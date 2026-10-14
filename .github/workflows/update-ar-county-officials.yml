@@ -1,0 +1,156 @@
+name: Update Arkansas county officials
+
+# Weekly refresh of the Arkansas county judges and justices of the peace
+# (ar/data/app/ar-county-officials.json, fetched by ar/index.html's County and
+# Quorum Court District cards), rebuilt by ar/scripts/build_ar_county_officials.py:
+# each county judge from the Arkansas Judiciary's directory of county judges
+# and clerks (one request), and each county's justices of the peace from the
+# Association of Arkansas Counties' page for that county (76 requests, paced at
+# the 20 seconds the association's robots.txt asks, so about 25 minutes). If
+# anything changed it opens a PR rather than committing directly to main —
+# officeholder data gets a look before it ships.
+#
+# The builder FAILS rather than writing when the judiciary and the association
+# name different county judges, or when a county's justice list carries a
+# different number of names than the state's map draws districts. Both are
+# states a person has to read, so a red run here is the signal, not noise.
+#
+# EVERY SEAT IS ON THE 3 NOVEMBER 2026 BALLOT AND THE NEW TERMS START ON
+# 1 JANUARY 2027. Adam chose (2026-10-13) to name the justices now and to
+# re-check every county in January; ar/WATCH.md carries that row.
+#
+# It also WATCHES the quorum court district map
+# (ar/data/app/ar-quorum-court-districts.json), which no job rewrites: a new
+# map changes which justice sits for which district, so a person rebuilds it.
+# The watch compares the state's live layer with the fingerprint recorded when
+# the shipped file was built and opens or updates one tracking issue when they
+# differ, staying green — the validate-sources pattern. It reads four pages of
+# attributes, paced at the 60 seconds the state's open-data portal asks.
+#
+# ARKANSAS IS DARK, so this job regenerates no county page:
+# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
+# go-live adds its adapter.
+
+on:
+  schedule:
+    - cron: "23 17 * * 3" # Wednesday 17:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR runs CI; see
+      # update-ar-legislature-roster.yml for why.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Watch the quorum court district map
+        id: watch
+        # A changed map is an expected, non-fatal state that feeds the tracking
+        # issue below, and so is an unreachable layer; neither should stop the
+        # roster refresh.
+        continue-on-error: true
+        run: |
+          set +e
+          out="$(python3 ar/scripts/build_ar_quorum_court_districts.py --watch 2>&1)"
+          code=$?
+          echo "$out"
+          {
+            echo "report<<REPORT_EOF"
+            echo "$out"
+            echo "REPORT_EOF"
+            echo "code=$code"
+          } >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Rebuild county judges and justices of the peace
+        run: python3 ar/scripts/build_ar_county_officials.py
+
+      - name: Validate app + data files
+        run: |
+          python3 ar/scripts/build_ar_county_officials.py --check
+          python3 ar/scripts/build_ar_quorum_court_districts.py --check
+          python3 ar/scripts/validate_index.py ar/index.html
+
+      - name: Open or update the district-map issue
+        if: steps.watch.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT: ${{ steps.watch.outputs.report }}
+        run: |
+          title="Arkansas quorum court district map changed — rebuild needed"
+          {
+            echo "_Automated by \`.github/workflows/update-ar-county-officials.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app._"
+            echo
+            echo "The state's justice of the peace district layer no longer matches what \`ar/data/app/ar-quorum-court-districts.json\` was built from, or could not be read. A county may have redrawn its districts, or the state re-published its layer."
+            echo
+            echo '```'
+            echo "$REPORT"
+            echo '```'
+            echo
+            echo "**To clear this issue:**"
+            echo "1. Run \`python3 ar/scripts/build_ar_quorum_court_districts.py\` and read which counties changed."
+            echo "2. If a county's districts changed and that county is in \`NUMBERED\` in \`ar/scripts/build_ar_county_officials.py\`, re-read which justice sits for which district on the county's own page."
+            echo "3. Bump \`sw.cache_name\` in \`ar/metro-worksheet.json\` and run \`python3 scripts/generate_metro_files.py\`, because the district file is served cache-first."
+            echo
+            echo "If the report says the layer could not be read, re-run this workflow before acting: one failed read is not a change."
+          } > issue-body.md
+
+          existing="$(gh issue list --state open --search "in:title $title" --json number --jq '.[0].number')"
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file issue-body.md
+            gh issue comment "$existing" --body "Refreshed by the weekly Arkansas quorum court map watch — see the updated issue body."
+            echo "Updated existing issue #$existing."
+          else
+            gh issue create --title "$title" --body-file issue-body.md
+            echo "Opened a new tracking issue."
+          fi
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ar/data/app/ar-county-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ar-county-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history; the rebuilt file is
+          # carried over the checkout as an uncommitted change.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add ar/data/app/ar-county-officials.json
+          git commit -m "Update Arkansas county judges and justices of the peace"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Arkansas county judges and justices of the peace" \
+              --body "Automated weekly refresh of the Arkansas county judges (the Arkansas Judiciary's directory of county judges and clerks) and justices of the peace (the Association of Arkansas Counties' county pages), generated by \`ar/scripts/build_ar_county_officials.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

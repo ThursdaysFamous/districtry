@@ -7,6 +7,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "ar": {
+    "path": "ar/og-image.png",
+    "label": "ar",
+    "sha256": "2b6a12f21ff5fb143734443b3c188736fc0551411abc365c22f1845b6ecd618a",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-13"
+  },
   "ca": {
     "path": "ca/og-image.png",
     "label": "ca",

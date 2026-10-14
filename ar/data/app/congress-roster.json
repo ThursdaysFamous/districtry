@@ -1,0 +1,62 @@
+{
+  "1": {
+    "name": "Eric A. \"Rick\" Crawford",
+    "party": "Republican",
+    "url": "https://crawford.house.gov",
+    "capitolOffice": [
+      "2422 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4076"
+    ],
+    "districtOffice": [
+      "112 S. 1st",
+      "Cabot, AR 72023",
+      "Phone: 501-843-3043"
+    ]
+  },
+  "2": {
+    "name": "J. French Hill",
+    "party": "Republican",
+    "url": "https://hill.house.gov",
+    "capitolOffice": [
+      "1533 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2506"
+    ],
+    "districtOffice": [
+      "1501 N. University Ave., Suite 630",
+      "Little Rock, AR 72207",
+      "Phone: 501-324-5941"
+    ]
+  },
+  "3": {
+    "name": "Steve Womack",
+    "party": "Republican",
+    "url": "https://womack.house.gov",
+    "capitolOffice": [
+      "2412 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4301"
+    ],
+    "districtOffice": [
+      "6101 Phoenix Ave, Suite 4",
+      "Fort Smith, AR 72903-5083",
+      "Phone: 479-424-1146"
+    ]
+  },
+  "4": {
+    "name": "Bruce Westerman",
+    "party": "Republican",
+    "url": "https://westerman.house.gov",
+    "capitolOffice": [
+      "202 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3772"
+    ],
+    "districtOffice": [
+      "101 N. Washington Ave., Suite 406",
+      "El Dorado, AR 71730",
+      "Phone: 501-609-9796"
+    ]
+  }
+}

@@ -1,0 +1,5858 @@
+{
+ "05001": {
+  "county": "Arkansas County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Thomas Eddie Best",
+   "phone": "870-946-4321",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Eddie Roberson"
+    },
+    {
+     "name": "Clay Carter"
+    },
+    {
+     "name": "Derek Menard"
+    },
+    {
+     "name": "Charles Wright"
+    },
+    {
+     "name": "Robert Henderson"
+    },
+    {
+     "name": "Inez McLemore"
+    },
+    {
+     "name": "Michele Blasengame"
+    },
+    {
+     "name": "Lloyd Brosius"
+    },
+    {
+     "name": "Curtis Ahrens"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Eddie Roberson",
+     "2": "Clay Carter",
+     "3": "Derek Menard",
+     "4": "Charles Wright",
+     "5": "Robert L. Henderson",
+     "6": "Inez McLemore",
+     "7": "Michelle Blasengame",
+     "8": "Lloyd Brosius",
+     "9": "Curtis Ahrens"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/arkansas/"
+  }
+ },
+ "05003": {
+  "county": "Ashley County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Jim Hudson",
+   "phone": "870-853-2000",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Ron Miller"
+    },
+    {
+     "name": "Billie Pippen"
+    },
+    {
+     "name": "Jimmy Pennington"
+    },
+    {
+     "name": "Rickey Nelms"
+    },
+    {
+     "name": "Jeff Langley"
+    },
+    {
+     "name": "Rhonda Pippen"
+    },
+    {
+     "name": "Ronnie Wheeler"
+    },
+    {
+     "name": "Bob Rush"
+    },
+    {
+     "name": "Greg Sivils"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Ron Miller",
+     "2": "Billie C. Pippen",
+     "3": "Jimmy Lynn Pennington",
+     "4": "Rickey Nelms",
+     "5": "Jeff Langley",
+     "6": "Rhonda Pippen",
+     "7": "Ronald Wheeler",
+     "8": "Bob Rush",
+     "9": "Greg Sivils"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/ashley/"
+  }
+ },
+ "05005": {
+  "county": "Baxter County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Kevin Litty",
+   "office": "#1 East Seventh, Suite 303, Mountain Home, AR 72653",
+   "phone": "870-425-2755",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://www.baxtercountyar.gov/justices.php",
+   "districts": {
+    "1": "Dennis Frank",
+    "10": "Shannon Walker",
+    "11": "Eric Payne",
+    "2": "Mike McDonald",
+    "3": "Rick Steiner",
+    "4": "William Dirk Waldrop",
+    "5": "Maryanne Edge",
+    "6": "Lisa House",
+    "7": "Bob Nault",
+    "8": "Eddie Griffin",
+    "9": "Cameron Davis"
+   },
+   "justices": [
+    {
+     "name": "Dennis M. Frank"
+    },
+    {
+     "name": "Mike McDonald"
+    },
+    {
+     "name": "Rick Steiner"
+    },
+    {
+     "name": "Dirk Waldrop"
+    },
+    {
+     "name": "Maryanne Edge"
+    },
+    {
+     "name": "Lisa House"
+    },
+    {
+     "name": "Robert Nault"
+    },
+    {
+     "name": "Eddie Griffin"
+    },
+    {
+     "name": "Cameron Davis"
+    },
+    {
+     "name": "Shannon Walker"
+    },
+    {
+     "name": "Eric Payne"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Dennis Frank",
+     "10": "Shannon Walker",
+     "11": "Eric Payne",
+     "2": "Mike McDonald",
+     "3": "Rick Steiner",
+     "5": "Maryanne Edge",
+     "6": "Lisa House",
+     "7": "Robert Nault",
+     "8": "Eddie Griffin",
+     "9": "Cameron Davis"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "4"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/baxter/"
+  },
+  "website": "http://www.baxtercounty.org/"
+ },
+ "05007": {
+  "county": "Benton County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Barry Moehring",
+   "office": "215 East Central, Bentonville, AR 72712",
+   "phone": "479-271-1098",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Jeff Dunn"
+    },
+    {
+     "name": "Ken Farmer"
+    },
+    {
+     "name": "Richard McKeehan"
+    },
+    {
+     "name": "Michael Miller"
+    },
+    {
+     "name": "Carrie Perrien Smith"
+    },
+    {
+     "name": "Brian Armas"
+    },
+    {
+     "name": "Joseph Bollinger"
+    },
+    {
+     "name": "Joel Jones"
+    },
+    {
+     "name": "Jacob Jeanson"
+    },
+    {
+     "name": "Danny McCrackin"
+    },
+    {
+     "name": "Dustin Todd"
+    },
+    {
+     "name": "John Rissler"
+    },
+    {
+     "name": "Kurt S. Moore"
+    },
+    {
+     "name": "Bethany Henry Rosenbaum"
+    },
+    {
+     "name": "Lucas Pointer"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Jeff Dunn",
+     "10": "Danny McCrackin",
+     "11": "Dustin Todd",
+     "12": "John Good Rissler",
+     "13": "Kurt S. Moore",
+     "14": "Bethany Henry Rosenbaum",
+     "2": "Ken Farmer",
+     "3": "Richard McKeehan",
+     "4": "Michael Miller",
+     "5": "Carrie Perrien Smith",
+     "6": "Brian Armas",
+     "7": "Joseph Bollinger",
+     "8": "Joel Jones"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "9",
+     "15"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 15,
+   "sourceUrl": "https://arcounties.org/counties/benton/"
+  },
+  "website": "https://bentoncountyar.gov"
+ },
+ "05009": {
+  "county": "Boone County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Mitchell Archer",
+   "note": "The Arkansas Judiciary's directory names an earlier judge.",
+   "office": "100 N. Main St. #300, Harrison, AR 72601",
+   "phone": "870-741-5760",
+   "source": "Boone County's own page for its county judge",
+   "sourceUrl": "https://www.boonecountyar.com/county-judge",
+   "weekly": false
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Matt Odom"
+    },
+    {
+     "name": "Glenn Redding"
+    },
+    {
+     "name": "Heath Kirkpatrick"
+    },
+    {
+     "name": "Bryan Snavley"
+    },
+    {
+     "name": "Kyle Evatt"
+    },
+    {
+     "name": "Sam Tinsley"
+    },
+    {
+     "name": "Rodney Sullivan"
+    },
+    {
+     "name": "Shane Jones"
+    },
+    {
+     "name": "Ralph H. Guynn"
+    },
+    {
+     "name": "Bill Melbourne"
+    },
+    {
+     "name": "David Thompson"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Matt Odom",
+     "10": "Bill Melbourne",
+     "11": "David Thompson",
+     "2": "Glenn Redding",
+     "3": "Heath Kirkpatrick",
+     "5": "Kyle Evatt",
+     "6": "Sam Tinsley",
+     "7": "Rodney Sullivan",
+     "8": "Shane M. Jones",
+     "9": "Ralph H. Guynn"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "4"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/boone/"
+  },
+  "website": "https://www.boonecountyar.com"
+ },
+ "05011": {
+  "county": "Bradley County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Klay McKinney",
+   "office": "101 East Cedar, Warren, AR 71671",
+   "phone": "870-226-3853",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Gwendolyn S. Bullard"
+    },
+    {
+     "name": "Mike Jolley"
+    },
+    {
+     "name": "Pat Morman"
+    },
+    {
+     "name": "Jimmy Sledge"
+    },
+    {
+     "name": "Tony Cathey"
+    },
+    {
+     "name": "Bobby L. Hargrave"
+    },
+    {
+     "name": "Jim Anders"
+    },
+    {
+     "name": "Alton R. Richard"
+    },
+    {
+     "name": "Dana Harvey"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Gwendolyn S. Bullard",
+     "2": "Mike Jolley",
+     "3": "B.K. Pat Morman",
+     "4": "Jimmy Sledge",
+     "5": "Tony Cathey",
+     "6": "Bobby Hargrave",
+     "7": "James G. (Jim) Anders",
+     "8": "Alton Ray Richard",
+     "9": "Dana Harvey"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/bradley/"
+  }
+ },
+ "05013": {
+  "county": "Calhoun County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Floyd Nutt",
+   "phone": "870-798-4818",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Thomas R. Stringfellow"
+    },
+    {
+     "name": "Keith Gresham"
+    },
+    {
+     "name": "David Reddin"
+    },
+    {
+     "name": "Jimmy Dale Williams"
+    },
+    {
+     "name": "Randy Duncan"
+    },
+    {
+     "name": "John Beasley"
+    },
+    {
+     "name": "Kenneth “Kenny” Evans"
+    },
+    {
+     "name": "Mark Hornaday"
+    },
+    {
+     "name": "Michael Gardner"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Tommy Stringfellow",
+     "2": "Keith Gresham",
+     "3": "David Reddin",
+     "4": "Jimmy Dale Williams",
+     "5": "Randy Duncan",
+     "6": "John Beasley",
+     "7": "Kenneth \"Kenny\" Evans",
+     "8": "Mark Hornaday",
+     "9": "Michael W. Gardner"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/calhoun/"
+  }
+ },
+ "05015": {
+  "county": "Carroll County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "David Writer",
+   "office": "210 West Church Ave., Berryville, AR 72616",
+   "phone": "870-423-2967",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "http://carrollcounty.us/QuorumCourt/Justices",
+   "districts": {
+    "1": "Gary Capcik",
+    "10": "Jerry King",
+    "11": "Caroline Rogers",
+    "2": "Jack Deaton",
+    "3": "Harrie Farrow",
+    "4": "Hunter Rivett",
+    "5": "Matt Phillips",
+    "6": "Craig Hicks",
+    "7": "Kellie Matt",
+    "8": "Bobby James",
+    "9": "Aaron Hall"
+   },
+   "justices": [
+    {
+     "name": "Jack Deaton"
+    },
+    {
+     "name": "Gary Capcik"
+    },
+    {
+     "name": "Harrie Farrow"
+    },
+    {
+     "name": "Hunter Rivett"
+    },
+    {
+     "name": "Matt Phillips"
+    },
+    {
+     "name": "Craig Hicks"
+    },
+    {
+     "name": "Kellie Matt"
+    },
+    {
+     "name": "Bobby James"
+    },
+    {
+     "name": "Aaron Hall"
+    },
+    {
+     "name": "Jerry King"
+    },
+    {
+     "name": "Caroline Rogers"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Jack Deaton",
+     "10": "Jerry King",
+     "11": "Caroline Jane Rogers",
+     "3": "Laurie \"Harrie\" Farrow",
+     "4": "Hunter Rivett",
+     "5": "Jonathon Matt Phillips",
+     "6": "Craig Hicks",
+     "7": "Kellie Matt",
+     "8": "Bobby James",
+     "9": "Aaron Hall"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "2"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/carroll/"
+  },
+  "website": "http://carrollcounty.us/"
+ },
+ "05017": {
+  "county": "Chicot County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Tom Mosley",
+   "phone": "870-265-8015",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Theodore Brown"
+    },
+    {
+     "name": "Clinton Hampton"
+    },
+    {
+     "name": "Michael Mencer"
+    },
+    {
+     "name": "Jeraldine Tucker"
+    },
+    {
+     "name": "Terry Alpe"
+    },
+    {
+     "name": "Mark Pieroni"
+    },
+    {
+     "name": "William Borgognoni"
+    },
+    {
+     "name": "Danita Baker Turner"
+    },
+    {
+     "name": "Dr. Terri McCullough"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Theodore Brown",
+     "2": "Clinton Hampton",
+     "3": "Michael A. Mencer",
+     "4": "Jeraldine Tucker",
+     "6": "Mark Pieroni",
+     "8": "Danita Baker Turner"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "5",
+     "7",
+     "9"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/chicot/"
+  }
+ },
+ "05019": {
+  "county": "Clark County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Troy Tucker",
+   "office": "401 Clay Street, Arkadelphia, AR 71923",
+   "phone": "870-246-5847",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://clarkcountyar.gov/quorum-court/",
+   "districts": {
+    "1": "Zach Bledsoe",
+    "10": "Wayne Baumgardner",
+    "11": "Tracy Drake",
+    "2": "Michael Ankton",
+    "3": "Vanilla Hannah",
+    "4": "Llewellyn Terry Sr.",
+    "5": "Jimmy King",
+    "6": "Stuart Thomas",
+    "7": "Jenna Scott",
+    "8": "Garry \"BJ\" Johns",
+    "9": "Andrea Angle"
+   },
+   "justices": [
+    {
+     "name": "Zach Bledsoe"
+    },
+    {
+     "name": "Michael L. Ankton"
+    },
+    {
+     "name": "Vanilla Hannah"
+    },
+    {
+     "name": "Llewellyn Terry Sr."
+    },
+    {
+     "name": "James King Jr."
+    },
+    {
+     "name": "Stuart Thomas"
+    },
+    {
+     "name": "Jenna Scott"
+    },
+    {
+     "name": "Garry “BJ” Johns"
+    },
+    {
+     "name": "Andrea Angle"
+    },
+    {
+     "name": "Wayne Baumgardner"
+    },
+    {
+     "name": "Tracy Ellis Drake"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Zachary Bledsoe",
+     "10": "Wayne Baumgardner",
+     "11": "Tracy Drake",
+     "2": "Michael L. Ankton",
+     "3": "Vanilla Nelson Hannah",
+     "4": "Llewellyn Terry Sr.",
+     "5": "James King Jr.",
+     "6": "Stuart Thomas",
+     "7": "Jenna Scott",
+     "8": "Garry (B.J.) Johns",
+     "9": "Andrea Angle"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/clark/"
+  },
+  "website": "http://www.clarkcountyarkansas.com/"
+ },
+ "05021": {
+  "county": "Clay County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Mike Patterson",
+   "phone": "870-598-2667",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Neal \"Poppy\" Smith"
+    },
+    {
+     "name": "Joseph C. Henderson"
+    },
+    {
+     "name": "Patrick Patterson"
+    },
+    {
+     "name": "David Cagle"
+    },
+    {
+     "name": "Brad Green"
+    },
+    {
+     "name": "Dennis Haines"
+    },
+    {
+     "name": "Randy Kingston"
+    },
+    {
+     "name": "George E. Lowe"
+    },
+    {
+     "name": "David Hatcher"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Neal “Poppy” Smith",
+     "2": "Joseph C. Henderson",
+     "3": "Patrick Patterson",
+     "4": "David Cagle",
+     "5": "Brad Green",
+     "6": "Dennis Haines",
+     "7": "Randy Kingston",
+     "8": "George E. Lowe",
+     "9": "David Hatcher"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/clay/"
+  }
+ },
+ "05023": {
+  "county": "Cleburne County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Eric Crosby",
+   "office": "300 W. Main Street, Heber Springs, AR 72543",
+   "phone": "501-362-8141",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Brian Moorehead"
+    },
+    {
+     "name": "Sam Henegar"
+    },
+    {
+     "name": "Stephen Beavers"
+    },
+    {
+     "name": "Linda Fletcher"
+    },
+    {
+     "name": "Alan Malone"
+    },
+    {
+     "name": "Chad Evans"
+    },
+    {
+     "name": "Jacque Martin"
+    },
+    {
+     "name": "Brent E. Foust"
+    },
+    {
+     "name": "Charles “Chee” Tamburo"
+    },
+    {
+     "name": "Mark Baugh"
+    },
+    {
+     "name": "Jeremy McClung"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Brian Moorehead",
+     "10": "Mark G. Baugh",
+     "11": "Jeremy McClung",
+     "2": "Sam Henegar",
+     "3": "Stephen Beavers",
+     "4": "Linda Fletcher",
+     "5": "Alan Malone",
+     "6": "Chad Evans",
+     "7": "Jacque Patchell Martin",
+     "8": "Brent E. Foust",
+     "9": "Charles “Chee” Tamburo"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/cleburne/"
+  },
+  "website": "https://www.cleburnecountyar.com"
+ },
+ "05025": {
+  "county": "Cleveland County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Don Triplett",
+   "note": "The Arkansas Judiciary's directory names an earlier judge.",
+   "phone": "870-325-6214",
+   "source": "the Association of Arkansas Counties' page for Cleveland County",
+   "sourceUrl": "https://arcounties.org/counties/cleveland/",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Ricky Neal"
+    },
+    {
+     "name": "Melody Spears"
+    },
+    {
+     "name": "Dwayne Ashcraft"
+    },
+    {
+     "name": "Pat Keegan-Potter"
+    },
+    {
+     "name": "Donnie Herring"
+    },
+    {
+     "name": "Patrick Berry"
+    },
+    {
+     "name": "Bruce T. Brown"
+    },
+    {
+     "name": "Jeffrey Smith"
+    },
+    {
+     "name": "Charles Rodgers"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Ricky Neal",
+     "2": "Melody Spears",
+     "3": "DeWayne Ashcraft",
+     "5": "Donnie Herring",
+     "7": "Bruce T. Brown",
+     "8": "Jeffrey Smith",
+     "9": "Charles Rodgers"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "4",
+     "6"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/cleveland/"
+  }
+ },
+ "05027": {
+  "county": "Columbia County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "William Douglas Fields",
+   "office": "1 Court Square, Magnolia, AR 71753",
+   "phone": "(870) 234-2542",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Virginia Pate"
+    },
+    {
+     "name": "Mark Fullenwider"
+    },
+    {
+     "name": "Jason Clark"
+    },
+    {
+     "name": "Penny Cook"
+    },
+    {
+     "name": "Ricky Waller"
+    },
+    {
+     "name": "Jeremy Dodson"
+    },
+    {
+     "name": "Oliver Thomas"
+    },
+    {
+     "name": "Keith Willingham"
+    },
+    {
+     "name": "Charles Michael Henderson"
+    },
+    {
+     "name": "Lynn Story"
+    },
+    {
+     "name": "Mike Loe"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Virginia Annette Pate",
+     "10": "Lynn Story",
+     "11": "Mike Loe",
+     "2": "Mark Fullenwider",
+     "3": "Jason J. Clark",
+     "4": "Penny J. Cook",
+     "5": "Ricky J. Waller",
+     "6": "Jeremy Shaun Dodson",
+     "7": "Oliver W. Thomas",
+     "9": "Charles Michael Henderson"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "8"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/columbia/"
+  },
+  "website": "http://www.countyofcolumbia.org"
+ },
+ "05029": {
+  "county": "Conway County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Jimmy Hart",
+   "office": "117 S. Moose Street, Morrilton, AR 72110",
+   "phone": "501-354-9640",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://conwaycountyar.com/home/quorum-court/",
+   "districts": {
+    "1": "Philip Hoyt",
+    "10": "Leslie Griffiths",
+    "11": "Jimmy Miller",
+    "2": "Patrick Hartman",
+    "3": "Steven Davenport",
+    "4": "Thomas Flowers",
+    "5": "Keith Long",
+    "6": "Brigham Jones, Jr",
+    "7": "Johnathan Trafford",
+    "8": "Michael Hammons",
+    "9": "John Trafford"
+   },
+   "justices": [
+    {
+     "name": "Philip Hoyt"
+    },
+    {
+     "name": "Patrick D. Hartman"
+    },
+    {
+     "name": "Steven Davenport"
+    },
+    {
+     "name": "Thomas A. Flowers"
+    },
+    {
+     "name": "Keith Long"
+    },
+    {
+     "name": "Brigham Jones"
+    },
+    {
+     "name": "Johnathan Trafford"
+    },
+    {
+     "name": "Michael Hammons"
+    },
+    {
+     "name": "John D. Trafford, Jr."
+    },
+    {
+     "name": "Dr. Leslie Griffiths"
+    },
+    {
+     "name": "Jimmy Miller"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Philip Hoyt",
+     "10": "Dr. Leslie Griffiths",
+     "11": "Jimmy Miller",
+     "2": "Patrick Hartman",
+     "3": "Steven Davenport",
+     "4": "Thomas A. Flowers",
+     "5": "Keith Long",
+     "6": "Brigham Jones",
+     "7": "Johnathan Trafford",
+     "8": "Michael Hammons",
+     "9": "John D. Trafford, Jr."
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/conway/"
+  },
+  "website": "https://conwaycountyar.com"
+ },
+ "05031": {
+  "county": "Craighead County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Marvin Day",
+   "office": "511 Union Street, Jonesboro, AR 72401",
+   "phone": "870-933-4500",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Brad Noel"
+    },
+    {
+     "name": "Garrett Barnes"
+    },
+    {
+     "name": "Barry Forrest"
+    },
+    {
+     "name": "Linda Allison"
+    },
+    {
+     "name": "Rick Myers"
+    },
+    {
+     "name": "Darrel Cook"
+    },
+    {
+     "name": "Richard Rogers"
+    },
+    {
+     "name": "David Tennison"
+    },
+    {
+     "name": "Josh Longmire"
+    },
+    {
+     "name": "Steve Cline"
+    },
+    {
+     "name": "Dan Pasmore"
+    },
+    {
+     "name": "Terry Couch"
+    },
+    {
+     "name": "Kevin Williams"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Brad Noel",
+     "10": "Steve Cline",
+     "11": "Dan Pasmore",
+     "12": "Terry Couch",
+     "13": "Kevin D. Williams",
+     "2": "Garrett Barnes",
+     "3": "Barry Forrest",
+     "4": "Linda Allison",
+     "5": "Rick Myers",
+     "6": "Darrel Cook",
+     "7": "Richard Rogers",
+     "8": "David Tennison",
+     "9": "Josh Longmire"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/craighead/"
+  },
+  "website": "http://www.craigheadcounty.org/"
+ },
+ "05033": {
+  "county": "Crawford County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Chris Keith",
+   "office": "300 Main Street - Room 4, Van Buren, AR 72956",
+   "phone": "479-474-1511",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://crawfordcountyar.gov/officials/justices.cshtml",
+   "districts": {
+    "1": "Robert Kevin Arnold",
+    "10": "Jayson Peppas",
+    "11": "Kevin Bell",
+    "12": "Donna Staton",
+    "13": "Steve Johnson",
+    "2": "Lonnie Myers",
+    "3": "Morgan R. Morgan",
+    "4": "Lloyd Cole",
+    "5": "Brad Martin",
+    "6": "Mark Shaffer",
+    "7": "Kyle Stinchcomb",
+    "8": "Tia Woodruff",
+    "9": "Jason Cox"
+   },
+   "justices": [
+    {
+     "name": "Robert Kevin Arnold"
+    },
+    {
+     "name": "Lonnie Myers"
+    },
+    {
+     "name": "Morgan R. Morgan"
+    },
+    {
+     "name": "Lloyd Cole"
+    },
+    {
+     "name": "Brad Martin"
+    },
+    {
+     "name": "Mark Shaffer"
+    },
+    {
+     "name": "Kyle Stinchcomb"
+    },
+    {
+     "name": "Tia Woodruff"
+    },
+    {
+     "name": "Jason Cox"
+    },
+    {
+     "name": "Jayson E. Peppas"
+    },
+    {
+     "name": "Kevin Bell"
+    },
+    {
+     "name": "Donna Staton"
+    },
+    {
+     "name": "Steven Johnson"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Robert Kevin Arnold",
+     "10": "Jayson E. Peppas",
+     "11": "Kevin L. Bell",
+     "12": "Donna Staton",
+     "13": "Steven Johnson",
+     "2": "Lonnie Myers",
+     "3": "Morgan R. Morgan",
+     "4": "Lloyd Cole",
+     "5": "Brad Martin",
+     "6": "Mark Shaffer",
+     "7": "Kyle Stinchcomb",
+     "8": "Tia Woodruff",
+     "9": "Jason Cox"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/crawford/"
+  },
+  "website": "http://www.crawford-county.org/"
+ },
+ "05035": {
+  "county": "Crittenden County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Woody Wheeless",
+   "office": "100 Court Square, Marion, AR 72364",
+   "phone": "870-739-3200",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Vickie Miles-Robertson"
+    },
+    {
+     "name": "Albert Leo Marconi"
+    },
+    {
+     "name": "Stacy Allen"
+    },
+    {
+     "name": "Tamara Hood"
+    },
+    {
+     "name": "Marco McClendon"
+    },
+    {
+     "name": "Thomas A. Dill"
+    },
+    {
+     "name": "Rickey McCauley"
+    },
+    {
+     "name": "Glen Sidney Hardin"
+    },
+    {
+     "name": "Kenneth Cross"
+    },
+    {
+     "name": "Bradly Moore"
+    },
+    {
+     "name": "Lisa O’Neal"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Vickie Robertson",
+     "10": "Bradly Moore",
+     "11": "Lisa O'Neal",
+     "2": "Albert Marconi",
+     "3": "Stacy Allen",
+     "4": "Tamara Hood",
+     "5": "Marco McClendon",
+     "6": "Thomas A. Dill",
+     "7": "Rickey McCauley",
+     "8": "Sidney Hardin",
+     "9": "Kenneth Cross"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/crittenden/"
+  },
+  "website": "https://www.crittendencountyar.org/"
+ },
+ "05037": {
+  "county": "Cross County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Lynn Blake",
+   "office": "705 East Union, Suite 4, Wynne, AR 72396",
+   "phone": "870-238-5750",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Amy Imboden"
+    },
+    {
+     "name": "John Kyle Wilson"
+    },
+    {
+     "name": "Anthony Jarrett"
+    },
+    {
+     "name": "Glenda Vance"
+    },
+    {
+     "name": "Gloria Aldridge"
+    },
+    {
+     "name": "Kevin Jumper"
+    },
+    {
+     "name": "Carl Loewer"
+    },
+    {
+     "name": "Jay Gahr"
+    },
+    {
+     "name": "Scott May"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Amy Imboden",
+     "2": "John Kyle Wilson",
+     "3": "Anthony Jarrett",
+     "4": "Glenda Vance",
+     "5": "Gloria Ferguson Aldridge",
+     "6": "Kevin Jumper",
+     "7": "Carl Loewer",
+     "8": "Jay Gahr",
+     "9": "Scott May"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/cross/"
+  },
+  "website": "http://www.crosscountyar.org"
+ },
+ "05039": {
+  "county": "Dallas County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Chris Stanfield",
+   "office": "206 3rd Street West, Fordyce, AR 71742",
+   "phone": "870-352-3371",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Wornest Lambert"
+    },
+    {
+     "name": "Loretta Cotton"
+    },
+    {
+     "name": "Edith Totty"
+    },
+    {
+     "name": "Tracy Graves"
+    },
+    {
+     "name": "Todd Roark"
+    },
+    {
+     "name": "Andy Johnson"
+    },
+    {
+     "name": "David Fite"
+    },
+    {
+     "name": "Robert Seale"
+    },
+    {
+     "name": "Donny Ford"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Wornest Lambert",
+     "2": "Loretta Cotton",
+     "3": "Edith Totty",
+     "4": "Tracy Graves",
+     "5": "Tod Roark",
+     "6": "Andy Johnson",
+     "7": "David Fite",
+     "8": "Robert Seale",
+     "9": "Donny Ford"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/dallas/"
+  }
+ },
+ "05041": {
+  "county": "Desha County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Wayne Smith",
+   "note": "The Arkansas Judiciary's directory names an earlier judge.",
+   "phone": "870-877-2426",
+   "source": "the Association of Arkansas Counties' page for Desha County",
+   "sourceUrl": "https://arcounties.org/counties/desha/",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Troy Jackson Jr."
+    },
+    {
+     "name": "Lynn Weatherford"
+    },
+    {
+     "name": "Patricia Watkins"
+    },
+    {
+     "name": "Ricky Helton"
+    },
+    {
+     "name": "Hollis Mankin"
+    },
+    {
+     "name": "Ken Holt Jr."
+    },
+    {
+     "name": "Rita K. Kolb"
+    },
+    {
+     "name": "Dollie Ann Wilson"
+    },
+    {
+     "name": "David Allen Binns"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Troy Jackson, Jr.",
+     "2": "G. Lynn Weatherford",
+     "3": "Patricia Watkins",
+     "4": "Ricky Helton",
+     "5": "Hollis Mankin",
+     "6": "Ken Holt, Jr.",
+     "7": "Rita K. Kolb",
+     "8": "Dollie Ann Wilson"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "9"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/desha/"
+  }
+ },
+ "05043": {
+  "county": "Drew County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Jessie Griffin",
+   "office": "210 South Main, Monticello, AR 71655",
+   "phone": "870-460-6200",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Orlando Jones"
+    },
+    {
+     "name": "Ben Higginbotham"
+    },
+    {
+     "name": "Roger D. Harris"
+    },
+    {
+     "name": "Sheila Maxwell"
+    },
+    {
+     "name": "Steve Pigott"
+    },
+    {
+     "name": "Donna Harton Usry"
+    },
+    {
+     "name": "Craig Kaminicki"
+    },
+    {
+     "name": "Frank Appleberry"
+    },
+    {
+     "name": "Zachary Hill"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Orlando Jones",
+     "2": "Ben D. Higginbotham",
+     "3": "Roger D. Harris",
+     "4": "Sheila Maxwell",
+     "5": "Stephen H. Pigott",
+     "6": "Donna F. Usry",
+     "7": "Craig Kaminicki",
+     "8": "Frank Appleberry",
+     "9": "Zachary Hill"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/drew/"
+  }
+ },
+ "05045": {
+  "county": "Faulkner County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Allen Dodson",
+   "office": "801 Locust Street, Conway, AR 72034",
+   "phone": "501-450-4900",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Justin Knight"
+    },
+    {
+     "name": "Maree Coats"
+    },
+    {
+     "name": "John Allison III"
+    },
+    {
+     "name": "Samuel Strain"
+    },
+    {
+     "name": "Jonny Tyler"
+    },
+    {
+     "name": "Tyler Lachowsky"
+    },
+    {
+     "name": "Tyler Pearson"
+    },
+    {
+     "name": "Jason Lyon"
+    },
+    {
+     "name": "Kris Kendrick"
+    },
+    {
+     "name": "Andy Shock"
+    },
+    {
+     "name": "Joyia Yorgey"
+    },
+    {
+     "name": "David Meeks"
+    },
+    {
+     "name": "Jake Moss"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Justin Knight",
+     "10": "Andy Shock",
+     "11": "Joyia Yorgey",
+     "12": "David Meeks",
+     "13": "Jake Moss",
+     "2": "Maree Coats",
+     "3": "John Allison III",
+     "4": "Samuel “Sam” Strain",
+     "5": "Jonny Tyler",
+     "6": "Tyler Lachowsky",
+     "7": "Tyler Pearson",
+     "8": "Jason Lyon",
+     "9": "Kris Kendrick"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/faulkner/"
+  },
+  "website": "http://www.faulknercounty.org"
+ },
+ "05047": {
+  "county": "Franklin County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Rickey Bowman",
+   "office": "211 West Commercial, Ozark, AR 72949",
+   "phone": "479-667-4726",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Roy Day"
+    },
+    {
+     "name": "Freddy Ree"
+    },
+    {
+     "name": "David Bowles, Sr."
+    },
+    {
+     "name": "Sherrie Sanders"
+    },
+    {
+     "name": "Dennis Fisher"
+    },
+    {
+     "name": "Brian Lachowsky, Sr."
+    },
+    {
+     "name": "Gary O’Neal"
+    },
+    {
+     "name": "Luke Verkamp"
+    },
+    {
+     "name": "Lacey Neissl Clark"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Roy Day",
+     "2": "Freddy Ree",
+     "3": "David L. Bowles, Sr.",
+     "5": "Dennis Fisher",
+     "6": "Brian Lachowsky",
+     "7": "Gary O'Neal",
+     "8": "Luke Verkamp",
+     "9": "Lacey Neissl Clark"
+    },
+    "noWinner": [
+     "4"
+    ],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/franklin/"
+  },
+  "website": "https://www.franklincountyar.org/"
+ },
+ "05049": {
+  "county": "Fulton County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Kenneth Crow",
+   "phone": "870-895-3341",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://www.fultoncountyar.gov/quorum-court",
+   "districts": {
+    "1": "Cris Newberry",
+    "2": "Dennis Kinder",
+    "3": "Albert Roork",
+    "4": "Gary Phillips",
+    "5": "Scott Watkins",
+    "6": "Marjorie A. Rogers",
+    "7": "Gary Tanner",
+    "8": "Jimmy Marler",
+    "9": "Hank Burke"
+   },
+   "justices": [
+    {
+     "name": "Cris Newberry"
+    },
+    {
+     "name": "Dennis W. Kinder"
+    },
+    {
+     "name": "Albert \"Al\" Roork"
+    },
+    {
+     "name": "Gary Phillips"
+    },
+    {
+     "name": "Scott Watkins"
+    },
+    {
+     "name": "Majorie A. Rogers"
+    },
+    {
+     "name": "Gary Tanner"
+    },
+    {
+     "name": "Jimmy Marler"
+    },
+    {
+     "name": "Hank Burke"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Cris Newberry",
+     "2": "Dennis W. Kinder",
+     "3": "Albert “Al” Roork",
+     "4": "Gary Phillips",
+     "5": "Scott Watkins",
+     "6": "Marjorie A. Rogers",
+     "7": "Gary Tanner",
+     "8": "Jimmy Marler",
+     "9": "Hank Burke"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/fulton/"
+  },
+  "website": "https://www.fultoncountyar.gov"
+ },
+ "05051": {
+  "county": "Garland County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Darryl Mahoney",
+   "office": "501 Ouachita, Hot Springs, AR 71901",
+   "phone": "501-622-3600",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://www.garlandcounty.org/280/Justices-of-the-Peace",
+   "districts": {
+    "1": "Micah Braughton",
+    "10": "Debbie McGrew",
+    "11": "Ronald (Nub) Hunter",
+    "12": "Jeremy Brown",
+    "13": "Ralph Edds",
+    "2": "Thomas Anderson",
+    "3": "Susan Garner Jones",
+    "4": "Jimmy Young",
+    "5": "Ralf Bailes",
+    "6": "Ben Hooten",
+    "7": "Dayton Myers",
+    "8": "Alan Floyd",
+    "9": "Dr. Brian Peters"
+   },
+   "justices": [
+    {
+     "name": "Micah Braughton"
+    },
+    {
+     "name": "Thomas J. Anderson"
+    },
+    {
+     "name": "Susan Jones"
+    },
+    {
+     "name": "Jimmy Young"
+    },
+    {
+     "name": "Ralf Bailes"
+    },
+    {
+     "name": "Ben D. Hooten"
+    },
+    {
+     "name": "Dayton Myers"
+    },
+    {
+     "name": "Alan Floyd"
+    },
+    {
+     "name": "Brian Peters"
+    },
+    {
+     "name": "Debbie McGrew"
+    },
+    {
+     "name": "Ronald T. Hunter"
+    },
+    {
+     "name": "Jeremy W. Brown"
+    },
+    {
+     "name": "Ralph Edds"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Micah Braughton",
+     "10": "Debbie McGrew",
+     "11": "Ronnie Hunter",
+     "12": "Jeremy Brown",
+     "13": "Ralph Edds",
+     "2": "Thomas J. Anderson",
+     "3": "Susan Garner Jones",
+     "4": "Jimmy Young",
+     "5": "Ralf Bailes",
+     "6": "Ben Hooten",
+     "7": "Dayton Myers",
+     "8": "Alan M. Floyd",
+     "9": "Brian A. Peters"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/garland/"
+  },
+  "website": "http://www.garlandcounty.org/"
+ },
+ "05053": {
+  "county": "Grant County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Randy Pruitt",
+   "office": "101 West Center Street, Room 101, Sheridan, AR 72150",
+   "phone": "870-942-2551",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Jason Roshto"
+    },
+    {
+     "name": "Danny Bone"
+    },
+    {
+     "name": "Jim D. Easley"
+    },
+    {
+     "name": "Marilyn DeMoss"
+    },
+    {
+     "name": "Scott Wells"
+    },
+    {
+     "name": "Tony M. Carder"
+    },
+    {
+     "name": "Michael Nevens"
+    },
+    {
+     "name": "Mark Allen"
+    },
+    {
+     "name": "Paul Drake"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Jason Roshto",
+     "2": "Danny Bone",
+     "3": "Jim D. Easley",
+     "4": "Marilyn DeMoss",
+     "5": "Scott Wells",
+     "6": "Tony M. Carder",
+     "7": "Michael Nevens",
+     "8": "Mark Allen",
+     "9": "Paul S. Drake"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/grant/"
+  },
+  "website": "http://www.grantcountyar.com"
+ },
+ "05055": {
+  "county": "Greene County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Rusty McMillon",
+   "office": "320 W. Court Street, Room 107, Paragould, AR 72450",
+   "phone": "870-239-6300",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Sherma Dicus"
+    },
+    {
+     "name": "Robby Glasco"
+    },
+    {
+     "name": "Bill McCartney"
+    },
+    {
+     "name": "Johanna Pillow"
+    },
+    {
+     "name": "Michele Boling"
+    },
+    {
+     "name": "Phillip Keeling"
+    },
+    {
+     "name": "Allen Davis"
+    },
+    {
+     "name": "Dean Wooldridge"
+    },
+    {
+     "name": "Marc Reeves"
+    },
+    {
+     "name": "Ronnie Roberts"
+    },
+    {
+     "name": "Kirk Brinkley"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Sherma Clark Dicus",
+     "10": "Ronnie Roberts",
+     "11": "Kirk Brinkley",
+     "2": "Robby Glasco",
+     "3": "Bill McCartney",
+     "5": "Michele Boling",
+     "6": "Phillip Keeling",
+     "7": "Allen Davis",
+     "8": "Dean Wooldridge",
+     "9": "Marc Reeves"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [
+     "4"
+    ],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/greene/"
+  },
+  "website": "http://greenecounty.arkansas.gov"
+ },
+ "05057": {
+  "county": "Hempstead County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Jerry Crane",
+   "phone": "870-777-7800 ext. 100",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://hempsteadcountyar.com/justice-of-the-peace/",
+   "districts": {
+    "1": "Vacant",
+    "10": "Jay Lathrop",
+    "11": "Keith Steed",
+    "2": "Krystal Goshen",
+    "3": "Doris Brown",
+    "4": "Ed Darling",
+    "5": "Victor Ford",
+    "6": "Joe Mac Raschke",
+    "7": "Steve Atchley",
+    "8": "David Clayton",
+    "9": "Jessie Henry"
+   },
+   "justices": [
+    {
+     "vacant": true
+    },
+    {
+     "name": "Krystal Goshen"
+    },
+    {
+     "name": "Doris Brown"
+    },
+    {
+     "name": "Ed B. Darling"
+    },
+    {
+     "name": "Victor Ford"
+    },
+    {
+     "name": "Joe Raschke"
+    },
+    {
+     "name": "Steve Atchley"
+    },
+    {
+     "name": "C. David Clayton"
+    },
+    {
+     "name": "Jessie Henry"
+    },
+    {
+     "name": "Jay Lathrop"
+    },
+    {
+     "name": "B. Keith Steed"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "10": "Jay Lathrop",
+     "11": "B. Keith Steed",
+     "3": "Doris Brown",
+     "4": "Ed B. Darling",
+     "5": "Victor Ford",
+     "7": "Steve Atchley",
+     "8": "C. David Clayton",
+     "9": "Jessie Henry"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "1",
+     "2",
+     "6"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/hempstead/"
+  }
+ },
+ "05059": {
+  "county": "Hot Spring County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Dennis Thornton",
+   "office": "210 Locust Street, Malvern, AR 72104",
+   "phone": "501-332-2261",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "James Bryant"
+    },
+    {
+     "name": "Brian Coston"
+    },
+    {
+     "name": "Ralph V. Williams"
+    },
+    {
+     "name": "Darrin Hardy"
+    },
+    {
+     "name": "Mike Scarbrough"
+    },
+    {
+     "name": "Don Hilyard"
+    },
+    {
+     "name": "Peyton Murphy"
+    },
+    {
+     "name": "Tony Schnaekel"
+    },
+    {
+     "name": "Jimmy Rogers"
+    },
+    {
+     "name": "Wylie Whitley"
+    },
+    {
+     "name": "Jay Sheets"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "James Bryant",
+     "10": "Wylie Whitley",
+     "11": "Jay Sheets",
+     "2": "Brian Coston",
+     "3": "Ralph V. Williams",
+     "4": "Darrin Hardy",
+     "5": "Michael Scarbrough",
+     "6": "Don Hilyard",
+     "9": "Jimmy Rogers"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "7",
+     "8"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/hot-spring/"
+  },
+  "website": "https://hotspringcounty.org/"
+ },
+ "05061": {
+  "county": "Howard County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Brent Pinkerton",
+   "office": "421 N. Main St., Nashville, AR 71852",
+   "phone": "870-845-7501",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Kerry Strasner"
+    },
+    {
+     "name": "Andy Hogg"
+    },
+    {
+     "name": "D’Ann Rogers"
+    },
+    {
+     "name": "Janet O'Neal"
+    },
+    {
+     "name": "Jerry Harwell"
+    },
+    {
+     "name": "Elizabeth McDaniel"
+    },
+    {
+     "name": "Kellyjo Oge"
+    },
+    {
+     "name": "Don W. Marks"
+    },
+    {
+     "name": "Juanita Jackson"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Kerry Strasner",
+     "2": "Andy Hogg",
+     "4": "Janet O’Neal",
+     "5": "Jerry Harwell",
+     "6": "Elizabeth McDaniel",
+     "8": "Don Marks",
+     "9": "Juanita G. Jackson"
+    },
+    "noWinner": [
+     "7"
+    ],
+    "notOnList": [
+     "3"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/howard/"
+  }
+ },
+ "05063": {
+  "county": "Independence County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Kevin B. Jeffery",
+   "office": "192 East Main Street, Batesville, AR 72501",
+   "phone": "870-793-8800",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Timothy Stewart"
+    },
+    {
+     "name": "Johnny McMullin"
+    },
+    {
+     "name": "Brent Henderson"
+    },
+    {
+     "name": "Brad Covington"
+    },
+    {
+     "name": "Cliff Barnett"
+    },
+    {
+     "name": "Tammy Pearce"
+    },
+    {
+     "name": "Jason W. Jones"
+    },
+    {
+     "name": "Kenny Hurley"
+    },
+    {
+     "name": "Johnathan Abbott"
+    },
+    {
+     "name": "Charles W. Jordan"
+    },
+    {
+     "name": "Dennis Stephens"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Timothy Stewart",
+     "10": "Charles Jordan",
+     "11": "Dennis Stephens",
+     "2": "Johnny McMullin",
+     "3": "Brent Henderson",
+     "4": "Charles Bradley Covington",
+     "6": "Tammy Pearce",
+     "7": "Jason Jones",
+     "8": "Kenny Hurley",
+     "9": "Johnathan Abbott"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "5"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/independence/"
+  }
+ },
+ "05065": {
+  "county": "Izard County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Eric Smith",
+   "phone": "870-368-4328",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://www.izardcountyar.org/plugins/show_image.php?id=726",
+   "districts": {
+    "1": "Mark Simino",
+    "2": "Kelly Hatman",
+    "3": "Randy “Hank” Sherrell",
+    "4": "Frances Syce",
+    "5": "John David Miller",
+    "6": "Justin Thornton",
+    "7": "Quillen Edwards",
+    "8": "Doug Harber",
+    "9": "Richard “Rich” Emmens"
+   },
+   "justices": [
+    {
+     "name": "Mark Simino"
+    },
+    {
+     "name": "Kelly Hatman"
+    },
+    {
+     "name": "Randy “Hank“ Sherrell"
+    },
+    {
+     "name": "Frances Syce"
+    },
+    {
+     "name": "John David Miller"
+    },
+    {
+     "name": "Justin Thornton"
+    },
+    {
+     "name": "Quillwn Edwards"
+    },
+    {
+     "name": "Doug Harber"
+    },
+    {
+     "name": "Richard “Rich” Emmens"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Mark Simino",
+     "2": "Kelly Hatman",
+     "3": "Randy \"Hank\" Sherrell",
+     "4": "Frances L. Syce",
+     "5": "John David Miller",
+     "6": "Justin Thornton",
+     "7": "Quillen P. Edwards",
+     "8": "Doug Harber",
+     "9": "Richard (Rich) Emmens"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/izard/"
+  },
+  "website": "https://www.izardcountyar.org/"
+ },
+ "05067": {
+  "county": "Jackson County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Jeff Phillips",
+   "office": "208 Main Street, Newport, AR 72112",
+   "phone": "870-523-7400",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Rusty Kinder"
+    },
+    {
+     "name": "Tommy Young"
+    },
+    {
+     "name": "David Howard"
+    },
+    {
+     "name": "Bryan Smith"
+    },
+    {
+     "name": "Clay Young"
+    },
+    {
+     "name": "Mark Harmon"
+    },
+    {
+     "name": "Jerry W. Mann"
+    },
+    {
+     "name": "Kenny Falwell"
+    },
+    {
+     "name": "Robby Stewart"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Rusty Kinder",
+     "2": "Tommy Young",
+     "3": "David R. Howard",
+     "4": "Bryan Smith",
+     "5": "Clay Young",
+     "6": "Mark Harmon",
+     "7": "Jerry W. Mann",
+     "8": "Kenny Falwell",
+     "9": "Robby Stewart"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/jackson/"
+  },
+  "website": "https://jacksoncountyar.com/"
+ },
+ "05069": {
+  "county": "Jefferson County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Ivan Whitfield",
+   "note": "The Arkansas Judiciary's directory names an earlier judge.",
+   "phone": "870-541-5360",
+   "source": "the Association of Arkansas Counties' page for Jefferson County",
+   "sourceUrl": "https://arcounties.org/counties/jefferson/",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Alfred Carroll, Sr."
+    },
+    {
+     "name": "Reginald Adams"
+    },
+    {
+     "name": "Reginald T. Johnson"
+    },
+    {
+     "name": "Patricia Johnson"
+    },
+    {
+     "name": "Jimmy Fisher Sr."
+    },
+    {
+     "name": "Margarette Williams"
+    },
+    {
+     "name": "Melanie Johnson Dumas"
+    },
+    {
+     "name": "Roy Agee"
+    },
+    {
+     "name": "Cedric Jackson"
+    },
+    {
+     "name": "Conley F. Byrd, Jr."
+    },
+    {
+     "name": "Richard Victorino"
+    },
+    {
+     "name": "Ted Harden"
+    },
+    {
+     "name": "Brenda Bishop-Gaddy"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Alfred Carroll",
+     "10": "Conley F. Byrd, Jr.",
+     "12": "Ted Harden",
+     "13": "Brenda Bishop-Gaddy",
+     "2": "Reginald Adams",
+     "3": "Reginald Johnson",
+     "4": "Patricia Royal Johnson",
+     "5": "Jimmy Fisher Sr.",
+     "6": "Margarette Williams",
+     "7": "Melanie Johnson Dumas",
+     "8": "Roy Agee",
+     "9": "Cedric Jackson"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "11"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/jefferson/"
+  },
+  "website": "https://jeffersoncountyar.gov"
+ },
+ "05071": {
+  "county": "Johnson County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Herman Houston",
+   "phone": "479-754-2175",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://johnsoncounty.arkansas.gov/quorum-court/",
+   "districts": {
+    "1": "Lewis “Ray” Hobbs",
+    "10": "Pete Petersen",
+    "11": "Bryan Cooper",
+    "2": "Paula Ober",
+    "3": "Van Hill",
+    "4": "Bethany Bean",
+    "5": "Mike Estes",
+    "6": "John Payne",
+    "7": "Kris Muldoon",
+    "8": "Katie Howard",
+    "9": "Larry Jones"
+   },
+   "justices": [
+    {
+     "name": "Lewis Hobbs"
+    },
+    {
+     "name": "Paula Ober"
+    },
+    {
+     "name": "Van Alan Hill"
+    },
+    {
+     "name": "Bethany Bean"
+    },
+    {
+     "name": "Mike Estes"
+    },
+    {
+     "name": "John Payne"
+    },
+    {
+     "name": "Kris Muldoon"
+    },
+    {
+     "name": "Katie Howard"
+    },
+    {
+     "name": "Larry Jones"
+    },
+    {
+     "name": "Robert Petersen"
+    },
+    {
+     "name": "Bryan Cooper"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "10": "Robert Petersen",
+     "11": "Bryan Cooper",
+     "2": "Paula Ober",
+     "3": "Van Alan Hill",
+     "4": "Bethany Bean",
+     "5": "Mike Estes",
+     "6": "John Payne",
+     "7": "Kris Muldoon",
+     "8": "Katie Howard",
+     "9": "Larry Jones"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "1"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/johnson/"
+  }
+ },
+ "05073": {
+  "county": "Lafayette County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Valarie Clark",
+   "office": "#1 Courthouse Square, Lewisville, AR 71845",
+   "phone": "870-921-4858",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Jeremy Kitchens"
+    },
+    {
+     "name": "Linda D. Goodner"
+    },
+    {
+     "name": "Charles H. Goodwin"
+    },
+    {
+     "name": "Rex Lenard"
+    },
+    {
+     "name": "LeNora Jackson"
+    },
+    {
+     "name": "Catherine Ann Rone"
+    },
+    {
+     "name": "Horace M. Hight"
+    },
+    {
+     "name": "Stephanie Harris"
+    },
+    {
+     "name": "Jimmy Brackman"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Jeremy Kitchens",
+     "2": "Linda D. Goodner",
+     "3": "Charles H. Goodwin",
+     "4": "Rex Lenard",
+     "5": "LeNora Jackson",
+     "6": "Catherine Rone",
+     "7": "H.M. “Buddy” Hight",
+     "8": "Stephanie Harris",
+     "9": "Jimmy Brackman"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/lafayette/"
+  },
+  "website": "http://www.lafayettecounty.arkansas.gov/"
+ },
+ "05075": {
+  "county": "Lawrence County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Gary Barnhill",
+   "office": "315 West Main Street, Room 1, Walnut Ridge, AR 72476",
+   "phone": "870-886-1110",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Pardo Roberts"
+    },
+    {
+     "name": "Frank Brewer"
+    },
+    {
+     "name": "Lloyd Clark"
+    },
+    {
+     "name": "Matthew Cox"
+    },
+    {
+     "name": "Frank Binkley"
+    },
+    {
+     "name": "Jeff Yates"
+    },
+    {
+     "name": "Tracy Moore"
+    },
+    {
+     "name": "Kenny Jones"
+    },
+    {
+     "name": "Troy Owens"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Pardo Roberts",
+     "2": "Frank Brewer",
+     "3": "Lloyd W. Clark",
+     "5": "Frank Binkley",
+     "6": "Jeff Yates",
+     "7": "Tracy Moore",
+     "8": "Kenny R. Jones",
+     "9": "Troy Owens"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "4"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/lawrence/"
+  },
+  "website": "http://www.lawrencecountyarkansas.com/"
+ },
+ "05077": {
+  "county": "Lee County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Terry Sandefer",
+   "office": "15 East Chestnut Street, Marianna, AR 72360",
+   "phone": "870-295-7700",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Rusty Crump"
+    },
+    {
+     "name": "Junious Pruett"
+    },
+    {
+     "name": "Lydia Lewis"
+    },
+    {
+     "name": "Jed Anderson"
+    },
+    {
+     "name": "Ronni Schwantz"
+    },
+    {
+     "name": "Tracia Tinzie"
+    },
+    {
+     "name": "West Higginbothom"
+    },
+    {
+     "name": "Bill Gerrard"
+    },
+    {
+     "name": "Jesse C. Garrett"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Rusty Crump",
+     "2": "Junious Pruett",
+     "3": "Lydia Lewis",
+     "4": "Jed S. Anderson",
+     "5": "Ronni Schwantz",
+     "6": "Tracia Tinzie",
+     "7": "West Higginbothom",
+     "8": "Bill Gerrard III",
+     "9": "Jesse Clay Garrett"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/lee/"
+  }
+ },
+ "05079": {
+  "county": "Lincoln County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Buddy Lynn Earnest",
+   "office": "300 S. Drew Street, Star City, AR 71667",
+   "phone": "870-628-4147",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Kip Dutton"
+    },
+    {
+     "name": "Corey Dial"
+    },
+    {
+     "name": "Brad Henley"
+    },
+    {
+     "name": "Jeffery L. Frizzell"
+    },
+    {
+     "name": "Drew I. Steed"
+    },
+    {
+     "name": "Edwin Branson"
+    },
+    {
+     "name": "Phillip Thomas"
+    },
+    {
+     "name": "Bill Dowdy"
+    },
+    {
+     "name": "Jax Gasaway"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Kip Dutton",
+     "2": "Corey Dial",
+     "3": "Brad Henley",
+     "4": "Jeffery Lance Frizzell",
+     "5": "Drew I. Steed",
+     "6": "Edwin Branson",
+     "7": "Phillip Thomas",
+     "8": "Bill Dowdy",
+     "9": "Jax Gasaway"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/lincoln/"
+  }
+ },
+ "05081": {
+  "county": "Little River County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Larry Cowling",
+   "office": "351 North Second, Ashdown, AR 71822",
+   "phone": "870-898-7202",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://lrcounty.org/departments/quorum-court/",
+   "districts": {
+    "1": "Andrea Billingsley",
+    "2": "Lisa Hearn",
+    "3": "Keith Pullen",
+    "4": "Mark Ardwin",
+    "5": "Tyler Davis",
+    "6": "John Bowman",
+    "7": "Charles Henderson",
+    "8": "Suzanne Ward",
+    "9": "Larry Phillips"
+   },
+   "justices": [
+    {
+     "name": "Andrea Billingsley"
+    },
+    {
+     "name": "Lisa Hearn"
+    },
+    {
+     "name": "Keith Pullen"
+    },
+    {
+     "name": "Mark Ardwin"
+    },
+    {
+     "name": "Tyler Davis"
+    },
+    {
+     "name": "John Bowman"
+    },
+    {
+     "name": "Charles Henderson"
+    },
+    {
+     "name": "Suzanne Ward"
+    },
+    {
+     "name": "Larry Phillips"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Andrea L. Billingsley",
+     "2": "Lisa Hearn",
+     "3": "Keith Pullen",
+     "4": "Mark Ardwin",
+     "5": "Tyler E. Davis",
+     "6": "John Bowman",
+     "7": "Charles Henderson",
+     "8": "Suzanne Spain Ward",
+     "9": "Larry Phillips"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/little-river/"
+  }
+ },
+ "05083": {
+  "county": "Logan County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Ray Gack",
+   "phone": "479-963-3601",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://logancountyark.org/quorum-court",
+   "districts": {
+    "1": "Charles Sparks",
+    "10": "Chistopher Loftin",
+    "11": "Brenda Brewer",
+    "2": "Gary Rhinehart",
+    "3": "Mike Schluterman",
+    "4": "Joyce Koch",
+    "5": "Bill Wright",
+    "6": "Jeffrey O'Neal",
+    "7": "Bobby Cobb",
+    "8": "Dalton Haller",
+    "9": "Sam Tabler"
+   },
+   "justices": [
+    {
+     "name": "Charles W. Sparks"
+    },
+    {
+     "name": "Gary Rhinehart"
+    },
+    {
+     "name": "Michael Schluterman"
+    },
+    {
+     "name": "Joyce Koch"
+    },
+    {
+     "name": "Bill Wright"
+    },
+    {
+     "name": "Jeffrey O'Neal"
+    },
+    {
+     "name": "Bobby Cobb"
+    },
+    {
+     "name": "Dalton Haller"
+    },
+    {
+     "name": "Sam Tabler"
+    },
+    {
+     "name": "Dr. Christopher Loftin"
+    },
+    {
+     "name": "Brenda Brewer"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Charles Sparks",
+     "10": "Dr. Christopher Loftin",
+     "11": "Brenda Haley Brewer",
+     "2": "Gary Rhinehart",
+     "3": "Michael Schluterman",
+     "4": "Joyce Koch",
+     "5": "Bill Wright",
+     "6": "Jeffrey O’Neal",
+     "7": "Bobby Cobb",
+     "8": "Dalton Haller",
+     "9": "Sam Tabler"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/logan/"
+  },
+  "website": "http://www.logancountyark.org"
+ },
+ "05085": {
+  "county": "Lonoke County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Doug Erwin",
+   "phone": "501-676-6403",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Brent Canon"
+    },
+    {
+     "name": "Henry L. Hawkins"
+    },
+    {
+     "name": "Henry L. Lang"
+    },
+    {
+     "name": "Claud Irvin"
+    },
+    {
+     "name": "Robert “Bobby” Gilliam"
+    },
+    {
+     "name": "Mickey \"Stubby\" Stumbaugh"
+    },
+    {
+     "name": "Adam Sims"
+    },
+    {
+     "name": "Tate House"
+    },
+    {
+     "name": "Linda Waddell"
+    },
+    {
+     "name": "Elizabeth Anderson"
+    },
+    {
+     "name": "Mike Dolan"
+    },
+    {
+     "name": "Patty Knox"
+    },
+    {
+     "name": "Bob Morris"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Brent Canon",
+     "11": "Mike Dolan",
+     "12": "Patty Knox",
+     "13": "Bob Morris",
+     "2": "Henry L. Hawkins",
+     "3": "Henry L. Lang",
+     "4": "Claud E. Irvin",
+     "5": "Robert (Bobby) Gilliam",
+     "6": "Mickey D. “Stubby” Stumbaugh",
+     "7": "Adam Sims",
+     "8": "Tate House",
+     "9": "Linda Waddell"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "10"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/lonoke/"
+  }
+ },
+ "05087": {
+  "county": "Madison County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Larry D. Garrett",
+   "phone": "479-738-6721",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://madisoncountyar.gov/quorum_court.php",
+   "districts": {
+    "1": "Bob Rawson",
+    "2": "Cord Riley",
+    "3": "Jason Yates",
+    "4": "Sam Roddy",
+    "5": "Wendy Pettz",
+    "6": "Shannon Fancher",
+    "7": "Joe Wilson",
+    "8": "Jeff Marley",
+    "9": "Michael Keck"
+   },
+   "justices": [
+    {
+     "name": "Bob Rawson"
+    },
+    {
+     "name": "Cord Riley"
+    },
+    {
+     "name": "Jason Yates"
+    },
+    {
+     "name": "Sam Roddy"
+    },
+    {
+     "name": "Wendy Pettz"
+    },
+    {
+     "name": "Shannon Fancher"
+    },
+    {
+     "name": "Joe Wilson"
+    },
+    {
+     "name": "Jeff Marley"
+    },
+    {
+     "name": "Michael Keck"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Bob Rawson",
+     "2": "Cord Riley",
+     "3": "Jason Yates",
+     "4": "Sam Roddy",
+     "5": "Wendy Pettz",
+     "6": "Shannon Fancher",
+     "7": "Joe Wilson",
+     "8": "Jeff Marley",
+     "9": "Michael Keck"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/madison/"
+  },
+  "website": "http://madisoncogov.com"
+ },
+ "05089": {
+  "county": "Marion County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Jason Stumph",
+   "phone": "870-449-6231",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://marioncounty.arkansas.gov/Marion-County-Quorum-Court",
+   "districts": {
+    "1": "Chuck Van Velkinburgh",
+    "2": "Sandra Lee",
+    "3": "Travis Hopson",
+    "4": "Kolton Jensen",
+    "5": "John Reed",
+    "6": "Leslie Kerwood",
+    "7": "Wesley Shipman",
+    "8": "Tommy Dorsey",
+    "9": "Tommy Dean Johnson"
+   },
+   "justices": [
+    {
+     "name": "Chuck Van Velkinburgh"
+    },
+    {
+     "name": "Sandra Lee"
+    },
+    {
+     "name": "Travis Hopson"
+    },
+    {
+     "name": "Kolton Jensen"
+    },
+    {
+     "name": "Dr. John Reed"
+    },
+    {
+     "name": "Leslie Kerwood"
+    },
+    {
+     "name": "Wesley Shipman"
+    },
+    {
+     "name": "Tommy Dorsey"
+    },
+    {
+     "name": "Tommy Dean Johnson"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Chuck Van Velkinburgh",
+     "2": "Sandra L. Lee",
+     "3": "Travis Hopson",
+     "4": "Kolton Jensen",
+     "5": "Dr. John D. Reed",
+     "6": "Leslie Kerwood",
+     "7": "Wesley Shipman",
+     "8": "Tommy Dorsey",
+     "9": "Tommy Dean Johnson"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/marion/"
+  },
+  "website": "http://www.marioncounty.arkansas.gov"
+ },
+ "05091": {
+  "county": "Miller County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Cathy Hardin Harrison",
+   "office": "400 Laurel Street #115, Texarkana, AR 71854",
+   "phone": "870-774-1301",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Judy Wilson"
+    },
+    {
+     "name": "John Adger Smith"
+    },
+    {
+     "name": "Ethan Eppinette"
+    },
+    {
+     "name": "Carl Standridge"
+    },
+    {
+     "name": "Ernest Keck"
+    },
+    {
+     "name": "Ernest Pender"
+    },
+    {
+     "name": "Larry East"
+    },
+    {
+     "name": "Robbie Hines"
+    },
+    {
+     "name": "Howdy Smith"
+    },
+    {
+     "name": "Jimmy Cowart"
+    },
+    {
+     "name": "Rodney Watkins"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Judy Wilson",
+     "10": "Jimmy Cowart",
+     "11": "Rodney Watkins",
+     "2": "John Adger Smith",
+     "3": "Ethan Eppinette",
+     "5": "Ernest Keck",
+     "6": "Ernest Pender",
+     "7": "Larry East",
+     "8": "Robbie Hines",
+     "9": "Howdy Smith"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "4"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/miller/"
+  },
+  "website": "https://millercountyar.gov"
+ },
+ "05093": {
+  "county": "Mississippi County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "John Alan Nelson",
+   "office": "200 W. Walnut, Blytheville, AR 72315",
+   "phone": "870-763-3212",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Drake Brown"
+    },
+    {
+     "name": "Michael White"
+    },
+    {
+     "name": "Neil M. Burge"
+    },
+    {
+     "name": "Tobye McClanahan"
+    },
+    {
+     "name": "Molly Houseworth Jackson"
+    },
+    {
+     "name": "Cecil McDonald"
+    },
+    {
+     "name": "Butch Prunty"
+    },
+    {
+     "name": "Rick Ash"
+    },
+    {
+     "name": "Harbans Mangat"
+    },
+    {
+     "name": "Betty Hepler"
+    },
+    {
+     "name": "Sumner Cullom Sr"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Drake Brown",
+     "10": "Betty V. Hepler",
+     "11": "Sumner R. Cullom Sr.",
+     "2": "Michael L. White",
+     "3": "Neil M. Burge",
+     "4": "Tobye McClanahan",
+     "5": "Molly Houseworth Jackson",
+     "6": "Cecil McDonald",
+     "7": "John “Butch” Prunty",
+     "8": "Ricky Ash",
+     "9": "Harbans Mangat"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/mississippi/"
+  },
+  "website": "http://www.mississippicountyar.org"
+ },
+ "05095": {
+  "county": "Monroe County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "P.K. Norman",
+   "phone": "870-747-3921",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Cathy Shelton"
+    },
+    {
+     "name": "Jeffery Lovell"
+    },
+    {
+     "name": "Stephanie Sims"
+    },
+    {
+     "name": "Kenneth Harvey Sr."
+    },
+    {
+     "name": "Ryan Medford"
+    },
+    {
+     "name": "James Boston"
+    },
+    {
+     "name": "Jimmy Rogers"
+    },
+    {
+     "name": "Doug Mayhue"
+    },
+    {
+     "name": "Alvin Beck"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Cathy Shelton",
+     "2": "Jeff Lovell",
+     "3": "Stephanie Sims",
+     "4": "Kenneth Harvey, Sr.",
+     "5": "Ryan Medford",
+     "6": "James R. Boston",
+     "7": "Jimmy Rogers",
+     "8": "Doug Mayhue",
+     "9": "Alvin M. Beck"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/monroe/"
+  }
+ },
+ "05097": {
+  "county": "Montgomery County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Bart Williams",
+   "office": "105 Highway 270 East, Suite 7, Mount Ida, AR 71957",
+   "phone": "870-867-3114",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Benjamin Harrison"
+    },
+    {
+     "name": "Tommy Beshears"
+    },
+    {
+     "name": "Matt Rae"
+    },
+    {
+     "name": "Steve Irwin"
+    },
+    {
+     "name": "Ty Whisenhunt"
+    },
+    {
+     "name": "Melissa Powell"
+    },
+    {
+     "name": "Nathan Howell"
+    },
+    {
+     "name": "Tonya Roberts"
+    },
+    {
+     "name": "David McCarter"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "2": "Tommy Beshears",
+     "3": "Matt Rae",
+     "4": "Steve Irwin",
+     "6": "Melissa Powell",
+     "7": "Nathan Howell",
+     "8": "Tonya Roberts",
+     "9": "David W. McCarter"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "1",
+     "5"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/montgomery/"
+  }
+ },
+ "05099": {
+  "county": "Nevada County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Mike Otwell",
+   "office": "215 East 2nd Street South, Prescott, AR 71857",
+   "phone": "870-887-3115",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Dennis Pruitt"
+    },
+    {
+     "name": "Willie Wilson"
+    },
+    {
+     "name": "Patricia Grimes"
+    },
+    {
+     "name": "James Roy Cornelius"
+    },
+    {
+     "name": "Eric Jackson"
+    },
+    {
+     "name": "Herbert Coleman"
+    },
+    {
+     "name": "Regina Irizarry"
+    },
+    {
+     "name": "Todd Butler"
+    },
+    {
+     "name": "Tommy Poole"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Dennis Carroll Pruitt",
+     "2": "Willie A. Wilson",
+     "3": "Patricia A. Grimes",
+     "4": "James Roy Cornelius",
+     "5": "Eric Jackson",
+     "6": "Herbert Coleman",
+     "7": "Regina Irizarry",
+     "8": "Todd Butler",
+     "9": "Tommy Poole"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/nevada/"
+  }
+ },
+ "05101": {
+  "county": "Newton County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Warren Campbell",
+   "phone": "870-446-5127",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Jamie Mefford"
+    },
+    {
+     "name": "Richard Campbell"
+    },
+    {
+     "name": "Terry Clark"
+    },
+    {
+     "name": "Dennis Sain"
+    },
+    {
+     "name": "Jerry Lee"
+    },
+    {
+     "name": "Chris Martin"
+    },
+    {
+     "name": "Steven Adams"
+    },
+    {
+     "name": "Arlis Jones"
+    },
+    {
+     "name": "John D. Phillips"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Jamie Mefford",
+     "2": "Richard Campbell",
+     "3": "Terry Clark",
+     "4": "Dennis Sain",
+     "5": "Jerry Lee",
+     "6": "Chris Martin",
+     "7": "Steven Adams",
+     "8": "Arlis Jones",
+     "9": "John David Phillips"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/newton/"
+  }
+ },
+ "05103": {
+  "county": "Ouachita County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Robbie McAdoo",
+   "phone": "870-837-2210",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Ware Russell"
+    },
+    {
+     "name": "Dale Vaughan"
+    },
+    {
+     "name": "Michael Tyler"
+    },
+    {
+     "name": "Jonathan Wolfe"
+    },
+    {
+     "name": "Shannon Milam"
+    },
+    {
+     "name": "Addie Moore-Edwards"
+    },
+    {
+     "name": "Wayland Chambers"
+    },
+    {
+     "name": "Willie Hardy"
+    },
+    {
+     "name": "Fred Lilly Sr."
+    },
+    {
+     "name": "Helen Aregood"
+    },
+    {
+     "name": "Jerry West"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Ware Russell",
+     "10": "Helen Aregood",
+     "11": "Jerry N. West",
+     "2": "Dale Vaughan",
+     "4": "Jonathan Wolfe",
+     "5": "Shannon Milam",
+     "6": "Addie Moore-Edwards",
+     "7": "Wayland Chambers",
+     "8": "Willie R. Hardy",
+     "9": "Fred Lilly"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "3"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/ouachita/"
+  }
+ },
+ "05105": {
+  "county": "Perry County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Larry Blackmon",
+   "phone": "501-889-5128",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Travis Bentley"
+    },
+    {
+     "name": "Dale Payne"
+    },
+    {
+     "name": "Ronnie Lee"
+    },
+    {
+     "name": "Shane Treadway"
+    },
+    {
+     "name": "Edward Evans"
+    },
+    {
+     "name": "Robert McCully"
+    },
+    {
+     "name": "David “Butch” Hoyt"
+    },
+    {
+     "name": "Benjamin Lee"
+    },
+    {
+     "name": "Scott Skinkle"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Travis Bentley",
+     "2": "Dale Payne",
+     "3": "Ronnie Lee",
+     "4": "Shane Treadway",
+     "5": "Edward Marshall Evans",
+     "7": "David “Butch” Hoyt",
+     "8": "Benjamin Lee",
+     "9": "Scott Skinkle"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "6"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/perry/"
+  },
+  "website": "https://perrycoarkansas.org"
+ },
+ "05107": {
+  "county": "Phillips County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Clark Hall",
+   "office": "620 Cherry Street, Helena, AR 72342",
+   "phone": "870-338-5500",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Edward Carter"
+    },
+    {
+     "name": "Alfred Robinson IV"
+    },
+    {
+     "name": "Oscar Hoskins"
+    },
+    {
+     "name": "Isaac Tribune"
+    },
+    {
+     "name": "Betty Brimley"
+    },
+    {
+     "name": "Shirley Moss-Larry"
+    },
+    {
+     "name": "William Stoner"
+    },
+    {
+     "name": "Martin Rawls"
+    },
+    {
+     "name": "Lita Moore-Johnson"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Edward Carter",
+     "3": "Oscar Hoskins",
+     "4": "Isaac Tribune",
+     "5": "Betty Brimley",
+     "6": "Shirley Moss-Larry",
+     "7": "William Kyle Stoner",
+     "8": "Martin Rawls",
+     "9": "Lita Moore-Johnson"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [
+     "2"
+    ],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/phillips/"
+  }
+ },
+ "05109": {
+  "county": "Pike County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Eddie Howard",
+   "phone": "870-285-2414",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Randy Lamb"
+    },
+    {
+     "name": "Robbie Crocker"
+    },
+    {
+     "name": "Seth Henry Kirkham"
+    },
+    {
+     "name": "Leotis Snowden"
+    },
+    {
+     "name": "Jerry Fendley"
+    },
+    {
+     "name": "Kip Holbrook"
+    },
+    {
+     "name": "Richard Mohlenhoff"
+    },
+    {
+     "name": "John J. Plyler, Jr."
+    },
+    {
+     "name": "Paul Baker"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Randy Lamb",
+     "2": "Robbie Crocker",
+     "3": "Seth Henry Kirkham",
+     "4": "Leotis Snowden",
+     "5": "Jerry Fendley",
+     "6": "Kip Holbrook",
+     "7": "Richard Mohlenhoff",
+     "8": "John J. Plyler, Jr.",
+     "9": "Paul S. Baker"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/pike/"
+  },
+  "website": "http://www.pikecountyar.org"
+ },
+ "05111": {
+  "county": "Poinsett County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "J.C. Carter",
+   "office": "401 Market Street, Harrisburg, AR 72432",
+   "phone": "870-578-0600",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Diane Jones"
+    },
+    {
+     "name": "Elizabeth T. Schwarz"
+    },
+    {
+     "name": "Hunter Jones"
+    },
+    {
+     "name": "Ronald Martin"
+    },
+    {
+     "name": "James Lloyd Baker, Sr."
+    },
+    {
+     "name": "Larry Fowler"
+    },
+    {
+     "name": "Donnie Taylor"
+    },
+    {
+     "name": "Jordan Looney"
+    },
+    {
+     "name": "Jerry Carter"
+    },
+    {
+     "name": "Steve Jernigan"
+    },
+    {
+     "name": "Harold Blackwood"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "10": "Steve Jernigan",
+     "11": "Harold Blackwood",
+     "2": "Elizabeth T. Schwarz",
+     "3": "Hunter Jones",
+     "4": "Ronald D. Martin",
+     "5": "James Lloyd Baker, Sr.",
+     "6": "Larry Fowler",
+     "7": "Donnie Taylor",
+     "8": "Jordan Looney",
+     "9": "Jerry Carter"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [
+     "1"
+    ],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/poinsett/"
+  },
+  "website": "http://www.poinsettcounty.us"
+ },
+ "05113": {
+  "county": "Polk County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Brandon Ellison",
+   "office": "507 Church Avenue, Box 7, Mena, AR 71953",
+   "phone": "479-394-8133",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Chris Daniel"
+    },
+    {
+     "name": "Jeremy Jones"
+    },
+    {
+     "name": "Levi Ellison"
+    },
+    {
+     "name": "James Looney"
+    },
+    {
+     "name": "Troy Lunsford"
+    },
+    {
+     "name": "Tommy Floyd"
+    },
+    {
+     "name": "Tawana Gilbert"
+    },
+    {
+     "name": "Terry Scott"
+    },
+    {
+     "name": "Mitchell Tidwell"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Chris Daniel",
+     "2": "Jeremy Jones",
+     "3": "Levi Ellison",
+     "4": "James Perry Looney",
+     "5": "Troy Lunsford",
+     "6": "Tommy Floyd",
+     "7": "Tawana Gilbert",
+     "8": "Terry L. Scott",
+     "9": "Mitchell Tidwell"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/polk/"
+  }
+ },
+ "05115": {
+  "county": "Pope County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Ben Cross",
+   "office": "100 West Main, Russellville, AR 72801",
+   "phone": "479-968-7487",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Philip Haney"
+    },
+    {
+     "name": "Margaret Motley"
+    },
+    {
+     "name": "Tim Whittenburg"
+    },
+    {
+     "name": "Ronnie Wilbanks"
+    },
+    {
+     "name": "Jackie Heflin"
+    },
+    {
+     "name": "Suzanne McCall"
+    },
+    {
+     "name": "Blake Tarpley"
+    },
+    {
+     "name": "Doug Skelton"
+    },
+    {
+     "name": "Bill Sparks"
+    },
+    {
+     "name": "Allan R. George"
+    },
+    {
+     "name": "Leonel Cantu"
+    },
+    {
+     "name": "Jordan Sowers"
+    },
+    {
+     "name": "David Ivy"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Philip Haney",
+     "10": "Allan R. George",
+     "12": "Jordan Sowers",
+     "13": "David Ivy",
+     "2": "Margaret Motley",
+     "3": "Tim Whittenburg",
+     "4": "Ronnie Wilbanks",
+     "5": "Jackie Heflin",
+     "6": "Suzanne McCall",
+     "7": "Blake Tarpley",
+     "8": "Doug Skelton",
+     "9": "Bill Sparks"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "11"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/pope/"
+  },
+  "website": "http://www.popecountyar.com"
+ },
+ "05117": {
+  "county": "Prairie County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Lawrence Holloway",
+   "office": "605 Highway 38 E, Des Arc, AR 72040",
+   "phone": "870-256-3741",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Bill Calhoun"
+    },
+    {
+     "name": "Zach Payne"
+    },
+    {
+     "name": "Ronald D. Eans"
+    },
+    {
+     "name": "Jordan Smith"
+    },
+    {
+     "name": "Gary King"
+    },
+    {
+     "name": "Rick Stallings"
+    },
+    {
+     "name": "Levi Childress"
+    },
+    {
+     "name": "Bobby Willeford"
+    },
+    {
+     "name": "Paul E. Hooks"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Bill Calhoun",
+     "2": "Zach Payne",
+     "3": "Ronald Eans",
+     "4": "Jordan Smith",
+     "5": "Gary King",
+     "6": "Rick Stallings",
+     "7": "Levi Childress",
+     "8": "Bobby Willeford",
+     "9": "Paul E. Hooks"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/prairie/"
+  }
+ },
+ "05119": {
+  "county": "Pulaski County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Barry Hyde",
+   "office": "201 S. Broadway, Little Rock, AR 72201",
+   "phone": "501-340-8305",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://www.pulaskicounty.net/quorum-court",
+   "districts": {
+    "1": "Rebekah L. Davis",
+    "10": "Patricia Young-Baker",
+    "11": "Aaron Robinson",
+    "12": "Luke McCoy",
+    "13": "Douglas House",
+    "14": "Paul Elliott",
+    "15": "Staci Medlock",
+    "2": "Natalie Capps",
+    "3": "Kathy Lewison",
+    "4": "Julie Blackwood",
+    "5": "Steven Person",
+    "6": "Donna Massey",
+    "7": "Dianne Curry",
+    "8": "Curtis Keith",
+    "9": "Tina Ward"
+   },
+   "justices": [
+    {
+     "name": "Rebekah Davis"
+    },
+    {
+     "name": "Natalie Capps"
+    },
+    {
+     "name": "Kathy Lewison"
+    },
+    {
+     "name": "Julie Blackwood"
+    },
+    {
+     "name": "Steven Person"
+    },
+    {
+     "name": "Donna Massey"
+    },
+    {
+     "name": "Dianne Curry"
+    },
+    {
+     "name": "Curtis Keith"
+    },
+    {
+     "name": "Tina Renee Ward"
+    },
+    {
+     "name": "Patrica Young-Baker"
+    },
+    {
+     "name": "Aaron Robinson"
+    },
+    {
+     "name": "Luke McCoy"
+    },
+    {
+     "name": "Douglas House"
+    },
+    {
+     "name": "Paul Elliot"
+    },
+    {
+     "name": "Staci Medlock"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Rebekah Davis",
+     "11": "Aaron Robinson",
+     "12": "J. Luke McCoy",
+     "15": "Staci Medlock",
+     "2": "Natalie Capps",
+     "3": "Kathy Lewison",
+     "4": "Julie Blackwood",
+     "5": "Steven Person",
+     "6": "Donna Massey",
+     "7": "Dianne Curry",
+     "8": "Curtis A. Keith",
+     "9": "Tina Renee Ward"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "10",
+     "13",
+     "14"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 15,
+   "sourceUrl": "https://arcounties.org/counties/pulaski/"
+  },
+  "website": "https://pulaskicounty.net/"
+ },
+ "05121": {
+  "county": "Randolph County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Ben Wicker",
+   "office": "107 West Broadway, Pocahontas, AR 72455",
+   "phone": "870-892-5264",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Mistina Hibbard"
+    },
+    {
+     "name": "Jill Thompson Henderson"
+    },
+    {
+     "name": "Tony Brown"
+    },
+    {
+     "name": "David Blevins"
+    },
+    {
+     "name": "Doris Sharp"
+    },
+    {
+     "name": "Darrell Nelson"
+    },
+    {
+     "name": "Eric Bass"
+    },
+    {
+     "name": "Roy Causbie"
+    },
+    {
+     "name": "David Statler"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Mistina Hibbard",
+     "2": "Jill Thompson Henderson",
+     "3": "Tony Brown",
+     "4": "David Blevins",
+     "5": "Doris Sharp",
+     "6": "Darrell Nelson",
+     "7": "Eric Bass",
+     "8": "Roy Causbie",
+     "9": "David Statler"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/randolph/"
+  }
+ },
+ "05123": {
+  "county": "St. Francis County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Stanley Craig Jones",
+   "office": "313 S. Izard St. , Suite 1, Forrest City, AR 72335",
+   "phone": "870-261-1700",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://stfranciscountyar.gov/departments/quorum-court/",
+   "districts": {
+    "1": "Charles Jones",
+    "10": "VACANT",
+    "11": "Jamie Busby",
+    "2": "Jimmy Long",
+    "3": "Kevin Vandiver",
+    "4": "David Coleman",
+    "5": "Ernestine Weaver",
+    "6": "Regan Hill",
+    "7": "Nathaniel Murray",
+    "8": "Christopher (Chris) Ray",
+    "9": "Maceo Hawkins"
+   },
+   "justices": [
+    {
+     "name": "Charles Jones"
+    },
+    {
+     "name": "Jimmy A. Long"
+    },
+    {
+     "name": "Kevin Vandiver"
+    },
+    {
+     "name": "David R. Coleman"
+    },
+    {
+     "name": "Ernestine Weaver"
+    },
+    {
+     "name": "Regan Hill"
+    },
+    {
+     "name": "Nathaniel Murray"
+    },
+    {
+     "name": "Chris Ray"
+    },
+    {
+     "name": "Maceo Hawkins"
+    },
+    {
+     "vacant": true
+    },
+    {
+     "name": "Jamie Busby"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Charles Jones",
+     "11": "Jamie Busby",
+     "2": "Jimmy Long",
+     "4": "David R. Coleman",
+     "5": "Ernestine Weaver",
+     "7": "Nathaniel Murray",
+     "8": "Chris Ray",
+     "9": "Maceo J. Hawkins"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "3",
+     "6",
+     "10"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/st-francis/"
+  },
+  "website": "https://stfranciscountyar.gov/"
+ },
+ "05125": {
+  "county": "Saline County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Matthew Brumley",
+   "office": "200 North Main, Room 117, Benton, AR 72015",
+   "phone": "501-303-5640",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://salinecounty.org/government/quorum_court/justices_of_the_peace.php",
+   "districts": {
+    "1": "Pat Bisbee",
+    "10": "Jim Whitley",
+    "11": "Clint Chism",
+    "12": "Stephanie Johnson",
+    "13": "Karen Crowson",
+    "2": "Wilson Hatcher",
+    "3": "Carlton Billingsley",
+    "4": "Keith Kellum",
+    "5": "Mike Davidson",
+    "6": "Rick Bellinger",
+    "7": "Josh Curtis",
+    "8": "Ed Albares",
+    "9": "CJ Engel"
+   },
+   "justices": [
+    {
+     "name": "Pat Bisbee"
+    },
+    {
+     "name": "Wilson Hatcher"
+    },
+    {
+     "name": "Carlton Billingsley"
+    },
+    {
+     "name": "Keith Kellum"
+    },
+    {
+     "name": "Michael Davidson"
+    },
+    {
+     "name": "Rick Bellinger"
+    },
+    {
+     "name": "Josh Curtis"
+    },
+    {
+     "name": "Edward A. Albares"
+    },
+    {
+     "name": "CJ Engel"
+    },
+    {
+     "name": "Jim Whitley"
+    },
+    {
+     "name": "Clint Chism"
+    },
+    {
+     "name": "Stephanie Johnson"
+    },
+    {
+     "name": "Karen Crowson"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Pat Bisbee",
+     "10": "Jim Whitley",
+     "11": "Clint Chism",
+     "12": "Stephanie Johnson",
+     "13": "Karen Crowson",
+     "2": "Wilson Hatcher",
+     "3": "Carlton Billingsley",
+     "4": "Keith Kellum",
+     "6": "Rick Bellinger",
+     "7": "Josh Curtis",
+     "8": "Edward A. Albares",
+     "9": "C.J. Engel"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "5"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/saline/"
+  },
+  "website": "http://www.salinecounty.org/"
+ },
+ "05127": {
+  "county": "Scott County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Brian K. Jones",
+   "phone": "479-637-2155",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Bobby Hattabaugh"
+    },
+    {
+     "name": "Melvin “Dee” Parker"
+    },
+    {
+     "name": "Lenoard Russell"
+    },
+    {
+     "name": "Linda L. Vaughn"
+    },
+    {
+     "name": "Jamie Lynn Goff"
+    },
+    {
+     "name": "Tommy Roberson"
+    },
+    {
+     "name": "John E. Luttrell"
+    },
+    {
+     "name": "Lance Stinson"
+    },
+    {
+     "name": "Tara Brackett"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Bobby Hattabaugh",
+     "2": "Melvin “Dee” Parker",
+     "3": "Leonard Russell",
+     "4": "Linda L. Vaughn",
+     "5": "Jamie Lynn Goff",
+     "6": "Tommy Roberson",
+     "7": "John E. Luttrell",
+     "8": "Lance Stinson",
+     "9": "Tara Brackett"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/scott/"
+  },
+  "website": "http://www.scottcountyar.com"
+ },
+ "05129": {
+  "county": "Searcy County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Tony Horton",
+   "phone": "870-448-3554",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "John Hinchey"
+    },
+    {
+     "name": "Kim Loftin"
+    },
+    {
+     "name": "James Madison Smith"
+    },
+    {
+     "name": "Tarance DePriest"
+    },
+    {
+     "name": "Wayne Witcher"
+    },
+    {
+     "name": "Joel Brian Ragland"
+    },
+    {
+     "name": "Jason Ragland"
+    },
+    {
+     "name": "Cindi Silor"
+    },
+    {
+     "name": "Jerry Loggins"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "2": "Kim D. Loftin",
+     "3": "James Madison Smith",
+     "5": "Wayne Witcher",
+     "6": "Joel Brian Ragland",
+     "7": "Jason Ragland",
+     "8": "Cindi Silor",
+     "9": "Jerry Loggins"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "1"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [
+     "4"
+    ],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/searcy/"
+  }
+ },
+ "05131": {
+  "county": "Sebastian County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Steve Hotz",
+   "office": "35 South 6th, Fort Smith, AR 72901",
+   "phone": "479-783-6139",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://sebastiancountyar.gov/Departments/County-Judge/Quorum-Court/Current-Members",
+   "districts": {
+    "1": "Johnny Hobbs",
+    "10": "Dickie Lee Robertson",
+    "11": "Gerry Ward",
+    "12": "Tommy Camp",
+    "13": "Lorrie Glidewell Runion",
+    "2": "Jackie Davis",
+    "3": "Shawn Looper",
+    "4": "James Butler",
+    "5": "Brandon Morrison",
+    "6": "Danny W. Aldridge",
+    "7": "Kenneth Williamson",
+    "8": "Valeria J. Robinson",
+    "9": "Rhonda Royal"
+   },
+   "justices": [
+    {
+     "name": "Johnny Hobbs"
+    },
+    {
+     "name": "Jackie C. Davis"
+    },
+    {
+     "name": "Shawn Looper"
+    },
+    {
+     "name": "James W. Butler"
+    },
+    {
+     "name": "Brandon Morrison"
+    },
+    {
+     "name": "Danny Aldridge"
+    },
+    {
+     "name": "Kenneth Williamson"
+    },
+    {
+     "name": "Valeria J. Robinson"
+    },
+    {
+     "name": "Rhonda Royal"
+    },
+    {
+     "name": "Dickie Lee Robertson"
+    },
+    {
+     "name": "Gerry Ward"
+    },
+    {
+     "name": "Tommy Camp"
+    },
+    {
+     "name": "Lorrie Ann Glidewell Runion"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Johnny Hobbs",
+     "10": "Dickie L. Robertson",
+     "11": "Gerry Ward",
+     "12": "Tommy Camp",
+     "13": "Lorrie A. Gildewell Runion",
+     "2": "Jackie C. Davis",
+     "3": "Shawn Looper",
+     "4": "James W. Butler",
+     "6": "Danny Aldridge",
+     "7": "Kenneth Williamson",
+     "8": "Valeria J. Robinson",
+     "9": "Rhonda L. Royal"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "5"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/sebastian/"
+  },
+  "website": "http://www.sebastiancountyar.gov/"
+ },
+ "05133": {
+  "county": "Sevier County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Sandra Dunn",
+   "note": "The Arkansas Judiciary's directory names an earlier judge.",
+   "phone": "870-642-2425",
+   "source": "the Association of Arkansas Counties' page for Sevier County",
+   "sourceUrl": "https://arcounties.org/counties/sevier/",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Michael Barnes"
+    },
+    {
+     "name": "Walter Smith Jr."
+    },
+    {
+     "name": "Roxy Stephens"
+    },
+    {
+     "name": "Callie Efird"
+    },
+    {
+     "name": "Roger Whitmore"
+    },
+    {
+     "name": "Angie Hughes-Walker"
+    },
+    {
+     "name": "Scottie Morris"
+    },
+    {
+     "name": "Kenneth Currence"
+    },
+    {
+     "name": "Tim Erwin"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Michael Barnes",
+     "2": "Walter L. Smith, Jr.",
+     "3": "Roxy Ann Stephens",
+     "4": "Callie Efird",
+     "5": "Roger Whitmore",
+     "6": "Angie Hughes-Walker",
+     "7": "Scottie Morris",
+     "8": "Kenneth R. Currence"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "9"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/sevier/"
+  },
+  "website": "http://www.seviercountyar.org"
+ },
+ "05135": {
+  "county": "Sharp County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Mark Counts",
+   "phone": "870-994-7338",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://sharpcountyar.com/officials",
+   "districts": {
+    "1": "Kevin Dienst",
+    "2": "Briana DiIorio",
+    "3": "Joey Barnes",
+    "4": "Roy \"Chuck\" Murphy",
+    "5": "Tommy Estes",
+    "6": "Jackie Pickett",
+    "7": "Buell Wilkes",
+    "8": "Jeral Hastings",
+    "9": "Zack Baxter"
+   },
+   "justices": [
+    {
+     "name": "Kevin Dienst"
+    },
+    {
+     "name": "Briana DiIorio"
+    },
+    {
+     "name": "Joey Barnes"
+    },
+    {
+     "name": "Chuck Murphy"
+    },
+    {
+     "name": "Tommy Estes"
+    },
+    {
+     "name": "Jackie Pickett"
+    },
+    {
+     "name": "Buell Wilkes"
+    },
+    {
+     "name": "Jeral Hastings"
+    },
+    {
+     "name": "Zack Baxter"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Kevin Dienst",
+     "3": "Joey Barnes",
+     "4": "Roy “Chuck” Murphy",
+     "5": "Tommy Estes",
+     "6": "Jackie Pickett",
+     "7": "Buell Wilkes",
+     "8": "Jeral Hastings",
+     "9": "Zack Baxter"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "2"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/sharp/"
+  }
+ },
+ "05137": {
+  "county": "Stone County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Stacey Avey",
+   "office": "107 West Main Street, Suite C, Mountain View, AR 72560",
+   "phone": "870-269-3351",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "districtAsOf": "2026-10-13",
+   "districtSourceUrl": "https://www.stonecountyar.gov/justices-of-the-peace",
+   "districts": {
+    "1": "Jim Bullard",
+    "2": "Travis Trammell",
+    "3": "Billy Wayne Mitchell",
+    "4": "Jason Kocher",
+    "5": "Ronald Clark",
+    "6": "Mark Davis",
+    "7": "Michael W. Vickers",
+    "8": "Neal Harness",
+    "9": "Eddie Cowell"
+   },
+   "justices": [
+    {
+     "name": "Jim Bullard"
+    },
+    {
+     "name": "Travis Trammell"
+    },
+    {
+     "name": "Billy Wayne Mitchell"
+    },
+    {
+     "name": "Jason Kocher"
+    },
+    {
+     "name": "Ronald Clark"
+    },
+    {
+     "name": "Mark Davis"
+    },
+    {
+     "name": "Michael Wade Vickers"
+    },
+    {
+     "name": "Neal Harness"
+    },
+    {
+     "name": "Eddie Cowell"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Jimmy Bullard",
+     "2": "Travis Trammell",
+     "3": "Billy Wayne Mitchell",
+     "4": "Jason Kocher",
+     "5": "Ronald Clark",
+     "6": "Mark Davis",
+     "7": "Michael Wade Vickers",
+     "8": "Neal Harness",
+     "9": "Eddie Cowell"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/stone/"
+  }
+ },
+ "05139": {
+  "county": "Union County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Mike Loftin",
+   "office": "101 N. Washington, Suite 101, El Dorado, AR 71730",
+   "phone": "870-864-1900",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Mike Dumas"
+    },
+    {
+     "name": "Greg Harrison"
+    },
+    {
+     "name": "David Taylor"
+    },
+    {
+     "name": "Steven Ward"
+    },
+    {
+     "name": "Carolyn Jones"
+    },
+    {
+     "name": "Thad Mason"
+    },
+    {
+     "name": "Casey Wooten"
+    },
+    {
+     "name": "Royce DeWayne Worth"
+    },
+    {
+     "name": "Benny Vestal"
+    },
+    {
+     "name": "Ross Burton"
+    },
+    {
+     "name": "Phillip Hamaker"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Mike Dumas",
+     "10": "Ross Burton",
+     "11": "Phillip Hamaker",
+     "2": "Greg Harrison",
+     "3": "David Taylor",
+     "4": "Steven Ward",
+     "5": "Carolyn Jones",
+     "7": "Casey Wooten",
+     "8": "Royce Dewayne Worth",
+     "9": "Benny Vestal"
+    },
+    "noWinner": [
+     "6"
+    ],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/union/"
+  },
+  "website": "http://www.unioncountyar.com"
+ },
+ "05141": {
+  "county": "Van Buren County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Dale James",
+   "phone": "501-745-2443",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Robbia Mays"
+    },
+    {
+     "name": "Nickie Brown"
+    },
+    {
+     "name": "Sarah N. Brown"
+    },
+    {
+     "name": "Paul Wellenberger"
+    },
+    {
+     "name": "Mike Bradford"
+    },
+    {
+     "name": "Bailee Roberson"
+    },
+    {
+     "name": "Becky Page"
+    },
+    {
+     "name": "Virgil Lemings"
+    },
+    {
+     "name": "Ester Bass"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "2": "Nickie Brown",
+     "3": "Sarah N. Brown",
+     "5": "Michael “Mike” Bradford",
+     "6": "Bailee Roberson",
+     "7": "Becky Page",
+     "8": "Virgil Lemings",
+     "9": "Ester Bass"
+    },
+    "noWinner": [
+     "1"
+    ],
+    "notOnList": [
+     "4"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/van-buren/"
+  },
+  "website": "https://www.vanburencountyar.gov/"
+ },
+ "05143": {
+  "county": "Washington County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Patrick Deakins",
+   "phone": "479-444-1700",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Bradley Bruns"
+    },
+    {
+     "name": "David Wilson"
+    },
+    {
+     "name": "Robert Massingill"
+    },
+    {
+     "name": "Vladimir Lopez"
+    },
+    {
+     "name": "Kyle Lyons"
+    },
+    {
+     "name": "Lisa Ecke"
+    },
+    {
+     "name": "Charles Dean"
+    },
+    {
+     "name": "Shawndra Washington"
+    },
+    {
+     "name": "Beth Coger"
+    },
+    {
+     "name": "Robert Dennis"
+    },
+    {
+     "name": "Suki Highers"
+    },
+    {
+     "name": "Evelyn Rios Stafford"
+    },
+    {
+     "name": "Willie Leming"
+    },
+    {
+     "name": "Gary Ricker"
+    },
+    {
+     "name": "Butch Pond"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Bradley Bruns",
+     "10": "Robert E. Dennis",
+     "11": "Suki Lin Highers",
+     "12": "Evelyn Rios Stafford",
+     "13": "Willie E. Leming",
+     "14": "Gary Ricker",
+     "15": "Butch Pond",
+     "2": "David Wilson",
+     "3": "Robert Massingill",
+     "4": "Vladimir Lopez",
+     "5": "Kyle Lyons",
+     "6": "Lisa Ecke",
+     "7": "Charles T. Dean",
+     "8": "Shawndra Washington",
+     "9": "Beth Coger"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 15,
+   "sourceUrl": "https://arcounties.org/counties/washington/"
+  },
+  "website": "https://www.washingtoncountyar.gov"
+ },
+ "05145": {
+  "county": "White County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Lisa Brown",
+   "phone": "501-279-6200",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Doug Kennedy"
+    },
+    {
+     "name": "Bobby Burns"
+    },
+    {
+     "name": "Chris Boaz"
+    },
+    {
+     "name": "Allen King"
+    },
+    {
+     "name": "Jimmy L. House"
+    },
+    {
+     "name": "Shane Allen Sellers"
+    },
+    {
+     "name": "David H. Freppon"
+    },
+    {
+     "name": "Chuck Lang"
+    },
+    {
+     "name": "Mike Cleveland"
+    },
+    {
+     "name": "Kieth Carlisle"
+    },
+    {
+     "name": "Nathan Lincoln"
+    },
+    {
+     "name": "Joel Pritchett"
+    },
+    {
+     "vacant": true
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Doug Kennedy",
+     "10": "Keith Carlisle",
+     "11": "Nathan Lincoln",
+     "12": "Joel Pritchett",
+     "2": "Bobby Burns",
+     "3": "Chris Boaz",
+     "4": "Allen King",
+     "5": "Jimmy L. House",
+     "6": "Shane Allen Sellers",
+     "7": "David H. Freppon",
+     "8": "Charles “Chuck” Lang",
+     "9": "Mike Cleveland"
+    },
+    "noWinner": [
+     "13"
+    ],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 13,
+   "sourceUrl": "https://arcounties.org/counties/white/"
+  },
+  "website": "http://www.whitecountyar.org"
+ },
+ "05147": {
+  "county": "Woodruff County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Michael John Gray",
+   "phone": "870-347-5206",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Thomas Gaines"
+    },
+    {
+     "name": "Brian Austin"
+    },
+    {
+     "name": "Kenny Simons"
+    },
+    {
+     "name": "Freddie Hudson"
+    },
+    {
+     "name": "Gary McCue"
+    },
+    {
+     "name": "Bill Crawford"
+    },
+    {
+     "name": "John Berry Beard"
+    },
+    {
+     "name": "Harold “Bo” Collins"
+    },
+    {
+     "name": "Robert Lee Gibbs"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Thomas Gaines",
+     "2": "Brian Austin",
+     "3": "Kenny Simons",
+     "4": "Freddie Hudson",
+     "6": "Bill Crawford",
+     "7": "John Berry Beard",
+     "8": "Harold Bo Collins",
+     "9": "Robert L. Gibbs"
+    },
+    "noWinner": [],
+    "notOnList": [
+     "5"
+    ],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 9,
+   "sourceUrl": "https://arcounties.org/counties/woodruff/"
+  },
+  "website": "https://woodruffcounty.arkansas.gov"
+ },
+ "05149": {
+  "county": "Yell County",
+  "judge": {
+   "asOf": "2026-10-13",
+   "name": "Jeff Gilkey",
+   "phone": "479-495-4860",
+   "source": "the Arkansas Judiciary's directory of county judges and clerks",
+   "sourceUrl": "https://arcourts.gov/directories/county-judge-clerk",
+   "weekly": true
+  },
+  "quorumCourt": {
+   "asOf": "2026-10-13",
+   "justices": [
+    {
+     "name": "Brent Montgomery"
+    },
+    {
+     "name": "Greg Dixon"
+    },
+    {
+     "name": "Rick Padgett"
+    },
+    {
+     "name": "Steven Payton"
+    },
+    {
+     "name": "Robert Caldwell"
+    },
+    {
+     "name": "Mike Taylor"
+    },
+    {
+     "name": "James Brown"
+    },
+    {
+     "name": "Carl Cross"
+    },
+    {
+     "name": "Jeffrey Lewis"
+    },
+    {
+     "name": "Tony Sigle"
+    },
+    {
+     "name": "Jeff Montgomery"
+    }
+   ],
+   "publisher": "Association of Arkansas Counties",
+   "results": {
+    "asOf": "2026-10-13",
+    "districts": {
+     "1": "Brent Montgomery",
+     "10": "Tony Sigle",
+     "11": "Jeff Montgomery",
+     "2": "Greg Dixon",
+     "3": "Rick Padgett",
+     "4": "Steven Payton",
+     "5": "Robert Caldwell",
+     "6": "Mike Taylor",
+     "7": "James Brown",
+     "8": "Carl Cross",
+     "9": "Jeffrey Lewis"
+    },
+    "noWinner": [],
+    "notOnList": [],
+    "publisher": "Association of Arkansas Counties",
+    "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
+    "title": "2024 General Election Results, Justices of the Peace",
+    "unclear": [],
+    "updated": "2024-12-17"
+   },
+   "seats": 11,
+   "sourceUrl": "https://arcounties.org/counties/yell/"
+  }
+ }
+}
