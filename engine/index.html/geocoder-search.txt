@@ -1,10 +1,13 @@
-  function renderGeocodeResults(results) {
+  function renderGeocodeResults(results, fromLink) {
     // the district section (district-result / district-hint rows) is owned by
     // renderDistrictSection and stays on top; only address rows are replaced
     clearResultRows(false);
     if (!results || results.length === 0) {
       if (geoResultsList.querySelector("li.district-result")) { syncResultCount(); return; }
-      geoStatus.textContent = "No addresses matched inside " + METRO_NAME + " yet. Keep typing, or check the spelling.";
+      // "keep typing" is wrong for words the reader did not type: a link that
+      // names a place without saying where it is says so instead
+      geoStatus.textContent = fromLink ? mapLinkTextMessage(fromLink) :
+        "No addresses matched inside " + appPlaceName() + " yet. Keep typing, or check the spelling.";
       geoStatus.className = "geo-status err";
       return;
     }
@@ -66,7 +69,7 @@
   }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
-  function maybeRenderSiblingMatches(query) {
+  function maybeRenderSiblingMatches(query, mustCarry, seen) {
     var anySibling = METRO_EXPLORERS.some(function (m) { return m.id !== THIS_METRO && m.bbox; });
     if (!anySibling) return;
     // share the geocoder's abort slot so a new keystroke/search cancels this
@@ -89,7 +92,14 @@
       })
       .then(function (got) {
         if (signal.aborted) return;
-        var results = got.results;
+        // every answer, before any is held back, for a caller looking for
+        // the street a shared address is on (runAddressSearch)
+        if (seen) seen(got.results);
+        // held to the house number when the query is an address without
+        // the name it was shared with (runAddressSearch)
+        var results = !mustCarry ? got.results : got.results.filter(function (r) {
+          return labelCarriesNumber(r.display_name, mustCarry);
+        });
         var perMetro = {}; // id -> rows rendered
         var labels = [];
         results.forEach(function (r) {
@@ -101,10 +111,11 @@
           if (labels.indexOf(metro.label) === -1) labels.push(metro.label);
           geoResultsList.appendChild(buildSiblingResultRow(metro, r));
         });
-        if (!labels.length) return; // leave the standard "no matches" status as-is
-        geoStatus.textContent = "Nothing in " + METRO_NAME + " matched — but it looks like you're searching " +
+        if (!labels.length) return 0; // leave the standard "no matches" status as-is
+        geoStatus.textContent = "Nothing in " + appPlaceName() + " matched — but it looks like you're searching " +
           labels.join(" and ") + ".";
         geoStatus.className = "geo-status";
+        return labels.length;
       })
       .catch(function (err) {
         if (err.name === "AbortError") throw err; // the callers' handlers ignore aborts
@@ -613,7 +624,7 @@
     mapLinkController = new AbortController();
     return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
       if (seq !== districtSearchSeq) return;
-      if (full.kind === "text") return runGeocodeSearch(full.text);
+      if (full.kind === "text") return runGeocodeSearch(full.text, full);
       return showMapLink(full);
     }, function (err) {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
@@ -647,10 +658,10 @@
     return li;
   }
 
-  function runGeocodeSearch(q) {
+  function runGeocodeSearch(q, fromLink) {
     var link = parseMapLink(q);
     if (link && link.kind !== "text") return showMapLink(link);
-    if (link) q = link.text;
+    if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
@@ -664,23 +675,168 @@
         syncResultCount();
         return;
       }
-      return runAddressSearch(q);
+      return runAddressSearch(q, fromLink);
     });
   }
 
-  function runAddressSearch(q) {
-    return geocodeAddress(q).then(function (results) {
-      if (results && results.length) return renderGeocodeResults(results);
-      var cleaned = cleanPoiAddress(q);
-      if (cleaned === q) {
-        renderGeocodeResults(results);
-        return maybeRenderSiblingMatches(q);
+  /* What a reader is told when a link names a place without saying where it
+   * is and nothing here matched the name it gave. */
+  function mapLinkTextMessage(link) {
+    var name = link.source === "apple" ? "Apple Maps" : "Google Maps";
+    return "That " + name + " link names \u201c" + link.text + "\u201d but doesn't say where it is, " +
+      "and no address in " + appPlaceName() + " matched it. Find the place on the map and tap it.";
+  }
+
+  /* The text as it came first, then each retry only after a miss: without
+   * a unit fragment (cleanPoiAddress), then the sibling apps.
+   *
+   * TEXT A MAP LINK CARRIED gets two more tries, because a place shared from
+   * the Google Maps app is its name and its address in one string, which a
+   * geocoder often cannot match whole (ENGINE map-link addressAfterName).
+   * The address alone is tried here and then in the sibling apps, and an
+   * answer to it counts only if it carries the address's house number
+   * (labelCarriesNumber): without one the geocoder answers with streets that
+   * partly match, and a single such answer would be selected as the place.
+   * Last, the place's name alone, whose answers are listed and never
+   * selected, since a name can belong to another place; the reader can tell
+   * from the address on the row. Typed text gets none of these, so typing
+   * costs the geocoder no more requests than it did.
+   *
+   * THE STREET WITHOUT THE NUMBER. An answer to the address alone that is on
+   * the address's street in its town (labelOnStreet) is kept aside, and when
+   * no answer carries the number the map shows that street and asks the
+   * reader to tap the place (showStreetOnly), here when this app's own
+   * search found it and after the sibling apps' lookup otherwise. */
+  function runAddressSearch(q, fromLink) {
+    var seq = districtSearchSeq;
+    var bare = fromLink ? addressAfterName(q) : null;
+    var name = bare ? q.split(",")[0].trim() : "";
+    var tries = [], held = [], street = [];
+    function add(t, mustCarry) {
+      if (t && tries.indexOf(t) < 0) { tries.push(t); held.push(mustCarry || null); }
+    }
+    function keepStreet(results) {
+      (results || []).forEach(function (r) { if (labelOnStreet(r.display_name, bare)) street.push(r); });
+    }
+    add(q); add(cleanPoiAddress(q));
+    if (bare) { add(bare, bare); add(cleanPoiAddress(bare), bare); }
+    var i = 0;
+    function next(results) {
+      if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      if (results && held[i]) {
+        keepStreet(results);
+        results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
       }
-      return geocodeAddress(cleaned).then(function (retry) {
-        renderGeocodeResults(retry);
-        if (!retry || retry.length === 0) return maybeRenderSiblingMatches(q);
+      if (results && results.length) return renderGeocodeResults(results);
+      if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
+      if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
+      renderGeocodeResults(results, fromLink);
+      return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+        // 0, never undefined: an aborted or sibling-less lookup tries no more
+        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
+          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
+          if (name.length < 3) return;
+          return geocodeAddress(name).then(function (named) {
+            if (seq !== districtSearchSeq || !named || !named.length) return;
+            listByName(named);
+            geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
+              "A search for its name, \u201c" + name + "\u201d, found " +
+              (named.length === 1 ? "the place below. Pick it if it's the one you meant."
+                                  : "the places below. Pick the one you meant, if it's there.");
+            geoStatus.className = "geo-status";
+          });
+        });
       });
+    }
+    return geocodeAddress(tries[0]).then(next);
+  }
+  // the sibling apps' lookup, with the abort slot every search shares
+  function searchEverywhere(text) {
+    inFlightController = new AbortController();
+    return geocodeUnbounded(text, inFlightController.signal);
+  }
+
+  /* Places a link's name found. Marked so that #q= never selects one for the
+   * reader (prefillGeocodeSearch): a name can belong to another place. */
+  function listByName(results) {
+    renderGeocodeResults(results);
+    var rows = geoResultsList.querySelectorAll("li");
+    for (var k = 0; k < rows.length; k++) {
+      if (!rows[k].className) rows[k].className = "name-result"; // the address rows just drawn
+    }
+  }
+
+  /* The street a shared address is on, when no answer carries its house
+   * number (labelOnStreet, ENGINE map-link). The map frames the street, from
+   * the extent the geocoder gives it, and the reader taps the place: nothing
+   * is selected, because a point on a street is not the place and a
+   * district's edge can run down the middle of the street. The place's name
+   * is searched next, and an answer is listed (never selected) only if it is
+   * within STREET_NEAR_MILES of the street, since that is where the place
+   * is: on 2026-10-14 a search for the name of a small business shared
+   * from the Google Maps app answered three other places with similar
+   * names, 20 to 50 km from its street. */
+  var STREET_NEAR_MILES = 0.5;
+  function showStreetOnly(street, bare, name, search) {
+    var seq = districtSearchSeq;
+    var a = addressParts(bare);
+    var bounds = null;
+    street.forEach(function (r) {
+      var e = r.extent; // [west, north, east, south]
+      var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+      var b = e && e.length === 4 ? L.latLngBounds([e[3], e[0]], [e[1], e[2]])
+                                  : L.latLngBounds([lat, lng], [lat, lng]);
+      bounds = bounds ? bounds.extend(b) : b;
     });
+    clearResultRows(false);
+    var where = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number +
+      " on it, so the map is showing that street.";
+    geoStatus.textContent = where + " Tap the place you meant.";
+    geoStatus.className = "geo-status";
+    refreshSearchShellExpanded();
+    map.fitBounds(bounds, { paddingTopLeft: [24, clearOfSearchPanel()], paddingBottomRight: [24, 24], maxZoom: 17 });
+    // the reader's tap answers the message, which then goes
+    map.once("click", function () {
+      if (seq !== districtSearchSeq) return;
+      clearResultRows(false);
+      geoStatus.textContent = "";
+      collapseAfterSelect = true;
+      refreshSearchShellExpanded();
+    });
+    if (name.length < 3) return Promise.resolve();
+    return search(name).then(function (named) {
+      if (seq !== districtSearchSeq) return;
+      var near = (named || []).filter(function (r) {
+        var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+        return haversineMiles(lat, lng,
+          Math.max(bounds.getSouth(), Math.min(bounds.getNorth(), lat)),
+          Math.max(bounds.getWest(), Math.min(bounds.getEast(), lng))) <= STREET_NEAR_MILES;
+      });
+      if (!near.length) return;
+      listByName(near);
+      geoStatus.textContent = where + " A search for its name, \u201c" + name + "\u201d, found " +
+        (near.length === 1 ? "the place below. Pick it if it's the one you meant, or tap the map."
+                           : "the places below. Pick the one you meant, or tap the map.");
+      geoStatus.className = "geo-status";
+    });
+  }
+  /* How far below the map's top edge the street is framed. The search panel
+   * floats over the top of the map while it holds the message, and on a phone
+   * it covers nearly half of it (measured at 412x915: the panel ends 168 px
+   * into a 384 px map), so the street is framed in the part below the panel.
+   * Not when that part is too short to frame a street in; the street then
+   * sits at the middle of the map, as any search result does. */
+  function clearOfSearchPanel() {
+    var top = 24;
+    var panel = document.getElementById("search-extra");
+    var r = panel ? panel.getBoundingClientRect() : null;
+    var m = map.getContainer().getBoundingClientRect();
+    if (r && r.height > 0 && r.left < m.right && r.right > m.left && r.bottom > m.top && m.bottom - r.bottom >= 160) {
+      top = Math.max(top, Math.round(r.bottom - m.top) + 12);
+    }
+    return top;
   }
 
   /* ---------- an address handed over in the URL (#q=) ----------
@@ -698,14 +854,16 @@
    * It SELECTS a result only when the geocoder returns exactly one. Several
    * matches is the case where taking the first would name the wrong
    * officeholder, so the list stays up and the reader picks. A sibling-metro
-   * row is never auto-clicked — that button navigates to another instance. */
+   * row is never auto-clicked — that button navigates to another instance —
+   * and neither is a place found by a shared link's name alone
+   * (listByName), which may be another place of the same name. */
   function prefillGeocodeSearch(q) {
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
     return runGeocodeSearch(q).then(function () {
-      var own = geoResultsList.querySelectorAll("li:not(.sibling-result) > button");
+      var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
       if (own.length === 1) own[0].click();
     })["catch"](function (err) {
       if (err.name === "AbortError") return;

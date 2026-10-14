@@ -775,6 +775,155 @@ try {
     await context.close();
   }
 
+  // 1d4. A LINK FROM THE GOOGLE MAPS APP names a place with no position: it
+  //      resolves to ?q=<the place's name, its address>&ftid=…, which is what
+  //      a place shared into the installed app arrives as (SHARED is the
+  //      share as the launcher hands it on, its lines joined by spaces). The
+  //      whole string goes to the geocoder first; when it matches nothing,
+  //      the address alone does, and a single match CARRYING ITS HOUSE
+  //      NUMBER is selected. A street that only partly matches is not (the
+  //      3rd Street answer is what Photon really gave for this address).
+  //      Then the place's name alone, whose answer is listed and never
+  //      selected. When nothing matches at all, the reader is told the link
+  //      gave no position, in the app's own place name (Illinois's
+  //      METRO_NAME is still "Chicago"). Typed text gets no retries.
+  //      THE STREET WITHOUT THE NUMBER: when the address alone finds its
+  //      street in its town and no answer carries the number, the map frames
+  //      that street, selects nothing, lists a name answer only near it, and
+  //      a tap on the map then selects the tapped point (showStreetOnly).
+  {
+    const SHARED = "Starved Rock Lodge 2668 E 875th Rd, Oglesby, IL 61348 https://maps.app.goo.gl/XyZ987";
+    const FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x880bd2e1b3a8f5d1:0x9b1c2d3e4f5a6b7c&entry=gps";
+    const NAMED = "Starved Rock Lodge, 2668 E 875th Rd, Oglesby, IL 61348";
+    const BARE = "2668 E 875th Rd, Oglesby, IL 61348";
+    const NAME = "Starved Rock Lodge";
+    const feature = (lng, lat, props) => ({ type: "Feature", geometry: { type: "Point", coordinates: [lng, lat] }, properties: props });
+    const HOUSE = feature(-88.9893, 41.3196, { housenumber: "2668", street: "East 875th Road", city: "Oglesby", state: "Illinois" });
+    const THIRD = feature(-89.0619, 41.2918, { name: "West 3rd Street", city: "Oglesby", state: "Illinois" });
+    const LODGE = feature(-88.9945, 41.3190, { name: "Starved Rock Lodge", street: "Fox Canyon Bridge", state: "Illinois" });
+    const PHONE = { viewport: { width: 412, height: 915 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true };
+    const run = async (hash, answer, settled, full = FULL, act = null, phone = false) => {
+      const context = await browser.newContext(phone ? { serviceWorkers: "block", ...PHONE } : { serviceWorkers: "block" });
+      const asked = [];
+      const page = await booted(context, `${BASE}#q=${encodeURIComponent(hash)}`, async (p) => {
+        await p.route("**/photon.komoot.io/**", (route) => {
+          const u = new URL(route.request().url());
+          const bounded = !!u.searchParams.get("bbox");
+          const q = u.searchParams.get("q");
+          asked.push((bounded ? "bounded:" : "unbounded:") + q);
+          route.fulfill({ status: 200, contentType: "application/json",
+            body: JSON.stringify({ type: "FeatureCollection", features: answer(q, bounded) }) });
+        });
+        await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+          route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: full }) });
+        });
+      });
+      await page.waitForFunction(settled, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForTimeout(300); // a selection, if one were coming, follows the list
+      const read = () => page.evaluate((ns) => ({
+        point: window[ns].state.selectedPoint,
+        status: document.getElementById("geo-status").textContent,
+        rows: [...document.querySelectorAll("#geocode-results li")].map((li) => ({ cls: li.className, text: li.textContent })),
+        centre: window[ns].map.getCenter(),
+        zoom: window[ns].map.getZoom(),
+      }), EXPORTS_NAME);
+      const got = await read();
+      const after = act ? await act(page, read) : null;
+      await context.close();
+      return { asked, got, after };
+    };
+    const selected = (ns) => !!window[ns].state.selectedPoint;
+    const found = await run(SHARED, (q, bounded) => (bounded && q === BARE ? [HOUSE] : []), selected);
+    check("a Google Maps app link's address is searched alone when its name and address match nothing",
+      found.asked[0] === "bounded:" + NAMED && found.asked.indexOf("bounded:" + BARE) > 0,
+      JSON.stringify(found.asked));
+    check("the one answer carrying the address's house number is selected",
+      !!found.got.point && Math.abs(found.got.point.lat - 41.3196) < 1e-6 && Math.abs(found.got.point.lng + 88.9893) < 1e-6,
+      JSON.stringify(found.got.point));
+    const named = await run(SHARED, (q, bounded) => (bounded && q === BARE ? [THIRD] : bounded && q === NAME ? [LODGE] : []),
+      () => /A search for its name/.test(document.getElementById("geo-status").textContent));
+    check("a street without the address's house number is never taken for the shared place",
+      !named.got.point && named.got.rows.every((r) => r.text.indexOf("3rd Street") < 0), JSON.stringify(named.got));
+    check("the place found by its name alone is listed, marked, and never selected",
+      !named.got.point && named.got.rows.length === 1 && named.got.rows[0].cls === "name-result" &&
+        named.got.rows[0].text.indexOf(NAME) >= 0 && named.got.status.indexOf(BARE) >= 0,
+      JSON.stringify(named.got));
+    check("the name alone is asked only after the address, here and in the sibling apps",
+      named.asked.indexOf("bounded:" + NAME) > named.asked.indexOf("unbounded:" + BARE) &&
+        named.asked.indexOf("unbounded:" + BARE) > named.asked.indexOf("unbounded:" + NAMED) &&
+        named.asked.indexOf("unbounded:" + NAMED) > named.asked.indexOf("bounded:" + BARE),
+      JSON.stringify(named.asked));
+    const missed = await run(SHARED, () => [],
+      () => /doesn't say where it is/.test(document.getElementById("geo-status").textContent));
+    check("a link naming a place nothing matches says the link gave no position, in the app's own place name",
+      !missed.got.point && missed.got.status.indexOf(NAMED) >= 0 && missed.got.status.indexOf(APP_NAME.replace(/^districtry /, "")) >= 0 &&
+        missed.got.status.indexOf("Chicago") < 0,
+      JSON.stringify(missed.got.status));
+    const typed = await run(NAMED, () => [], () => /No addresses matched inside/.test(document.getElementById("geo-status").textContent));
+    check("typed text that misses names the app's own place and is not retried without its name",
+      typed.asked.every((a) => a !== "bounded:" + BARE && a !== "unbounded:" + BARE && a !== "bounded:" + NAME) &&
+        typed.got.status.indexOf(APP_NAME.replace(/^districtry /, "")) >= 0 && typed.got.status.indexOf("Chicago") < 0,
+      JSON.stringify(typed));
+
+    // The place Adam shared on 2026-10-14 is on a short drive in Westmont
+    // that Photon holds without its house number: asked for the address
+    // alone it answered six streets there (ON is the address's street,
+    // BESIDE one of the others, both with the extent Photon gave them), and
+    // asked for the name, places with similar names 20 to 50 km away (FAR).
+    // The name, the number and the link here are made up; the streets are
+    // Photon's.
+    const S_FULL = "https://www.google.com/maps/place/Corner+Shop,+9+W+Oakley+Dr+NW,+Westmont,+IL+60559/data=!4m2!3m1!1s0x880e5575a1b2c3d4:0x1a2b3c4d5e6f7a8b!18m1!1e1?utm_source=mstt_1&entry=gps";
+    const S_SHARED = "Corner Shop 9 W Oakley Dr NW, Westmont, IL 60559 https://maps.app.goo.gl/AbC123";
+    const S_BARE = "9 W Oakley Dr NW, Westmont, IL 60559";
+    const S_NAME = "Corner Shop";
+    const ON = feature(-87.9794943, 41.8219565, { name: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois",
+      postcode: "60559", type: "street", extent: [-87.9794965, 41.8221975, -87.9794932, 41.8217156] });
+    const BESIDE = feature(-87.9779586, 41.8216492, { name: "Oakley Drive North", city: "Westmont", state: "Illinois",
+      postcode: "60559", type: "street", extent: [-87.9794947, 41.8217156, -87.9764337, 41.8214675] });
+    const FAR = feature(-88.3190, 42.2181, { name: "Corner Shop", street: "Berkshire Drive", city: "Crystal Lake", state: "Illinois" });
+    const CLOSE = feature(-87.9790, 41.8218, { name: S_NAME, city: "Westmont", state: "Illinois", postcode: "60559" });
+    const onStreet = () => /showing that street/.test(document.getElementById("geo-status").textContent);
+    // Where the street's two ends are drawn, in the map's own pixels, and
+    // where the search panel holding the message ends: the street is framed
+    // below the panel, which floats over the top of the map. On a phone the
+    // panel covers nearly half the map, and a street at the middle of the map
+    // would run up under it, so this is asked at a phone's size. Then a tap
+    // on the middle of the street.
+    const tap = async (page, read) => {
+      const frame = await page.evaluate(([ns, ends]) => {
+        const map = window[ns].map, m = map.getContainer().getBoundingClientRect();
+        const panel = document.getElementById("search-extra").getBoundingClientRect();
+        return { below: panel.bottom - m.top, width: m.width, height: m.height,
+          ends: ends.map((e) => map.latLngToContainerPoint(e)) };
+      }, [EXPORTS_NAME, [[41.8221975, -87.9794965], [41.8217156, -87.9794932]]]);
+      const box = await page.locator("#map").boundingBox();
+      await page.touchscreen.tap(box.x + (frame.ends[0].x + frame.ends[1].x) / 2, box.y + (frame.ends[0].y + frame.ends[1].y) / 2);
+      await page.waitForTimeout(300);
+      return { frame, ...(await read()) };
+    };
+    const street = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),
+      onStreet, S_FULL, tap, true);
+    const g = street.got, t = street.after, f = t.frame;
+    check("a shared address whose house number the search lacks frames its street clear of the search panel and selects nothing",
+      !g.point && g.zoom >= 16 && f.below > 0 &&
+        f.ends.every((e) => e.x >= 0 && e.x <= f.width && e.y >= f.below + 12 && e.y <= f.height) &&
+        g.status.indexOf("W Oakley Dr NW in Westmont but not number 9") >= 0 && g.status.indexOf("Tap the place you meant") >= 0,
+      JSON.stringify({ got: g, frame: f }));
+    check("answers to the place's name far from its street are not listed, and no sibling app is asked",
+      g.rows.length === 0 && street.asked.indexOf("bounded:" + S_NAME) > street.asked.indexOf("bounded:" + S_BARE) &&
+        street.asked.every((a) => a.indexOf("unbounded:") !== 0),
+      JSON.stringify({ rows: g.rows, asked: street.asked }));
+    check("a tap on the street then selects the point tapped and the message goes",
+      !!t.point && Math.abs(t.point.lat - 41.8219565) < 0.0003 && Math.abs(t.point.lng + 87.9794949) < 0.0003 && t.status === "",
+      JSON.stringify(t));
+    const near = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR, CLOSE] : []),
+      () => /A search for its name/.test(document.getElementById("geo-status").textContent), S_FULL);
+    check("an answer to the place's name near its street is listed, marked, and never selected",
+      !near.got.point && near.got.rows.length === 1 && near.got.rows[0].cls === "name-result" &&
+        near.got.rows[0].text.indexOf(S_NAME) >= 0 && near.got.status.indexOf("showing that street") >= 0,
+      JSON.stringify(near.got));
+  }
+
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
   //     (dstFitMastheadActions) before the row would drop them below the
   //     search, which a reader saw as the search bar jumping from the middle

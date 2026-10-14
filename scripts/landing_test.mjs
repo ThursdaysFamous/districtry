@@ -518,6 +518,51 @@ try {
     await ctx.close();
   }
 
+  // ...a link from the Google Maps app carries no position, only the place's
+  // name and address in one string. When that matches nothing, the address
+  // alone is asked, and an answer counts only if it carries the address's
+  // house number (ENGINE map-link labelCarriesNumber): a street that merely
+  // partly matches must route nowhere. The address's own street in its own
+  // town, without the number (labelOnStreet), opens the app that covers it
+  // with what was typed, so that app shows the street (showStreetOnly).
+  // Typed text gets no such retry.
+  {
+    const NAMED = "Lambeau Field, 1265 Lombardi Ave, Green Bay, WI 54304";
+    const BARE = "1265 Lombardi Ave, Green Bay, WI 54304";
+    const FULL = "https://maps.google.com/?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304&ftid=0x0:0x1&entry=gps";
+    const at = (props) => ({ ...photonFeature(44.5013, -88.0622), properties: props });
+    for (const c of [
+      { name: "an answer carrying its house number opens /wi/", text: FULL, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
+        asks: [NAMED, BARE], want: "/wi/" },
+      { name: "a street without its house number opens nothing", text: FULL, answer: at({ street: "Lombardi Avenue" }),
+        asks: [NAMED, BARE], want: "/" },
+      { name: "its street in its town, without the number, opens /wi/ with the link to show the street",
+        text: FULL, answer: at({ name: "Lombardi Avenue", city: "Green Bay", state: "Wisconsin", postcode: "54304" }),
+        asks: [NAMED, BARE], want: "/wi/", hash: "#q=" + encodeURIComponent(FULL) },
+      { name: "the same words typed are not retried", text: NAMED, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
+        asks: [NAMED], want: "/" },
+    ]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [];
+      await page.route("**/photon.komoot.io/**", (r) => {
+        const q = new URL(r.request().url()).searchParams.get("q");
+        asked.push(q);
+        return photonStub(q === BARE ? [c.answer] : [])(r);
+      });
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", c.text);
+      await page.click("#search-button");
+      await addressSettled(page);
+      check(`a place's name and address that match nothing whole: ${c.name}`,
+        JSON.stringify(asked) === JSON.stringify(c.asks) && new URL(page.url()).pathname === c.want &&
+          (!c.hash || new URL(page.url()).hash === c.hash),
+        JSON.stringify({ asked, url: page.url() }));
+      await ctx.close();
+    }
+  }
+
   // --- 1d. an address nobody covers SAYS SO, and never guesses -------------
   //
   // The honesty rule this whole project runs on, applied to the front door: a
