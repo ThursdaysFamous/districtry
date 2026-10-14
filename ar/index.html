@@ -1829,8 +1829,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
     font-size: 13px;
     font-weight: 600;
-    /* Handoff 3 §5a: the pill is tinted with the layer's own color */
-    color: var(--layer-accent, var(--card-link));
+    /* Handoff 3 §5a: the pill is tinted with the layer's own color — but
+       as TEXT it cannot be the layer's colour itself. A map colour is chosen
+       to read as a line on the map (3:1 at best), and painted as 13px text it
+       read 1.1:1 for "IL-7" on a dark card and 2.2:1 for a pale fill colour
+       on a light one. Mixed half and half with the card's own ink, every
+       layer colour in every app clears 4.5:1 in both themes, which
+       validate_contrast.py measures (check_layer_pills) and fails on if this
+       declaration changes shape. */
+    color: color-mix(in srgb, var(--layer-accent, var(--card-link)) 50%, var(--card-ink));
     background: color-mix(in srgb, currentColor 9%, transparent);
     padding: 3px 10px;
     border-radius: 999px;
@@ -15931,6 +15938,12 @@ function initArkansasExplorer() {
         }
       }
     }
+    /* The cards were built before these getters existed, so a page that
+       BOOTS dark carried every card's light colour — the stripe, the dot and
+       the district pill — until the reader flipped the theme. Measured at the
+       Loop on 2026-10-13: U.S. House kept #14181C on a #262331 card head.
+       A flip repaints through dstRepaintLayers, so boot does the same. */
+    if (dstDark) dstRepaintLayers();
   })();
   /* The selection highlight is "the layer's own colour, shifted away from it so
      the matched region pops". The engine spells that DARKEN, which is right on
