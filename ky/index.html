@@ -13075,7 +13075,7 @@ function initKentuckyExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Kentucky Senate + Kentucky House ----------
@@ -13116,7 +13116,7 @@ function initKentuckyExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "Kentucky Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13129,7 +13129,7 @@ function initKentuckyExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Kentucky House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
 
@@ -13282,7 +13282,7 @@ function initKentuckyExplorer() {
       "School District cards name them.",
     overlay: {
       load: loadSchoolDistrictsUnified,
-      style: { color: "#1F6F4A", weight: 1.5, fillColor: "#3E9E72", fillOpacity: 0.05 }
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 }
     },
     hoverName: kyNameHover,
     query: kySchoolQuery(loadSchoolDistrictsUnified),
@@ -13300,7 +13300,7 @@ function initKentuckyExplorer() {
       "District card is the answer.",
     overlay: {
       load: loadSchoolDistrictsElementary,
-      style: { color: "#1F6F4A", weight: 1.5, fillColor: "#7FC4A3", fillOpacity: 0.07, dashArray: "4 2" }
+      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07 }
     },
     hoverName: kyNameHover,
     query: kySchoolQuery(loadSchoolDistrictsElementary),
@@ -13317,7 +13317,7 @@ function initKentuckyExplorer() {
       "grade, and the Unified School District card is the answer.",
     overlay: {
       load: loadSchoolDistrictsSecondary,
-      style: { color: "#14503A", weight: 1.5, fillColor: "#2E7D5B", fillOpacity: 0.07, dashArray: "1 3" }
+      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.07 }
     },
     hoverName: kyNameHover,
     query: kySchoolQuery(loadSchoolDistrictsSecondary),
@@ -13376,7 +13376,7 @@ function initKentuckyExplorer() {
       "the County card is the answer here, not a missing layer.",
     overlay: {
       load: loadKyPlaces,
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: kyNameHover,
     query: function (point, seq) {
@@ -13700,7 +13700,7 @@ function initKentuckyExplorer() {
     label: "Supreme Court District",
     overlay: {
       load: loadSupremeCourtDistricts,
-      style: { color: "#5B3A8E", weight: 2, fillColor: "#7C5CB8", fillOpacity: 0.05 }
+      style: { color: "#8A692C", weight: 2, fillColor: "#8A692C", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Supreme Court District"),
     query: kyCourtQuery(loadSupremeCourtDistricts, "supreme"),
@@ -13722,7 +13722,7 @@ function initKentuckyExplorer() {
       // The same ground as the Supreme Court, which is the statute's own
       // instruction, so the two overlays coincide on purpose.
       load: loadSupremeCourtDistricts,
-      style: { color: "#2F5D8A", weight: 1.5, fillColor: "#4A80B5", fillOpacity: 0.05, dashArray: "4 3" }
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Court of Appeals District"),
     query: kyCourtQuery(loadSupremeCourtDistricts, "appeals"),
@@ -13744,7 +13744,7 @@ function initKentuckyExplorer() {
     label: "Circuit Court",
     overlay: {
       load: loadCircuitCourts,
-      style: { color: "#8A5A2F", weight: 1.5, fillColor: "#B5834A", fillOpacity: 0.05 }
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Circuit"),
     query: kyCourtQuery(loadCircuitCourts, "circuit"),
@@ -13766,7 +13766,7 @@ function initKentuckyExplorer() {
     label: "District Court",
     overlay: {
       load: loadDistrictCourts,
-      style: { color: "#2F7A6A", weight: 1.5, fillColor: "#4AA893", fillOpacity: 0.05, dashArray: "3 3" }
+      style: { color: "#2F7A6A", weight: 1.5, fillColor: "#4AA893", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("District"),
     query: kyCourtQuery(loadDistrictCourts, "district"),
@@ -15771,12 +15771,11 @@ function initKentuckyExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#14503A": "#5AA485", "#1F6F4A": "#5ABE8B",
-    "#2E7D5B": "#63C99A", "#2F5D8A": "#6BA9E7", "#2F7A6A": "#64C5AF", "#3E9E72": "#65E3A8",
-    "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6", "#4A2E8C": "#9879FA", "#4A80B5": "#87C3FE",
-    "#4AA893": "#6DE9CD", "#5B3A8E": "#AB81F4", "#6B7280": "#ACB6C9", "#7C5CB8": "#BFA2FE",
-    "#7FC4A3": "#A0FBD0", "#8A5A2F": "#DF9D64", "#8C2E4A": "#F06F91", "#B0316E": "#FE80B4",
-    "#B5834A": "#FEBC70", "#D06A9C": "#FEB3D4"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#2F6B3A": "#6FBE7B", "#2F7A6A": "#69CAB3",
+    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4AA893": "#74EFD3",
+    "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
+    "#8163AE": "#CAAAFF", "#8A692C": "#DDB061", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
+    "#A05F00": "#FBA33D", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
