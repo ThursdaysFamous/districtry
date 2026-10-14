@@ -85,7 +85,7 @@
      markup must describe content the page actually shows, so leaving it
      here once the section left would be a schema violation rather than a
      leftover. -->
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="/manifest.webmanifest">
 <!-- ==== GENERATED:BEGIN head-theme ==== -->
 <meta name="theme-color" content="#6d3fd1">
 
@@ -1378,6 +1378,62 @@ svg.leaflet-image-layer.leaflet-interactive path {
     padding: 2px 4px;
   }
   .tile-banner-dismiss:hover { color: var(--ink); }
+  /* The one-time invitation to add districtry to a phone's home screen
+     (engine install-app). Fixed to the foot of the SCREEN rather than of the
+     map, because on a phone the reader has usually scrolled down into the
+     cards by the time it appears. Its z-index sits above the skip link (1000)
+     and below the share popover (1100), the More menu (1200) and the feedback
+     form (2000), so it never covers any of them. Both buttons are 40px tall,
+     well clear of WCAG 2.5.8's 24px, because a miss lands on the page. */
+  .install-invite {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 1050;
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(20, 24, 28, 0.18);
+    padding: 8px 6px 8px 12px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .install-invite-text { flex: 1 1 auto; margin: 0; line-height: 1.4; }
+  .install-invite-go {
+    flex: none;
+    min-height: 40px;
+    padding: 0 14px;
+    background: transparent;
+    color: var(--accent-deep, #0B5394);
+    border: 1px solid var(--accent-deep, #0B5394);
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .install-invite-close {
+    flex: none;
+    min-width: 40px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--slate);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .install-invite-close:hover { color: var(--ink); }
   .hover-toggle-btn {
     font-family: var(--font-body);
     font-size: 12px;
@@ -1773,8 +1829,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
     font-size: 13px;
     font-weight: 600;
-    /* Handoff 3 §5a: the pill is tinted with the layer's own color */
-    color: var(--layer-accent, var(--card-link));
+    /* Handoff 3 §5a: the pill is tinted with the layer's own color — but
+       as TEXT it cannot be the layer's colour itself. A map colour is chosen
+       to read as a line on the map (3:1 at best), and painted as 13px text it
+       read 1.1:1 for "IL-7" on a dark card and 2.2:1 for a pale fill colour
+       on a light one. Mixed half and half with the card's own ink, every
+       layer colour in every app clears 4.5:1 in both themes, which
+       validate_contrast.py measures (check_layer_pills) and fails on if this
+       declaration changes shape. */
+    color: color-mix(in srgb, var(--layer-accent, var(--card-link)) 50%, var(--card-ink));
     background: color-mix(in srgb, currentColor 9%, transparent);
     padding: 3px 10px;
     border-radius: 999px;
@@ -3020,7 +3083,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
      on approach. Same class as the flag stripe and the star — a city color
      written as a literal, not a token. */
   .feedback-actions .btn-primary:hover { background: var(--accent-deep); }
-  .share-copy-btn:hover { background: var(--dst-brand-tint-soft); }
+  .share-copy-btn:hover,
+  .install-invite-go:hover { background: var(--dst-brand-tint-soft); }
   .masthead .search-extra {
     position: absolute;
     top: calc(100% + 6px);
@@ -3592,7 +3656,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   [data-theme="dark"] .share-popover-url,
   [data-theme="dark"] .share-popover-embed { background: var(--dst-sunken); border-color: rgba(236, 233, 244, 0.16); color: var(--slate); }
   [data-theme="dark"] .layer-toggle-btn,
-  [data-theme="dark"] .map-tile-banner { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
+  [data-theme="dark"] .map-tile-banner,
+  [data-theme="dark"] .install-invite { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
   /* .search-shell is deliberately NOT in that list. In the engine it floats
      over the map as a card and earns a shadow; this skin moves the toolbar
      into the masthead and flattens the shell to nothing (transparent, no
@@ -3759,6 +3824,93 @@ svg.leaflet-image-layer.leaflet-interactive path {
     } catch (e) { /* blocked storage (private mode) — light is the safe ground */ }
     document.documentElement.setAttribute("data-theme", t);
   })();
+</script>
+<script>
+/* ==== ENGINE:BEGIN play-app ==== */
+/* THE GOOGLE PLAY APP'S MARK, in ONE copy, for the pages that show a
+   support link: every app, every sources page, the front page and the
+   sponsorship page. The installed app's launcher (/app/) carries it too,
+   though it shows no support link, because a place shared into the app
+   arrives there (see below).
+
+   districtry's Android app on Google Play is this site in a full-screen
+   Chrome window (a Trusted Web Activity), so it shows these same pages.
+   Google Play's Payments policy does not let an app lead a reader to a
+   payment method other than Google's own billing, and Google applies that
+   to donations: in February 2022 it rejected an update of StreetComplete,
+   an open-source map app, for asking for donations, rejected it again once
+   the donation links were gone and a link to the project's GitHub page,
+   which asks for donations, was left, and accepted it when that link went
+   too (github.com/streetcomplete/StreetComplete/issues/3768). So inside the
+   Play app the links to GitHub Sponsors and to the sponsorship page are
+   hidden. The website keeps them, and so does a copy installed from the
+   browser's own menu, which no store reviews.
+
+   THE LINKS TO THIS PROJECT'S CODE ON GITHUB STAY, and that is a judgement
+   rather than a measurement. They sit in no sentence about money, which the
+   StreetComplete link did, but the repository's page shows a Sponsor
+   button. If a review objects to them, they join the rule below and the app
+   itself needs no rebuild, because it loads these pages.
+
+   THIS BLOCK IS ITS OWN <script> ELEMENT on every page, never a second
+   block inside the theme script, because scripts/question_page.py copies a
+   sources page's theme script into the question pages it generates, and
+   those pages carry no support link.
+
+   HOW A WINDOW IS KNOWN TO BE THE PLAY APP. The app is built to open
+   /app/?ref=play, and the launcher passes ref=play on, and nothing else, to
+   the page it opens: a URL is how the Trusted Web Activity documentation
+   says an app passes data to its pages. A page whose referrer is the app
+   itself (android-app://com.districtry.app, the package name the setup
+   guide builds) is marked too. Chrome names the Android app that opened a
+   page as its referrer, which is how a link tapped in Gmail arrives as
+   android-app://com.google.android.gm, so this should cover a shared link
+   opened straight into the app rather than through its icon. A place shared
+   from another app's Share menu takes that path into the LAUNCHER (the
+   manifest's share_target), which hands on with location.replace, so the
+   page it opens sees the launcher as its referrer rather than the app: the
+   launcher carries this block for that reason, and passes ref=play on when
+   it finds the mark. The referrer path is not yet measured on a phone; the
+   first is the one the app's own launches take, and both are tested here
+   with the referrer stood in for. Either sets a mark in session
+   storage, so every later page in the same window (another state, a sources
+   page, the front page) hides the links as well, and the mark goes when the
+   app is closed. Session storage belongs to one window, so the mark never
+   reaches the reader's ordinary browser tabs.
+
+   WHAT IS HIDDEN is matched by address rather than by a class, so a support
+   link added later to any page carrying this block is hidden in the Play app
+   without anyone remembering to mark it: every link to github.com/sponsors
+   or to sponsorship.html, and the paragraph or list item around one, because
+   a sentence asking for sponsorship reads wrong with its link taken out.
+   The :has() selectors are a rule of their own because a browser that does
+   not know :has() drops every selector in a rule that names it, and the
+   app panel's sponsorship sentence, .dpf-support, is named by class in the
+   first rule for that browser.
+
+   It runs in the head, before first paint, so the links never flash, and an
+   ordinary visit adds no style at all. */
+(function () {
+  var opened = /(?:^|&)ref=play(?:&|$)/.test(location.search.slice(1)) ||
+    /^android-app:\/\/com\.districtry\.app(?:\/|$)/.test(document.referrer || "");
+  var marked = opened;
+  try {
+    if (opened) sessionStorage.setItem("districtry-play-app", "1");
+    else marked = sessionStorage.getItem("districtry-play-app") === "1";
+  } catch (e) { /* blocked storage: only the page the app opened is marked */ }
+  if (!marked) return;
+  document.documentElement.classList.add("dst-play-app");
+  var css = document.createElement("style");
+  css.textContent =
+    ".dst-play-app a[href*=\"github.com/sponsors\"]," +
+    ".dst-play-app a[href*=\"sponsorship.html\"]," +
+    ".dst-play-app .dpf-support{display:none!important}" +
+    ".dst-play-app p:has(a[href*=\"github.com/sponsors\"])," +
+    ".dst-play-app li:has(a[href*=\"github.com/sponsors\"])," +
+    ".dst-play-app li:has(a[href*=\"sponsorship.html\"]){display:none!important}";
+  document.head.appendChild(css);
+})();
+/* ==== ENGINE:END play-app ==== */
 </script>
 </head>
 <body>
@@ -4064,6 +4216,21 @@ function initMichiganExplorer() {
     "city-ward": "cw", "precinct": "pc", "tribal-government": "tg", "municipality": "mu",
     "police-station": "ps", "fire-station": "fs", "post-office": "po",
     "mi-court-of-appeals": "mia", "mi-circuit-court": "mic", "mi-isd": "is" };
+  // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
+  // reader moving to a sibling app takes the concepts of the layers they have
+  // on (`carry=`), and the app they arrive in turns on its own layers for
+  // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["mi-senate"],
+    "state-house": ["mi-house"], "appellate-court-district": ["mi-court-of-appeals"],
+    "trial-court-district": ["mi-circuit-court"], "county": ["county"],
+    "county-board": ["county-commissioner"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "city-council": ["city-ward"],
+    "voting-precinct": ["precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
+    "school-district-elementary": ["school-district-elementary"],
+    "regional-education-agency": ["mi-isd"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4087,17 +4254,17 @@ function initMichiganExplorer() {
   // an instance whose full coverage is a proper subset of a wider region its
   // statewide layers still answer in; it also requires that instance's boot
   // to hand drawOutOfScopeMask() the region geometry, because the key names
-  // only the bands that were actually drawn.
-  var COVERAGE_KEY = { outside: "Outside Michigan" };
+  // only the bands that were actually drawn. `edge` names the purple line
+  // around the coverage in an instance with no region.
+  var COVERAGE_KEY = { outside: "Outside Michigan", edge: "Michigan" };
   /* Sibling District Explorer deployments — one canonical list shared by every
    * metro fork. When a new metro launches, add its entry to every fork's
    * worksheet and regenerate (Conversion 3 will source this list from the
    * fleet manifest instead). THIS_METRO drops the fork's own entry so the
    * list is identical in every fork. `bbox` (greater metro area, mirroring
-   * that fork's PERMALINK_GATE) and `emoji` feed the sibling-metro portal
-   * easter egg (ENGINE metro-portal): wander the map into a sibling's bbox —
-   * or search/geolocate a point inside one — and the app offers to hand you
-   * off to that fork's explorer. */
+   * that fork's PERMALINK_GATE) and `emoji` feed the sibling hand-off
+   * (ENGINE metro-portal): click, search or geolocate a point a sibling
+   * answers for and the app sends you to that sibling, with your layers. */
   var METRO_EXPLORERS = [
     { id: "chicago", label: "Illinois", url: "https://districtry.com/il/", emoji: "🌭", explorerName: "districtry Illinois",
       bbox: { minLng: -91.52, minLat: 36.96, maxLng: -87.01, maxLat: 42.51 } },
@@ -5581,6 +5748,22 @@ function initMichiganExplorer() {
     return biggest ? ringToLatLng(biggest) : null;
   }
 
+  // Every ring of the coverage outline (GeoJSON [lng,lat]) as a closed
+  // Leaflet line, for the edge drawn along it. All of them, because each is a
+  // place the wash stops: measured 2026-10-13, the ten outlines this draws
+  // hold one ring each except San Francisco's (the city and Treasure Island)
+  // and Kentucky's (the state and the Kentucky Bend), both covered ground.
+  function outlineEdgeLines(rings) {
+    var out = [];
+    for (var i = 0; i < (rings || []).length; i++) {
+      var r = rings[i];
+      if (!r || r.length < 4) continue;
+      var line = ringToLatLng(r);
+      out.push(line.concat([line[0]]));
+    }
+    return out;
+  }
+
   /* ---------- the coverage key ----------
    * A <details> rather than a <div>, and that is a layout decision rather
    * than a stylistic one: on desktop it is open and reads as a legend card,
@@ -5748,6 +5931,34 @@ function initMichiganExplorer() {
         // Read by styleDistrictryCoverage: with no region ring to sit inside,
         // one band carries the whole claim and is drawn lighter for it.
         c.fallbackMask = true;
+        /* AND THE SAME PURPLE EDGE, around the coverage itself. Until
+           2026-10-13 only the three apps that pass a region (Illinois, New
+           York, Wisconsin) drew the glowing state line, so the nine whose
+           coverage IS their state, and San Francisco, whose coverage is its
+           city, showed the wash with no line along it, and the operator
+           noticed the difference. Their edge is the coverage outline, so the
+           line is drawn there: exactly where the wash stops.
+           Only for an app that DECLARES no region. One that declares a region
+           whose file failed to load keeps the two-band wash with no line, as
+           before: its line means the state line, and the coverage ring is
+           not that. So `dst-glow` still appears in a region-declaring app
+           only once the region band has painted, which is what Illinois's and
+           New York's smoke tests wait on. Unlike the region's line, which
+           keeps only the largest ring so a state's lake islands get no glow of
+           their own, this one goes round every ring: a separate piece of
+           coverage (Treasure Island, the Kentucky Bend) is ground the app
+           answers for, and the line marks where that stops. */
+        var edges = typeof loadRegionGeometry === "function" ? [] : outlineEdgeLines(outline);
+        if (edges.length) {
+          c.glow = L.polyline(edges, {
+            pane: "scope-mask", className: "dst-glow",
+            weight: 9, opacity: 0, interactive: false
+          }).addTo(map);
+          c.stateLine = L.polyline(edges, {
+            pane: "scope-mask", weight: 1.5, opacity: 0.9, interactive: false
+          }).addTo(map);
+          if (ck && ck.edge) bands.push({ swatch: "dml-glow", label: ck.edge });
+        }
       }
       if (ck) bands.push({ swatch: "dml-sw dml-out", label: ck.outside, rule: bands.length > 0 });
 
@@ -6286,6 +6497,11 @@ function initMichiganExplorer() {
   // refuses one), so the two cannot be confused.
   function layerFromLinkCode(token) { return layerIdOfCode[token] || token; }
 
+  // Concept -> this app's layer ids, for a hand-off's `carry=` (ENGINE
+  // metro-portal writes it when it sends a reader here from a sibling app).
+  // Guarded like LAYER_CODES: an app with no table turns nothing on from it.
+  var layerIdsOfConcept = (typeof LAYER_CONCEPTS === "object" && LAYER_CONCEPTS) ? LAYER_CONCEPTS : {};
+
   // Five decimals (about a metre), trailing zeros dropped: 41.88250 -> 41.8825.
   function linkCoord(n) { return String(+n.toFixed(5)); }
 
@@ -6314,6 +6530,12 @@ function initMichiganExplorer() {
     }
     if (params.layers) params.layers.split(",").forEach(addLayer);
     if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    // `carry=`: the layers a reader had on in the sibling app they just left,
+    // named by what they mean. Each concept this app has turns on its own
+    // layers for it; one it lacks is dropped, like an unknown id.
+    if (params.carry) params.carry.split(",").forEach(function (c) {
+      if (Object.prototype.hasOwnProperty.call(layerIdsOfConcept, c)) layerIdsOfConcept[c].forEach(addLayer);
+    });
     return {
       point: pick("p", "point"),
       layers: layers,
@@ -7403,15 +7625,23 @@ function initMichiganExplorer() {
   /* =========================================================================
    * SIBLING-METRO HANDOFF — every instance knows where its siblings live
    * (fleet-outlines.json; METRO_EXPLORERS[].bbox for the search rows' coarse
-   * pass). When the map centre, a selected point, a searched address or a
-   * geolocation fix lands inside a sibling's area, the reader goes STRAIGHT
-   * there, carrying the zoom they were at (and the point, when there is one)
-   * so the map they arrive on is framed like the one they left.
+   * pass). When a selected point, a searched address or a geolocation fix
+   * lands inside a sibling's area, the reader goes STRAIGHT there, carrying
+   * the point, the zoom they were at and the layers they had on, so the map
+   * they arrive on is framed like the one they left.
    *
    * This was an easter egg until 2026-08-25: a card, a five-second countdown
    * and a "Stay" button. Retired at the operator's direction — it asked a
    * question whose answer was always yes, and made every reader who crossed a
    * state line watch a timer to get where they were already going.
+   *
+   * PANNING NO LONGER SWITCHES APPS (2026-10-13, the operator's ruling,
+   * reversing his own of 2026-09-30). Until then a `moveend` handler sent the
+   * reader on as soon as the map's CENTRE left this app's outline and a
+   * sibling's held it, so dragging the map across a state line opened another
+   * app. Only a SELECTION hands off now: a click, the keyboard select button,
+   * a searched address, a geolocation fix. Panning past the line shows the
+   * wash and stays here.
    * ======================================================================= */
 
   /* A metro without a (well-formed) bbox simply opts out of the handoff —
@@ -7444,16 +7674,56 @@ function initMichiganExplorer() {
     return best;
   }
 
+  /* THE LAYERS THE READER HAS ON, AS WHAT THEY MEAN RATHER THAN WHAT THIS APP
+   * CALLS THEM. Layer ids differ between apps for one thing (Illinois's
+   * `congress` is Iowa's `us-house`, its `il-house` is Wisconsin's
+   * `wi-assembly`), and one id can mean two things (Illinois's `ward` is a
+   * city council ward, Wisconsin's an election ward). So a hand-off names
+   * CONCEPTS, from the fleet-wide layer-concepts.json, which
+   * generate_metro_files.py slices into each app as LAYER_CONCEPTS (concept ->
+   * this app's layer ids). The receiving app turns on its own layers for each
+   * concept it has and drops the rest (ENGINE permalink, `carry=`). A layer in
+   * no concept is not carried. Guarded, so an app with no table carries
+   * nothing rather than failing. */
+  function carriedLayerConcepts() {
+    if (typeof LAYER_CONCEPTS !== "object" || !LAYER_CONCEPTS) return [];
+    var out = [];
+    Object.keys(LAYER_CONCEPTS).forEach(function (concept) {
+      var ids = LAYER_CONCEPTS[concept] || [];
+      for (var i = 0; i < ids.length; i++) {
+        if (state.layersOn[ids[i]]) { out.push(concept); return; }
+      }
+    });
+    return out;
+  }
+
   /* The sibling's URL, framed like the view being left: the point when there
-   * is one (a click, a search hit, a geolocation fix) and the zoom always. A
-   * pan-triggered handoff carries zoom alone — the reader selected nothing, so
-   * arriving with a point selected for them would answer a question they never
-   * asked. */
+   * is one (a click, a search hit, a geolocation fix), the zoom when one is
+   * given, and the layers on now. The state menu and the footer row pass
+   * neither point nor zoom — the reader asked for another state, not for a
+   * place in it — so they carry the layers alone. Long form on purpose: these
+   * links are never shared, and the receiving app rewrites the hash to its own
+   * short form as soon as its layers are on. */
   function metroPortalUrl(metro, point, zoom) {
     var parts = [];
     if (point) parts.push("point=" + point.lat.toFixed(5) + "," + point.lng.toFixed(5));
-    if (isFinite(zoom)) parts.push("zoom=" + zoom);
+    if (zoom !== null && zoom !== undefined && isFinite(zoom)) parts.push("zoom=" + zoom);
+    var carry = carriedLayerConcepts();
+    if (carry.length) parts.push("carry=" + carry.join(","));
     return parts.length ? metro.url + "#" + parts.join("&") : metro.url;
+  }
+
+  /* A link to a sibling app that keeps its href current with the layers on.
+   * Rewritten as the reader reaches for it rather than when it is built,
+   * because the layers change after the menu exists: `pointerdown` comes
+   * before a click, a middle click and a right click's "open in new tab",
+   * `focus` before a keyboard Enter, and `click` itself runs before the
+   * browser follows the link. */
+  function carryLayersOnLink(a, metro) {
+    function refresh() { a.href = metroPortalUrl(metro); }
+    a.addEventListener("pointerdown", refresh);
+    a.addEventListener("focus", refresh);
+    a.addEventListener("click", refresh);
   }
 
   // One handoff per page load. Belt and braces beside the coverage guard
@@ -7473,7 +7743,7 @@ function initMichiganExplorer() {
     // caller has already asked placeOwner(); this is the last word on it.
     if (here && servedHereNow(here.lat, here.lng) === true) return false;
     metroHandedOff = true;
-    trackEvent("metro-portal-go/" + metro.id, opts.source || "wander");
+    trackEvent("metro-portal-go/" + metro.id, opts.source || "select");
     window.location.href = metroPortalUrl(metro, here, map.getZoom());
     return true;
   }
@@ -7576,13 +7846,9 @@ function initMichiganExplorer() {
    * `proceed` selects the point here, and runs unless the reader is sent on.
    * Returns true when it has taken over (the caller stops and `proceed` runs
    * later, if at all), false when the point is plainly this app's and the
-   * caller should select it now.
-   *
-   * Panning already hands off on `moveend`, but only when the CENTRE crosses.
-   * A reader looking at Illinois can click Wisconsin near the top of the map
-   * without the centre ever leaving Illinois, which is exactly the case this
-   * covers: the click carries the point, so they arrive with it selected
-   * rather than merely somewhere in the neighbourhood. */
+   * caller should select it now. The click carries the point, so the reader
+   * arrives with it selected rather than merely somewhere in the
+   * neighbourhood. */
   var handoffSeq = 0;
   function handoffSelection(lat, lng, source, proceed) {
     if (metroHandedOff) return false;
@@ -7596,21 +7862,6 @@ function initMichiganExplorer() {
     });
     return true;
   }
-
-  var wanderSeq = 0;
-  map.on("moveend", function () {
-    if (metroHandedOff) return;
-    var c = map.getCenter();
-    // Only once this app's own outline has loaded and says the centre has left
-    // it. Before then, or while it is inside, the reader is looking at their
-    // own map near its edge.
-    if (servedHereNow(c.lat, c.lng) !== false) return;
-    var seq = ++wanderSeq;
-    placeOwner(c.lat, c.lng).then(function (owner) {
-      if (seq !== wanderSeq || !owner || owner === "here") return;
-      offerMetroPortal(owner, { source: "wander" });
-    });
-  });
   /* ==== ENGINE:END metro-portal ==== */
   /* =========================================================================
    * GEOCODER — Photon search box + Nominatim POI lookups, bounded to
@@ -7903,7 +8154,8 @@ function initMichiganExplorer() {
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one.
+   * Only a short link is ever sent to it, and only when a reader pastes one
+   * or shares one into the installed app.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
@@ -11538,11 +11790,57 @@ function initMichiganExplorer() {
     // dropping the row: hasUsableGeometry is what decides a layer is unusable.
     return null;
   }
+  /* ---------- an ArcGIS error envelope is an ERROR, never an empty set.
+   *
+   * ArcGIS answers a refused query with HTTP 200 and a body of
+   * {"error":{"code":…,"message":…,"details":[…]}}, which parses as JSON and
+   * carries no features. Read as data it became an empty FeatureCollection,
+   * so a card said "returned no usable geometry" — or, from a loader that
+   * reads an empty set as an answer, that nothing is there — when what had
+   * happened was a refusal. Measured 2026-10-13 on Hamilton County's ArcGIS
+   * Online organisation: "API calls quota exceeded (6063 request units)!
+   * maximum allowed request units (6000) per Minute. Retry after 60 sec." The
+   * quota is per organisation and shared by everyone reading it, so whether a
+   * request is refused depends on what other readers did in the same minute.
+   *
+   * So the envelope becomes an Error naming its code and message, and a 429
+   * (the quota refusal) is asked again ONCE after the wait the server names,
+   * capped at ARCGIS_QUOTA_RETRY_CAP_MS so a card is not left loading for a
+   * full minute. A second refusal is reported, not retried again. ---------- */
+  var ARCGIS_QUOTA_RETRY_CAP_MS = 15000;
+  function arcgisErrorOf(payload) {
+    var e = payload && payload.error;
+    if (!e || typeof e !== "object") return null;
+    var err = new Error("ArcGIS error " + (e.code != null ? e.code : "(no code)") + ": " +
+      (e.message || "the service refused the query"));
+    err.arcgisCode = e.code;
+    var details = (e.details || []).join(" ");
+    var m = /retry after (\d+) ?s/i.exec(details);
+    if (m) err.retryAfterMs = Number(m[1]) * 1000;
+    return err;
+  }
+  function fetchArcGISJSON(url, opts, retries) {
+    function ask(quotaRetryLeft) {
+      return fetchJSONWithRetry(url, opts || {}, retries).then(function (payload) {
+        var err = arcgisErrorOf(payload);
+        if (!err) return payload;
+        if (err.arcgisCode === 429 && quotaRetryLeft) {
+          var wait = Math.min(err.retryAfterMs || 5000, ARCGIS_QUOTA_RETRY_CAP_MS);
+          return new Promise(function (resolve) { setTimeout(resolve, wait); })
+            .then(function () { return ask(false); });
+        }
+        throw err;
+      });
+    }
+    return ask(true);
+  }
   /* The contract is "produce what f=geojson should have produced", including
    * the transfer-cap flag the paged loader reads. `fieldNames` is optional; a
    * caller that requested outFields=* passes nothing and gets every attribute,
    * which is what the GeoJSON export does. */
   function esriToGeoJSON(payload, fieldNames) {
+    var refused = arcgisErrorOf(payload);
+    if (refused) throw refused;
     var src = (payload && payload.features) || [];
     var out = [];
     for (var i = 0; i < src.length; i++) {
@@ -11581,7 +11879,7 @@ function initMichiganExplorer() {
       return Promise.reject(new Error(
         "fetchArcGISAsGeoJSON needs f=json (the GeoJSON export unnests interior rings): " + url));
     }
-    return fetchJSONWithRetry(url, opts || {}, retries === undefined ? 2 : retries)
+    return fetchArcGISJSON(url, opts || {}, retries === undefined ? 2 : retries)
       .then(function (payload) { return esriToGeoJSON(payload, fieldNames); });
   }
   function loadArcGISGeoJSON(serviceUrl) {
@@ -11593,7 +11891,7 @@ function initMichiganExplorer() {
     // precision, so a builder that omits it measures a layer this app fetches
     // as clean. Esri JSON keeps the ring either way.
     var url = serviceUrl + "/query?where=1%3D1&outFields=*&f=json&outSR=4326&geometryPrecision=6";
-    return fetchJSONWithRetry(url, {}, 2)
+    return fetchArcGISJSON(url, {}, 2)
       .then(function (payload) {
         var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("no usable geometry from " + serviceUrl);
@@ -11623,7 +11921,7 @@ function initMichiganExplorer() {
       "&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects" +
       "&outFields=" + encodeURIComponent(outFields || "*") +
       "&outSR=4326&f=json&geometryPrecision=6";
-    return fetchJSONWithRetry(url, {}, 1)
+    return fetchArcGISJSON(url, {}, 1)
       .then(function (payload) {
         var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("point query returned no usable geometry: " + serviceUrl);
@@ -11641,8 +11939,8 @@ function initMichiganExplorer() {
       // f=json, not f=geojson: the GeoJSON export unnests interior rings (see
       // the arcgis-loader block for the measurement). esriToGeoJSON carries
       // exceededTransferLimit through, which is what this loop pages on.
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
-        .then(esriToGeoJSON).then(function (gj) {
+      return fetchArcGISJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        .then(function (payload) { return esriToGeoJSON(payload); }).then(function (gj) {
         var feats = (gj && gj.features) || [];
         acc = acc.concat(feats);
         var more = gj && (gj.exceededTransferLimit || (gj.properties && gj.properties.exceededTransferLimit));
@@ -11655,8 +11953,9 @@ function initMichiganExplorer() {
         if (more && feats.length > 0) return page(offset + feats.length, acc);
         var out = { type: "FeatureCollection", features: acc };
         // Same "200 but useless" guard the unpaged loaders apply: an Esri error
-        // envelope 200s carrying no usable geometry; without this makeCached
-        // would retain that empty response as a permanent success.
+        // envelope now rejects in fetchArcGISJSON, but a service can still
+        // answer 200 with rows and no shapes; without this makeCached would
+        // retain that empty response as a permanent success.
         if (!hasUsableGeometry(out)) throw new Error("paged ArcGIS layer returned no usable geometry: " + layerUrl);
         return out;
       });
@@ -12741,7 +13040,7 @@ function initMichiganExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Michigan Senate + Michigan House ----------
@@ -12788,7 +13087,7 @@ function initMichiganExplorer() {
     loadRoster: loadMiSenateMembers,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "Michigan Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -12802,7 +13101,7 @@ function initMichiganExplorer() {
     loadRoster: loadMiHouseMembers,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Michigan House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
 
@@ -12859,7 +13158,7 @@ function initMichiganExplorer() {
     label: "County Commissioner District",
     overlay: {
       load: loadMiCommissionerDistricts,
-      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     // the same value the card's header pill shows, so hover and card cannot
     // disagree about which district a polygon is
@@ -13176,10 +13475,10 @@ function initMichiganExplorer() {
     // stated rather than discovered: subOf hides a child whenever any ancestor
     // is off, so turning County off takes this card with it.
     subOf: "county",
-    // long-dash brown — reads apart from Municipality's tight magenta dots
+    // the fleet's township brown (layer-concepts.json `colors`), apart from Municipality's magenta
     overlay: {
       load: loadCountySubdivisions,
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13300,8 +13599,8 @@ function initMichiganExplorer() {
       "township it is in.",
     overlay: {
       load: loadPlaces,
-      // tight magenta dots; an empty card here honestly means "unincorporated"
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      // the fleet's municipality magenta (layer-concepts.json `colors`); an empty card here honestly means "unincorporated"
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13416,7 +13715,7 @@ function initMichiganExplorer() {
     emptyNote: "This point is not in a unified (K-12) school district. It is " +
       "in one of Michigan's 27 elementary school districts instead — the " +
       "School District (Elementary) card names it.",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13435,7 +13734,7 @@ function initMichiganExplorer() {
     emptyNote: "This point is not in one of Michigan's 27 elementary school " +
       "districts. Almost all of the state is covered by a unified (K-12) " +
       "district instead — the School District (Unified) card names it.",
-    style: { color: "#B26A00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05, dashArray: "3 3" },
+    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13643,7 +13942,7 @@ function initMichiganExplorer() {
     group: "political",
     label: "Precinct",
     loader: loadMiPrecincts,
-    style: { color: "#5C4B8C", weight: 1, fillColor: "#8F7BC4", fillOpacity: 0.04, dashArray: "2 2" },
+    style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "Precinct", keys: ["name"], primary: true },
       { name: "county", label: "County", keys: ["county"] },
@@ -13689,8 +13988,8 @@ function initMichiganExplorer() {
     group: "political",
     label: "Court of Appeals District",
     loader: loadMiCoaDistricts,
-    // plum, long-dashed — the broadest political boundary this app draws
-    style: { color: "#5B2A86", weight: 2, fillColor: "#5B2A86", fillOpacity: 0.04, dashArray: "10 4" },
+    // the fleet's appellate-court brown (layer-concepts.json `colors`) — the broadest political boundary this app draws
+    style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "countyCount", label: "Counties in this district", keys: ["county_count"] },
@@ -13708,8 +14007,8 @@ function initMichiganExplorer() {
     group: "political",
     label: "Circuit Court",
     loader: loadMiCircuitCourts,
-    // deep violet, the fleet's judicial hue
-    style: { color: "#4A2E8C", weight: 1.5, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "6 3" },
+    // the fleet's trial-court orchid (layer-concepts.json `colors`)
+    style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "Circuit", keys: ["name"], primary: true },
       { name: "counties", label: "Covers", keys: ["counties"] },
@@ -13745,7 +14044,7 @@ function initMichiganExplorer() {
     emptyNote: "This point is not in a Michigan intermediate school district. " +
       "The state's map of them covers land only, so a point on one of the " +
       "Great Lakes, or outside Michigan, is in none.",
-    style: { color: "#1F6F78", weight: 1.5, fillColor: "#2A8C96", fillOpacity: 0.04, dashArray: "4 4" },
+    style: { color: "#6B6320", weight: 1.5, fillColor: "#B3A64A", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { label: "How its board is chosen",
@@ -13850,8 +14149,8 @@ function initMichiganExplorer() {
     // true. What is left is a point inside Michigan that no ZCTA covers, so the
     // note now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
-    // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",
@@ -15228,7 +15527,7 @@ function initMichiganExplorer() {
     // vocabulary — "District 6 / Council member" against "Ward 1 / City
     // Commissioner". The toggle names the concept; the card names the thing.
     label: "City Council District",
-    style: { color: "#0F5C8C", weight: 2, fillColor: "#2E8FC4", fillOpacity: 0.06 },
+    style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.06 },
     // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
@@ -16824,6 +17123,8 @@ function initMichiganExplorer() {
       if (metro.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = metro.url;
+      // the layers on now travel with the reader (ENGINE metro-portal)
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, metro);
       a.target = "_blank";
       a.rel = "noopener";
       a.textContent = metro.label;
@@ -17227,13 +17528,13 @@ function initMichiganExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#0F5C8C": "#52ADF0", "#14181C": "#696F76",
-    "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BB", "#1F6F78": "#5CC0CC",
-    "#2A8C96": "#5CD8E5", "#2E8FC4": "#92D3FD", "#2E9E6B": "#5BEAA5", "#2F6B3A": "#6FBE7B",
-    "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#5B2A86": "#B375F2", "#5C4B8C": "#AB95EF",
-    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8C2E4A": "#F47294", "#8F7BC4": "#D1C2FF",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B26A00": "#FFB15F",
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#6B6320": "#BAB05A", "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#7A5C3E": "#CFA57D",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B3A64A": "#F5E46B",
     "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
@@ -17400,6 +17701,9 @@ function initMichiganExplorer() {
       if (m.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = m.url;
+      /* and the layers the reader has on travel with them (ENGINE
+         metro-portal), as they do when a click crosses a state line */
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
       a.setAttribute("role", "menuitem");
       if (m.emoji) {
         var e = document.createElement("span");
@@ -17495,6 +17799,12 @@ function initMichiganExplorer() {
         }
       }
     }
+    /* The cards were built before these getters existed, so a page that
+       BOOTS dark carried every card's light colour — the stripe, the dot and
+       the district pill — until the reader flipped the theme. Measured at the
+       Loop on 2026-10-13: U.S. House kept #14181C on a #262331 card head.
+       A flip repaints through dstRepaintLayers, so boot does the same. */
+    if (dstDark) dstRepaintLayers();
   })();
   /* The selection highlight is "the layer's own colour, shifted away from it so
      the matched region pops". The engine spells that DARKEN, which is right on
@@ -17842,6 +18152,217 @@ function initMichiganExplorer() {
     else if (dstPhoneMQ.addListener) dstPhoneMQ.addListener(dstApplyPhoneLayout);
   }
   /* ==== ENGINE:END districtry-behavior ==== */
+
+  /* ==== ENGINE:BEGIN install-app ==== */
+  /* ==== install as an app: ONE districtry, opened where the reader left off ====
+     The apps and the front door link the one manifest at /manifest.webmanifest,
+     whose scope is the whole site, so an installed districtry crosses state
+     lines without leaving its window, and whose start_url is the launcher at
+     /app/. This block is the app's half of that arrangement, in three parts.
+
+     1. WHICH STATE WAS OPEN LAST. Each boot writes this app's tag under
+        DST_LAST_APP_KEY, and the launcher reads it to open that state.
+        scripts/build_manifests.py --check holds the launcher to this key. On an
+        iPhone an installed web app keeps storage apart from Safari's, so its
+        first launch has nothing to read and opens the front page; it remembers
+        from then on.
+
+     2. THE INVITATION, phones only and once. Android hands the page a
+        `beforeinstallprompt` event when Chrome judges the site installable;
+        it is held, and an Install button is offered once the reader has an
+        answer on screen. Safari has no such event, so an iPhone gets a short
+        tip saying where Add to Home Screen is. Never inside an iframe (an
+        embedded map is someone else's page), never once installed, and never
+        a second time: showing it records DST_INSTALL_INVITE_KEY.
+
+     3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
+        browser reports an install, `app-launch/<tag>` once per launch of the
+        installed app (DST_APP_LAUNCH_KEY in session storage marks the window
+        as counted), `install-invite/<what>` for the invitation: shown,
+        accepted, declined or closed, and tip-shown or tip-closed on an iPhone,
+        and `share-in/<tag>` when a place shared into the installed app opened
+        this app (below). A launch is counted at boot, before GoatCounter's
+        script has always arrived, so these wait for it rather than being lost.
+
+     4. A PLACE SHARED INTO THE APP. The manifest's share_target puts the
+        installed districtry in Android's Share menu and sends what was shared
+        to the launcher at /app/, which hands it here as #q= (the hash, which
+        never leaves the browser; the permalink block searches it) and leaves
+        DST_SHARE_IN_KEY in session storage. It is counted once and removed, so
+        the next page in the window does not count it again. The share arrives
+        in the address of a request for /app/, so the launcher's own worker
+        must answer it from its copy rather than the host: that worker is
+        registered here when districtry is installed and whenever the
+        installed app runs, so it is in place before the first share even if
+        the installed app has never been opened from its icon.
+        scripts/build_manifests.py --check holds the launcher to this key and
+        this block to the launcher's worker. */
+  var DST_LAST_APP_KEY = "districtry-last-app";
+  var DST_INSTALL_INVITE_KEY = "districtry-install-invite";
+  var DST_APP_LAUNCH_KEY = "districtry-app-launch";
+  var DST_SHARE_IN_KEY = "districtry-share-in";
+  var DST_INVITE_DELAY_MS = 3000;
+  var dstFramed = (function () {
+    try { return window.top !== window.self; } catch (e) { return true; }
+  })();
+  function dstCountWhenReady(name, tries) {
+    if (window.goatcounter && typeof window.goatcounter.count === "function") {
+      trackEvent(name);
+      return;
+    }
+    // up to ten seconds; a blocked or failed counter stays a no-op
+    if ((tries || 0) < 40) setTimeout(function () { dstCountWhenReady(name, (tries || 0) + 1); }, 250);
+  }
+  /* Every invitation event goes through here, so the name the privacy page
+     publishes is the one family `install-invite/` and the outcomes are its
+     suffixes. */
+  function dstInviteEvent(what) {
+    dstCountWhenReady("install-invite/" + what);
+  }
+  function dstInstalledLaunch() {
+    return !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+      window.navigator.standalone === true);
+  }
+  /* The launcher's worker (app/sw.js, scope /app/), so a place shared into
+     the installed app is answered from the launcher's copy on the phone. */
+  function dstRegisterLauncher() {
+    if (dstFramed || !("serviceWorker" in window.navigator)) return;
+    try {
+      window.navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" })["catch"](function () {});
+    } catch (e) { /* the launcher registers it itself on its first launch */ }
+  }
+  function dstInviteSeen() {
+    try { return !!window.localStorage.getItem(DST_INSTALL_INVITE_KEY); } catch (e) { return true; }
+  }
+  function dstMarkInviteSeen(value) {
+    try { window.localStorage.setItem(DST_INSTALL_INVITE_KEY, value); } catch (e) { /* private mode: it may show again */ }
+  }
+  /* An iPhone's own Safari. Other iOS browsers and in-app views name
+     themselves in the user agent and put Share somewhere else, so the tip's
+     directions would be wrong there; an iPad reports itself as a Mac and is
+     not a phone. */
+  function dstIsIphoneSafari() {
+    var ua = window.navigator.userAgent || "";
+    if (!/\b(iPhone|iPod)\b/.test(ua)) return false;
+    if (/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|FBAN|FBAV|Instagram|Line\//.test(ua)) return false;
+    return /Version\/[\d.]+.*Safari\//.test(ua);
+  }
+  /* The invitation waits for the reader's first answer: a point selected,
+     then a moment to read the cards. */
+  function dstAfterFirstAnswer(fn) {
+    var poll = setInterval(function () {
+      if (!state.selectedPoint) return;
+      clearInterval(poll);
+      setTimeout(fn, DST_INVITE_DELAY_MS);
+    }, 500);
+  }
+  var dstInviteBar = null;
+  function dstHideInvite() {
+    if (dstInviteBar && dstInviteBar.parentNode) dstInviteBar.parentNode.removeChild(dstInviteBar);
+    dstInviteBar = null;
+  }
+  /* Built through the DOM with textContent, the way every card is. */
+  function dstShowInvite(text, onInstall) {
+    if (dstInviteBar || dstInstalledLaunch() || !dstIsPhone()) return false;
+    var bar = document.createElement("aside");
+    bar.className = "install-invite";
+    bar.setAttribute("aria-label", "Add districtry to your home screen");
+    var p = document.createElement("p");
+    p.className = "install-invite-text";
+    p.textContent = text;
+    bar.appendChild(p);
+    if (onInstall) {
+      var go = document.createElement("button");
+      go.type = "button";
+      go.className = "install-invite-go";
+      go.textContent = "Install";
+      go.addEventListener("click", onInstall);
+      bar.appendChild(go);
+    }
+    var close = document.createElement("button");
+    close.type = "button";
+    close.className = "install-invite-close";
+    close.setAttribute("aria-label", onInstall ? "Not now" : "Close");
+    close.textContent = "✕";
+    close.addEventListener("click", function () {
+      dstHideInvite();
+      dstInviteEvent(onInstall ? "closed" : "tip-closed");
+    });
+    bar.appendChild(close);
+    document.body.appendChild(bar);
+    dstInviteBar = bar;
+    return true;
+  }
+
+  if (!dstFramed) {
+    try { window.localStorage.setItem(DST_LAST_APP_KEY, METRO_BRAND.instanceTag); } catch (e) { /* the launcher then opens the front page */ }
+  }
+
+  if (dstInstalledLaunch()) {
+    var dstLaunchCounted = false;
+    try { dstLaunchCounted = !!window.sessionStorage.getItem(DST_APP_LAUNCH_KEY); } catch (e) { dstLaunchCounted = false; }
+    if (!dstLaunchCounted) {
+      try { window.sessionStorage.setItem(DST_APP_LAUNCH_KEY, "1"); } catch (e) { /* counted again on the next page in this window */ }
+      dstCountWhenReady("app-launch/" + METRO_BRAND.instanceTag);
+    }
+    dstRegisterLauncher();
+  }
+
+  if (!dstFramed) {
+    var dstSharedIn = false;
+    try {
+      dstSharedIn = !!window.sessionStorage.getItem(DST_SHARE_IN_KEY);
+      if (dstSharedIn) window.sessionStorage.removeItem(DST_SHARE_IN_KEY);
+    } catch (e) { dstSharedIn = false; }
+    if (dstSharedIn) dstCountWhenReady("share-in/" + METRO_BRAND.instanceTag);
+  }
+
+  window.addEventListener("appinstalled", function () {
+    dstHideInvite();
+    dstCountWhenReady("app-install/" + METRO_BRAND.instanceTag);
+    dstRegisterLauncher();
+  });
+
+  var dstHeldPrompt = null;
+  var dstInviteQueued = false;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    /* On a computer, or inside someone else's page, the browser's own
+       install control is left exactly as it is. */
+    if (dstFramed || !dstIsPhone()) return;
+    e.preventDefault();
+    dstHeldPrompt = e;
+    if (dstInviteQueued || dstInviteSeen()) return;
+    dstInviteQueued = true;
+    dstAfterFirstAnswer(function () {
+      if (!dstHeldPrompt || dstInviteSeen()) return;
+      var shown = dstShowInvite("Add districtry to your home screen. It opens to the state you used last.", function () {
+        var held = dstHeldPrompt;
+        dstHeldPrompt = null;
+        dstHideInvite();
+        if (!held) return;
+        held.prompt();
+        held.userChoice.then(function (choice) {
+          dstInviteEvent(choice && choice.outcome === "accepted" ? "accepted" : "declined");
+        }, function () {});
+      });
+      if (shown) {
+        dstMarkInviteSeen("shown");
+        dstInviteEvent("shown");
+      }
+    });
+  });
+
+  if (!dstFramed && !dstInstalledLaunch() && dstIsIphoneSafari() && !dstInviteSeen()) {
+    dstAfterFirstAnswer(function () {
+      if (dstInviteSeen()) return;
+      var shown = dstShowInvite("Add districtry to your Home Screen: tap Share (in the ⋯ menu if you don’t see it), then Add to Home Screen.", null);
+      if (shown) {
+        dstMarkInviteSeen("tip-shown");
+        dstInviteEvent("tip-shown");
+      }
+    });
+  }
+  /* ==== ENGINE:END install-app ==== */
 }
 // Deferred Leaflet (above) executes before DOMContentLoaded, so L is ready by
 // the time this fires. Run immediately if the DOM is already parsed, else wait.

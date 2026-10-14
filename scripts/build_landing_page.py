@@ -110,6 +110,12 @@ FAVICON = os.path.join(REPO_ROOT, "districtry", "icons", "favicon.svg")
 # spec calls for below 24px — right for a browser tab, wrong for the front door,
 # which is why the two are different files doing different jobs.
 MARK_SOURCE = os.path.join(REPO_ROOT, "il", "index.html")
+# The site's one-sentence description. A module constant rather than a local
+# because the installed app says the same thing: build_manifests.py reads it for
+# the web app manifest's `description`, so the front door and the app a reader
+# installs from it cannot come to describe districtry two different ways.
+DESCRIPTION = ("Enter an address or ZIP — districtry shows every civic district that covers "
+               "that point on the map, and the people who hold those seats. Free, no login.")
 
 # Each instance's worksheet, for the layer count on its row in the state list.
 # A row that states a number must read it from the thing that owns it; a
@@ -133,6 +139,7 @@ INSTANCE_WORKSHEET = {
     "ok": "ok/metro-worksheet.json",
     "sc": "sc/metro-worksheet.json",
     "tn": "tn/metro-worksheet.json",
+    "ar": "ar/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -152,6 +159,20 @@ def shared_theme_boot():
     part of what ships.
     """
     with open(THEME_BOOT, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
+PLAY_APP = os.path.join(REPO_ROOT, "engine", "shared", "play-app.txt")
+
+
+def shared_play_app():
+    """The Google Play app's mark, read from its ONE source.
+
+    engine/shared/play-app.txt is an ENGINE fence in every app, every sources
+    page and the sponsorship page, spliced by compose_app.py. This page carries
+    it too because its footer asks for sponsorship, and a reader in the Play
+    app reaches it from any state's menu. Returned verbatim, like the theme
+    boot.
+    """
+    with open(PLAY_APP, encoding="utf-8") as fh:
         return fh.read().rstrip("\n")
 MAP_LINK = os.path.join(REPO_ROOT, "engine", "shared", "map-link.txt")
 
@@ -844,8 +865,7 @@ def build():
     # Console shows the demand is phrased as a question ("what district am i
     # in"), and a brand nobody is searching for yet cannot earn the click.
     title = "What district am I in? Find your district — districtry"
-    desc = ("Enter an address or ZIP — districtry shows every civic district that covers "
-            "that point on the map, and the people who hold those seats. Free, no login.")
+    desc = DESCRIPTION
 
     answer_count, answer_verb = answer_phrase(metros)
     # The map's lighter wash is drawn only for an area with a second, wider
@@ -867,6 +887,11 @@ def build():
 <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<!-- The one web app manifest (scripts/build_manifests.py). The front door links
+     it like every app does, so districtry installs as the same single app from
+     here as from any state's map. -->
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="districtry" />
 <meta name="robots" content="index, follow" />
 <!-- Bing Webmaster Tools site ownership, added 2026-09-13. A PUBLIC ownership
      token like the IndexNow key, not a secret: it proves to Bing that whoever
@@ -942,6 +967,9 @@ def build():
 </script>
 <script>
 %(themeboot)s
+</script>
+<script>
+%(playapp)s
 </script>
 <style>
 %(fontface)s
@@ -1842,6 +1870,26 @@ footer .support b { color: var(--ink); }
           window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
         });
   }
+
+  /* A PLACE HANDED OVER IN THE ADDRESS (#q=). A place shared into the
+   * installed app reaches its launcher (app/index.html), which opens the
+   * state the reader used last with #q=, or this page when no state has been
+   * opened yet. It is put in the box and sent exactly as if it had been
+   * pasted, so a map link is read here and routed, and anything else is an
+   * address search. The hash, never the query string, because the counter on
+   * this page reports the query string with every visit; and it is taken out
+   * of this page's address first, so going back here does not search it
+   * again and send the reader forward a second time. */
+  var handed = /(?:^#|&)q=([^&]*)/.exec(location.hash);
+  if (handed) {
+    var handedText = "";
+    try { handedText = decodeURIComponent(handed[1]).trim(); } catch (err) { handedText = ""; }
+    if (window.history && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+    if (handedText) {
+      input.value = handedText;
+      if (form.requestSubmit) form.requestSubmit(); else button.click();
+    }
+  }
 })();
 </script>
 </body>
@@ -1856,6 +1904,7 @@ footer .support b { color: var(--ink); }
         "favicon": html.escape(favicon_uri, quote=True),
         "fontface": fontface + "\n" + FALLBACK_FACE,
         "themeboot": shared_theme_boot(),
+        "playapp": shared_play_app(),
         "maplink": shared_map_link(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,

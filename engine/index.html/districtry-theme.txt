@@ -161,6 +161,9 @@
       if (m.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = m.url;
+      /* and the layers the reader has on travel with them (ENGINE
+         metro-portal), as they do when a click crosses a state line */
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
       a.setAttribute("role", "menuitem");
       if (m.emoji) {
         var e = document.createElement("span");
@@ -256,6 +259,12 @@
         }
       }
     }
+    /* The cards were built before these getters existed, so a page that
+       BOOTS dark carried every card's light colour — the stripe, the dot and
+       the district pill — until the reader flipped the theme. Measured at the
+       Loop on 2026-10-13: U.S. House kept #14181C on a #262331 card head.
+       A flip repaints through dstRepaintLayers, so boot does the same. */
+    if (dstDark) dstRepaintLayers();
   })();
   /* The selection highlight is "the layer's own colour, shifted away from it so
      the matched region pops". The engine spells that DARKEN, which is right on

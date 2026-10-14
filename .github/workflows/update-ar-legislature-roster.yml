@@ -1,0 +1,99 @@
+name: Update Arkansas legislature roster
+
+# Weekly refresh of the Arkansas Senate + House rosters
+# (ar/data/app/ar-senate-members.json and ar-house-members.json, fetched by
+# ar/index.html's chamber cards). Rebuilds both chambers from the Arkansas
+# State Legislature's own member list and member pages on
+# www.arkleg.state.ar.us and — if anything changed — opens a PR rather than
+# committing directly to main.
+#
+# The builder reads the one member list and all 138 member pages (a departed
+# member keeps a row on the list, and only their own page says "Resigned" or
+# "Deceased"), two seconds apart, so the rebuild takes about five minutes. It
+# reads each page's heading, status line and district and never the mailing
+# address or telephone the same pages print.
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN SCRAPED A
+# SECOND TIME, the update-ilga-roster.yml pattern: a second pass would ask the
+# legislature's server for the same 139 pages again for nothing. A run where
+# main changed those same files meanwhile errors at the checkout instead of
+# pushing, which is right.
+#
+# ARKANSAS IS DARK, so this job does not regenerate ar/state-legislature.html:
+# build_legislator_pages.py refuses an instance metros.json does not carry, so
+# that page is not built yet. Go-live adds the step in the same change that
+# adds ar to metros.json — ar/WATCH.md has the list.
+
+on:
+  schedule:
+    - cron: "23 17 * * 2" # Tuesday 17:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Stdlib only: the builder fetches with urllib after reading
+      # www.arkleg.state.ar.us's robots.txt through scraper_common.
+      - name: Rebuild Arkansas Senate + House rosters
+        run: python3 ar/scripts/build_ar_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 ar/scripts/validate_index.py ar/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ar/data/app/ar-senate-members.json ar/data/app/ar-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ar-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add ar/data/app/ar-senate-members.json ar/data/app/ar-house-members.json
+          git commit -m "Update Arkansas Senate + House rosters from the Arkansas State Legislature"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Arkansas Senate + House rosters" \
+              --body "Automated weekly refresh of the Arkansas Senate and Arkansas House chamber cards' rosters, from the Arkansas State Legislature's own member list and member pages on www.arkleg.state.ar.us. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

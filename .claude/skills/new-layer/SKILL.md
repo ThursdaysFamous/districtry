@@ -78,13 +78,29 @@ root `layer-codes.json` — two or three lowercase letters or digits, starting
 with a letter, never a code already listed (retired ones included) and never
 another layer's id — because share links write layers by code and the code is
 permanent; the generator refuses a layer without one, and its `--check` fails
-on a code changed or removed against the base branch. Then one run:
+on a code changed or removed against the base branch. If another app has a
+layer that means the same thing, put this layer's id in that concept's row of
+the root `layer-concepts.json` (or add a row), so a reader who moves between
+apps keeps it switched on; the generator fails on an id the app does not
+register and on an id two live apps share that no row carries. A layer in a
+concept row is drawn in that concept's colours from the same file's `colors`
+table — its `color:` and `fillColor:` (a point layer's `fill:`) set to that
+row's `line` and `fill` — and the generator fails on any other colour literal
+in its definition; a new concept row needs a `colors` entry too, with a line
+colour no other concept uses that reads 4.5:1 as the small label on a white
+card, which the generator also checks. It is drawn at that concept's line
+width from the `lines` table as well — its `weight:` set to the row's
+`weight` — and a new concept row needs a `lines` entry (null for a concept
+drawn as map pins). No layer, in a concept or not, sets a `dashArray:`: a dash
+on the map means a district crossing the edge of the one pinned for
+comparison, which the engine draws, and the generator refuses any other.
+Then one run:
 
 ```bash
 python3 scripts/generate_metro_files.py
 ```
 
-emits `LAYER_AREA_RANK`, `LAYER_CODES`, `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
+emits `LAYER_AREA_RANK`, `LAYER_CODES`, `LAYER_CONCEPTS`, `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
 `sw.js` URL lists, the smoke test's `EXPECT_LAYERS`, the `sources.html` matrix
 row and the instance `CLAUDE.md` layer count.
 

@@ -282,6 +282,14 @@ def is_name(text):
         bare = token.strip(".,\"'").lower()
         if bare in NOT_NAME:
             return False
+        # A job title joined to a name by a hyphen is still a job title.
+        # Clifton Public Library prints its librarian as "Tia Varns-Director"
+        # under "Meet the Board & Librarians!" (2026-10-12), and the whole
+        # token passed. MEASURED against the 45,433 distinct `name` values the
+        # fleet ships: splitting on hyphens rejects 32, and every one is a
+        # school, a district or a coverage label, never a person.
+        if "-" in bare and any(part in NOT_NAME for part in bare.split("-")):
+            return False
         if bare in SUFFIX or bare in PARTICLE:
             continue
         if not NAME_TOKEN.match(token):
@@ -1084,14 +1092,16 @@ def selftest():
               % (MAX_MEMBERS + 2, MAX_MEMBERS))
     # is_name, in both directions, on values measured in the fleet's own rosters.
     for value in ("Trevor Ward", "Mark St. Eve", "Roland C. Person",
-                  "April Hoste", "Jackie Winter", "Thomas P. Stagg"):
+                  "April Hoste", "Jackie Winter", "Thomas P. Stagg",
+                  "Ann Smith-Jones"):
         checks += 1
         if not is_name(value):
             problems += 1
             print("  FAIL %r is a real name this reader rejects" % value)
     for value in ("FOIA Officer", "Library Board", "Learn More", "About Us",
                   "Meeting Room", "Library Director", "Adult Services",
-                  "Board Minutes", "Summer Reading", "121 E. Washington St."):
+                  "Board Minutes", "Summer Reading", "121 E. Washington St.",
+                  "Tia Varns-Director"):
         checks += 1
         if is_name(value):
             problems += 1

@@ -115,7 +115,7 @@ ROSTER_FILES = {
     "congress-roster.json": 9,  # U.S. House (TN) roster, refreshed weekly by update-tn-congress-roster.yml.
     "tn-senate-members.json": 33,  # Tennessee Senate roster, one record per seat, names from the Legislature's own district map on the state's TNMap service; refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "tn-house-members.json": 99,  # Tennessee House roster, one record per seat on the same terms; House 31 and 84 read vacant on 2026-10-10.
-    "tn-commissioners.json": 54,  # County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/.
+    "tn-commissioners.json": 56,  # County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
