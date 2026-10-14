@@ -8368,6 +8368,27 @@ degrades to identity-only, never an error card. Hover shares the card's
 join by construction (hoverOfficial runs townshipGovFor against the same
 cache) and names the executive.
 
+**Chicago's eight townships are drawn now (2026-10-14).** The "Chicago city"
+sentence above was true of the Census's map and was what a reader got: asked
+where Jefferson Township is, the layer had nothing to show. On Adam's choice
+the layer now draws Hyde Park, Jefferson, Lake, Lake View, North, Rogers Park,
+South and West from Cook County GIS `politicalBoundary` layer 3, clipped to the
+Census outline of Chicago (`scripts/build_chicago_townships.py` →
+`il/data/app/chicago-townships.json`), in place of the Cook "Chicago city"
+subdivision (GEOID 1703114000) — in the whole set and the point answer by
+`withChicagoTownships` in `il/index.html`, and in the tile archive by
+`SPLICES` in `scripts/mirror_tiger_tiles.py`, whose record carries the file's
+SHA-256 so `--check` fails if the file moves without a rebuild. Measured that
+day: the county's eight cover 98.5% of the Census's 600.9 km2 of Chicago; the
+9.07 km2 they leave out is mostly lakefront landfill, given to the nearest
+township edge by the builder and said so in the file's metadata. The card says
+the township has no government and that the Cook County Assessor and Board of
+Review use it to group property; there are no officials to name. Chicago's
+DuPage County part (GEOID 1704314000, west O'Hare) is a separate Census
+subdivision and still reads "Chicago city". A browser check with TIGERweb
+stubbed from the real set put 104 points around the eight townships' edges
+and found tile and file answering alike at every one.
+
 **What this supersedes and what it does not.** The De Witt build-log entry's
 "township officials are not a concept any fork carries" is amended — the
 concept now exists — but De Witt's own PDF stays unbuilt for its own

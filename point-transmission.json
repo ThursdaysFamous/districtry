@@ -137,6 +137,7 @@
       "atpoint_sites": [
         "load",
         "load",
+        "load",
         "loadCommissionerDistricts",
         "loadPoliceBeats",
         "loadPoliceDistricts",

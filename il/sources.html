@@ -1611,10 +1611,11 @@ table.matrix code {
               </tr>
               <tr id="layer-township">
                 <th scope="row"><span class="layer-name">Township / County Subdivision</span><code>township</code></th>
-                <td data-label="What it answers">The township or county subdivision containing the point — and, in covered counties, the township's elected officers.</td>
+                <td data-label="What it answers">The township or county subdivision containing the point — in Chicago, which of the city's eight townships the Assessor groups it in — and, in covered counties, the township's elected officers.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1</a></li>
+                    <li><a href="https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/3" target="_blank" rel="noopener">Cook County GIS — Political Township (Chicago's eight townships, drawn in place of the Census's single Chicago subdivision)</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">township-officials.json, rebuilt weekly by CI from the Cook County Clerk's directory (29 townships — supervisor, trustees, clerk/assessor/collector/highway commissioner, hall contact), joined by county-subdivision GEOID. Townships in other counties keep the identity-only card.</td>
@@ -1962,7 +1963,7 @@ table.matrix code {
       "@id": "https://districtry.com/il/sources.html#dataset-township",
       "identifier": "township",
       "name": "Township / County Subdivision",
-      "description": "The township or county subdivision containing the point — and, in covered counties, the township's elected officers. township-officials.json, rebuilt weekly by CI from the Cook County Clerk's directory (29 townships — supervisor, trustees, clerk/assessor/collector/highway commissioner, hall contact), joined by county-subdivision GEOID. Townships in other counties keep the identity-only card.",
+      "description": "The township or county subdivision containing the point — in Chicago, which of the city's eight townships the Assessor groups it in — and, in covered counties, the township's elected officers. township-officials.json, rebuilt weekly by CI from the Cook County Clerk's directory (29 townships — supervisor, trustees, clerk/assessor/collector/highway commissioner, hall contact), joined by county-subdivision GEOID. Townships in other counties keep the identity-only card.",
       "url": "https://districtry.com/il/sources.html#layer-township",
       "isPartOf": {
         "@id": "https://districtry.com/il/sources.html#catalog"
@@ -1972,6 +1973,11 @@ table.matrix code {
           "@type": "Dataset",
           "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — Political Township (Chicago's eight townships, drawn in place of the Census's single Chicago subdivision)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/3"
         }
       ],
       "spatialCoverage": {

@@ -13261,7 +13261,48 @@ function initChiExplorer() {
     return load;
   }
   var loadIlCounties = tigerStatewideLoader("State_County", 1, "GEOID,NAME,BASENAME,STATE,LSADC", "counties");
-  var loadIlTownships = tigerStatewideLoader("Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
+  var loadIlCountySubdivisions = tigerStatewideLoader("Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
+  /* The Census draws Chicago as ONE county subdivision, "Chicago city", where
+   * the city still has eight townships in law -- no township government, but
+   * the Cook County Assessor and Board of Review group the city's property by
+   * them. chicago-townships.json (scripts/build_chicago_townships.py) holds the
+   * eight from Cook County's own map, clipped to the Census's Chicago outline,
+   * and stands in for "Chicago city" both in the whole set and in a point
+   * answer. scripts/mirror_tiger_tiles.py makes the same swap before it builds
+   * the township tile archive, so tile and file answer alike. */
+  var CHICAGO_COUSUB_GEOID = "1703114000";
+  var loadChicagoTownships = makeCached(function () {
+    return fetchJSONWithRetry("data/app/chicago-townships.json", {}, 2);
+  });
+  function isChicagoCousub(f) {
+    return String(findPropCI((f && f.properties) || {}, ["geoid"])) === CHICAGO_COUSUB_GEOID;
+  }
+  function withChicagoTownships(base) {
+    var load = makeCached(function () {
+      return Promise.all([base(), loadChicagoTownships()]).then(function (r) {
+        var out = [];
+        (r[0].features || []).forEach(function (f) {
+          if (isChicagoCousub(f)) Array.prototype.push.apply(out, r[1].features || []);
+          else out.push(f);
+        });
+        return { type: "FeatureCollection", features: out };
+      });
+    });
+    load.atPoint = function (point) {
+      return base.atPoint(point).then(function (fc) {
+        var feats = (fc && fc.features) || [];
+        if (!feats.some(isChicagoCousub)) return fc;
+        return loadChicagoTownships().then(function (ct) {
+          var hit = findFeatureContaining(ct, point);
+          // none only within a metre of the city limit: keep the Census answer
+          if (!hit) return fc;
+          return { type: "FeatureCollection", features: feats.map(function (f) { return isChicagoCousub(f) ? hit : f; }) };
+        });
+      });
+    };
+    return load;
+  }
+  var loadIlTownships = withChicagoTownships(loadIlCountySubdivisions);
   var loadIlPlaces = tigerStatewideLoader("Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
   var loadIlSchoolUnified = tigerStatewideLoader("School", 0, "GEOID,NAME,STATE", "unified school districts");
   var loadIlSchoolSecondary = tigerStatewideLoader("School", 1, "GEOID,NAME,STATE", "secondary school districts");
@@ -13538,7 +13579,7 @@ function initChiExplorer() {
       style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     // TIGER NAME already carries the honest civil-division type suffix
-    // ("Homer township", "Chicago city") — 17 of 102 counties have no
+    // ("Homer township"; Chicago's eight read "Jefferson township" and so on) — 17 of 102 counties have no
     // township government and subdivide as precincts/cities instead,
     // which is why the layer label says "County Subdivision" too.
     hoverName: function (feature) {
@@ -13557,6 +13598,7 @@ function initChiExplorer() {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"]),
+          chicago: findPropCI(props, ["cook_twp"]) != null,
           gov: townshipGovFor(feature, roster)
         };
       });
@@ -13566,7 +13608,9 @@ function initChiExplorer() {
       var wrap = cardEl("div", "card-flush");
       wrap.appendChild(renderBodyIntro({
         title: result.name != null ? String(result.name) : "Unknown subdivision",
-        note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+        note: result.chicago
+          ? "One of Chicago's eight townships. It has no township government; the Cook County Assessor and Board of Review use it to group property in the city."
+          : result.geoid != null ? "GEOID " + String(result.geoid) : null
       }));
       var gov = result.gov;
       if (!gov) return wrap; // identity-only: no sourced roster for this subdivision

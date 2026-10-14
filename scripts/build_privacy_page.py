@@ -230,22 +230,33 @@ LINK_LOOKUP_ROW = (
 # would be wrong for one of them: the apps' boxes are type-ahead and send on
 # each keystroke, while the front door's sends only on submit. Over-stating what
 # leaves a browser is the safe direction to be wrong in, and it is still wrong.
+# Nominatim's row said until 2026-10-14 that it also received "the address you
+# searched, when the bounded fallback runs" (from #477). Measured that day, every
+# app's one Nominatim request is poiGeocodeRequest, reached only from the
+# office-pin queue; the search box uses Photon (New York: GeoSearch, then Photon).
+# New York places its office pins through GeoSearch instead, so "when" is per row:
+# one shared sentence had every geocoder doing both jobs.
 GEOCODERS = {
     "photon.komoot.io": (
         "Photon / Komoot", "address search", "https://www.komoot.com/privacy",
         "<strong>The text you type into the search box</strong> — sent as you type on the "
-        "apps' type-ahead boxes, and only when you press the button on the front door."),
+        "apps' type-ahead boxes, and only when you press the button on the front door.",
+        "Only while you are searching for an address."),
     "nominatim.openstreetmap.org": (
-        "Nominatim / OpenStreetMap", "address search, office pins",
+        "Nominatim / OpenStreetMap", "office pins",
         "https://osmfoundation.org/wiki/Privacy_Policy",
-        "The address you searched, when the bounded fallback runs. It also receives "
-        "<em>public office addresses from the datasets</em> — a clerk's office, a school "
-        "— to place their map pins; that is data about buildings, not about you."),
+        "<em>Public office addresses from the datasets</em> — a clerk's office, a school "
+        "— to place their map pins; that is data about buildings, not about you. "
+        "Nothing you type into the search box is sent here.",
+        "Only when a card places an office pin."),
     "geosearch.planninglabs.nyc": (
-        "GeoSearch / NYC Planning", "address search",
+        "GeoSearch / NYC Planning", "address search, office pins",
         "https://www.nyc.gov/home/privacy-policy.page",
         "<strong>The text you type into the search box</strong>, sent as you type so "
-        "suggestions can appear."),
+        "suggestions can appear. It also receives <em>public office addresses from the "
+        "datasets</em> to place their map pins.",
+        "Only while you are searching for an address, or when a card places an office "
+        "pin."),
 }
 
 # THE BATCH ADDRESS CHECK (Illinois today) is a second way an address leaves a
@@ -996,7 +1007,10 @@ def render_app_rows(apps):
         for store in ("sessionStorage", "localStorage"):
             for k in a["storage_read"][store]:
                 stored.append("%s<small>read only</small>" % code(k))
-        search = ", ".join(GEOCODERS[h][0] for h in a["geocoders"]) or "<em>No search box.</em>"
+        # Each service is named with its job, because an app reaches one geocoder
+        # for the search box and may reach another only for office pins.
+        search = ", ".join("%s (%s)" % (GEOCODERS[h][0], GEOCODERS[h][1])
+                           for h in a["geocoders"]) or "<em>No search box.</em>"
         point = ("%d layer%s" % (a["point_query_layers"], "" if a["point_query_layers"] == 1 else "s")
                  if a["point_query_layers"] else "<em>None.</em>")
         rows.append(
@@ -1033,10 +1047,8 @@ def render_recipient_rows(apps):
         rows.append(recipient_row(label, sub, policy, what, when,
                                   ", ".join(a["name"] for a in users) + "."))
     for host in sorted({h for a in apps for h in a["geocoders"]}):
-        label, sub, policy, what = GEOCODERS[host]
+        label, sub, policy, what, when = GEOCODERS[host]
         users = [a["name"] for a in apps if host in a["geocoders"]]
-        when = ("Only while you are searching for an address, or when a "
-                "card places an office pin.")
         # MEASURED per (surface, host), not per surface: an app reaches more
         # than one geocoder, and only the one the batch panel actually calls
         # receives a pasted list.
@@ -1595,7 +1607,7 @@ PRIVACY_BODY = """
             <th scope="col">Google Analytics</th>
             <th scope="col">GoatCounter</th>
             <th scope="col">Stored in your browser</th>
-            <th scope="col">Address search</th>
+            <th scope="col">Address lookups</th>
             <th scope="col">Sends your point to a server</th>
           </tr>
         </thead>
