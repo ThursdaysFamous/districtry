@@ -143,7 +143,7 @@ OUT = os.path.join(REPO_ROOT, "privacy.html")
 POINT_TRANSMISSION = os.path.join(REPO_ROOT, "point-transmission.json")
 CANONICAL = "https://districtry.com/privacy.html"
 SITE = "https://districtry.com/"
-UPDATED = "24 August 2026"
+UPDATED = "13 October 2026"
 CONTACT = "adam@overberg.co"
 REPO_URL = "https://github.com/ThursdaysFamous/districtry"
 
@@ -212,13 +212,14 @@ LINK_LOOKUP_HOST = "link-lookup.districtry.deno.net"
 LINK_LOOKUP_ROW = (
     "Deno Deploy", "short map-link lookup", "https://deno.com/privacy",
     "Only when you paste a <strong>short</strong> Google Maps or Apple Maps link "
-    "(maps.app.goo.gl, maps.apple) into a search box: that link, sent to districtry&#39;s "
+    "(maps.app.goo.gl, maps.apple) into a search box, or share one into the installed "
+    "app: that link, sent to districtry&#39;s "
     "own lookup, which runs on Deno&#39;s servers, follows it to the full link and "
     "sends that back. Deno receives your IP address and the short link. The lookup&#39;s "
     "own code stores neither; Deno, not this project, keeps whatever request logs its "
     "platform keeps. A full map link or a coordinate pair is read in "
     "your browser and goes nowhere.",
-    "Only when you paste a short map link.", "link_lookup")
+    "Only when you paste or share a short map link.", "link_lookup")
 
 
 # Geocoders, keyed by the host the measurement finds. What a geocoder receives is
@@ -358,14 +359,28 @@ def measure_address_list(src, name):
 # records which kind was pasted and never the position, which is read in the
 # browser and sent nowhere. A SHORT link (maps.app.goo.gl, maps.apple) holds no
 # position, so it alone goes to the link lookup named by LINK_LOOKUP_HOST.
-EXPECTED_EVENTS = ["address-search", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
+# `app-install/`, `app-launch/` and `install-invite/` joined on 2026-10-13, when
+# districtry became installable as ONE app (engine `install-app`, the root
+# manifest built by scripts/build_manifests.py). `app-install/<tag>` records
+# that the browser reported an install and from which app; `app-launch/<tag>`
+# that the installed app was opened, once per launch, and into which app; and
+# `install-invite/<what>` what became of the one-time invitation on a phone
+# (shown, accepted, declined or closed; tip-shown or tip-closed for the
+# iPhone's directions). All three are by app and never by place: the launch
+# event is sent at boot, before any point is selected.
+# `share-in/` joined on 2026-10-14, when the installed app joined Android's
+# Share menu (the manifest's share_target): `share-in/<tag>` records that a
+# place shared into the app opened that app, and nothing about the place,
+# which travels in the address hash and reaches analytics only as the
+# rounded `select` any selection sends.
+EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
-                   "share-native", "share-open", "share-permalink", "share-qr"]
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 
 
@@ -824,6 +839,9 @@ def gate_fleet_claims(apps):
 COUNT_WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"}
 COUNTER_EXCEPTIONS = {
     "404.html": "served for a URL that does not exist",
+    "app/index.html":
+        "the installed app\u2019s launcher, which hands straight on to the state "
+        "you used last, where the visit is counted",
     "coverage-map.html":
         "the front door\u2019s iframe body, counted by the page that embeds it",
 }
@@ -889,6 +907,29 @@ def measure_counter_coverage(apps):
                  % (a["file"], "present" if mine else "absent",
                     "present" if theirs else "absent"))
     return {"counted": counted, "uncounted": uncounted}
+
+
+def launcher_keys():
+    """The storage keys the installed app's launcher reads (the state used last)
+    and writes (a place shared into the app), established by the gate that
+    already holds both (scripts/build_manifests.py --check), so the sentences
+    naming the launcher and that gate cannot disagree."""
+    try:
+        import build_manifests
+    except ImportError as e:
+        fail("cannot import scripts/build_manifests.py (%s). The sentences about "
+             "the installed app's launcher are measured through it." % e)
+    return build_manifests.check_launcher()
+
+
+def launcher_reads():
+    """The storage key the installed app's launcher reads."""
+    return launcher_keys()[0]
+
+
+def launcher_shares():
+    """The session key the launcher leaves when a place is shared into the app."""
+    return launcher_keys()[1]
 
 
 def counter_who():
@@ -1096,6 +1137,69 @@ def render_storage_paragraphs(apps):
                 "kept in %s under %s on %s, so the site does not flash white on your next "
                 "visit. It is one word, and it never leaves your browser.%s</p>"
                 % (code(store), code(key), esc(joined(users)), carried))
+        elif key == "districtry-last-app":
+            # The claim that the launcher READS this key is the manifest
+            # builder's to keep, and its --check fails when the launcher stops;
+            # asking it here means this sentence and that gate are one reader.
+            launcher_key = launcher_reads()
+            if launcher_key != key:
+                fail("the apps write %r and the installed app's launcher reads %r, "
+                     "so the sentence about it would be false" % (key, launcher_key))
+            out.append(
+                "<p><strong>Which state you used last.</strong> Each app keeps its own "
+                "two-letter tag (%s, %s and so on) in %s under %s on %s. The installed "
+                "app's launcher at %s reads it to open that state's map. It is two "
+                "letters, the next state you open replaces it, and it never leaves your "
+                "browser.</p>"
+                % (code("il"), code("ny"), code(store), code(key), esc(joined(users)),
+                   code("/app/")))
+        elif key == "districtry-install-invite":
+            out.append(
+                "<p><strong>The install invitation.</strong> On a phone, the map offers once "
+                "to add districtry to your home screen. It records that it has asked in %s "
+                "under %s, so it does not ask again. This is on %s. It is one word, and it "
+                "never leaves your browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-app-launch":
+            out.append(
+                "<p><strong>A launch already counted.</strong> When you open the installed "
+                "app, the launch is counted once. A mark in %s under %s records that, so "
+                "moving between states in the same window does not count it again. This "
+                "is on %s. It is erased when you close the app, and it never leaves your "
+                "browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-play-app":
+            # The launcher is not one of the surfaces this page measures, so
+            # the claim that it sets the mark too is the manifest gate's: its
+            # check fails unless the launcher carries this block.
+            launcher_keys()
+            out.append(
+                "<p><strong>Opened in the Google Play app.</strong> If you open districtry "
+                "from its Android app on Google Play, a mark in %s under %s records that, "
+                "so the pages in that window leave out the links asking for sponsorship: "
+                "Google Play does not allow an app from its store to send readers to an "
+                "outside payment page. The website keeps those links. This is on %s, and "
+                "on the installed app's launcher at %s. It is erased when you close the "
+                "app, and it never leaves your browser.</p>"
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users))),
+                   code("/app/")))
+        elif key == "districtry-share-in":
+            # The apps read and remove this key; the launcher writes it. That
+            # half is held by the manifest gate, as the last-app key is.
+            share_key = launcher_shares()
+            if share_key != key:
+                fail("the apps count a shared place under %r and the installed app's "
+                     "launcher marks it under %r, so the sentence about it would be "
+                     "false" % (key, share_key))
+            out.append(
+                "<p><strong>A place shared into the app.</strong> When you share a place "
+                "into the installed app, its launcher at %s leaves a mark in %s under %s, "
+                "so the map it opens can count that a share arrived. The map removes the "
+                "mark as soon as it has counted it. This is on %s. It says nothing about "
+                "the place, and it never leaves your browser.</p>"
+                % (code("/app/"), code(store), code(key), esc(joined(users))))
         elif key == "districtry-boundary-streets":
             out.append(
                 "<p><strong>Boundary street names.</strong> If you switch the map's "
@@ -1512,6 +1616,9 @@ PRIVACY_BODY = """
         time you switch that layer on (for a layer drawn from vector tiles, the pieces of its
         map you have looked at), so the map loads fast and those layers work offline.
         It holds published public data — district shapes and rosters — not anything about you.</p>
+      <p><strong>If you install districtry,</strong> its launcher at %(launcher)s keeps one more
+        cache, holding only the launcher page itself, so the installed app opens with no
+        connection.</p>
       <p><strong>No app here sets a cookie of its own.</strong> Google Analytics, where it runs,
         sets its own.</p>
     </div>
@@ -1581,6 +1688,17 @@ PRIVACY_BODY = """
         someone can send you a form that already says what to check. That text, and a copied link
         to the form with what you typed, travel after the <span class="k">#</span> in the address,
         which your browser never sends to a server or to analytics.</p>
+      <p><strong>Places you share into the app.</strong> Once districtry is installed on an
+        Android phone it is in the Share menu, so a place open in Google Maps can be shared
+        straight to it. What you share arrives in the address of a request for the installed
+        app's launcher at %(launcher)s, and the launcher's own copy on your phone answers that
+        request. The launcher hands it to the map after the <span class="k">#</span>, and the map
+        reads it as it would a link pasted into its search box: a link that carries its position
+        is read on your phone, a short link goes to the short-link lookup in the table above, and
+        a place name or an address goes to the address search. The launcher keeps that copy from
+        the first time the installed app opens, or from the moment you install districtry from a
+        state's map. A share sent before then reaches this site's host, GitHub Pages, in the
+        address of that request.</p>
     </div>
   </section>
 
@@ -1731,6 +1849,7 @@ def build():
             "storage": render_storage_paragraphs(apps),
             "appslede": render_apps_lede(apps),
             "analytics": render_analytics_section(apps),
+            "launcher": code("/app/"),
             "permalink": code("#p=41.8825,-87.6285"),
             "hash": code("#"),
             "dp": COORD_DECIMALS,

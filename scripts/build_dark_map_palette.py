@@ -152,15 +152,39 @@ def _lch_to_lab(L, C, H):
     return L, C * math.cos(H), C * math.sin(H)
 
 
-def dark_map_palette(index_html):
-    """Every layer stroke/fill literal in index.html -> its dark counterpart."""
+def layer_colours(index_html):
+    """Every layer stroke/fill literal in one app's index.html."""
     strokes = re.findall(r'\bcolor:\s*"(#[0-9A-Fa-f]{6})"', index_html)
     fills = re.findall(r'fillColor:\s*"(#[0-9A-Fa-f]{6})"', index_html)
     palette = sorted({c.upper() for c in strokes + fills})
     if not palette:
         fail("found no layer colours to derive a dark palette from — did the\n             color:/fillColor: literal style change?")
-    ls = [_oklch(c)[0] for c in palette]
-    lo, hi = min(ls), max(ls)
+    return palette
+
+
+# ONE LIGHTNESS RANGE FOR THE WHOLE FLEET (2026-10-13). The remap stretches
+# lightness between the darkest and the lightest colour it is given, and until
+# the layer colours were unified across the apps (layer-concepts.json
+# `colors`) each app passed only its own: measured that day, the lightest
+# literal was #41B6E6 in eight apps and #7CC49B, #6FBF7F or #7FC4A3 in the
+# other five, so one light colour could have two dark ones, and a layer drawn
+# alike in every app in daylight would not have been at night. The range is now taken over every app's colours at
+# once, so the same light colour maps to the same dark colour everywhere. The
+# darkest colour still maps to DARK_L_LO, so the contrast floor recorded
+# above does not move.
+def fleet_bounds(texts):
+    ls = [_oklch(c)[0] for t in texts for c in layer_colours(t)]
+    return min(ls), max(ls)
+
+
+def dark_map_palette(index_html, bounds=None):
+    """Every layer stroke/fill literal in index.html -> its dark counterpart,
+    remapped over `bounds` (the fleet's lightness range) when given."""
+    palette = layer_colours(index_html)
+    if bounds is None:
+        ls = [_oklch(c)[0] for c in palette]
+        bounds = (min(ls), max(ls))
+    lo, hi = bounds
     span = (hi - lo) or 1.0
     out = {}
     for c in palette:
@@ -172,9 +196,9 @@ def dark_map_palette(index_html):
         out[c] = _hex(*_lch_to_lab(Ln, Cn, H))
     return out
 
-def render(index_html):
+def render(index_html, bounds=None):
     """The region body: one JS object literal, sorted, wrapped to stay readable."""
-    table = dark_map_palette(index_html)
+    table = dark_map_palette(index_html, bounds)
     pairs = ['"%s": "%s"' % (k, v) for k, v in sorted(table.items())]
     lines, cur = [], "  var DST_DARK_MAP_COLORS = {"
     for i, pair in enumerate(pairs):
@@ -206,9 +230,11 @@ def main():
     args = ap.parse_args()
 
     totals = []
-    for rel, path, text in targets():
+    apps = targets()
+    bounds = fleet_bounds([text for _, _, text in apps])
+    for rel, path, text in apps:
         head, current, tail = split_region(text)
-        body, n = render(text)
+        body, n = render(text, bounds)
         rendered = "\n" + body + "\n"
         totals.append((rel, n))
 

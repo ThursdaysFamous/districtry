@@ -107,7 +107,7 @@ All 83 counties: commissioner districts, compiled by the state from the plan eac
 
 ## Minnesota
 
-All 87 counties: county board districts in every one of them, judicial districts, townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. Nobody is named yet on the county boards, the judges' benches or the two state chambers, and the Data gaps panel says why.
+All 87 counties and their county commissioner districts: judicial and watershed districts, townships and cities, voting precincts, school districts and school board districts, ZIP codes, tribal land, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. County commissioners, school board members and the councils of the cities over 25,000 people are named for the winner of each seat's most recent election in the Secretary of State's results, and a tribal council is named where the nation publishes its own list. Nobody is named yet on the judges' benches, the two state chambers or the smaller cities' councils, and the Data gaps panel says why.
 
 - [Minnesota district lookup](https://districtry.com/mn/): 19 layers, all 87 counties.
 - [Who is my U.S. representative?](https://districtry.com/mn/congress.html)
@@ -116,7 +116,7 @@ All 87 counties: county board districts in every one of them, judicial districts
 
 ## Kentucky
 
-All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts — with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.
+All 120 counties: each county's fiscal court and elected officers, cities with their mayors and councils, school districts, and the Supreme Court, Court of Appeals, circuit court and district court districts — plus the Kentucky Senate, House and U.S. House districts, with the member named for each U.S. House seat. County and city officials are named from the Department for Local Government's directories, and judges from the Court of Justice's own pages. Nobody is named yet on the two state chambers or the school boards, and the Data gaps panel says why.
 
 - [Kentucky district lookup](https://districtry.com/ky/): 12 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
@@ -126,7 +126,7 @@ All 120 counties: the county a point sits in, and the Kentucky Senate, House and
 
 ## Indiana
 
-All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why.
+All 92 counties: each county's commissioners and county council, townships, cities and towns, school districts, ZIP codes, the Pokagon Band's trust land, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. County officials, and the mayors and councils of most places over 25,000 people, are named for the winner of each seat's most recent election in the Election Division's certified results; the Pokagon Band's council is named from its own page. Nobody is named yet on the two state chambers, the school boards, the township boards or the smaller towns' councils, and the Data gaps panel says why.
 
 - [Indiana district lookup](https://districtry.com/in/): 12 layers, all 92 counties.
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
@@ -136,7 +136,7 @@ All 92 counties: townships, cities and towns, school districts, ZIP codes, and t
 
 ## North Carolina
 
-All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why.
+All 100 counties: each county's board of commissioners, townships, cities and towns, school districts, ZIP codes, the Eastern Band of Cherokee Indians' land, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. County commissioners are named for the winner of each seat's most recent election in the State Board of Elections' results. Nobody is named yet on the city councils, the school boards or the Eastern Band's council, and the Data gaps panel says why.
 
 - [North Carolina district lookup](https://districtry.com/nc/): 12 layers, all 100 counties.
 - [Who is my U.S. representative?](https://districtry.com/nc/congress.html)
@@ -173,7 +173,7 @@ All 95 counties and their county commission districts: cities and towns, school 
 
 - [Tennessee district lookup](https://districtry.com/tn/): 13 layers, all 95 counties.
 - [Who is my U.S. representative?](https://districtry.com/tn/congress.html)
-- [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 54 of them, each naming every member with whatever contact details that county publishes.
+- [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 56 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/tn/sources.html)
 - [Who is my Tennessee legislator?](https://districtry.com/tn/state-legislature.html)
 - [Tennessee district questions](https://districtry.com/tn/faq.html)

@@ -662,7 +662,7 @@
       "rank_comment": [
         "CCPSA District Council shares the police-district geometry exactly (22,",
         "one council per district); place it just after so its outline draws on",
-        "top when both are on and its distinct teal dash stays legible."
+        "top when both are on, its teal line over the red one beneath it."
       ],
       "source": {
         "answers": "The elected District Council for this police district, under the Community Commission for Public Safety and Accountability.",
@@ -990,7 +990,7 @@
   "negative_point": {
     "lat": 41.7,
     "lng": -87.1,
-    "note": "Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing \"where we serve\" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points."
+    "note": "Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing \"where we serve\" bound to suit a test. So the point stays. Two checks put it at the map's centre, and until 2026-10-13 both had to refuse ../fleet-outlines.json, because the map then switched apps whenever its centre crossed into a sibling's state; panning no longer does that, so neither refuses anything, and a selection the app makes itself never leaves. Check 1i is where Illinois asserts fleet routing, on its own points, and that panning across a state line stays here."
   },
   "coverage_key": {
     "outside": "Outside Illinois",
@@ -3357,10 +3357,6 @@
     "shell_urls": [
       "./",
       "./sources.html",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
-      "./icons/icon-maskable-512.png",
       "./icons/apple-touch-icon.png",
       "./icons/water-taxi.png",
       "./icons/seals/cook-county.png",

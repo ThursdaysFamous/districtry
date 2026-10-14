@@ -569,8 +569,9 @@ def render():
         if kind == "map-link lookup":
             w("districtry's own service (`services/link-lookup/main.ts`, on Deno")
             w("Deploy). It receives **a short Google Maps or Apple Maps link**, and")
-            w("only when a reader pastes one, and answers with the full link it leads")
-            w("to. `build_privacy_page.py` names it as a recipient.")
+            w("only when a reader pastes one or shares one into the installed app,")
+            w("and answers with the full link it leads to. `build_privacy_page.py`")
+            w("names it as a recipient.")
             w("")
         if kind == "library CDN":
             w("Pinned: " + ", ".join("**%s %s**" % (n, v) for n, v in pins) + ".")
