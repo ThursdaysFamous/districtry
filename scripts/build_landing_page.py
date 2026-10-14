@@ -967,6 +967,8 @@ def build():
 </script>
 <script>
 %(themeboot)s
+</script>
+<script>
 %(playapp)s
 </script>
 <style>

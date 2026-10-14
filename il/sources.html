@@ -118,6 +118,8 @@
   }
 })();
 /* ==== ENGINE:END theme-boot ==== */
+</script>
+<script>
 /* ==== ENGINE:BEGIN play-app ==== */
 /* THE GOOGLE PLAY APP'S MARK, in ONE copy, for the pages that show a
    support link: every app, every sources page, the front page and the
@@ -125,14 +127,27 @@
 
    districtry's Android app on Google Play is this site in a full-screen
    Chrome window (a Trusted Web Activity), so it shows these same pages.
-   Google Play's Payments policy does not let an app send a reader to a
+   Google Play's Payments policy does not let an app lead a reader to a
    payment method other than Google's own billing, and Google applies that
-   to donations: in February 2022 it rejected StreetComplete, an open-source
-   map app, for a donation link to its GitHub project page, and accepted it
-   once the link was gone. So inside the Play app the links to GitHub
-   Sponsors and to the sponsorship page are hidden. The website keeps them,
-   and so does a copy installed from the browser's own menu, which no store
-   reviews.
+   to donations: in February 2022 it rejected an update of StreetComplete,
+   an open-source map app, for asking for donations, rejected it again once
+   the donation links were gone and a link to the project's GitHub page,
+   which asks for donations, was left, and accepted it when that link went
+   too (github.com/streetcomplete/StreetComplete/issues/3768). So inside the
+   Play app the links to GitHub Sponsors and to the sponsorship page are
+   hidden. The website keeps them, and so does a copy installed from the
+   browser's own menu, which no store reviews.
+
+   THE LINKS TO THIS PROJECT'S CODE ON GITHUB STAY, and that is a judgement
+   rather than a measurement. They sit in no sentence about money, which the
+   StreetComplete link did, but the repository's page shows a Sponsor
+   button. If a review objects to them, they join the rule below and the app
+   itself needs no rebuild, because it loads these pages.
+
+   THIS BLOCK IS ITS OWN <script> ELEMENT on every page, never a second
+   block inside the theme script, because scripts/question_page.py copies a
+   sources page's theme script into the question pages it generates, and
+   those pages carry no support link.
 
    HOW A WINDOW IS KNOWN TO BE THE PLAY APP. The app is built to open
    /app/?ref=play, and the launcher passes ref=play on, and nothing else, to
