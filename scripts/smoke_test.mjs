@@ -1345,6 +1345,43 @@ try {
         `first=${JSON.stringify(first)} after reload=${JSON.stringify(second)}`);
       await context.close();
     }
+    // A PLACE SHARED INTO THE APP. The launcher (/app/) hands it over as #q=,
+    // in the shape Android shares a Google Maps place (its name, then the
+    // link), and leaves districtry-share-in in session storage. The app must
+    // select the place the link names, read in the browser, and count the
+    // share once, by app and never by place; a reload counts nothing more.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await context.addInitScript(() => {
+        try {
+          if (!sessionStorage.getItem("__shareSeeded")) {
+            sessionStorage.setItem("__shareSeeded", "1");
+            sessionStorage.setItem("districtry-share-in", "1");
+          }
+        } catch (e) { /* blocked storage: the count check below reports it */ }
+      });
+      const SHARED = "Willis Tower https://www.google.com/maps/place/Willis+Tower/@41.8789,-87.6359,17z/data=!3m1!4b1!8m2!3d41.8788761!4d-87.6359149";
+      const page = await booted(context, `${BASE}#q=${encodeURIComponent(SHARED)}`, stubCounter);
+      const sel = await page.waitForFunction((n) => !!window[n].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME), () => null);
+      await page.waitForTimeout(300);
+      const shareEvents = () => page.evaluate(() => (window.__gcEvents || [])
+        .filter((v) => v && v.event && /^(share-in|map-link)\//.test(v.path)).map((v) => v.path));
+      const first = await shareEvents();
+      const mark = await page.evaluate(() => sessionStorage.getItem("districtry-share-in"));
+      check("a place shared into the app is selected from its link, read in the browser",
+        !!sel && Math.abs(sel.lat - 41.8788761) < 1e-5 && Math.abs(sel.lng - -87.6359149) < 1e-5,
+        JSON.stringify(sel));
+      check("the share is counted once, by app, and its mark removed",
+        first.filter((e) => e.indexOf("share-in/") === 0).join() === `share-in/${TAG}` && mark === null,
+        JSON.stringify({ events: first, mark }));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const again = (await shareEvents()).filter((e) => e.indexOf("share-in/") === 0);
+      check("a reload in the same window counts the share no more", again.length === 0, JSON.stringify(again));
+      await context.close();
+    }
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
         userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });
@@ -1361,6 +1398,62 @@ try {
       const events = await installEvents(page);
       check("closing the tip removes it, and the tip and its closing are each counted once",
         gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
+      await context.close();
+    }
+  }
+
+  // 1m. INSIDE THE GOOGLE PLAY APP THE SUPPORT LINKS ARE HIDDEN, AND ONLY
+  //     THERE (engine/shared/play-app.txt). The Play app is this site in a
+  //     full-screen Chrome window and Google Play does not allow an app to
+  //     send readers to an outside payment page, so a window the app opened
+  //     (it arrives with ?ref=play, passed on by the launcher) hides every
+  //     link to GitHub Sponsors and to the sponsorship page: the panel's
+  //     sponsorship sentence and its Sponsorship link. (The page's old footer
+  //     carries a third, and the skin has drawn that footer nowhere since the
+  //     redesign, so it is counted in `anywhere` and not in the panel.) The
+  //     mark is kept for the window, so the next page hides them with no tag
+  //     in its address. A plain visit must keep the panel's links, which is
+  //     the half that stops a rule hiding them everywhere from passing.
+  {
+    const supportShown = (p) => p.evaluate(() => {
+      const visible = (el) => !!el && el.getClientRects().length > 0;
+      const all = (sel) => Array.prototype.slice.call(document.querySelectorAll(sel));
+      const support = ['a[href*="github.com/sponsors"]', 'a[href*="sponsorship.html"]'];
+      return {
+        marked: document.documentElement.classList.contains("dst-play-app"),
+        kept: (function () { try { return sessionStorage.getItem("districtry-play-app"); } catch (e) { return "blocked"; } })(),
+        sentence: visible(document.querySelector(".dpf-support")),
+        panel: all(support.map((sel) => "#districtry-panel-foot " + sel).join(", ")).map(visible),
+        anywhere: all(support.join(", ")).filter(visible).length,
+      };
+    });
+    const noCounter = async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    };
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}?ref=play`, noCounter);
+      const inApp = await supportShown(page);
+      check("in the Play app every support link on the map page is hidden",
+        inApp.marked && inApp.kept === "1" && !inApp.sentence &&
+          inApp.panel.length >= 3 && inApp.panel.every((v) => !v) && inApp.anywhere === 0,
+        JSON.stringify(inApp));
+      await page.goto(`${BASE}sources.html`, { waitUntil: "domcontentloaded" });
+      const next = await supportShown(page);
+      check("the mark carries to the next page in the window, with no tag in its address",
+        next.marked && next.anywhere === 0 &&
+          (await page.locator('a[href*="github.com/sponsors"]').count()) >= 1,
+        JSON.stringify(next));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE, noCounter);
+      const web = await supportShown(page);
+      check("on the website the map page keeps its support links",
+        !web.marked && web.kept === null && web.sentence &&
+          web.panel.length >= 3 && web.panel.every((v) => v),
+        JSON.stringify(web));
       await context.close();
     }
   }

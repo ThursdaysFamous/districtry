@@ -662,7 +662,7 @@
       "rank_comment": [
         "CCPSA District Council shares the police-district geometry exactly (22,",
         "one council per district); place it just after so its outline draws on",
-        "top when both are on and its distinct teal dash stays legible."
+        "top when both are on, its teal line over the red one beneath it."
       ],
       "source": {
         "answers": "The elected District Council for this police district, under the Community Commission for Public Safety and Accountability.",

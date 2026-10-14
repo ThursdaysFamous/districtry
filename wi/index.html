@@ -3825,6 +3825,93 @@ svg.leaflet-image-layer.leaflet-interactive path {
     document.documentElement.setAttribute("data-theme", t);
   })();
 </script>
+<script>
+/* ==== ENGINE:BEGIN play-app ==== */
+/* THE GOOGLE PLAY APP'S MARK, in ONE copy, for the pages that show a
+   support link: every app, every sources page, the front page and the
+   sponsorship page. The installed app's launcher (/app/) carries it too,
+   though it shows no support link, because a place shared into the app
+   arrives there (see below).
+
+   districtry's Android app on Google Play is this site in a full-screen
+   Chrome window (a Trusted Web Activity), so it shows these same pages.
+   Google Play's Payments policy does not let an app lead a reader to a
+   payment method other than Google's own billing, and Google applies that
+   to donations: in February 2022 it rejected an update of StreetComplete,
+   an open-source map app, for asking for donations, rejected it again once
+   the donation links were gone and a link to the project's GitHub page,
+   which asks for donations, was left, and accepted it when that link went
+   too (github.com/streetcomplete/StreetComplete/issues/3768). So inside the
+   Play app the links to GitHub Sponsors and to the sponsorship page are
+   hidden. The website keeps them, and so does a copy installed from the
+   browser's own menu, which no store reviews.
+
+   THE LINKS TO THIS PROJECT'S CODE ON GITHUB STAY, and that is a judgement
+   rather than a measurement. They sit in no sentence about money, which the
+   StreetComplete link did, but the repository's page shows a Sponsor
+   button. If a review objects to them, they join the rule below and the app
+   itself needs no rebuild, because it loads these pages.
+
+   THIS BLOCK IS ITS OWN <script> ELEMENT on every page, never a second
+   block inside the theme script, because scripts/question_page.py copies a
+   sources page's theme script into the question pages it generates, and
+   those pages carry no support link.
+
+   HOW A WINDOW IS KNOWN TO BE THE PLAY APP. The app is built to open
+   /app/?ref=play, and the launcher passes ref=play on, and nothing else, to
+   the page it opens: a URL is how the Trusted Web Activity documentation
+   says an app passes data to its pages. A page whose referrer is the app
+   itself (android-app://com.districtry.app, the package name the setup
+   guide builds) is marked too. Chrome names the Android app that opened a
+   page as its referrer, which is how a link tapped in Gmail arrives as
+   android-app://com.google.android.gm, so this should cover a shared link
+   opened straight into the app rather than through its icon. A place shared
+   from another app's Share menu takes that path into the LAUNCHER (the
+   manifest's share_target), which hands on with location.replace, so the
+   page it opens sees the launcher as its referrer rather than the app: the
+   launcher carries this block for that reason, and passes ref=play on when
+   it finds the mark. The referrer path is not yet measured on a phone; the
+   first is the one the app's own launches take, and both are tested here
+   with the referrer stood in for. Either sets a mark in session
+   storage, so every later page in the same window (another state, a sources
+   page, the front page) hides the links as well, and the mark goes when the
+   app is closed. Session storage belongs to one window, so the mark never
+   reaches the reader's ordinary browser tabs.
+
+   WHAT IS HIDDEN is matched by address rather than by a class, so a support
+   link added later to any page carrying this block is hidden in the Play app
+   without anyone remembering to mark it: every link to github.com/sponsors
+   or to sponsorship.html, and the paragraph or list item around one, because
+   a sentence asking for sponsorship reads wrong with its link taken out.
+   The :has() selectors are a rule of their own because a browser that does
+   not know :has() drops every selector in a rule that names it, and the
+   app panel's sponsorship sentence, .dpf-support, is named by class in the
+   first rule for that browser.
+
+   It runs in the head, before first paint, so the links never flash, and an
+   ordinary visit adds no style at all. */
+(function () {
+  var opened = /(?:^|&)ref=play(?:&|$)/.test(location.search.slice(1)) ||
+    /^android-app:\/\/com\.districtry\.app(?:\/|$)/.test(document.referrer || "");
+  var marked = opened;
+  try {
+    if (opened) sessionStorage.setItem("districtry-play-app", "1");
+    else marked = sessionStorage.getItem("districtry-play-app") === "1";
+  } catch (e) { /* blocked storage: only the page the app opened is marked */ }
+  if (!marked) return;
+  document.documentElement.classList.add("dst-play-app");
+  var css = document.createElement("style");
+  css.textContent =
+    ".dst-play-app a[href*=\"github.com/sponsors\"]," +
+    ".dst-play-app a[href*=\"sponsorship.html\"]," +
+    ".dst-play-app .dpf-support{display:none!important}" +
+    ".dst-play-app p:has(a[href*=\"github.com/sponsors\"])," +
+    ".dst-play-app li:has(a[href*=\"github.com/sponsors\"])," +
+    ".dst-play-app li:has(a[href*=\"sponsorship.html\"]){display:none!important}";
+  document.head.appendChild(css);
+})();
+/* ==== ENGINE:END play-app ==== */
+</script>
 </head>
 <body>
 
@@ -8077,7 +8164,8 @@ function initWisconsinExplorer() {
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one.
+   * Only a short link is ever sent to it, and only when a reader pastes one
+   * or shares one into the installed app.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
@@ -13343,9 +13431,10 @@ function initWisconsinExplorer() {
     label: "County Board District",
     overlay: {
       load: loadSupervisoryDistricts,
-      // solid green, light fill — the only political layer drawn inside a
-      // county, so it reads against County's grey and the chambers' dashes
-      style: { color: "#1B5E3F", weight: 1.5, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+      // solid county-board blue, light fill (layer-concepts.json `colors`) —
+      // the only political layer drawn inside a county, so it reads against
+      // County's grey and the chambers' purples
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       // same two properties the card's header and County row read, so hover
@@ -13570,8 +13659,8 @@ function initWisconsinExplorer() {
     label: "Court of Appeals District",
     overlay: {
       load: loadCoaDistricts,
-      // plum, long-dashed — the broadest political boundary after Congress
-      style: { color: "#5B2A86", weight: 2, fillColor: "#5B2A86", fillOpacity: 0.04, dashArray: "10 4" }
+      // the fleet's appellate-court brown (layer-concepts.json `colors`) — the broadest political boundary after Congress
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.04 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13666,8 +13755,9 @@ function initWisconsinExplorer() {
     label: "Circuit Court",
     overlay: {
       load: loadCircuitCourts,
-      // deep violet, the crib's judicial hue — distinct from every chamber dash
-      style: { color: "#4A2E8C", weight: 1.5, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "6 3" }
+      // the fleet's trial-court orchid (layer-concepts.json `colors`), distinct
+      // from every chamber's colour
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13791,8 +13881,8 @@ function initWisconsinExplorer() {
     subOf: "county",
     overlay: {
       load: loadCountySubdivisions,
-      // long-dash brown — reads apart from Municipality's tight magenta dots
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      // the fleet's township brown (layer-concepts.json `colors`), apart from Municipality's magenta
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13939,8 +14029,8 @@ function initWisconsinExplorer() {
       "the County Subdivision card names the town it is in.",
     overlay: {
       load: loadPlaces,
-      // tight magenta dots; an empty card here honestly means "unincorporated"
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      // the fleet's municipality magenta (layer-concepts.json `colors`); an empty card here honestly means "unincorporated"
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14329,9 +14419,10 @@ function initWisconsinExplorer() {
     // shape (docs/EXPANSION_GUIDE.md Part 4, nesting determination)
     overlay: {
       load: loadWards,
-      // fine dotted amber — the smallest containment fabric on the map, kept
-      // visually below its county-subdivision parent's long brown dash
-      style: { color: "#8C6D1F", weight: 1, fillColor: "#C9A227", fillOpacity: 0.04, dashArray: "1 3" }
+      // thin solid navy, the fleet's precinct colour and line (layer-concepts.json
+      // `colors` and `lines`) — the smallest containment fabric on the map, kept
+      // visually below its county-subdivision parent by the thinner line
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -14530,7 +14621,7 @@ function initWisconsinExplorer() {
     // tile-overlay block): the whole file is 2.3 MB gzipped, the tile under a
     // point about 1 KB. Built and gated by scripts/build_vector_tiles.py
     tiles: "data/app/tiles/school-district-unified.pmtiles",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -14577,7 +14668,7 @@ function initWisconsinExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 6-7. Wisconsin State Senate + State Assembly ----------
@@ -14615,7 +14706,7 @@ function initWisconsinExplorer() {
     loadRoster: loadWiSenateMembers,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "WI Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -14629,7 +14720,7 @@ function initWisconsinExplorer() {
     loadRoster: loadWiAssemblyMembers,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "WI Assembly directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
   /* ---------- 8-9. School District (Union High / Elementary) ----------
@@ -14653,7 +14744,7 @@ function initWisconsinExplorer() {
     group: "schools",
     label: "School District (Union High)",
     loader: loadWiSchoolSecondary,
-    style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.05, dashArray: "10 4" },
+    style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -14667,7 +14758,7 @@ function initWisconsinExplorer() {
     group: "schools",
     label: "School District (Elementary)",
     loader: loadWiSchoolElementary,
-    style: { color: "#B26A00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05, dashArray: "3 3" },
+    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -14775,9 +14866,9 @@ function initWisconsinExplorer() {
     // plan chose deliberately for a layer that elects no one.
     overlay: {
       load: loadAldermanicDistricts,
-      // warm sienna — a municipal-politics hue, distinct from the violet
-      // judicial pair and the amber ward dots beneath it
-      style: { color: "#A0522D", weight: 1.5, fillColor: "#A0522D", fillOpacity: 0.05, dashArray: "4 2" }
+      // the fleet's city-council blue and solid line (layer-concepts.json
+      // `colors` and `lines`), heavier than the navy wards beneath it
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -15001,8 +15092,8 @@ function initWisconsinExplorer() {
     },
     overlay: {
       load: loadElectedBoardDistricts,
-      // the reference instance's elected-school-board green, kept for parity
-      style: { color: "#2E8C6A", weight: 2, fillColor: "#2E8C6A", fillOpacity: 0.05, dashArray: "2 2" }
+      // the fleet's school-board indigo (layer-concepts.json `colors`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -15132,9 +15223,9 @@ function initWisconsinExplorer() {
     },
     overlay: {
       load: loadWtcsDistricts,
-      // a teal apart from the school-district greens, dashed like the
-      // other derived/administrative tilings
-      style: { color: "#1F7A8C", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05, dashArray: "6 3" }
+      // the fleet's community-college teal (layer-concepts.json `colors`),
+      // apart from the school-district greens
+      style: { color: "#1A7789", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05 }
     },
     query: function (point, seq) {
       return queryFeatureAt(loadWtcsDistricts, point).then(function (feature) {
@@ -15198,7 +15289,7 @@ function initWisconsinExplorer() {
     overlay: {
       load: loadMpdDistricts,
       // the reference instance's police-district crimson, kept for parity
-      style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06, dashArray: "2 6" }
+      style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06 }
     },
     // same hover the polygon factory derived: the primary field's raw value
     hoverName: function (feature) {
@@ -15276,7 +15367,7 @@ function initWisconsinExplorer() {
     coverage: milwaukeeCoverage,
     loader: loadMilwaukeeNeighborhoods,
     // the reference instance's community-area green, kept for parity
-    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.06, dashArray: "5 3" },
+    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.06 },
     fields: [
       { name: "name", label: "Neighborhood", keys: ["name"], primary: true }
     ],
@@ -15395,7 +15486,7 @@ function initWisconsinExplorer() {
     },
     loader: loadTidDistricts,
     // the reference instance's tif-district purple, kept for parity
-    style: { color: "#6A4A93", weight: 2, fillColor: "#8E6BB8", fillOpacity: 0.10, dashArray: "4 3" },
+    style: { color: "#6A4A93", weight: 2, fillColor: "#8E6BB8", fillOpacity: 0.10 },
     fields: [
       { name: "name", label: "TID", keys: ["name"], primary: true },
       { name: "tid", label: "District number", keys: ["tid"] },
@@ -15440,7 +15531,7 @@ function initWisconsinExplorer() {
       load: loadMadisonAssocs,
       // a sibling hue to the Milwaukee neighborhood green, one step bluer,
       // so the two city fabrics read as kin without colliding
-      style: { color: "#2F6B5E", weight: 1.5, fillColor: "#4E8F80", fillOpacity: 0.06, dashArray: "5 3" }
+      style: { color: "#2F6B5E", weight: 1.5, fillColor: "#4E8F80", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var v = (feature.properties || {}).NAME;
@@ -15601,7 +15692,7 @@ function initWisconsinExplorer() {
     about: "A dispatch service area from the state's NG911 dataset — who responds here, not a taxing district and not an elected body.",
     loader: loadFireServiceAreas,
     // the reference instance's fire-district red, kept for parity
-    style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05 }
   });
   registerNg911ServiceLayer({
     id: "law-service",
@@ -15610,7 +15701,7 @@ function initWisconsinExplorer() {
     noun: "law-enforcement",
     about: "A dispatch service area from the state's NG911 dataset — who responds here, not a taxing district and not an elected body.",
     loader: loadLawServiceAreas,
-    style: { color: "#2F5D8C", weight: 1.5, fillColor: "#4A7BB0", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#2F5D8C", weight: 1.5, fillColor: "#4A7BB0", fillOpacity: 0.05 }
   });
   registerNg911ServiceLayer({
     id: "ems-service",
@@ -15619,7 +15710,7 @@ function initWisconsinExplorer() {
     noun: "EMS",
     about: "A dispatch service area from the state's NG911 dataset — the emergency medical service dispatched here, not a taxing district and not an elected body.",
     loader: loadEmsServiceAreas,
-    style: { color: "#B45309", weight: 1.5, fillColor: "#D97706", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#B45309", weight: 1.5, fillColor: "#D97706", fillOpacity: 0.05 }
   });
   registerNg911ServiceLayer({
     id: "psap-area",
@@ -15628,7 +15719,7 @@ function initWisconsinExplorer() {
     noun: "911 answering-point",
     about: "The public safety answering point from the state's NG911 dataset — the dispatch center that answers a 911 call placed here, not a taxing district and not an elected body.",
     loader: loadPsapAreas,
-    style: { color: "#0F766E", weight: 1.5, fillColor: "#14A38F", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#0F766E", weight: 1.5, fillColor: "#14A38F", fillOpacity: 0.05 }
   });
 
   /* ---------- 10. ZIP Code (statewide ZCTA) ----------
@@ -15855,8 +15946,8 @@ function initWisconsinExplorer() {
     // true. What is left is a point inside Wisconsin that no ZCTA covers, so the
     // note now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
-    // dotted outline (distinct pattern from County Subdivision's long dash) + different hue
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true }
     ],
@@ -15945,8 +16036,8 @@ function initWisconsinExplorer() {
   registerNearestPointLayer({
     id: "police-station",
     group: "safety",
-    color: "#0B5394",
-    fill: "#41B6E6",
+    color: "#1B4F8C",
+    fill: "#7FA8D9",
     label: "Police Station",
     loader: usgsStructuresLoader(USGS_POLICE_LAYER, "USGS structures layer 53"),
     intro: "Nearest police stations (USGS National Map structures data), straight-line distance:",
@@ -15957,8 +16048,8 @@ function initWisconsinExplorer() {
   registerNearestPointLayer({
     id: "fire-station",
     group: "safety",
-    color: "#7A0B1E",
-    fill: "#C8102E",
+    color: "#A3341F",
+    fill: "#E8927C",
     label: "Fire Station",
     loader: usgsStructuresLoader(USGS_FIRE_LAYER, "USGS structures layer 51"),
     intro: "Nearest fire stations (USGS National Map structures data), straight-line distance:",
@@ -16097,7 +16188,7 @@ function initWisconsinExplorer() {
   //   id: "state-senate", label: "State Senate District", layerIndex: 1,
   //   districtFields: ["sldust", "sldu"], directoryUrl: "https://example.gov/senate/members",
   //   loadRoster: makeCached(function () { return fetchJSONWithRetry("data/app/state-senate-members.json", {}, 2); }),
-  //   style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+  //   style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   // });
 
   // registerNearestPointLayer — nearest-N amenity points (fire stations,
@@ -18058,19 +18149,20 @@ function initWisconsinExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#0F766E": "#50C7BC", "#14181C": "#696F76",
-    "#14A38F": "#41EED2", "#1B5E3F": "#5FB387", "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BB",
-    "#1F7A8C": "#58C8E1", "#2E8C6A": "#62DAAC", "#2E9E6B": "#5BEAA5", "#2F5D8C": "#6EACED",
-    "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBDAA", "#3D6B49": "#7EBC8D", "#3D95A6": "#6CDEF5",
-    "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#4E8F80": "#83DAC5",
-    "#5B2A86": "#B375F2", "#5C8F6B": "#95D9A9", "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6",
-    "#6B7280": "#B1BBCE", "#7A0A1C": "#EB5B61", "#7A0B1E": "#EA5C63", "#7A5C3E": "#CFA57D",
-    "#8163AE": "#CAAAFF", "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8C6D1F": "#DEB452",
-    "#8E6BB8": "#D3B3FE", "#9C0B24": "#FE6B6E", "#A0522D": "#FE9666", "#A98B6C": "#F3CBA1",
-    "#B02E2E": "#FE8880", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B26A00": "#FFB15F",
-    "#B45309": "#FEA16D", "#C8102E": "#FE928F", "#C9A227": "#FEE195", "#D0564C": "#FEB1A7",
-    "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7", "#D97706": "#FEC9A1", "#E4572E": "#FFBCA9"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#0F766E": "#50C7BC",
+    "#14181C": "#696F76", "#14A38F": "#41EED2", "#1A7789": "#55C6DF", "#1B4F8C": "#5CA0F5",
+    "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
+    "#2F5D8C": "#6EACED", "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBDAA", "#3B8FD4": "#A5D2FD",
+    "#3D6B49": "#7EBC8D", "#3D95A6": "#6CDEF5", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#83DC93", "#4E8F80": "#83DAC5", "#585EDD": "#A7B4FE", "#5C8F6B": "#95D9A9",
+    "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
+    "#7A0A1C": "#EB5B61", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
+    "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8E6BB8": "#D3B3FE", "#9550B2": "#E09BFE",
+    "#9C0B24": "#FE6B6E", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B02E2E": "#FE8880", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B45309": "#FEA16D",
+    "#C8102E": "#FE928F", "#D0564C": "#FEB1A7", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7",
+    "#D97706": "#FEC9A1", "#E4572E": "#FFBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
@@ -18713,13 +18805,29 @@ function initWisconsinExplorer() {
      3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
         browser reports an install, `app-launch/<tag>` once per launch of the
         installed app (DST_APP_LAUNCH_KEY in session storage marks the window
-        as counted), and `install-invite/<what>` for the invitation: shown,
-        accepted, declined or closed, and tip-shown or tip-closed on an iPhone.
-        A launch is counted at boot, before GoatCounter's script has always
-        arrived, so these wait for it rather than being lost. */
+        as counted), `install-invite/<what>` for the invitation: shown,
+        accepted, declined or closed, and tip-shown or tip-closed on an iPhone,
+        and `share-in/<tag>` when a place shared into the installed app opened
+        this app (below). A launch is counted at boot, before GoatCounter's
+        script has always arrived, so these wait for it rather than being lost.
+
+     4. A PLACE SHARED INTO THE APP. The manifest's share_target puts the
+        installed districtry in Android's Share menu and sends what was shared
+        to the launcher at /app/, which hands it here as #q= (the hash, which
+        never leaves the browser; the permalink block searches it) and leaves
+        DST_SHARE_IN_KEY in session storage. It is counted once and removed, so
+        the next page in the window does not count it again. The share arrives
+        in the address of a request for /app/, so the launcher's own worker
+        must answer it from its copy rather than the host: that worker is
+        registered here when districtry is installed and whenever the
+        installed app runs, so it is in place before the first share even if
+        the installed app has never been opened from its icon.
+        scripts/build_manifests.py --check holds the launcher to this key and
+        this block to the launcher's worker. */
   var DST_LAST_APP_KEY = "districtry-last-app";
   var DST_INSTALL_INVITE_KEY = "districtry-install-invite";
   var DST_APP_LAUNCH_KEY = "districtry-app-launch";
+  var DST_SHARE_IN_KEY = "districtry-share-in";
   var DST_INVITE_DELAY_MS = 3000;
   var dstFramed = (function () {
     try { return window.top !== window.self; } catch (e) { return true; }
@@ -18741,6 +18849,14 @@ function initWisconsinExplorer() {
   function dstInstalledLaunch() {
     return !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
       window.navigator.standalone === true);
+  }
+  /* The launcher's worker (app/sw.js, scope /app/), so a place shared into
+     the installed app is answered from the launcher's copy on the phone. */
+  function dstRegisterLauncher() {
+    if (dstFramed || !("serviceWorker" in window.navigator)) return;
+    try {
+      window.navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" })["catch"](function () {});
+    } catch (e) { /* the launcher registers it itself on its first launch */ }
   }
   function dstInviteSeen() {
     try { return !!window.localStorage.getItem(DST_INSTALL_INVITE_KEY); } catch (e) { return true; }
@@ -18816,11 +18932,22 @@ function initWisconsinExplorer() {
       try { window.sessionStorage.setItem(DST_APP_LAUNCH_KEY, "1"); } catch (e) { /* counted again on the next page in this window */ }
       dstCountWhenReady("app-launch/" + METRO_BRAND.instanceTag);
     }
+    dstRegisterLauncher();
+  }
+
+  if (!dstFramed) {
+    var dstSharedIn = false;
+    try {
+      dstSharedIn = !!window.sessionStorage.getItem(DST_SHARE_IN_KEY);
+      if (dstSharedIn) window.sessionStorage.removeItem(DST_SHARE_IN_KEY);
+    } catch (e) { dstSharedIn = false; }
+    if (dstSharedIn) dstCountWhenReady("share-in/" + METRO_BRAND.instanceTag);
   }
 
   window.addEventListener("appinstalled", function () {
     dstHideInvite();
     dstCountWhenReady("app-install/" + METRO_BRAND.instanceTag);
+    dstRegisterLauncher();
   });
 
   var dstHeldPrompt = null;
