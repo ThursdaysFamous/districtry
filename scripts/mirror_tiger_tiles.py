@@ -85,6 +85,18 @@ STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": 
 # records this host serving a districtry token (verdict token-ok).
 USER_AGENT = "districtry tiger-tile mirror (+https://districtry.com/)"
 
+# A fetched set in which one census feature is replaced by shipped features
+# before the archive is built, because the app's own loader makes the same
+# swap: (tag, layer) -> (file, the GEOID it replaces). The Census draws Chicago
+# as one subdivision, "Chicago city"; il/index.html's township loader puts
+# Chicago's eight townships in its place (scripts/build_chicago_townships.py),
+# so the archive holds them too and tile and file answer alike. The record
+# carries the file's SHA-256, and --check FAILS when the shipped file no
+# longer matches the one the archive was built with.
+SPLICES = {
+    ("il", "township"): ("il/data/app/chicago-townships.json", "1703114000"),
+}
+
 # (tag, layer id, service, layer index, outFields) — one app loader call each.
 MIRRORS = [
     ("il", "county", "State_County", 1, "GEOID,NAME,BASENAME,STATE,LSADC"),
@@ -321,6 +333,27 @@ def keep_in_state(fc, tag, work):
     return dropped
 
 
+def splice_shipped(fc, row):
+    """Put a SPLICES file's features where the census feature it replaces sat."""
+    sp = SPLICES.get((row["tag"], row["layer"]))
+    if not sp:
+        return
+    rel, geoid = sp
+    shipped = read_json(os.path.join(REPO_ROOT, rel)).get("features") or []
+    out, hits = [], 0
+    for f in fc["features"]:
+        if str((f.get("properties") or {}).get("GEOID")) == geoid:
+            out.extend(shipped)
+            hits += 1
+        else:
+            out.append(f)
+    if hits != 1:
+        raise RuntimeError("the census set holds %d features with GEOID %s, not the 1 %s replaces"
+                           % (hits, geoid, rel))
+    fc["features"] = out
+    row["_splice_sha256"] = sha256_file(os.path.join(REPO_ROOT, rel))
+
+
 def fetch_as_geojson(row, work):
     url = query_url(row)
     fields = row["fields"]
@@ -352,6 +385,7 @@ def fetch_as_geojson(row, work):
     row["_dropped"] = keep_in_state(fc, row["tag"], work) if row["env"] is not None else 0
     if not fc["features"]:
         raise RuntimeError("no feature overlaps the state")
+    splice_shipped(fc, row)
     canon = json.dumps(fc, sort_keys=True, separators=(",", ":")).encode()
     with open(out, "wb") as fh:
         fh.write(canon)
@@ -422,6 +456,8 @@ def refresh(only, force, n_points, seed):
                 "data_sha256": digest,
                 "archive_sha256": sha256_file(arch),
             }
+            if row.get("_splice_sha256"):
+                rec[k]["spliced"] = {"file": SPLICES[(tag, layer)][0], "sha256": row["_splice_sha256"]}
             if row["env"] is not None:
                 rec[k]["page_size"] = PAGE_SIZE
                 rec[k]["in_state"] = STATE_FIPS[tag]
@@ -488,6 +524,18 @@ def check():
         if r.get("query") != query_url(row):
             problems.append("%s was fetched with %s, which is not the query MIRRORS makes today — "
                             "--refresh it" % (k, r.get("query")))
+        sp = SPLICES.get((tag, layer))
+        if sp:
+            got = r.get("spliced") or {}
+            path = os.path.join(REPO_ROOT, sp[0])
+            if got.get("file") != sp[0]:
+                problems.append("%s: the archive was not built with %s in place of GEOID %s — "
+                                "--refresh --only %s" % (k, sp[0], sp[1], k))
+            elif not os.path.isfile(path) or sha256_file(path) != got.get("sha256"):
+                problems.append("%s: %s is not the file the archive was built with — "
+                                "--refresh --only %s --force" % (k, sp[0], k))
+        elif r.get("spliced"):
+            problems.append("%s records a spliced file SPLICES no longer lists" % k)
         if not os.path.isfile(arch):
             problems.append("%s: %s is missing" % (k, os.path.relpath(arch, REPO_ROOT)))
         elif sha256_file(arch) != r.get("archive_sha256"):
