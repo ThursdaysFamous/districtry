@@ -118,8 +118,8 @@ publishes finer lines than the Census does, the county's lines are the better
 answer. The case that prompted this is Chicago: the Census treats the whole city
 as one subdivision, "Chicago city", while Cook County's own map draws the eight
 townships inside it. A layer that answers "Chicago city" there does not pass:
-Adam ruled on 2026-10-14 that Illinois stays open on this level until the eight
-townships are drawn, and that work belongs to the state's thread. The general
+Adam ruled on 2026-10-14 that the level stays open until the finer lines are
+drawn, and Illinois's layer drew the eight townships the same day. The general
 rule is the same: where a county publishes finer lines that the Census map
 merges, the level is open until the finer lines are drawn.
 
