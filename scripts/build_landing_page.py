@@ -1789,6 +1789,15 @@ footer .support b { color: var(--ink); }
   function submitLink(link, q) {
     if (link && link.kind === "point") { routePoint(link.lat, link.lng); return; }
     if (link && link.kind !== "text") { resetButton(); setStatus(mapLinkMessage(link), true); return; }
+    searchAndRoute(q, link ? addressAfterName(q) : null);
+  }
+
+  /* `bare` is the address without the place's name in front of it, for
+   * text a map link carried, tried only when the whole text matches nothing
+   * (ENGINE map-link addressAfterName): a place shared from the Google Maps
+   * app is its name and its address in one string. Its answers count only
+   * if they carry its house number (labelCarriesNumber), as in the apps. */
+  function searchAndRoute(q, bare, mustCarry) {
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -1797,6 +1806,12 @@ footer .support b { color: var(--ink); }
       })
       .then(function (data) {
         var feats = (data && data.features) || [];
+        if (mustCarry) {
+          feats = feats.filter(function (f) {
+            return labelCarriesNumber(f && f.properties && f.properties.housenumber, mustCarry);
+          });
+        }
+        if (!feats.length && bare) { searchAndRoute(bare, null, bare); return; }
         return loadFleetOutlines().then(function (outlines) {
           if (!outlines) return routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare

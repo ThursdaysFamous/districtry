@@ -4346,6 +4346,23 @@ function initIndianaExplorer() {
     return METRO_NAME + " District Explorer";
   }
 
+  /* The place a reader is told this app covers, in the sentences that say
+     where a search or a located point fell: the brand's app name with the
+     product word taken off ("districtry Illinois" -> "Illinois"), which is how
+     build_history_page.py names an instance on its own page. METRO_NAME is
+     not that. It is the engine's handle for the fork, and Illinois's is still
+     "Chicago", where the app started, so until 2026-10-14 the statewide
+     Illinois app told a reader that an address in Peoria matched nothing
+     "inside Chicago". Falls back to METRO_NAME where no brand is declared,
+     which keeps such a fork's sentences as they were. */
+  function appPlaceName() {
+    if (typeof METRO_BRAND !== "undefined" && METRO_BRAND && METRO_BRAND.appName &&
+        METRO_BRAND.productName && METRO_BRAND.appName.indexOf(METRO_BRAND.productName + " ") === 0) {
+      return METRO_BRAND.appName.slice(METRO_BRAND.productName.length + 1);
+    }
+    return METRO_NAME;
+  }
+
   function siblingDisplayName(metro) {
     if (!metro) return "";
     return metro.explorerName || (metro.label + " District Explorer");
@@ -7024,7 +7041,7 @@ function initIndianaExplorer() {
             // standing inside a sibling's area: send them there, deep-linking
             // the located point (the URL fragment stays client-side, same
             // exposure as the sibling's own geolocate → permalink flow)
-            geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
+            geoStatusEl.textContent = "You're outside " + appPlaceName() + " — but " +
               siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
             trackLocateFail("other-app");
@@ -7032,7 +7049,7 @@ function initIndianaExplorer() {
             return;
           }
           trackLocateFail("outside");
-          geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
+          geoStatusEl.textContent = "Your current location looks like it's outside the " + appPlaceName() + " area this app covers.";
           geoStatusEl.className = "geo-status err";
         });
       },
@@ -8141,6 +8158,40 @@ function initIndianaExplorer() {
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a place's name before its address ----------
+   * A Google Maps link shared from the Android app carries no position. It
+   * names the place as one string, its name and then its address
+   * (?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=…), so
+   * parseMapLink returns it as text to search, and a geocoder often cannot
+   * match the two together: Photon answers nothing for that Starved Rock
+   * Lodge string, though it holds the lodge by name. So when text a map link
+   * carried matches nothing whole, the app's search box and the front
+   * door's both try the address alone. Returns null unless the text opens
+   * with words and a later part, after a comma, opens with a house number. */
+  function addressAfterName(q) {
+    var parts = String(q).split(",");
+    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    for (var i = 1; i < parts.length; i++) {
+      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+    }
+    return null;
+  }
+
+  /* Whether a geocoder's answer carries the house number an address opens
+   * with. An answer to the address alone is used only if it does, because
+   * a geocoder that does not hold the number answers with whatever partly
+   * matches. Measured on 2026-10-14: Photon holds no 2668 on East 875th Road
+   * (asked for it spelled out, it answers three stretches of that road, one
+   * 9 km from the lodge, and a building on it), and asked for "2668 E 875th
+   * Rd, Oglesby, IL 61348" it answered West 3rd Street and East 3rd Street
+   * in the town of Oglesby, about 6 km from the lodge. A single such answer
+   * would be selected as the place that was shared. */
+  function labelCarriesNumber(label, address) {
+    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    if (!m) return false;
+    return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
+  }
+
   /* A SHORT LINK holds no position: only Google or Apple knows where it
    * leads, and a page cannot ask them, because a browser does not let a page
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
@@ -8186,13 +8237,16 @@ function initIndianaExplorer() {
   /* ==== ENGINE:END map-link ==== */
 
   /* ==== ENGINE:BEGIN geocoder-search ==== */
-  function renderGeocodeResults(results) {
+  function renderGeocodeResults(results, fromLink) {
     // the district section (district-result / district-hint rows) is owned by
     // renderDistrictSection and stays on top; only address rows are replaced
     clearResultRows(false);
     if (!results || results.length === 0) {
       if (geoResultsList.querySelector("li.district-result")) { syncResultCount(); return; }
-      geoStatus.textContent = "No addresses matched inside " + METRO_NAME + " yet. Keep typing, or check the spelling.";
+      // "keep typing" is wrong for words the reader did not type: a link that
+      // names a place without saying where it is says so instead
+      geoStatus.textContent = fromLink ? mapLinkTextMessage(fromLink) :
+        "No addresses matched inside " + appPlaceName() + " yet. Keep typing, or check the spelling.";
       geoStatus.className = "geo-status err";
       return;
     }
@@ -8254,7 +8308,7 @@ function initIndianaExplorer() {
   }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
-  function maybeRenderSiblingMatches(query) {
+  function maybeRenderSiblingMatches(query, mustCarry) {
     var anySibling = METRO_EXPLORERS.some(function (m) { return m.id !== THIS_METRO && m.bbox; });
     if (!anySibling) return;
     // share the geocoder's abort slot so a new keystroke/search cancels this
@@ -8277,7 +8331,11 @@ function initIndianaExplorer() {
       })
       .then(function (got) {
         if (signal.aborted) return;
-        var results = got.results;
+        // held to the house number when the query is an address without
+        // the name it was shared with (runAddressSearch)
+        var results = !mustCarry ? got.results : got.results.filter(function (r) {
+          return labelCarriesNumber(r.display_name, mustCarry);
+        });
         var perMetro = {}; // id -> rows rendered
         var labels = [];
         results.forEach(function (r) {
@@ -8289,10 +8347,11 @@ function initIndianaExplorer() {
           if (labels.indexOf(metro.label) === -1) labels.push(metro.label);
           geoResultsList.appendChild(buildSiblingResultRow(metro, r));
         });
-        if (!labels.length) return; // leave the standard "no matches" status as-is
-        geoStatus.textContent = "Nothing in " + METRO_NAME + " matched — but it looks like you're searching " +
+        if (!labels.length) return 0; // leave the standard "no matches" status as-is
+        geoStatus.textContent = "Nothing in " + appPlaceName() + " matched — but it looks like you're searching " +
           labels.join(" and ") + ".";
         geoStatus.className = "geo-status";
+        return labels.length;
       })
       .catch(function (err) {
         if (err.name === "AbortError") throw err; // the callers' handlers ignore aborts
@@ -8801,7 +8860,7 @@ function initIndianaExplorer() {
     mapLinkController = new AbortController();
     return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
       if (seq !== districtSearchSeq) return;
-      if (full.kind === "text") return runGeocodeSearch(full.text);
+      if (full.kind === "text") return runGeocodeSearch(full.text, full);
       return showMapLink(full);
     }, function (err) {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
@@ -8835,10 +8894,10 @@ function initIndianaExplorer() {
     return li;
   }
 
-  function runGeocodeSearch(q) {
+  function runGeocodeSearch(q, fromLink) {
     var link = parseMapLink(q);
     if (link && link.kind !== "text") return showMapLink(link);
-    if (link) q = link.text;
+    if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
@@ -8852,23 +8911,79 @@ function initIndianaExplorer() {
         syncResultCount();
         return;
       }
-      return runAddressSearch(q);
+      return runAddressSearch(q, fromLink);
     });
   }
 
-  function runAddressSearch(q) {
-    return geocodeAddress(q).then(function (results) {
-      if (results && results.length) return renderGeocodeResults(results);
-      var cleaned = cleanPoiAddress(q);
-      if (cleaned === q) {
-        renderGeocodeResults(results);
-        return maybeRenderSiblingMatches(q);
+  /* What a reader is told when a link names a place without saying where it
+   * is and nothing here matched the name it gave. */
+  function mapLinkTextMessage(link) {
+    var name = link.source === "apple" ? "Apple Maps" : "Google Maps";
+    return "That " + name + " link names \u201c" + link.text + "\u201d but doesn't say where it is, " +
+      "and no address in " + appPlaceName() + " matched it. Find the place on the map and tap it.";
+  }
+
+  /* The text as it came first, then each retry only after a miss: without
+   * a unit fragment (cleanPoiAddress), then the sibling apps.
+   *
+   * TEXT A MAP LINK CARRIED gets two more tries, because a place shared from
+   * the Google Maps app is its name and its address in one string, which a
+   * geocoder often cannot match whole (ENGINE map-link addressAfterName).
+   * The address alone is tried here and then in the sibling apps, and an
+   * answer to it counts only if it carries the address's house number
+   * (labelCarriesNumber): without one the geocoder answers with streets that
+   * partly match, and a single such answer would be selected as the place.
+   * Last, the place's name alone, whose answers are listed and never
+   * selected, since a name can belong to another place; the reader can tell
+   * from the address on the row. Typed text gets none of these, so typing
+   * costs the geocoder no more requests than it did. */
+  function runAddressSearch(q, fromLink) {
+    var seq = districtSearchSeq;
+    var bare = fromLink ? addressAfterName(q) : null;
+    var name = bare ? q.split(",")[0].trim() : "";
+    var tries = [], held = [];
+    function add(t, mustCarry) {
+      if (t && tries.indexOf(t) < 0) { tries.push(t); held.push(mustCarry || null); }
+    }
+    add(q); add(cleanPoiAddress(q));
+    if (bare) { add(bare, bare); add(cleanPoiAddress(bare), bare); }
+    var i = 0;
+    function next(results) {
+      if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      if (results && held[i]) {
+        results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
       }
-      return geocodeAddress(cleaned).then(function (retry) {
-        renderGeocodeResults(retry);
-        if (!retry || retry.length === 0) return maybeRenderSiblingMatches(q);
+      if (results && results.length) return renderGeocodeResults(results);
+      if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
+      renderGeocodeResults(results, fromLink);
+      return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+        // 0, never undefined: an aborted or sibling-less lookup tries no more
+        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        return Promise.resolve(maybeRenderSiblingMatches(bare, bare)).then(function (again) {
+          if (again !== 0 || name.length < 3 || seq !== districtSearchSeq) return;
+          return geocodeAddress(name).then(function (named) {
+            if (seq !== districtSearchSeq || !named || !named.length) return;
+            renderNameMatches(named, name, bare);
+          });
+        });
       });
-    });
+    }
+    return geocodeAddress(tries[0]).then(next);
+  }
+
+  /* Places a link's name found after its address matched nothing anywhere.
+   * Marked so that #q= never selects one for the reader (prefillGeocodeSearch). */
+  function renderNameMatches(results, name, address) {
+    renderGeocodeResults(results);
+    var rows = geoResultsList.querySelectorAll("li");
+    for (var k = 0; k < rows.length; k++) {
+      if (!rows[k].className) rows[k].className = "name-result"; // the address rows just drawn
+    }
+    geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + address + "\u201d. " +
+      "A search for its name, \u201c" + name + "\u201d, found " +
+      (results.length === 1 ? "the place below. Pick it if it's the one you meant."
+                            : "the places below. Pick the one you meant, if it's there.");
+    geoStatus.className = "geo-status";
   }
 
   /* ---------- an address handed over in the URL (#q=) ----------
@@ -8886,14 +9001,16 @@ function initIndianaExplorer() {
    * It SELECTS a result only when the geocoder returns exactly one. Several
    * matches is the case where taking the first would name the wrong
    * officeholder, so the list stays up and the reader picks. A sibling-metro
-   * row is never auto-clicked — that button navigates to another instance. */
+   * row is never auto-clicked — that button navigates to another instance —
+   * and neither is a place found by a shared link's name alone
+   * (renderNameMatches), which may be another place of the same name. */
   function prefillGeocodeSearch(q) {
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
     return runGeocodeSearch(q).then(function () {
-      var own = geoResultsList.querySelectorAll("li:not(.sibling-result) > button");
+      var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
       if (own.length === 1) own[0].click();
     })["catch"](function (err) {
       if (err.name === "AbortError") return;

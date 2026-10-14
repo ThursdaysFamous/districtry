@@ -775,6 +775,88 @@ try {
     await context.close();
   }
 
+  // 1d4. A LINK FROM THE GOOGLE MAPS APP names a place with no position: it
+  //      resolves to ?q=<the place's name, its address>&ftid=…, which is what
+  //      a place shared into the installed app arrives as (SHARED is the
+  //      share as the launcher hands it on, its lines joined by spaces). The
+  //      whole string goes to the geocoder first; when it matches nothing,
+  //      the address alone does, and a single match CARRYING ITS HOUSE
+  //      NUMBER is selected. A street that only partly matches is not (the
+  //      3rd Street answer is what Photon really gave for this address).
+  //      Then the place's name alone, whose answer is listed and never
+  //      selected. When nothing matches at all, the reader is told the link
+  //      gave no position, in the app's own place name (Illinois's
+  //      METRO_NAME is still "Chicago"). Typed text gets no retries.
+  {
+    const SHARED = "Starved Rock Lodge 2668 E 875th Rd, Oglesby, IL 61348 https://maps.app.goo.gl/XyZ987";
+    const FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x880bd2e1b3a8f5d1:0x9b1c2d3e4f5a6b7c&entry=gps";
+    const NAMED = "Starved Rock Lodge, 2668 E 875th Rd, Oglesby, IL 61348";
+    const BARE = "2668 E 875th Rd, Oglesby, IL 61348";
+    const NAME = "Starved Rock Lodge";
+    const feature = (lng, lat, props) => ({ type: "Feature", geometry: { type: "Point", coordinates: [lng, lat] }, properties: props });
+    const HOUSE = feature(-88.9893, 41.3196, { housenumber: "2668", street: "East 875th Road", city: "Oglesby", state: "Illinois" });
+    const THIRD = feature(-89.0619, 41.2918, { name: "West 3rd Street", city: "Oglesby", state: "Illinois" });
+    const LODGE = feature(-88.9945, 41.3190, { name: "Starved Rock Lodge", street: "Fox Canyon Bridge", state: "Illinois" });
+    const run = async (hash, answer, settled) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const asked = [];
+      const page = await booted(context, `${BASE}#q=${encodeURIComponent(hash)}`, async (p) => {
+        await p.route("**/photon.komoot.io/**", (route) => {
+          const u = new URL(route.request().url());
+          const bounded = !!u.searchParams.get("bbox");
+          const q = u.searchParams.get("q");
+          asked.push((bounded ? "bounded:" : "unbounded:") + q);
+          route.fulfill({ status: 200, contentType: "application/json",
+            body: JSON.stringify({ type: "FeatureCollection", features: answer(q, bounded) }) });
+        });
+        await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+          route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: FULL }) });
+        });
+      });
+      await page.waitForFunction(settled, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForTimeout(300); // a selection, if one were coming, follows the list
+      const got = await page.evaluate((ns) => ({
+        point: window[ns].state.selectedPoint,
+        status: document.getElementById("geo-status").textContent,
+        rows: [...document.querySelectorAll("#geocode-results li")].map((li) => ({ cls: li.className, text: li.textContent })),
+      }), EXPORTS_NAME);
+      await context.close();
+      return { asked, got };
+    };
+    const selected = (ns) => !!window[ns].state.selectedPoint;
+    const found = await run(SHARED, (q, bounded) => (bounded && q === BARE ? [HOUSE] : []), selected);
+    check("a Google Maps app link's address is searched alone when its name and address match nothing",
+      found.asked[0] === "bounded:" + NAMED && found.asked.indexOf("bounded:" + BARE) > 0,
+      JSON.stringify(found.asked));
+    check("the one answer carrying the address's house number is selected",
+      !!found.got.point && Math.abs(found.got.point.lat - 41.3196) < 1e-6 && Math.abs(found.got.point.lng + 88.9893) < 1e-6,
+      JSON.stringify(found.got.point));
+    const named = await run(SHARED, (q, bounded) => (bounded && q === BARE ? [THIRD] : bounded && q === NAME ? [LODGE] : []),
+      () => /A search for its name/.test(document.getElementById("geo-status").textContent));
+    check("a street without the address's house number is never taken for the shared place",
+      !named.got.point && named.got.rows.every((r) => r.text.indexOf("3rd Street") < 0), JSON.stringify(named.got));
+    check("the place found by its name alone is listed, marked, and never selected",
+      !named.got.point && named.got.rows.length === 1 && named.got.rows[0].cls === "name-result" &&
+        named.got.rows[0].text.indexOf(NAME) >= 0 && named.got.status.indexOf(BARE) >= 0,
+      JSON.stringify(named.got));
+    check("the name alone is asked only after the address, here and in the sibling apps",
+      named.asked.indexOf("bounded:" + NAME) > named.asked.indexOf("unbounded:" + BARE) &&
+        named.asked.indexOf("unbounded:" + BARE) > named.asked.indexOf("unbounded:" + NAMED) &&
+        named.asked.indexOf("unbounded:" + NAMED) > named.asked.indexOf("bounded:" + BARE),
+      JSON.stringify(named.asked));
+    const missed = await run(SHARED, () => [],
+      () => /doesn't say where it is/.test(document.getElementById("geo-status").textContent));
+    check("a link naming a place nothing matches says the link gave no position, in the app's own place name",
+      !missed.got.point && missed.got.status.indexOf(NAMED) >= 0 && missed.got.status.indexOf(APP_NAME.replace(/^districtry /, "")) >= 0 &&
+        missed.got.status.indexOf("Chicago") < 0,
+      JSON.stringify(missed.got.status));
+    const typed = await run(NAMED, () => [], () => /No addresses matched inside/.test(document.getElementById("geo-status").textContent));
+    check("typed text that misses names the app's own place and is not retried without its name",
+      typed.asked.every((a) => a !== "bounded:" + BARE && a !== "unbounded:" + BARE && a !== "bounded:" + NAME) &&
+        typed.got.status.indexOf(APP_NAME.replace(/^districtry /, "")) >= 0 && typed.got.status.indexOf("Chicago") < 0,
+      JSON.stringify(typed));
+  }
+
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
   //     (dstFitMastheadActions) before the row would drop them below the
   //     search, which a reader saw as the search bar jumping from the middle

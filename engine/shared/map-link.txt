@@ -143,6 +143,40 @@
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a place's name before its address ----------
+   * A Google Maps link shared from the Android app carries no position. It
+   * names the place as one string, its name and then its address
+   * (?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=…), so
+   * parseMapLink returns it as text to search, and a geocoder often cannot
+   * match the two together: Photon answers nothing for that Starved Rock
+   * Lodge string, though it holds the lodge by name. So when text a map link
+   * carried matches nothing whole, the app's search box and the front
+   * door's both try the address alone. Returns null unless the text opens
+   * with words and a later part, after a comma, opens with a house number. */
+  function addressAfterName(q) {
+    var parts = String(q).split(",");
+    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    for (var i = 1; i < parts.length; i++) {
+      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+    }
+    return null;
+  }
+
+  /* Whether a geocoder's answer carries the house number an address opens
+   * with. An answer to the address alone is used only if it does, because
+   * a geocoder that does not hold the number answers with whatever partly
+   * matches. Measured on 2026-10-14: Photon holds no 2668 on East 875th Road
+   * (asked for it spelled out, it answers three stretches of that road, one
+   * 9 km from the lodge, and a building on it), and asked for "2668 E 875th
+   * Rd, Oglesby, IL 61348" it answered West 3rd Street and East 3rd Street
+   * in the town of Oglesby, about 6 km from the lodge. A single such answer
+   * would be selected as the place that was shared. */
+  function labelCarriesNumber(label, address) {
+    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    if (!m) return false;
+    return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
+  }
+
   /* A SHORT LINK holds no position: only Google or Apple knows where it
    * leads, and a page cannot ask them, because a browser does not let a page
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
