@@ -6735,7 +6735,6 @@
     "county": "Vermilion",
     "head": {
       "name": "Rickey Williams, Jr",
-      "phone": "217-431-2400",
       "role": "Mayor"
     },
     "name": "City of Danville",
@@ -18890,6 +18889,7 @@
       {
         "district": "At Large",
         "name": "Monique Davis",
+        "phone": "224-707-0733",
         "role": "Trustee"
       },
       {
@@ -24678,7 +24678,7 @@
     ],
     "county": "Lake",
     "head": {
-      "name": "Scott Nickles",
+      "name": "Scott R. Nickles",
       "role": "Mayor"
     },
     "name": "Village of Round Lake Beach",
