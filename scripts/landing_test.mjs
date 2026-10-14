@@ -522,7 +522,10 @@ try {
   // name and address in one string. When that matches nothing, the address
   // alone is asked, and an answer counts only if it carries the address's
   // house number (ENGINE map-link labelCarriesNumber): a street that merely
-  // partly matches must route nowhere. Typed text gets no such retry.
+  // partly matches must route nowhere. The address's own street in its own
+  // town, without the number (labelOnStreet), opens the app that covers it
+  // with what was typed, so that app shows the street (showStreetOnly).
+  // Typed text gets no such retry.
   {
     const NAMED = "Lambeau Field, 1265 Lombardi Ave, Green Bay, WI 54304";
     const BARE = "1265 Lombardi Ave, Green Bay, WI 54304";
@@ -533,6 +536,9 @@ try {
         asks: [NAMED, BARE], want: "/wi/" },
       { name: "a street without its house number opens nothing", text: FULL, answer: at({ street: "Lombardi Avenue" }),
         asks: [NAMED, BARE], want: "/" },
+      { name: "its street in its town, without the number, opens /wi/ with the link to show the street",
+        text: FULL, answer: at({ name: "Lombardi Avenue", city: "Green Bay", state: "Wisconsin", postcode: "54304" }),
+        asks: [NAMED, BARE], want: "/wi/", hash: "#q=" + encodeURIComponent(FULL) },
       { name: "the same words typed are not retried", text: NAMED, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
         asks: [NAMED], want: "/" },
     ]) {
@@ -550,7 +556,8 @@ try {
       await page.click("#search-button");
       await addressSettled(page);
       check(`a place's name and address that match nothing whole: ${c.name}`,
-        JSON.stringify(asked) === JSON.stringify(c.asks) && new URL(page.url()).pathname === c.want,
+        JSON.stringify(asked) === JSON.stringify(c.asks) && new URL(page.url()).pathname === c.want &&
+          (!c.hash || new URL(page.url()).hash === c.hash),
         JSON.stringify({ asked, url: page.url() }));
       await ctx.close();
     }

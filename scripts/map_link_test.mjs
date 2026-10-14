@@ -17,7 +17,7 @@ import path from "node:path";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const src = readFileSync(path.join(root, "engine/shared/map-link.txt"), "utf8");
-const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber };")();
+const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, addressParts, labelOnStreet };")();
 
 const near = (a, b) => Math.abs(a - b) < 1e-6;
 const cases = [
@@ -150,8 +150,62 @@ for (const [label, address, want] of carry) {
   }
 }
 
-const total = cases.length + 5 + bare.length + carry.length;
+// An address's parts, for the street it is on: the number, the street (a
+// unit at its end left off), the town before the state and the ZIP code.
+const parts = [
+  ["9 W Oakley Dr NW, Westmont, IL 60559", { number: "9", street: "W Oakley Dr NW", town: "Westmont", zip: "60559" }],
+  ["2935 S 6th St, Springfield, IL 62703, United States", { number: "2935", street: "S 6th St", town: "Springfield", zip: "62703" }],
+  ["100 Main St Suite 4, Peoria, IL", { number: "100", street: "Main St", town: "Peoria", zip: "" }],
+  ["89-11 Merrick Blvd, Jamaica, NY 11432", { number: "89-11", street: "Merrick Blvd", town: "Jamaica", zip: "11432" }],
+  ["Starved Rock Lodge", null],
+  ["2668 E 875th Rd", null],  // no town or ZIP to hold a street to
+];
+for (const [address, want] of parts) {
+  const got = api.addressParts(address);
+  if (JSON.stringify(got) !== JSON.stringify(want)) {
+    failed++;
+    console.error("map-link: FAIL addressParts(" + JSON.stringify(address) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  }
+}
+
+// An answer is on the address's street when one part names the same street,
+// abbreviated, and another is its town or ZIP code. The Westmont labels are
+// the six streets Photon answered on 2026-10-14 for the address of a place
+// Adam shared from the Google Maps app, on W Oakley Dr NW (its house number
+// is not repeated here), and only one of them is that street.
+const OAKLEY = "9 W Oakley Dr NW, Westmont, IL 60559";
+const street = [
+  ["West Oakley Drive Northwest, Westmont, Illinois, 60559", OAKLEY, true],
+  ["Oakley Drive North, Westmont, Illinois, 60559", OAKLEY, false],
+  ["Oakley Drive South, Westmont, Illinois, 60559", OAKLEY, false],
+  ["Oakley Drive West, Westmont, Illinois, 60559", OAKLEY, false],
+  ["Oakley Drive Southwest, Westmont, Illinois, 60559", OAKLEY, false],
+  ["West Oakley Drive Northwest, Westmont, Illinois", OAKLEY, true],                 // the town alone
+  ["West Oakley Drive Northwest, DuPage County, Illinois, 60559", OAKLEY, true],    // the ZIP code alone
+  ["West Oakley Drive Northwest, Downers Grove, Illinois, 60515", OAKLEY, false],   // another town's street
+  ["28 West Oakley Drive Northwest, Westmont, Illinois, 60559", OAKLEY, true],      // another number on it
+  ["Joe's, 40 West Oakley Drive Northwest, Westmont, Illinois, 60559", OAKLEY, true],
+  ["Oakley Drive, Westmont, Illinois, 60559", OAKLEY, true],                        // its directions left off
+  ["East Oakley Drive Northwest, Westmont, Illinois, 60559", OAKLEY, false],
+  ["West 3rd Street, Oglesby, Illinois", "2668 E 875th Rd, Oglesby, IL 61348", false],
+  ["East 875th Road, Oglesby, Illinois, 61348", "2668 E 875th Rd, Oglesby, IL 61348", true],
+  ["West North Avenue, Chicago, Illinois, 60622", "1600 North Ave, Chicago, IL 60622", true],
+  ["North Avenue, Chicago, Illinois", "1600 W North Ave, Chicago, IL 60622", true],  // a street named North
+  ["North Avenue, Chicago, Illinois", "1600 W Ave, Chicago, IL 60622", false],
+  ["North Northwest Highway, Chicago, Illinois", "5555 N Northwest Hwy, Chicago, IL 60630", true],
+  ["West Oakley Drive Northwest, Westmont, Illinois, 60559", "Oakley Cake Shop", false],    // a name, no address
+];
+for (const [label, address, want] of street) {
+  const got = api.labelOnStreet(label, address);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL labelOnStreet(" + JSON.stringify(label) + ", " + JSON.stringify(address) + ")\n  want " + want + "\n  got  " + got);
+  }
+}
+
+const total = cases.length + 5 + bare.length + carry.length + parts.length + street.length;
 if (failed) { console.error("map-link: " + failed + " of " + total + " checks failed"); process.exit(1); }
 console.log("map-link: OK — " + cases.length + " pasted texts read as expected; a short link is sent only to the lookup; " +
   bare.length + " place names split from their addresses as expected; " + carry.length +
-  " answers held to the address's house number as expected");
+  " answers held to the address's house number as expected; " + parts.length + " addresses split into their parts and " +
+  street.length + " answers held to the address's street as expected");
