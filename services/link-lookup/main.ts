@@ -24,8 +24,22 @@
 // reader's. privacy.html must name this lookup on the day an app's
 // MAP_LINK_LOOKUP points at it.
 //
-// Deploy: a Deno Deploy project linked to this repository with this file as
-// its entry point. It needs no settings and no secrets.
+// DEPLOY: the Deno Deploy app `link-lookup` in the `districtry` organization,
+// with this file as its entry point. It needs no settings and no secrets.
+// The app is NOT linked to this repository, and must not be linked again.
+// A linked app rebuilds on every push to every branch, and each build takes
+// a full copy of the repository: 200 MiB compressed, measured with
+// `git archive` on 2026-10-14. The app was linked on 2026-10-13, and in
+// about 21 hours there were 79 builds (26 from main, 53 from work branches),
+// about 15.5 GiB. The Free plan allows 20 GiB of egress a month, and Deno
+// sent a 75% usage alert the next morning. Adam unlinked the repository on
+// 2026-10-14. The version deployed then keeps serving.
+//
+// To change this file, deploy it by hand from this folder, so that the folder
+// is all that is uploaded:
+//   cd services/link-lookup && deno deploy --org districtry --app link-lookup --prod
+// Then check it answers: ?u=https://example.com/ must return a 400 that names
+// short links, and a real maps.app.goo.gl link must return {"url": ...}.
 
 const ALLOWED_ORIGINS = new Set([
   "https://districtry.com",
