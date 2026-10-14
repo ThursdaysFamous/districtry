@@ -1159,7 +1159,9 @@ def render_storage_paragraphs(apps):
                 "Google Play does not allow an app from its store to send readers to an "
                 "outside payment page. The website keeps those links. This is on %s. It is "
                 "erased when you close the app, and it never leaves your browser.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users)))))
         elif key == "districtry-boundary-streets":
             out.append(
                 "<p><strong>Boundary street names.</strong> If you switch the map's "
