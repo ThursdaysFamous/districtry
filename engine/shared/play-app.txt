@@ -1,6 +1,8 @@
 /* THE GOOGLE PLAY APP'S MARK, in ONE copy, for the pages that show a
    support link: every app, every sources page, the front page and the
-   sponsorship page.
+   sponsorship page. The installed app's launcher (/app/) carries it too,
+   though it shows no support link, because a place shared into the app
+   arrives there (see below).
 
    districtry's Android app on Google Play is this site in a full-screen
    Chrome window (a Trusted Web Activity), so it shows these same pages.
@@ -34,9 +36,14 @@
    guide builds) is marked too. Chrome names the Android app that opened a
    page as its referrer, which is how a link tapped in Gmail arrives as
    android-app://com.google.android.gm, so this should cover a shared link
-   opened straight into the app rather than through its icon. That second
-   path is not yet measured on a phone; the first is the one the app's own
-   launches take, and the one tested here. Either sets a mark in session
+   opened straight into the app rather than through its icon. A place shared
+   from another app's Share menu takes that path into the LAUNCHER (the
+   manifest's share_target), which hands on with location.replace, so the
+   page it opens sees the launcher as its referrer rather than the app: the
+   launcher carries this block for that reason, and passes ref=play on when
+   it finds the mark. The referrer path is not yet measured on a phone; the
+   first is the one the app's own launches take, and both are tested here
+   with the referrer stood in for. Either sets a mark in session
    storage, so every later page in the same window (another state, a sources
    page, the front page) hides the links as well, and the mark goes when the
    app is closed. Session storage belongs to one window, so the mark never

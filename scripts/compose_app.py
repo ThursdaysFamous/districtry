@@ -95,7 +95,10 @@ INSTANCES = {
 # build_sitemap.py already discover by. `root` stays explicit: the repo root
 # holds pages that are not sub-pages at all (the landing page, the redirect
 # shells, the coverage-map iframe body), so there is nothing to discover there.
-ROOT_SUBPAGES = ["privacy.html", "sponsorship.html", "traffic.html"]
+# The installed app's launcher, app/index.html, is listed with them for its one
+# fence, the Google Play app's mark: a place shared into that app arrives at
+# the launcher, which must set the mark before it hands on (see the page).
+ROOT_SUBPAGES = ["privacy.html", "sponsorship.html", "traffic.html", "app/index.html"]
 
 
 # A discovered page that carries NO ENGINE fence is not composed and is named

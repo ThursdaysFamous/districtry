@@ -22,6 +22,22 @@ front page with nothing failing. The launcher has a service worker of its own
 connection; it caches the launcher page and nothing else, and it deletes only
 its own caches, never an instance's.
 
+SHARING A PLACE INTO THE APP (from 2026-10-14). `share_target` puts the
+installed districtry in Android's Share menu, so a place open in Google Maps
+can be shared straight to it. It sends what was shared to the launcher as
+`/app/?title=…&text=…&url=…` (GET, because GitHub Pages answers no POST), and
+the launcher hands it on to a state's map in the HASH, as `#q=`, where the map
+runs the search a pasted link gets. A GET puts what was shared in the query
+string, so three things keep it there and nowhere else: the launcher takes it
+out of its own address before it leaves (the next page is sent that address as
+its referrer, and the visit counter reports a referrer); the launcher's worker
+answers a share from its copy and refreshes that copy by asking for `/app/`
+alone, never the request it was handed; and the apps register that worker
+when districtry is installed from them and whenever the installed app runs,
+so a share is answered on the phone from the start. Safari supports no share
+target, so an iPhone never shows districtry in its Share menu; the Google Play
+app takes its share target from this manifest when it is built.
+
 WHY THE ROOT SERVICE WORKER IS NOT USED. `/sw.js` is the kill switch that
 retires the pre-R2.3 root registration. It must stay exactly that, and a
 manifest needs no worker at its own scope to be installable, so the launcher's
@@ -44,7 +60,12 @@ WHAT `--check` ASSERTS, beyond byte-equality of the manifest:
     app page and the front door declare it;
   * the launcher reads the key the engine writes, registers its own worker at
     its own scope, is kept out of search, and names no other host;
-  * the launcher's worker names no cache outside its own prefix.
+  * the launcher reads every parameter the share target sends, takes the share
+    out of its own address, hands it on as `#q=`, and leaves the mark the
+    engine counts a share by under the key the engine reads;
+  * the launcher's worker names no cache outside its own prefix and never
+    fetches the request it was handed, and the engine block registers that
+    worker at the same script and scope the launcher does.
 
 Usage:
     python3 scripts/build_manifests.py            # write
@@ -87,6 +108,13 @@ LAUNCHER = os.path.join("app", "index.html")
 LAUNCHER_SW = os.path.join("app", "sw.js")
 LAUNCHER_CACHE_PREFIX = "districtry-app-launch-v"
 ENGINE_BLOCK = os.path.join("engine", "index.html", "install-app.txt")
+PLAY_APP_BLOCK = os.path.join("engine", "shared", "play-app.txt")
+
+# What Android's Share menu sends the launcher. Android puts a shared link in
+# `text` and usually leaves `url` empty, so the launcher reads all three.
+SHARE_PARAMS = ("title", "text", "url")
+LAUNCHER_SW_REGISTER_RE = re.compile(
+    r'serviceWorker\.register\(\s*"/app/sw\.js"\s*,\s*\{\s*scope:\s*"/app/"')
 
 # The splash background. Not the theme colour: the brand icons sit on a light
 # field, and a violet splash behind a light-field icon reads as a mistake on a
@@ -181,6 +209,13 @@ def build_manifest():
              "purpose": purpose}
             for icon, _src, px, purpose in ICONS
         ],
+        # districtry in Android's Share menu: what is shared opens the
+        # launcher, which hands it to a state's map (see the docstring).
+        "share_target": {
+            "action": START_URL,
+            "method": "GET",
+            "params": {p: p for p in SHARE_PARAMS},
+        },
     }
     return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
 
@@ -273,9 +308,17 @@ def check_launcher():
         fail("%s does not read localStorage %r, the key %s writes. Every installed "
              "copy would open the front page instead of the reader's state, and "
              "nothing else would fail." % (LAUNCHER, key, ENGINE_BLOCK))
-    if not re.search(r'serviceWorker\.register\(\s*"/app/sw\.js"\s*,\s*\{\s*scope:\s*"/app/"', page):
+    if not LAUNCHER_SW_REGISTER_RE.search(page):
         fail("%s does not register /app/sw.js at scope /app/ — without it an "
              "installed app cannot open with no connection" % LAUNCHER)
+    # The engine registers the same worker when districtry is installed from an
+    # app and whenever the installed app runs, so a share is answered from the
+    # launcher's copy even before the installed app's first launch.
+    if not LAUNCHER_SW_REGISTER_RE.search(engine):
+        fail("%s does not register /app/sw.js at scope /app/. Until the launcher's "
+             "own first launch, a place shared into the app would reach the host "
+             "in the address of the request." % ENGINE_BLOCK)
+    share_key = launcher_share_key(engine, page)
     if not re.search(r'<meta name="robots" content="noindex', page):
         fail("%s is not marked noindex. It is a redirect, not a page a search "
              "result should send anyone to." % LAUNCHER)
@@ -295,7 +338,58 @@ def check_launcher():
         fail("%s names %s. It may name only its own cache prefix %r: a worker "
              "that names an instance's cache can delete it."
              % (LAUNCHER_SW, sorted(names), LAUNCHER_CACHE_PREFIX))
-    return key
+    # A share arrives as /app/?text=…, so a worker that refreshed its copy by
+    # fetching the request it was handed would send what was shared to the
+    # host on every share.
+    if re.search(r"\bfetch\(\s*event\.request\b", sw):
+        fail("%s fetches the request it was handed. A place shared into the app "
+             "arrives in that request's address, so the refresh must ask for the "
+             "launcher page alone." % LAUNCHER_SW)
+    return key, share_key
+
+
+def launcher_share_key(engine, page):
+    """The launcher's half of a share, and the key the engine counts it by.
+
+    The launcher must read each parameter the manifest's share_target sends,
+    take them out of its own address before it leaves (that address is the
+    next page's referrer, and the visit counter reports a referrer), hand the
+    place on in the hash as `#q=`, and leave the mark the engine block counts a
+    share by. It also reads the Google Play app's mark off the class the
+    Play-app block sets, so a share opened in that app keeps its tag; a class
+    renamed in the block would lose it silently, so the name is checked here."""
+    for p in SHARE_PARAMS:
+        if 'params.get("%s")' % p not in page:
+            fail("%s does not read the share target's %r parameter. Android puts a "
+                 "shared link in `text` and sometimes `title` or `url`, so a place "
+                 "shared that way would open the app with nothing searched."
+                 % (LAUNCHER, p))
+    if "history.replaceState(" not in page:
+        fail("%s never takes the share out of its own address. That address is "
+             "sent to the next page as its referrer, and the visit counter there "
+             "reports a referrer." % LAUNCHER)
+    if '"#q=" + encodeURIComponent(' not in page:
+        fail("%s does not hand the shared place on as #q= in the hash. The hash "
+             "never leaves the browser; anything else would." % LAUNCHER)
+    m = re.search(r'\bvar DST_SHARE_IN_KEY = "([^"]+)";', engine)
+    if not m:
+        fail("%s no longer declares DST_SHARE_IN_KEY as a string literal, so the "
+             "key the launcher must write cannot be established" % ENGINE_BLOCK)
+    share_key = m.group(1)
+    if 'sessionStorage.setItem("%s"' % share_key not in page:
+        fail("%s does not write sessionStorage %r, the key %s counts a share by. "
+             "Shares into the app would go uncounted, and nothing else would fail."
+             % (LAUNCHER, share_key, ENGINE_BLOCK))
+    play = read(os.path.join(REPO, PLAY_APP_BLOCK), "the Play-app block")
+    pm = re.search(r'classList\.add\("([^"]+)"\)', play)
+    if not pm or "==== ENGINE:BEGIN play-app ====" not in page or \
+            'classList.contains("%s")' % pm.group(1) not in page:
+        fail("%s does not carry the Play-app block and read the class it sets "
+             "(%s). A place shared into the Google Play app arrives with the app "
+             "as the launcher's referrer and no ref=play, so without them the "
+             "pages it opens would show the support links Google Play forbids."
+             % (LAUNCHER, pm.group(1) if pm else "none found in %s" % PLAY_APP_BLOCK))
+    return share_key
 
 
 def main():
@@ -325,10 +419,11 @@ def main():
 
     icons(args.check)
     linking = check_pages()
-    key = check_launcher()
+    key, share_key = check_launcher()
     print("build-manifests: OK — one manifest for %d instances, linked by %d "
-          "page(s); the launcher reads %r, the key the apps write"
-          % (len(INSTANCES), linking, key))
+          "page(s); the launcher reads %r, the key the apps write, and marks a "
+          "shared place under %r, the key they count it by"
+          % (len(INSTANCES), linking, key, share_key))
 
 
 if __name__ == "__main__":
