@@ -775,6 +775,44 @@ try {
     await context.close();
   }
 
+  // 1d3b. A LOOKUP THAT FAILS IS ASKED AGAIN (ENGINE map-link
+  //      resolveShortMapLink): a shared short link once came back "couldn't
+  //      be read" on a phone and read at once minutes later. Here the first
+  //      try gets no answer at all and the second a 502, and the third
+  //      answers, so the place is selected after two tries again. Then a link
+  //      whose every try gets no answer says which side failed and never
+  //      sends a reader to an address bar.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const tries = {};
+    const shortLink = "https://maps.app.goo.gl/AbCdEf123";
+    const deadLink = "https://maps.app.goo.gl/ZzYyXx987";
+    const page = await booted(context, `${BASE}#q=${encodeURIComponent(shortLink)}`, async (p) => {
+      await p.route("**/photon.komoot.io/**", (route) => route.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify({ type: "FeatureCollection", features: [] }) }));
+      await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+        const u = new URL(route.request().url()).searchParams.get("u");
+        const n = tries[u] = (tries[u] || 0) + 1;
+        if (u === deadLink || n === 1) return route.abort("failed");
+        if (n === 2) return route.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "the link could not be followed" }) });
+        return route.fulfill({ status: 200, contentType: "application/json",
+          body: JSON.stringify({ url: "https://www.google.com/maps/place/Daley+Plaza/@41.8836,-87.6314,17z/data=!3m1!4b1!8m2!3d41.88395!4d-87.63022" }) });
+      });
+    });
+    await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const point = await page.evaluate((ns) => window[ns].state.selectedPoint, EXPORTS_NAME);
+    check("a short link the lookup fails to read twice is asked a third time, and its place is selected",
+      tries[shortLink] === 3 && !!point && Math.abs(point.lat - 41.88395) < 1e-6 && Math.abs(point.lng + 87.63022) < 1e-6,
+      `${tries[shortLink]} lookup(s), point ${JSON.stringify(point)}`);
+    await page.fill("#geocode-input", deadLink);
+    await page.waitForFunction(() => document.querySelector("#geo-status.err"), null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const msg = await page.evaluate(() => document.getElementById("geo-status").textContent);
+    check("a short link the lookup never reaches is asked three times, then says districtry couldn't reach the lookup",
+      tries[deadLink] === 3 && /couldn't be read just now \(districtry couldn't reach the service that reads short links\)/.test(msg) &&
+      !/address bar/.test(msg), `${tries[deadLink]} lookup(s): ${JSON.stringify(msg)}`);
+    await context.close();
+  }
+
   // 1d4. A LINK FROM THE GOOGLE MAPS APP names a place with no position: it
   //      resolves to ?q=<the place's name, its address>&ftid=…, which is what
   //      a place shared into the installed app arrives as (SHARED is the
