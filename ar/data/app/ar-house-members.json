@@ -1,0 +1,602 @@
+{
+  "1": {
+    "name": "Jeremy Wooldridge",
+    "party": "Republican",
+    "email": "jeremy.wooldridge@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Wooldridge&ddBienniumSession=2025%2F2026F"
+  },
+  "2": {
+    "name": "Trey Steimel",
+    "party": "Republican",
+    "email": "trey.steimel@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Steimel&ddBienniumSession=2025%2F2026F"
+  },
+  "3": {
+    "name": "Stetson Painter",
+    "party": "Republican",
+    "email": "stetson.painter@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Painter&ddBienniumSession=2025%2F2026F"
+  },
+  "4": {
+    "name": "Jason Nazarenko",
+    "party": "Republican",
+    "email": "jason.nazarenko@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Nazarenko&ddBienniumSession=2025%2F2026F"
+  },
+  "5": {
+    "name": "Ron McNair",
+    "party": "Republican",
+    "email": "rmcnair1950@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=McNair&ddBienniumSession=2025%2F2026F"
+  },
+  "6": {
+    "name": "Harlan Breaux",
+    "party": "Republican",
+    "email": "harlan.breaux@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Breaux&ddBienniumSession=2025%2F2026F"
+  },
+  "7": {
+    "name": "Brit McKenzie",
+    "party": "Republican",
+    "email": "brit.mckenzie@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=B.+McKenzie&ddBienniumSession=2025%2F2026F"
+  },
+  "8": {
+    "vacant": true,
+    "vacantWhy": "The Arkansas State Legislature's page for this district's last member marks them as resigned, and its member list names nobody after them.",
+    "sourceUrl": "https://www.arkleg.state.ar.us/Legislators/Detail?member=McCollum&ddBienniumSession=2025%2F2026F",
+    "asOf": "2026-10-13"
+  },
+  "9": {
+    "name": "Diana Gonzales Worthen",
+    "party": "Democratic",
+    "email": "diana.gonzalesworthen@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Gonzales+Worthen&ddBienniumSession=2025%2F2026F"
+  },
+  "10": {
+    "name": "Mindy McAlindon",
+    "party": "Republican",
+    "email": "mindy.mcalindon@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=McAlindon&ddBienniumSession=2025%2F2026F"
+  },
+  "11": {
+    "name": "Rebecca Burkes",
+    "party": "Republican",
+    "email": "rebecca.burkes@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=R.+Burkes&ddBienniumSession=2025%2F2026F"
+  },
+  "12": {
+    "name": "Hope Duke",
+    "party": "Republican",
+    "email": "hope.duke@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Duke&ddBienniumSession=2025%2F2026F"
+  },
+  "13": {
+    "name": "R. Scott Richardson",
+    "party": "Republican",
+    "email": "scott.richardson@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=R.+Scott+Richardson&ddBienniumSession=2025%2F2026F"
+  },
+  "14": {
+    "name": "Nick Burkes",
+    "party": "Republican",
+    "email": "nick.burkes@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=N.+Burkes&ddBienniumSession=2025%2F2026F"
+  },
+  "15": {
+    "name": "John P. Carr",
+    "party": "Republican",
+    "email": "john.carr@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=John+Carr&ddBienniumSession=2025%2F2026F"
+  },
+  "16": {
+    "name": "Kendon Underwood",
+    "party": "Republican",
+    "email": "kendon.underwood@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Underwood&ddBienniumSession=2025%2F2026F"
+  },
+  "17": {
+    "name": "Randy Torres",
+    "party": "Republican",
+    "email": "Randy.Torres@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Torres&ddBienniumSession=2025%2F2026F"
+  },
+  "18": {
+    "name": "Robin Lundstrum",
+    "party": "Republican",
+    "email": "robin.lundstrum@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Lundstrum&ddBienniumSession=2025%2F2026F"
+  },
+  "19": {
+    "name": "Steve Unger",
+    "party": "Republican",
+    "email": "steve.unger@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Unger&ddBienniumSession=2025%2F2026F"
+  },
+  "20": {
+    "name": "Denise Garner",
+    "party": "Democratic",
+    "email": "denise.garner@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=D.+Garner&ddBienniumSession=2025%2F2026F"
+  },
+  "21": {
+    "name": "Nicole Clowney",
+    "party": "Democratic",
+    "email": "nicole.clowney@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Clowney&ddBienniumSession=2025%2F2026F"
+  },
+  "22": {
+    "name": "David Whitaker",
+    "party": "Democratic",
+    "email": "david.whitaker@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=D.+Whitaker&ddBienniumSession=2025%2F2026F"
+  },
+  "23": {
+    "name": "Kendra Moore",
+    "party": "Republican",
+    "email": "kendra.moore@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=K.+Moore&ddBienniumSession=2025%2F2026F"
+  },
+  "24": {
+    "name": "Brad Hall",
+    "party": "Republican",
+    "email": "brad.hall@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Hall&ddBienniumSession=2025%2F2026F"
+  },
+  "25": {
+    "name": "Chad Puryear",
+    "party": "Republican",
+    "email": "chad.puryear@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Puryear&ddBienniumSession=2025%2F2026F"
+  },
+  "26": {
+    "name": "James Eaton",
+    "party": "Republican",
+    "email": "james.eaton@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Eaton&ddBienniumSession=2025%2F2026F"
+  },
+  "27": {
+    "name": "Steven Walker",
+    "party": "Republican",
+    "email": "steven.walker@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Walker&ddBienniumSession=2025%2F2026F"
+  },
+  "28": {
+    "name": "Bart Schulz",
+    "party": "Republican",
+    "email": "bart.schulz@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Schulz&ddBienniumSession=2025%2F2026F"
+  },
+  "29": {
+    "name": "Rick McClure",
+    "party": "Republican",
+    "email": "rick.mcclure@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=McClure&ddBienniumSession=2025%2F2026F"
+  },
+  "30": {
+    "name": "Frances Cavenaugh",
+    "party": "Republican",
+    "email": "frances.cavenaugh@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Cavenaugh&ddBienniumSession=2025%2F2026F"
+  },
+  "31": {
+    "name": "Jimmy Gazaway",
+    "party": "Republican",
+    "email": "jimmy.gazaway@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Gazaway&ddBienniumSession=2025%2F2026F"
+  },
+  "32": {
+    "name": "Jack Ladyman",
+    "party": "Republican",
+    "email": "jackladyman@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Ladyman&ddBienniumSession=2025%2F2026F"
+  },
+  "33": {
+    "name": "Jon Milligan",
+    "party": "Republican",
+    "email": "jonmilligan@ymail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Milligan&ddBienniumSession=2025%2F2026F"
+  },
+  "34": {
+    "name": "Joey L. Carr",
+    "party": "Republican",
+    "email": "joey.carr@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Joey+Carr&ddBienniumSession=2025%2F2026F"
+  },
+  "35": {
+    "name": "Jessie McGruder",
+    "party": "Democratic",
+    "email": "mcgruder4arkansashouse@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=McGruder&ddBienniumSession=2025%2F2026F"
+  },
+  "36": {
+    "name": "Johnny Rye",
+    "party": "Republican",
+    "email": "john.rye1956@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Rye&ddBienniumSession=2025%2F2026F"
+  },
+  "37": {
+    "name": "Steve Hollowell",
+    "party": "Republican",
+    "email": "steve.hollowell@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Hollowell&ddBienniumSession=2025%2F2026F"
+  },
+  "38": {
+    "name": "Dwight Tosh",
+    "party": "Republican",
+    "email": "dwight.tosh@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Tosh&ddBienniumSession=2025%2F2026F"
+  },
+  "39": {
+    "name": "Wayne Long",
+    "party": "Republican",
+    "email": "wayne.long@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Long&ddBienniumSession=2025%2F2026F"
+  },
+  "40": {
+    "name": "Shad Pearce",
+    "party": "Republican",
+    "email": "shad.pearce@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Pearce&ddBienniumSession=2025%2F2026F"
+  },
+  "41": {
+    "name": "Alyssa Brown",
+    "party": "Republican",
+    "email": "alyssa.brown@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=A.+Brown&ddBienniumSession=2025%2F2026F"
+  },
+  "42": {
+    "name": "Stephen Meeks",
+    "party": "Republican",
+    "email": "Stephen.Meeks@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=S.+Meeks&ddBienniumSession=2025%2F2026F"
+  },
+  "43": {
+    "name": "Rick Beck",
+    "party": "Republican",
+    "email": "rick.beck@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Beck&ddBienniumSession=2025%2F2026F"
+  },
+  "44": {
+    "name": "Bill Teeter",
+    "party": "Republican",
+    "email": "Bill.Teeter@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Teeter&ddBienniumSession=2025%2F2026F"
+  },
+  "45": {
+    "name": "Aaron Pilkington",
+    "party": "Republican",
+    "email": "aaron.pilkington@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Pilkington&ddBienniumSession=2025%2F2026F"
+  },
+  "46": {
+    "name": "Jon S. Eubanks",
+    "party": "Republican",
+    "email": "Jon.Eubanks@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Eubanks&ddBienniumSession=2025%2F2026F"
+  },
+  "47": {
+    "name": "Lee Johnson",
+    "party": "Republican",
+    "email": "lee.johnson@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=L.+Johnson&ddBienniumSession=2025%2F2026F"
+  },
+  "48": {
+    "name": "Ryan A. Rose",
+    "party": "Republican",
+    "email": "ryan.rose@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Rose&ddBienniumSession=2025%2F2026F"
+  },
+  "49": {
+    "name": "Jay Richardson",
+    "party": "Democratic",
+    "email": "jay.richardson@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Richardson&ddBienniumSession=2025%2F2026F"
+  },
+  "50": {
+    "name": "Zack Gramlich",
+    "party": "Republican",
+    "email": "zack.gramlich@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Gramlich&ddBienniumSession=2025%2F2026F"
+  },
+  "51": {
+    "name": "Cindy Crawford",
+    "party": "Republican",
+    "email": "cindy.crawford@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Crawford&ddBienniumSession=2025%2F2026F"
+  },
+  "52": {
+    "name": "Marcus E. Richmond",
+    "party": "Republican",
+    "email": "richmond4staterep@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Richmond&ddBienniumSession=2025%2F2026F"
+  },
+  "53": {
+    "name": "Matt Duffield",
+    "party": "Republican",
+    "email": "matt.duffield@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Duffield&ddBienniumSession=2025%2F2026F"
+  },
+  "54": {
+    "name": "Mary Bentley",
+    "party": "Republican",
+    "email": "mary.bentley@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Bentley&ddBienniumSession=2025%2F2026F"
+  },
+  "55": {
+    "name": "Matt Brown",
+    "party": "Republican",
+    "email": "brownmk@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=M.+Brown&ddBienniumSession=2025%2F2026F"
+  },
+  "56": {
+    "name": "Stephen Magie",
+    "party": "Democratic",
+    "email": "stephen.magie@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Magie&ddBienniumSession=2025%2F2026F"
+  },
+  "57": {
+    "name": "Cameron Cooper",
+    "party": "Republican",
+    "email": "cameron.cooper@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=C.+Cooper&ddBienniumSession=2025%2F2026F"
+  },
+  "58": {
+    "name": "Les D. Eaves",
+    "party": "Republican",
+    "email": "les.eaves@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Eaves&ddBienniumSession=2025%2F2026F"
+  },
+  "59": {
+    "name": "Jim Wooten",
+    "party": "Republican",
+    "email": "wjewooten@aol.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Wooten&ddBienniumSession=2025%2F2026F"
+  },
+  "60": {
+    "name": "Roger D. Lynch",
+    "party": "Republican",
+    "email": "roger.lynch@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Lynch&ddBienniumSession=2025%2F2026F"
+  },
+  "61": {
+    "name": "Jeremiah Moore",
+    "party": "Republican",
+    "email": "jeremiah.moore@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Moore&ddBienniumSession=2025%2F2026F"
+  },
+  "62": {
+    "name": "Mark D. McElroy",
+    "party": "Republican",
+    "email": "mdmcelroy1@yahoo.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=M.+McElroy&ddBienniumSession=2025%2F2026F"
+  },
+  "63": {
+    "name": "Lincoln Barnett",
+    "party": "Democratic",
+    "email": "lincoln.barnett@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Barnett&ddBienniumSession=2025%2F2026F"
+  },
+  "64": {
+    "name": "Kenneth B. Ferguson",
+    "party": "Democratic",
+    "email": "kenneth.ferguson@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=K.+Ferguson&ddBienniumSession=2025%2F2026F"
+  },
+  "65": {
+    "name": "Glenn Barnes",
+    "party": "Democratic",
+    "email": "pinehillmbc111@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Barnes&ddBienniumSession=2025%2F2026F"
+  },
+  "66": {
+    "name": "Mark Perry",
+    "party": "Democratic",
+    "email": "mperry@windstream.net",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Perry&ddBienniumSession=2025%2F2026F"
+  },
+  "67": {
+    "name": "Karilyn Brown",
+    "party": "Republican",
+    "email": "karilyn.brown@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=K.+Brown&ddBienniumSession=2025%2F2026F"
+  },
+  "68": {
+    "name": "Brian S. Evans",
+    "party": "Republican",
+    "email": "brian.evans@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Evans&ddBienniumSession=2025%2F2026F"
+  },
+  "69": {
+    "name": "David Ray",
+    "party": "Republican",
+    "email": "david.ray@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Ray&ddBienniumSession=2025%2F2026F"
+  },
+  "70": {
+    "name": "Alex B. Holladay",
+    "party": "Democratic",
+    "email": "alex.holladay@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Holladay&ddBienniumSession=2025%2F2026F"
+  },
+  "71": {
+    "name": "Brandon Achor",
+    "party": "Republican",
+    "email": "brandon.achor@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Achor&ddBienniumSession=2025%2F2026F"
+  },
+  "72": {
+    "name": "Tracy Steele",
+    "party": "Democratic",
+    "email": "sensteele@yahoo.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Steele&ddBienniumSession=2025%2F2026F"
+  },
+  "73": {
+    "name": "Andrew Collins",
+    "party": "Democratic",
+    "email": "andrew.collins@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=A.+Collins&ddBienniumSession=2025%2F2026F"
+  },
+  "74": {
+    "name": "Tippi McCullough",
+    "party": "Democratic",
+    "email": "tippi.mccullough@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=McCullough&ddBienniumSession=2025%2F2026F"
+  },
+  "75": {
+    "name": "Ashley Hudson",
+    "party": "Democratic",
+    "email": "ashley.hudson@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Hudson&ddBienniumSession=2025%2F2026F"
+  },
+  "76": {
+    "name": "Joy Springer",
+    "party": "Democratic",
+    "email": "joy.springer@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Springer&ddBienniumSession=2025%2F2026F"
+  },
+  "77": {
+    "name": "Fred Allen",
+    "party": "Democratic",
+    "email": "allenfred@me.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=F.+Allen&ddBienniumSession=2025%2F2026F"
+  },
+  "78": {
+    "name": "Keith Brooks",
+    "party": "Republican",
+    "email": "keith.brooks@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Brooks&ddBienniumSession=2025%2F2026F"
+  },
+  "79": {
+    "name": "Tara Shephard",
+    "party": "Democratic",
+    "email": "tara.shephard@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=T.+Shephard&ddBienniumSession=2025%2F2026F"
+  },
+  "80": {
+    "name": "Denise Jones Ennett",
+    "party": "Democratic",
+    "email": "Denise.Ennett@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Ennett&ddBienniumSession=2025%2F2026F"
+  },
+  "81": {
+    "name": "RJ Hawk",
+    "party": "Republican",
+    "email": "rj.hawk@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Hawk&ddBienniumSession=2025%2F2026F"
+  },
+  "82": {
+    "name": "Tony Furman",
+    "party": "Republican",
+    "email": "tony.furman@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Furman&ddBienniumSession=2025%2F2026F"
+  },
+  "83": {
+    "name": "Paul Childress",
+    "party": "Republican",
+    "email": "Paul.Childress@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Childress&ddBienniumSession=2025%2F2026F"
+  },
+  "84": {
+    "name": "Les Warren",
+    "party": "Republican",
+    "email": "les.warren@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Warren&ddBienniumSession=2025%2F2026F"
+  },
+  "85": {
+    "name": "Richard McGrew",
+    "party": "Republican",
+    "email": "mcgrewrep22@gmail.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=McGrew&ddBienniumSession=2025%2F2026F"
+  },
+  "86": {
+    "name": "John Maddox",
+    "party": "Republican",
+    "email": "john.maddox@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Maddox&ddBienniumSession=2025%2F2026F"
+  },
+  "87": {
+    "name": "DeAnn Vaught",
+    "party": "Republican",
+    "email": "deann.vaught@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Vaught&ddBienniumSession=2025%2F2026F"
+  },
+  "88": {
+    "name": "Dolly Henley",
+    "party": "Republican",
+    "email": "dolly.henley@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Henley&ddBienniumSession=2025%2F2026F"
+  },
+  "89": {
+    "name": "Justin Gonzales",
+    "party": "Republican",
+    "email": "justinrory@yahoo.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Gonzales&ddBienniumSession=2025%2F2026F"
+  },
+  "90": {
+    "name": "Richard Womack",
+    "party": "Republican",
+    "email": "richard@richardwomack.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Womack&ddBienniumSession=2025%2F2026F"
+  },
+  "91": {
+    "name": "Bruce Cozart",
+    "party": "Republican",
+    "email": "bccci@cablelynx.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Cozart&ddBienniumSession=2025%2F2026F"
+  },
+  "92": {
+    "name": "Julie Mayberry",
+    "party": "Republican",
+    "email": "julie.mayberry@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Mayberry&ddBienniumSession=2025%2F2026F"
+  },
+  "93": {
+    "name": "Mike Holcomb",
+    "party": "Republican",
+    "email": "mike.holcomb@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Holcomb&ddBienniumSession=2025%2F2026F"
+  },
+  "94": {
+    "name": "Jeff Wardlaw",
+    "party": "Republican",
+    "email": "jeff@jeffwardlaw.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Wardlaw&ddBienniumSession=2025%2F2026F"
+  },
+  "95": {
+    "name": "Howard M. Beaty, Jr.",
+    "party": "Republican",
+    "email": "howard.beaty@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Beaty+Jr.&ddBienniumSession=2025%2F2026F"
+  },
+  "96": {
+    "name": "Sonia Eubanks Barker",
+    "party": "Republican",
+    "email": "sonia.barker@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Barker&ddBienniumSession=2025%2F2026F"
+  },
+  "97": {
+    "name": "Matthew J. Shepherd",
+    "party": "Republican",
+    "email": "matthew.shepherd@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=M.+Shepherd&ddBienniumSession=2025%2F2026F"
+  },
+  "98": {
+    "name": "Wade Andrews",
+    "party": "Republican",
+    "email": "wade.andrews@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Andrews&ddBienniumSession=2025%2F2026F"
+  },
+  "99": {
+    "name": "Lane Jean",
+    "party": "Republican",
+    "email": "l_jean@sbcglobal.net",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Jean&ddBienniumSession=2025%2F2026F"
+  },
+  "100": {
+    "name": "Carol Dalby",
+    "party": "Republican",
+    "email": "carol.dalby@arkansashouse.org",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Dalby&ddBienniumSession=2025%2F2026F"
+  }
+}

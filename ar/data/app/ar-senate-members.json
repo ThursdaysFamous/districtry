@@ -1,0 +1,211 @@
+{
+  "1": {
+    "vacant": true,
+    "vacantWhy": "The Arkansas State Legislature's page for this district's last member marks them as resigned, and its member list names nobody after them.",
+    "sourceUrl": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Gilmore&ddBienniumSession=2025%2F2026F",
+    "asOf": "2026-10-13"
+  },
+  "2": {
+    "name": "Matt Stone",
+    "party": "Republican",
+    "email": "matt.stone@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Stone&ddBienniumSession=2025%2F2026F"
+  },
+  "3": {
+    "name": "Steve Crowell",
+    "party": "Republican",
+    "email": "steve.crowell@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Crowell&ddBienniumSession=2025%2F2026F"
+  },
+  "4": {
+    "name": "Jimmy Hickey, Jr",
+    "party": "Republican",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Hickey&ddBienniumSession=2025%2F2026F"
+  },
+  "5": {
+    "name": "Terry Rice",
+    "party": "Republican",
+    "email": "Terry.Rice@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Rice&ddBienniumSession=2025%2F2026F"
+  },
+  "6": {
+    "name": "Matt McKee",
+    "party": "Republican",
+    "email": "Matt.mckee@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=M.+McKee&ddBienniumSession=2025%2F2026F"
+  },
+  "7": {
+    "name": "Alan Clark",
+    "party": "Republican",
+    "email": "alan.clark@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=A.+Clark&ddBienniumSession=2025%2F2026F"
+  },
+  "8": {
+    "name": "Stephanie Flowers",
+    "party": "Democratic",
+    "email": "Stephanie.Flowers@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=S.+Flowers&ddBienniumSession=2025%2F2026F"
+  },
+  "9": {
+    "name": "Reginald Murdock",
+    "party": "Democratic",
+    "email": "rkm_72360@yahoo.com",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=R.+Murdock&ddBienniumSession=2025%2F2026F"
+  },
+  "10": {
+    "name": "Ronald Caldwell",
+    "party": "Republican",
+    "email": "ronald.caldwell@Senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Caldwell&ddBienniumSession=2025%2F2026F"
+  },
+  "11": {
+    "name": "Ricky Hill",
+    "party": "Republican",
+    "email": "Ricky.Hill@Senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Hill&ddBienniumSession=2025%2F2026F"
+  },
+  "12": {
+    "name": "Jamie Scott",
+    "party": "Democratic",
+    "email": "jamie.scott@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Scott&ddBienniumSession=2025%2F2026F"
+  },
+  "13": {
+    "name": "Jane English",
+    "party": "Republican",
+    "email": "jane.english@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+English&ddBienniumSession=2025%2F2026F"
+  },
+  "14": {
+    "name": "Clarke Tucker",
+    "party": "Democratic",
+    "email": "clarke.tucker@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=C.+Tucker&ddBienniumSession=2025%2F2026F"
+  },
+  "15": {
+    "name": "Fredrick J. Love",
+    "party": "Democratic",
+    "email": "fred.love@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=F.+Love&ddBienniumSession=2025%2F2026F"
+  },
+  "16": {
+    "name": "Kim Hammer",
+    "party": "Republican",
+    "email": "kim.hammer@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=K.+Hammer&ddBienniumSession=2025%2F2026F"
+  },
+  "17": {
+    "name": "Mark Johnson",
+    "party": "Republican",
+    "email": "mark.johnson@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=M.+Johnson&ddBienniumSession=2025%2F2026F"
+  },
+  "18": {
+    "vacant": true,
+    "vacantWhy": "The Arkansas State Legislature's page for this district's last member marks them as resigned, and its member list names nobody after them.",
+    "sourceUrl": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Dismang&ddBienniumSession=2025%2F2026F",
+    "asOf": "2026-10-13"
+  },
+  "19": {
+    "name": "Dave Wallace",
+    "party": "Republican",
+    "email": "dave.wallace@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=D.+Wallace&ddBienniumSession=2025%2F2026F"
+  },
+  "20": {
+    "name": "Dan Sullivan",
+    "party": "Republican",
+    "email": "dan.sullivan@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=D.+Sullivan&ddBienniumSession=2025%2F2026F"
+  },
+  "21": {
+    "name": "Blake Johnson",
+    "party": "Republican",
+    "email": "Blake.Johnson@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=B.+Johnson&ddBienniumSession=2025%2F2026F"
+  },
+  "22": {
+    "name": "John Payton",
+    "party": "Republican",
+    "email": "john.payton@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Payton&ddBienniumSession=2025%2F2026F"
+  },
+  "23": {
+    "name": "Scott Flippo",
+    "party": "Republican",
+    "email": "Scott.Flippo@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Flippo&ddBienniumSession=2025%2F2026F"
+  },
+  "24": {
+    "name": "Missy Irvin",
+    "party": "Republican",
+    "email": "Missy.Irvin@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Irvin&ddBienniumSession=2025%2F2026F"
+  },
+  "25": {
+    "name": "Breanne Davis",
+    "party": "Republican",
+    "email": "breanne.davis@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=B.+Davis&ddBienniumSession=2025%2F2026F"
+  },
+  "26": {
+    "name": "Brad Simon",
+    "party": "Republican",
+    "email": "Brad.Simon@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Simon&ddBienniumSession=2025%2F2026F"
+  },
+  "27": {
+    "name": "Justin Boyd",
+    "party": "Republican",
+    "email": "justin.boyd@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Boyd&ddBienniumSession=2025%2F2026F"
+  },
+  "28": {
+    "name": "Bryan King",
+    "party": "Republican",
+    "email": "bryan.king@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=B.+King&ddBienniumSession=2025%2F2026F"
+  },
+  "29": {
+    "name": "Jim Petty",
+    "party": "Republican",
+    "email": "jim.petty@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Petty&ddBienniumSession=2025%2F2026F"
+  },
+  "30": {
+    "name": "Greg Leding",
+    "party": "Democratic",
+    "email": "greg.leding@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=G.+Leding&ddBienniumSession=2025%2F2026F"
+  },
+  "31": {
+    "name": "Clint Penzo",
+    "party": "Republican",
+    "email": "clint.penzo@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=C.+Penzo&ddBienniumSession=2025%2F2026F"
+  },
+  "32": {
+    "name": "Joshua Bryant",
+    "party": "Republican",
+    "email": "joshua.bryant@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Bryant&ddBienniumSession=2025%2F2026F"
+  },
+  "33": {
+    "name": "Bart Hester",
+    "party": "Republican",
+    "email": "bart.hester@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Hester&ddBienniumSession=2025%2F2026F"
+  },
+  "34": {
+    "name": "Jim Dotson",
+    "party": "Republican",
+    "email": "jim.dotson@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=J.+Dotson&ddBienniumSession=2025%2F2026F"
+  },
+  "35": {
+    "name": "Tyler Dees",
+    "party": "Republican",
+    "email": "tyler.dees@senate.ar.gov",
+    "url": "https://www.arkleg.state.ar.us/Legislators/Detail?member=Dees&ddBienniumSession=2025%2F2026F"
+  }
+}

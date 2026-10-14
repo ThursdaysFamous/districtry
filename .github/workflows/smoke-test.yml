@@ -111,6 +111,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro oklahoma --out ok/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -475,10 +476,14 @@ jobs:
       # surface said districtry while il/manifest.webmanifest still read
       # "Chicago District Explorer" in the pre-rebrand navy, so installing to
       # an Android home screen produced the old name and the old icon. NY and
-      # SF were the same. It is generated from each worksheet's brand block
-      # now, and this is the gate that keeps it that way. It also refuses to
-      # name an icon that is not on disk — a manifest pointing at a missing
-      # PNG installs a blank square and nothing else notices. Stdlib only.
+      # SF were the same. It is generated from the worksheets' brand blocks
+      # now, and this is the gate that keeps it that way. Since 2026-10-13 it
+      # is ONE manifest at the root, so districtry installs as one app from
+      # any page, and this also fails on a page linking any other manifest and
+      # on the launcher at /app/ drifting from the key the apps write. It
+      # refuses to name an icon that is not on disk — a manifest pointing at a
+      # missing PNG installs a blank square and nothing else notices. Stdlib
+      # only.
       - name: Install manifests match the brand keys
         if: ${{ !cancelled() }}
         run: python3 scripts/build_manifests.py --check
@@ -1633,6 +1638,7 @@ jobs:
           python3 ok/scripts/validate_index.py ok/index.html
           python3 sc/scripts/validate_index.py sc/index.html
           python3 tn/scripts/validate_index.py tn/index.html
+          python3 ar/scripts/validate_index.py ar/index.html
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
       # the repo had — ca and ny were separate repos with their own CI. They
@@ -1760,6 +1766,7 @@ jobs:
           BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ar/  node ar/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
 
           # The root landing page and — the part that matters — its forwarding

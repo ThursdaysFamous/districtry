@@ -284,11 +284,15 @@
       "area_rank": 10,
       "rank_note": "IL county subdivision (1,695 statewide: townships + city/precinct MCDs)",
       "source": {
-        "answers": "The township or county subdivision containing the point — and, in covered counties, the township's elected officers.",
+        "answers": "The township or county subdivision containing the point — in Chicago, which of the city's eight townships the Assessor groups it in — and, in covered counties, the township's elected officers.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          },
+          {
+            "label": "Cook County GIS — Political Township (Chicago's eight townships, drawn in place of the Census's single Chicago subdivision)",
+            "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/3"
           }
         ],
         "people": "township-officials.json, rebuilt weekly by CI from the Cook County Clerk's directory (29 townships — supervisor, trustees, clerk/assessor/collector/highway commissioner, hall contact), joined by county-subdivision GEOID. Townships in other counties keep the identity-only card.",
@@ -662,7 +666,7 @@
       "rank_comment": [
         "CCPSA District Council shares the police-district geometry exactly (22,",
         "one council per district); place it just after so its outline draws on",
-        "top when both are on and its distinct teal dash stays legible."
+        "top when both are on, its teal line over the red one beneath it."
       ],
       "source": {
         "answers": "The elected District Council for this police district, under the Community Commission for Public Safety and Accountability.",
@@ -1208,6 +1212,12 @@
         "file": "ccbr-districts.json",
         "min_features": 3,
         "max_features": 3
+      },
+      {
+        "file": "chicago-townships.json",
+        "min_features": 8,
+        "max_features": 8,
+        "note": "Chicago's eight townships (Hyde Park, Jefferson, Lake, Lake View, North, Rogers Park, South, West) from Cook County GIS politicalBoundary layer 3, clipped to the Census outline of Chicago, with the lakefront landfill the county's shoreline leaves out given to the nearest township (scripts/build_chicago_townships.py). The township layer puts them in place of the Census's single 'Chicago city' subdivision in the whole set, the point answer and the tile archive alike. They have no township government; the Cook County Assessor and Board of Review use them to group property."
       },
       {
         "file": "champaign-county-outline.json",
@@ -3353,14 +3363,10 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v41",
+    "cache_name": "districtry-il-shell-v43",
     "shell_urls": [
       "./",
       "./sources.html",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
-      "./icons/icon-maskable-512.png",
       "./icons/apple-touch-icon.png",
       "./icons/water-taxi.png",
       "./icons/seals/cook-county.png",

@@ -376,7 +376,8 @@
      on approach. Same class as the flag stripe and the star — a city color
      written as a literal, not a token. */
   .feedback-actions .btn-primary:hover { background: var(--accent-deep); }
-  .share-copy-btn:hover { background: var(--dst-brand-tint-soft); }
+  .share-copy-btn:hover,
+  .install-invite-go:hover { background: var(--dst-brand-tint-soft); }
   .masthead .search-extra {
     position: absolute;
     top: calc(100% + 6px);
@@ -948,7 +949,8 @@
   [data-theme="dark"] .share-popover-url,
   [data-theme="dark"] .share-popover-embed { background: var(--dst-sunken); border-color: rgba(236, 233, 244, 0.16); color: var(--slate); }
   [data-theme="dark"] .layer-toggle-btn,
-  [data-theme="dark"] .map-tile-banner { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
+  [data-theme="dark"] .map-tile-banner,
+  [data-theme="dark"] .install-invite { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
   /* .search-shell is deliberately NOT in that list. In the engine it floats
      over the map as a card and earns a shadow; this skin moves the toolbar
      into the masthead and flattens the shell to nothing (transparent, no

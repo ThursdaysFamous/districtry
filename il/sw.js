@@ -45,15 +45,11 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v41";
+const CACHE_NAME = "districtry-il-shell-v43";
 
 const SHELL_URLS = [
   "./",
   "./sources.html",
-  "./manifest.webmanifest",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-maskable-512.png",
   "./icons/apple-touch-icon.png",
   "./icons/water-taxi.png",
   "./icons/seals/cook-county.png",
@@ -104,6 +100,7 @@ const GEOMETRY_URLS = [
   "./data/app/cass-county-outline.json",
   "./data/app/cass-precincts.json",
   "./data/app/ccbr-districts.json",
+  "./data/app/chicago-townships.json",
   "./data/app/champaign-county-outline.json",
   "./data/app/christian-county-outline.json",
   "./data/app/christian-county-board-districts.json",

@@ -7122,8 +7122,21 @@ the next route.
 
 ## Ask il-chipoli-introduction — Chipoli (chipoli.org): two Chicago civic maps that fit together
 
-> **ASKED 2026-10-13**, sent 14:01:30 UTC to contact@chipoli.org, the only contact the site
-> publishes. **No answer yet**; the follow-up clock runs to about 2026-11-03. The operator reworded
+> **ASKED 2026-10-13. ANSWERED 2026-10-13**, 47 minutes later, by the site's owner from a personal
+> address (the owner's name and contact details stay in the operator's mailbox; the site names
+> nobody, so this file does not either). The owner runs Chipoli independently, started it after
+> moving back to Chicago and finding it hard to get up to speed on local politics, is open to
+> collaborating on the ideas in the letter, and offered "a potential avenue of building something
+> together". The reply did not answer the third idea (what Chipoli has had to put together by
+> hand). On the operator's choice
+> of 2026-10-13 the next step is the reply drafted under **Reply 1** below: yes to cross-checking,
+> a link from each Chicago ward card to that ward's Chipoli page if the owner agreed, and two questions.
+> **Reply 1 was SENT 18:00 UTC and ANSWERED 20:10 UTC the same day**: the owner agreed to
+> quarterly cross-checks and to links ("Feel free to link to Chipoli as much as you want"), fixed
+> House District 28, and offered design feedback. The next letter is **Reply 2**, drafted below.
+>
+> The first letter was sent 14:01:30 UTC to contact@chipoli.org, the only contact the site
+> publishes. The operator reworded
 > the draft below before sending, keeping its substance: the same counts, both errors, the three
 > ideas and the question of who runs the site. The bracketed choice went as "I am fixing this
 > week", and the third idea was put as asking what the two sites could jointly ask the city or
@@ -7156,7 +7169,7 @@ who holds no district) and the 67 state and federal legislators Chipoli lists (2
 representatives, 9 members of Congress, against the three legislator rosters). One error on each side:
 
 - **Chipoli's**: House District 28 is listed as `Robert \` with the page address `/legislators/robert`.
-  The General Assembly lists him as `Robert "Bob" Rita`, and the quotation marks cut the name short.
+  The General Assembly lists the representative as `Robert "Bob" Rita`, and the quotation marks cut the name short.
 - **districtry's**: wards 31 and 40 read `Jr., Felix Cardona` and `Jr., Andre Vasquez`, on the map's
   ward card and in the table on `il/ward.html`. The city's dataset (`htai-wnw4`, read 2026-10-13 after
   its robots.txt) writes `Cardona, Jr., Felix` and `Vasquez, Jr., Andre`, and both the app's
@@ -7241,3 +7254,152 @@ commission's own page lists one (the 3rd and the 12th), and shows the 25th's two
 either way is worth discussing. An answer to the third idea is evidence for the letters to the State
 Board and, later, to the city. A polite no, or no answer, costs nothing: the comparison has already
 found one error of ours.
+
+### Reply 1 — yes to cross-checking, a ward-card link if the owner agrees, and two questions
+
+> **SENT 2026-10-13, 18:00:17 UTC**, in the same Gmail thread to the owner's personal address.
+> The operator reworded the draft below and kept its substance: the cross-check offer with
+> House District 28 as the example, the ward-card link built and waiting for approval, the two
+> link-back options and both questions. **ANSWERED 2026-10-13, 20:10 UTC** (see Reply 2). Written
+> on the operator's choice that day of "Add links too" out of three options (data only; data plus
+> links; building something together).
+
+> Subject: Re: districtry and Chipoli: two Chicago maps that fit together
+>
+> Hi <OWNER'S FIRST NAME>,
+>
+> Thanks for writing back, and for the background. Getting up to speed on what is going on in your
+> own ward is exactly the problem both our sites are working on.
+>
+> The two alderperson names are fixed on districtry now: they read Felix Cardona Jr. and Andre
+> Vasquez Jr.
+>
+> Here is where I'd like to start:
+>
+> 1. Checking each other's lists. Every few weeks I can rerun the comparison I did and send you
+>    anything that looks wrong on your side, and you're welcome to do the same for ours. As of
+>    today your legislators page still shows House District 28 as "Robert \".
+> 2. A link from districtry to Chipoli. I'd like to add a line to each Chicago ward card on
+>    districtry that links to that ward's page on Chipoli (for example
+>    https://chipoli.org/alderpersons/42), saying it is an independent site. It's built, and I'll
+>    only switch it on once you tell me you're happy with it. If you'd like to link the other way,
+>    https://districtry.com/il/ is the place to point people, and I can send you link formats that
+>    open the map on an address with the right districts already showing.
+> 3. Two questions for you. What has Chipoli had to put together by hand that the city or the state
+>    should be publishing properly? And what do you have in mind when you say building something
+>    together?
+>
+> Thanks,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+**Before sending:**
+
+- Fill in the owner's first name from the reply in the Gmail thread. The site names nobody, so
+  this file does not either.
+- The owner offered a phone number for texting. It is not copied here or anywhere in the
+  repository. Whether to text instead of, or as well as, sending this is the operator's call.
+- Open Chipoli's legislators page and check House District 28 still reads "Robert \" (it did when
+  `https://chipoli.org/legislators.js` was read on 2026-10-13 at about 17:45 UTC). If it is fixed,
+  replace the last sentence of point 1 with a thank-you.
+- The link in point 2 is built and waits in a pull request that will not be merged until the owner
+  says yes. If the owner says no, or wants different wording, the pull request is changed or closed.
+- Keep any exchange of data to rosters both sites read from sources that allow it. Chipoli's
+  campaign-money data comes from the State Board of Elections' disclosure site, which districtry
+  does not read (see "Before sending" on the first letter).
+
+### Reply 2 — the timing of the cross-checks, a link format for Chipoli, yes to design feedback, and the operator's goal
+
+> **DRAFTED 2026-10-13, NOT SENT.** Answers the owner's second reply (20:10 UTC), which said:
+> quarterly cross-checks, timed around elections because that is when most information changes;
+> House District 28 fixed (confirmed on `https://chipoli.org/legislators.js` at about 20:20 UTC,
+> where the name now reads `Robert "Bob" Rita`); yes to links both ways, with a question about
+> where Chipoli could link to districtry; the hardest data to find is a record of the School
+> Board's attendance and TIF spending broken down beyond one catch-all category; and openness to
+> building tools together, an offer of design feedback, and a question about the operator's goal.
+>
+> **Rewritten in a more casual voice** on the operator's word of 2026-10-13, 20:58 UTC ("the tone
+> could be more casual and friendly"). The owner writes casually, and the first two letters were
+> formal. The operator was editing the Gmail draft directly, so this text was handed over in the
+> thread for pasting rather than sent to the Letters thread as a draft update. The substance is
+> unchanged, with two exceptions noted under "Before sending": the count of places, and a second
+> link format.
+>
+> Both links were tested on 2026-10-13 in a browser against this branch. The address link, with
+> the geocoder stubbed to one result, searched the address, selected the point and switched on
+> the five layers. The coordinates link selected the exact point, switched on the five layers
+> (and the ward layer, which the precinct layer turns on), and made no geocoder request.
+
+> Subject: Re: districtry and Chipoli: two Chicago maps that fit together
+>
+> Hey <OWNER'S FIRST NAME>,
+>
+> Thanks for fixing House 28 so fast, and for the green light on links!
+>
+> Quarterly cross-checks timed around elections sounds perfect. I'll run the first one once the
+> November 3 results are certified, since that changes state legislators, members of Congress
+> and county board seats, and the next one after the February 23 city election.
+>
+> The Chipoli link on each Chicago ward card goes live on districtry in the next day or so. For
+> linking back, your address lookup seems like the best spot. This link looks up an address on
+> districtry and turns on the districts Chipoli doesn't draw: the Cook County board, judicial
+> subcircuit, Board of Review, water reclamation district and voting precinct.
+>
+> https://districtry.com/il/#q=233%20S%20Wacker%20Dr%2C%20Chicago&l=cb,jc,br,mw,wp
+>
+> Just put the reader's address after q= (URL-encoded). It works for addresses outside Chicago
+> too, so feel free to send those our way. And if your lookup already has the coordinates, you
+> can use p= instead, and it'll land on the exact spot without a second lookup:
+>
+> https://districtry.com/il/#p=41.87888,-87.63592&l=cb,jc,br,mw,wp
+>
+> The School Board records and TIF spending are outside what districtry covers, so I can't help
+> much there, but I'd love to hear how it goes if you ask the city for either.
+>
+> And yes please on the design feedback! Notes or screenshots of anything you'd change would be
+> super helpful.
+>
+> As for my goal: I want districtry in all 50 states, so anyone in the country can click where
+> they live and see every district they're in and who represents them. So far it's in 12 states
+> plus San Francisco. Going state by state shows exactly where this info is hard to get: maps
+> that only exist as PDFs, boards that don't list their members anywhere, and counties that each
+> publish their own way. I want to use those hurdles to push states to publish this stuff
+> properly, in one place and in a form people can actually use. In Illinois that starts with
+> precinct maps, and I'm planning to ask the State Board of Elections to publish them all in one
+> place.
+>
+> On building something together: I'm keeping districtry strictly nonpartisan, so I'm best suited
+> to tools that work the same way for every voter. If you've got an idea along those lines, I'm
+> all ears.
+>
+> Thanks again,
+> <YOUR NAME>
+> https://districtry.com/il/
+
+**Before sending:**
+
+- Fill in the owner's first name from the reply in the Gmail thread.
+- The links sentence says the ward-card link "goes live on districtry in the next day or so",
+  because the change that adds it was still waiting to merge when the operator asked for this
+  text (2026-10-13, about 21:00 UTC). If a Chicago ward card on districtry.com already shows the
+  Chipoli line when this goes, "is live on districtry now" is also true.
+- The count of places matches the site's own front page on 2026-10-13, "12 states and San
+  Francisco answer today", where New York counts as a state because its statewide layers answer
+  across the state. The previous version of this reply said "eleven states plus New York City and
+  San Francisco", which disagreed with the front page. Recount if another state goes live first.
+- The coordinates link is new in this version. The operator can cut that paragraph to keep the
+  e-mail short; the address link stands on its own.
+- The goal paragraph follows the operator's own words of 2026-10-13, 20:18 UTC: "My ultimate goal
+  is deployment of the app to all 50 states. But also to use the hurdles I run into as a call for
+  better data publication from the state level." It is the operator's to rewrite. The State Board
+  letter is still held, so the paragraph says "planning to ask", as the first letter did.
+- The nonpartisan paragraph is deliberate: the owner said in the first reply that they are
+  politically active, and mentioned election tools in the second. The city election is on
+  23 February 2027.
+- Paste the links as plain text. On 2026-10-13 the Gmail draft of the previous version showed
+  Google redirect addresses (`https://www.google.com/url?q=…`) as the visible text of both the
+  address link and the signature link, although each link's target was right.
+- The cross-check dates are promises. If the operator wants them kept, they need a reminder
+  routine; none exists yet (offered to the operator 2026-10-13).

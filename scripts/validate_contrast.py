@@ -101,7 +101,9 @@ a token the row says so and measures the token), the pre-rebrand navy the
 hover popup and the footer still declare (#08406e, #0B5394, #C9D4DB — much of
 it dead under the skin's cascade, some of it live), Leaflet's own popup chrome
 (#333 on white), the three gap-kind indicators, and --layer-accent, which is
-set INLINE per card at runtime and no static gate can read; the skin's OWN
+set INLINE per card at runtime and no pair row can read — its one TEXT use,
+the district pill on every card, is measured by check_layer_pills against every
+layer colour each app declares, and its stripe and dot are not text; the skin's OWN
 tints (--dst-ink-tint, --dst-raised-hover), which are skin literals rather
 than brand tokens and ground the metro menu's focus state — but NOT
 --dst-brand-tint-soft, which this list named until 2026-09-12 and which
@@ -211,7 +213,7 @@ FLOORS = {"text": 4.5, "large": 3.0, "ui": 3.0, "decorative": None}
 # literal is the card palette's, which is the next gate's subject.
 PAIRS = [
     # — body text on the grounds —
-    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body"),
+    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body; the phone install invitation's .install-invite-text on its --panel bar (styles-app)"),
     ("ink",        "paper",      "text", "app ground: body (styles-app); every root page's body; the question pages' .lookup-input value, a --paper field inside the --panel .lookup-card (shell)"),
     ("ink",        "surface-2",  "text", ".layer-block-head in DARK only — the skin repaints it #262331 (== --surface-2 dark) under --card-ink #ece9f4 (== --ink dark); in light the head is styles-card-v2's literal #fff (== --surface), so the light half of this row re-measures (ink, surface). The --surface-2 VALUE reaches a light-tier reader through .card-section-label (the muted row below)"),
     ("ink",        "brand-tint", "text", "landing .notice-h and .pill; privacy .tldr (build_landing_page, build_privacy_page — children of body or of an unpainted main, i.e. on --paper)"),
@@ -219,7 +221,7 @@ PAIRS = [
     ("ink",        "border",     "text", ".gap-suggest:hover — text with the border colour as its ground (styles-footer; the gaps modal is composed outside the hidden footer)"),
     ("ink-2",      "surface",    "text", "history.html .tile-l (build_history_page)"),
     ("ink-2",      "paper",      "text", "history.html .intro, .entry p, code (build_history_page)"),
-    ("ink-3",      "surface",    "text", "landing .cov-count beside its --ink strong, on the --surface .coverage card (build_landing_page); the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
+    ("ink-3",      "surface",    "text", "landing .cov-count beside its --ink strong, on the --surface .coverage card (build_landing_page); the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); .install-invite-close, the invitation's dismiss glyph, as --slate on its --panel bar (styles-app); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
     ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app); the .lookup-input PLACEHOLDER, which is --slate rather than the --slate-soft every other placeholder in the fleet uses \u2014 that pair is 2.28:1 on --paper and is the recorded (faint, paper) shortfall below, so a new field does not join it"),
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body)"),
@@ -238,7 +240,7 @@ PAIRS = [
     ("faint",      "dst-brand-tint-soft@surface", "text", ".dpf-support at 11px on all six app pages (styles-districtry-skin) — the one line in the panel foot a reader is asked to act on, as --slate-soft on the skin's own tint over the --panel foot"),
 
     # — links and accents as text —
-    ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
+    ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep); the invitation's .install-invite-go, an outlined button on its --panel bar (styles-app). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
     ("brand-700",  "paper",      "text", "links on the app ground; privacy and history `a`; .locate-btn, .btn-secondary (styles-app, styles-footer)"),
     ("brand-700",  "brand-tint", "text", "landing footer .support a:hover (build_landing_page — on body)"),
     ("brand-700",  "brand-tint@surface", "text", "privacy .masthead-actions a:hover — the masthead is a --surface panel (build_privacy_page)"),
@@ -909,6 +911,127 @@ def check_complete(table, pairs, not_painted, label, path):
                 "now names it — drop the entry" % (label, name, reason))
 
 
+# THE DISTRICT PILL ON EVERY CARD (2026-10-13). Each card's header carries a
+# pill naming the district ("IL-7", "Ward 34"), tinted with the layer's own map
+# colour, which the engine sets INLINE per card as --layer-accent. That is the
+# one text colour the pair tables above cannot hold, because it is not one
+# colour: it is every layer colour in every app, in both themes. It went
+# unmeasured, and on the day this was written the pill read 1.1:1 for "IL-7"
+# and 1.9:1 for "Ward 34" on a dark card at the Loop — the layer's colour was
+# painted as text, and a map colour is chosen to read as a LINE (the dark
+# palette clears 3.10:1 against the map at best, never 4.5 against a card).
+#
+# So the pill's text is the layer colour MIXED with the card's own ink, and
+# this check measures that mix for every colour a layer can carry. The set is
+# each instance's DST_DARK_MAP_COLORS table, which build_dark_map_palette.py
+# derives from every `color:`/`fillColor:` hex literal in that app — a
+# SUPERSET of what moduleColor() can return (it returns a layer's stroke, else
+# its fill, else mod.color, else its own fallback, which is read here too):
+# keys are the light colours, values the dark ones. The light tier is measured
+# over the light card's head and body grounds, the dark tier over the dark
+# ones, all read from the CSS rather than restated.
+#
+# What it cannot see, stated rather than implied: a layer colour that is not a
+# six-digit hex literal (a variable, a per-feature function) is in no table,
+# and a card whose accent is never refreshed for the theme shows its light
+# colour on a dark card — which is the bug this shipped with, fixed in
+# districtry-theme.txt and held by Illinois's smoke check 1e2 in a browser.
+CARD_CSS = os.path.join(REPO_ROOT, "engine", "index.html", "styles-card-v2.txt")
+REGISTRY_JS = os.path.join(REPO_ROOT, "engine", "index.html", "layer-registry.txt")
+PILL_MIX_RE = re.compile(
+    r"\.card-id-pill\s*\{[^}]*?\bcolor:\s*color-mix\(in srgb,\s*"
+    r"var\(--layer-accent,\s*var\(--card-link\)\)\s*(\d+(?:\.\d+)?)%,\s*"
+    r"var\(--card-ink\)\);[^}]*?\bbackground:\s*color-mix\(in srgb,\s*currentColor\s*"
+    r"(\d+(?:\.\d+)?)%,\s*transparent\);", re.S)
+
+
+def _rule_value(css, selector, prop, path):
+    """The `prop` of the first rule whose selector list is exactly `selector`."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    m = re.search(r"(?:^|[}\s])" + re.escape(selector) + r"\s*\{([^}]*)\}", css)
+    if not m:
+        fail("no %r rule in %s" % (selector, os.path.relpath(path, REPO_ROOT)))
+    v = re.search(r"(?:^|[;\s])" + re.escape(prop) + r"\s*:\s*([^;]+);", m.group(1))
+    if not v:
+        fail("%r in %s sets no %s" % (selector, os.path.relpath(path, REPO_ROOT), prop))
+    return v.group(1).strip()
+
+
+def _mix(a, b, p):
+    """CSS color-mix(in srgb, a p, b): channel-wise in gamma-encoded sRGB."""
+    return tuple(a[i] * p + b[i] * (1 - p) for i in range(3)) + (1.0,)
+
+
+def check_layer_pills():
+    card = read(CARD_CSS)
+    skin = read(SKIN)
+    m = PILL_MIX_RE.search(re.sub(r"/\*.*?\*/", "", card, flags=re.S))
+    if not m:
+        problems.append(
+            "styles-card-v2's .card-id-pill no longer paints its text as "
+            "color-mix(in srgb, var(--layer-accent, var(--card-link)) N%, var(--card-ink)) "
+            "over a color-mix(currentColor M%, transparent) ground — the shape "
+            "check_layer_pills measures. Painting the layer colour itself as text is "
+            "the 1.1:1 defect this check exists for; any other shape needs this check "
+            "taught to read it.")
+        return None
+    share, tint = float(m.group(1)) / 100.0, float(m.group(2)) / 100.0
+    light_vars = token_block(card, ".layer-block,\n  .stats-panel", CARD_CSS)
+    dark_vars = token_block(skin, ':root[data-theme="dark"] .layer-block,\n  :root[data-theme="dark"] .stats-panel', SKIN)
+    grounds = {
+        "light": [_rule_value(card, ".layer-block-head", "background", CARD_CSS),
+                  _rule_value(card, ".layer-block", "background", CARD_CSS)],
+        "dark": [_rule_value(skin, ':root[data-theme="dark"] .layer-block-head', "background", SKIN),
+                 _rule_value(skin, ':root[data-theme="dark"] .layer-block', "background", SKIN)],
+    }
+    ink = {"light": parse_color(light_vars["--card-ink"]), "dark": parse_color(dark_vars["--card-ink"])}
+    link = {"light": light_vars["--card-link"], "dark": dark_vars["--card-link"]}
+    fb = re.search(r'function moduleColor\(mod\)\s*\{.*?\|\|\s*"(#[0-9A-Fa-f]{6})"', read(REGISTRY_JS), re.S)
+    if not fb:
+        fail("cannot read moduleColor()'s fallback colour in %s" % os.path.relpath(REGISTRY_JS, REPO_ROOT))
+    colours = {"light": {link["light"].upper(): "--card-link", fb.group(1).upper(): "moduleColor fallback"},
+               "dark": {link["dark"].upper(): "--card-link"}}
+    apps = 0
+    for name in sorted(os.listdir(REPO_ROOT)):
+        path = os.path.join(REPO_ROOT, name, "index.html")
+        if name == "engine" or not os.path.isfile(path):
+            continue
+        src = read(path)
+        if 'idPill.className = "card-id-pill"' not in src:
+            continue
+        t = re.search(r"var DST_DARK_MAP_COLORS = \{(.*?)\};", src, re.S)
+        if not t:
+            problems.append("%s/index.html draws card pills and carries no DST_DARK_MAP_COLORS "
+                            "table, so its layer colours cannot be measured" % name)
+            continue
+        apps += 1
+        for k, v in re.findall(r'"(#[0-9A-Fa-f]{6})":\s*"(#[0-9A-Fa-f]{6})"', t.group(1)):
+            colours["light"].setdefault(k.upper(), name)
+            colours["dark"].setdefault(v.upper(), name)
+        # moduleColor's fallback has no dark counterpart unless it is a key
+        dk = dict(re.findall(r'"(#[0-9A-Fa-f]{6})":\s*"(#[0-9A-Fa-f]{6})"', t.group(1)))
+        colours["dark"].setdefault(dk.get(fb.group(1).upper(), fb.group(1).upper()), name)
+    if apps < 2:
+        fail("check_layer_pills found %d app(s) drawing card pills — the discovery is broken" % apps)
+    worst = {}
+    for tier in ("light", "dark"):
+        for hexv, where in sorted(colours[tier].items()):
+            text = _mix(parse_color(hexv), ink[tier], share)
+            text8 = tuple(round(c) for c in text[:3]) + (1.0,)
+            for g in sorted(set(grounds[tier])):
+                ground = parse_color(g)
+                pill = composite(text8[:3] + (tint,), ground)
+                r = contrast(text8, pill)
+                if tier not in worst or r < worst[tier][0]:
+                    worst[tier] = (r, hexv, g)
+                if r < FLOORS["text"]:
+                    problems.append(
+                        "card pill, %s: layer colour %s (%s) mixed %d%% with --card-ink "
+                        "reads %.2f:1 on %s — below %.1f" % (
+                            tier, hexv, where, round(share * 100), r, g, FLOORS["text"]))
+    return dict(apps=apps, light=len(colours["light"]), dark=len(colours["dark"]), worst=worst)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--report", action="store_true",
@@ -944,9 +1067,18 @@ def main():
             report(by_tier, pal["label"])
         totals.append(pal)
 
+    pills = check_layer_pills()
+
     if args.json:
         print(json.dumps(emitted, indent=1))
         return
+
+    if args.report and pills:
+        print()
+        print("card pills (--layer-accent mixed with --card-ink), worst per tier:")
+        for tier in ("light", "dark"):
+            r, hexv, g = pills["worst"][tier]
+            print("  %-5s %.2f:1  %s on %s" % (tier, r, hexv, g))
 
     if args.report:
         print()
@@ -965,9 +1097,12 @@ def main():
     n_acc = sum(len(p["accepted"]) for p in totals)
     n_open = sum(1 for p in totals for a in p["accepted"].values() if not a["decided"])
     print("validate-contrast: OK — %d pair(s) across %d palette(s) measured in 2 tiers, "
-          "%d gated; %d accepted shortfall(s)%s"
+          "%d gated; %d accepted shortfall(s)%s; card pills: %d light and %d dark layer "
+          "colour(s) across %d app(s), worst %.2f:1 light and %.2f:1 dark"
           % (n_pairs, len(totals), n_gated, n_acc,
-             ", %d awaiting a decision" % n_open if n_open else ""))
+             ", %d awaiting a decision" % n_open if n_open else "",
+             pills["light"], pills["dark"], pills["apps"],
+             pills["worst"]["light"][0], pills["worst"]["dark"][0]))
 
 
 if __name__ == "__main__":

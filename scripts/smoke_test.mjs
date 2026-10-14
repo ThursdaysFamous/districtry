@@ -1136,6 +1136,38 @@ try {
     await context.close();
   }
 
+  // 1k2. THE CHICAGO WARD CARD LINKS THAT WARD'S CHIPOLI PAGE. The address is
+  //     built from the ward number at runtime, so the monthly link check
+  //     cannot probe it, and every path on chipoli.org answers 200 whatever
+  //     the number, so a wrong one would look fine from outside too. Both City
+  //     sources are stubbed so the ward is known: the card must carry exactly
+  //     one Chipoli link, to /alderpersons/42, opening in a new tab, beside
+  //     the line saying the site is not the City's.
+  {
+    const [plat, plng] = POINT.split(",").map(Number);
+    const d = 0.01;
+    const wards = JSON.stringify({ type: "FeatureCollection", features: [{ type: "Feature",
+      properties: { ward: "42" },
+      geometry: { type: "Polygon", coordinates: [[[plng - d, plat - d], [plng + d, plat - d],
+        [plng + d, plat + d], [plng - d, plat + d], [plng - d, plat - d]]] } }] });
+    const roster = JSON.stringify([{ ward: "42", alderman: "Hopkins, Brendan" }]);
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=ward`, async (p) => {
+      await p.route(/p293-wvbd/, (r) => r.fulfill({ status: 200, contentType: "application/json", body: wards }));
+      await p.route(/htai-wnw4/, (r) => r.fulfill({ status: 200, contentType: "application/json", body: roster }));
+    });
+    const card = await cardText(page, "ward");
+    const chipoli = await page.evaluate(() => Array.from(document.querySelectorAll("#card-ward a"))
+      .filter((a) => /chipoli\.org/.test(a.href))
+      .map((a) => ({ href: a.href, text: a.textContent, target: a.target, rel: a.rel })));
+    check("the Chicago ward card links that ward's Chipoli page and says the site is not the City's",
+      chipoli.length === 1 && chipoli[0].href === "https://chipoli.org/alderpersons/42" &&
+        chipoli[0].text.indexOf("Ward 42 on Chipoli") === 0 && chipoli[0].target === "_blank" &&
+        /noopener/.test(chipoli[0].rel) && /not run by the City/.test(card.text),
+      JSON.stringify({ chipoli, card: card.text.slice(0, 400) }));
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view
@@ -1217,6 +1249,213 @@ try {
     const events = await page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event && /^share-qr$/.test(v.path)).map((v) => v.path));
     check("drawing the QR is counted once", events.length === 1, JSON.stringify(events));
     await context.close();
+  }
+
+  // 1l. THE INSTALL INVITATION AND THE APP COUNTS (engine install-app). On a
+  //     phone-width screen the app holds Chrome's install event, so Chrome's
+  //     own mini-infobar never appears, and offers an Install button once the
+  //     reader has an answer on screen; pressing it hands over to the
+  //     browser's own dialog. It is offered ONCE: after a reload, with the
+  //     event fired again, nothing shows. On a computer the event is left
+  //     alone. An iPhone's Safari has no such event and gets a short tip with
+  //     no button. A launch of the installed app is counted once per window
+  //     and an install once, both by app and never by place. Chrome's real
+  //     event cannot be produced in a test, so a synthetic one carries the two
+  //     members the app uses, prompt() and userChoice.
+  {
+    const PHONE = { width: 390, height: 844 };
+    const TAG = APP_DIR.replace(/\/$/, "");
+    const VIEW = `${BASE}#p=41.8825,-87.6285&l=cg`;
+    const stubCounter = async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    };
+    const fireInstallEvent = (p) => p.evaluate(() => {
+      const e = new Event("beforeinstallprompt", { cancelable: true });
+      window.__prompted = window.__prompted || 0;
+      e.prompt = () => { window.__prompted++; return Promise.resolve(); };
+      e.userChoice = Promise.resolve({ outcome: "accepted", platform: "web" });
+      window.dispatchEvent(e);
+      return e.defaultPrevented;
+    });
+    const installEvents = (p) => p.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^(install-invite|app-install|app-launch)\//.test(v.path)).map((v) => v.path));
+
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      const shown = await page.waitForSelector(".install-invite .install-invite-go", { timeout: 10000 }).then(() => true, () => false);
+      check("on a phone the app holds Chrome's install event and offers its own Install button after an answer",
+        held === true && shown, `held=${held} shown=${shown}`);
+      if (shown) await page.click(".install-invite-go");
+      await page.waitForTimeout(200);
+      const after = await page.evaluate(() => ({
+        prompted: window.__prompted,
+        bar: !!document.querySelector(".install-invite"),
+        seen: localStorage.getItem("districtry-install-invite"),
+        last: localStorage.getItem("districtry-last-app"),
+      }));
+      check("Install hands over to the browser's own dialog, and the invitation goes",
+        after.prompted === 1 && !after.bar && after.seen === "shown", JSON.stringify(after));
+      check("the app records which state was open last, for the installed app's launcher",
+        after.last === TAG, JSON.stringify(after.last));
+      await page.evaluate(() => window.dispatchEvent(new Event("appinstalled")));
+      await page.waitForTimeout(100);
+      const events = await installEvents(page);
+      check("the invitation, its answer and the install are each counted once, by app",
+        events.join() === `install-invite/shown,install-invite/accepted,app-install/${TAG}`, JSON.stringify(events));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      const heldAgain = await fireInstallEvent(page);
+      await page.waitForTimeout(4500);
+      const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
+      check("the invitation is offered once: a later visit holds the event and shows nothing",
+        heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 900 } });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      check("on a computer the browser's own install control is left alone", held === false, `held=${held}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await context.addInitScript(() => {
+        const real = window.matchMedia.bind(window);
+        window.matchMedia = (q) => /display-mode:\s*standalone/.test(q)
+          ? { matches: true, media: q, onchange: null, addListener() {}, removeListener() {},
+              addEventListener() {}, removeEventListener() {}, dispatchEvent() { return false; } }
+          : real(q);
+      });
+      const page = await booted(context, BASE, stubCounter);
+      await page.waitForTimeout(300);
+      const first = await installEvents(page);
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const second = await installEvents(page);
+      check("a launch of the installed app is counted once per window, by app",
+        first.join() === `app-launch/${TAG}` && second.length === 0,
+        `first=${JSON.stringify(first)} after reload=${JSON.stringify(second)}`);
+      await context.close();
+    }
+    // A PLACE SHARED INTO THE APP. The launcher (/app/) hands it over as #q=,
+    // in the shape Android shares a Google Maps place (its name, then the
+    // link), and leaves districtry-share-in in session storage. The app must
+    // select the place the link names, read in the browser, and count the
+    // share once, by app and never by place; a reload counts nothing more.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await context.addInitScript(() => {
+        try {
+          if (!sessionStorage.getItem("__shareSeeded")) {
+            sessionStorage.setItem("__shareSeeded", "1");
+            sessionStorage.setItem("districtry-share-in", "1");
+          }
+        } catch (e) { /* blocked storage: the count check below reports it */ }
+      });
+      const SHARED = "Willis Tower https://www.google.com/maps/place/Willis+Tower/@41.8789,-87.6359,17z/data=!3m1!4b1!8m2!3d41.8788761!4d-87.6359149";
+      const page = await booted(context, `${BASE}#q=${encodeURIComponent(SHARED)}`, stubCounter);
+      const sel = await page.waitForFunction((n) => !!window[n].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME), () => null);
+      await page.waitForTimeout(300);
+      const shareEvents = () => page.evaluate(() => (window.__gcEvents || [])
+        .filter((v) => v && v.event && /^(share-in|map-link)\//.test(v.path)).map((v) => v.path));
+      const first = await shareEvents();
+      const mark = await page.evaluate(() => sessionStorage.getItem("districtry-share-in"));
+      check("a place shared into the app is selected from its link, read in the browser",
+        !!sel && Math.abs(sel.lat - 41.8788761) < 1e-5 && Math.abs(sel.lng - -87.6359149) < 1e-5,
+        JSON.stringify(sel));
+      check("the share is counted once, by app, and its mark removed",
+        first.filter((e) => e.indexOf("share-in/") === 0).join() === `share-in/${TAG}` && mark === null,
+        JSON.stringify({ events: first, mark }));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const again = (await shareEvents()).filter((e) => e.indexOf("share-in/") === 0);
+      check("a reload in the same window counts the share no more", again.length === 0, JSON.stringify(again));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
+        userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });
+      const page = await booted(context, VIEW, stubCounter);
+      const tip = await page.waitForSelector(".install-invite", { timeout: 10000 }).then(() => true, () => false);
+      const bar = await page.evaluate(() => {
+        const el = document.querySelector(".install-invite");
+        return el ? { text: el.textContent, button: !!el.querySelector(".install-invite-go") } : null;
+      });
+      check("an iPhone's Safari gets the Add to Home Screen tip, with no Install button",
+        tip && !!bar && /Add to Home Screen/.test(bar.text) && !bar.button, JSON.stringify(bar));
+      if (tip) await page.click(".install-invite-close");
+      const gone = await page.evaluate(() => !document.querySelector(".install-invite"));
+      const events = await installEvents(page);
+      check("closing the tip removes it, and the tip and its closing are each counted once",
+        gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
+      await context.close();
+    }
+  }
+
+  // 1m. INSIDE THE GOOGLE PLAY APP THE SUPPORT LINKS ARE HIDDEN, AND ONLY
+  //     THERE (engine/shared/play-app.txt). The Play app is this site in a
+  //     full-screen Chrome window and Google Play does not allow an app to
+  //     send readers to an outside payment page, so a window the app opened
+  //     (it arrives with ?ref=play, passed on by the launcher) hides every
+  //     link to GitHub Sponsors and to the sponsorship page: the panel's
+  //     sponsorship sentence and its Sponsorship link. (The page's old footer
+  //     carries a third, and the skin has drawn that footer nowhere since the
+  //     redesign, so it is counted in `anywhere` and not in the panel.) The
+  //     mark is kept for the window, so the next page hides them with no tag
+  //     in its address. A plain visit must keep the panel's links, which is
+  //     the half that stops a rule hiding them everywhere from passing.
+  {
+    const supportShown = (p) => p.evaluate(() => {
+      const visible = (el) => !!el && el.getClientRects().length > 0;
+      const all = (sel) => Array.prototype.slice.call(document.querySelectorAll(sel));
+      const support = ['a[href*="github.com/sponsors"]', 'a[href*="sponsorship.html"]'];
+      return {
+        marked: document.documentElement.classList.contains("dst-play-app"),
+        kept: (function () { try { return sessionStorage.getItem("districtry-play-app"); } catch (e) { return "blocked"; } })(),
+        sentence: visible(document.querySelector(".dpf-support")),
+        panel: all(support.map((sel) => "#districtry-panel-foot " + sel).join(", ")).map(visible),
+        anywhere: all(support.join(", ")).filter(visible).length,
+      };
+    });
+    const noCounter = async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    };
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}?ref=play`, noCounter);
+      const inApp = await supportShown(page);
+      check("in the Play app every support link on the map page is hidden",
+        inApp.marked && inApp.kept === "1" && !inApp.sentence &&
+          inApp.panel.length >= 3 && inApp.panel.every((v) => !v) && inApp.anywhere === 0,
+        JSON.stringify(inApp));
+      await page.goto(`${BASE}sources.html`, { waitUntil: "domcontentloaded" });
+      const next = await supportShown(page);
+      check("the mark carries to the next page in the window, with no tag in its address",
+        next.marked && next.anywhere === 0 &&
+          (await page.locator('a[href*="github.com/sponsors"]').count()) >= 1,
+        JSON.stringify(next));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE, noCounter);
+      const web = await supportShown(page);
+      check("on the website the map page keeps its support links",
+        !web.marked && web.kept === null && web.sentence &&
+          web.panel.length >= 3 && web.panel.every((v) => v),
+        JSON.stringify(web));
+      await context.close();
+    }
   }
 
   // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
@@ -2163,6 +2402,51 @@ try {
       });
     }
     check("tile failure shows dismissible banner", shown && hiddenAfterDismiss === true, `shown=${shown} hiddenAfterDismiss=${hiddenAfterDismiss}`);
+    await context.close();
+  }
+
+  // 1i2. A CARD'S DISTRICT PILL IS LEGIBLE IN A PAGE THAT BOOTS DARK. Two
+  //      defects read "IL-7" at 1.1:1 on a dark card (2026-10-13): the cards
+  //      were built before the dark palette's getters were installed, so a page
+  //      that booted dark kept every card's LIGHT colour (#14181C for the House)
+  //      until the theme was flipped; and the pill painted the layer colour
+  //      itself as text. validate_contrast.py measures the pill's mix for every
+  //      layer colour statically; this is the half only a browser can see — the
+  //      accent a card actually carries after a dark boot, and the ratio the
+  //      browser actually paints.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress`, async (p) => {
+      await p.addInitScript(() => { try { localStorage.setItem("districtry-theme", "dark"); } catch (e) {} });
+    });
+    const pill = await page.waitForFunction(() => {
+      const cb = document.getElementById("toggle-congress");
+      const block = cb && cb.closest(".layer-block");
+      const el = block && block.querySelector(".card-id-pill");
+      if (!el || el.hidden || !el.textContent.trim()) return null;
+      const rgb = (v) => {
+        const m = v.match(/^color\(srgb ([\d.e-]+) ([\d.e-]+) ([\d.e-]+)(?: \/ ([\d.e-]+))?\)$/);
+        if (m) return [+m[1] * 255, +m[2] * 255, +m[3] * 255, m[4] === undefined ? 1 : +m[4]];
+        const n = v.match(/[\d.]+/g).map(Number);
+        return [n[0], n[1], n[2], n.length > 3 ? n[3] : 1];
+      };
+      const lum = (c) => {
+        const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+        return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+      };
+      const text = rgb(getComputedStyle(el).color);
+      const tint = rgb(getComputedStyle(el).backgroundColor);
+      const head = rgb(getComputedStyle(el.parentElement).backgroundColor);
+      const ground = [0, 1, 2].map((i) => tint[i] * tint[3] + head[i] * (1 - tint[3]));
+      const a = lum(text), b = lum(ground);
+      return { text: el.textContent.trim(), theme: document.documentElement.getAttribute("data-theme"),
+               accent: block.style.getPropertyValue("--layer-accent").trim().toUpperCase(),
+               ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05) };
+    }, null, { timeout: QUERY_TIMEOUT }).then((h) => h.jsonValue(), () => null);
+    check("a page that boots dark gives its cards the dark layer colour, not the light one",
+      !!pill && pill.theme === "dark" && !!pill.accent && pill.accent !== "#14181C", JSON.stringify(pill));
+    check("the U.S. House card's district pill reads at 4.5:1 or better on a dark card",
+      !!pill && pill.ratio >= 4.5, JSON.stringify(pill));
     await context.close();
   }
 

@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **248 distinct hosts** those files
-name, **44 are fetched by the browser**; the other 204 are links.
+makes from a link a reader clicks. Of **249 distinct hosts** those files
+name, **44 are fetched by the browser**; the other 205 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -36,8 +36,9 @@ per-app measurement, so the two cannot disagree.
 
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
-only when a reader pastes one, and answers with the full link it leads
-to. `build_privacy_page.py` names it as a recipient.
+only when a reader pastes one or shares one into the installed app,
+and answers with the full link it leads to. `build_privacy_page.py`
+names it as a recipient.
 
 ### Basemap tiles — 3 host(s)
 
@@ -363,7 +364,7 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 393 | 6 |
+| il | 131 | 394 | 6 |
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 265 | 5 |
@@ -376,7 +377,7 @@ measured until the next run describes it.
 | ok | 17 | 12 | 0 |
 | sc | 17 | 13 | 0 |
 | tn | 17 | 11 | 0 |
-| **total** | **506** | **922** | **12** |
+| **total** | **506** | **923** | **12** |
 
 **145 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
