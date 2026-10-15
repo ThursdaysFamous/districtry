@@ -2384,7 +2384,7 @@ trusted.
         "wright"
       ],
       "covers": [
-        "county-government"
+        "county-government:wright"
       ],
       "ask": {
         "who": "County Auditor Amanda Meyer",
@@ -2406,7 +2406,7 @@ trusted.
         "pottawattamie"
       ],
       "covers": [
-        "county-government"
+        "county-government:pottawattamie"
       ],
       "ask": {
         "who": "County Auditor Mary Ann Hanusa",
