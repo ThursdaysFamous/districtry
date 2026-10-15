@@ -7413,10 +7413,11 @@ found one error of ours.
 > About page names him as Director with that address and asks "For better service, please use
 > email if possible" (read 2026-10-15, after the host's robots.txt, which answers 404 and so
 > permits every path). Postal: 3825 Ridgewood Road, Jackson, MS 39211; telephone (601) 432-6354.
-> The operator has not chosen between this and letters to the counties. It is drafted because one
-> office could cover all 82 counties, which is the choice the operator made for Tennessee on
-> 2026-10-11 (`tn-ctas-commissioner-districts`). The mailbox has not been searched for earlier
-> correspondence with MARIS; do that before it goes.
+> On 2026-10-15 the operator chose to have it made into a Gmail draft ("Make the draft" on the
+> Mississippi thread's decision card), ahead of letters to the counties, because one office could
+> cover all 82 counties, which is the choice made for Tennessee on 2026-10-11
+> (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
+> been searched for earlier correspondence with MARIS; do that before it goes.
 
 **Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
