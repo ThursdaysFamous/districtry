@@ -1,0 +1,2112 @@
+{
+ "built": "2026-10-15",
+ "councilSeats": {
+  "21067": {
+   "1": "Tyler Morton",
+   "10": "Dave Sevigny",
+   "11": "Jennifer Reynolds",
+   "12": "Hil Boone",
+   "2": "Shayla Lynch, J.D.",
+   "3": "Tom Eblen",
+   "4": "Emma Curtis",
+   "5": "Liz Sheehan",
+   "6": "Lisa Higgins-Hord",
+   "7": "Joseph Hale",
+   "8": "Amy Beasley",
+   "9": "Whitney Elliott Baxter"
+  },
+  "21111": {
+   "1": "TAMMY HAWKINS",
+   "10": "JOSIE RAYMOND",
+   "11": "KEVIN KRAMER",
+   "12": "JONATHAN \"JJ\" JOSEPH",
+   "13": "DAN SEUM JR",
+   "14": "CRYSTAL BAST",
+   "15": "JENNIFER CHAPPELL",
+   "16": "SCOTT REED",
+   "17": "MARKUS WINKLER",
+   "18": "MARILYN PARKER",
+   "19": "ANTHONY PIAGENTINI",
+   "2": "BARBARA SHANKLIN",
+   "20": "STUART BENSON",
+   "21": "BETSY RUHE",
+   "22": "KEVIN D. BRATCHER",
+   "23": "JEFF HUDSON",
+   "24": "GINNY MULVEY-WOOLRIDGE",
+   "25": "KHALIL BATSHON",
+   "26": "BRENT T. ACKERSON",
+   "3": "SHAMEKA PARRISH-WRIGHT",
+   "4": "KEN HERNDON",
+   "5": "DONNA PURVIS",
+   "6": "J.P. LYNINGER",
+   "7": "PAULA MCCRANEY",
+   "8": "BEN RENO-WEBER",
+   "9": "ANDREW OWEN"
+  }
+ },
+ "councils": {
+  "21067": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Council_District/FeatureServer/0",
+  "21111": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPolitical/MapServer/8"
+ },
+ "counties": {
+  "Adair": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+   ],
+   "drawn": true,
+   "fips": "21001",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 2,
+    "2026 primary": 14
+   },
+   "precincts": 16,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Allen": {
+   "drawn": false,
+   "fips": "21003",
+   "notes": [
+    "2022 not used: 5 precincts placed by both elections, 1 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 6
+   },
+   "precincts": 14,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "B102",
+    "B103",
+    "D101",
+    "D102",
+    "D103"
+   ]
+  },
+  "Anderson": {
+   "drawn": false,
+   "fips": "21005",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 6
+   },
+   "precincts": 8,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "B101",
+    "D101"
+   ]
+  },
+  "Ballard": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21007",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 5
+   },
+   "precincts": 5,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Barren": {
+   "drawn": false,
+   "fips": "21009",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 12
+   },
+   "precincts": 14,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "F101",
+    "F102"
+   ]
+  },
+  "Bell": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21013",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 30
+   },
+   "precincts": 30,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Bourbon": {
+   "drawn": false,
+   "fips": "21017",
+   "notes": [
+    "2022 not used: 2 precincts placed by both elections, 2 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 5
+   },
+   "precincts": 7,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "C101",
+    "D101"
+   ]
+  },
+  "Boyle": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "drawn": true,
+   "fips": "21021",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 7,
+    "2026 primary": 18
+   },
+   "precincts": 25,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Bracken": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "drawn": true,
+   "fips": "21023",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 1,
+    "2026 primary": 7
+   },
+   "precincts": 8,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Breathitt": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21025",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 21
+   },
+   "precincts": 21,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Breckinridge": {
+   "drawn": false,
+   "fips": "21027",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 10
+   },
+   "precincts": 15,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "C101",
+    "C102",
+    "D101",
+    "D102",
+    "D103"
+   ]
+  },
+  "Bullitt": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21029",
+   "leftOut": {
+    "X001": "an Army post: no magistrate race on its ballot (Ft. Knox)"
+   },
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 47
+   },
+   "precincts": 48,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Butler": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21031",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 5
+   },
+   "precincts": 5,
+   "sheet2022": null,
+   "sheet2026": "text"
+  },
+  "Caldwell": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21033",
+   "notes": [
+    "2022 not used: 1 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 10,
+    "the one uncontested district": 3
+   },
+   "precincts": 13,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Calloway": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21035",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 1,
+    "2026 primary": 2,
+    "the one uncontested district": 1
+   },
+   "precincts": 4,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Carlisle": {
+   "drawn": false,
+   "fips": "21039",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 4
+   },
+   "precincts": 6,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "C101",
+    "C102"
+   ]
+  },
+  "Carroll": {
+   "districts": [
+    "1",
+    "2",
+    "3"
+   ],
+   "drawn": true,
+   "fips": "21041",
+   "notes": [
+    "2022 not used: 1 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 2,
+    "the one uncontested district": 1
+   },
+   "precincts": 3,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Carter": {
+   "drawn": false,
+   "fips": "21043",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 18
+   },
+   "precincts": 27,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "B101",
+    "B102",
+    "B103",
+    "B104",
+    "B105",
+    "C101",
+    "C102",
+    "C103",
+    "C104"
+   ]
+  },
+  "Casey": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21045",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 15
+   },
+   "precincts": 15,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Christian": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "drawn": true,
+   "fips": "21047",
+   "leftOut": {
+    "G105": "an Army post: no magistrate race on its ballot (Ft Campbell)"
+   },
+   "notes": [],
+   "placedBy": {
+    "2022 general": 20,
+    "2026 primary": 21
+   },
+   "precincts": 42,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Clark": {
+   "drawn": false,
+   "fips": "21049",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 12
+   },
+   "precincts": 26,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "A103",
+    "A104",
+    "A105",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "F101",
+    "F102",
+    "F103",
+    "F104",
+    "F105"
+   ]
+  },
+  "Clay": {
+   "drawn": false,
+   "fips": "21051",
+   "notes": [],
+   "placedBy": {},
+   "precincts": 20,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A106",
+    "A107",
+    "B101",
+    "B103",
+    "B104",
+    "C101",
+    "C102",
+    "C103",
+    "C104",
+    "D102",
+    "D103",
+    "D104",
+    "E101",
+    "E102",
+    "E103",
+    "E104",
+    "F101",
+    "F102",
+    "F104"
+   ]
+  },
+  "Clinton": {
+   "drawn": false,
+   "fips": "21053",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 11
+   },
+   "precincts": 13,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102"
+   ]
+  },
+  "Crittenden": {
+   "drawn": false,
+   "fips": "21055",
+   "notes": [
+    "2022 not used: 6 precincts placed by both elections, 2 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 6
+   },
+   "precincts": 10,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "B101",
+    "D101",
+    "D102",
+    "E101"
+   ]
+  },
+  "Cumberland": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21057",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 10
+   },
+   "precincts": 10,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Edmonson": {
+   "drawn": false,
+   "fips": "21061",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 4
+   },
+   "precincts": 10,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "C101",
+    "C102",
+    "F101"
+   ]
+  },
+  "Elliott": {
+   "drawn": false,
+   "fips": "21063",
+   "notes": [],
+   "placedBy": {},
+   "precincts": 7,
+   "sheet2022": "ocr",
+   "sheet2026": "ocr",
+   "unplaced": [
+    "A101",
+    "B101",
+    "C101",
+    "D101",
+    "E101",
+    "F101",
+    "G101"
+   ]
+  },
+  "Estill": {
+   "drawn": false,
+   "fips": "21065",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 9
+   },
+   "precincts": 15,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "A103",
+    "A104",
+    "A105",
+    "A106"
+   ]
+  },
+  "Fleming": {
+   "drawn": false,
+   "fips": "21069",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 14
+   },
+   "precincts": 18,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "C101",
+    "C102",
+    "D102",
+    "D103"
+   ]
+  },
+  "Floyd": {
+   "drawn": false,
+   "fips": "21071",
+   "notes": [
+    "two answers for D110"
+   ],
+   "placedBy": {
+    "2022 general": 21,
+    "2026 primary": 20
+   },
+   "precincts": 42,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "D110"
+   ]
+  },
+  "Franklin": {
+   "drawn": false,
+   "fips": "21073",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 16,
+    "2026 primary": 3
+   },
+   "precincts": 23,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "B104",
+    "C103",
+    "C104",
+    "E103"
+   ]
+  },
+  "Fulton": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21075",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 6,
+    "the one uncontested district": 2
+   },
+   "precincts": 8,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Gallatin": {
+   "drawn": false,
+   "fips": "21077",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 4
+   },
+   "precincts": 8,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "B102"
+   ]
+  },
+  "Garrard": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21079",
+   "notes": [
+    "2022 not used: 1 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 12,
+    "the one uncontested district": 2
+   },
+   "precincts": 14,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Grant": {
+   "districts": [
+    "1",
+    "2",
+    "3"
+   ],
+   "drawn": true,
+   "fips": "21081",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 3
+   },
+   "precincts": 3,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Grayson": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "drawn": true,
+   "fips": "21085",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 16,
+    "2026 primary": 4,
+    "county map": 1
+   },
+   "precincts": 21,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Green": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21087",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 4,
+    "2026 primary": 6
+   },
+   "precincts": 10,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Hancock": {
+   "drawn": false,
+   "fips": "21091",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 3
+   },
+   "precincts": 10,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "B102",
+    "B103",
+    "C101",
+    "C102"
+   ]
+  },
+  "Hardin": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "drawn": true,
+   "fips": "21093",
+   "leftOut": {
+    "A009": "an Army post: no magistrate race on its ballot (Fort Knox 26)",
+    "A010": "an Army post: no magistrate race on its ballot (Fort Knox 27)"
+   },
+   "notes": [],
+   "placedBy": {
+    "2022 general": 21,
+    "2026 primary": 35
+   },
+   "precincts": 58,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Harlan": {
+   "drawn": false,
+   "fips": "21095",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 26
+   },
+   "precincts": 32,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "D101",
+    "D103",
+    "D104",
+    "D106",
+    "D108",
+    "D109"
+   ]
+  },
+  "Harrison": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "drawn": true,
+   "fips": "21097",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 16,
+    "2026 primary": 2
+   },
+   "precincts": 18,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Hart": {
+   "drawn": false,
+   "fips": "21099",
+   "notes": [
+    "2022 not used: 0 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 2
+   },
+   "precincts": 5,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "A100",
+    "B200",
+    "D400"
+   ]
+  },
+  "Henderson": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21101",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 13,
+    "2026 primary": 15
+   },
+   "precincts": 28,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Henry": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "drawn": true,
+   "fips": "21103",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 9,
+    "2026 primary": 7
+   },
+   "precincts": 16,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Hickman": {
+   "districts": [
+    "1",
+    "2",
+    "3"
+   ],
+   "drawn": true,
+   "fips": "21105",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 4,
+    "2026 primary": 2
+   },
+   "precincts": 6,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Hopkins": {
+   "drawn": false,
+   "fips": "21107",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 14
+   },
+   "precincts": 50,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A001",
+    "A002",
+    "A003",
+    "A004",
+    "A005",
+    "A006",
+    "A007",
+    "B008",
+    "B009",
+    "B010",
+    "B011",
+    "B012",
+    "B013",
+    "B014",
+    "B015",
+    "E030",
+    "E031",
+    "E032",
+    "E033",
+    "E034",
+    "E035",
+    "E036",
+    "F037",
+    "F038",
+    "F039",
+    "F040",
+    "F041",
+    "F042",
+    "F043",
+    "G044",
+    "G045",
+    "G046",
+    "G047",
+    "G048",
+    "G049",
+    "G050"
+   ]
+  },
+  "Jackson": {
+   "districts": [
+    "1",
+    "2",
+    "3"
+   ],
+   "drawn": true,
+   "fips": "21109",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 11
+   },
+   "precincts": 11,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Jessamine": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "drawn": true,
+   "fips": "21113",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 28,
+    "the one uncontested district": 7
+   },
+   "precincts": 35,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Knott": {
+   "drawn": false,
+   "fips": "21119",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 19
+   },
+   "precincts": 30,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A103",
+    "A104",
+    "A105",
+    "A106",
+    "A108",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D107"
+   ]
+  },
+  "Knox": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21121",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 20
+   },
+   "precincts": 20,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Larue": {
+   "drawn": false,
+   "fips": "21123",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 3
+   },
+   "precincts": 12,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A103",
+    "B101",
+    "B102",
+    "B103",
+    "D101",
+    "D102",
+    "D103",
+    "D104"
+   ]
+  },
+  "Laurel": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "drawn": true,
+   "fips": "21125",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 23
+   },
+   "precincts": 23,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Lawrence": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21127",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 18
+   },
+   "precincts": 18,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Lee": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21129",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 10
+   },
+   "precincts": 10,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Leslie": {
+   "drawn": false,
+   "fips": "21131",
+   "notes": [],
+   "placedBy": {},
+   "precincts": 17,
+   "sheet2022": "ocr",
+   "sheet2026": "ocr",
+   "unplaced": [
+    "A101",
+    "A102",
+    "A103",
+    "A104",
+    "A105",
+    "B101",
+    "B102",
+    "B103",
+    "B104",
+    "C101",
+    "C102",
+    "C103",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105"
+   ]
+  },
+  "Letcher": {
+   "drawn": false,
+   "fips": "21133",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 20
+   },
+   "precincts": 30,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "B101",
+    "B102",
+    "B103",
+    "B104",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107"
+   ]
+  },
+  "Lewis": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21135",
+   "notes": [
+    "2022 not used: 0 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 3,
+    "the one uncontested district": 1
+   },
+   "precincts": 4,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Lincoln": {
+   "drawn": false,
+   "fips": "21137",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 4,
+    "2026 primary": 13
+   },
+   "precincts": 18,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "C105"
+   ]
+  },
+  "Livingston": {
+   "drawn": false,
+   "fips": "21139",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 2
+   },
+   "precincts": 7,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "B101",
+    "B102",
+    "C101",
+    "C102"
+   ]
+  },
+  "Logan": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "drawn": true,
+   "fips": "21141",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 4,
+    "2026 primary": 4
+   },
+   "precincts": 8,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Lyon": {
+   "drawn": false,
+   "fips": "21143",
+   "notes": [
+    "2022 not used: 0 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {},
+   "precincts": 7,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "B102",
+    "C101",
+    "C102",
+    "X001"
+   ]
+  },
+  "Madison": {
+   "drawn": false,
+   "fips": "21151",
+   "notes": [
+    "two answers for D113"
+   ],
+   "placedBy": {
+    "2026 primary": 46
+   },
+   "precincts": 47,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "D113"
+   ]
+  },
+  "Magoffin": {
+   "districts": [
+    "1",
+    "2",
+    "3"
+   ],
+   "drawn": true,
+   "fips": "21153",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 14
+   },
+   "precincts": 14,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Marion": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21155",
+   "notes": [
+    "2022 not used: 1 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 2,
+    "county map": 3
+   },
+   "precincts": 5,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Martin": {
+   "drawn": false,
+   "fips": "21159",
+   "notes": [],
+   "placedBy": {},
+   "precincts": 14,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "A103",
+    "B101",
+    "B102",
+    "B103",
+    "C101",
+    "C102",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "E101",
+    "E102"
+   ]
+  },
+  "McCreary": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21147",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 18
+   },
+   "precincts": 18,
+   "sheet2022": null,
+   "sheet2026": "text"
+  },
+  "McLean": {
+   "drawn": false,
+   "fips": "21149",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 4
+   },
+   "precincts": 8,
+   "sheet2022": null,
+   "sheet2026": "text",
+   "unplaced": [
+    "B101",
+    "B102",
+    "C101",
+    "C102"
+   ]
+  },
+  "Meade": {
+   "drawn": false,
+   "fips": "21163",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 8
+   },
+   "precincts": 19,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "C101",
+    "C102",
+    "C103",
+    "D101",
+    "D102",
+    "D103",
+    "E101",
+    "E102",
+    "E103"
+   ]
+  },
+  "Menifee": {
+   "drawn": false,
+   "fips": "21165",
+   "notes": [
+    "2022 not used: 0 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {},
+   "precincts": 6,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "C101",
+    "D101",
+    "E101"
+   ]
+  },
+  "Mercer": {
+   "drawn": false,
+   "fips": "21167",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 2
+   },
+   "precincts": 16,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "A103",
+    "A104",
+    "C101",
+    "C102",
+    "C104",
+    "C105",
+    "D101",
+    "D102",
+    "D103",
+    "F101",
+    "F102",
+    "G102"
+   ]
+  },
+  "Metcalfe": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21169",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 2,
+    "2026 primary": 10
+   },
+   "precincts": 12,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Monroe": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21171",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 12
+   },
+   "precincts": 12,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Morgan": {
+   "drawn": false,
+   "fips": "21175",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 6
+   },
+   "precincts": 12,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "A103",
+    "E101",
+    "E102",
+    "E103"
+   ]
+  },
+  "Muhlenberg": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21177",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 10,
+    "2026 primary": 15
+   },
+   "precincts": 25,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Nelson": {
+   "drawn": false,
+   "fips": "21179",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 15
+   },
+   "precincts": 24,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A102",
+    "A103",
+    "A104",
+    "A105",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105"
+   ]
+  },
+  "Nicholas": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21181",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 3,
+    "2026 primary": 2
+   },
+   "precincts": 5,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Ohio": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21183",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 19
+   },
+   "precincts": 19,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Oldham": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "drawn": true,
+   "fips": "21185",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 8,
+    "2026 primary": 29
+   },
+   "precincts": 37,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Owen": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21187",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 3,
+    "2026 primary": 9
+   },
+   "precincts": 12,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Owsley": {
+   "drawn": false,
+   "fips": "21189",
+   "notes": [
+    "C101 not on the 2026 sheet"
+   ],
+   "placedBy": {
+    "2026 primary": 5
+   },
+   "precincts": 8,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "B101",
+    "B102",
+    "C101"
+   ]
+  },
+  "Pendleton": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21191",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 12
+   },
+   "precincts": 12,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Perry": {
+   "districts": [
+    "1",
+    "2",
+    "3"
+   ],
+   "drawn": true,
+   "fips": "21193",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 37
+   },
+   "precincts": 37,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Powell": {
+   "drawn": false,
+   "fips": "21197",
+   "notes": [],
+   "placedBy": {},
+   "precincts": 7,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "B102",
+    "C101",
+    "D101",
+    "E101"
+   ]
+  },
+  "Pulaski": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21199",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 19
+   },
+   "precincts": 19,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Robertson": {
+   "drawn": false,
+   "fips": "21201",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 2,
+    "2026 primary": 2
+   },
+   "precincts": 5,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "E101"
+   ]
+  },
+  "Rockcastle": {
+   "drawn": false,
+   "fips": "21203",
+   "notes": [],
+   "placedBy": {},
+   "precincts": 15,
+   "sheet2022": null,
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "B101",
+    "B102",
+    "C101",
+    "C102",
+    "C103",
+    "D101",
+    "D102",
+    "D103",
+    "E101",
+    "E102",
+    "E103",
+    "E104",
+    "E105"
+   ]
+  },
+  "Rowan": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21205",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 9,
+    "2026 primary": 9
+   },
+   "precincts": 18,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Russell": {
+   "drawn": false,
+   "fips": "21207",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 13
+   },
+   "precincts": 16,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "B101",
+    "B102",
+    "B103"
+   ]
+  },
+  "Scott": {
+   "drawn": false,
+   "fips": "21209",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 3
+   },
+   "precincts": 11,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A103",
+    "C101",
+    "C103",
+    "E101",
+    "E103",
+    "F100",
+    "G101"
+   ]
+  },
+  "Shelby": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+   ],
+   "drawn": true,
+   "fips": "21211",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 14,
+    "2026 primary": 20
+   },
+   "precincts": 34,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Simpson": {
+   "districts": [
+    "East",
+    "West",
+    "North",
+    "South"
+   ],
+   "drawn": true,
+   "fips": "21213",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 3,
+    "2026 primary": 10
+   },
+   "precincts": 13,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Spencer": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21215",
+   "notes": [
+    "2022 not used: 0 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 5,
+    "county map": 4
+   },
+   "precincts": 9,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Taylor": {
+   "drawn": false,
+   "fips": "21217",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 16
+   },
+   "precincts": 20,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "C101",
+    "C103",
+    "C104",
+    "C105"
+   ]
+  },
+  "Todd": {
+   "drawn": false,
+   "fips": "21219",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 6
+   },
+   "precincts": 13,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A102",
+    "A103",
+    "C101",
+    "C102",
+    "E101",
+    "E102"
+   ]
+  },
+  "Trigg": {
+   "drawn": false,
+   "fips": "21221",
+   "leftOut": {
+    "E501": "an Army post: no magistrate race on its ballot (Fort Campbell)"
+   },
+   "notes": [
+    "2022 not used: 0 precincts placed by both elections, 0 disagree"
+   ],
+   "placedBy": {
+    "2026 primary": 3
+   },
+   "precincts": 9,
+   "sheet2022": "text",
+   "sheet2026": "text",
+   "unplaced": [
+    "A100",
+    "B200",
+    "F600",
+    "F601",
+    "G700"
+   ]
+  },
+  "Trimble": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21223",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 2,
+    "2026 primary": 9,
+    "county map": 1
+   },
+   "precincts": 12,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Union": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "drawn": true,
+   "fips": "21225",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 12
+   },
+   "precincts": 12,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Warren": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "drawn": true,
+   "fips": "21227",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 33,
+    "2026 primary": 19,
+    "county map": 1
+   },
+   "precincts": 53,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Washington": {
+   "drawn": false,
+   "fips": "21229",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 8
+   },
+   "precincts": 13,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "C101",
+    "C102",
+    "C103",
+    "F101",
+    "F102"
+   ]
+  },
+  "Wayne": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21231",
+   "notes": [],
+   "placedBy": {
+    "2026 primary": 19
+   },
+   "precincts": 19,
+   "sheet2022": "ocr",
+   "sheet2026": "text"
+  },
+  "Webster": {
+   "districts": [
+    "1",
+    "2",
+    "3"
+   ],
+   "drawn": true,
+   "fips": "21233",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 5,
+    "2026 primary": 9
+   },
+   "precincts": 14,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Whitley": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "drawn": true,
+   "fips": "21235",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 9,
+    "2026 primary": 27
+   },
+   "precincts": 36,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  },
+  "Wolfe": {
+   "drawn": false,
+   "fips": "21237",
+   "notes": [],
+   "placedBy": {},
+   "precincts": 8,
+   "sheet2022": "ocr",
+   "sheet2026": "text",
+   "unplaced": [
+    "A101",
+    "A105",
+    "B101",
+    "B102",
+    "B106",
+    "C101",
+    "C102",
+    "C104"
+   ]
+  },
+  "Woodford": {
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "drawn": true,
+   "fips": "21239",
+   "notes": [],
+   "placedBy": {
+    "2022 general": 6,
+    "2026 primary": 2
+   },
+   "precincts": 8,
+   "sheet2022": "text",
+   "sheet2026": "text"
+  }
+ },
+ "countyMaps": {
+  "Grayson": "https://services6.arcgis.com/ZEEfHlyOqtzNL4oA/arcgis/rest/services/Grayson_Mag_Dists/FeatureServer/0",
+  "Hardin": "https://services1.arcgis.com/fYwcHOBzInDTQxh0/arcgis/rest/services/2024Magisterial_Dist/FeatureServer/0",
+  "Marion": "https://services1.arcgis.com/Txq2JUfAytfzQqPz/arcgis/rest/services/Magistrial_Boundaries/FeatureServer/0",
+  "Spencer": "https://services5.arcgis.com/SRuaqVyoD8TEQJga/arcgis/rest/services/SpencerMagisterialPrecinct2023/FeatureServer/0",
+  "Trimble": "https://services5.arcgis.com/SRuaqVyoD8TEQJga/arcgis/rest/services/TrimbleMagisPrecinct/FeatureServer/1",
+  "Warren": "https://webgis.bgky.org/server/rest/services/CCPC/CCPC_Magisterial_Voting_Districts/FeatureServer/0"
+ },
+ "fidelityWorstM": 20.0,
+ "precincts": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/SBE_Voting_Precincts_with_Attributes/FeatureServer/0",
+ "publisher": "Kentucky State Board of Elections (precincts and recap sheets); LOJIC and the Lexington-Fayette Urban County Government (council maps)",
+ "sheets": {
+  "2022 general": "https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx",
+  "2026 primary": "https://elect.ky.gov/results/2020-2029/Pages/2026Primary-Recap-Sheets.aspx"
+ },
+ "shipped_sha256": "b4231a97264cd6f7f65f47732b10d3c07a54212760d01464d1fae72cdee47d14",
+ "validate": "2000/2000 (100.00%) agreement, no point in two districts"
+}

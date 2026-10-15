@@ -1616,7 +1616,11 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("ky-senate", "ky-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # The magisterial districts of the fiscal courts the State Board's
+        # precinct results can place whole, and the Louisville and Lexington
+        # council districts (2026-10-15). Which counties that is, is read off
+        # the shipped file by _ky_county_maps_owed.
+        "county-government": depth("fiscal-court"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         # All three Census tilings, because Kentucky needs all three: measured
@@ -2022,10 +2026,22 @@ def _ky_county_maps_owed(B):
     and so are the Louisville Metro Council and the Lexington-Fayette Urban
     County Council. A commissioner-form court elects its commissioners
     countywide from residency districts (KRS 67.060), which owes no map.
+
+    A county the fiscal-court layer draws owes nothing more, and which counties
+    it draws is MEASURED off the shipped file, never listed here: the builder
+    (ky/scripts/build_ky_county_districts.py) writes a county only when every
+    one of its precincts is placed, and its --check holds that.
     """
     rel = "ky/data/app/ky-county-officials.json"
     with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
         doc = json.load(fh)
+    drawn_rel = "ky/data/app/ky-county-districts.json"
+    with open(os.path.join(REPO_ROOT, drawn_rel), encoding="utf-8") as fh:
+        drawn = {f["properties"]["countyFips"] for f in json.load(fh)["features"]}
+    stray = sorted(drawn - set(doc))
+    if stray:
+        fail("ky: `%s` draws counties %s, which the county roster does not carry"
+             % (drawn_rel, ", ".join(stray)))
     by_district = {"magistrate", "metro", "urban-county"}
     at_large = {"commissioner"}
     owed = set()
@@ -2035,7 +2051,7 @@ def _ky_county_maps_owed(B):
             fail("ky: `%s` gives county %s the form %r, which the county-map "
                  "test does not know. Say whether that court is elected by "
                  "district before it is scored." % (rel, fips, form))
-        if form in by_district:
+        if form in by_district and fips not in drawn:
             owed.add(B.slug_of(rec["county"]))
     return owed
 
@@ -2065,23 +2081,26 @@ def _in_county_maps_owed(B):
     return owed
 
 
-# A state is listed here only while its county-government level draws NO
-# district: where an entry draws some, which counties it draws has to be
-# measured, and the audit below fails until somebody does.
-COUNTY_MAPS_OWED = {"ky": _ky_county_maps_owed, "in": _in_county_maps_owed}
+# Each state's derive function, and the layers whose drawn counties it
+# subtracts. Where a county-government entry names a layer the function does not
+# measure, which counties that layer draws is unmeasured, and the audit below
+# fails until somebody measures it.
+COUNTY_MAPS_OWED = {"ky": (_ky_county_maps_owed, ("fiscal-court",)),
+                    "in": (_in_county_maps_owed, ())}
 
 
 def county_maps_owed(tag, counties, B):
     """The counties that name a body elected by district and draw no district."""
-    derive = COUNTY_MAPS_OWED.get(tag)
+    derive, measured = COUNTY_MAPS_OWED.get(tag, (None, ()))
     if derive is None:
         return set()
     entry = ANSWERS[tag]["county-government"]
-    if entry.verdict != "depth" or entry.layers:
-        fail("%s: the county-map test assumes this state draws no county "
-             "district, and its county-government entry now names %s. Measure "
-             "which counties that layer draws and narrow COUNTY_MAPS_OWED."
-             % (tag, ", ".join(entry.layers) or entry.verdict))
+    if entry.verdict != "depth" or set(entry.layers) != set(measured):
+        fail("%s: the county-map test subtracts the counties %s draws, and its "
+             "county-government entry names %s. Measure which counties that "
+             "layer draws and update COUNTY_MAPS_OWED."
+             % (tag, ", ".join(measured) or "no layer",
+                ", ".join(entry.layers) or entry.verdict))
     owed = derive(B)
     known = {B.slug_of(n) for n in counties.get(tag, {})}
     stray = sorted(owed - known)
@@ -2194,11 +2213,11 @@ WARD_MAPS = {
               "2758000": "St. Paul", "2771032": "Winona"}),
     # Kentucky's city roster carries no ward labels, so the sweep finds nothing
     # there; the two councils elected by district are declared. Louisville's
-    # Metro Council answers both of the Census's Louisville places.
+    # Metro Council answers both of the Census's Louisville places. Both are
+    # drawn by the fiscal-court layer from the governments' own council maps
+    # (2026-10-15).
     "ky": dict(
-        drawn=set(),
-        owed={"2148006": "Louisville Metro", "2148000": "Louisville",
-              "2146027": "Lexington-Fayette"},
+        drawn={"2148006", "2148000", "2146027"},
         declared={"2148006", "2148000", "2146027"}),
     "in": dict(
         drawn=set(),
