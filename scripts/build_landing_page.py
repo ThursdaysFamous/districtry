@@ -1773,13 +1773,19 @@ footer .support b { color: var(--ink); }
     var link = parseMapLink(q);
     if (link && link.kind === "short") {
       var signal = inFlight.signal;
-      resolveShortMapLink(link, signal).then(function (full) {
+      setStatus("Reading the link\\u2026", false);
+      // a failed lookup is tried again (ENGINE map-link), and the reader is
+      // told so rather than left watching the same words
+      resolveShortMapLink(link, signal, function () {
+        if (!signal.aborted) setStatus("Reading the link\\u2026 trying again", false);
+      }).then(function (full) {
         if (signal.aborted) return;
+        setStatus("Searching\\u2026", false);
         submitLink(full, full.kind === "text" ? full.text : q, q);
       }, function (err) {
         if (err && err.name === "AbortError") return;
         resetButton();
-        setStatus(mapLinkMessage(link), true);
+        setStatus(mapLinkMessage(link, err), true);
       });
       return;
     }
