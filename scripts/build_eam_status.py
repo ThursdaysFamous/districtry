@@ -685,6 +685,7 @@ def selftest():
     """
     bad = check_marks() + check_live_fleet() + check_name_shapes()
     bad += check_watch_tables() + check_named_unit() + check_ask_credit()
+    bad += check_ward_cases()
     for head, want, why in HEADER_CASES:
         got = is_schedule_table([head])
         if got != want:
@@ -1504,11 +1505,13 @@ ANSWERS = {
         # The app DRAWS them and, since 2026-10-01, names the clerk and trustees
         # of 186 of them from the twelve counties that publish a roster — which
         # is why the older reading here, that nothing draws a township
-        # government, no longer describes the tree. It stays open on the
-        # measurement rather than on that reading: Iowa has roughly 1,600 civil
-        # townships, so about 1,400 still name nobody and the card says so on
-        # every one of them.
-        "sub-county-government": OPEN,
+        # government, no longer describes the tree. It was held open on the
+        # measurement that about 1,400 of Iowa's roughly 1,600 civil townships
+        # still name nobody. Adam ruled on 2026-10-15 that this level passes
+        # when the boards are named wherever a list is published, and the other
+        # counties publish none, so it is answered; the card still says so on
+        # every township it cannot name.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": answers("school-director-district"),
         "precincts": answers("precinct"),
         "special-districts": answers("community-college", "cc-director-district", "iowa-aea"),
@@ -1759,9 +1762,10 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # The fleet-wide tribal layer thread owns drawing Oklahoma's nations,
-        # as census statistical areas labeled as such (Adam, 2026-10-10).
-        "tribal-government": OPEN,
+        # The fleet-wide tribal layer thread drew Oklahoma's nations, as census
+        # statistical areas labeled as such (Adam, 2026-10-10), and the app went
+        # live with them: 31 areas across 33 nations (ok/CLAUDE.md).
+        "tribal-government": answers("tribal-government"),
     },
     # South Carolina, added at its go-live with its county councils.
     "sc": {
@@ -1997,6 +2001,349 @@ CITY_FILES = {
 }
 
 
+# ---------------------------------------------------------------------------
+# WHERE A BODY IS ELECTED BY DISTRICT, NAMES ARE NOT THE WHOLE ANSWER (Adam,
+# 2026-10-15, "Keep maps"). The standard's test for levels 4 and 6 is that a
+# reader clicking inside the unit is told who governs THAT POINT. A board
+# elected at large answers that with its names. A board elected by ward or
+# district does not: a reader is owed the one member whose district holds the
+# point, and only a drawn district says which. So a unit whose body is elected
+# by district counts as answered only where its districts are drawn. A seat
+# that is elected countywide or citywide but must LIVE in a district (Indiana's
+# county commissioners, Kentucky's commissioner-form fiscal courts) is an
+# at-large seat and owes no map.
+# ---------------------------------------------------------------------------
+
+def _ky_county_maps_owed(B):
+    """Kentucky counties whose fiscal court is elected by district.
+
+    Read off each county's own `form` in the Department for Local Government's
+    directory. Magistrates are elected from magisterial districts (KRS 25.010),
+    and so are the Louisville Metro Council and the Lexington-Fayette Urban
+    County Council. A commissioner-form court elects its commissioners
+    countywide from residency districts (KRS 67.060), which owes no map.
+    """
+    rel = "ky/data/app/ky-county-officials.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    by_district = {"magistrate", "metro", "urban-county"}
+    at_large = {"commissioner"}
+    owed = set()
+    for fips, rec in doc.items():
+        form = rec.get("form")
+        if form not in by_district | at_large:
+            fail("ky: `%s` gives county %s the form %r, which the county-map "
+                 "test does not know. Say whether that court is elected by "
+                 "district before it is scored." % (rel, fips, form))
+        if form in by_district:
+            owed.add(B.slug_of(rec["county"]))
+    return owed
+
+
+def _in_county_maps_owed(B):
+    """Indiana counties whose fiscal body seats members by district.
+
+    A county council elects four members from districts and three at large
+    (IC 36-2-3-4), so every council carrying a seat that is not at large owes a
+    map. Daviess labels its four district seats only as "County Council
+    Member", which is why the test is "not at large" rather than "says
+    District". County commissioners are elected by the whole county from
+    residency districts (IC 36-2-2-4) and owe none. Marion County is governed by
+    the Indianapolis City-County Council, elected from 25 districts, and is not
+    in the council file.
+    """
+    rel = "in/data/app/in-county-councils.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    owed = set()
+    for fips, rec in doc.items():
+        seats = [str(s.get("seat") or "") for s in rec.get("seats") or []]
+        if any(s and not re.search(r"\bat[- ]large\b", s, re.I)
+               for s in seats):
+            owed.add(B.slug_of(rec["county"]))
+    owed.add(B.slug_of("Marion"))
+    return owed
+
+
+def _il_county_maps_owed(B, records):
+    """Illinois counties whose board is elected by district and is not drawn.
+
+    A county's roster keys its members by district when its board is elected
+    that way, and a board elected at large rides the shared commissioners file,
+    which carries no districts. The county-board layer draws a county exactly
+    when its dispatch table carries that county's `key:`, so a named county
+    with districted members and no key is owed a map. Read from il/index.html
+    rather than listed, because counties join the dispatch table weekly.
+    """
+    with open(os.path.join(REPO_ROOT, "il", "index.html"), encoding="utf-8") as fh:
+        text = fh.read()
+    mark = '    id: "county-board",\n'
+    if mark not in text:
+        fail("il: il/index.html no longer registers county-board in the shape "
+             "the county-map test reads, so it cannot tell which counties draw "
+             "their board districts.")
+    start = text.index(mark)
+    end = re.compile(r"\n  \}\);\n").search(text, start)
+    drawn = set(re.findall(r'key: "([a-z-]+)"', text[start:end.start()]
+                           if end else ""))
+    if len(drawn) < 2:
+        fail("il: parsed %d counties out of the county-board dispatch table — "
+             "it has changed shape" % len(drawn))
+    owed = set()
+    for name, rec in records.items():
+        if rec.get("districts") and B.slug_of(name) not in drawn:
+            owed.add(B.slug_of(name))
+    return owed
+
+
+def _ia_county_maps_owed(B, records):
+    """Iowa counties whose supervisors are elected by district and unmatched.
+
+    The county board directory gives each county's plan: Plan 1 elects at
+    large, Plan 2 at large from residency districts, and Plan 3 by district
+    (Iowa Code 331.206). A county "transitioning" to districts still has a
+    board elected at large. The supervisor-district layer draws every Plan 3
+    county, so what a Plan 3 county can still lack is the pairing: a roster
+    that names its supervisors without saying which district each holds tells
+    a reader the board, not the one member whose district holds the point.
+    """
+    rel = "ia/data/app/ia-county-board-directory.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    rel_geo = "ia/data/app/ia-supervisor-districts.json"
+    with open(os.path.join(REPO_ROOT, rel_geo), encoding="utf-8") as fh:
+        drawn = {f["properties"].get("COUNTY")
+                 for f in json.load(fh).get("features") or []}
+    by_district = {"PLAN 3"}
+    at_large = {"PLAN 1", "PLAN 2", "TRANSITIONING"}
+    owed = set()
+    for fips, rec in doc.items():
+        plan = rec.get("plan")
+        if plan not in by_district | at_large:
+            fail("ia: `%s` gives county %s the plan %r, which the county-map "
+                 "test does not know. Say whether that board is elected by "
+                 "district before it is scored." % (rel, fips, plan))
+        if plan not in by_district:
+            continue
+        name = rec["county"]
+        named = records.get(name) or {}
+        if name not in drawn or not named.get("districts"):
+            owed.add(B.slug_of(name))
+    return owed
+
+
+def _no_layer(derive):
+    """A state whose county-government level draws no county district."""
+    def wrapped(B, records):
+        return derive(B)
+    wrapped.draws_none = True
+    return wrapped
+
+
+# A STATE WHOSE ENTRY DRAWS NO DISTRICT (Kentucky, Indiana) is wrapped in
+# `_no_layer`, and the audit below fails the day its county-government entry
+# gains a layer, because which counties that layer draws then has to be
+# measured. A state whose entry draws some (Illinois, Iowa) measures it itself.
+COUNTY_MAPS_OWED = {
+    "ky": _no_layer(_ky_county_maps_owed),
+    "in": _no_layer(_in_county_maps_owed),
+    "il": _il_county_maps_owed,
+    "ia": _ia_county_maps_owed,
+}
+
+
+def county_maps_owed(tag, counties, B):
+    """The counties that name a body elected by district and draw no district."""
+    derive = COUNTY_MAPS_OWED.get(tag)
+    if derive is None:
+        return set()
+    entry = ANSWERS[tag]["county-government"]
+    if getattr(derive, "draws_none", False) and (
+            entry.verdict != "depth" or entry.layers):
+        fail("%s: the county-map test assumes this state draws no county "
+             "district, and its county-government entry now names %s. Measure "
+             "which counties that layer draws and narrow COUNTY_MAPS_OWED."
+             % (tag, ", ".join(entry.layers) or entry.verdict))
+    records = counties.get(tag, {})
+    owed = derive(B, records)
+    known = {B.slug_of(n) for n in records}
+    stray = sorted(owed - known)
+    # Illinois and Iowa may owe a map for a county they do not name yet; that
+    # county is open on names already, and the set is intersected with the
+    # named counties before it is scored. Kentucky and Indiana name every
+    # county they derive from, so a stray there is a misread file.
+    if stray and getattr(derive, "draws_none", False):
+        fail("%s: COUNTY_MAPS_OWED names %s, which is not a county this state's "
+             "rosters carry" % (tag, ", ".join(stray)))
+    return owed
+
+
+# Counties that a city government governs, credited to the county tier when the
+# city's own roster names its council. New York City's five boroughs are five
+# counties with no county legislature: the City Council is their government,
+# elected from 51 drawn districts.
+CITY_GOVERNED_COUNTIES = {
+    "ny": (("Bronx", "Kings", "New York", "Queens", "Richmond"),
+           "ny/data/app/council-members.json"),
+}
+
+
+def city_governed_counties(tag, B):
+    names, rel = CITY_GOVERNED_COUNTIES.get(tag, ((), None))
+    if not names:
+        return set()
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    if not _named_anywhere(doc):
+        fail("%s: `%s` is credited with governing %s and names nobody"
+             % (tag, rel, ", ".join(names)))
+    return {B.slug_of(n) for n in names}
+
+
+WARD_ELECTED = re.compile(r"\b(ward|district)\b", re.I)
+WARD_KEYS = ("seat", "district", "ward", "role", "office", "label")
+
+
+def elects_by_ward(record):
+    """Does this unit's roster seat anybody by ward or district?
+
+    A roster keyed by `districts` or `wards`, or a seat, role or office whose
+    wording names a ward or a district. It is a SWEEP, not the decision: what
+    it finds must be listed in WARD_MAPS as drawn, owed or elected at large, so
+    a ward-electing city cannot pass the level on its names alone by being
+    missed here and read as at large.
+    """
+    stack = [record]
+    while stack:
+        x = stack.pop()
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k in ("districts", "wards") and v:
+                    return True
+                if k in WARD_KEYS and isinstance(v, str) \
+                        and WARD_ELECTED.search(v):
+                    return True
+                stack.append(v)
+        elif isinstance(x, list):
+            stack.extend(x)
+    return False
+
+
+# Measured 2026-10-15 over every named unit at the floor. `drawn` is "all" where
+# one layer draws every ward the state's rosters seat (Wisconsin's statewide
+# aldermanic layer, New York City's council layer), and otherwise the units the
+# app draws. `owed` are units elected by ward or district with no drawn wards;
+# `at_large` are units the sweep finds whose district seats are elected by the
+# whole city, with the reason. A unit the sweep finds in none of the three FAILS
+# the build, and so does an entry the sweep no longer finds.
+WARD_MAPS = {
+    "il": dict(
+        drawn={"1701114", "1703012", "1704845", "1705092", "1705573",
+               "1706613", "1709642", "1710487", "1714000", "1714026",
+               "1719642", "1722697", "1724582", "1728326", "1730926",
+               "1738570", "1744225", "1749867", "1753559", "1754638",
+               "1754820", "1755249", "1757225", "1757875", "1759000",
+               "1762367", "1765000", "1765078", "1770122", "1772000",
+               "1779293"},
+        owed={"1712385": "Champaign", "1718563": "Danville"}),
+    "wi": dict(drawn="all"),
+    "ny": dict(drawn="all"),
+    "ia": dict(
+        drawn={"1912000", "1921000", "1982425"},
+        owed={"1901855": "Ames", "1906355": "Bettendorf",
+              "1911755": "Cedar Falls", "1919000": "Davenport",
+              "1922395": "Dubuque", "1949485": "Marion",
+              "1949755": "Marshalltown", "1950160": "Mason City",
+              "1983910": "West Des Moines"},
+        at_large={"1938595": "Iowa City's charter nominates its district "
+                             "council members by district and elects them by "
+                             "the whole city"}),
+    "mi": dict(
+        drawn={"2605920", "2622000", "2629000", "2634000", "2641420",
+               "2684000"},
+        owed={"2603000": "Ann Arbor", "2606020": "Bay City",
+              "2638640": "Holland", "2642820": "Kentwood",
+              "2646000": "Lansing", "2653780": "Midland",
+              "2656320": "Muskegon", "2665440": "Pontiac",
+              "2682960": "Walker"}),
+    "mn": dict(
+        drawn=set(),
+        owed={"2702908": "Austin", "2706382": "Blaine",
+              "2706616": "Bloomington", "2707966": "Brooklyn Park",
+              "2710972": "Chaska", "2713114": "Coon Rapids",
+              "2717000": "Duluth", "2718674": "Elk River",
+              "2722814": "Fridley", "2739878": "Mankato",
+              "2743000": "Minneapolis", "2743252": "Minnetonka",
+              "2743864": "Moorhead", "2749300": "Owatonna",
+              "2751730": "Plymouth", "2753026": "Ramsey",
+              "2754214": "Richfield", "2754880": "Rochester",
+              "2756896": "St. Cloud", "2757220": "St. Louis Park",
+              "2758000": "St. Paul", "2771032": "Winona"}),
+    # Kentucky's city roster carries no ward labels, so the sweep finds nothing
+    # there; the two councils elected by district are declared. Louisville's
+    # Metro Council answers both of the Census's Louisville places.
+    "ky": dict(
+        drawn=set(),
+        owed={"2148006": "Louisville Metro", "2148000": "Louisville",
+              "2146027": "Lexington-Fayette"},
+        declared={"2148006", "2148000", "2146027"}),
+    "in": dict(
+        drawn=set(),
+        owed={"1801468": "Anderson", "1805860": "Bloomington",
+              "1810342": "Carmel", "1814734": "Columbus",
+              "1820728": "Elkhart", "1822000": "Evansville",
+              "1823278": "Fishers", "1825000": "Fort Wayne",
+              "1825450": "Franklin", "1828386": "Goshen",
+              "1829898": "Greenwood", "1836003": "Indianapolis",
+              "1838358": "Jeffersonville", "1840392": "Kokomo",
+              "1840788": "Lafayette", "1842426": "Lawrence",
+              "1846908": "Marion", "1848528": "Merrillville",
+              "1848798": "Michigan City", "1849932": "Mishawaka",
+              "1851876": "Muncie", "1852326": "New Albany",
+              "1854180": "Noblesville", "1861092": "Portage",
+              "1864260": "Richmond", "1871000": "South Bend",
+              "1875428": "Terre Haute", "1878326": "Valparaiso",
+              "1882700": "Westfield", "1882862": "West Lafayette",
+              "1886372": "Zionsville"}),
+}
+
+
+def ward_maps_owed(tag, units, ward):
+    """The named units elected by ward or district whose wards are not drawn.
+
+    `ward` is the sweep's finding for this state. Every unit in it must be
+    accounted for in WARD_MAPS, and every entry there must still be found by the
+    sweep (or be declared), so the table cannot rot in either direction.
+    """
+    if not ward and tag not in WARD_MAPS:
+        return set()
+    if tag not in WARD_MAPS:
+        fail("%s: these named units seat members by ward or district and "
+             "WARD_MAPS has no entry for the state: %s. Say which are drawn."
+             % (tag, ", ".join(sorted(units[g]["name"] for g in ward))))
+    m = WARD_MAPS[tag]
+    drawn, owed = m.get("drawn", set()), m.get("owed", {})
+    at_large, declared = m.get("at_large", {}), m.get("declared", set())
+    listed = set(owed) | set(at_large) | (set() if drawn == "all" else drawn)
+    if drawn != "all":
+        missing = sorted(ward - listed)
+        if missing:
+            fail("%s: these named units seat members by ward or district and "
+                 "WARD_MAPS does not say whether their wards are drawn: %s"
+                 % (tag, ", ".join("%s (%s)" % (units[g]["name"], g)
+                                   for g in missing)))
+    stale = sorted(g for g in listed if g not in ward and g not in declared)
+    if stale:
+        fail("%s: WARD_MAPS lists %s, which the sweep no longer finds electing "
+             "by ward or district. Re-measure and drop or declare the entry."
+             % (tag, ", ".join(stale)))
+    outside = sorted(g for g in set(owed) | declared if g not in units)
+    if outside:
+        fail("%s: WARD_MAPS names %s, which is not a unit at the floor"
+             % (tag, ", ".join(outside)))
+    return set(owed)
+
+
 EXPECTED_GOVERNMENTS = os.path.join(REPO_ROOT, "docs", "expected-governments.json")
 
 
@@ -2162,7 +2509,7 @@ def city_tier(tag, expected):
              "(it needs the network); a missing state must not read as one "
              "with nothing to answer." % tag)
     units = {u["geoid"]: u for u in expected["units"][tag]}
-    named = set()
+    named, ward = set(), set()
     for rel, keyed_by in CITY_ROSTERS.get(tag, []):
         path = os.path.join(REPO_ROOT, rel)
         if not os.path.exists(path):
@@ -2186,6 +2533,8 @@ def city_tier(tag, expected):
             if geoid in units and _named_anywhere(record):
                 named.add(geoid)
                 hit += 1
+                if elects_by_ward(record):
+                    ward.add(geoid)
         print("build-eam-status: %s — city tier: `%s` names a governing body "
               "for %d of this state's %d unit(s) at %s+"
               % (tag, rel, hit, len(units),
@@ -2206,9 +2555,11 @@ def city_tier(tag, expected):
                  "id is wrong; a declaration matching nothing is a pass nobody "
                  "earned." % (tag, geoid))
         named.add(geoid)
+        if elects_by_ward(doc):
+            ward.add(geoid)
         print("build-eam-status: %s — city tier: `%s` names %s's governing body"
               % (tag, rel, units[geoid]["name"]))
-    return units, named
+    return units, named, ward
 
 
 # `_named_anywhere` decides whether a 25,000+ unit is answered, which is the
@@ -2351,6 +2702,35 @@ def check_named_unit():
           % (len(NAMED_UNIT_CASES),
              sum(1 for _, w, _ in NAMED_UNIT_CASES if w),
              sum(1 for _, w, _ in NAMED_UNIT_CASES if not w)))
+    return bad
+
+
+# `elects_by_ward` is the sweep that decides which named cities must show a
+# drawn ward before they count, so its cases are stated too.
+WARD_CASES = (
+    ({"members": {"01": [{"name": "Eric J. Haugaard"}]}}, False,
+     "members keyed by a bare number say nothing about how they are elected"),
+    ({"wards": {"1": [{"name": "A. Person"}]}}, True, "a `wards` key"),
+    ({"members": [{"name": "A. Person", "role": "Council Member, Ward 3"}]},
+     True, "a role naming a ward"),
+    ({"seats": [{"name": "A. Person", "seat": "District B"}]}, True,
+     "a seat naming a lettered district"),
+    ({"members": [{"name": "A. Person", "role": "Council Member At Large"}]},
+     False, "an at-large council"),
+    ({"board": [{"name": "A. Person", "role": "Trustee"}]}, False,
+     "a village board of trustees"),
+    ({"districts": []}, False, "an empty `districts` key seats nobody"),
+)
+
+
+def check_ward_cases():
+    bad = 0
+    for record, want, why in WARD_CASES:
+        got = elects_by_ward(record)
+        if got != want:
+            bad += 1
+            print("  WARD  want=%s got=%s  (%s)" % (want, got, why))
+    print("  WARD  %d ward-sweep case(s)" % len(WARD_CASES))
     return bad
 
 
@@ -2544,7 +2924,7 @@ def _names_a_body(rec):
 
 
 def score_covered(tag, counties_named, total_counties, expected, records,
-                  named_counties=()):
+                  named_counties=(), county_maps_owed=()):
     """Every expected function for one instance: verdict, and why.
 
     Returns (entries, covered) where `entries` is one record per function in the
@@ -2589,6 +2969,12 @@ def score_covered(tag, counties_named, total_counties, expected, records,
                     verdict = "answered" if short == 0 else "open"
                     detail = ("%d of %d counties name a governing body"
                               % (counties_named, total_counties))
+                    if county_maps_owed:
+                        detail += (" and draw it where it is elected by "
+                                   "district; %d more name a body elected by "
+                                   "district whose districts are not drawn, "
+                                   "or not matched to their members"
+                                   % len(county_maps_owed))
                     # THE COUNTY UNIVERSE IS A COUNT, NOT A LIST. STATE_COUNTIES
                     # holds a number on purpose (every derivable list is a
                     # coverage list, which would make the denominator vacuous),
@@ -2605,12 +2991,19 @@ def score_covered(tag, counties_named, total_counties, expected, records,
                     unit_word, unit_plural = "county", "counties"
                     unit_universe = set(named_counties)
             elif key == "local-government":
-                units, named = city_tier(tag, expected)
+                units, named, ward = city_tier(tag, expected)
+                owed = ward_maps_owed(tag, units, ward) & named
+                named = named - owed
                 short = len(units) - len(named)
                 verdict = "answered" if short == 0 else "open"
                 detail = ("%d of %d units at %s+ name a governing body"
                           % (len(named), len(units),
                              "{:,}".format(expected["floor"])))
+                if owed:
+                    detail += (" and draw it where it is elected by ward or "
+                               "district; %d more name a body elected by ward "
+                               "or district whose wards are not drawn"
+                               % len(owed))
                 if short:
                     rest = sorted((u["name"] for g, u in units.items()
                                    if g not in named))
@@ -2922,10 +3315,16 @@ def measure(counties, paths, B):
                      "different clocks; split the row."
                      % (tag, label, reach, len(surface), ceiling))
 
-        counties_named = len(named_counties)
+        # New York City's five counties are governed by the City Council.
+        named_counties |= city_governed_counties(tag, B)
+        # A county naming a body elected by district passes only where those
+        # districts are drawn (Adam, 2026-10-15).
+        maps_owed = county_maps_owed(tag, counties, B) & named_counties
+        mapped = named_counties - maps_owed
+        counties_named = len(mapped)
         cov_entries, cov = score_covered(
             tag, counties_named, COVERED_COUNTIES.get(tag), expected,
-            covering.get(tag) or {}, named_counties)
+            covering.get(tag) or {}, mapped, maps_owed)
 
         rows.append(dict(
             tag=tag, scored=scored, total=total, ring=ring,
