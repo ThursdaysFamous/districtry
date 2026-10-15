@@ -63,7 +63,8 @@ in the researched-but-unbuilt backlog.
   "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"],
-  "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "municipality", "police-station", "fire-station", "post-office"]
+  "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "municipality", "police-station", "fire-station", "post-office"],
+  "mississippi": ["us-house", "ms-senate", "county", "ms-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3358,6 +3359,44 @@ trusted.
             "why": "Arkansas's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-13 against TIGERweb's School service for STATE='05': 234 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 75-county total (134,659 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. The planning pass on 2026-10-09 read that the state maps board zones for 176 of its 238 school districts, that whether the other 62 elect at large is NOT measured, and that the state's school directory (adedata.arkansas.gov) lists no board members. Four of the state's 238 districts have no national code, so the Census's 234 is not a miscount. Not attempted in this change."
+      }
+  ],
+  "mississippi": [
+      {
+            "id": "ms-supervisor-district-lines",
+            "concept": "County supervisor district",
+            "area": "Mississippi — the counties whose current supervisor district lines are not confirmed",
+            "counties": [],
+            "kind": "data-quality",
+            "layer": "county",
+            "summary": "In most Mississippi counties this app names all five supervisors but cannot show which one represents the spot you picked, because it has no confirmed map of the current district lines there.",
+            "why": "The Census Bureau's map still carries the lines from before the 2020 census in most counties, and no state office publishes the current ones. Old lines would name the wrong supervisor for many people, so none are drawn.",
+            "wanted": "Each county's current supervisor district map, or one statewide map of every county's current lines from a state office.",
+            "blocker": "PLACEHOLDER"
+      },
+      {
+            "id": "ms-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Mississippi",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "This app can tell you which Mississippi city, town or village you are in, and not who your mayor or council members are.",
+            "why": "No statewide list of Mississippi's mayors and council or board members has been read yet. The boundary this card draws carries geography and no officeholder at all, and this app never guesses a name.",
+            "wanted": "A statewide roster of mayors and council or board members by ward, or each city's own published list.",
+            "blocker": "The boundary is the Census's own incorporated-places layer, which carries a name, a code and a functional status and no officeholder field. Measured 2026-10-15: 300 places for STATE='28' — 113 `<Name> city`, 167 `<Name> town` and 20 `<Name> village`, every one FUNCSTAT A (active) except Tillatoba town, which the Census records as inactive and the card says so — covering 5,634 of the state's 121,535 km² of land. The card states the style the Census records and claims nothing about the form of government. The planning pass on 2026-10-09 found that Mississippi has 15 cities of more than 25,000 people, that the state's Official and Statistical Register names their boards without ward numbers and predates the June 2025 city elections, and that ward maps turned up for Gulfport, Olive Branch and Jackson only; none of it has been read into this instance. Not attempted in this change; the instance arrived on the national tier plus the county supervisors. The cities over 25,000 people are the part the fleet's done standard asks for first. Mississippi is dark as of this record."
+      },
+      {
+            "id": "ms-school-board-members",
+            "concept": "School board",
+            "area": "Mississippi",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people on its board.",
+            "why": "No statewide list of Mississippi's school board members has been found. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+            "blocker": "Measured 2026-10-15 against TIGERweb's School service for STATE='28': 137 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 82-county total (121,535 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. How each board is chosen (elected, appointed, or some of each) has not been researched here and the card claims nothing about it. The planning pass on 2026-10-09 read that many county school boards are elected from the county's supervisor districts, so naming their members by district would share the supervisor-line problem recorded in ms-supervisor-district-lines, and found no statewide list of members. Not attempted in this change. Mississippi is dark as of this record."
       }
   ]
 }

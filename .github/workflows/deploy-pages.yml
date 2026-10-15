@@ -232,6 +232,9 @@ jobs:
             # tell a dark folder from an unregistered one. It goes live only on
             # the operator's word.
             'ar/**'
+            # Mississippi arrives dark on the same terms as Arkansas, and goes
+            # live only on the operator's word.
+            'ms/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
