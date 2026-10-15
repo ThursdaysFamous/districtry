@@ -48,7 +48,7 @@ different thing from one it failed.
 | ia | **EAM·** | 99 | 99/99 | 77 | 77 | all | 65 | all | 12 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 411 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 7 of 14 levels |
-| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 13 | all | 8 of 14 levels |
+| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 14 | all | 9 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 12 of 14 levels |
 | nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 11 | all | 9 of 14 levels |
@@ -130,10 +130,9 @@ this instance is in maintenance.
 ### ky — EAM·
 
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ky-circuit-court-districts.json`, `ky-district-court-districts.json`, `ky-house-districts.json`, `ky-senate-districts.json`, `ky-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 14 of 120 counties name a governing body and draw it where it is elected by district; 106 more name a body elected by district whose districts are not drawn, or not matched to their members
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 14 of 17 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 3 more name a body elected by ward or district whose wards are not drawn; unanswered: Lexington-Fayette urban county, Louisville city, Louisville/Jefferson County metro government (balance)
+- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ky-circuit-court-districts.json`, `ky-county-districts.json`, `ky-district-court-districts.json`, `ky-house-districts.json`, `ky-senate-districts.json`, `ky-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **4. The county governing body, in every county of the state** — open. 72 of 120 counties name a governing body and draw it where it is elected by district; 48 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
