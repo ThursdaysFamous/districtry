@@ -86,7 +86,7 @@
       "@type": "ItemList",
       "name": "districtry instances",
       "itemListOrder": "https://schema.org/ItemListUnordered",
-      "numberOfItems": 13,
+      "numberOfItems": 14,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -165,6 +165,12 @@
           "position": 13,
           "name": "Tennessee",
           "url": "https://districtry.com/tn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "name": "Arkansas",
+          "url": "https://districtry.com/ar/"
         }
       ]
     }
@@ -948,7 +954,7 @@ footer .support b { color: var(--ink); }
                placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
-      <p class="search-help">districtry opens the map that covers the point. 12 states and San Francisco
+      <p class="search-help">districtry opens the map that covers the point. 13 states and San Francisco
          answer today — an address anywhere else says so instead of guessing.</p>
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
@@ -961,7 +967,7 @@ footer .support b { color: var(--ink); }
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
       <div class="cov-head">
-        <p class="cov-count"><strong>12 states and San Francisco answer today.</strong>
+        <p class="cov-count"><strong>13 states and San Francisco answer today.</strong>
           Pick one to open its map.</p>
         <ul class="cov-key" aria-label="Key">
           <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
@@ -975,7 +981,7 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Alabama</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Alaska</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arizona</span><span class="vh">, not yet</span></span></li>
-        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arkansas</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/ar/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arkansas</span><span class="st-scope">all 75 counties &#183; <span class="st-n">11</span>&nbsp;layers</span></a></li>
         <li><a class="st st-part" href="https://districtry.com/ca/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">California</span><span class="st-scope">San Francisco only &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Colorado</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Connecticut</span><span class="vh">, not yet</span></span></li>
@@ -1063,6 +1069,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ok/congress.html">Oklahoma<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/sc/congress.html">South Carolina<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/tn/congress.html">Tennessee<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/ar/congress.html">Arkansas<span class="chip-topic"> &#183; U.S. House</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1078,6 +1085,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ok/state-legislature.html">Oklahoma<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/sc/state-legislature.html">South Carolina<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/tn/state-legislature.html">Tennessee<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/ar/state-legislature.html">Arkansas<span class="chip-topic"> &#183; Legislature</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1096,6 +1104,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ok/county-commissioner.html">Oklahoma<span class="chip-topic"> &#183; commissioners</span></a></li>
           <li><a class="chip" href="/sc/county-council.html">South Carolina<span class="chip-topic"> &#183; county council</span></a></li>
           <li><a class="chip" href="/tn/county-commissioner.html">Tennessee<span class="chip-topic"> &#183; commissioners</span></a></li>
+          <li><a class="chip" href="/ar/quorum-court.html">Arkansas<span class="chip-topic"> &#183; quorum court</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1291,7 +1300,10 @@ footer .support b { color: var(--ink); }
       bbox: { minLat: 31.99, maxLat: 35.16, minLng: -83.36, maxLng: -78.49 } },
     { id: "tennessee", tag: "tn", name: "Tennessee", url: "https://districtry.com/tn/",
       outline: "tn/data/app/metro-outline.json",
-      bbox: { minLat: 34.98, maxLat: 36.68, minLng: -90.32, maxLng: -81.64 } }
+      bbox: { minLat: 34.98, maxLat: 36.68, minLng: -90.32, maxLng: -81.64 } },
+    { id: "arkansas", tag: "ar", name: "Arkansas", url: "https://districtry.com/ar/",
+      outline: "ar/data/app/metro-outline.json",
+      bbox: { minLat: 33.0, maxLat: 36.5, minLng: -94.62, maxLng: -89.64 } }
   ];
 
   function metrosClaiming(lat, lng) {

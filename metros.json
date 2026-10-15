@@ -234,6 +234,24 @@
       "landing_name": "Tennessee",
       "blurb": "All 95 counties and their county commission districts: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Tennessee Senate, House and U.S. House districts, with who holds each seat. County commissioners are named from each county's own pages where the county publishes a current list, and the Data gaps panel lists the counties not named yet and why.",
       "scope": "all 95 counties"
+    },
+    {
+      "id": "arkansas",
+      "explorer_name": "districtry Arkansas",
+      "label": "Arkansas",
+      "url": "https://districtry.com/ar/",
+      "emoji": "💎",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -94.62,
+        "minLat": 33.0,
+        "maxLng": -89.64,
+        "maxLat": 36.5
+      },
+      "tag": "ar",
+      "landing_name": "Arkansas",
+      "blurb": "All 75 counties and their quorum court districts: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Arkansas Senate, House and U.S. House districts, with who holds each seat. Every county judge is named, and so is the justice of the peace for nearly every district, from the county's own site where it numbers its justices and otherwise from the 2024 election results while the winner is still on the Association of Arkansas Counties' list. Nobody is named yet on the city councils or school boards, and the Data gaps panel says why.",
+      "scope": "all 75 counties"
     }
   ]
 }

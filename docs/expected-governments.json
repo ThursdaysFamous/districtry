@@ -1,11 +1,12 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-11",
+ "measured": "2026-10-15",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
  "subdivision_is_general_purpose": {
+  "ar": null,
   "ia": null,
   "il": false,
   "in": false,
@@ -20,6 +21,141 @@
   "wi": null
  },
  "units": {
+  "ar": [
+   {
+    "geoid": "0541000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Little Rock city",
+    "pop": 202591
+   },
+   {
+    "geoid": "0523290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fayetteville city",
+    "pop": 93949
+   },
+   {
+    "geoid": "0524550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fort Smith city",
+    "pop": 89142
+   },
+   {
+    "geoid": "0566080",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Springdale city",
+    "pop": 84161
+   },
+   {
+    "geoid": "0535710",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jonesboro city",
+    "pop": 78576
+   },
+   {
+    "geoid": "0560410",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rogers city",
+    "pop": 69908
+   },
+   {
+    "geoid": "0550450",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "North Little Rock city",
+    "pop": 64591
+   },
+   {
+    "geoid": "0515190",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Conway city",
+    "pop": 64134
+   },
+   {
+    "geoid": "0505320",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bentonville city",
+    "pop": 54164
+   },
+   {
+    "geoid": "0555310",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pine Bluff city",
+    "pop": 41253
+   },
+   {
+    "geoid": "0533400",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hot Springs city",
+    "pop": 37930
+   },
+   {
+    "geoid": "0505290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Benton city",
+    "pop": 35014
+   },
+   {
+    "geoid": "0563800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sherwood city",
+    "pop": 32731
+   },
+   {
+    "geoid": "0504840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bella Vista city",
+    "pop": 30104
+   },
+   {
+    "geoid": "0553390",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Paragould city",
+    "pop": 29537
+   },
+   {
+    "geoid": "0534750",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jacksonville city",
+    "pop": 29477
+   },
+   {
+    "geoid": "0568810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Texarkana city",
+    "pop": 29387
+   },
+   {
+    "geoid": "0561670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Russellville city",
+    "pop": 28940
+   },
+   {
+    "geoid": "0510300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cabot city",
+    "pop": 26569
+   }
+  ],
   "ia": [
    {
     "geoid": "1921000",

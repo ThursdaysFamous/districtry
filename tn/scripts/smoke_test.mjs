@@ -371,20 +371,21 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     TENNESSEE BORDERS TWO LIVE INSTANCES, so it has both halves to
-  //     prove. Kentucky and North Carolina are covered, so a point just over
-  //     either line must open that app; the other six neighbours (Virginia,
-  //     Georgia, Alabama, Mississippi, Arkansas, Missouri) are not, so a point
-  //     over their lines must be selected HERE, where the app says nothing
-  //     answers there (1a2-ii). This instance is also DARK, so it has no entry
-  //     in fleet-outlines.json at all and answers its own side from the
-  //     coverage rings the wash retained — no fetch. Chicago proves the file is
-  //     still read for ground nowhere near this state.
+  //     TENNESSEE BORDERS THREE LIVE INSTANCES, so it has both halves to
+  //     prove. Kentucky, North Carolina and, since its go-live (2026-10-15),
+  //     Arkansas are covered, so a point just over any of those lines must
+  //     open that app; the other five neighbours (Virginia, Georgia, Alabama,
+  //     Mississippi, Missouri) are not, so a point over their lines must be
+  //     selected HERE, where the app says nothing answers there (1a2-ii). This
+  //     instance answers its own side from the coverage rings the wash
+  //     retained — no fetch. Chicago proves the file is still read for ground
+  //     nowhere near this state.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Bowling Green, Kentucky", lat: 36.9685, lng: -86.4808, want: "https://districtry.com/ky/" },
       { name: "Murphy, North Carolina", lat: 35.0876, lng: -84.0213, want: "https://districtry.com/nc/" },
+      { name: "West Memphis, Arkansas", lat: 35.1465, lng: -90.1845, want: "https://districtry.com/ar/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

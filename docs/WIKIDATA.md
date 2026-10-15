@@ -69,6 +69,7 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q1649 (Oklahoma) | the `/ok/` instance |
 | P1001 (applies to jurisdiction) | Q1456 (South Carolina) | the `/sc/` instance |
 | P1001 (applies to jurisdiction) | Q1509 (Tennessee) | the `/tn/` instance |
+| P1001 (applies to jurisdiction) | Q1612 (Arkansas) | the `/ar/` instance |
 
 ### What is deliberately absent
 
@@ -127,6 +128,7 @@ endpoint used.
 | `Q1537` | Wisconsin |
 | `Q1546` | Iowa |
 | `Q1603` | Kentucky |
+| `Q1612` | Arkansas |
 | `Q1649` | Oklahoma |
 | `Q1860` | English |
 | `Q189210` | web application |

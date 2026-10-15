@@ -372,10 +372,13 @@ try {
   //     the app, which reads exactly like correct behaviour.
   //
   //     OKLAHOMA'S OWN CASE IS THE ONE BELOW THAT MATTERS, and it is the
-  //     absence half: none of its six neighbours (Texas, Arkansas, Missouri,
-  //     Kansas, Colorado, New Mexico) is covered, so a point just over the
-  //     state line must be selected HERE, where the app says nothing answers
-  //     there, rather than handed to an app with nothing to show. This instance
+  //     absence half: five of its six neighbours (Texas, Missouri, Kansas,
+  //     Colorado, New Mexico) are not covered, so a point just over one of
+  //     those state lines must be selected HERE, where the app says nothing
+  //     answers there, rather than handed to an app with nothing to show.
+  //     ARKANSAS IS COVERED SINCE ITS GO-LIVE (2026-10-15), so Fort Smith,
+  //     about 4 km over the line, must open that app; the case was added in
+  //     the change that published it. This instance
   //     is also DARK, so it has no entry in fleet-outlines.json at all and
   //     answers its own side from the coverage rings the wash retained — no
   //     fetch. The two positive cases prove the file is still read for
@@ -384,6 +387,7 @@ try {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Milwaukee", lat: 43.04, lng: -87.91, want: "https://districtry.com/wi/" },
+      { name: "Fort Smith, Arkansas", lat: 35.3859, lng: -94.3985, want: "https://districtry.com/ar/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
