@@ -1461,20 +1461,6 @@ trusted.
       "wanted": "Park district boundaries — from the county or from the districts. The trustee lists are already in hand."
     },
     {
-      "id": "scott-county-commissioners",
-      "kind": "no-source",
-      "concept": "County commissioners",
-      "area": "Scott County",
-      "layer": "county-board",
-      "counties": [
-        "scott"
-      ],
-      "summary": "Scott County's three commissioners aren't named. They're elected county-wide, so there are no districts to draw.",
-      "why": "The county's own page renders its member list through a widget that returns nothing, and election results name who won a race rather than who holds the seat today.",
-      "blocker": "Researched 8 Aug 2026, closing an absence that had NO record at all. AT-LARGE PROVEN from the county's own results portal at results.gbsvote.com, which names the county clerk as Election Authority (Greene l_id=11, Morgan l_id=16, Scott l_id=19): the 8 Nov 2022 GENERAL ELECTION, marked ** OFFICIAL RESULTS **, carries \"FOR COUNTY COMMISSIONER / 10 of 10 precincts reporting / Vote for ( 1 )\" (John D. Simmons), and the 19 Mar 2024 PRIMARY, also OFFICIAL, repeats it for both parties (Thomas L. Peterson, Republican). The whole county votes for one seat at a time; the only \"DISTRICT\" strings on the 2022 canvass are the Fifteenth Congressional, One Hundredth Representative and Fiftieth Legislative districts. So there is no geometry to seek and none should be invented. scottcoil.gov/commissioners publishes the office phone (217-742-5532) and commissioners@scottcoil.gov but renders the members themselves through a Munibit \"People\" widget whose /api/public/mwjsPeople endpoint returns HTTP 500 without the page's own parameters, and the Internet Archive preserved the same empty shell. CORRECTED 2026-08-08, hours after this record first shipped: the claim above that the names are unreachable was WRONG, and the source that disproves it is the very one cited for the board form. The county's results portal names the winner of every commissioner contest in plain HTML — Robert L. Schafer (R) in Nov 2020 and John D. Simmons (R) in Nov 2022, both on OFFICIAL canvasses; Thomas L. Peterson (R) in Nov 2024. Three separate patterns of mine missed them, not the data: the office is headed \"FOR COUNTY COMMISSIONER\" in recent years but plain \"COUNTY COMMISSIONER\" in 2020 and abbreviated \"COUNTY COMM\" on Morgan's 2020 page, and each time the fix was in the reader. WHAT IS ACTUALLY MISSING is narrower and does not go away with better parsing: election returns record who WON a contest, never who holds the seat today. A mid-term vacancy filled by APPOINTMENT appears in no return anywhere, and the staggered six-year, one-per-general structure that turns three contests into three sitting members is an INFERENCE from the pattern, not something the county states. Publishing these three unconfirmed would be precisely the guess the honesty rules forbid, so the ask became a confirmation rather than a request for a roster. ASKED 2026-08-08: confirm those three, name the chairman, correct the term assumption.",
-      "wanted": "Confirmation of which three commissioners are serving now, and which of them chairs the board. No map needed."
-    },
-    {
       "id": "st-clair-board-contact",
       "concept": "County board members",
       "area": "St. Clair County",
@@ -3112,7 +3098,7 @@ trusted.
       "summary": "Every North Carolina county is run by an elected board of commissioners. The County card names its members, but this app does not show you which commissioner district you live in, so it cannot say which member is yours.",
       "why": "No statewide map of commissioner districts is published, and state law keeps each county's district lines in the county clerk's office as a written description rather than as a map.",
       "wanted": "Each county's current commissioner district boundary, as a downloadable file or a public map service from the county's own GIS office.",
-      "blocker": "NAMES SHIP SINCE 2026-10-11, AND ONLY THE LINES ARE MISSING NOW. nc/scripts/build_nc_county_commissioners.py reads the State Board of Elections' certified precinct results for the 2022 and 2024 generals and names the newest winner of every seat: 579 named across 100 counties, 8 seats naming nobody with the reason on the card, each county's seat count held to the 2026 filing list. Tyrrell names nobody: it elects by limited voting and its own board page could not be read from here. These are election winners and not a roster, since a vacancy is filled by appointment (NCGS 153A-27), and the card says so. THE REST OF THIS RECORD IS THE GEOMETRY MEASUREMENT. MEASURED 2026-09-29 across seven state and federal map catalogues (NC OneMap, the state's ArcGIS Online organisation, the Census's own TIGERweb, the NC Department of Transportation's open data, data.nc.gov, the NC General Assembly's redistricting portal and arcgis.com's public search): not one carries a single county's commissioner districts. THE CAUSE IS STATUTORY RATHER THAN AN OVERSIGHT. NCGS 153A-22(f) requires a board that districts itself to keep the delineation in the clerk's office, and NCGS 153A-20 files the resolution with the Secretary of State — both as WRITTEN DESCRIPTIONS. So there is no central geometry to read and never has been, and the honest route is county by county against each county's own GIS office. THE FORM OF EVERY BOARD IS ANSWERABLE TODAY WITHOUT ANY GEOMETRY, which is a separate piece of work and the cheaper half: the NC Association of County Commissioners publishes every county's election method in one statewide table — measured from it, 39 at large, 23 district-labelled but elected countywide, 22 a combination and 16 purely by district (100), 587 commissioners, 61 counties using residency districts and 5 using limited voting. That is a `structure` field on this card, the Illinois shape, statewide. It is an Excel export published as a PDF, so ask for the workbook rather than parsing the PDF. DO NOT CLASSIFY A BOARD'S FORM FROM CERTIFIED RETURNS. A first pass did and was wrong three ways: NCGS 153A-58(c)/(d) allows a district-NAMED seat to be elected countywide, a `DISTRICT \\d+` pattern misses township names, roman numerals and `EASTERN DISTRICT`, and a union of two generals double-classifies a county whose method changed by session law mid-window (Wake S.L. 2023-30, Watauga S.L. 2023-147). Only WHICH PRECINCTS VOTED in the contest separates the two forms. TWO COUNTIES NAME THEIR DISTRICTS AFTER TOWNSHIPS (Gaston and Hyde, per that same table), and this instance already ships a township layer — so their district geometry may already be on the map under another name. It is not composed from it: a township name matching a district name is not a statement that the two are the same polygon, and the county's own written description is what would settle it. Hosts that refused this client while the catalogues were searched, recorded and not worked around: Durham's www.dconc.gov (`User-agent: *` / `Disallow: /`), Buncombe's website host (a Cloudflare managed challenge — its GIS host answers fine, which is the Knox lesson: a county is not blocked because its website is), Dare's www.darenc.gov (HTTP 403) and www.robesoncounty.gov (no DNS record at all, so the address is wrong or retired rather than refusing)."
+      "blocker": "NAMES SHIP SINCE 2026-10-11, AND ONLY THE LINES ARE MISSING NOW. nc/scripts/build_nc_county_commissioners.py reads the State Board of Elections' certified precinct results for the 2022 and 2024 generals and names the newest winner of every seat: 584 named across 100 counties, 7 seats naming nobody with the reason on the card, each county's seat count held to the 2026 filing list. Tyrrell elects by limited voting, so its seat counts come from its own board page, read 2026-10-15 over plain HTTP because its HTTPS connections reset from here. These are election winners and not a roster, since a vacancy is filled by appointment (NCGS 153A-27), and the card says so. THE REST OF THIS RECORD IS THE GEOMETRY MEASUREMENT. MEASURED 2026-09-29 across seven state and federal map catalogues (NC OneMap, the state's ArcGIS Online organisation, the Census's own TIGERweb, the NC Department of Transportation's open data, data.nc.gov, the NC General Assembly's redistricting portal and arcgis.com's public search): not one carries a single county's commissioner districts. THE CAUSE IS STATUTORY RATHER THAN AN OVERSIGHT. NCGS 153A-22(f) requires a board that districts itself to keep the delineation in the clerk's office, and NCGS 153A-20 files the resolution with the Secretary of State — both as WRITTEN DESCRIPTIONS. So there is no central geometry to read and never has been, and the honest route is county by county against each county's own GIS office. THE FORM OF EVERY BOARD IS ANSWERABLE TODAY WITHOUT ANY GEOMETRY, which is a separate piece of work and the cheaper half: the NC Association of County Commissioners publishes every county's election method in one statewide table — measured from it, 39 at large, 23 district-labelled but elected countywide, 22 a combination and 16 purely by district (100), 587 commissioners, 61 counties using residency districts and 5 using limited voting. That is a `structure` field on this card, the Illinois shape, statewide. It is an Excel export published as a PDF, so ask for the workbook rather than parsing the PDF. DO NOT CLASSIFY A BOARD'S FORM FROM CERTIFIED RETURNS. A first pass did and was wrong three ways: NCGS 153A-58(c)/(d) allows a district-NAMED seat to be elected countywide, a `DISTRICT \\d+` pattern misses township names, roman numerals and `EASTERN DISTRICT`, and a union of two generals double-classifies a county whose method changed by session law mid-window (Wake S.L. 2023-30, Watauga S.L. 2023-147). Only WHICH PRECINCTS VOTED in the contest separates the two forms. TWO COUNTIES NAME THEIR DISTRICTS AFTER TOWNSHIPS (Gaston and Hyde, per that same table), and this instance already ships a township layer — so their district geometry may already be on the map under another name. It is not composed from it: a township name matching a district name is not a statement that the two are the same polygon, and the county's own written description is what would settle it. Hosts that refused this client while the catalogues were searched, recorded and not worked around: Durham's www.dconc.gov (`User-agent: *` / `Disallow: /`), Buncombe's website host (a Cloudflare managed challenge — its GIS host answers fine, which is the Knox lesson: a county is not blocked because its website is), Dare's www.darenc.gov (HTTP 403) and www.robesoncounty.gov (no DNS record at all, so the address is wrong or retired rather than refusing)."
     },
     {
       "id": "nc-municipal-officeholders",
@@ -4444,6 +4430,17 @@ the parameters it sends, and in Lansing's case a read-only key it hands to every
 visitor.** A person loading the page in a browser saw the names. Our check asked
 the feed a question the page never asks.
 
+**SCOTT IS CLOSED (2026-10-15).** Its three commissioners ship on the County card,
+read each week by `scripts/il_county_commissioners_scraper.py` through the feed the
+page itself calls: the scraper takes the feed's address and parameters off the page on
+every run rather than pinning them, and checks that the office telephone in the page's
+own text matches the one the feed gives for every member. The names agree with the
+official canvasses this record had already cited (Schafer 2020, Simmons 2022, Peterson
+2024), and the feed is what settles the two things the canvasses could not: that those
+three are serving now, and that Robert Schafer is the chairman. The
+`scott-county-commissioners` gap record is retired. The letter of 2026-10-06 is still
+out; a reply is a cross-check now rather than the only route.
+
 **The standing check, for every new reader and before any record or letter calls a
 page unreadable** (Adam, 2026-10-06):
 
@@ -4496,7 +4493,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 321 hosts** (2026-09-12; 92 measured or re-measured since — see below).
+**WHAT IT FOUND, across 322 hosts** (2026-09-12; 93 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -4508,7 +4505,7 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 242 | the districtry token gets a full page on the plain `requests` stack |
+| `token-ok` | 243 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 23 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
@@ -4521,11 +4518,11 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**26 HOSTS REFUSE THE TOKEN AND 242 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+**26 HOSTS REFUSE THE TOKEN AND 243 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
 --inventory` prints it on this tree: 44 files send a browser string; 21 reach at least one
 host that genuinely refuses the token, **2 reach only hosts that serve the token a full
 page, and 21 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 231 of the 321 measured hosts are still reached by such a caller.
+the `requests` stack); 232 of the 322 measured hosts are still reached by such a caller.
 The 101 and 62 those first two figures read until 2026-10-01 were the state before SIXTY
 scrapers were switched onto our own token in one change, each of them re-measured at the
 pages it actually fetches. The 2 that remain are held on purpose: both follow links out of
