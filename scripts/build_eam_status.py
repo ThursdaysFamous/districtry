@@ -1588,9 +1588,10 @@ ANSWERS = {
         # Secretary of State's local results files
         # (mn/scripts/build_mn_town_boards.py). The March towns' results are in
         # no state file, BUT a town clerk certifies its officers to the county
-        # each spring and some counties publish those certifications (Goodhue,
-        # read 2026-10-15), so the counties that publish are owed before this
-        # level passes. Gap mn-township-officers carries both halves.
+        # each spring, and a survey of all 87 counties on 2026-10-15 found 42
+        # that publish a list of them (mn/data/source/
+        # mn-county-township-officer-survey.json). Those 42 are owed before
+        # this level passes. Gap mn-township-officers carries both halves.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.
