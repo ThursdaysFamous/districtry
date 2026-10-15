@@ -139,7 +139,7 @@ prose.
 | ia | 0 | 21 |
 | mi | 0 | 19 |
 | mn | 6 | 20 |
-| ky | 4 | 12 |
+| ky | 4 | 13 |
 | in | 4 | 12 |
 | nc | 4 | 12 |
 | ok | 4 | 13 |
@@ -287,7 +287,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `city-ward`.
 
-#### ky — 4 of 12 layers fetch their shapes
+#### ky — 4 of 13 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -297,6 +297,7 @@ measured until the next run describes it.
 | School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
+- **Not measured** — declared since the probe ran: `fiscal-court`.
 
 #### in — 4 of 12 layers fetch their shapes
 
@@ -375,16 +376,16 @@ measured until the next run describes it.
 | ia | 71 | 65 | 0 |
 | mi | 32 | 61 | 1 |
 | mn | 29 | 19 | 0 |
-| ky | 14 | 13 | 0 |
+| ky | 18 | 14 | 0 |
 | in | 14 | 12 | 0 |
 | nc | 17 | 11 | 0 |
 | ok | 17 | 12 | 0 |
 | sc | 17 | 13 | 0 |
 | tn | 17 | 11 | 0 |
 | ar | 17 | 11 | 0 |
-| **total** | **524** | **936** | **12** |
+| **total** | **528** | **937** | **12** |
 
-**149 distinct source hosts** across the six manifests. Each instance's
+**150 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

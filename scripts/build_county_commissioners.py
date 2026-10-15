@@ -117,6 +117,15 @@ EXPECT_MEMBERS = {
                                      # the site is pulaskicountyil.net and its board page
                                      # names all three with a county e-mail each. The
                                      # page carried Last-Modified 2026-07-23 when read.
+    "SCOTT": 3,                      # 2026-10-15; commission form, three elected
+                                     # countywide (the official canvasses on
+                                     # results.gbsvote.com name Schafer 2020, Simmons
+                                     # 2022, Peterson 2024). The gap record said the
+                                     # names could not be read: the county's page fills
+                                     # them in from its own people feed a moment after it
+                                     # opens, and that feed answers when called with the
+                                     # parameters the page carries, which the scraper
+                                     # re-reads from the page every run.
     "GALLATIN": 5,                   # 2026-08-21; at-large proven TWICE from the county's
                                      # own certified canvasses — "CO.BD.MEMBER CWD (VOTE
                                      # FOR) 3" in the 2026 primary and "COUNTY BOARD MEMBER
