@@ -3612,6 +3612,14 @@ NOT_COUNTY_BOARDS = {
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
     ),
+    "in/data/app/in-township-officials.json": dict(
+        date="2026-10-15",
+        reason="Indiana's township trustees and township boards, about a "
+               "thousand townships' own governments rather than any county's. "
+               "These pages are one per county board; a township is a "
+               "different government below the county, and the app names its "
+               "trustee and board on its own Township card.",
+    ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
         reason="San Francisco's Board of Supervisors is a CITY council that "

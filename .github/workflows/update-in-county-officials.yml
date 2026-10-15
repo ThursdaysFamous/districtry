@@ -42,7 +42,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: pip install -c scripts/requirements.txt requests
+        run: pip install -c scripts/requirements.txt requests shapely
 
       - name: Rebuild county officials
         run: python3 in/scripts/build_in_county_officials.py

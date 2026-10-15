@@ -206,6 +206,7 @@
       "atpoint_hooks_fired": 2,
       "layer_ids": [
         "county",
+        "county-council",
         "county-subdivision",
         "fire-station",
         "in-house",
