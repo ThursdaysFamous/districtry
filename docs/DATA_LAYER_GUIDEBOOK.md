@@ -1927,6 +1927,7 @@ trusted.
     "covers": [
       "county-government"
     ],
+    "ask": {"who": "Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov)", "asked": "2026-10-07", "outcome": "pending"},
     "kind": "no-source",
     "layer": "county-legislature",
     "summary": "In most of the state the County card names nobody. Five counties are answered; in the other 52 outside the city the card tells you which county you are in and not who governs it.",
@@ -1943,6 +1944,7 @@ trusted.
       "local-government",
       "sub-county-government"
     ],
+    "ask": {"who": "Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov)", "asked": "2026-10-07", "outcome": "pending"},
     "kind": "no-source",
     "layer": "municipality",
     "summary": "Outside New York City the City or Town card names nobody. It tells you which city, town or village you are in, and not who sits on its board or council.",
