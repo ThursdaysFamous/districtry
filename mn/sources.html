@@ -1326,11 +1326,12 @@ table.matrix code {
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt) for the 2022 to 2025 generals: each district is the precincts that voted in its seat's most recent contest, read in that election's own precincts (the Secretary of State's per-general precinct layers for 2022 and 2024, today's precincts for odd years), cut to the Census school district boundary. Built by mn/scripts/build_mn_school_board_districts.py; Minneapolis's six agree with the City of Minneapolis's own park commissioner districts at all 1,800 sampled points, measured 2026-10-08</a></li>
+                    <li><a href="https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278" target="_blank" rel="noopener">Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place</a></li>
                     <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.</td>
-                <td data-label="Where it applies">The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts).</td>
+                <td data-label="Where it applies">The 14 Minnesota school districts whose boards elect by district: Anoka-Hennepin, Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Duluth's rural townships are not placed in a district (gap mn-school-board-election-districts).</td>
               </tr>
               <tr id="layer-school-district-elementary">
                 <th scope="row"><span class="layer-name">School District (Elementary)</span><code>school-district-elementary</code></th>
@@ -1641,13 +1642,18 @@ table.matrix code {
         },
         {
           "@type": "Dataset",
+          "name": "Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place",
+          "url": "https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278"
+        },
+        {
+          "@type": "Dataset",
           "name": "Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts)"
+        "name": "The 14 Minnesota school districts whose boards elect by district: Anoka-Hennepin, Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Duluth's rural townships are not placed in a district (gap mn-school-board-election-districts)"
       }
     },
     {

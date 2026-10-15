@@ -164,9 +164,13 @@ rebuilds each district as the precincts that voted in its seat's latest regular 
 rather than today's, clipped to the Census school district, with all 13 boards simplified in
 one shared topology. Where the results cannot place ground the map says so instead of
 guessing: a precinct that voted in two districts is a "split" feature naming both, and ground
-no contest reached is an "unplaced" feature with the reason. Anoka-Hennepin is not drawn,
-because its odd-year results are reported by shared polling place and not by precinct; the gap
-`mn-school-board-election-districts` records it. A board electing every seat in every precinct
+no contest reached is an "unplaced" feature with the reason. Anoka-Hennepin's odd-year results
+are reported by shared polling place and not by precinct, so since 2026-10-15 its six districts
+come from the district's OWN 2022 board election map instead: `mn/scripts/trace_isd11_board_map.py`
+reads the map's six fills, fits the map to the Census school boundary (median 6.1 m off) and
+writes which 2022 precincts each district holds to `mn/data/source/isd11-board-districts.json`
+(every precinct at least 98.9% inside one district), and the builder draws those precincts.
+Duluth's rural townships stay unplaced, recorded in `mn-school-board-election-districts`. A board electing every seat in every precinct
 is a residency board, not an election district, and is excluded by measurement (more than 10%
 shared precincts). Minneapolis's own park district map, which the school board shares, is the
 independent witness, at 1,800 of 1,800 sample points. The card names the seat's member from

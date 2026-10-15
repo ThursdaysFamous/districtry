@@ -9381,7 +9381,7 @@ function initMinnesotaExplorer() {
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
     "watershed-district", // 64 bodies covering about 67,000 km2 of the state's 225,000 at a mean 1,050 km2 (median 316, from 20 in Richfield-Bloomington to 15,700 in Red Lake) — smaller on average than a House district and larger than a unified school district
     "school-district-unified", // 322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings
-    "school-board-district", // 59 board election districts on 13 school boards, a mean 527 km2 (median 217, from 2 in Winona to 3,927 in St. Louis County) — smaller on average than a unified school district, which they divide, and larger than a commissioner district
+    "school-board-district", // 65 board election districts on 14 school boards, a mean 489 km2 (median 175, from 2 in Lake Superior to 3,958 in St. Louis County), measured 2026-10-15 — smaller on average than a unified school district, which they divide, and larger than a commissioner district
     "county-commissioner", // 447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code
     "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
     "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
@@ -14400,7 +14400,7 @@ function initMinnesotaExplorer() {
    * district, and those precincts, cut to the school district's boundary, are
    * the district (mn/scripts/build_mn_school_board_districts.py;
    * data/app/mn-school-board-districts.json). Thirteen boards, measured
-   * 2026-10-08; Minneapolis's six agree with the city's own map at every one
+   * 2026-10-08, and Anoka-Hennepin from its own map (below); Minneapolis's six agree with the city's own map at every one
    * of 1,800 sampled points.
    *
    * THREE KINDS OF FEATURE, AND THE CARD SAYS WHICH. A "district" is one
@@ -14411,9 +14411,11 @@ function initMinnesotaExplorer() {
    * covers — Duluth's rural townships, which vote at combined polling places,
    * and small pieces where no voter's ballot carried the contest.
    *
-   * Anoka-Hennepin elects by district too and is NOT drawn: it reports every
-   * district contest on combined polling places, which the results do not
-   * place on precincts (gap mn-school-board-election-districts).
+   * Anoka-Hennepin reports every district contest on combined polling
+   * places, which the results do not place on precincts, so its six districts
+   * are drawn from the district's OWN map instead (drawnFrom "map"): read
+   * once by mn/scripts/trace_isd11_board_map.py into the 2022 precincts each
+   * district is made of, every precinct at least 98.9% inside one district.
    * ---------- */
   var loadMnSchoolBoardDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-school-board-districts.json", {}, 2);
@@ -14516,7 +14518,11 @@ function initMinnesotaExplorer() {
       } else if (p.kind === "unplaced") {
         rows.push({
           label: "Why",
-          value: p.why === "combined"
+          value: p.drawnFrom === "map"
+            ? "The district's own board election map puts no district on this " +
+              "ground. The line between the school district and its neighbour " +
+              "may run a little differently on that map."
+            : p.why === "combined"
             ? "This board runs its own election in odd years and reports this " +
               "area at combined polling places, which the state's results do " +
               "not place on precincts. The district's own map shows which " +
@@ -14546,7 +14552,13 @@ function initMinnesotaExplorer() {
       }
       rows.push({
         label: "How this line is drawn",
-        value: "From the precincts that voted in each district's most recent " +
+        value: p.drawnFrom === "map"
+          ? "From the district's own board election map (" + String(p.mapTitle) +
+            "), read precinct by precinct against the state's 2022 precincts " +
+            "and cut to the school district's boundary. The names are the " +
+            "winners of the most recent elections, not a list the district " +
+            "keeps up to date."
+          : "From the precincts that voted in each district's most recent " +
           "election in the Minnesota Secretary of State's results, cut to the " +
           "school district's boundary. The names are the winners of those " +
           "elections, not a list the district keeps up to date."
@@ -14554,7 +14566,12 @@ function initMinnesotaExplorer() {
       wrap.appendChild(renderFieldStack(rows));
       var links = [];
       if (board && board.website) links.push({ label: "District website", url: String(board.website) });
-      if (p.sourceUrl) links.push({ label: "Results by precinct", url: String(p.sourceUrl) });
+      if (p.sourceUrl) {
+        links.push({
+          label: p.drawnFrom === "map" ? "The district's board map" : "Results by precinct",
+          url: String(p.sourceUrl)
+        });
+      }
       if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
       return wrap;
     },

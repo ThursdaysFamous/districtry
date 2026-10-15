@@ -211,7 +211,7 @@
       "label": "School Board District",
       "group": "schools",
       "area_rank": 8,
-      "rank_note": "59 board election districts on 13 school boards, a mean 527 km2 (median 217, from 2 in Winona to 3,927 in St. Louis County) — smaller on average than a unified school district, which they divide, and larger than a commissioner district",
+      "rank_note": "65 board election districts on 14 school boards, a mean 489 km2 (median 175, from 2 in Lake Superior to 3,958 in St. Louis County), measured 2026-10-15 — smaller on average than a unified school district, which they divide, and larger than a commissioner district",
       "source": {
         "answers": "The election district of a school board that elects its members by district (Minn. Stat. 205A.12), and the member or members it elects. Where a precinct votes in two districts, both are named; where the results do not place a piece of a board's school district, the card says so.",
         "boundary": [
@@ -220,12 +220,16 @@
             "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
           },
           {
+            "label": "Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place",
+            "url": "https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278"
+          },
+          {
             "label": "Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)",
             "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer"
           }
         ],
         "people": "The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
-        "applies": "The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts)."
+        "applies": "The 14 Minnesota school districts whose boards elect by district: Anoka-Hennepin, Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Duluth's rural townships are not placed in a district (gap mn-school-board-election-districts)."
       }
     },
     {

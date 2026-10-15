@@ -1599,10 +1599,11 @@ ANSWERS = {
         # 2026-10-08 (#1429): the Secretary of State's precinct results name
         # which boards file district offices, and school-board-district draws
         # the 59 districts of the 13 that elect by geography, each from the
-        # precincts that voted in its seat's latest contest. Anoka-Hennepin is
-        # the one not drawn — its odd-year results are by shared polling place
-        # — and carries gap mn-school-board-election-districts, the shape
-        # Wisconsin's mps-school-board answer already has.
+        # precincts that voted in its seat's latest contest. Anoka-Hennepin,
+        # whose odd-year results are by shared polling place, joined
+        # 2026-10-15 from the district's own 2022 board map, read precinct by
+        # precinct (65 districts on 14 boards); Duluth's rural townships carry
+        # gap mn-school-board-election-districts.
         "school-boards-by-district": answers("school-board-district"),
         # The Secretary of State publishes all 4,105 precincts statewide, from
         # the office that maintains them, and the app draws them.
