@@ -13367,6 +13367,12 @@ function initIndianaExplorer() {
     return fetchJSONWithRetry("data/app/in-city-officials.json", {}, 2);
   });
   var INDIANAPOLIS_GEOID = "1836003";
+  // Township trustees and board members, keyed by Census county-subdivision
+  // id (in/scripts/build_in_township_officials.py), for the Township or City
+  // card.
+  var loadTownshipOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-township-officials.json", {}, 2);
+  });
   var IN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
   function inElectionDate(iso) {
@@ -13431,6 +13437,61 @@ function initIndianaExplorer() {
         "council's district lines yet. \"At large\" seats are elected by the " +
         "whole " + (county ? "county" : rec.kind === "town" ? "town" : "city") + "."
     });
+  }
+
+  // A township's trustee and board, for the Township or City card.
+  function inTownshipRows(wrap, rec) {
+    var rows = [];
+    if (rec.trustee) {
+      wrap.appendChild(renderSectionLabel("Township trustee"));
+      wrap.appendChild(renderPersonRows(inSeatRows({ seats: [rec.trustee] })
+        .map(function (r) { r.badge = null; return r; })));
+    } else {
+      rows.push({
+        label: "Township trustee",
+        value: "Not named here. The certified results carry no winner for " +
+          "this township's trustee."
+      });
+    }
+    if (rec.board && rec.board.length) {
+      wrap.appendChild(renderSectionLabel("Township board"));
+      wrap.appendChild(renderPersonRows(inSeatRows({ seats: rec.board })
+        .map(function (r) { r.badge = null; return r; })));
+      var open = Number(rec.boardSeats || 0) - rec.board.length;
+      if (open > 0) {
+        rows.push({
+          label: "Seats with no winner",
+          value: (open === 1 ? "One seat" : open + " seats") + " on this board " +
+            "had nobody elected at that election. " +
+            "Indiana fills a seat like that by party caucus, which the " +
+            "results do not record."
+        });
+      }
+    } else {
+      rows.push({
+        label: "Township board",
+        value: "Not named here. The certified results carry no race for this " +
+          "township's board."
+      });
+    }
+    if (rec.note) rows.push({ label: "About this township", value: String(rec.note) });
+    rows.push({
+      label: "What these names are",
+      value: "The winners of the most recent township election, from the " +
+        "Indiana Election Division's certified results. They are not a list " +
+        "the township keeps up to date: Indiana fills a vacancy by party " +
+        "caucus, so if an office has changed hands since the election this " +
+        "still shows who won it. The township's or county's own page says who " +
+        "holds each office today."
+    });
+    wrap.appendChild(renderFieldStack(rows));
+    var src = rec.trustee || (rec.board && rec.board[0]);
+    if (src && src.sourceUrl) {
+      wrap.appendChild(renderLinkRow({
+        links: [{ label: "Indiana Election Division results \u2197",
+          url: String(src.sourceUrl) }]
+      }));
+    }
   }
 
   registerLayer({
@@ -13786,11 +13847,11 @@ function initIndianaExplorer() {
    * second source can go stale. Measured: the six LSADC values yield exactly
    * five suffixes, 1,012 of 1,012.
    *
-   * NO OFFICEHOLDER. An Indiana civil township elects a trustee and a
-   * township board (IC 36-6-4, IC 36-6-6), and no statewide roster of them
-   * was found — the card names the office and says plainly that this app
-   * does not know who holds it, which is the honesty floor. Recorded as gap
-   * in-township-officers. ---------- */
+   * OFFICEHOLDERS. An Indiana civil township elects a trustee and a
+   * township board (IC 36-6-4, IC 36-6-6). Since 2026-10-15 the card names
+   * the winners of the certified 2022 general from
+   * in-township-officials.json, keyed by this layer's GEOID; a township the
+   * results do not cover says so. Gap in-township-officers. ---------- */
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
@@ -13834,8 +13895,16 @@ function initIndianaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null
         };
+      }).then(function (result) {
+        if (!result) return null;
+        // A roster that fails to load leaves the subdivision answer standing.
+        return loadTownshipOfficials().then(function (r) {
+          result.officials = r[String(result.geoid)] || null;
+          return result;
+        }, function () { result.rosterFailed = true; return result; });
       });
     },
     render: function (result) {
@@ -13869,13 +13938,18 @@ function initIndianaExplorer() {
       // WHO HOLDS THE OFFICE, said as the open question it is. Only a township
       // has an officer this card would name; a city's people belong on the
       // city's own card, and the water records have no government at all.
-      if (result.kind === "township") {
+      if (result.officials) {
+        inTownshipRows(wrap, result.officials);
+      } else if (result.kind === "township") {
         wrap.appendChild(renderFieldStack([{
-          label: "Your township board",
-          value: "Not named here. No statewide roster of Indiana's township " +
-            "trustees and township board members was found, and this app does " +
-            "not guess one — your township's own page, or the county's, is " +
-            "the current source."
+          label: "Your township trustee and board",
+          value: result.rosterFailed
+            ? "The list of township officers did not load, so no names are " +
+              "shown."
+            : "Not named here. The state's certified results for the most " +
+              "recent township election carry no race for this township, " +
+              "so this app has no name to give. Your county's or township's " +
+              "own page is the current source."
         }]));
       }
       return wrap;

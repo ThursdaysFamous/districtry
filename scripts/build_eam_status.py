@@ -1697,7 +1697,14 @@ ANSWERS = {
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
-        "sub-county-government": OPEN,
+        # Since 2026-10-15 the Township or City card names each civil
+        # township's trustee and board from the Election Division's certified
+        # 2022 general (in-township-officials.json): 973 trustees and 921
+        # boards of 1,004 townships. The rest are recorded on the card (no
+        # race in the results, and Marion's boards are not in them). Adam's
+        # 2026-10-15 rule passes a level once its boards are named wherever a
+        # list is published, so it is answered.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,

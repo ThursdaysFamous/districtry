@@ -47,7 +47,7 @@ different thing from one it failed.
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 77 | 77 | all | 65 | all | 12 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 411 | all | 12 of 14 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 7 of 14 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 13 | all | 8 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 13 | all | 8 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 12 of 14 levels |
@@ -118,11 +118,10 @@ this instance is in maintenance.
 ### in — EAM·
 
 - **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-house-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 92 counties name a governing body and draw it where it is elected by district; 92 more name a body elected by district whose districts are not drawn
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 5 of 39 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 31 more name a body elected by ward or district whose wards are not drawn; unanswered: Anderson city, Bloomington city, Brownsburg town, Carmel city, Columbus city, Elkhart city, Evansville city, Fishers city and 26 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
-  - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)

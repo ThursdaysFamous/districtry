@@ -693,6 +693,34 @@ try {
   }
 
 
+  // 2h. The Township or City card names the township's trustee and board,
+  //     from the same-origin township file joined by the subdivision's Census
+  //     id. The township polygon is TIGERweb's, so it is stubbed: a square
+  //     around downtown Fort Wayne carrying Wayne Township's id.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const [la, ln] = [41.0793, -85.1394];
+    const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
+      [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    const page = await booted(context, `${BASE}#point=${la},${ln}&layers=county-subdivision`, (p) =>
+      p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/1\/query/, (route) =>
+        route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
+          features: [{
+            attributes: { GEOID: "1800381620", NAME: "Wayne township", BASENAME: "Wayne",
+                          STATE: "18", COUNTY: "003", LSADC: "44" },
+            geometry: { rings: [ring] },
+          }],
+        }) })));
+    const tw = await cardText(page, "county-subdivision");
+    check("Township card names Wayne Township's trustee and board as dated winners",
+      !tw.error && /Wayne/.test(tw.text) && /TOWNSHIP TRUSTEE/i.test(tw.text) &&
+        /Austin R Knox/.test(tw.text) && /TOWNSHIP BOARD/i.test(tw.text) &&
+        /elected November 8, 2022/.test(tw.text) && /party caucus/.test(tw.text),
+      tw.text.slice(0, 200));
+    await context.close();
+  }
+
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the

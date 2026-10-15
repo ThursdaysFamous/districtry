@@ -90,9 +90,20 @@ Gap `in-municipal-officeholders` records the rest.
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
 roster-miss path, which is the honest card until a roster is built. Recorded as gap
-`in-general-assembly-roster`. Two more gaps cover the live fabric, where the Census carries
-geography and no officeholder field at all: `in-township-officers` and
-`in-school-board-members`.
+`in-general-assembly-roster`. Gap `in-school-board-members` covers the school cards, where the
+Census carries geography and no officeholder field at all.
+
+**THE TOWNSHIP CARD NAMES THE TRUSTEE AND BOARD OF MOST TOWNSHIPS** (2026-10-15).
+`in/scripts/build_in_township_officials.py` reads the same archive's certified 2022 general
+(office categories 1021 trustee and 1023 board member) and writes `in-township-officials.json`,
+keyed by the county-subdivision layer's own Census id: 973 trustees and 921 boards across 987 of
+the 1,004 civil townships. **THE MATCH IS STATED WHERE THE CENSUS AND THE RESULTS DISAGREE**:
+`ALIASES` carries five townships the Census names differently (Hamilton's Adams Township is
+recorded as "Sheridan town", and the results call Allen's St. Joseph Township "St Joe"), `SHARED` carries Johnson County's
+one government for three townships, and `LEFT_OUT` two races filed under the wrong office; any
+other race that matches no township, or more than one, fails the build. Marion's five-member
+boards are not in that file, so its nine cards say no board race was found. Gap
+`in-township-officers` records the 97 townships named only in part or not at all.
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
@@ -172,9 +183,9 @@ after every await) and **per-layer failure isolation** (a layer's failure shows 
 its own card, never breaks the others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
-roster source exists, cards link to the official body instead of inventing a name. Eight of this
-instance's eleven layers name nobody (U.S. House, County and City or Town name people), and every
-one of their cards says so. External strings
+roster source exists, cards link to the official body instead of inventing a name. Seven of this
+instance's twelve layers name nobody (U.S. House, County, City or Town, Township or City and the
+tribal layer name people), and every one of their cards says so. External strings
 always render through `sanitize()`/`textContent`. Roster refreshes always land as PRs for human
 review — never as direct commits to main.
 

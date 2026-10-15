@@ -3075,14 +3075,14 @@ trusted.
       {
           "id": "in-township-officers",
           "concept": "Township trustee and board",
-          "area": "Indiana — all 1,004 civil townships",
+          "area": "Indiana — 97 of the 1,004 civil townships",
           "counties": [],
           "kind": "no-source",
           "layer": "county-subdivision",
-          "summary": "The Township card names your township and none of the four or six people you elect to run it.",
-          "why": "An Indiana township elects a trustee and a township board, and some also elect an assessor. This app draws the township and has not yet fetched who holds those offices.",
-          "wanted": "The trustee, the board members and, where one is elected, the assessor of each township.",
-          "blocker": "UNBUILT WORK WITH A MEASURED SOURCE. Township Trustee, Township Board Member and Township Assessor are three separate certified office categories in the Indiana Election Division's own returns (measured across the 2022 General and the 2026 Primary), so every holder is named in a certified document. Marion County's township boards have five members rather than three, which a builder has to carry rather than assume. The boundary here is TIGER's county-subdivision layer, 1,004 of whose 1,012 Indiana records are civil townships; the other eight are Census bookkeeping and get no roster claim."
+          "summary": "The Township card names the trustee and board most townships elected in 2022, but in 97 townships it names only part of that, or nobody.",
+          "why": "The names come from the state's certified 2022 election results, and some townships had no trustee or board race in them, including all nine in Marion County. They are election winners, so someone appointed since then is not shown.",
+          "wanted": "The trustee and every board member of each township, including Marion County's five-member boards, and the assessor where a township elects one.",
+          "blocker": "PARTLY BUILT, 2026-10-15. in/scripts/build_in_township_officials.py reads the Indiana Election Division's certified 2022 General (office categories 1021 Township Trustee and 1023 Township Board Member) and names 973 trustees and 921 boards across 987 of the 1,004 civil townships. What is left is measured: 17 townships have no record at all, 14 more have a board and no trustee race, 66 have no board race (Marion's nine among them: its five-member boards are not in that file), and 114 boards are short a seat nobody won. Township Assessor is its own office category and is not read. The 2026 General's winners take office on January 1, 2027, and the weekly refresh reads them once the Election Division archives them."
       },
       {
           "id": "in-municipal-officeholders",
