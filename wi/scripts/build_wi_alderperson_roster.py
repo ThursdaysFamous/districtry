@@ -215,6 +215,21 @@ FLOORS = {
     # members and a shared number is dropped from both. Floors are those
     # measured counts less one.
     "49400": ("Marion", 3, 5, 4, 2, 0),
+    # THE TRANCHE OF 2026-10-15, eight councils of 25,000 or more whose
+    # districts the shipped geometry already draws. The named floor is the
+    # whole council, measured that day; each contact floor is the measured
+    # count less one. Brookfield prints an e-mail for all 14 and a phone for
+    # 13; De Pere's page links a directory entry and prints no contact; Mequon
+    # and Oak Creek print phones and no address (Mequon's Email is a form);
+    # Oak Creek's District 6 prints no phone; West Allis's list is names only.
+    "10025": ("Brookfield", 7, 14, 13, 12, 0),
+    "19775": ("De Pere", 4, 8, 0, 0, 7),
+    "25950": ("Fitchburg", 4, 8, 7, 7, 0),
+    "40775": ("La Crosse", 13, 13, 12, 12, 12),
+    "51150": ("Mequon", 8, 8, 0, 7, 7),
+    "58800": ("Oak Creek", 6, 6, 0, 4, 5),
+    "78600": ("Sun Prairie", 4, 8, 7, 7, 0),
+    "85300": ("West Allis", 5, 10, 0, 0, 0),
 }
 
 

@@ -10,16 +10,16 @@
   "all-refused": 10,
   "answers-nothing": 4,
   "challenged": 2,
-  "crawl-delay-too-long": 5,
+  "crawl-delay-too-long": 6,
   "path-answers-nothing": 7,
   "proxy-denied": 1,
   "robots-disallows-this-path": 11,
-  "robots-unreadable": 5,
-  "stack-not-token": 7,
+  "robots-unreadable": 4,
+  "stack-not-token": 8,
   "tls-chain": 1,
-  "token-ok": 242,
+  "token-ok": 251,
   "token-refused": 3,
-  "token-refused-and-stack": 23
+  "token-refused-and-stack": 24
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -580,6 +580,33 @@
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    },
    "measured": "2026-09-13"
+  },
+  "cityofsunprairie.com": {
+   "host": "cityofsunprairie.com",
+   "url": "https://cityofsunprairie.com/801/City-Council-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "error",
+     "note": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+    },
+    "stdlib+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 120729 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "stack-not-token",
+   "note": "requests+token ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')); stdlib+token HTTP 200, 120729 bytes; the front door answers the token (HTTP 200, 151068 bytes), so the refusal is this path",
+   "root": {
+    "kind": "ok",
+    "note": "HTTP 200, 151068 bytes"
+   },
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "cityofwaupaca.org": {
    "host": "cityofwaupaca.org",
@@ -1570,6 +1597,25 @@
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
    }
+  },
+  "fitchburgwi.gov": {
+   "host": "fitchburgwi.gov",
+   "url": "https://fitchburgwi.gov/2924/Mayor-City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 101938 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 101938 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "fliphtml5.com": {
    "host": "fliphtml5.com",
@@ -4035,6 +4081,25 @@
     "scripts/cpd_district_scraper.py": "self"
    }
   },
+  "www.ci.brookfield.wi.us": {
+   "host": "www.ci.brookfield.wi.us",
+   "url": "https://www.ci.brookfield.wi.us/170/Your-Aldermen",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 110920 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 110920 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.ci.galesburg.il.us": {
    "host": "www.ci.galesburg.il.us",
    "url": "https://www.ci.galesburg.il.us",
@@ -4089,41 +4154,6 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
-  },
-  "www.ci.oshkosh.wi.us": {
-   "host": "www.ci.oshkosh.wi.us",
-   "url": "https://www.ci.oshkosh.wi.us/CityCouncil/",
-   "cells": {
-    "requests+token": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
-    },
-    "stdlib+token": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
-    },
-    "requests+chrome": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
-    },
-    "stdlib+chrome": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
-    }
-   },
-   "robots": {
-    "requests+token": "unreadable (SSLError)",
-    "stdlib+token": "unreadable (URLError)",
-    "requests+chrome": "unreadable (SSLError)",
-    "stdlib+chrome": "unreadable (URLError)",
-    "policy": "unreadable to every client on the ladder"
-   },
-   "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
-   "callers": {
-    "wi/scripts/wi_municipal_board_scraper.py": "both"
-   },
-   "measured": "2026-10-01"
   },
   "www.cityofames.org": {
    "host": "www.cityofames.org",
@@ -4194,6 +4224,25 @@
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
+  },
+  "www.cityoflacrosse.org": {
+   "host": "www.cityoflacrosse.org",
+   "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 106218 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 61 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 106218 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.cityoflockport.net": {
    "host": "www.cityoflockport.net",
@@ -4268,6 +4317,41 @@
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
+  },
+  "www.cityofmequonwi.gov": {
+   "host": "www.cityofmequonwi.gov",
+   "url": "https://www.cityofmequonwi.gov/commoncouncil",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 71722 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 51 rule(s)"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 71722 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.cityofwautoma.com": {
    "host": "www.cityofwautoma.com",
@@ -4937,6 +5021,21 @@
    },
    "measured": "2026-10-01"
   },
+  "www.deperewi.gov": {
+   "host": "www.deperewi.gov",
+   "url": "https://www.deperewi.gov/department/index.php?structureid=3",
+   "cells": {},
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 5 rule(s)",
+    "crawl-delay": 300.0
+   },
+   "verdict": "crawl-delay-too-long",
+   "note": "Crawl-delay: 300.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.desmoinescounty.iowa.gov": {
    "host": "www.desmoinescounty.iowa.gov",
    "url": "https://www.desmoinescounty.iowa.gov/board_of_supervisors/meetings_minutes/",
@@ -5035,6 +5134,25 @@
    "callers": {
     "scripts/ewg_municipal_officials_scraper.py": "self"
    }
+  },
+  "www.fdl.wi.gov": {
+   "host": "www.fdl.wi.gov",
+   "url": "https://www.fdl.wi.gov/city-council/",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 100591 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 16 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 100591 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.fdlco.wi.gov": {
    "host": "www.fdlco.wi.gov",
@@ -6146,6 +6264,25 @@
    },
    "measured": "2026-09-13"
   },
+  "www.menomoneefalls.gov": {
+   "host": "www.menomoneefalls.gov",
+   "url": "https://www.menomoneefalls.gov/1410/Village-Board-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 219404 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 219404 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.menomonie-wi.gov": {
    "host": "www.menomonie-wi.gov",
    "url": "https://www.menomonie-wi.gov/248/City-Council",
@@ -6223,6 +6360,25 @@
     "scripts/il_county_commissioners_scraper.py": "browser"
    }
   },
+  "www.mtpleasantwi.gov": {
+   "host": "www.mtpleasantwi.gov",
+   "url": "https://www.mtpleasantwi.gov/319/Village-Board",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 214196 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 214196 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.muskego.wi.gov": {
    "host": "www.muskego.wi.gov",
    "url": "https://www.muskego.wi.gov/government/boards_commissions/common_council.php",
@@ -6259,6 +6415,25 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.oakcreekwi.gov": {
+   "host": "www.oakcreekwi.gov",
+   "url": "https://www.oakcreekwi.gov/388/Common-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 104477 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 104477 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.ocontocountywi.gov": {
    "host": "www.ocontocountywi.gov",
@@ -6322,6 +6497,25 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.oshkoshwi.gov": {
+   "host": "www.oshkoshwi.gov",
+   "url": "https://www.oshkoshwi.gov/CityCouncil/FormOfGovernment.aspx",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 35887 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 35887 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.ottumwa.us": {
    "host": "www.ottumwa.us",
@@ -7145,6 +7339,25 @@
     "ia/scripts/ia_county_auditor_scraper.py": "self"
    },
    "measured": "2026-09-13"
+  },
+  "www.westalliswi.gov": {
+   "host": "www.westalliswi.gov",
+   "url": "https://www.westalliswi.gov/page/contact-your-alderperson",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 1461946 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 2 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 1461946 bytes (page carries a captcha widget)",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.westbendwi.gov": {
    "host": "www.westbendwi.gov",
