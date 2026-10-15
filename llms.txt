@@ -173,7 +173,7 @@ All 95 counties and their county commission districts: cities and towns, school 
 
 - [Tennessee district lookup](https://districtry.com/tn/): 13 layers, all 95 counties.
 - [Who is my U.S. representative?](https://districtry.com/tn/congress.html)
-- [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 56 of them, each naming every member with whatever contact details that county publishes.
+- [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 57 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/tn/sources.html)
 - [Who is my Tennessee legislator?](https://districtry.com/tn/state-legislature.html)
 - [Tennessee district questions](https://districtry.com/tn/faq.html)
