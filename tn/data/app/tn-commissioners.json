@@ -5144,6 +5144,91 @@
    ]
   }
  },
+ "47173": {
+  "county": "Union County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://unioncountytn.gov/county-commission/",
+  "readAt": "2026-10-15",
+  "seats": 16,
+  "domains": [
+   "unioncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "mike.boles@unioncountytn.gov",
+     "name": "Mike Boles"
+    },
+    {
+     "name": "Carrie Edds"
+    },
+    {
+     "email": "gerald.simmons@unioncountytn.gov",
+     "name": "Gerald Simmons"
+    }
+   ],
+   "2": [
+    {
+     "name": "Dennis Nicley"
+    },
+    {
+     "email": "cheryl.walker@unioncountytn.gov",
+     "name": "Cheryl Walker"
+    }
+   ],
+   "3": [
+    {
+     "email": "bill.cox@unioncountytn.gov",
+     "name": "Bill Cox"
+    },
+    {
+     "email": "kenny.moore@unioncountytn.gov",
+     "name": "Kenny Moore"
+    }
+   ],
+   "4": [
+    {
+     "email": "danny.cooke@unioncountytn.gov",
+     "name": "Danny Cooke"
+    },
+    {
+     "name": "Tim Cox"
+    }
+   ],
+   "5": [
+    {
+     "name": "Dustin Berry"
+    },
+    {
+     "name": "Brett Pursel"
+    }
+   ],
+   "6": [
+    {
+     "name": "Ann Dyer"
+    },
+    {
+     "email": "roy.jones@unioncountytn.gov",
+     "name": "R.L. Jones"
+    },
+    {
+     "name": "Johnny Raley"
+    }
+   ],
+   "7": [
+    {
+     "email": "lynn.beeler@unioncountytn.gov",
+     "name": "Lynn Beeler"
+    },
+    {
+     "email": "angela.conner.murphy@unioncountytn.gov",
+     "name": "Angela Conner-Murphy"
+    }
+   ]
+  }
+ },
  "47177": {
   "county": "Warren County",
   "seatTitle": "Commissioner",
