@@ -4217,15 +4217,16 @@ function initArkansasExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ar-senate": "ars", "county": "co", "ar-house": "arh",
     "school-district-unified": "su", "zip-code": "zp", "quorum-court": "qc",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "county-subdivision": "cs", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ar-senate"],
     "state-house": ["ar-house"], "county": ["county"], "county-board": ["quorum-court"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9376,6 +9377,7 @@ function initArkansasExplorer() {
     "school-district-unified", // 234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "zip-code",          // 942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas
     "quorum-court",      // 775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town
+    "county-subdivision", // 820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town
     "municipality",      // 501 incorporated cities and towns, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13788,16 +13790,85 @@ function initArkansasExplorer() {
     }
   });
 
-  /* No county-subdivision layer, on purpose. Arkansas's townships are legal
-   * subdivisions of each county, and the Census does not count them as
-   * governments: every one of the 1,051 county subdivisions TIGERweb carries
-   * for STATE='05' is FUNCSTAT N (a nonfunctioning legal entity), measured
-   * 2026-10-13 — 951 townships, 82 "District N" and 18 "Township N" in the
-   * counties that number them. A township does elect a constable, and no
-   * source naming constables has been read here, so a township card would
-   * name nobody and claim a government the Census says is not one. A justice
-   * of the peace district is not one of these. Recorded as a drop in the
-   * guidebook. */
+  /* ---------- Township — the state's own township map, pre-built ----------
+   * Which township a point is in: the level-14 map (docs/DONE_STANDARD.md,
+   * Adam's ruling of 2026-10-14), owed in every state whether or not the
+   * units govern anyone. Arkansas's townships are legal subdivisions of
+   * each county, set by the county court (Arkansas Code 14-14-401). A
+   * township has no government of its own (the Census records all of them
+   * as nonfunctioning legal entities, FUNCSTAT N) but its voters elect a
+   * constable (Arkansas Constitution, article 7, section 47), and no source
+   * naming constables by township has been read, so the card says all
+   * three things and names nobody.
+   *
+   * THE LINES ARE THE STATE'S, NOT THE CENSUS'S, AND THAT IS MEASURED.
+   * Every other state's township layer reads TIGERweb live; here TIGERweb is
+   * out of date. The state's TOWNSHIP_POLITICAL_DIVISION layer (820
+   * townships) and TIGERweb's (1,051) disagree about how many townships a
+   * county has in 27 of 75 counties (2026-10-15), and where that was
+   * checked the state is right: TIGERweb still draws 38 townships in
+   * Washington County, where a 2013 county court order upheld in Clowers v.
+   * Edwards (2020) left 3. ar/scripts/build_ar_townships.py builds the file
+   * (Douglas-Peucker at 20 m under a 25 m ceiling, every county's townships
+   * held to cover that county). Same-origin, so nothing about the reader's
+   * point leaves the browser. ---------- */
+  var loadArTownships = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-townships.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Township",
+    subOf: "county",
+    overlay: {
+      load: loadArTownships,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    // the same value the card's title shows
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArTownships, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          county: findPropCI(props, ["county"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown township",
+        note: result.county != null ? String(result.county) + " County" : null
+      }));
+      wrap.appendChild(renderFieldStack([
+        {
+          label: "Government",
+          value: "None of its own. A township is a division of the county, and " +
+            "the county court sets its lines."
+        },
+        {
+          label: "Constable",
+          value: "Under the state constitution, each township's voters elect a " +
+            "constable for a two-year term. This map does not name constables: " +
+            "no list of them by township has been read."
+        },
+        {
+          label: "Where the lines come from",
+          value: "The state's own township map, from the Arkansas GIS Office. " +
+            "The Census Bureau's map of Arkansas townships differs from it in " +
+            "at least 27 of the 75 counties."
+        }
+      ]));
+      return wrap;
+    }
+  });
 
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Little Rock" + " city") or a prefix. Returns null when the two are equal
@@ -15686,7 +15757,7 @@ function initArkansasExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house", "quorum-court",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};

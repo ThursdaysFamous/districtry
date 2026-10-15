@@ -4216,17 +4216,17 @@ function initSouthCarolinaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "sc-senate": "scs", "county": "co",
-    "school-district-unified": "su", "sc-house": "sch", "county-council": "cu",
-    "zip-code": "zp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "school-district-unified": "su", "sc-house": "sch", "county-subdivision": "cs",
+    "county-council": "cu", "zip-code": "zp", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["sc-senate"],
     "state-house": ["sc-house"], "county": ["county"], "county-board": ["county-council"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9375,6 +9375,7 @@ function initSouthCarolinaExplorer() {
     "county",            // 46 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 72 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "sc-house",          // 124 House districts — the smallest of the three chamber tilings
+    "county-subdivision", // 299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)
     "county-council",    // 315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes
     "zip-code",          // 841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina
     "municipality",      // 271 incorporated cities and towns, live from TIGERweb
@@ -13739,13 +13740,6 @@ function initSouthCarolinaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
-  /* No county-subdivision layer, on purpose. South Carolina has no township
-   * government, and every one of the 299 county subdivisions TIGERweb
-   * carries for STATE='45' is a census county division (LSADC 22, FUNCSTAT
-   * S): a statistical area drawn for counting, governing nobody, measured
-   * 2026-10-10. Drawing it would put a card on the map for something that
-   * is not a government. Recorded as a drop in the guidebook. */
-
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Columbia" + " city") or a prefix. Returns null when the two are equal
   // or unrelated, so a TIGER change shows up as a missing type row rather
@@ -13759,6 +13753,98 @@ function initSouthCarolinaExplorer() {
     if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
     return null;
   }
+
+  /* ---------- Census County Division — live TIGERweb, the level-14 map ----------
+   * Which county subdivision a point is in, owed in every state whether or
+   * not the units govern anyone (docs/DONE_STANDARD.md, level 14, Adam's
+   * ruling of 2026-10-14). South Carolina has no township governments, and
+   * every one of the 299 county subdivisions TIGERweb carries for STATE='45'
+   * is a census county division (LSADC 22, FUNCSTAT S, measured 2026-10-15):
+   * an area the Census Bureau draws to report its counts, which governs
+   * nobody. The statewide set is 12.2 MB at geometryPrecision=5 and downloads
+   * only when the layer is on. The card says that rather than implying a
+   * government: it names the division and its county, and its Government row
+   * is read from the Census's own functional-status code, so a FUNCSTAT this
+   * card does not know prints no row rather than an improvised one. North
+   * Carolina's layer with South Carolina's unit, point-first through
+   * tigerStatewideLoader, so a first click asks TIGERweb about the selected
+   * point while the statewide set downloads for the map. ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // A census county division's own name ("Ashland" of "Ashland CCD"): the
+  // card's header already says what kind of area it is, and the hover row
+  // prints the same value beside the same label.
+  function subdivisionTitle(props) {
+    var name = findPropCI(props, ["name"]), base = findPropCI(props, ["basename"]);
+    if (subdivisionKind(name, base) === "ccd" && base != null && String(base) !== "") return String(base);
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Census County Division",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return subdivisionTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: subdivisionTitle(props),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title != null ? result.title : "Unknown division",
+        note: result.county
+      }));
+      var GOVERNMENT = {
+        S: "None. A census county division is an area the U.S. Census " +
+          "Bureau draws to report its counts, and no one is elected from it. " +
+          "South Carolina has no township governments, so outside a city or " +
+          "town the county governs.",
+        N: "None. The U.S. Census Bureau records this area as having no " +
+          "functioning government, and no one is elected to run it."
+      };
+      var gov = result.funcstat != null ? GOVERNMENT[String(result.funcstat)] : null;
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
+  });
 
   /* ---------- 5. City or Town — live TIGERweb, incorporated places ----------
    * South Carolina's municipalities are styled cities and towns. Measured
@@ -15740,8 +15826,8 @@ function initSouthCarolinaExplorer() {
     // geography: like them it is a member elected by this district alone.
     "county-council",
     "school-district-unified",
-    "county", "municipality", "zip-code", "tribal-government",
-    "police-station", "fire-station", "post-office"];
+    "county", "county-subdivision", "municipality", "zip-code",
+    "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;

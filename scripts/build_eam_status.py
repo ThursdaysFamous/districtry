@@ -1628,6 +1628,10 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
+        # The Census's 493 county divisions, drawn live from TIGERweb as North
+        # Carolina's townships are, with a card saying no one is elected from
+        # them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         # ALL FOUR COURTS ANSWER, from statute text alone. Every Kentucky
         # judge is elected from a district or circuit made of WHOLE COUNTIES
         # named in the statute (KRS 21A.010, 22A.010(2), 23A.020, 24A.030), so
@@ -1639,7 +1643,6 @@ ANSWERS = {
         # named since 2026-10-07 (Louisville's from the three Jefferson court
         # sites its Court of Justice page links), though the standard asks
         # whether the app answers the level and would count it without them.
-        "subdivision-boundaries": OPEN,
         "courts-by-district": answers(
             "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
             "ky-district-court"),
@@ -1748,7 +1751,9 @@ ANSWERS = {
         # and the secondary tiling is empty. Recorded in ok/CLAUDE.md.
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary"),
-        "subdivision-boundaries": OPEN,
+        # The Census's 305 county divisions, drawn live from TIGERweb with a
+        # card saying no one is elected from them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # OKLAHOMA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 305 county
         # subdivisions TIGERweb carries for the state are census county
@@ -1782,7 +1787,9 @@ ANSWERS = {
         # TIGER's unified tiling holds all 72 districts and the other two hold
         # none, measured in sc/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
-        "subdivision-boundaries": OPEN,
+        # The Census's 299 county divisions, drawn live from TIGERweb with a
+        # card saying no one is elected from them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # SOUTH CAROLINA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 299
         # county subdivisions TIGERweb carries for the state are census county
@@ -1818,7 +1825,10 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
-        "subdivision-boundaries": OPEN,
+        # The 855 civil districts, drawn live from TIGERweb and titled "Civil
+        # District N", with a card saying no one is elected to run one and that
+        # the number is not a county commission district's (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # TENNESSEE HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 855 county
         # subdivisions TIGERweb carries for the state are civil districts
@@ -1853,7 +1863,10 @@ ANSWERS = {
         # TIGER's unified tiling holds all 234 districts and the other two hold
         # none, measured in ar/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
-        "subdivision-boundaries": OPEN,
+        # The 820 townships of the state's own map (ar/data/app/ar-townships.json),
+        # not the Census's, which is out of date in at least 27 counties
+        # (2026-10-15, ar/scripts/build_ar_townships.py).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # ARKANSAS HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 1,051
         # county subdivisions TIGERweb carries for the state are townships and

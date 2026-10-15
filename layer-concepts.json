@@ -94,7 +94,9 @@
     },
     "county-subdivision": {
       "il": "township", "ny": "municipality", "wi": "county-subdivision", "ia": "county-subdivision",
-      "mi": "county-subdivision", "mn": "county-subdivision", "in": "county-subdivision", "nc": "county-subdivision"
+      "mi": "county-subdivision", "mn": "county-subdivision", "in": "county-subdivision", "nc": "county-subdivision",
+      "ky": "county-subdivision", "ok": "county-subdivision", "sc": "county-subdivision", "tn": "county-subdivision",
+      "ar": "county-subdivision"
     },
     "municipality": {
       "il": "municipality", "ny": ["municipality", "village"], "wi": "municipality", "ia": "municipality",
