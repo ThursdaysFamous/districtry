@@ -174,6 +174,20 @@ PROVENANCE = [
             "district and its county and nothing about who holds it."
         ),
     },
+    {
+        "layer": "tribal-government",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "Tribal land from the Census's AIANNHA service, current vintage, through "
+            "the fleet's shared reader scripts/tribal_areas.py and built by "
+            "scripts/build_tribal_areas.py: 1 area, the Mississippi Band of Choctaw Indians' "
+            "off-reservation trust land near Henning, of which about 4% lies in Tennessee. "
+            "Land enters the map when the United States takes it into trust, on no "
+            "redistricting calendar, so only a rebuild sees a new area; --check is offline "
+            "and proves the land-to-government join, never the Census's own set."
+        ),
+    },
 ]
 
 ENDPOINTS = [
