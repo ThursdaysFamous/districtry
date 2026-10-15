@@ -349,10 +349,32 @@
       }
     },
     {
+      "id": "city-ward",
+      "label": "City Council District",
+      "group": "political",
+      "area_rank": 16,
+      "rank_note": "101 council wards and districts in the 22 cities whose councils this app names and which elect by ward or district, a mean 17.7 km2 (median 14.8, from 2.4 in Winona to 71.8 in Duluth) — ranked just after City, which each one divides, so a ward draws on top of its city",
+      "source": {
+        "answers": "The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects.",
+        "boundary": [
+          {
+            "label": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, whose every precinct carries the ward it lies in: each ward is its precincts joined together, built by mn/scripts/build_mn_city_wards.py. Checked against the ballot: for all 101 wards, the precincts that voted in the ward's latest council contest since 2022 (the Secretary of State's localPrct.txt results) are exactly the precincts the same election's precinct map puts in the ward, measured 2026-10-15",
+            "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+          },
+          {
+            "label": "Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt), the ballot each ward is checked against",
+            "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
+          }
+        ],
+        "people": "The winner of each ward's most recent council election, from the same city council roster the City card reads (mn/data/app/mn-city-councils.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
+        "applies": "The 22 Minnesota cities above 25,000 people whose councils elect by ward or district: Austin, Blaine, Bloomington, Brooklyn Park, Chaska, Coon Rapids, Duluth, Elk River, Fridley, Mankato, Minneapolis, Minnetonka, Moorhead, Owatonna, Plymouth, Ramsey, Richfield, Rochester, St. Cloud, St. Louis Park, St. Paul and Winona. The precinct map carries wards for 47 smaller cities too; they are not drawn, because this app does not name those councils."
+      }
+    },
+    {
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
       "source": {
         "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
@@ -370,7 +392,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -388,7 +410,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 18,
+      "area_rank": 19,
       "rank_note": "1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -406,7 +428,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 19,
+      "area_rank": 20,
       "rank_note": "1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -439,7 +461,7 @@
       }
     }
   ],
-  "min_register_layer": 15,
+  "min_register_layer": 16,
   "anchor_point": {
     "lat": 44.9744,
     "lng": -93.2655,
@@ -481,6 +503,10 @@
     {
       "layer": "school-board-district",
       "expected": "District 4"
+    },
+    {
+      "layer": "city-ward",
+      "expected": "Ward 7"
     }
   ],
   "negative_point": {
@@ -555,6 +581,12 @@
         "note": "Board election districts of the 13 Minnesota school boards that elect by district and whose results place them, drawn by mn/scripts/build_mn_school_board_districts.py from the Secretary of State's precinct-level results, read in each election's own precincts and cut to the Census school district. 59 districts, 4 split precincts shipped as their own features naming every district they vote in, and 5 pieces the results do not place (Duluth's combined polling places among them). Gated on the districts' precincts being disjoint, on no two features overlapping, on every seat being one the roster names, and on Minneapolis's six agreeing with the city's own park commissioner districts. Simplified at a 15 m Douglas-Peucker interval over one shared topology."
       },
       {
+        "file": "mn-city-wards.json",
+        "min_features": 101,
+        "max_features": 140,
+        "note": "Council wards and districts of the 22 Minnesota cities whose councils this app names and which elect by ward or district, built by mn/scripts/build_mn_city_wards.py: the Secretary of State's precincts joined on the ward each one carries. Gated on each city's wards being exactly its roster's ward seats, on every ward's precincts matching the precincts that voted in its latest council contest (101 of 101, read in that election's own precinct map), on 2,000 seeded points agreeing with the exact dissolve, and on no two wards overlapping. Simplified at a 15 m Douglas-Peucker interval over one shared topology."
+      },
+      {
         "file": "tribal-areas.json",
         "min_features": 22,
         "max_features": 22,
@@ -595,7 +627,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v8",
+    "cache_name": "districtry-mn-shell-v9",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -85,7 +85,7 @@ precincts — in which every precinct carries the districts it sits in as attrib
 layers dissolve out of one source: `ctycomdist` (447 commissioner districts across all 87
 counties — 81 counties elect five and six elect seven), `pctcode` (precincts), `juddist` (10),
 `swcdist_n` (117), `hospdist_n` (16), `parkdist_n` (3) and `ward` (274 wards in 76 cities, the
-layer Illinois assembled county by county). **A single upstream service serving seven layers
+layer Illinois assembled county by county; 268 in 69 cities when re-measured 2026-10-15). **A single upstream service serving seven layers
 is also a single point of failure for seven layers**, which is why `mn/WATCH.md` watches its
 Service Modified stamp and its field names rather than only its endpoint.
 
@@ -157,6 +157,18 @@ shared precincts). Minneapolis's own park district map, which the school board s
 independent witness, at 1,800 of 1,800 sample points. The card names the seat's member from
 `mn-school-boards.json`.
 
+**`city-ward` (2026-10-15) DRAWS THE WARDS OF THE 22 CITIES WHOSE COUNCILS THE CITY CARD NAMES
+AND WHICH ELECT BY WARD OR DISTRICT** — 101 wards, the precinct layer dissolved on its `ward`
+attribute (`mn/scripts/build_mn_city_wards.py`). The cities are read off `mn-city-councils.json`,
+not listed, and the builder fails unless each city's wards are exactly its roster's ward seats.
+**THE BALLOT IS THE WITNESS**: every ward's precincts must be exactly those that voted in its
+latest council contest in `localPrct.txt`, read in that election's own precinct map, and all 101
+are. An odd-year contest has no map of its own, so it must match the previous general's map or
+today's exactly: Bloomington merged W-4 P-31 into P-30 after the 2024 general, so its 2023
+contest matches 2022's map and not today's. The precinct layer also carries wards for 47 smaller
+cities; they are not drawn, because the card could name nobody in them. The toggle says "City
+Council District" because Duluth and Rochester elect by district, Iowa's reasoning.
+
 **TWO HOSTS ARE MEASURED AND NEITHER CHANGES THE ANSWER.** `www.mngeo.state.mn.us` serves a
 Radware Bot Manager captcha to this project's token — obeyed, never worked around, and it
 costs nothing because the data is on the separate enterprise host. `gis.data.mn.gov`'s
@@ -191,8 +203,8 @@ generate nothing for an instance that does not ask.
 
 - Metro: Minnesota (`minnesota`) — https://districtry.com/mn/
 - Geocoders: address Photon (Minnesota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Minnesota-bounded, serial >=1s queue)
-- Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A; mn-judicial-district Fourth Judicial District; voting-precinct Minneapolis W-7 P-6; county-commissioner Hennepin County Commissioner District 3; watershed-district Mississippi Watershed Management Organization; school-board-district District 4. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
-- Layers: 19 registered (political 6, safety 2, schools 4, geography 7); `registerLayer(` floor 15. Debug namespace `window.MinnesotaExplorer`.
+- Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A; mn-judicial-district Fourth Judicial District; voting-precinct Minneapolis W-7 P-6; county-commissioner Hennepin County Commissioner District 3; watershed-district Mississippi Watershed Management Organization; school-board-district District 4; city-ward Ward 7. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
+- Layers: 20 registered (political 7, safety 2, schools 4, geography 7); `registerLayer(` floor 16. Debug namespace `window.MinnesotaExplorer`.
 - Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC); `update-mn-commissioner-roster.yml` (Tue 13:40 UTC); `update-mn-city-councils.yml` (Tue 14:10 UTC); `update-mn-school-boards.yml` (Wed 14:10 UTC).
 - Source registry: `mn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

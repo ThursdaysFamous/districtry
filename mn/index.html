@@ -4216,8 +4216,9 @@ function initMinnesotaExplorer() {
     "county": "co", "mn-house": "mnh", "watershed-district": "ws",
     "school-district-unified": "su", "school-board-district": "bd", "county-commissioner": "cm",
     "zip-code": "zp", "school-district-elementary": "se", "county-subdivision": "cs",
-    "voting-precinct": "vp", "municipality": "mu", "school-district-secondary": "sh",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw",
+    "school-district-secondary": "sh", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4226,8 +4227,8 @@ function initMinnesotaExplorer() {
     "state-house": ["mn-house"], "trial-court-district": ["mn-judicial-district"],
     "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "school-board-district": ["school-board-district"], "police-station": ["police-station"],
@@ -9388,6 +9389,7 @@ function initMinnesotaExplorer() {
     "voting-precinct",   // 4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census
     "tribal-government", // Tribal land — Minnesota has 22 pieces across 13 nations, from the Leech Lake Reservation's 3,393.820 km² down to a 0.146 km² Grand Portage parcel, MEASURED by scripts/build_tribal_areas.py. Ranked on its 6.892 km² MEDIAN, below the voting-precinct fabric's 14.72 km² median (measured 2026-10-10 on the shipped mn-precincts.json, cylindrical equal-area) — medians rather than means, because this layer's own mean of 514 km² is Leech Lake, Red Lake and White Earth and describes none of the other nineteen pieces. The municipality layer below it is live and publishes no median, so no claim is made about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Minnesota is on no tribal land, so the layer carries its own emptyNote. The card names the nation as the Bureau of Indian Affairs names it, its seat (one, the Ho-Chunk Nation's, is in Wisconsin), the districts the Census draws on five of these pieces of land, the 2020 population, and the council from each nation's own published list: nine of the thirteen publish one this project reads weekly, and for the other four the card says why it names nobody. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area
+    "city-ward",         // 101 council wards and districts in the 22 cities whose councils this app names and which elect by ward or district, a mean 17.7 km2 (median 14.8, from 2.4 in Winona to 71.8 in Duluth) — ranked just after City, which each one divides, so a ward draws on top of its city
     "school-district-secondary", // 1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota
     "police-station",    // 694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -14561,6 +14563,137 @@ function initMinnesotaExplorer() {
     }
   });
 
+  /* ---------- 5c. City council ward or district ----------
+   * The 22 cities whose councils this app names (data/app/mn-city-councils.json)
+   * and which elect members by ward or district. The lines are the Secretary
+   * of State's own: every precinct in its statewide precinct map carries the
+   * ward it lies in, and a Minnesota precinct lies wholly inside one ward, so
+   * each ward is its precincts joined together
+   * (mn/scripts/build_mn_city_wards.py; data/app/mn-city-wards.json). The
+   * builder checks each ward against the ballot: the precincts that voted in
+   * the ward's latest council contest are exactly the precincts the map of
+   * that election puts in it, for all 101 wards (measured 2026-10-15).
+   *
+   * A GENERIC LABEL, as Iowa's: Duluth and Rochester elect by DISTRICT and the
+   * other twenty by WARD, so the toggle says "City Council District" and each
+   * card names the unit as its city does, off the `seat` property.
+   *
+   * The precinct map carries wards for 47 more cities whose councils the app
+   * does not name yet; they are not drawn, because the card could name nobody.
+   * ---------- */
+  var loadMnCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-city-wards.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: insideMinnesota,
+    emptyNote: "This point is not in a city council ward or district this map " +
+      "draws. It draws the wards of the 22 cities above 25,000 people whose " +
+      "councils are elected by ward or district; most Minnesota cities elect " +
+      "their whole council at large, and the City card names it where this " +
+      "app has it.",
+    overlay: {
+      load: loadMnCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.seat != null ? String(p.city) + ", " + String(p.seat) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadMnCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hit = null;
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hit = feats[i].properties || {};
+            break;
+          }
+        }
+        if (!hit) return null;
+        var result = { seq: seq, props: hit, council: null };
+        return loadMnCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(hit.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.seat),
+        note: String(p.city) + " City Council"
+      }));
+      // Card convention: identity -> officeholder. The member is the winner
+      // of the seat's most recent election, dated, as on the City card.
+      var people = [], rows = [];
+      ((council && council.seats) || []).forEach(function (seat) {
+        if (seat.seat !== p.seat) return;
+        if (seat.name) {
+          var when = mnElectionDate(seat.election);
+          people.push({
+            name: String(seat.name),
+            badge: "Council, " + String(seat.seat),
+            note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+          });
+          if (seat.citySays && seat.citySays.name) {
+            var read = mnElectionDate(seat.citySays.read);
+            rows.push({
+              label: "The city's own page names someone else",
+              value: String(p.city) + "'s own council page named " +
+                String(seat.citySays.name) + " for this seat" +
+                (read ? " when read on " + read : "") + ". The seat has " +
+                "probably changed hands since " + String(seat.name) + " won it."
+            });
+          }
+        } else {
+          rows.push({ label: "Council member: not named here", value: String(seat.unnamed || "") + "." });
+        }
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      if (result.rosterFailed) {
+        rows.push({ label: "Council member", value: "The list of election winners did not load, so no name is shown." });
+      }
+      var others = 0;
+      ((council && council.seats) || []).forEach(function (s) {
+        if (s.seat === "Mayor" || s.seat === "At Large" || /^Seat /.test(s.seat)) others += 1;
+      });
+      if (others) {
+        rows.push({
+          label: "Also on this council",
+          value: "The mayor" + (others > 1 ? " and the members elected by the whole city" : "") +
+            ". The City card names them."
+        });
+      }
+      rows.push({
+        label: "What this name is",
+        value: "The winner of this seat's most recent election in the Minnesota " +
+          "Secretary of State's results. It is not a list the city keeps up to " +
+          "date, so if the seat has changed hands since, this still shows who won."
+      });
+      rows.push({
+        label: "How this line is drawn",
+        value: "From the Minnesota Secretary of State's precinct map, which gives " +
+          "every precinct its ward. The precincts that voted in this seat's latest " +
+          "election are the same ones the map puts in it."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Minnesota Secretary of State election results", url: "https://www.sos.mn.gov/elections-voting/election-results/" };
+    }
+  });
+
   /* ---------- 6. ZIP Code ----------
    * ZIP Code Tabulation Areas carry NO STATE FIELD, because a ZCTA can cross
    * a state line, so this is the one TIGERweb layer here fetched by a
@@ -14780,8 +14913,9 @@ function initMinnesotaExplorer() {
    * Stat. § 412.02, read at revisor.mn.gov on 2026-09-29); a home rule
    * charter city's own charter governs instead. No statewide roster of
    * Minnesota's mayors and council members was found, so the card names
-   * nobody. Recorded as gap mn-municipal-officeholders. The 274 city WARDS
-   * the Secretary of State publishes are a later change, not a roster.
+   * nobody. Recorded as gap mn-municipal-officeholders. The wards of the 22
+   * of these cities that elect by ward are the City Council District layer
+   * (5c above), drawn from the Secretary of State's precincts.
    *
    * THE 43 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL, from the
    * Secretary of State's own city results files, every name dated to the
@@ -16541,6 +16675,9 @@ function initMinnesotaExplorer() {
     // like them it is one person elected by this district alone, where the
     // judicial district below elects a whole bench.
     "county-commissioner",
+    // The city council ward sits with the county board: one member elected by
+    // this ward alone, and it answers only in the 22 cities that elect by ward.
+    "city-ward",
     // The judicial district comes after the three chambers: a reader looking
     // for who represents them wants the legislators first, and this is ten
     // shapes where those are 8, 67 and 134.
@@ -17050,14 +17187,14 @@ function initMinnesotaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
-    "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD",
+    "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
+    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4BA3D3": "#B0E0FE", "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#5E3A8C": "#B283F5",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

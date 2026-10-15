@@ -2179,19 +2179,14 @@ WARD_MAPS = {
               "2646000": "Lansing", "2653780": "Midland",
               "2656320": "Muskegon", "2665440": "Pontiac",
               "2682960": "Walker"}),
+    # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
+    # which reads the cities off the city council roster.
     "mn": dict(
-        drawn=set(),
-        owed={"2702908": "Austin", "2706382": "Blaine",
-              "2706616": "Bloomington", "2707966": "Brooklyn Park",
-              "2710972": "Chaska", "2713114": "Coon Rapids",
-              "2717000": "Duluth", "2718674": "Elk River",
-              "2722814": "Fridley", "2739878": "Mankato",
-              "2743000": "Minneapolis", "2743252": "Minnetonka",
-              "2743864": "Moorhead", "2749300": "Owatonna",
-              "2751730": "Plymouth", "2753026": "Ramsey",
-              "2754214": "Richfield", "2754880": "Rochester",
-              "2756896": "St. Cloud", "2757220": "St. Louis Park",
-              "2758000": "St. Paul", "2771032": "Winona"}),
+        drawn={"2702908", "2706382", "2706616", "2707966", "2710972",
+               "2713114", "2717000", "2718674", "2722814", "2739878",
+               "2743000", "2743252", "2743864", "2749300", "2751730",
+               "2753026", "2754214", "2754880", "2756896", "2757220",
+               "2758000", "2771032"}),
     # Kentucky's city roster carries no ward labels, so the sweep finds nothing
     # there; the two councils elected by district are declared. Louisville's
     # Metro Council answers both of the Census's Louisville places.
