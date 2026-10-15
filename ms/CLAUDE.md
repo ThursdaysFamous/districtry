@@ -54,8 +54,8 @@ subdivisions — all 410 are nonfunctioning (FUNCSTAT N) and they ARE the superv
 in 70 counties the Census's 2026 layer still carries its own 2020 edition, the lines drawn on the
 2010 census — the planning measurement found those put 34% of Madison County's residents in the
 wrong district, 16% of Lee's and 9.5% of Harrison's. So a supervisor district is drawn only where
-its current lines are confirmed (the recommended option on the decision card of 2026-10-15), and
-the rest is gap `ms-supervisor-district-lines`. **THE
+its current lines are confirmed (Adam's choice, "Confirmed only", on the decision card of
+2026-10-15), and the rest is gap `ms-supervisor-district-lines`. **THE
 DIRECTORY ALSO PRINTS SUPERVISORS' OWN ADDRESSES AND TELEPHONES IN SOME COUNTIES**, which may be
 homes: a board address or telephone is carried only where at least three of the five supervisors
 print the same one, because five people do not share a home — 76 counties have an address and 68 a
