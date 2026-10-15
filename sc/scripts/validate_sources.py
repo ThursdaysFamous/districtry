@@ -204,12 +204,18 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-10-10 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. Incorporated places 271 ·
-    # unified school districts 72.
+    # unified school districts 72. County subdivisions 299, all census county
+    # divisions, measured 2026-10-15.
     #
     # SCHOOL LAYERS 1 (SECONDARY) AND 2 (ELEMENTARY) ANSWER ZERO FOR SOUTH
     # CAROLINA, measured the same day; the unified layer covers the state
     # alone. Neither is watched -- a row whose count is zero on purpose cannot
     # tell a drop from the status quo.
+    {
+        "layer": "county-subdivision",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2745%27&returnCountOnly=true&f=json",
+        "min_count": 265,   # 299 measured 2026-10-15; floor set below it, not at it
+    },
     {
         "layer": "municipality",
         "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2745%27&returnCountOnly=true&f=json",

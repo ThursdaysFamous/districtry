@@ -194,12 +194,18 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-10-09 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. Incorporated places 600 ·
-    # unified school districts 415 · elementary school districts 91.
+    # unified school districts 415 · elementary school districts 91. County
+    # subdivisions 305, all census county divisions, measured 2026-10-15.
     #
     # SCHOOL LAYER 1 (SECONDARY) ANSWERS ZERO FOR OKLAHOMA, measured the same
     # day; the unified and elementary layers partition the state between them.
     # Layer 1 is deliberately not watched -- a row whose count is zero on
     # purpose cannot tell a drop from the status quo.
+    {
+        "layer": "county-subdivision",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2740%27&returnCountOnly=true&f=json",
+        "min_count": 270,   # 305 measured 2026-10-15; floor set below it, not at it
+    },
     {
         "layer": "municipality",
         "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2740%27&returnCountOnly=true&f=json",

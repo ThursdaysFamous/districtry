@@ -280,6 +280,16 @@ ENDPOINTS = [
                 "&returnCountOnly=true&f=json"),
         "min_count": 100,
     },
+    # Unlike the four rows above, this layer is fetched by the APP at run time
+    # (2026-10-15): no builder and no data/app file, so a new Census vintage
+    # reaches it on its own and a count that falls away is the thing to see.
+    {
+        "layer": "county-subdivision",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2721%27"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 440,  # 493 census county divisions measured 2026-10-15
+    },
 ]
 
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

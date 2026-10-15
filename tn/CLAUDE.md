@@ -8,7 +8,7 @@ districtry Tennessee: a single-file, dependency-light web app. Click a point in 
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/tn/** as a folder of the consolidated
 districtry repo, following the statewide shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships THIRTEEN layers, and **IT IS PUBLISHED** since Adam's word
+Illinois root-scripts shape. It ships FOURTEEN layers, and **IT IS PUBLISHED** since Adam's word
 of 2026-10-13. It arrived dark on 2026-10-10 (no `metros.json` entry, `tn/**` blanket-excluded
 from the Pages deploy) and the go-live change narrowed that exclude to the build inputs the
 siblings exclude, registered the instance and regenerated every surface that counts the fleet,
@@ -21,7 +21,7 @@ County, Ohio; it was the one fixed point in the fleet inside this instance's out
 coverage ring and a card that names the county), **U.S. House**
 (9 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators
 roster), **Tennessee Senate** and **Tennessee House** (33 and 99 districts, TIGERweb geometry),
-the LIVE TIGERweb fabric (**City or Town**, **School District (Unified)** 127,
+the LIVE TIGERweb fabric (**Civil District**, **City or Town**, **School District (Unified)** 127,
 **School District (Elementary)** 15, **School District (Secondary)** 15, **ZIP Code**) and three
 nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**,
 **Post Office**).
@@ -62,12 +62,21 @@ Nashville-Davidson (TIGER names the place "Nashville-Davidson metropolitan gover
 County (LSADC MG). Both the municipality card and the county card say so. No place is FUNCSTAT I
 (inactive), measured 2026-10-10.
 
-**THERE IS NO TOWNSHIP OR CIVIL-DISTRICT LAYER, AND THAT IS A MEASUREMENT.** All 855 county
+**THE CIVIL DISTRICTS ARE DRAWN, AND THE CARD SAYS WHAT THEY ARE NOT.** All 855 county
 subdivisions TIGERweb carries for STATE='47' are civil districts ("District N", LSADC 28,
-FUNCSTAT N). The Census codes FUNCSTAT N as a legal area with no functioning government: nobody
-is elected to run one. Their numbers look like county commission district numbers, and nothing
-in the Census record says the lines are the same, so drawing them would invite exactly that
-misreading.
+FUNCSTAT N, measured 2026-10-15). The Census codes FUNCSTAT N as a legal area with no
+functioning government: nobody is elected to run one. They were left out at arrival for that
+reason and for a second one that still stands: their numbers look like county commission district
+numbers, and nothing in the Census record says the lines are the same. Since 2026-10-15 the done
+standard's level 14 (Adam, 2026-10-14) asks every state to draw its subdivision boundaries
+whether or not they govern anyone, so `county-subdivision` draws them live from TIGERweb, North
+Carolina's layer, and the card answers the misreading in words: it is labelled "Civil District",
+titles each unit "Civil District N" rather than TIGER's bare "District N", says no one is elected
+to run it, and says the number belongs to the civil district and not to a commission district,
+pointing at that layer. It says nothing about constables, whom Tennessee elects from districts
+each county commission sets; which counties still use the civil districts for that is not
+measured. The statewide set is 28.9 MB, uncompressed, and downloads only when the layer is
+switched on; a click asks TIGERweb about the point alone.
 
 **THE ZIP LAYER HIDES OUTSIDE TENNESSEE.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (Bowling Green, Kentucky gives 42101; a

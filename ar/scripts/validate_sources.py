@@ -158,6 +158,21 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-subdivision",
+        "app_file": "ar-townships.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/57",
+        "note": (
+            "All 820 townships in 75 counties, pre-built from the state's own "
+            "TOWNSHIP_POLITICAL_DIVISION layer by "
+            "ar/scripts/build_ar_townships.py rather than from the Census, "
+            "whose township map of Arkansas disagrees with the state's about "
+            "how many townships a county has in 27 counties (2026-10-15). The "
+            "layer carries no edit date, so build_ar_townships.py --watch, the "
+            "annual row in ar/WATCH.md, is what notices a county court "
+            "redrawing; this check only says the layer still answers."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "ar-county-officials.json",
         "source_url": "https://arcourts.gov/directories/county-judge-clerk",

@@ -139,13 +139,13 @@ prose.
 | ia | 0 | 21 |
 | mi | 0 | 19 |
 | mn | 6 | 19 |
-| ky | 4 | 12 |
+| ky | 5 | 13 |
 | in | 4 | 12 |
 | nc | 4 | 12 |
-| ok | 4 | 13 |
-| sc | 3 | 12 |
-| tn | 5 | 13 |
-| ar | 3 | 11 |
+| ok | 5 | 14 |
+| sc | 4 | 13 |
+| tn | 6 | 14 |
+| ar | 3 | 12 |
 
 ### Where each layer's shapes come from
 
@@ -286,7 +286,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `mn-judicial-district`, `mn-senate`, `county`, `mn-house`, `watershed-district`, `school-board-district`, `county-commissioner`, `voting-precinct`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 
-#### ky — 4 of 12 layers fetch their shapes
+#### ky — 4 of 13 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -296,6 +296,7 @@ measured until the next run describes it.
 | School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
+- **Not measured** — declared since the probe ran: `county-subdivision`.
 
 #### in — 4 of 12 layers fetch their shapes
 
@@ -323,7 +324,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `tribal-government`.
 
-#### ok — 4 of 13 layers fetch their shapes
+#### ok — 4 of 14 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -334,9 +335,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `ok-senate`, `county`, `ok-house`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `county-commissioner`.
+- **Not measured** — declared since the probe ran: `county-subdivision`, `county-commissioner`.
 
-#### sc — 3 of 12 layers fetch their shapes
+#### sc — 3 of 13 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -346,9 +347,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `sc-senate`, `county`, `sc-house`, `county-council`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `tribal-government`.
+- **Not measured** — declared since the probe ran: `county-subdivision`, `tribal-government`.
 
-#### tn — 5 of 13 layers fetch their shapes
+#### tn — 5 of 14 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -360,6 +361,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `tn-senate`, `county`, `tn-house`, `county-commissioner`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `county-subdivision`.
 
 #### ar — not measured
 
@@ -374,14 +376,14 @@ measured until the next run describes it.
 | ia | 71 | 65 | 0 |
 | mi | 32 | 61 | 1 |
 | mn | 28 | 17 | 0 |
-| ky | 14 | 13 | 0 |
+| ky | 15 | 13 | 0 |
 | in | 14 | 12 | 0 |
 | nc | 17 | 11 | 0 |
-| ok | 17 | 12 | 0 |
-| sc | 17 | 13 | 0 |
-| tn | 17 | 11 | 0 |
-| ar | 17 | 11 | 0 |
-| **total** | **523** | **934** | **12** |
+| ok | 18 | 12 | 0 |
+| sc | 18 | 13 | 0 |
+| tn | 18 | 11 | 0 |
+| ar | 18 | 12 | 0 |
+| **total** | **528** | **935** | **12** |
 
 **149 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

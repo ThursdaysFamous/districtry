@@ -328,9 +328,19 @@ second branch for a level a state does not have.
 
 **Kentucky has no sub-county general-purpose government.** The only sub-county units the Census
 publishes for the state are 493 Census County Divisions — statistical areas drawn for
-tabulation, which govern nobody — so there is no elected sub-county body to draw. That layer is
-deliberately NOT shipped: at 19.91 MB raw / 5.03 MB gzipped it is the heaviest fabric the state
-has, and it would put a card on the map for something that is not a government.
+tabulation, which govern nobody — so there is no elected sub-county body to draw.
+
+**THE COUNTY DIVISIONS ARE DRAWN ANYWAY, SINCE 2026-10-15, AS THE LEVEL-14 MAP.** They were left
+out at arrival because a card for one would sit on the map beside the governments. The done
+standard's level 14 (Adam, 2026-10-14) asks every state to draw its township or county
+subdivision boundaries whether or not they govern anyone, so `county-subdivision` ("Census
+County Division") now draws all 493 live from TIGERweb, North Carolina's layer with its own
+card: the division's name without TIGER's "CCD", its county from the app's own county file, and
+a Government row saying no one is elected from it and that outside a city the county governs.
+That row is read from the Census's functional-status code (all 493 are LSADC 22, FUNCSTAT S,
+measured 2026-10-15), so a code the card does not carry prints no row. A click asks TIGERweb
+about the point alone; the statewide set, 19.9 MB because TIGERweb serves it uncompressed,
+downloads only when the layer is switched on.
 
 **Kentucky has no tribal land.** Measured 2026-10-01 against the Census AIANNHA service over an
 envelope covering the whole state: zero features in federal reservations, off-reservation trust

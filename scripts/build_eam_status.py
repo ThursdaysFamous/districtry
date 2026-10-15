@@ -1864,8 +1864,9 @@ ANSWERS = {
         # none, measured in ar/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
         # The 820 townships of the state's own map (ar/data/app/ar-townships.json),
-        # not the Census's, which is out of date in at least 27 counties
-        # (2026-10-15, ar/scripts/build_ar_townships.py).
+        # not the Census's, which disagrees with it about how many townships a
+        # county has in 27 counties and, in the two checked, is the out-of-date
+        # one (2026-10-15, ar/scripts/build_ar_townships.py).
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # ARKANSAS HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 1,051
