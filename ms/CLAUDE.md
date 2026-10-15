@@ -81,7 +81,11 @@ Past about 150 KB, give it a coverage file of its own or tiles. **The shapes are
 outline's too**: `state-counties.json` was rebuilt with Douglas-Peucker on 2026-10-15 because
 the Visvalingam simplification it shipped with put a county line up to 184.5 m from the
 Census's, with 54 counties over 25 m, and the supervisor builder's county witness holds the two
-files to each other at 4,000 points.
+files to each other at 4,000 points. **That rebuild fixed the stray and made the other measure
+worse**: the ground answered with the wrong county, or none inside the state, went from 23.1 to
+40.7 km² (equal-area, against the full-precision lines), which the first measurement never looked
+at. An interval of 10 m or finer beats both on both measures with a larger file, so the interval is
+provisional until Adam's choice for the newer states' county files, and `ms/WATCH.md` carries it.
 **THE DIRECTORY PRINTS MOST COUNTY NAMES AS ARTWORK, NOT TEXT.** 80 of its 82 county pages carry
 the county's name as an image, so the builder finds the 82 start pages (each opens with "Named
 for"), pairs them with the 82 counties in alphabetical order, and refuses to write unless there are

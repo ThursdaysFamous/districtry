@@ -26,6 +26,29 @@ Douglas-Peucker thresholds the stray itself. The legislative builder beside
 this one already uses it, and its fidelity check is imported from there rather
 than copied.
 
+AND THE STRAY IS ONE OF TWO MEASURES, AND ON THE OTHER interval=20 IS WORSE
+THAN THE SETTING IT REPLACED (measured later on 2026-10-15, after another
+thread measured the same trade across the newer states). The second measure is
+the ground a reader is given the wrong answer on: the area, in an equal-area
+projection (EPSG:5070), where this file names a different county than the
+full-precision TIGERweb lines do, or names none inside the state.
+
+    setting                    worst stray   ground answered wrongly   gzipped
+    visvalingam 10%  (first)       184.5 m          23.1 km2            134 KB
+    dp interval=20   (shipped)      21.7 m          40.7 km2            139 KB
+    dp interval=10                  11.1 m          18.0 km2            208 KB
+    dp interval=5                    5.6 m           8.1 km2            295 KB
+
+At a 20 m interval the drawn line stays within about 20 m of the true one but
+leaves out more of its small bends, and the ground those bends enclose is
+answered with the neighbouring county. Every interval of 10 m or finer beats
+the first build on both measures, with a larger file. Which interval ships is a
+trade between accuracy and the size of a file every reader downloads, and Adam
+is choosing it for the ten newer states' county files (asked 2026-10-15). This
+file stays at interval=20 until he does, and Mississippi follows his choice
+before it goes live (ms/WATCH.md). Measuring only the stray is how interval=20
+looked like a fix.
+
 Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js
 (mapshaper via `npx mapshaper@<pinned>`).
 
@@ -60,6 +83,8 @@ OUT_FILE = "state-counties.json"
 # Douglas-Peucker interval in METRES (keep-shapes). Measured 2026-10-15: the
 # median source step is 27.84 m, and interval=20 leaves the worst stray under
 # the 25 m ceiling the legislative builder pins (blb.FIDELITY_CEILING_M).
+# PROVISIONAL: it answers more ground with the wrong county than the setting it
+# replaced (the docstring's table), and changes to Adam's choice before go-live.
 SIMPLIFY = "interval=20"
 MIN_FEATURES = 82  # every Mississippi county — no water pseudo-district on this layer
 VALIDATION_KEY = "GEOID"  # unique per county, preserved through simplification
