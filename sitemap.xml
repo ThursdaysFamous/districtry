@@ -483,7 +483,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner.html</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -6178,6 +6178,12 @@
   <url>
     <loc>https://districtry.com/tn/county-commissioner/unicoi.html</loc>
     <lastmod>2026-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tn/county-commissioner/union.html</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
