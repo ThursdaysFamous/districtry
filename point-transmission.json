@@ -239,6 +239,7 @@
       "layer_ids": [
         "county",
         "county-subdivision",
+        "fiscal-court",
         "ky-circuit-court",
         "ky-court-of-appeals",
         "ky-district-court",

@@ -232,6 +232,18 @@ PROVENANCE = [
             "re-run it against the 2026 recap sheets once they are posted."
         ),
     },
+    {
+        "layer": "fiscal-court",
+        "app_file": "ky-county-districts.json",
+        "source_url": "https://elect.ky.gov/results/2020-2029/Pages/2026Primary-Recap-Sheets.aspx",
+        "note": (
+            "Which magistrate race was on each precinct's ballot in the 2026 "
+            "primary, read by build_ky_county_districts.py (2026-10-15) to compose "
+            "the magisterial districts from the State Board of Elections' "
+            "precincts. Re-run the builder after each election with magistrate "
+            "races; ky/WATCH.md carries the row."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -280,7 +292,31 @@ ENDPOINTS = [
                 "&returnCountOnly=true&f=json"),
         "min_count": 100,
     },
-    # Unlike the four rows above, this layer is fetched by the APP at run time
+    # The fiscal-court layer's three inputs (build_ky_county_districts.py):
+    # the State Board's precinct map and the two merged governments' council
+    # maps. Counts measured 2026-10-15.
+    {
+        "layer": "fiscal-court",
+        "url": ("https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/"
+                "Ky_SBE_VTD_Boundaries_WM/FeatureServer/0/query"
+                "?where=1%3D1&returnCountOnly=true&f=json"),
+        "min_count": 3100,
+    },
+    {
+        "layer": "fiscal-court",
+        "url": ("https://gis.lojic.org/maps/rest/services/LojicSolutions/"
+                "OpenDataPolitical/MapServer/8/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 26,
+    },
+    {
+        "layer": "fiscal-court",
+        "url": ("https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/"
+                "Council_District/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 12,
+    },
+    # Unlike every row above, this layer is fetched by the APP at run time
     # (2026-10-15): no builder and no data/app file, so a new Census vintage
     # reaches it on its own and a count that falls away is the thing to see.
     {

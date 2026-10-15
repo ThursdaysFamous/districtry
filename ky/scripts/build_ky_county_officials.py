@@ -27,7 +27,10 @@ a candidate with the member's surname (and, where two winners share a surname,
 the member's first name). Nothing else is inferred: a member who took the seat
 after that election, a sheet that was not served, or a name spelled two ways
 leaves the member without a district, and the card still lists them. The
-match holds 346 of 562 members (2026-10-11): 245 of 252 where the sheet carries
+same name match gives each Louisville Metro and Lexington-Fayette council
+member the district their government's own council map names them for
+(ky-county-districts.source.json); Lexington's at-large members stay without
+one. The fiscal court match holds 346 of 562 members (2026-10-11): 245 of 252 where the sheet carries
 text, 101 of 300 where it is a scan, most of the rest being scans whose
 hand-tallied grids text recognition cannot read. Measured 2026-10-11: 120
 counties, 520 magistrates and 42 commissioners named, one
@@ -60,6 +63,9 @@ CITIES = os.path.join(INSTANCE, "data", "app", "ky-city-officials.json")
 COUNTIES = os.path.join(INSTANCE, "data", "app", "state-counties.json")
 OUT = os.path.join(INSTANCE, "data", "app", "ky-county-officials.json")
 RESULTS = os.path.join(INSTANCE, "data", "source", "ky-fiscal-court-2022-results.json")
+# Which council district each Louisville and Lexington member holds, as the two
+# governments' own council maps name them (build_ky_county_districts.py).
+SEATS = os.path.join(INSTANCE, "data", "source", "ky-county-districts.source.json")
 
 JUDGE = "County Judge Executive"
 BOARD = {"County Magistrate": ("magistrate", "Magistrate"),
@@ -95,10 +101,12 @@ GOV_TYPE = {"Magistrate": "magistrate", "Commissioner": "commissioner",
 MERGED = {
     "Jefferson": {"place": "2148006", "form": "metro",
                   "body": "Louisville Metro Council",
-                  "law": "KRS 67C"},
+                  "law": "KRS 67C",
+                  "mapPublisher": "LOJIC (Louisville/Jefferson County Information Consortium)"},
     "Fayette": {"place": "2146027", "form": "urban-county",
                 "body": "Lexington-Fayette Urban County Council",
-                "law": "KRS 67A"},
+                "law": "KRS 67A",
+                "mapPublisher": "Lexington-Fayette Urban County Government"},
 }
 
 # A county whose form a second publisher contradicts. Printed on the card and
@@ -162,7 +170,7 @@ def district_sort(d):
     return (0, int(d), "") if d.isdigit() else (1, 0, d)
 
 
-def attach_districts(rec, sheet):
+def attach_districts(rec, sheet, want=None):
     """Give each member the district whose 2022 winner bears their name.
 
     A member matches only when the surname is the winner's, and one of the
@@ -170,7 +178,7 @@ def attach_districts(rec, sheet):
     gives Dennis Combs a district), in exactly one contest for the county's own office, narrowed by
     first name when two winners share a surname, and no other member has
     already taken that district."""
-    want = CONTEST[rec["form"]]
+    want = want or CONTEST[rec["form"]]
     winners = {}
     for key, contest in (sheet or {}).get("contests", {}).items():
         office, _, district = key.partition("|")
@@ -201,6 +209,21 @@ def attach_districts(rec, sheet):
                                 "method": sheet["method"]}
 
 
+def attach_council(rec, seats, source):
+    """Give each council member the district their government's council map
+    names them for, by the attach_districts name rule. A name on the map
+    carries no credentials ("Shayla Lynch, J.D." is Lynch)."""
+    winners = {d: re.sub(r",.*$", "", n) for d, n in (seats or {}).items()}
+    sheet = {"contests": {"COUNCIL|%s" % d: {"winner": n} for d, n in winners.items()}}
+    probe = {"members": rec["members"]}
+    attach_districts(probe, dict(sheet, url=source["url"], election=None, method="map"),
+                     want="COUNCIL")
+    rec["members"] = probe["members"]
+    if "districtsFrom" in probe:
+        rec["districtsFrom"] = {"url": source["url"], "publisher": source["publisher"],
+                                "method": "map"}
+
+
 def full_name(o):
     return re.sub(r"\s+", " ", ("%s %s" % (o.get("first", ""), o.get("last", ""))).strip())
 
@@ -222,8 +245,9 @@ def person(o, role_key, role):
     return rec
 
 
-def build(scrape, cities, counties, fixes=None, results=None):
+def build(scrape, cities, counties, fixes=None, results=None, council_seats=None):
     fixes = NAME_FIXES if fixes is None else fixes
+    council_seats = council_seats or {}
     results = results or {}
     election = (results.get("source") or {}).get("election")
     sheets = {k.lower(): dict(v, election=election)
@@ -293,6 +317,10 @@ def build(scrape, cities, counties, fixes=None, results=None):
                                    role="Council member") for s in council]
             if city.get("unnamedSeats"):
                 rec["unnamedSeats"] = city["unnamedSeats"]
+            if geoid in (council_seats.get("councilSeats") or {}):
+                attach_council(rec, council_seats["councilSeats"][geoid],
+                               {"url": council_seats["councils"][geoid],
+                                "publisher": m["mapPublisher"]})
             # The judge/executive office survives in both merged counties with
             # few duties; it is an elected county office, not a seat on the council.
             officers = judges + officers
@@ -391,7 +419,12 @@ def selftest():
         "url": "r1", "method": "text", "contests": {
             "MAGISTRATE|3": {"winner": "Sammy L. BAKER"},
             "COUNTY COMMISSIONER|1": {"winner": "Ann LEE"}}}}}
-    out = build(scrape, cities, counties, fixes={}, results=results)
+    seats = {"councils": {"21111": "map"},
+             "councilSeats": {"21111": {"7": "BRENT T. ACKERSON", "2": "SHAYLA LYNCH, J.D."}}}
+    out = build(scrape, cities, counties, fixes={}, results=results, council_seats=seats)
+    assert out["21111"]["members"][0]["district"] == "7", out["21111"]
+    assert out["21111"]["districtsFrom"]["url"] == "map"
+    del out["21111"]["members"][0]["district"]
     a = out["21001"]
     assert a["members"][1]["district"] == "3" and a["districtsFrom"]["url"] == "r1", a
     # A shared surname with no shared initial is two people, not one.
@@ -432,7 +465,7 @@ def main():
         selftest()
         return
     out = build(load(SCRAPE), load(CITIES), load(COUNTIES)["features"],
-                results=load(RESULTS))
+                results=load(RESULTS), council_seats=load(SEATS))
     n, members, districted = gate(out)
     text = render(out)
     if args.check:

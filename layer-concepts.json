@@ -90,7 +90,8 @@
     "county-board": {
       "il": "county-board", "ny": ["county-legislature", "county-supervisor"], "ca": "supervisor-district",
       "wi": "county-board", "ia": "county-supervisor", "mi": "county-commissioner", "mn": "county-commissioner",
-      "ok": "county-commissioner", "sc": "county-council", "tn": "county-commissioner", "ar": "quorum-court"
+      "ok": "county-commissioner", "sc": "county-council", "tn": "county-commissioner", "ar": "quorum-court",
+      "ky": "fiscal-court"
     },
     "county-subdivision": {
       "il": "township", "ny": "municipality", "wi": "county-subdivision", "ia": "county-subdivision",
@@ -105,7 +106,7 @@
     },
     "city-council": {
       "il": "ward", "ny": "council", "ca": "supervisor-district", "wi": "aldermanic-district",
-      "ia": "city-ward", "mi": "city-ward"
+      "ia": "city-ward", "mi": "city-ward", "ky": "fiscal-court"
     },
     "voting-precinct": {
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",
