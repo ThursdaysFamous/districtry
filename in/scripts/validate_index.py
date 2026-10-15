@@ -96,9 +96,10 @@ MIN_REGISTER_LAYER = 9
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "in-senate", "county", "in-house", "school-district-unified",
-    "zip-code", "county-subdivision", "municipality", "tribal-government",
-    "police-station", "fire-station", "post-office",
+    "us-house", "in-senate", "county", "in-house", "county-council",
+    "school-district-unified", "zip-code", "county-subdivision",
+    "municipality", "tribal-government", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +110,7 @@ GEOMETRY_FILES = {
     "in-senate-districts.json": (50, 50),  # Indiana Senate districts, pre-built by in/scripts/build_legislative_boundaries.py (2,000-point agreement gate).
     "in-house-districts.json": (100, 100),  # Indiana House districts, pre-built by in/scripts/build_legislative_boundaries.py (2,000-point agreement gate).
     "tribal-areas.json": (1, 1),  # Indiana's tribal land (scripts/build_tribal_areas.py) — one piece of the Pokagon Band of Potawatomi's trust land, which crosses from Michigan. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "in-council-districts.json": (241, 241),  # County council districts in 55 counties and Indianapolis's 25 City-County Council districts, from the Indiana Geographic Information Office's CountyCouncilPolygon layer, built by in/scripts/build_in_council_districts.py.
 }
 
 # file -> minimum key count (officeholder rosters).

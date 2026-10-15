@@ -15,11 +15,11 @@
   "proxy-denied": 1,
   "robots-disallows-this-path": 11,
   "robots-unreadable": 5,
-  "stack-not-token": 7,
+  "stack-not-token": 8,
   "tls-chain": 1,
-  "token-ok": 242,
+  "token-ok": 243,
   "token-refused": 3,
-  "token-refused-and-stack": 23
+  "token-refused-and-stack": 24
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -3883,6 +3883,34 @@
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
+  "www.brownsburg.org": {
+   "host": "www.brownsburg.org",
+   "url": "https://www.brownsburg.org/288/Town-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (ConnectionError) \u2014 not fetched by this client"
+    },
+    "stdlib+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 131358 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "unreadable (ConnectionError)",
+    "stdlib+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "stack-not-token",
+   "note": "requests+token robots.txt unreadable (ConnectionError) \u2014 not fetched by this client; stdlib+token HTTP 200, 131358 bytes; the front door answers the token (HTTP 200, 172096 bytes), so the refusal is this path",
+   "root": {
+    "kind": "ok",
+    "note": "HTTP 200, 172096 bytes"
+   },
+   "callers": {
+    "in/scripts/build_in_city_officials.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.buffalocountywi.gov": {
    "host": "www.buffalocountywi.gov",
    "url": "https://www.buffalocountywi.gov/departments/coroner/",
@@ -6492,6 +6520,25 @@
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
+  "www.schererville.org": {
+   "host": "www.schererville.org",
+   "url": "https://www.schererville.org/council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 27200 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 27200 bytes",
+   "callers": {
+    "in/scripts/build_in_city_officials.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.schuylercounty.org": {
    "host": "www.schuylercounty.org",
    "url": "https://www.schuylercounty.org/elections/voting-locations/",
@@ -6709,6 +6756,41 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.townofplainfield.com": {
+   "host": "www.townofplainfield.com",
+   "url": "https://www.townofplainfield.com/1287/Town-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 218306 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 218306 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "in/scripts/build_in_city_officials.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.twp.northville.mi.us": {
    "host": "www.twp.northville.mi.us",

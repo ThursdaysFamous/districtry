@@ -58,6 +58,9 @@ jobs:
           python3 in/scripts/build_in_county_officials.py --check
           python3 in/scripts/build_in_city_officials.py --check
           python3 in/scripts/build_in_township_officials.py --check
+          # the council district lines name their member through these rosters,
+          # so a refresh that renames a seat must still join every district
+          python3 in/scripts/build_in_council_districts.py --check
           python3 in/scripts/validate_index.py in/index.html
 
       - name: Check for changes

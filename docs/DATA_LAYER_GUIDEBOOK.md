@@ -58,7 +58,7 @@ in the researched-but-unbuilt backlog.
   "iowa": ["iowa-aea", "city-ward", "us-house", "ia-senate", "county", "ia-house", "county-supervisor", "school-district-unified", "school-director-district", "cc-director-district", "county-subdivision", "tribal-government", "municipality", "zip-code", "post-office", "police-station", "fire-station", "school-site", "precinct", "ia-judicial-district", "community-college"],
   "michigan": ["us-house", "mi-senate", "county", "mi-house", "school-district-unified", "school-district-elementary", "county-commissioner", "county-subdivision", "zip-code", "city-ward", "precinct", "municipality", "police-station", "fire-station", "post-office", "mi-court-of-appeals", "mi-circuit-court", "mi-isd", "tribal-government"],
   "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "tribal-government", "municipality", "school-district-secondary", "police-station", "fire-station", "post-office"],
-  "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "indiana": ["us-house", "in-senate", "county", "in-house", "county-council", "school-district-unified", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
@@ -3037,16 +3037,15 @@ trusted.
   "indiana": [
       {
           "id": "in-county-government",
-          "concept": "County council and commissioners",
-          "area": "Indiana — all 92 counties",
+          "concept": "County council districts",
+          "area": "Indiana — 37 of the 92 counties",
           "counties": [],
-          "everyCounty": true,
           "kind": "no-source",
-          "layer": "county",
-          "summary": "The County card lists every member of your county's governing bodies but not which district seat is yours.",
-          "why": "Neither the commissioners' nor the council's district lines are on this app's map yet, so the card lists every seat rather than yours. In Marion County the same is true of the Indianapolis City-County Council.",
-          "wanted": "The commissioner and council district covering the point, and in Marion County the City-County Council district.",
-          "blocker": "NOT A MISSING SOURCE — UNBUILT WORK, and the sources are measured. The names shipped on 2026-10-09: every commissioner and council member in the other 91 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (in/scripts/build_in_county_officials.py). Marion County's 25 City-County Council members and the Mayor of Indianapolis followed on 2026-10-11, from the same archive's 2023 municipal general (in/scripts/build_in_city_officials.py). The district lines are next: the Indiana Geographic Information Office's Data Harvest publishes commissioner districts for 58 counties and council districts for 56 on Administrative_Boundaries_of_Indiana_Current layers 3 and 4 (measured 2026-10-09), including Indianapolis's 25 City-County Council districts, whose 2023 winners are in the same results archive. Commissioner districts are residency districts elected countywide in 90 counties (Lake and St. Joseph elect by district), so in those 90 the list of every commissioner already answers who represents a reader. The counties with no published boundary are the catalogue-sweep route — Vigo County publishes both district layers on its own ArcGIS Online org, which is the shape to test county by county. Nothing here is asked of anybody; it is this instance's own next change."
+          "layer": "county-council",
+          "summary": "In 37 counties the map has no county council district lines, so it cannot say which council seat is yours; the County card lists every member.",
+          "why": "This app draws the council districts counties give the state's mapping office, and these counties gave none or only part. Lake and St. Joseph also elect commissioners by district, and those lines are missing too.",
+          "wanted": "The county council district covering the point in every county, and the commissioner district in Lake and St. Joseph counties.",
+          "blocker": "PARTLY BUILT, 2026-10-15. The names are all shipped: every commissioner and council member in 91 counties from the Indiana Election Division's certified results (in/scripts/build_in_county_officials.py), and Marion County's 25 City-County Council members from the 2023 municipal general (in/scripts/build_in_city_officials.py). The lines for 55 counties are drawn from the Indiana Geographic Information Office's Administrative_Boundaries_of_Indiana_Current layer 4 (CountyCouncilPolygon), Marion's 25 districts among them (in/scripts/build_in_council_districts.py). Measured that day the layer carries 56 counties; Clay files three of its four districts and is left out, and the other 36 file nothing there. Commissioners are elected by the whole county everywhere but Lake and St. Joseph, so no commissioner lines are owed elsewhere; neither county is in the state's commissioner layer (layer 3, 58 counties) or its council layer. The next route is each county's own GIS, one county at a time — Vigo County publishes both district layers on its own ArcGIS Online org — and Lake and St. Joseph first, because both bodies there are elected by district."
       },
       {
           "id": "in-general-assembly-roster",
@@ -3092,9 +3091,9 @@ trusted.
           "kind": "no-source",
           "layer": "municipality",
           "summary": "The City or Town card names the mayor and council only in places over 25,000 people, and not which council seat is yours.",
-          "why": "This app reads the state's election results for Indiana's largest places so far. Three of those are towns whose uncontested seats are on no ballot, and council district lines are not on the map, so the card lists every seat.",
+          "why": "This app names the councils of Indiana's largest places so far, from the state's election results and three towns' own pages. Council district lines are not on the map, so the card lists every seat.",
           "wanted": "The mayor or town council president, the council members and the clerk of each city and town, and the council district covering the point.",
-          "blocker": "PARTLY BUILT. On 2026-10-11 the mayor and council of 36 of the 39 places the Census counted at 25,000 or more shipped, each the winner of that seat's most recent election in the Election Division's certified 2023 municipal general (in/scripts/build_in_city_officials.py). The other three are towns — Plainfield (no race in the 2023 results at all), Brownsburg and Schererville (three wards each) — because a town holds no general election for an uncontested seat, so those councils need the towns' own pages. The smaller 527 places are the same source's next step. UNBUILT WORK WITH A MEASURED SOURCE. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division: its 2023 municipal returns name 1,327 officeholders, including 428 districted city council seats. The COUNCIL DISTRICTS THEMSELVES have no statewide geometry, so a districted council seat cannot be placed until a city or its county publishes wards — and under Adam's ruling of 2026-09-21, the state precinct fabric may CHECK a city-published ward boundary and never stand in for one. The roster half is buildable now; the ward half is per-city work."
+          "blocker": "PARTLY BUILT. On 2026-10-11 the mayor and council of 36 of the 39 places the Census counted at 25,000 or more shipped, each the winner of that seat's most recent election in the Election Division's certified 2023 municipal general (in/scripts/build_in_city_officials.py). The other three are towns — Plainfield (no race in the 2023 results at all), Brownsburg and Schererville (three wards each) — because a town holds no general election for an uncontested seat; since 2026-10-15 those three councils are read from each town's own council page and dated to the read, so all 39 places over 25,000 are named. The smaller 527 places are the same source's next step. UNBUILT WORK WITH A MEASURED SOURCE. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division: its 2023 municipal returns name 1,327 officeholders, including 428 districted city council seats. The COUNCIL DISTRICTS THEMSELVES have no statewide geometry, so a districted council seat cannot be placed until a city or its county publishes wards — and under Adam's ruling of 2026-09-21, the state precinct fabric may CHECK a city-published ward boundary and never stand in for one. The roster half is buildable now; the ward half is per-city work."
       }
   ],
   "northcarolina": [
@@ -4506,7 +4505,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 321 hosts** (2026-09-12; 92 measured or re-measured since — see below).
+**WHAT IT FOUND, across 324 hosts** (2026-09-12; 92 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -4518,9 +4517,9 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 242 | the districtry token gets a full page on the plain `requests` stack |
-| `token-refused-and-stack` | 23 | refuses the token on both stacks, serves stdlib + Chrome |
-| `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
+| `token-ok` | 243 | the districtry token gets a full page on the plain `requests` stack |
+| `token-refused-and-stack` | 24 | refuses the token on both stacks, serves stdlib + Chrome |
+| `stack-not-token` | 8 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
 | `all-refused` / `challenged` | 12 | refuses or challenges all four; a captcha is never answered |
 | `answers-nothing` / `path-answers-nothing` | 11 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
@@ -4531,11 +4530,11 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**26 HOSTS REFUSE THE TOKEN AND 242 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
---inventory` prints it on this tree: 44 files send a browser string; 21 reach at least one
+**27 HOSTS REFUSE THE TOKEN AND 243 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+--inventory` prints it on this tree: 45 files send a browser string; 22 reach at least one
 host that genuinely refuses the token, **2 reach only hosts that serve the token a full
 page, and 21 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 231 of the 321 measured hosts are still reached by such a caller.
+the `requests` stack); 234 of the 324 measured hosts are still reached by such a caller.
 The 101 and 62 those first two figures read until 2026-10-01 were the state before SIXTY
 scrapers were switched onto our own token in one change, each of them re-measured at the
 pages it actually fetches. The 2 that remain are held on purpose: both follow links out of

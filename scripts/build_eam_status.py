@@ -1688,7 +1688,10 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("in-senate", "in-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # Since 2026-10-15 the council districts of 55 counties are drawn
+        # (Marion's are the City-County Council's 25); COUNTY_MAPS_DRAWN reads
+        # which from the shipped file.
+        "county-government": depth("county-council"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         # UNIFIED ALONE TILES THE STATE: TIGERweb's elementary and secondary
@@ -2055,7 +2058,9 @@ def _in_county_maps_owed(B):
     map. Daviess labels its four district seats only as "County Council
     Member", which is why the test is "not at large" rather than "says
     District". County commissioners are elected by the whole county from
-    residency districts (IC 36-2-2-4) and owe none. Marion County is governed by
+    residency districts (IC 36-2-2-4) and owe none, except in Lake and St.
+    Joseph, which elect them by district; both councils are elected by district
+    too, so those two counties are owed a map either way. Marion County is governed by
     the Indianapolis City-County Council, elected from 25 districts, and is not
     in the council file.
     """
@@ -2072,10 +2077,26 @@ def _in_county_maps_owed(B):
     return owed
 
 
-# A state is listed here only while its county-government level draws NO
-# district: where an entry draws some, which counties it draws has to be
-# measured, and the audit below fails until somebody does.
+def _in_county_maps_drawn(B):
+    """Indiana counties whose council districts the app draws.
+
+    Read off the shipped district file itself (in/scripts/
+    build_in_council_districts.py), so a county counts as drawn exactly when a
+    reader can click inside one of its districts. Marion's features are the
+    Indianapolis City-County Council's 25 districts.
+    """
+    rel = "in/data/app/in-council-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    return {B.slug_of(f["properties"]["county"]) for f in doc["features"]}
+
+
+# A state is listed in COUNTY_MAPS_OWED while some county names a body elected
+# by district. Where its county-government entry draws a layer, which counties
+# that layer draws has to be MEASURED, by a function in COUNTY_MAPS_DRAWN, and
+# the audit below fails until somebody writes one.
 COUNTY_MAPS_OWED = {"ky": _ky_county_maps_owed, "in": _in_county_maps_owed}
+COUNTY_MAPS_DRAWN = {"in": _in_county_maps_drawn}
 
 
 def county_maps_owed(tag, counties, B):
@@ -2084,12 +2105,21 @@ def county_maps_owed(tag, counties, B):
     if derive is None:
         return set()
     entry = ANSWERS[tag]["county-government"]
-    if entry.verdict != "depth" or entry.layers:
-        fail("%s: the county-map test assumes this state draws no county "
-             "district, and its county-government entry now names %s. Measure "
-             "which counties that layer draws and narrow COUNTY_MAPS_OWED."
-             % (tag, ", ".join(entry.layers) or entry.verdict))
-    owed = derive(B)
+    drawn = set()
+    if entry.verdict != "depth":
+        fail("%s: the county-map test reads a depth entry, and this state's "
+             "county-government entry is %s" % (tag, entry.verdict))
+    if entry.layers:
+        measure = COUNTY_MAPS_DRAWN.get(tag)
+        if measure is None:
+            fail("%s: the county-government entry now names %s. Measure which "
+                 "counties that layer draws in COUNTY_MAPS_DRAWN."
+                 % (tag, ", ".join(entry.layers)))
+        drawn = measure(B)
+    elif tag in COUNTY_MAPS_DRAWN:
+        fail("%s: COUNTY_MAPS_DRAWN measures drawn counties and the "
+             "county-government entry names no layer" % tag)
+    owed = derive(B) - drawn
     known = {B.slug_of(n) for n in counties.get(tag, {})}
     stray = sorted(owed - known)
     if stray:
@@ -2207,21 +2237,24 @@ WARD_MAPS = {
         owed={"2148006": "Louisville Metro", "2148000": "Louisville",
               "2146027": "Lexington-Fayette"},
         declared={"2148006", "2148000", "2146027"}),
+    # Indianapolis's council districts are the City-County Council's, drawn by
+    # the County Council District layer for Marion County.
     "in": dict(
-        drawn=set(),
+        drawn={"1836003"},
         owed={"1801468": "Anderson", "1805860": "Bloomington",
+              "1808416": "Brownsburg",
               "1810342": "Carmel", "1814734": "Columbus",
               "1820728": "Elkhart", "1822000": "Evansville",
               "1823278": "Fishers", "1825000": "Fort Wayne",
               "1825450": "Franklin", "1828386": "Goshen",
-              "1829898": "Greenwood", "1836003": "Indianapolis",
+              "1829898": "Greenwood",
               "1838358": "Jeffersonville", "1840392": "Kokomo",
               "1840788": "Lafayette", "1842426": "Lawrence",
               "1846908": "Marion", "1848528": "Merrillville",
               "1848798": "Michigan City", "1849932": "Mishawaka",
               "1851876": "Muncie", "1852326": "New Albany",
-              "1854180": "Noblesville", "1861092": "Portage",
-              "1864260": "Richmond", "1871000": "South Bend",
+              "1854180": "Noblesville", "1860246": "Plainfield", "1861092": "Portage",
+              "1864260": "Richmond", "1868220": "Schererville", "1871000": "South Bend",
               "1875428": "Terre Haute", "1878326": "Valparaiso",
               "1882700": "Westfield", "1882862": "West Lafayette",
               "1886372": "Zionsville"}),
