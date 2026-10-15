@@ -1460,20 +1460,6 @@ trusted.
       "wanted": "Park district boundaries — from the county or from the districts. The trustee lists are already in hand."
     },
     {
-      "id": "scott-county-commissioners",
-      "kind": "no-source",
-      "concept": "County commissioners",
-      "area": "Scott County",
-      "layer": "county-board",
-      "counties": [
-        "scott"
-      ],
-      "summary": "Scott County's three commissioners aren't named. They're elected county-wide, so there are no districts to draw.",
-      "why": "The county's own page renders its member list through a widget that returns nothing, and election results name who won a race rather than who holds the seat today.",
-      "blocker": "Researched 8 Aug 2026, closing an absence that had NO record at all. AT-LARGE PROVEN from the county's own results portal at results.gbsvote.com, which names the county clerk as Election Authority (Greene l_id=11, Morgan l_id=16, Scott l_id=19): the 8 Nov 2022 GENERAL ELECTION, marked ** OFFICIAL RESULTS **, carries \"FOR COUNTY COMMISSIONER / 10 of 10 precincts reporting / Vote for ( 1 )\" (John D. Simmons), and the 19 Mar 2024 PRIMARY, also OFFICIAL, repeats it for both parties (Thomas L. Peterson, Republican). The whole county votes for one seat at a time; the only \"DISTRICT\" strings on the 2022 canvass are the Fifteenth Congressional, One Hundredth Representative and Fiftieth Legislative districts. So there is no geometry to seek and none should be invented. scottcoil.gov/commissioners publishes the office phone (217-742-5532) and commissioners@scottcoil.gov but renders the members themselves through a Munibit \"People\" widget whose /api/public/mwjsPeople endpoint returns HTTP 500 without the page's own parameters, and the Internet Archive preserved the same empty shell. CORRECTED 2026-08-08, hours after this record first shipped: the claim above that the names are unreachable was WRONG, and the source that disproves it is the very one cited for the board form. The county's results portal names the winner of every commissioner contest in plain HTML — Robert L. Schafer (R) in Nov 2020 and John D. Simmons (R) in Nov 2022, both on OFFICIAL canvasses; Thomas L. Peterson (R) in Nov 2024. Three separate patterns of mine missed them, not the data: the office is headed \"FOR COUNTY COMMISSIONER\" in recent years but plain \"COUNTY COMMISSIONER\" in 2020 and abbreviated \"COUNTY COMM\" on Morgan's 2020 page, and each time the fix was in the reader. WHAT IS ACTUALLY MISSING is narrower and does not go away with better parsing: election returns record who WON a contest, never who holds the seat today. A mid-term vacancy filled by APPOINTMENT appears in no return anywhere, and the staggered six-year, one-per-general structure that turns three contests into three sitting members is an INFERENCE from the pattern, not something the county states. Publishing these three unconfirmed would be precisely the guess the honesty rules forbid, so the ask became a confirmation rather than a request for a roster. ASKED 2026-08-08: confirm those three, name the chairman, correct the term assumption.",
-      "wanted": "Confirmation of which three commissioners are serving now, and which of them chairs the board. No map needed."
-    },
-    {
       "id": "st-clair-board-contact",
       "concept": "County board members",
       "area": "St. Clair County",
@@ -4456,6 +4442,17 @@ the parameters it sends, and in Lansing's case a read-only key it hands to every
 visitor.** A person loading the page in a browser saw the names. Our check asked
 the feed a question the page never asks.
 
+**SCOTT IS CLOSED (2026-10-15).** Its three commissioners ship on the County card,
+read each week by `scripts/il_county_commissioners_scraper.py` through the feed the
+page itself calls: the scraper takes the feed's address and parameters off the page on
+every run rather than pinning them, and checks that the office telephone in the page's
+own text matches the one the feed gives for every member. The names agree with the
+official canvasses this record had already cited (Schafer 2020, Simmons 2022, Peterson
+2024), and the feed is what settles the two things the canvasses could not: that those
+three are serving now, and that Robert Schafer is the chairman. The
+`scott-county-commissioners` gap record is retired. The letter of 2026-10-06 is still
+out; a reply is a cross-check now rather than the only route.
+
 **The standing check, for every new reader and before any record or letter calls a
 page unreadable** (Adam, 2026-10-06):
 
@@ -4508,7 +4505,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 321 hosts** (2026-09-12; 92 measured or re-measured since — see below).
+**WHAT IT FOUND, across 322 hosts** (2026-09-12; 93 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -4520,7 +4517,7 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 242 | the districtry token gets a full page on the plain `requests` stack |
+| `token-ok` | 243 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 23 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
@@ -4533,11 +4530,11 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**26 HOSTS REFUSE THE TOKEN AND 242 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+**26 HOSTS REFUSE THE TOKEN AND 243 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
 --inventory` prints it on this tree: 44 files send a browser string; 21 reach at least one
 host that genuinely refuses the token, **2 reach only hosts that serve the token a full
 page, and 21 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 231 of the 321 measured hosts are still reached by such a caller.
+the `requests` stack); 232 of the 322 measured hosts are still reached by such a caller.
 The 101 and 62 those first two figures read until 2026-10-01 were the state before SIXTY
 scrapers were switched onto our own token in one change, each of them re-measured at the
 pages it actually fetches. The 2 that remain are held on purpose: both follow links out of
