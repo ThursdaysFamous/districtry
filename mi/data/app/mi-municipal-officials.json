@@ -1631,6 +1631,44 @@
   "sourceUrl": "https://dearborn.gov/government/city-council/meet-city-council",
   "readAt": "2026-10-01"
  },
+ "2621020": {
+  "name": "Dearborn Heights",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Hassan Saab",
+    "role": "Council Chair"
+   },
+   {
+    "name": "Bob Constan",
+    "role": "Council Chair Pro Tem"
+   },
+   {
+    "name": "Margaret King",
+    "role": "Council Member"
+   },
+   {
+    "name": "Nancy Bryer",
+    "role": "Council Member"
+   },
+   {
+    "name": "Denise Malinowski Maxwell",
+    "role": "Council Member"
+   },
+   {
+    "name": "Tom Wencel",
+    "role": "Council Member"
+   },
+   {
+    "name": "Mohammed Mawla",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://www.dearbornheightsmi.gov/231/City-Council",
+  "readAt": "2026-10-15"
+ },
  "2624120": {
   "name": "East Lansing",
   "kind": "city",
