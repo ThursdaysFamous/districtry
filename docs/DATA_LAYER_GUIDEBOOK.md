@@ -1460,20 +1460,6 @@ trusted.
       "wanted": "Park district boundaries — from the county or from the districts. The trustee lists are already in hand."
     },
     {
-      "id": "scott-county-commissioners",
-      "kind": "no-source",
-      "concept": "County commissioners",
-      "area": "Scott County",
-      "layer": "county-board",
-      "counties": [
-        "scott"
-      ],
-      "summary": "Scott County's three commissioners aren't named. They're elected county-wide, so there are no districts to draw.",
-      "why": "The county's own page renders its member list through a widget that returns nothing, and election results name who won a race rather than who holds the seat today.",
-      "blocker": "Researched 8 Aug 2026, closing an absence that had NO record at all. AT-LARGE PROVEN from the county's own results portal at results.gbsvote.com, which names the county clerk as Election Authority (Greene l_id=11, Morgan l_id=16, Scott l_id=19): the 8 Nov 2022 GENERAL ELECTION, marked ** OFFICIAL RESULTS **, carries \"FOR COUNTY COMMISSIONER / 10 of 10 precincts reporting / Vote for ( 1 )\" (John D. Simmons), and the 19 Mar 2024 PRIMARY, also OFFICIAL, repeats it for both parties (Thomas L. Peterson, Republican). The whole county votes for one seat at a time; the only \"DISTRICT\" strings on the 2022 canvass are the Fifteenth Congressional, One Hundredth Representative and Fiftieth Legislative districts. So there is no geometry to seek and none should be invented. scottcoil.gov/commissioners publishes the office phone (217-742-5532) and commissioners@scottcoil.gov but renders the members themselves through a Munibit \"People\" widget whose /api/public/mwjsPeople endpoint returns HTTP 500 without the page's own parameters, and the Internet Archive preserved the same empty shell. CORRECTED 2026-08-08, hours after this record first shipped: the claim above that the names are unreachable was WRONG, and the source that disproves it is the very one cited for the board form. The county's results portal names the winner of every commissioner contest in plain HTML — Robert L. Schafer (R) in Nov 2020 and John D. Simmons (R) in Nov 2022, both on OFFICIAL canvasses; Thomas L. Peterson (R) in Nov 2024. Three separate patterns of mine missed them, not the data: the office is headed \"FOR COUNTY COMMISSIONER\" in recent years but plain \"COUNTY COMMISSIONER\" in 2020 and abbreviated \"COUNTY COMM\" on Morgan's 2020 page, and each time the fix was in the reader. WHAT IS ACTUALLY MISSING is narrower and does not go away with better parsing: election returns record who WON a contest, never who holds the seat today. A mid-term vacancy filled by APPOINTMENT appears in no return anywhere, and the staggered six-year, one-per-general structure that turns three contests into three sitting members is an INFERENCE from the pattern, not something the county states. Publishing these three unconfirmed would be precisely the guess the honesty rules forbid, so the ask became a confirmation rather than a request for a roster. ASKED 2026-08-08: confirm those three, name the chairman, correct the term assumption.",
-      "wanted": "Confirmation of which three commissioners are serving now, and which of them chairs the board. No map needed."
-    },
-    {
       "id": "st-clair-board-contact",
       "concept": "County board members",
       "area": "St. Clair County",
@@ -1926,6 +1912,7 @@ trusted.
     "covers": [
       "county-government"
     ],
+    "ask": {"who": "Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov)", "asked": "2026-10-07", "outcome": "pending"},
     "kind": "no-source",
     "layer": "county-legislature",
     "summary": "In most of the state the County card names nobody. Five counties are answered; in the other 52 outside the city the card tells you which county you are in and not who governs it.",
@@ -1942,6 +1929,7 @@ trusted.
       "local-government",
       "sub-county-government"
     ],
+    "ask": {"who": "Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov)", "asked": "2026-10-07", "outcome": "pending"},
     "kind": "no-source",
     "layer": "municipality",
     "summary": "Outside New York City the City or Town card names nobody. It tells you which city, town or village you are in, and not who sits on its board or council.",
@@ -3333,7 +3321,7 @@ trusted.
             "summary": "In some districts the Quorum Court District card names no justice of the peace, because the person elected there in 2024 has since left, or because no one won, or because the names cannot be matched with certainty.",
             "why": "No Arkansas government publishes who sits for each district statewide. Names come from a county's own site or the county association's 2024 results, and neither says who replaced a justice who left.",
             "wanted": "Each county's justices of the peace listed by district on the county's own website, or one statewide list by district from a state office.",
-            "blocker": "Measured 2026-10-13. THE DISTRICTS are built: the state's mapping office draws all 775 (gis.arkansas.gov Boundaries layer 19), and every county's count matches the seats state law sets. THE COUNTY JUDGES are named in all 75 counties, from the state courts' directory, except in five counties (Boone, Cleveland, Desha, Jefferson, Sevier) where that directory names an earlier judge and a third source was read. THE JUSTICES: the association's county pages list all 775 names, three of them vacant, unnumbered. Every county's own website was surveyed the same day with robots.txt read first: 37 counties number their justices; 20 of those are complete, current and name the association's people, and they are wired (218 districts). The other 17 are held back because a seat is blank or listed without a district (Cleburne, Drew, Jackson), the list is headed with an earlier term (Crittenden, Cross, Poinsett, White), the county and the association name a different person for a seat (Faulkner, Greene, Mississippi, Perry, Pope, Sevier) or spell a surname differently and nothing has settled which is right (Boone, Hot Spring, Miller, Van Buren). Nine counties publish their justices with no districts and 29 could not be read: 20 have no official website, 5 block or challenge this client (Benton, Franklin, Grant, Jefferson, Washington), and 4 have a robots.txt that refuses us or cannot be read (Ashley, Calhoun, Craighead, Montgomery). Everywhere else a district's justice comes from the association's 2024 general election results for justices of the peace (updated 17 December 2024), which give the winner of all 775 districts, on the operator's ruling of 2026-10-13 (\"Use 2024 list\"): a winner is named only while the association's current list for the county still includes that person, re-checked every week. On the 20 counties that number their own, that rule named 203 districts and 202 agreed with the county; the other was Carroll District 1, whose 2024 winner the county's own page shows appointed to District 2 since, which is why the county's own list wins wherever it exists. Measured 2026-10-13 across all 75 counties, 42 of the 2024 winners are no longer on the current list, 5 districts had no winner (Franklin 4, Howard 7, Union 6, Van Buren 1, White 13), and 4 winners cannot be matched with certainty (Greene 4, Phillips 2, Poinsett 1, Searcy 4, each a different first name under the same surname). With the county lists, the cards name 737 of the 775 districts. EVERY ONE OF THESE SEATS IS ON THE 3 NOVEMBER 2026 BALLOT and the new terms start on 1 January 2027; on the operator's ruling of 2026-10-13 every county is re-read in January. Arkansas is dark as of this record. Published 2026-10-15; the weekly job that re-applies the rule has not completed, because the association's site answers GitHub's servers with HTTP 403, so the rule was last applied on 2026-10-13 and the cards say that date."
+            "blocker": "Measured 2026-10-13. THE DISTRICTS are built: the state's mapping office draws all 775 (gis.arkansas.gov Boundaries layer 19), and every county's count matches the seats state law sets. THE COUNTY JUDGES are named in all 75 counties, from the state courts' directory, except in five counties (Boone, Cleveland, Desha, Jefferson, Sevier) where that directory names an earlier judge and a third source was read. THE JUSTICES: the association's county pages list all 775 names, three of them vacant, unnumbered. Every county's own website was surveyed the same day with robots.txt read first: 37 counties number their justices; 20 of those are complete, current and name the association's people, and they are wired (218 districts). The other 17 are held back because a seat is blank or listed without a district (Cleburne, Drew, Jackson), the list is headed with an earlier term (Crittenden, Cross, Poinsett, White), the county and the association name a different person for a seat (Faulkner, Greene, Mississippi, Perry, Pope, Sevier) or spell a surname differently and nothing has settled which is right (Boone, Hot Spring, Miller, Van Buren). Nine counties publish their justices with no districts and 29 could not be read: 20 have no official website, 5 block or challenge this client (Benton, Franklin, Grant, Jefferson, Washington), and 4 have a robots.txt that refuses us or cannot be read (Ashley, Calhoun, Craighead, Montgomery). Everywhere else a district's justice comes from the association's 2024 general election results for justices of the peace (updated 17 December 2024), which give the winner of all 775 districts, on the operator's ruling of 2026-10-13 (\"Use 2024 list\"): a winner is named only while the association's current list for the county still includes that person, re-checked every week. On the 20 counties that number their own, that rule named 203 districts and 202 agreed with the county; the other was Carroll District 1, whose 2024 winner the county's own page shows appointed to District 2 since, which is why the county's own list wins wherever it exists. Measured 2026-10-13 across all 75 counties, 42 of the 2024 winners are no longer on the current list, 5 districts had no winner (Franklin 4, Howard 7, Union 6, Van Buren 1, White 13), and 4 winners cannot be matched with certainty (Greene 4, Phillips 2, Poinsett 1, Searcy 4, each a different first name under the same surname). With the county lists, the cards name 737 of the 775 districts. EVERY ONE OF THESE SEATS IS ON THE 3 NOVEMBER 2026 BALLOT and the new terms start on 1 January 2027; on the operator's ruling of 2026-10-13 every county is re-read in January. Published 2026-10-15; the weekly job that re-applies the rule has not completed, because the association's site answers GitHub's servers with HTTP 403, so the rule was last applied on 2026-10-13 and the cards say that date. A letter to the association asking it to let the weekly reader in, and to list each justice's district on its county pages, is NOT YET ASKED — DRAFTED 2026-10-15 (docs/ASK_DRAFTS.md, Ask ar-aac-county-pages), on the operator's choice of the same day."
       },
       {
             "id": "ar-municipal-officeholders",
@@ -4454,6 +4442,17 @@ the parameters it sends, and in Lansing's case a read-only key it hands to every
 visitor.** A person loading the page in a browser saw the names. Our check asked
 the feed a question the page never asks.
 
+**SCOTT IS CLOSED (2026-10-15).** Its three commissioners ship on the County card,
+read each week by `scripts/il_county_commissioners_scraper.py` through the feed the
+page itself calls: the scraper takes the feed's address and parameters off the page on
+every run rather than pinning them, and checks that the office telephone in the page's
+own text matches the one the feed gives for every member. The names agree with the
+official canvasses this record had already cited (Schafer 2020, Simmons 2022, Peterson
+2024), and the feed is what settles the two things the canvasses could not: that those
+three are serving now, and that Robert Schafer is the chairman. The
+`scott-county-commissioners` gap record is retired. The letter of 2026-10-06 is still
+out; a reply is a cross-check now rather than the only route.
+
 **The standing check, for every new reader and before any record or letter calls a
 page unreadable** (Adam, 2026-10-06):
 
@@ -4506,7 +4505,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 321 hosts** (2026-09-12; 92 measured or re-measured since — see below).
+**WHAT IT FOUND, across 322 hosts** (2026-09-12; 93 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -4518,7 +4517,7 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 242 | the districtry token gets a full page on the plain `requests` stack |
+| `token-ok` | 243 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 23 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
@@ -4531,11 +4530,11 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**26 HOSTS REFUSE THE TOKEN AND 242 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+**26 HOSTS REFUSE THE TOKEN AND 243 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
 --inventory` prints it on this tree: 44 files send a browser string; 21 reach at least one
 host that genuinely refuses the token, **2 reach only hosts that serve the token a full
 page, and 21 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 231 of the 321 measured hosts are still reached by such a caller.
+the `requests` stack); 232 of the 322 measured hosts are still reached by such a caller.
 The 101 and 62 those first two figures read until 2026-10-01 were the state before SIXTY
 scrapers were switched onto our own token in one change, each of them re-measured at the
 pages it actually fetches. The 2 that remain are held on purpose: both follow links out of

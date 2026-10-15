@@ -648,6 +648,31 @@
   "sourceUrl": "https://www.schuylercounty.org/county-board/county-board-members/",
   "structure": "7 members elected countywide"
  },
+ "SCOTT": {
+  "county": "Scott County",
+  "members": [
+   {
+    "name": "John Simmons",
+    "role": "Commissioner"
+   },
+   {
+    "name": "Robert Schafer",
+    "role": "Chairman"
+   },
+   {
+    "name": "Tom Peterson",
+    "role": "Commissioner"
+   }
+  ],
+  "office": {
+   "address": "35 E. Market St., Winchester, IL 62694",
+   "email": "commissioners@scottcoil.gov",
+   "label": "Scott County Commissioners",
+   "phone": "217-742-5532"
+  },
+  "sourceUrl": "https://www.scottcoil.gov/commissioners",
+  "structure": "Commission form — 3 commissioners elected countywide"
+ },
  "UNION": {
   "county": "Union County",
   "members": [

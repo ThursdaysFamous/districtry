@@ -4091,7 +4091,7 @@ makes about the county against the county.**
 | Johnson | 3 commissioners | the county has no website at all, as its Clerk stated on 21 July 2026 | 21 July 2026, answered the same day; 5 and 16 August, unanswered |
 | Perry | 3 commissioners | the county's site turns away automated visits | none |
 | Pope | unknown | the web address serves a template page carrying no county information, and the clerk's domain is mail-only with no website behind it | none |
-| Scott | 3 commissioners | the county's own page renders its member list through a widget that returns nothing | 19 July 2026, answered 20 July by the State's Attorney's office about the county seal |
+| Scott — **CLOSED 2026-10-15** | 3 commissioners | nothing now: the page's widget reads a feed that answers when asked the page's way, and all three ship from it | 19 July 2026, answered 20 July by the State's Attorney's office about the county seal |
 
 **Why certified returns are not the answer, which is worth saying because this project
 builds a great deal from them.** Every one of these five has readable certified canvasses —
@@ -4267,6 +4267,13 @@ documented pattern among Illinois clerks and is why no site could be read.
 > https://districtry.com/il/
 
 ### Scott County Clerk — `countyclerk@scottcoil.gov`
+
+**CLOSED 2026-10-15 WITHOUT A REPLY, AND THE LETTER'S CENTRAL CLAIM WAS WRONG.** The
+members page does not come back empty: its widget fills the list from the county's own
+people feed, and that feed answers when called with the parameters the page carries. All
+three commissioners, with Robert Schafer as chairman, now ship from it on the County card.
+Do not send a follow-up; if the Clerk replies, the reply is a cross-check and the correction
+above is owed in the answer.
 
 The narrowest of the five: the county has a page for this and it comes back empty. This
 office was written to on 19 July 2026 about the county seal and answered the next day by
@@ -7403,3 +7410,94 @@ found one error of ours.
   address link and the signature link, although each link's target was right.
 - The cross-check dates are promises. If the operator wants them kept, they need a reminder
   routine; none exists yet (offered to the operator 2026-10-13).
+
+## Ask ar-aac-county-pages — Association of Arkansas Counties: a way for our weekly program to read the county pages, and each justice's district
+
+> **NOT YET ASKED — DRAFTED 2026-10-15**, to Christy L. Smith, Communications Director, at
+> `csmith@arcounties.org`, the address beside her name and title on the association's own staff
+> page (`arcounties.org/about-us/staff/`, read 2026-10-15 after its robots.txt, at the 20 seconds
+> between requests it asks for; the page hides every address behind Cloudflare's e-mail protection,
+> which a browser decodes for every visitor). The contact page carries a street address and
+> telephone and no e-mail, and the staff page names no web or data contact, so the letter goes to
+> the person whose office runs the association's publications and asks her to pass it on if the
+> site's security is somebody else's (the staff page also lists a cyber and network security
+> engineer, and the site credits a web vendor). Adam chose "Draft letter" on 2026-10-15, the day
+> Arkansas went live. The mailbox was searched the same day for any message to, from or copying
+> `arcounties.org`, for the association's name, and for "quorum court" and "justice of the peace":
+> none. On send, record `ASKED <date>` in gap `ar-quorum-court` and in `ar/WATCH.md`.
+
+**Why this is asked.** Arkansas's map names every county judge and the justice of the peace in 737
+of 775 quorum court districts, and the justices' names come from the association's 75 county pages
+(and, for districts, from the county's own site or the association's 2024 general election
+results). A weekly job is meant to re-read those pages. From GitHub's servers, where that job runs,
+`arcounties.org` answers HTTP 403 on every request, on both runs so far (2026-10-14 and 2026-10-15),
+while it serves this project's reads from elsewhere normally; that refusal is an access control and
+is not worked around, so the shipped names are as read on 2026-10-13 and every card says so. Every
+county judge and justice is on the 3 November 2026 ballot and the new terms start on 1 January 2027,
+so without a reader the association lets in, the January update is a person's run. The site is
+fronted by Cloudflare, so the refusal is likely a setting that blocks data-centre traffic in
+general rather than a decision about this project, and the letter says so. The second question is
+the one that would close gap `ar-quorum-court`: the county pages list each court's justices
+without saying who sits for which district, and no Arkansas government publishes that statewide.
+Three answers to the first all work (permission, a file, a no), and a no to the second is a
+complete answer too.
+
+> Subject: Reading your county pages for a free Arkansas district map
+>
+> Dear Ms. Smith,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
+> a point on a map, or type an address, and see every district that covers it and who represents
+> them there. Our Arkansas map went live this week at https://districtry.com/ar/. For quorum
+> courts, it draws every justice of the peace district from the Arkansas GIS Office's map, and the
+> names of each county's judge and justices come from your county pages, with your 2024 general
+> election results showing which district each justice was elected from. Every card credits the
+> Association and links back to the county's page.
+>
+> I am writing with two questions.
+>
+> First, a small program reads your county pages once a week to keep the names current. It
+> identifies itself by name, reads only the county list and the 75 county pages, and waits the 20
+> seconds between requests that your site asks for. When it runs from GitHub's servers, where our
+> scheduled programs run, your site refuses every request (an HTTP 403), so the program stops
+> and reads nothing. We will not try to get around that. The names on the map now were read
+> on 13 October from a computer your site answered normally, and each card shows that date. I
+> expect the block is a general security setting rather than anything aimed at us, but it matters
+> more than usual this year, because every county judge and justice of the peace is on the
+> November ballot. Is there a way for us to read the county pages that you are comfortable with?
+> Any of these would work:
+>
+> 1. permission for our weekly program to read the county pages from GitHub's servers (it can send
+>    whatever identifying name or header suits you);
+> 2. a file of each county's elected officials posted somewhere outside that check; or
+> 3. a no, which is a perfectly good answer. We would then update the names by hand after the new
+>    terms start in January.
+>
+> Second, your county pages list each county's justices of the peace without saying which district
+> each one represents. Where a county's own website numbers its justices we use that, and elsewhere
+> we use your 2024 results, but that leaves some districts blank wherever a justice has been
+> appointed since. Would the Association consider adding the district beside each justice's name?
+> As far as we can find, no one publishes that for the whole state, and it would let us name the
+> justice in nearly every district we now leave blank. If it is not practical, a "no" is a
+> genuinely useful answer.
+>
+> We show only each official's name and office, never a home address or personal contact details.
+> If the site's security or the county pages are looked after by someone else, I would be grateful
+> if you could pass this along.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** Permission: recorded in `ar/scripts/build_ar_county_officials.py`
+with its date and whatever identifier the association names, and the weekly job re-reads the county
+pages itself again; nothing else changes, because the robots.txt read and the 20-second pace stay.
+A file: the builder reads it instead, after that host's robots.txt, and the county pages stay the
+check. A no: the January re-read stays a person's run from a computer the site serves, as
+`ar/WATCH.md` already says. Districts added to the county pages: the builder takes each justice's
+district from the association's own list, a district the county's own site also numbers must agree
+with it or the build fails as it does today, and the 2024 results rule is retired wherever the
+association gives a district. A no to that: recorded in gap `ar-quorum-court` with its date, and
+the counties' own sites and the next election's results stay the route.
