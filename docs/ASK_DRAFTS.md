@@ -4091,7 +4091,7 @@ makes about the county against the county.**
 | Johnson | 3 commissioners | the county has no website at all, as its Clerk stated on 21 July 2026 | 21 July 2026, answered the same day; 5 and 16 August, unanswered |
 | Perry | 3 commissioners | the county's site turns away automated visits | none |
 | Pope | unknown | the web address serves a template page carrying no county information, and the clerk's domain is mail-only with no website behind it | none |
-| Scott | 3 commissioners | the county's own page renders its member list through a widget that returns nothing | 19 July 2026, answered 20 July by the State's Attorney's office about the county seal |
+| Scott — **CLOSED 2026-10-15** | 3 commissioners | nothing now: the page's widget reads a feed that answers when asked the page's way, and all three ship from it | 19 July 2026, answered 20 July by the State's Attorney's office about the county seal |
 
 **Why certified returns are not the answer, which is worth saying because this project
 builds a great deal from them.** Every one of these five has readable certified canvasses —
@@ -4267,6 +4267,13 @@ documented pattern among Illinois clerks and is why no site could be read.
 > https://districtry.com/il/
 
 ### Scott County Clerk — `countyclerk@scottcoil.gov`
+
+**CLOSED 2026-10-15 WITHOUT A REPLY, AND THE LETTER'S CENTRAL CLAIM WAS WRONG.** The
+members page does not come back empty: its widget fills the list from the county's own
+people feed, and that feed answers when called with the parameters the page carries. All
+three commissioners, with Robert Schafer as chairman, now ship from it on the County card.
+Do not send a follow-up; if the Clerk replies, the reply is a cross-check and the correction
+above is owed in the answer.
 
 The narrowest of the five: the county has a page for this and it comes back empty. This
 office was written to on 19 July 2026 about the county seal and answered the next day by

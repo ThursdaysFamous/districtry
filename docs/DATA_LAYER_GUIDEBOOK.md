@@ -1460,20 +1460,6 @@ trusted.
       "wanted": "Park district boundaries — from the county or from the districts. The trustee lists are already in hand."
     },
     {
-      "id": "scott-county-commissioners",
-      "kind": "no-source",
-      "concept": "County commissioners",
-      "area": "Scott County",
-      "layer": "county-board",
-      "counties": [
-        "scott"
-      ],
-      "summary": "Scott County's three commissioners aren't named. They're elected county-wide, so there are no districts to draw.",
-      "why": "The county's own page renders its member list through a widget that returns nothing, and election results name who won a race rather than who holds the seat today.",
-      "blocker": "Researched 8 Aug 2026, closing an absence that had NO record at all. AT-LARGE PROVEN from the county's own results portal at results.gbsvote.com, which names the county clerk as Election Authority (Greene l_id=11, Morgan l_id=16, Scott l_id=19): the 8 Nov 2022 GENERAL ELECTION, marked ** OFFICIAL RESULTS **, carries \"FOR COUNTY COMMISSIONER / 10 of 10 precincts reporting / Vote for ( 1 )\" (John D. Simmons), and the 19 Mar 2024 PRIMARY, also OFFICIAL, repeats it for both parties (Thomas L. Peterson, Republican). The whole county votes for one seat at a time; the only \"DISTRICT\" strings on the 2022 canvass are the Fifteenth Congressional, One Hundredth Representative and Fiftieth Legislative districts. So there is no geometry to seek and none should be invented. scottcoil.gov/commissioners publishes the office phone (217-742-5532) and commissioners@scottcoil.gov but renders the members themselves through a Munibit \"People\" widget whose /api/public/mwjsPeople endpoint returns HTTP 500 without the page's own parameters, and the Internet Archive preserved the same empty shell. CORRECTED 2026-08-08, hours after this record first shipped: the claim above that the names are unreachable was WRONG, and the source that disproves it is the very one cited for the board form. The county's results portal names the winner of every commissioner contest in plain HTML — Robert L. Schafer (R) in Nov 2020 and John D. Simmons (R) in Nov 2022, both on OFFICIAL canvasses; Thomas L. Peterson (R) in Nov 2024. Three separate patterns of mine missed them, not the data: the office is headed \"FOR COUNTY COMMISSIONER\" in recent years but plain \"COUNTY COMMISSIONER\" in 2020 and abbreviated \"COUNTY COMM\" on Morgan's 2020 page, and each time the fix was in the reader. WHAT IS ACTUALLY MISSING is narrower and does not go away with better parsing: election returns record who WON a contest, never who holds the seat today. A mid-term vacancy filled by APPOINTMENT appears in no return anywhere, and the staggered six-year, one-per-general structure that turns three contests into three sitting members is an INFERENCE from the pattern, not something the county states. Publishing these three unconfirmed would be precisely the guess the honesty rules forbid, so the ask became a confirmation rather than a request for a roster. ASKED 2026-08-08: confirm those three, name the chairman, correct the term assumption.",
-      "wanted": "Confirmation of which three commissioners are serving now, and which of them chairs the board. No map needed."
-    },
-    {
       "id": "st-clair-board-contact",
       "concept": "County board members",
       "area": "St. Clair County",
@@ -4453,6 +4439,17 @@ both were wrong for the same reason: **the page itself carries the feed's addres
 the parameters it sends, and in Lansing's case a read-only key it hands to every
 visitor.** A person loading the page in a browser saw the names. Our check asked
 the feed a question the page never asks.
+
+**SCOTT IS CLOSED (2026-10-15).** Its three commissioners ship on the County card,
+read each week by `scripts/il_county_commissioners_scraper.py` through the feed the
+page itself calls: the scraper takes the feed's address and parameters off the page on
+every run rather than pinning them, and checks that the office telephone in the page's
+own text matches the one the feed gives for every member. The names agree with the
+official canvasses this record had already cited (Schafer 2020, Simmons 2022, Peterson
+2024), and the feed is what settles the two things the canvasses could not: that those
+three are serving now, and that Robert Schafer is the chairman. The
+`scott-county-commissioners` gap record is retired. The letter of 2026-10-06 is still
+out; a reply is a cross-check now rather than the only route.
 
 **The standing check, for every new reader and before any record or letter calls a
 page unreadable** (Adam, 2026-10-06):
