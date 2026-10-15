@@ -96,6 +96,11 @@ record states that the state does not have it. Where a state genuinely lacks a
 level — a state with no townships, say — the entry is covered by that fact
 rather than by work, and the record states the fact and where it was checked.
 
+Townships (level 9) pass when the township boards are named wherever a list of
+them is published (Adam, 2026-10-15). A state where only some counties publish
+their township officers passes on those counties, and the card says so for the
+townships it cannot name.
+
 ## Township and county subdivision boundaries
 
 Added on 2026-10-14 at Adam's request: the layer that tells a reader which
@@ -185,6 +190,14 @@ the whole answer and there is no district to draw — the precedent Iowa already
 set for countywide-elected bodies. This matters: many Illinois villages above
 25,000 elect their trustees at large, so a rule demanding drawn districts
 everywhere would fail them for a boundary that does not exist.
+
+Adam confirmed this on 2026-10-15 for the county body as well as the city one,
+and the scoring tool has enforced it since: a county or city whose body is
+elected by district counts only where those districts are drawn, and naming its
+members is not enough. A seat that the whole county or city elects, even if its
+holder must live in a district, is an at-large seat and needs no map; Indiana's
+county commissioners and Kentucky's commissioner-form fiscal courts are elected
+that way.
 
 ## What a record has to do to count
 
