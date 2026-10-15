@@ -19,7 +19,9 @@ joined to the public-domain unitedstates/congress-legislators roster), **Mississ
 **Mississippi House** (52 and 122 districts, TIGERweb geometry joined to the legislature's own
 member gallery and member profiles), the LIVE TIGERweb fabric — **City, Town or Village**
 (`municipality`, 300), **School District** (137) and **ZIP Code** — and three nearest-N layers from
-the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**). Beside it,
+**County Supervisor District** (`county-supervisor`) draws the five districts of each of the 12
+counties whose current lines are confirmed, and is hidden in the other 70.
 
 **THE CONGRESSIONAL MAP IS TIGERweb LAYER 0, AND THAT WAS MEASURED RATHER THAN ASSUMED.** Layer 0
 is the 120th Congress's map, which is wrong for a state that redrew for 2026 (North Carolina,
@@ -49,11 +51,11 @@ PLACES.** Every county elects five supervisors, each from a district (some count
 "beats"). The Secretary of State's County Offices and Directory (2026 edition) names all 410 by
 district, so every County card lists its board. The Census carries the district lines as county
 subdivisions — all 410 are nonfunctioning (FUNCSTAT N) and they ARE the supervisor districts — but
-in about 70 counties they are still the lines from before the 2020 census — the planning
-measurement found the old lines put 34% of Madison County's residents in the wrong district, 16% of
-Lee's and 9.5% of Harrison's. So a supervisor
-district is drawn only where its current lines are confirmed (the recommended option on the
-decision card of 2026-10-15), and the rest is gap `ms-supervisor-district-lines`. **THE
+in 70 counties the Census's 2026 layer still carries its own 2020 edition, the lines drawn on the
+2010 census — the planning measurement found those put 34% of Madison County's residents in the
+wrong district, 16% of Lee's and 9.5% of Harrison's. So a supervisor district is drawn only where
+its current lines are confirmed (the recommended option on the decision card of 2026-10-15), and
+the rest is gap `ms-supervisor-district-lines`. **THE
 DIRECTORY ALSO PRINTS SUPERVISORS' OWN ADDRESSES AND TELEPHONES IN SOME COUNTIES**, which may be
 homes: a board address or telephone is carried only where at least three of the five supervisors
 print the same one, because five people do not share a home — 76 counties have an address and 68 a
@@ -61,6 +63,25 @@ telephone on the 2026 edition, and Amite, Coahoma, Humphreys, Lincoln, Sunflower
 which print a different address for each supervisor, have none. No supervisor's own line and
 nothing printed for the election commissioners is ever carried.
 
+**A COUNTY'S SUPERVISOR DISTRICTS ARE DRAWN ONLY WHEN TWO MEASUREMENTS AGREE, AND TWELVE PASS**
+(`ms/scripts/build_ms_supervisor_districts.py`, its `--check` in CI). Its Census lines changed
+after the 2020 census, counted in PEOPLE whose district number moved rather than in area — Clay's
+change covers 0.07% of the county and moves 689 people — AND its five districts hold nearly equal
+numbers of people on the 2020 census's own blocks, within 10% of an equal share. Measured
+2026-10-15 over all 82 counties: twelve pass at 3.2% to 9.0% (Choctaw, Clay, DeSoto, Grenada,
+Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster, Winston), and their old lines
+measured 15.6% to 85.6% on the same blocks. **SIX COUNTIES CARRY THE OLD EDITION AND BALANCE ANYWAY,
+AND ARE NOT DRAWN** — Lafayette, Marshall, Montgomery, Jefferson Davis, Walthall and Marion — because
+a balanced old map may have been kept or redrawn without telling the Census, and no measurement
+here can tell which; the county's own map or its answer to a letter settles one. `--survey`
+re-takes both measurements for every county and marks one that newly passes, which a person adds
+to `CENSUS_COUNTIES` after looking. **THE LAYER'S COVERAGE TEST READS THE LAYER'S OWN FILE**, so a
+reader's first selection downloads it even with the layer off — 83 KB gzipped for twelve counties.
+Past about 150 KB, give it a coverage file of its own or tiles. **The shapes are the county
+outline's too**: `state-counties.json` was rebuilt with Douglas-Peucker on 2026-10-15 because
+the Visvalingam simplification it shipped with put a county line up to 184.5 m from the
+Census's, with 54 counties over 25 m, and the supervisor builder's county witness holds the two
+files to each other at 4,000 points.
 **THE DIRECTORY PRINTS MOST COUNTY NAMES AS ARTWORK, NOT TEXT.** 80 of its 82 county pages carry
 the county's name as an image, so the builder finds the 82 start pages (each opens with "Named
 for"), pairs them with the 82 counties in alphabetical order, and refuses to write unless there are
@@ -94,7 +115,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Mississippi (`mississippi`) — https://districtry.com/ms/
 - Geocoders: address Photon (Mississippi-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Mississippi-bounded, serial >=1s queue)
 - Ground truth: 32.30380,-90.18220 (the State Capitol, Jackson, Hinds County) → county Hinds County; us-house 2; ms-senate 29; ms-house 67. Negative point 32.48000,-88.25000 (near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
 - Scheduled workflows: `update-ms-congress-roster.yml` (Mon 18:11 UTC); `update-ms-legislature-roster.yml` (Tue 18:11 UTC); `update-ms-county-officials.yml` (Wed 18:11 UTC); `ms-validate-sources.yml` (1st of month 20:13 UTC).
 - Source registry: `ms/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -114,6 +135,10 @@ python3 ms/scripts/validate_index.py ms/index.html
 
 # Coverage-wash gate (anchors + envelopes, offline against the shipped file):
 python3 ms/scripts/build_metro_outline.py --check
+
+# Supervisor districts (offline: build record, directory seats, the Census edition
+# the card names, and the County layer at 4,000 points):
+python3 ms/scripts/build_ms_supervisor_districts.py --check
 
 # Generated-region gate: per-instance facts live ONCE in ms/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
@@ -168,7 +193,10 @@ Pre-built layers ship as same-origin `data/app/` files, all rebuilt from a live 
 operator script: `metro-outline.json` (the whole-state outline for the coverage wash,
 `ms/scripts/build_metro_outline.py` — one INSIDE anchor per county plus OUTSIDE anchors in
 Alabama, Tennessee, Arkansas and Louisiana), `state-counties.json`
-(`ms/scripts/build_state_counties.py`), and `congress-districts.json`, `ms-senate-districts.json`,
+(`ms/scripts/build_state_counties.py`, Douglas-Peucker, refused unless the 25 m fidelity ceiling
+passes), `ms-supervisor-districts.json` (`ms/scripts/build_ms_supervisor_districts.py`, the 12
+confirmed counties, one mapshaper run so a shared line is simplified once), and
+`congress-districts.json`, `ms-senate-districts.json`,
 `ms-house-districts.json` (`ms/scripts/build_legislative_boundaries.py` — statewide TIGERweb,
 mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement gate
 and the 25 m fidelity ceiling pass). Rosters: `congress-roster.json`

@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ms-senate", "ms-house"];
 const EXPECT_DISTRICT = { "county": "Hinds County", "us-house": "2", "ms-senate": "29", "ms-house": "67" };
 const NEGATIVE_POINT = "32.48000,-88.25000"; // near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.
 const APP_NAME = "districtry Mississippi";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -972,6 +972,128 @@ try {
         named.length === 0,
       `named=${named.slice(0, 2)} text=${county.text.slice(0, 90)}`);
     await context.close();
+  }
+
+  // 10. THE COUNTY SUPERVISOR DISTRICT LAYER, drawn only in the counties whose
+  //     current lines are confirmed. The expected district, county, supervisor
+  //     and edition are read from the shipped files, so a rebuild that
+  //     renumbers a county moves the expectation with it; what is asserted is
+  //     that the card agrees with those files at the point.
+  //       - Two drawn counties: the card's "District N" is the district the
+  //         shipped file puts the point in, it names that district's
+  //         supervisor from the directory, and it says where the line and the
+  //         name come from.
+  //       - The Capitol, in Hinds, whose Census lines are the ones drawn after
+  //         the 2010 census and are not drawn: the layer HIDES, with the
+  //         layers= permalink intact. This is the half that discriminates:
+  //         without `coverage` the card would say no district is drawn here,
+  //         about a county that has five.
+  //       - The roster is refused: the district still answers and names nobody.
+  //       - A vacant seat, on a stubbed directory because no drawn county has
+  //         one in the 2026 edition: the card says the seat is vacant and
+  //         names nobody for it.
+  //     The points are interior points of each district as the shipped file
+  //     draws it (polylabel, 2026-10-15), each at least 5 km from its lines.
+  {
+    const sup = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-supervisor-districts.json"), "utf8"));
+    const rec = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "source", "ms-supervisor-districts.source.json"), "utf8"));
+    const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-county-officials.json"), "utf8"));
+    // the app's rule: even-odd within a polygon, any part of a multipolygon
+    function inRing(x, y, ring) {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i], [xj, yj] = ring[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    }
+    function districtsAt(point) {
+      const [lat, lng] = point.split(",").map(Number);
+      return sup.features.filter((f) => {
+        const g = f.geometry;
+        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
+      }).map((f) => f.properties);
+    }
+    function seatOf(p) {
+      const o = roster[p.countyfips] || { supervisors: [] };
+      return o.supervisors.find((sv) => String(sv.district) === String(p.district)) || {};
+    }
+    const drawnPoints = ["34.92782,-90.17414", "33.34602,-88.57919"];  // DeSoto 3, Lowndes 4
+
+    for (const pt of drawnPoints) {
+      const at = districtsAt(pt);
+      const p = at[0] || {};
+      const seat = seatOf(p);
+      const word = p.label === "Beat" ? "Beat" : "District";
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      check(`county-supervisor card in ${p.county || "a drawn county"} names ${word} ${p.district} and its supervisor, with where the line and the name come from`,
+        at.length === 1 && !info.error && !!seat.name &&
+          new RegExp(`\\b${word} ${p.district}\\b`).test(text) &&
+          text.includes(seat.name) && text.includes(p.county) &&
+          /Where this line comes from/.test(text) && text.includes(`${rec.vintage} edition`) &&
+          /Where the name comes from/.test(text),
+        `districts here=${at.length} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county-supervisor`);
+      const hidden = await page
+        .waitForFunction(() => {
+          const box = document.getElementById("toggle-county-supervisor");
+          const block = box && box.closest(".layer-block");
+          return block && block.hidden === true;
+        }, null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const stillOn = await page.evaluate(
+        (n) => window[n].state.layersOn["county-supervisor"] === true, EXPORTS_NAME);
+      check("county-supervisor hides in Hinds County, whose current lines are not confirmed, and stays switched on",
+        districtsAt(POINT).length === 0 && hidden && stillOn,
+        `drawn here=${districtsAt(POINT).length} hidden=${hidden} layersOn=${stillOn}`);
+      await context.close();
+    }
+
+    const p = districtsAt(drawnPoints[0])[0] || {};
+    const seat = seatOf(p);
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
+        await pg.route("**/data/app/ms-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      const named = (roster[p.countyfips] || { supervisors: [] }).supervisors
+        .filter((sv) => sv.name && text.includes(sv.name)).map((sv) => sv.name);
+      check("county-supervisor still names the district, and names nobody, when the roster fails",
+        !info.error && new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
+          /did not load/.test(text) && named.length === 0,
+        `named=${named.slice(0, 2)} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+
+    {
+      const stub = JSON.parse(JSON.stringify(roster));
+      const seats = stub[p.countyfips].supervisors;
+      seats[seats.findIndex((sv) => String(sv.district) === String(p.district))] =
+        { district: String(p.district), vacant: true };
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
+        await pg.route("**/data/app/ms-county-officials.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
+      });
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      check("county-supervisor says a vacant seat is vacant and names nobody for it",
+        !info.error && !!seat.name && /listed as vacant/.test(text) && !text.includes(seat.name) &&
+          !/Vacant/.test(text),
+        text.slice(0, 120));
+      await context.close();
+    }
   }
 } finally {
   await browser.close();

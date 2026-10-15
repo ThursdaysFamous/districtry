@@ -232,7 +232,19 @@ def _robots_client(verify):
         return None
     import requests
 
-    session = requests.Session()
+    class _PinnedSession(requests.Session):
+        # verify= on every request, never on the session alone: requests lets
+        # REQUESTS_CA_BUNDLE and then CURL_CA_BUNDLE win over session.verify, so
+        # a pinned chain set only on the session is silently replaced wherever
+        # either is set. Measured 2026-10-15 on www.legislature.ms.gov, whose
+        # server omits its intermediate: SSLError through session.verify, and
+        # the robots.txt answer (404) with the same bundle passed per request.
+        def request(self, method, url, **kwargs):
+            if kwargs.get("verify") is None:
+                kwargs["verify"] = self.verify
+            return requests.Session.request(self, method, url, **kwargs)
+
+    session = _PinnedSession()
     session.verify = verify
     return session
 

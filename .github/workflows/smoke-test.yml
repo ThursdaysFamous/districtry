@@ -1415,6 +1415,17 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --check
 
+      # Mississippi draws county supervisor districts only in the counties whose
+      # Census lines are confirmed current: changed after the 2020 census, and
+      # balanced on that census's own blocks. The blocks are not shipped, so the
+      # population cannot be re-measured here; this holds the shipped file to
+      # its build record, every district to a directory seat in the county's own
+      # word, the card to the Census edition the file was built from, and the
+      # drawn counties to the County layer at 4,000 points.
+      - name: MS supervisor districts still match their build record, the directory and the County layer
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_supervisor_districts.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it

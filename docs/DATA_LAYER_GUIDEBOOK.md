@@ -64,7 +64,7 @@ in the researched-but-unbuilt backlog.
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"],
   "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "municipality", "police-station", "fire-station", "post-office"],
-  "mississippi": ["us-house", "ms-senate", "county", "ms-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
+  "mississippi": ["us-house", "ms-senate", "county", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3365,14 +3365,14 @@ trusted.
       {
             "id": "ms-supervisor-district-lines",
             "concept": "County supervisor district",
-            "area": "Mississippi — the counties whose current supervisor district lines are not confirmed",
+            "area": "Mississippi — the 70 counties whose current supervisor district lines are not confirmed",
             "counties": [],
             "kind": "data-quality",
-            "layer": "county",
-            "summary": "In most Mississippi counties this app names all five supervisors but cannot show which one represents the spot you picked, because it has no confirmed map of the current district lines there.",
-            "why": "The Census Bureau's map still carries the lines from before the 2020 census in most counties, and no state office publishes the current ones. Old lines would name the wrong supervisor for many people, so none are drawn.",
+            "layer": "county-supervisor",
+            "summary": "In 70 of Mississippi's 82 counties this app names all five supervisors but cannot show which one represents the spot you picked, because it has no confirmed map of the current district lines there.",
+            "why": "The Census Bureau's map still carries older lines in most counties, and no statewide map of the current ones has been found. Old lines would name the wrong supervisor for many people, so none are drawn there.",
             "wanted": "Each county's current supervisor district map, or one statewide map of every county's current lines from a state office.",
-            "blocker": "PLACEHOLDER"
+            "blocker": "Measured 2026-10-15 across all 82 counties by ms/scripts/build_ms_supervisor_districts.py --survey. The Census carries all 410 supervisor districts as county subdivisions (TIGERweb tigerWMS_Current layer 22, the January 1, 2026 vintage, BASENAME 1 to 5 in every county, every one FUNCSTAT N). Each county is measured two ways on the 2020 census's own blocks (Tracts_Blocks layer 12, each block assigned by its internal point): how many people the 2026 lines put in a different district NUMBER from the Census's own 2020 edition (tigerWMS_Census2020 layer 20), and how far apart the largest and smallest districts are, as a percentage of an equal share. TWELVE COUNTIES ARE DRAWN, the ones whose lines changed (530 to 58,881 people moved) and balance (3.17% to 9.00%): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. Their 2020-edition lines measure 15.64% to 85.61% on the same blocks. Clay's change covers 0.07% of the county's area and moves 689 people, which is why people and not area are the test. SIXTY-FOUR COUNTIES carry their 2020 edition unchanged and measure 13.56% (Itawamba) to 303.58% (Jefferson): lines drawn on the 2010 census, which no longer balance on the 2020 one. The planning measurement found those put 34% of Madison County's residents, 16% of Lee's and 9.5% of Harrison's in a different district from the one they now vote in. SIX COUNTIES carry their 2020 edition and balance anyway: Lafayette 2.53%, Marshall 6.10%, Montgomery 6.21%, Jefferson Davis 6.76%, Walthall 7.71% and Marion 7.77%. Such a county may have kept its lines or redrawn them without telling the Census, and nothing measured here can tell which, so none of the six is drawn until the county's own map or its answer to a letter settles it. Marion's 2026 layer differs from its 2020 edition by a sliver of about 19 m2 on the line between districts 4 and 5, which moves nobody. No statewide map of the current lines from a state office has been found: the Secretary of State's County Offices and Directory names every supervisor by district and draws nothing. The names ship on the County card for all 82 counties. Mississippi is dark as of this record."
       },
       {
             "id": "ms-municipal-officeholders",

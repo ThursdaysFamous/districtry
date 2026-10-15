@@ -4216,8 +4216,8 @@ function initMississippiExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ms-senate": "mss", "county": "co", "ms-house": "msh",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "county-supervisor": "cv", "zip-code": "zp",
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -9369,6 +9369,7 @@ function initMississippiExplorer() {
     "county",            // 82 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ms-house",          // 122 House districts — smaller on average than a county, larger than a school district
     "school-district-unified", // 137 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
+    "county-supervisor", // 410 supervisor districts statewide, five per county, about 296 km2 of land on average against 887 km2 for a school district; drawn only in the counties whose current lines are confirmed
     "zip-code",          // 827 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Mississippi
     "municipality",      // 300 incorporated places, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13513,6 +13514,151 @@ function initMississippiExplorer() {
     }
   });
 
+  /* ---------- 1a. County Supervisor District ----------
+   * Which of the county's five supervisors represents the point, drawn ONLY
+   * in the counties whose current lines this app has confirmed
+   * (data/app/ms-supervisor-districts.json, built by
+   * ms/scripts/build_ms_supervisor_districts.py). The Census carries every
+   * county's districts, but in most counties it still carries the lines
+   * drawn after the 2010 census, which would name the wrong supervisor for
+   * many readers. A county is drawn when its Census lines changed after the
+   * 2020 census AND hold nearly equal numbers of people on the 2020 census's
+   * own blocks; everywhere else the layer is hidden (coverage), and gap
+   * ms-supervisor-district-lines says why. The County card names all five
+   * supervisors in every county either way.
+   *
+   * THE COVERAGE TEST READS THIS LAYER'S OWN FILE, because a point is in a
+   * drawn county exactly when it is in one of its districts (the Census's
+   * districts tile each county). It costs the file's download on a reader's
+   * first selection even with the layer off: 83 KB gzipped for twelve
+   * counties, measured 2026-10-15. A failed fetch fails OPEN per the
+   * engine's coverage contract, and the query then answers from the same
+   * file or shows its own Retry.
+   *
+   * THE NAME IS THE DIRECTORY'S AND THE LINE IS THE CENSUS'S. The district
+   * number joins the two, and each feature carries the county's own word
+   * for a district ("District" or "Beat"), copied from the directory when
+   * the file was built and held to it by the builder's --check. ---------- */
+  var loadSupervisorDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-supervisor-districts.json", {}, 2);
+  });
+  function inConfirmedSupervisorCounty(point) {
+    return loadSupervisorDistricts().then(function (fc) {
+      var feats = (fc && fc.features) || [];
+      for (var i = 0; i < feats.length; i++) {
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+      }
+      return false;
+    });
+  }
+
+  registerLayer({
+    id: "county-supervisor",
+    group: "political",
+    label: "County Supervisor District",
+    coverage: inConfirmedSupervisorCounty,
+    // Inside the drawn counties the districts cover every point, so this is
+    // reached only if the file and the coverage test ever disagree.
+    emptyNote: "No supervisor district is drawn at this point. The County " +
+      "card names all five of the county's supervisors.",
+    overlay: {
+      load: loadSupervisorDistricts,
+      // the fleet's county-board blue and width (root layer-concepts.json
+      // `colors` and `lines`), reading apart from County's grey and the
+      // chambers' purples
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      var county = findPropCI(props, ["county"]);
+      var district = findPropCI(props, ["district"]);
+      if (county == null || district == null) return null;
+      return String(county) + " " +
+        msDistrictName(findPropCI(props, ["label"]), district);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadSupervisorDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          county: findPropCI(props, ["county"]),
+          geoid: findPropCI(props, ["countyfips"]),
+          district: findPropCI(props, ["district"]),
+          label: findPropCI(props, ["label"]),
+          lines: findPropCI(props, ["lines"]),
+          officials: null,
+          rosterFailed: false
+        };
+        // the roster's own failure is not this layer's failure: the district
+        // still answers the question, and the card says no one is named
+        return loadMsCountyOfficials().then(function (roster) {
+          result.officials = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.district != null
+        ? msDistrictName(result.label, result.district) : "Unknown district";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var o = result.officials;
+      var seat = null;
+      ((o && o.supervisors) || []).forEach(function (s) {
+        if (s && result.district != null && String(s.district) === String(result.district)) seat = s;
+      });
+      var word = result.label === "Beat" ? "beat" : "district";
+      if (seat && seat.vacant === true) {
+        wrap.appendChild(renderFieldStack([{
+          label: "Supervisor",
+          value: "This seat is listed as vacant in the Secretary of State's directory."
+        }]));
+      } else if (seat && seat.name) {
+        wrap.appendChild(renderPersonRows([{ name: String(seat.name), badge: "Supervisor" }]));
+      } else {
+        wrap.appendChild(renderFieldStack([{
+          label: "Supervisor",
+          value: result.rosterFailed
+            ? "The list of supervisors did not load, so no one is named here."
+            : "The Secretary of State's directory names no supervisor for this " +
+              word + ", so no one is named here."
+        }]));
+      }
+      var office = msBoardOffice(o);
+      if (office) wrap.appendChild(office);
+      var rows = [{
+        label: "County",
+        value: result.county != null ? String(result.county) : "Unknown county",
+        primary: true
+      }];
+      if (result.lines === "census") {
+        rows.push({
+          label: "Where this line comes from",
+          value: "The Census Bureau's map of the county's supervisor " + word +
+            "s (January 1, 2026 edition). The Census changed this county's " +
+            "lines after the 2020 census, and this app checked that the five " +
+            word + "s hold nearly equal numbers of people in that census, as " +
+            "lines drawn after it should. It draws supervisor " + word + "s " +
+            "only in counties where both are true."
+        });
+      }
+      if (o) rows.push({ label: "Where the name comes from", value: msDirectoryCredit(o) });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = msDirectoryLink(result && result.officials);
+      if (!url) return null;
+      return { label: String(result.county) + " in the Secretary of State's directory", url: url };
+    }
+  });
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 0 geometry
    * (data/app/congress-districts.json, this state only) joined by district
@@ -15521,7 +15667,7 @@ function initMississippiExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ms-senate", "ms-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ms-senate", "ms-house", "county-supervisor",
     "school-district-unified",
     "county", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];

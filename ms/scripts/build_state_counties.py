@@ -12,8 +12,19 @@ the served area IS the state.
 This is an occasional OPERATOR step, not weekly CI — county lines change
 essentially never; re-run only if TIGERweb corrects a boundary.
 
-Simplification is topology-aware mapshaper (Visvalingam, keep-shapes), the
-same tool + protocol as every other instance's boundary builders.
+SIMPLIFICATION IS DOUGLAS-PEUCKER WITH A FIDELITY CEILING, AND THAT IS A
+MEASUREMENT. This file was first built the way the copied builder built it,
+Visvalingam at 10% retained, and measured on 2026-10-15 against the
+full-precision TIGERweb lines that drew a line up to 184.5 m away from where
+the county line really runs (Holmes and Attala, along their shared edge),
+with 54 of the 82 counties more than 25 m off somewhere. A reader within that
+distance of a county line could be told the wrong county, and the County
+Supervisor District layer, which is simplified with a bounded stray, would
+then disagree with this one about which county a point is in. Visvalingam
+thresholds triangle AREA, which does not bound how far the drawn line strays;
+Douglas-Peucker thresholds the stray itself. The legislative builder beside
+this one already uses it, and its fidelity check is imported from there rather
+than copied.
 
 Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js
 (mapshaper via `npx mapshaper@<pinned>`).
@@ -29,6 +40,11 @@ import subprocess
 import sys
 import tempfile
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, _HERE)
+import build_legislative_boundaries as blb  # noqa: E402  (same instance tree)
+assert os.path.dirname(os.path.abspath(blb.__file__)) == _HERE, blb.__file__
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 MAPSHAPER = "mapshaper@0.6.102"  # pinned for reproducible output (fleet convention)
@@ -41,7 +57,10 @@ STATE_BBOX = {"minLng": -91.85, "minLat": 29.95, "maxLng": -87.9, "maxLat": 35.1
 
 FIELDS = ["NAME", "BASENAME", "GEOID", "STATE", "COUNTY"]
 OUT_FILE = "state-counties.json"
-SIMPLIFY = "10%"
+# Douglas-Peucker interval in METRES (keep-shapes). Measured 2026-10-15: the
+# median source step is 27.84 m, and interval=20 leaves the worst stray under
+# the 25 m ceiling the legislative builder pins (blb.FIDELITY_CEILING_M).
+SIMPLIFY = "interval=20"
 MIN_FEATURES = 82  # every Mississippi county — no water pseudo-district on this layer
 VALIDATION_KEY = "GEOID"  # unique per county, preserved through simplification
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m — the precision the app requests live
@@ -73,7 +92,7 @@ def run_mapshaper(source_path, simplify, out_path):
     subprocess.run(
         [
             "npx", "-y", MAPSHAPER, source_path,
-            "-simplify", "visvalingam", "keep-shapes", simplify,
+            "-simplify", "dp", "keep-shapes", simplify,
             "-o", "precision=" + PRECISION, "format=geojson", out_path,
         ],
         check=True, cwd=REPO_ROOT,
@@ -191,6 +210,17 @@ def main():
     if not ok:
         raise RuntimeError("state-counties validation failed: %s" % msg)
 
+    step = blb.median_source_step_m(source["features"])
+    worst, over = blb.check_fidelity(source["features"], simplified["features"], VALIDATION_KEY)
+    if over:
+        raise RuntimeError(
+            "state-counties: %d county(ies) stray past the %.0f m fidelity ceiling "
+            "(worst %.1f m): %s — refusing to write"
+            % (len(over), blb.FIDELITY_CEILING_M, worst, ", ".join(sorted(over)[:5])))
+    print("state-counties: median source step %.2f m, worst stray %.1f m against a "
+          "%.0f m ceiling, 0 of %d counties over"
+          % (step, worst, blb.FIDELITY_CEILING_M, n))
+
     compact = json.dumps(simplified, separators=(",", ":"))
     if json.loads(compact) != simplified:
         raise RuntimeError("state-counties round-trip mismatch before writing")
@@ -201,7 +231,7 @@ def main():
         f.write(compact)
 
     print(
-        "state-counties -> data/app/%s: %d features (statewide); %s; %d bytes (%s retain, 6dp)"
+        "state-counties -> data/app/%s: %d features (statewide); %s; %d bytes (dp %s, 6dp)"
         % (OUT_FILE, n, msg, len(compact), SIMPLIFY),
         file=sys.stderr,
     )

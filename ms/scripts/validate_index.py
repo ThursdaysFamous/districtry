@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "ms-senate", "county", "ms-house", "school-district-unified",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "county-supervisor", "zip-code", "municipality", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +106,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (4, 4),  # The 4 U.S. House districts, TIGERweb layer 0 (CD120).
     "ms-senate-districts.json": (52, 52),  # The 52 Mississippi Senate districts.
     "ms-house-districts.json": (122, 122),  # The 122 Mississippi House districts.
+    "ms-supervisor-districts.json": (60, 60),  # The county supervisor districts of the 12 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county; the coverage test for the County Supervisor District layer reads it too.
 }
 
 # file -> minimum key count (officeholder rosters).

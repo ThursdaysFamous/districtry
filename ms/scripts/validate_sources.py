@@ -54,6 +54,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+import aia_bundle  # noqa: E402  (FLEET_SHARED — the one copy of the pins)
 
 try:
     import requests
@@ -126,9 +127,9 @@ PROVENANCE = [
             "The Mississippi Legislature's own member gallery, plus every "
             "member's own profile; rebuilt weekly by "
             "ms/scripts/build_ms_legislature_roster.py. The server sends only "
-            "its own certificate, so this check reads it through the "
-            "GlobalSign intermediate scripts/aia_bundle.py pins and may report "
-            "it unreachable where that bundle is not applied. The profiles "
+            "its own certificate, so this check reads it, robots.txt "
+            "included, through the GlobalSign intermediate "
+            "scripts/aia_bundle.py pins (PINNED_CHAINS above). The profiles "
             "also print a home address and personal telephone, which the "
             "builder never reads."
         ),
@@ -145,8 +146,23 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
             "All 82 counties pre-built from TIGERweb by "
-            "ms/scripts/build_state_counties.py. The card names each county's "
-            "five supervisors from ms-county-officials.json."
+            "ms/scripts/build_state_counties.py (Douglas-Peucker, held to a "
+            "25 m fidelity ceiling). The card names each county's five "
+            "supervisors from ms-county-officials.json."
+        ),
+    },
+    {
+        "layer": "county-supervisor",
+        "app_file": "ms-supervisor-districts.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
+        "note": (
+            "The supervisor districts of the 12 counties whose current lines "
+            "are confirmed, pre-built from the Census's county subdivisions "
+            "(January 1, 2026 vintage) by "
+            "ms/scripts/build_ms_supervisor_districts.py. A county is drawn "
+            "when its lines changed after the 2020 census and balance on that "
+            "census's own blocks; --survey re-measures all 82, and a new "
+            "vintage needs a survey and a rebuild."
         ),
     },
     {
@@ -272,18 +288,61 @@ class Findings(object):
         return "ok"
 
 
+# Hosts that send only their own certificate, keyed to the intermediate
+# scripts/aia_bundle.py pins for them. The builder that reads the host completes
+# the chain from that pin, so this check reads it the same way, robots.txt
+# included: read with the plain trust store, www.legislature.ms.gov's robots.txt
+# is unreachable, which RFC 9309 treats as a refusal, and on 2026-10-15 that
+# stopped the whole run at the first legislature row.
+PINNED_CHAINS = {"www.legislature.ms.gov": "globalsign-rsa-ov-2018"}
+_BUNDLES = {}
+
+
+def _verify_for(url):
+    """The CA bundle path to read `url` with, or None for the default store."""
+    from urllib.parse import urlsplit
+
+    key = PINNED_CHAINS.get(urlsplit(url).hostname or "")
+    if key is None:
+        return None
+    if key not in _BUNDLES:
+        _BUNDLES[key] = aia_bundle.ca_bundle("ms-validate-sources", key)
+    return _BUNDLES[key]
+
+
+def _drop_bundles():
+    for path in _BUNDLES.values():
+        try:
+            os.unlink(path)
+        except OSError:
+            pass
+
+
 def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/ms/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/ms/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/ms/)"}, label="ms-validate-sources")
+        verify = _verify_for(url)
+    except (Exception, SystemExit) as e:  # a moved pin is a finding, not a crash
+        return False, "could not build the pinned certificate chain: %s" % e
+    try:
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="ms-validate-sources", verify=verify)
+    except SystemExit:
+        # require_robots_once has printed why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
+        kwargs = {"verify": verify} if verify else {}
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/ms/)"},
+            headers={"User-Agent": ua},
+            **kwargs
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e
@@ -518,10 +577,13 @@ def main():
         sys.exit(1)
 
     findings = Findings()
-    check_manifest_matches_app(html, findings)
-    check_socrata(findings, args.offline)
-    check_provenance(findings, args.offline)
-    check_endpoints(findings, args.offline)
+    try:
+        check_manifest_matches_app(html, findings)
+        check_socrata(findings, args.offline)
+        check_provenance(findings, args.offline)
+        check_endpoints(findings, args.offline)
+    finally:
+        _drop_bundles()
 
     report = render(findings)
     sys.stdout.write(report)
