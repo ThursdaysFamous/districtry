@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "ms-senate", "county", "ms-house", "school-district-unified",
-    "county-supervisor", "zip-code", "municipality", "police-station",
-    "fire-station", "post-office",
+    "county-supervisor", "zip-code", "municipality", "tribal-government",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "ms-senate-districts.json": (52, 52),  # The 52 Mississippi Senate districts.
     "ms-house-districts.json": (122, 122),  # The 122 Mississippi House districts.
     "ms-supervisor-districts.json": (100, 100),  # The county supervisor districts of the 20 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 8 from the county's own map, redrawn along whole 2020 census blocks.
+    "tribal-areas.json": (2, 2),  # Mississippi's tribal land (scripts/build_tribal_areas.py) — the Mississippi Choctaw Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -117,6 +118,7 @@ ROSTER_FILES = {
     "ms-county-officials.json": 82,  # Every county's five supervisors by district, from the Secretary of State's County Offices and Directory, one record per county, refreshed weekly by update-ms-county-officials.yml.
     "ms-supervisor-counties.json": 20,  # The 20 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "tribal-councils.json": 1,  # The Mississippi Band of Choctaw Indians' Tribal Chief and Tribal Council, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

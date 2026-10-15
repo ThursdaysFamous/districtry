@@ -4217,7 +4217,8 @@ function initMississippiExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ms-senate": "mss", "county": "co", "ms-house": "msh",
     "school-district-unified": "su", "county-supervisor": "cv", "zip-code": "zp",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -9374,6 +9375,7 @@ function initMississippiExplorer() {
     "county-supervisor", // 410 supervisor districts statewide, five per county, about 296 km2 of land on average against 887 km2 for a school district; drawn only in the counties whose current lines are confirmed
     "zip-code",          // 827 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Mississippi
     "municipality",      // 300 incorporated places, live from TIGERweb
+    "tribal-government", // Tribal land — Mississippi has 2 pieces held by one nation, the Mississippi Choctaw Reservation (123.468 km², in 56 separate parts, 77.1 km² of it in Neshoba County) and its off-reservation trust land (16.396 km² in Mississippi), MEASURED by scripts/build_tribal_areas.py on 2026-10-15. Ranked after municipalities and before the point layers, as South Carolina's and Indiana's are. Its parts are small — the reservation's 56 run from 51.6 km² down to under 0.01 km² and the trust land's 29 from 3.55 km² down — so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13933,6 +13935,122 @@ function initMississippiExplorer() {
     }
   });
 
+  /* ---------- 5a. Tribal Government — Mississippi's tribal land, 2 pieces, one nation.
+   *
+   * The Mississippi Choctaw Reservation (123.468 km², 7,749 people at the
+   * 2020 census) and the Mississippi Choctaw Off-Reservation Trust Land
+   * (17.092 km², 331 people), both held by the Mississippi Band of Choctaw
+   * Indians, which the Bureau of Indian Affairs seats at Choctaw. Measured
+   * 2026-10-15 by scripts/build_tribal_areas.py: the reservation lies wholly
+   * in Mississippi, in 56 separate parts, 77.1 km² of it in Neshoba County
+   * (measured against this app's own county outlines); 16.396 km² of the
+   * trust land is in Mississippi and the other 0.695 km² in Tennessee, and
+   * the file carries the whole trust land, as every instance's does. The
+   * Census draws no tribal subdivision on either.
+   *
+   * WHO THE CARD NAMES. The Tribal Chief and the seventeen members of the
+   * Tribal Council, from the band's own page at choctaw.org, read weekly by
+   * scripts/tribal_council_scraper.py. Each member represents one of the
+   * band's communities, which the page gives beside the name, so each is
+   * carried as that member's district — as a word, never as a shape: the
+   * Census draws no tribal subdivision on this land, so this app has no
+   * outline for any community. The card's districts sentence points at
+   * those words instead of saying "no council seat belongs to it", which
+   * would be false here.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND AS A WHOLE: by
+   * Adam's ruling of 2026-09-30, a government answers for that ground, so a
+   * reader who clicks it should be told which one.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadMsTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadMsTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE CHIEF AND THE COUNCIL, where the nation's own page names them,
+    // merged onto the land by the loader above, so the card makes no request
+    // of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Tribal Chief and Tribal Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Mississippi has 2 tribal areas, the Mississippi Choctaw Reservation and its off-reservation trust land, both the Mississippi Band of Choctaw Indians', and this point is on neither."
+  });
+
   /* ---------- 6. School District — live TIGERweb, unified districts ----------
    * Mississippi runs ONE of TIGER's three school tilings and it covers the
    * state whole, measured 2026-10-15 against TIGERweb School/MapServer for
@@ -15710,7 +15828,7 @@ function initMississippiExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ms-senate", "ms-house", "county-supervisor",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16193,11 +16311,11 @@ function initMississippiExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#77BBFD",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
+    "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
+    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

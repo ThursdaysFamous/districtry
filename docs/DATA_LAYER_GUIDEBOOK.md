@@ -65,7 +65,7 @@ in the researched-but-unbuilt backlog.
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "municipality", "police-station", "fire-station", "post-office"],
-  "mississippi": ["us-house", "ms-senate", "county", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
+  "mississippi": ["us-house", "ms-senate", "county", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->

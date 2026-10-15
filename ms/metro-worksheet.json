@@ -265,10 +265,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 9,
+      "rank_note": "Tribal land — Mississippi has 2 pieces held by one nation, the Mississippi Choctaw Reservation (123.468 km², in 56 separate parts, 77.1 km² of it in Neshoba County) and its off-reservation trust land (16.396 km² in Mississippi), MEASURED by scripts/build_tribal_areas.py on 2026-10-15. Ranked after municipalities and before the point layers, as South Carolina's and Indiana's are. Its parts are small — the reservation's 56 run from 51.6 km² down to under 0.01 km² and the trust land's 29 from 3.55 km² down — so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Mississippi has 2 such areas, both the Mississippi Band of Choctaw Indians'.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The Mississippi Band of Choctaw Indians' Tribal Chief and its seventeen-member Tribal Council, each member with the community they represent, from the band's own page at choctaw.org, read weekly by scripts/tribal_council_scraper.py and dated on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Mississippi — the Mississippi Choctaw Reservation and its off-reservation trust land, most of the reservation in Neshoba County. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -286,7 +304,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -304,7 +322,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -389,6 +407,12 @@
         "min_features": 100,
         "max_features": 100,
         "note": "The county supervisor districts of the 20 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 8 from the county's own map, redrawn along whole 2020 census blocks."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 2,
+        "max_features": 2,
+        "note": "Mississippi's tribal land (scripts/build_tribal_areas.py) — the Mississippi Choctaw Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -421,6 +445,11 @@
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      },
+      {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The Mississippi Band of Choctaw Indians' Tribal Chief and Tribal Council, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
       }
     ]
   },

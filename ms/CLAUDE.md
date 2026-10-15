@@ -22,7 +22,10 @@ member gallery and member profiles), the LIVE TIGERweb fabric — **City, Town o
 the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**). Beside it,
 **County Supervisor District** (`county-supervisor`) draws the five districts of each of the 20
 counties whose current lines are confirmed (12 from the Census's lines, 8 from the county's own
-map), and is hidden in the other 62.
+map), and is hidden in the other 62. **Tribal Government** (`tribal-government`) draws the
+Mississippi Band of Choctaw Indians' reservation and its off-reservation trust land, the only
+tribal land the Census draws in the state, and names the Tribal Chief and the seventeen council
+members from the band's own page.
 
 **THE CONGRESSIONAL MAP IS TIGERweb LAYER 0, AND THAT WAS MEASURED RATHER THAN ASSUMED.** Layer 0
 is the 120th Congress's map, which is wrong for a state that redrew for 2026 (North Carolina,
@@ -141,6 +144,13 @@ Mississippi and its elementary and secondary tilings hold none, and the unified 
 area sums to the 82-county total (121,535 km²) — so the layer is "School District", and its id
 stays `school-district-unified` because a layer id is a public address.
 
+**THE BAND'S COMMUNITIES ARE WORDS ON THE CARD, NEVER SHAPES.** Each council member represents
+one of the band's communities (Bogue Chitto, Conehatta, Pearl River and the rest), which the band's
+page prints beside the name, so the card carries it beside the name. The Census draws no tribal
+subdivision on this land, so this app has no outline for any community, and the card's
+districts sentence says so and points at the names rather than saying no council seat belongs to
+the land, which would be false here (`scripts/build_tribal_areas.py`, `council_has_districts`).
+
 **THE ZIP LAYER HIDES OUTSIDE MISSISSIPPI.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (the Alabama negative point gives 36925,
 measured 2026-10-15). The coverage test reads the shipped outline, and the smoke test asserts both
@@ -161,7 +171,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Mississippi (`mississippi`) — https://districtry.com/ms/
 - Geocoders: address Photon (Mississippi-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Mississippi-bounded, serial >=1s queue)
 - Ground truth: 32.30380,-90.18220 (the State Capitol, Jackson, Hinds County) → county Hinds County; us-house 2; ms-senate 29; ms-house 67. Negative point 32.48000,-88.25000 (near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
+- Layers: 12 registered (political 5, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
 - Scheduled workflows: `update-ms-congress-roster.yml` (Mon 18:11 UTC); `update-ms-legislature-roster.yml` (Tue 18:11 UTC); `update-ms-county-officials.yml` (Wed 18:11 UTC); `ms-validate-sources.yml` (1st of month 20:13 UTC).
 - Source registry: `ms/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -252,7 +262,11 @@ and the 25 m fidelity ceiling pass). Rosters: `congress-roster.json`
 `ms-{senate,house}-members.json` (`ms/scripts/build_ms_legislature_roster.py`, from the
 legislature's own pages) and `ms-county-officials.json` (`ms/scripts/build_ms_county_officials.py`,
 from the Secretary of State's directory) — all count-guarded, all refreshed weekly by CI as
-reviewed PRs. `scripts/validate_chamber_rosters.py` holds both chamber files to one record per
+reviewed PRs. The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both
+written by the fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government
+join every instance uses (`data/tribal-government-join.json`); the council is re-read weekly from
+the band's own page by `scripts/tribal_council_scraper.py` in the fleet's
+`update-tribal-councils.yml`, and the land is rebuilt only when the Census redraws it. `scripts/validate_chamber_rosters.py` holds both chamber files to one record per
 seat.
 
 robots.txt is read before the first fetch through `scraper_common.require_robots_once`, with the

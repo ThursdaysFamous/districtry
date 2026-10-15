@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ms-senate", "ms-house"];
 const EXPECT_DISTRICT = { "county": "Hinds County", "us-house": "2", "ms-senate": "29", "ms-house": "67" };
 const NEGATIVE_POINT = "32.48000,-88.25000"; // near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.
 const APP_NAME = "districtry Mississippi";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -1157,6 +1157,47 @@ try {
         text.slice(0, 120));
       await context.close();
     }
+  }
+  // ---- Tribal Government. The Mississippi Choctaw Reservation's card names
+  // the band, its seat, the Tribal Chief and the council members with the
+  // community each represents, from the band's own page; the districts
+  // sentence points at those community names rather than saying no council
+  // seat belongs to the land, which would be false here. A point off tribal
+  // land is told so in the layer's own words. The point is shapely's
+  // representative point of the shipped reservation's part in Neshoba County
+  // (2026-10-15).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const c = await at("32.79497,-89.25493");
+    const districts = c.by("Districts drawn here");
+    check("the Mississippi Choctaw Reservation names the band, its seat, its Chief and its council by community",
+          c.by("Tribal government") === "Mississippi Band of Choctaw Indians" &&
+          c.by("Seat of government") === "Choctaw, MS" &&
+          c.by("Land") === "Mississippi Choctaw Reservation" &&
+          c.text.indexOf("Cyrus Ben") !== -1 &&
+          c.text.indexOf("Tribal Chief and Tribal Council") !== -1 &&
+          c.text.indexOf("Bogue Chitto") !== -1 &&
+          c.text.indexOf("From the nation's own council page") !== -1 &&
+          districts.indexOf("beside their name below") !== -1 &&
+          districts.indexOf("no council seat") === -1 &&
+          !c.by("Why no names"),
+          JSON.stringify(c.text.slice(0, 200)));
+    const off = await at(POINT);
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
   }
 } finally {
   await browser.close();
