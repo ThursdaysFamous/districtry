@@ -62,7 +62,8 @@ FLOOR = 25000
 # city tier is the whole app, which the report states rather than measures.
 STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "mn": "27", "ky": "21", "ny": "36", "in": "18",
-              "nc": "37", "ok": "40", "sc": "45", "tn": "47"}
+              "nc": "37", "ok": "40", "sc": "45", "tn": "47",
+              "ar": "05"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -92,6 +93,10 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     "ok": None,
     "sc": None,
     "tn": None,
+    # Arkansas's townships are non-functioning too (FUNCSTAT N on all 1,051
+    # county subdivisions, measured 2026-10-13 in ar/CLAUDE.md), so no active
+    # one can reach the floor; added at its go-live, 2026-10-15.
+    "ar": None,
 }
 
 

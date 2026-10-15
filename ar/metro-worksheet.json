@@ -57,188 +57,34 @@
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
   "feedback_subject": "districtry Arkansas feedback",
   "metro_explorers": [
-    {
-      "id": "chicago",
-      "label": "Illinois",
-      "url": "https://districtry.com/il/",
-      "emoji": "🌭",
-      "explorer_name": "districtry Illinois",
-      "bbox": {
-        "minLng": -91.52,
-        "minLat": 36.96,
-        "maxLng": -87.01,
-        "maxLat": 42.51
-      }
-    },
-    {
-      "id": "nyc",
-      "label": "New York",
-      "url": "https://districtry.com/ny/",
-      "emoji": "🗽",
-      "explorer_name": "districtry New York",
-      "bbox": {
-        "minLng": -79.82,
-        "minLat": 40.43,
-        "maxLng": -71.62,
-        "maxLat": 45.07
-      }
-    },
-    {
-      "id": "sf",
-      "label": "San Francisco",
-      "url": "https://districtry.com/ca/",
-      "emoji": "🌉",
-      "explorer_name": "districtry San Francisco",
-      "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
-      }
-    },
-    {
-      "id": "wisconsin",
-      "label": "Wisconsin",
-      "url": "https://districtry.com/wi/",
-      "emoji": "🧀",
-      "explorer_name": "districtry Wisconsin",
-      "bbox": {
-        "minLng": -92.89,
-        "minLat": 42.49,
-        "maxLng": -86.25,
-        "maxLat": 47.31
-      }
-    },
-    {
-      "id": "iowa",
-      "label": "Iowa",
-      "url": "https://districtry.com/ia/",
-      "emoji": "🌽",
-      "explorer_name": "districtry Iowa",
-      "bbox": {
-        "minLng": -96.64,
-        "minLat": 40.37,
-        "maxLng": -90.14,
-        "maxLat": 43.5
-      }
-    },
-    {
-      "id": "michigan",
-      "label": "Michigan",
-      "url": "https://districtry.com/mi/",
-      "emoji": "🚗",
-      "explorer_name": "districtry Michigan",
-      "bbox": {
-        "minLng": -87.6,
-        "minLat": 41.7,
-        "maxLng": -82.11,
-        "maxLat": 48.01
-      }
-    },
-    {
-      "id": "minnesota",
-      "label": "Minnesota",
-      "url": "https://districtry.com/mn/",
-      "emoji": "🛶",
-      "explorer_name": "districtry Minnesota",
-      "bbox": {
-        "minLng": -97.3,
-        "minLat": 43.44,
-        "maxLng": -89.58,
-        "maxLat": 49.44
-      }
-    },
-    {
-      "id": "kentucky",
-      "label": "Kentucky",
-      "url": "https://districtry.com/ky/",
-      "emoji": "🐎",
-      "explorer_name": "districtry Kentucky",
-      "bbox": {
-        "minLng": -89.62,
-        "minLat": 36.45,
-        "maxLng": -81.91,
-        "maxLat": 39.2
-      }
-    },
-    {
-      "id": "indiana",
-      "label": "Indiana",
-      "url": "https://districtry.com/in/",
-      "emoji": "🏁",
-      "explorer_name": "districtry Indiana",
-      "bbox": {
-        "minLng": -88.1,
-        "minLat": 37.83,
-        "maxLng": -84.78,
-        "maxLat": 41.77
-      }
-    },
-    {
-      "id": "northcarolina",
-      "label": "North Carolina",
-      "url": "https://districtry.com/nc/",
-      "emoji": "🌳",
-      "explorer_name": "districtry North Carolina",
-      "bbox": {
-        "minLng": -84.33,
-        "minLat": 33.74,
-        "maxLng": -75.39,
-        "maxLat": 36.6
-      }
-    },
-    {
-      "id": "oklahoma",
-      "label": "Oklahoma",
-      "url": "https://districtry.com/ok/",
-      "emoji": "🌾",
-      "explorer_name": "districtry Oklahoma",
-      "bbox": {
-        "minLng": -103.01,
-        "minLat": 33.61,
-        "maxLng": -94.43,
-        "maxLat": 37.01
-      }
-    },
-    {
-      "id": "southcarolina",
-      "label": "South Carolina",
-      "url": "https://districtry.com/sc/",
-      "emoji": "🌴",
-      "explorer_name": "districtry South Carolina",
-      "bbox": {
-        "minLng": -83.36,
-        "minLat": 31.99,
-        "maxLng": -78.49,
-        "maxLat": 35.16
-      }
-    },
-    {
-      "id": "tennessee",
-      "label": "Tennessee",
-      "url": "https://districtry.com/tn/",
-      "emoji": "🎸",
-      "explorer_name": "districtry Tennessee",
-      "bbox": {
-        "minLng": -90.32,
-        "minLat": 34.98,
-        "maxLng": -81.64,
-        "maxLat": 36.68
-      }
-    },
-    {
-      "id": "arkansas",
-      "label": "Arkansas",
-      "url": "https://districtry.com/ar/",
-      "emoji": "💎",
-      "explorer_name": "districtry Arkansas",
-      "bbox": {
-        "minLng": -94.62,
-        "minLat": 33.0,
-        "maxLng": -89.64,
-        "maxLat": 36.5
-      }
-    }
+    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
+      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
+    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
+      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
+    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
+      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
+    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
+      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
+    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
+      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
+    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
+      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
+    { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
+      "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
+    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
+    { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
+      "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } },
+    { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
+      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } },
+    { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
+      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } },
+    { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
+      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
+    { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
   ],
   "hover_number_keys": [
     [
@@ -310,7 +156,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "ar-county-officials.json, rebuilt weekly: the county judge from the Arkansas Judiciary's directory of county judges and clerks (with the office telephone, and the office address only where the Association of Arkansas Counties prints the same one), and the county's justices of the peace from the Association of Arkansas Counties' page for the county, listed as the association lists them, without a district; the Quorum Court District layer names each district's justice where a source says who it is. Recorded as gap ar-quorum-court.",
+        "people": "ar-county-officials.json, read on 2026-10-13: the county judge from the Arkansas Judiciary's directory of county judges and clerks (with the office telephone, and the office address only where the Association of Arkansas Counties prints the same one), and the county's justices of the peace from the Association of Arkansas Counties' page for the county, listed as the association lists them, without a district; the Quorum Court District layer names each district's justice where a source says who it is. Recorded as gap ar-quorum-court.",
         "applies": "Arkansas — statewide, all 75 counties."
       }
     },
@@ -382,7 +228,7 @@
             "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/19"
           }
         ],
-        "people": "ar-county-officials.json, rebuilt weekly: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. A district's justice is named from the county's own site where it numbers them (20 counties, measured 2026-10-13), and elsewhere from the association's 2024 general election results for justices of the peace, updated 17 December 2024, only while the association's current list for the county still includes that winner; a district whose winner has left, or cannot be matched, says so and names no one. Recorded as gap ar-quorum-court.",
+        "people": "ar-county-officials.json, read on 2026-10-13: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. A district's justice is named from the county's own site where it numbers them (20 counties, measured 2026-10-13), and elsewhere from the association's 2024 general election results for justices of the peace, updated 17 December 2024, only while the association's current list for the county still includes that winner; a district whose winner has left, or cannot be matched, says so and names no one. Recorded as gap ar-quorum-court.",
         "applies": "Arkansas — statewide, all 75 counties, 775 districts."
       }
     },
@@ -553,7 +399,7 @@
       {
         "file": "ar-county-officials.json",
         "min_keys": 75,
-        "note": "Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, refreshed weekly by update-ar-county-officials.yml."
+        "note": "Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, built by update-ar-county-officials.yml. That job is scheduled weekly but has not completed since 2026-10-13, because the association's site answers its requests from GitHub's servers with HTTP 403 (measured 2026-10-14 and 2026-10-15), so the file stays as read on 2026-10-13 and every card states that date."
       },
       {
         "file": "coverage-gaps.json",

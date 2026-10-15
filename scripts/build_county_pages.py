@@ -347,6 +347,29 @@ INSTANCES = [
          adapters=("tn_commissioners",),
          index_provenance="each name from the county's own published list of "
                           "its commission, read every week"),
+    # ARKANSAS'S GOVERNING BODY IS THE QUORUM COURT, AND ITS PRESIDING OFFICER
+    # IS NOT ONE OF ITS MEMBERS. Every county elects a county judge, who runs
+    # the county and presides over the quorum court without a vote (Ark.
+    # Const. amend. 55), and nine to fifteen justices of the peace, one from
+    # each district. The judge is a section of its own; a justice is named by
+    # district only where the district card names one, from the county's own
+    # numbered list or the association's 2024 results (Adam's rulings of
+    # 2026-10-13), and the justices no source places in a district are listed
+    # after the districts rather than dropped.
+    dict(tag="ar", state="Arkansas", concept="quorum-court",
+         index_page="quorum-court.html",
+         heading="%(county)s County Quorum Court",
+         page_title="%(county)s County Quorum Court",
+         phrase="quorum court", index_label="Quorum courts",
+         all_label="All Arkansas quorum courts",
+         app_name="districtry Arkansas", app_url="https://districtry.com/ar/",
+         district_word="District", member_word="Justice of the Peace",
+         adapters=("ar_quorum_courts",),
+         index_provenance="each county judge from the Arkansas Judiciary's "
+                          "directory, and each justice of the peace named by "
+                          "district from the county's own list or from the "
+                          "Association of Arkansas Counties' 2024 election "
+                          "results"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -1985,6 +2008,252 @@ def sc_councils(inst):
     return out, problems, nameless, [path], note
 
 
+AR_INTRO = ("Every Arkansas county is governed by a county judge, who runs the "
+            "county and presides over the quorum court without a vote, and a "
+            "quorum court of justices of the peace, one elected from each of "
+            "its districts. ")
+# The date style is the one _mn_date() writes for the read dates beside it.
+AR_ELECTION = ("Every seat on the court, and the county judge's office, is "
+               "elected at the general election of November 3, 2026 for a term "
+               "that starts on January 1, 2027.")
+AR_STANDFIRST = ("The county judge and the justices of the peace of the "
+                 "%(heading)s, named by district where a source says who sits "
+                 "for it.")
+AR_DESC = ("%(county)s County's quorum court: its county judge, and the "
+           "justice of the peace for each of its %(districts)d districts where "
+           "a source names one.")
+AR_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "published by the county, the Arkansas Judiciary or the "
+                 "Association of Arkansas Counties,\nand where none of them "
+                 "says who sits for a district this page says so rather than "
+                 "filling the gap.")
+AR_CTA_NOTE = ("Opens the map with the county and quorum court district layers "
+               "on. The district lines are the state's own map of every "
+               "county's justice of the peace districts.")
+AR_RESULTS_NOTES = {
+    "notOnList": "the justice of the peace elected here in 2024 is no longer on "
+                 "the Association of Arkansas Counties' current list for the "
+                 "county",
+    "noWinner": "the association's 2024 election results list no winner for "
+                "this district",
+    "unclear": "the 2024 winner's name cannot be matched with certainty to "
+               "anyone on the association's current list",
+}
+AR_SUFFIXES = ("jr", "sr", "ii", "iii", "iv")
+
+
+def _ar_fold(name):
+    import unicodedata
+    s = unicodedata.normalize("NFKD", name or "")
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]+", " ", s.lower()).split()
+
+
+def _ar_unplaced(placed, listed):
+    """The justices on the association's list whom no district on the page
+    names, so a page can list them rather than drop them.
+
+    THIS IS NOT A SECOND READING OF WHO SITS WHERE. The district names were
+    matched to the list when the roster was built (match_results and NUMBERED
+    in ar/scripts/build_ar_county_officials.py); this asks only which list
+    names are left over, in three passes that each take a name only when one
+    candidate answers — the whole name, then a surname nobody else on the list
+    shares, then the surname with the first given name — and the caller fails
+    the build unless what is left is exactly as many people as the districts
+    left unnamed. A list name this cannot account for therefore stops the
+    build rather than appearing twice or not at all."""
+    pool = list(listed)
+    left = list(placed)
+
+    def words(n):
+        return [w for w in _ar_fold(n) if w not in AR_SUFFIXES]
+
+    def take(test):
+        for p in list(left):
+            hits = [n for n in pool if test(p, n)]
+            if len(hits) == 1:
+                pool.remove(hits[0])
+                left.remove(p)
+
+    take(lambda p, n: _ar_fold(p) == _ar_fold(n))
+    take(lambda p, n: words(p)[-1:] == words(n)[-1:]
+         and sum(1 for m in pool if words(m)[-1:] == words(n)[-1:]) == 1)
+    take(lambda p, n: words(p)[-1:] == words(n)[-1:]
+         and words(p)[:1] == words(n)[:1])
+    return pool, left
+
+
+def ar_quorum_courts(inst):
+    """Arkansas: ONE file keyed by county GEOID ("05119"), each record carrying
+    the county judge and the quorum court (ar/scripts/build_ar_county_officials.py):
+    the association's list of the court's justices, which does not number them,
+    and either the county's own numbered list (`quorumCourt.districts`) or the
+    association's 2024 results matched to that list (`quorumCourt.results`).
+
+    THE PAGE NAMES WHAT THE DISTRICT CARD NAMES, IN THE SAME ORDER OF
+    PRECEDENCE: the county's own list wherever it exists, a "Vacant" there
+    being a vacancy; otherwise the 2024 winner while the association's list
+    still includes them; otherwise the reason the card gives, and no name. The
+    number of districts is the state's map's, so a district no source names
+    still has its section. Justices on the list that no district names are
+    listed after the districts, and the county judge before them."""
+    path = os.path.join(app_data(inst["tag"]), "ar-county-officials.json")
+    map_path = os.path.join(app_data(inst["tag"]), "ar-quorum-court-districts.json")
+    drawn = {}
+    for f in _read(map_path).get("features") or []:
+        props = f.get("properties") or {}
+        drawn.setdefault(str(props.get("countyFips")), set()).add(
+            str(props.get("district")))
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+        qc = rec.get("quorumCourt") or {}
+        judge = rec.get("judge") or {}
+        labels = sorted(drawn.get(geoid) or (), key=district_sort_key)
+        read_on = _mn_date(qc.get("asOf"))
+        if not name or not labels or not read_on:
+            problems.append("ar-county-officials.json %r carries no county or no "
+                            "read date, or the district map draws none" % geoid)
+            continue
+        if labels != [str(i) for i in range(1, len(labels) + 1)]:
+            problems.append("ar %s County: the district map does not number its "
+                            "districts 1..N" % name)
+            continue
+        listed = [j["name"].strip() for j in qc.get("justices") or []
+                  if not j.get("vacant") and (j.get("name") or "").strip()]
+        list_vacant = sum(1 for j in qc.get("justices") or [] if j.get("vacant"))
+        own = qc.get("districts")
+        res = None if own else (qc.get("results") or {})
+        if own is not None and set(own) != set(labels):
+            problems.append("ar %s County: the county's own list numbers "
+                            "districts the map does not draw" % name)
+            continue
+
+        districts, placed, unnamed = [], [], 0
+        for label in labels:
+            if own is not None:
+                held = (own.get(label) or "").strip()
+                if not held or re.match(r"(?i)^vacant$", held):
+                    districts.append(district(label, vacancies=1))
+                    unnamed += 1
+                    continue
+            else:
+                held = ((res.get("districts") or {}).get(label) or "").strip()
+                if not held:
+                    why = [k for k in AR_RESULTS_NOTES
+                           if label in (res.get(k) or [])]
+                    if len(why) != 1:
+                        problems.append("ar %s County District %s: the 2024 "
+                                        "results neither name it nor say why"
+                                        % (name, label))
+                        continue
+                    districts.append(district(label,
+                                              note=AR_RESULTS_NOTES[why[0]] + "."))
+                    unnamed += 1
+                    continue
+            placed.append(held)
+            districts.append(district(label, [{"name": held,
+                                               "role": inst["member_word"]}]))
+
+        extras = []
+        if (judge.get("name") or "").strip():
+            judge_read = _mn_date(judge.get("asOf"))
+            src = (judge.get("source") or "the Arkansas Judiciary's directory of "
+                   "county judges and clerks").strip()
+            line = src[:1].upper() + src[1:] + (
+                ", read %s." % judge_read if judge_read else ".")
+            if (judge.get("note") or "").strip():
+                line += " " + judge["note"].strip()
+            p = {"name": judge["name"].strip(),
+                 "role": "County Judge, presiding without a vote",
+                 "elected": line}
+            if (judge.get("phone") or "").strip():
+                p["phone"] = judge["phone"].strip()
+            extras.append(("county-judge", "County Judge", [p]))
+        else:
+            problems.append("ar %s County carries no county judge" % name)
+
+        # Who on the list no district names. None where every district is
+        # named or vacant, which is most counties, and then the list is not
+        # read at all, so a spelling difference between two publishers of a
+        # name both have (Pulaski's Elliot and Elliott) cannot stop the build.
+        needed = unnamed - list_vacant
+        after = []
+        if needed > 0:
+            rest, unmatched = _ar_unplaced(placed, listed)
+            if unmatched or len(rest) != needed:
+                problems.append("ar %s County: %d district(s) name nobody and "
+                                "the association lists %d justice(s) no "
+                                "district names (%s); the two must agree before "
+                                "a page can list them"
+                                % (name, needed, len(rest), ", ".join(rest)))
+                continue
+            extras.append(("not-placed",
+                           "Justices not matched to a district",
+                           [{"name": n, "role": inst["member_word"]}
+                            for n in rest]))
+            after.append("not-placed")
+            for d in districts:
+                if d["note"]:
+                    d["note"] = d["note"][:-1] + (
+                        "; the justices this page cannot place in a district "
+                        "are listed after the districts.")
+
+        if own is not None:
+            how = ("%s County publishes its own list of its quorum court by "
+                   "district, and this page names each district's justice from "
+                   "it, read on %s." % (name, _mn_date(qc.get("districtAsOf"))
+                                        or read_on))
+        else:
+            how = ("No list from %s County says which justice sits for which "
+                   "district, so this page names each district's justice from "
+                   "the Association of Arkansas Counties' 2024 general election "
+                   "results, and only while the association's current list for "
+                   "the county, read on %s, still includes the winner." %
+                   (name, read_on))
+        lede = esc(AR_INTRO + how + " " + AR_ELECTION).replace("%", "%%")
+
+        def link(url, text):
+            return ('<a href="%s" rel="noopener" target="_blank">%s</a>'
+                    % (esc(url), esc(text))) if url else esc(text)
+        judge_src = (judge.get("source") or "the Arkansas Judiciary's directory "
+                     "of county judges and clerks").strip()
+        sources = ["%s for the county judge" % link(judge.get("sourceUrl"),
+                                                     judge_src),
+                   "%s for the list of justices"
+                   % link(qc.get("sourceUrl"), "the Association of Arkansas "
+                          "Counties' page for %s County" % name)]
+        if own is not None:
+            sources.append("%s for who sits for which district"
+                           % link(qc.get("districtSourceUrl"),
+                                  "%s County's own list" % name))
+        else:
+            sources.append("%s for who sits for which district"
+                           % link(res.get("sourceUrl"), "the association's 2024 "
+                                  "election results"))
+        source_html = "Sources: %s, %s and %s, each read on %s." % (
+            sources[0], sources[1], sources[2], esc(read_on))
+
+        entry = {"districts": districts, "extras": extras,
+                 "after_anchors": after, "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "lede": lede,
+                 "standfirst": AR_STANDFIRST, "desc": AR_DESC,
+                 "disclaimer": AR_DISCLAIMER, "cta_note": AR_CTA_NOTE,
+                 "source_html": source_html}
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ar %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = entry
+    note = ("%d of Arkansas's 75 counties, each county judge and every justice "
+            "of the peace on the association's list, by district where a source "
+            "places them" % len(out))
+    return out, problems, nameless, [path], note
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -2229,6 +2498,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "sc_councils": sc_councils,
             "ky_county_governments": ky_county_governments,
             "tn_commissioners": tn_commissioners,
+            "ar_quorum_courts": ar_quorum_courts,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -2551,14 +2821,25 @@ def districted_body(inst, name, rec):
                   "Opens the map with the county and %s layers on. Search your "
                   "address or ZIP, or tap your location."
                   % esc(inst["phrase"])))
-    for anchor, heading, members in rec.get("extras") or []:
-        rows = [h for h in (member_html(m) for m in members) if h]
-        if not rows:
-            continue
-        out.append('<section class="district" id="%s">' % esc(anchor))
-        out.append('<h2>%s</h2>' % esc(heading))
-        out.append('<ul class="members">%s</ul>' % "".join(rows))
-        out.append('</section>')
+    # An extra section renders before the districts unless the record names
+    # its anchor in `after_anchors`: Arkansas lists the justices no district
+    # names AFTER the districts, where a reader who did not find a name under
+    # their own district looks next. A record without the key is unchanged.
+    after = set(rec.get("after_anchors") or ())
+
+    def extra_sections(trailing):
+        for anchor, heading, members in rec.get("extras") or []:
+            if (anchor in after) != trailing:
+                continue
+            rows = [h for h in (member_html(m) for m in members) if h]
+            if not rows:
+                continue
+            out.append('<section class="district" id="%s">' % esc(anchor))
+            out.append('<h2>%s</h2>' % esc(heading))
+            out.append('<ul class="members">%s</ul>' % "".join(rows))
+            out.append('</section>')
+
+    extra_sections(False)
     for d in rec["districts"]:
         label = d["label"]
         # A whole label ("District 2", Indiana's) anchors as #district-2, the
@@ -2599,6 +2880,7 @@ def districted_body(inst, name, rec):
             out.append('<p class="unlisted">Not listed in the county\'s '
                        'directory.</p>')
         out.append('</section>')
+    extra_sections(True)
     unnamed = seats - named
     if unnamed:
         out.append('<p class="unlisted">%d of %d listed seats are not named by '
@@ -2669,6 +2951,13 @@ def source_note(rec, at_large):
     """Where the names came from, in the page's own words. A page that names
     people without saying who published them is the thing this project refuses
     everywhere else."""
+    # A RECORD WHOSE NAMES COME FROM SEVERAL PUBLISHERS writes its own line,
+    # already escaped (Arkansas: the judiciary for the judge, the association
+    # for the list, the county or the 2024 results for the districts). It also
+    # states only the day each was read, never a schedule: the job that re-reads
+    # Arkansas's could not reach the association's site at go-live.
+    if rec.get("source_html"):
+        return '<p class="source-note">%s</p>' % rec["source_html"]
     bits = []
     if at_large:
         if rec.get("sourceDocument"):
@@ -3323,28 +3612,14 @@ NOT_COUNTY_BOARDS = {
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
     ),
-    "ar/data/app/ar-county-officials.json": dict(
-        date="2026-10-13",
-        reason="Arkansas's county judges and quorum courts, which ARE the "
-               "county's governing body and belong on these pages. They are "
-               "held back for the reason South Carolina's councils were until "
-               "it went live: Arkansas is dark, and a county page, its index "
-               "and the about page's officeholder count would describe an app "
-               "nobody can open yet. Its go-live change writes the adapter and this "
-               "entry goes. The adapter has a choice to make that no other "
-               "state has posed: a district's justice comes from the county's "
-               "own numbered list or from the association's 2024 election "
-               "results, and some districts are deliberately left unnamed, "
-               "so a page must lay out only what the district cards name.",
-    ),
     "ms/data/app/ms-county-officials.json": dict(
         date="2026-10-15",
         reason="Mississippi's county boards of supervisors, which ARE the "
                "county's governing body and belong on these pages. They are "
-               "held back for the reason Arkansas's are: Mississippi is dark, "
-               "and a county page, its index and the about page's officeholder "
-               "count would describe an app nobody can open yet. Its go-live "
-               "change writes the adapter and this entry goes.",
+               "held back because Mississippi is dark, and a county page, its "
+               "index and the about page's officeholder count would describe "
+               "an app nobody can open yet. Its go-live change writes the "
+               "adapter and this entry goes.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",

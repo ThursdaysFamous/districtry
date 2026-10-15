@@ -110,7 +110,9 @@ asks whether the app draws the map at all. Every state is divided into county
 subdivisions: in some they are governments (Illinois and Indiana townships,
 Michigan and Wisconsin towns and townships, New York towns), and in others they
 are areas the Census draws for counting only (Kentucky, North Carolina,
-Oklahoma, South Carolina, Tennessee). The map is owed either way; where the
+Oklahoma, South Carolina, Tennessee), or legal areas the Census records as
+having no functioning government (Arkansas's townships). The map is owed
+either way; where the
 units govern nobody, the card says so rather than implying a government.
 
 **The Census map is the default source, not the last word.** Where a county
@@ -147,10 +149,11 @@ already sit. Nor is an Indiana township, for the same reason: measured
 2026-10-11, 61 clear the line, and the trustee runs township assistance, fire
 protection and cemeteries while the county governs an unincorporated resident.
 No active township or town in Iowa, Kentucky, Wisconsin, Minnesota, North
-Carolina, Oklahoma, South Carolina or Tennessee reaches 25,000 (North
-Carolina's townships govern nobody, and the last three states are divided into
-census county divisions, which are statistical areas), so the question does not
-arise in those eight today; if one ever does, it is answered by the
+Carolina, Oklahoma, South Carolina, Tennessee or Arkansas reaches 25,000 (North
+Carolina's townships govern nobody, Oklahoma, South Carolina and Tennessee are
+divided into census county divisions, which are statistical areas, and every
+Arkansas township is one the Census records as having no functioning
+government), so the question does not arise in those nine today; if one ever does, it is answered by the
 general-purpose test above and not by a per-state exception.
 
 | app | units at 25,000+ | of which towns or townships |
@@ -163,13 +166,14 @@ general-purpose test above and not by a per-state exception.
 | Indiana | 39 | — |
 | Wisconsin | 35 | — |
 | Tennessee | 28 | — |
+| Arkansas | 19 | — |
 | Iowa | 18 | — |
 | Kentucky | 17 | — |
 | South Carolina | 17 | — |
 | Oklahoma | 16 | — |
 
-That is 530 governments across the twelve statewide apps. The first seven rows
-were measured 2026-10-01 and the rest 2026-10-11;
+That is 549 governments across the thirteen statewide apps. The first seven rows
+were measured 2026-10-01, Arkansas's 2026-10-15 and the rest 2026-10-11;
 until then the scoring tool read a state it had not measured as one with nothing
 to answer, so Indiana, North Carolina and Oklahoma passed this entry unchecked.
 San Francisco is one city, so its city tier is the whole app.

@@ -43,6 +43,7 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
+| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 11 | all | 8 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 77 | 77 | all | 65 | all | 12 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 411 | all | 12 of 14 levels |
@@ -64,6 +65,21 @@ per county, so each one is named under its state below.
 - **ca** — no county frontier, so E and A do not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
 
 ## What each state still needs
+
+### ar — EAM·
+
+- **Watched, not rewritten:** `ar/data/app/ar-quorum-court-districts.json`, by `.github/workflows/update-ar-county-officials.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
+- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `ar-house-districts.json`, `ar-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 19 units at 25,000+ name a governing body; unanswered: Bella Vista city, Benton city, Bentonville city, Cabot city, Conway city, Fayetteville city, Fort Smith city, Hot Springs city and 11 more
+  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
+  - **10. School boards elected by district** — open (required only where the state has the level)
+  - **11. Election precincts** — open (required only where the state has the level)
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
+  - **14. Township or county subdivision boundaries** — open
+- **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **9. Townships or other general-purpose sub-county governments** — Arkansas has no sub-county general-purpose government — outside a city or town limit the county governs. The 1,051 sub-county units the Census publishes for Arkansas are townships, which the Census records as having no functioning government.
+  - **13. Tribal governments** — Arkansas has no tribal land. The Census publishes no federal or state reservation and no off-reservation trust land in the state, measured 2026-10-15 with a control in Tennessee.
 
 ### ca — **E.A.M.C.**
 

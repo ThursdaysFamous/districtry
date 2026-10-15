@@ -483,7 +483,9 @@
     { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
       "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
-      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
   ],
   "sources_page": {
     "file": "ky/sources.html",
