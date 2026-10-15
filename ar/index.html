@@ -8292,18 +8292,30 @@ function initArkansasExplorer() {
    * place shared from the Google Maps app into the installed app on a phone
    * was told its short link couldn't be read, and minutes later the lookup
    * answered the same link at once, six times in a row, and on the live
-   * site through the installed app's launcher at a phone's size. Which side
-   * failed that once is not established: the lookup's own code records
-   * nothing, and Deno keeps a trace of each request for one day, in the
-   * Deno account rather than anywhere this code can read. So a
-   * failed try is made again after 1.5 seconds and once more after 4, and
-   * each try gives up after 8 seconds rather than leaving "Reading the
-   * link…" on screen for good. Two answers are not tried again, because a
-   * second try cannot change them: a 400 (the lookup refuses what it was
-   * sent) and a full link that is itself short. onRetry, if given, is
-   * called with the failed try's error before each new try, so the page can
-   * say it is trying again. A try cut short by `signal` rejects with an
-   * AbortError, as fetch does; one that ran out of time does not.
+   * site through the installed app's launcher at a phone's size. The
+   * lookup's own code records nothing, but Deno keeps a trace of each
+   * request for one day, in the Deno account rather than anywhere this code
+   * can read, and that request's trace, read the same day, holds one fetch:
+   * the lookup asked the short link's own host, which answered 404 in 107 ms.
+   * That is the answer the host gives a link that does not exist ("Dynamic
+   * Link Not Found", measured the same evening with a made-up one), so
+   * Google did not know a link it knew minutes later. The likeliest reason,
+   * inferred rather than measured, is that the link was seconds old: a share
+   * hands the app a link Google has only just made, and the app asks about
+   * it at once, which a pasted link rarely does. So a failed try is made
+   * again after 1.5 seconds and once more after 4, and a lookup 404 (how the
+   * lookup reports any answer that does not lead to a map) once more after
+   * 10, because a link too new to be known gets that answer and the wait
+   * costs time only when a link fails. Each try gives up after 8 seconds
+   * rather than leaving "Reading the link…" on screen for good, and the
+   * other failures keep two retries, because a fourth try after three
+   * timeouts would keep a reader waiting most of a minute. Two answers are
+   * not tried again, because a second try cannot change them: a 400 (the
+   * lookup refuses what it was sent) and a full link that is itself short.
+   * onRetry, if given, is called with the failed try's error before each
+   * new try, so the page can say it is trying again. A try cut short by
+   * `signal` rejects with an AbortError, as fetch does; one that ran out of
+   * time does not.
    *
    * WHICH SIDE FAILED is the rejection's `reason`, which mapLinkMessage
    * tells the reader, so the next failure on a phone says what this one
@@ -8314,6 +8326,7 @@ function initArkansasExplorer() {
    * or Apple did not send it to a map (its 404), and "no-answer" when Google
    * or Apple did not answer the lookup (its 502). */
   var MAP_LINK_RETRY_WAITS = [1500, 4000];
+  var MAP_LINK_NEW_LINK_WAITS = MAP_LINK_RETRY_WAITS.concat([10000]);
   var MAP_LINK_TRY_MS = 8000;
   var MAP_LINK_STATUS_REASONS = { 404: "no-map", 502: "no-answer" };
 
@@ -8365,8 +8378,9 @@ function initArkansasExplorer() {
         });
     }
     function again(err) {
-      if (err.name === "AbortError" || err.final || retries >= MAP_LINK_RETRY_WAITS.length) throw err;
-      var wait = MAP_LINK_RETRY_WAITS[retries++];
+      var waits = err.reason === "no-map" ? MAP_LINK_NEW_LINK_WAITS : MAP_LINK_RETRY_WAITS;
+      if (err.name === "AbortError" || err.final || retries >= waits.length) throw err;
+      var wait = waits[retries++];
       if (onRetry) onRetry(retries, err);
       return new Promise(function (resolve, reject) {
         var timer = setTimeout(function () {

@@ -95,9 +95,11 @@ if (!full || full.kind !== "point" || !near(full.lat, 41.88395) || !near(full.ln
   failed++; console.error("map-link: FAIL the lookup's full link was not read as its place; got " + JSON.stringify(full));
 }
 // A FAILED LOOKUP IS TRIED AGAIN, and only when a second try could answer
-// differently. The block's waits (1.5 and 4 seconds between tries, 8 seconds
-// for each try) run here a thousand times faster, and every delay it asks
-// for is recorded, so the retry schedule is checked rather than waited out.
+// differently. The block's waits (1.5 and 4 seconds between tries, 10 more
+// before a fourth try when the lookup answered 404, the answer a link too new
+// for Google to know gets, and 8 seconds for each try) run here a thousand
+// times faster, and every delay it asks for is recorded, so the retry
+// schedule is checked rather than waited out.
 const realSetTimeout = globalThis.setTimeout;
 let waits = [];
 globalThis.setTimeout = (fn, ms) => { waits.push(ms); return realSetTimeout(fn, ms / 1000); };
@@ -114,7 +116,10 @@ const lookups = [
   ["a short link again", [DAMAGED], 1, false, "no-map"],
   ["a 400", [{ ok: false, status: 400 }], 1, false, ""],
   ["a 502 on every try", [{ ok: false, status: 502 }], 3, false, "no-answer"],
-  ["a 404 on every try", [{ ok: false, status: 404 }], 3, false, "no-map"],
+  ["a 404 on every try", [{ ok: false, status: 404 }], 4, false, "no-map"],
+  ["a 404 three times, then the place", [{ ok: false, status: 404 }, { ok: false, status: 404 }, { ok: false, status: 404 }, PLACE], 4, true],
+  ["a 404, then a 502 on every try", [{ ok: false, status: 404 }, { ok: false, status: 502 }], 3, false, "no-answer"],
+  ["a 502 twice, then a 404", [{ ok: false, status: 502 }, { ok: false, status: 502 }, { ok: false, status: 404 }], 4, false, "no-map"],
   ["no answer on every try", [NO_ANSWER], 3, false, "unreached"],
   ["a hung request on every try", [HANG], 3, false, "timeout"],
   ["a 502, then the place", [{ ok: false, status: 502 }, PLACE], 2, true],
@@ -136,7 +141,7 @@ for (const [label, answers, wantTries, wantResolved, wantReason] of lookups) {
   if (!!got.v !== wantResolved) problems.push(got.v ? "resolved" : "rejected (" + (got.e && got.e.message) + ")");
   if (got.v && got.v.kind !== "point") problems.push("resolved to " + JSON.stringify(got.v));
   if (!wantResolved && got.e && got.e.reason !== wantReason) problems.push("reason " + JSON.stringify(got.e.reason) + ", want " + JSON.stringify(wantReason));
-  if (JSON.stringify(pauses) !== JSON.stringify([1500, 4000].slice(0, wantTries - 1))) problems.push("paused " + JSON.stringify(pauses));
+  if (JSON.stringify(pauses) !== JSON.stringify([1500, 4000, 10000].slice(0, wantTries - 1))) problems.push("paused " + JSON.stringify(pauses));
   if (retried.length !== wantTries - 1 || retried.some(([n, r], i) => n !== i + 1 || !r)) problems.push("told the page " + JSON.stringify(retried));
   if (problems.length) { failed++; console.error("map-link: FAIL a lookup answering " + label + ": " + problems.join("; ")); }
 }
