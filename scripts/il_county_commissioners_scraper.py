@@ -41,7 +41,7 @@ import aia_bundle
 import platinum_canvass
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
-    require_robots_once, UA_CHROME_X11_128,
+    require_robots_once, UA_CHROME_X11_128, UA_HEADERS_ROSTER_BOT,
 )
 
 UA = {"User-Agent": UA_CHROME_X11_128}
@@ -1290,6 +1290,92 @@ def parse_pulaski(page):
     return members, None
 
 
+# ------------------------------------------------------------------- Scott
+def scott_feed(page):
+    """The address the Scott page's own script loads its member list from.
+
+    scottcoil.gov/commissioners arrives with an empty People block and fills it
+    a moment later with `import('/api/public/mwjsPeople?tn=…&et=…&pi=…&eb=…')`.
+    Those parameters are the page's, handed to every visitor, so they are READ
+    OFF THE PAGE on every run rather than pinned here: if Munibit rotates them,
+    the next run follows the page. Called bare, without them, the endpoint
+    answers HTTP 500 — which is what an 8 Aug 2026 pass took for a shut door
+    and wrote into a gap record and a letter (corrected 2026-10-15; the fleet
+    rule is in CLAUDE.md, "A page that loads its names after it opens")."""
+    m = re.search(r"import\('(/api/public/mwjsPeople\?tn=[^']+)'\)", page)
+    return html_mod.unescape(m.group(1)) if m else None
+
+
+def parse_scott(page, feed):
+    """Scott County's three commissioners, from the feed its page renders.
+
+    The feed is a JavaScript module that opens `var mwjsMemberData={…};`, a
+    JSON object whose `people` carry `personName` and one category apiece
+    (`cats[0].ItemText`: "County Chair" or "Commissioner"). Measured
+    2026-10-15: John Simmons, Robert Schafer (County Chair) and Tom Peterson —
+    the same three the county's OFFICIAL canvasses on results.gbsvote.com
+    (l_id=19) show winning the 2020, 2022 and 2024 commissioner contests, which
+    is the independent check that this is the sitting board.
+
+    WHAT IT DOES NOT CARRY, so nothing here invents it: every person's
+    `personPhone` is 2177425532 and every address 35 E. Market St., Winchester —
+    the commissioners' office, not a member's own line — so both ship once, as
+    the office, and no member gets a phone. No personal e-mail is published
+    (`personEmail` is empty on all three); the office address
+    commissioners@scottcoil.gov comes from the page's content block. No party,
+    term or start date is published either.
+
+    AT-LARGE, proven independently of this page: the 8 Nov 2022 general, marked
+    ** OFFICIAL RESULTS **, carries "FOR COUNTY COMMISSIONER / 10 of 10 precincts
+    reporting / Vote for ( 1 )"."""
+    m = re.search(r"var mwjsMemberData=(\{.*?\});\s*let ", feed or "", re.S)
+    if not m:
+        return [], None
+    try:
+        data = json.loads(m.group(1))
+    except ValueError:
+        return [], None
+    members, addrs, phones = [], set(), set()
+    for person in data.get("people") or []:
+        name = clean(person.get("personName"))
+        if not name:
+            continue
+        entry = {"name": name}
+        cats = person.get("cats") or []
+        role = role_of(cats[0].get("ItemText")) if cats else None
+        if role:
+            entry["role"] = role
+        email = (person.get("personEmail") or "").strip().lower()
+        if email:
+            entry["email"] = email
+        if not any(x["name"] == name for x in members):
+            members.append(entry)
+        for a in person.get("addresses") or []:
+            parts = [clean(a.get("PAddress1")), clean(a.get("PCity"))]
+            if all(parts):
+                addrs.add("%s, %s, %s %s" % (parts[0], parts[1], clean(a.get("PState")),
+                                             clean(a.get("PZip"))))
+        phone = normalize_phone(person.get("personPhone"))
+        if phone:
+            phones.add(phone)
+    content = re.search(r'(?is)<div id="firstSection".*?</div></div></div>', page)
+    block = content.group(0) if content else ""
+    page_phone = normalize_phone(clean(block))
+    # the office line is printed on the page AND on every person in the feed;
+    # the two copies must agree before either ships
+    if phones and page_phone and phones != {page_phone}:
+        return [], None
+    office = {"label": "Scott County Commissioners"}
+    if len(addrs) == 1:
+        office["address"] = addrs.pop()
+    if page_phone:
+        office["phone"] = page_phone
+    email = email_in(block)
+    if email:
+        office["email"] = email
+    return members, office
+
+
 # ------------------------------------------------- incomplete TLS chains
 # THE COLES PATTERN, MET A SECOND TIME. gallatinco.illinois.gov answers 200 and
 # renders perfectly in a browser, but serves ONLY its leaf certificate — the
@@ -1429,13 +1515,27 @@ SITES = {
         "expect": 5,
         "parse": parse_hamilton,
     },
+    "SCOTT": {
+        "name": "Scott County",
+        # The page renders its members from a feed whose address it carries;
+        # see scott_feed. The www host is where the page and the feed live.
+        "url": "https://www.scottcoil.gov/commissioners",
+        "structure": "Commission form \u2014 3 commissioners elected countywide",
+        "expect": 3,
+        "feed": scott_feed,
+        "parse": parse_scott,
+        # Our own token: the page and its feed both answered it in full on
+        # 2026-10-15 (HTTP 200, 121,382 bytes for the page, 313,670 for the
+        # feed), and robots.txt is a 404 on the host, so no group binds.
+        "headers": UA_HEADERS_ROSTER_BOT,
+    },
 }
 
 
 FETCH_ATTEMPTS = 3
 
 
-def fetch(session, url, verify=True):
+def fetch(session, url, verify=True, headers=None):
     """GET with a bounded retry. Returns (response, error_or_None).
 
     WHY A RETRY EXISTS HERE (added 2026-08-08). There was none, and a single
@@ -1459,13 +1559,18 @@ def fetch(session, url, verify=True):
     # www.calhouncountyil.gov a 127-byte one, neither matching any path read
     # here, on all three reads of a deliberate re-measurement fifteen seconds
     # apart. Both had been recorded as answering every client with a challenge.
-    require_robots_once(url, UA["User-Agent"], headers=UA,
+    #
+    # A county added since then starts on our own token, the fleet's default,
+    # through its SITES entry's `headers`; the browser string stays for the
+    # counties that were already read with it.
+    headers = headers or UA
+    require_robots_once(url, headers["User-Agent"], headers=headers,
                         label="il-county-commissioners",
                         verify=None if verify is True else verify)
     last = None
     for attempt in range(FETCH_ATTEMPTS):
         try:
-            resp = session.get(url, headers=UA, timeout=60, verify=verify)
+            resp = session.get(url, headers=headers, timeout=60, verify=verify)
             resp.raise_for_status()
             return resp, None
         except requests.RequestException as exc:
@@ -1554,12 +1659,25 @@ def main():
             if name not in bundles:
                 bundles[name] = aia_bundle.ca_bundle("county-commissioners", name)
             verify = bundles[name]
-        resp, err = fetch(session, spec["url"], verify)
+        resp, err = fetch(session, spec["url"], verify, spec.get("headers"))
         if resp is None:
             print("county-commissioners: WARN — %s unreadable after %d attempts (%s)"
                   % (key, FETCH_ATTEMPTS, err), file=sys.stderr)
             continue
-        members, office = spec["parse"](resp.text)
+        if spec.get("feed"):
+            # A page that fills itself in from a feed: read the feed the way the
+            # page does, at the address the page carries, on the page's host.
+            feed_path = spec["feed"](resp.text)
+            feed_resp, feed_err = (fetch(session, requests.compat.urljoin(resp.url, feed_path), verify, spec.get("headers"))
+                                   if feed_path else (None, "the page no longer names its feed"))
+            if feed_resp is None:
+                print("county-commissioners: WARN — %s feed unreadable (%s)"
+                      % (key, feed_err), file=sys.stderr)
+                continue
+            parse = (lambda page, _f=feed_resp.text, _p=spec["parse"]: _p(page, _f))
+        else:
+            parse = spec["parse"]
+        members, office = parse(resp.text)
         # ZERO is the flake signature, so it earns one more look: a page whose
         # SHAPE changed usually still yields some rows, while a challenge page
         # or a truncated response yields none. Re-fetching cannot hide a real
@@ -1567,9 +1685,9 @@ def main():
         # refuses to write, exactly as before.
         if not members and spec["expect"]:
             time.sleep(3)
-            retry, _ = fetch(session, spec["url"], verify)
+            retry, _ = fetch(session, spec["url"], verify, spec.get("headers"))
             if retry is not None:
-                members, office = spec["parse"](retry.text)
+                members, office = parse(retry.text)
                 if members:
                     print("county-commissioners: %s parsed 0 on the first fetch and %d "
                           "on a re-fetch — transient, not a page change"

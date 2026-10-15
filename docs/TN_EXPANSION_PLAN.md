@@ -22,7 +22,7 @@
 | U.S. House | 9 (the 119th Congress's map) | pre-built | the representative, refreshed weekly |
 | Tennessee Senate | 33 | pre-built | the senator, from the Legislature's own map |
 | Tennessee House | 99 | pre-built | the representative, from the same map (two seats listed vacant) |
-| County Commission District | 859 in 95 counties | pre-built | the members, in the 56 counties whose own pages were read (gap `tn-county-commissioners`) |
+| County Commission District | 859 in 95 counties | pre-built | the members, in the 57 counties whose own pages were read (gap `tn-county-commissioners`) |
 | City or Town | 345 | live | nobody (gap `tn-municipal-officeholders`) |
 | School District (Unified) | 127 | live | nobody (gap `tn-school-board-members`) |
 | School District (Elementary) | 15 | live | nobody (same gap) |
