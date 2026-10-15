@@ -1581,6 +1581,16 @@ ANSWERS = {
         # control (gap mn-judicial-roster).
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mn-judicial-district"),
+        # STILL OPEN 2026-10-15, one half done. The standard's township rule
+        # passes a state where boards are named wherever a list of them is
+        # published. The Township or City card now names the board of each of
+        # the 704 towns that hold their town election in November, from the
+        # Secretary of State's local results files
+        # (mn/scripts/build_mn_town_boards.py). The March towns' results are in
+        # no state file, BUT a town clerk certifies its officers to the county
+        # each spring and some counties publish those certifications (Goodhue,
+        # read 2026-10-15), so the counties that publish are owed before this
+        # level passes. Gap mn-township-officers carries both halves.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.

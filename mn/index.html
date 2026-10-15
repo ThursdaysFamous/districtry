@@ -14813,12 +14813,26 @@ function initMinnesotaExplorer() {
    * A town elects three supervisors to three-year terms, plus a clerk and a
    * treasurer in alternate years (Minn. Stat. § 367.03, read at
    * revisor.mn.gov on 2026-09-29 — the state's own publisher, which robots.txt
-   * allows). No statewide roster of those officers was found, so the card
-   * names nobody. Recorded as gap mn-township-officers.
+   * allows) — or, in a town that holds its election in November, every
+   * officer for four years and supervisors optionally for six (subd. 4 and
+   * 4a, read 2026-10-15).
+   *
+   * THE 704 NOVEMBER-ELECTION TOWNS NAME THEIR BOARD, from the Secretary of
+   * State's own local results files, every name dated to the election that
+   * seated it (mn/scripts/build_mn_town_boards.py; data/app/mn-town-boards.json),
+   * the city council card's posture. A March-election town's results are in
+   * no file the state publishes, so its card still names nobody; recorded as
+   * gap mn-township-officers.
    * ---------- */
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
+  // The supervisors, clerk and treasurer of each November-election town,
+  // keyed by the town's Census GEOID; every seat names the election that
+  // filled it.
+  var loadMnTownBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-town-boards.json", {}, 2);
+  });
 
   registerLayer({
     id: "county-subdivision",
@@ -14845,7 +14859,7 @@ function initMinnesotaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // the civil-division type taken from what TIGER's own NAME carries
@@ -14855,8 +14869,20 @@ function initMinnesotaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          board: null
         };
+        if (result.kind !== "township") return result;
+        // A roster that fails to load leaves the township card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadMnTownBoards().then(function (roster) {
+          result.board = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14867,8 +14893,11 @@ function initMinnesotaExplorer() {
       }));
       var KIND_NOTE = {
         "township": "Township — an organized town, and an active local " +
-          "government. It elects three supervisors to three-year terms, plus " +
-          "a clerk and a treasurer in alternate years (Minn. Stat. § 367.03).",
+          "government. It elects a board of supervisors, usually three, and " +
+          "usually a clerk and a treasurer: a town that votes in March " +
+          "elects supervisors for three years and the clerk and treasurer " +
+          "for two, and one that votes in November elects them for four " +
+          "(Minn. Stat. § 367.03).",
         "city": "This is the Census Bureau's placeholder subdivision record " +
           "for a city. A Minnesota city is not part of a township, so there " +
           "is no township government under this point — the city on the " +
@@ -14886,13 +14915,47 @@ function initMinnesotaExplorer() {
       // only a township has an officer this card would name: a city's people
       // belong on the city's own card, unorganized territory's on the
       // county's, and the water records have no government at all
-      if (result.kind === "township") {
+      if (result.kind === "township" && !result.board) {
         wrap.appendChild(renderFieldStack([{
           label: "Your town board",
-          value: "Not named here. No statewide roster of Minnesota's town " +
-            "supervisors, clerks and treasurers was found, and this app does " +
-            "not guess one — the township's own website is the current source."
+          value: result.rosterFailed
+            ? "The list of election winners did not load, so no name is " +
+              "shown. The township's own website names its board."
+            : "Not named here. This app names the boards of the towns that " +
+              "hold their town election in November, from the state's " +
+              "election results, and this town's board is not in them. That " +
+              "is the case for every town that votes in March: the state " +
+              "publishes no results file for March town elections. The " +
+              "township's own website is the current source."
         }]));
+      } else if (result.kind === "township") {
+        var people = [], rows = [];
+        (result.board.seats || []).forEach(function (seat) {
+          var label = String(seat.seat);
+          if (seat.name) {
+            var when = mnElectionDate(seat.election);
+            people.push({
+              name: String(seat.name),
+              badge: label,
+              note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+            });
+          } else {
+            rows.push({ label: label + ": not named here", value: String(seat.unnamed || "") + "." });
+          }
+        });
+        if (people.length) wrap.appendChild(renderPersonRows(people));
+        rows.push({
+          label: "What these names are",
+          value: "The winner of the most recent November election for each " +
+            "seat in the Minnesota Secretary of State's results. It is not a " +
+            "list the town keeps up to date, so if a seat has changed hands " +
+            "since (a resignation or an appointment) this still shows who won. " +
+            "A seat not listed was not on a November ballot since 2022: an " +
+            "appointed clerk or treasurer, or a supervisor elected earlier to " +
+            "a longer term. The township's own website says who holds each " +
+            "seat today."
+        });
+        wrap.appendChild(renderFieldStack(rows));
       }
       return wrap;
     }

@@ -7403,3 +7403,64 @@ found one error of ours.
   address link and the signature link, although each link's target was right.
 - The cross-check dates are promises. If the operator wants them kept, they need a reminder
   routine; none exists yet (offered to the operator 2026-10-13).
+
+## Ask mn-mat-town-officers — Minnesota Association of Townships: a list of each town's supervisors, clerk and treasurer
+
+> **NOT SENT.** Drafted 2026-10-15 by the Minnesota thread, to the association's general address,
+> `info@mntownships.org`, which its own Contact Us page gives for general questions (read
+> 2026-10-15 after its robots.txt, whose `*` group permits that page). The pages read first, so
+> the letter asks only for what is not already public: the home page, About, Contact Us, Township
+> Team, Information Library, Township Population and Update Officer Information. None lists
+> officers. The Update Officer Information page says MAT keeps officer records and asks towns to
+> report changes, and the Township Team page says MAT serves "over 9,000 township officers" in
+> "1,772 of the 1,776 townships".
+
+**Why this is asked.** Minnesota's map draws every one of the state's organized towns, and since
+2026-10-15 the Township or City card names the board of the 704 towns that hold their town
+election in November, from the Secretary of State's local results files, each name dated to the
+election that seated it. The other towns hold their election in March, which the towns run
+themselves, and those results are in no file the state publishes (the four March election days
+2023-2026 answer 404 on the Secretary of State's results host). So for roughly 1,090 towns the
+card names nobody. MAT is the one body that keeps a statewide record of town officers. One list
+from it would cover every March town at once, and would also tell us who holds a November town's
+seat today rather than who last won it — which is also the kind of change in how Minnesota
+publishes this information that the project exists to encourage.
+
+> Subject: A list of Minnesota's town supervisors, clerks and treasurers
+>
+> Hello,
+>
+> I run districtry (https://districtry.com/mn/), a free, non-commercial website where anyone can
+> click a point on a map of Minnesota, or type an address, and see every district that covers it
+> and who represents them there.
+>
+> The map shows every Minnesota township. For the towns that hold their town election in November,
+> it names the supervisors, clerk and treasurer from the Secretary of State's election results,
+> with the date of the election that seated each one. For the towns that vote in March, it names
+> nobody, because those results are not published anywhere statewide.
+>
+> Your website says MAT keeps a record of town officers for its member towns. Would MAT be willing
+> to share a list of each town's supervisors, clerk and treasurer, by name and office, that we may
+> show on the map and credit to MAT? Or, if it suits MAT better, to publish such a list on your own
+> website, where we could read it? Either would let a resident of any township see who serves on
+> their town board.
+>
+> We would show only each officer's name and office, and never a home address, phone number or
+> e-mail address. The map would link to MAT for anyone who wants to know more.
+>
+> A one-line reply is plenty. If this is not something MAT can do, a "no" is a genuinely useful
+> answer too, and we will keep reading the election results and each town's own website.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A list shared with us: recorded with its date and any terms MAT gives,
+and read into the Township or City card for every town it covers, each name dated to the list,
+with the November towns' election winners kept beside it so a reader can see where the two
+differ. A list published on MAT's site: read weekly after its robots.txt, the same way. Only names
+and offices are ever read. A no: recorded in gap `mn-township-officers` with its date, the
+November towns stay named from the election results, and the March towns stay unnamed until a
+statewide source appears.

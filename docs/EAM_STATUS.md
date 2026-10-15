@@ -50,7 +50,7 @@ different thing from one it failed.
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 7 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 13 | all | 8 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 13 of 14 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 18 | all | 13 of 14 levels |
+| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 19 | all | 13 of 14 levels |
 | nc | **EAM·** | 100 | 100/100 § | 372 | 579 | all | 11 | all | 8 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 8 of 14 levels |

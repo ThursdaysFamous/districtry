@@ -42,6 +42,21 @@ township card names the other the way Michigan's village card must. The subdivis
 1,797 organized towns, 901 city placeholder records standing for 851 distinct cities (50 of
 which cross a county line) and 59 unorganized territories.
 
+**THE TOWNSHIP CARD NAMES THE BOARD OF EVERY TOWN THAT VOTES IN NOVEMBER, AND ONLY THOSE**
+(2026-10-15, `mn/scripts/build_mn_town_boards.py` → `mn-town-boards.json`, rebuilt by
+`update-mn-city-councils.yml`). A town holds its town election in March or, by choice, in
+November; the November contests are in the Secretary of State's `local.txt` files beside the
+city contests, and 704 towns' boards come out of them — 2,813 of 3,115 seats named, each dated,
+292 of the rest won by write-in. A March town runs its own election and its results are in no
+file the state publishes (the March election days answer 404 on the results host), so about
+1,090 towns still name nobody under gap `mn-township-officers`, with a letter to the Minnesota
+Association of Townships drafted in `docs/ASK_DRAFTS.md`. **THE DONE-STANDARD LEVEL STAYS OPEN ON PURPOSE**: a town clerk certifies its officers to the county after each election and some counties publish those certifications (Goodhue's, read 2026-10-15), so the counties that publish are owed first; which of the 87 do is not yet measured. A seat a November town has not had
+on a ballot since 2022 is ABSENT rather than read from 2020: a six-year supervisor term (Minn.
+Stat. 367.03 subd. 4a) or an appointed clerk or treasurer leaves a board short, and the card
+says what a missing seat means. The results key a town by its five-digit county subdivision
+code, joined to exactly one TIGER township whose name matches; Lent and Lima have no TIGER
+record and are declared in `NO_TIGER_TOWNSHIP`.
+
 **THE SECONDARY SCHOOL TILING HAS EXACTLY ONE FEATURE AND SHIPS ANYWAY** — Park Rapids for
 grades 9-12 over the Pine Point district, 13.3 km². Iowa and Michigan both record a measured
 ZERO there and correctly ship nothing; one feature is not zero, and a reader standing inside it
