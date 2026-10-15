@@ -7403,3 +7403,113 @@ found one error of ours.
   address link and the signature link, although each link's target was right.
 - The cross-check dates are promises. If the operator wants them kept, they need a reminder
   routine; none exists yet (offered to the operator 2026-10-13).
+
+## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
+
+> **NOT YET ASKED — DRAFTED 2026-10-15.** To Jim Steil, Director of MARIS (the Mississippi
+> Automated Resource Information System, created by Miss. Code § 57-13-23 as "the mechanism
+> within state government for the storing, processing, extracting and disseminating of useful
+> data and information relating to the state's resources"), at `jsteil@mississippi.edu`. MARIS's
+> About page names him as Director with that address and asks "For better service, please use
+> email if possible" (read 2026-10-15, after the host's robots.txt, which answers 404 and so
+> permits every path). Postal: 3825 Ridgewood Road, Jackson, MS 39211; telephone (601) 432-6354.
+> The operator has not chosen between this and letters to the counties. It is drafted because one
+> office could cover all 82 counties, which is the choice the operator made for Tennessee on
+> 2026-10-11 (`tn-ctas-commissioner-districts`). The mailbox has not been searched for earlier
+> correspondence with MARIS; do that before it goes.
+
+**Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
+counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
+County's District 3 is vacant), and can draw the districts they represent in only 12 counties.
+The only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's
+county subdivisions are the supervisor districts. Measured 2026-10-15 by
+`ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
+Bureau's current edition differs from its 2020 edition in 12 counties, which the map draws; in 64
+counties the lines it shows are unchanged since 2020 and have a total population deviation above
+10% on the 2020 census (the largest district less the smallest, as a share of an equal district: a
+median of 37%, and as much as 304%), which suggests those counties have redrawn them since (an
+inference: nothing published says which counties redrew); in the last 6 they are
+unchanged and balanced, which proves nothing either way. MARIS publishes the Bureau's 2020 file
+as its supervisor district layer (`MS_SupervDists_2020`, publication date 2021-02-01, source
+"Census MAF/TIGER database" of 2021-01-29, read from its metadata 2026-10-15), and its
+`Political/MS_SupervisorDistricts_2020` map service listed no layers when read the same day,
+while it publishes the 2025 legislative maps and county parcels and point addresses county by
+county. A survey the same day of every county's website and planning and development district
+(the record is `/mnt/project-files/ms/supervisor-map-survey/`) found 25 counties publishing a
+usable map: 14 whose own lines differ from the Bureau's current ones, where across those 14
+counties the Bureau's lines place 146,842 of 1,065,116 residents in a different district; 10 whose
+own map confirms the Bureau's; and Tippah, whose current plan was found with its publisher not
+established. 21 counties had nothing online, 20 publish only a copy of the Bureau's lines, 15 only
+older or unresolved layers, and Yazoo a planning-district plan whose date is not established. Two
+planning and development districts publish supervisor maps for many of their counties: the
+Central Mississippi PDD from its own server, and the Golden Triangle PDD from an ArcGIS Online
+organisation whose portal record names it. One state office collecting the counties' current maps
+is the change in how Mississippi publishes this information that the project exists to
+encourage, and a no from MARIS is the evidence that it takes more than asking.
+
+> Subject: Mississippi's county supervisor district maps
+>
+> Dear Mr. Steil,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
+> a point on a map, or type an address, and see every district that covers it and who represents
+> them there. We are building Mississippi's map now; it is not public yet.
+>
+> For the county boards, we can name every sitting supervisor in all 82 counties from the
+> Secretary of State's directory. What we cannot find is a current map of the districts they
+> represent. The only statewide map I have found is the Census Bureau's, and MARIS's supervisor
+> district layer is the Bureau's 2020 file. The Bureau's current edition has new lines for only 12
+> counties. In 64 others the lines it still shows are the ones it showed in 2020, and they are out
+> of balance on the 2020 census, most of them badly, which suggests those counties have redrawn
+> them since.
+>
+> On 15 October I looked for each county's own map on its website and its planning and development
+> district's. 25 counties publish one that can be used. In 14 of them the county's map differs from
+> the Census Bureau's, and across those 14 counties the Bureau's lines place 146,842 of 1,065,116
+> residents in a different district from the county's own map. The Central Mississippi and Golden
+> Triangle planning and development districts already publish supervisor maps for many of their
+> counties. For 21 counties I found no map online, and 20 publish only a copy of the Census lines.
+>
+> I'd like to ask whether MARIS would consider either of two things:
+>
+> 1. If MARIS already has, or knows of, a newer collection of the counties' supervisor district
+>    lines than the 2020 Census file, a pointer to it would answer most of this letter.
+> 2. Otherwise, collect each county's current supervisor district map, as MARIS already publishes
+>    county parcels and point addresses county by county, and publish them in one place, free,
+>    ideally as one statewide layer that is updated whenever a county redraws.
+>
+> This is only about district boundaries, not voter records or any personal information. I'd be
+> glad to send the county-by-county list of what I found, with links to the 25 maps. I also
+> noticed that the supervisor districts map service currently shows no layers, in case that is
+> not already known.
+>
+> A short answer either way is useful, including a no, or the name of the right person to ask. If
+> another office, such as the Secretary of State's, is the better place for this, I'd be grateful
+> to know.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A pointer to a newer collection: each county's lines are taken from it
+only after the same checks the county-published maps get (five districts tiling the county,
+balanced on the 2020 census, and a sign the plan was adopted after 2020), and the gap
+`ms-supervisor-district-lines` shrinks by the counties it settles. A yes to collecting them: the
+map reads MARIS's layer as each county lands, after the host's robots.txt, and credits MARIS on
+the card. A no, or no answer after the follow-ups: recorded in that gap with its date, the map
+keeps drawing counties from their own published maps, and letters go to the counties with no
+current map online. Which state office could require counties to send in their maps, and whether
+that needs a change in law, is then the next question; nothing here establishes it.
+
+**Before sending:**
+
+- Re-read MARIS's About page in a browser and confirm the Director and the address are unchanged.
+- The counts must still match `/mnt/project-files/ms/supervisor-map-survey/` and
+  `ms/data/app/ms-supervisor-districts.json` on the day it goes; if the map has drawn more counties
+  since, say so.
+- The sentence about the empty map service is a courtesy and can be cut. Check it first: if the
+  service shows its layer again, cut it.
+- Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
+  Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
