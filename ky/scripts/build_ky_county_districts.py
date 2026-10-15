@@ -101,7 +101,7 @@ RESULTS_2022 = os.path.join(INSTANCE, "data", "source", "ky-fiscal-court-2022-re
 RECORD = os.path.join(INSTANCE, "data", "source", "ky-county-districts.source.json")
 
 PRECINCTS = ("https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/"
-             "SBE_Voting_Precincts_with_Attributes/FeatureServer/0")
+             "Ky_SBE_VTD_Boundaries_WM/FeatureServer/0")
 PRIMARY_PAGE = "https://elect.ky.gov/results/2020-2029/Pages/2026Primary-Recap-Sheets.aspx"
 GENERAL_PAGE = "https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx"
 

@@ -249,7 +249,7 @@
         "boundary": [
           {
             "label": "Kentucky State Board of Elections — voting precincts, composed into magisterial districts from the precincts on each magistrate race's ballot in the certified 2026 primary and 2022 general recap sheets (ky/scripts/build_ky_county_districts.py)",
-            "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/SBE_Voting_Precincts_with_Attributes/FeatureServer/0"
+            "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0"
           },
           {
             "label": "Kentucky State Board of Elections — 2026 primary recap sheets",

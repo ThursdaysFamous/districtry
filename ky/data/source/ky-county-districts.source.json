@@ -1594,10 +1594,10 @@
    "fips": "21185",
    "notes": [],
    "placedBy": {
-    "2022 general": 8,
+    "2022 general": 9,
     "2026 primary": 29
    },
-   "precincts": 37,
+   "precincts": 38,
    "sheet2022": "text",
    "sheet2026": "text"
   },
@@ -2101,12 +2101,12 @@
   "Warren": "https://webgis.bgky.org/server/rest/services/CCPC/CCPC_Magisterial_Voting_Districts/FeatureServer/0"
  },
  "fidelityWorstM": 20.0,
- "precincts": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/SBE_Voting_Precincts_with_Attributes/FeatureServer/0",
+ "precincts": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0",
  "publisher": "Kentucky State Board of Elections (precincts and recap sheets); LOJIC and the Lexington-Fayette Urban County Government (council maps)",
  "sheets": {
   "2022 general": "https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx",
   "2026 primary": "https://elect.ky.gov/results/2020-2029/Pages/2026Primary-Recap-Sheets.aspx"
  },
- "shipped_sha256": "b4231a97264cd6f7f65f47732b10d3c07a54212760d01464d1fae72cdee47d14",
+ "shipped_sha256": "548cade9d90af869e9acb1cea3c21f01612fc067baebf2a37ae235e6690b3ebf",
  "validate": "2000/2000 (100.00%) agreement, no point in two districts"
 }

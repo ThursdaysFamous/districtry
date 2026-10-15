@@ -298,7 +298,7 @@ ENDPOINTS = [
     {
         "layer": "fiscal-court",
         "url": ("https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/"
-                "SBE_Voting_Precincts_with_Attributes/FeatureServer/0/query"
+                "Ky_SBE_VTD_Boundaries_WM/FeatureServer/0/query"
                 "?where=1%3D1&returnCountOnly=true&f=json"),
         "min_count": 3100,
     },
