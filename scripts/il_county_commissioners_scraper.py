@@ -41,7 +41,7 @@ import aia_bundle
 import platinum_canvass
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
-    require_robots_once, UA_CHROME_X11_128,
+    require_robots_once, UA_CHROME_X11_128, UA_HEADERS_ROSTER_BOT,
 )
 
 UA = {"User-Agent": UA_CHROME_X11_128}
@@ -1524,6 +1524,10 @@ SITES = {
         "expect": 3,
         "feed": scott_feed,
         "parse": parse_scott,
+        # Our own token: the page and its feed both answered it in full on
+        # 2026-10-15 (HTTP 200, 121,382 bytes for the page, 313,670 for the
+        # feed), and robots.txt is a 404 on the host, so no group binds.
+        "headers": UA_HEADERS_ROSTER_BOT,
     },
 }
 
@@ -1531,7 +1535,7 @@ SITES = {
 FETCH_ATTEMPTS = 3
 
 
-def fetch(session, url, verify=True):
+def fetch(session, url, verify=True, headers=None):
     """GET with a bounded retry. Returns (response, error_or_None).
 
     WHY A RETRY EXISTS HERE (added 2026-08-08). There was none, and a single
@@ -1555,13 +1559,18 @@ def fetch(session, url, verify=True):
     # www.calhouncountyil.gov a 127-byte one, neither matching any path read
     # here, on all three reads of a deliberate re-measurement fifteen seconds
     # apart. Both had been recorded as answering every client with a challenge.
-    require_robots_once(url, UA["User-Agent"], headers=UA,
+    #
+    # A county added since then starts on our own token, the fleet's default,
+    # through its SITES entry's `headers`; the browser string stays for the
+    # counties that were already read with it.
+    headers = headers or UA
+    require_robots_once(url, headers["User-Agent"], headers=headers,
                         label="il-county-commissioners",
                         verify=None if verify is True else verify)
     last = None
     for attempt in range(FETCH_ATTEMPTS):
         try:
-            resp = session.get(url, headers=UA, timeout=60, verify=verify)
+            resp = session.get(url, headers=headers, timeout=60, verify=verify)
             resp.raise_for_status()
             return resp, None
         except requests.RequestException as exc:
@@ -1650,7 +1659,7 @@ def main():
             if name not in bundles:
                 bundles[name] = aia_bundle.ca_bundle("county-commissioners", name)
             verify = bundles[name]
-        resp, err = fetch(session, spec["url"], verify)
+        resp, err = fetch(session, spec["url"], verify, spec.get("headers"))
         if resp is None:
             print("county-commissioners: WARN — %s unreadable after %d attempts (%s)"
                   % (key, FETCH_ATTEMPTS, err), file=sys.stderr)
@@ -1659,7 +1668,7 @@ def main():
             # A page that fills itself in from a feed: read the feed the way the
             # page does, at the address the page carries, on the page's host.
             feed_path = spec["feed"](resp.text)
-            feed_resp, feed_err = (fetch(session, requests.compat.urljoin(resp.url, feed_path), verify)
+            feed_resp, feed_err = (fetch(session, requests.compat.urljoin(resp.url, feed_path), verify, spec.get("headers"))
                                    if feed_path else (None, "the page no longer names its feed"))
             if feed_resp is None:
                 print("county-commissioners: WARN — %s feed unreadable (%s)"
@@ -1676,7 +1685,7 @@ def main():
         # refuses to write, exactly as before.
         if not members and spec["expect"]:
             time.sleep(3)
-            retry, _ = fetch(session, spec["url"], verify)
+            retry, _ = fetch(session, spec["url"], verify, spec.get("headers"))
             if retry is not None:
                 members, office = parse(retry.text)
                 if members:
