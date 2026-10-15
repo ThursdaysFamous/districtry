@@ -1727,7 +1727,12 @@ file route is closed. No reply → one follow-up at about three weeks.
 
 ## Ask 15 — City of Marion, Iowa: four names and the ward each holds
 
-> **NOT YET ASKED — DRAFTED 2026-09-05.** Not queued in Gmail; there is no existing thread
+> **WITHDRAWN 2026-10-15, NEVER SENT.** The city's council page has been read since
+> 2026-10-01 by `ia/scripts/ia_city_council_scraper.py` with the browser client the city's
+> edge measurably requires, so all four ward members are named and Marion's wards shipped
+> on 2026-10-15. `marion-council-roster` is retired. Nothing below should be sent.
+>
+> *Original status:* NOT YET ASKED — DRAFTED 2026-09-05. Not queued in Gmail; there is no existing thread
 > with this office. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
 > `marion-council-roster` blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in the Marion row
 > of `ia/WATCH.md` — Iowa keeps the ledger in both, unlike Illinois.
