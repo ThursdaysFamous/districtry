@@ -2018,7 +2018,7 @@ CITY_FILES = {
 # at-large seat and owes no map.
 # ---------------------------------------------------------------------------
 
-def _ky_county_maps_owed(B):
+def _ky_county_maps_owed(B, records=None):
     """Kentucky counties whose fiscal court is elected by district.
 
     Read off each county's own `form` in the Department for Local Government's
@@ -2081,30 +2081,115 @@ def _in_county_maps_owed(B):
     return owed
 
 
-# Each state's derive function, and the layers whose drawn counties it
-# subtracts. Where a county-government entry names a layer the function does not
-# measure, which counties that layer draws is unmeasured, and the audit below
-# fails until somebody measures it.
-COUNTY_MAPS_OWED = {"ky": (_ky_county_maps_owed, ("fiscal-court",)),
-                    "in": (_in_county_maps_owed, ())}
+def _il_county_maps_owed(B, records):
+    """Illinois counties whose board is elected by district and is not drawn.
+
+    A county's roster keys its members by district when its board is elected
+    that way, and a board elected at large rides the shared commissioners file,
+    which carries no districts. The county-board layer draws a county exactly
+    when its dispatch table carries that county's `key:`, so a named county
+    with districted members and no key is owed a map. Read from il/index.html
+    rather than listed, because counties join the dispatch table weekly.
+    """
+    with open(os.path.join(REPO_ROOT, "il", "index.html"), encoding="utf-8") as fh:
+        text = fh.read()
+    mark = '    id: "county-board",\n'
+    if mark not in text:
+        fail("il: il/index.html no longer registers county-board in the shape "
+             "the county-map test reads, so it cannot tell which counties draw "
+             "their board districts.")
+    start = text.index(mark)
+    end = re.compile(r"\n  \}\);\n").search(text, start)
+    drawn = set(re.findall(r'key: "([a-z-]+)"', text[start:end.start()]
+                           if end else ""))
+    if len(drawn) < 2:
+        fail("il: parsed %d counties out of the county-board dispatch table — "
+             "it has changed shape" % len(drawn))
+    owed = set()
+    for name, rec in records.items():
+        if rec.get("districts") and B.slug_of(name) not in drawn:
+            owed.add(B.slug_of(name))
+    return owed
+
+
+def _ia_county_maps_owed(B, records):
+    """Iowa counties whose supervisors are elected by district and unmatched.
+
+    The county board directory gives each county's plan: Plan 1 elects at
+    large, Plan 2 at large from residency districts, and Plan 3 by district
+    (Iowa Code 331.206). A county "transitioning" to districts still has a
+    board elected at large. The supervisor-district layer draws every Plan 3
+    county, so what a Plan 3 county can still lack is the pairing: a roster
+    that names its supervisors without saying which district each holds tells
+    a reader the board, not the one member whose district holds the point.
+    """
+    rel = "ia/data/app/ia-county-board-directory.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    rel_geo = "ia/data/app/ia-supervisor-districts.json"
+    with open(os.path.join(REPO_ROOT, rel_geo), encoding="utf-8") as fh:
+        drawn = {f["properties"].get("COUNTY")
+                 for f in json.load(fh).get("features") or []}
+    by_district = {"PLAN 3"}
+    at_large = {"PLAN 1", "PLAN 2", "TRANSITIONING"}
+    owed = set()
+    for fips, rec in doc.items():
+        plan = rec.get("plan")
+        if plan not in by_district | at_large:
+            fail("ia: `%s` gives county %s the plan %r, which the county-map "
+                 "test does not know. Say whether that board is elected by "
+                 "district before it is scored." % (rel, fips, plan))
+        if plan not in by_district:
+            continue
+        name = rec["county"]
+        named = records.get(name) or {}
+        if name not in drawn or not named.get("districts"):
+            owed.add(B.slug_of(name))
+    return owed
+
+
+def _no_layer(derive):
+    """A state whose county-government level draws no county district."""
+    def wrapped(B, records):
+        return derive(B)
+    wrapped.draws_none = True
+    return wrapped
+
+
+# A STATE WHOSE ENTRY DRAWS NO DISTRICT (Indiana) is wrapped in `_no_layer`,
+# and the audit below fails the day its county-government entry gains a layer,
+# because which counties that layer draws then has to be measured. A state
+# whose entry draws some (Illinois, Iowa, Kentucky) measures it itself.
+COUNTY_MAPS_OWED = {
+    "ky": _ky_county_maps_owed,
+    "in": _no_layer(_in_county_maps_owed),
+    "il": _il_county_maps_owed,
+    "ia": _ia_county_maps_owed,
+}
 
 
 def county_maps_owed(tag, counties, B):
     """The counties that name a body elected by district and draw no district."""
-    derive, measured = COUNTY_MAPS_OWED.get(tag, (None, ()))
+    derive = COUNTY_MAPS_OWED.get(tag)
     if derive is None:
         return set()
     entry = ANSWERS[tag]["county-government"]
-    if entry.verdict != "depth" or set(entry.layers) != set(measured):
-        fail("%s: the county-map test subtracts the counties %s draws, and its "
-             "county-government entry names %s. Measure which counties that "
-             "layer draws and update COUNTY_MAPS_OWED."
-             % (tag, ", ".join(measured) or "no layer",
-                ", ".join(entry.layers) or entry.verdict))
-    owed = derive(B)
-    known = {B.slug_of(n) for n in counties.get(tag, {})}
+    if getattr(derive, "draws_none", False) and (
+            entry.verdict != "depth" or entry.layers):
+        fail("%s: the county-map test assumes this state draws no county "
+             "district, and its county-government entry now names %s. Measure "
+             "which counties that layer draws and narrow COUNTY_MAPS_OWED."
+             % (tag, ", ".join(entry.layers) or entry.verdict))
+    records = counties.get(tag, {})
+    owed = derive(B, records)
+    known = {B.slug_of(n) for n in records}
     stray = sorted(owed - known)
-    if stray:
+    # Illinois and Iowa may owe a map for a county they do not name yet; that
+    # county is open on names already, and the set is intersected with the
+    # named counties before it is scored. Indiana names every county it
+    # derives from, so a stray there is a misread file; Kentucky's derive
+    # checks its own drawn file against its roster.
+    if stray and getattr(derive, "draws_none", False):
         fail("%s: COUNTY_MAPS_OWED names %s, which is not a county this state's "
              "rosters carry" % (tag, ", ".join(stray)))
     return owed
@@ -2904,7 +2989,8 @@ def score_covered(tag, counties_named, total_counties, expected, records,
                     if county_maps_owed:
                         detail += (" and draw it where it is elected by "
                                    "district; %d more name a body elected by "
-                                   "district whose districts are not drawn"
+                                   "district whose districts are not drawn, "
+                                   "or not matched to their members"
                                    % len(county_maps_owed))
                     # THE COUNTY UNIVERSE IS A COUNT, NOT A LIST. STATE_COUNTIES
                     # holds a number on purpose (every derivable list is a
