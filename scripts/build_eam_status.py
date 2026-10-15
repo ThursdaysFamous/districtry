@@ -180,7 +180,7 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
-                  "nc": 100, "ok": 77, "sc": 46, "tn": 95}
+                  "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1831,6 +1831,48 @@ ANSWERS = {
         # One piece of off-reservation trust land, 0.695 km2 near Henning; the
         # fleet-wide tribal-government thread owns it.
         "tribal-government": OPEN,
+    },
+    # Arkansas, added at its go-live with the national tier and the quorum
+    # court layer.
+    "ar": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ar-senate", "ar-house"),
+        "county-boundaries": answers("county"),
+        # Every county elects a county judge and a quorum court of justices of
+        # the peace, each from a district. The layer draws all 775 districts
+        # from the state's mapping office, names every county judge, and names
+        # a district's justice from the county's own numbered list or the 2024
+        # results. Recorded in ar/CLAUDE.md.
+        "county-government": depth("quorum-court"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # TIGER's unified tiling holds all 234 districts and the other two hold
+        # none, measured in ar/CLAUDE.md, so one layer is the whole level.
+        "school-district-boundaries": answers("school-district-unified"),
+        "subdivision-boundaries": OPEN,
+        "courts-by-district": OPEN,
+        # ARKANSAS HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 1,051
+        # county subdivisions TIGERweb carries for the state are townships and
+        # districts with FUNCSTAT N, measured 2026-10-13. A township elects a
+        # constable and has no governing body. Recorded in ar/CLAUDE.md.
+        "sub-county-government": na(
+            "Arkansas has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 1,051 sub-county units "
+            "the Census publishes for Arkansas are townships, which the Census "
+            "records as having no functioning government."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # NO TRIBAL LAND IN ARKANSAS, measured 2026-10-15 with
+        # validate_tribal_join's own queries: the reservation, trust-land and
+        # state-reservation layers keep nothing inside the state, while the same
+        # queries keep Tennessee's one known piece as a control. Two Oklahoma
+        # Tribal Statistical Areas cross the line by a sliver; a statistical
+        # area is drawn only in Oklahoma.
+        "tribal-government": na(
+            "Arkansas has no tribal land. The Census publishes no federal or "
+            "state reservation and no off-reservation trust land in the state, "
+            "measured 2026-10-15 with a control in Tennessee."),
     },
     "ny": {
         "us-house": answers("congress"),

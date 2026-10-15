@@ -4222,7 +4222,12 @@ function initArkansasExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ar-senate"],
+    "state-house": ["ar-house"], "county": ["county"], "county-board": ["quorum-court"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -13335,7 +13340,9 @@ function initArkansasExplorer() {
    * county elects a county judge, who runs the county and presides over the
    * quorum court, and a quorum court of 9 to 15 justices of the peace, each
    * from a district (data/app/ar-county-officials.json, built by
-   * ar/scripts/build_ar_county_officials.py and refreshed weekly):
+   * ar/scripts/build_ar_county_officials.py; its weekly job has not completed
+   * since 2026-10-13 because the association's site answers GitHub's servers
+   * with HTTP 403, so every card states the day the names were read):
    *   - the judge from the Arkansas Judiciary's own directory of county
    *     judges and clerks, with the office telephone, and the office address
    *     only where the Association of Arkansas Counties prints the same one.
@@ -13448,6 +13455,13 @@ function initArkansasExplorer() {
       // The builder names the source per county: the judiciary's directory,
       // or — where it disagreed with the association and a person read a
       // third source — the source that settled it, dated by when it was read.
+      // THE DATE IS THE WHOLE CLAIM, AND THE CARD NO LONGER SAYS "EVERY WEEK".
+      // It did until go-live (2026-10-15), and the weekly refresh had failed
+      // twice by then: the association's site refuses GitHub's servers with a
+      // 403 while serving this project's own sandbox, and the builder reads
+      // both publishers in one run, so neither was re-read. A schedule is a
+      // request, not a measurement; the read date is the measurement, and a
+      // reader can weigh a date. ar/WATCH.md records the refusal.
       var judgeRead = arReadDate(judge.asOf);
       var judgeSource = judge.source ? String(judge.source)
         : "the Arkansas Judiciary's directory of county judges and clerks";
@@ -13455,7 +13469,6 @@ function initArkansasExplorer() {
         label: "Where the judge's name comes from",
         value: judgeSource.charAt(0).toUpperCase() + judgeSource.slice(1) +
           (judgeRead ? ", read " + judgeRead : "") + "." +
-          (judge.weekly ? " This app reads it every week." : "") +
           (judge.note ? " " + String(judge.note) : "")
       });
       var qc = o.quorumCourt || {};
@@ -13491,7 +13504,7 @@ function initArkansasExplorer() {
         label: "Where these names come from",
         value: "The Association of Arkansas Counties' page for " + county +
           (listRead ? ", read " + listRead : "") + ", which lists the justices " +
-          "in one line and does not number them. This app reads it every week."
+          "in one line and does not number them."
       }];
       if (count.vacant) {
         credit.unshift({
@@ -13647,7 +13660,7 @@ function initArkansasExplorer() {
     label: "Quorum Court District",
     overlay: {
       load: loadArQuorumCourtDistricts,
-      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     // the same value the card's header pill shows, so hover and card cannot
     // disagree about which district a polygon is
@@ -13715,8 +13728,7 @@ function initArkansasExplorer() {
             "for justices of the peace" + (updated ? " (updated " + updated + ")" : "") +
             ", which give the winner of each district. This app names that person " +
             "only while the association's current list for " + county + " still " +
-            "includes them, and checks that every week" +
-            (checked ? "; last checked " + checked : "") + "."
+            "includes them" + (checked ? ", last checked " + checked : "") + "."
         });
       } else if (res && key != null && (res.notOnList || []).indexOf(key) !== -1) {
         rows.push({
@@ -14018,8 +14030,8 @@ function initArkansasExplorer() {
     // It deliberately does not say "outside Arkansas": out there the
     // layer is hidden and this card is never drawn.
     emptyNote: "No ZIP code here. The Census draws these areas around where mail is delivered, so ground with no delivery addresses can sit outside every one.",
-    // its own hue, distinct from City's magenta
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05 },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",
@@ -16157,10 +16169,10 @@ function initArkansasExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1B7A3D": "#58CD7A", "#2E9E6B": "#5BEAA5", "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
-    "#6B7280": "#B1BBCE", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FD88B8",
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#77BBFD",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FD88B8",
     "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */

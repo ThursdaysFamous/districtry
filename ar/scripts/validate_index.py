@@ -114,7 +114,7 @@ ROSTER_FILES = {
     "congress-roster.json": 4,  # U.S. House (AR) roster, refreshed weekly by update-ar-congress-roster.yml.
     "ar-senate-members.json": 35,  # Arkansas Senate roster from the Arkansas State Legislature's own member list and pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 1 and 18 read vacant on 2026-10-13.
     "ar-house-members.json": 100,  # Arkansas House roster on the same terms; House 8 read vacant on 2026-10-13.
-    "ar-county-officials.json": 75,  # Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, refreshed weekly by update-ar-county-officials.yml.
+    "ar-county-officials.json": 75,  # Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, built by update-ar-county-officials.yml. That job is scheduled weekly but has not completed since 2026-10-13, because the association's site answers its requests from GitHub's servers with HTTP 403 (measured 2026-10-14 and 2026-10-15), so the file stays as read on 2026-10-13 and every card states that date.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

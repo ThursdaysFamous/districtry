@@ -27,9 +27,16 @@ name: Update Arkansas county officials
 # differ, staying green — the validate-sources pattern. It reads four pages of
 # attributes, paced at the 60 seconds the state's open-data portal asks.
 #
-# ARKANSAS IS DARK, so this job regenerates no county page:
-# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
-# go-live adds its adapter.
+# It regenerates the per-county pages (ar/quorum-court/<county>.html) and the
+# files that count them in the same PR, since Arkansas's go-live gave
+# scripts/build_county_pages.py its adapter.
+#
+# THE JOB HAD NOT COMPLETED BY GO-LIVE (2026-10-15). The association's site
+# answers GitHub's servers with HTTP 403 while serving this project's own
+# sandbox, measured on the runs of 2026-10-14 and 2026-10-15, and the builder
+# reads both publishers in one run, so a refused run rewrites nothing. That is
+# an access control and is not worked around; the cards and pages state the
+# day each name was read rather than a schedule. ar/WATCH.md carries the row.
 
 on:
   schedule:
@@ -142,7 +149,20 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ar/data/app/ar-county-officials.json
+          # The per-county pages (ar/quorum-court/) are GENERATED from the
+          # roster this job just rewrote, so regenerate them here or the smoke
+          # gate's `build_county_pages.py --check` fails on this PR with a page
+          # naming last week's justices.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          # llms.txt COUNTS the per-county pages, so a county dropping out of
+          # the roster would move it.
+          python3 scripts/build_llms_txt.py
+          # docs/EAM_STATUS.md counts the districts this roster names, so a
+          # district gaining or losing its name moves it.
+          python3 scripts/build_eam_status.py
+          git add ar/data/app/ar-county-officials.json ar/quorum-court ar/quorum-court.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Arkansas county judges and justices of the peace"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

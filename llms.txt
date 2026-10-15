@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 13 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina and Tennessee. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 14 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -177,6 +177,17 @@ All 95 counties and their county commission districts: cities and towns, school 
 - [Sources & data layers](https://districtry.com/tn/sources.html)
 - [Who is my Tennessee legislator?](https://districtry.com/tn/state-legislature.html)
 - [Tennessee district questions](https://districtry.com/tn/faq.html)
+
+## Arkansas
+
+All 75 counties and their quorum court districts: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Arkansas Senate, House and U.S. House districts, with who holds each seat. Every county judge is named, and so is the justice of the peace for nearly every district, from the county's own site where it numbers its justices and otherwise from the 2024 election results while the winner is still on the Association of Arkansas Counties' list. Nobody is named yet on the city councils or school boards, and the Data gaps panel says why.
+
+- [Arkansas district lookup](https://districtry.com/ar/): 11 layers, all 75 counties.
+- [Who is my U.S. representative?](https://districtry.com/ar/congress.html)
+- [Who is on my quorum court?](https://districtry.com/ar/quorum-court.html): links a page per county, 75 of them, each naming every member with whatever contact details that county publishes.
+- [Sources & data layers](https://districtry.com/ar/sources.html)
+- [Who is my Arkansas legislator?](https://districtry.com/ar/state-legislature.html)
+- [Arkansas district questions](https://districtry.com/ar/faq.html)
 
 ## Where the answers come from
 

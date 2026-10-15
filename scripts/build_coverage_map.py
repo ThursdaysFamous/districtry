@@ -130,6 +130,10 @@ AREAS = {
     # over the whole state, the county commission layer included (its 859
     # districts tile all 95 counties). Its coverage_key carries `outside` alone.
     "tn": {"outline": "tn/data/app/metro-outline.json", "state_outline": None},
+    # Arkansas joined at its go-live. ONE tier, like tn: every layer answers
+    # over the whole state, the quorum court layer included (its 775
+    # districts tile all 75 counties). Its coverage_key carries `outside` alone.
+    "ar": {"outline": "ar/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,
