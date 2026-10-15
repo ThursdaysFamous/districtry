@@ -359,24 +359,28 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     MISSISSIPPI HAS ONE NEIGHBOUR THE FLEET SERVES AND THREE IT DOES NOT,
+  //     MISSISSIPPI HAS TWO NEIGHBOURS THE FLEET SERVES AND TWO IT DOES NOT,
   //     so both halves are its own. Tennessee is live, so a click on Memphis
   //     must open that app: Overton Park sits about 16 km north of the state
-  //     line, well clear of either outline's simplification. Alabama is served
-  //     by nobody, so a click near York, Alabama must stay here (1a2-ii
-  //     below). This instance is also DARK, so it has no entry in
+  //     line, well clear of either outline's simplification. Arkansas went
+  //     live on 2026-10-15, so a click on Lake Village must open THAT app: it
+  //     is the Chicot County seat, about 11.5 km west of the river that is the
+  //     state line, and measured against fleet-outlines.json it lies inside
+  //     Arkansas's outline and no other, and outside this app's coverage ring.
+  //     Alabama is served by nobody, so a click near York, Alabama must stay
+  //     here (1a2-ii below). This instance is also DARK, so it has no entry in
   //     fleet-outlines.json at all and answers its own side from the coverage
   //     rings the wash retained — no fetch. Chicago proves the file is still
   //     read for ground far from here.
   //
-  //     ARKANSAS AND LOUISIANA ARE DELIBERATELY NOT CASES. Arkansas is dark
-  //     and Louisiana is on the next-states list, so a "stays here" case in
-  //     either would start failing the day that state goes live, in a change
-  //     that is about another state.
+  //     LOUISIANA IS DELIBERATELY NOT A CASE. It is on the next-states list,
+  //     so a "stays here" case there would start failing the day it goes
+  //     live, in a change that is about another state.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
+      { name: "Lake Village, Arkansas", lat: 33.3290, lng: -91.2818, want: "https://districtry.com/ar/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -412,8 +416,11 @@ try {
     }, { n: EXPORTS_NAME, pt: NEGATIVE_POINT });
     await page.waitForTimeout(3000);
     const url = page.url();
+    // Still under BASE means still this app. This asked for the URL NOT to
+    // name one of a list of sibling tags, and a list needs a new entry each
+    // time a state goes live: the one it lacked would read as staying here.
     check("a click near York, Alabama stays in this app",
-      !/districtry\.com\/(il|wi|ia|mi|ny|ca|mn|ky|in|nc|ok|sc|tn)\//.test(url), url);
+      url.startsWith(BASE), url);
     await context.close();
   }
 
