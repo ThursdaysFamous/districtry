@@ -13523,19 +13523,29 @@ function initMississippiExplorer() {
    * ms/scripts/build_ms_supervisor_districts.py). The Census carries every
    * county's districts, but in most counties it still carries the lines
    * drawn after the 2010 census, which would name the wrong supervisor for
-   * many readers. A county is drawn when its Census lines changed after the
-   * 2020 census AND hold nearly equal numbers of people on the 2020 census's
-   * own blocks; everywhere else the layer is hidden (coverage), and gap
+   * many readers. A county is drawn from the Census's lines when they
+   * changed after the 2020 census AND hold nearly equal numbers of people on
+   * the 2020 census's own blocks (lines "census"), or from a map the county
+   * or its planning and development district publishes, where that map
+   * shows its own currency and passes the same population test (lines
+   * "county", redrawn along whole 2020 blocks so every vertex is the
+   * Census's). Everywhere else the layer is hidden (coverage), and gap
    * ms-supervisor-district-lines says why. The County card names all five
    * supervisors in every county either way.
    *
-   * THE COVERAGE TEST READS THIS LAYER'S OWN FILE, because a point is in a
-   * drawn county exactly when it is in one of its districts (the Census's
-   * districts tile each county). It costs the file's download on a reader's
-   * first selection even with the layer off: 83 KB gzipped for twelve
-   * counties, measured 2026-10-15. A failed fetch fails OPEN per the
-   * engine's coverage contract, and the query then answers from the same
-   * file or shows its own Retry.
+   * THE COVERAGE TEST ASKS THE COUNTY LAYER, NOT THIS LAYER'S FILE. It finds
+   * the point's county in state-counties.json, which the County card loads
+   * on every selection anyway, and looks it up in
+   * data/app/ms-supervisor-counties.json, the list of drawn counties the
+   * same build writes (under 1 KB). The engine runs a coverage test on a
+   * reader's first selection even with the layer off, and reading the
+   * districts file for it cost 150 KB gzipped for twenty counties, measured
+   * 2026-10-15. Within a few tens of metres of a county line the two files,
+   * each simplified on its own, can put a point in different counties; there
+   * this layer follows the County card, so the two cards do not name
+   * different counties (the builder's county witness bounds that strip). A
+   * failed fetch fails OPEN per the engine's coverage contract, and the
+   * query then answers from the districts file or shows its own Retry.
    *
    * THE NAME IS THE DIRECTORY'S AND THE LINE IS THE CENSUS'S. The district
    * number joins the two, and each feature carries the county's own word
@@ -13544,11 +13554,18 @@ function initMississippiExplorer() {
   var loadSupervisorDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ms-supervisor-districts.json", {}, 2);
   });
+  var loadSupervisorCounties = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-supervisor-counties.json", {}, 2);
+  });
   function inConfirmedSupervisorCounty(point) {
-    return loadSupervisorDistricts().then(function (fc) {
-      var feats = (fc && fc.features) || [];
+    return Promise.all([loadStateCounties(), loadSupervisorCounties()]).then(function (got) {
+      var feats = (got[0] && got[0].features) || [];
+      var drawn = got[1] || {};
       for (var i = 0; i < feats.length; i++) {
-        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+          var geoid = findPropCI(feats[i].properties || {}, ["geoid"]);
+          return geoid != null && Object.prototype.hasOwnProperty.call(drawn, String(geoid));
+        }
       }
       return false;
     });
@@ -13560,7 +13577,8 @@ function initMississippiExplorer() {
     label: "County Supervisor District",
     coverage: inConfirmedSupervisorCounty,
     // Inside the drawn counties the districts cover every point, so this is
-    // reached only if the file and the coverage test ever disagree.
+    // reached only where the County layer's line and this layer's disagree,
+    // within a few tens of metres of a county line.
     emptyNote: "No supervisor district is drawn at this point. The County " +
       "card names all five of the county's supervisors.",
     overlay: {
@@ -13589,6 +13607,9 @@ function initMississippiExplorer() {
           district: findPropCI(props, ["district"]),
           label: findPropCI(props, ["label"]),
           lines: findPropCI(props, ["lines"]),
+          source: findPropCI(props, ["source"]),
+          read: findPropCI(props, ["read"]),
+          setAside: findPropCI(props, ["set_aside"]),
           officials: null,
           rosterFailed: false
         };
@@ -13648,6 +13669,24 @@ function initMississippiExplorer() {
             word + "s hold nearly equal numbers of people in that census, as " +
             "lines drawn after it should. It draws supervisor " + word + "s " +
             "only in counties where both are true."
+        });
+      } else if (result.lines === "county") {
+        var read = msDate(result.read);
+        var aside = Number(result.setAside) || 0;
+        rows.push({
+          label: "Where this line comes from",
+          value: String(result.source || "The county's own map of its supervisor " +
+            word + "s") + (read ? ", read on " + read : "") + ". The Census " +
+            "Bureau's map of this county still shows its " + word + "s from " +
+            "before the 2020 census, so this app draws the county's own instead, " +
+            "along the 2020 census blocks: each block goes to the " + word +
+            " that covers most of it on the county's map. It checked that these " +
+            word + "s differ from the Census Bureau's and that the five hold " +
+            "nearly equal numbers of people in the 2020 census" +
+            (aside > 0 ? ", not counting the " +
+              String(aside).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " people in " +
+              "census blocks with almost no homes, which the population " +
+              "figures published with this map leave out" : "") + "."
         });
       }
       if (o) rows.push({ label: "Where the name comes from", value: msDirectoryCredit(o) });

@@ -20,8 +20,9 @@ joined to the public-domain unitedstates/congress-legislators roster), **Mississ
 member gallery and member profiles), the LIVE TIGERweb fabric — **City, Town or Village**
 (`municipality`, 300), **School District** (137) and **ZIP Code** — and three nearest-N layers from
 the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**). Beside it,
-**County Supervisor District** (`county-supervisor`) draws the five districts of each of the 12
-counties whose current lines are confirmed, and is hidden in the other 70.
+**County Supervisor District** (`county-supervisor`) draws the five districts of each of the 20
+counties whose current lines are confirmed (12 from the Census's lines, 8 from the county's own
+map), and is hidden in the other 62.
 
 **THE CONGRESSIONAL MAP IS TIGERweb LAYER 0, AND THAT WAS MEASURED RATHER THAN ASSUMED.** Layer 0
 is the 120th Congress's map, which is wrong for a state that redrew for 2026 (North Carolina,
@@ -75,9 +76,50 @@ AND ARE NOT DRAWN** — Lafayette, Marshall, Montgomery, Jefferson Davis, Waltha
 a balanced old map may have been kept or redrawn without telling the Census, and no measurement
 here can tell which; the county's own map or its answer to a letter settles one. `--survey`
 re-takes both measurements for every county and marks one that newly passes, which a person adds
-to `CENSUS_COUNTIES` after looking. **THE LAYER'S COVERAGE TEST READS THE LAYER'S OWN FILE**, so a
-reader's first selection downloads it even with the layer off — 83 KB gzipped for twelve counties.
-Past about 150 KB, give it a coverage file of its own or tiles. **The shapes are the county
+to `CENSUS_COUNTIES` after looking.
+
+**EIGHT MORE ARE DRAWN FROM THE COUNTY'S OWN MAP** (`COUNTY_SOURCES` in the same builder,
+2026-10-15). A survey of every county's website and its planning and development district's
+(`/mnt/project-files/ms/supervisor-map-survey/`) found 14 of the 70 old-edition counties publishing
+lines of their own. Eight are drawn because each publication names or proves its own currency,
+and the build re-reads that evidence every time: a layer named for its adoption ("Supervisor
+Districts Adopted 2022", Rankin's 2021), population figures per district that equal the 2020
+census's own block counts (six of the eight publish them, and for Hinds, whose layer name gives no
+year, they are the witness), a
+service description saying the lines were "approved 2023 as a result of the 2020 US Census"
+(Harrison), or a printed map dated 8/09/2022 on the county's own website, pinned by its SHA-256
+and compared with the layer by eye (Lamar). Copiah, Hinds, Madison, Rankin, Simpson and Warren come
+from the Central Mississippi Planning and Development District's map viewers, Harrison from the
+county's own map server and Lamar from the parcel viewer its website links to. Each must also
+balance on the 2020 blocks (4.39% to 8.48%), keep the 2020 edition's district numbers, and the
+Census's current lines there must STILL be its 2020 edition's, so the day the Census receives a
+county's new lines the build stops and a person moves it to `CENSUS_COUNTIES`. **NOTHING TRACED
+SHIPS**: each 2020 block goes to the district covering most of it and a district is drawn as the
+union of its blocks, so every vertex is the Census Bureau's (the Iowa method), and where a plan
+publishes a population per district the blocks reproduce it to the person. Rankin's plan leaves
+out two blocks (3,633 people in a block with 3 housing units and 157 in one with none), which the
+build re-reads from the Census and the card mentions without saying what they are, because that
+is not measured. On the same blocks the Census's old lines give 123,495 of these eight counties'
+865,800 residents a different district number. The other six (Coahoma, Covington, Lee, Pearl
+River, Perry and Wilkinson) publish lines that differ from the Census's, but nothing found shows
+they are the plan adopted after the 2020 census, so they wait (`ms/WATCH.md`).
+
+**THE MAP SERVER'S OWN GEOJSON WAS MEASURED WRONG, SO EVERY POLYGON IS READ AS ARCGIS JSON.**
+Asked for GeoJSON, Lamar's layer sometimes sent District 3, whose two parts ArcGIS's own JSON gives
+as two outer rings, as one polygon whose smaller part (3.0 km2, 1,317 people) is a hole outside the
+larger; the same query was right minutes before and after. The population checks caught it as
+people living in no district. The builder converts rings itself by ArcGIS's rule (clockwise outer,
+counter-clockwise hole) and repairs a ring only when the repair changes its area by less than one
+part in a million.
+
+**THE LAYER'S COVERAGE TEST READS A LIST OF THE DRAWN COUNTIES, NOT THE DISTRICTS FILE.** The test
+runs on every selection whether or not the layer is on, and reading the districts file made a
+reader's first selection download it: 150 KB gzipped for twenty counties, measured 2026-10-15. It
+now finds the point's county in `state-counties.json`, which the County card loads anyway, and
+looks it up in `ms-supervisor-counties.json` (under 1 KB), which the builder writes beside the
+districts and its `--check` holds to them. Within a few tens of metres of a county line the two
+files can disagree, and there the layer follows the County card. The smoke test fails if the
+districts file is requested with the layer off. **The shapes are the county
 outline's too**: `state-counties.json` was rebuilt with Douglas-Peucker on 2026-10-15 because
 the Visvalingam simplification it shipped with put a county line up to 184.5 m from the
 Census's, with 54 counties over 25 m, and the supervisor builder's county witness holds the two
@@ -198,8 +240,10 @@ operator script: `metro-outline.json` (the whole-state outline for the coverage 
 `ms/scripts/build_metro_outline.py` — one INSIDE anchor per county plus OUTSIDE anchors in
 Alabama, Tennessee, Arkansas and Louisiana), `state-counties.json`
 (`ms/scripts/build_state_counties.py`, Douglas-Peucker, refused unless the 25 m fidelity ceiling
-passes), `ms-supervisor-districts.json` (`ms/scripts/build_ms_supervisor_districts.py`, the 12
-confirmed counties, one mapshaper run so a shared line is simplified once), and
+passes), `ms-supervisor-districts.json` (`ms/scripts/build_ms_supervisor_districts.py`, the 20
+confirmed counties, 12 from the Census and 8 from the county's own map resolved to whole 2020
+blocks, in one mapshaper run so a shared line is simplified once) with `ms-supervisor-counties.json`
+(the drawn counties' list, written by the same build, which the layer's coverage test reads), and
 `congress-districts.json`, `ms-senate-districts.json`,
 `ms-house-districts.json` (`ms/scripts/build_legislative_boundaries.py` — statewide TIGERweb,
 mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement gate

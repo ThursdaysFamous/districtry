@@ -986,15 +986,24 @@ try {
   //     and edition are read from the shipped files, so a rebuild that
   //     renumbers a county moves the expectation with it; what is asserted is
   //     that the card agrees with those files at the point.
-  //       - Two drawn counties: the card's "District N" is the district the
-  //         shipped file puts the point in, it names that district's
-  //         supervisor from the directory, and it says where the line and the
-  //         name come from.
-  //       - The Capitol, in Hinds, whose Census lines are the ones drawn after
-  //         the 2010 census and are not drawn: the layer HIDES, with the
+  //       - Two counties drawn from the Census's lines: the card's
+  //         "District N" is the district the shipped file puts the point in, it
+  //         names that district's supervisor from the directory, and it says
+  //         where the line and the name come from, naming the Census edition.
+  //       - Two counties drawn from their own maps, Hinds at the Capitol and
+  //         Rankin: the card says whose map the line comes from and when it
+  //         was read, and never names the Census edition; in Rankin it also
+  //         says how many people the map's own population figures leave out,
+  //         and in Hinds that it leaves nobody out.
+  //       - Amite, whose Census lines are the ones drawn after the 2010 census
+  //         and which publishes none of its own: the layer HIDES, with the
   //         layers= permalink intact. This is the half that discriminates:
   //         without `coverage` the card would say no district is drawn here,
   //         about a county that has five.
+  //       - With the layer OFF at the Capitol, the coverage test reads the
+  //         list of drawn counties and never the districts file, which was
+  //         150 KB gzipped on every reader's first selection when the test
+  //         read it (2026-10-15), and the layer's toggle still shows there.
   //       - The roster is refused: the district still answers and names nobody.
   //       - A vacant seat, on a stubbed directory because no drawn county has
   //         one in the 2026 edition: the card says the seat is vacant and
@@ -1027,6 +1036,8 @@ try {
       return o.supervisors.find((sv) => String(sv.district) === String(p.district)) || {};
     }
     const drawnPoints = ["34.92782,-90.17414", "33.34602,-88.57919"];  // DeSoto 3, Lowndes 4
+    const ownMapPoints = [POINT, "32.34382,-89.84721"];  // Hinds 5 (the Capitol), Rankin 4
+    const AMITE = "31.17456,-90.72388";  // the Amite County point check 9 uses
 
     for (const pt of drawnPoints) {
       const at = districtsAt(pt);
@@ -1047,9 +1058,30 @@ try {
       await context.close();
     }
 
+    for (const pt of ownMapPoints) {
+      const at = districtsAt(pt);
+      const p = at[0] || {};
+      const seat = seatOf(p);
+      const aside = Number(p.set_aside) || 0;
+      const asideText = `${aside.toLocaleString("en-US")} people in census blocks with almost no homes`;
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      check(`county-supervisor card in ${p.county || "a county drawn from its own map"} names District ${p.district} and its supervisor, and says whose map the line comes from${aside ? " and whom its figures leave out" : ""}`,
+        at.length === 1 && p.lines === "county" && !info.error && !!seat.name &&
+          new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
+          text.includes(seat.name) && text.includes(p.county) &&
+          !!p.source && text.includes(p.source) && /, read on \d{1,2} [A-Z][a-z]+ \d{4}\./.test(text) &&
+          !text.includes(`${rec.vintage} edition`) &&
+          (aside > 0 ? text.includes(asideText) : !/almost no homes/.test(text)),
+        `districts here=${at.length} lines=${p.lines} ${text.slice(0, 160)}`);
+      await context.close();
+    }
+
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=county-supervisor`);
+      const page = await booted(context, `${BASE}#point=${AMITE}&layers=county-supervisor`);
       const hidden = await page
         .waitForFunction(() => {
           const box = document.getElementById("toggle-county-supervisor");
@@ -1059,9 +1091,33 @@ try {
         .then(() => true, () => false);
       const stillOn = await page.evaluate(
         (n) => window[n].state.layersOn["county-supervisor"] === true, EXPORTS_NAME);
-      check("county-supervisor hides in Hinds County, whose current lines are not confirmed, and stays switched on",
-        districtsAt(POINT).length === 0 && hidden && stillOn,
-        `drawn here=${districtsAt(POINT).length} hidden=${hidden} layersOn=${stillOn}`);
+      check("county-supervisor hides in Amite County, whose current lines are not confirmed, and stays switched on",
+        districtsAt(AMITE).length === 0 && hidden && stillOn,
+        `drawn here=${districtsAt(AMITE).length} hidden=${hidden} layersOn=${stillOn}`);
+      await context.close();
+    }
+
+    {
+      const asked = [];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (pg) => {
+        pg.on("request", (r) => asked.push(r.url()));
+      });
+      await cardText(page, "county");
+      const shown = await page
+        .waitForFunction(() => {
+          const box = document.getElementById("toggle-county-supervisor");
+          const block = box && box.closest(".layer-block");
+          return block && block.hidden === false;
+        }, null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const list = asked.some((u) => /\/data\/app\/ms-supervisor-counties\.json/.test(u));
+      const file = asked.some((u) => /\/data\/app\/ms-supervisor-districts\.json/.test(u));
+      const off = await page.evaluate(
+        (n) => !window[n].state.layersOn["county-supervisor"], EXPORTS_NAME);
+      check("with county-supervisor off, its coverage test reads the list of drawn counties and never the districts file, and its toggle shows in Hinds",
+        off && list && !file && shown,
+        `off=${off} list=${list} districts file=${file} shown=${shown}`);
       await context.close();
     }
 

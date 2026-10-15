@@ -156,13 +156,16 @@ PROVENANCE = [
         "app_file": "ms-supervisor-districts.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
         "note": (
-            "The supervisor districts of the 12 counties whose current lines "
-            "are confirmed, pre-built from the Census's county subdivisions "
-            "(January 1, 2026 vintage) by "
-            "ms/scripts/build_ms_supervisor_districts.py. A county is drawn "
-            "when its lines changed after the 2020 census and balance on that "
-            "census's own blocks; --survey re-measures all 82, and a new "
-            "vintage needs a survey and a rebuild."
+            "The supervisor districts of the 20 counties whose current lines "
+            "are confirmed, pre-built by "
+            "ms/scripts/build_ms_supervisor_districts.py: 12 from the Census's "
+            "county subdivisions (January 1, 2026 vintage), where the lines "
+            "changed after the 2020 census and balance on that census's own "
+            "blocks, and 8 from the county's own map, redrawn along whole 2020 "
+            "blocks (their layers are counted under ENDPOINTS below). --survey "
+            "re-measures all 82, and a new vintage needs a survey and a "
+            "rebuild, which stops if the Census has received a county's own "
+            "lines."
         ),
     },
     {
@@ -267,6 +270,57 @@ ENDPOINTS = [
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 745,   # 827 measured 2026-10-15
     },
+    # The county maps ms/scripts/build_ms_supervisor_districts.py reads for the
+    # eight counties drawn from their own lines. Unlike the rows above these have
+    # a builder and a committed file; they are COUNTED here because all three
+    # servers answer a deleted layer with HTTP 200 (an empty page, an
+    # "Application Error" page or a blank one, measured 2026-10-15), so a status
+    # check would read a layer that is gone as reachable. A count query on a
+    # missing layer answers HTTP 200 with an Esri error envelope instead, which
+    # the check below reports. Each layer held exactly 5 districts that day; a
+    # change is a reason to rebuild, which re-reads the evidence each county's
+    # lines were confirmed with. Check 1 holds these rows to the builder's own
+    # COUNTY_SOURCES, so the two cannot name different layers.
+    {
+        "layer": "county-supervisor",   # Copiah
+        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Copiah_County_Feature_Layer/FeatureServer/15/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Harrison
+        "url": "https://geo.co.harrison.ms.us/server/rest/services/AGO/HarrisonCounty_SupervisorDistrict/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Hinds
+        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Hinds_County_Map/FeatureServer/17/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Lamar
+        "url": "https://services1.arcgis.com/mz3jHVSffoNsLuEB/arcgis/rest/services/Lamar_Service/FeatureServer/15/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Madison
+        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Madison_County_Map/FeatureServer/44/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Rankin
+        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Rankin_County_Feature_Layer/FeatureServer/13/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Simpson
+        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Simpson_County_Feature_Layer/FeatureServer/32/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Warren
+        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Warren_County_Feature_Layer/FeatureServer/21/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -293,8 +347,11 @@ class Findings(object):
 # the chain from that pin, so this check reads it the same way, robots.txt
 # included: read with the plain trust store, www.legislature.ms.gov's robots.txt
 # is unreachable, which RFC 9309 treats as a refusal, and on 2026-10-15 that
-# stopped the whole run at the first legislature row.
-PINNED_CHAINS = {"www.legislature.ms.gov": "globalsign-rsa-ov-2018"}
+# stopped the whole run at the first legislature row. gis.cmpdd.org, the
+# planning district's map server the supervisor build reads, sends its leaf
+# without the GoDaddy intermediate, measured the same day.
+PINNED_CHAINS = {"www.legislature.ms.gov": "globalsign-rsa-ov-2018",
+                 "gis.cmpdd.org": "godaddy-g2"}
 _BUNDLES = {}
 
 
@@ -370,6 +427,28 @@ def check_manifest_matches_app(html, findings):
                          "dataset id %s not found in index.html — manifest is "
                          "out of sync with the app (update ms/scripts/validate_sources.py)"
                          % d["id"])
+    # The county maps the supervisor build reads are counted under ENDPOINTS,
+    # and the builder's COUNTY_SOURCES is the authority on which they are: a
+    # county added there and not here would be a layer nothing watches.
+    try:
+        import build_ms_supervisor_districts as supervisor
+    except Exception as e:  # a broken import is a finding, not a crash
+        findings.add(FAIL, "county-supervisor",
+                     "could not read the supervisor builder's county sources: %s" % e)
+    else:
+        want = sorted(spec["url"] for spec in supervisor.COUNTY_SOURCES.values())
+        have = sorted(e["url"].split("/query?")[0] for e in ENDPOINTS
+                      if e["layer"] == "county-supervisor")
+        if want != have:
+            findings.add(FAIL, "county-supervisor",
+                         "ENDPOINTS counts %s and the builder reads %s — update "
+                         "ms/scripts/validate_sources.py" % (have, want))
+        unpinned = sorted(h for h, k in supervisor.PINNED_CHAINS.items()
+                          if PINNED_CHAINS.get(h) != k)
+        if unpinned:
+            findings.add(FAIL, "county-supervisor",
+                         "the builder pins a certificate for %s and this check does "
+                         "not, so it would read the host differently" % unpinned)
     for p in PROVENANCE:
         # A file the app addresses by a slug built at RUNTIME has no literal to
         # find — the same `dynamic_reference` exemption validate_index.py

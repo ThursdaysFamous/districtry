@@ -51,6 +51,8 @@ import base64
 import hashlib
 import os
 import tempfile
+import time
+import urllib.error
 import urllib.request
 
 # The AIA caIssuers URIs printed inside these counties' own leaf certificates,
@@ -59,7 +61,7 @@ import urllib.request
 # counties behind the same CA share an entry, and a county that re-keys its
 # chain gets a deliberate pin update here, never a loosened check.
 INTERMEDIATES = {
-    "godaddy-g2": {  # colesco.illinois.gov, gis.knoxcountyil.gov
+    "godaddy-g2": {  # colesco.illinois.gov, gis.knoxcountyil.gov, gis.cmpdd.org
         "url": "http://certificates.godaddy.com/repository/gdig2.crt",
         "sha256": "973a41276ffd01e027a2aad49e34c37846d3e976ff6a620b6712e33832041aa6",
         "subject_cn": "Go Daddy Secure Certificate Authority - G2",
@@ -86,6 +88,15 @@ INTERMEDIATES = {
 }
 
 TIMEOUT = 60
+# GoDaddy's repository sometimes answers a request with a 302 to its own
+# address: 2 of 6 plain fetches did on 2026-10-15, behind its Sucuri proxy, and
+# the next request was answered with the certificate. urllib gives up on such a
+# redirect as a loop once it repeats, which stopped a run of
+# ms/scripts/validate_sources.py the same day while the rest of that run read
+# the same certificate. So a failed download is tried again; the bytes are
+# still held to the pin, so a retry can only return the certificate or fail.
+ATTEMPTS = 3
+RETRY_SECONDS = 3
 
 
 def ca_bundle(label, key="godaddy-g2"):
@@ -110,7 +121,14 @@ def ca_bundle(label, key="godaddy-g2"):
     roots_path = (os.environ.get("REQUESTS_CA_BUNDLE")
                   or os.environ.get("SSL_CERT_FILE") or certifi.where())
 
-    der = urllib.request.urlopen(spec["url"], timeout=TIMEOUT).read()
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            der = urllib.request.urlopen(spec["url"], timeout=TIMEOUT).read()
+            break
+        except (urllib.error.URLError, OSError):
+            if attempt == ATTEMPTS:
+                raise
+            time.sleep(RETRY_SECONDS * attempt)
     got = hashlib.sha256(der).hexdigest()
     if got != spec["sha256"]:
         raise SystemExit(

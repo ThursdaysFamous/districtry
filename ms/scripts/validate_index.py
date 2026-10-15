@@ -106,7 +106,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (4, 4),  # The 4 U.S. House districts, TIGERweb layer 0 (CD120).
     "ms-senate-districts.json": (52, 52),  # The 52 Mississippi Senate districts.
     "ms-house-districts.json": (122, 122),  # The 122 Mississippi House districts.
-    "ms-supervisor-districts.json": (60, 60),  # The county supervisor districts of the 12 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county; the coverage test for the County Supervisor District layer reads it too.
+    "ms-supervisor-districts.json": (100, 100),  # The county supervisor districts of the 20 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 8 from the county's own map, redrawn along whole 2020 census blocks.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -115,6 +115,7 @@ ROSTER_FILES = {
     "ms-senate-members.json": 52,  # Mississippi Senate roster from the Mississippi Legislature's own member gallery and profiles, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 34 read vacant on 2026-10-15.
     "ms-house-members.json": 122,  # Mississippi House roster on the same terms; House 70 and 77 read vacant on 2026-10-15.
     "ms-county-officials.json": 82,  # Every county's five supervisors by district, from the Secretary of State's County Offices and Directory, one record per county, refreshed weekly by update-ms-county-officials.yml.
+    "ms-supervisor-counties.json": 20,  # The 20 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
