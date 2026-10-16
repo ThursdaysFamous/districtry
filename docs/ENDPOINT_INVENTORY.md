@@ -372,7 +372,7 @@ measured until the next run describes it.
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
 | il | 131 | 406 | 6 |
-| ny | 39 | 35 | 0 |
+| ny | 38 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 266 | 5 |
 | ia | 71 | 70 | 0 |
@@ -385,7 +385,7 @@ measured until the next run describes it.
 | sc | 20 | 14 | 0 |
 | tn | 21 | 14 | 0 |
 | ar | 20 | 13 | 0 |
-| **total** | **550** | **971** | **12** |
+| **total** | **549** | **971** | **12** |
 
 **155 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
