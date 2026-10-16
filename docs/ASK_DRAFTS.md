@@ -6994,18 +6994,20 @@ conditional and kept apart from the three numbered asks so that a no to it does 
 > 1. When a county's precincts change and it keeps the new map as a digital file, ask for that file
 >    along with the PDF the law already requires. If the Board already collects these files, I'd be
 >    glad to know.
-> 2. Publish the precinct maps the Board receives in one place on its website, free, so anyone can
->    find every county's current map.
-> 3. In time, combine the digital files into one statewide precinct map, updated on a fixed
->    schedule, alongside the districts the locator already shows. Wisconsin's Legislature does this
->    from county filings every January and July, and Minnesota's Secretary of State publishes one
->    statewide precinct map. Illinois took part in the Census Bureau's 2020 voting district program,
->    and the Bureau will ask states for precinct maps again starting in early 2028, so a map kept up
->    to date would serve that too.
+> 2. Publish the precinct maps the Board receives in one place, free: the PDFs for people to read
+>    and, wherever a county has sent one, the map file itself in a standard format anyone can
+>    download and a computer can read. The Board's locator already serves its districts as map data
+>    this way, so precincts could sit beside them.
+> 3. In time, combine those files into one statewide precinct map, updated on a fixed schedule and
+>    free to download. Wisconsin's Legislature does this from county filings every January and July,
+>    and Minnesota's Secretary of State publishes one statewide precinct map. Illinois took part in
+>    the Census Bureau's 2020 voting district program, and the Bureau will ask states for precinct
+>    maps again starting in early 2028, so a map kept up to date would serve that too.
 >
 > If the Board agrees that a change in the law would help, for example having election authorities
-> send their digital file along with the PDF under Section 11-6, the Board's legislative proposals
-> for the spring session would be a natural place for it.
+> send their digital file along with the PDF under Section 11-6 and having the Board publish those
+> files for download, the Board's legislative proposals for the spring session would be a natural
+> place for it.
 >
 > This is only about precinct boundaries. I'm not asking about voter records or any personal
 > information.
