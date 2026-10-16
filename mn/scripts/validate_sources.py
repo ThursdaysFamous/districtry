@@ -293,6 +293,19 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-subdivision",
+        "app_file": "mn-town-boards.json",
+        "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt",
+        "note": (
+            "The supervisors, clerk and treasurer of the 704 towns that hold "
+            "their town election in November, each naming its most recent "
+            "winner from the same local results files as the city councils "
+            "(this URL is the 2024 general's). Refreshed weekly by "
+            "update-mn-city-councils.yml. March town elections are in no file "
+            "this host publishes."
+        ),
+    },
+    {
         "layer": "school-district-unified",
         "app_file": "mn-school-boards.json",
         "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt",

@@ -74,6 +74,15 @@ INTERMEDIATES = {
         "sha256": "43cac31ef8e8ba1b4b16b8206e4c0a26c5badb2fc3aa09e90170e41b66c2fd64",
         "subject_cn": "GoGetSSL RSA DV CA",
     },
+    # www.legislature.ms.gov — the Mississippi Legislature, whose leaf (issued to
+    # the state's Department of Information Technology Services) names this
+    # intermediate's AIA address; read and hashed 2026-10-15. The first instance
+    # file to need a pin: ms/scripts/build_ms_legislature_roster.py.
+    "globalsign-rsa-ov-2018": {
+        "url": "http://secure.globalsign.com/cacert/gsrsaovsslca2018.crt",
+        "sha256": "b676ffa3179e8812093a1b5eafee876ae7a6aaf231078dad1bfb21cd2893764a",
+        "subject_cn": "GlobalSign RSA OV SSL CA 2018",
+    },
 }
 
 TIMEOUT = 60

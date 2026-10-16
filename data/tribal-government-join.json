@@ -15,11 +15,11 @@
   "North Carolina",
   "Oklahoma",
   "South Carolina",
+  "Tennessee",
   "Wisconsin"
  ],
  "statesNotYetCovered": [
-  "California",
-  "Tennessee"
+  "California"
  ],
  "areas": {
   "0080": {
@@ -657,6 +657,24 @@
      "state": "Minnesota",
      "km2": 1.163,
      "share": 1.0
+    }
+   ]
+  },
+  "2300": {
+   "government": "Mississippi Band of Choctaw Indians",
+   "parentGovernment": null,
+   "governmentState": "MS",
+   "states": [
+    "Tennessee"
+   ],
+   "lands": [
+    {
+     "class": "trust-land",
+     "geoid": "2300T",
+     "name": "Mississippi Choctaw Off-Reservation Trust Land",
+     "state": "Tennessee",
+     "km2": 0.695,
+     "share": 0.0407
     }
    ]
   },
