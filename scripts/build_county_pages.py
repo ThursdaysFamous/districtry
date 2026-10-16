@@ -3543,6 +3543,14 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "mn/data/app/mn-county-town-officers.json": dict(
+        date="2026-10-16",
+        reason="the supervisors, clerks and treasurers of 416 Minnesota "
+               "towns, read from the lists of township officers the counties "
+               "publish. Real officeholders, named, and town government rather "
+               "than county government: each record carries its county only "
+               "to say whose list it came from.",
+    ),
     "il/data/app/municipal-officials.json": dict(
         date="2026-09-13",
         reason="mayors, clerks and council members of 1,300 Illinois "
@@ -3563,6 +3571,13 @@ NOT_COUNTY_BOARDS = {
     "wi/data/app/wi-municipal-clerks.json": dict(
         date="2026-09-13",
         reason="municipal clerks, 1,850 of them. Municipal, not county.",
+    ),
+    "wi/data/app/wi-town-boards.json": dict(
+        date="2026-10-15",
+        reason="Wisconsin TOWN boards, a chairperson and supervisors per town, "
+               "read from each county's own directory. A town is a unit below "
+               "the county, not the county board, which is the same reason "
+               "il township-officials.json is recorded here.",
     ),
     "wi/data/app/wi-municipal-boards.json": dict(
         date="2026-10-01",
@@ -3607,6 +3622,14 @@ NOT_COUNTY_BOARDS = {
                "in-county-commissioners.json. The council's members are named "
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
+    ),
+    "in/data/app/in-township-officials.json": dict(
+        date="2026-10-15",
+        reason="Indiana's township trustees and township boards, about a "
+               "thousand townships' own governments rather than any county's. "
+               "These pages are one per county board; a township is a "
+               "different government below the county, and the app names its "
+               "trustee and board on its own Township card.",
     ),
     "ms/data/app/ms-county-officials.json": dict(
         date="2026-10-15",

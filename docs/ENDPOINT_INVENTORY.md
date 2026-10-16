@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **256 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 211 are links.
+makes from a link a reader clicks. Of **260 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 215 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -141,7 +141,7 @@ prose.
 | mi | 0 | 19 |
 | mn | 6 | 20 |
 | ky | 5 | 14 |
-| in | 4 | 12 |
+| in | 4 | 13 |
 | nc | 4 | 12 |
 | ok | 5 | 14 |
 | sc | 4 | 13 |
@@ -300,7 +300,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
 - **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`.
 
-#### in — 4 of 12 layers fetch their shapes
+#### in — 4 of 13 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -311,7 +311,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `in-senate`, `county`, `in-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `tribal-government`.
+- **Not measured** — declared since the probe ran: `county-council`, `tribal-government`.
 
 #### nc — 4 of 12 layers fetch their shapes
 
@@ -374,20 +374,20 @@ measured until the next run describes it.
 | il | 131 | 406 | 6 |
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
-| wi | 92 | 265 | 5 |
+| wi | 92 | 266 | 5 |
 | ia | 71 | 70 | 0 |
-| mi | 32 | 61 | 1 |
-| mn | 29 | 19 | 0 |
+| mi | 36 | 65 | 1 |
+| mn | 29 | 20 | 0 |
 | ky | 19 | 14 | 0 |
-| in | 14 | 12 | 0 |
+| in | 14 | 14 | 0 |
 | nc | 17 | 11 | 0 |
 | ok | 18 | 12 | 0 |
 | sc | 18 | 13 | 0 |
 | tn | 19 | 13 | 0 |
 | ar | 18 | 12 | 0 |
-| **total** | **534** | **957** | **12** |
+| **total** | **538** | **965** | **12** |
 
-**150 distinct source hosts** across the six manifests. Each instance's
+**153 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

@@ -1472,11 +1472,14 @@ ANSWERS = {
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("wi-circuit-court", "wi-court-of-appeals"),
         # A Wisconsin town IS the general-purpose government outside a village
-        # or city, and the app draws it — but what it names there is the town
-        # CLERK, who does not govern. The standard's test is that a reader is
-        # told who governs the point, so this is open rather than answered, and
-        # `town-clerks-*.json` is named here as what was considered.
-        "sub-county-government": OPEN,
+        # or city. Until 2026-10-15 the card named only the town CLERK, who
+        # does not govern, so this was open. It now names the town BOARD
+        # wherever the county publishes a list of town officials, read county
+        # by county (wi-town-boards.json), and in every other county it says
+        # why it cannot — which is the test Adam set on 2026-10-15 for this
+        # level: it passes where a list is published, and the card says so for
+        # the towns it cannot name.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": answers("mps-school-board"),
         "precincts": answers("ward"),
         "special-districts": answers("wtcs-district", "tid-district"),
@@ -1590,8 +1593,13 @@ ANSWERS = {
         # no state file, BUT a town clerk certifies its officers to the county
         # each spring, and a survey of all 87 counties on 2026-10-15 found 42
         # that publish a list of them (mn/data/source/
-        # mn-county-township-officer-survey.json). Those 42 are owed before
-        # this level passes. Gap mn-township-officers carries both halves.
+        # mn-county-township-officer-survey.json). 29 of those lists are READ
+        # since 2026-10-16 (mn/scripts/build_mn_county_town_officers.py): 2,019
+        # officers in 416 March towns. The other 13 are not: five behind a
+        # robots.txt Disallow, three behind a Cloudflare 403, one 5xx, one a
+        # scanned image, and three that name no March town's officers in a
+        # form that can be read (Anoka, Olmsted, Goodhue). Until those are
+        # settled the level stays open. Gap mn-township-officers carries it.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.
@@ -1707,7 +1715,10 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("in-senate", "in-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # Since 2026-10-15 the council districts of 55 counties are drawn
+        # (Marion's are the City-County Council's 25); COUNTY_MAPS_DRAWN reads
+        # which from the shipped file.
+        "county-government": depth("county-council"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         # UNIFIED ALONE TILES THE STATE: TIGERweb's elementary and secondary
@@ -1716,7 +1727,14 @@ ANSWERS = {
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
-        "sub-county-government": OPEN,
+        # Since 2026-10-15 the Township or City card names each civil
+        # township's trustee and board from the Election Division's certified
+        # 2022 general (in-township-officials.json): 973 trustees and 921
+        # boards of 1,004 townships. The rest are recorded on the card (no
+        # race in the results, and Marion's boards are not in them). Adam's
+        # 2026-10-15 rule passes a level once its boards are named wherever a
+        # list is published, so it is answered.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
@@ -2091,7 +2109,9 @@ def _in_county_maps_owed(B):
     map. Daviess labels its four district seats only as "County Council
     Member", which is why the test is "not at large" rather than "says
     District". County commissioners are elected by the whole county from
-    residency districts (IC 36-2-2-4) and owe none. Marion County is governed by
+    residency districts (IC 36-2-2-4) and owe none, except in Lake and St.
+    Joseph, which elect them by district; both councils are elected by district
+    too, so those two counties are owed a map either way. Marion County is governed by
     the Indianapolis City-County Council, elected from 25 districts, and is not
     in the council file.
     """
@@ -2106,6 +2126,25 @@ def _in_county_maps_owed(B):
             owed.add(B.slug_of(rec["county"]))
     owed.add(B.slug_of("Marion"))
     return owed
+
+
+def _in_county_maps_drawn(B):
+    """Indiana counties whose council districts the app draws.
+
+    Read off the shipped district file itself (in/scripts/
+    build_in_council_districts.py), so a county counts as drawn exactly when a
+    reader can click inside one of its districts. Marion's features are the
+    Indianapolis City-County Council's 25 districts.
+    """
+    rel = "in/data/app/in-council-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    return {B.slug_of(f["properties"]["county"]) for f in doc["features"]}
+
+
+def _in_county_maps_undrawn(B, records):
+    """Indiana counties owed a council map that the shipped file does not draw."""
+    return _in_county_maps_owed(B) - _in_county_maps_drawn(B)
 
 
 def _il_county_maps_owed(B, records):
@@ -2183,13 +2222,13 @@ def _no_layer(derive):
     return wrapped
 
 
-# A STATE WHOSE ENTRY DRAWS NO DISTRICT (Indiana) is wrapped in `_no_layer`,
+# A STATE WHOSE ENTRY DRAWS NO DISTRICT is wrapped in `_no_layer`,
 # and the audit below fails the day its county-government entry gains a layer,
 # because which counties that layer draws then has to be measured. A state
-# whose entry draws some (Illinois, Iowa, Kentucky) measures it itself.
+# whose entry draws some (Illinois, Iowa, Kentucky, Indiana) measures it itself.
 COUNTY_MAPS_OWED = {
     "ky": _ky_county_maps_owed,
-    "in": _no_layer(_in_county_maps_owed),
+    "in": _in_county_maps_undrawn,
     "il": _il_county_maps_owed,
     "ia": _ia_county_maps_owed,
 }
@@ -2301,12 +2340,10 @@ WARD_MAPS = {
                              "council members by district and elects them by "
                              "the whole city"}),
     "mi": dict(
-        drawn={"2605920", "2622000", "2629000", "2634000", "2641420",
-               "2684000"},
+        drawn={"2605920", "2622000", "2629000", "2634000", "2638640",
+               "2641420", "2653780", "2656320", "2665440", "2684000"},
         owed={"2603000": "Ann Arbor", "2606020": "Bay City",
-              "2638640": "Holland", "2642820": "Kentwood",
-              "2646000": "Lansing", "2653780": "Midland",
-              "2656320": "Muskegon", "2665440": "Pontiac",
+              "2642820": "Kentwood", "2646000": "Lansing",
               "2682960": "Walker"}),
     # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
     # which reads the cities off the city council roster.
@@ -2324,21 +2361,24 @@ WARD_MAPS = {
     "ky": dict(
         drawn={"2148006", "2148000", "2146027"},
         declared={"2148006", "2148000", "2146027"}),
+    # Indianapolis's council districts are the City-County Council's, drawn by
+    # the County Council District layer for Marion County.
     "in": dict(
-        drawn=set(),
+        drawn={"1836003"},
         owed={"1801468": "Anderson", "1805860": "Bloomington",
+              "1808416": "Brownsburg",
               "1810342": "Carmel", "1814734": "Columbus",
               "1820728": "Elkhart", "1822000": "Evansville",
               "1823278": "Fishers", "1825000": "Fort Wayne",
               "1825450": "Franklin", "1828386": "Goshen",
-              "1829898": "Greenwood", "1836003": "Indianapolis",
+              "1829898": "Greenwood",
               "1838358": "Jeffersonville", "1840392": "Kokomo",
               "1840788": "Lafayette", "1842426": "Lawrence",
               "1846908": "Marion", "1848528": "Merrillville",
               "1848798": "Michigan City", "1849932": "Mishawaka",
               "1851876": "Muncie", "1852326": "New Albany",
-              "1854180": "Noblesville", "1861092": "Portage",
-              "1864260": "Richmond", "1871000": "South Bend",
+              "1854180": "Noblesville", "1860246": "Plainfield", "1861092": "Portage",
+              "1864260": "Richmond", "1868220": "Schererville", "1871000": "South Bend",
               "1875428": "Terre Haute", "1878326": "Valparaiso",
               "1882700": "Westfield", "1882862": "West Lafayette",
               "1886372": "Zionsville"}),

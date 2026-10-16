@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
-"""Build ms/data/app/ms-county-officials.json: the five supervisors of every
-Mississippi county, by district, from the Secretary of State's County Offices
-and Directory.
+"""Build ms/data/app/ms-county-officials.json: the five supervisors and the
+five election commissioners of every Mississippi county, by district, from the
+Secretary of State's County Offices and Directory.
 
 WHAT A MISSISSIPPI COUNTY ELECTS. Every one of the 82 counties is governed by
 a board of five supervisors, each elected from a district; five counties
 (Carroll, George, Jasper, Jones and Scott) print the district as a "Beat".
-The County card names all five, and the label each county itself uses.
+The County card names all five, and the label each county itself uses. Each
+county also elects five election commissioners, numbered District 1 to 5 like
+its supervisors. The directory's own description of the office (printed page
+43 of the 2026 edition) requires each to be "A qualified elector of the
+supervisor district in which election is sought" and gives their duties as
+"conducting general and special elections, certifying election results, and
+purging voter rolls". The County card names them too.
 
 THE SOURCE. The Secretary of State publishes a County Offices and Directory
 once a year as a PDF, linked from
@@ -42,6 +48,15 @@ HOW THE PDF IS READ, measured on the 2026 edition:
     prints one vacant seat, Sunflower District 3, and the file carries it as
     {"district": "3", "vacant": true} rather than as a person called Vacant;
     more than MAX_VACANT is read as a broken parse.
+  - Every county also has exactly one "Election Commissioners" heading, alone
+    on its line in 66 counties and followed by a run of dots and a telephone
+    in 16, and under it exactly five lines, "District 1" to "District 5" —
+    "District" even in the five counties that call their supervisor
+    districts beats — each running on from the name to an address and, on
+    some, a telephone. One line (Wilkinson District 4) sets part of its run
+    of dots as ellipsis characters, so a commissioner's line is cut at either.
+    All 410 commissioners are named in 2026; a seat printed "Vacant" would be
+    carried the way a supervisor's is.
 
 WHAT IS CARRIED, AND WHAT NEVER IS. The directory prints an address and a
 telephone beside every supervisor. In most counties all five print the same
@@ -51,9 +66,17 @@ board's address is carried only where at least three of the five print the
 same one, and its telephone on the same test, because five people do not share
 a home; nothing printed for one supervisor alone is carried, and no
 supervisor's own line is. On 2026-10-15 that test gave a board address in 76
-counties and a board telephone in 68. The directory also prints election
-commissioners, whose lines are home addresses, and the builder never reads
-them.
+counties and a board telephone in 68.
+
+For the election commissioners ONLY THE NAME IS KEPT. Each commissioner's line
+runs on from the name to the commissioner's own address, which may be a home,
+and sometimes a telephone; the line is cut at its first run of dots and nothing
+after the name is kept, written or printed, not even in an error message, so
+an error names only the county and the district. A name that carries a digit,
+an @ or a post-office box is a line cut in the wrong place, and the build
+stops rather than carry it. The telephone 16 counties print after the heading
+is not carried either: the card names people, and nothing on the page says
+whose line it is.
 
 NOTHING IN THE FILE CHANGES UNLESS THE PDF DOES. Each county carries the
 edition, the PDF's own creation date and the page the county is on, and no
@@ -117,10 +140,17 @@ MIN_BOARD_PHONE = 58
 # Seats the directory prints as "Vacant": one in the 2026 edition (Sunflower
 # District 3). Many more than that is a parse reading the wrong column.
 MAX_VACANT = 8
+# Election commissioners named: all 410 in the 2026 edition, measured
+# 2026-10-16. A parse that names far fewer has lost a county's block.
+MIN_COMMISSIONERS = 400
 
 FETCH_TIMEOUT = 120
 
 LEADER = re.compile(r"\s*\.{2,}\s*")
+# A commissioner's line is cut at a run of dots or of ellipsis characters.
+COMMISSIONER_LEADER = re.compile(r"\s*(?:\.{2,}|\u2026+)\s*")
+# What is left of a run of dots in a name that was cut in the wrong place.
+LEADER_REMNANT_RE = re.compile(r"\.{2,}|\u2026")
 ENTRY_RE = re.compile(r"^(District|Beat)\s*(\d+)\s*\.{2,}\s*(.*)$")
 # A name run straight into its address by one or two dots (no leader run).
 GLUED_RE = re.compile(r"^(.*?[A-Za-z])\.{1,2}((?:P\.\s?O\.|\d).*)$")
@@ -129,8 +159,22 @@ PHONE_RE = re.compile(r"^(\d{3})[-. ](\d{3})-(\d{4})")
 # line, a stray period, or another number ("County Barn 662-...").
 CONT_RE = re.compile(r"^(?:\(f\)|\.$|.*\b\d{3}-\d{4}\b)")
 SUFFIX_RE = re.compile(r",\s*(Jr|Sr)$")
+# A role printed after a commissioner's name: "Danny Glaskox, Chairman" in
+# Jackson County's District 1, the one such line in the 2026 edition. The
+# file carries names only, so the role is cut off rather than kept.
+CHAIR_SUFFIX_RE = re.compile(r",\s*(?:Chairman|Chairwoman|Chairperson|Chair)\.?$", re.I)
+# A role word at the end of a kept name, which the check refuses: the parse
+# cut the name in the wrong place or a new edition prints a new role.
+ROLE_WORD_RE = re.compile(r"\b(?:Chairman|Chairwoman|Chairperson|Chair|President|"
+                          r"Secretary|Treasurer|Clerk)\.?$", re.I)
 # The directory's word for a seat nobody holds.
 VACANT_RE = re.compile(r"^vacant$", re.I)
+# The commissioners' heading: alone, or followed by a run of dots and the
+# telephone 16 counties print there, which is never read.
+COMMISSIONERS_HEAD_RE = re.compile(r"^Election Commissioners(?:\s*\.{2,}.*)?$")
+# What a name never carries and an address always does: a digit (a street
+# number, a box number, a ZIP code), an @, or a post-office box.
+NOT_A_NAME_RE = re.compile(r"\d|@|\bP\.\s?O\.", re.I)
 
 
 def clean(s):
@@ -206,8 +250,11 @@ def parse_entry(label, number, rest, where):
         if glued:
             parts = [glued.group(1), glued.group(2), parts[1]]
     if len(parts) != 3:
-        raise SystemExit("%s %s %s: expected name, address and telephone, got %r"
-                         % (where, label, number, parts))
+        # The fields are not printed: a supervisor's own address and telephone
+        # may be a home's, and a CI log is not where they belong.
+        raise SystemExit("%s %s %s: expected a name, an address and a telephone "
+                         "separated by runs of dots, and the line splits into %d "
+                         "fields instead" % (where, label, number, len(parts)))
     name, address, phone = (clean(p) for p in parts)
     name = SUFFIX_RE.sub(lambda m: ", %s." % m.group(1), name)
     phone_m = PHONE_RE.match(phone.strip(" ."))
@@ -249,8 +296,60 @@ def supervisors_block(lines, where):
                          % (where, districts, SEATS))
     for e in entries:
         if not e["vacant"] and not re.search(r"[A-Za-z]{2}", e["name"]):
-            raise SystemExit("%s: district %s has no name (%r)"
-                             % (where, e["district"], e["name"]))
+            raise SystemExit("%s: supervisor district %s has no name"
+                             % (where, e["district"]))
+    return labels.pop(), entries
+
+
+def commissioner_name(rest, where, number):
+    """The name at the start of an election commissioner's line, and nothing
+    else from it: the rest of the line is the commissioner's own address."""
+    first = next((p for p in COMMISSIONER_LEADER.split(rest) if p.strip()), "")
+    glued = GLUED_RE.match(first)
+    if glued:
+        first = glued.group(1)
+    name = CHAIR_SUFFIX_RE.sub("", clean(first).strip(" ."))
+    name = SUFFIX_RE.sub(lambda m: ", %s." % m.group(1), name)
+    if NOT_A_NAME_RE.search(name) or LEADER_REMNANT_RE.search(name):
+        raise SystemExit("%s: the election commissioner line for district %s does "
+                         "not cut where a name ends: what would be kept carries a "
+                         "digit, an @, a post-office box or a run of dots. Nothing "
+                         "from the line is printed, because it carries an address."
+                         % (where, number))
+    if not VACANT_RE.match(name) and not re.search(r"[A-Za-z]{2}", name):
+        raise SystemExit("%s: election commissioner district %s has no name"
+                         % (where, number))
+    return name
+
+
+def commissioners_block(lines, where):
+    """The county's five election commissioners: district and name only."""
+    heads = [k for k, l in enumerate(lines) if COMMISSIONERS_HEAD_RE.match(l.strip())]
+    if len(heads) != 1:
+        raise SystemExit("%s: %d 'Election Commissioners' headings, expected exactly one"
+                         % (where, len(heads)))
+    entries = []
+    labels = set()
+    for raw in lines[heads[0] + 1:]:
+        s = raw.strip()
+        if not s:
+            continue
+        m = ENTRY_RE.match(s)
+        if not m:
+            break
+        labels.add(m.group(1))
+        name = commissioner_name(m.group(3), where, m.group(2))
+        district = str(int(m.group(2)))
+        entries.append({"district": district, "vacant": True}
+                       if VACANT_RE.match(name) else
+                       {"district": district, "name": name})
+    if len(labels) != 1:
+        raise SystemExit("%s: election commissioner lines labelled %s"
+                         % (where, sorted(labels)))
+    districts = [e["district"] for e in entries]
+    if districts != [str(n) for n in range(1, SEATS + 1)]:
+        raise SystemExit("%s: election commissioner districts read %s, expected 1 to %d"
+                         % (where, districts, SEATS))
     return labels.pop(), entries
 
 
@@ -287,7 +386,15 @@ def load_counties():
 
 
 def parse(pdf_bytes, pdf_url, edition):
-    import pymupdf
+    # Only the weekly read of the directory needs pymupdf, and
+    # update-ms-county-officials.yml installs it; --check, which the smoke job
+    # runs, never reaches this line, so the import is declared optional rather
+    # than paid for by every pull request.
+    try:
+        import pymupdf
+    except ImportError:
+        raise RuntimeError("reading the directory needs pymupdf: "
+                           "pip install -c scripts/requirements.txt pymupdf")
 
     doc = pymupdf.open(stream=pdf_bytes, filetype="pdf")
     published = pdf_date(doc.metadata)
@@ -314,6 +421,7 @@ def parse(pdf_bytes, pdf_url, edition):
             named_hits.append(name)
         label, entries = supervisors_block(lines, where)
         address, phone = board_office(entries)
+        commissioner_label, commissioners = commissioners_block(lines, where)
         record = {
             "county": name,
             "label": label,
@@ -321,6 +429,8 @@ def parse(pdf_bytes, pdf_url, edition):
                             if e["vacant"] else
                             {"district": e["district"], "name": e["name"]}
                             for e in entries],
+            "commissionerLabel": commissioner_label,
+            "electionCommissioners": commissioners,
         }
         if address:
             record["boardAddress"] = address
@@ -356,8 +466,9 @@ def check_shape(data):
         problems.append("county keys differ from state-counties.json: missing %s, extra %s"
                         % (sorted(geoids - set(data)), sorted(set(data) - geoids)))
     allowed = {"county", "label", "supervisors", "boardAddress", "boardPhone",
+               "commissionerLabel", "electionCommissioners",
                "source", "published", "sourceUrl", "sourcePage", "printedPage"}
-    addresses = phones = vacant = 0
+    addresses = phones = vacant = commissioners = commissioners_vacant = 0
     for geoid, rec in sorted(data.items()):
         extra = set(rec) - allowed
         if extra:
@@ -371,9 +482,47 @@ def check_shape(data):
             if set(s) == {"district", "vacant"} and s.get("vacant") is True:
                 vacant += 1
                 continue
+            # Field NAMES only: a record carrying more than a name may be
+            # carrying an address, which does not belong in a log either.
             if set(s) != {"district", "name"} or not s.get("name") \
                     or VACANT_RE.match(str(s.get("name"))):
-                problems.append("%s district %s: %r" % (geoid, s.get("district"), s))
+                problems.append("%s supervisor district %s carries fields %s"
+                                % (geoid, s.get("district"), sorted(s)))
+            elif LEADER_REMNANT_RE.search(str(s["name"])):
+                problems.append("%s supervisor district %s: the name carries a run "
+                                "of dots, so its line was cut in the wrong place "
+                                "(not printed)" % (geoid, s.get("district")))
+            elif ROLE_WORD_RE.search(str(s["name"])):
+                problems.append("%s supervisor district %s: the name ends in a role "
+                                "word (not printed)" % (geoid, s.get("district")))
+        if rec.get("commissionerLabel") not in ("District", "Beat"):
+            problems.append("%s: election commissioner label %r"
+                            % (geoid, rec.get("commissionerLabel")))
+        coms = rec.get("electionCommissioners") or []
+        if [c.get("district") for c in coms] != [str(n) for n in range(1, SEATS + 1)]:
+            problems.append("%s: election commissioner districts %s"
+                            % (geoid, [c.get("district") for c in coms]))
+        for c in coms:
+            if set(c) == {"district", "vacant"} and c.get("vacant") is True:
+                commissioners_vacant += 1
+                continue
+            if set(c) != {"district", "name"} or not c.get("name") \
+                    or VACANT_RE.match(str(c.get("name"))):
+                problems.append("%s election commissioner district %s carries "
+                                "fields %s" % (geoid, c.get("district"), sorted(c)))
+                continue
+            if NOT_A_NAME_RE.search(str(c["name"])) or LEADER_REMNANT_RE.search(str(c["name"])):
+                problems.append("%s election commissioner district %s: the name "
+                                "carries a digit, an @, a post-office box or a run "
+                                "of dots, so it may carry an address (not printed)"
+                                % (geoid, c.get("district")))
+                continue
+            if ROLE_WORD_RE.search(str(c["name"])):
+                problems.append("%s election commissioner district %s: the name "
+                                "ends in a role word (not printed)"
+                                % (geoid, c.get("district")))
+                continue
+            commissioners += 1
         if rec.get("boardPhone") and not re.fullmatch(r"\d{3}-\d{3}-\d{4}", rec["boardPhone"]):
             problems.append("%s: board telephone %r" % (geoid, rec["boardPhone"]))
         if not str(rec.get("sourceUrl", "")).startswith("https://www.sos.ms.gov/"):
@@ -389,7 +538,13 @@ def check_shape(data):
     if vacant > MAX_VACANT:
         problems.append("%d seats read as vacant (at most %d) — the parse is "
                         "probably reading the wrong column" % (vacant, MAX_VACANT))
-    return problems, addresses, phones, vacant
+    if commissioners < MIN_COMMISSIONERS:
+        problems.append("only %d election commissioners named (floor %d)"
+                        % (commissioners, MIN_COMMISSIONERS))
+    if commissioners_vacant > MAX_VACANT:
+        problems.append("%d election commissioner seats read as vacant (at most %d)"
+                        % (commissioners_vacant, MAX_VACANT))
+    return problems, addresses, phones, vacant, commissioners, commissioners_vacant
 
 
 def main():
@@ -404,16 +559,17 @@ def main():
     if args.check:
         with open(OUT) as f:
             data = json.load(f)
-        problems, addresses, phones, vacant = check_shape(data)
+        problems, addresses, phones, vacant, coms, coms_vacant = check_shape(data)
         if problems:
             for p in problems:
                 print("build_ms_county_officials --check: FAIL — " + p, file=sys.stderr)
             return 1
-        print("build_ms_county_officials --check: OK — %d counties, %d seats "
-              "(%d named, %d vacant), a board address in %d and a board "
-              "telephone in %d"
+        print("build_ms_county_officials --check: OK — %d counties, %d supervisor "
+              "seats (%d named, %d vacant), a board address in %d and a board "
+              "telephone in %d; %d election commissioners named and %d vacant, "
+              "names only"
               % (len(data), SEATS * len(data), SEATS * len(data) - vacant, vacant,
-                 addresses, phones))
+                 addresses, phones, coms, coms_vacant))
         return 0
 
     if args.pdf:
@@ -434,7 +590,7 @@ def main():
 
     sha = hashlib.sha256(pdf_bytes).hexdigest()
     data, published, named = parse(pdf_bytes, pdf_url, edition)
-    problems, addresses, phones, vacant = check_shape(data)
+    problems, addresses, phones, vacant, coms, coms_vacant = check_shape(data)
     if problems:
         for p in problems:
             print("build_ms_county_officials: FAIL — " + p, file=sys.stderr)
@@ -451,15 +607,16 @@ def main():
     labels = Counter(r["label"] for r in data.values())
     vacancies = ["%s %s %s" % (r["county"], r["label"], s["district"])
                  for r in data.values() for s in r["supervisors"] if s.get("vacant")]
-    print("build_ms_county_officials: %d counties, %d seats (%s) from the %d "
-          "edition published %s, %s, SHA-256 %s; %d named and %d vacant (%s); a "
-          "board address in %d counties and a board telephone in %d; %d of %d "
-          "'Named for' lines name their county"
+    print("build_ms_county_officials: %d counties, %d supervisor seats (%s) from "
+          "the %d edition published %s, %s, SHA-256 %s; %d named and %d vacant "
+          "(%s); a board address in %d counties and a board telephone in %d; %d "
+          "election commissioners named and %d vacant; %d of %d 'Named for' "
+          "lines name their county"
           % (len(data), SEATS * len(data),
              ", ".join("%d %s" % (n, l) for l, n in sorted(labels.items())),
              edition, published, pdf_url, sha, SEATS * len(data) - vacant, vacant,
-             ", ".join(sorted(vacancies)) or "none", addresses, phones, named,
-             EXPECTED_COUNTIES))
+             ", ".join(sorted(vacancies)) or "none", addresses, phones, coms,
+             coms_vacant, named, EXPECTED_COUNTIES))
     return 0
 
 

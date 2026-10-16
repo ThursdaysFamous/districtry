@@ -45,16 +45,47 @@
 // must give exactly the features its loader returns (countyStampCheck). A
 // loader that adds a property, filters or merges outside withStamp fails here
 // the day its county enters the archive, wherever the points happen to land.
+//
+// EVERY ANSWER FROM ANOTHER HOST IS HELD FOR BOTH RUNS (2026-10-16). A card
+// can join data no tile carries — New York's precinct card names the station
+// house from a live city dataset — and the two runs used to fetch it each for
+// themselves. On 2026-10-16 the city refused that request once and answered
+// it moments later, so the first point of the tile run printed no station and
+// the file run printed one, and the check failed on a change to Indiana. Each
+// layer's page now asks every other host once, through `heldAnswers`, and both
+// runs read that one answer, a failure included. The comparison is tile
+// against file, so nothing else may vary between the two.
+//
+// ONE THING STILL CAN: the page's own patience. A loader gives up after its
+// own timeout, so an answer that arrives later reaches the second run and not
+// the first. When a layer differs AND the page gave up on a held request while
+// it was comparing, that layer is run once more on a fresh page, where every
+// answer is already held and arrives at once, and that run's result stands.
+// With no such request there is no second run: a real difference between a
+// tile and its file comes back exactly, because nothing else in it varies.
+//
+// THE SET A MIRRORED LAYER WAS BUILT FROM IS FETCHED ONCE, BEFORE ITS PAGE
+// OPENS, waiting longer between tries — the other failure that day was the
+// city answering 503 four times in fifteen seconds — and the page's own
+// request for that set is answered from the same copy.
+//
+// AND ONLY THE INSTANCES A CHANGE CAN REACH ARE PROBED. On a pull request the
+// files it changes are read against its base and against this workflow's own
+// trigger paths: a file under one instance reaches that instance, and a
+// trigger path outside every instance (the engine, this probe, the mirror
+// records) reaches all of them. Both failures were on a change to Indiana,
+// which draws nothing from tiles. TAGS still names instances outright, and a
+// run that is not a pull request probes every instance.
 
-import { chromium } from "playwright";
+import { chromium, request } from "playwright";
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT, instances, vendorDir } from "./probe_points.mjs";
 
 const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/+$/, "") + "/";
 const PAIRS = +(process.env.POINTS || 20);
-const TAGS = process.env.TAGS ? process.env.TAGS.split(",") : instances();
 const ONLY = process.env.LAYERS ? new Set(process.env.LAYERS.split(",")) : null;
 const SOURCES = JSON.parse(readFileSync(join(ROOT, "layer-sources.json"), "utf8"));
 // EVERY mirror's record, not one of them: an archive mirrored by any of them
@@ -75,6 +106,180 @@ function appToken(tag) {
     APP_TOKEN[tag] = m ? m[1] : "";
   }
   return APP_TOKEN[tag];
+}
+
+// The trigger paths of the workflow that runs this probe, read rather than
+// restated, so a path added there reaches the scope below with nothing to edit
+// here. A pattern under `*/` is one instance's; any other is shared.
+function triggerPaths() {
+  const yml = readFileSync(join(ROOT, ".github", "workflows", "vector-tiles.yml"), "utf8").split("\n");
+  const out = [];
+  let inPaths = false, indent = -1;
+  for (const line of yml) {
+    const m = line.match(/^(\s*)paths:\s*$/);
+    if (m) { inPaths = true; indent = m[1].length; continue; }
+    if (!inPaths) continue;
+    const item = line.match(/^(\s*)-\s*"([^"]+)"/);
+    if (item && item[1].length > indent) { out.push(item[2]); continue; }
+    if (/^\s*(#.*)?$/.test(line)) continue;
+    if ((line.match(/^\s*/)[0].length) <= indent) break;
+  }
+  return out;
+}
+function globRe(glob) {
+  return new RegExp("^" + glob.split("**").map((part) =>
+    part.split("*").map((t) => t.replace(/[.+?^${}()|[\]\\]/g, "\\$&")).join("[^/]*")).join(".*") + "$");
+}
+// The probe's own import is read as a trigger too: it chooses no points of its
+// own today, but a change to it is a change to this probe.
+const PROBE_FILES = ["scripts/probe_points.mjs"];
+
+// Which instances this change can reach, or null for every instance.
+function changedTags(all) {
+  const base = process.env.GITHUB_BASE_REF;
+  if (!base) return null;
+  const paths = triggerPaths();
+  if (!paths.length) {
+    console.log("  note  no trigger paths read from vector-tiles.yml; probing every instance");
+    return null;
+  }
+  let files;
+  try {
+    files = execFileSync("git", ["diff", "--name-only", `origin/${base}...HEAD`], { cwd: ROOT, encoding: "utf8" })
+      .split("\n").filter(Boolean);
+  } catch (e) {
+    console.log(`  note  could not read the change against origin/${base} (${String(e).split("\n")[0].slice(0, 160)}); probing every instance`);
+    return null;
+  }
+  const shared = paths.filter((p) => !p.startsWith("*/")).map(globRe);
+  const own = paths.filter((p) => p.startsWith("*/")).map(globRe);
+  const tags = new Set();
+  for (const f of files) {
+    if (PROBE_FILES.includes(f) || shared.some((re) => re.test(f))) {
+      console.log(`  scope ${f} is shared by every instance, so every instance is probed`);
+      return null;
+    }
+    const top = f.split("/")[0];
+    if (all.includes(top) && own.some((re) => re.test(f))) tags.add(top);
+  }
+  return [...tags].sort();
+}
+
+// The hosts that only paint the map: no card reads them, so they go to the
+// network as they always did rather than through heldAnswers.
+const PAINT_ONLY = /(^|\.)basemaps\.cartocdn\.com$/;
+// statuses worth asking again: a rate limit, and a server's own outage
+const TRANSIENT = new Set([408, 429, 500, 502, 503, 504]);
+// what a fulfilled response must not repeat: the body is already decoded,
+// and its length is the body's own
+const DROP_HEADERS = new Set(["content-encoding", "content-length", "transfer-encoding", "connection", "set-cookie"]);
+// one request context for every held fetch, so a fetch outlives the page that
+// first asked for it and the layer's second page finds it finished
+const API = await request.newContext();
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const keyOf = (method, url, body) => `${method} ${new URL(url).href} ${body || ""}`;
+
+// One answer per request for one layer: the first asks the network, up to four
+// times a second or more apart when the answer is a rate limit or an outage,
+// and every identical request after it, in either run, gets exactly that.
+function heldAnswers() {
+  const map = new Map();
+  return {
+    seed(url, body) {
+      map.set(keyOf("GET", url), Promise.resolve({ status: 200, headers: { "content-type": "application/json" }, body }));
+    },
+    get(req) {
+      const k = keyOf(req.method(), req.url(), req.postData());
+      if (!map.has(k)) {
+        const headers = Object.assign({}, req.headers());
+        delete headers["accept-encoding"];
+        map.set(k, (async () => {
+          let last = null;
+          for (let i = 0; i < 4; i++) {
+            if (i) await sleep(1000 * 2 ** (i - 1)); // 1, 2 and 4 s
+            try {
+              const r = await API.fetch(req.url(), { method: req.method(), headers, data: req.postDataBuffer() || undefined,
+                timeout: 120000, failOnStatusCode: false });
+              last = { status: r.status(), headers: r.headers(), body: await r.body() };
+              if (!TRANSIENT.has(last.status)) return last;
+            } catch (e) {
+              last = { failed: String(e && e.message || e).split("\n")[0] };
+            }
+          }
+          return last;
+        })());
+      }
+      return map.get(k);
+    }
+  };
+}
+
+// a fresh page for one layer, with every other host answered from `held`;
+// `gaveUp` counts the held requests the page abandoned while comparing
+async function openPage(tag, held, referenceSet) {
+  const ctx = await browser.newContext({ serviceWorkers: "block" });
+  const page = await ctx.newPage();
+  const base = new URL(BASE).origin;
+  const inflight = new Set();
+  const state = { comparing: false, gaveUp: 0 };
+  page.on("requestfailed", (r) => {
+    if (state.comparing && inflight.has(r) && /ERR_ABORTED/.test((r.failure() || {}).errorText || "")) state.gaveUp++;
+  });
+  // registered first, so every route below takes precedence over it
+  await page.route((u) => u.origin !== base && !PAINT_ONLY.test(u.hostname), async (route) => {
+    const req = route.request();
+    inflight.add(req);
+    const got = await held.get(req);
+    try {
+      if (got.failed) await route.abort("failed");
+      else {
+        const headers = {};
+        for (const [k, v] of Object.entries(got.headers)) if (!DROP_HEADERS.has(k.toLowerCase())) headers[k] = v;
+        await route.fulfill({ status: got.status, headers, body: got.body });
+      }
+    } catch { /* the page had already given up on this request, or closed */ }
+    inflight.delete(req);
+  });
+  const dir = vendorDir(tag);
+  await page.route(/cdnjs\.cloudflare\.com/, (route) => {
+    const f = new URL(route.request().url()).pathname.split("/").pop();
+    if (existsSync(join(dir, f)))
+      return route.fulfill({ body: readFileSync(join(dir, f)),
+        contentType: f.endsWith(".css") ? "text/css" : "application/javascript" });
+    return route.fallback();
+  });
+  if (referenceSet) {
+    const body = JSON.stringify(referenceSet);
+    // only the whole-set envelope query; a point query is not answered here
+    await page.route((u) => /PUMA_TAD_TAZ_UGA_ZCTA/.test(u.href) && /esriGeometryEnvelope/.test(decodeURIComponent(u.href)),
+      (route) => route.fulfill({ body, contentType: "application/json" }));
+  }
+  return { ctx, page, state };
+}
+
+// curl for the sets a mirrored layer was built from: it honours a proxy where
+// Node's fetch does not, and it waits 1, 2, 4, 8, 16 and 32 s between tries.
+// A request the server accepts and then answers with nothing is dropped after
+// a minute and asked again: on 2026-10-16 New York City's open data site held
+// one open for the whole ten minutes --max-time allows with no byte sent,
+// which left no time for a second try, and the layer failed on that alone.
+const CURL_RETRY = ["--retry", "6", "--retry-all-errors", "--retry-max-time", "240",
+  "--speed-limit", "1", "--speed-time", "60"];
+
+// The body goes to a file, never to stdout. curl truncates a file before it
+// tries again, but it cannot take back what it already wrote to stdout, so a
+// download that stalled part-way and was retried came back as the partial
+// body followed by the whole one, and JSON.parse failed where the two met
+// (il:cps-high and ny:es-zone on 2026-10-16, on two runs of one commit).
+function curlBody(args) {
+  const dir = mkdtempSync(join(tmpdir(), "probe-tile-cards-"));
+  const out = join(dir, "body");
+  try {
+    execFileSync("curl", [...args.slice(0, -1), "-o", out, args[args.length - 1]], { stdio: ["ignore", "ignore", "inherit"] });
+    return readFileSync(out);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 }
 
 const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
@@ -188,6 +393,12 @@ function tiledLayers(tag) {
 
 const FIND = "Object.keys(window).map((k) => window[k]).find((v) => v && typeof v === 'object' && typeof v.tileCardCheck === 'function')";
 
+const ALL = instances();
+const SCOPE = process.env.TAGS ? null : changedTags(ALL);
+const TAGS = process.env.TAGS ? process.env.TAGS.split(",") : (SCOPE || ALL);
+if (SCOPE) console.log(`  scope this change reaches ${SCOPE.length ? SCOPE.join(", ") : "no instance"}; ` +
+  `the other ${ALL.length - SCOPE.length} instance(s) draw nothing it changed, so they are not probed`);
+
 let problems = 0, compared = 0, answered = 0, layersDone = 0;
 const browser = await chromium.launch();
 try {
@@ -214,6 +425,7 @@ try {
       // answered below from this set instead; the mirror's own gate already
       // holds the archive to it.
       let referenceSet = null;
+      const held = heldAnswers();
       if (!feats.length && MIRROR[`${tag}:${id}`] && MIRROR[`${tag}:${id}`].dataset) {
         // a layer mirrored from a city open-data portal: the record's route is
         // already GeoJSON, and the app's own whole-set loader calls the SAME
@@ -223,10 +435,13 @@ try {
         const tok = appToken(tag);
         const url = rec.query + (tok ? (rec.query.includes("?") ? "&" : "?") + "$$app_token=" + tok : "");
         try {
-          const fc = JSON.parse(execFileSync("curl", ["-sS", "--fail", "-L", "--max-redirs", "5",
-            "--retry", "3", "--retry-all-errors", "--retry-delay", "5", "--max-time", "600",
-            "-A", "districtry portal-tile mirror (+https://districtry.com/)", url], { maxBuffer: 1 << 30 }));
+          const raw = curlBody(["-sS", "--fail", "-L", "--max-redirs", "5", ...CURL_RETRY, "--max-time", "600",
+            "-A", "districtry portal-tile mirror (+https://districtry.com/)", url]);
+          const fc = JSON.parse(raw);
           for (const f of fc.features || []) if (f.geometry) feats.push(f);
+          // the app's whole-set loader calls this same route with this same
+          // token, so its file run reads these bytes rather than asking again
+          held.seed(url, raw);
         } catch (e) {
           console.log(`  FAIL  ${tag}:${id} — could not fetch the mirrored set to place points: ${String(e).slice(0, 200)}`);
           problems++; continue;
@@ -242,9 +457,12 @@ try {
             // --retry-all-errors: without it curl's --retry skips a reset
             // connection (exit 35), which is how a CI run lost ia:municipality
             // on 2026-09-27 with three retries unspent.
-            const page = JSON.parse(execFileSync("curl", ["-sS", "--fail", "--retry", "3", "--retry-all-errors",
-              "--retry-delay", "5", "--max-time", "300",
-              "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url], { maxBuffer: 1 << 30 }));
+            const raw = curlBody(["-sS", "--fail", ...CURL_RETRY, "--max-time", "300",
+              "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url]);
+            const page = JSON.parse(raw);
+            // a set fetched whole is held under its own query, which the app's
+            // loader may or may not ask in exactly this form
+            if (!rec.page_size) held.seed(url, raw);
             const got = page.features || [];
             if (rec.page_size && !referenceSet) referenceSet = Object.assign({}, page, { features: [] });
             // an in-state mirror keeps only some of the box (rec.kept); a point in
@@ -283,36 +501,37 @@ try {
           }
         }
       }
-      const ctx = await browser.newContext({ serviceWorkers: "block" });
-      const page = await ctx.newPage();
-      const dir = vendorDir(tag);
-      await page.route(/cdnjs\.cloudflare\.com/, (route) => {
-        const f = new URL(route.request().url()).pathname.split("/").pop();
-        if (existsSync(join(dir, f)))
-          return route.fulfill({ body: readFileSync(join(dir, f)),
-            contentType: f.endsWith(".css") ? "text/css" : "application/javascript" });
-        return route.continue();
-      });
-      if (referenceSet) {
-        delete referenceSet.exceededTransferLimit;
-        const body = JSON.stringify(referenceSet);
-        // only the whole-set envelope query; a point query is not answered here
-        await page.route((u) => /PUMA_TAD_TAZ_UGA_ZCTA/.test(u.href) && /esriGeometryEnvelope/.test(decodeURIComponent(u.href)),
-          (route) => route.fulfill({ body, contentType: "application/json" }));
+      if (referenceSet) delete referenceSet.exceededTransferLimit;
+      async function compare() {
+        const { ctx, page, state } = await openPage(tag, held, referenceSet);
+        try {
+          await page.goto(`${BASE}${tag}/`, { waitUntil: "domcontentloaded" });
+          await page.waitForFunction(`!!(${FIND})`, null, { timeout: 60000 });
+          state.comparing = true;
+          const res = await page.evaluate(`(${FIND}).tileCardCheck(${JSON.stringify(id)}, ${JSON.stringify(pts)})`);
+          state.comparing = false;
+          const stamps = countyFiles
+            ? await page.evaluate(`(${FIND}).countyStampCheck(${JSON.stringify(id)}, ${JSON.stringify(countyFiles)})`) : null;
+          return { res, stamps, gaveUp: state.gaveUp };
+        } finally {
+          await ctx.close();
+        }
       }
-      let res, stamps = null;
+      let res, stamps = null, rerun = null;
       try {
-        await page.goto(`${BASE}${tag}/`, { waitUntil: "domcontentloaded" });
-        await page.waitForFunction(`!!(${FIND})`, null, { timeout: 60000 });
-        res = await page.evaluate(`(${FIND}).tileCardCheck(${JSON.stringify(id)}, ${JSON.stringify(pts)})`);
-        if (countyFiles) stamps = await page.evaluate(`(${FIND}).countyStampCheck(${JSON.stringify(id)}, ${JSON.stringify(countyFiles)})`);
+        let got = await compare();
+        // a difference while the page gave up on a held answer: once more,
+        // with every answer already held (see the header)
+        if (got.gaveUp && got.res.some((r) => r.tiles !== r.file)) {
+          rerun = got.gaveUp;
+          got = await compare();
+        }
+        ({ res, stamps } = got);
       } catch (e) {
         console.log(`  FAIL  ${tag}:${id} — ${String(e).slice(0, 200)}`);
         problems++;
-        await ctx.close();
         continue;
       }
-      await ctx.close();
       const county = res.some((r) => "inArchive" in r);
       // the tile path must be what answered: a query reaching its boundaries
       // another way compares equal while downloading the whole file. For a
@@ -359,6 +578,8 @@ try {
         (hidden ? `${hidden} outside the layer's coverage and skipped, ` : "") +
         `${bad.length} differ, ${errs.length} errored` +
         (county ? `, ${hoverBad.length} hover names differ` : `, ${notTiled.length} not answered from tiles`));
+      if (rerun) console.log(`          the first run differed while the page gave up waiting on ${rerun} answer(s) from another host; ` +
+        "this is the second run, with every answer already held");
       if (county) {
         const byCounty = {};
         for (const r of res) {
@@ -389,7 +610,12 @@ try {
   }
 } finally {
   await browser.close();
+  await API.dispose();
 }
-if (!layersDone && !problems) { console.log("probe-tile-cards: OK — no layer is drawn from tiles"); process.exit(0); }
+if (!layersDone && !problems) {
+  console.log(SCOPE ? "probe-tile-cards: OK — no instance this change reaches draws a layer from tiles"
+    : "probe-tile-cards: OK — no layer is drawn from tiles");
+  process.exit(0);
+}
 if (problems) { console.log(`probe-tile-cards: FAIL — ${problems} layer(s) failed: a card that differs, an error, or a page that did not boot (each is named above)`); process.exit(1); }
 console.log(`probe-tile-cards: OK — ${layersDone} layer(s), ${compared} points (${answered} inside a district): every card from tiles matches the card from the whole file`);

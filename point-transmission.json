@@ -207,6 +207,7 @@
       "atpoint_hooks_fired": 2,
       "layer_ids": [
         "county",
+        "county-council",
         "county-subdivision",
         "fire-station",
         "in-house",
@@ -352,12 +353,17 @@
         "county",
         "county-supervisor",
         "fire-station",
+        "ms-chancery-court",
+        "ms-circuit-court",
+        "ms-court-of-appeals",
         "ms-house",
         "ms-senate",
+        "ms-supreme-court",
         "municipality",
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]

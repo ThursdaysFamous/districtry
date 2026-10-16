@@ -7589,11 +7589,14 @@ the counties' own sites and the next election's results stay the route.
 
 **Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
-County's District 3 is vacant), and can draw the districts they represent in only 12 counties.
-The only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's
-county subdivisions are the supervisor districts. Measured 2026-10-15 by
-`ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
-Bureau's current edition differs from its 2020 edition in 12 counties, which the map draws; in 64
+County's District 3 is vacant), and can draw the districts they represent in only 20 counties:
+12 from the Census Bureau's current edition and 8 from the county's own published map, the 8
+added after this letter was drafted. The letter's text does not count what the map draws, so it
+is unchanged. The only statewide map of supervisor districts found is the Census
+Bureau's, where Mississippi's county subdivisions are the supervisor districts. Measured
+2026-10-15 by `ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own
+blocks: the Bureau's current edition differs from its 2020 edition in 12 counties, which the map
+draws; in 64
 counties the lines it shows are unchanged since 2020 and have a total population deviation above
 10% on the 2020 census (the largest district less the smallest, as a share of an equal district: a
 median of 37%, and as much as 304%), which suggests those counties have redrawn them since (an
@@ -7682,3 +7685,110 @@ that needs a change in law, is then the next question; nothing here establishes 
   service shows its layer again, cut it.
 - Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
   Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
+
+## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
+
+> **NOT YET ASKED — DRAFTED 2026-10-15.** Three letters, one per city, each about one ward map
+> this project measured on 2026-10-15 and did not ship. Each city's gap record in
+> `docs/DATA_LAYER_GUIDEBOOK.md` carries the measurement (`annarbor-ward-boundary`,
+> `kentwood-ward-boundary`, `bay-city-ward-boundary`). On send, add `"ask": {"who": "<name>",
+> "asked": "<date>"}` to that record. The four other Michigan cities owed on the done standard
+> (Holland, Midland, Muskegon, Pontiac) shipped the same day and need no letter. Lansing's ward map
+> waits on the operator's decision about its licence, and Walker's on his decision about map PDFs
+> that state terms; neither is asked here.
+
+| city | addressed to | address | where the address came from |
+|---|---|---|---|
+| Ann Arbor | Scott Harrod | `sjharrod@a2gov.org` | the maintainer named on the city's own open-data record for the "Wards and Precincts" dataset (ckan.a2gov.org, dataset 8c6a26f9), read 2026-10-15 |
+| Kentwood | Dan Kasunic, City Clerk | `elections@kentwood.us` | the city clerk's election page, which gives this address for elections questions; the clerk's main page names Dan Kasunic and `eclerk@kentwood.us`, read 2026-10-15 |
+| Bay City | the City Clerk's office | **none recorded** | NOT FOUND: the city's website could not be reached from this project's sandbox, so the clerk's name and address must be read in a browser before sending |
+
+### Ann Arbor
+
+> Subject: A question about the outer edge of the city's ward map
+>
+> Dear Mr. Harrod,
+>
+> I run districtry (https://districtry.com/mi/), a free, non-commercial map that tells a reader
+> which districts they live in and who represents them. I would like to add Ann Arbor's five
+> council wards, and the "Wards and Precincts" file on the city's open-data portal, which names you
+> as its maintainer, is the right source: its ward lines match the precincts the State of Michigan
+> records for 2026 almost exactly.
+>
+> The one thing that stops me is the file's outer edge. In several places it draws city wards over
+> neighbourhoods that the state's precinct map and the 2020 Census place in Ann Arbor, Pittsfield
+> or Scio Township. If I published the file as it is, a reader living in one of those township
+> neighbourhoods would be told they live in a city ward. I also compared Washtenaw County's
+> municipal boundary layer, and it does not settle it either: the city file, the county, the state
+> and the Census each draw the city limits a little differently.
+>
+> Could you tell me whether the ward file is meant to follow the current city limits, and if not,
+> whether there is a version that does, or a city-limits layer the city considers authoritative?
+> I can send a list of the places where the maps differ, with coordinates, if that would help.
+>
+> We show only each council member's name and ward, from the city's own council page.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+### Kentwood
+
+> Subject: Which ward is the area north of 52nd Street between Stauffer and Breton in?
+>
+> Dear Mr. Kasunic,
+>
+> I run districtry (https://districtry.com/mi/), a free, non-commercial map that tells a reader
+> which districts they live in and who represents them. I would like to add Kentwood's two wards,
+> using the city's 2025 Precinct Map from the Clerk's elections page.
+>
+> Almost everywhere, the city's map and the precinct map the State of Michigan keeps for 2026 put
+> each address in the same ward. They disagree about one area of about a square kilometre north of
+> 52nd Street between Stauffer Avenue and Breton Avenue (around 42.871 N, 85.609 W): the city's map
+> shows it in Ward 1 and the state's shows it in Ward 2. I do not want to tell residents there the
+> wrong ward, so I have left Kentwood off the map until I know which is right.
+>
+> Could you tell me which ward that area is in? If one of the two maps is out of date, it would
+> also help to know which.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+### Bay City
+
+> Subject: Does the city's ward map match the 2026 precincts?
+>
+> Dear City Clerk,
+>
+> I run districtry (https://districtry.com/mi/), a free, non-commercial map that tells a reader
+> which districts they live in and who represents them. I would like to add Bay City's nine
+> commission wards.
+>
+> The city publishes a "Wards" map layer (last updated in December 2023), and Bay County publishes
+> the same ward lines. When I compare them with the precincts the State of Michigan records for
+> Bay City in 2026, they disagree in a few places, mostly along the Saginaw River and around
+> Middleground Island. About one spot in seventy across the city falls in a different ward
+> depending on which map I use, so I have left Bay City off the map rather than risk telling
+> someone the wrong ward.
+>
+> Could you tell me whether the 2026 precincts follow the ward lines in the city's current map, and
+> if the ward map has been updated since 2023, where I could find the current version?
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** Ann Arbor: a file or layer that follows the city limits is read
+through the kept builder and gated as Holland was; an answer that the file is right as drawn is
+weighed against the Census tiling gate by a person rather than loosening it. Kentwood: the city's
+PDF is read through the Holland reader and the area is assigned as the clerk says, with the
+answer and its date recorded in the builder. Bay City: a current map is measured against the
+state's precincts again; an answer that the state's precincts are out of date is recorded in the
+gap with its date.
