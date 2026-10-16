@@ -9387,7 +9387,7 @@ function initIowaExplorer() {
     "county-subdivision", // 1,663 records tiling the state, live from TIGERweb (no data/app file) — 1,600 civil townships, 62 incorporated cities that double as their own subdivision record, and one federal reservoir carried as unorganized territory
     "tribal-government", // Tribal land — Iowa has 4 pieces across 3 nations inside the state, from the Meskwaki Settlement's 26.188 km² down to the Meskwaki trust land's 1.673 km², MEASURED by scripts/build_tribal_areas.py; median 9.19 km². Drawn above county subdivisions, which are townships of about 93 km², and below cities, several of which are smaller. The Omaha and Winnebago reservations cross the Missouri from Nebraska and are drawn whole. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 939 incorporated cities, live from TIGERweb (no data/app file) — small dense pockets within the county-subdivision fabric, so smaller on average than a civil township despite fewer records
-    "city-ward",         // The instance's CITY tier: 14 subdivisions across three cities — Des Moines's 4 wards averaging 22.7 sq mi inside one 90.66 sq mi city, Waterloo's 5 wards averaging 12.6 sq mi inside one 62.98 sq mi city, Cedar Rapids's 5 districts averaging 15.2 sq mi inside one 75.54 sq mi city — so strictly smaller than the City that contains them and larger than a precinct
+    "city-ward",         // The instance's CITY tier: 55 subdivisions across twelve cities — Des Moines's 4 wards averaging 22.7 sq mi inside one 90.66 sq mi city, Waterloo's 5 wards averaging 12.6 sq mi inside one 62.98 sq mi city, Cedar Rapids's 5 districts averaging 15.2 sq mi inside one 75.54 sq mi city, and from Marshalltown's 4 wards to Davenport's 8 in the nine cities added 2026-10-15 — so strictly smaller than the City that contains them and larger than a precinct
     "zip-code",          // Census ZCTAs by Iowa envelope (no data/app file) — 1,443 features measured in-envelope, smaller on average than an incorporated city
     "precinct",          // 1,660 election precincts, pre-built (mapshaper-simplified from the Legislature's own ArcGIS layer) — identity-only, no roster; ranked with the other fine-grained political boundaries
     "police-station",    // Nearest-3 point layer (449 stations in the state envelope) — not a containment boundary; ranked with the amenity points
@@ -14480,6 +14480,13 @@ function initIowaExplorer() {
   var loadCityCouncils = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-city-councils.json", {}, 2);
   });
+  // The cities whose wards the City Council District layer draws AND whose
+  // council the City card names from ia-city-councils.json. Kept beside the
+  // ward layer's entries (each of those carries the same geoid), so the City
+  // card's note can say the seat is drawn without guessing.
+  var IA_WARD_MAP_GEOIDS = { "1901855": true, "1906355": true, "1911755": true,
+    "1919000": true, "1922395": true, "1949485": true, "1949755": true,
+    "1983910": true };
   // How many of them the shipped file names, counted at render time rather
   // than typed: a city refused by its own robots.txt leaves the file on its
   // own, and every figure typed into a sentence on this card has gone stale
@@ -14617,10 +14624,16 @@ function initIowaExplorer() {
         // elected — the five-city branch below can assert at-large only
         // because all five of those cities are.
         var anySeat = result.council.members.some(function (rec) { return !!rec.seat; });
-        if (anySeat) {
+        // WHETHER THE SEAT IS DRAWN IS READ FROM THE WARD LAYER'S OWN ENTRY
+        // TABLE, not typed: this sentence said "Des Moines and Waterloo only"
+        // for six weeks after Cedar Rapids was drawn, and nine more cities
+        // joined on 2026-10-15.
+        if (anySeat && result.geoid != null && IA_WARD_MAP_GEOIDS[String(result.geoid)]) {
+          councilNote += " Turn on City Council District to see which ward " +
+            "you are standing in and who represents it.";
+        } else if (anySeat) {
           councilNote += " A member's ward or district is NAMED above and not " +
-            "drawn: this app draws city wards in Des Moines and Waterloo only, " +
-            "so the map does not outline the seat you are standing in.";
+            "drawn: the map does not outline the seat you are standing in.";
         }
         // THE MAYOR IS NOT ALWAYS ON THE PAGE, AND SAYING SO BEATS SILENCE.
         // Two of the fourteen name their council and not their mayor, and a
@@ -15117,11 +15130,12 @@ function initIowaExplorer() {
   /* ==== ENGINE:END county-layer-dispatcher ==== */
 
   /* ---------- 12. City Council District — the instance's city tier ----------
-   * THREE CITIES, ONE TOGGLE, and the section is written from Des Moines
+   * TWELVE CITIES, ONE TOGGLE, and the section is written from Des Moines
    * because it was here first. Waterloo joined 2026-09-04 and Cedar Rapids
-   * the same day; each is a dispatch entry at the bottom of this section, and
-   * each city's own vocabulary ("ward" in the first two, "district" in Cedar
-   * Rapids) reaches the card through its features' `label`.
+   * the same day, and nine more on 2026-10-15 (ia/scripts/build_ia_city_wards.py);
+   * each is a dispatch entry at the bottom of this section, and each city's
+   * own vocabulary ("district" in Cedar Rapids, "ward" everywhere else)
+   * reaches the card through its features' `label`.
    *
    * Iowa Code 372.4(1)(b): a city governed on 1 July 1975 by the mayor-council
    * form with "two council members elected at large and one council member
@@ -15192,8 +15206,29 @@ function initIowaExplorer() {
     var loadWards = makeCached(function () {
       return fetchJSONWithRetry(opts.wardsUrl, {}, 2);
     });
+    // A city with its own roster file reads it; the nine that joined on
+    // 2026-10-15 read their council out of ia-city-councils.json (the file the
+    // City card already reads, weekly CI), reshaped here into the same
+    // {wards, citywide, sourceUrl} the card wants. Each member's seat there is
+    // "Ward N" or "At-Large", normalised by build_ia_city_councils.py from the
+    // city's own page. The mayor is left to the City card, as Waterloo's and
+    // Cedar Rapids' are, because the whole city elects the mayor.
     var loadCouncil = makeCached(function () {
-      return fetchJSONWithRetry(opts.councilUrl, {}, 2);
+      if (!opts.councilGeoid) return fetchJSONWithRetry(opts.councilUrl, {}, 2);
+      return loadCityCouncils().then(function (file) {
+        var rec = file && file[opts.councilGeoid];
+        if (!rec || !rec.members) return null;
+        var wards = {}, citywide = [];
+        rec.members.forEach(function (m) {
+          if (m.kind !== "council" || !m.seat) return;
+          var w = /^Ward (\d+)$/.exec(String(m.seat));
+          var row = { name: m.name, seat: m.role, phone: m.phone, email: m.email };
+          if (m.termEnds) row.termExpires = m.termEnds;
+          if (w) wards[w[1]] = row;
+          else if (m.seat === "At-Large") citywide.push(row);
+        });
+        return { wards: wards, citywide: citywide, sourceUrl: rec.sourceUrl };
+      });
     });
     return {
       key: opts.key,
@@ -15232,7 +15267,9 @@ function initIowaExplorer() {
             sqmiles: findPropCI(props, ["sqmiles"]),
             member: member || null,
             citywide: (roster && roster.citywide) || null,
-            rosterUrl: roster ? roster.sourceUrl : null,
+            // a city whose council this app cannot read still links its own
+            // site, carried on the ward file (Mason City)
+            rosterUrl: roster ? roster.sourceUrl : (parts[2] ? parts[2].sourceUrl : null),
             disclaimer: parts[2] ? parts[2].disclaimer : null
           };
         });
@@ -15339,6 +15376,84 @@ function initIowaExplorer() {
         // is a demonstrated decision rather than a gap the pipeline cannot see.
         councilNote: "Three at-large members and one member from each of five districts, " +
           "plus a mayor who is elected citywide and is not named on this card."
+      }),
+      cityWardEntry({
+        key: "ames",
+        city: "Ames",
+        wardsUrl: "data/app/ames-wards.json",
+        councilGeoid: "1901855",
+        councilLabel: "Ames City Council",
+        councilNote: "Two at-large members and one member from each of four wards, plus a mayor who is elected citywide and is not named on this card."
+      }),
+      cityWardEntry({
+        key: "bettendorf",
+        city: "Bettendorf",
+        wardsUrl: "data/app/bettendorf-wards.json",
+        councilGeoid: "1906355",
+        councilLabel: "Bettendorf City Council",
+        councilNote: "Two at-large members and one member from each of five wards, plus a mayor who is elected citywide and is not named on this card."
+      }),
+      cityWardEntry({
+        key: "cedar-falls",
+        city: "Cedar Falls",
+        wardsUrl: "data/app/cedar-falls-wards.json",
+        councilGeoid: "1911755",
+        councilLabel: "Cedar Falls City Council",
+        councilNote: "Two at-large members and one member from each of five wards, plus a mayor who is elected citywide and is not named on this card."
+      }),
+      cityWardEntry({
+        key: "davenport",
+        city: "Davenport",
+        wardsUrl: "data/app/davenport-wards.json",
+        councilGeoid: "1919000",
+        councilLabel: "Davenport City Council",
+        councilNote: "Two at-large aldermen and one alderman from each of eight wards, plus a mayor who is elected citywide and is not named on this card."
+      }),
+      cityWardEntry({
+        key: "dubuque",
+        city: "Dubuque",
+        wardsUrl: "data/app/dubuque-wards.json",
+        councilGeoid: "1922395",
+        councilLabel: "Dubuque City Council",
+        councilNote: "Two at-large members and one member from each of four wards, plus a mayor who is elected citywide and is not named on this card."
+      }),
+      cityWardEntry({
+        key: "marion",
+        city: "Marion",
+        wardsUrl: "data/app/marion-wards.json",
+        councilGeoid: "1949485",
+        councilLabel: "Marion City Council",
+        councilNote: "Two at-large members and one member from each of four wards, plus a mayor who is elected citywide and is not named on this card."
+      }),
+      cityWardEntry({
+        key: "marshalltown",
+        city: "Marshalltown",
+        wardsUrl: "data/app/marshalltown-wards.json",
+        councilGeoid: "1949755",
+        councilLabel: "Marshalltown City Council",
+        councilNote: "Three at-large members and one member from each of four wards, plus a mayor who is elected citywide and is not named on this card."
+      }),
+      // MASON CITY IS DRAWN AND NAMES NOBODY. Its site sits behind a
+      // Cloudflare managed challenge, robots.txt included, so its council page
+      // cannot be read; its ward layer carries member names, but a roster
+      // riding a boundary is not read for people (the Coles County reading).
+      // The roster that comes back null leaves the card identity-only.
+      cityWardEntry({
+        key: "mason-city",
+        city: "Mason City",
+        wardsUrl: "data/app/mason-city-wards.json",
+        councilGeoid: "1950160",
+        councilLabel: "Mason City City Council",
+        councilNote: "Two at-large members and one member from each of four wards, plus a mayor. " +
+          "This app cannot read the city's own council page, so no member is named here."
+      }),
+      cityWardEntry({
+        key: "west-des-moines",
+        city: "West Des Moines",
+        wardsUrl: "data/app/west-des-moines-wards.json",
+        councilGeoid: "1983910",
+        councilLabel: "West Des Moines City Council",
+        councilNote: "Two at-large members and one member from each of three wards, plus a mayor who is elected citywide and is not named on this card."
       })
     ]
   });

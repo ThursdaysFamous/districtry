@@ -45,7 +45,7 @@ different thing from one it failed.
 |---|---|---|---|---|---|---|---|---|---|
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 11 | all | 8 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 14 levels |
-| ia | **EAM·** | 99 | 99/99 | 77 | 77 | all | 65 | all | 12 of 14 levels |
+| ia | **EAM·** | 99 | 99/99 | 89 | 89 | all | 70 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 411 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 7 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 14 | all | 9 of 14 levels |
@@ -55,7 +55,7 @@ different thing from one it failed.
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 8 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 13 | all | 8 of 14 levels |
-| tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 11 | all | 6 of 14 levels |
+| tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 13 | all | 7 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 12 of 14 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -102,10 +102,9 @@ this instance is in maintenance.
 
 ### ia — EAM·
 
-- **Under a WATCH.md plan (47):** re-checked on a stated cadence rather than by a job — `adair-county-outline.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `butler-county-outline.json`, `calhoun-county-outline.json`, `cedar-rapids-wards.json`, `cerro-gordo-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `floyd-county-outline.json`, `franklin-county-outline.json`, `guthrie-county-outline.json`, `hamilton-county-outline.json`, `humboldt-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `kossuth-county-outline.json`, `lee-county-outline.json`, `linn-county-outline.json`, `madison-county-outline.json`, `metro-outline.json`, `montgomery-county-outline.json`, `palo-alto-county-outline.json`, `pottawattamie-county-outline.json`, `sac-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `taylor-county-outline.json`, `warren-county-outline.json`, `waterloo-wards.json`, `webster-county-outline.json`, `winneshiek-county-outline.json`, `worth-county-outline.json`, `wright-county-outline.json`
-- **Covered: no.** 2 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **4. The county governing body, in every county of the state** — open. 73 of 99 counties name a governing body and draw it where it is elected by district; 24 more name a body elected by district whose districts are not drawn, or not matched to their members. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-supervisor-count-impossible` — County Auditor Mary Ann Hanusa was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 9 of 18 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 9 more name a body elected by ward or district whose wards are not drawn; unanswered: Ames city, Bettendorf city, Cedar Falls city, Davenport city, Dubuque city, Marion city, Marshalltown city, Mason City city and 1 more
+- **Under a WATCH.md plan (52):** re-checked on a stated cadence rather than by a job — `adair-county-outline.json`, `ames-wards.json`, `bettendorf-wards.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `calhoun-county-outline.json`, `cedar-falls-wards.json`, `cedar-rapids-wards.json`, `cerro-gordo-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `davenport-wards.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `dubuque-wards.json`, `floyd-county-outline.json`, `franklin-county-outline.json`, `guthrie-county-outline.json`, `hamilton-county-outline.json`, `humboldt-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `kossuth-county-outline.json`, `lee-county-outline.json`, `linn-county-outline.json`, `marion-wards.json`, `marshalltown-wards.json`, `mason-city-wards.json`, `metro-outline.json`, `montgomery-county-outline.json`, `palo-alto-county-outline.json`, `pottawattamie-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `warren-county-outline.json`, `waterloo-wards.json`, `webster-county-outline.json`, `west-des-moines-wards.json`, `winneshiek-county-outline.json`, `worth-county-outline.json`, `wright-county-outline.json`
+- **Covered: no.** 1 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+  - **4. The county governing body, in every county of the state** — open. 77 of 99 counties name a governing body and draw it where it is elected by district; 20 more name a body elected by district whose districts are not drawn, or not matched to their members. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` (wright) — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-supervisor-count-impossible` (pottawattamie) — County Auditor Mary Ann Hanusa was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
 
 ### il — EAM·
 
@@ -207,14 +206,13 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `tn-county-commissioners` accounts for every county in the state, which is what Examined rests on here: 57 of 95 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-senate-districts.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 57 of 95 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 28 units at 25,000+ name a governing body; unanswered: Bartlett city, Brentwood city, Bristol city, Chattanooga city, Clarksville city, Cleveland city, Collierville town, Columbia city and 20 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Tennessee has no sub-county general-purpose government — outside a city or town limit the county governs. The 855 sub-county units the Census publishes for Tennessee are civil districts, which the Census records as having no functioning government.
