@@ -8,14 +8,14 @@ districtry South Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/sc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships FIFTEEN layers, and **the instance is LIVE since
+Illinois root-scripts shape. It ships SIXTEEN layers, and **the instance is LIVE since
 2026-10-13**, on Adam's word: it has a `metros.json` entry and a landing card, its folder is
 published with the siblings' narrow deploy excludes, and its question pages (`county-council.html`
 with a page per county under `county-council/`, `congress.html`, `state-legislature.html`) are in
 the sitemap. It arrived dark on 2026-10-10; `docs/SC_EXPANSION_PLAN.md` is the record of both
 changes.
 
-**The national tier** — eleven of the fifteen layers answer from a national publisher or the
+**The national tier** — eleven of the sixteen layers answer from a national publisher or the
 General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),
 **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **South Carolina Senate** and **South Carolina House**
@@ -81,6 +81,19 @@ circuit's number of resident judges (shipped as `judge_count`, because a propert
 reads to the fleet's checks as a list of people), names nobody (gap
 `sc-judicial-circuit-officers`), and links the section. The builder stops if a sentence the card
 repeats stops reading that way in the files. The annual re-check is in `sc/WATCH.md`.
+
+**SCHOOL BOARD DISTRICTS ARE DRAWN SINCE 2026-10-16, WITH WHO VOTES FOR EACH SEAT.**
+`school-board-district` draws the 383 districts the boards of 54 school districts are elected from,
+from the Revenue and Fiscal Affairs Office's statewide "School Board Districts" layer, which marks
+each of the other 18 boards "At Large". It is pre-built by
+`sc/scripts/build_sc_school_board_districts.py` through the fleet module
+`scripts/published_district_layers.py`. Each board is set by its own act of the General Assembly,
+read in its ratified text on scstatehouse.gov, and the card says how many members the district
+elects and who votes for them: the district's voters, every voter in the school district, or, for
+115 districts on 16 boards whose acts never say, that the act does not state it (gap
+`sc-school-board-who-votes`). No statewide list of board members has been read, so the card names
+nobody and links the school district's own website (gap `sc-school-board-members`). The layer
+states no licence. The quarterly re-check is in `sc/WATCH.md`.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 72 districts
 for South Carolina and its elementary and secondary tilings hold none, and the unified districts'

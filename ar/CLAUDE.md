@@ -8,16 +8,16 @@ districtry Arkansas: a single-file, dependency-light web app. Click a point in A
 search an address) and it reports every civic district containing that point and who represents
 you there. It serves at **districtry.com/ar/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships FIFTEEN layers, and **IT IS PUBLISHED** since Adam's word of
+root-scripts shape. It ships SIXTEEN layers, and **IT IS PUBLISHED** since Adam's word of
 2026-10-15 ("turn on arkansas"). It arrived dark on 2026-10-13 (no `metros.json` entry, `ar/**`
 blanket-excluded from the Pages deploy), and the go-live change narrowed that exclude to the build
 inputs the siblings exclude, registered the instance and regenerated every surface that counts the
 fleet. `ar/WATCH.md` keeps the go-live row with its date, and `docs/AR_EXPANSION_PLAN.md` is the
 record of the launch.
 
-**The national tier** — ten of the fifteen layers draw their shapes from a national publisher and
-name people from a national roster or the Arkansas State Legislature; three, the quorum court, the
-townships and the precincts, below, are drawn from the state's own maps, and the two court layers,
+**The national tier** — ten of the sixteen layers draw their shapes from a national publisher and
+name people from a national roster or the Arkansas State Legislature; four, the quorum court, the
+townships, the precincts and the school board zones, below, are drawn from the state's own maps, and the two court layers,
 below, group the Census's counties as the state's own lists do. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
 county judge and lists the justices of the peace), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **Arkansas Senate** and **Arkansas House** (35 and 100
@@ -109,6 +109,19 @@ January 2027 (Act 220 of 2025), a dated row in `ar/WATCH.md` beside the annual r
 rank second and third by area, under the U.S. House: a Court of Appeals district averages 19,683
 km2 and a circuit 4,921, just over a Senate district's 3,937. A law setting court districts that
 has no free copy anyone can read is evidence for the state-publishing ask.
+
+**SCHOOL BOARD ZONES ARE DRAWN SINCE 2026-10-16, FROM THE SECRETARY OF STATE'S STATEWIDE LAYER.**
+`school-board-district` (labelled School Board Zone) draws the 965 zones the boards of 176 school
+districts elect members from, from the Arkansas GIS Office's `SCHOOL_BOARD_ZONES` layer, which the
+Secretary of State compiles for election administration. It is pre-built by
+`ar/scripts/build_ar_school_board_districts.py` through the fleet module
+`scripts/published_district_layers.py`. The card names the zone and its school district, and where
+a board has resolved to elect every member at large and is changing a seat at a time, says when it
+resolved, from the GIS Office's notes of 9 April 2026 read through the Internet Archive because the
+page now redirects. A board elected wholly at large has no zones, and the empty card says so. No
+statewide list of board members has been found, so the card names nobody (gap
+`ar-school-board-members`). The layer states no licence, which is evidence for the publishing ask.
+The quarterly re-check is in `ar/WATCH.md`.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 234 districts
 for Arkansas and its elementary and secondary tilings hold none, and the unified districts' land

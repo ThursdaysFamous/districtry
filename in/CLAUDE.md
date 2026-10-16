@@ -8,9 +8,10 @@ districtry Indiana: a single-file, dependency-light web app. Click a point in In
 search an address) and it reports every civic district containing that point. It serves at
 **districtry.com/in/** as a folder of the consolidated districtry repo — following the
 Wisconsin/Iowa/Michigan shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships FIFTEEN layers, all but three from a national publisher: the county
-council districts and the voting precincts come from the state's mapping office, and the Court of
-Appeals districts group the Census's counties as the court's own district map does (all below).
+root-scripts shape. It ships SIXTEEN layers, all but four from a national publisher: the county
+council districts and the voting precincts come from the state's mapping office, the Court of
+Appeals districts group the Census's counties as the court's own district map does, and the
+Indianapolis Public Schools board districts come from the City of Indianapolis (all below).
 
 **LIVE SINCE THE GO-LIVE CHANGE OF 2026-10-07**, eight days after it arrived dark: it is in
 `metros.json`, `fleet-outlines.json`, the sitemap, the landing page and the coverage map, and
@@ -137,6 +138,16 @@ counties, names nobody (gap `in-court-of-appeals-judges`) and links the court's 
 THE TRIAL COURTS ARE NOT DRAWN: every judicial circuit is one county except the 7th, which Dearborn
 and Ohio share (the Prosecuting Attorneys Council's list, citing IC 33-33, which was not read), so a
 circuit map would redraw the county map. The annual re-check is in `in/WATCH.md`.
+
+**THE INDIANAPOLIS PUBLIC SCHOOLS BOARD'S FIVE DISTRICTS ARE DRAWN SINCE 2026-10-16, AND NO OTHER
+BOARD'S ARE.** `school-board-district` draws them from the City of Indianapolis and Marion County's
+School Board Districts layer, pre-built by `in/scripts/build_in_school_board_districts.py` through
+the fleet module `scripts/published_district_layers.py`. The same layer draws residence districts
+for the Lawrence and Washington township boards, which are not drawn because the whole township
+votes for every seat. Indiana publishes no statewide map of school board election districts, and
+the 2022 and 2024 certified results point to about forty other boards electing some members by
+district (gap `in-school-board-districts`). The card names nobody (gap `in-school-board-members`).
+The layer states no licence. The quarterly re-check is in `in/WATCH.md`.
 
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's

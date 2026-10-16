@@ -8,7 +8,7 @@ districtry Tennessee: a single-file, dependency-light web app. Click a point in 
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/tn/** as a folder of the consolidated
 districtry repo, following the statewide shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships SEVENTEEN layers, and **IT IS PUBLISHED** since Adam's word
+Illinois root-scripts shape. It ships EIGHTEEN layers, and **IT IS PUBLISHED** since Adam's word
 of 2026-10-13. It arrived dark on 2026-10-10 (no `metros.json` entry, `tn/**` blanket-excluded
 from the Pages deploy) and the go-live change narrowed that exclude to the build inputs the
 siblings exclude, registered the instance and regenerated every surface that counts the fleet,
@@ -113,6 +113,18 @@ elect its circuit judges, chancellors and district attorney general, each for ei
 none of them (gap `tn-judicial-district-officers`), and links the district attorney's own page.
 It ranks second by area, under the U.S. House, because its mean area (3,409 km2) is just over a
 Senate district's (3,306 km2). The annual re-check is in `tn/WATCH.md`.
+
+**SCHOOL BOARD DISTRICTS ARE DRAWN FOR EIGHTEEN COUNTIES SINCE 2026-10-16.** Tennessee's county
+boards of education are elected from districts under state law, and `school-board-district` draws
+the 114 districts the Comptroller of the Treasury's Office of Local Government maps for eighteen of
+them (layer 5 of its Redistricting_Address_Lookup service, the districts drawn after the 2020
+Census). It is pre-built by `tn/scripts/build_tn_school_board_districts.py` through the fleet
+module `scripts/published_district_layers.py`. In Shelby County the districts leave out the six
+towns that run their own school districts. The map does not say how many members a district
+elects, so the card says a district may elect more than one. The other 77 counties' districts are
+not drawn (gap `tn-school-board-districts`), and no statewide list of board members has been read,
+so the card names nobody (gap `tn-school-board-members`). The layer states no licence. The
+quarterly re-check is in `tn/WATCH.md`.
 
 **THE ZIP LAYER HIDES OUTSIDE TENNESSEE.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (Bowling Green, Kentucky gives 42101; a
