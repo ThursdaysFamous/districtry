@@ -15,6 +15,10 @@ say; everything else lives here once. Measured on 2026-10-16:
     Treasury's map of new school board districts, for eighteen counties) and
     Indiana (the City of Indianapolis's map, from which only the Indianapolis
     Public Schools districts are taken).
+  * Conservancy districts, through
+    in/scripts/build_in_conservancy_districts.py: Indiana (the Department of
+    Natural Resources' map of conservancy districts, active ones only, grouped
+    by the circuit court that set each one up).
 
 A builder names the property its districts are grouped by (`group`): the
 school board, for a school board district. The counts, the record and the

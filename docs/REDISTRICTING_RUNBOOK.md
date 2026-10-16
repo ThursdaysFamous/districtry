@@ -85,7 +85,7 @@ and North Carolina, as in those five, every other layer is still unwritten here.
 on 2026-10-16, drew court districts in Indiana, Oklahoma, South Carolina, Tennessee and Arkansas,
 and each of those stubs gained a row for them (Arkansas two). A fourth, the same day, drew school
 board districts in Indiana, South Carolina, Tennessee and Arkansas, and each of those stubs gained a
-row for them.
+row for them. A fifth drew Indiana's conservancy districts, and the stub for that state gained a row for them.
 
 ### CHI (37 layers)
 
@@ -226,13 +226,15 @@ here, and `mn/WATCH.md` carries their dates. Owned by the Minnesota thread.
 ### IN — NOT YET WRITTEN
 
 No blast-radius entries for Indiana except the precinct layer, added 2026-10-15, and the Court of
-Appeals and school board layers, added 2026-10-16. Owned by the Indiana thread.
+Appeals, school board and conservancy district layers, added 2026-10-16. Owned by the Indiana
+thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | Election precincts (IN, 5,121) | **At no fixed time**: the county changes its precincts | each county, gathered every year by the General Assembly and the Election Division into one statewide layer that IndianaMap publishes as a new service each year | geometry (`in/scripts/build_in_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `in/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. A new yearly edition sits at a new address with new field names, so it needs the builder's address, edition and field names changed and the card's "Indiana's 2026 precinct map" with them; the builder's `--check` holds the card to the edition it reads. The quarterly `--watch` row in `in/WATCH.md` is the tripwire |
 | Court of Appeals districts (IN, 1st to 3rd) | **At no fixed time**: an act of the General Assembly moving a county between districts | the General Assembly, in the Indiana Code; read from the court's own district map, because the Code is served only on a site this project cannot read | geometry (`in/scripts/build_in_appeals_districts.py` rebuild over the shipped county fabric: the pinned 53, 19 and 20 county counts and the one-piece check re-run), the smoke anchor (the 2nd District at the ground-truth point), and the service-worker cache name, since the file is cache-first. The map image's SHA-256 is recorded, and the annual row in `in/WATCH.md` re-hashes it. The 4th and 5th Districts are statewide and not drawn |
 | School board districts (IN, Indianapolis Public Schools 1 to 5) | **At no fixed time** as far as this project has read: who redraws them, and when, is set in the Indiana Code, which is served only on a site this project cannot read | state law, for the Indianapolis Public Schools board; the City of Indianapolis and Marion County publish the map | geometry (`in/scripts/build_in_school_board_districts.py` rebuild: the exact count of five, each district's label on the layer, the agreement gate and the card's sentences re-run) and the service-worker cache name, since the file is cache-first. The quarterly `--watch` row in `in/WATCH.md` is the tripwire |
+| Conservancy districts (IN, 100 active) | **At no fixed time**: a circuit court sets a district up, changes its land or dissolves it when property owners petition; no census or election calendar moves them | each district's circuit court, under the Indiana Conservancy District Act (IC 14-33); the Department of Natural Resources maps them and publishes each board in a yearly directory | geometry (`in/scripts/build_in_conservancy_districts.py` rebuild: the exact count of 100, the per-court agreement gate, the court-county land check and every correction table re-run, each failing when it stops applying), the boards file (`in/scripts/build_in_conservancy_directors.py`: the id corrections, the name and county agreement tests and the role table), and the service-worker cache name, since the map file is cache-first. The quarterly `--watch` row and the yearly directory row in `in/WATCH.md` are the tripwires |
 
 ### NC — NOT YET WRITTEN
 

@@ -1762,7 +1762,15 @@ ANSWERS = {
         # Division, carries all 5,121 precincts, and the app draws them
         # (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # The Department of Natural Resources' map of the 100 active
+        # conservancy districts, whose directors the property owners elect,
+        # with each board named from the department's 2026 directory
+        # (2026-10-16; in/scripts/build_in_conservancy_districts.py and
+        # build_in_conservancy_directors.py). Seven districts' boards are not
+        # in that directory, gap in-conservancy-district-records. Indiana's
+        # other statewide special-district map, the State Library's library
+        # districts, has appointed boards and is not drawn yet.
+        "special-districts": answers("conservancy-district"),
         # SHIPPED 2026-10-10 (#1496): the Pokagon Band's trust land, the one
         # piece of tribal land in Indiana, with the band's council named.
         "tribal-government": answers("tribal-government"),

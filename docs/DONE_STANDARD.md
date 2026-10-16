@@ -342,6 +342,16 @@ question.
   maps to the University of Oklahoma's Center for Spatial Analysis, which was
   asked on 2026-10-01 and has not answered, and no precinct layer ships there
   until it does.
+- Special districts: Illinois (fire, park and library districts, the
+  Metropolitan Water Reclamation District and Chicago's special service areas),
+  Wisconsin (technical college and tax increment districts), Iowa (community
+  college and area education agency districts), Michigan (intermediate school
+  districts), Minnesota (watershed districts), New York (fire and library
+  districts) and San Francisco (BART directors), and since 2026-10-16 Indiana's
+  100 active conservancy districts, from the Department of Natural Resources'
+  map, each board named from the department's 2026 directory except seven the
+  directory names nobody for. Kentucky, North Carolina, Oklahoma, South
+  Carolina, Tennessee and Arkansas still owe the entry.
 - Tribal governments: no app answers one.
 
 ## Launching is a lower bar than being done
