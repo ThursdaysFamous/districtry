@@ -350,8 +350,10 @@ question.
   districts) and San Francisco (BART directors), and since 2026-10-16 Indiana's
   100 active conservancy districts, from the Department of Natural Resources'
   map, each board named from the department's 2026 directory except seven the
-  directory names nobody for. Kentucky, North Carolina, Oklahoma, South
-  Carolina, Tennessee and Arkansas still owe the entry.
+  directory names nobody for, and Oklahoma's 84 conservation districts, from
+  the Conservation Commission's map, each with its office and none with its
+  directors, because the Commission publishes no list of them. Kentucky, North
+  Carolina, South Carolina, Tennessee and Arkansas still owe the entry.
 - Tribal governments: no app answers one.
 
 ## Launching is a lower bar than being done

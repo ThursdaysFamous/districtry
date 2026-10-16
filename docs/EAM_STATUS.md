@@ -54,7 +54,7 @@ different thing from one it failed.
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 21 | all | 8 of 14 levels |
 | nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 12 | all | 10 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
-| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 13 | all | 10 of 14 levels |
+| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 15 | all | 11 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 16 | all | 12 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 16 | all | 10 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 266 | all | 13 of 14 levels |
@@ -181,12 +181,11 @@ this instance is in maintenance.
 
 ### ok — EAM·
 
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-commissioner-districts.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
-- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-commissioner-districts.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
+- **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 16 units at 25,000+ name a governing body; unanswered: Bartlesville city, Bixby city, Broken Arrow city, Edmond city, Enid city, Jenks city, Lawton city, Midwest City city and 8 more
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
-  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Oklahoma has no sub-county general-purpose government — outside a city or town limit the county governs. The 305 sub-county units the Census publishes for Oklahoma are census county divisions: statistical areas, not governments.
 

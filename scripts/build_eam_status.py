@@ -1843,7 +1843,15 @@ ANSWERS = {
             "statistical areas, not governments."),
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
-        "special-districts": OPEN,
+        # The Conservation Commission's map of the 84 conservation districts,
+        # which cover the state, with each district's office from the
+        # Commission's directory (2026-10-16;
+        # ok/scripts/build_ok_conservation_districts.py and
+        # build_ok_conservation_offices.py). Three of each board's five
+        # directors are elected by the district's voters, and the card names
+        # none of them, because the Commission publishes no list of directors
+        # (gap ok-conservation-district-directors).
+        "special-districts": answers("conservation-district"),
         # The fleet-wide tribal layer thread drew Oklahoma's nations, as census
         # statistical areas labeled as such (Adam, 2026-10-10), and the app went
         # live with them: 31 areas across 33 nations (ok/CLAUDE.md).

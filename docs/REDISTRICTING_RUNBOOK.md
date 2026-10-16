@@ -86,6 +86,7 @@ on 2026-10-16, drew court districts in Indiana, Oklahoma, South Carolina, Tennes
 and each of those stubs gained a row for them (Arkansas two). A fourth, the same day, drew school
 board districts in Indiana, South Carolina, Tennessee and Arkansas, and each of those stubs gained a
 row for them. A fifth drew Indiana's conservancy districts, and the stub for that state gained a row for them.
+A sixth drew Oklahoma's conservation districts, and the stub for that state gained a row for them.
 
 ### CHI (37 layers)
 
@@ -248,12 +249,13 @@ the North Carolina thread.
 ### OK — NOT YET WRITTEN
 
 No blast-radius entries for Oklahoma except the township layer, added 2026-10-15, and the court
-layer, added 2026-10-16. Owned by the Oklahoma thread.
+and conservation district layers, added 2026-10-16. Owned by the Oklahoma thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | County subdivisions (OK census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
 | District court judicial districts (OK, 26) | **At no fixed time**: an act of the Legislature moving a county between districts or changing which counties elect an office | the Legislature, in the Oklahoma Statutes; read from the State Election Board's roster of officers, because both of the state's publishers of the statutes refuse this project in robots.txt | geometry (`ok/scripts/build_ok_judicial_districts.py` rebuild over the shipped county fabric: the 75-office count, the offices-against-key agreement on every county and the partition check re-run), each office's electorate on the card (Districts 4, 12 and 14 elect some offices from part of the district), the smoke anchor (District 7 at the ground-truth point), and the service-worker cache name, since the file is cache-first. The roster is re-read after each November general election, the row in `ok/WATCH.md` |
+| Conservation districts (OK, 84) | **At no fixed time**: the Conservation Commission moves land between districts, divides one or consolidates several when the boards involved ask; no census or election calendar moves them | the Oklahoma Conservation Commission, by administrative order (27A O.S. § 3-2-106, item 18, as the Commission's copy of the act prints it), which also keeps the map | geometry (`ok/scripts/build_ok_conservation_districts.py` rebuild: the exact count of 84, the 22 extra records the spec declares, the per-district agreement gate, the coverage check against the county file and the two inside points and one outside point re-run), the offices file (`ok/scripts/build_ok_conservation_offices.py`: the name join and its two correction tables, each failing when it stops applying, and every drawn district needing exactly one office), and the service-worker cache name, since the map file is cache-first. The quarterly `--watch` and directory rows in `ok/WATCH.md` are the tripwires |
 
 ### SC — NOT YET WRITTEN
 

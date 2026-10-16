@@ -149,7 +149,7 @@ All 100 counties: each county's board of commissioners, townships, cities and to
 
 All 77 counties and their commissioner districts: cities and towns, census county divisions, school districts, ZIP codes, the tribal areas the Census draws, and the nearest police station, fire station and post office — plus the district court judicial districts and the Oklahoma Senate, House and U.S. House districts, with a member named for every U.S. House seat and nearly every legislative one. Each county's three commissioners are named from the State Election Board's roster. Nobody is named yet on the city councils or the district courts, and the Data gaps panel says why.
 
-- [Oklahoma district lookup](https://districtry.com/ok/): 15 layers, all 77 counties.
+- [Oklahoma district lookup](https://districtry.com/ok/): 16 layers, all 77 counties.
 - [Who is my U.S. representative?](https://districtry.com/ok/congress.html)
 - [County commissioner district lookup](https://districtry.com/ok/county-commissioner.html): links a page per county, 77 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ok/sources.html)
