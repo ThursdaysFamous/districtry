@@ -129,7 +129,8 @@ class Spec(object):
         self.multipart_records = multipart_records
         self.required = tuple(required or ("key", group, "label"))
         # extra_check(features) raises through fail() on anything wrong; it
-        # runs in all three modes, on what the builder read.
+        # runs in all three modes, on what the builder read. --watch reads no
+        # geometry, so a check that needs the shapes must skip itself there.
         self.extra_check = extra_check
         self.card_claims = tuple(card_claims)
         # (lng, lat, key, why): the point must fall in the district with that key

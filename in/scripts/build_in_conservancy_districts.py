@@ -293,7 +293,11 @@ def court_county_holds_land(feats):
     """Every district's court county holds some of its land: at least one of
     the district's drawn vertices lies inside that county on the shipped county
     file. COURT_NOT_SHOWN's district must hold none in the county the map names
-    and some in the county the table names, or the entry is out of date."""
+    and some in the county the table names, or the entry is out of date.
+    --watch reads the districts without their shapes, so the test runs on every
+    build and every --check and is skipped there."""
+    if any(f.get("geometry") is None for f in feats):
+        return
     with open(COUNTIES_FILE, encoding="utf-8") as fh:
         counties = {f["properties"]["BASENAME"]: f["geometry"]
                     for f in json.load(fh)["features"]}
