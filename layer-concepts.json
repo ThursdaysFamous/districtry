@@ -65,17 +65,17 @@
     "us-house": {
       "il": "congress", "ny": "congress", "ca": "congress", "wi": "us-house", "ia": "us-house",
       "mi": "us-house", "mn": "us-house", "ky": "us-house", "in": "us-house", "nc": "us-house",
-      "ok": "us-house", "sc": "us-house", "tn": "us-house"
+      "ok": "us-house", "sc": "us-house", "tn": "us-house", "ar": "us-house"
     },
     "state-senate": {
       "il": "il-senate", "ny": "state-senate", "ca": "ca-senate", "wi": "wi-senate", "ia": "ia-senate",
       "mi": "mi-senate", "mn": "mn-senate", "ky": "ky-senate", "in": "in-senate", "nc": "nc-senate",
-      "ok": "ok-senate", "sc": "sc-senate", "tn": "tn-senate"
+      "ok": "ok-senate", "sc": "sc-senate", "tn": "tn-senate", "ar": "ar-senate"
     },
     "state-house": {
       "il": "il-house", "ny": "state-assembly", "ca": "ca-assembly", "wi": "wi-assembly", "ia": "ia-house",
       "mi": "mi-house", "mn": "mn-house", "ky": "ky-house", "in": "in-house", "nc": "nc-house",
-      "ok": "ok-house", "sc": "sc-house", "tn": "tn-house"
+      "ok": "ok-house", "sc": "sc-house", "tn": "tn-house", "ar": "ar-house"
     },
     "supreme-court-district": { "il": "il-supreme-court", "ky": "ky-supreme-court" },
     "appellate-court-district": { "wi": "wi-court-of-appeals", "mi": "mi-court-of-appeals", "ky": "ky-court-of-appeals" },
@@ -85,25 +85,28 @@
     },
     "county": {
       "il": "county", "ny": "county", "wi": "county", "ia": "county", "mi": "county", "mn": "county",
-      "ky": "county", "in": "county", "nc": "county", "ok": "county", "sc": "county", "tn": "county"
+      "ky": "county", "in": "county", "nc": "county", "ok": "county", "sc": "county", "tn": "county", "ar": "county"
     },
     "county-board": {
       "il": "county-board", "ny": ["county-legislature", "county-supervisor"], "ca": "supervisor-district",
       "wi": "county-board", "ia": "county-supervisor", "mi": "county-commissioner", "mn": "county-commissioner",
-      "ok": "county-commissioner", "sc": "county-council", "tn": "county-commissioner"
+      "ok": "county-commissioner", "sc": "county-council", "tn": "county-commissioner", "ar": "quorum-court",
+      "ky": "fiscal-court"
     },
     "county-subdivision": {
       "il": "township", "ny": "municipality", "wi": "county-subdivision", "ia": "county-subdivision",
-      "mi": "county-subdivision", "mn": "county-subdivision", "in": "county-subdivision", "nc": "county-subdivision"
+      "mi": "county-subdivision", "mn": "county-subdivision", "in": "county-subdivision", "nc": "county-subdivision",
+      "ky": "county-subdivision", "ok": "county-subdivision", "sc": "county-subdivision", "tn": "county-subdivision",
+      "ar": "county-subdivision"
     },
     "municipality": {
       "il": "municipality", "ny": ["municipality", "village"], "wi": "municipality", "ia": "municipality",
       "mi": "municipality", "mn": "municipality", "ky": "municipality", "in": "municipality",
-      "nc": "municipality", "ok": "municipality", "sc": "municipality", "tn": "municipality"
+      "nc": "municipality", "ok": "municipality", "sc": "municipality", "tn": "municipality", "ar": "municipality"
     },
     "city-council": {
       "il": "ward", "ny": "council", "ca": "supervisor-district", "wi": "aldermanic-district",
-      "ia": "city-ward", "mi": "city-ward"
+      "ia": "city-ward", "mi": "city-ward", "mn": "city-ward", "ky": "fiscal-court"
     },
     "voting-precinct": {
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",
@@ -113,7 +116,7 @@
     "zip-code": {
       "il": "zip-code", "ny": ["zip-code", "nys-zip-code"], "ca": "zip-code", "wi": "zip-code", "ia": "zip-code",
       "mi": "zip-code", "mn": "zip-code", "in": "zip-code", "nc": "zip-code", "ok": "zip-code",
-      "sc": "zip-code", "tn": "zip-code"
+      "sc": "zip-code", "tn": "zip-code", "ar": "zip-code"
     },
     "neighborhood": {
       "il": "community-area", "ny": "neighborhood", "ca": "neighborhood", "wi": "milwaukee-neighborhoods"
@@ -123,7 +126,7 @@
       "il": "school-district-unified", "ny": "nys-school-district", "wi": "school-district-unified",
       "ia": "school-district-unified", "mi": "school-district-unified", "mn": "school-district-unified",
       "ky": "school-district-unified", "in": "school-district-unified", "nc": "school-district-unified",
-      "ok": "school-district-unified", "sc": "school-district-unified", "tn": "school-district-unified"
+      "ok": "school-district-unified", "sc": "school-district-unified", "tn": "school-district-unified", "ar": "school-district-unified"
     },
     "school-district-elementary": {
       "il": "school-district-elementary", "wi": "school-district-elementary", "mi": "school-district-elementary",
@@ -150,23 +153,23 @@
     "police-station": {
       "il": "police-station", "ny": "police-station", "ca": "police-station", "wi": "police-station",
       "ia": "police-station", "mi": "police-station", "mn": "police-station", "in": "police-station",
-      "nc": "police-station", "ok": "police-station", "sc": "police-station", "tn": "police-station"
+      "nc": "police-station", "ok": "police-station", "sc": "police-station", "tn": "police-station", "ar": "police-station"
     },
     "fire-station": {
       "il": "fire-station", "ny": "fire-station", "ca": "fire-station", "wi": "fire-station",
       "ia": "fire-station", "mi": "fire-station", "mn": "fire-station", "in": "fire-station",
-      "nc": "fire-station", "ok": "fire-station", "sc": "fire-station", "tn": "fire-station"
+      "nc": "fire-station", "ok": "fire-station", "sc": "fire-station", "tn": "fire-station", "ar": "fire-station"
     },
     "post-office": {
       "il": "post-office", "ny": "post-office", "ca": "post-office", "wi": "post-office",
       "ia": "post-office", "mi": "post-office", "mn": "post-office", "in": "post-office",
-      "nc": "post-office", "ok": "post-office", "sc": "post-office", "tn": "post-office"
+      "nc": "post-office", "ok": "post-office", "sc": "post-office", "tn": "post-office", "ar": "post-office"
     },
     "library": { "il": "library", "ny": "library", "ca": "library", "wi": "library" },
     "tribal-government": {
       "il": "tribal-government", "ny": "tribal-government", "wi": "tribal-government", "ia": "tribal-government",
       "mi": "tribal-government", "mn": "tribal-government", "in": "tribal-government",
-      "nc": "tribal-government", "ok": "tribal-government", "sc": "tribal-government"
+      "nc": "tribal-government", "ok": "tribal-government", "sc": "tribal-government", "tn": "tribal-government"
     }
   },
   "colors": {

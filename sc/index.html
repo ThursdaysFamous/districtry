@@ -4216,17 +4216,17 @@ function initSouthCarolinaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "sc-senate": "scs", "county": "co",
-    "school-district-unified": "su", "sc-house": "sch", "county-council": "cu",
-    "zip-code": "zp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "school-district-unified": "su", "sc-house": "sch", "county-subdivision": "cs",
+    "county-council": "cu", "zip-code": "zp", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["sc-senate"],
     "state-house": ["sc-house"], "county": ["county"], "county-board": ["county-council"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4289,7 +4289,9 @@ function initSouthCarolinaExplorer() {
     { id: "southcarolina", label: "South Carolina", url: "https://districtry.com/sc/", emoji: "🌴", explorerName: "districtry South Carolina",
       bbox: { minLng: -83.36, minLat: 31.99, maxLng: -78.49, maxLat: 35.16 } },
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
-      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } }
+      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
+    { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8292,28 +8294,130 @@ function initSouthCarolinaExplorer() {
    * here is a change there too. */
   var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
 
-  function resolveShortMapLink(link, signal) {
+  /* A LOOKUP THAT FAILS ONCE CAN ANSWER A MOMENT LATER. On 2026-10-14 a
+   * place shared from the Google Maps app into the installed app on a phone
+   * was told its short link couldn't be read, and minutes later the lookup
+   * answered the same link at once, six times in a row, and on the live
+   * site through the installed app's launcher at a phone's size. The
+   * lookup's own code records nothing, but Deno keeps a trace of each
+   * request for one day, in the Deno account rather than anywhere this code
+   * can read, and that request's trace, read the same day, holds one fetch:
+   * the lookup asked the short link's own host, which answered 404 in 107 ms.
+   * That is the answer the host gives a link that does not exist ("Dynamic
+   * Link Not Found", measured the same evening with a made-up one), so
+   * Google did not know a link it knew minutes later. The likeliest reason,
+   * inferred rather than measured, is that the link was seconds old: a share
+   * hands the app a link Google has only just made, and the app asks about
+   * it at once, which a pasted link rarely does. So a failed try is made
+   * again after 1.5 seconds and once more after 4, and a lookup 404 (how the
+   * lookup reports any answer that does not lead to a map) once more after
+   * 10, because a link too new to be known gets that answer and the wait
+   * costs time only when a link fails. Each try gives up after 8 seconds
+   * rather than leaving "Reading the link…" on screen for good, and the
+   * other failures keep two retries, because a fourth try after three
+   * timeouts would keep a reader waiting most of a minute. Two answers are
+   * not tried again, because a second try cannot change them: a 400 (the
+   * lookup refuses what it was sent) and a full link that is itself short.
+   * onRetry, if given, is called with the failed try's error before each
+   * new try, so the page can say it is trying again. A try cut short by
+   * `signal` rejects with an AbortError, as fetch does; one that ran out of
+   * time does not.
+   *
+   * WHICH SIDE FAILED is the rejection's `reason`, which mapLinkMessage
+   * tells the reader, so the next failure on a phone says what this one
+   * could not: "unreached" when no answer reached the page at all (the
+   * phone is offline, or the lookup's host failed, since an error page from
+   * that host carries no CORS header and reaches the page as a failed
+   * fetch), "timeout", "no-map" when the lookup followed the link and Google
+   * or Apple did not send it to a map (its 404), and "no-answer" when Google
+   * or Apple did not answer the lookup (its 502). */
+  var MAP_LINK_RETRY_WAITS = [1500, 4000];
+  var MAP_LINK_NEW_LINK_WAITS = MAP_LINK_RETRY_WAITS.concat([10000]);
+  var MAP_LINK_TRY_MS = 8000;
+  var MAP_LINK_STATUS_REASONS = { 404: "no-map", 502: "no-answer" };
+
+  function mapLinkLookupError(message, reason, final) {
+    var e = new Error(message);
+    e.reason = reason || "";
+    e.final = !!final;
+    return e;
+  }
+
+  function resolveShortMapLink(link, signal, onRetry) {
     if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
-    return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
-      { signal: signal, headers: { Accept: "application/json" } })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
-        if (!full || full.kind === "short") throw new Error("the lookup returned no full link");
-        return full;
-      });
+    var retries = 0;
+    function abortError() {
+      var e = new Error("The lookup was cancelled");
+      e.name = "AbortError";
+      return e;
+    }
+    function lookupOnce() {
+      if (signal && signal.aborted) return Promise.reject(abortError());
+      var own = new AbortController(), late = false;
+      var cancel = function () { own.abort(); };
+      if (signal) signal.addEventListener("abort", cancel);
+      var timer = setTimeout(function () { late = true; own.abort(); }, MAP_LINK_TRY_MS);
+      var settle = function () {
+        clearTimeout(timer);
+        if (signal) signal.removeEventListener("abort", cancel);
+      };
+      return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
+        { signal: own.signal, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (!res.ok) {
+            throw mapLinkLookupError("HTTP " + res.status, MAP_LINK_STATUS_REASONS[res.status], res.status === 400);
+          }
+          return res.json();
+        }, function (err) {
+          throw mapLinkLookupError((err && err.message) || "the lookup could not be reached", "unreached");
+        })
+        .then(function (data) {
+          var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
+          if (!full || full.kind === "short") throw mapLinkLookupError("the lookup returned no full link", "no-map", true);
+          return full;
+        })
+        .then(function (full) { settle(); return full; }, function (err) {
+          settle();
+          if (signal && signal.aborted) throw abortError();
+          if (late) throw mapLinkLookupError("the lookup did not answer within " + MAP_LINK_TRY_MS / 1000 + " seconds", "timeout");
+          throw err;
+        });
+    }
+    function again(err) {
+      var waits = err.reason === "no-map" ? MAP_LINK_NEW_LINK_WAITS : MAP_LINK_RETRY_WAITS;
+      if (err.name === "AbortError" || err.final || retries >= waits.length) throw err;
+      var wait = waits[retries++];
+      if (onRetry) onRetry(retries, err);
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () {
+          if (signal) signal.removeEventListener("abort", cancel);
+          resolve();
+        }, wait);
+        var cancel = function () { clearTimeout(timer); reject(abortError()); };
+        if (signal) signal.addEventListener("abort", cancel);
+      }).then(lookupOnce).then(null, again);
+    }
+    return lookupOnce().then(null, again);
   }
 
   /* What the reader is told when a link cannot be read here. Kept beside the
-   * parser so the app and the front door say the same thing. */
-  function mapLinkMessage(link) {
+   * parser so the app and the front door say the same thing. For a short
+   * link, `err` is how the lookup failed (resolveShortMapLink), and the
+   * message says which side it was, in words. */
+  function mapLinkMessage(link, err) {
     var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
     if (link.kind === "short") {
-      return "That short " + name + " link couldn't be read. Open the link, " +
-        "then copy the full address from your browser's address bar and paste that.";
+      var maker = link.source === "apple" ? "Apple" : "Google";
+      var why = {
+        "unreached": "districtry couldn't reach the service that reads short links",
+        "timeout": "the service that reads short links didn't answer in time",
+        "no-map": maker + " didn't say where it leads",
+        "no-answer": maker + " didn't answer the service that reads short links"
+      }[(err && err.reason) || ""] || "";
+      // Not "open the link and copy the address bar": on a phone a map link
+      // opens the maps app, which has no address bar.
+      return "That short " + name + " link couldn't be read just now" + (why ? " (" + why + ")" : "") + ". " +
+        "Search again in a moment, or type the place's address.";
     }
     if (name) {
       return "That " + name + " link doesn't say where a place is (a directions link, for one). " +
@@ -8948,13 +9052,20 @@ function initSouthCarolinaExplorer() {
     geoStatus.textContent = "Reading the link\u2026";
     geoStatus.className = "geo-status";
     mapLinkController = new AbortController();
-    return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
+    // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
+    // and the reader is told so rather than left watching the same words
+    return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
+    }).then(function (full) {
       if (seq !== districtSearchSeq) return;
-      if (full.kind === "text") return runGeocodeSearch(full.text, full);
+      if (full.kind === "text") {
+        geoStatus.textContent = "Searching\u2026";
+        return runGeocodeSearch(full.text, full);
+      }
       return showMapLink(full);
     }, function (err) {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
-      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
     });
   }
@@ -9264,6 +9375,7 @@ function initSouthCarolinaExplorer() {
     "county",            // 46 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 72 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "sc-house",          // 124 House districts — the smallest of the three chamber tilings
+    "county-subdivision", // 299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)
     "county-council",    // 315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes
     "zip-code",          // 841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina
     "municipality",      // 271 incorporated cities and towns, live from TIGERweb
@@ -13628,13 +13740,6 @@ function initSouthCarolinaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
-  /* No county-subdivision layer, on purpose. South Carolina has no township
-   * government, and every one of the 299 county subdivisions TIGERweb
-   * carries for STATE='45' is a census county division (LSADC 22, FUNCSTAT
-   * S): a statistical area drawn for counting, governing nobody, measured
-   * 2026-10-10. Drawing it would put a card on the map for something that
-   * is not a government. Recorded as a drop in the guidebook. */
-
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Columbia" + " city") or a prefix. Returns null when the two are equal
   // or unrelated, so a TIGER change shows up as a missing type row rather
@@ -13648,6 +13753,98 @@ function initSouthCarolinaExplorer() {
     if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
     return null;
   }
+
+  /* ---------- Census County Division — live TIGERweb, the level-14 map ----------
+   * Which county subdivision a point is in, owed in every state whether or
+   * not the units govern anyone (docs/DONE_STANDARD.md, level 14, Adam's
+   * ruling of 2026-10-14). South Carolina has no township governments, and
+   * every one of the 299 county subdivisions TIGERweb carries for STATE='45'
+   * is a census county division (LSADC 22, FUNCSTAT S, measured 2026-10-15):
+   * an area the Census Bureau draws to report its counts, which governs
+   * nobody. The statewide set is 12.2 MB at geometryPrecision=5 and downloads
+   * only when the layer is on. The card says that rather than implying a
+   * government: it names the division and its county, and its Government row
+   * is read from the Census's own functional-status code, so a FUNCSTAT this
+   * card does not know prints no row rather than an improvised one. North
+   * Carolina's layer with South Carolina's unit, point-first through
+   * tigerStatewideLoader, so a first click asks TIGERweb about the selected
+   * point while the statewide set downloads for the map. ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // A census county division's own name ("Ashland" of "Ashland CCD"): the
+  // card's header already says what kind of area it is, and the hover row
+  // prints the same value beside the same label.
+  function subdivisionTitle(props) {
+    var name = findPropCI(props, ["name"]), base = findPropCI(props, ["basename"]);
+    if (subdivisionKind(name, base) === "ccd" && base != null && String(base) !== "") return String(base);
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Census County Division",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return subdivisionTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: subdivisionTitle(props),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title != null ? result.title : "Unknown division",
+        note: result.county
+      }));
+      var GOVERNMENT = {
+        S: "None. A census county division is an area the U.S. Census " +
+          "Bureau draws to report its counts, and no one is elected from it. " +
+          "South Carolina has no township governments, so outside a city or " +
+          "town the county governs.",
+        N: "None. The U.S. Census Bureau records this area as having no " +
+          "functioning government, and no one is elected to run it."
+      };
+      var gov = result.funcstat != null ? GOVERNMENT[String(result.funcstat)] : null;
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
+  });
 
   /* ---------- 5. City or Town — live TIGERweb, incorporated places ----------
    * South Carolina's municipalities are styled cities and towns. Measured
@@ -15629,8 +15826,8 @@ function initSouthCarolinaExplorer() {
     // geography: like them it is a member elected by this district alone.
     "county-council",
     "school-district-unified",
-    "county", "municipality", "zip-code", "tribal-government",
-    "police-station", "fire-station", "post-office"];
+    "county", "county-subdivision", "municipality", "zip-code",
+    "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -16115,8 +16312,9 @@ function initSouthCarolinaExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
     "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
     "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
+    "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -112,6 +112,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -1283,6 +1284,15 @@ jobs:
       - name: The shipped Iowa city councils still refuse an address and keep their seat counts
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_city_councils.py --check
+      # Kentucky's magisterial and council districts are composed from precincts
+      # and recap sheets the build fetches; --check holds the shipped file to the
+      # hash its builder recorded and each drawn county to its Census outline,
+      # offline, and --selftest holds the placing rules to fixed cases.
+      - name: The shipped Kentucky fiscal court districts match their record and cover their counties
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ky/scripts/build_ky_county_districts.py --selftest
+          python3 ky/scripts/build_ky_county_districts.py --check
       # FOUR COUNTIES WHOSE TWO OUTSIDE PUBLISHERS DISAGREE about their board's
       # size are read from the county's OWN board page instead, and the four
       # pages take four shapes. Three defects are declared here because each
@@ -1413,6 +1423,17 @@ jobs:
       - name: Every dropped-ring declaration's prose agrees with its own fields, and no layer is gated by half
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --check
+
+      # Mississippi draws county supervisor districts only in the counties whose
+      # Census lines are confirmed current: changed after the 2020 census, and
+      # balanced on that census's own blocks. The blocks are not shipped, so the
+      # population cannot be re-measured here; this holds the shipped file to
+      # its build record, every district to a directory seat in the county's own
+      # word, the card to the Census edition the file was built from, and the
+      # drawn counties to the County layer at 4,000 points.
+      - name: MS supervisor districts still match their build record, the directory and the County layer
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_supervisor_districts.py --check
 
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
@@ -1639,6 +1660,7 @@ jobs:
           python3 sc/scripts/validate_index.py sc/index.html
           python3 tn/scripts/validate_index.py tn/index.html
           python3 ar/scripts/validate_index.py ar/index.html
+          python3 ms/scripts/validate_index.py ms/index.html
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
       # the repo had — ca and ny were separate repos with their own CI. They
@@ -1767,6 +1789,7 @@ jobs:
           BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ar/  node ar/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ms/  node ms/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
 
           # The root landing page and — the part that matters — its forwarding

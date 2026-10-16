@@ -622,13 +622,20 @@
     geoStatus.textContent = "Reading the link\u2026";
     geoStatus.className = "geo-status";
     mapLinkController = new AbortController();
-    return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
+    // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
+    // and the reader is told so rather than left watching the same words
+    return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
+    }).then(function (full) {
       if (seq !== districtSearchSeq) return;
-      if (full.kind === "text") return runGeocodeSearch(full.text, full);
+      if (full.kind === "text") {
+        geoStatus.textContent = "Searching\u2026";
+        return runGeocodeSearch(full.text, full);
+      }
       return showMapLink(full);
     }, function (err) {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
-      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
     });
   }

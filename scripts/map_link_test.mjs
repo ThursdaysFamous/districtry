@@ -94,14 +94,94 @@ if (asked.length !== 1 || asked[0] !== LOOKUP + "?u=" + encodeURIComponent(SHORT
 if (!full || full.kind !== "point" || !near(full.lat, 41.88395) || !near(full.lng, -87.63022)) {
   failed++; console.error("map-link: FAIL the lookup's full link was not read as its place; got " + JSON.stringify(full));
 }
-// A lookup that answers with another short link, or fails, is a rejection.
-for (const answer of [{ ok: true, json: () => Promise.resolve({ url: SHORT }) }, { ok: false, status: 502 }]) {
-  globalThis.fetch = () => Promise.resolve(answer);
-  await api.resolveShortMapLink({ kind: "short", url: SHORT, source: "google" })
-    .then(() => { failed++; console.error("map-link: FAIL a lookup answering " + JSON.stringify(answer.status || "a short link") + " resolved"); }, () => {});
+// A FAILED LOOKUP IS TRIED AGAIN, and only when a second try could answer
+// differently. The block's waits (1.5 and 4 seconds between tries, 10 more
+// before a fourth try when the lookup answered 404, the answer a link too new
+// for Google to know gets, and 8 seconds for each try) run here a thousand
+// times faster, and every delay it asks for is recorded, so the retry
+// schedule is checked rather than waited out.
+const realSetTimeout = globalThis.setTimeout;
+let waits = [];
+globalThis.setTimeout = (fn, ms) => { waits.push(ms); return realSetTimeout(fn, ms / 1000); };
+const DAMAGED = { ok: true, json: () => Promise.resolve({ url: SHORT }) };
+const PLACE = { ok: true, json: () => Promise.resolve({
+  url: "https://www.google.com/maps/place/Daley+Plaza/@41.8836,-87.6314,17z/data=!3m1!4b1!8m2!3d41.88395!4d-87.63022" }) };
+const NO_ANSWER = () => Promise.reject(new TypeError("Failed to fetch"));
+// a request that never answers until it is cancelled, as a hung one does
+const HANG = (url, opts) => new Promise((_, reject) => opts.signal.addEventListener("abort",
+  () => { const e = new Error("aborted"); e.name = "AbortError"; reject(e); }));
+const lookups = [
+  // [what each try answers, tries wanted, resolves?, reason wanted]
+  ["the place", [PLACE], 1, true],
+  ["a short link again", [DAMAGED], 1, false, "no-map"],
+  ["a 400", [{ ok: false, status: 400 }], 1, false, ""],
+  ["a 502 on every try", [{ ok: false, status: 502 }], 3, false, "no-answer"],
+  ["a 404 on every try", [{ ok: false, status: 404 }], 4, false, "no-map"],
+  ["a 404 three times, then the place", [{ ok: false, status: 404 }, { ok: false, status: 404 }, { ok: false, status: 404 }, PLACE], 4, true],
+  ["a 404, then a 502 on every try", [{ ok: false, status: 404 }, { ok: false, status: 502 }], 3, false, "no-answer"],
+  ["a 502 twice, then a 404", [{ ok: false, status: 502 }, { ok: false, status: 502 }, { ok: false, status: 404 }], 4, false, "no-map"],
+  ["no answer on every try", [NO_ANSWER], 3, false, "unreached"],
+  ["a hung request on every try", [HANG], 3, false, "timeout"],
+  ["a 502, then the place", [{ ok: false, status: 502 }, PLACE], 2, true],
+  ["no answer twice, then the place", [NO_ANSWER, NO_ANSWER, PLACE], 3, true],
+];
+for (const [label, answers, wantTries, wantResolved, wantReason] of lookups) {
+  let tries = 0;
+  const retried = [];
+  waits = [];
+  globalThis.fetch = (url, opts) => {
+    const a = answers[Math.min(tries++, answers.length - 1)];
+    return typeof a === "function" ? a(url, opts) : Promise.resolve(a);
+  };
+  const got = await api.resolveShortMapLink({ kind: "short", url: SHORT, source: "google" }, undefined,
+    (n, err) => retried.push([n, err && err.reason])).then((v) => ({ v }), (e) => ({ e }));
+  const pauses = waits.filter((ms) => ms !== 8000);
+  const problems = [];
+  if (tries !== wantTries) problems.push("asked " + tries + " times, want " + wantTries);
+  if (!!got.v !== wantResolved) problems.push(got.v ? "resolved" : "rejected (" + (got.e && got.e.message) + ")");
+  if (got.v && got.v.kind !== "point") problems.push("resolved to " + JSON.stringify(got.v));
+  if (!wantResolved && got.e && got.e.reason !== wantReason) problems.push("reason " + JSON.stringify(got.e.reason) + ", want " + JSON.stringify(wantReason));
+  if (JSON.stringify(pauses) !== JSON.stringify([1500, 4000, 10000].slice(0, wantTries - 1))) problems.push("paused " + JSON.stringify(pauses));
+  if (retried.length !== wantTries - 1 || retried.some(([n, r], i) => n !== i + 1 || !r)) problems.push("told the page " + JSON.stringify(retried));
+  if (problems.length) { failed++; console.error("map-link: FAIL a lookup answering " + label + ": " + problems.join("; ")); }
 }
-if (!/short Google Maps link/.test(api.mapLinkMessage({ kind: "short", source: "google" }))) {
-  failed++; console.error("map-link: FAIL the short-link message does not name Google Maps");
+// A cancelled lookup stops, between tries as well as during one, and says
+// it was cancelled rather than that the link could not be read.
+for (const during of [true, false]) {
+  let tries = 0, told = 0;
+  const ctl = new AbortController();
+  globalThis.fetch = (url, opts) => {
+    tries++;
+    if (during) return HANG(url, opts);
+    return Promise.resolve({ ok: false, status: 502 });
+  };
+  const p = api.resolveShortMapLink({ kind: "short", url: SHORT, source: "google" }, ctl.signal,
+    () => { told++; if (!during) ctl.abort(); });
+  if (during) realSetTimeout(() => ctl.abort(), 1);
+  const e = await p.then(() => null, (err) => err);
+  // cancelled during a try, the page is never told a new try is coming
+  if (!e || e.name !== "AbortError" || tries !== 1 || told !== (during ? 0 : 1)) {
+    failed++;
+    console.error("map-link: FAIL a lookup cancelled " + (during ? "during a try" : "between tries") +
+      " should stop with an AbortError after one try; got " + (e && e.name) + " after " + tries +
+      ", telling the page " + told + " time(s) it was trying again");
+  }
+}
+globalThis.setTimeout = realSetTimeout;
+
+// The message names the maker and, when the lookup said, which side failed.
+const said = [
+  [{ kind: "short", source: "google" }, undefined, /^That short Google Maps link couldn't be read just now\. /],
+  [{ kind: "short", source: "google" }, { reason: "unreached" }, /\(districtry couldn't reach the service that reads short links\)/],
+  [{ kind: "short", source: "google" }, { reason: "timeout" }, /\(the service that reads short links didn't answer in time\)/],
+  [{ kind: "short", source: "google" }, { reason: "no-map" }, /\(Google didn't say where it leads\)/],
+  [{ kind: "short", source: "apple" }, { reason: "no-answer" }, /^That short Apple Maps link .*\(Apple didn't answer the service that reads short links\)/],
+];
+for (const [link, err, want] of said) {
+  const msg = api.mapLinkMessage(link, err);
+  if (!want.test(msg) || /address bar/.test(msg)) {
+    failed++; console.error("map-link: FAIL the short-link message for " + JSON.stringify(err) + " reads " + JSON.stringify(msg));
+  }
 }
 
 // The address behind a place's name: tried alone when the whole string
@@ -203,9 +283,11 @@ for (const [label, address, want] of street) {
   }
 }
 
-const total = cases.length + 5 + bare.length + carry.length + parts.length + street.length;
+const total = cases.length + 2 + lookups.length + 2 + said.length + bare.length + carry.length + parts.length + street.length;
 if (failed) { console.error("map-link: " + failed + " of " + total + " checks failed"); process.exit(1); }
 console.log("map-link: OK — " + cases.length + " pasted texts read as expected; a short link is sent only to the lookup; " +
+  lookups.length + " lookup answers tried again or not as expected, a cancelled lookup stops, and " + said.length +
+  " short-link messages say which side failed; " +
   bare.length + " place names split from their addresses as expected; " + carry.length +
   " answers held to the address's house number as expected; " + parts.length + " addresses split into their parts and " +
   street.length + " answers held to the address's street as expected");

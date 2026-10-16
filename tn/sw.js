@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-tn-shell-v2";
+const CACHE_NAME = "districtry-tn-shell-v4";
 
 const SHELL_URLS = [
   "./",
@@ -50,6 +50,7 @@ const GEOMETRY_URLS = [
   "./data/app/tn-senate-districts.json",
   "./data/app/tn-house-districts.json",
   "./data/app/tn-commission-districts.json",
+  "./data/app/tribal-areas.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -61,6 +62,7 @@ const ROSTER_URLS = [
   "./data/app/tn-house-members.json",
   "./data/app/tn-commissioners.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/tribal-councils.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

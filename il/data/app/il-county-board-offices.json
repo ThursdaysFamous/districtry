@@ -81,6 +81,13 @@
    "source": "isbe",
    "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
   },
+  "ford": {
+   "address": "200 West State Street, Paxton, IL 60957",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
   "fulton": {
    "address": "100 N Main St, Lewistown, IL 61542",
    "filedFor": "2025",
@@ -152,6 +159,13 @@
    "address": "141 South Main Street, Room 501, Decatur, IL 62523",
    "asOf": "2025-12-15",
    "confirmedBy": "County Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "macoupin": {
+   "address": "215 South East Street, Carlinville, IL 62626",
+   "asOf": "2025-12-15",
+   "confirmedBy": "Sheriff",
    "source": "isbe",
    "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
   },

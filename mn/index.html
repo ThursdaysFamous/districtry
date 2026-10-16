@@ -4216,8 +4216,9 @@ function initMinnesotaExplorer() {
     "county": "co", "mn-house": "mnh", "watershed-district": "ws",
     "school-district-unified": "su", "school-board-district": "bd", "county-commissioner": "cm",
     "zip-code": "zp", "school-district-elementary": "se", "county-subdivision": "cs",
-    "voting-precinct": "vp", "municipality": "mu", "school-district-secondary": "sh",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw",
+    "school-district-secondary": "sh", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4226,8 +4227,8 @@ function initMinnesotaExplorer() {
     "state-house": ["mn-house"], "trial-court-district": ["mn-judicial-district"],
     "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "school-board-district": ["school-board-district"], "police-station": ["police-station"],
@@ -4292,7 +4293,9 @@ function initMinnesotaExplorer() {
     { id: "southcarolina", label: "South Carolina", url: "https://districtry.com/sc/", emoji: "🌴", explorerName: "districtry South Carolina",
       bbox: { minLng: -83.36, minLat: 31.99, maxLng: -78.49, maxLat: 35.16 } },
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
-      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } }
+      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
+    { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8295,28 +8298,130 @@ function initMinnesotaExplorer() {
    * here is a change there too. */
   var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
 
-  function resolveShortMapLink(link, signal) {
+  /* A LOOKUP THAT FAILS ONCE CAN ANSWER A MOMENT LATER. On 2026-10-14 a
+   * place shared from the Google Maps app into the installed app on a phone
+   * was told its short link couldn't be read, and minutes later the lookup
+   * answered the same link at once, six times in a row, and on the live
+   * site through the installed app's launcher at a phone's size. The
+   * lookup's own code records nothing, but Deno keeps a trace of each
+   * request for one day, in the Deno account rather than anywhere this code
+   * can read, and that request's trace, read the same day, holds one fetch:
+   * the lookup asked the short link's own host, which answered 404 in 107 ms.
+   * That is the answer the host gives a link that does not exist ("Dynamic
+   * Link Not Found", measured the same evening with a made-up one), so
+   * Google did not know a link it knew minutes later. The likeliest reason,
+   * inferred rather than measured, is that the link was seconds old: a share
+   * hands the app a link Google has only just made, and the app asks about
+   * it at once, which a pasted link rarely does. So a failed try is made
+   * again after 1.5 seconds and once more after 4, and a lookup 404 (how the
+   * lookup reports any answer that does not lead to a map) once more after
+   * 10, because a link too new to be known gets that answer and the wait
+   * costs time only when a link fails. Each try gives up after 8 seconds
+   * rather than leaving "Reading the link…" on screen for good, and the
+   * other failures keep two retries, because a fourth try after three
+   * timeouts would keep a reader waiting most of a minute. Two answers are
+   * not tried again, because a second try cannot change them: a 400 (the
+   * lookup refuses what it was sent) and a full link that is itself short.
+   * onRetry, if given, is called with the failed try's error before each
+   * new try, so the page can say it is trying again. A try cut short by
+   * `signal` rejects with an AbortError, as fetch does; one that ran out of
+   * time does not.
+   *
+   * WHICH SIDE FAILED is the rejection's `reason`, which mapLinkMessage
+   * tells the reader, so the next failure on a phone says what this one
+   * could not: "unreached" when no answer reached the page at all (the
+   * phone is offline, or the lookup's host failed, since an error page from
+   * that host carries no CORS header and reaches the page as a failed
+   * fetch), "timeout", "no-map" when the lookup followed the link and Google
+   * or Apple did not send it to a map (its 404), and "no-answer" when Google
+   * or Apple did not answer the lookup (its 502). */
+  var MAP_LINK_RETRY_WAITS = [1500, 4000];
+  var MAP_LINK_NEW_LINK_WAITS = MAP_LINK_RETRY_WAITS.concat([10000]);
+  var MAP_LINK_TRY_MS = 8000;
+  var MAP_LINK_STATUS_REASONS = { 404: "no-map", 502: "no-answer" };
+
+  function mapLinkLookupError(message, reason, final) {
+    var e = new Error(message);
+    e.reason = reason || "";
+    e.final = !!final;
+    return e;
+  }
+
+  function resolveShortMapLink(link, signal, onRetry) {
     if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
-    return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
-      { signal: signal, headers: { Accept: "application/json" } })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
-        if (!full || full.kind === "short") throw new Error("the lookup returned no full link");
-        return full;
-      });
+    var retries = 0;
+    function abortError() {
+      var e = new Error("The lookup was cancelled");
+      e.name = "AbortError";
+      return e;
+    }
+    function lookupOnce() {
+      if (signal && signal.aborted) return Promise.reject(abortError());
+      var own = new AbortController(), late = false;
+      var cancel = function () { own.abort(); };
+      if (signal) signal.addEventListener("abort", cancel);
+      var timer = setTimeout(function () { late = true; own.abort(); }, MAP_LINK_TRY_MS);
+      var settle = function () {
+        clearTimeout(timer);
+        if (signal) signal.removeEventListener("abort", cancel);
+      };
+      return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
+        { signal: own.signal, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (!res.ok) {
+            throw mapLinkLookupError("HTTP " + res.status, MAP_LINK_STATUS_REASONS[res.status], res.status === 400);
+          }
+          return res.json();
+        }, function (err) {
+          throw mapLinkLookupError((err && err.message) || "the lookup could not be reached", "unreached");
+        })
+        .then(function (data) {
+          var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
+          if (!full || full.kind === "short") throw mapLinkLookupError("the lookup returned no full link", "no-map", true);
+          return full;
+        })
+        .then(function (full) { settle(); return full; }, function (err) {
+          settle();
+          if (signal && signal.aborted) throw abortError();
+          if (late) throw mapLinkLookupError("the lookup did not answer within " + MAP_LINK_TRY_MS / 1000 + " seconds", "timeout");
+          throw err;
+        });
+    }
+    function again(err) {
+      var waits = err.reason === "no-map" ? MAP_LINK_NEW_LINK_WAITS : MAP_LINK_RETRY_WAITS;
+      if (err.name === "AbortError" || err.final || retries >= waits.length) throw err;
+      var wait = waits[retries++];
+      if (onRetry) onRetry(retries, err);
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () {
+          if (signal) signal.removeEventListener("abort", cancel);
+          resolve();
+        }, wait);
+        var cancel = function () { clearTimeout(timer); reject(abortError()); };
+        if (signal) signal.addEventListener("abort", cancel);
+      }).then(lookupOnce).then(null, again);
+    }
+    return lookupOnce().then(null, again);
   }
 
   /* What the reader is told when a link cannot be read here. Kept beside the
-   * parser so the app and the front door say the same thing. */
-  function mapLinkMessage(link) {
+   * parser so the app and the front door say the same thing. For a short
+   * link, `err` is how the lookup failed (resolveShortMapLink), and the
+   * message says which side it was, in words. */
+  function mapLinkMessage(link, err) {
     var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
     if (link.kind === "short") {
-      return "That short " + name + " link couldn't be read. Open the link, " +
-        "then copy the full address from your browser's address bar and paste that.";
+      var maker = link.source === "apple" ? "Apple" : "Google";
+      var why = {
+        "unreached": "districtry couldn't reach the service that reads short links",
+        "timeout": "the service that reads short links didn't answer in time",
+        "no-map": maker + " didn't say where it leads",
+        "no-answer": maker + " didn't answer the service that reads short links"
+      }[(err && err.reason) || ""] || "";
+      // Not "open the link and copy the address bar": on a phone a map link
+      // opens the maps app, which has no address bar.
+      return "That short " + name + " link couldn't be read just now" + (why ? " (" + why + ")" : "") + ". " +
+        "Search again in a moment, or type the place's address.";
     }
     if (name) {
       return "That " + name + " link doesn't say where a place is (a directions link, for one). " +
@@ -8951,13 +9056,20 @@ function initMinnesotaExplorer() {
     geoStatus.textContent = "Reading the link\u2026";
     geoStatus.className = "geo-status";
     mapLinkController = new AbortController();
-    return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
+    // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
+    // and the reader is told so rather than left watching the same words
+    return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
+    }).then(function (full) {
       if (seq !== districtSearchSeq) return;
-      if (full.kind === "text") return runGeocodeSearch(full.text, full);
+      if (full.kind === "text") {
+        geoStatus.textContent = "Searching\u2026";
+        return runGeocodeSearch(full.text, full);
+      }
       return showMapLink(full);
     }, function (err) {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
-      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
     });
   }
@@ -9269,7 +9381,7 @@ function initMinnesotaExplorer() {
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
     "watershed-district", // 64 bodies covering about 67,000 km2 of the state's 225,000 at a mean 1,050 km2 (median 316, from 20 in Richfield-Bloomington to 15,700 in Red Lake) — smaller on average than a House district and larger than a unified school district
     "school-district-unified", // 322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings
-    "school-board-district", // 59 board election districts on 13 school boards, a mean 527 km2 (median 217, from 2 in Winona to 3,927 in St. Louis County) — smaller on average than a unified school district, which they divide, and larger than a commissioner district
+    "school-board-district", // 65 board election districts on 14 school boards, a mean 489 km2 (median 175, from 2 in Lake Superior to 3,958 in St. Louis County), measured 2026-10-15 — smaller on average than a unified school district, which they divide, and larger than a commissioner district
     "county-commissioner", // 447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code
     "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
     "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
@@ -9277,6 +9389,7 @@ function initMinnesotaExplorer() {
     "voting-precinct",   // 4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census
     "tribal-government", // Tribal land — Minnesota has 22 pieces across 13 nations, from the Leech Lake Reservation's 3,393.820 km² down to a 0.146 km² Grand Portage parcel, MEASURED by scripts/build_tribal_areas.py. Ranked on its 6.892 km² MEDIAN, below the voting-precinct fabric's 14.72 km² median (measured 2026-10-10 on the shipped mn-precincts.json, cylindrical equal-area) — medians rather than means, because this layer's own mean of 514 km² is Leech Lake, Red Lake and White Earth and describes none of the other nineteen pieces. The municipality layer below it is live and publishes no median, so no claim is made about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Minnesota is on no tribal land, so the layer carries its own emptyNote. The card names the nation as the Bureau of Indian Affairs names it, its seat (one, the Ho-Chunk Nation's, is in Wisconsin), the districts the Census draws on five of these pieces of land, the 2020 population, and the council from each nation's own published list: nine of the thirteen publish one this project reads weekly, and for the other four the card says why it names nobody. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area
+    "city-ward",         // 101 council wards and districts in the 22 cities whose councils this app names and which elect by ward or district, a mean 17.7 km2 (median 14.8, from 2.4 in Winona to 71.8 in Duluth) — ranked just after City, which each one divides, so a ward draws on top of its city
     "school-district-secondary", // 1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota
     "police-station",    // 694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -14287,7 +14400,7 @@ function initMinnesotaExplorer() {
    * district, and those precincts, cut to the school district's boundary, are
    * the district (mn/scripts/build_mn_school_board_districts.py;
    * data/app/mn-school-board-districts.json). Thirteen boards, measured
-   * 2026-10-08; Minneapolis's six agree with the city's own map at every one
+   * 2026-10-08, and Anoka-Hennepin from its own map (below); Minneapolis's six agree with the city's own map at every one
    * of 1,800 sampled points.
    *
    * THREE KINDS OF FEATURE, AND THE CARD SAYS WHICH. A "district" is one
@@ -14298,9 +14411,11 @@ function initMinnesotaExplorer() {
    * covers — Duluth's rural townships, which vote at combined polling places,
    * and small pieces where no voter's ballot carried the contest.
    *
-   * Anoka-Hennepin elects by district too and is NOT drawn: it reports every
-   * district contest on combined polling places, which the results do not
-   * place on precincts (gap mn-school-board-election-districts).
+   * Anoka-Hennepin reports every district contest on combined polling
+   * places, which the results do not place on precincts, so its six districts
+   * are drawn from the district's OWN map instead (drawnFrom "map"): read
+   * once by mn/scripts/trace_isd11_board_map.py into the 2022 precincts each
+   * district is made of, every precinct at least 98.9% inside one district.
    * ---------- */
   var loadMnSchoolBoardDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-school-board-districts.json", {}, 2);
@@ -14403,7 +14518,11 @@ function initMinnesotaExplorer() {
       } else if (p.kind === "unplaced") {
         rows.push({
           label: "Why",
-          value: p.why === "combined"
+          value: p.drawnFrom === "map"
+            ? "The district's own board election map puts no district on this " +
+              "ground. The line between the school district and its neighbour " +
+              "may run a little differently on that map."
+            : p.why === "combined"
             ? "This board runs its own election in odd years and reports this " +
               "area at combined polling places, which the state's results do " +
               "not place on precincts. The district's own map shows which " +
@@ -14433,7 +14552,13 @@ function initMinnesotaExplorer() {
       }
       rows.push({
         label: "How this line is drawn",
-        value: "From the precincts that voted in each district's most recent " +
+        value: p.drawnFrom === "map"
+          ? "From the district's own board election map (" + String(p.mapTitle) +
+            "), read precinct by precinct against the state's 2022 precincts " +
+            "and cut to the school district's boundary. The names are the " +
+            "winners of the most recent elections, not a list the district " +
+            "keeps up to date."
+          : "From the precincts that voted in each district's most recent " +
           "election in the Minnesota Secretary of State's results, cut to the " +
           "school district's boundary. The names are the winners of those " +
           "elections, not a list the district keeps up to date."
@@ -14441,8 +14566,144 @@ function initMinnesotaExplorer() {
       wrap.appendChild(renderFieldStack(rows));
       var links = [];
       if (board && board.website) links.push({ label: "District website", url: String(board.website) });
-      if (p.sourceUrl) links.push({ label: "Results by precinct", url: String(p.sourceUrl) });
+      if (p.sourceUrl) {
+        links.push({
+          label: p.drawnFrom === "map" ? "The district's board map" : "Results by precinct",
+          url: String(p.sourceUrl)
+        });
+      }
       if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Minnesota Secretary of State election results", url: "https://www.sos.mn.gov/elections-voting/election-results/" };
+    }
+  });
+
+  /* ---------- 5c. City council ward or district ----------
+   * The 22 cities whose councils this app names (data/app/mn-city-councils.json)
+   * and which elect members by ward or district. The lines are the Secretary
+   * of State's own: every precinct in its statewide precinct map carries the
+   * ward it lies in, and a Minnesota precinct lies wholly inside one ward, so
+   * each ward is its precincts joined together
+   * (mn/scripts/build_mn_city_wards.py; data/app/mn-city-wards.json). The
+   * builder checks each ward against the ballot: the precincts that voted in
+   * the ward's latest council contest are exactly the precincts the map of
+   * that election puts in it, for all 101 wards (measured 2026-10-15).
+   *
+   * A GENERIC LABEL, as Iowa's: Duluth and Rochester elect by DISTRICT and the
+   * other twenty by WARD, so the toggle says "City Council District" and each
+   * card names the unit as its city does, off the `seat` property.
+   *
+   * The precinct map carries wards for 47 more cities whose councils the app
+   * does not name yet; they are not drawn, because the card could name nobody.
+   * ---------- */
+  var loadMnCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-city-wards.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: insideMinnesota,
+    emptyNote: "This point is not in a city council ward or district this map " +
+      "draws. It draws the wards of the 22 cities above 25,000 people whose " +
+      "councils are elected by ward or district; most Minnesota cities elect " +
+      "their whole council at large, and the City card names it where this " +
+      "app has it.",
+    overlay: {
+      load: loadMnCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.seat != null ? String(p.city) + ", " + String(p.seat) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadMnCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hit = null;
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hit = feats[i].properties || {};
+            break;
+          }
+        }
+        if (!hit) return null;
+        var result = { seq: seq, props: hit, council: null };
+        return loadMnCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(hit.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.seat),
+        note: String(p.city) + " City Council"
+      }));
+      // Card convention: identity -> officeholder. The member is the winner
+      // of the seat's most recent election, dated, as on the City card.
+      var people = [], rows = [];
+      ((council && council.seats) || []).forEach(function (seat) {
+        if (seat.seat !== p.seat) return;
+        if (seat.name) {
+          var when = mnElectionDate(seat.election);
+          people.push({
+            name: String(seat.name),
+            badge: "Council, " + String(seat.seat),
+            note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+          });
+          if (seat.citySays && seat.citySays.name) {
+            var read = mnElectionDate(seat.citySays.read);
+            rows.push({
+              label: "The city's own page names someone else",
+              value: String(p.city) + "'s own council page named " +
+                String(seat.citySays.name) + " for this seat" +
+                (read ? " when read on " + read : "") + ". The seat has " +
+                "probably changed hands since " + String(seat.name) + " won it."
+            });
+          }
+        } else {
+          rows.push({ label: "Council member: not named here", value: String(seat.unnamed || "") + "." });
+        }
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      if (result.rosterFailed) {
+        rows.push({ label: "Council member", value: "The list of election winners did not load, so no name is shown." });
+      }
+      var others = 0;
+      ((council && council.seats) || []).forEach(function (s) {
+        if (s.seat === "Mayor" || s.seat === "At Large" || /^Seat /.test(s.seat)) others += 1;
+      });
+      if (others) {
+        rows.push({
+          label: "Also on this council",
+          value: "The mayor" + (others > 1 ? " and the members elected by the whole city" : "") +
+            ". The City card names them."
+        });
+      }
+      rows.push({
+        label: "What this name is",
+        value: "The winner of this seat's most recent election in the Minnesota " +
+          "Secretary of State's results. It is not a list the city keeps up to " +
+          "date, so if the seat has changed hands since, this still shows who won."
+      });
+      rows.push({
+        label: "How this line is drawn",
+        value: "From the Minnesota Secretary of State's precinct map, which gives " +
+          "every precinct its ward. The precincts that voted in this seat's latest " +
+          "election are the same ones the map puts in it."
+      });
+      wrap.appendChild(renderFieldStack(rows));
       return wrap;
     },
     primaryLink: function () {
@@ -14569,12 +14830,26 @@ function initMinnesotaExplorer() {
    * A town elects three supervisors to three-year terms, plus a clerk and a
    * treasurer in alternate years (Minn. Stat. § 367.03, read at
    * revisor.mn.gov on 2026-09-29 — the state's own publisher, which robots.txt
-   * allows). No statewide roster of those officers was found, so the card
-   * names nobody. Recorded as gap mn-township-officers.
+   * allows) — or, in a town that holds its election in November, every
+   * officer for four years and supervisors optionally for six (subd. 4 and
+   * 4a, read 2026-10-15).
+   *
+   * THE 704 NOVEMBER-ELECTION TOWNS NAME THEIR BOARD, from the Secretary of
+   * State's own local results files, every name dated to the election that
+   * seated it (mn/scripts/build_mn_town_boards.py; data/app/mn-town-boards.json),
+   * the city council card's posture. A March-election town's results are in
+   * no file the state publishes, so its card still names nobody; recorded as
+   * gap mn-township-officers.
    * ---------- */
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
+  // The supervisors, clerk and treasurer of each November-election town,
+  // keyed by the town's Census GEOID; every seat names the election that
+  // filled it.
+  var loadMnTownBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-town-boards.json", {}, 2);
+  });
 
   registerLayer({
     id: "county-subdivision",
@@ -14601,7 +14876,7 @@ function initMinnesotaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // the civil-division type taken from what TIGER's own NAME carries
@@ -14611,8 +14886,20 @@ function initMinnesotaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          board: null
         };
+        if (result.kind !== "township") return result;
+        // A roster that fails to load leaves the township card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadMnTownBoards().then(function (roster) {
+          result.board = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14623,8 +14910,11 @@ function initMinnesotaExplorer() {
       }));
       var KIND_NOTE = {
         "township": "Township — an organized town, and an active local " +
-          "government. It elects three supervisors to three-year terms, plus " +
-          "a clerk and a treasurer in alternate years (Minn. Stat. § 367.03).",
+          "government. It elects a board of supervisors, usually three, and " +
+          "usually a clerk and a treasurer: a town that votes in March " +
+          "elects supervisors for three years and the clerk and treasurer " +
+          "for two, and one that votes in November elects them for four " +
+          "(Minn. Stat. § 367.03).",
         "city": "This is the Census Bureau's placeholder subdivision record " +
           "for a city. A Minnesota city is not part of a township, so there " +
           "is no township government under this point — the city on the " +
@@ -14642,13 +14932,47 @@ function initMinnesotaExplorer() {
       // only a township has an officer this card would name: a city's people
       // belong on the city's own card, unorganized territory's on the
       // county's, and the water records have no government at all
-      if (result.kind === "township") {
+      if (result.kind === "township" && !result.board) {
         wrap.appendChild(renderFieldStack([{
           label: "Your town board",
-          value: "Not named here. No statewide roster of Minnesota's town " +
-            "supervisors, clerks and treasurers was found, and this app does " +
-            "not guess one — the township's own website is the current source."
+          value: result.rosterFailed
+            ? "The list of election winners did not load, so no name is " +
+              "shown. The township's own website names its board."
+            : "Not named here. This app names the boards of the towns that " +
+              "hold their town election in November, from the state's " +
+              "election results, and this town's board is not in them. That " +
+              "is the case for every town that votes in March: the state " +
+              "publishes no results file for March town elections. The " +
+              "township's own website is the current source."
         }]));
+      } else if (result.kind === "township") {
+        var people = [], rows = [];
+        (result.board.seats || []).forEach(function (seat) {
+          var label = String(seat.seat);
+          if (seat.name) {
+            var when = mnElectionDate(seat.election);
+            people.push({
+              name: String(seat.name),
+              badge: label,
+              note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+            });
+          } else {
+            rows.push({ label: label + ": not named here", value: String(seat.unnamed || "") + "." });
+          }
+        });
+        if (people.length) wrap.appendChild(renderPersonRows(people));
+        rows.push({
+          label: "What these names are",
+          value: "The winner of the most recent November election for each " +
+            "seat in the Minnesota Secretary of State's results. It is not a " +
+            "list the town keeps up to date, so if a seat has changed hands " +
+            "since (a resignation or an appointment) this still shows who won. " +
+            "A seat not listed was not on a November ballot since 2022: an " +
+            "appointed clerk or treasurer, or a supervisor elected earlier to " +
+            "a longer term. The township's own website says who holds each " +
+            "seat today."
+        });
+        wrap.appendChild(renderFieldStack(rows));
       }
       return wrap;
     }
@@ -14669,8 +14993,9 @@ function initMinnesotaExplorer() {
    * Stat. § 412.02, read at revisor.mn.gov on 2026-09-29); a home rule
    * charter city's own charter governs instead. No statewide roster of
    * Minnesota's mayors and council members was found, so the card names
-   * nobody. Recorded as gap mn-municipal-officeholders. The 274 city WARDS
-   * the Secretary of State publishes are a later change, not a roster.
+   * nobody. Recorded as gap mn-municipal-officeholders. The wards of the 22
+   * of these cities that elect by ward are the City Council District layer
+   * (5c above), drawn from the Secretary of State's precincts.
    *
    * THE 43 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL, from the
    * Secretary of State's own city results files, every name dated to the
@@ -16430,6 +16755,9 @@ function initMinnesotaExplorer() {
     // like them it is one person elected by this district alone, where the
     // judicial district below elects a whole bench.
     "county-commissioner",
+    // The city council ward sits with the county board: one member elected by
+    // this ward alone, and it answers only in the 22 cities that elect by ward.
+    "city-ward",
     // The judicial district comes after the three chambers: a reader looking
     // for who represents them wants the legislators first, and this is ten
     // shapes where those are 8, 67 and 134.
@@ -16939,14 +17267,14 @@ function initMinnesotaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
-    "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD",
+    "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
+    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4BA3D3": "#B0E0FE", "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#5E3A8C": "#B283F5",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -2398,6 +2398,11 @@
         "note": "State Senate roster from the Open States current-people export (wi.csv), refreshed weekly by update-wi-legislature-roster.yml; the floor tolerates transient vacancies (33 seats)."
       },
       {
+        "file": "wi-town-boards.json",
+        "min_keys": 700,
+        "note": "Town boards — the chairperson and supervisors of each Wisconsin town — keyed by the town's county-subdivision GEOID, plus `_counties`, which records for every county with towns whether it publishes a list of town officials, the document and edition, and the day it was last read. No state agency lists town boards, so wi/scripts/wi_town_board_scraper.py reads each county's own list (one parser per county under wi/scripts/town_boards/) and build_wi_town_boards.py joins it to the town-clerk files' GEOIDs, failing a county below its floor. Names and roles only: the directories print home addresses, phones and personal e-mails beside the names and none ship. A county whose read fails keeps its last good record and date. Refreshed weekly by update-wi-town-board-roster.yml."
+      },
+      {
         "file": "winnebago-polling-places.json",
         "min_keys": 142,
         "note": "Winnebago County ward → polling place pairing for the 2026 General Election — wi/scripts/build_wi_polling_places.py, from the workbook the Wisconsin Elections Commission sent 2026-08-27 (wi/data/source/wec/). PROVISIONAL until the Commission publishes its November edition; 158 of the county's LTSB wards are paired, and the card names the election, the provisional status and MyVote as the confirmation route.",
@@ -2490,6 +2495,11 @@
       "file": "update-wi-municipal-executive-roster.yml",
       "purpose": "Milwaukee County municipal executives (mayors and village presidents), each name witnessed against the municipality's own page before it ships",
       "schedule": "Thu 16:30 UTC"
+    },
+    {
+      "file": "update-wi-town-board-roster.yml",
+      "purpose": "Town board chairpersons and supervisors, read from each county's own list of town officials (one parser per county under wi/scripts/town_boards/)",
+      "schedule": "Thu 17:45 UTC"
     }
   ],
   "geocoder": {
@@ -2581,7 +2591,9 @@
     { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
       "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
-      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
   ],
   "history_page": {
     "file": "history.html",
