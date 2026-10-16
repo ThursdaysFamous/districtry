@@ -4681,7 +4681,9 @@ function initChiExplorer() {
     { id: "southcarolina", label: "South Carolina", url: "https://districtry.com/sc/", emoji: "🌴", explorerName: "districtry South Carolina",
       bbox: { minLng: -83.36, minLat: 31.99, maxLng: -78.49, maxLat: 35.16 } },
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
-      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } }
+      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
+    { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8864,28 +8866,130 @@ function initChiExplorer() {
    * here is a change there too. */
   var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
 
-  function resolveShortMapLink(link, signal) {
+  /* A LOOKUP THAT FAILS ONCE CAN ANSWER A MOMENT LATER. On 2026-10-14 a
+   * place shared from the Google Maps app into the installed app on a phone
+   * was told its short link couldn't be read, and minutes later the lookup
+   * answered the same link at once, six times in a row, and on the live
+   * site through the installed app's launcher at a phone's size. The
+   * lookup's own code records nothing, but Deno keeps a trace of each
+   * request for one day, in the Deno account rather than anywhere this code
+   * can read, and that request's trace, read the same day, holds one fetch:
+   * the lookup asked the short link's own host, which answered 404 in 107 ms.
+   * That is the answer the host gives a link that does not exist ("Dynamic
+   * Link Not Found", measured the same evening with a made-up one), so
+   * Google did not know a link it knew minutes later. The likeliest reason,
+   * inferred rather than measured, is that the link was seconds old: a share
+   * hands the app a link Google has only just made, and the app asks about
+   * it at once, which a pasted link rarely does. So a failed try is made
+   * again after 1.5 seconds and once more after 4, and a lookup 404 (how the
+   * lookup reports any answer that does not lead to a map) once more after
+   * 10, because a link too new to be known gets that answer and the wait
+   * costs time only when a link fails. Each try gives up after 8 seconds
+   * rather than leaving "Reading the link…" on screen for good, and the
+   * other failures keep two retries, because a fourth try after three
+   * timeouts would keep a reader waiting most of a minute. Two answers are
+   * not tried again, because a second try cannot change them: a 400 (the
+   * lookup refuses what it was sent) and a full link that is itself short.
+   * onRetry, if given, is called with the failed try's error before each
+   * new try, so the page can say it is trying again. A try cut short by
+   * `signal` rejects with an AbortError, as fetch does; one that ran out of
+   * time does not.
+   *
+   * WHICH SIDE FAILED is the rejection's `reason`, which mapLinkMessage
+   * tells the reader, so the next failure on a phone says what this one
+   * could not: "unreached" when no answer reached the page at all (the
+   * phone is offline, or the lookup's host failed, since an error page from
+   * that host carries no CORS header and reaches the page as a failed
+   * fetch), "timeout", "no-map" when the lookup followed the link and Google
+   * or Apple did not send it to a map (its 404), and "no-answer" when Google
+   * or Apple did not answer the lookup (its 502). */
+  var MAP_LINK_RETRY_WAITS = [1500, 4000];
+  var MAP_LINK_NEW_LINK_WAITS = MAP_LINK_RETRY_WAITS.concat([10000]);
+  var MAP_LINK_TRY_MS = 8000;
+  var MAP_LINK_STATUS_REASONS = { 404: "no-map", 502: "no-answer" };
+
+  function mapLinkLookupError(message, reason, final) {
+    var e = new Error(message);
+    e.reason = reason || "";
+    e.final = !!final;
+    return e;
+  }
+
+  function resolveShortMapLink(link, signal, onRetry) {
     if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
-    return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
-      { signal: signal, headers: { Accept: "application/json" } })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
-        if (!full || full.kind === "short") throw new Error("the lookup returned no full link");
-        return full;
-      });
+    var retries = 0;
+    function abortError() {
+      var e = new Error("The lookup was cancelled");
+      e.name = "AbortError";
+      return e;
+    }
+    function lookupOnce() {
+      if (signal && signal.aborted) return Promise.reject(abortError());
+      var own = new AbortController(), late = false;
+      var cancel = function () { own.abort(); };
+      if (signal) signal.addEventListener("abort", cancel);
+      var timer = setTimeout(function () { late = true; own.abort(); }, MAP_LINK_TRY_MS);
+      var settle = function () {
+        clearTimeout(timer);
+        if (signal) signal.removeEventListener("abort", cancel);
+      };
+      return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
+        { signal: own.signal, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (!res.ok) {
+            throw mapLinkLookupError("HTTP " + res.status, MAP_LINK_STATUS_REASONS[res.status], res.status === 400);
+          }
+          return res.json();
+        }, function (err) {
+          throw mapLinkLookupError((err && err.message) || "the lookup could not be reached", "unreached");
+        })
+        .then(function (data) {
+          var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
+          if (!full || full.kind === "short") throw mapLinkLookupError("the lookup returned no full link", "no-map", true);
+          return full;
+        })
+        .then(function (full) { settle(); return full; }, function (err) {
+          settle();
+          if (signal && signal.aborted) throw abortError();
+          if (late) throw mapLinkLookupError("the lookup did not answer within " + MAP_LINK_TRY_MS / 1000 + " seconds", "timeout");
+          throw err;
+        });
+    }
+    function again(err) {
+      var waits = err.reason === "no-map" ? MAP_LINK_NEW_LINK_WAITS : MAP_LINK_RETRY_WAITS;
+      if (err.name === "AbortError" || err.final || retries >= waits.length) throw err;
+      var wait = waits[retries++];
+      if (onRetry) onRetry(retries, err);
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () {
+          if (signal) signal.removeEventListener("abort", cancel);
+          resolve();
+        }, wait);
+        var cancel = function () { clearTimeout(timer); reject(abortError()); };
+        if (signal) signal.addEventListener("abort", cancel);
+      }).then(lookupOnce).then(null, again);
+    }
+    return lookupOnce().then(null, again);
   }
 
   /* What the reader is told when a link cannot be read here. Kept beside the
-   * parser so the app and the front door say the same thing. */
-  function mapLinkMessage(link) {
+   * parser so the app and the front door say the same thing. For a short
+   * link, `err` is how the lookup failed (resolveShortMapLink), and the
+   * message says which side it was, in words. */
+  function mapLinkMessage(link, err) {
     var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
     if (link.kind === "short") {
-      return "That short " + name + " link couldn't be read. Open the link, " +
-        "then copy the full address from your browser's address bar and paste that.";
+      var maker = link.source === "apple" ? "Apple" : "Google";
+      var why = {
+        "unreached": "districtry couldn't reach the service that reads short links",
+        "timeout": "the service that reads short links didn't answer in time",
+        "no-map": maker + " didn't say where it leads",
+        "no-answer": maker + " didn't answer the service that reads short links"
+      }[(err && err.reason) || ""] || "";
+      // Not "open the link and copy the address bar": on a phone a map link
+      // opens the maps app, which has no address bar.
+      return "That short " + name + " link couldn't be read just now" + (why ? " (" + why + ")" : "") + ". " +
+        "Search again in a moment, or type the place's address.";
     }
     if (name) {
       return "That " + name + " link doesn't say where a place is (a directions link, for one). " +
@@ -9520,13 +9624,20 @@ function initChiExplorer() {
     geoStatus.textContent = "Reading the link\u2026";
     geoStatus.className = "geo-status";
     mapLinkController = new AbortController();
-    return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
+    // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
+    // and the reader is told so rather than left watching the same words
+    return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
+    }).then(function (full) {
       if (seq !== districtSearchSeq) return;
-      if (full.kind === "text") return runGeocodeSearch(full.text, full);
+      if (full.kind === "text") {
+        geoStatus.textContent = "Searching\u2026";
+        return runGeocodeSearch(full.text, full);
+      }
       return showMapLink(full);
     }, function (err) {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
-      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
     });
   }
@@ -15223,6 +15334,19 @@ function initChiExplorer() {
       return !!findFeatureContaining(geojson, point);
     });
   }
+  /* Macoupin's nine board districts are the county's OWN published layer
+   * (GIS_Layers layer 3, behind its property map), witnessed by the Census 2020
+   * voting districts nesting in it and by the county's Citizen's Guide precinct
+   * list (scripts/build_macoupin_board_districts.py). The members are the
+   * County Clerk's elected-officials directory, read from the service its page
+   * fills itself from: two per district, the year each seat is next on the
+   * ballot, and the page's own mark for an appointee. */
+  var loadMacoupinBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/macoupin-county-board-districts.json", {}, 2);
+  });
+  var loadMacoupinBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/macoupin-county-board-members.json", {}, 2);
+  });
   var loadMadisonCountyOutline = makeCached(function () {
     return fetchJSONWithRetry("data/app/madison-county-outline.json", {}, 2);
   });
@@ -15879,6 +16003,26 @@ function initChiExplorer() {
   });
   var loadChristianBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/christian-county-board-members.json", {}, 2);
+  });
+  /* Ford (2026-10-15) — three board districts of four members, dissolved
+   * from the 22 Census 2020 voting districts per Res. 21-101, the county's
+   * 2021 plan, whose own table matches every precinct and district population
+   * to the person (build_ford_boundaries.py). The twelve members come from
+   * the County Clerk's letter of 2026-10-01, because the county's board page
+   * sits behind a JavaScript challenge (build_ford_county_board.py). */
+  var loadFordCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ford-county-outline.json", {}, 2);
+  });
+  function fordCountyCoverage(point) {
+    return loadFordCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadFordBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ford-county-board-districts.json", {}, 2);
+  });
+  var loadFordBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ford-county-board-members.json", {}, 2);
   });
   /* Jackson (the 87th county, 2026-08-23) — the first county served whose board
    * districts SPLIT precincts. Its own certified 2024 General canvass reports
@@ -22215,6 +22359,30 @@ function initChiExplorer() {
     });
   });
 
+  /* Danville's seven wards (Vermilion, 2026-10-15) on the CITY's own ArcGIS
+   * server, whose item description calls the layer "the authoritative
+   * geographic boundaries for the seven (7) corporate municipal wards". Layer 2
+   * is the polygons (`ward_id` "Ward 1".."Ward 7"); the service's table 1 also
+   * carries the fourteen aldermen, and is read NOWHERE: the two aldermen per
+   * ward join from the shipped roster (the city's own council page), which
+   * agreed with that table name for name on the day this was written. Measured
+   * against the Census place polygon the wards leave 1.64% of the city
+   * uncovered and draw 1.07% outside it, in 196 and 186 slivers whose largest is
+   * 0.07 km2: two drawings of one city limit, not a missing ward. An older copy
+   * on the county's org (Danville_Wards, last edited 2024-02) is not used. */
+  var DANVILLE_WARD_SERVICE = "https://gis.cityofdanville.org/arcgis/rest/services/" +
+    "Hosted/Ward_Boundaries/FeatureServer/2";
+  var loadDanvilleWards = makeCached(function () {
+    return loadArcGISGeoJSON(DANVILLE_WARD_SERVICE).then(function (geojson) {
+      var out = (geojson.features || []).map(function (f) {
+        var num = /(\d+)/.exec(String(findPropCI(f.properties || {}, ["ward_id"]) || ""));
+        return wardFeature(f, "Danville", "Ward", num ? num[1] : null);
+      });
+      if (!out.length) throw new Error("Danville ward layer returned no wards");
+      return { type: "FeatureCollection", features: out };
+    });
+  });
+
   /* St. Clair's two ward-electing cities ride the county's own voting-
    * districts service (layers 13 and 14). Belleville's layer publishes NINE
    * polygons for eight wards — one is a centimeter-scale sliver duplicating
@@ -22663,6 +22831,7 @@ function initChiExplorer() {
       municipalWardEntry("lincoln", loadLincolnWards),
       municipalWardEntry("springfield", loadSpringfieldWards),
       municipalWardEntry("freeport", loadFreeportWards),
+      municipalWardEntry("danville", loadDanvilleWards),
       municipalWardEntry("st-clair-cities", loadStClairCityWards),
       municipalWardEntry("whiteside-cities", loadWhitesideWards),
       municipalWardEntry("peoria-city", loadPeoriaCityDistricts),
@@ -27365,6 +27534,78 @@ function initChiExplorer() {
           }
         }
       },
+      // Macoupin — 9 districts of TWO members each (18 seats), drawn from the
+      // county's own Board Districts layer, which the 2005-2021 precinct
+      // fabric nests in exactly as Ordinance O-2021.06 writes the plan. The
+      // roster is the County Clerk's directory; the Chair holds a District 5
+      // seat and is marked on it. Two members carry the directory's mark for
+      // an appointee filling an unexpired term, which rides their row.
+      {
+        key: "macoupin",
+        coverage: macoupinCountyCoverage,
+        loadGeometry: loadMacoupinBoardDistricts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["district"]);
+          return (v == null || v === "") ? null : "District " + String(v);
+        },
+        query: function (point, seq) {
+          return Promise.all([
+            featureSetAt(loadMacoupinBoardDistricts, point),
+            loadMacoupinBoardMembers().catch(function () { return null; })
+          ]).then(function (results) {
+            var feature = findFeatureContaining(results[0], point);
+            if (!feature) return null;
+            var district = findPropCI(feature.properties || {}, ["district"]);
+            var roster = results[1];
+            return {
+              seq: seq,
+              district: district == null ? null : String(district),
+              entry: (roster && district != null) ? roster[String(district)] : null,
+              rosterLoaded: !!roster
+            };
+          });
+        },
+        render: function (result) {
+          var members = (result.entry && result.entry.members) || [];
+          var wrap = cardEl("div", "card-flush");
+          wrap.appendChild(renderBodyIntro({
+            title: "Macoupin County Board",
+            note: result.rosterLoaded
+              ? boardCountNote(members.length, null)
+              : "The member list could not be loaded just now."
+          }));
+          if (members.length) {
+            wrap.appendChild(renderPersonRows(members.map(function (m) {
+              var p = boardMemberPerson(m);
+              var extra = municipalNote(
+                m.appointed ? "Appointed to fill an unexpired term" : null,
+                municipalTermNote(m));
+              if (extra) p.note = p.note ? p.note + " · " + extra : extra;
+              return p;
+            })));
+          }
+          return wrap;
+        },
+        cardIdentifier: function (result) {
+          return result.district ? "District " + result.district : null;
+        },
+        primaryLink: function () {
+          return {
+            label: "Macoupin County Clerk — Elected Officials (official)",
+            url: "https://www.macoupinvotes.gov/election-results/elected-officials/"
+          };
+        },
+        hoverOfficial: {
+          load: loadMacoupinBoardMembers,
+          name: function (feature, roster) {
+            if (!roster) return null;
+            var d = findPropCI(feature.properties || {}, ["district"]);
+            var e = d == null ? null : roster[String(d)];
+            if (!e || !e.members || !e.members.length) return null;
+            return e.members.map(function (m) { return m.name; }).join(", ");
+          }
+        }
+      },
       // Clark — 7 SINGLE-member districts, dissolved from the Census 2020
       // voting districts per a composition the county's own certified
       // canvasses state three times over (build_clark_boundaries.py). The
@@ -29360,6 +29601,79 @@ function initChiExplorer() {
         },
         hoverOfficial: {
           load: loadChristianBoardMembers,
+          name: function (feature, roster) {
+            if (!roster) return null;
+            var d = findPropCI(feature.properties || {}, ["district"]);
+            var e = d != null ? roster[String(d)] : null;
+            if (!e || !e.members || !e.members.length) return null;
+            return e.members.map(function (m) { return m.name; }).join(", ");
+          }
+        }
+      },
+      // Ford — 3 districts of FOUR members each (12 seats, staggered), whole
+      // precincts per Exhibit A of Res. 21-101, dissolved from the 22 Census
+      // 2020 voting districts (build_ford_boundaries.py). Patton 3 is drawn in
+      // District 1, as the plan's text, table and map all place it. The twelve
+      // members and the two officers come from the County Clerk's letter of
+      // 2026-10-01; the county's board page sits behind a JavaScript challenge.
+      {
+        key: "ford",
+        coverage: fordCountyCoverage,
+        loadGeometry: loadFordBoardDistricts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["district"]);
+          return (v == null || v === "") ? null : String(v);
+        },
+        query: function (point, seq) {
+          return Promise.all([
+            featureSetAt(loadFordBoardDistricts, point),
+            loadFordBoardMembers().catch(function () { return {}; })
+          ]).then(function (results) {
+            var feature = findFeatureContaining(results[0], point);
+            if (!feature) return null;
+            var props = feature.properties || {};
+            var district = findPropCI(props, ["district"]);
+            return {
+              seq: seq,
+              district: district,
+              precincts: findPropCI(props, ["precincts"]),
+              entry: district != null ? results[1][String(district)] : null
+            };
+          });
+        },
+        render: function (result) {
+          var members = (result.entry && result.entry.members) || [];
+          var wrap = cardEl("div", "card-flush");
+          wrap.appendChild(renderBodyIntro({
+            title: "Ford County Board",
+            note: members.length
+              ? boardCountNote(members.length, null)
+              : "Four members represent this district."
+          }));
+          if (members.length) {
+            wrap.appendChild(renderPersonRows(members.map(boardMemberPerson)));
+            wrap.appendChild(renderFieldStack([{
+              label: "Source",
+              value: "The board's members by district, sent by the County "
+                + "Clerk on " + String(result.entry.verified || "") + "."
+            }]));
+          }
+          if (result.precincts && result.precincts.length) {
+            wrap.appendChild(renderFieldStack([
+              { label: "Precincts", value: result.precincts.join(", ") }
+            ]));
+          }
+          return wrap;
+        },
+        cardIdentifier: function (result) {
+          return result.district != null && result.district !== ""
+            ? "District " + String(result.district) : null;
+        },
+        primaryLink: function () {
+          return { label: "Ford County Board (official)", url: "https://fordcounty.illinois.gov/ford-county-board/" };
+        },
+        hoverOfficial: {
+          load: loadFordBoardMembers,
           name: function (feature, roster) {
             if (!roster) return null;
             var d = findPropCI(feature.properties || {}, ["district"]);

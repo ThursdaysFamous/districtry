@@ -4217,12 +4217,18 @@ function initArkansasExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ar-senate": "ars", "county": "co", "ar-house": "arh",
     "school-district-unified": "su", "zip-code": "zp", "quorum-court": "qc",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "county-subdivision": "cs", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ar-senate"],
+    "state-house": ["ar-house"], "county": ["county"], "county-board": ["quorum-court"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8288,28 +8294,130 @@ function initArkansasExplorer() {
    * here is a change there too. */
   var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
 
-  function resolveShortMapLink(link, signal) {
+  /* A LOOKUP THAT FAILS ONCE CAN ANSWER A MOMENT LATER. On 2026-10-14 a
+   * place shared from the Google Maps app into the installed app on a phone
+   * was told its short link couldn't be read, and minutes later the lookup
+   * answered the same link at once, six times in a row, and on the live
+   * site through the installed app's launcher at a phone's size. The
+   * lookup's own code records nothing, but Deno keeps a trace of each
+   * request for one day, in the Deno account rather than anywhere this code
+   * can read, and that request's trace, read the same day, holds one fetch:
+   * the lookup asked the short link's own host, which answered 404 in 107 ms.
+   * That is the answer the host gives a link that does not exist ("Dynamic
+   * Link Not Found", measured the same evening with a made-up one), so
+   * Google did not know a link it knew minutes later. The likeliest reason,
+   * inferred rather than measured, is that the link was seconds old: a share
+   * hands the app a link Google has only just made, and the app asks about
+   * it at once, which a pasted link rarely does. So a failed try is made
+   * again after 1.5 seconds and once more after 4, and a lookup 404 (how the
+   * lookup reports any answer that does not lead to a map) once more after
+   * 10, because a link too new to be known gets that answer and the wait
+   * costs time only when a link fails. Each try gives up after 8 seconds
+   * rather than leaving "Reading the link…" on screen for good, and the
+   * other failures keep two retries, because a fourth try after three
+   * timeouts would keep a reader waiting most of a minute. Two answers are
+   * not tried again, because a second try cannot change them: a 400 (the
+   * lookup refuses what it was sent) and a full link that is itself short.
+   * onRetry, if given, is called with the failed try's error before each
+   * new try, so the page can say it is trying again. A try cut short by
+   * `signal` rejects with an AbortError, as fetch does; one that ran out of
+   * time does not.
+   *
+   * WHICH SIDE FAILED is the rejection's `reason`, which mapLinkMessage
+   * tells the reader, so the next failure on a phone says what this one
+   * could not: "unreached" when no answer reached the page at all (the
+   * phone is offline, or the lookup's host failed, since an error page from
+   * that host carries no CORS header and reaches the page as a failed
+   * fetch), "timeout", "no-map" when the lookup followed the link and Google
+   * or Apple did not send it to a map (its 404), and "no-answer" when Google
+   * or Apple did not answer the lookup (its 502). */
+  var MAP_LINK_RETRY_WAITS = [1500, 4000];
+  var MAP_LINK_NEW_LINK_WAITS = MAP_LINK_RETRY_WAITS.concat([10000]);
+  var MAP_LINK_TRY_MS = 8000;
+  var MAP_LINK_STATUS_REASONS = { 404: "no-map", 502: "no-answer" };
+
+  function mapLinkLookupError(message, reason, final) {
+    var e = new Error(message);
+    e.reason = reason || "";
+    e.final = !!final;
+    return e;
+  }
+
+  function resolveShortMapLink(link, signal, onRetry) {
     if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
-    return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
-      { signal: signal, headers: { Accept: "application/json" } })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
-        if (!full || full.kind === "short") throw new Error("the lookup returned no full link");
-        return full;
-      });
+    var retries = 0;
+    function abortError() {
+      var e = new Error("The lookup was cancelled");
+      e.name = "AbortError";
+      return e;
+    }
+    function lookupOnce() {
+      if (signal && signal.aborted) return Promise.reject(abortError());
+      var own = new AbortController(), late = false;
+      var cancel = function () { own.abort(); };
+      if (signal) signal.addEventListener("abort", cancel);
+      var timer = setTimeout(function () { late = true; own.abort(); }, MAP_LINK_TRY_MS);
+      var settle = function () {
+        clearTimeout(timer);
+        if (signal) signal.removeEventListener("abort", cancel);
+      };
+      return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
+        { signal: own.signal, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (!res.ok) {
+            throw mapLinkLookupError("HTTP " + res.status, MAP_LINK_STATUS_REASONS[res.status], res.status === 400);
+          }
+          return res.json();
+        }, function (err) {
+          throw mapLinkLookupError((err && err.message) || "the lookup could not be reached", "unreached");
+        })
+        .then(function (data) {
+          var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
+          if (!full || full.kind === "short") throw mapLinkLookupError("the lookup returned no full link", "no-map", true);
+          return full;
+        })
+        .then(function (full) { settle(); return full; }, function (err) {
+          settle();
+          if (signal && signal.aborted) throw abortError();
+          if (late) throw mapLinkLookupError("the lookup did not answer within " + MAP_LINK_TRY_MS / 1000 + " seconds", "timeout");
+          throw err;
+        });
+    }
+    function again(err) {
+      var waits = err.reason === "no-map" ? MAP_LINK_NEW_LINK_WAITS : MAP_LINK_RETRY_WAITS;
+      if (err.name === "AbortError" || err.final || retries >= waits.length) throw err;
+      var wait = waits[retries++];
+      if (onRetry) onRetry(retries, err);
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () {
+          if (signal) signal.removeEventListener("abort", cancel);
+          resolve();
+        }, wait);
+        var cancel = function () { clearTimeout(timer); reject(abortError()); };
+        if (signal) signal.addEventListener("abort", cancel);
+      }).then(lookupOnce).then(null, again);
+    }
+    return lookupOnce().then(null, again);
   }
 
   /* What the reader is told when a link cannot be read here. Kept beside the
-   * parser so the app and the front door say the same thing. */
-  function mapLinkMessage(link) {
+   * parser so the app and the front door say the same thing. For a short
+   * link, `err` is how the lookup failed (resolveShortMapLink), and the
+   * message says which side it was, in words. */
+  function mapLinkMessage(link, err) {
     var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
     if (link.kind === "short") {
-      return "That short " + name + " link couldn't be read. Open the link, " +
-        "then copy the full address from your browser's address bar and paste that.";
+      var maker = link.source === "apple" ? "Apple" : "Google";
+      var why = {
+        "unreached": "districtry couldn't reach the service that reads short links",
+        "timeout": "the service that reads short links didn't answer in time",
+        "no-map": maker + " didn't say where it leads",
+        "no-answer": maker + " didn't answer the service that reads short links"
+      }[(err && err.reason) || ""] || "";
+      // Not "open the link and copy the address bar": on a phone a map link
+      // opens the maps app, which has no address bar.
+      return "That short " + name + " link couldn't be read just now" + (why ? " (" + why + ")" : "") + ". " +
+        "Search again in a moment, or type the place's address.";
     }
     if (name) {
       return "That " + name + " link doesn't say where a place is (a directions link, for one). " +
@@ -8944,13 +9052,20 @@ function initArkansasExplorer() {
     geoStatus.textContent = "Reading the link\u2026";
     geoStatus.className = "geo-status";
     mapLinkController = new AbortController();
-    return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
+    // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
+    // and the reader is told so rather than left watching the same words
+    return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
+    }).then(function (full) {
       if (seq !== districtSearchSeq) return;
-      if (full.kind === "text") return runGeocodeSearch(full.text, full);
+      if (full.kind === "text") {
+        geoStatus.textContent = "Searching\u2026";
+        return runGeocodeSearch(full.text, full);
+      }
       return showMapLink(full);
     }, function (err) {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
-      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
     });
   }
@@ -9262,6 +9377,7 @@ function initArkansasExplorer() {
     "school-district-unified", // 234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "zip-code",          // 942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas
     "quorum-court",      // 775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town
+    "county-subdivision", // 820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town
     "municipality",      // 501 incorporated cities and towns, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13226,7 +13342,9 @@ function initArkansasExplorer() {
    * county elects a county judge, who runs the county and presides over the
    * quorum court, and a quorum court of 9 to 15 justices of the peace, each
    * from a district (data/app/ar-county-officials.json, built by
-   * ar/scripts/build_ar_county_officials.py and refreshed weekly):
+   * ar/scripts/build_ar_county_officials.py; its weekly job has not completed
+   * since 2026-10-13 because the association's site answers GitHub's servers
+   * with HTTP 403, so every card states the day the names were read):
    *   - the judge from the Arkansas Judiciary's own directory of county
    *     judges and clerks, with the office telephone, and the office address
    *     only where the Association of Arkansas Counties prints the same one.
@@ -13339,6 +13457,13 @@ function initArkansasExplorer() {
       // The builder names the source per county: the judiciary's directory,
       // or — where it disagreed with the association and a person read a
       // third source — the source that settled it, dated by when it was read.
+      // THE DATE IS THE WHOLE CLAIM, AND THE CARD NO LONGER SAYS "EVERY WEEK".
+      // It did until go-live (2026-10-15), and the weekly refresh had failed
+      // twice by then: the association's site refuses GitHub's servers with a
+      // 403 while serving this project's own sandbox, and the builder reads
+      // both publishers in one run, so neither was re-read. A schedule is a
+      // request, not a measurement; the read date is the measurement, and a
+      // reader can weigh a date. ar/WATCH.md records the refusal.
       var judgeRead = arReadDate(judge.asOf);
       var judgeSource = judge.source ? String(judge.source)
         : "the Arkansas Judiciary's directory of county judges and clerks";
@@ -13346,7 +13471,6 @@ function initArkansasExplorer() {
         label: "Where the judge's name comes from",
         value: judgeSource.charAt(0).toUpperCase() + judgeSource.slice(1) +
           (judgeRead ? ", read " + judgeRead : "") + "." +
-          (judge.weekly ? " This app reads it every week." : "") +
           (judge.note ? " " + String(judge.note) : "")
       });
       var qc = o.quorumCourt || {};
@@ -13382,7 +13506,7 @@ function initArkansasExplorer() {
         label: "Where these names come from",
         value: "The Association of Arkansas Counties' page for " + county +
           (listRead ? ", read " + listRead : "") + ", which lists the justices " +
-          "in one line and does not number them. This app reads it every week."
+          "in one line and does not number them."
       }];
       if (count.vacant) {
         credit.unshift({
@@ -13538,7 +13662,7 @@ function initArkansasExplorer() {
     label: "Quorum Court District",
     overlay: {
       load: loadArQuorumCourtDistricts,
-      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     // the same value the card's header pill shows, so hover and card cannot
     // disagree about which district a polygon is
@@ -13606,8 +13730,7 @@ function initArkansasExplorer() {
             "for justices of the peace" + (updated ? " (updated " + updated + ")" : "") +
             ", which give the winner of each district. This app names that person " +
             "only while the association's current list for " + county + " still " +
-            "includes them, and checks that every week" +
-            (checked ? "; last checked " + checked : "") + "."
+            "includes them" + (checked ? ", last checked " + checked : "") + "."
         });
       } else if (res && key != null && (res.notOnList || []).indexOf(key) !== -1) {
         rows.push({
@@ -13667,16 +13790,85 @@ function initArkansasExplorer() {
     }
   });
 
-  /* No county-subdivision layer, on purpose. Arkansas's townships are legal
-   * subdivisions of each county, and the Census does not count them as
-   * governments: every one of the 1,051 county subdivisions TIGERweb carries
-   * for STATE='05' is FUNCSTAT N (a nonfunctioning legal entity), measured
-   * 2026-10-13 — 951 townships, 82 "District N" and 18 "Township N" in the
-   * counties that number them. A township does elect a constable, and no
-   * source naming constables has been read here, so a township card would
-   * name nobody and claim a government the Census says is not one. A justice
-   * of the peace district is not one of these. Recorded as a drop in the
-   * guidebook. */
+  /* ---------- Township — the state's own township map, pre-built ----------
+   * Which township a point is in: the level-14 map (docs/DONE_STANDARD.md,
+   * Adam's ruling of 2026-10-14), owed in every state whether or not the
+   * units govern anyone. Arkansas's townships are legal subdivisions of
+   * each county, set by the county court (Arkansas Code 14-14-401). A
+   * township has no government of its own (the Census records all of them
+   * as nonfunctioning legal entities, FUNCSTAT N) but its voters elect a
+   * constable (Arkansas Constitution, article 7, section 47), and no source
+   * naming constables by township has been read, so the card says all
+   * three things and names nobody.
+   *
+   * THE LINES ARE THE STATE'S, NOT THE CENSUS'S, AND THAT IS MEASURED.
+   * Every other state's township layer reads TIGERweb live; here TIGERweb is
+   * out of date. The state's TOWNSHIP_POLITICAL_DIVISION layer (820
+   * townships) and TIGERweb's (1,051) disagree about how many townships a
+   * county has in 27 of 75 counties (2026-10-15), and where that was
+   * checked the state is right: TIGERweb still draws 38 townships in
+   * Washington County, where a 2013 county court order upheld in Clowers v.
+   * Edwards (2020) left 3. ar/scripts/build_ar_townships.py builds the file
+   * (Douglas-Peucker at 20 m under a 25 m ceiling, every county's townships
+   * held to cover that county). Same-origin, so nothing about the reader's
+   * point leaves the browser. ---------- */
+  var loadArTownships = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-townships.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Township",
+    subOf: "county",
+    overlay: {
+      load: loadArTownships,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    // the same value the card's title shows
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArTownships, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          county: findPropCI(props, ["county"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown township",
+        note: result.county != null ? String(result.county) + " County" : null
+      }));
+      wrap.appendChild(renderFieldStack([
+        {
+          label: "Government",
+          value: "None of its own. A township is a division of the county, and " +
+            "the county court sets its lines."
+        },
+        {
+          label: "Constable",
+          value: "Under the state constitution, each township's voters elect a " +
+            "constable for a two-year term. This map does not name constables: " +
+            "no list of them by township has been read."
+        },
+        {
+          label: "Where the lines come from",
+          value: "The state's own township map, from the Arkansas GIS Office. " +
+            "The Census Bureau's map of Arkansas townships differs from it in " +
+            "at least 27 of the 75 counties."
+        }
+      ]));
+      return wrap;
+    }
+  });
 
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Little Rock" + " city") or a prefix. Returns null when the two are equal
@@ -13909,8 +14101,8 @@ function initArkansasExplorer() {
     // It deliberately does not say "outside Arkansas": out there the
     // layer is hidden and this card is never drawn.
     emptyNote: "No ZIP code here. The Census draws these areas around where mail is delivered, so ground with no delivery addresses can sit outside every one.",
-    // its own hue, distinct from City's magenta
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05 },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",
@@ -15565,7 +15757,7 @@ function initArkansasExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house", "quorum-court",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16048,11 +16240,11 @@ function initArkansasExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1B7A3D": "#58CD7A", "#2E9E6B": "#5BEAA5", "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
-    "#6B7280": "#B1BBCE", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#77BBFD",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
+    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

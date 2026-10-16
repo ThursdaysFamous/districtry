@@ -313,6 +313,7 @@ const ROSTER_URLS = [
   "./data/app/wi-municipal-executives.json",
   "./data/app/wi-municipal-facts.json",
   "./data/app/wi-senate-members.json",
+  "./data/app/wi-town-boards.json",
   "./data/app/winnebago-polling-places.json",
   "./data/app/wood-polling-places.json",
 ];
