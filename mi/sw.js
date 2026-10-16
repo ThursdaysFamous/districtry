@@ -62,6 +62,7 @@ const GEOMETRY_URLS = [
   "./data/app/mi-midland-wards.json",
   "./data/app/mi-muskegon-wards.json",
   "./data/app/mi-holland-wards.json",
+  "./data/app/mi-walker-wards.json",
   "./data/app/alger-county-outline.json",
   "./data/app/allegan-county-outline.json",
   "./data/app/antrim-county-outline.json",

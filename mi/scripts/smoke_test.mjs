@@ -810,8 +810,9 @@ try {
         // carries an In Memoriam for a First Ward councilman who died in 2024,
         // and the parser stops before it; the card must never name him.
         { city: "Flint", geoid: "2629000", pt: "43.02123,-83.70302", ward: "5", seat: "Ward 5" },
-        // The four drawn on 2026-10-15; Holland is last in the dispatcher's OR,
-        // so it is also the check that the table is not shadowing its tail. Each point is a ward's interior point
+        // The four drawn on 2026-10-15 and Walker, drawn 2026-10-16; Walker is
+        // last in the dispatcher's OR, so it is also the check that the table
+        // is not shadowing its tail. Each point is a ward's interior point
         // pulled 0.002 degrees in from its edges in the shipped file. Pontiac
         // calls its seats districts, so its pill reads "District N" (Warren's
         // roster says District while its card says Ward, hence a separate field).
@@ -819,6 +820,7 @@ try {
         { city: "Midland", geoid: "2653780", pt: "43.61238,-84.25517", ward: "2", seat: "Ward 2" },
         { city: "Muskegon", geoid: "2656320", pt: "43.22525,-86.27361", ward: "3", seat: "Ward 3" },
         { city: "Pontiac", geoid: "2665440", pt: "42.67950,-83.28043", ward: "4", seat: "District 4", pill: "District 4" },
+        { city: "Walker", geoid: "2682960", pt: "42.94906,-85.75129", ward: "3", seat: "Ward 3" },
       ];
       for (const c of CITY_POINTS) {
         const board = boards[c.geoid];
