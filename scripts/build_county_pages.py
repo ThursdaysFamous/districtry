@@ -3543,6 +3543,14 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "mn/data/app/mn-county-town-officers.json": dict(
+        date="2026-10-16",
+        reason="the supervisors, clerks and treasurers of 416 Minnesota "
+               "towns, read from the lists of township officers the counties "
+               "publish. Real officeholders, named, and town government rather "
+               "than county government: each record carries its county only "
+               "to say whose list it came from.",
+    ),
     "il/data/app/municipal-officials.json": dict(
         date="2026-09-13",
         reason="mayors, clerks and council members of 1,300 Illinois "

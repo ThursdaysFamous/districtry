@@ -16,9 +16,9 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 ## Illinois
 
-94 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats.
+96 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats.
 
-- [Illinois district lookup](https://districtry.com/il/): 41 layers, 94 counties.
+- [Illinois district lookup](https://districtry.com/il/): 41 layers, 96 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
 - [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 97 of them, each naming every member with whatever contact details that county publishes.
 - [Who runs my fire protection district?](https://districtry.com/il/fire-district.html)
