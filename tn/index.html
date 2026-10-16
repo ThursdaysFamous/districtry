@@ -4216,17 +4216,18 @@ function initTennesseeExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "tn-senate": "tns", "county": "co", "tn-house": "tnh",
-    "school-district-unified": "su", "county-commissioner": "cm", "zip-code": "zp",
-    "school-district-elementary": "se", "school-district-secondary": "sh", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "school-district-unified": "su", "county-commissioner": "cm", "county-subdivision": "cs",
+    "zip-code": "zp", "school-district-elementary": "se", "school-district-secondary": "sh",
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
+    "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["tn-senate"],
     "state-house": ["tn-house"], "county": ["county"], "county-board": ["county-commissioner"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
@@ -9378,6 +9379,7 @@ function initTennesseeExplorer() {
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
     "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
+    "county-subdivision", // 855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
     "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
     "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
     "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
@@ -13721,16 +13723,6 @@ function initTennesseeExplorer() {
     }
   });
 
-  /* No county-subdivision layer, on purpose. Tennessee has no township
-   * government, and every one of the 855 county subdivisions TIGERweb
-   * carries for STATE='47' is a civil district ("District N", LSADC 28,
-   * FUNCSTAT N, measured 2026-10-10). The Census Bureau codes FUNCSTAT N as
-   * a legal area with no functioning government: nobody is elected to run
-   * one, so a card for it would name an area that answers to nobody. The
-   * numbers look like county commission district numbers, and nothing in
-   * the Census record says the two are the same lines. Recorded in
-   * tn/CLAUDE.md. */
-
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Franklin" + " city") or a prefix. Returns null when the two are equal or
   // unrelated, so a TIGER change shows up as a missing type row rather than
@@ -13744,6 +13736,120 @@ function initTennesseeExplorer() {
     if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
     return null;
   }
+
+  /* ---------- Civil District — live TIGERweb, the level-14 map ----------
+   * Which county subdivision a point is in, owed in every state whether or
+   * not the units govern anyone (docs/DONE_STANDARD.md, level 14, Adam's
+   * ruling of 2026-10-14). Every one of the 855 county subdivisions
+   * TIGERweb carries for STATE='47' is a civil district ("District N",
+   * LSADC 28, FUNCSTAT N, measured 2026-10-15): a legal division of the
+   * county that the Census codes as having no functioning government, so
+   * nobody is elected to run one. That was the reason this layer was
+   * skipped until now, with a second one that still stands: a civil
+   * district's number looks like a county commission district's, and
+   * nothing in the Census record says the two are the same lines. So the
+   * card says both things in words. It titles the unit "Civil District N"
+   * rather than TIGER's bare "District N", says it has no government, and
+   * says its number is not the commission district, pointing at that
+   * layer. The Government row is read from the Census's own
+   * functional-status code, so a FUNCSTAT this card does not know prints no
+   * row rather than an improvised one. It does not mention constables:
+   * Tennessee elects them from districts each county commission sets, and
+   * nothing here has measured which counties still use the civil districts
+   * for that. North Carolina's layer, point-first through
+   * tigerStatewideLoader; the statewide set is 28.9 MB at
+   * geometryPrecision=5 and downloads only when the layer is on. ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // "Civil District 7" for TIGER's "District 7", so neither the card nor the
+  // hover row can be read as a commission district; any other name TIGER
+  // carries is shown as it stands.
+  function subdivisionTitle(props) {
+    var name = findPropCI(props, ["name"]), base = findPropCI(props, ["basename"]);
+    if (subdivisionKind(name, base) === "district" && base != null && String(base) !== "") {
+      return "Civil District " + String(base);
+    }
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Civil District",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return subdivisionTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: subdivisionTitle(props),
+          civil: subdivisionKind(findPropCI(props, ["name"]),
+            findPropCI(props, ["basename"])) === "district",
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title != null ? result.title : "Unknown civil district",
+        note: result.county
+      }));
+      var rows = [];
+      if (result.funcstat != null && String(result.funcstat) === "N") {
+        rows.push({
+          label: "Government",
+          value: result.civil
+            ? "None. A civil district is a legal division of a Tennessee " +
+              "county, and the U.S. Census Bureau records it as having no " +
+              "functioning government: no one is elected to run it."
+            : "None. The U.S. Census Bureau records this area as having no " +
+              "functioning government, and no one is elected to run it."
+        });
+      }
+      // only for a civil district, the one shape whose number can be
+      // mistaken for a commission district's
+      if (result.civil) rows.push({
+        label: "Not a commission district",
+        value: "This number belongs to the civil district, not to a county " +
+          "commission district. The County Commission District layer shows " +
+          "which commission district this point is in."
+      });
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    }
+  });
 
   /* ---------- 5. City or Town — live TIGERweb, incorporated places ----------
    * Tennessee incorporates cities and towns under several charters, and the
@@ -15860,7 +15966,7 @@ function initTennesseeExplorer() {
     "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
-    "county", "municipality", "zip-code", "tribal-government",
+    "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16346,9 +16452,10 @@ function initTennesseeExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
     "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
     "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE", "#8163AE": "#CAAAFF",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA33D", "#A3341F": "#FE8269",
-    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+    "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
+    "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA33D",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA",
+    "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

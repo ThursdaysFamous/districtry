@@ -26,6 +26,7 @@
         "ar-house",
         "ar-senate",
         "county",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "police-station",
@@ -220,8 +221,9 @@
       ]
     },
     "ky": {
-      "layers_sending_point": 4,
+      "layers_sending_point": 5,
       "layers": [
+        "county-subdivision",
         "municipality",
         "school-district-elementary",
         "school-district-secondary",
@@ -236,6 +238,7 @@
       "atpoint_hooks_fired": 1,
       "layer_ids": [
         "county",
+        "county-subdivision",
         "fiscal-court",
         "ky-circuit-court",
         "ky-court-of-appeals",
@@ -327,6 +330,35 @@
         "us-house",
         "voting-precinct",
         "watershed-district",
+        "zip-code"
+      ]
+    },
+    "ms": {
+      "layers_sending_point": 3,
+      "layers": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "county",
+        "county-supervisor",
+        "fire-station",
+        "ms-house",
+        "ms-senate",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
         "zip-code"
       ]
     },
@@ -424,8 +456,9 @@
       ]
     },
     "ok": {
-      "layers_sending_point": 4,
+      "layers_sending_point": 5,
       "layers": [
+        "county-subdivision",
         "municipality",
         "school-district-elementary",
         "school-district-unified",
@@ -442,6 +475,7 @@
       "layer_ids": [
         "county",
         "county-commissioner",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "ok-house",
@@ -456,8 +490,9 @@
       ]
     },
     "sc": {
-      "layers_sending_point": 3,
+      "layers_sending_point": 4,
       "layers": [
+        "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
@@ -473,6 +508,7 @@
       "layer_ids": [
         "county",
         "county-council",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "police-station",
@@ -486,8 +522,9 @@
       ]
     },
     "tn": {
-      "layers_sending_point": 5,
+      "layers_sending_point": 6,
       "layers": [
+        "county-subdivision",
         "municipality",
         "school-district-elementary",
         "school-district-secondary",
@@ -505,6 +542,7 @@
       "layer_ids": [
         "county",
         "county-commissioner",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "police-station",

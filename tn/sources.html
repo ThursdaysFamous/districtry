@@ -1160,7 +1160,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1321,7 +1321,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">4 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1339,6 +1339,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">None. The county's governing body is drawn by the County Commission District layer, which carries its districts and, county by county as each roster ships, its members.</td>
                 <td data-label="Where it applies">Tennessee — statewide, all 95 counties.</td>
+              </tr>
+              <tr id="layer-county-subdivision">
+                <th scope="row"><span class="layer-name">Civil District</span><code>county-subdivision</code></th>
+                <td data-label="What it answers">The civil district containing the point, and its county.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 855 features for Tennessee, every one a civil district (&quot;District N&quot;, LSADC 28, FUNCSTAT N), measured 2026-10-15.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. A civil district is a legal division of a Tennessee county that the Census Bureau records as having no functioning government (FUNCSTAT N): no one is elected to run it. The card says so, titles the unit &quot;Civil District N&quot;, and says its number is not a county commission district number.</td>
+                <td data-label="Where it applies">Tennessee — statewide.</td>
               </tr>
               <tr id="layer-zip-code">
                 <th scope="row"><span class="layer-name">ZIP Code</span><code>zip-code</code></th>
@@ -1522,6 +1533,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Tennessee — statewide, all 95 counties, 859 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/tn/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "Civil District",
+      "description": "The civil district containing the point, and its county. NO OFFICEHOLDER. A civil district is a legal division of a Tennessee county that the Census Bureau records as having no functioning government (FUNCSTAT N): no one is elected to run it. The card says so, titles the unit \"Civil District N\", and says its number is not a county commission district number.",
+      "url": "https://districtry.com/tn/sources.html#layer-county-subdivision",
+      "isPartOf": {
+        "@id": "https://districtry.com/tn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 855 features for Tennessee, every one a civil district (\"District N\", LSADC 28, FUNCSTAT N), measured 2026-10-15.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Tennessee — statewide"
       }
     },
     {
