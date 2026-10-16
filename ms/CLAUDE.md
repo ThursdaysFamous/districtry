@@ -172,9 +172,9 @@ runs on every selection whether or not the layer is on, and reading the district
 reader's first selection download it: 150 KB gzipped for twenty counties, measured 2026-10-15. It
 now finds the point's county in `state-counties.json`, which the County card loads anyway, and
 looks it up in `ms-supervisor-counties.json` (under 1 KB), which the builder writes beside the
-districts and its `--check` holds to them. Within a few tens of metres of a county line the two
-files can disagree, and there the layer follows the County card. The smoke test fails if the
-districts file is requested with the layer off. **The shapes are the county
+districts and its `--check` holds to them. Within a few metres of a county line (5.0 m at most,
+measured 2026-10-16) the two files can disagree, and there the layer follows the County card. The
+smoke test fails if the districts file is requested with the layer off. **The shapes are the county
 outline's too**: `state-counties.json` was rebuilt with Douglas-Peucker on 2026-10-15 because
 the Visvalingam simplification it shipped with put a county line up to 184.5 m from the
 Census's, with 54 counties over 25 m, and the supervisor builder's county witness holds the two
@@ -184,8 +184,9 @@ worse**: the ground answered with the wrong county, or none inside the state, we
 at. The file is now drawn at a 5 m interval under an 8 m ceiling, Adam's choice for the newer
 states' county files ("Finest", 2026-10-15): 5.6 m and 8.1 km², in a file of 295 KB gzipped
 against 139 KB, and the six court maps, which are dissolves of it, were rebuilt with it. The
-supervisor districts and the legislature's maps stay at a 20 m interval, which `ms/WATCH.md`
-carries.
+supervisor districts and the legislature's three maps were redrawn at the same setting on
+2026-10-16, Adam's choice before the instance opened ("Finer first"); each builder's docstring
+carries what that changed, and `ms/WATCH.md` the row.
 **THE DIRECTORY PRINTS MOST COUNTY NAMES AS ARTWORK, NOT TEXT.** 80 of its 82 county pages carry
 the county's name as an image, so the builder finds the 82 start pages (each opens with "Named
 for"), pairs them with the 82 counties in alphabetical order, and refuses to write unless there are
@@ -365,8 +366,8 @@ blocks, in one mapshaper run so a shared line is simplified once) with `ms-super
 (the drawn counties' list, written by the same build, which the layer's coverage test reads), and
 `congress-districts.json`, `ms-senate-districts.json`,
 `ms-house-districts.json` (`ms/scripts/build_legislative_boundaries.py` — statewide TIGERweb,
-mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement gate
-and the 25 m fidelity ceiling pass), and the six court maps,
+mapshaper-simplified with Douglas-Peucker at 5 m, refused unless BOTH the 2,000-random-point
+agreement gate and the 8 m fidelity ceiling pass), and the six court maps,
 `ms-{supreme-court,court-of-appeals,chancery-court,circuit-court}-districts.json` and the
 `ms-{chancery,circuit}-court-districts-2027.json` pair (`ms/scripts/build_ms_court_districts.py`,
 dissolved from `state-counties.json`). Rosters: `congress-roster.json`

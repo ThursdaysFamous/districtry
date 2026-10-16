@@ -491,7 +491,7 @@
    "precinct_people_off_census": 444,
    "precincts_read": 16,
    "read": "2026-10-16",
-   "simplification_people_moved": 3,
+   "simplification_people_moved": 0,
    "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9"
   },
   "28121": {

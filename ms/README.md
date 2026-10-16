@@ -11,7 +11,7 @@ The national tier, the Mississippi Legislature's own member pages, and every cou
 | Group | Layer | Source |
 |---|---|---|
 | **Political** | U.S. House District (4) | U.S. Census TIGERweb boundary (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
-| | Mississippi Senate District (52) | TIGERweb Legislative boundary — the lines of the 2025 court-ordered redraw (pre-built, 2,000-point agreement gate and a 25 m fidelity ceiling) + the legislature's own member gallery and member profiles: name, party, Senate e-mail address and the Capitol office, and a vacant seat named as vacant |
+| | Mississippi Senate District (52) | TIGERweb Legislative boundary — the lines of the 2025 court-ordered redraw (pre-built, 2,000-point agreement gate and an 8 m fidelity ceiling) + the legislature's own member gallery and member profiles: name, party, Senate e-mail address and the Capitol office, and a vacant seat named as vacant |
 | | Mississippi House District (122) | Same boundary pair and the same roster source |
 | **Schools** | School District (137) | TIGERweb unified school districts, which tile the whole state; identity only, recorded as a gap |
 | **Geography** | County (82) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; names the county's five supervisors by district from the Secretary of State's County Offices and Directory |
