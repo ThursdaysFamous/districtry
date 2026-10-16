@@ -170,13 +170,15 @@ PROVENANCE = [
         "app_file": "ms-supervisor-districts.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
         "note": (
-            "The supervisor districts of the 20 counties whose current lines "
+            "The supervisor districts of the 23 counties whose current lines "
             "are confirmed, pre-built by "
             "ms/scripts/build_ms_supervisor_districts.py: 12 from the Census's "
             "county subdivisions (January 1, 2026 vintage), where the lines "
             "changed after the 2020 census and balance on that census's own "
-            "blocks, and 8 from the county's own map, redrawn along whole 2020 "
-            "blocks (their layers are counted under ENDPOINTS below). --survey "
+            "blocks, and 11 from the county's own map, redrawn along whole 2020 "
+            "blocks (their layers, and the three precinct maps that witness "
+            "Lee's, Pearl River's and Perry's, are counted under ENDPOINTS "
+            "below). --survey "
             "re-measures all 82, and a new vintage needs a survey and a "
             "rebuild, which stops if the Census has received a county's own "
             "lines."
@@ -344,7 +346,7 @@ ENDPOINTS = [
         "min_count": 745,   # 827 measured 2026-10-15
     },
     # The county maps ms/scripts/build_ms_supervisor_districts.py reads for the
-    # eight counties drawn from their own lines. Unlike the rows above these have
+    # eleven counties drawn from their own lines. Unlike the rows above these have
     # a builder and a committed file; they are COUNTED here because all three
     # servers answer a deleted layer with HTTP 200 (an empty page, an
     # "Application Error" page or a blank one, measured 2026-10-15), so a status
@@ -353,7 +355,9 @@ ENDPOINTS = [
     # the check below reports. Each layer held exactly 5 districts that day; a
     # change is a reason to rebuild, which re-reads the evidence each county's
     # lines were confirmed with. Check 1 holds these rows to the builder's own
-    # COUNTY_SOURCES, so the two cannot name different layers.
+    # COUNTY_SOURCES, so the two cannot name different layers. Lee's, Pearl
+    # River's and Perry's maps, added 2026-10-16, are on ArcGIS Online like
+    # Lamar's.
     {
         "layer": "county-supervisor",   # Copiah
         "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Copiah_County_Feature_Layer/FeatureServer/15/query?where=1%3D1&returnCountOnly=true&f=json",
@@ -375,8 +379,23 @@ ENDPOINTS = [
         "min_count": 5,
     },
     {
+        "layer": "county-supervisor",   # Lee
+        "url": "https://services3.arcgis.com/j2GTvlDqmJmX3REZ/arcgis/rest/services/New_Districts/FeatureServer/4/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
         "layer": "county-supervisor",   # Madison
         "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Madison_County_Map/FeatureServer/44/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Pearl River
+        "url": "https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/91/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Perry
+        "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9/query?where=1%3D1&returnCountOnly=true&f=json",
         "min_count": 5,
     },
     {
@@ -393,6 +412,26 @@ ENDPOINTS = [
         "layer": "county-supervisor",   # Warren
         "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Warren_County_Feature_Layer/FeatureServer/21/query?where=1%3D1&returnCountOnly=true&f=json",
         "min_count": 5,
+    },
+    # The precinct maps that witness three of those counties' lines (the
+    # builder's precinct_witness). Each floor is the count read on 2026-10-16:
+    # a precinct map that loses precincts has been redrawn, which is a reason to
+    # rebuild, and the rebuild re-measures whether it still follows the lines.
+    # Check 1 holds these rows to COUNTY_SOURCES as it holds the maps.
+    {
+        "layer": "county-supervisor (precincts)",   # Lee, the Circuit Clerk's splits
+        "url": "https://services.arcgis.com/AzU5dE5IP7kWAdH7/arcgis/rest/services/Lee_County_Master_Splits_2024/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 215,
+    },
+    {
+        "layer": "county-supervisor (precincts)",   # Pearl River
+        "url": "https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/92/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 27,
+    },
+    {
+        "layer": "county-supervisor (precincts)",   # Perry
+        "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/PRECINCTS_2023/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 16,
     },
 ]
 
@@ -592,6 +631,14 @@ def check_manifest_matches_app(html, findings):
             findings.add(FAIL, "county-supervisor",
                          "ENDPOINTS counts %s and the builder reads %s — update "
                          "ms/scripts/validate_sources.py" % (have, want))
+        want = sorted(spec["precincts"]["url"] for spec in supervisor.COUNTY_SOURCES.values()
+                      if spec.get("precincts"))
+        have = sorted(e["url"].split("/query?")[0] for e in ENDPOINTS
+                      if e["layer"] == "county-supervisor (precincts)")
+        if want != have:
+            findings.add(FAIL, "county-supervisor",
+                         "ENDPOINTS counts the precinct maps %s and the builder reads %s "
+                         "— update ms/scripts/validate_sources.py" % (have, want))
         unpinned = sorted(h for h, k in supervisor.PINNED_CHAINS.items()
                           if PINNED_CHAINS.get(h) != k)
         if unpinned:
