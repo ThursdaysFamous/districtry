@@ -174,6 +174,20 @@ PROVENANCE = [
             "district and its county and nothing about who holds it."
         ),
     },
+    {
+        "layer": "tribal-government",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "Tribal land from the Census's AIANNHA service, current vintage, through "
+            "the fleet's shared reader scripts/tribal_areas.py and built by "
+            "scripts/build_tribal_areas.py: 1 area, the Mississippi Band of Choctaw Indians' "
+            "off-reservation trust land near Henning, of which about 4% lies in Tennessee. "
+            "Land enters the map when the United States takes it into trust, on no "
+            "redistricting calendar, so only a rebuild sees a new area; --check is offline "
+            "and proves the land-to-government join, never the Census's own set."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -186,11 +200,17 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-10-10 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. Incorporated places 345 ·
+    # county subdivisions 855, all civil districts (measured 2026-10-15) ·
     # unified school districts 127 · elementary school districts 15 · secondary
     # school districts 15. Tennessee uses all three school layers: fifteen
     # cities run their own elementary schools while the county system runs the
     # high schools, so a reader there is in one elementary and one secondary
     # district at once.
+    {
+        "layer": "county-subdivision",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2747%27&returnCountOnly=true&f=json",
+        "min_count": 770,   # 855 measured 2026-10-15; floor set below it, not at it
+    },
     {
         "layer": "municipality",
         "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2747%27&returnCountOnly=true&f=json",
@@ -286,14 +306,21 @@ def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/tn/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/tn/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/tn/)"}, label="tn-validate-sources")
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="tn-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/tn/)"},
+            headers={"User-Agent": ua},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

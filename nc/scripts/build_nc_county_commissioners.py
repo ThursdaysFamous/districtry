@@ -162,16 +162,20 @@ LIMITED_VOTING_SEATS = {
         3, "https://www.perquimanscountync.gov/board-of-commissioners"),
     (2024, "PERQUIMANS", "PERQUIMANS COUNTY BOARD OF COMMISSIONERS"): (
         3, "https://www.perquimanscountync.gov/board-of-commissioners"),
+    # Tyrrell's site resets every HTTPS connection from this project's sandbox
+    # and serves its pages over plain HTTP, which is how it was read on
+    # 2026-10-15 (robots.txt read first: Joomla's default, which disallows
+    # only its own system folders). Its board page names five commissioners:
+    # the top two of 2022 and the top three of 2024, each contest "vote for 1".
+    (2022, "TYRRELL", "TYRRELL COUNTY BOARD OF COMMISSIONERS"): (
+        2, "http://tyrrellcounty.org/en/county-commissioner"),
+    (2024, "TYRRELL", "TYRRELL COUNTY BOARD OF COMMISSIONERS"): (
+        3, "http://tyrrellcounty.org/en/county-commissioner"),
 }
 # A limited-voting county whose seat counts could not be read, so its board
 # names nobody. The fifth limited-voting county NCACC counts is not identified
 # here: its table is behind a Cloudflare challenge (nc/WATCH.md).
-LIMITED_VOTING_UNSETTLED = {
-    "TYRRELL": "Tyrrell County elects its board by limited voting, so the "
-               "election results do not say how many seats each contest filled, "
-               "and the county's website did not answer when this was built. "
-               "This map names nobody here rather than guessing.",
-}
+LIMITED_VOTING_UNSETTLED = {}
 
 # A note a seat needs that the results cannot carry, by (county, group, name).
 SEAT_NOTES = {

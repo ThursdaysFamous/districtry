@@ -493,9 +493,11 @@ PRESERVABLE = {
     "normal": {"kind": "enrich", "places": ["Town of Normal"]},
     "quincy": {"kind": "enrich", "places": ["City of Quincy"]},
     "danville": {"kind": "enrich", "places": ["City of Danville"]},
-    # Lake County's six readable cities above 25,000. The county source is at
+    # Lake County's seven readable cities above 25,000. The county source is at
     # the contact-only rung — a hall address for all 41 municipalities and not
     # one official — so each of these arrives with an address and nobody in it.
+    # Gurnee (2026-10-15): read through the feed its own board page names.
+    "gurnee": {"kind": "enrich", "places": ["Village of Gurnee"]},
     "highland-park": {"kind": "enrich", "places": ["City of Highland Park"]},
     "mundelein": {"kind": "enrich", "places": ["Village of Mundelein"]},
     "north-chicago": {"kind": "enrich", "places": ["City of North Chicago"]},

@@ -844,7 +844,9 @@
       "/il/data/app/cass-county-board-districts.json",
       "/il/data/app/marshall-county-board-districts.json",
       "/il/data/app/mason-county-board-districts.json",
-      "/il/data/app/christian-county-board-districts.json"
+      "/il/data/app/christian-county-board-districts.json",
+      "/il/data/app/macoupin-county-board-districts.json",
+      "/il/data/app/ford-county-board-districts.json"
      ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
@@ -1072,7 +1074,9 @@
        "cass",
        "marshall",
        "mason",
-       "christian"
+       "christian",
+       "macoupin",
+       "ford"
       ],
       "failed": [
        {
@@ -1194,6 +1198,12 @@
        ],
        "christian": [
         "/il/data/app/christian-county-board-districts.json"
+       ],
+       "macoupin": [
+        "/il/data/app/macoupin-county-board-districts.json"
+       ],
+       "ford": [
+        "/il/data/app/ford-county-board-districts.json"
        ]
       }
      },

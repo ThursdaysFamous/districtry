@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 2 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1306,7 +1306,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">4 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1324,6 +1324,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ok-county-commissioners.json, from the Oklahoma State Election Board's Roster of State and County Officers (the 2024 edition, compiled after the November 5, 2024 general election), rebuilt weekly by CI. The card lists the county's three commissioners and the county's information telephone line. The roster is a snapshot the counties do not keep current between elections, and the card says so.</td>
                 <td data-label="Where it applies">Oklahoma — statewide, all 77 counties.</td>
+              </tr>
+              <tr id="layer-county-subdivision">
+                <th scope="row"><span class="layer-name">Census County Division</span><code>county-subdivision</code></th>
+                <td data-label="What it answers">The census county division containing the point, and its county.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and Oklahoma has no township governments, so the county governs everyone outside a city or town. The card names the division and its county and says it governs nobody.</td>
+                <td data-label="Where it applies">Oklahoma — statewide.</td>
               </tr>
               <tr id="layer-zip-code">
                 <th scope="row"><span class="layer-name">ZIP Code</span><code>zip-code</code></th>
@@ -1507,6 +1518,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Most of Oklahoma. The Census draws a tribal area over most of the state; the western Panhandle and parts of the north and west lie outside every one"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ok/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "Census County Division",
+      "description": "The census county division containing the point, and its county. NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and Oklahoma has no township governments, so the county governs everyone outside a city or town. The card names the division and its county and says it governs nobody.",
+      "url": "https://districtry.com/ok/sources.html#layer-county-subdivision",
+      "isPartOf": {
+        "@id": "https://districtry.com/ok/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Oklahoma — statewide"
       }
     },
     {

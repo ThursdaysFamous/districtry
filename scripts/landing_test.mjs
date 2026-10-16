@@ -498,24 +498,97 @@ try {
     check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
     await ctx.close();
   }
-  // ...and when the lookup cannot follow it, the page says how to get the full one
+  // ...a lookup that fails once is asked again, and the second answer is used
+  // (ENGINE map-link resolveShortMapLink: a try again after 1.5 seconds)...
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
-    let photonAsked = false;
-    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
-    await page.route("**/link-lookup.districtry.deno.net/**", (r) =>
-      r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "could not follow the link" }) }));
+    let lookups = 0;
+    await page.route("**/photon.komoot.io/**", photonStub([]));
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) => ++lookups === 1
+      ? r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "the link could not be followed" }) })
+      : r.fulfill({ status: 200, contentType: "application/json",
+          body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) }));
     await stubInstances(page);
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
     await page.click("#search-button");
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(600);
+    const between = await textOrNull(page, "#search-status");
+    await page.waitForURL((u) => new URL(u).pathname === "/wi/", { timeout: 6000 }).catch(() => {});
+    check("a lookup that fails once says it is trying again", /trying again/i.test(between || ""), JSON.stringify(between));
+    check("a lookup that fails once is asked again, and its answer opens /wi/",
+      lookups === 2 && new URL(page.url()).pathname === "/wi/", lookups + " lookup(s), at " + page.url());
+    await ctx.close();
+  }
+  // ...and when the lookup still cannot follow it, the page says which side
+  // failed, and no longer sends a phone reader to an address bar
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false, lookups = 0;
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+      lookups++;
+      return r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "the link could not be followed" }) });
+    });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+    await page.click("#search-button");
+    await page.waitForSelector("#search-status.err", { timeout: 12000 }).catch(() => {});
     const msg = await textOrNull(page, "#search-status");
-    check("a short map link the lookup cannot follow stays on the landing page and says what to paste instead",
-      new URL(page.url()).pathname === "/" && /copy the full address/i.test(msg || ""), JSON.stringify(msg));
+    check("a short map link the lookup cannot follow is asked three times in all", lookups === 3, String(lookups));
+    check("a short map link the lookup cannot follow stays on the landing page and says Google didn't answer",
+      new URL(page.url()).pathname === "/" && /couldn't be read just now \(Google didn't answer/.test(msg || "") &&
+      !/address bar/.test(msg || ""), JSON.stringify(msg));
     check("a short map link is never sent to the geocoder, even when the lookup fails", !photonAsked, String(photonAsked));
     await ctx.close();
+  }
+
+  // ...a link from the Google Maps app carries no position, only the place's
+  // name and address in one string. When that matches nothing, the address
+  // alone is asked, and an answer counts only if it carries the address's
+  // house number (ENGINE map-link labelCarriesNumber): a street that merely
+  // partly matches must route nowhere. The address's own street in its own
+  // town, without the number (labelOnStreet), opens the app that covers it
+  // with what was typed, so that app shows the street (showStreetOnly).
+  // Typed text gets no such retry.
+  {
+    const NAMED = "Lambeau Field, 1265 Lombardi Ave, Green Bay, WI 54304";
+    const BARE = "1265 Lombardi Ave, Green Bay, WI 54304";
+    const FULL = "https://maps.google.com/?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304&ftid=0x0:0x1&entry=gps";
+    const at = (props) => ({ ...photonFeature(44.5013, -88.0622), properties: props });
+    for (const c of [
+      { name: "an answer carrying its house number opens /wi/", text: FULL, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
+        asks: [NAMED, BARE], want: "/wi/" },
+      { name: "a street without its house number opens nothing", text: FULL, answer: at({ street: "Lombardi Avenue" }),
+        asks: [NAMED, BARE], want: "/" },
+      { name: "its street in its town, without the number, opens /wi/ with the link to show the street",
+        text: FULL, answer: at({ name: "Lombardi Avenue", city: "Green Bay", state: "Wisconsin", postcode: "54304" }),
+        asks: [NAMED, BARE], want: "/wi/", hash: "#q=" + encodeURIComponent(FULL) },
+      { name: "the same words typed are not retried", text: NAMED, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
+        asks: [NAMED], want: "/" },
+    ]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [];
+      await page.route("**/photon.komoot.io/**", (r) => {
+        const q = new URL(r.request().url()).searchParams.get("q");
+        asked.push(q);
+        return photonStub(q === BARE ? [c.answer] : [])(r);
+      });
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", c.text);
+      await page.click("#search-button");
+      await addressSettled(page);
+      check(`a place's name and address that match nothing whole: ${c.name}`,
+        JSON.stringify(asked) === JSON.stringify(c.asks) && new URL(page.url()).pathname === c.want &&
+          (!c.hash || new URL(page.url()).hash === c.hash),
+        JSON.stringify({ asked, url: page.url() }));
+      await ctx.close();
+    }
   }
 
   // --- 1d. an address nobody covers SAYS SO, and never guesses -------------

@@ -2,8 +2,9 @@
  "measured": "2026-10-10",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
  "vintage": "current",
- "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename.",
+ "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. Arkansas is covered with no areas too, measured 2026-10-15 at its go-live: the three drawn classes return 499 features nationally and none is kept inside Arkansas, with Tennessee run as a control on the same queries and keeping its one known piece, the Mississippi Choctaw trust land near Henning (0.695 km2). The Cherokee and Choctaw statistical areas that reach over Arkansas's western line are statistical areas, which are drawn only in Oklahoma. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename.",
  "statesCovered": [
+  "Arkansas",
   "Illinois",
   "Indiana",
   "Iowa",
@@ -14,11 +15,11 @@
   "North Carolina",
   "Oklahoma",
   "South Carolina",
+  "Tennessee",
   "Wisconsin"
  ],
  "statesNotYetCovered": [
-  "California",
-  "Tennessee"
+  "California"
  ],
  "areas": {
   "0080": {
@@ -656,6 +657,24 @@
      "state": "Minnesota",
      "km2": 1.163,
      "share": 1.0
+    }
+   ]
+  },
+  "2300": {
+   "government": "Mississippi Band of Choctaw Indians",
+   "parentGovernment": null,
+   "governmentState": "MS",
+   "states": [
+    "Tennessee"
+   ],
+   "lands": [
+    {
+     "class": "trust-land",
+     "geoid": "2300T",
+     "name": "Mississippi Choctaw Off-Reservation Trust Land",
+     "state": "Tennessee",
+     "km2": 0.695,
+     "share": 0.0407
     }
    ]
   },

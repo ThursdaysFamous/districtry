@@ -19,10 +19,10 @@ name: Update Arkansas legislature roster
 # main changed those same files meanwhile errors at the checkout instead of
 # pushing, which is right.
 #
-# ARKANSAS IS DARK, so this job does not regenerate ar/state-legislature.html:
-# build_legislator_pages.py refuses an instance metros.json does not carry, so
-# that page is not built yet. Go-live adds the step in the same change that
-# adds ar to metros.json — ar/WATCH.md has the list.
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE.
+# `ar/state-legislature.html` carries a GENERATED table of both rosters, and
+# `about.html` and `sitemap.xml` count them, so all three are regenerated here
+# and staged in the same `git add`.
 
 on:
   schedule:
@@ -85,7 +85,10 @@ jobs:
           # files ride across the checkout as working-tree changes.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ar/data/app/ar-senate-members.json ar/data/app/ar-house-members.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add ar/data/app/ar-senate-members.json ar/data/app/ar-house-members.json ar/state-legislature.html about.html sitemap.xml
           git commit -m "Update Arkansas Senate + House rosters from the Arkansas State Legislature"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
