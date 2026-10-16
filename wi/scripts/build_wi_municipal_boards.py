@@ -57,6 +57,13 @@ FLOORS = {
     # city also publishes a Cell Phone column and the scraper does not emit it,
     # so this phone floor counts city lines only and 7 is every member.
     "Janesville": ("Janesville", 7, 7, 7),
+    # The tranche of 2026-10-15. Mount Pleasant prints an e-mail and a phone
+    # for all seven. Menomonee Falls prints neither: its one phone is the
+    # village's main line on every card and its e-mail is a form. Fond du Lac
+    # prints both for all seven.
+    "Mount Pleasant": ("Mount Pleasant", 7, 7, 7),
+    "Menomonee Falls": ("Menomonee Falls", 7, 0, 0),
+    "Fond du Lac": ("Fond du Lac", 7, 7, 7),
 }
 
 
@@ -150,14 +157,29 @@ def main(argv):
                                          min_phones), file=sys.stderr)
             return 1
 
-        out[geoid] = {
+        # NOT EVERY BODY HERE SAYS IT IS ELECTED AT LARGE. Menomonee Falls
+        # says its trustees are elected "by numbered seat" and Fond du Lac does
+        # not say at all; neither draws a district. Such a city carries
+        # `atLarge: false` and the scraper's `howElected`, which repeats what
+        # the city says, and the card prints that sentence instead of claiming
+        # an election method the city never stated.
+        at_large = city.get("atLarge") is True
+        record = {
             "name": place,
             "county": city.get("county"),
-            "atLarge": True,
+            "atLarge": at_large,
             "board": members,
             "asOf": today,
             "sourceUrl": city.get("sourceUrl"),
         }
+        if not at_large:
+            how = str(city.get("howElected") or "").strip()
+            if not how:
+                print("%s: not marked at large and says nothing about how it "
+                      "is elected; refusing to write" % label, file=sys.stderr)
+                return 1
+            record["howElected"] = how
+        out[geoid] = record
         notes.append("%s: %d member(s), %d e-mail(s), %d phone(s)"
                      % (label, len(members), emails, phones))
 

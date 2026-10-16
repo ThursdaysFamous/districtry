@@ -84,7 +84,9 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
     [
@@ -182,7 +184,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
@@ -200,7 +202,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -218,7 +220,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
@@ -236,7 +238,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "600 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -254,7 +256,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -272,7 +274,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -290,7 +292,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -323,6 +325,24 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Census County Division",
+      "group": "geography",
+      "area_rank": 7,
+      "rank_note": "305 census county divisions, live from TIGERweb (no data/app file) — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)",
+      "source": {
+        "answers": "The census county division containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and Oklahoma has no township governments, so the county governs everyone outside a city or town. The card names the division and its county and says it governs nobody.",
+        "applies": "Oklahoma — statewide."
+      }
+    },
+    {
       "id": "county-commissioner",
       "label": "County Commissioner District",
       "group": "political",
@@ -341,7 +361,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 9,
   "anchor_point": {
     "lat": 35.4923,
     "lng": -97.5034,
@@ -448,7 +468,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ok-shell-v3",
+    "cache_name": "districtry-ok-shell-v4",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

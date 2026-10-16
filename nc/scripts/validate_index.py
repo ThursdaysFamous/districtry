@@ -89,7 +89,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 8
+MIN_REGISTER_LAYER = 9
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -97,8 +97,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "nc-senate", "county", "nc-house", "school-district-unified",
-    "county-subdivision", "zip-code", "tribal-government", "municipality",
-    "police-station", "fire-station", "post-office",
+    "county-subdivision", "zip-code", "tribal-government", "voting-precinct",
+    "municipality", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +109,7 @@ GEOMETRY_FILES = {
     "nc-senate-districts.json": (50, 50),  # The 50 NC Senate districts. Simplified in the same mapshaper run as the other two chamber files.
     "nc-house-districts.json": (120, 120),  # The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files.
     "tribal-areas.json": (2, 2),  # North Carolina's tribal land (scripts/build_tribal_areas.py) — the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians'. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "nc-precincts.json": (2625, 2625),  # Every North Carolina voting precinct, pre-built by nc/scripts/build_nc_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' file as NC OneMap serves it (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 2,625 count on the fetch and the drawn file). 8.2 MB, 2.43 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).

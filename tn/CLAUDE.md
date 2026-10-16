@@ -8,7 +8,7 @@ districtry Tennessee: a single-file, dependency-light web app. Click a point in 
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/tn/** as a folder of the consolidated
 districtry repo, following the statewide shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships THIRTEEN layers, and **IT IS PUBLISHED** since Adam's word
+Illinois root-scripts shape. It ships SIXTEEN layers, and **IT IS PUBLISHED** since Adam's word
 of 2026-10-13. It arrived dark on 2026-10-10 (no `metros.json` entry, `tn/**` blanket-excluded
 from the Pages deploy) and the go-live change narrowed that exclude to the build inputs the
 siblings exclude, registered the instance and regenerated every surface that counts the fleet,
@@ -21,7 +21,7 @@ County, Ohio; it was the one fixed point in the fleet inside this instance's out
 coverage ring and a card that names the county), **U.S. House**
 (9 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators
 roster), **Tennessee Senate** and **Tennessee House** (33 and 99 districts, TIGERweb geometry),
-the LIVE TIGERweb fabric (**City or Town**, **School District (Unified)** 127,
+the LIVE TIGERweb fabric (**Civil District**, **City or Town**, **School District (Unified)** 127,
 **School District (Elementary)** 15, **School District (Secondary)** 15, **ZIP Code**) and three
 nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**,
 **Post Office**).
@@ -62,12 +62,40 @@ Nashville-Davidson (TIGER names the place "Nashville-Davidson metropolitan gover
 County (LSADC MG). Both the municipality card and the county card say so. No place is FUNCSTAT I
 (inactive), measured 2026-10-10.
 
-**THERE IS NO TOWNSHIP OR CIVIL-DISTRICT LAYER, AND THAT IS A MEASUREMENT.** All 855 county
+**THE CIVIL DISTRICTS ARE DRAWN, AND THE CARD SAYS WHAT THEY ARE NOT.** All 855 county
 subdivisions TIGERweb carries for STATE='47' are civil districts ("District N", LSADC 28,
-FUNCSTAT N). The Census codes FUNCSTAT N as a legal area with no functioning government: nobody
-is elected to run one. Their numbers look like county commission district numbers, and nothing
-in the Census record says the lines are the same, so drawing them would invite exactly that
-misreading.
+FUNCSTAT N, measured 2026-10-15). The Census codes FUNCSTAT N as a legal area with no
+functioning government: nobody is elected to run one. They were left out at arrival for that
+reason and for a second one that still stands: their numbers look like county commission district
+numbers, and nothing in the Census record says the lines are the same. Since 2026-10-15 the done
+standard's level 14 (Adam, 2026-10-14) asks every state to draw its subdivision boundaries
+whether or not they govern anyone, so `county-subdivision` draws them live from TIGERweb, North
+Carolina's layer, and the card answers the misreading in words: it is labelled "Civil District",
+titles each unit "Civil District N" rather than TIGER's bare "District N", says no one is elected
+to run it, and says the number belongs to the civil district and not to a commission district,
+pointing at that layer. It says nothing about constables, whom Tennessee elects from districts
+each county commission sets; which counties still use the civil districts for that is not
+measured. The statewide set is 28.9 MB, uncompressed, and downloads only when the layer is
+switched on; a click asks TIGERweb about the point alone.
+
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM THE COMPTROLLER'S STATEWIDE LAYER.**
+`voting-precinct` draws all 1,870 precincts from "Voting Precincts New", the layer behind the
+Comptroller of the Treasury's Voter District Lookup; the Comptroller does the counties'
+redistricting map work and each county election commission sets its precincts. It is pre-built by
+`tn/scripts/build_tn_precincts.py` through the fleet module `scripts/statewide_precincts.py` at
+Douglas-Peucker 8 m (9.4 MB, 2.45 MB gzipped), so a click is answered from the file and no point
+leaves the browser. Three things in the layer are read around, each measured: the county is a
+number written two ways ("3" and "003"); Overton County's nine precincts each appear twice with
+identical geometry, dropped to one each only because the builder declares nine; and Davidson
+County has eight small pieces named "Precinct Created by Split CCD & Senate Districts" rather than
+a precinct, whose card says the state's map does not name their precinct rather than calling the
+ground part of no precinct. "CCD" is spelled out nowhere in the service; it most likely means a
+county commission district, which is inferred from the service's layer list. The card names the
+precinct and its county, says a precinct elects no one, says a precinct name that includes a
+polling place may not be where a reader votes now, states the 8 m, and links the Secretary of
+State's voter registration lookup. The service states no licence and no description, and the
+Comptroller's site does not link the layer; both are evidence for the state-publishing ask. The
+quarterly re-check is in `tn/WATCH.md`.
 
 **THE ZIP LAYER HIDES OUTSIDE TENNESSEE.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (Bowling Green, Kentucky gives 42101; a
@@ -133,7 +161,7 @@ nothing that confirms the page is current or which district each member sits for
 page cannot be used as it stands — four disagree with the county's own results or later documents
 (Hancock, Johnson, Overton, Sequatchie), Smith leaves three districts' write-in seats unnamed
 without calling them vacant, and Houston's layout separates two members from any district
-heading. **A FOURTH TRANCHE OF 2 JOINED THE SAME DAY, OUT OF THE 16 NOT TRIED BEFORE**: 51 counties, 901 seats, 898 named. Sullivan is read from its ELECTION COMMISSION's list of elected officials by district, not from the county's commission page, which still lists the 2022 board: **A STALE COUNTY PAGE IS NOT THE END OF THE SEARCH**, because a county's other government hosts can carry the current list (Scott's was the precedent). Clay is read from its own page and checked against its scanned August results. Fourteen were held: Gibson (its page names a District 12 member where the results say no candidate qualified), eight whose only list is the 2022 board, Grundy and Moore (no list published), Pickett (its listed county website is the chamber of commerce's), and Morgan and Rhea (unreadable that day); Cumberland answered 429 again. **A RESULTS FILE IS EVIDENCE AND NEVER A SOURCE**: the weekly reader parses HTML, and a county whose only by-district list is its results is held rather than read from them. **A FIFTH TRANCHE OF 3 JOINED THE SAME DAY, OUT OF 18 HELD COUNTIES RE-EXAMINED**: 54 counties, 950 seats, 946 named. **A COUNTY THAT LETTERS ITS DISTRICTS IS PAIRED BY MEASUREMENT, NEVER BY ORDER**: Dyer's A to J were matched to the state's 1 to 10 through the Comptroller's own lettered precinct layer, its lettered map placed by its own coordinates, and the county's precinct results; the answer happens to be alphabetical and is written out in the module so a change has to be measured again. A module's `DISTRICT_LABELS` carries the county's own name for each district, and the card ("The county's name for it") and the county's page print it BESIDE the state's number, never in place of it, because the number is what the map, the hover name and the page anchor use. Henry's District 2 third seat is recorded vacant on the county's own count of 14, its August tie going back to the voters on 3 November; Hamblen's districts are confirmed by the county GIS office's own elected-representatives layer, with no August results published anywhere to compare. Macon now has two county pages that disagree in five districts and is held until the county says which is current. **A SIXTH PASS RE-EXAMINED SEVEN HELD COUNTIES AND NAMED NONE**, and corrected one reason: Johnson's "later document" is its election commission's list of the 2022 commission under a revision date that is the footer on every page of that site, so Johnson's page is unconfirmed rather than contradicted. **A DATE ON A PAGE IS NOT A DATE ON ITS CONTENT.** Smith's six unnamed seats are on the 3 November ballot as unexpired terms. **A SEVENTH TRANCHE OF 2 JOINED ON 2026-10-13**: 56 counties, 988 seats, 984 named. Morgan came from a retry of the four held for a server or network fault: its page answered and matches its election commission's scanned August results in all 18 seats. Trousdale came from re-reading the stale pages: its page had been rewritten for the new term, with "Beginning Term: September 1, 2026" on every new member's card and the same 20 names as the commission's 28 September agenda, and with no August results published its new members' districts rest on the page, as Claiborne's do. **A STALE PAGE IS RE-READ, NOT WRITTEN OFF**: it was rewritten two days after the survey found it stale. Cumberland's page answered too and is held because nothing can check it (its election commission, damaged by fire in March, posts no August results), Rhea still presents a certificate for another name, and Union's election commission answered its robots.txt with HTTP 500. **A SERVER ERROR IS THAT DAY'S ANSWER, NOT THE COUNTY'S**: Morgan was surveyed as failing on every path and served its page two days later. One letter, sent 2026-10-11 on Adam's choice (Ask tn-ctas-commissioner-districts in `docs/ASK_DRAFTS.md`), asks the University of Tennessee's County Technical Assistance Service to add each commissioner's district to the directory that already lists every commissioner, which would cover every county at once. **A CHAIR NAMED ON A PAGE IS NOT RECORDED UNLESS SOMETHING SHOWS THE NEW
+heading. **A FOURTH TRANCHE OF 2 JOINED THE SAME DAY, OUT OF THE 16 NOT TRIED BEFORE**: 51 counties, 901 seats, 898 named. Sullivan is read from its ELECTION COMMISSION's list of elected officials by district, not from the county's commission page, which still lists the 2022 board: **A STALE COUNTY PAGE IS NOT THE END OF THE SEARCH**, because a county's other government hosts can carry the current list (Scott's was the precedent). Clay is read from its own page and checked against its scanned August results. Fourteen were held: Gibson (its page names a District 12 member where the results say no candidate qualified), eight whose only list is the 2022 board, Grundy and Moore (no list published), Pickett (its listed county website is the chamber of commerce's), and Morgan and Rhea (unreadable that day); Cumberland answered 429 again. **A RESULTS FILE IS EVIDENCE AND NEVER A SOURCE**: the weekly reader parses HTML, and a county whose only by-district list is its results is held rather than read from them. **A FIFTH TRANCHE OF 3 JOINED THE SAME DAY, OUT OF 18 HELD COUNTIES RE-EXAMINED**: 54 counties, 950 seats, 946 named. **A COUNTY THAT LETTERS ITS DISTRICTS IS PAIRED BY MEASUREMENT, NEVER BY ORDER**: Dyer's A to J were matched to the state's 1 to 10 through the Comptroller's own lettered precinct layer, its lettered map placed by its own coordinates, and the county's precinct results; the answer happens to be alphabetical and is written out in the module so a change has to be measured again. A module's `DISTRICT_LABELS` carries the county's own name for each district, and the card ("The county's name for it") and the county's page print it BESIDE the state's number, never in place of it, because the number is what the map, the hover name and the page anchor use. Henry's District 2 third seat is recorded vacant on the county's own count of 14, its August tie going back to the voters on 3 November; Hamblen's districts are confirmed by the county GIS office's own elected-representatives layer, with no August results published anywhere to compare. Macon now has two county pages that disagree in five districts and is held until the county says which is current. **A SIXTH PASS RE-EXAMINED SEVEN HELD COUNTIES AND NAMED NONE**, and corrected one reason: Johnson's "later document" is its election commission's list of the 2022 commission under a revision date that is the footer on every page of that site, so Johnson's page is unconfirmed rather than contradicted. **A DATE ON A PAGE IS NOT A DATE ON ITS CONTENT.** Smith's six unnamed seats are on the 3 November ballot as unexpired terms. **A SEVENTH TRANCHE OF 2 JOINED ON 2026-10-13**: 56 counties, 988 seats, 984 named. Morgan came from a retry of the four held for a server or network fault: its page answered and matches its election commission's scanned August results in all 18 seats. Trousdale came from re-reading the stale pages: its page had been rewritten for the new term, with "Beginning Term: September 1, 2026" on every new member's card and the same 20 names as the commission's 28 September agenda, and with no August results published its new members' districts rest on the page, as Claiborne's do. **A STALE PAGE IS RE-READ, NOT WRITTEN OFF**: it was rewritten two days after the survey found it stale. Cumberland's page answered too and is held because nothing can check it (its election commission, damaged by fire in March, posts no August results), Rhea still presents a certificate for another name, and Union's election commission answered its robots.txt with HTTP 500. **A SERVER ERROR IS THAT DAY'S ANSWER, NOT THE COUNTY'S**: Morgan was surveyed as failing on every path and served its page two days later. **AN EIGHTH TRANCHE OF 1 JOINED ON 2026-10-15**: 57 counties, 1,004 seats, 1,000 named. Union's election commission, which had answered HTTP 500 twice, served its site, and its election-night summary report of the August election gives exactly the sixteen members on the county's page, district by district. The same pass re-read 27 held counties: Bledsoe's page now names three new members and is still held, because no government record of its August results was found to check them against. One letter, sent 2026-10-11 on Adam's choice (Ask tn-ctas-commissioner-districts in `docs/ASK_DRAFTS.md`), asks the University of Tennessee's County Technical Assistance Service to add each commissioner's district to the directory that already lists every commissioner, which would cover every county at once. **A CHAIR NAMED ON A PAGE IS NOT RECORDED UNLESS SOMETHING SHOWS THE NEW
 COMMISSION ELECTED THEM**: the chairs are chosen in September, and Cocke's and Claiborne's pages
 both print one that nothing confirms for the new term. **A PARSER'S `TITLE` IS A CARD'S WORD AND NOTHING ELSE**:
 three of the twenty kept a compiled pattern under that name, which the scraper would have
@@ -151,11 +179,18 @@ by `scripts/build_county_pages.py` from the same roster.
 The Comptroller's layer reports the date of its last data edit, and the monthly source check
 warns when it moves past the edit the shipped file was built from (2026-09-10).
 
-**TRIBAL GOVERNMENTS ARE IN SCOPE AND ARE NOT IN THIS PR.** Measured with
-`scripts/tribal_areas.py` on 2026-10-10, the Census draws no reservation in Tennessee and one
+**TRIBAL GOVERNMENT SHIPPED 2026-10-15**, built by the fleet-wide tribal-government thread with
+the same reader every instance uses (`scripts/build_tribal_areas.py --state "Tennessee" --tag tn`).
+Measured with `scripts/tribal_areas.py` the Census draws no reservation in Tennessee and one
 piece of off-reservation trust land: 0.695 km2 of the Mississippi Band of Choctaw Indians'
-trust land, near Henning in Lauderdale County (4.1% of that trust land's area). The fleet-wide
-tribal-government thread owns it.
+trust land, near Henning in Lauderdale County (4.1% of that trust land's area; the rest is in
+Mississippi). The nation is seated in Choctaw, Mississippi, so the card names that seat, and
+the population line says the 2020 count covers the whole trust land. The card names the Tribal
+Chief and the 17-member Tribal Council from the nation's own page at
+`www.choctaw.org/about-us/tribal-government/`, read weekly by `scripts/tribal_council_scraper.py`;
+each member is elected from one of the nation's eight communities in Mississippi, named beside
+them, and none from this land. Like every cross-state parcel in the fleet, the shipped file
+carries the whole trust land, so a click on its Mississippi part answers too.
 
 **THE CHAMBER AND COMMISSION BOUNDARIES USE DOUGLAS-PEUCKER AT `interval=20`**, inherited from
 North Carolina's measurement and re-measured here: worst stray 23.2 / 21.4 / 21.5 / 21.4 m (U.S.
@@ -184,8 +219,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Tennessee (`tennessee`) — https://districtry.com/tn/
 - Geocoders: address Photon (Tennessee-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Tennessee-bounded, serial >=1s queue)
-- Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
-- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 11. Debug namespace `window.TennesseeExplorer`.
+- Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19; voting-precinct Precinct 19-4. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
+- Layers: 16 registered (political 5, safety 2, schools 3, geography 6); `registerLayer(` floor 13. Debug namespace `window.TennesseeExplorer`.
 - Scheduled workflows: `update-tn-congress-roster.yml` (Mon 17:15 UTC); `update-tn-legislature-roster.yml` (Tue 17:15 UTC); `update-tn-commissioner-roster.yml` (Wed 17:15 UTC); `tn-validate-sources.yml` (1st of month 19:30 UTC).
 - Source registry: `tn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -129,6 +129,8 @@ jobs:
 
       - name: Every tiled layer's card matches its card from the whole file
         run: |
-          python3 -m http.server 8000 >/dev/null 2>&1 &
+          # A listen queue of 1024 rather than socketserver's 5, for the
+          # reason smoke-test.yml gives where it starts the same server.
+          python3 -c 'import runpy, socketserver, sys; socketserver.TCPServer.request_queue_size = 1024; sys.argv = ["http.server", "8000"]; runpy.run_module("http.server", run_name="__main__", alter_sys=True)' >/dev/null 2>&1 &
           sleep 2
           BASE_URL=http://localhost:8000 node scripts/probe_tile_cards.mjs

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/scm-NEW.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Supreme Court Districts - State of Mississippi Judiciary</title>
+<!-- InstanceEndEditable -->
+<meta name="description" content="The Official Site of the State of Mississippi Judiciary-Mississippi has a two-tier appellate court system that reviews decisions of law and fact made by the trial courts. The Mississippi Supreme Court is the court of last resort among state courts. Decisions of the Chancery, Circuit and County Courts and of the Court of Appeals may be appealed to the Supreme Court."/>
+<meta name="keywords" content="Mississippi Supreme Court, SCT Decisions, SCT District, SCT Judges, SCT oral Arguments, Oral Arguments, Supreme Court, Court of Appeals, Circuit Courts, Chancery Courts, County Courts, Justice Courts, Drug Courts, Municipal Courts, Youth Courts, legal, law, decision, opinion, judicial, official, court, appeals, supreme, MS, Mississippi, rule, docket calendar, decisions, rules, other jurisdication, bar roll, state judiciary, clerk's office, MJC, Mississippi Judicial College, Law Library" />
+<meta charset="utf-8">
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<script type="text/javascript" src="/google_analytics.js?vmod=1692717707"></script>		<script type="text/javascript" src="/ie_compatibility.js?vmod=1668612465"></script>		<link type="text/css" rel="stylesheet" href="/layout/styles/mobile2.css?vmod=1772565985">		<script src=https://cdn.userway.org/widget.js data-account="wulasfB3LU"></script>
+<script type="text/JavaScript">
+//JPJ - 06/13/2014 - resize div to expand with window
+window.onresize = function() 
+{
+	var adiv = document.getElementById("topdiv");
+	
+	//adiv.style.height =  (document.body.clientHeight - 290);
+	adiv.style.minHeight = "100px";
+	adiv.style.minWidth = "1000px";
+	//adiv.style.width =  (document.body.clientWidth - 1);
+} 
+
+//JPJ - 04/21/2015 - calls AJAX Post Request
+function makePOSTRequest(url, parameters) 
+{ 
+      //document.body.style.cursor = "wait";
+   
+      http_request = false;
+      if (window.XMLHttpRequest) { // Mozilla, Safari,...
+         http_request = new XMLHttpRequest();
+         if (http_request.overrideMimeType) {
+         	// set type accordingly to anticipated content type
+            //http_request.overrideMimeType('text/xml');
+            http_request.overrideMimeType('text/html');
+         }
+      } else if (window.ActiveXObject) { // IE
+         try {
+            http_request = new ActiveXObject("Msxml2.XMLHTTP");
+         } catch (e) {
+            try {
+               http_request = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
+         }
+      }
+      if (!http_request) {
+         alert('Cannot create XMLHTTP instance');
+         return false;
+      }
+      
+      http_request.onreadystatechange = alertContents;
+      http_request.open('POST', url, true);
+      http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      //http_request.setRequestHeader("Content-length", parameters.length);
+      //http_request.setRequestHeader("Connection", "close");
+      http_request.send(parameters);
+   }
+
+//JPJ - 04/21/2015 - checks to make sure the call responds and is in the ready state..calls alertMethod  
+function alertContents() 
+{
+    if (http_request.readyState == 4) 
+     {
+        if (http_request.status == 200) 
+          {
+            //alert(http_request.responseText);
+            result = decodeURI(http_request.responseText);
+            alertMethod(result);
+            // alert('result '+result);                
+          // document.body.style.cursor = "default";
+          } 
+     }
+}
+
+//JPJ - 04/21/2015 - displays the response text to the webpage
+function alertMethod(aResult)
+{
+  //alert(aResult);
+
+  var rArray = aResult.split("~");
+  var icount = rArray.length;
+  var resultDiv = rArray[1];
+  var sw = parseInt(rArray[0]);
+  //alert(sw);
+  
+ switch(sw)
+ {
+
+  case 1:
+     //alert(rArray[3]); 
+     //document.getElementById(resultDiv).innerHTML = rArray[3];
+	 
+	 if (rArray[2] == 'N')
+     {
+		document.getElementById('logPass').value = '';
+		document.getElementById('errdiv').innerHTML = rArray[3];	   
+     }
+     else
+     { 
+		document.getElementById(resultDiv).innerHTML = rArray[3];
+     } 
+   break;
+  case 2:
+	 //alert(rArray[3]); 
+     document.getElementById(resultDiv).innerHTML = rArray[3]; 
+
+   break;
+  case 3:
+     //alert(rArray[1]); 
+     var retval = rArray[3]; 
+     //alert(retval);
+
+     if (rArray[2] == 'N')
+     {
+		document.getElementById('logPass').value = '';
+		document.getElementById('errdiv').innerHTML = rArray[3];	   
+     }
+     else
+     { 
+		document.getElementById(resultDiv).innerHTML = rArray[3];
+     } 
+     
+   break;
+   case 4:
+     //alert(rArray[3]); 
+     document.getElementById(resultDiv).innerHTML = rArray[3]; 
+
+   break;
+   case 5:
+     //alert(rArray[3]); 
+     document.getElementById(resultDiv).innerHTML = rArray[3]; 
+
+   break;
+   case 6:
+     //alert(rArray[3]); 
+     document.getElementById(resultDiv).innerHTML = rArray[3]; 
+
+   break;
+   case 7:
+     //alert(rArray[3]); 
+     document.getElementById(resultDiv).innerHTML = rArray[3]; 
+
+   break;
+ }
+}
+
+//JPJ - 04/21/2015 - check to see if applicant wants to force a relogin
+function frcLogin()
+{
+	var vMail = '';
+	//alert(vMail);
+	var vPass = '';
+	//alert(vPass); 
+  
+	var poststr = 'sEmail='+vMail+'&sPWD='+vPass;
+	//alert(poststr);
+   
+	makePOSTRequest('docketLogin.php', poststr);
+	//regLog();
+}
+
+//JPJ - 04/21/2015 - check to see if applicant wants to force a relogin
+function forceLogin()
+{
+	//window.location.href = 'index2.html';
+}
+
+//JPJ - 04/21/2015 - looks for the enter key event in order to call the login event when the enter key is presses
+function KeyDownHandler(event)
+{
+  if (event.which == 13 || event.keyCode == 13)
+   {
+     event.returnValue=false;
+     event.cancel = true;     
+     regLog();
+   
+   }
+  return true;
+}
+
+//JPJ - 04/21/2015 - calls login page
+function regLog()
+{ 
+  var vMail = document.getElementById('logEMAIL').value;
+  //alert(vMail);
+  var vPass = document.getElementById('logPass').value;
+  //alert(vPass); 
+  
+  var poststr = 'sEmail='+vMail+'&sPWD='+vPass;
+  //alert(poststr);
+   
+  makePOSTRequest('docketLogin.php', poststr);
+}
+
+//JPJ -- 04/21/2015 - clears the email and password input boxes
+function clearLog()
+{
+  document.getElementById('logEMAIL').value = '';
+  document.getElementById('logPass').value = '';
+}
+
+//JPJ - 04/21/2015 - verifies that an email address is in the correct format before updating database
+function checkEmail(email)
+{ 
+  var esymbols = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  
+  if (esymbols.test(email.value) && (email.value !== ''))
+   {
+     document.getElementById('regBtn').disabled = false;
+	 document.getElementById('regBtn').style.background = '#0040ff';
+	 return true;
+   }
+  else
+   {
+     alert("Invalid Email Address");
+	 document.getElementById('regBtn').disabled = true;
+	 document.getElementById('regBtn').style.background = '#808080';
+     return false;
+   }
+}
+
+//JPJ - 04/21/2015 - verifies a password
+function checkPass(sPass)
+{
+   var error = '';
+   var pw = sPass;
+   //alert(pw);
+   //alert(String(pw).match(/[0-9]/));
+   
+   if (String(pw).length < 10)       //JPJ - 12/11/2014 - changed to passwords must be 10 characters long for security
+    {
+	 error = 'Password must be 10 characters long!';
+	 document.getElementById('psStat').value = error;
+	 document.getElementById('psw').className = 'bpsw';
+	 //doucment.getElementById('psw').setAttribute('class', 'bpsw');
+	 document.getElementById('rpsw').className = 'bpsw';
+	 alert(error);
+	 return false
+    }
+   if (!String(pw).match(/[0-9]/))
+    {
+	 error = 'Password must contain at least one number!';
+	 document.getElementById('psStat').value = error;
+	 document.getElementById('psw').className = 'bpsw';
+	 document.getElementById('rpsw').className = 'bpsw';
+	 alert(error);
+	 return false;
+	}
+   if (!String(pw).match(/[a-z]/))
+    {
+	 error = 'Password must include at least one lower-case letter!';
+	 document.getElementById('psStat').value = error;
+	 document.getElementById('psw').className = 'bpsw';
+	 document.getElementById('rpsw').className = 'bpsw';
+	 //alert(error);
+	 return false;
+	}
+   if (!String(pw).match(/[A-Z]/))
+    {
+	 error = 'Password must include at least one upper-case letter!';
+	 document.getElementById('psStat').value = error;
+	 document.getElementById('psw').className = 'bpsw';
+	 document.getElementById('rpsw').className = 'bpsw';
+	 //alert(error);
+	 return false;
+	}
+   if (!String(pw).match(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\@#/]/))
+    {
+	 error = 'Password must contain at least one symbol!';
+	 document.getElementById('psStat').value = error;
+	 document.getElementById('psw').className = 'bpsw';
+	 document.getElementById('rpsw').className = 'bpsw';
+	 //alert(error);
+	 return false;
+	}
+	
+	document.getElementById('psw').className = 'ipsw';
+	document.getElementById('rpsw').className = 'ipsw';
+	document.getElementById('psStat').value = 'Password is good!';
+	return true;
+}
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+ $(".usericon").mouseover(function() {
+    $(this).children(".description").show();
+}).mouseout(function() {
+    $(this).children(".description").hide();
+}); 
+</script>
+  
+<script type="text/javascript"> 
+
+//jpj - 10/24/2016 - when the user taps off of the mobile menu it should now hide
+$(document).ready( function(){
+
+    $('#nburger-link').click( function(event){
+        event.stopPropagation();
+        $('#nburger-drop').toggle();
+    });
+
+    $(document).click( function(){
+        $('#nburger-drop').hide();
+    });
+
+});
+
+</script>
+
+		<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+      	</head>
+      	<body id="top" class="body">
+      	<!-- ################################################################################################ --> 
+      			<nav aria-label="Mobile Navigation">
+		<ul id="nburger" class="New Burger">
+        <li> <a href="#" id="nburger-link">
+        <!--<ul></ul>-->
+        <img src="/images_folder/demo/icons/Burger_nav_icon2.png" width="70" height="28" class="nav" alt="Mobile Navigation"></a>
+        <ul id="nburger-drop">
+        <li><a href="/index.php" aria-label="State of Mississippi Judiciary Home Page"><img src="/images_site/icons/Home_icon1.png" alt="New Home page"></a>
+        <li><a href="/aboutcourts/aboutthecourts.php" aria-label="Appellate Courts">APPELLATE COURTS</a>
+        <ul>
+        <li><a href="/appellatecourts/sc/sc.php" aria-label="Supreme Court" class="mobilelink">Supreme Court</a></li>
+        <li><a href="/appellatecourts/coa/coa.php" aria-label="Court of Appeals" class="mobilelink">Court of Appeals</a></li>
+        <li><a href="/appellatecourts/clerk/clerk.php" aria-label="Clerk of Appellate Courts" class="mobilelink">Clerk of Appellate Courts</a></li>
+		<li><a href="/records/officeoftheclerk.php" aria-label="Office of the Clerk FAQ" class="mobilelink">Office of the Clerk FAQ</a></li>
+        </ul>
+        </li>
+        <li><a href="/trialcourts/tc_aboutthecourts.php" aria-label="Trial Courts">TRIAL COURTS</a>
+        <ul>
+		<li><a href="/trialcourts/chancerycourt/chancerycourt.php" aria-label="Chancery Court" class="mobilelink">Chancery Court</a></li>
+        <li><a href="/trialcourts/circuitcourt/circuitcourt.php" aria-label="Circuit Court" class="mobilelink">Circuit Court</a></li>
+        <li><a href="/trialcourts/countycourt/countycourt.php" aria-label="County Court" class="mobilelink">County Court</a></li>
+        <li><a href="/trialcourts/justicecourt/justicecourt.php" aria-label="Justice Court" class="mobilelink">Justice Court</a></li>
+        <li><a href="/trialcourts/municipalcourt/municipalcourt.php" aria-label="Municipal Court" class="mobilelink">Municipal Court</a></li>
+        <li><a href="/trialcourts/youthcourt/youthcourt.php" aria-label="Youth Court" class="mobilelink">Youth Court</a></li>
+        </ul>
+        </li>
+		<li>
+		
+		<li><a href="/trialcourts/interventioncourts/interventioncourt.php" aria-label="Intervention Courts">INTERVENTION COURTS</a></li></li>
+		<li><a href="/trialcourts/ccid/ccid.php">CCID COURT</a></li>
+        </li>
+        <li><a href="/aoc/aoc.php" aria-label="AOC">AOC</a>
+        <ul>
+        <li><a href="/aoc/courtinterpreter/courtinterpreter.php" aria-label="Court Interpreter" class="mobilelink">Court Interpreter</a></li>
+        <li><a href="/cle_bccr/BCCR/bccr.php" aria-label="Board of Certified Court Reporters" class="mobilelink">Board of Certified Court Reporters</a></li>
+        <li><a href="/aoc/forms/personnelinfo.php" aria-label="Employee Information and Forms" class="mobilelink">Employee Information and Forms</a></li>
+        <li><a href="/statistics/statistics.php" aria-label="Statistics" class="mobilelink">Statistics</a></li>
+		<!--<li><a href="/statistics/statistics.php" aria-label="Statistics Reporting" class="mobilelink">Statistics Reporting</a></li>-->
+        </ul>
+        </li>
+        <li><a href="/mec/mec.php">MEC</a></li>
+        <li><a href="/records/records.php" aria-label="RECORDS">RECORDS</a>
+        <ul>
+        <li><a href="/records/officeoftheclerk.php" aria-label="Office of the Clerk FAQ" class="mobilelink">Office of the Clerk FAQ</a></li>
+        <li><a href="/records/media.php" aria-label="Media FAQ" class="mobilelink">Media FAQ</a></li>
+        <li><a href="/publicrecords_policy.pdf" aria-label="Public Records Policy" class="mobilelink">Public Records Policy</a></li>
+        </ul>
+        </li>
+        <li><a href="/commissions/commissionsforcescommittees.php" aria-label="Commissions, Task Forces & Committees">COMMISSIONS</a>
+        <ul>
+        <li><a href="/commissions/commissionsforcescommittees.php" aria-label="Commissions, Task Forces &amp; Committees" class="mobilelink">Commissions, Task Forces &amp; Committees</a>
+        <li><a href="http://www.msatjc.org/" aria-label="MS Access to Justice Commission (MSATJC)" class="mobilelink">MS Access to Justice Commission (MSATJC)</a>
+        <!--<li><a href="/commissions/childrenjustice/childrensjustice.php" aria-label="MS Commission on Children's Justice" class="mobilelink">MS Commission on Children's Justice</a>-->
+		<!--<li><a href="/cle_bccr/cle.php" aria-label="CLE" class="mobilelink">CLE</a></li>-->
+        <li><a href="/cle_bccr/BCCR/bccr.php" aria-label="Board of Certified Court Reporters" class="mobilelink">Board of Certified Court Reporters</a></li>
+        </ul>
+        </li>
+		<li><a href="/research/research.php" aria-label="Research">RESEARCH</a>
+        <ul>
+        <li><a href="http://www.lexisnexis.com/hottopics/mscode/" aria-label="MS Code" class="mobilelink">MS Code</a></li>
+        <li><a href="/research/msmodeljury.php" aria-label="MS Model Jury Instructions" class="mobilelink">MS Model Jury Instructions</a></li>
+        <li><a href="/research/reports/reports.php" aria-label="Reports" class="mobilelink">Reports</a></li>
+        <li><a href="/research/rules/rules.php" aria-label="MS Rules of Court" class="mobilelink">MS Rules of Court</a></li>
+        <li><a href="/research/statelibrary/library.php" aria-label="State Library" class="mobilelink">State Library</a></li>
+        </ul>
+        </li>
+        <li><a href="/bar/baradmissions/baradmissions.php" aria-label="Bar Admissions">BAR</a>
+        <ul>
+        <li><a href="/bar/baradmissions/baradmissions.php" aria-label="Bar Admissions" class="mobilelink">Bar Admissions</a></li>
+        <li><a href="/bar/barroll/barroll.php" class="mobilelink">Bar Roll</a></li>
+        <!--<li><a href="/cle_bccr/cle.php" aria-label="CLE" class="mobilelink">CLE</a></li>-->
+        </ul>
+        </li>
+        <!--<li><a href="" aria-label="NEWS">NEWS</a>-->
+		<li style="background-color: #06213f; padding:5px;">NEWS
+        <ul>
+        <li><a href="/news/news.php" aria-label="News" class="mobilelink">News</a></li>
+        <li><a href="/news/newsletters/newsletters.php" aria-label="Newsletters" class="mobilelink">Newsletters</a></li>
+		<li><a href="/news/forms/camnotice.pdf" target="_blank" aria-label="Camera Coverage Notice" class="mobilelink">Camera Coverage Notice</a></li>
+        <li><a href="/research/rules/msrulesofcourt/rules_electronicphotographic_coverage.pdf" target="_blank" aria-label="Camera Rules" class="mobilelink">Camera Rules</a></li>
+        </ul>
+        </li>
+        <li style="background-color: #06213f; padding:5px;">EDUCATION
+        <ul>
+        <li><a href="/cle_bccr/cle.php" aria-label="CLE" class="mobilelink">CLE</a></li>
+        <li><a href="/cle_bccr/BCCR/bccr.php" aria-label="Board of Certified Court Reporters" class="mobilelink">Board of Certified Court Reporters</a></li>
+        <li><a href="http://mjc.olemiss.edu/" aria-label="Judicial College" class="mobilelink">Judicial College</a></li>
+		<li><a href="/trialcourts/youthcourt/youthcourtvideos.php" target="_blank" aria-label="Youth Court video tutorials" class="mobilelink">Youth Court video tutorials</a></li>
+        <li><a href="https://www.msbar.org/inside-the-bar/young-lawyers-division/guardian-ad-litem-training-videos/gal-training-videos/" target="_blank" class="mobilelink">GAL Training Videos</a></li>
+        </ul>
+        </li>
+        <li style="background-color: #06213f; padding:5px;">LEGAL HELP
+		<ul>
+        <li><a href="http://www.msatjc.org/" target="_blank" aria-label="MS Access to Justice Commission (MSATJC)" class="mobilelink">MS Access to Justice Commission (MSATJC)</a></li>
+		<li><a href="/Legal/CivilLegal.php" target="_blank" class="mobilelink">Civil Legal Assistance</a></li>
+		<li><a href="/aoc/courtinterpreter/translations.php" target="_blank" aria-label="Translated Forms, Samples, and Documents" class="mobilelink">Translated Forms, Samples, and Documents</a></li>
+        <li><a href="/trialcourts/youthcourt/youthcourtvideos.php" target="_blank" class="mobilelink">Youth Court video tutorials</a></li>
+        </ul>
+        <li>
+		<li><a href="#"><i class="fa fa-user" alt="Login User" aria-hidden="true"></i></a><ul><li><a href="https://courts.ms.gov/appellatecourts/docket/login.php" aria-label="Sign In">Sign In</a></li><li><a href="https://www.pamecapps.mec.ms.gov/onlinereg/" aria-label="Register">Register</a></li></ul></li><input type=hidden id="login_mobile" value="N"><script type="text/javascript" src="/js_functions.js?vmod=1786541030"></script>        </ul>
+        </li>
+        </ul>
+		</nav>      	<div class="wrapper row1">
+      	<header id="header" class="clear"> 
+      	<!-- ################################################################################################ -->
+      		   <div class="logo-seal"></div>
+     	<a href="/index.php" aria-label="State of Mississippi Judiciary Home Page"><img src="/images_folder/demo/Judiciary-seal-cropped.png" alt="Judiciary Seal"></a>
+     	<div id="logo">
+     	<div id="logo" class="fl_left">
+     	<h1 style="color: #ffffff;">State of Mississippi Judiciary</h1>
+     	<p><em>Administrative Office of Courts</em></p>
+     	</div>
+     	</div>
+     	<div>
+		</div>    		<div class="main_fl_right"><a href="https://courts.ms.gov/appellatecourts/docket/login.php"><i class="fa fa-user" alt="Login User" aria-hidden="true"></i> &nbsp; Sign In</a>  &#8739; <a href="https://www.pamecapps.mec.ms.gov/onlinereg/" aria-label="Register">Register</a><input type=hidden id="login_desktop" value="N"><script type="text/javascript" src="/js_functions.js?vmod=1786541030"></script>	<div class="main_fl_right">    </div>
+	</div>    	</header>
+    	</div>
+     	
+     	<!-- ################################################################################################ -->
+     		<nav id="mainav" class="rounded2" aria-label="Desktop Navigation"> 
+       <ul>
+       <li></li>
+       <li><a href="/index.php" aria-label="State of Mississippi Judiciary Home Page"><img src="/images_folder/demo/Home_icon.jpg" alt="Home page"></a></li>
+       <!--<li><a href="/aboutcourts/aboutthecourts.php" aria-label="Court" class="desktoplink">Court</a>-->
+	   <li class="desktoplink">Court
+       <ul>
+       <li><a href="/aboutcourts/aboutthecourts.php" aria-label="Appellate Courts" class="desktoplink">Appellate Courts</a>
+       <ul>
+       <li><a href="/appellatecourts/sc/sc.php" aria-label="Supreme Court" class="desktop1link">Supreme Court</a></li>
+       <li><a href="/appellatecourts/coa/coa.php" aria-label="Court of Appeals" class="desktop1link">Court of Appeals</a></li>
+       <li><a href="/appellatecourts/clerk/clerk.php" aria-label="Clerk of Appellate Courts" class="desktop1link">Clerk of Appellate Courts</a></li>
+	   <li><a href="/records/officeoftheclerk.php" aria-label="Office of the Clerk FAQ" class="desktop1link">Office of the Clerk FAQ</a></li>
+       </ul>
+       </li>
+       <li><a href="/trialcourts/tc_aboutthecourts.php" aria-label="Trial Courts" class="desktoplink">Trial Courts</a>
+       <ul>
+	   <li style="border-bottom: 1px solid #06213f;"><a href="/trialcourts/chancerycourt/chancerycourt.php" aria-label="Chancery Court" class="desktop1link">Chancery Court</a></li>
+       <li style="border-bottom: 1px solid #06213f;"><a href="/trialcourts/circuitcourt/circuitcourt.php" aria-label="Circuit Court" class="desktop1link">Circuit Court</a></li>
+       <li style="border-bottom: 1px solid #06213f;"><a href="/trialcourts/countycourt/countycourt.php" aria-label="County Court" class="desktop1link">County Court</a></li>
+       <li style="border-bottom: 1px solid #06213f;"><a href="/trialcourts/justicecourt/justicecourt.php" aria-label="Justice Court" class="desktop1link">Justice Court</a></li>
+       <li style="border-bottom: 1px solid #06213f;"><a href="/trialcourts/municipalcourt/municipalcourt.php" aria-label="Municipal Court" class="desktop1link">Municipal Court</a></li>
+       <li><a href="/trialcourts/youthcourt/youthcourt.php" aria-label="Youth Court" class="desktop1link">Youth Court</a></li>
+       </ul>
+       </li>
+	   <li><a href="/trialcourts/interventioncourts/interventioncourt.php" aria-label="Intervention Courts" class="desktoplink">Intervention Courts</a>
+	   <li><a href="/trialcourts/ccid/ccid.php" aria-label="CCID Court" class="desktoplink">CCID Court</a>
+	   
+       </ul>
+       </li>
+       <li><a href="/aoc/aoc.php" aria-label="AOC" class="desktoplink">AOC</a>
+       <ul>
+       <li><a href="/aoc/courtinterpreter/courtinterpreter.php" aria-label="Court Interpreter" class="desktop1link">Court Interpreter</a></li>
+       <li><a href="/cle_bccr/BCCR/bccr.php" aria-label="Board of Certified Court Reporters" class="desktop1link">Board of Certified Court Reporters</a></li>
+       <li><a href="/aoc/forms/personnelinfo.php" aria-label="Employee Information and Forms" class="desktop1link">Employee Information and Forms</a></li>
+       <li><a href="/statistics/statistics.php" aria-label="Statistics" class="desktop1link">Statistics</a></li>
+	   <!--<li><a href="/statistics/statistics.php" aria-label="Statistics Reporting" class="desktop1link">Statistics Reporting</a></li>-->
+       <!--<li><a href="/aoc/wireless/wirelesscommunications.php" class="desktop1link">Wireless Communications</a></li>-->
+       </ul>
+       </li>
+       <li><a href="/mec/mec.php" aria-label="MEC" class="desktoplink">MEC</a></li>
+       <li class="desktoplink">Records
+       <ul>
+       <!--<li><a href="/records/records.php" aria-label="FAQ" class="desktoplink">FAQ</a>-->
+	   <li><a href="/records/officeoftheclerk.php" aria-label="Office of the Clerk FAQ" class="desktop1link">Office of the Clerk FAQ</a></li>
+       <li><a href="/records/media.php" aria-label="Media FAQ" class="desktop1link">Media FAQ</a></li>
+       <!--<ul>
+       <li><a href="/records/officeoftheclerk.php" aria-label="Office of the Clerk FAQ" class="desktop1link">Office of the Clerk FAQ</a></li>
+       <li><a href="/records/media.php" class="desktop1link">Media</a></li>
+       </ul>-->
+       </li>
+       <!--<li><a href="/mec/mec.php" aria-label="MEC" class="desktop1link">MEC</a></li>-->
+       <li><a href="/publicrecords_policy.pdf" aria-label="Public Records Policy" class="desktop1link">Public Records Policy</a></li>
+       </ul>
+       </li>
+       <li><a href="/commissions/commissionsforcescommittees.php" aria-label="Commissions, Task Forces & Committees" class="desktoplink">Commissions</a>
+       <ul>
+       <li><a href="/commissions/commissionsforcescommittees.php" aria-label="Commissions, Task Forces & Committees" class="desktop1link">Commissions, Task Forces & Committees</a></li>
+       <li><a href="http://www.msatjc.org/" aria-label="MS Access to Justice Commission (MSATJC)" class="desktop1link">MS Access to Justice Commission (MSATJC)</a></li>
+       <!--<li><a href="/commissions/childrenjustice/childrensjustice.php" aria-label="Mississippi Commission on Children's Justice" class="desktop1link">Mississippi Commission on Children's Justice</a></li>-->
+	   <li><a href="/cle_bccr/cle.php" aria-label="CLE" class="desktop1link">CLE </a></li>
+       <li><a href="/cle_bccr/BCCR/bccr.php" aria-label="Board of Certified Court Reporters" class="desktop1link">Board of Certified Court Reporters</a></li>
+       </ul>
+       </li>
+       <li><a href="/research/research.php" aria-label="Research" class="desktoplink">Research</a>
+       <ul>
+       <li><a href="http://www.lexisnexis.com/hottopics/mscode/" class="desktop1link">MS Code</a></li>
+       <li><a href="/research/msmodeljury.php" aria-label="MS Model Jury Instructions" class="desktop1link">MS Model Jury Instructions</a></li>
+       <li><a href="/research/reports/reports.php" aria-label="Reports" class="desktop1link">Reports</a></li>
+       <li><a href="/research/rules/rules.php" aria-label="MS Rules of Court" class="desktop1link">MS Rules of Court</a></li>            
+       <li><a href="/research/statelibrary/library.php" aria-label="State Library" class="desktoplink">State Library</a>
+       <ul>
+       <li><a href="/research/statelibrary/library.php" aria-label="State Library" class="desktop1link">State Library</a></li>
+	   <!--<li><a href="/research/statelibrary/st_lib_faqs.pdf" class="desktop1link">FAQ</a></li>-->
+	   <li><a href="/research/statelibrary/library faq.php" class="desktop1link">Library FAQ</a></li>
+       <li><a href="/research/statelibrary/history.php" class="desktop1link">History</a></li>
+       <li><a href="/research/statelibrary/holidays.php" class="desktop1link">Holidays</a></li>
+       <li><a href="/research/statelibrary/policies.php" class="desktop1link">Policies</a></li>
+       </ul>
+       </li>
+       </ul>
+       </li>
+       <!--<li><a href="/bar/baradmissions/baradmissions.php" aria-label="Bar Admissions" class="desktoplink">Bar</a>-->
+	   <li class="desktoplink">Bar
+       <ul>
+       <li><a href="/bar/baradmissions/baradmissions.php" aria-label="Bar Admissions" class="desktop1link">Bar Admissions</a></li>
+       <li><a href="/bar/barroll/barroll.php" class="desktop1link">Bar Roll</a></li>
+	   <li><a href="/cle_bccr/cle.php" aria-label="CLE" class="desktop1link">CLE</a></li>
+       </ul>
+       </li>
+       <!--<li><a href="" aria-label="News" >News</a>-->
+	   <li class="desktoplink">News
+       <ul>
+       <li><a href="/news/news.php" aria-label="News" class="desktop1link">News</a></li>
+       <li><a href="/news/newsletters/newsletters.php" aria-label="Newsletters" class="desktop1link">Newsletters</a></li>
+	   <li><a href="/news/forms/camnotice.pdf" target="_blank" aria-label="Camera Coverage Notice" class="desktop1link">Camera Coverage Notice</a></li>
+       <li><a href="/research/rules/msrulesofcourt/rules_electronicphotographic_coverage.pdf" target="_blank" aria-label="Camera Rules" class="desktop1link">Camera Rules</a></li>
+       </ul>
+       </li>
+       <!--<li><a href="/cle_bccr/cle.php" aria-label="Education" class="desktoplink">Education</a>-->
+	   <li class="desktoplink">Education
+       <ul>
+       <li><a href="/cle_bccr/cle.php" aria-label="CLE" class="desktop1link">CLE </a></li>
+       <li><a href="/cle_bccr/BCCR/bccr.php" aria-label="Board of Certified Court Reporters" class="desktop1link">Board of Certified Court Reporters</a></li>
+       <li><a href="http://mjc.olemiss.edu/" target="_blank" aria-label="Judicial College" class="desktop1link">Judicial College</a></li>
+	   <li><a href="/trialcourts/youthcourt/youthcourtvideos.php" class="desktop1link">Youth Court video tutorials</a></li>
+       <li><a href="https://www.msbar.org/inside-the-bar/young-lawyers-division/guardian-ad-litem-training-videos/gal-training-videos/" target="_blank" class="desktop1link">GAL Training Videos</a></li>
+	   
+       </ul>
+       </li>
+       <li class="desktoplink">LEGAL HELP
+       <ul>
+       <li><a href="http://www.msatjc.org/" aria-label="MS Access to Justice Commission (MSATJC)" class="desktop1link">MS Access to Justice Commission (MSATJC)</a></li>
+	   <li><a href="/Legal/CivilLegal.php" target="_blank" class="desktop1link">Civil Legal Assistance</a></li>
+	   <li><a href="/aoc/courtinterpreter/translations.php" target="_blank" aria-label="Translated Forms, Samples, and Documents" class="desktop1link">Translated Forms, Samples, and Documents</a></li>
+       <li><a href="/trialcourts/youthcourt/youthcourtvideos.php" target="_blank" class="desktop1link">Youth Court video tutorials</a></li>
+       </ul>
+       </li>
+       <li></li>
+       </ul>
+       </nav>       	<div class="wrapper">
+     	<div class="wrapper row4">
+     	<div class="rounded">
+		<footer id="footer2" class="clear">
+     	<img src="../../images_folder/demo/Gartin_COURTS2.jpg" alt="Gartin Building court room"/>
+     	</footer>
+		</div>
+     	</div>
+     	</div>
+     	
+     	<div class="wrapper row3">
+     	<div class="rounded">
+    	<main class="container clear"> 
+     	<!-- main body --> 
+     	<!-- ################################################################################################ -->
+     	<div class="group btmspace-30"> 
+     	<!-- InstanceBeginEditable name="sidebar" -->
+      		   	<div class="sidebar one_quarter first1">
+		<nav class="sdb_holder" style="color:#06213f;">
+		<!--<span>Supreme Court<hr></span>-->
+		<a href="../../appellatecourts/sc/sc.php">Supreme Court</a>
+		<a href="../../appellatecourts/sc/scdistricts.php" style="margin-left:15px;">Districts</a>
+		<a href="../../appellatecourts/sc/scjustices.php" style="margin-left:15px;">Justices</a>
+		<a href="../../appellatecourts/sc/scdecisions.php" style="margin-left:15px;">Decisions</a>
+		<a href="../../appellatecourts/sc/scdocketcalendar.php" style="margin-left:15px;">Docket Calendar</a>
+		<a href="../../index.php" target="_blank" style="margin-left:15px;">General Docket</a>
+		<a href="../../appellatecourts/sc/scoa.php" style="margin-left:15px;">Oral Argument Webcast</a>
+		<a href="../../appellatecourts/coa/coa.php" target="_self">Court of Appeals</a>
+		<a href="../../appellatecourts/clerk/clerk.php">Clerk of Appellate Courts</a>
+		</nav>
+		</div>      	<!-- InstanceEndEditable -->
+     	<!-- InstanceBeginEditable name="content" -->
+		<div class="two_third">
+		<!-- ################################################################################################ -->
+		<div class="mainheading"  style="font-size:24px;">
+		<div class="mainheading"  style="font-size:24px;">Mississippi Supreme Court Judicial Map</div>
+		<br> 
+		</div>
+		<div>
+		<!-- ################################################################################################ -->
+		<div class="mainheading"  style="font-size:24px;">
+		<p><br>
+		<img class="imgr" src="supremecourtdistrictsmap.jpg">            
+		</p>
+		</div>
+		<p align="justify" class="btmspace-15 contenttext"  > <font color="#455660"><strong><em>Supreme Court District 1</em></strong></font><br />
+		<strong>Counties:</strong> Bolivar, Claiborne, Copiah, Hinds, Holmes, Humphreys, Issaquena, Jefferson, Kemper, Lauderdale, Leake, Madison, Neshoba, Newton, Noxubee, Rankin, Scott, Sharkey, Sunflower, Warren, Washington, Yazoo <br />
+		<br />
+		<font color="#455660"><strong><em>Supreme Court District 2</em></strong></font><br />
+		<strong>Counties:</strong> Adams, Amite, Clarke, Covington, Forrest, Franklin, George, Greene, Hancock, Harrison, Jackson, Jasper, Jefferson Davis, Jones, Lamar, Lawrence, Lincoln, Marion, Pearl River, Perry, Pike, Simpson, Smith, Stone, Walthall, Wayne, Wilkinson<br />
+		<br />
+		<br />
+		<font color="#455660"><strong><em>Supreme Court District 3</em></strong></font><br />
+		<strong>Counties:</strong> Alcorn, Attala, Benton, Calhoun, Carroll, Chickasaw, Choctaw, Clay, Coahoma, Desoto, Grenada, Itawamba, Lafayette, Lee, Leflore, Lowndes, Marshall, Monroe, Montgomery, Oktibbeha, Panola, Pontotoc, Prentiss, Quitman, Tallahatchie, Tate, Tippah, Tishomingo, Tunica, Union, Webster, Winston, Yalobusha</p>
+		<hr style="border-top: dashed 1px;" />
+		<p align="left"><em> <span style="font-size: 14px">Pictured above is Mississippi's<br />
+		region map of its three grand divisions. <br />
+		Each judicial district is grouped by color.</span><br />
+		</em> </p>
+		</p>
+		<!-- ################################################################################################ -->
+		</div>
+		<p>&nbsp;</p>
+		<!-- ################################################################################################ -->
+		</div>
+		<!-- InstanceEndEditable -->
+     	<!-- / Middle Column --> 
+     	<!-- Right Column --><!-- / Right Column --> 
+     	</div>
+     	<!-- ################################################################################################ --> 
+     	<!-- / main body -->
+     	<div class="clear"></div>
+     	</main>
+     	<font color="#1E62B6">    </font>
+     	<font color="#1E62B6">    </font> </div>
+     	</div>
+     	<!-- ################################################################################################ --> 
+     	<div class="wrapper row4">
+     	<div class="rounded">
+     		   <footer id="footer" class="clear">
+       <!-- ################################################################################################ -->
+       <div class="one_third first">
+       <figure class="center"><img class="btmspace-15" src="/images_folder/demo/worldmap.png" alt="Flat World Map">
+       <figcaption><a href="https://www.google.com/maps/place/450+High+St,+Jackson,+MS+39201/@32.3056503,-90.1823121,17z/data=!3m1!4b1!4m2!3m1!1s0x8628325402ad740b:0x63eb30a84a741fde" target="_blank" style="color:#000000">Find Us With Google Maps &raquo;</a></figcaption>
+       </figure>
+       </div>
+       <div class="one_third">
+       <font color="#000000">
+       <address>
+       <strong>Physical Address: </strong><br>
+       Gartin Justice Building<br>
+       450 High Street<br>
+       Jackson, MS 39201<br>
+       <br>
+       <i class="fa fa-envelope-o pright-10" aria-hidden="true" alt="Mailing Envelope Icon"></i>   
+       <strong>Mailing Address:</strong> <br>
+       P O Box 249<br>
+       Jackson, MS 39205
+       </address>
+       </font>
+       </div>
+       <div class="one_third nospace">
+       <p class="nospace"><font color="#000000"><strong class="header">Resources</strong></font>
+       <address>
+       <a href="/map_visitorsguide.pdf" target="_blank" class="footerlink">Map &amp; Visitor's Guide</a><br>
+       <a href="/employment/employment.php" class="footerlink" aria-label="Employment Opportunities">Employment Opportunities</a><br>
+       <a href="/aoc/forms/personnelinfo.php" class="footerlink" aria-label="Employee Information and Forms">Employee Information and Forms</a><br>
+       <a href="/directory/directory.php" class="footerlink">Directories</a><br>
+	   <a href="/privacy_policy.php" class="footerlink">Privacy Policy</a><br>
+       
+       <br><strong><font color="#000000">
+       Clerk's Office</font></strong><br>
+       <i class="fa fa-phone pright-10" aria-hidden="true" alt="Telephone Handset Icon" style="color:#06213f;"></i><font color="#000000">  601-359-3694 | Fax: 601-359-2407<br/>
+       Hours: Monday - Friday 8:00am - 5:00pm</font>
+       </address>
+       </p>
+       </div>
+       </footer>       	</div>
+       	</div>
+    	
+<!-- JAVASCRIPTS --> 
+<script src="../../layout/scripts/jquery.min.js"></script> 
+<script src="../../layout/scripts/jquery.fitvids.min.js"></script> 
+<script src="../../layout/scripts/tabslet/jquery.tabslet.min.js"></script>
+</body>
+<!-- InstanceEnd --></html>

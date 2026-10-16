@@ -205,6 +205,20 @@ PROVENANCE = [
             "land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "nc-precincts.json",
+        "source_url": "https://services.nconemap.gov/secure/rest/services/NC1Map_Boundaries/MapServer/0",
+        "note": (
+            "North Carolina's 2,625 voting precincts from NC OneMap's copy of "
+            "the State Board of Elections' statewide file (matched to "
+            "SBE_PRECINCTS_20260824.zip by its counts), pre-built by "
+            "nc/scripts/build_nc_precincts.py through "
+            "scripts/statewide_precincts.py. The builder's --watch also lists "
+            "the Board's own folder for a newer zip, on the quarterly row in "
+            "nc/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -299,6 +313,16 @@ ENDPOINTS = [
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 1500,  # 1,668 measured 2026-09-29
     },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in nc/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://services.nconemap.gov/secure/rest/services/"
+                "NC1Map_Boundaries/MapServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2350,  # 2,625 records measured 2026-10-15
+    },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -324,14 +348,21 @@ def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/nc/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/mi/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/mi/)"}, label="nc-validate-sources")
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="nc-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/mi/)"},
+            headers={"User-Agent": ua},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

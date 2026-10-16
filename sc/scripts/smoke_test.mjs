@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "34.00035,-81.03295"; // the State House, Columbia, Richland County
-const OFFLINE = ["county", "us-house", "sc-senate", "sc-house", "county-council"];
-const EXPECT_DISTRICT = { "county": "Richland County", "us-house": "6", "sc-senate": "26", "sc-house": "72", "county-council": "4" };
+const OFFLINE = ["county", "us-house", "sc-senate", "sc-house", "county-council", "voting-precinct"];
+const EXPECT_DISTRICT = { "county": "Richland County", "us-house": "6", "sc-senate": "26", "sc-house": "72", "county-council": "4", "voting-precinct": "Ward 1" };
 const NEGATIVE_POINT = "33.75000,-82.55000"; // Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry South Carolina";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -792,6 +792,36 @@ try {
         props: { GEOID: "4503360", NAME: "Richland School District 1", STATE: "45" },
         want: [/Richland School District 1/],
         reject: [/Unified/]
+      },
+      // The level-14 map. Every South Carolina subdivision is a census county
+      // division (LSADC 22, FUNCSTAT S, measured 2026-10-15), so the card must
+      // say no one is elected from it, name its county from the app's own
+      // county file, and title it without TIGER's "CCD", since the card's
+      // header already says Census County Division. A status code the card
+      // does not carry prints no Government row rather than an improvised one.
+      {
+        name: "a census county division says no one is elected from it",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4507990702", NAME: "Columbia CCD", BASENAME: "Columbia", STATE: "45", COUNTY: "079", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Columbia/, /Richland County/, /no one is elected from it/, /no township governments/],
+        reject: [/\bCCD\b/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4507990702", NAME: "Columbia CCD", BASENAME: "Columbia", STATE: "45", COUNTY: "079", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Columbia/, /no functioning government/],
+        reject: [/draws to report its counts/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4507990702", NAME: "Columbia CCD", BASENAME: "Columbia", STATE: "45", COUNTY: "079", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Columbia/, /Richland County/],
+        reject: [/Government/]
       }
     ];
 

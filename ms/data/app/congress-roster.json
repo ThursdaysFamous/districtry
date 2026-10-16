@@ -1,0 +1,62 @@
+{
+  "1": {
+    "name": "Trent Kelly",
+    "party": "Republican",
+    "url": "https://trentkelly.house.gov",
+    "capitolOffice": [
+      "2243 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4306"
+    ],
+    "districtOffice": [
+      "318 N. 7th St., Suite D",
+      "Columbus, MS 39701",
+      "Phone: 662-327-0748"
+    ]
+  },
+  "2": {
+    "name": "Bennie G. Thompson",
+    "party": "Democrat",
+    "url": "https://benniethompson.house.gov",
+    "capitolOffice": [
+      "2466 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5876"
+    ],
+    "districtOffice": [
+      "107 W. Madison St.",
+      "Bolton, MS 39041",
+      "Phone: 601-866-9003"
+    ]
+  },
+  "3": {
+    "name": "Michael Guest",
+    "party": "Republican",
+    "url": "https://guest.house.gov",
+    "capitolOffice": [
+      "450 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5031"
+    ],
+    "districtOffice": [
+      "308 B East Government Street",
+      "Brandon, MS 39042",
+      "Phone: 769-241-6120"
+    ]
+  },
+  "4": {
+    "name": "Mike Ezell",
+    "party": "Republican",
+    "url": "https://ezell.house.gov",
+    "capitolOffice": [
+      "443 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5772"
+    ],
+    "districtOffice": [
+      "641 Main Street, Suite 142",
+      "Hattiesburg, MS 39401",
+      "Phone: 601-582-3246"
+    ]
+  }
+}

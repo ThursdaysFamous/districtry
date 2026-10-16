@@ -2,10 +2,10 @@
 
 Every page here was read on 2026-10-01 with the fleet's roster token, after
 its host's robots.txt; each parser's docstring names the page structure it was
-written against and the trap it guards. Dearborn Heights is not in the table:
-its council page names six people and says nothing about a seventh seat, and
-the only statement of the vacancy is a time-limited News Flash (2026-09-22,
-appointment vote 2026-10-13), so the page cannot be read as a whole council.
+written against and the trap it guards. Dearborn Heights joined on
+2026-10-15: until the council filled its vacant seat on 2026-10-13 its page
+named six people and said nothing about a seventh, so it could not be read as
+a whole council. Its parser refuses any count but seven for that reason.
 """
 
 import json
@@ -618,6 +618,25 @@ def parse_lansing(h, also):
     return {"members": members}
 
 
+def parse_dearborn_heights(h, also):
+    """CivicPlus h-card widget headed "Members": seven cards, each a name, a
+    job title that is blank for an ordinary member ("Council Chair" and
+    "Council Chair Pro Tem" otherwise) and a "More Information" link. No
+    per-member contact on the page. TRAP: from 2026-09-22 to 2026-10-13 the
+    page named six members and said nothing about the vacant seventh seat, so
+    a count below seven is a vacancy the page does not state, never a smaller
+    council; the parser refuses it rather than shipping six as the whole
+    council."""
+    members = []
+    for name, title, b in _hcards(h):
+        role = title or "Council Member"
+        if role not in ("Council Chair", "Council Chair Pro Tem", "Council Member"):
+            raise ValueError("Dearborn Heights: unexpected title %r for %r" % (title, name))
+        members.append(member(name, role))
+    _expect("Dearborn Heights", members, 7)
+    return {"members": members}
+
+
 UNITS = [
     {"geoid": "2684000", "name": "Warren", "kind": "city", "body": "City Council",
      "url": "https://www.cityofwarren.org/government/city-council/city-council-members/",
@@ -631,6 +650,9 @@ UNITS = [
     {"geoid": "2621000", "name": "Dearborn", "kind": "city", "body": "City Council",
      "url": "https://dearborn.gov/government/city-council/meet-city-council",
      "seats": 7, "parse": parse_dearborn},
+    {"geoid": "2621020", "name": "Dearborn Heights", "kind": "city", "body": "City Council",
+     "url": "https://www.dearbornheightsmi.gov/231/City-Council",
+     "seats": 7, "parse": parse_dearborn_heights},
     {"geoid": "2649000", "name": "Livonia", "kind": "city", "body": "City Council",
      "url": "https://www.livonia.gov/1653/City-Council",
      "seats": 7, "parse": parse_livonia},

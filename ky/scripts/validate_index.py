@@ -88,7 +88,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 4
+MIN_REGISTER_LAYER = 6
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -97,7 +97,8 @@ MIN_REGISTER_LAYER = 4
 EXPECT_LAYER_IDS = [
     "us-house", "ky-supreme-court", "ky-court-of-appeals", "ky-senate",
     "ky-circuit-court", "ky-district-court", "ky-house", "county",
-    "school-district-unified", "municipality", "school-district-elementary",
+    "school-district-unified", "county-subdivision", "fiscal-court",
+    "voting-precinct", "municipality", "school-district-elementary",
     "school-district-secondary",
 ]
 
@@ -111,6 +112,8 @@ GEOMETRY_FILES = {
     "ky-supreme-court-districts.json": (7, 7),  # The 7 Supreme Court districts of KRS 21A.010, dissolved from the county fabric. The Court of Appeals layer draws this same file: KRS 22A.010(2) gives it the Supreme Court's districts.
     "ky-circuit-court-districts.json": (57, 57),  # The 57 judicial circuits of KRS 23A.020, dissolved from the county fabric.
     "ky-district-court-districts.json": (59, 59),  # The 59 judicial districts of KRS 24A.030, dissolved from the county fabric. A second version is already enacted for 2031-01-01, taking it to 58; WATCH.md carries the row.
+    "ky-county-districts.json": (300, 360),  # Magisterial and council districts, built by ky/scripts/build_ky_county_districts.py from the State Board of Elections' precinct map and recap sheets and from Louisville's and Lexington's council maps; its --check holds the file to its source record and each drawn county to its Census outline.
+    "ky-precincts.json": (3194, 3194),  # Every Kentucky voting precinct, pre-built by ky/scripts/build_ky_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 3,194 count on the fetch and the drawn file). 10.2 MB, 2.49 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).

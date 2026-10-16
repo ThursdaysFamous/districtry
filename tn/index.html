@@ -4216,21 +4216,23 @@ function initTennesseeExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "tn-senate": "tns", "county": "co", "tn-house": "tnh",
-    "school-district-unified": "su", "county-commissioner": "cm", "zip-code": "zp",
-    "school-district-elementary": "se", "school-district-secondary": "sh", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "county-commissioner": "cm", "county-subdivision": "cs",
+    "zip-code": "zp", "school-district-elementary": "se", "school-district-secondary": "sh",
+    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["tn-senate"],
     "state-house": ["tn-house"], "county": ["county"], "county-board": ["county-commissioner"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4293,7 +4295,9 @@ function initTennesseeExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -9378,10 +9382,13 @@ function initTennesseeExplorer() {
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
     "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
+    "county-subdivision", // 855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
     "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
     "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
     "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
+    "voting-precinct",   // 1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)
     "municipality",      // 345 incorporated places, live from TIGERweb
+    "tribal-government", // Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13720,16 +13727,6 @@ function initTennesseeExplorer() {
     }
   });
 
-  /* No county-subdivision layer, on purpose. Tennessee has no township
-   * government, and every one of the 855 county subdivisions TIGERweb
-   * carries for STATE='47' is a civil district ("District N", LSADC 28,
-   * FUNCSTAT N, measured 2026-10-10). The Census Bureau codes FUNCSTAT N as
-   * a legal area with no functioning government: nobody is elected to run
-   * one, so a card for it would name an area that answers to nobody. The
-   * numbers look like county commission district numbers, and nothing in
-   * the Census record says the two are the same lines. Recorded in
-   * tn/CLAUDE.md. */
-
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Franklin" + " city") or a prefix. Returns null when the two are equal or
   // unrelated, so a TIGER change shows up as a missing type row rather than
@@ -13743,6 +13740,226 @@ function initTennesseeExplorer() {
     if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
     return null;
   }
+
+  /* ---------- Civil District — live TIGERweb, the level-14 map ----------
+   * Which county subdivision a point is in, owed in every state whether or
+   * not the units govern anyone (docs/DONE_STANDARD.md, level 14, Adam's
+   * ruling of 2026-10-14). Every one of the 855 county subdivisions
+   * TIGERweb carries for STATE='47' is a civil district ("District N",
+   * LSADC 28, FUNCSTAT N, measured 2026-10-15): a legal division of the
+   * county that the Census codes as having no functioning government, so
+   * nobody is elected to run one. That was the reason this layer was
+   * skipped until now, with a second one that still stands: a civil
+   * district's number looks like a county commission district's, and
+   * nothing in the Census record says the two are the same lines. So the
+   * card says both things in words. It titles the unit "Civil District N"
+   * rather than TIGER's bare "District N", says it has no government, and
+   * says its number is not the commission district, pointing at that
+   * layer. The Government row is read from the Census's own
+   * functional-status code, so a FUNCSTAT this card does not know prints no
+   * row rather than an improvised one. It does not mention constables:
+   * Tennessee elects them from districts each county commission sets, and
+   * nothing here has measured which counties still use the civil districts
+   * for that. North Carolina's layer, point-first through
+   * tigerStatewideLoader; the statewide set is 28.9 MB at
+   * geometryPrecision=5 and downloads only when the layer is on. ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // "Civil District 7" for TIGER's "District 7", so neither the card nor the
+  // hover row can be read as a commission district; any other name TIGER
+  // carries is shown as it stands.
+  function subdivisionTitle(props) {
+    var name = findPropCI(props, ["name"]), base = findPropCI(props, ["basename"]);
+    if (subdivisionKind(name, base) === "district" && base != null && String(base) !== "") {
+      return "Civil District " + String(base);
+    }
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Civil District",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return subdivisionTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: subdivisionTitle(props),
+          civil: subdivisionKind(findPropCI(props, ["name"]),
+            findPropCI(props, ["basename"])) === "district",
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title != null ? result.title : "Unknown civil district",
+        note: result.county
+      }));
+      var rows = [];
+      if (result.funcstat != null && String(result.funcstat) === "N") {
+        rows.push({
+          label: "Government",
+          value: result.civil
+            ? "None. A civil district is a legal division of a Tennessee " +
+              "county, and the U.S. Census Bureau records it as having no " +
+              "functioning government: no one is elected to run it."
+            : "None. The U.S. Census Bureau records this area as having no " +
+              "functioning government, and no one is elected to run it."
+        });
+      }
+      // only for a civil district, the one shape whose number can be
+      // mistaken for a commission district's
+      if (result.civil) rows.push({
+        label: "Not a commission district",
+        value: "This number belongs to the civil district, not to a county " +
+          "commission district. The County Commission District layer shows " +
+          "which commission district this point is in."
+      });
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    }
+  });
+
+  /* ---------- Voting precinct — the Comptroller's statewide layer ----------
+   * Tennessee's 1,870 precincts from the Comptroller of the Treasury's
+   * Voter District Lookup layer; the Comptroller does the map work for the
+   * counties and each county election commission sets its precincts.
+   * Pre-built by tn/scripts/build_tn_precincts.py through
+   * scripts/statewide_precincts.py (Douglas-Peucker at 8 m;
+   * data/app/tn-precincts.json, same-origin), so a click is answered in the
+   * browser and no point is sent anywhere.
+   *
+   * A PRECINCT ELECTS NO ONE TO PUBLIC OFFICE, so the card has no
+   * officeholder row to be missing and says why. Names are printed as the
+   * counties write them, and some include a polling place, which may have
+   * moved since (inferred, not measured), so the card sends a reader to the
+   * county election commission for where to vote. Davidson's eight small
+   * pieces named only as "Precinct Created by Split CCD & Senate Districts"
+   * get a card saying the state's map does not name their precinct, rather
+   * than being called part of no precinct, which would be false. The card
+   * does not spell out "CCD": the same service carries County Commission
+   * District layers and no census-division layer, so it most likely means a
+   * county commission district (inferred from the service's layer list,
+   * 2026-10-15), and the card needs only the label's own words.
+   * ---------- */
+  var loadTnPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-precincts.json", {}, 2);
+  });
+
+  // A precinct elects no one to public office, so the card says so rather
+  // than leaving a reader to wonder which name is missing.
+  var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
+    "and how your ballots are reported, not a district with a representative of its own.";
+
+  // The card's title: a name that is only a number reads "Precinct 0908", so
+  // it cannot be taken for a district number; one of Davidson's eight small
+  // pieces the Comptroller's map leaves unnamed says so; any other name is
+  // printed as the state publishes it.
+  function precinctTitle(props) {
+    if (props.unnamed) return "Unnamed piece of a precinct";
+    var name = props.name != null ? String(props.name).trim() : "";
+    if (!name) return null;
+    return /^[0-9][0-9-]*$/.test(name) ? "Precinct " + name : name;
+  }
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadTnPrecincts,
+      // the finest tiling on this map: a light stroke, so it reads under the
+      // broader boundaries rather than competing with them
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return precinctTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadTnPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: precinctTitle(props),
+          unnamed: props.unnamed === true,
+          county: props.county != null ? String(props.county) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title || "Unknown precinct",
+        note: result.county
+      }));
+      var rows = [];
+      if (result.unnamed) {
+        rows.push({
+          label: "Which precinct",
+          value: "The state's map does not name the precinct this small area belongs to. It " +
+            "labels the area only as a piece created where district lines split a precinct. " +
+            "Your county election commission can tell you which precinct you vote in."
+        });
+      }
+      rows.push({ label: "Who it elects", value: PRECINCT_ELECTS });
+      rows.push({
+        label: "Where to vote",
+        value: "Your county election commission sets where each precinct votes. A precinct's " +
+          "name can include a place people voted at when it was named, which may not be where " +
+          "you vote now."
+      });
+      rows.push({
+        label: "How exact this line is",
+        value: "The Comptroller of the Treasury keeps this map for the county election " +
+          "commissions, which set the precincts. The lines are drawn here to within 8 metres; " +
+          "for a definitive answer, ask your county election commission."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Check your voter registration",
+        url: "https://tnmap.tn.gov/voterlookup/"
+      };
+    }
+  });
 
   /* ---------- 5. City or Town — live TIGERweb, incorporated places ----------
    * Tennessee incorporates cities and towns under several charters, and the
@@ -13855,6 +14072,111 @@ function initTennesseeExplorer() {
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
     }
+  });
+
+  /* ---------- Tribal Government — Tennessee's tribal land, 1 piece, one nation.
+   *
+   * The Tennessee part of the Mississippi Choctaw Off-Reservation Trust
+   * Land, near Henning in Lauderdale County, held by the Mississippi Band of
+   * Choctaw Indians, which is seated in Choctaw, Mississippi. About 4% of
+   * that trust land lies in Tennessee; the rest is in Mississippi, which this
+   * fleet does not cover yet. No tribal subdivision is drawn on it.
+   *
+   * WHO THE CARD NAMES. The Tribal Chief and the 17-member Tribal Council,
+   * from the nation's own Tribal Government page at choctaw.org. Each
+   * council member is elected from one of the nation's eight communities in
+   * Mississippi, named beside them; none is elected from this land.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling of
+   * 2026-09-30, a government answers for that ground, so a reader who clicks
+   * it should be told which one.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadTnTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadTnTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Tribal Chief and Tribal Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Tennessee has 1 tribal area, the Mississippi Band of Choctaw Indians' trust land near Henning in Lauderdale County, and this point is not on it."
   });
 
   /* ---------- 6-8. School District (Unified / Elementary / Secondary) ----------
@@ -15754,7 +16076,7 @@ function initTennesseeExplorer() {
     "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
-    "county", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16237,12 +16559,13 @@ function initTennesseeExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#77BBFD",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5",
-    "#6B7280": "#B1BBCE", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA",
-    "#D19133": "#FED7A7"};
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
