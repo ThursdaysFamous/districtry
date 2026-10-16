@@ -1680,7 +1680,25 @@ jobs:
           # this tree, 4,244 server lines against 785 from the probes, 76% of
           # them repeat fetches of six font files. It is still kept, and still
           # printed — on failure, below, which is the only time it says anything.
-          python3 -m http.server 8000 > /tmp/http-server.log 2>&1 &
+          #
+          # The server is http.server with ONE change: a listen queue of 1024
+          # instead of the 5 socketserver uses. Three browsers loading pages at
+          # once open far more than five connections at a time, and http.server
+          # speaks HTTP/1.0, so every request is a new connection. A connection
+          # that finds the queue full is dropped without a reply, and the
+          # browser waits 1, then 3, 7, 15 and 31 seconds before trying again,
+          # which is how a page on localhost came to miss page.goto's
+          # 30-second limit with nothing in the server's log: #1530, #1547 and
+          # #1553 in three days, never on an assertion. Measured 2026-10-16 in
+          # the sandbox, 1,500 requests at once against the stock server: 1,250
+          # connections dropped and the slowest answered in 8.8s; with a queue
+          # of 1024, none dropped and the slowest took 1.3s. Everything else is
+          # the stock server, run through runpy so its command line is
+          # unchanged. The count of dropped connections is printed after the
+          # gates, so a run shows whether this is still happening.
+          listen_overflows() { awk '/^TcpExt:/ { if (!h) { split($0, k); h = 1 } else { split($0, v); for (i in k) if (k[i] == "ListenOverflows") print v[i]; exit } }' /proc/net/netstat; }
+          overflows_before=$(listen_overflows)
+          python3 -c 'import runpy, socketserver, sys; socketserver.TCPServer.request_queue_size = 1024; sys.argv = ["http.server", "8000"]; runpy.run_module("http.server", run_name="__main__", alter_sys=True)' > /tmp/http-server.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for i in $(seq 1 40); do
@@ -1696,8 +1714,9 @@ jobs:
           # would only move the date it is hit again. The runner has four
           # cores, no gate shares a port or writes a file another reads, and
           # http.server answers each request on its own thread. If parallel
-          # runs ever make a gate flaky, lower BROWSER_GATE_JOBS rather than
-          # adding sleeps or retries.
+          # runs ever make a gate flaky, first read the dropped-connection
+          # count printed below; if it is zero, lower BROWSER_GATE_JOBS rather
+          # than adding sleeps or retries.
           #
           # The list below is read by validate_gate_counts.py,
           # validate_steward_mirror.py and validate_instance_registration.py,
@@ -1837,5 +1856,6 @@ jobs:
             fi
           done
           echo "browser gates: $n run, $BROWSER_GATE_JOBS at a time, $(( $(date +%s) - started ))s wall"
+          echo "connections dropped for a full listen queue during the gates: $(( $(listen_overflows) - overflows_before ))"
 
           exit $status
