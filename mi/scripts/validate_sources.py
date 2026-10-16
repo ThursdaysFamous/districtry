@@ -435,6 +435,53 @@ PROVENANCE = [
     },
     {
         "layer": "city-ward",
+        "app_file": "mi-pontiac-wards.json",
+        "source_url": ("https://services1.arcgis.com/GE4Idg9FL97XBa3P/arcgis/rest/services/"
+                       "Adult_Use_Marihuana_Overlay_District/FeatureServer/0"),
+        "note": (
+            "Pontiac's six 2026 council districts, from Oakland County's public item "
+            "'Council Districts' (the service name is the county's licensing-review name), "
+            "pre-built by mi/scripts/build_mi_pontiac_wards.py. The district is in the "
+            "`Zoning` field. The licence field is a disclaimer quoted on the card; the build "
+            "refuses if it changes. Gate: the 'lines' rule against the state's 2026 "
+            "precincts (99.75% when built) plus the Census tiling gate."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-midland-wards.json",
+        "source_url": "https://arcgis1.midland-mi.org/arcgis/rest/services/Miscellaneous/MapServer/7",
+        "note": (
+            "Midland's five council wards, from the city's own ArcGIS Server, ten "
+            "precincts dissolved by WARD; pre-built by mi/scripts/build_mi_midland_wards.py. "
+            "Layer 7 is named 'Council Wards' and the build refuses if the index moves. "
+            "Only WARD is read; the layer's councilman, address and phone fields are not."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-muskegon-wards.json",
+        "source_url": ("https://maps.muskegoncountygis.com/arcgis/rest/services/City_of_Muskegon/"
+                       "City_of_Muskegon_Commission_Districts/MapServer/2"),
+        "note": (
+            "Muskegon's four commission wards, from Muskegon County's public ward-lookup "
+            "service; pre-built by mi/scripts/build_mi_muskegon_wards.py. The service states "
+            "no terms, and the build refuses if it starts to."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-holland-wards.json",
+        "source_url": "https://www.cityofholland.com/DocumentCenter/View/605/Wards-and-Precincts",
+        "note": (
+            "Holland's six council wards, read from the city's own georeferenced Wards and "
+            "Precincts map PDF (ArcGIS Pro export, 2025-12-01) by "
+            "mi/scripts/build_mi_holland_wards.py. A new edition at the same address is "
+            "re-read on the next build; the build refuses if the sheet starts stating terms."
+        ),
+    },
+    {
+        "layer": "city-ward",
         "app_file": "mi-jackson-council-members.json",
         "source_url": "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager",
         "note": (

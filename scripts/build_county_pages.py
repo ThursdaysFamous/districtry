@@ -3572,6 +3572,13 @@ NOT_COUNTY_BOARDS = {
         date="2026-09-13",
         reason="municipal clerks, 1,850 of them. Municipal, not county.",
     ),
+    "wi/data/app/wi-town-boards.json": dict(
+        date="2026-10-15",
+        reason="Wisconsin TOWN boards, a chairperson and supervisors per town, "
+               "read from each county's own directory. A town is a unit below "
+               "the county, not the county board, which is the same reason "
+               "il township-officials.json is recorded here.",
+    ),
     "wi/data/app/wi-municipal-boards.json": dict(
         date="2026-10-01",
         reason="the governing body of the Wisconsin municipalities that elect "
@@ -3615,6 +3622,14 @@ NOT_COUNTY_BOARDS = {
                "in-county-commissioners.json. The council's members are named "
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
+    ),
+    "in/data/app/in-township-officials.json": dict(
+        date="2026-10-15",
+        reason="Indiana's township trustees and township boards, about a "
+               "thousand townships' own governments rather than any county's. "
+               "These pages are one per county board; a township is a "
+               "different government below the county, and the app names its "
+               "trustee and board on its own Township card.",
     ),
     "ms/data/app/ms-county-officials.json": dict(
         date="2026-10-15",
