@@ -1848,9 +1848,10 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # One piece of off-reservation trust land, 0.695 km2 near Henning; the
-        # fleet-wide tribal-government thread owns it.
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
+        # Mississippi Band of Choctaw Indians' trust land near Henning, named
+        # with the nation's Tribal Chief and Tribal Council.
+        "tribal-government": answers("tribal-government"),
     },
     # Arkansas, added at its go-live with the national tier and the quorum
     # court layer.

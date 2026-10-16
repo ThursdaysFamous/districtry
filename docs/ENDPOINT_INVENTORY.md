@@ -144,7 +144,7 @@ prose.
 | nc | 4 | 12 |
 | ok | 4 | 13 |
 | sc | 3 | 12 |
-| tn | 5 | 13 |
+| tn | 5 | 14 |
 | ar | 3 | 11 |
 
 ### Where each layer's shapes come from
@@ -350,7 +350,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `tribal-government`.
 
-#### tn — 5 of 13 layers fetch their shapes
+#### tn — 5 of 14 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -362,6 +362,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `tn-senate`, `county`, `tn-house`, `county-commissioner`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
 
 #### ar — not measured
 
@@ -381,9 +382,9 @@ measured until the next run describes it.
 | nc | 17 | 11 | 0 |
 | ok | 17 | 12 | 0 |
 | sc | 17 | 13 | 0 |
-| tn | 17 | 11 | 0 |
+| tn | 18 | 13 | 0 |
 | ar | 17 | 11 | 0 |
-| **total** | **528** | **942** | **12** |
+| **total** | **529** | **944** | **12** |
 
 **150 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
