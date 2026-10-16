@@ -15334,6 +15334,19 @@ function initChiExplorer() {
       return !!findFeatureContaining(geojson, point);
     });
   }
+  /* Macoupin's nine board districts are the county's OWN published layer
+   * (GIS_Layers layer 3, behind its property map), witnessed by the Census 2020
+   * voting districts nesting in it and by the county's Citizen's Guide precinct
+   * list (scripts/build_macoupin_board_districts.py). The members are the
+   * County Clerk's elected-officials directory, read from the service its page
+   * fills itself from: two per district, the year each seat is next on the
+   * ballot, and the page's own mark for an appointee. */
+  var loadMacoupinBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/macoupin-county-board-districts.json", {}, 2);
+  });
+  var loadMacoupinBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/macoupin-county-board-members.json", {}, 2);
+  });
   var loadMadisonCountyOutline = makeCached(function () {
     return fetchJSONWithRetry("data/app/madison-county-outline.json", {}, 2);
   });
@@ -15990,6 +16003,26 @@ function initChiExplorer() {
   });
   var loadChristianBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/christian-county-board-members.json", {}, 2);
+  });
+  /* Ford (2026-10-15) — three board districts of four members, dissolved
+   * from the 22 Census 2020 voting districts per Res. 21-101, the county's
+   * 2021 plan, whose own table matches every precinct and district population
+   * to the person (build_ford_boundaries.py). The twelve members come from
+   * the County Clerk's letter of 2026-10-01, because the county's board page
+   * sits behind a JavaScript challenge (build_ford_county_board.py). */
+  var loadFordCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ford-county-outline.json", {}, 2);
+  });
+  function fordCountyCoverage(point) {
+    return loadFordCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadFordBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ford-county-board-districts.json", {}, 2);
+  });
+  var loadFordBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ford-county-board-members.json", {}, 2);
   });
   /* Jackson (the 87th county, 2026-08-23) — the first county served whose board
    * districts SPLIT precincts. Its own certified 2024 General canvass reports
@@ -22326,6 +22359,30 @@ function initChiExplorer() {
     });
   });
 
+  /* Danville's seven wards (Vermilion, 2026-10-15) on the CITY's own ArcGIS
+   * server, whose item description calls the layer "the authoritative
+   * geographic boundaries for the seven (7) corporate municipal wards". Layer 2
+   * is the polygons (`ward_id` "Ward 1".."Ward 7"); the service's table 1 also
+   * carries the fourteen aldermen, and is read NOWHERE: the two aldermen per
+   * ward join from the shipped roster (the city's own council page), which
+   * agreed with that table name for name on the day this was written. Measured
+   * against the Census place polygon the wards leave 1.64% of the city
+   * uncovered and draw 1.07% outside it, in 196 and 186 slivers whose largest is
+   * 0.07 km2: two drawings of one city limit, not a missing ward. An older copy
+   * on the county's org (Danville_Wards, last edited 2024-02) is not used. */
+  var DANVILLE_WARD_SERVICE = "https://gis.cityofdanville.org/arcgis/rest/services/" +
+    "Hosted/Ward_Boundaries/FeatureServer/2";
+  var loadDanvilleWards = makeCached(function () {
+    return loadArcGISGeoJSON(DANVILLE_WARD_SERVICE).then(function (geojson) {
+      var out = (geojson.features || []).map(function (f) {
+        var num = /(\d+)/.exec(String(findPropCI(f.properties || {}, ["ward_id"]) || ""));
+        return wardFeature(f, "Danville", "Ward", num ? num[1] : null);
+      });
+      if (!out.length) throw new Error("Danville ward layer returned no wards");
+      return { type: "FeatureCollection", features: out };
+    });
+  });
+
   /* St. Clair's two ward-electing cities ride the county's own voting-
    * districts service (layers 13 and 14). Belleville's layer publishes NINE
    * polygons for eight wards — one is a centimeter-scale sliver duplicating
@@ -22774,6 +22831,7 @@ function initChiExplorer() {
       municipalWardEntry("lincoln", loadLincolnWards),
       municipalWardEntry("springfield", loadSpringfieldWards),
       municipalWardEntry("freeport", loadFreeportWards),
+      municipalWardEntry("danville", loadDanvilleWards),
       municipalWardEntry("st-clair-cities", loadStClairCityWards),
       municipalWardEntry("whiteside-cities", loadWhitesideWards),
       municipalWardEntry("peoria-city", loadPeoriaCityDistricts),
@@ -27476,6 +27534,78 @@ function initChiExplorer() {
           }
         }
       },
+      // Macoupin — 9 districts of TWO members each (18 seats), drawn from the
+      // county's own Board Districts layer, which the 2005-2021 precinct
+      // fabric nests in exactly as Ordinance O-2021.06 writes the plan. The
+      // roster is the County Clerk's directory; the Chair holds a District 5
+      // seat and is marked on it. Two members carry the directory's mark for
+      // an appointee filling an unexpired term, which rides their row.
+      {
+        key: "macoupin",
+        coverage: macoupinCountyCoverage,
+        loadGeometry: loadMacoupinBoardDistricts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["district"]);
+          return (v == null || v === "") ? null : "District " + String(v);
+        },
+        query: function (point, seq) {
+          return Promise.all([
+            featureSetAt(loadMacoupinBoardDistricts, point),
+            loadMacoupinBoardMembers().catch(function () { return null; })
+          ]).then(function (results) {
+            var feature = findFeatureContaining(results[0], point);
+            if (!feature) return null;
+            var district = findPropCI(feature.properties || {}, ["district"]);
+            var roster = results[1];
+            return {
+              seq: seq,
+              district: district == null ? null : String(district),
+              entry: (roster && district != null) ? roster[String(district)] : null,
+              rosterLoaded: !!roster
+            };
+          });
+        },
+        render: function (result) {
+          var members = (result.entry && result.entry.members) || [];
+          var wrap = cardEl("div", "card-flush");
+          wrap.appendChild(renderBodyIntro({
+            title: "Macoupin County Board",
+            note: result.rosterLoaded
+              ? boardCountNote(members.length, null)
+              : "The member list could not be loaded just now."
+          }));
+          if (members.length) {
+            wrap.appendChild(renderPersonRows(members.map(function (m) {
+              var p = boardMemberPerson(m);
+              var extra = municipalNote(
+                m.appointed ? "Appointed to fill an unexpired term" : null,
+                municipalTermNote(m));
+              if (extra) p.note = p.note ? p.note + " · " + extra : extra;
+              return p;
+            })));
+          }
+          return wrap;
+        },
+        cardIdentifier: function (result) {
+          return result.district ? "District " + result.district : null;
+        },
+        primaryLink: function () {
+          return {
+            label: "Macoupin County Clerk — Elected Officials (official)",
+            url: "https://www.macoupinvotes.gov/election-results/elected-officials/"
+          };
+        },
+        hoverOfficial: {
+          load: loadMacoupinBoardMembers,
+          name: function (feature, roster) {
+            if (!roster) return null;
+            var d = findPropCI(feature.properties || {}, ["district"]);
+            var e = d == null ? null : roster[String(d)];
+            if (!e || !e.members || !e.members.length) return null;
+            return e.members.map(function (m) { return m.name; }).join(", ");
+          }
+        }
+      },
       // Clark — 7 SINGLE-member districts, dissolved from the Census 2020
       // voting districts per a composition the county's own certified
       // canvasses state three times over (build_clark_boundaries.py). The
@@ -29471,6 +29601,79 @@ function initChiExplorer() {
         },
         hoverOfficial: {
           load: loadChristianBoardMembers,
+          name: function (feature, roster) {
+            if (!roster) return null;
+            var d = findPropCI(feature.properties || {}, ["district"]);
+            var e = d != null ? roster[String(d)] : null;
+            if (!e || !e.members || !e.members.length) return null;
+            return e.members.map(function (m) { return m.name; }).join(", ");
+          }
+        }
+      },
+      // Ford — 3 districts of FOUR members each (12 seats, staggered), whole
+      // precincts per Exhibit A of Res. 21-101, dissolved from the 22 Census
+      // 2020 voting districts (build_ford_boundaries.py). Patton 3 is drawn in
+      // District 1, as the plan's text, table and map all place it. The twelve
+      // members and the two officers come from the County Clerk's letter of
+      // 2026-10-01; the county's board page sits behind a JavaScript challenge.
+      {
+        key: "ford",
+        coverage: fordCountyCoverage,
+        loadGeometry: loadFordBoardDistricts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["district"]);
+          return (v == null || v === "") ? null : String(v);
+        },
+        query: function (point, seq) {
+          return Promise.all([
+            featureSetAt(loadFordBoardDistricts, point),
+            loadFordBoardMembers().catch(function () { return {}; })
+          ]).then(function (results) {
+            var feature = findFeatureContaining(results[0], point);
+            if (!feature) return null;
+            var props = feature.properties || {};
+            var district = findPropCI(props, ["district"]);
+            return {
+              seq: seq,
+              district: district,
+              precincts: findPropCI(props, ["precincts"]),
+              entry: district != null ? results[1][String(district)] : null
+            };
+          });
+        },
+        render: function (result) {
+          var members = (result.entry && result.entry.members) || [];
+          var wrap = cardEl("div", "card-flush");
+          wrap.appendChild(renderBodyIntro({
+            title: "Ford County Board",
+            note: members.length
+              ? boardCountNote(members.length, null)
+              : "Four members represent this district."
+          }));
+          if (members.length) {
+            wrap.appendChild(renderPersonRows(members.map(boardMemberPerson)));
+            wrap.appendChild(renderFieldStack([{
+              label: "Source",
+              value: "The board's members by district, sent by the County "
+                + "Clerk on " + String(result.entry.verified || "") + "."
+            }]));
+          }
+          if (result.precincts && result.precincts.length) {
+            wrap.appendChild(renderFieldStack([
+              { label: "Precincts", value: result.precincts.join(", ") }
+            ]));
+          }
+          return wrap;
+        },
+        cardIdentifier: function (result) {
+          return result.district != null && result.district !== ""
+            ? "District " + String(result.district) : null;
+        },
+        primaryLink: function () {
+          return { label: "Ford County Board (official)", url: "https://fordcounty.illinois.gov/ford-county-board/" };
+        },
+        hoverOfficial: {
+          load: loadFordBoardMembers,
           name: function (feature, roster) {
             if (!roster) return null;
             var d = findPropCI(feature.properties || {}, ["district"]);

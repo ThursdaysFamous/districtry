@@ -11531,7 +11531,50 @@
     "sourceUrl": "https://www.mchenrycountyil.gov/county-government/county-yearbook/cities-villages"
   },
   "1732018": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Cheryl Ross",
+        "role": "Trustee",
+        "termExpires": "2027"
+      },
+      {
+        "district": "At Large",
+        "name": "Greg Garner",
+        "role": "Trustee",
+        "termExpires": "2027"
+      },
+      {
+        "district": "At Large",
+        "name": "Karen Thorstenson",
+        "role": "Trustee",
+        "termExpires": "2029"
+      },
+      {
+        "district": "At Large",
+        "name": "Kevin Woodside",
+        "role": "Trustee",
+        "termExpires": "2029"
+      },
+      {
+        "district": "At Large",
+        "name": "Liliana Ware",
+        "role": "Trustee",
+        "termExpires": "2027"
+      },
+      {
+        "district": "At Large",
+        "name": "Quin O'Brien",
+        "role": "Trustee",
+        "termExpires": "2027"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Thomas B. Hood",
+      "role": "Mayor",
+      "termExpires": "2029"
+    },
     "name": "Village of Gurnee",
     "office": {
       "address": "325 N O'Plaine Rd, Gurnee IL 60031",
