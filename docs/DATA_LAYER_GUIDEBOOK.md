@@ -64,7 +64,8 @@ in the researched-but-unbuilt backlog.
   "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "municipality", "police-station", "fire-station", "post-office"]
+  "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "municipality", "police-station", "fire-station", "post-office"],
+  "mississippi": ["us-house", "ms-senate", "county", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3438,6 +3439,44 @@ trusted.
             "why": "Arkansas's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-13 against TIGERweb's School service for STATE='05': 234 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 75-county total (134,659 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. The planning pass on 2026-10-09 read that the state maps board zones for 176 of its 238 school districts, that whether the other 62 elect at large is NOT measured, and that the state's school directory (adedata.arkansas.gov) lists no board members. Four of the state's 238 districts have no national code, so the Census's 234 is not a miscount. Not attempted in this change."
+      }
+  ],
+  "mississippi": [
+      {
+            "id": "ms-supervisor-district-lines",
+            "concept": "County supervisor district",
+            "area": "Mississippi — the 70 counties whose current supervisor district lines are not confirmed",
+            "counties": [],
+            "kind": "data-quality",
+            "layer": "county-supervisor",
+            "summary": "In 70 of Mississippi's 82 counties this app names all five supervisors but cannot show which one represents the spot you picked, because it has no confirmed map of the current district lines there.",
+            "why": "The Census Bureau's map still carries older lines in most counties, and no statewide map of the current ones has been found. Old lines would name the wrong supervisor for many people, so none are drawn there.",
+            "wanted": "Each county's current supervisor district map, or one statewide map of every county's current lines from a state office.",
+            "blocker": "Measured 2026-10-15 across all 82 counties by ms/scripts/build_ms_supervisor_districts.py --survey. The Census carries all 410 supervisor districts as county subdivisions (TIGERweb tigerWMS_Current layer 22, the January 1, 2026 vintage, BASENAME 1 to 5 in every county, every one FUNCSTAT N). Each county is measured two ways on the 2020 census's own blocks (Tracts_Blocks layer 12, each block assigned by its internal point): how many people the 2026 lines put in a different district NUMBER from the Census's own 2020 edition (tigerWMS_Census2020 layer 20), and how far apart the largest and smallest districts are, as a percentage of an equal share. TWELVE COUNTIES ARE DRAWN, the ones whose lines changed (530 to 58,881 people moved) and balance (3.17% to 9.00%): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. Their 2020-edition lines measure 15.64% to 85.61% on the same blocks. Clay's change covers 0.07% of the county's area and moves 689 people, which is why people and not area are the test. SIXTY-FOUR COUNTIES carry their 2020 edition unchanged and measure 13.56% (Itawamba) to 303.58% (Jefferson): lines drawn on the 2010 census, which no longer balance on the 2020 one. The planning measurement found those put 34% of Madison County's residents, 16% of Lee's and 9.5% of Harrison's in a different district from the one they now vote in. SIX COUNTIES carry their 2020 edition and balance anyway: Lafayette 2.53%, Marshall 6.10%, Montgomery 6.21%, Jefferson Davis 6.76%, Walthall 7.71% and Marion 7.77%. Such a county may have kept its lines or redrawn them without telling the Census, and nothing measured here can tell which, so none of the six is drawn until the county's own map or its answer to a letter settles it. Marion's 2026 layer differs from its 2020 edition by a sliver of about 19 m2 on the line between districts 4 and 5, which moves nobody. No statewide map of the current lines from a state office has been found: the Secretary of State's County Offices and Directory names every supervisor by district and draws nothing, and MARIS, the state's GIS clearinghouse, publishes only the Census's 2020 file (MS_SupervDists_2020, publication date 2021-02-01, read 2026-10-15), whose map service listed no layers that day. A survey the same day of every county's website and planning and development district (/mnt/project-files/ms/supervisor-map-survey/) found 25 counties publishing a usable map, 14 of them with lines newer than the Census's, where the Census lines put 146,842 of 1,065,116 residents in a different district; drawing those is the next change. NOT YET ASKED — DRAFTED 2026-10-15: Ask ms-maris-supervisor-districts, to MARIS's Director, asking it to collect and publish every county's current map. The names ship on the County card for all 82 counties. Mississippi is dark as of this record."
+      },
+      {
+            "id": "ms-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Mississippi",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "This app can tell you which Mississippi city, town or village you are in, and not who your mayor or council members are.",
+            "why": "No statewide list of Mississippi's mayors and council or board members has been read yet. The boundary this card draws carries geography and no officeholder at all, and this app never guesses a name.",
+            "wanted": "A statewide roster of mayors and council or board members by ward, or each city's own published list.",
+            "blocker": "The boundary is the Census's own incorporated-places layer, which carries a name, a code and a functional status and no officeholder field. Measured 2026-10-15: 300 places for STATE='28' — 113 `<Name> city`, 167 `<Name> town` and 20 `<Name> village`, every one FUNCSTAT A (active) except Tillatoba town, which the Census records as inactive and the card says so — covering 5,634 of the state's 121,535 km² of land. The card states the style the Census records and claims nothing about the form of government. The planning pass on 2026-10-09 found that Mississippi has 15 cities of more than 25,000 people, that the state's Official and Statistical Register names their boards without ward numbers and predates the June 2025 city elections, and that ward maps turned up for Gulfport, Olive Branch and Jackson only; none of it has been read into this instance. Not attempted in this change; the instance arrived on the national tier plus the county supervisors. The cities over 25,000 people are the part the fleet's done standard asks for first. Mississippi is dark as of this record."
+      },
+      {
+            "id": "ms-school-board-members",
+            "concept": "School board",
+            "area": "Mississippi",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people on its board.",
+            "why": "No statewide list of Mississippi's school board members has been found. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+            "blocker": "Measured 2026-10-15 against TIGERweb's School service for STATE='28': 137 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 82-county total (121,535 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. How each board is chosen (elected, appointed, or some of each) has not been researched here and the card claims nothing about it. The planning pass on 2026-10-09 read that many county school boards are elected from the county's supervisor districts, so naming their members by district would share the supervisor-line problem recorded in ms-supervisor-district-lines, and found no statewide list of members. Not attempted in this change. Mississippi is dark as of this record."
       }
   ]
 }
