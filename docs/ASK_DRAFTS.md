@@ -6928,7 +6928,8 @@ Board letter goes without them.
 
 ## Ask il-state-board-precinct-maps — Illinois State Board of Elections: publish the precinct maps it receives in one place
 
-> **NOT YET ASKED — DRAFTED 2026-10-10, REVISED 2026-10-16**, waiting for the operator's approval.
+> **NOT YET ASKED — DRAFTED 2026-10-10, REVISED 2026-10-16**, approved by the operator that day and
+> handed to the Letters thread for a Gmail draft. The operator sends it.
 > The hold on `il-grundy-gis-state-board-view` ended when it was answered on 2026-10-16.
 > `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director (named in a 7 July 2026
 > Justice Department letter reported by Capitol News Illinois). The Board's website refuses
