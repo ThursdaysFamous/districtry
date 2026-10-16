@@ -229,6 +229,10 @@ def main():
         return
     import requests  # noqa: PLC0415
     import build_mn_town_boards as boards  # noqa: PLC0415
+    from scraper_common import require_robots_once  # noqa: PLC0415
+    # the TIGER fetch is build_mn_town_boards's, with its client; read the
+    # host's policy here too, as that client, so this file asks before it fetches
+    require_robots_once(boards.TIGER_LAYER, boards.USER_AGENT)
     townships = boards.fetch_townships(requests.Session())
     roster = build(source, townships)
     problems, officers, counties = check(roster, source)
