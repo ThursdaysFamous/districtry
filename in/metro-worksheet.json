@@ -243,6 +243,24 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 9,
+      "rank_note": "The 5 districts the Indianapolis Public Schools board is elected from, pre-built from the City of Indianapolis's layer — 41.6 km2 mean area (median 40.0), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, larger than a voting precinct (18.40)",
+      "source": {
+        "answers": "The district the Indianapolis Public Schools board elects a member from. Everywhere else in Indiana the card says this map draws no other board's districts yet.",
+        "boundary": [
+          {
+            "label": "City of Indianapolis and Marion County — School Board Districts, layer 9 of its OpenData_Political map service: the five Indianapolis Public Schools districts, measured 2026-10-16, pre-built by in/scripts/build_in_school_board_districts.py and shipped with the app. The same layer draws residence districts for the Lawrence and Washington township boards, which are not drawn because the whole township votes for every seat. The service states no licence.",
+            "url": "https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/9"
+          }
+        ],
+        "people": "NO NAMES YET. No list of the Indianapolis Public Schools board's members has been read, so the card names no one rather than guessing; recorded as gap in-school-board-members.",
+        "applies": "Indianapolis Public Schools, in Marion County. The 2022 and 2024 results point to about forty other Indiana boards electing some members by district, and no statewide map of their districts is published (gap in-school-board-districts)."
+      }
+    },
+    {
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
@@ -351,7 +369,7 @@
       }
     }
   ],
-  "min_register_layer": 11,
+  "min_register_layer": 12,
   "anchor_point": {
     "lat": 39.7686,
     "lng": -86.1626,
@@ -445,6 +463,12 @@
         "min_features": 241,
         "max_features": 241,
         "note": "County council districts in 55 counties and Indianapolis's 25 City-County Council districts, from the Indiana Geographic Information Office's CountyCouncilPolygon layer, built by in/scripts/build_in_council_districts.py."
+      },
+      {
+        "file": "in-school-board-districts.json",
+        "min_features": 5,
+        "max_features": 5,
+        "note": "The five Indianapolis Public Schools board districts, pre-built by in/scripts/build_in_school_board_districts.py through scripts/published_school_board_districts.py from the City of Indianapolis's layer (Douglas-Peucker at 4 m; a 400-point agreement gate, measured 100.00% with zero overlaps). 24 KB, fetched only when a reader switches the layer on."
       },
       {
         "file": "in-appeals-districts.json",

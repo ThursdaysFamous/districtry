@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissi
 const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19", "voting-precinct": "Precinct 19-4", "tn-judicial-district": "20" };
 const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.
 const APP_NAME = "districtry Tennessee";
-const EXPECT_LAYERS = 17;
+const EXPECT_LAYERS = 18;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the

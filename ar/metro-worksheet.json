@@ -297,10 +297,32 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board Zone",
+      "group": "schools",
+      "area_rank": 11,
+      "rank_note": "965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)",
+      "source": {
+        "answers": "The zone a school board elects a member from, and the school district whose board it is. Where a board has resolved to elect every member at large and is changing a seat at a time, the card says when it resolved.",
+        "boundary": [
+          {
+            "label": "Arkansas GIS Office — SCHOOL_BOARD_ZONES, layer 32 of its Boundaries service, which the Arkansas Secretary of State compiles “to aid in election administration and future redistricting”: 965 zones on 176 school districts, measured 2026-10-16, pre-built by ar/scripts/build_ar_school_board_districts.py and shipped with the app. It credits the Secretary of State, is provided as is, and states no licence.",
+            "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/32"
+          },
+          {
+            "label": "Arkansas GIS Office — its notes of 9 April 2026 on the school board zone update, naming the twelve boards that resolved to elect every member at large and when; read through the Internet Archive's copy of 13 May 2026, because the page itself now redirects",
+            "url": "https://web.archive.org/web/20260513222106/https://gis.arkansas.gov/2026/04/09/date-update-school-board-zones/"
+          }
+        ],
+        "people": "NO NAMES YET. No statewide list of Arkansas's school board members has been found — the Department of Education's report-card feed carries no board field — so the card names no one rather than guessing; recorded as gap ar-school-board-members.",
+        "applies": "The 176 Arkansas school districts whose boards elect some or all members from zones. A board elected wholly at large has no zones, and the empty card says so."
+      }
+    },
+    {
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -318,7 +340,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "501 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -336,7 +358,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -354,7 +376,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -372,7 +394,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -387,7 +409,7 @@
       }
     }
   ],
-  "min_register_layer": 13,
+  "min_register_layer": 14,
   "anchor_point": {
     "lat": 34.7465,
     "lng": -92.2896,
@@ -488,6 +510,12 @@
         "min_features": 2920,
         "max_features": 2920,
         "note": "Every Arkansas voting precinct, pre-built by ar/scripts/build_ar_precincts.py through scripts/statewide_precincts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,920 count on the drawn file, after the eight records that are further pieces of seven precincts are joined into them). 9.3 MB, 2.44 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "ar-school-board-zones.json",
+        "min_features": 965,
+        "max_features": 965,
+        "note": "Every Arkansas school board zone, pre-built by ar/scripts/build_ar_school_board_districts.py through scripts/published_school_board_districts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 965 count, after the Jasper district's zone 3, published in two pieces, is joined into one). 5.1 MB, 1.40 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "ar-appeals-districts.json",

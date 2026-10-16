@@ -171,7 +171,7 @@ All 46 counties and their county council districts: cities and towns, voting pre
 
 All 95 counties and their county commission districts: civil districts, cities and towns, voting precincts, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Tennessee Senate, House and U.S. House districts, with who holds each seat, and the judicial districts. County commissioners are named from each county's own pages where the county publishes a current list, nobody is named yet on the judicial districts, and the Data gaps panel lists what is missing and why.
 
-- [Tennessee district lookup](https://districtry.com/tn/): 17 layers, all 95 counties.
+- [Tennessee district lookup](https://districtry.com/tn/): 18 layers, all 95 counties.
 - [Who is my U.S. representative?](https://districtry.com/tn/congress.html)
 - [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 57 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/tn/sources.html)
@@ -182,7 +182,7 @@ All 95 counties and their county commission districts: civil districts, cities a
 
 All 75 counties and their quorum court districts: townships, cities and towns, voting precincts, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Arkansas Senate, House and U.S. House districts, with who holds each seat, and the Court of Appeals districts and judicial circuits. Every county judge is named, and so is the justice of the peace for nearly every district, from the county's own site where it numbers its justices and otherwise from the 2024 election results while the winner is still on the Association of Arkansas Counties' list. Nobody is named yet on the city councils, school boards or courts, and the Data gaps panel says why.
 
-- [Arkansas district lookup](https://districtry.com/ar/): 15 layers, all 75 counties.
+- [Arkansas district lookup](https://districtry.com/ar/): 16 layers, all 75 counties.
 - [Who is my U.S. representative?](https://districtry.com/ar/congress.html)
 - [Who is on my quorum court?](https://districtry.com/ar/quorum-court.html): links a page per county, 75 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ar/sources.html)
