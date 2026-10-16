@@ -352,8 +352,11 @@ question.
   map, each board named from the department's 2026 directory except seven the
   directory names nobody for, and Oklahoma's 84 conservation districts, from
   the Conservation Commission's map, each with its office and none with its
-  directors, because the Commission publishes no list of them. Kentucky, North
-  Carolina, South Carolina, Tennessee and Arkansas still owe the entry.
+  directors, because the Commission publishes no list of them, and Arkansas's
+  971 fire districts, from the map state law has each fire district file with
+  the Arkansas GIS Office, naming nobody, because the map names no one who
+  runs a district. Kentucky, North Carolina, South Carolina and Tennessee still
+  owe the entry.
 - Tribal governments: no app answers one.
 
 ## Launching is a lower bar than being done

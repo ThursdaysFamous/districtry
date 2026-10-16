@@ -2017,7 +2017,12 @@ ANSWERS = {
         # The Arkansas GIS Office's layer carries all 2,920 precincts as the
         # counties report them, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # ANSWERED 2026-10-16: the GIS Office's FIRE_DISTRICTS layer, the map
+        # state law has every fire district file with it, draws 971 districts
+        # (ar/scripts/build_ar_fire_districts.py). Level 12 asks for the
+        # districts drawn; who runs each one is not on the map and is recorded
+        # as gap ar-fire-district-boards.
+        "special-districts": answers("fire-district"),
         # NO TRIBAL LAND IN ARKANSAS, measured 2026-10-15 with
         # validate_tribal_join's own queries: the reservation, trust-land and
         # state-reservation layers keep nothing inside the state, while the same

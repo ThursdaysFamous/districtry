@@ -87,6 +87,7 @@ and each of those stubs gained a row for them (Arkansas two). A fourth, the same
 board districts in Indiana, South Carolina, Tennessee and Arkansas, and each of those stubs gained a
 row for them. A fifth drew Indiana's conservancy districts, and the stub for that state gained a row for them.
 A sixth drew Oklahoma's conservation districts, and the stub for that state gained a row for them.
+A seventh drew Arkansas's fire districts, and the stub for that state gained a row for them.
 
 ### CHI (37 layers)
 
@@ -285,8 +286,8 @@ No blast-radius entries for Tennessee except the civil-district and precinct lay
 ### AR — NOT YET WRITTEN
 
 No blast-radius entries for Arkansas except the township and precinct layers, both added
-2026-10-15, and the two court layers and the school board layer, added 2026-10-16. Owned by the
-Arkansas thread.
+2026-10-15, and the two court layers, the school board layer and the fire district layer, added
+2026-10-16. Owned by the Arkansas thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -295,6 +296,7 @@ Arkansas thread.
 | Court of Appeals districts (AR, 7) | **At no fixed time**: an act of the General Assembly moving a county between districts (Act 1812 of 2003 sets them now) | the General Assembly, in the Arkansas Code; read from the Arkansas GIS Office's quotation of the act, because the Code's only copy is LexisNexis's | geometry (`ar/scripts/build_ar_court_districts.py` rebuild over the shipped county fabric: the seven districts and twelve positions, the act-against-layer agreement on every county and the partition check re-run), the smoke anchor (District 6 at the Capitol), and the service-worker cache name, since the file is cache-first. The annual row in `ar/WATCH.md` re-reads the sources after each session |
 | Judicial circuits (AR, 28) | **At no fixed time**: an act of the General Assembly moving a county between circuits or adding a judgeship (Act 220 of 2025 adds the 19th West's eighth on 1 January 2027, a dated row in `ar/WATCH.md`); the five court-ordered election subdistricts change only by order of the federal court | the General Assembly, in the Arkansas Code, and for the subdistricts the U.S. District Court (Hunt v. State of Arkansas); read from the Administrative Office of the Courts' circuit judge directory | geometry (the same builder: every judge serving every county of the circuit, the pinned 126 judges, the directory-against-layer agreement on every county and the partition check re-run), each circuit's judge count on the card, the smoke anchor (the 6th Circuit at the Capitol), and the service-worker cache name, since the file is cache-first. The subdistricts are not drawn, so a change to them moves no geometry here; the card's subdistrict row rests on the court order's own sentences |
 | School board zones (AR, 965 on 176 boards) | **Decennial, after each census**, and whenever a board moves its seats to at large (Act 424 of 2023 let a board do so) | which body redraws a board's zones is not measured here; the Secretary of State compiles the zones and the Arkansas GIS Office publishes the statewide layer | geometry (`ar/scripts/build_ar_school_board_districts.py` rebuild: the exact counts of 965 zones and 176 boards, the eight boards moving to at large seat by seat, the four now wholly at large, the two districts sharing a name, the agreement gate and the card's sentences re-run) and the service-worker cache name, since the file is cache-first. The quarterly `--watch` row in `ar/WATCH.md` is the tripwire; a change to a board moving to at large stops the rebuild until the GIS Office's notes are re-read |
+| Fire districts (AR, 971) | **At no fixed time**: the 20 documents the layer links for districts' lines are, by their file names, county ordinances, court orders, resolutions and annexations; no census or election calendar moves them | each district's map is certified by the mayor, county judge or county fire coordinator and sent to the Arkansas GIS Office, which publishes the statewide layer (A.C.A. § 12-10-329, as the layer's own description puts it); which body may create or change a district is not measured here | geometry (`ar/scripts/build_ar_fire_districts.py` rebuild: the exact counts of 971 districts and 135 sets of counties, the two extra Siloam Springs records the spec declares and the latest of their dates, the four records that label ground, every county name, the agreement gate, the per-county coverage check, the card's sentences and the three inside points and one outside point re-run) and the service-worker cache name, since the file is cache-first. The quarterly `--watch` row in `ar/WATCH.md` is the tripwire |
 
 ---
 
