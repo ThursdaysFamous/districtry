@@ -48,9 +48,19 @@ which cross a county line) and 59 unorganized territories.
 November; the November contests are in the Secretary of State's `local.txt` files beside the
 city contests, and 704 towns' boards come out of them — 2,813 of 3,115 seats named, each dated,
 292 of the rest won by write-in. A March town runs its own election and its results are in no
-file the state publishes (the March election days answer 404 on the results host), so about
-1,090 towns still name nobody under gap `mn-township-officers`, with a letter to the Minnesota
-Association of Townships drafted in `docs/ASK_DRAFTS.md`. **THE DONE-STANDARD LEVEL STAYS OPEN ON PURPOSE**: a town clerk certifies its officers to the county after each election and some counties publish those certifications (Goodhue's, read 2026-10-15), so the counties that publish are owed first; which of the 87 do is not yet measured. A seat a November town has not had
+file the state publishes (the March election days answer 404 on the results host). **416 OF
+THEM ARE NAMED FROM THEIR COUNTY'S LIST SINCE 2026-10-16** (`mn/scripts/mn_county_town_officers_scraper.py`
+→ `data/source/mn-county-town-officers.json`, then `build_mn_county_town_officers.py` →
+`mn-county-town-officers.json`): a town clerk certifies its officers to the county after each
+election, 42 counties publish the lists, and 29 are read — 2,019 officers, names, offices and
+terms only, never the home addresses and personal e-mail several lists print beside them. One
+source per town: a town the election results name keeps those names, and the county list is
+compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 13 counties and
+their reasons are in gap `mn-township-officers`, which still covers about 680 towns, with a
+letter to the Minnesota Association of Townships drafted in `docs/ASK_DRAFTS.md`. **NO WEEKLY
+JOB READS THE LISTS YET** — a new workflow needs the operator's word — so each card names the
+day its list was read. **THE DONE-STANDARD LEVEL STAYS OPEN** while those 13 are unsettled.
+A seat a November town has not had
 on a ballot since 2022 is ABSENT rather than read from 2020: a six-year supervisor term (Minn.
 Stat. 367.03 subd. 4a) or an appointed clerk or treasurer leaves a board short, and the card
 says what a missing seat means. The results key a town by its five-digit county subdivision

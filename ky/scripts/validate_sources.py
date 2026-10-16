@@ -244,6 +244,22 @@ PROVENANCE = [
             "races; ky/WATCH.md carries the row."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "ky-precincts.json",
+        "source_url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0",
+        "note": (
+            "Kentucky's 3,194 voting precincts from the State Board of "
+            "Elections' statewide layer (hosted by the Division of Geographic "
+            "Information, CC0 1.0), pre-built by "
+            "ky/scripts/build_ky_precincts.py through "
+            "scripts/statewide_precincts.py. The layer is reloaded whole, so "
+            "its edit stamp says nothing about which county changed; the "
+            "quarterly --watch row in ky/WATCH.md compares every precinct's "
+            "key, name, county and area with the fingerprint recorded at the "
+            "build."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -325,6 +341,18 @@ ENDPOINTS = [
                 "Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2721%27"
                 "&returnCountOnly=true&f=json"),
         "min_count": 440,  # 493 census county divisions measured 2026-10-15
+    },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in ky/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    # It is the same query as the fiscal-court row's first input, kept as its
+    # own row so each layer names what it is built from.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/"
+                "Ky_SBE_VTD_Boundaries_WM/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2900,  # 3,194 records measured 2026-10-15
     },
 ]
 
