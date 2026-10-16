@@ -183,6 +183,19 @@ PROVENANCE = [
             "land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "in-precincts.json",
+        "source_url": "https://gisdata.in.gov/server/rest/services/Hosted/Voting_District_Boundaries_2026/FeatureServer/0",
+        "note": (
+            "Indiana's 5,121 voting precincts from IndianaMap's 2026 edition, "
+            "pre-built by in/scripts/build_in_precincts.py through "
+            "scripts/statewide_precincts.py. EACH YEAR IS A NEW SERVICE at a "
+            "new address, so this row goes on passing after a 2027 edition "
+            "appears; the builder's --watch lists IndianaMap's catalogue for "
+            "a later edition, on the quarterly row in in/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -292,6 +305,16 @@ ENDPOINTS = [
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 1100,  # 1,206 measured 2026-09-29; floor set below it, not at it
     },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in in/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://gisdata.in.gov/server/rest/services/"
+                "Hosted/Voting_District_Boundaries_2026/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 4600,  # 5,121 records measured 2026-10-15
+    },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -317,14 +340,21 @@ def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/in/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/in/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/in/)"}, label="in-validate-sources")
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="in-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/in/)"},
+            headers={"User-Agent": ua},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

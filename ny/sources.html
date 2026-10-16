@@ -1431,18 +1431,19 @@ table.matrix code {
                     <li><a href="https://data.cityofnewyork.us/d/y76i-bdw7" target="_blank" rel="noopener">Police precinct boundaries from NYC Open Data (y76i-bdw7)</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.</td>
+                <td data-label="Who it names">Commanding officers, station house addresses and precinct desk telephones are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.</td>
                 <td data-label="Where it applies">New York City.</td>
               </tr>
               <tr id="layer-police-station">
                 <th scope="row"><span class="layer-name">Police Station</span><code>police-station</code></th>
-                <td data-label="What it answers">The nearest police stations to this point, by straight-line distance.</td>
+                <td data-label="What it answers">The nearest NYPD precinct station houses to this point, by straight-line distance.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://data.cityofnewyork.us/d/ji82-xba5" target="_blank" rel="noopener">Police station locations from NYC Open Data (ji82-xba5)</a></li>
+                    <li><a href="https://www.nyc.gov/site/nypd/bureaus/patrol/precincts-landing.page" target="_blank" rel="noopener">Station house addresses from each precinct's own NYPD page</a></li>
+                    <li><a href="https://geosearch.planninglabs.nyc/" target="_blank" rel="noopener">Located from those addresses with NYC Planning's GeoSearch geocoder</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">No roster is joined; the card gives the station and its address.</td>
+                <td data-label="Who it names">No roster is joined; the card gives each station house, its address and its desk telephone, re-read weekly from NYPD's precinct pages.</td>
                 <td data-label="Where it applies">New York City.</td>
               </tr>
               <tr id="layer-fire-station">
@@ -2257,7 +2258,7 @@ table.matrix code {
       "@id": "https://districtry.com/ny/sources.html#dataset-police-precinct",
       "identifier": "police-precinct",
       "name": "NYPD Precinct",
-      "description": "Which NYPD precinct covers this address, and who commands it. Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
+      "description": "Which NYPD precinct covers this address, and who commands it. Commanding officers, station house addresses and precinct desk telephones are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
       "url": "https://districtry.com/ny/sources.html#layer-police-precinct",
       "isPartOf": {
         "@id": "https://districtry.com/ny/sources.html#catalog"
@@ -2433,7 +2434,7 @@ table.matrix code {
       "@id": "https://districtry.com/ny/sources.html#dataset-police-station",
       "identifier": "police-station",
       "name": "Police Station",
-      "description": "The nearest police stations to this point, by straight-line distance. No roster is joined; the card gives the station and its address.",
+      "description": "The nearest NYPD precinct station houses to this point, by straight-line distance. No roster is joined; the card gives each station house, its address and its desk telephone, re-read weekly from NYPD's precinct pages.",
       "url": "https://districtry.com/ny/sources.html#layer-police-station",
       "isPartOf": {
         "@id": "https://districtry.com/ny/sources.html#catalog"
@@ -2441,8 +2442,13 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "Police station locations from NYC Open Data (ji82-xba5)",
-          "url": "https://data.cityofnewyork.us/d/ji82-xba5"
+          "name": "Station house addresses from each precinct's own NYPD page",
+          "url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts-landing.page"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Located from those addresses with NYC Planning's GeoSearch geocoder",
+          "url": "https://geosearch.planninglabs.nyc/"
         }
       ],
       "spatialCoverage": {

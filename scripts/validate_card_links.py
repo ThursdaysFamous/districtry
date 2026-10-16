@@ -618,6 +618,29 @@ EXPECTED_UNREACHABLE = {
         "incomplete TLS chain (leaf only, no intermediate) — NOT a block: the site "
         "answers HTTP 200 to a client that supplies the missing issuer, which the "
         "board roster scraper does by AIA with a pinned hash",
+    # THE FOURTH OF THE SAME, and the first outside Illinois. The Mississippi
+    # Legislature's site sends its leaf without the GlobalSign intermediate that
+    # signed it. Measured 2026-10-15: requests with certifi stops at
+    # SSLCertVerificationError on the front page, and the same request with
+    # scripts/aia_bundle.py's pinned "globalsign-rsa-ov-2018" intermediate
+    # answers HTTP 200 with 56 KB. ms/scripts/build_ms_legislature_roster.py
+    # reads the member pages that way; the ms app and its sources page link
+    # the site for readers, whose browsers complete the chain themselves.
+    "legislature.ms.gov":
+        "incomplete TLS chain (leaf only, no intermediate) — NOT a block: the site "
+        "answers HTTP 200 to a client that supplies the missing issuer, which the "
+        "legislature roster scraper does with a pinned intermediate",
+    # THE SAME, one map server further in. The Central Mississippi Planning and
+    # Development District's map server sends its leaf without the GoDaddy
+    # intermediate. Measured 2026-10-15: requests with certifi stops at
+    # SSLCertVerificationError on the folder ms/sources.html links, and with
+    # scripts/aia_bundle.py's pinned "godaddy-g2" intermediate it answers HTTP
+    # 200 with 19,950 bytes. ms/scripts/build_ms_supervisor_districts.py reads
+    # six counties' supervisor districts there that way.
+    "gis.cmpdd.org":
+        "incomplete TLS chain (leaf only, no intermediate) — NOT a block: the server "
+        "answers HTTP 200 to a client that supplies the missing issuer, which the "
+        "Mississippi supervisor district build does with a pinned intermediate",
     # THE FIRST WISCONSIN ENTRY. The wi ward card links MyVote as the honest
     # polling-place answer it cannot carry as data (gap ward-polling-places).
     # Measured 2026-08-25: HTTP 403 with `Cf-Mitigated: challenge` on every

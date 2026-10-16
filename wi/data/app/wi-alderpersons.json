@@ -263,6 +263,145 @@
   "seats": 8,
   "sourceUrl": "https://blackriverfallswi.gov/common-council-committee-of-the-whole"
  },
+ "10025": {
+  "districts": 7,
+  "members": {
+   "01": [
+    {
+     "email": "stoll@ci.brookfield.wi.us",
+     "name": "Peter Stoll",
+     "phone": "(262) 327-7514"
+    },
+    {
+     "email": "monty@ci.brookfield.wi.us",
+     "name": "Sara Monty",
+     "phone": "(616) 822-6005"
+    }
+   ],
+   "02": [
+    {
+     "email": "owen@ci.brookfield.wi.us",
+     "name": "Rick Owen",
+     "phone": "(414) 916-2519"
+    },
+    {
+     "email": "reddin@ci.brookfield.wi.us",
+     "name": "Bob Reddin",
+     "phone": "(414) 429-2024"
+    }
+   ],
+   "03": [
+    {
+     "email": "andersonj@ci.brookfield.wi.us",
+     "name": "Jason Anderson",
+     "phone": "(414) 412-0774"
+    },
+    {
+     "email": "szews@ci.brookfield.wi.us",
+     "name": "Thomas Szews",
+     "phone": "(262) 938-3294"
+    }
+   ],
+   "04": [
+    {
+     "email": "hallquist@ci.brookfield.wi.us",
+     "name": "Mike Hallquist",
+     "phone": "(262) 565-3596"
+    },
+    {
+     "email": "bloom@ci.brookfield.wi.us",
+     "name": "Chuck Bloom III",
+     "phone": "(414) 759-5403"
+    }
+   ],
+   "05": [
+    {
+     "email": "marquardtd@ci.brookfield.wi.us",
+     "name": "Dean Marquardt",
+     "phone": "(414) 640-0009"
+    },
+    {
+     "email": "1garymahkorn@gmail.com",
+     "name": "Gary D Mahkorn",
+     "phone": "(414) 530-8421"
+    }
+   ],
+   "06": [
+    {
+     "email": "kahler@ci.brookfield.wi.us",
+     "name": "Catherine Kahler"
+    },
+    {
+     "email": "blackburnc@ci.brookfield.wi.us",
+     "name": "Christopher Blackburn",
+     "phone": "(262) 821-5262"
+    }
+   ],
+   "07": [
+    {
+     "email": "poglitsch@ci.brookfield.wi.us",
+     "name": "David Poglitsch",
+     "phone": "(414) 737-4543"
+    },
+    {
+     "email": "fugleberg@ci.brookfield.wi.us",
+     "name": "Eric Fugleberg",
+     "phone": "(701) 430-3032"
+    }
+   ]
+  },
+  "municipality": "Brookfield",
+  "seats": 14,
+  "sourceUrl": "https://www.ci.brookfield.wi.us/170/Your-Aldermen"
+ },
+ "19775": {
+  "districts": 4,
+  "members": {
+   "01": [
+    {
+     "name": "Amy Chandik Kundinger",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=291"
+    },
+    {
+     "name": "Shana Defnet Ledvina",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=317"
+    }
+   ],
+   "02": [
+    {
+     "name": "Jonathon Hansen",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=237"
+    },
+    {
+     "name": "Pamela Gantz",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=372"
+    }
+   ],
+   "03": [
+    {
+     "name": "Mike Eserkaln",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=316"
+    },
+    {
+     "name": "Devin Perock",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=373"
+    }
+   ],
+   "04": [
+    {
+     "name": "Casey Nelson",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=238"
+    },
+    {
+     "name": "Dustin Thill",
+     "url": "https://www.deperewi.gov/egov/apps/staff/directory.egov?view=detail;id=460"
+    }
+   ]
+  },
+  "municipality": "De Pere",
+  "seats": 8,
+  "sourceUrl": "https://www.deperewi.gov/department/index.php?structureid=3"
+ },
  "20350": {
   "districts": 4,
   "members": {
@@ -392,6 +531,62 @@
   "seats": 5,
   "sourceUrl": "https://www.eauclairewi.gov/310/City-Council"
  },
+ "25950": {
+  "districts": 4,
+  "members": {
+   "01": [
+    {
+     "email": "Dave.Herbst@fitchburgwi.gov",
+     "name": "Dave Herbst",
+     "phone": "608-516-7173"
+    },
+    {
+     "email": "Joe.Maldonado@fitchburgwi.gov",
+     "name": "Joe Maldonado",
+     "phone": "414-339-4574"
+    }
+   ],
+   "02": [
+    {
+     "email": "Bill.Jetzer@fitchburgwi.gov",
+     "name": "Bill Jetzer",
+     "phone": "608-212-9954"
+    },
+    {
+     "email": "Gabriella.Gerhardt@fitchburgwi.gov",
+     "name": "Gabriella Gerhardt",
+     "phone": "540-710-3843"
+    }
+   ],
+   "03": [
+    {
+     "email": "Logan.Reigstad@fitchburgwi.gov",
+     "name": "Logan Reigstad",
+     "phone": "608-509-7422"
+    },
+    {
+     "email": "Donald.Dantzler@fitchburgwi.gov",
+     "name": "Donald Dantzler",
+     "phone": "815-250-6387"
+    }
+   ],
+   "04": [
+    {
+     "email": "Micah.LaDousa@fitchburgwi.gov",
+     "name": "Micah LaDousa",
+     "phone": "917-279-4245"
+    },
+    {
+     "email": "Jake.Lepper@fitchburgwi.gov",
+     "name": "Jake Lepper",
+     "phone": "608-215-3094"
+    }
+   ]
+  },
+  "municipality": "Fitchburg",
+  "seats": 8,
+  "sourceUrl": "https://fitchburgwi.gov/2924/Mayor-City-Council"
+ },
  "27300": {
   "districts": 6,
   "members": {
@@ -459,7 +654,6 @@
   "sourceUrl": "https://www.germantownwi.gov/299/Village-Board"
  },
  "31000": {
-  "carriedFrom": "2026-10-01",
   "districts": 12,
   "members": {
    "01": [
@@ -690,7 +884,7 @@
   "sourceUrl": "https://www.villageofhoward.com/208/Village-President-Board-of-Trustees"
  },
  "39225": {
-  "carriedFrom": "2026-10-08",
+  "carriedFrom": "2026-10-16",
   "districts": 17,
   "members": {
    "01": [
@@ -782,6 +976,118 @@
   "municipality": "Kenosha",
   "seats": 17,
   "sourceUrl": "https://gis-city.kenosha.org/server/rest/services/Organizational_Layers/Districts_ElectedRepresentation/FeatureServer/150"
+ },
+ "40775": {
+  "districts": 13,
+  "members": {
+   "01": [
+    {
+     "email": "dickinsont@cityoflacrosse.org",
+     "name": "Tamra Dickinson",
+     "phone": "(608) 790-6909",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Tamra-Dickinson"
+    }
+   ],
+   "02": [
+    {
+     "email": "goggine@cityoflacrosse.org",
+     "name": "Erin Goggin",
+     "phone": "(715) 523-9048",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Erin-Goggin"
+    }
+   ],
+   "03": [
+    {
+     "email": "janssenb@cityoflacrosse.org",
+     "name": "Barb Janssen",
+     "phone": "(608) 317-4311",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Barb-Janssen"
+    }
+   ],
+   "04": [
+    {
+     "email": "sleznikowl@cityoflacrosse.org",
+     "name": "Larry Sleznikow",
+     "phone": "(608) 769-2139",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Larry-Sleznikow"
+    }
+   ],
+   "05": [
+    {
+     "email": "stineo@cityoflacrosse.org",
+     "name": "Olivia Stine",
+     "phone": "(608) 406-4049",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Olivia-Stine"
+    }
+   ],
+   "06": [
+    {
+     "email": "kahlowc@cityoflacrosse.org",
+     "name": "Chris Kahlow",
+     "phone": "(608) 789-8706",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Chris-Kahlow"
+    }
+   ],
+   "07": [
+    {
+     "email": "padeskyg@cityoflacrosse.org",
+     "name": "Gary Padesky",
+     "phone": "(608) 317-3331",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Gary-Padesky"
+    }
+   ],
+   "08": [
+    {
+     "email": "mindelm@cityoflacrosse.org",
+     "name": "Mackenzie Mindel",
+     "phone": "(608) 403-5448",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Mackenzie-Mindel"
+    }
+   ],
+   "09": [
+    {
+     "email": "newberrya@cityoflacrosse.org",
+     "name": "Aron Newberry",
+     "phone": "(608) 789-8709",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Aron-Newberry"
+    }
+   ],
+   "10": [
+    {
+     "email": "trostj@cityoflacrosse.org",
+     "name": "Jennifer Trost",
+     "phone": "(608) 360-2482",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Jennifer-Trost"
+    }
+   ],
+   "11": [
+    {
+     "email": "bedfordc@cityoflacrosse.org",
+     "name": "Crystal Bedford",
+     "phone": "(608) 789-8711",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Crystal-Bedford"
+    }
+   ],
+   "12": [
+    {
+     "email": "westonl@cityoflacrosse.org",
+     "name": "Lisa D. Weston",
+     "phone": "(608) 789-8712",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Lisa-D-Weston"
+    }
+   ],
+   "13": [
+    {
+     "email": "northwoodr@cityoflacrosse.org",
+     "name": "Rosanne L. Northwood",
+     "phone": "(608) 789-8713",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members/Rosanne-L-Northwood"
+    }
+   ]
+  },
+  "municipality": "La Crosse",
+  "seats": 13,
+  "sourceUrl": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members"
  },
  "48000": {
   "districts": 20,
@@ -1050,7 +1356,6 @@
   }
  },
  "50825": {
-  "carriedFrom": "2026-10-08",
   "districts": 8,
   "members": {
    "01": [
@@ -1180,6 +1485,70 @@
   "seats": 11,
   "sourceUrl": "https://www.menomonie-wi.gov/248/City-Council"
  },
+ "51150": {
+  "districts": 8,
+  "members": {
+   "01": [
+    {
+     "name": "Robert Strzelczyk",
+     "phone": "(262) 501-4111",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/robert-strzelczyk"
+    }
+   ],
+   "02": [
+    {
+     "name": "Kelly Tolocko",
+     "phone": "(414) 651-7773",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/kelly-tolocko"
+    }
+   ],
+   "03": [
+    {
+     "name": "Dale Mayr",
+     "phone": "(262) 617-2033",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/dale-mayr"
+    }
+   ],
+   "04": [
+    {
+     "name": "Jeffrey Hansher",
+     "phone": "(262) 573-4173",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/jeffrey-hansher"
+    }
+   ],
+   "05": [
+    {
+     "name": "Gregg Bach",
+     "phone": "(262) 243-9757",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/gregg-bach"
+    }
+   ],
+   "06": [
+    {
+     "name": "Brian Parrish",
+     "phone": "(414) 708-5631",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/brian-parrish"
+    }
+   ],
+   "07": [
+    {
+     "name": "Peter Bratt",
+     "phone": "(214) 422-2434",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/peter-bratt"
+    }
+   ],
+   "08": [
+    {
+     "name": "Bill Gebhardt",
+     "phone": "(414) 378-8545",
+     "url": "https://www.cityofmequonwi.gov/commoncouncil/directory-listing/bill-gebhardt"
+    }
+   ]
+  },
+  "municipality": "Mequon",
+  "seats": 8,
+  "sourceUrl": "https://www.cityofmequonwi.gov/commoncouncil"
+ },
  "53000": {
   "districts": 15,
   "members": {
@@ -1264,7 +1633,6 @@
   "sourceUrl": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000"
  },
  "55275": {
-  "carriedFrom": "2026-10-08",
   "districts": 7,
   "members": {
    "01": [
@@ -1441,6 +1809,55 @@
   "municipality": "New Lisbon",
   "seats": 4,
   "sourceUrl": "https://cityofnewlisbon.com/common-council"
+ },
+ "58800": {
+  "districts": 6,
+  "members": {
+   "01": [
+    {
+     "name": "Alicia Haase",
+     "phone": "414-308-7858",
+     "url": "https://www.oakcreekwi.gov/m/directory/employee?eid=17"
+    }
+   ],
+   "02": [
+    {
+     "name": "Gregory Loreck",
+     "phone": "414-559-2169",
+     "url": "https://www.oakcreekwi.gov/m/directory/employee?eid=23"
+    }
+   ],
+   "03": [
+    {
+     "name": "James Ruetz",
+     "phone": "414-308-7874",
+     "url": "https://www.oakcreekwi.gov/m/directory/employee?eid=25"
+    }
+   ],
+   "04": [
+    {
+     "name": "Lisa Marshall",
+     "phone": "414-807-3337",
+     "url": "https://www.oakcreekwi.gov/m/directory/employee?eid=27"
+    }
+   ],
+   "05": [
+    {
+     "name": "Ken Gehl",
+     "phone": "414-308-7960",
+     "url": "https://www.oakcreekwi.gov/m/directory/employee?eid=28"
+    }
+   ],
+   "06": [
+    {
+     "name": "Chris Guzikowski",
+     "url": "https://www.oakcreekwi.gov/m/directory/employee?eid=29"
+    }
+   ]
+  },
+  "municipality": "Oak Creek",
+  "seats": 6,
+  "sourceUrl": "https://www.oakcreekwi.gov/388/Common-Council"
  },
  "59250": {
   "districts": 4,
@@ -1876,6 +2293,62 @@
   "seats": 7,
   "sourceUrl": "https://www.sturgeonbaywi.org/government/city_council/index.php"
  },
+ "78600": {
+  "districts": 4,
+  "members": {
+   "01": [
+    {
+     "email": "cdrengler@cityofsunprairie.com",
+     "name": "Casey Drengler",
+     "phone": "(608) 608-9990"
+    },
+    {
+     "email": "rowens@cityofsunprairie.com",
+     "name": "Rex Owens",
+     "phone": "(608) 896-4260"
+    }
+   ],
+   "02": [
+    {
+     "email": "bbaker@cityofsunprairie.com",
+     "name": "Bill Baker",
+     "phone": "(608) 608-9991"
+    },
+    {
+     "email": "srosas@cityofsunprairie.com",
+     "name": "Santiago Rosas",
+     "phone": "(608) 206-3916"
+    }
+   ],
+   "03": [
+    {
+     "email": "mcrombie@cityofsunprairie.com",
+     "name": "Maureen Crombie",
+     "phone": "(608) 669-7058"
+    },
+    {
+     "email": "mjacobs@cityofsunprairie.com",
+     "name": "Mike Jacobs",
+     "phone": "(608) 438-6983"
+    }
+   ],
+   "04": [
+    {
+     "email": "cbatterman@cityofsunprairie.com",
+     "name": "Cheryl Batterman",
+     "phone": "(608) 692-1658"
+    },
+    {
+     "email": "ecomstock@cityofsunprairie.com",
+     "name": "Emily Comstock",
+     "phone": "(608) 608-9992"
+    }
+   ]
+  },
+  "municipality": "Sun Prairie",
+  "seats": 8,
+  "sourceUrl": "https://cityofsunprairie.com/801/City-Council-Members"
+ },
  "78650": {
   "districts": 10,
   "members": {
@@ -2082,7 +2555,6 @@
   "sourceUrl": "https://viroqua-wisconsin.com/government/city_council_and_committees.php"
  },
  "84250": {
-  "carriedFrom": "2026-10-08",
   "districts": 15,
   "members": {
    "01": [
@@ -2410,8 +2882,55 @@
   "seats": 12,
   "sourceUrl": "https://www.wauwatosa.net/government/common-council/contact-the-common-council"
  },
+ "85300": {
+  "districts": 5,
+  "members": {
+   "01": [
+    {
+     "name": "Ray Turner"
+    },
+    {
+     "name": "Kimberlee Grob"
+    }
+   ],
+   "02": [
+    {
+     "name": "Chad Halvorsen"
+    },
+    {
+     "name": "Marissa Nowling"
+    }
+   ],
+   "03": [
+    {
+     "name": "Suzzette Grisham"
+    },
+    {
+     "name": "Danna Kuehn"
+    }
+   ],
+   "04": [
+    {
+     "name": "Daniel Roadt"
+    },
+    {
+     "name": "Patty Novak"
+    }
+   ],
+   "05": [
+    {
+     "name": "Kevin Haass"
+    },
+    {
+     "name": "Martin Weigel"
+    }
+   ]
+  },
+  "municipality": "West Allis",
+  "seats": 10,
+  "sourceUrl": "https://www.westalliswi.gov/page/contact-your-alderperson"
+ },
  "85350": {
-  "carriedFrom": "2026-10-08",
   "districts": 8,
   "members": {
    "01": [

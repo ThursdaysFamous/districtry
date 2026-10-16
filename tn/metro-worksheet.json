@@ -84,7 +84,9 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
     [
@@ -215,10 +217,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Civil District",
+      "group": "geography",
+      "area_rank": 7,
+      "rank_note": "855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it",
+      "source": {
+        "answers": "The civil district containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 855 features for Tennessee, every one a civil district (\"District N\", LSADC 28, FUNCSTAT N), measured 2026-10-15.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A civil district is a legal division of a Tennessee county that the Census Bureau records as having no functioning government (FUNCSTAT N): no one is elected to run it. The card says so, titles the unit \"Civil District N\", and says its number is not a county commission district number.",
+        "applies": "Tennessee — statewide."
+      }
+    },
+    {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -236,7 +256,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "15 city and special school districts running the lower grades, live from TIGERweb",
       "source": {
         "answers": "The district running the lower grades at the point, where that is not a unified district.",
@@ -254,7 +274,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb",
       "source": {
         "answers": "The district running the high school at the point, where that is not a unified district.",
@@ -269,10 +289,28 @@
       }
     },
     {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 11,
+      "rank_note": "1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)",
+      "source": {
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "boundary": [
+          {
+            "label": "Tennessee Comptroller of the Treasury — Voting Precincts New, layer 12 of the Redistricting_Address_Lookup service behind the Comptroller's Voter District Lookup; each county election commission sets its precincts. 1,870 features, pre-built for the state by tn/scripts/build_tn_precincts.py and shipped with the app; Davidson County's eight small pieces the layer leaves unnamed are kept and say so on the card. The service states no licence.",
+            "url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/12"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "applies": "Tennessee — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 12,
       "rank_note": "345 incorporated places, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any, and whether it is a consolidated city-county government.",
@@ -290,7 +328,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -308,7 +346,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -326,7 +364,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -339,9 +377,27 @@
         "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
         "applies": "Tennessee — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
       }
+    },
+    {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 13,
+      "rank_note": "Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Tennessee has 1 such area, the Mississippi Band of Choctaw Indians' trust land near Henning.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The Mississippi Band of Choctaw Indians' Tribal Chief and 17-member Tribal Council, from the nation's own Tribal Government page at choctaw.org, read weekly by scripts/tribal_council_scraper.py and dated on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Tennessee — the trust land near Henning in Lauderdale County. Every other point in the state is on no tribal land. The rest of the same trust land is in Mississippi, which this fleet does not cover yet."
+      }
     }
   ],
-  "min_register_layer": 11,
+  "min_register_layer": 13,
   "anchor_point": {
     "lat": 36.1659,
     "lng": -86.7844,
@@ -367,6 +423,10 @@
     {
       "layer": "county-commissioner",
       "expected": "19"
+    },
+    {
+      "layer": "voting-precinct",
+      "expected": "Precinct 19-4"
     }
   ],
   "negative_point": {
@@ -415,6 +475,18 @@
         "min_features": 859,
         "max_features": 859,
         "note": "The 859 county commission districts in 95 counties, from the Comptroller of the Treasury's statewide layer (tn/scripts/build_tn_commission_districts.py)."
+            },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Tennessee's tribal land (scripts/build_tribal_areas.py) — the Tennessee part of the Mississippi Choctaw Off-Reservation Trust Land near Henning. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "tn-precincts.json",
+        "min_features": 1870,
+        "max_features": 1870,
+        "note": "Every Tennessee voting precinct, pre-built by tn/scripts/build_tn_precincts.py through scripts/statewide_precincts.py from the Comptroller of the Treasury's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 1,870 count on the fetch and the drawn file, after Overton County's nine records published twice with identical geometry are dropped to one each). 9.4 MB, 2.45 MB gzipped, fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [
@@ -435,18 +507,23 @@
       },
       {
         "file": "tn-commissioners.json",
-        "min_keys": 56,
+        "min_keys": 57,
         "note": "County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/."
       },
       {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+           },
+      {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The Mississippi Band of Choctaw Indians' Tribal Chief and Tribal Council, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-tn-shell-v2",
+    "cache_name": "districtry-tn-shell-v5",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

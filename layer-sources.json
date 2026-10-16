@@ -844,7 +844,13 @@
       "/il/data/app/cass-county-board-districts.json",
       "/il/data/app/marshall-county-board-districts.json",
       "/il/data/app/mason-county-board-districts.json",
-      "/il/data/app/christian-county-board-districts.json"
+      "/il/data/app/christian-county-board-districts.json",
+      "/il/data/app/macoupin-county-board-districts.json",
+      "/il/data/app/ford-county-board-districts.json",
+      "/il/data/app/fayette-county-board-districts.json",
+      "/il/data/app/cumberland-county-board-districts.json",
+      "/il/data/app/jersey-county-board-districts.json",
+      "/il/data/app/lawrence-county-board-districts.json"
      ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
@@ -1072,7 +1078,13 @@
        "cass",
        "marshall",
        "mason",
-       "christian"
+       "christian",
+       "macoupin",
+       "ford",
+       "fayette",
+       "cumberland",
+       "jersey",
+       "lawrence"
       ],
       "failed": [
        {
@@ -1194,6 +1206,24 @@
        ],
        "christian": [
         "/il/data/app/christian-county-board-districts.json"
+       ],
+       "macoupin": [
+        "/il/data/app/macoupin-county-board-districts.json"
+       ],
+       "ford": [
+        "/il/data/app/ford-county-board-districts.json"
+       ],
+       "fayette": [
+        "/il/data/app/fayette-county-board-districts.json"
+       ],
+       "cumberland": [
+        "/il/data/app/cumberland-county-board-districts.json"
+       ],
+       "jersey": [
+        "/il/data/app/jersey-county-board-districts.json"
+       ],
+       "lawrence": [
+        "/il/data/app/lawrence-county-board-districts.json"
        ]
       }
      },
