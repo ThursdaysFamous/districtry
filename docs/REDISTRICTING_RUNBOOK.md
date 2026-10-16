@@ -254,13 +254,15 @@ layer, added 2026-10-16. Owned by the Oklahoma thread.
 ### SC — NOT YET WRITTEN
 
 No blast-radius entries for South Carolina except the township and precinct layers, both added
-2026-10-15, and the court layer, added 2026-10-16. Owned by the South Carolina thread.
+2026-10-15, and the court and school board layers, added 2026-10-16. Owned by the South Carolina
+thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | County subdivisions (SC census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
 | Election precincts (SC, 2,315) | **At no fixed time**: an act of the General Assembly, one county at a time | the General Assembly, by act (Title 7, Chapter 7 of the Code), county by county; the Revenue and Fiscal Affairs Office keeps the official maps | geometry (`sc/scripts/build_sc_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `sc/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. A new act changes the card's act and effective-date rows with the lines, which the rebuild carries. The quarterly `--watch` row in `sc/WATCH.md` is the tripwire |
 | Judicial circuits (SC, 16) | **At no fixed time**: an act of the General Assembly amending Section 14-5-610 | the General Assembly, in Section 14-5-610 of the Code | geometry (`sc/scripts/build_sc_judicial_circuits.py` rebuild over the shipped county fabric: the 16-circuit, judge-count and at-large checks and the partition check re-run), each circuit's judge count on the card, the smoke anchor (the 5th Circuit at the ground-truth point), and the service-worker cache name, since the file is cache-first. The builder also stops if a sentence of the constitution or of Section 1-7-310 that the card repeats changes. The annual row in `sc/WATCH.md` re-reads them after each session |
+| School board districts (SC, 383 on 54 boards) | **At no fixed time**: an act of the General Assembly for one school district's board, most often after each decennial census | the General Assembly, by an act for each board (the 54 read are in the builder's act table); the Revenue and Fiscal Affairs Office keeps the maps | geometry (`sc/scripts/build_sc_school_board_districts.py` rebuild: the exact counts of 383 districts on 54 boards and 18 boards marked At Large, each board's seats adding up to the board its act sets, the agreement gate and the card's sentences re-run), each district's act, seats and who-votes rows on the card, and the service-worker cache name, since the file is cache-first. A board newly drawn, or a district's label changed, stops the rebuild until that board's act is read and its row in the act table changes. The layer's own act and map fields are wrong for several boards (the builder's docstring lists them), so they are never read as the act. The quarterly `--watch` row in `sc/WATCH.md` is the tripwire, and a dated row there covers the five boards whose cards describe the election of 3 November 2026 |
 
 ### TN — NOT YET WRITTEN
 

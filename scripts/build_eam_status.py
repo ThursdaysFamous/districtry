@@ -1876,7 +1876,13 @@ ANSWERS = {
             "outside a city or town limit the county governs. The 299 "
             "sub-county units the Census publishes for South Carolina are "
             "census county divisions: statistical areas, not governments."),
-        "school-boards-by-district": OPEN,
+        # ANSWERED 2026-10-16: the Revenue and Fiscal Affairs Office's
+        # statewide map draws the 383 districts of the 54 boards elected by
+        # district and marks the other 18 school districts At Large
+        # (sc/scripts/build_sc_school_board_districts.py). Who votes for each
+        # seat is read from each board's own act; for 16 boards the act does
+        # not say, which the card states (gap sc-school-board-who-votes).
+        "school-boards-by-district": answers("school-board-district"),
         # The Revenue and Fiscal Affairs Office keeps the official maps of all
         # 2,315 precincts the General Assembly sets by act, and the app draws
         # them (2026-10-15).

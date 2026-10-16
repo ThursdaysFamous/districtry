@@ -158,7 +158,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: South Carolina (`southcarolina`) — https://districtry.com/sc/
 - Geocoders: address Photon (South Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Carolina-bounded, serial >=1s queue)
 - Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4; voting-precinct Ward 1; sc-circuit-court 5th Judicial Circuit. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
-- Layers: 15 registered (political 6, safety 2, schools 1, geography 6); `registerLayer(` floor 11. Debug namespace `window.SCExplorer`.
+- Layers: 16 registered (political 6, safety 2, schools 2, geography 6); `registerLayer(` floor 12. Debug namespace `window.SCExplorer`.
 - Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `update-sc-county-council-roster.yml` (Wed 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
 - Source registry: `sc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

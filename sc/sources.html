@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">16 layers — 6 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1283,7 +1283,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">1 layer</span></h2>
+        <h2>Schools <span class="matrix-count">2 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1301,6 +1301,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. South Carolina's school boards are not all chosen the same way, and no statewide roster of their members has been established here — recorded as gap sc-school-board-members.</td>
                 <td data-label="Where it applies">South Carolina — statewide. The label carries no qualifier because there is nothing to distinguish it from: the elementary and secondary tilings TIGERweb serves for other states are EMPTY in South Carolina (0 features each, measured 2026-10-10), and the 72 unified districts' Census land area sums to exactly the 46-county total (77,866 km2).</td>
+              </tr>
+              <tr id="layer-school-board-district">
+                <th scope="row"><span class="layer-name">School Board District</span><code>school-board-district</code></th>
+                <td data-label="What it answers">The district a school board elects a member from, the school district whose board it is, how many members the district elects, and who votes for them, as the board's own act of the General Assembly says: the district's voters, every voter in the school district, or not stated.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/School_Board_Districts/FeatureServer/0" target="_blank" rel="noopener">South Carolina Revenue and Fiscal Affairs Office — &quot;School Board Districts&quot;, layer 0 of the Boundaries_Districts service on gis.state.sc.us: 383 districts on the boards of 54 school districts and one record marked “At Large” for each of the other 18, measured 2026-10-16, pre-built by sc/scripts/build_sc_school_board_districts.py and shipped with the app. The service states no licence, only an as-is disclaimer.</a></li>
+                    <li><a href="https://www.scstatehouse.gov/sess125_2023-2024/bills/1025.htm" target="_blank" rel="noopener">South Carolina General Assembly — each board's own act, read in its ratified text on 2026-10-16 (for example Act 230 of 2024, which sets the Aiken County board), for how many members each district elects and who votes for them; the builder lists all 54</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO NAMES YET. No statewide list of South Carolina's school board members has been read — the School Boards Association sends its directory on request, and the State Election Commission's results site answers GitHub's servers with no page — so the card names no one rather than guessing, and links the school district's own website; recorded as gap sc-school-board-members.</td>
+                <td data-label="Where it applies">The 54 South Carolina school districts whose boards are elected from districts. The other 18 are marked “At Large” on the state's map and have no districts to draw; the empty card says so.</td>
               </tr>
             </tbody>
           </table>
@@ -1585,6 +1597,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "South Carolina — all 46 counties. Hampton elects its whole council at large and Jasper elects its council by the whole county from four residence townships, so both cards name every member"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/sc/sources.html#dataset-school-board-district",
+      "identifier": "school-board-district",
+      "name": "School Board District",
+      "description": "The district a school board elects a member from, the school district whose board it is, how many members the district elects, and who votes for them, as the board's own act of the General Assembly says: the district's voters, every voter in the school district, or not stated. NO NAMES YET. No statewide list of South Carolina's school board members has been read — the School Boards Association sends its directory on request, and the State Election Commission's results site answers GitHub's servers with no page — so the card names no one rather than guessing, and links the school district's own website; recorded as gap sc-school-board-members.",
+      "url": "https://districtry.com/sc/sources.html#layer-school-board-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/sc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "South Carolina Revenue and Fiscal Affairs Office — \"School Board Districts\", layer 0 of the Boundaries_Districts service on gis.state.sc.us: 383 districts on the boards of 54 school districts and one record marked “At Large” for each of the other 18, measured 2026-10-16, pre-built by sc/scripts/build_sc_school_board_districts.py and shipped with the app. The service states no licence, only an as-is disclaimer.",
+          "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/School_Board_Districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "South Carolina General Assembly — each board's own act, read in its ratified text on 2026-10-16 (for example Act 230 of 2024, which sets the Aiken County board), for how many members each district elects and who votes for them; the builder lists all 54",
+          "url": "https://www.scstatehouse.gov/sess125_2023-2024/bills/1025.htm"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 54 South Carolina school districts whose boards are elected from districts. The other 18 are marked “At Large” on the state's map and have no districts to draw; the empty card says so"
       }
     },
     {

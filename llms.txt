@@ -160,7 +160,7 @@ All 77 counties and their commissioner districts: cities and towns, census count
 
 All 46 counties and their county council districts: cities and towns, voting precincts and census county divisions, school districts, ZIP codes, the Catawba Nation's land, and the nearest police station, fire station and post office — plus the South Carolina Senate, House and U.S. House districts, with the member named for every seat, and the judicial circuits. Each council seat names the winner of its most recent election in the State Election Commission's certified results. Nobody is named yet on the city councils, school boards or circuit courts, and the Data gaps panel says why.
 
-- [South Carolina district lookup](https://districtry.com/sc/): 15 layers, all 46 counties.
+- [South Carolina district lookup](https://districtry.com/sc/): 16 layers, all 46 counties.
 - [Who is my U.S. representative?](https://districtry.com/sc/congress.html)
 - [Who is on my county council?](https://districtry.com/sc/county-council.html): links a page per county, 46 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/sc/sources.html)
