@@ -9,7 +9,7 @@
      CI drift gate (smoke-test.yml):
          python3 scripts/build_county_status.py --check -->
 
-**93 of 102 Illinois counties are served** — 93 through their own dispatch entries, 0 through a shipped judicial circuit, and 0 through the County card alone. 9 more are researched-but-unserved (every one carries a recorded gap saying why), leaving 0 unresearched.
+**94 of 102 Illinois counties are served** — 94 through their own dispatch entries, 0 through a shipped judicial circuit, and 0 through the County card alone. 8 more are researched-but-unserved (every one carries a recorded gap saying why), leaving 0 unresearched.
 
 ## How to read this
 
@@ -19,7 +19,7 @@
 - **Open gaps** — records from the guidebook's gaps block (`data/app/coverage-gaps.json`, the app's Data gaps panel). A record naming several counties appears in each of their rows.
 - **"Complete"** here means: served, and `none` in the gaps column. A served county with open gaps is honest-but-unfinished; what each gap needs is the record's `wanted` line in the guidebook. One exception worth naming: a row reading **`no gap record`** in the Board column is NOT complete even though its gaps column says `none` — nobody has measured what it is missing, which is a weaker claim than having nothing missing.
 
-## Served counties (93)
+## Served counties (94)
 
 | County | FIPS | Served through | Board | County-keyed dispatch entries | Open gaps |
 |---|---|---|---|---|---|
@@ -46,6 +46,7 @@
 | Edgar | 17045 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Edwards | 17047 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Effingham | 17049 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `effingham-municipal-officials` (no-source); `fire-park-district-officers` (no-source) |
+| Ford | 17053 | dispatch | districted | `county-board` | 1 — `ford-board-contact` (data-quality) |
 | Franklin | 17055 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
 | Fulton | 17057 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Gallatin | 17059 | dispatch | at-large — County card | `county-precinct`, `library-district` | 2 — `gallatin-board-contact` (data-quality); `statewide-library-officials` (no-source) |
@@ -67,12 +68,12 @@
 | Kendall | 17093 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 5 — `aurora-council-contact` (blocked); `blocked-crawlers` (blocked); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `plano-ward-officials` (no-source) |
 | Knox | 17095 | dispatch | districted | `county-board`, `library-district` | 3 — `knox-precinct-geometry` (no-source); `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | LaSalle | 17099 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 5 — `lasalle-board-districts-stale` (no-source); `lasalle-municipal-wards` (no-source); `ogle-lasalle-special-districts` (no-source); `statewide-library-officials` (no-source); `wenona-two-clerks-disagree` (data-quality) |
-| Lake | 17097 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `county-source-library-officials` (no-source); `gurnee-village-board-names` (no-source); `lake-municipal-names` (no-source); `park-city-wards` (no-source) |
+| Lake | 17097 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `lake-municipal-names` (no-source); `park-city-wards` (no-source) |
 | Lee | 17103 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 4 — `fire-park-district-officers` (no-source); `lee-municipal-officials` (no-source); `lee-park-library-districts` (no-source); `statewide-library-officials` (no-source) |
 | Livingston | 17105 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `livingston-special-districts` (no-source); `statewide-library-officials` (no-source) |
 | Logan | 17107 | dispatch | districted | `county-board`, `county-precinct`, `library-district`, `park-district` | 2 — `logan-fire-districts` (no-source); `logan-park-district-boards` (no-source) |
 | Macon | 17115 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 4 — `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `macon-board-phone-area-code` (data-quality); `macon-district-name-formatting` (data-quality) |
-| Macoupin | 17117 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 4 — `macoupin-county-board-districts` (no-source); `macoupin-special-districts` (no-source); `macoupin-ward-geometry` (no-source); `statewide-library-officials` (no-source) |
+| Macoupin | 17117 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `macoupin-special-districts` (no-source); `macoupin-ward-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Madison | 17119 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `madison-ward-officials` (no-source) |
 | Marshall | 17123 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `library-governance-type` (data-quality); `statewide-library-officials` (no-source); `wenona-two-clerks-disagree` (data-quality) |
 | Mason | 17125 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `mason-precinct-vintage` (data-quality) |
@@ -98,7 +99,7 @@
 | Saline | 17165 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Sangamon | 17167 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district` | 4 — `fire-park-district-officers` (no-source); `municipal-website-dead-ends` (data-quality); `sangamon-park-library-districts` (no-source); `statewide-library-officials` (no-source) |
 | Schuyler | 17169 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Scott | 17171 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `scott-county-commissioners` (no-source); `statewide-library-officials` (no-source) |
+| Scott | 17171 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Shelby | 17173 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | St. Clair | 17163 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 5 — `fire-park-district-officers` (no-source); `library-governance-type` (data-quality); `st-clair-board-contact` (data-quality); `st-clair-park-library-districts` (no-source); `statewide-library-officials` (no-source) |
 | Stark | 17175 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `county-source-library-officials` (no-source) |
@@ -117,7 +118,7 @@
 | Winnebago | 17201 | dispatch | districted | `county-board`, `county-precinct`, `judicial-subcircuit`, `library-district` | 3 — `rockford-city-precincts` (no-source); `statewide-library-officials` (no-source); `winnebago-special-districts` (no-source) |
 | Woodford | 17203 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `woodford-special-district-boards` (data-quality) |
 
-## Researched frontier (9) — gap-recorded, not yet served
+## Researched frontier (8) — gap-recorded, not yet served
 
 Counties outside the coverage ring that a research pass has already measured; each row's records say what blocks it and what a submission would need to contain.
 
@@ -126,7 +127,6 @@ Counties outside the coverage ring that a research pass has already measured; ea
 | Bureau | 17011 | 1 — `bureau-county-board-districts` (no-source) |
 | Champaign | 17019 | 2 — `champaign-piatt-ccgisc-license` (blocked); `urbana-city-council-names` (no-source) |
 | Fayette | 17051 | 1 — `fayette-county-board-geometry` (no-source) |
-| Ford | 17053 | 1 — `ford-county-board-vintage` (no-source) |
 | Jasper | 17079 | 1 — `jasper-county-board` (no-source) |
 | Lawrence | 17101 | 1 — `lawrence-county-board` (no-source) |
 | Marion | 17121 | 1 — `marion-county-board-districts` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 104 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

@@ -419,15 +419,15 @@ jobs:
         continue-on-error: true
         run: python3 scripts/il_large_city_councils_scraper.py --out-dir /tmp
 
-      # Lake County's six readable cities above 25,000. The county IS in this
+      # Lake County's seven readable cities above 25,000. The county IS in this
       # job, at the contact-only rung: its portal publishes a hall address for
       # all 41 municipalities and names nobody, so every Lake unit above the
       # line arrives with an address and no people. Seven of Illinois's eight
       # unanswered units were Lake's, which is why this is a whole-county
-      # decision rather than a seventh entry in the step above. Gurnee is the
-      # seventh and is not here: its board page names no trustee in any byte
-      # this job is served.
-      - name: Scrape six Lake County cities' own council pages
+      # decision rather than a seventh entry in the step above. Gurnee joined
+      # 2026-10-15: its board page fills its list from a feed the page names,
+      # and the scraper reads that feed the way the page does.
+      - name: Scrape seven Lake County cities' own council pages
         id: scrape_lake_cities
         continue-on-error: true
         run: python3 scripts/il_lake_cities_councils_scraper.py --out-dir /tmp
@@ -701,6 +701,7 @@ jobs:
           add "${{ steps.scrape_large_cities.outcome }}" normal      enrich /tmp/normal_council.json
           add "${{ steps.scrape_large_cities.outcome }}" quincy      enrich /tmp/quincy_council.json
           add "${{ steps.scrape_large_cities.outcome }}" danville    enrich /tmp/danville_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" gurnee           enrich /tmp/gurnee_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" highland-park    enrich /tmp/highland-park_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" mundelein        enrich /tmp/mundelein_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" north-chicago    enrich /tmp/north-chicago_council.json

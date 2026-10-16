@@ -140,6 +140,7 @@ INSTANCE_WORKSHEET = {
     "sc": "sc/metro-worksheet.json",
     "tn": "tn/metro-worksheet.json",
     "ar": "ar/metro-worksheet.json",
+    "ms": "ms/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -231,18 +232,19 @@ CANONICAL = "https://districtry.com/"
 QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
-    # SIX NAMES FOR ONE READER'S QUESTION. A county's governing body is a
+    # SEVEN NAMES FOR ONE READER'S QUESTION. A county's governing body is a
     # board in Illinois and Wisconsin, a board of supervisors in Iowa, a board
     # of commissioners in Michigan, a county legislature in New York, a
-    # fiscal court (or a merged council) in Kentucky and a county council in
-    # South Carolina, and
+    # fiscal court (or a merged council) in Kentucky, a county council in
+    # South Carolina and a quorum court in Arkansas, and
     # somebody asking who sits on it does not know or care which word their
     # state uses. One row, so the front door asks the question once.
     ("Who sits on my county board?", ("county-board.html", "county-supervisor.html",
                                       "county-commissioner.html",
                                       "county-legislature.html",
                                       "county-government.html",
-                                      "county-council.html")),
+                                      "county-council.html",
+                                      "quorum-court.html")),
     ("Who represents me on the city council?", ("ward.html", "council-district.html",
                                                 "supervisor-district.html",
                                                 "city-council.html")),
@@ -270,6 +272,7 @@ CHIP_TOPIC = {
     "county-commissioner.html": "commissioners",
     "county-government.html": "fiscal court",
     "county-council.html": "county council",
+    "quorum-court.html": "quorum court",
     "county-legislature.html": "county legislature",
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",
@@ -1773,22 +1776,42 @@ footer .support b { color: var(--ink); }
     var link = parseMapLink(q);
     if (link && link.kind === "short") {
       var signal = inFlight.signal;
-      resolveShortMapLink(link, signal).then(function (full) {
+      setStatus("Reading the link\\u2026", false);
+      // a failed lookup is tried again (ENGINE map-link), and the reader is
+      // told so rather than left watching the same words
+      resolveShortMapLink(link, signal, function () {
+        if (!signal.aborted) setStatus("Reading the link\\u2026 trying again", false);
+      }).then(function (full) {
         if (signal.aborted) return;
-        submitLink(full, full.kind === "text" ? full.text : q);
+        setStatus("Searching\\u2026", false);
+        submitLink(full, full.kind === "text" ? full.text : q, q);
       }, function (err) {
         if (err && err.name === "AbortError") return;
         resetButton();
-        setStatus(mapLinkMessage(link), true);
+        setStatus(mapLinkMessage(link, err), true);
       });
       return;
     }
-    submitLink(link, link && link.kind === "text" ? link.text : q);
+    submitLink(link, link && link.kind === "text" ? link.text : q, q);
   });
 
-  function submitLink(link, q) {
+  // `typed` is what was put in the box: the link itself, for a link
+  function submitLink(link, q, typed) {
     if (link && link.kind === "point") { routePoint(link.lat, link.lng); return; }
     if (link && link.kind !== "text") { resetButton(); setStatus(mapLinkMessage(link), true); return; }
+    searchAndRoute(q, link ? addressAfterName(q) : null, null, typed);
+  }
+
+  /* `bare` is the address without the place's name in front of it, for
+   * text a map link carried, tried only when the whole text matches nothing
+   * (ENGINE map-link addressAfterName): a place shared from the Google Maps
+   * app is its name and its address in one string. Its answers count only
+   * if they carry its house number (labelCarriesNumber), as in the apps.
+   * When none does but one is on the address's street in its town
+   * (labelOnStreet), the app covering that street is opened with what was
+   * typed, and shows the street there for the reader to tap the place
+   * (routeStreet). */
+  function searchAndRoute(q, bare, mustCarry, typed) {
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -1796,7 +1819,19 @@ footer .support b { color: var(--ink); }
         return res.json();
       })
       .then(function (data) {
-        var feats = (data && data.features) || [];
+        var feats = (data && data.features) || [], street = [];
+        if (mustCarry) {
+          street = feats.filter(function (f) { return labelOnStreet(photonParts(f), mustCarry); });
+          feats = feats.filter(function (f) {
+            return labelCarriesNumber(f && f.properties && f.properties.housenumber, mustCarry);
+          });
+        }
+        if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed); return; }
+        if (!feats.length && street.length) {
+          return routeStreet(street, typed).then(function (went) {
+            if (!went) { resetButton(); setStatus("That address is outside every place districtry covers today \\u2014 see what's covered below.", true); }
+          });
+        }
         return loadFleetOutlines().then(function (outlines) {
           if (!outlines) return routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
@@ -1821,6 +1856,32 @@ footer .support b { color: var(--ink); }
         resetButton();
         setStatus("Search failed \\u2014 try again, or pick a place below.", true);
       });
+  }
+
+  // A Photon answer's parts in the order the apps label one (photonLabel),
+  // which is what labelOnStreet reads
+  function photonParts(f) {
+    var p = (f && f.properties) || {};
+    return [p.name, p.housenumber && p.street ? p.housenumber + " " + p.street : p.street,
+            p.district, p.city, p.state, p.postcode].filter(Boolean).join(", ");
+  }
+
+  /* The street a shared place's address is on, when no answer carries its
+   * house number: the app that covers the street is opened with what was
+   * typed, so it reads the link again and shows the street there (ENGINE
+   * geocoder-search showStreetOnly). It hands over the text and not the
+   * street's position, because a point on a street is not the place. */
+  function routeStreet(street, typed) {
+    return loadFleetOutlines().then(function (outlines) {
+      var c = street[0].geometry && street[0].geometry.coordinates;
+      if (!c || c.length < 2) return null;
+      return outlines ? fleetOwner(c[1], c[0], outlines) : resolveMetro(c[1], c[0]);
+    }).then(function (metro) {
+      if (!metro) return false;
+      setStatus("Opening " + metro.name + "\\u2026", false);
+      window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
+      return true;
+    });
   }
 
   /* A position read from a link: the same routing a geocoded address gets. */

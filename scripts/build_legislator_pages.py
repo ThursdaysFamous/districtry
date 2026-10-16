@@ -315,7 +315,31 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Tennessee"),
     ),
-}
+    # Arkansas joined at its go-live with both chambers named from the
+    # Legislature's own member list and every member's own page (a seat whose
+    # only row is a departed member prints as a vacancy). Ark. Const. art. 5,
+    # secs. 3 and 4 set representatives' terms at two years and senators' at
+    # four.
+    "ar": dict(
+        worksheet="ar/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Arkansas legislator?",
+            body="the Arkansas General Assembly",
+            short="Arkansas General Assembly",
+            term="Senators serve four-year terms and representatives two.",
+            chambers=[
+                dict(layer="ar-senate", name="Arkansas Senate", short="Senate",
+                     holder="Senator", roster="ar-senate-members.json"),
+                dict(layer="ar-house", name="Arkansas House of Representatives", short="House",
+                     holder="Representative", roster="ar-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Arkansas"),
+    ),}
 
 
 def fail(msg):

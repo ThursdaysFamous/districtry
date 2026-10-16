@@ -20,6 +20,23 @@
     return METRO_NAME + " District Explorer";
   }
 
+  /* The place a reader is told this app covers, in the sentences that say
+     where a search or a located point fell: the brand's app name with the
+     product word taken off ("districtry Illinois" -> "Illinois"), which is how
+     build_history_page.py names an instance on its own page. METRO_NAME is
+     not that. It is the engine's handle for the fork, and Illinois's is still
+     "Chicago", where the app started, so until 2026-10-14 the statewide
+     Illinois app told a reader that an address in Peoria matched nothing
+     "inside Chicago". Falls back to METRO_NAME where no brand is declared,
+     which keeps such a fork's sentences as they were. */
+  function appPlaceName() {
+    if (typeof METRO_BRAND !== "undefined" && METRO_BRAND && METRO_BRAND.appName &&
+        METRO_BRAND.productName && METRO_BRAND.appName.indexOf(METRO_BRAND.productName + " ") === 0) {
+      return METRO_BRAND.appName.slice(METRO_BRAND.productName.length + 1);
+    }
+    return METRO_NAME;
+  }
+
   function siblingDisplayName(metro) {
     if (!metro) return "";
     return metro.explorerName || (metro.label + " District Explorer");

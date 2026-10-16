@@ -3030,6 +3030,11 @@
   "bodyRead": "2026-10-14",
   "bodySourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=239",
   "county": "Fayette",
+  "districtsFrom": {
+   "method": "map",
+   "publisher": "Lexington-Fayette Urban County Government",
+   "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Council_District/FeatureServer/0"
+  },
   "executive": {
    "email": "LGorton@lexingtonky.gov",
    "name": "Linda Gorton",
@@ -3040,18 +3045,77 @@
   "law": "KRS 67A",
   "members": [
    {
-    "email": "wbaxter@lexingtonky.gov",
-    "name": "Whitney Elliott Baxter",
-    "phone": "(859) 280-8246",
+    "district": "1",
+    "email": "tmorton@lexingtonky.gov",
+    "name": "Tyler Morton",
+    "phone": "(859) 280-8238",
     "role": "Council member"
    },
    {
+    "district": "2",
+    "email": "slynch@lexingtonky.gov",
+    "name": "Shayla Lynch",
+    "phone": "(859) 280-8239",
+    "role": "Council member"
+   },
+   {
+    "district": "4",
+    "email": "ecurtis@lexingtonky.gov",
+    "name": "Emma Curtis",
+    "phone": "(859) 280-8241",
+    "role": "Council member"
+   },
+   {
+    "district": "5",
+    "email": "lsheehan@lexingtonky.gov",
+    "name": "Liz Sheehan",
+    "phone": "(859) 280-8242",
+    "role": "Council member"
+   },
+   {
+    "district": "6",
+    "email": "lhigginshord@lexingtonky.gov",
+    "name": "Lisa Higgins-Hord",
+    "phone": "(859) 280-8243",
+    "role": "Council member"
+   },
+   {
+    "district": "7",
+    "email": "jhale@lexingtonky.gov",
+    "name": "Joseph Hale",
+    "phone": "(859) 280-8244",
+    "role": "Council member"
+   },
+   {
+    "district": "8",
     "email": "abeasley2@lexingtonky.gov",
     "name": "Amy Beasley",
     "phone": "(859) 280-8245",
     "role": "Council member"
    },
    {
+    "district": "9",
+    "email": "wbaxter@lexingtonky.gov",
+    "name": "Whitney Elliott Baxter",
+    "phone": "(859) 280-8246",
+    "role": "Council member"
+   },
+   {
+    "district": "10",
+    "email": "dsevigny@lexingtonky.gov",
+    "name": "Dave Sevigny",
+    "phone": "(859) 280-8247",
+    "role": "Council member"
+   },
+   {
+    "district": "11",
+    "email": "jreynolds@lexingtonky.gov",
+    "name": "Jennifer Reynolds",
+    "phone": "(859) 280-8248",
+    "role": "Council member"
+   },
+   {
+    "district": "12",
     "email": "hboone@lexingtonky.gov",
     "name": "Hilary Boone",
     "phone": "(859) 280-8249",
@@ -3064,57 +3128,9 @@
     "role": "Council member"
    },
    {
-    "email": "ecurtis@lexingtonky.gov",
-    "name": "Emma Curtis",
-    "phone": "(859) 280-8241",
-    "role": "Council member"
-   },
-   {
     "email": "cellinger@lexingtonky.gov",
     "name": "Chuck Ellinger",
     "phone": "(859) 280-8236",
-    "role": "Council member"
-   },
-   {
-    "email": "jhale@lexingtonky.gov",
-    "name": "Joseph Hale",
-    "phone": "(859) 280-8244",
-    "role": "Council member"
-   },
-   {
-    "email": "lhigginshord@lexingtonky.gov",
-    "name": "Lisa Higgins-Hord",
-    "phone": "(859) 280-8243",
-    "role": "Council member"
-   },
-   {
-    "email": "slynch@lexingtonky.gov",
-    "name": "Shayla Lynch",
-    "phone": "(859) 280-8239",
-    "role": "Council member"
-   },
-   {
-    "email": "tmorton@lexingtonky.gov",
-    "name": "Tyler Morton",
-    "phone": "(859) 280-8238",
-    "role": "Council member"
-   },
-   {
-    "email": "jreynolds@lexingtonky.gov",
-    "name": "Jennifer Reynolds",
-    "phone": "(859) 280-8248",
-    "role": "Council member"
-   },
-   {
-    "email": "dsevigny@lexingtonky.gov",
-    "name": "Dave Sevigny",
-    "phone": "(859) 280-8247",
-    "role": "Council member"
-   },
-   {
-    "email": "lsheehan@lexingtonky.gov",
-    "name": "Liz Sheehan",
-    "phone": "(859) 280-8242",
     "role": "Council member"
    },
    {
@@ -5130,6 +5146,11 @@
   "bodyRead": "2026-10-14",
   "bodySourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=248",
   "county": "Jefferson",
+  "districtsFrom": {
+   "method": "map",
+   "publisher": "LOJIC (Louisville/Jefferson County Information Consortium)",
+   "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPolitical/MapServer/8"
+  },
   "executive": {
    "email": "craig.greenberg@louisvilleky.gov",
    "name": "Craig Greenberg",
@@ -5140,158 +5161,184 @@
   "law": "KRS 67C",
   "members": [
    {
-    "email": "brent.ackerson@louisvilleky.gov",
-    "name": "Brent Ackerson",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "crystal.bast@louisvilleky.gov",
-    "name": "Crystal Bast",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "khalil.batshon@louisvilleky.gov",
-    "name": "Khalil Batshon",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "stuart.benson@louisvilleky.gov",
-    "name": "Stuart Benson",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "kevin.bratcher@louisvilleky.gov",
-    "name": "Kevin Bratcher",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "jennifer.chappell@louisvilleky.gov",
-    "name": "Jennifer Chappell",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
+    "district": "1",
     "email": "tammy.hawkins@louisvilleky.gov",
     "name": "Tammy Hawkins",
     "phone": "(502) 574-1100",
     "role": "Council member"
    },
    {
-    "email": "ken.herndon@louisvilleky.gov",
-    "name": "Ken Herndon",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "jeff.hudson@louisvilleky.gov",
-    "name": "Jeff Hudson",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "jonathan.joseph@louisvilleky.gov",
-    "name": "Jonathan Joseph",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "kevin.kramer@louisvilleky.gov",
-    "name": "Kevin Kramer",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "jp.lyninger@louisvilleky.gov",
-    "name": "JP Lyninger",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "paula.mccraney@louisvilleky.gov",
-    "name": "Paula McCraney",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "ginny.mulveywoolridge@louisvilleky.gov",
-    "name": "Ginny Mulvey-Woolridge",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "andrew.owen@louisvilleky.gov",
-    "name": "Andrew Owen",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "Marilyn.Parker@louisvilleky.gov",
-    "name": "Marilyn Parker",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "shameka.parrishwright@louisvilleky.gov",
-    "name": "Shameka Parrish-Wright",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "anthony.piagentini@louisvilleky.gov",
-    "name": "Anthony B. Piagentini",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "donna.purvis@louisvilleky.gov",
-    "name": "Donna Purvis",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "josie.raymond@louisvilleky.gov",
-    "name": "Josie Raymond",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "scott.reed@louisvilleky.gov",
-    "name": "Scott Reed",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "ben.reno-weber@louisvilleky.gov",
-    "name": "Ben Reno-weber",
-    "phone": "(502) 574-1000",
-    "role": "Council member"
-   },
-   {
-    "email": "betsy.ruhe@louisvilleky.gov",
-    "name": "Betsy Ruhe",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
-    "email": "dan.seum@louisvilleky.gov",
-    "name": "Dan Seum Jr.",
-    "phone": "(502) 574-1100",
-    "role": "Council member"
-   },
-   {
+    "district": "2",
     "email": "barbara.shanklin@louisvilleky.gov",
     "name": "Barbara Shanklin",
     "phone": "(502) 574-1100",
     "role": "Council member"
    },
    {
+    "district": "3",
+    "email": "shameka.parrishwright@louisvilleky.gov",
+    "name": "Shameka Parrish-Wright",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "4",
+    "email": "ken.herndon@louisvilleky.gov",
+    "name": "Ken Herndon",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "5",
+    "email": "donna.purvis@louisvilleky.gov",
+    "name": "Donna Purvis",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "6",
+    "email": "jp.lyninger@louisvilleky.gov",
+    "name": "JP Lyninger",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "7",
+    "email": "paula.mccraney@louisvilleky.gov",
+    "name": "Paula McCraney",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "8",
+    "email": "ben.reno-weber@louisvilleky.gov",
+    "name": "Ben Reno-weber",
+    "phone": "(502) 574-1000",
+    "role": "Council member"
+   },
+   {
+    "district": "9",
+    "email": "andrew.owen@louisvilleky.gov",
+    "name": "Andrew Owen",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "10",
+    "email": "josie.raymond@louisvilleky.gov",
+    "name": "Josie Raymond",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "11",
+    "email": "kevin.kramer@louisvilleky.gov",
+    "name": "Kevin Kramer",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "12",
+    "email": "jonathan.joseph@louisvilleky.gov",
+    "name": "Jonathan Joseph",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "13",
+    "email": "dan.seum@louisvilleky.gov",
+    "name": "Dan Seum Jr.",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "14",
+    "email": "crystal.bast@louisvilleky.gov",
+    "name": "Crystal Bast",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "15",
+    "email": "jennifer.chappell@louisvilleky.gov",
+    "name": "Jennifer Chappell",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "16",
+    "email": "scott.reed@louisvilleky.gov",
+    "name": "Scott Reed",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "17",
     "email": "markus.wnkler@louisvilleky.gov",
     "name": "Markus Winkler",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "18",
+    "email": "Marilyn.Parker@louisvilleky.gov",
+    "name": "Marilyn Parker",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "19",
+    "email": "anthony.piagentini@louisvilleky.gov",
+    "name": "Anthony B. Piagentini",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "20",
+    "email": "stuart.benson@louisvilleky.gov",
+    "name": "Stuart Benson",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "21",
+    "email": "betsy.ruhe@louisvilleky.gov",
+    "name": "Betsy Ruhe",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "22",
+    "email": "kevin.bratcher@louisvilleky.gov",
+    "name": "Kevin Bratcher",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "23",
+    "email": "jeff.hudson@louisvilleky.gov",
+    "name": "Jeff Hudson",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "24",
+    "email": "ginny.mulveywoolridge@louisvilleky.gov",
+    "name": "Ginny Mulvey-Woolridge",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "25",
+    "email": "khalil.batshon@louisvilleky.gov",
+    "name": "Khalil Batshon",
+    "phone": "(502) 574-1100",
+    "role": "Council member"
+   },
+   {
+    "district": "26",
+    "email": "brent.ackerson@louisvilleky.gov",
+    "name": "Brent Ackerson",
     "phone": "(502) 574-1100",
     "role": "Council member"
    }

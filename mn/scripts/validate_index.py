@@ -88,7 +88,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 15
+MIN_REGISTER_LAYER = 16
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -99,8 +99,8 @@ EXPECT_LAYER_IDS = [
     "watershed-district", "school-district-unified", "school-board-district",
     "county-commissioner", "zip-code", "school-district-elementary",
     "county-subdivision", "voting-precinct", "tribal-government",
-    "municipality", "school-district-secondary", "police-station",
-    "fire-station", "post-office",
+    "municipality", "city-ward", "school-district-secondary",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -115,6 +115,7 @@ GEOMETRY_FILES = {
     "mn-commissioner-districts.json": (447, 447),  # Every county commissioner district in Minnesota, pre-built by mn/scripts/build_mn_commissioner_districts.py: the Secretary of State's 4,105 precincts dissolved on the commissioner district each one carries, so no line is drawn that a precinct boundary does not already draw. Six gates must pass before it writes — Minn. Stat. 375.01 and 375.025 read live, giving a 447-district partition of all 87 counties with consecutive numbering and a board size the statute allows; seven county governments' own layers agreeing about every one of the 785 precincts they cover; the certified 2024 and 2022 per-precinct results agreeing as dated snapshots; no point inside one district inside a second; and all 87 county anchors landing in exactly their own county's district, Cook's declared outside the fabric because it sits in Lake Superior. Simplified at a 15 m Douglas-Peucker interval over ONE shared topology, taken from the fabric's own 16.09 m median segment, so neighbouring districts share their border exactly.
     "mn-precincts.json": (4105, 4105),  # Every Minnesota voting precinct, pre-built by mn/scripts/build_mn_precincts.py from the Secretary of State's own statewide service (paged at the service's 2,000-record cap; Douglas-Peucker at a 4 m interval; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 4,105 count floor on both the fetch and the simplified output). This instance's largest file at 1.67 MB gzipped, fetched only when a reader switches the layer on.
     "mn-school-board-districts.json": (60, 90),  # Board election districts of the 13 Minnesota school boards that elect by district and whose results place them, drawn by mn/scripts/build_mn_school_board_districts.py from the Secretary of State's precinct-level results, read in each election's own precincts and cut to the Census school district. 59 districts, 4 split precincts shipped as their own features naming every district they vote in, and 5 pieces the results do not place (Duluth's combined polling places among them). Gated on the districts' precincts being disjoint, on no two features overlapping, on every seat being one the roster names, and on Minneapolis's six agreeing with the city's own park commissioner districts. Simplified at a 15 m Douglas-Peucker interval over one shared topology.
+    "mn-city-wards.json": (101, 140),  # Council wards and districts of the 22 Minnesota cities whose councils this app names and which elect by ward or district, built by mn/scripts/build_mn_city_wards.py: the Secretary of State's precincts joined on the ward each one carries. Gated on each city's wards being exactly its roster's ward seats, on every ward's precincts matching the precincts that voted in its latest council contest (101 of 101, read in that election's own precinct map), on 2,000 seeded points agreeing with the exact dissolve, and on no two wards overlapping. Simplified at a 15 m Douglas-Peucker interval over one shared topology.
     "tribal-areas.json": (22, 22),  # Minnesota's tribal land (scripts/build_tribal_areas.py) — 22 areas across 13 nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
@@ -123,6 +124,7 @@ ROSTER_FILES = {
     "congress-roster.json": 8,  # U.S. House roster, refreshed weekly by update-mn-congress-roster.yml.
     "mn-county-commissioners.json": 447,  # All 447 county commissioner districts, each naming the winner of its most recent election in the Secretary of State's results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_commissioner_roster.py (update-mn-commissioner-roster.yml).
     "mn-city-councils.json": 43,  # The mayor and council of each of Minnesota's 43 cities above 25,000 people, each seat naming the winner of its most recent election in the Secretary of State's city results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_city_councils.py (update-mn-city-councils.yml).
+    "mn-town-boards.json": 680,  # The board of each Minnesota town that holds its town election in November, keyed by the town's Census county subdivision GEOID, each seat naming the winner of its most recent November election in the Secretary of State's local results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_town_boards.py (update-mn-city-councils.yml).
     "mn-school-boards.json": 310,  # The elected board of each Minnesota school district whose elections the Secretary of State reports, keyed by the Census district id, each seat naming the winner of its most recent election and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_school_boards.py (update-mn-school-boards.yml).
     "coverage-gaps.json": 0,  # The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the county commissioner roster, the two legislature rosters, and the county officers.
     "tribal-councils.json": 9,  # The council of every Minnesota nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.

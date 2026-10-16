@@ -8,13 +8,13 @@ districtry Oklahoma: a single-file, dependency-light web app. Click a point in O
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/ok/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships ELEVEN layers, and it went **LIVE** in its go-live change,
+the Illinois root-scripts shape. It ships FOURTEEN layers, and it went **LIVE** in its go-live change,
 which Adam held until the fleet-wide tribal thread had drawn Oklahoma's tribal areas: it has a
 `metros.json` entry and a landing card, the Pages deploy publishes `ok/` (keeping
 `ok/data/state`, `ok/data/source` and `ok/scripts` out), and `ok/congress.html` and
 `ok/state-legislature.html` carry its rosters as generated tables.
 
-**The national tier** — everything eleven layers answer today comes from a national publisher.
+**The national tier** — these eleven layers answer from a national publisher.
 **County** (77, Census TIGERweb, identity-only and the coverage ring), **U.S. House** (5
 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators
 roster), **Oklahoma Senate** and **Oklahoma House** (48 and 101 districts, TIGERweb geometry
@@ -31,9 +31,15 @@ exercises the factory's empty-member path: the card shows the district and the c
 directory, never a name. Reading the chambers' own sites for office and telephone is a WATCH
 item, not done here.
 
-**THERE IS NO TOWNSHIP LAYER, AND THAT IS A MEASUREMENT.** All 305 county subdivisions TIGERweb
-carries for STATE='40' are census county divisions (LSADC 22, FUNCSTAT S): statistical areas
-drawn for counting, which govern nobody. A card for one would put a non-government on the map.
+**THE COUNTY DIVISIONS ARE DRAWN, AND THE CARD SAYS THEY GOVERN NOBODY.** All 305 county
+subdivisions TIGERweb carries for STATE='40' are census county divisions (LSADC 22, FUNCSTAT S,
+measured 2026-10-15): statistical areas drawn for counting. They were left out at arrival so the
+map would not carry a card for a non-government. Since 2026-10-15 the done standard's level 14
+(Adam, 2026-10-14) asks every state to draw its subdivision boundaries whether or not they govern
+anyone, so `county-subdivision` ("Census County Division") draws them live from TIGERweb, North
+Carolina's layer, with a card that names the division without TIGER's "CCD", names its county
+and says no one is elected from it. The statewide set is 10.7 MB, uncompressed, and downloads
+only when the layer is switched on; a click asks TIGERweb about the point alone.
 
 **TWO SCHOOL LAYERS, BECAUSE TWO OF TIGER'S THREE TILINGS PARTITION THE STATE.** Unified (415)
 and elementary (91) districts together cover the state's land exactly (166,222.99 + 11,441.40 =
@@ -106,7 +112,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Oklahoma (`oklahoma`) — https://districtry.com/ok/
 - Geocoders: address Photon (Oklahoma-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oklahoma-bounded, serial >=1s queue)
 - Ground truth: 35.49230,-97.50340 (the State Capitol, Oklahoma City, Oklahoma County) → county Oklahoma County; us-house 5; ok-senate 48; ok-house 99. Negative point 33.65000,-97.15000 (near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.).
-- Layers: 13 registered (political 5, safety 2, schools 2, geography 4); `registerLayer(` floor 8. Debug namespace `window.OklahomaExplorer`.
+- Layers: 14 registered (political 5, safety 2, schools 2, geography 5); `registerLayer(` floor 9. Debug namespace `window.OklahomaExplorer`.
 - Scheduled workflows: `update-ok-congress-roster.yml` (Mon 16:45 UTC); `update-ok-legislature-roster.yml` (Tue 16:45 UTC); `update-ok-commissioner-roster.yml` (Wed 16:45 UTC); `ok-validate-sources.yml` (1st of month 19:00 UTC).
 - Source registry: `ok/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

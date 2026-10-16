@@ -143,6 +143,153 @@
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a place's name before its address ----------
+   * A Google Maps link shared from the Android app carries no position. It
+   * names the place as one string, its name and then its address
+   * (?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=…), so
+   * parseMapLink returns it as text to search, and a geocoder often cannot
+   * match the two together: Photon answers nothing for that Starved Rock
+   * Lodge string, though it holds the lodge by name. So when text a map link
+   * carried matches nothing whole, the app's search box and the front
+   * door's both try the address alone. Returns null unless the text opens
+   * with words and a later part, after a comma, opens with a house number. */
+  function addressAfterName(q) {
+    var parts = String(q).split(",");
+    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    for (var i = 1; i < parts.length; i++) {
+      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+    }
+    return null;
+  }
+
+  /* Whether a geocoder's answer carries the house number an address opens
+   * with. An answer to the address alone is used only if it does, because
+   * a geocoder that does not hold the number answers with whatever partly
+   * matches. Measured on 2026-10-14: Photon holds no 2668 on East 875th Road
+   * (asked for it spelled out, it answers three stretches of that road, one
+   * 9 km from the lodge, and a building on it), and asked for "2668 E 875th
+   * Rd, Oglesby, IL 61348" it answered West 3rd Street and East 3rd Street
+   * in the town of Oglesby, about 6 km from the lodge. A single such answer
+   * would be selected as the place that was shared. */
+  function labelCarriesNumber(label, address) {
+    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    if (!m) return false;
+    return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
+  }
+
+  /* ---------- street names in the Postal Service's abbreviations ----------
+   * USPS Publication 28: a leading or trailing direction ("West" -> "W") and
+   * the street type ("Avenue" -> "Ave"). abbreviateStreetName is how the
+   * boundary-street labels print a name (ENGINE basemap): a word is
+   * shortened only in those two positions, and a direction only when a name
+   * is left beside it, so "North Avenue" (a street named North) prints
+   * "North Ave", "West North Avenue" prints "W North Ave", "North Broadway"
+   * prints "N Broadway", and "Avenue A" keeps its whole type. The ordinary
+   * street names are left as CARTO prints them. The tables are here rather
+   * than in the basemap block because the front door's address box, which
+   * draws no map, reads them too (labelOnStreet below). */
+  var STREET_DIRECTIONS = {
+    north: "N", south: "S", east: "E", west: "W",
+    northeast: "NE", northwest: "NW", southeast: "SE", southwest: "SW"
+  };
+  var STREET_TYPES = {
+    avenue: "Ave", boulevard: "Blvd", circle: "Cir", court: "Ct", drive: "Dr",
+    expressway: "Expy", freeway: "Fwy", highway: "Hwy", lane: "Ln", parkway: "Pkwy",
+    place: "Pl", road: "Rd", square: "Sq", street: "St", terrace: "Ter", trail: "Trl"
+  };
+  function abbreviateStreetName(name) {
+    var words = String(name || "").split(/\s+/).filter(Boolean);
+    if (words.length < 2) return words.join(" ");
+    var lower = function (i) { return words[i].toLowerCase(); };
+    var first = 0, last = words.length - 1;
+    // a direction is shortened only when a NAME is left beside it, not just
+    // a street type: "North Broadway" -> "N Broadway", "North Avenue" stays
+    var nameLeft = function (from, to) {
+      if (to > from) return true;
+      return to === from && !STREET_TYPES[lower(from)];
+    };
+    if (STREET_DIRECTIONS[lower(last)] && nameLeft(first, last - 1)) {
+      words[last] = STREET_DIRECTIONS[lower(last)];
+      last -= 1;
+    }
+    if (STREET_DIRECTIONS[lower(first)] && nameLeft(first + 1, last)) {
+      words[first] = STREET_DIRECTIONS[lower(first)];
+      first += 1;
+    }
+    if (STREET_TYPES[lower(last)] && last > first) words[last] = STREET_TYPES[lower(last)];
+    return words.join(" ");
+  }
+
+  /* ---------- the street an address is on ----------
+   * A geocoder can hold a street and not the house number on it. A small
+   * business shared from the Google Maps app on 2026-10-14, on W Oakley Dr
+   * NW in Westmont, Illinois, matched nothing with its name in front, and
+   * asked for the address alone Photon answered six streets in Westmont,
+   * West Oakley Drive Northwest among them, with no house number on any;
+   * the Census Bureau's geocoder, asked for the same address, offered that
+   * number on Oakley Ln and on Oakley Ct, two other streets. When the street
+   * is all that is known, the street is the honest answer: the app shows it
+   * and the reader taps the place (ENGINE geocoder-search showStreetOnly),
+   * and the front door opens the app that covers it.
+   *
+   * addressParts splits an address into its house number, street, town and
+   * ZIP code, or returns null unless it opens with a house number and has a
+   * part after the street. labelOnStreet says whether a geocoder's answer is
+   * on that street in that town: one part of the answer, less any house
+   * number, must name the same street once both are written in the
+   * abbreviations above, and another part must be the town or the ZIP code,
+   * because most street names are in many towns. A direction written on one
+   * side and not the other still matches; two different directions do not,
+   * because West and East Madison Street are miles apart. */
+  function addressParts(address) {
+    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
+    var m = /^(\d+[a-z]?(?:-\d+)?)\s+(.+)$/i.exec(parts[0] || "");
+    if (!m || parts.length < 2) return null;
+    // a unit at the end of the street line is not part of the street's name
+    var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
+    var town = parts[1], zip = "", i, s;
+    for (i = 2; i < parts.length; i++) {
+      s = /^[a-z]{2}(?:\s+(\d{5})(?:-\d{4})?)?$/i.exec(parts[i]);  // "IL 60559", "IL"
+      if (s) { town = parts[i - 1]; zip = s[1] || ""; break; }
+    }
+    if (!zip) zip = (/(?:^|[\s,])(\d{5})(?:-\d{4})?(?=[\s,]|$)/.exec(parts.slice(1).join(", ")) || [])[1] || "";
+    return { number: m[1], street: street, town: town, zip: zip };
+  }
+  // A street's name as a matching key: every word in its abbreviation, so
+  // "Drive" and "Dr" agree wherever they stand, then a leading and a
+  // trailing direction set apart when a name is left beside it, so "W North
+  // Ave" keeps North (a street named North) and loses W.
+  function streetNameKey(name) {
+    var dirs = {}, types = {}, k;
+    for (k in STREET_DIRECTIONS) dirs[STREET_DIRECTIONS[k].toUpperCase()] = true;
+    for (k in STREET_TYPES) types[STREET_TYPES[k].toUpperCase()] = true;
+    var words = String(name || "").replace(/\./g, "").split(/\s+/).filter(Boolean).map(function (w) {
+      var low = w.toLowerCase();
+      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || w).toUpperCase();
+    });
+    var named = function (rest) { return rest.length > 1 || (rest.length === 1 && !types[rest[0]]); };
+    var key = { pre: "", post: "" };
+    if (words.length > 1 && dirs[words[words.length - 1]] && named(words.slice(0, -1))) key.post = words.pop();
+    if (words.length > 1 && dirs[words[0]] && named(words.slice(1))) key.pre = words.shift();
+    key.core = words.join(" ");
+    return key;
+  }
+  function labelOnStreet(label, address) {
+    var a = addressParts(address);
+    if (!a) return false;
+    var want = streetNameKey(a.street);
+    if (!want.core) return false;
+    var town = a.town.toLowerCase(), onStreet = false, inTown = false;
+    String(label || "").split(",").forEach(function (part) {
+      var low = part.trim().toLowerCase();
+      if (low && (low === town || low === a.zip)) inTown = true;
+      var got = streetNameKey(part.trim().replace(/^\d+[a-z]?(?:-\d+)?\s+/i, ""));
+      if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
+          (!got.post || !want.post || got.post === want.post)) onStreet = true;
+    });
+    return onStreet && inTown;
+  }
+
   /* A SHORT LINK holds no position: only Google or Apple knows where it
    * leads, and a page cannot ask them, because a browser does not let a page
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
@@ -156,28 +303,130 @@
    * here is a change there too. */
   var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
 
-  function resolveShortMapLink(link, signal) {
+  /* A LOOKUP THAT FAILS ONCE CAN ANSWER A MOMENT LATER. On 2026-10-14 a
+   * place shared from the Google Maps app into the installed app on a phone
+   * was told its short link couldn't be read, and minutes later the lookup
+   * answered the same link at once, six times in a row, and on the live
+   * site through the installed app's launcher at a phone's size. The
+   * lookup's own code records nothing, but Deno keeps a trace of each
+   * request for one day, in the Deno account rather than anywhere this code
+   * can read, and that request's trace, read the same day, holds one fetch:
+   * the lookup asked the short link's own host, which answered 404 in 107 ms.
+   * That is the answer the host gives a link that does not exist ("Dynamic
+   * Link Not Found", measured the same evening with a made-up one), so
+   * Google did not know a link it knew minutes later. The likeliest reason,
+   * inferred rather than measured, is that the link was seconds old: a share
+   * hands the app a link Google has only just made, and the app asks about
+   * it at once, which a pasted link rarely does. So a failed try is made
+   * again after 1.5 seconds and once more after 4, and a lookup 404 (how the
+   * lookup reports any answer that does not lead to a map) once more after
+   * 10, because a link too new to be known gets that answer and the wait
+   * costs time only when a link fails. Each try gives up after 8 seconds
+   * rather than leaving "Reading the link…" on screen for good, and the
+   * other failures keep two retries, because a fourth try after three
+   * timeouts would keep a reader waiting most of a minute. Two answers are
+   * not tried again, because a second try cannot change them: a 400 (the
+   * lookup refuses what it was sent) and a full link that is itself short.
+   * onRetry, if given, is called with the failed try's error before each
+   * new try, so the page can say it is trying again. A try cut short by
+   * `signal` rejects with an AbortError, as fetch does; one that ran out of
+   * time does not.
+   *
+   * WHICH SIDE FAILED is the rejection's `reason`, which mapLinkMessage
+   * tells the reader, so the next failure on a phone says what this one
+   * could not: "unreached" when no answer reached the page at all (the
+   * phone is offline, or the lookup's host failed, since an error page from
+   * that host carries no CORS header and reaches the page as a failed
+   * fetch), "timeout", "no-map" when the lookup followed the link and Google
+   * or Apple did not send it to a map (its 404), and "no-answer" when Google
+   * or Apple did not answer the lookup (its 502). */
+  var MAP_LINK_RETRY_WAITS = [1500, 4000];
+  var MAP_LINK_NEW_LINK_WAITS = MAP_LINK_RETRY_WAITS.concat([10000]);
+  var MAP_LINK_TRY_MS = 8000;
+  var MAP_LINK_STATUS_REASONS = { 404: "no-map", 502: "no-answer" };
+
+  function mapLinkLookupError(message, reason, final) {
+    var e = new Error(message);
+    e.reason = reason || "";
+    e.final = !!final;
+    return e;
+  }
+
+  function resolveShortMapLink(link, signal, onRetry) {
     if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
-    return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
-      { signal: signal, headers: { Accept: "application/json" } })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
-        if (!full || full.kind === "short") throw new Error("the lookup returned no full link");
-        return full;
-      });
+    var retries = 0;
+    function abortError() {
+      var e = new Error("The lookup was cancelled");
+      e.name = "AbortError";
+      return e;
+    }
+    function lookupOnce() {
+      if (signal && signal.aborted) return Promise.reject(abortError());
+      var own = new AbortController(), late = false;
+      var cancel = function () { own.abort(); };
+      if (signal) signal.addEventListener("abort", cancel);
+      var timer = setTimeout(function () { late = true; own.abort(); }, MAP_LINK_TRY_MS);
+      var settle = function () {
+        clearTimeout(timer);
+        if (signal) signal.removeEventListener("abort", cancel);
+      };
+      return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
+        { signal: own.signal, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (!res.ok) {
+            throw mapLinkLookupError("HTTP " + res.status, MAP_LINK_STATUS_REASONS[res.status], res.status === 400);
+          }
+          return res.json();
+        }, function (err) {
+          throw mapLinkLookupError((err && err.message) || "the lookup could not be reached", "unreached");
+        })
+        .then(function (data) {
+          var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
+          if (!full || full.kind === "short") throw mapLinkLookupError("the lookup returned no full link", "no-map", true);
+          return full;
+        })
+        .then(function (full) { settle(); return full; }, function (err) {
+          settle();
+          if (signal && signal.aborted) throw abortError();
+          if (late) throw mapLinkLookupError("the lookup did not answer within " + MAP_LINK_TRY_MS / 1000 + " seconds", "timeout");
+          throw err;
+        });
+    }
+    function again(err) {
+      var waits = err.reason === "no-map" ? MAP_LINK_NEW_LINK_WAITS : MAP_LINK_RETRY_WAITS;
+      if (err.name === "AbortError" || err.final || retries >= waits.length) throw err;
+      var wait = waits[retries++];
+      if (onRetry) onRetry(retries, err);
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () {
+          if (signal) signal.removeEventListener("abort", cancel);
+          resolve();
+        }, wait);
+        var cancel = function () { clearTimeout(timer); reject(abortError()); };
+        if (signal) signal.addEventListener("abort", cancel);
+      }).then(lookupOnce).then(null, again);
+    }
+    return lookupOnce().then(null, again);
   }
 
   /* What the reader is told when a link cannot be read here. Kept beside the
-   * parser so the app and the front door say the same thing. */
-  function mapLinkMessage(link) {
+   * parser so the app and the front door say the same thing. For a short
+   * link, `err` is how the lookup failed (resolveShortMapLink), and the
+   * message says which side it was, in words. */
+  function mapLinkMessage(link, err) {
     var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
     if (link.kind === "short") {
-      return "That short " + name + " link couldn't be read. Open the link, " +
-        "then copy the full address from your browser's address bar and paste that.";
+      var maker = link.source === "apple" ? "Apple" : "Google";
+      var why = {
+        "unreached": "districtry couldn't reach the service that reads short links",
+        "timeout": "the service that reads short links didn't answer in time",
+        "no-map": maker + " didn't say where it leads",
+        "no-answer": maker + " didn't answer the service that reads short links"
+      }[(err && err.reason) || ""] || "";
+      // Not "open the link and copy the address bar": on a phone a map link
+      // opens the maps app, which has no address bar.
+      return "That short " + name + " link couldn't be read just now" + (why ? " (" + why + ")" : "") + ". " +
+        "Search again in a moment, or type the place's address.";
     }
     if (name) {
       return "That " + name + " link doesn't say where a place is (a directions link, for one). " +

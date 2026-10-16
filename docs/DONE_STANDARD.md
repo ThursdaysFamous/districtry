@@ -96,6 +96,11 @@ record states that the state does not have it. Where a state genuinely lacks a
 level — a state with no townships, say — the entry is covered by that fact
 rather than by work, and the record states the fact and where it was checked.
 
+Townships (level 9) pass when the township boards are named wherever a list of
+them is published (Adam, 2026-10-15). A state where only some counties publish
+their township officers passes on those counties, and the card says so for the
+townships it cannot name.
+
 ## Township and county subdivision boundaries
 
 Added on 2026-10-14 at Adam's request: the layer that tells a reader which
@@ -109,9 +114,15 @@ whether the app names the sub-county *government* where one exists. This one
 asks whether the app draws the map at all. Every state is divided into county
 subdivisions: in some they are governments (Illinois and Indiana townships,
 Michigan and Wisconsin towns and townships, New York towns), and in others they
-are areas the Census draws for counting only (Kentucky, North Carolina,
-Oklahoma, South Carolina, Tennessee). The map is owed either way; where the
+are areas the Census draws for counting only (Kentucky, Oklahoma and South
+Carolina's census county divisions), or legal areas the Census records as
+having no functioning government (North Carolina's and Arkansas's townships,
+Tennessee's civil districts). The map is owed either way; where the
 units govern nobody, the card says so rather than implying a government.
+Arkansas's are drawn from the state's own township map rather than the
+Census's: the two disagree about how many townships a county has in 27
+counties, and in the two counties checked, Washington and Scott, the Census's
+map is the out-of-date one (measured 2026-10-15).
 
 **The Census map is the default source, not the last word.** Where a county
 publishes finer lines than the Census does, the county's lines are the better
@@ -147,10 +158,11 @@ already sit. Nor is an Indiana township, for the same reason: measured
 2026-10-11, 61 clear the line, and the trustee runs township assistance, fire
 protection and cemeteries while the county governs an unincorporated resident.
 No active township or town in Iowa, Kentucky, Wisconsin, Minnesota, North
-Carolina, Oklahoma, South Carolina or Tennessee reaches 25,000 (North
-Carolina's townships govern nobody, and the last three states are divided into
-census county divisions, which are statistical areas), so the question does not
-arise in those eight today; if one ever does, it is answered by the
+Carolina, Oklahoma, South Carolina, Tennessee or Arkansas reaches 25,000 (North
+Carolina's townships and Tennessee's civil districts govern nobody, Kentucky,
+Oklahoma and South Carolina are divided into census county divisions, which are
+statistical areas, and every Arkansas township is one the Census records as
+having no functioning government), so the question does not arise in those nine today; if one ever does, it is answered by the
 general-purpose test above and not by a per-state exception.
 
 | app | units at 25,000+ | of which towns or townships |
@@ -163,13 +175,14 @@ general-purpose test above and not by a per-state exception.
 | Indiana | 39 | — |
 | Wisconsin | 35 | — |
 | Tennessee | 28 | — |
+| Arkansas | 19 | — |
 | Iowa | 18 | — |
 | Kentucky | 17 | — |
 | South Carolina | 17 | — |
 | Oklahoma | 16 | — |
 
-That is 530 governments across the twelve statewide apps. The first seven rows
-were measured 2026-10-01 and the rest 2026-10-11;
+That is 549 governments across the thirteen statewide apps. The first seven rows
+were measured 2026-10-01, Arkansas's 2026-10-15 and the rest 2026-10-11;
 until then the scoring tool read a state it had not measured as one with nothing
 to answer, so Indiana, North Carolina and Oklahoma passed this entry unchecked.
 San Francisco is one city, so its city tier is the whole app.
@@ -181,6 +194,14 @@ the whole answer and there is no district to draw — the precedent Iowa already
 set for countywide-elected bodies. This matters: many Illinois villages above
 25,000 elect their trustees at large, so a rule demanding drawn districts
 everywhere would fail them for a boundary that does not exist.
+
+Adam confirmed this on 2026-10-15 for the county body as well as the city one,
+and the scoring tool has enforced it since: a county or city whose body is
+elected by district counts only where those districts are drawn, and naming its
+members is not enough. A seat that the whole county or city elects, even if its
+holder must live in a district, is an at-large seat and needs no map; Indiana's
+county commissioners and Kentucky's commissioner-form fiscal courts are elected
+that way.
 
 ## What a record has to do to count
 
