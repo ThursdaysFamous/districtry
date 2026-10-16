@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ms-senate", "ms-house"];
 const EXPECT_DISTRICT = { "county": "Hinds County", "us-house": "2", "ms-senate": "29", "ms-house": "67" };
 const NEGATIVE_POINT = "32.48000,-88.25000"; // near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.
 const APP_NAME = "districtry Mississippi";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 16;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -1158,6 +1158,224 @@ try {
       await context.close();
     }
   }
+  // 11. THE FOUR COURTS WHOSE JUDGES ARE ELECTED FROM DISTRICTS. Every
+  //     expectation is read from the shipped maps and the shipped list of
+  //     judges at the point, so a rebuild moves it with the files; what is
+  //     asserted is that each card agrees with them.
+  //       - At the Capitol, in Hinds County: the Supreme Court card names its
+  //         district and that district's three justices and no others. The
+  //         Court of Appeals divides Hinds by voting precinct, so its card
+  //         names both districts, says which one takes the listed precincts,
+  //         and names the judges of both. The chancery card names its
+  //         chancellors and the vacancy the court's news reported, with that
+  //         news as its link. The circuit card names its judges and says which
+  //         counties its district takes in on 1 January 2027, worked out here
+  //         from the two shipped circuit maps.
+  //       - In Claiborne County, whose circuit district ends on 1 January
+  //         2027: the circuit card names today's district and its judge, says
+  //         which district the point is in from that day and that today's
+  //         district will not exist; the chancery card says which chancery
+  //         district the point moves to. The point is the shipped county's
+  //         pole of inaccessibility, 13 km from its nearest edge (2026-10-16).
+  //       - With the page's clock at 2 January 2027: both trial layers draw
+  //         the 2027 maps and never fetch today's, so the Claiborne point is
+  //         in the district the 2027 file puts it in, and the cards name
+  //         nobody, because the lists of judges this app reads still describe
+  //         the earlier districts. The Supreme Court card still names its
+  //         justices, since that court is not redrawn.
+  //       - The list of judges is refused: every card still names its
+  //         district, says the names did not load, and names nobody.
+  {
+    const courtFile = (n) => JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", n), "utf8"));
+    const judges = courtFile("ms-judge-roster.json").courts;
+    const maps = {
+      supreme: courtFile("ms-supreme-court-districts.json"),
+      appeals: courtFile("ms-court-of-appeals-districts.json"),
+      chancery: courtFile("ms-chancery-court-districts.json"),
+      chancery2027: courtFile("ms-chancery-court-districts-2027.json"),
+      circuit: courtFile("ms-circuit-court-districts.json"),
+      circuit2027: courtFile("ms-circuit-court-districts-2027.json"),
+    };
+    // the app's rule: even-odd within a polygon, any part of a multipolygon
+    function inRing(x, y, ring) {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i], [xj, yj] = ring[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    }
+    function propsAt(fc, point) {
+      const [lat, lng] = point.split(",").map(Number);
+      return fc.features.filter((f) => {
+        const g = f.geometry;
+        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
+      }).map((f) => f.properties);
+    }
+    function ord(n) {
+      const t = n % 100, u = n % 10;
+      return n + ((t >= 11 && t <= 13) ? "th" : u === 1 ? "st" : u === 2 ? "nd" : u === 3 ? "rd" : "th");
+    }
+    function countyPhrase(names) {
+      const joined = names.length === 1 ? names[0] : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+      return joined + (names.length === 1 ? " County" : " Counties");
+    }
+    const namesOf = (court, unit) =>
+      ((judges[court].districts[String(unit)] || {}).members || []).map((m) => m.name);
+    const allNames = (court) =>
+      Object.values(judges[court].districts).flatMap((d) => (d.members || []).map((m) => m.name));
+    const ALL = "ms-supreme-court,ms-court-of-appeals,ms-chancery-court,ms-circuit-court";
+    const CLAIBORNE = "31.96509,-90.84966";
+    const hrefs = (page, id) => page.$$eval(`#card-${id} a[href]`, (as) => as.map((a) => a.href));
+
+    const sc = propsAt(maps.supreme, POINT);
+    const coa = propsAt(maps.appeals, POINT);
+    const ch = propsAt(maps.chancery, POINT);
+    const ci = propsAt(maps.circuit, POINT);
+    const ci27 = propsAt(maps.circuit2027, POINT);
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${ALL}`);
+
+      const s = sc[0] || {};
+      const sInfo = await cardText(page, "ms-supreme-court");
+      const sNames = namesOf("supreme", s.unit);
+      const sOthers = allNames("supreme").filter((n) => !sNames.includes(n) && sInfo.text.includes(n));
+      check("ms-supreme-court names the Capitol's district and its three justices, and no others",
+        sc.length === 1 && !sInfo.error && sNames.length === 3 &&
+          new RegExp(`Supreme Court District ${s.unit}\\b`).test(sInfo.text) &&
+          sNames.every((n) => sInfo.text.includes(n)) && sOthers.length === 0 &&
+          /where these names come from/i.test(sInfo.text),
+        `features here=${sc.length} others named=${sOthers.slice(0, 2)} ${sInfo.text.slice(0, 120)}`);
+
+      const a = coa[0] || {};
+      const aInfo = await cardText(page, "ms-court-of-appeals");
+      const units = (a.units || []).map(String);
+      const aNames = units.flatMap((u) => namesOf("appeals", u));
+      check("ms-court-of-appeals names both districts that divide Hinds, says which takes the listed precincts, and names both districts' judges",
+        coa.length === 1 && units.length === 2 && a.county === "Hinds" && !aInfo.error &&
+          aInfo.text.includes(`Court of Appeals District ${units[0]} or ${units[1]}`) &&
+          aInfo.text.includes(`are in District ${a.named}, and the rest of the county is in District ${a.rest}`) &&
+          units.every((u) => new RegExp(`judges elected from district ${u}\\b`, "i").test(aInfo.text)) &&
+          aNames.length === 4 && aNames.every((n) => aInfo.text.includes(n)),
+        `features here=${coa.length} units=${units} ${aInfo.text.slice(0, 160)}`);
+
+      const c = ch[0] || {};
+      const cInfo = await cardText(page, "ms-chancery-court");
+      const cDistrict = judges.chancery.districts[String(c.unit)] || {};
+      const cNames = namesOf("chancery", c.unit);
+      const cNotes = cDistrict.notes || [];
+      const cLinks = await hrefs(page, "ms-chancery-court");
+      check("ms-chancery-court names the Capitol's district, its chancellors and the vacancy the court's news reported, with that news as its link",
+        ch.length === 1 && !cInfo.error && cNames.length > 0 &&
+          cInfo.text.includes(`${ord(c.unit)} Chancery District`) &&
+          cNames.every((n) => cInfo.text.includes(n)) &&
+          cNotes.every((n) => cInfo.text.includes(n.text) && cLinks.includes(n.url)) &&
+          (judges.chancery.listUpdated ? /where these names come from/i.test(cInfo.text) : true),
+        `features here=${ch.length} notes=${cNotes.length} ${cInfo.text.slice(0, 160)}`);
+
+      const r = ci[0] || {}, r27 = ci27[0] || {};
+      const gains = (r27.counties || []).filter((n) => !(r.counties || []).includes(n));
+      const rInfo = await cardText(page, "ms-circuit-court");
+      const rNames = namesOf("circuit", r.unit);
+      const change = `The ${ord(r27.unit)} Circuit District takes in ${countyPhrase(gains)}.`;
+      check("ms-circuit-court names the Capitol's district and its judges, and says which counties it takes in on 1 January 2027",
+        ci.length === 1 && ci27.length === 1 && String(r.unit) === String(r27.unit) && gains.length > 0 &&
+          !rInfo.error && rNames.length > 0 &&
+          rInfo.text.includes(`${ord(r.unit)} Circuit District`) &&
+          rNames.every((n) => rInfo.text.includes(n)) && rInfo.text.includes(change) &&
+          rInfo.text.includes("filled at the election of 3 November 2026"),
+        `features here=${ci.length}/${ci27.length} want "${change}" ${rInfo.text.slice(0, 160)}`);
+      await context.close();
+    }
+
+    {
+      const r = propsAt(maps.circuit, CLAIBORNE)[0] || {};
+      const r27 = propsAt(maps.circuit2027, CLAIBORNE)[0] || {};
+      const c = propsAt(maps.chancery, CLAIBORNE)[0] || {};
+      const c27 = propsAt(maps.chancery2027, CLAIBORNE)[0] || {};
+      const ends = !maps.circuit2027.features.some((f) => String(f.properties.unit) === String(r.unit));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${CLAIBORNE}&layers=ms-chancery-court,ms-circuit-court`);
+      const rInfo = await cardText(page, "ms-circuit-court");
+      const rNames = namesOf("circuit", r.unit);
+      const moves = `This point is in the ${ord(r27.unit)} Circuit District: ${countyPhrase(r27.counties || [])}.`;
+      const gone = `There is no ${ord(r.unit)} Circuit District from that day.`;
+      check("in Claiborne County the circuit card names today's district and its judge, the district it moves to, and that today's district ends",
+        String(r.unit) !== String(r27.unit) && ends && !rInfo.error && rNames.length > 0 &&
+          rInfo.text.includes(`${ord(r.unit)} Circuit District`) &&
+          rNames.every((n) => rInfo.text.includes(n)) &&
+          rInfo.text.includes(moves) && rInfo.text.includes(gone),
+        `today=${r.unit} 2027=${r27.unit} ends=${ends} ${rInfo.text.slice(0, 200)}`);
+      const cInfo = await cardText(page, "ms-chancery-court");
+      const cMoves = `This point is in the ${ord(c27.unit)} Chancery District: ${countyPhrase(c27.counties || [])}.`;
+      check("in Claiborne County the chancery card says which chancery district the point moves to on 1 January 2027",
+        String(c.unit) !== String(c27.unit) && !cInfo.error &&
+          cInfo.text.includes(`${ord(c.unit)} Chancery District`) && cInfo.text.includes(cMoves) &&
+          !cInfo.text.includes(`There is no ${ord(c.unit)} Chancery District`),
+        `today=${c.unit} 2027=${c27.unit} ${cInfo.text.slice(0, 200)}`);
+      await context.close();
+    }
+
+    {
+      const r27 = propsAt(maps.circuit2027, CLAIBORNE)[0] || {};
+      const c27 = propsAt(maps.chancery2027, CLAIBORNE)[0] || {};
+      const s = propsAt(maps.supreme, CLAIBORNE)[0] || {};
+      const asked = [];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${CLAIBORNE}&layers=${ALL}`, async (pg) => {
+        await pg.clock.setFixedTime(new Date("2027-01-02T12:00:00Z"));
+        pg.on("request", (q) => asked.push(q.url()));
+      });
+      const rInfo = await cardText(page, "ms-circuit-court");
+      const cInfo = await cardText(page, "ms-chancery-court");
+      const sInfo = await cardText(page, "ms-supreme-court");
+      const nobody = (info, court) => allNames(court).filter((n) => info.text.includes(n));
+      const fetched = (re) => asked.some((u) => re.test(u));
+      const today = fetched(/\/ms-(circuit|chancery)-court-districts\.json/);
+      const later = fetched(/\/ms-circuit-court-districts-2027\.json/) && fetched(/\/ms-chancery-court-districts-2027\.json/);
+      const redrawn = /These districts were redrawn on 1 January 2027/;
+      check("on 2 January 2027 the trial courts draw the 2027 maps, never fetch today's, and name nobody from lists of the earlier districts",
+        later && !today && !rInfo.error && !cInfo.error &&
+          rInfo.text.includes(`${ord(r27.unit)} Circuit District`) &&
+          cInfo.text.includes(`${ord(c27.unit)} Chancery District`) &&
+          redrawn.test(rInfo.text) && redrawn.test(cInfo.text) &&
+          nobody(rInfo, "circuit").length === 0 && nobody(cInfo, "chancery").length === 0 &&
+          !/from 1 january 2027/i.test(rInfo.text) && !rInfo.text.includes("3 November 2026"),
+        `2027 files=${later} today's files=${today} named=${nobody(rInfo, "circuit").slice(0, 2)} ${rInfo.text.slice(0, 160)}`);
+      const sNames = namesOf("supreme", s.unit);
+      check("on 2 January 2027 the Supreme Court card still names its justices",
+        !sInfo.error && sNames.length === 3 && sNames.every((n) => sInfo.text.includes(n)),
+        sInfo.text.slice(0, 120));
+      await context.close();
+    }
+
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${ALL}`, async (pg) => {
+        await pg.route("**/data/app/ms-judge-roster.json", (q) => q.fulfill({ status: 503, body: "down" }));
+      });
+      const cards = [
+        ["ms-supreme-court", "supreme", `Supreme Court District ${(sc[0] || {}).unit}`],
+        ["ms-court-of-appeals", "appeals", "Court of Appeals District"],
+        ["ms-chancery-court", "chancery", `${ord((ch[0] || {}).unit)} Chancery District`],
+        ["ms-circuit-court", "circuit", `${ord((ci[0] || {}).unit)} Circuit District`],
+      ];
+      const bad = [];
+      for (const [id, court, title] of cards) {
+        const info = await cardText(page, id);
+        const named = allNames(court).filter((n) => info.text.includes(n));
+        if (info.error || !info.text.includes(title) || !/did not load/.test(info.text) || named.length) {
+          bad.push(`${id}: ${named.length ? "named " + named[0] : info.text.slice(0, 80)}`);
+        }
+      }
+      check("every court card still names its district, and names nobody, when the list of judges fails",
+        bad.length === 0, bad.join(" | "));
+      await context.close();
+    }
+  }
+
   // ---- Tribal Government. The Mississippi Choctaw Reservation's card names
   // the band, its seat, the Tribal Chief and the council members with the
   // community each represents, from the band's own page; the districts

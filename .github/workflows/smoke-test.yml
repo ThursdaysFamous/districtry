@@ -1435,6 +1435,27 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ms/scripts/build_ms_supervisor_districts.py --check
 
+      # Mississippi's four courts whose judges are elected from districts draw
+      # each district as the counties the court's own page and the 2025 and
+      # 2026 laws list. Those pages and laws are kept as copies, and this
+      # re-hashes every copy, re-reads every list out of it, and holds each of
+      # the six shipped maps to its counties, including the two that take over
+      # on 1 January 2027 and the further moves the same laws make in 2031.
+      - name: MS court districts still match the court's own lists and the laws that redraw them
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_court_districts.py --check
+
+      # The judges' lists lag the bench by up to fourteen months, so the weekly
+      # build applies the changes since from the court's news and the
+      # Governor's announcements, and fails once a list has caught up with one.
+      # --selftest runs that parse and those tests on literals; --check holds
+      # the shipped file to its shape, its counts and the court maps.
+      - name: MS judges hold to their parse, their change table and the court maps
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ms/scripts/build_ms_judges.py --selftest
+          python3 ms/scripts/build_ms_judges.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it

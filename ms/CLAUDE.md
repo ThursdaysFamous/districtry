@@ -25,7 +25,11 @@ counties whose current lines are confirmed (12 from the Census's lines, 8 from t
 map), and is hidden in the other 62. **Tribal Government** (`tribal-government`) draws the
 Mississippi Band of Choctaw Indians' reservation and its off-reservation trust land, the only
 tribal land the Census draws in the state, and names the Tribal Chief and the seventeen council
-members from the band's own page.
+members from the band's own page. Four court layers draw the districts of the four courts whose
+judges are elected from districts and name those judges: **Supreme Court District**
+(`ms-supreme-court`, 3), **Court of Appeals District** (`ms-court-of-appeals`, 5), **Chancery
+Court District** (`ms-chancery-court`, 20) and **Circuit Court District** (`ms-circuit-court`, 23
+until 1 January 2027 and 22 from that day).
 
 **THE CONGRESSIONAL MAP IS TIGERweb LAYER 0, AND THAT WAS MEASURED RATHER THAN ASSUMED.** Layer 0
 is the 120th Congress's map, which is wrong for a state that redrew for 2026 (North Carolina,
@@ -151,6 +155,51 @@ subdivision on this land, so this app has no outline for any community, and the 
 districts sentence says so and points at the names rather than saying no council seat belongs to
 the land, which would be false here (`scripts/build_tribal_areas.py`, `council_has_districts`).
 
+**THE COURT DISTRICTS ARE LISTS OF WHOLE COUNTIES, AND THE CHANCERY AND CIRCUIT MAPS CHANGE ON 1
+JANUARY 2027** (`ms/scripts/build_ms_court_districts.py`, its `--check` in CI). Each map is a
+dissolve of `state-counties.json`, so neighbouring districts share their edges exactly, and nothing
+is simplified again after the dissolve. The county lists are parsed out of copies kept in
+`ms/data/source/courts/` (each court's own district page, and the four laws that write the chancery
+and circuit districts: Senate Bill 2768 and House Bill 1544 of 2025, House Bills 1 and 580 of 2026),
+and `--check` re-hashes every copy against the SHA-256 recorded when it was fetched. The two 2025
+laws write both the map in force now and the map from 1 January 2027 into the Code, so both ship:
+the app draws today's map until 06:00 UTC that day (midnight in Mississippi) by the reader's clock,
+decided once when the page loads, and the 2027 map from then on. Today's half of each law is held to
+the court's own page district by district, and a 2026 law that writes a district the 2025 laws also
+write must give it the same counties on every date. The same laws enact a third map from 1 January
+2031 (George County to the Nineteenth Chancery District; Holmes, Humphreys and Yazoo out of the
+Twenty-second Circuit District, which ends), which is parsed and held to `MOVES_2031` and not built,
+and the builder refuses to write a map on or after the day it stops being the law. The four laws
+were found by reading the short title of every measure the Legislature lists for the 2025 and 2026
+regular sessions and both extraordinary sessions, and `ms/scripts/validate_sources.py` repeats that
+scan monthly, so a later law is reported rather than missed.
+
+**THE COURT OF APPEALS SPLITS TEN COUNTIES BY VOTING PRECINCT, AND THAT LINE IS NOT DRAWN.** For each
+of Attala, Grenada, Hinds, Jones, Leake, Madison, Montgomery, Panola, Tallahatchie and Wayne, the
+court's page names the precincts that belong to one district and gives the rest of the county to
+another. This app has no map of those precinct lines (the court's page shows its districts only as a
+picture), so each of the ten is one feature naming both districts, and its card names both
+districts' judges and says which district takes the listed precincts (gap `ms-coa-precinct-lines`).
+The chancery and circuit subdistricts, from each of which one judge of a district is elected, are
+not drawn either, so those cards list every judge of the district (gap `ms-court-subdistricts`).
+
+**THE JUDGES COME FROM THE JUDICIARY'S OWN LISTS, AND THE TRIAL-COURT LISTS TRAIL THE BENCH**
+(`ms/scripts/build_ms_judges.py`, weekly as a reviewed PR, `--selftest` and `--check` in CI). The
+Supreme Court's and the Court of Appeals' pages of their judges are HTML; the chancellors and circuit
+judges are two PDF lists, dated 1 August 2025 and 4 February 2026 when they were read on
+2026-10-15. Five changes since those dates, each from the court's own news or the Governor's own
+announcement, are applied on top (`CHANGES`): two chancellors replaced; two chancellors who died, in
+the 5th and 9th Chancery Districts, whose cards say so and that no appointment had been announced
+when the news was read; and a circuit judge who joined the Supreme Court and was replaced. Every entry fails the build once the list catches up with
+it, and a person then re-reads the list and deletes the entry. **THE PDF LISTS ALSO PRINT THE JUDGES'
+STAFF, SOME WITH STREET ADDRESSES**: the parse reads only each judge's name, the judges' own
+addresses and telephones are not carried, and neither PDF is ever written into the repository. A
+trial list's district headings name their counties, so the builder records which map the list
+describes, and a card names chancellors or circuit judges only from a list describing the map it
+draws. **SO FROM 1 JANUARY 2027 THE CHANCERY AND CIRCUIT CARDS NAME NOBODY** until a list describing
+the 2027 districts appears, which the lists' lag makes likely to be months; `ms/WATCH.md` says how to
+close that before the day.
+
 **THE ZIP LAYER HIDES OUTSIDE MISSISSIPPI.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (the Alabama negative point gives 36925,
 measured 2026-10-15). The coverage test reads the shipped outline, and the smoke test asserts both
@@ -171,8 +220,8 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Mississippi (`mississippi`) — https://districtry.com/ms/
 - Geocoders: address Photon (Mississippi-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Mississippi-bounded, serial >=1s queue)
 - Ground truth: 32.30380,-90.18220 (the State Capitol, Jackson, Hinds County) → county Hinds County; us-house 2; ms-senate 29; ms-house 67. Negative point 32.48000,-88.25000 (near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.).
-- Layers: 12 registered (political 5, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
-- Scheduled workflows: `update-ms-congress-roster.yml` (Mon 18:11 UTC); `update-ms-legislature-roster.yml` (Tue 18:11 UTC); `update-ms-county-officials.yml` (Wed 18:11 UTC); `ms-validate-sources.yml` (1st of month 20:13 UTC).
+- Layers: 16 registered (political 9, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
+- Scheduled workflows: `update-ms-congress-roster.yml` (Mon 18:11 UTC); `update-ms-legislature-roster.yml` (Tue 18:11 UTC); `update-ms-county-officials.yml` (Wed 18:11 UTC); `update-ms-judges-roster.yml` (Thu 18:11 UTC); `ms-validate-sources.yml` (1st of month 20:13 UTC).
 - Source registry: `ms/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -195,6 +244,15 @@ python3 ms/scripts/build_metro_outline.py --check
 # Supervisor districts (offline: build record, directory seats, the Census edition
 # the card names, and the County layer at 4,000 points):
 python3 ms/scripts/build_ms_supervisor_districts.py --check
+
+# Court districts (offline: every kept page and law re-hashed, every county list
+# re-read, and the six maps held to them, the 2027 and 2031 moves included):
+python3 ms/scripts/build_ms_court_districts.py --check
+
+# Judges (offline: the parse and the change table on literals, then the shipped
+# file against its shape, its counts and the court maps):
+python3 ms/scripts/build_ms_judges.py --selftest
+python3 ms/scripts/build_ms_judges.py --check
 
 # Generated-region gate: per-instance facts live ONCE in ms/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
@@ -257,12 +315,15 @@ blocks, in one mapshaper run so a shared line is simplified once) with `ms-super
 `congress-districts.json`, `ms-senate-districts.json`,
 `ms-house-districts.json` (`ms/scripts/build_legislative_boundaries.py` — statewide TIGERweb,
 mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement gate
-and the 25 m fidelity ceiling pass). Rosters: `congress-roster.json`
+and the 25 m fidelity ceiling pass), and the six court maps,
+`ms-{supreme-court,court-of-appeals,chancery-court,circuit-court}-districts.json` and the
+`ms-{chancery,circuit}-court-districts-2027.json` pair (`ms/scripts/build_ms_court_districts.py`,
+dissolved from `state-counties.json`). Rosters: `congress-roster.json`
 (`ms/scripts/build_congress_roster.py`, from unitedstates/congress-legislators),
 `ms-{senate,house}-members.json` (`ms/scripts/build_ms_legislature_roster.py`, from the
 legislature's own pages) and `ms-county-officials.json` (`ms/scripts/build_ms_county_officials.py`,
-from the Secretary of State's directory) — all count-guarded, all refreshed weekly by CI as
-reviewed PRs. The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both
+from the Secretary of State's directory) and `ms-judge-roster.json` (`ms/scripts/build_ms_judges.py`,
+from the Judiciary's own lists) — all count-guarded, all refreshed weekly by CI as reviewed PRs. The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both
 written by the fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government
 join every instance uses (`data/tribal-government-join.json`); the council is re-read weekly from
 the band's own page by `scripts/tribal_council_scraper.py` in the fleet's

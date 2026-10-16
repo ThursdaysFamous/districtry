@@ -65,7 +65,7 @@ in the researched-but-unbuilt backlog.
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "municipality", "police-station", "fire-station", "post-office"],
-  "mississippi": ["us-house", "ms-senate", "county", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
+  "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3477,6 +3477,30 @@ trusted.
             "why": "No statewide list of Mississippi's school board members has been found. The boundary this card draws carries the district's name and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-15 against TIGERweb's School service for STATE='28': 137 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 82-county total (121,535 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. How each board is chosen (elected, appointed, or some of each) has not been researched here and the card claims nothing about it. The planning pass on 2026-10-09 read that many county school boards are elected from the county's supervisor districts, so naming their members by district would share the supervisor-line problem recorded in ms-supervisor-district-lines, and found no statewide list of members. Not attempted in this change. Mississippi is dark as of this record."
+      },
+      {
+            "id": "ms-coa-precinct-lines",
+            "concept": "Court of Appeals district",
+            "area": "Mississippi — Attala, Grenada, Hinds, Jones, Leake, Madison, Montgomery, Panola, Tallahatchie and Wayne Counties",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "ms-court-of-appeals",
+            "summary": "In ten Mississippi counties your Court of Appeals district depends on your voting precinct. There the card names both districts and both districts' judges, because this app cannot tell which side of the line you are on.",
+            "why": "The court lists the precincts on one side of each line, and this app has no current map of those counties' voting precincts.",
+            "wanted": "A current map of the voting precincts in those ten counties, using the precinct names the court lists.",
+            "blocker": "Measured 2026-10-15 from the Court of Appeals' own districts page (courts.ms.gov/appellatecourts/coa/coadistricts.php, the copy kept as ms/data/source/courts/coa-districts.htm and hashed in SOURCES in ms/scripts/build_ms_court_districts.py). For each of Attala, Grenada, Hinds, Jones, Leake, Madison, Montgomery, Panola, Tallahatchie and Wayne the page names the precincts that belong to one district and gives 'that portion ... not included' to another; the builder requires each county to be split exactly once, between exactly two districts, by one list and one 'not included' clause naming the listing district, and draws each of the ten as its own feature carrying both districts and the court's precinct list. The page shows the districts otherwise only as a picture (coadistrictmap.jpg). The Census's 2020 voting districts were not used: whether each of these ten counties still uses the precincts the Census drew in 2020, and under the names the court lists, was not measured. The same absence keeps the chancery and circuit subdistricts undrawn (ms-court-subdistricts). The monthly court page check in ms/scripts/validate_sources.py re-reads the page and reports any change to its lists."
+      },
+      {
+            "id": "ms-court-subdistricts",
+            "concept": "Chancery and circuit court subdistrict",
+            "area": "Mississippi — the chancery and circuit districts divided into subdistricts",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "ms-circuit-court",
+            "summary": "In some Mississippi chancery and circuit districts each judge is elected from one part of the district. This app does not draw those parts, so the card lists every judge of the district rather than only the one elected from yours.",
+            "why": "State law draws most of those parts at least partly by voting precinct, and this app has no current map of Mississippi's voting precincts.",
+            "wanted": "Maps of the chancery and circuit subdistricts, or a current statewide map of voting precincts using the names the law lists.",
+            "blocker": "Read 2026-10-16 in the four laws the court maps are built from (Senate Bill 2768 and House Bill 1544 of 2025, House Bills 580 and 1 of 2026; copies in ms/data/source/courts/), by searching their text for the word subdistrict: between now and 2031 they divide at least seven chancery districts (3, 5, 7, 9, 11, 14 and 17) and five circuit districts (4, 6, 7, 9 and 11) into subdistricts at one time or another, most by named voting precincts and some by whole counties. One of the 7th Circuit District's is 'all precincts located within the boundaries of the Capitol Complex Improvement District'. A judge elected from a subdistrict need only live in the district (sections 9-5-1 and 9-7-1 as those laws write them). Separately, many districts require the judge of a numbered place to live in named counties while the whole district elects every place; that changes nobody's judges and is not a gap. The cards say both in their 'Parts of a district' row and list every judge of the district. Subdistricts made of whole counties could be drawn from the county fabric; they are not, because a card would then name some districts' judges by subdistrict and others by district, and the precinct-based ones need a precinct map this app does not have. A federal suit filed in 2026 challenges the DeSoto County subdistrict the 2025 laws draw (ms/WATCH.md)."
       }
   ]
 }
