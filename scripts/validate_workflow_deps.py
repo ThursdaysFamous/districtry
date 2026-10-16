@@ -165,8 +165,20 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # files to meet it (Jackson County prints "Vacant" in one trustee's name cell),
 # and a per-instance copy of that word list is exactly what this list refuses.
 # Stdlib-only at module scope — argparse, json, os, re, sys.
+#
+# `aia_bundle` (2026-10-15) is the seventh, added when Mississippi's legislature
+# roster builder became the first INSTANCE file to read a host that serves only
+# its leaf certificate (www.legislature.ms.gov, whose GlobalSign intermediate
+# every automated client then reports as missing). The module's own docstring is
+# the argument and states this list's test in its own words: "A pinned hash that
+# exists in two files is a pin that drifts; this is the one copy." Which
+# certificate completes a host's chain, and what it must hash to, must not be
+# answered differently per instance. Stdlib-only at module scope — base64,
+# hashlib, os, tempfile, urllib.request; `certifi` is imported inside
+# `ca_bundle()`, the one function that uses it, and ships with `requests`, which
+# every caller already installs.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
-                "workflow_run_evidence", "validate_officeholder_names"}
+                "workflow_run_evidence", "validate_officeholder_names", "aia_bundle"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

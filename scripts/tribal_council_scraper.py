@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Read who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa and South Carolina nation's council, from the nation.
+Read who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, South Carolina and Tennessee nation's council, from the nation.
 
 THE AUTHORITY IS EACH NATION'S OWN PUBLISHED COUNCIL. The Bureau of Indian
 Affairs' directory carries one leader per government and never a council, so
@@ -142,6 +142,12 @@ NATIONS = {
     # catawba.com, whose robots.txt is a 404 (allow all), read with this
     # scraper's client the same day.
     "0525": {"nation": "Catawba", "pages": ["https://catawba.com/executive-committee"], "seats": 5},
+    # Mississippi Band of Choctaw Indians: seated in Choctaw, Mississippi; its
+    # off-reservation trust land near Henning is the one tribal land in
+    # Tennessee. robots.txt (www.choctaw.org, read 2026-10-15 with this
+    # scraper's client) is "User-Agent: * / Disallow:", which allows every path.
+    "2300": {"nation": "Mississippi Band of Choctaw Indians",
+             "pages": ["https://www.choctaw.org/about-us/tribal-government/"], "seats": 18},
 }
 
 _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|footer|"
@@ -732,6 +738,33 @@ def p_catawba(pages):
     return out
 
 
+def p_choctaw(pages):
+    # The Tribal Chief, then the 17-member Tribal Council. The chief's card is
+    # the one line "Tribal Chief <name>" (the earlier chiefs' cards read
+    # "Chief <name>"). Each council card is a name, then a title naming the
+    # member's community ("Bogue Chitto Councilwoman", or an office first:
+    # "Tribal Vice-Chief and Bogue Chitto Councilman"), then the page
+    # builder's placeholder "Your Title Goes Here". The committee lists further
+    # down date from a July 2025 resolution and are not read.
+    ls = pages[0]
+    chief = [m.group(1) for m in (re.match(r"Tribal Chief (\S.*)$", l) for l in ls) if m]
+    if len(chief) != 1:
+        raise ValueError("Choctaw: expected one Tribal Chief card, found %r" % chief)
+    out = [_m(chief[0], "Tribal Chief")]
+    body = _after(ls, "Tribal Council Meetings")
+    end = body.index("Tribal Council Committee Chairperson and Committee Members")
+    body = body[:end]
+    for i in range(len(body) - 2):
+        if body[i + 2] != "Your Title Goes Here":
+            continue
+        m = re.match(r"^(?:(.+?) and )?(.+?) (Council(?:man|woman))$", body[i + 1])
+        if not m:
+            raise ValueError("Choctaw: title not understood: %r" % body[i + 1])
+        office = (m.group(1) or "").replace("Tribal Vice-Chief", "Vice-Chief")
+        out.append(_m(body[i], office or m.group(3), district=m.group(2)))
+    return out
+
+
 def p_seneca(pages):
     # the President from the executive page, then the councilors, who are
     # elected from the nation's two territories and listed under each
@@ -773,7 +806,7 @@ PARSERS = {
     "0080": p_seneca, "0540": p_seneca, "2535": p_seneca, "3320": p_srmt, "0335": p_bois_forte, "1940": p_leech_lake, "2055": p_lower_sioux, "2285": p_mct,
     "3680": p_shakopee, "4445": p_upper_sioux, "4595": p_white_earth,
     "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
-    "4015": p_stockbridge, "0525": p_catawba,
+    "4015": p_stockbridge, "0525": p_catawba, "2300": p_choctaw,
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community"}
 
@@ -883,7 +916,7 @@ def run(from_dir=None, today=None):
     if failed:
         raise SystemExit("tribal-councils: never read and not readable now:\n  "
                          + "\n  ".join(failed))
-    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa and South Carolina nation's council, read "
+    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, South Carolina and Tennessee nation's council, read "
                    "by scripts/tribal_council_scraper.py. Stamped onto the cards by "
                    "scripts/build_tribal_areas.py --rosters.",
            "councils": councils}

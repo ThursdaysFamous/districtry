@@ -55,6 +55,7 @@ python3 scripts/build_coverage_gaps.py --check --metro oklahoma  --out ok/data/a
 python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -167,6 +168,7 @@ python3 ia/scripts/build_legislative_boundaries.py --check      # the same relat
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
+python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's supervisor districts against their build record, the directory's seats, the Census edition the card names, and the County layer
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404
@@ -192,6 +194,7 @@ python3 ok/scripts/validate_index.py ok/index.html
 python3 sc/scripts/validate_index.py sc/index.html
 python3 tn/scripts/validate_index.py tn/index.html
 python3 ar/scripts/validate_index.py ar/index.html
+python3 ms/scripts/validate_index.py ms/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -209,6 +212,7 @@ BASE_URL=http://localhost:8000/ok/ node ok/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/sc/ node sc/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/tn/ node tn/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ar/ node ar/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ms/ node ms/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

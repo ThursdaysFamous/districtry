@@ -3615,6 +3615,15 @@ NOT_COUNTY_BOARDS = {
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
     ),
+    "ms/data/app/ms-county-officials.json": dict(
+        date="2026-10-15",
+        reason="Mississippi's county boards of supervisors, which ARE the "
+               "county's governing body and belong on these pages. They are "
+               "held back because Mississippi is dark, and a county page, its "
+               "index and the about page's officeholder count would describe "
+               "an app nobody can open yet. Its go-live change writes the "
+               "adapter and this entry goes.",
+    ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
         reason="San Francisco's Board of Supervisors is a CITY council that "

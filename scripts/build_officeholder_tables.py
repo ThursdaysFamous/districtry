@@ -291,6 +291,26 @@ def city_officials(data):
     return rows
 
 
+def ward_city_councils(data):
+    """Iowa cities that elect by ward, read from their own council pages.
+
+    ia-city-councils.json holds every Iowa city above 25,000 whose page this
+    project can read; a city is a WARD city when its file names a "Ward N" seat,
+    which build_ia_city_councils.py normalises off the city's own role text.
+    Iowa City writes "District A" and is left out on purpose: its district seats
+    are elected by the whole city. Each city is its own government, so the
+    section sets org_per_seat and the seat label is the city's name.
+    """
+    rows = []
+    for key in sorted(data, key=lambda k: data[k]["city"]):
+        members = data[key].get("members") or []
+        if not any(re.match(r"Ward \d+$", m.get("seat") or "") for m in members):
+            continue
+        for member in members:
+            rows.append((data[key]["city"], member))
+    return rows
+
+
 def county_officers(data):
     """One elected officer per county, keyed by county FIPS.
 
@@ -566,6 +586,7 @@ ADAPTERS = {
     "county_officers": county_officers,
     "city_council": city_council,
     "city_officials": city_officials,
+    "ward_city_councils": ward_city_councils,
     "circuit_judges": circuit_judges,
     "township_officials": township_officials,
     "school_board_members": school_board_members,
@@ -710,6 +731,15 @@ CITY_TABLES = [
                   office_label="City hall", body="the Waterloo City Council",
                   org="Waterloo City Council",
                   heading="Who sits on the Waterloo City Council"),
+             # THE NINE WARD CITIES ADDED 2026-10-15, less Mason City, whose
+             # council page this project cannot read. One file, one section,
+             # each city its own organisation.
+             dict(roster="data/app/ia-city-councils.json",
+                  adapter="ward_city_councils", seat="City", holder="Council Member",
+                  role_label="Office", unit="elected officials", prep="in",
+                  body="the Iowa cities whose wards the map draws from their own council pages",
+                  org_per_seat=True,
+                  heading="Who sits on the other ward-electing city councils"),
              # FOUR CITIES, FOUR COUNCILS, one file: these reach this project
              # through their COUNTY's own directory rather than through a city
              # page, so the seat is the city's name and each city is its own
