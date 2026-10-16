@@ -83,7 +83,9 @@ Indiana, North Carolina, South Carolina, Tennessee and Arkansas, so four of thos
 precinct row and Indiana and North Carolina gained a stub each, holding that one row. In Indiana
 and North Carolina, as in those five, every other layer is still unwritten here. A third change,
 on 2026-10-16, drew court districts in Indiana, Oklahoma, South Carolina, Tennessee and Arkansas,
-and each of those stubs gained a row for them (Arkansas two).
+and each of those stubs gained a row for them (Arkansas two). A fourth, the same day, drew school
+board districts in Indiana, South Carolina, Tennessee and Arkansas, and each of those stubs gained a
+row for them.
 
 ### CHI (37 layers)
 
