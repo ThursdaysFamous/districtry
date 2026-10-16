@@ -110,7 +110,7 @@ the member, and this instance names none.
 - Metro: Kentucky (`kentucky`) — https://districtry.com/ky/
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
 - Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 38.80000,-83.55000 (near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
-- Layers: 13 registered (political 8, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
+- Layers: 14 registered (political 8, schools 3, geography 3); `registerLayer(` floor 5. Debug namespace `window.KentuckyExplorer`.
 - Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC); `update-ky-judges-roster.yml` (Tue 14:40 UTC); `update-ky-city-officials.yml` (Wed 14:50 UTC); `update-ky-county-officials.yml` (Thu 14:55 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -339,9 +339,19 @@ second branch for a level a state does not have.
 
 **Kentucky has no sub-county general-purpose government.** The only sub-county units the Census
 publishes for the state are 493 Census County Divisions — statistical areas drawn for
-tabulation, which govern nobody — so there is no elected sub-county body to draw. That layer is
-deliberately NOT shipped: at 19.91 MB raw / 5.03 MB gzipped it is the heaviest fabric the state
-has, and it would put a card on the map for something that is not a government.
+tabulation, which govern nobody — so there is no elected sub-county body to draw.
+
+**THE COUNTY DIVISIONS ARE DRAWN ANYWAY, SINCE 2026-10-15, AS THE LEVEL-14 MAP.** They were left
+out at arrival because a card for one would sit on the map beside the governments. The done
+standard's level 14 (Adam, 2026-10-14) asks every state to draw its township or county
+subdivision boundaries whether or not they govern anyone, so `county-subdivision` ("Census
+County Division") now draws all 493 live from TIGERweb, North Carolina's layer with its own
+card: the division's name without TIGER's "CCD", its county from the app's own county file, and
+a Government row saying no one is elected from it and that outside a city the county governs.
+That row is read from the Census's functional-status code (all 493 are LSADC 22, FUNCSTAT S,
+measured 2026-10-15), so a code the card does not carry prints no row. A click asks TIGERweb
+about the point alone; the statewide set, 19.9 MB because TIGERweb serves it uncompressed,
+downloads only when the layer is switched on.
 
 **Kentucky has no tribal land.** Measured 2026-10-01 against the Census AIANNHA service over an
 envelope covering the whole state: zero features in federal reservations, off-reservation trust
