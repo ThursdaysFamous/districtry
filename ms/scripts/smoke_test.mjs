@@ -1016,11 +1016,11 @@ try {
   //         was read, and never names the Census edition; in Rankin it also
   //         says how many people the map's own population figures leave out,
   //         and in Hinds that it leaves nobody out.
-  //       - Amite, whose Census lines are the ones drawn after the 2010 census
-  //         and which publishes none of its own: the layer HIDES, with the
-  //         layers= permalink intact. This is the half that discriminates:
-  //         without `coverage` the card would say no district is drawn here,
-  //         about a county that has five.
+  //       - Amite, whose Census lines place every resident as the Census's
+  //         January 1, 2010 edition does, and which publishes none of its
+  //         own: the layer HIDES, with the layers= permalink intact. This is
+  //         the half that discriminates: without `coverage` the card would
+  //         say no district is drawn here, about a county that has five.
   //       - With the layer OFF at the Capitol, the coverage test reads the
   //         list of drawn counties and never the districts file, which was
   //         150 KB gzipped on every reader's first selection when the test

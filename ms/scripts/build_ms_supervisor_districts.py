@@ -16,11 +16,14 @@ current lines, measured 2026-10-15.
 
 WHY MOST COUNTIES ARE NOT DRAWN. Counties redrew their districts after the
 2020 census, and in most of them the Census never received the new lines: the
-2026 layer still carries the lines in its own 2020 edition (tigerWMS_Census2020,
-layer 20), which are the lines drawn after the 2010 census. Those lines would
-name the wrong supervisor for many readers. The planning measurement found
-the old lines put 34% of Madison County's residents in a different district
-from the one they now vote in, 16% of Lee's and 9.5% of Harrison's.
+2026 layer still carries the lines in its own 2020 edition
+(tigerWMS_Census2020, layer 20), and in most of those counties that edition
+puts every resident in the same district as its 2010 edition
+(tigerWMS_Census2010, layer 28, the lines it held on January 1, 2010). Those
+lines would name the wrong supervisor for many readers. The planning
+measurement found the old lines put 34% of Madison County's residents in a
+different district from the one they now vote in, 16% of Lee's and 9.5% of
+Harrison's.
 
 TWO SOURCES OF CONFIRMED LINES, each a STATED list:
 
@@ -35,7 +38,8 @@ TWO SOURCES OF CONFIRMED LINES, each a STATED list:
   2. On the 2020 census's own block counts the five districts hold nearly
      equal numbers of people: the largest and smallest differ by no more than
      MAX_DEVIATION_PCT percent of an equal share. Lines drawn to balance on
-     the 2020 census pass this; lines drawn on the 2010 census mostly do not.
+     the 2020 census pass this; the older lines the Census still carries
+     mostly do not.
 
   COUNTY_SOURCES — a map the county publishes, or its planning and
   development district publishes for it, where the Census still carries the
@@ -58,11 +62,32 @@ tell which. A county's own published map, or its answer to a letter, is what
 settles one of them. Marion's 2026 layer differs from its 2020 edition by a
 sliver on the line between districts 4 and 5 (about 19 m2, 0.0000027% of the
 county, measured 2026-10-15). It moves nobody, so `--survey` reports 0 people
-moved and the test does not count it as a change. A survey of every county's
-own website and its planning and development district's, the same day, found
-14 counties publishing lines of their own that differ from the Census's; the
-eight in COUNTY_SOURCES are the ones whose publication names or proves its
-own currency, and the other six wait for more evidence (ms/WATCH.md).
+moved and the test does not count it as a change.
+
+THE OLD LINES ARE OLDER THAN THE 2010 CENSUS IN MOST OF THOSE COUNTIES, and
+this docstring called them "the lines drawn after the 2010 census" until
+2026-10-16, when `--survey` first measured them against the 2010 edition,
+whose POP100 is the 2010 census's own count of each district: in 52 of the 64
+counties whose 2020 edition measures more than 10%, it puts every 2020
+resident in the same district as the 2010 edition, so the Census's lines there
+have moved nobody since January 1, 2010, and in 49 of those 52 the districts
+were already more than 10% apart on the 2010 census's own counts. The 49 held
+1,504,204 of the state's 2,961,279 residents in 2020. Seven of them (Coahoma,
+Greene, Harrison, Hinds, Lauderdale, Sunflower and Yazoo) hold a 2020 block of
+more than 1,000 people, which may be a prison or a campus that a plan can
+leave out of its count, so their figures may overstate how far apart a plan's
+own count would put the districts. Estimated from that block's 2020 count
+against an equal share, leaving it out could account for the whole figure only
+in Coahoma and Sunflower; the other 47 held 1,456,843 residents.
+
+A survey of every county's own website and its planning and development
+district's on 2026-10-15 found 14 counties publishing lines of their own that
+differ from the Census's; the eleven in COUNTY_SOURCES are the ones whose
+publication names or proves its own currency, and the other three wait for
+more evidence (ms/WATCH.md). Three of the eleven (Lee, Pearl River and Perry,
+added 2026-10-16) are proved by the county's own map of its voting precincts,
+which follows the county's lines and not the Census's; precinct_witness() says
+what is measured.
 
 NOTHING TRACED SHIPS, from a county's own map: its lines only decide which
 district each 2020 census block belongs to (the one covering most of the
@@ -72,14 +97,21 @@ ia/scripts/build_county_supplied_supervisor_districts.py uses for the same
 question. A plan adopted after the 2020 census assigns whole 2020 blocks, so
 this recovers the plan's own lines from a map drawn on another base, and it
 puts the county line exactly where the neighbouring counties' blocks put it.
-Measured 2026-10-15, seven of the eight maps follow the blocks closely: every
-populated block lies at least 93% inside one district, and in the six that
-publish a population per district the blocks reproduce those figures to the
-person (Rankin's after the two blocks its plan sets aside). Lamar's map is
+Measured 2026-10-15, seven of the first eight maps follow the blocks closely:
+every populated block lies at least 93% inside one district, and in the six
+that publish a population per district the blocks reproduce those figures to
+the person (Rankin's after the two blocks its plan sets aside). Lamar's map is
 drawn on another base (its county line runs up to 60 m from the Census's), so
 its worst populated block is 72% inside one district, and 17 blocks with
 nobody living in them in 2020 (0.586 km2) are split about evenly between two;
-each goes to the larger share, and MAX_EVEN_KM2 bounds that ground.
+each goes to the larger share, and MAX_EVEN_KM2 bounds that ground. The three
+added 2026-10-16 follow the blocks less closely: the worst populated block is
+79% inside one district in Lee, 74% in Pearl River and 64% in Perry, and
+blocks with nobody in them are split about evenly on 0.010 km2 in Lee (one
+block) and 0.160 km2 in Perry (seven). In those three the precinct map checks
+that the blocks went to the right districts: it puts 10 of Lee's 83,343
+residents, none of Pearl River's 56,145 and 8 of Perry's 11,511 in a different
+district from the drawn lines.
 
 GATES BEFORE ANYTHING IS WRITTEN:
   - every drawn county has exactly five districts numbered 1 to 5;
@@ -94,6 +126,11 @@ GATES BEFORE ANYTHING IS WRITTEN:
     one-to-one pairing of the two that keeps the most residents in a district
     of the same number is 1-1 to 5-5), and every block's assignment is clear:
     a populated block at least MIN_POPULATED_SHARE inside one district;
+  - for a county proved by its precinct map, the precinct witness: the map
+    puts no more than PRECINCT_MAX_OFF_SHARE of the county's residents in a
+    different district from the drawn lines and at least MIN_PEOPLE_MOVED in
+    a different district from the Census's, and all but
+    PRECINCT_MAX_UNPLACED_SHARE of them in exactly one precinct;
   - the fleet's 2,000-point agreement test between the simplified districts
     and the full-precision lines, sampled inside the drawn counties;
   - the fidelity ceiling the legislative builder pins (no source vertex more
@@ -125,7 +162,8 @@ counties meet — is one arc simplified once.
 WHAT `--check` CAN AND CANNOT SEE. It is offline and runs in CI: the shipped
 file's counties, numbering, county names and sources, the roster join, the
 record in data/source/ms-supervisor-districts.source.json (each county's
-measurements, and for a county's own map the evidence it was read with), the
+measurements, held again to the gates above, and for a county's own map the
+evidence it was read with), the
 Census edition the app's card names, and the county witness against the
 shipped state-counties.json. It cannot re-measure population or re-read a
 county's map, because neither is shipped; the figures it prints are the ones
@@ -151,6 +189,7 @@ Usage:
 
 import argparse
 import atexit
+import collections
 import datetime
 import hashlib
 import itertools
@@ -194,6 +233,7 @@ CURRENT = TIGERWEB + "tigerWMS_Current/MapServer/22"
 CURRENT_NAME = "County Subdivisions"
 CURRENT_VINTAGE = "January 1, 2026"
 EDITION_2020 = TIGERWEB + "tigerWMS_Census2020/MapServer/20"
+EDITION_2010 = TIGERWEB + "tigerWMS_Census2010/MapServer/28"  # January 1, 2010 vintage
 BLOCKS = TIGERWEB + "Tracts_Blocks/MapServer/12"   # Census 2020 blocks, POP100
 TRACTS = TIGERWEB + "Tracts_Blocks/MapServer/10"   # Census 2020 tracts, POP100
 STATE = "28"
@@ -219,9 +259,11 @@ CENSUS_COUNTIES = {
 }
 
 # The counties drawn from a map the county publishes, or its planning and
-# development district publishes for it, because the Census still carries the
-# lines drawn on the 2010 census there. STATED, never derived, like the list
-# above. Each entry names the evidence that its lines are the ones adopted
+# development district publishes for it, because the Census still carries its
+# 2020 edition there, which in six of them (Copiah, Harrison, Hinds, Perry,
+# Simpson and Warren) puts every resident in the same district as its 2010
+# edition (measured 2026-10-16 by `--survey`). STATED, never derived, like the
+# list above. Each entry names the evidence that its lines are the ones adopted
 # after the 2020 census, and the build re-reads that evidence every time:
 #   layer_name       the layer's own name, compared exactly; "Supervisor
 #                    Districts Adopted 2022" names its own adoption;
@@ -231,7 +273,14 @@ CENSUS_COUNTIES = {
 #                    the date given; a changed document stops the build until
 #                    a person compares the new one;
 #   plan_population  a population field published with each district, which
-#                    must equal the 2020 census's own block counts.
+#                    must equal the 2020 census's own block counts;
+#   precincts        the county's own map of its voting precincts, which must
+#                    follow these lines and not the Census's: `url` and
+#                    `layer_name` as above, `name_field` naming each precinct,
+#                    and `district_field` where each precinct names its
+#                    supervisor district. A precinct that names none belongs to
+#                    the district holding most of its residents under the lines
+#                    being tested. precinct_witness() says what is measured.
 # `label_field` is a field naming the district in words ("Supervisor District
 # 3"), which must name the same number as `field`. `names` is a field naming
 # each district's supervisor, which must agree with the Secretary of State's
@@ -255,8 +304,12 @@ COUNTY_SOURCES = {
     # plan adopted in 2013 on the 2010 census; the service's serviceDescription
     # says these lines were approved in 2023 from the 2020 census (all three
     # read 2026-10-15). The lines side with the second: they are not the
-    # Census's lines for the county, which ARE the 2013 plan, and they balance
-    # at 6.2% on the 2020 blocks where the Census's measure 45.6%. The layer
+    # Census's lines for the county, and they balance at 6.2% on the 2020
+    # blocks where the Census's measure 45.6%. The Census's lines are not the
+    # 2013 plan either, which this comment said they were until 2026-10-16:
+    # they put every resident in the same district as its 2010 edition, the
+    # lines it held on January 1, 2010, which measure 35.8% apart on the 2010
+    # census's own counts. The layer
     # also names each district's supervisor, and the names are the directory's.
     "047": {"county": "Harrison",
             "url": ("https://geo.co.harrison.ms.us/server/rest/services/AGO/"
@@ -287,12 +340,80 @@ COUNTY_SOURCES = {
                 "compared": "2026-10-15"},
             "source": ("Lamar County's supervisor districts as published in the parcel "
                        "viewer the county's website links to")},
+    # The account publishing this layer is named for the county, which is all
+    # that says whose map it is; an identical copy in another account is named
+    # Supr_Dist_Adopted_2022_Lee_Co (no resident differs, measured 2026-10-15).
+    # The witness is the Lee County Circuit Clerk's 2024 precinct splits, which
+    # describe themselves as the Circuit Clerk's and name each split's
+    # supervisor district. The map the county's website links under "Maps"
+    # (the Board of Supervisors Map, whose districts are a layer called
+    # Supervisor Zones) puts 122 residents in a different district from this
+    # layer and is not used: it disagrees with the Circuit Clerk's splits for
+    # 128 people, against 10 for this layer, and a populated block lies as
+    # little as 30% inside one of its districts, so it cannot be resolved to
+    # whole blocks (measured 2026-10-15 and 2026-10-16).
+    "081": {"county": "Lee",
+            "url": ("https://services3.arcgis.com/j2GTvlDqmJmX3REZ/arcgis/rest/services/"
+                    "New_Districts/FeatureServer/4"),
+            "field": "DISTRICT",
+            "layer_name": "Lee Supervisor Districts 2022",
+            "precincts": {
+                "url": ("https://services.arcgis.com/AzU5dE5IP7kWAdH7/arcgis/rest/services/"
+                        "Lee_County_Master_Splits_2024/FeatureServer/0"),
+                "layer_name": "MasterSplitAugust24",
+                "name_field": "PRECINCT", "district_field": "SUPERVISOR"},
+            "source": ("Lee County's supervisor districts from the map published online as "
+                       "Lee Supervisor Districts 2022, which the Lee County Circuit Clerk's "
+                       "2024 voting precinct map follows")},
     "089": {"county": "Madison",
             "url": CMPDD + "Madison_County_Map/FeatureServer/44",
             "field": "district", "label_field": "name",
             "layer_name": "Supervisor Districts Adopted 2022",
             "plan_population": "population",
             "source": _CMPDD_SOURCE % "Madison"},
+    # The county's Board of Supervisors page links "Find My Supervisor" to a map
+    # whose supervisor districts are this layer, and the same page links the
+    # county's printed map, titled "Board of Supervisors Districts Effective
+    # January 1, 2023", which was compared with this layer by eye on 2026-10-16
+    # and matches. The layer names each district's supervisor; only the names
+    # are read, to compare with the directory. Its own service's 2023 precinct
+    # layer names each precinct's district.
+    "109": {"county": "Pearl River",
+            "url": ("https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/"
+                    "Redistricting_2023/FeatureServer/91"),
+            "field": "District", "names": "ElectedRep",
+            "layer_name": "BOS2023",
+            "document": {
+                "url": ("https://pearlrivercounty.net/DocumentCenter/View/115/"
+                        "Pearl-River-Board-Supervisors-Map-2023-PDF"),
+                "sha256": "a83c2415c1cafe3d40a644e7005a82e998a286e8e8268babe7818b842f1844f1",
+                "compared": "2026-10-16"},
+            "precincts": {
+                "url": ("https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/"
+                        "Redistricting_2023/FeatureServer/92"),
+                "layer_name": "Precincts2023",
+                "name_field": "PrecinctName", "district_field": "District"},
+            "source": ("Pearl River County's supervisor districts from the Find My Supervisor "
+                       "map on the county's website, which matches the county's printed map "
+                       "of the districts effective 1 January 2023")},
+    # The county's Board of Supervisors page links "Find My Supervisor" to the
+    # county's GIS map, which draws this layer as its Supervisor Districts and a
+    # layer of 2023 voting precincts beside it. Two other layers in the same
+    # account draw the same lines (0.00074% of the county's area differs,
+    # measured 2026-10-16).
+    "111": {"county": "Perry",
+            "url": ("https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/"
+                    "Perry_Addressing_Service/FeatureServer/9"),
+            "field": "name",
+            "layer_name": "SUPERVISOR_DISTRICTS",
+            "precincts": {
+                "url": ("https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/"
+                        "PRECINCTS_2023/FeatureServer/0"),
+                "layer_name": "PRECINCTS_2023",
+                "name_field": "Name"},
+            "source": ("Perry County's supervisor districts from the Find My Supervisor map "
+                       "on the county's website, whose 2023 voting precincts follow the same "
+                       "lines")},
     # The plan's own population figures leave out two blocks: 3,633 people in a
     # block with 3 housing units (District 5) and 157 in a block with none
     # (District 1), read from the Census 2026-10-15. Counting them, the five
@@ -325,14 +446,26 @@ PINNED_CHAINS = {"gis.cmpdd.org": "godaddy-g2"}
 SET_ASIDE_PEOPLE_PER_HOME = 10
 # What the record keeps of an entry, so --check can hold the entry to it.
 WITNESS_KEYS = ("layer_name", "service_says", "document", "plan_population", "names",
-                "set_aside")
+                "set_aside", "precincts")
+# A county's precinct map as a witness (precinct_witness). It must put no more
+# than PRECINCT_MAX_OFF_SHARE of the county's residents in a different district
+# from the drawn lines, while putting at least MIN_PEOPLE_MOVED in a different
+# district from the Census's, so that it tells the two apart; and it must place
+# all but PRECINCT_MAX_UNPLACED_SHARE of them in exactly one precinct. Measured
+# 2026-10-16 on the three counties that use one, with residents placed by their
+# 2020 block's internal point: Lee 10 of 83,343 residents against 13,351 for
+# the Census's lines, Pearl River 0 of 56,145 against 4,919, and Perry 8 of
+# 11,511 against 444.
+PRECINCT_MAX_OFF_SHARE = 0.005
+PRECINCT_MAX_UNPLACED_SHARE = 0.01
 # Resolving a county's map to whole 2020 blocks. A populated block must lie at
 # least MIN_POPULATED_SHARE inside one district, or the people in it could be
 # given either supervisor (measured worst 2026-10-15: Lamar 0.721, the other
-# seven 0.933 or more). A block with nobody in it that no district covers to
-# EVEN_SHARE is split about evenly; it goes to the larger share, and the ground
-# in such blocks is bounded per county by MAX_EVEN_KM2 (measured Lamar 0.586 km2
-# in 17 blocks, the other seven none).
+# seven 0.933 or more; 2026-10-16: Lee 0.789, Pearl River 0.745, Perry 0.639).
+# A block with nobody in it that no district covers to EVEN_SHARE is split
+# about evenly; it goes to the larger share, and the ground in such blocks is
+# bounded per county by MAX_EVEN_KM2 (measured Lamar 0.586 km2 in 17 blocks,
+# Perry 0.160 km2 in 7 and Lee 0.010 km2 in 1, the other eight none).
 MIN_POPULATED_SHARE = 0.6
 EVEN_SHARE = 0.55
 MAX_EVEN_KM2 = 1.0
@@ -541,13 +674,15 @@ def fetch_county_layer(spec):
             "features": esri_features(fc, spec["url"], spec["field"])}
 
 
-def fetch_cousubs(url, counties):
-    """{county3: {district: feature}} for the given counties, full precision."""
+def fetch_cousubs(url, counties, extra=""):
+    """{county3: {district: feature}} for the given counties, full precision;
+    `extra` names more fields to read (",POP100" for the 2010 edition's own
+    count of each district)."""
     where = "STATE='%s' AND COUNTY IN (%s)" % (STATE, ",".join("'%s'" % c for c in sorted(counties)))
     feats, offset = [], 0
     while True:
         page = _get(url, {
-            "where": where, "outFields": "GEOID,COUNTY,BASENAME,FUNCSTAT",
+            "where": where, "outFields": "GEOID,COUNTY,BASENAME,FUNCSTAT" + extra,
             "outSR": "4326", "geometryPrecision": "6", "f": "json",
             "orderByFields": "GEOID", "resultOffset": offset, "resultRecordCount": 1000,
         })
@@ -857,11 +992,112 @@ def source_witness_problems(spec, layer):
             problems.append("%s has changed (SHA-256 %s, compared with the layer on %s as %s) "
                             "— compare the new map with the layer, then pin it"
                             % (doc["url"], got, doc["compared"], doc["sha256"]))
-    if not (phrase or doc or spec.get("plan_population")):
+    if not (phrase or doc or spec.get("plan_population") or spec.get("precincts")):
         # A layer's name alone is compared, never counted: "Supervisor
         # Districts" says nothing about which plan it draws.
         problems.append("the entry names no evidence that these are the current lines")
     return problems
+
+
+def fetch_precincts(pspec):
+    """A county's precinct layer: its name and its precincts at full
+    precision. Only the precinct's name and district fields are asked for, so
+    nothing else such a layer carries is read (Coahoma's 2022 precinct and
+    supervisor layers carry population by race, read 2026-10-16)."""
+    meta = _fetch_json(pspec["url"], {"f": "json"})
+    fields = [pspec["name_field"]] + ([pspec["district_field"]]
+                                      if pspec.get("district_field") else [])
+    fc = _fetch_json(pspec["url"] + "/query", {
+        "where": "1=1", "outFields": ",".join(fields), "returnGeometry": "true",
+        "outSR": "4326", "geometryPrecision": "6", "f": "json"})
+    if fc.get("exceededTransferLimit"):
+        raise SystemExit("FAIL: %s hit its transfer limit" % pspec["url"])
+    return meta.get("name"), esri_features(fc, pspec["url"], pspec["name_field"])
+
+
+def precinct_witness(spec, ds, census, pts):
+    """A county's own voting precincts as the witness that its lines are the
+    ones its elections use. Each populated 2020 block goes to the precinct
+    holding its internal point. The district a block SHOULD be in is the one
+    its precinct names, or, for a layer naming none, the one holding most of
+    the precinct's residents under the lines being tested; the second asks
+    only whether the precincts nest inside those lines, which a precinct map
+    can do for one plan and not for a plan that cuts across its precincts.
+    Counted for the county's lines as drawn (`ds`, resolved to blocks) and for
+    the Census's current lines (`census`). Returns (measurements, problems)."""
+    from shapely import STRtree
+    from shapely.geometry import Point
+    pspec = spec["precincts"]
+    name, feats = fetch_precincts(pspec)
+    problems = []
+    if name != pspec["layer_name"]:
+        problems.append("the precinct layer is now called %r, not %r"
+                        % (name, pspec["layer_name"]))
+    shapes, named = [], []
+    for f in feats:
+        p = f.get("properties") or {}
+        label = p.get(pspec["name_field"])
+        if not f.get("geometry"):
+            problems.append("precinct %r has no polygon" % label)
+            continue
+        if pspec.get("district_field"):
+            d = district_number(p.get(pspec["district_field"]))
+            if d is None:
+                problems.append("precinct %r names %s %r, not a district 1-5"
+                                % (label, pspec["district_field"], p.get(pspec["district_field"])))
+                continue
+            named.append(d)
+        shapes.append(checked_shape(f["geometry"], "precinct %r" % label))
+    if len(shapes) < len(DISTRICTS):
+        problems.append("the precinct layer holds %d precincts" % len(shapes))
+        return None, problems
+    if pspec.get("district_field") and sorted(set(named)) != list(DISTRICTS):
+        problems.append("the precincts name districts %s, not 1-5" % sorted(set(named)))
+    tree = STRtree(shapes)
+    where, none, multi = [], 0, 0
+    for x, y, n in pts:
+        pt = Point(x, y)
+        hits = [int(i) for i in tree.query(pt) if shapes[int(i)].covers(pt)]
+        if len(hits) == 1:
+            where.append(hits[0])
+            continue
+        where.append(None)
+        if hits:
+            multi += n
+        else:
+            none += n
+
+    def off(lines):
+        _, _, _, answers = assign(pts, lines)
+        if pspec.get("district_field"):
+            want = [named[w] if w is not None else None for w in where]
+        else:
+            tally = {}
+            for (x, y, n), w, a in zip(pts, where, answers):
+                if w is not None:
+                    tally.setdefault(w, collections.Counter())[a] += n
+            want = [tally[w].most_common(1)[0][0] if w is not None else None for w in where]
+        return sum(n for (x, y, n), e, a in zip(pts, want, answers)
+                   if e is not None and e != a)
+
+    people = sum(n for _, _, n in pts)
+    m = {"precincts_read": len(shapes),
+         "precinct_people_in_none": none,
+         "precinct_people_in_two": multi,
+         "precinct_people_off": off(ds),
+         "precinct_people_off_census": off(census)}
+    if none + multi > PRECINCT_MAX_UNPLACED_SHARE * people:
+        problems.append("%d residents are in no precinct and %d in two (ceiling %.0f%% of %d)"
+                        % (none, multi, 100 * PRECINCT_MAX_UNPLACED_SHARE, people))
+    if m["precinct_people_off"] > PRECINCT_MAX_OFF_SHARE * people:
+        problems.append("the precincts put %d residents in a different district from these "
+                        "lines (ceiling %.1f%% of %d) — they do not follow them"
+                        % (m["precinct_people_off"], 100 * PRECINCT_MAX_OFF_SHARE, people))
+    if m["precinct_people_off_census"] < MIN_PEOPLE_MOVED:
+        problems.append("the precincts put only %d residents in a different district from the "
+                        "Census's lines, so they do not tell the two apart"
+                        % m["precinct_people_off_census"])
+    return m, problems
 
 
 def resolve_to_blocks(raw, block_feats):
@@ -1174,6 +1410,17 @@ def _measure_county_map(c3, spec, cur, old, tracts, roster):
              100 * stats["block_share_worst_populated"], stats["blocks_split_evenly"],
              stats["blocks_split_evenly_km2"]), file=sys.stderr)
     pts = [(x, y, n) for x, y, n, _, _ in detail]
+    if spec.get("precincts"):
+        pm, found = precinct_witness(spec, ds, cur[c3], pts)
+        problems += found
+        if pm is None:
+            return None, None, None, problems
+        m.update(pm)
+        print("%-10s %d precincts: %d residents in a different district from these lines, "
+              "%d from the Census's; %d in no precinct, %d in two"
+              % (spec["county"], pm["precincts_read"], pm["precinct_people_off"],
+                 pm["precinct_people_off_census"], pm["precinct_people_in_none"],
+                 pm["precinct_people_in_two"]), file=sys.stderr)
     return m, ds, pts, problems
 
 
@@ -1406,6 +1653,26 @@ def record_problems(rec, expected):
         if (m.get("blocks_split_evenly_km2") or 0) > MAX_EVEN_KM2:
             problems.append("%s: %r km2 in blocks split evenly"
                             % (geoid, m.get("blocks_split_evenly_km2")))
+        if spec.get("precincts"):
+            people = m.get("people") or 0
+            got = [m.get(k) for k in ("precincts_read", "precinct_people_off",
+                                      "precinct_people_off_census", "precinct_people_in_none",
+                                      "precinct_people_in_two")]
+            if not all(isinstance(v, int) and not isinstance(v, bool) for v in got):
+                problems.append("%s: the record carries no precinct measurements" % geoid)
+                continue
+            read, off, off_census, none, two = got
+            if read < len(DISTRICTS):
+                problems.append("%s: %d precincts were read" % (geoid, read))
+            if off > PRECINCT_MAX_OFF_SHARE * people:
+                problems.append("%s: the precincts put %d residents in a different district "
+                                "from the lines drawn" % (geoid, off))
+            if off_census < MIN_PEOPLE_MOVED:
+                problems.append("%s: the precincts put only %d residents in a different "
+                                "district from the Census's lines" % (geoid, off_census))
+            if none + two > PRECINCT_MAX_UNPLACED_SHARE * people:
+                problems.append("%s: %d residents were in no precinct and %d in two"
+                                % (geoid, none, two))
     return problems
 
 
@@ -1482,17 +1749,25 @@ def check():
 
 # -------------------------------------------------------------- --survey ----
 def survey():
-    """Every county's two measurements, printed; writes nothing."""
+    """Every county's two measurements, printed; writes nothing. It also says
+    how old the lines are where the Census still carries its 2020 edition: for
+    each county, the residents whose district the 2020 edition and the 2010
+    edition (the lines the Census held on January 1, 2010) number differently,
+    and how far apart the 2010 edition's districts were on the 2010 census's
+    own count of each (its POP100)."""
     names, _ = county_names()
     allc = sorted(g[2:] for g in names)
     cur = fetch_cousubs(CURRENT, allc)
     old = fetch_cousubs(EDITION_2020, allc)
-    rows = []
+    older = fetch_cousubs(EDITION_2010, allc, ",POP100")
+    rows, stale, total = [], [], 0
     for c3 in allc:
         if sorted(cur.get(c3) or {}) != list(DISTRICTS):
             rows.append((c3, "the Census draws %s" % sorted(cur.get(c3) or {})))
             continue
-        m = measure_county(c3, cur[c3], old.get(c3), fetch_blocks(c3))
+        blocks = fetch_blocks(c3)
+        m = measure_county(c3, cur[c3], old.get(c3), blocks)
+        total += m["people"]
         current = (m["deviation_pct"] <= MAX_DEVIATION_PCT
                    and m["people_moved_from_2020_edition"] >= MIN_PEOPLE_MOVED)
         verdict = ("CURRENT" if current else
@@ -1502,11 +1777,33 @@ def survey():
         listed = ("listed" if c3 in CENSUS_COUNTIES else
                   "the county's own map" if c3 in COUNTY_SOURCES else
                   "NOT LISTED" if current else "")
-        rows.append((c3, "%-22s %6.2f%% now  %6.2f%% 2020 edition  %6d moved  %-20s %s"
+        then10 = older.get(c3) or {}
+        if old.get(c3) and sorted(then10) == list(DISTRICTS):
+            a20 = assign(blocks, old[c3])[3]
+            a10 = assign(blocks, then10)[3]
+            differ = sum(n for (x, y, n), a, b in zip(blocks, a20, a10) if a != b)
+            dev10 = deviation_pct({d: int(f["properties"].get("POP100") or 0)
+                                   for d, f in then10.items()})
+            older_text = "%6d differ from 2010 edition, which measured %6.2f%% on 2010 counts" % (
+                differ, dev10)
+        else:
+            differ = dev10 = None
+            older_text = "2010 edition draws %s" % sorted(then10)
+        if verdict == "stale":
+            stale.append((c3, m["people"], differ, dev10))
+        rows.append((c3, "%-22s %6.2f%% now  %6.2f%% 2020 edition  %6d moved  %-20s %s  %s"
                      % (names[STATE + c3], m["deviation_pct"], m["deviation_2020_edition_pct"],
-                        m["people_moved_from_2020_edition"], verdict, listed)))
+                        m["people_moved_from_2020_edition"], verdict, older_text, listed)))
     for c3, line in rows:
         print(c3, line)
+    same = [r for r in stale if r[2] == 0]
+    unbalanced = [r for r in same if r[3] > MAX_DEVIATION_PCT]
+    print("%d counties carry the Census's 2020 edition and measure more than %g%% on the 2020 "
+          "blocks. In %d of them the 2010 edition puts every 2020 resident in the same district, "
+          "and %d of those %d measured more than %g%% on the 2010 census's own counts; those %d "
+          "held %d of the state's %d residents in 2020."
+          % (len(stale), MAX_DEVIATION_PCT, len(same), len(unbalanced), len(same),
+             MAX_DEVIATION_PCT, len(unbalanced), sum(r[1] for r in unbalanced), total))
     return 0
 
 

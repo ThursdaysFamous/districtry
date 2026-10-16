@@ -81,6 +81,13 @@
    "source": "isbe",
    "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
   },
+  "fayette": {
+   "address": "221 South 7th Street, Vandalia, IL 62471",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
   "ford": {
    "address": "200 West State Street, Paxton, IL 60957",
    "asOf": "2025-12-15",
@@ -114,6 +121,13 @@
    "source": "isbe",
    "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
   },
+  "jersey": {
+   "address": "200 North Lafayette Street, Suite 3, Jerseyville, IL 62052",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
   "kane": {
    "address": "719 South Batavia Avenue, Building A, Geneva, IL 60134",
    "asOf": "2025-12-15",
@@ -136,6 +150,13 @@
   },
   "lasalle": {
    "address": "707 East Etna Road, Ottawa, IL 61350",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "lawrence": {
+   "address": "1100 State Street, Lawrenceville, IL 62439",
    "asOf": "2025-12-15",
    "confirmedBy": "County Clerk",
    "source": "isbe",

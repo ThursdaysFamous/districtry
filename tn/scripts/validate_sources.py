@@ -188,6 +188,19 @@ PROVENANCE = [
             "and proves the land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "tn-precincts.json",
+        "source_url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/12",
+        "note": (
+            "Tennessee's 1,870 voting precincts from the Comptroller of the "
+            "Treasury's statewide layer (1,879 records: Overton County's nine "
+            "are published twice), pre-built by "
+            "tn/scripts/build_tn_precincts.py through "
+            "scripts/statewide_precincts.py; the quarterly --watch row in "
+            "tn/WATCH.md compares the fingerprint recorded at the build."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -280,6 +293,16 @@ ENDPOINTS = [
                 "&geometry=-90.40%2C34.90%2C-81.55%2C36.75&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 960,   # 1,070 measured 2026-10-10
+    },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in tn/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/"
+                "Redistricting_Address_Lookup/FeatureServer/12/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 1690,  # 1,879 records measured 2026-10-15
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

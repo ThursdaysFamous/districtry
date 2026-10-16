@@ -13571,11 +13571,12 @@ function initMississippiExplorer() {
    * in the counties whose current lines this app has confirmed
    * (data/app/ms-supervisor-districts.json, built by
    * ms/scripts/build_ms_supervisor_districts.py). The Census carries every
-   * county's districts, but in most counties it still carries the lines
-   * drawn after the 2010 census, which would name the wrong supervisor for
-   * many readers. A county is drawn from the Census's lines when they
-   * changed after the 2020 census AND hold nearly equal numbers of people on
-   * the 2020 census's own blocks (lines "census"), or from a map the county
+   * county's districts, but in most counties it still carries older lines,
+   * in most of them placing every resident as its January 1, 2010 edition
+   * does, which would name the wrong supervisor for many readers. A county
+   * is drawn from the Census's lines when they changed after the 2020
+   * census AND hold nearly equal numbers of people on the 2020 census's
+   * own blocks (lines "census"), or from a map the county
    * or its planning and development district publishes, where that map
    * shows its own currency and passes the same population test (lines
    * "county", redrawn along whole 2020 blocks so every vertex is the

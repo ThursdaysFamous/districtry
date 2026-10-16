@@ -66,6 +66,7 @@ const ROSTER_URLS = [
   "./data/app/mn-county-commissioners.json",
   "./data/app/mn-city-councils.json",
   "./data/app/mn-town-boards.json",
+  "./data/app/mn-county-town-officers.json",
   "./data/app/mn-school-boards.json",
   "./data/app/coverage-gaps.json",
   "./data/app/tribal-councils.json",
