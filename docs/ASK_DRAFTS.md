@@ -406,8 +406,9 @@ nobody, and the county's own page is the evidence.
 ### Still with no letter to draft
 
 A letter cannot be put in the mailbox until somebody writes it. These have a recipient
-and an argument here and no wording: Asks 13, 25, 33, `wi-oshkosh-council` and
-`ia-pottawattamie-tama-wright-boards`. (Ask 11, CCGISC, was listed here as having no
+and an argument here and no wording: Asks 13, 25, 33 and
+`ia-pottawattamie-tama-wright-boards` (`wi-oshkosh-council` was listed here too and is
+withdrawn as of 2026-10-16: the city's new site is read directly). (Ask 11, CCGISC, was listed here as having no
 recipient address; it was sent on 2026-08-05, and its follow-up is drafted.) The thirteen Illinois county letters that exist only in state notes are being
 rewritten as follow-ups, because every one of them bar Scott was asked in early August
 and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) answered.
@@ -5130,6 +5131,14 @@ round.
 ---
 
 ## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
+
+> **WITHDRAWN 2026-10-16. DO NOT SEND.** The question this letter asks has answered itself.
+> On 2026-10-15 the city's council page had moved to `www.oshkoshwi.gov`, whose robots.txt
+> (621 bytes) answered our own reader and permits both pages read, and `#1559` reads the Common
+> Council from there: seven members at large, every one with an `@oshkoshwi.gov` address, in
+> `wi/data/app/wi-municipal-boards.json` as of 2026-10-15. The old host's connection failure no
+> longer stands between the city and the map, so there is nothing left to ask. The text below
+> is kept as it was written; any copy of it in the operator's mailbox should be deleted unsent.
 
 > **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE LETTER STANDS AS WRITTEN.**
 > The rule asks whether names we called unreadable sit in a feed we could read. Oshkosh's do
