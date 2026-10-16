@@ -849,6 +849,35 @@ try {
               `president=${presBadge} how=${JSON.stringify((how || {}).value || null)}`);
     await context.close();
   }
+
+  // ---- 10b. A BOARD THE CITY DOES NOT CALL AT LARGE IS NOT LABELLED SO ----
+  // Fond du Lac's council page describes seven members and gives none a
+  // district, but never says how the seats are elected, so its roster carries
+  // `atLarge: false` and the city's own description. The card must print that
+  // description and must NOT head the block "elected at large". Read from the
+  // shipped roster at a point in downtown Fond du Lac (2026-10-15); the
+  // assertion is the wording, so it survives an April election.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=43.77300,-88.44700&layers=municipality`);
+    await cardText(page, "municipality");
+    const labels = await page.$$eval("#card-municipality .card-section-label",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const fields = await page.$$eval("#card-municipality .card-field",
+      (els) => els.map((e) => ({
+        label: (e.querySelector(".card-field-label") || {}).textContent || "",
+        value: (e.querySelector(".card-field-value") || {}).textContent || ""
+      })));
+    const heading = labels.find((l) => /^\d+ members/.test(l));
+    const how = fields.find((f) => f.label.trim() === "How they are elected");
+    const ok = heading === "7 members" && !!how &&
+               how.value.indexOf("do not say whether the seats are elected at large") !== -1;
+    check("a board whose city does not say it is at large is not labelled at large",
+          ok, `heading=${JSON.stringify(heading || null)} ` +
+              `how=${JSON.stringify((how || {}).value || null)}`);
+    await context.close();
+  }
   // ---- 1x. The Tribal Government card names the nation, its seat and its
   // council. The council is what this check exists for: it lives in a SEPARATE
   // file (data/app/tribal-councils.json, network-first) that the layer's loader

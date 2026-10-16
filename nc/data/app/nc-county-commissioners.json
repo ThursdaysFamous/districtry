@@ -4622,8 +4622,44 @@
   "county": "Tyrrell",
   "seats": [
    {
+    "election": "2024-11-05",
+    "name": "Darryl Liverman",
+    "party": "Unaffiliated",
     "seat": "Board seat",
-    "unnamed": "Tyrrell County elects its board by limited voting, so the election results do not say how many seats each contest filled, and the county's website did not answer when this was built. This map names nobody here rather than guessing."
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jordan R. Davis",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nathan T. (Tommy) Everett",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Nina Basnight Griswell",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robert Thompson",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
    }
   ]
  },
