@@ -1958,7 +1958,9 @@ note is drafted and waits on a route rather than on a send.
 
 ## Ask 17 — League of Wisconsin Municipalities: terms, before any money changes hands
 
-**NOT YET ASKED — DRAFTED 2026-09-05.** Nothing here has been bought, and nothing should
+**SENT 2026-10-01 16:17:55 UTC to `league@lwm-info.org`, subject "Reuse terms for the
+Directory of City and Village Officials". NO REPLY as of 2026-10-15** (read off the operator's
+mailbox that day). Drafted 2026-09-05. Nothing here has been bought, and nothing should
 be until this is answered.
 
 **The sweep this draft was waiting on has landed, and the draft names its figures.**
@@ -4823,7 +4825,9 @@ government to weaken a protection for one visitor's convenience.
 
 ## Ask wi-town-boards — Wisconsin Towns Association: is there a list of town board members?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** A first approach to this organisation. It asks
+> **SENT 2026-10-01 14:44:02 UTC to `wtowns@wisctowns.com`, subject "districtry.com — is there
+> a list of town board members?". NO REPLY as of 2026-10-15** (read off the operator's mailbox
+> that day). A follow-up is due about 2026-10-22. A first approach to this organisation. It asks
 > whether a list exists and on what terms, not for anything free: the association is a
 > membership body, not a government, and a list it compiles from its members is its own work
 > to price as it likes.

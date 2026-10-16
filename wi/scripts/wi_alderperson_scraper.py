@@ -479,11 +479,11 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 # way they were not. Its edge wants BOTH a non-urllib3 stack AND Chrome's client
 # hints — the Kendall shape — and the policy it then serves is BYTE-IDENTICAL to
 # Kendall County's own, one CMS vendor's default, which binds at the city's host
-# and is never to be cited as Janesville's choice. Mequon cannot be read from a Claude Code
-# sandbox at all -- every spelling of its host fails at the egress gateway with
-# `Tunnel connection failed: 502`, which is a fact about this route and says
-# nothing about the city -- so it waits on a measurement from a GitHub runner
-# (wi/WATCH.md).
+# and is never to be cited as Janesville's choice. Mequon could not be read from a Claude Code
+# sandbox on 2026-10-01 -- every spelling of its host failed at the egress gateway with
+# `Tunnel connection failed: 502`, which was a fact about that route and said
+# nothing about the city. On 2026-10-15 www.cityofmequonwi.gov answered from
+# the same sandbox, and it ships (scrape_mequon below).
 FRANKLIN_INDEX = ("https://www.franklinwi.gov/Departments/Elected-Officials"
                   "/Common-Council.htm")
 GREENFIELD_INDEX = "https://www.ci.greenfield.wi.us/334/Common-Council"
@@ -520,6 +520,36 @@ WAUSAU_INDEX = ("https://www.wausauwi.gov/your-government/city-council"
                 "/alderpersons")
 WAUWATOSA_INDEX = ("https://www.wauwatosa.net/government/common-council"
                    "/contact-the-common-council")
+
+# ---- the tranche of 2026-10-15, aimed at the done standard's city tier ----
+# Eight councils of 25,000 people or more whose districts the shipped geometry
+# already draws. Each page was read on 2026-10-15 with this file's client,
+# robots.txt first, and every one is plain HTML the server sends — none needed
+# a feed. Brookfield, Oak Creek, Sun Prairie and Fitchburg serve the same
+# 816-byte CivicPlus robots.txt, which permits every path read here; it is the
+# vendor's default file and is never to be cited as any city's own choice.
+BROOKFIELD_INDEX = "https://www.ci.brookfield.wi.us/170/Your-Aldermen"
+DE_PERE_INDEX = ("https://www.deperewi.gov/department/index.php"
+                 "?structureid=3")
+# THE APEX HOST, NOT `www`: measured 2026-10-15, www.fitchburgwi.gov served
+# robots.txt and then reset the connection on both page reads, while the apex
+# served the page on one retry. The Oconomowoc shape.
+FITCHBURG_INDEX = "https://fitchburgwi.gov/2924/Mayor-City-Council"
+# LA CROSSE AND MEQUON ARE READ WITH UA_AKAMAI. Measured 2026-10-15 from this
+# sandbox: with the plain UA above, La Crosse answers 403 to robots.txt itself
+# and to the page, and Mequon serves its robots.txt and then 403s the page;
+# with the client-hint set both serve robots.txt (7,073 and 2,005 bytes, no
+# rule matching these paths) and the page. The robots read uses the same set.
+LA_CROSSE_INDEX = ("https://www.cityoflacrosse.org/Your-Government"
+                   "/Elected-Officials/City-Council/City-Council-Members")
+# MEQUON WAS READ ON 2026-10-15 and the 502 recorded above did not recur: the
+# robots.txt (2,005 bytes, permits /) and the council page both answered 200
+# through Cloudflare's edge with no challenge marker in either body. A
+# challenge that comes back is caught by the seat count, never worked around.
+MEQUON_INDEX = "https://www.cityofmequonwi.gov/commoncouncil"
+OAK_CREEK_INDEX = "https://www.oakcreekwi.gov/388/Common-Council"
+SUN_PRAIRIE_INDEX = "https://cityofsunprairie.com/801/City-Council-Members"
+WEST_ALLIS_INDEX = "https://www.westalliswi.gov/page/contact-your-alderperson"
 
 # Cardinal number words, for a page that STATES the size of its own council.
 # Oconomowoc's "eight Aldermen representing each of the City's four
@@ -1924,8 +1954,12 @@ def scrape_appleton():
             continue
         name, n = " ".join(H.unescape(h.group(1)).split()), int(h.group(2))
         entry = {"name": name}
-        u = re.search(r'href="(government/district_(\d{1,2})\.php)"[^>]*'
-                      r'class="rz-bus-readmore"', block)
+        # The href was relative until 2026-10-15 and is absolute since; both
+        # spellings name the same city page, so both are read, and one off
+        # the city's own host is not.
+        u = re.search(r'href="((?:https://www\.appletonwi\.gov/)?government/'
+                      r'district_(\d{1,2})\.php)"[^>]*class="rz-bus-readmore"',
+                      block)
         if u:
             if int(u.group(2)) != n:
                 raise SystemExit("appleton: %s is headed District %d and its Read More "
@@ -2688,6 +2722,315 @@ def scrape_wauwatosa():
                           r"Alderperson\s*-\s*District\s+\d{1,2}")), WAUWATOSA_INDEX
 
 
+# ---------------------------------------------------------------- Brookfield
+def scrape_brookfield():
+    """A table: a full-width "District N / Wards ..." row, then one cell per
+    alderman — name, street address, city line, phone, "Term Expires M/YYYY",
+    and a mailto. Seven districts, two aldermen each.
+
+    THE STREET ADDRESS IN EACH CELL IS THE ALDERMAN'S HOME AND IS NEVER READ.
+    Only the first line (the name), the phone the city prints for the member
+    and the city mailbox ship. The photo `alt` text is not read either: it
+    spells the same people three ways ("Peter Stoll", "Monty Sara", "Ald. Rick
+    Owen"), and the cell's own first line is what the city keeps current.
+    """
+    page = fetch(BROOKFIELD_INDEX)
+    members, district = {}, None
+    for row in re.split(r"<tr[^>]*>", page)[1:]:
+        head = re.search(r"<strong>\s*District\s+(\d{1,2})\s*</strong>", row)
+        if head and 'colspan="6"' in row:
+            district = "%02d" % int(head.group(1))
+            continue
+        if district is None:
+            continue
+        for cell in re.findall(r"(?s)<td[^>]*>(.*?)</td>", row):
+            if "Term Expires" not in cell:
+                continue
+            lines = [" ".join(re.sub(r"<[^>]+>", " ", H.unescape(x)).split())
+                     for x in re.split(r"(?i)<br\s*/?>|</p>", cell)]
+            lines = [x for x in lines if x]
+            name = lines[0]
+            if not re.fullmatch(r"[A-Z][A-Za-z.'\- ]+", name):
+                raise SystemExit("brookfield: District %s cell opens with %r, "
+                                 "not a name" % (district, name))
+            entry = {"name": name}
+            entry.update(_contact(cell))
+            _put("brookfield", members, district, entry)
+    _seats_or_die("brookfield", members, 7, page,
+                  ("District N", r"<strong>\s*District\s+\d{1,2}\s*</strong>"))
+    return _people_or_die("brookfield", members, 14, page,
+                          ("Term Expires", r"Term Expires")), BROOKFIELD_INDEX
+
+
+# ------------------------------------------------------------------- De Pere
+_ORDINAL = {"1st": 1, "2nd": 2, "3rd": 3, "4th": 4, "5th": 5, "6th": 6}
+
+
+def scrape_de_pere():
+    """One table: a header row of "1st District" .. "4th District", one per
+    COLUMN, then rows holding one alderperson per column.
+
+    THE COLUMN IS THE DISTRICT, so each name is assigned by its cell's index
+    under the header row. The page states its own size — "four (4) Aldermanic
+    Districts; with two alderpersons elected to each district, for a total of
+    eight (8) alderpersons" — which is what the two count guards hold it to.
+    A name is often split across two links or a line break, so the whole
+    cell's text is the name. The news sidebar on the same page names an older
+    District 4 member and is outside the table, so it is never read.
+    """
+    # ONE TRY, NOT THREE. www.deperewi.gov states `Crawl-delay: 300` in the
+    # group that binds this client (measured 2026-10-15). One request per
+    # weekly run satisfies it by construction, the Dodgeville reasoning above,
+    # but fetch()'s retries would send a second request seconds after the
+    # first, so this host gets none: a failed read is that week's miss and the
+    # builder carries last week's rows.
+    page = fetch(DE_PERE_INDEX, tries=1)
+    start = page.find("Aldermanic Districts")
+    if start < 0:
+        raise SystemExit("de pere: the page no longer says how many "
+                         "Aldermanic Districts the city has")
+    table = re.search(r"(?s)<table\b.*?</table>", page[start:])
+    if not table:
+        raise SystemExit("de pere: no table follows the council sentence")
+    rows = re.split(r"<tr[^>]*>", table.group(0))[1:]
+    cols, members = None, {}
+    for row in rows:
+        cells = re.findall(r"(?s)<td[^>]*>(.*?)</td>", row)
+        if cols is None:
+            cols = []
+            for c in cells:
+                m = re.search(r"(\d(?:st|nd|rd|th))\s+District", _clean(c))
+                if not m:
+                    raise SystemExit("de pere: header cell %r names no "
+                                     "district" % _clean(c))
+                cols.append("%02d" % _ORDINAL[m.group(1)])
+            continue
+        for i, cell in enumerate(cells):
+            # A member's cell links their directory entry; the table's last
+            # row is a sentence telling a reader to click the names above,
+            # and it links no entry.
+            if "directory.egov" not in cell:
+                continue
+            name = _clean(cell)
+            if not name:
+                raise SystemExit("de pere: a directory link carries no name")
+            if i >= len(cols):
+                raise SystemExit("de pere: a row has more cells than the "
+                                 "header has districts")
+            entry = {"name": name}
+            href = re.search(r'href="([^"]*directory\.egov[^"]*)"', cell)
+            if href:
+                entry["url"] = urllib.parse.urljoin(DE_PERE_INDEX,
+                                                    H.unescape(href.group(1)))
+            _put("de pere", members, cols[i], entry)
+    _seats_or_die("de pere", members, 4, page,
+                  ("Nth District", r"\d(?:st|nd|rd|th) District"))
+    return _people_or_die("de pere", members, 8, page,
+                          ("directory link", r"directory\.egov\?view=detail")
+                          ), DE_PERE_INDEX
+
+
+# ----------------------------------------------------------------- Fitchburg
+def scrape_fitchburg():
+    """Table cells of "<a>NAME</a><br>Alder District N<br>Term Expires: ...
+    <br>PHONE<br><a mailto>". Four districts, two alders each.
+
+    THE NAME LINK'S TARGET IS NOT READ: measured 2026-10-15, District 3's
+    "Logan Reigstad" links /2934/Alderperson-Jay-Allen, a page left from the
+    seat's previous holder. The link text is what the city maintains, so that
+    is the name, and no member page ships for any of the eight.
+    """
+    page = fetch(FITCHBURG_INDEX)
+    members = {}
+    # THE CELL IS THE UNIT, not the paragraph: two of the eight cells put the
+    # name link outside the <p> that holds "Alder District N", so a per-<p>
+    # read found six (measured 2026-10-15).
+    for cell in re.findall(r"(?s)<td[^>]*>(.*?)</td>", page):
+        m = re.search(r"(?s)<a[^>]*>([^<]+)</a>\s*(?:<br\s*/?>|<p[^>]*>)\s*"
+                      r"Alder District\s+(\d{1,2})\s*<br", cell)
+        if not m:
+            continue
+        entry = {"name": " ".join(H.unescape(m.group(1)).split())}
+        entry.update(_contact(cell))
+        _put("fitchburg", members, "%02d" % int(m.group(2)), entry)
+    _seats_or_die("fitchburg", members, 4, page,
+                  ("Alder District N", r"Alder District\s+\d{1,2}"))
+    return _people_or_die("fitchburg", members, 8, page,
+                          ("Alder District N", r"Alder District\s+\d{1,2}")
+                          ), FITCHBURG_INDEX
+
+
+# ----------------------------------------------------------------- La Crosse
+def scrape_la_crosse():
+    """One <article> per council member: a linked h2 name, then "District N"
+    (with ", Council President" on one), then phone and e-mail list items.
+
+    The 403 the alderperson pool recorded for La Crosse was measured at
+    /I-Want-To/Contact/City-Council, a different page; this one answered 200
+    to this file's client on 2026-10-15.
+    """
+    page = fetch(LA_CROSSE_INDEX, headers=UA_AKAMAI)
+    members = {}
+    for art in re.findall(r"(?s)<article>(.*?)</article>", page):
+        m = re.search(r'(?s)<a href="([^"]+)"><h2 class="list-item-title">'
+                      r"([^<]+)</h2></a>\s*District\s+(\d{1,2})\b", art)
+        if not m:
+            continue
+        entry = {"name": " ".join(H.unescape(m.group(2)).split()),
+                 "url": urllib.parse.urljoin(LA_CROSSE_INDEX, m.group(1))}
+        entry.update(_contact(art))
+        _put("la crosse", members, "%02d" % int(m.group(3)), entry)
+    return _seats_or_die("la crosse", members, 13, page,
+                         ("list-item-title", r'class="list-item-title"')
+                         ), LA_CROSSE_INDEX
+
+
+# -------------------------------------------------------------------- Mequon
+def scrape_mequon():
+    """One directory card per official: a linked name, a position ("District
+    N Alderman", "District N Alderwoman", ", Common Council President" on one)
+    and a phone. The mayor's card has the same shape and is skipped by its
+    position.
+
+    NO E-MAIL SHIPS: each card's Email link opens a contact form on the city's
+    site, and no address is printed. Names carry double spaces, which are
+    collapsed.
+    """
+    page = fetch(MEQUON_INDEX, headers=UA_AKAMAI)
+    members = {}
+    for card in re.split(r'<div[^>]*class="[^"]*directory-listing', page)[1:]:
+        name = re.search(r'(?s)<a href="([^"]+)" class="body-4col-photo__link">'
+                         r"(.*?)</a>", card)
+        pos = re.search(r'(?s)body-4col-photo__position">(.*?)</span>', card)
+        if not name or not pos:
+            continue
+        m = re.match(r"District\s+(\d{1,2})\s+Alder(?:man|woman|person)\b",
+                     _clean(pos.group(1)))
+        if not m:
+            continue
+        entry = {"name": _clean(name.group(2)),
+                 "url": urllib.parse.urljoin(MEQUON_INDEX, name.group(1))}
+        ph = re.search(r'(?s)body-4col-photo__phone-number">(.*?)</span>', card)
+        if ph and _clean(ph.group(1)):
+            entry["phone"] = _clean(ph.group(1))
+        _put("mequon", members, "%02d" % int(m.group(1)), entry)
+    return _seats_or_die("mequon", members, 8, page,
+                         ("District N Alder", r"District\s+\d{1,2}\s+Alder")
+                         ), MEQUON_INDEX
+
+
+# ----------------------------------------------------------------- Oak Creek
+def scrape_oak_creek():
+    """The city's staff-directory widget: one h-card per alderperson, with
+    `p-name` and a `p-job-title` reading "Alderperson, District N".
+
+    The sibling page /177/Your-Common-Council names nobody, which is why the
+    alderperson pool once recorded no council page for Oak Creek.
+    """
+    page = fetch(OAK_CREEK_INDEX)
+    members = {}
+    for card in re.split(r'<li class="widgetItem h-card">', page)[1:]:
+        name = re.search(r'(?s)class="widgetTitle field p-name">(.*?)</h4>', card)
+        job = re.search(r'(?s)class="field p-job-title">(.*?)</div>', card)
+        if not name or not job:
+            continue
+        m = re.fullmatch(r"Alderperson,\s*District\s+(\d{1,2})", _clean(job.group(1)))
+        if not m:
+            continue
+        entry = {"name": _clean(name.group(1))}
+        more = re.search(r'href="(/m/directory/employee\?eid=\d+)"', card)
+        if more:
+            entry["url"] = urllib.parse.urljoin(OAK_CREEK_INDEX, more.group(1))
+        ph = re.search(r'href="tel:\d+">([^<]+)</a>', card)
+        if ph:
+            entry["phone"] = ph.group(1).strip()
+        _put("oak creek", members, "%02d" % int(m.group(1)), entry)
+    return _seats_or_die("oak creek", members, 6, page,
+                         ("Alderperson, District N",
+                          r"Alderperson,\s*District\s+\d{1,2}")), OAK_CREEK_INDEX
+
+
+# --------------------------------------------------------------- Sun Prairie
+def scrape_sun_prairie():
+    """"District N (.. Quadrant)" headings, each followed by two alders, each
+    alder a name, a phone and an "Email <NAME>" mailto. Four districts, two
+    alders each.
+
+    THE MAILTO IS THE UNIT: its own label names the alder it belongs to, so
+    the name is read from it and the phone from the text between it and the
+    item before it. The mayor's block above the first district heading has the
+    same shape and is skipped because no district has been named yet.
+    """
+    page = fetch(SUN_PRAIRIE_INDEX)
+    page = re.sub(r"(?is)<script.*?</script>", "", page)
+    token = re.compile(r"District\s+(\d{1,2})\s+\([A-Z]{2} Quadrant\)"
+                       r'|href="mailto:([^"]+)"[^>]*>\s*Email\s+([^<]+)</a>')
+    members, district, last = {}, None, 0
+    for m in token.finditer(page):
+        if m.group(1):
+            district, last = "%02d" % int(m.group(1)), m.end()
+            continue
+        chunk, last = page[last:m.start()], m.end()
+        if district is None:
+            continue
+        entry = {"name": " ".join(H.unescape(m.group(3)).split()),
+                 "email": m.group(2).strip()}
+        ph = re.search(r"\(\d{3}\)\s*\d{3}-\d{4}", _clean(chunk))
+        if ph:
+            entry["phone"] = ph.group(0)
+        _put("sun prairie", members, district, entry)
+    _seats_or_die("sun prairie", members, 4, page,
+                  ("District N (Quadrant)", r"District\s+\d\s+\([A-Z]{2} Quadrant\)"))
+    return _people_or_die("sun prairie", members, 8, page,
+                          ("Email NAME", r">\s*Email\s+[A-Z]")), SUN_PRAIRIE_INDEX
+
+
+# ---------------------------------------------------------------- West Allis
+_WORD_NUMBER = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5,
+                "Six": 6, "Seven": 7, "Eight": 8, "Nine": 9, "Ten": 10}
+
+
+def scrape_west_allis():
+    """"District One" .. "District Five", each followed by two lines
+    "Alderperson NAME".
+
+    THE ROSTER IS IN THE PAGE'S OWN EMBEDDED STATE, NOT ITS VISIBLE TEXT. The
+    site renders in the browser from a JSON payload the server sends inside
+    the same HTML, with the roster as escaped markup under the heading "Who Are
+    My Alderpersons?". Those bytes are what a reader's browser draws from, so
+    they are read as published; no further request is made. The payload
+    appears more than once in the document, so only the first block after the
+    heading is read — reading every copy would name each alderperson twice.
+
+    The photo caption elsewhere on the page says "Dan Roadt"; the district
+    list says "Daniel Roadt", and the list is what ships.
+    """
+    page = fetch(WEST_ALLIS_INDEX)
+    flat = page.replace('\\\\\\"', '"').replace('\\"', '"')
+    start = flat.find("Who Are My Alderpersons?")
+    if start < 0:
+        raise SystemExit("west allis: the heading 'Who Are My Alderpersons?' "
+                         "is gone from the page")
+    end = flat.find("District Maps", start)
+    block = flat[start:end if end > 0 else start + 20000]
+    members, district = {}, None
+    for m in re.finditer(r"District\s+(One|Two|Three|Four|Five|Six|Seven|"
+                         r"Eight|Nine|Ten)</strong>"
+                         r"|>Alderperson\s+([^<]+)</p>", block):
+        if m.group(1):
+            district = "%02d" % _WORD_NUMBER[m.group(1)]
+            continue
+        if district is None:
+            raise SystemExit("west allis: an alderperson is listed before "
+                             "any district heading")
+        _put("west allis", members, district,
+             {"name": " ".join(H.unescape(m.group(2)).split())})
+    _seats_or_die("west allis", members, 5, block,
+                  ("District <word>", r"District\s+[A-Z][a-z]+</strong>"))
+    return _people_or_die("west allis", members, 10, block,
+                          ("Alderperson NAME", r">Alderperson\s")), WEST_ALLIS_INDEX
+
+
 def main():
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
@@ -2746,6 +3089,16 @@ def main():
             # read from Waupaca County's directory, 2026-10-07, once the
             # aldermanic builder could draw its three districts (LOCAL_RECODE)
             ("49400", "Marion", 3, scrape_marion),
+            # the tranche of 2026-10-15: eight councils over 25,000 whose
+            # districts the shipped geometry already draws
+            ("10025", "Brookfield", 7, scrape_brookfield),
+            ("19775", "De Pere", 4, scrape_de_pere),
+            ("25950", "Fitchburg", 4, scrape_fitchburg),
+            ("40775", "La Crosse", 13, scrape_la_crosse),
+            ("51150", "Mequon", 8, scrape_mequon),
+            ("58800", "Oak Creek", 6, scrape_oak_creek),
+            ("78600", "Sun Prairie", 4, scrape_sun_prairie),
+            ("85300", "West Allis", 5, scrape_west_allis),
     )
     for code, name, districts, fn in COVERED:
         result, reason = attempt(name, fn)
