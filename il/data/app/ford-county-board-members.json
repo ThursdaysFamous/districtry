@@ -1,0 +1,61 @@
+{
+  "1": {
+    "members": [
+      {
+        "name": "Gene May"
+      },
+      {
+        "name": "Tom McQuinn"
+      },
+      {
+        "name": "Carson Vaughn",
+        "role": "Vice Chairman"
+      },
+      {
+        "name": "Dominic Brackenhoff"
+      }
+    ],
+    "sourceUrl": "https://fordcounty.illinois.gov/ford-county-board/",
+    "sourceDocument": "the County Board members by district, sent by e-mail from County Clerk Kelsie Vaughn, 2026-10-01",
+    "verified": "2026-10-01"
+  },
+  "2": {
+    "members": [
+      {
+        "name": "Cindy Ihrke"
+      },
+      {
+        "name": "Lesley King"
+      },
+      {
+        "name": "Greg Niewold"
+      },
+      {
+        "name": "Tim Nuss"
+      }
+    ],
+    "sourceUrl": "https://fordcounty.illinois.gov/ford-county-board/",
+    "sourceDocument": "the County Board members by district, sent by e-mail from County Clerk Kelsie Vaughn, 2026-10-01",
+    "verified": "2026-10-01"
+  },
+  "3": {
+    "members": [
+      {
+        "name": "Chase McCall",
+        "role": "Chairman"
+      },
+      {
+        "name": "Randy Ferguson"
+      },
+      {
+        "name": "Sarah Mussman"
+      },
+      {
+        "name": "Neil Rhoades"
+      }
+    ],
+    "sourceUrl": "https://fordcounty.illinois.gov/ford-county-board/",
+    "sourceDocument": "the County Board members by district, sent by e-mail from County Clerk Kelsie Vaughn, 2026-10-01",
+    "verified": "2026-10-01"
+  }
+}

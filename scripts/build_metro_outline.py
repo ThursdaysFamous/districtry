@@ -819,6 +819,17 @@ METRO_COUNTY_FIPS = ("031", "043", "197", "097", "089", "111", "093",
                      # moves from OUTSIDE to INSIDE with this join. READ THE
                      # RING COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
                      "021",
+                     # Ford (2026-10-15), board-only. Its three districts are
+                     # whole precincts per Res. 21-101, the county's 2021 plan,
+                     # whose own table gives all 22 precinct populations and all
+                     # three district totals, each matched to the person by the
+                     # census dissolve (scripts/build_ford_boundaries.py). Its
+                     # twelve members come from the Clerk's letter. Ford was one
+                     # third of the Champaign/Ford/Piatt enclave; Champaign and
+                     # Piatt stay shut on the CCGISC licence, so the hole
+                     # shrinks to those two. READ THE RING COUNT FROM --check,
+                     # NEVER FROM A MAP IN YOUR HEAD.
+                     "053",
                      # judicial-subcircuit secondary counties (see below)
                      "005", "083", "061", "137", "171")
 STATE_FIPS = "17"
@@ -1001,6 +1012,10 @@ DISPATCH_COUNTY_FIPS = {
     # district plan predates the change and all three changes fell inside one
     # district (scripts/build_christian_boundaries.py).
     "christian": "021",
+    # Ford (2026-10-15) — board-only, three districts of four members dissolved
+    # from the 22 Census 2020 voting districts per Res. 21-101 Exhibit A
+    # (scripts/build_ford_boundaries.py). No precinct entry in this change.
+    "ford": "053",
 }
 # ==== TEMPLATE:END outline-county-config ====
 
@@ -1176,6 +1191,10 @@ INSIDE = {
     # Montgomery, so a reader saw it as a doughnut in the coverage. Its board
     # districts closed it.
     "Taylorville (Christian)": (39.5490, -89.2945),
+    # Paxton (Ford) — the county seat, moved up from OUTSIDE on 2026-10-15
+    # when Ford's board districts shipped from Res. 21-101. It had held the
+    # Champaign/Ford/Piatt enclave since Vermilion's join of 2026-08-23.
+    "Paxton (Ford)": (40.4606, -88.0953),
     # The SECOND island (pass 14, 2026-08-05): Hamilton, deep-south and five
     # unserved neighbours around it — Fairfield (Wayne) holds the corridor
     # toward Effingham OUTSIDE.
@@ -1550,19 +1569,15 @@ OUTSIDE = {
     # obtained the Beacon export and Menard moved up to INSIDE. The reasoning
     # this list records is about what can be DERIVED, which was never the same
     # question as what a county will send.)
-    # Champaign, Ford and Piatt — ENCLOSED 2026-08-23 by Vermilion's join, the
-    # fleet's second multi-county enclave. Ford's every other neighbour
-    # (Iroquois, Kankakee, Livingston, McLean, Vermilion) is served and
-    # Champaign's and Piatt's are too, so the three are one interior block
-    # rather than frontier. All three carry an anchor rather than only the rim,
-    # so the whole hole is proven unwashed: mis-nested, the ring would render
-    # identically under the wash and all three would answer True here, failing
-    # the build. Each is MEASURED shut, not unexamined — Champaign and Piatt by
-    # the CCGISC licence ("All Rights Reserved"), Ford by having no vector
-    # district map and an adopted 2021 reapportionment resolution that leaves
-    # its districts "To be determined".
+    # Champaign and Piatt — ENCLOSED 2026-08-23 by Vermilion's join, the
+    # fleet's second multi-county enclave, which held Ford too until Ford's
+    # board districts shipped on 2026-10-15 (Paxton moved up to INSIDE).
+    # Both carry an anchor rather than only the rim, so the whole hole is
+    # proven unwashed. Each is MEASURED shut, not unexamined: the CCGISC
+    # licence ("All Rights Reserved"). Ford was recorded shut beside them on
+    # an adopted 2021 resolution that left its districts "To be determined";
+    # the amending resolution, 21-101, fills them in, and nobody had read it.
     "Urbana (Champaign)": (40.1106, -88.2073),
-    "Paxton (Ford)": (40.4606, -88.0953),
     "Monticello (Piatt)": (40.0281, -88.5728),
     # (Putnam's anchor moved up to INSIDE in tranche 5, and Adams's Clayton in
     # pass 8, each joining exactly as its OUTSIDE comment said it would — Adams
