@@ -5211,8 +5211,8 @@ work out how. A yes costs the city nothing it has not already published.
 ## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
 > **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
-> 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
-> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
+> 14:48 and 14:51 UTC. BURTON WAS ASKED 2026-10-12**, at 15:06 UTC, once the operator had
+> supplied its clerk's address (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
 > correction to each, in the same thread, at 15:21-15:23 UTC; see "Three letters went out on a
 > wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
@@ -5267,7 +5267,7 @@ e-mail addresses from automated readers, so its draft has no recipient yet.
 | Shelby Township | Stanley Grot, Township Clerk | `sgrot@shelbytwp.org` | the township clerk's office page |
 | Northville Township | Cynthia L. Jankowski, Township Clerk | `cjankowski@twp.northville.mi.us` | the township clerk's office page (the office's shared address is Clerk@twp.northville.mi.us) |
 | Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office. Township Clerk Debbie Swanson (`dswanson@ypsitownship.org`) answered it herself |
-| Burton | Racheal Boggs, City Clerk | **none recorded** | NOT FOUND: the city's clerk page hides its e-mail addresses from automated readers, so the address must be read in a browser |
+| Burton | Racheal Boggs, City Clerk | `r.boggs@burtonmi.gov` | supplied by the operator, since the city's clerk page hides its e-mail addresses from automated readers; the letter went 2026-10-12 |
 | Lansing | Chris Swope, City Clerk | `city.clerk@lansingmi.gov` | the Clerk's Office address printed on the city's own published notices |
 | Wyoming | Kelli VandenBerg, City Clerk | `clerk_info@wyomingmi.gov` | a search listing of the city's clerk page; this project does not read the city's site |
 
