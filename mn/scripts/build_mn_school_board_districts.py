@@ -44,7 +44,10 @@ TWO THINGS THE RESULTS CANNOT PLACE, AND BOTH SHIP AS WHAT THEY ARE.
   * A COMBINED POLLING PLACE. In odd years a board may run its own election
     and report on combined polling places (codes 9000 and up) instead of
     precincts; those cannot be placed. Anoka-Hennepin (ISD 11) reports every
-    district contest that way and is not drawn at all; Duluth (ISD 709)
+    district contest that way, so its results draw nothing, and it is drawn
+    instead from the district's own published map, read once into the 2022
+    precincts each district is made of (MAP_DRAWN below,
+    trace_isd11_board_map.py); Duluth (ISD 709)
     reports its rural townships that way, so that ground ships as one
     "not placed" feature. Any other part of a board's school district that
     no contest covers ships the same way, with its area printed.
@@ -110,10 +113,11 @@ MAX_SHARED_SHARE = 0.10
 SLIVER_M = 30.0
 MIN_UNPLACED_KM2 = 0.25
 
-# Measured 2026-10-08: 13 boards and 59 districts. The floors fail a parse
+# Measured 2026-10-08: 13 boards and 59 districts (14 and 65 with
+# Anoka-Hennepin's map, 2026-10-15). The floors fail a parse
 # that loses a board or a district, and are no promise the set cannot grow.
-MIN_BOARDS = 12
-MIN_DISTRICTS = 55
+MIN_BOARDS = 13
+MIN_DISTRICTS = 61
 
 M_PER_DEG_LAT = 110540.0
 
@@ -129,6 +133,12 @@ WITNESS = ("SSD 1",
            "Park_Commissioner_Districts_2022/FeatureServer/0/query",
            "MPLSPARK")
 WITNESS_POINTS = 300
+
+# Boards whose results cannot place them and whose own published map can,
+# each read once into the precincts its districts are made of. Anoka-Hennepin
+# reports every district contest at combined polling places
+# (trace_isd11_board_map.py records how its map was read).
+MAP_DRAWN = (os.path.join(INSTANCE, "data", "source", "isd11-board-districts.json"),)
 WITNESS_FLOOR = 0.98
 
 
@@ -451,7 +461,7 @@ def build(today, cache):
             for f in feats:
                 geom_of[(url, f["properties"]["vtdid"])] = f
         if not any(c["precincts"] for c in chosen.values()):
-            print("not drawn: %s — every district contest is reported on combined "
+            print("not drawn from the results: %s — every district contest is reported on combined "
                   "polling places, which the results do not place on precincts" % key)
             continue
 
@@ -536,10 +546,80 @@ def build(today, cache):
                          (to_m(unplaced, sx, sy).area / 1e6) if unplaced is not None else 0.0,
                          (" (%d combined polling places)" % len(combined)) if combined else "",
                          worst))
+    for path in MAP_DRAWN:
+        map_drawn(session, path, year_layer, geoid_of, name_of, collection, report)
     for line in report:
         print("  " + line)
     witness(session, collection)
     return collection
+
+
+def map_drawn(session, path, year_layer, geoid_of, name_of, collection, report):
+    """A board drawn from its own published map, read once into a list of the
+    precincts each district is made of (trace_isd11_board_map.py)."""
+    from shapely.geometry import mapping, shape  # noqa: PLC0415
+    from shapely.ops import unary_union  # noqa: PLC0415
+    with open(path, encoding="utf-8") as fh:
+        rec = json.load(fh)
+    key = rec["board"]
+    if key not in geoid_of or geoid_of[key] != rec["school"]:
+        fail("%s names %s (%s), which the school board roster does not"
+             % (os.path.relpath(path, REPO), key, rec["school"]))
+    if any(f["properties"]["board"] == key for f in collection["features"]):
+        fail("%s is drawn from its results AND from its map; drop %s"
+             % (key, os.path.relpath(path, REPO)))
+    url = "%s/%d/query" % (RESULTS_SERVICE, year_layer[2022])
+    if rec["precinctLayer"] != url.rsplit("/query", 1)[0]:
+        fail("%s was read against %s, and the 2022 precinct layer is now %s"
+             % (key, rec["precinctLayer"], url))
+    ids = set().union(*map(set, rec["districts"].values()))
+    feats, missing = fetch_precinct_geometry(session, url, ids)
+    if missing:
+        fail("%s: precinct(s) %s are not in the 2022 precinct layer" % (key, missing))
+    by_id = {f["properties"]["vtdid"]: f for f in feats}
+    school = shape(fetch_school(session, rec["school"])).buffer(0)
+    sx, sy = local_scale(mapping(school))
+    pieces = []
+    for seat, vtdids in sorted(rec["districts"].items()):
+        g = polygonal(dissolved([by_id[v] for v in vtdids]).intersection(school))
+        pieces.append((seat, vtdids, g))
+    worst = 0.0
+    for i, (seat, _, g) in enumerate(pieces):
+        for other, _, h in pieces[i + 1:]:
+            area = to_m(g.intersection(h), sx, sy).area
+            worst = max(worst, area)
+            if area > 1000:
+                fail("%s %s and %s overlap by %.0f m2" % (key, seat, other, area))
+    taken = unary_union([g for _, _, g in pieces])
+    residual = polygonal(school.difference(taken).intersection(fabric_cover(session, school)))
+    rm = to_m(residual, sx, sy)
+    kept = polygonal(rm.buffer(-SLIVER_M).buffer(SLIVER_M).intersection(rm))
+    # the same rule the results-drawn boards follow: a piece is shipped as
+    # unplaced only at MIN_UNPLACED_KM2 or more. Measured 2026-10-15, ISD 11
+    # leaves 0.26 km2 in eight pieces, the largest 0.09 km2, each inside a
+    # precinct the map draws outside every district (Oak Grove P-4, Fridley
+    # W-3 P-2, Blaine W-1 P-6) where the Census's school line runs a little
+    # past the precinct line
+    left = sum(g.area for g in getattr(kept, "geoms", [kept]) if not g.is_empty) / 1e6
+    parts = [g for g in getattr(kept, "geoms", [kept]) if not g.is_empty
+             and g.area / 1e6 >= MIN_UNPLACED_KM2]
+    for seat, vtdids, g in pieces:
+        collection["features"].append({"type": "Feature", "geometry": mapping(g), "properties": {
+            "geoid": rec["school"], "board": key, "school": name_of[key],
+            "kind": "district", "seat": seat, "drawnFrom": "map",
+            "mapTitle": rec["mapTitle"], "mapRead": rec["read"], "sourceUrl": rec["map"],
+            "precincts": len(vtdids)}})
+    if parts:
+        collection["features"].append({"type": "Feature", "properties": {
+            "geoid": rec["school"], "board": key, "school": name_of[key],
+            "kind": "unplaced", "why": "uncovered", "drawnFrom": "map",
+            "sourceUrl": rec["map"]},
+            "geometry": mapping(to_deg(unary_union(parts), sx, sy))})
+    report.append("%s (%s): %d districts from the district's own map, %d precincts, "
+                  "%.2f km2 in no district (%.2f km2 in pieces large enough to ship), "
+                  "worst overlap %.0f m2"
+                  % (key, name_of[key], len(pieces), len(ids), left,
+                     sum(g.area for g in parts) / 1e6, worst))
 
 
 def witness(session, collection):

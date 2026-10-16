@@ -1581,6 +1581,17 @@ ANSWERS = {
         # control (gap mn-judicial-roster).
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mn-judicial-district"),
+        # STILL OPEN 2026-10-15, one half done. The standard's township rule
+        # passes a state where boards are named wherever a list of them is
+        # published. The Township or City card now names the board of each of
+        # the 704 towns that hold their town election in November, from the
+        # Secretary of State's local results files
+        # (mn/scripts/build_mn_town_boards.py). The March towns' results are in
+        # no state file, BUT a town clerk certifies its officers to the county
+        # each spring, and a survey of all 87 counties on 2026-10-15 found 42
+        # that publish a list of them (mn/data/source/
+        # mn-county-township-officer-survey.json). Those 42 are owed before
+        # this level passes. Gap mn-township-officers carries both halves.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.
@@ -1589,10 +1600,11 @@ ANSWERS = {
         # 2026-10-08 (#1429): the Secretary of State's precinct results name
         # which boards file district offices, and school-board-district draws
         # the 59 districts of the 13 that elect by geography, each from the
-        # precincts that voted in its seat's latest contest. Anoka-Hennepin is
-        # the one not drawn — its odd-year results are by shared polling place
-        # — and carries gap mn-school-board-election-districts, the shape
-        # Wisconsin's mps-school-board answer already has.
+        # precincts that voted in its seat's latest contest. Anoka-Hennepin,
+        # whose odd-year results are by shared polling place, joined
+        # 2026-10-15 from the district's own 2022 board map, read precinct by
+        # precinct (65 districts on 14 boards); Duluth's rural townships carry
+        # gap mn-school-board-election-districts.
         "school-boards-by-district": answers("school-board-district"),
         # The Secretary of State publishes all 4,105 precincts statewide, from
         # the office that maintains them, and the app draws them.
@@ -2283,19 +2295,14 @@ WARD_MAPS = {
               "2646000": "Lansing", "2653780": "Midland",
               "2656320": "Muskegon", "2665440": "Pontiac",
               "2682960": "Walker"}),
+    # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
+    # which reads the cities off the city council roster.
     "mn": dict(
-        drawn=set(),
-        owed={"2702908": "Austin", "2706382": "Blaine",
-              "2706616": "Bloomington", "2707966": "Brooklyn Park",
-              "2710972": "Chaska", "2713114": "Coon Rapids",
-              "2717000": "Duluth", "2718674": "Elk River",
-              "2722814": "Fridley", "2739878": "Mankato",
-              "2743000": "Minneapolis", "2743252": "Minnetonka",
-              "2743864": "Moorhead", "2749300": "Owatonna",
-              "2751730": "Plymouth", "2753026": "Ramsey",
-              "2754214": "Richfield", "2754880": "Rochester",
-              "2756896": "St. Cloud", "2757220": "St. Louis Park",
-              "2758000": "St. Paul", "2771032": "Winona"}),
+        drawn={"2702908", "2706382", "2706616", "2707966", "2710972",
+               "2713114", "2717000", "2718674", "2722814", "2739878",
+               "2743000", "2743252", "2743864", "2749300", "2751730",
+               "2753026", "2754214", "2754880", "2756896", "2757220",
+               "2758000", "2771032"}),
     # Kentucky's city roster carries no ward labels, so the sweep finds nothing
     # there; the two councils elected by district are declared. Louisville's
     # Metro Council answers both of the Census's Louisville places. Both are
