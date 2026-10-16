@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 11
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 9
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "ar-senate", "county", "ar-house", "school-district-unified",
-    "zip-code", "quorum-court", "municipality", "police-station",
-    "fire-station", "post-office",
+    "zip-code", "quorum-court", "county-subdivision", "voting-precinct",
+    "municipality", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,8 @@ GEOMETRY_FILES = {
     "ar-senate-districts.json": (35, 35),  # The 35 Arkansas Senate districts.
     "ar-house-districts.json": (100, 100),  # The 100 Arkansas House districts.
     "ar-quorum-court-districts.json": (775, 775),  # The 775 justice of the peace districts of all 75 counties, from the state's own layer (ar/scripts/build_ar_quorum_court_districts.py).
+    "ar-townships.json": (820, 820),  # The 820 townships of all 75 counties, from the state's own layer (ar/scripts/build_ar_townships.py).
+    "ar-precincts.json": (2920, 2920),  # Every Arkansas voting precinct, pre-built by ar/scripts/build_ar_precincts.py through scripts/statewide_precincts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,920 count on the drawn file, after the eight records that are further pieces of seven precincts are joined into them). 9.3 MB, 2.44 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -114,7 +116,7 @@ ROSTER_FILES = {
     "congress-roster.json": 4,  # U.S. House (AR) roster, refreshed weekly by update-ar-congress-roster.yml.
     "ar-senate-members.json": 35,  # Arkansas Senate roster from the Arkansas State Legislature's own member list and pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 1 and 18 read vacant on 2026-10-13.
     "ar-house-members.json": 100,  # Arkansas House roster on the same terms; House 8 read vacant on 2026-10-13.
-    "ar-county-officials.json": 75,  # Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, refreshed weekly by update-ar-county-officials.yml.
+    "ar-county-officials.json": 75,  # Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, built by update-ar-county-officials.yml. That job is scheduled weekly but has not completed since 2026-10-13, because the association's site answers its requests from GitHub's servers with HTTP 403 (measured 2026-10-14 and 2026-10-15), so the file stays as read on 2026-10-13 and every card states that date.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

@@ -59,7 +59,11 @@
     { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
       "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
-      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
     [
@@ -1239,6 +1243,36 @@
         "note": "Christian County's four County Board districts, sixteen members at four per district on staggered terms (the certified 2022 General ran a 4-year and a 2-year contest in every district). THE ONLY DISTRICTED BOARD IN THE INSTANCE THAT NAMES NOBODY: the county's board page listed its Chairman and Vice Chairman and no members when it was last readable, and christiancountyil.gov has sat behind a Cloudflare managed challenge since 2026-09-15 — an access control, not worked around. The geometry is a dissolve of the THIRTY Census 2020 voting districts, which is the fabric the county's own 2021 County Board District and Precinct Map was drawn on; the county has since re-precincted to 29, so the Jasper test fails and NO precinct layer ships. The composition is gated on reproducing all four district populations that map publishes (8,918 / 8,210 / 8,441 / 8,463 of 34,032) and is independently witnessed by three certified elections — the 2022 and 2024 Generals and the 2026 General Primary — which partition the county's 29 current precincts into the same four districts with none in two of them. Bounds are an EQUALITY because four is the whole board."
       },
       {
+        "file": "ford-county-board-districts.json",
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Ford County's three County Board districts, twelve members at four per district on staggered terms, effective December 2022. A dissolve of the 22 Census 2020 voting districts per Exhibit A of Res. 21-101, the county's 2021 reapportionment plan, whose own population table gives all 22 precinct counts and the district totals 4,640 / 4,250 / 4,644, each reproduced to the person (scripts/build_ford_boundaries.py). Patton 3 is drawn wholly in District 1, as the plan's text, table and map place it; the county's board page also lists it under District 3. Bounds are an EQUALITY because three is the whole board."
+      },
+      {
+        "file": "fayette-county-board-districts.json",
+        "min_features": 10,
+        "max_features": 10,
+        "note": "Fayette County's seven County Board districts, two members each, drawn where the county's certified 2022 General canvass places whole precincts (25 of 28 Census 2020 voting districts), plus three SHARED areas the canvass lists under more than one district and the county has not drawn: Avena (3 or 5), Bear Grove (2 or 6) and Vandalia 3 (5, 6 or 7). A shared feature carries `between` and no district number, and its card names every district it could be (scripts/build_partial_board_districts.py). Bounds are an EQUALITY: seven districts plus three shared areas."
+      },
+      {
+        "file": "cumberland-county-board-districts.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Cumberland County's three compass-point County Board districts, two members each, drawn where the county's 2025 Yearbook places whole precincts (10 of 12 Census 2020 voting districts), plus Neoga Township as one SHARED area, which the Yearbook puts partly in Western and partly in Central without publishing the line. A shared feature carries `between` and no district name (scripts/build_partial_board_districts.py). Bounds are an EQUALITY: three districts plus one shared area."
+      },
+      {
+        "file": "jersey-county-board-districts.json",
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Jersey County's four County Board districts, three members each, drawn by whole townships from the precinct-by-district table the County Clerk sent on 2026-10-01, plus Jersey Township as one SHARED area between Districts 1 and 2: the county divides its precincts there, splits Jersey 7 between both, and runs Jersey 1-8 where the census carries 1-10, so nothing inside it can be placed. A township witness proves every census precinct lies in the township its name says (scripts/build_partial_board_districts.py). Bounds are an EQUALITY: four districts plus one shared area."
+      },
+      {
+        "file": "lawrence-county-board-districts.json",
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Lawrence County's seven single-member County Board districts. Districts 1 to 4 are drawn as whole townships from the 2024 precinct description the County Clerk sent on 2026-10-01; Districts 5, 6 and 7 divide Lawrence Township along streets and railroads, which this build does not draw, so the township ships as one SHARED area between them. A township witness proves every census precinct lies in the township its name says, the census's Christy 9 inside Christy (scripts/build_partial_board_districts.py). Bounds are an EQUALITY: four districts plus one shared area."
+      },
+      {
         "file": "clark-county-board-districts.json",
         "min_features": 7,
         "max_features": 7,
@@ -1321,7 +1355,7 @@
         "file": "cumberland-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Cumberland County coverage outline — the coverage test for the county's county-precinct dispatch entry, and what puts the county inside the coverage ring. It shipped on 2026-08-04 as gap-location geometry only, from the pass-13 detached-counties sweep, and was promoted on 2026-08-21 when Cumberland joined ON ITS PRECINCTS: its three compass-point board districts split precincts and are permanently shut to a whole-precinct dissolve, so the precincts dispatch alone and no board district ships."
+        "note": "Cumberland County coverage outline — the coverage test for the county's county-precinct and county-board dispatch entries, and what puts the county inside the coverage ring. It shipped on 2026-08-04 as gap-location geometry only and was promoted on 2026-08-21 when Cumberland joined on its precincts; its board districts joined on 2026-10-16, drawn where the Yearbook places whole precincts with Neoga Township shared."
       },
       {
         "file": "cumberland-precincts.json",
@@ -1413,6 +1447,12 @@
         "note": "Warren County's 26 voting precincts, named exactly as the county's own precinct-map LEGEND prints them. Census 2020 drew 28 voting districts here, so TWO census pairs are merged back to the county's fabric — Roseville 1 + Roseville 2 into Roseville, and Spring Grove-Alexis + Spring Grove-Gerlaw into Spring Grove — and each merged feature names the census units it is built from as censusUnits, so a reader can still find it in census products. Both merges are NAMEABLE and each sits wholly inside a single district, which the builder re-proves every run rather than trusting a comment; that is the same fact that lets Warren's districts be dissolved from census geometry at all, which is why nothing new had to be sourced for this file. The absence simply had no gap record explaining it (the Cass/Greene/Scott/Moultrie shape). Every precinct carries its County Board district. No polling place ships (the Calhoun rule; scripts/build_warren_boundaries.py)."
       },
       {
+        "file": "macoupin-county-board-districts.json",
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Macoupin County's 9 County Board districts, taken exactly as the county publishes them in its own ArcGIS Online service (GIS_Layers layer 3, owned by the county's account behind its property map), unsimplified. Every channel the gap record had checked — the Socrata portal and the Clerk's Map Room PDFs — truly carried no district data; this service is a third channel it had not looked in. THREE WITNESSES, none of them the layer: all 61 Census 2020 voting districts (the 2005-2021 precinct fabric Ordinance O-2021.06 writes the plan in) nest in it, the worst at 98.8% of its area, pinned and re-measured on every build; the county's own Citizen's Guide precinct list agrees on 41 of 45 current precincts and on the Shipman and Girard splits, and its one difference, Cahokia, is the ordinance's old-precinct line; and the county's 44,967 people are placed exactly once, matching each district's voting-district sum to the person (scripts/build_macoupin_board_districts.py)."
+      },
+      {
         "file": "knox-county-board-districts.json",
         "min_features": 5,
         "max_features": 5,
@@ -1436,14 +1476,13 @@
         "min_features": 1,
         "max_features": 1,
         "dynamic_reference": true,
-        "note": "Gap-location outline for Fayette County — NOT a dispatched county. The pass-7 sweep measured its board geometry as blocked/partial; this outline exists solely so its recorded gap attaches to its ground in the data-gaps panel (scripts/build_county_outline.py). Referenced by slug-built URL, so the validator's literal-reference check skips it."
+        "note": "Fayette County coverage outline — the coverage test for the county's county-board dispatch entry, and what puts the county inside the coverage ring (2026-10-16, drawn where the certified 2022 canvass places whole precincts, with Avena, Bear Grove and Vandalia 3 shared). It shipped earlier as gap-location geometry only (scripts/build_county_outline.py)."
       },
       {
         "file": "ford-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Gap-location outline for Ford County — NOT a dispatched county. The pass-7 sweep measured its board geometry as blocked/partial; this outline exists solely so its recorded gap attaches to its ground in the data-gaps panel (scripts/build_county_outline.py). Referenced by slug-built URL, so the validator's literal-reference check skips it."
+        "note": "Ford County outline (scripts/build_county_outline.py) — the coverage test for the county's board dispatch entry (fordCountyCoverage). Built as a gap-location outline; it became a coverage test on 2026-10-15 when Ford joined as a dispatched county."
       },
       {
         "file": "franklin-county-outline.json",
@@ -1610,7 +1649,7 @@
         "file": "jersey-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Jersey County outline — gap-location geometry only. Jersey is served as a judicial-circuit secondary with no dispatch entry, so this ships purely so its 2026-08-08 board gap record attaches to ground the gaps panel can locate.",
+        "note": "Jersey County coverage outline — the coverage test for the county's county-board dispatch entry (2026-10-16, drawn by whole townships with Jersey Township shared between Districts 1 and 2). It shipped earlier as gap-location geometry only.",
         "dynamic_reference": true
       },
       {
@@ -1711,7 +1750,7 @@
         "file": "lawrence-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Lawrence County outline — gap-location geometry only, not a dispatched county. Added by the pass-13 detached-counties research sweep (2026-08-04) so its gap entry attaches to ground.",
+        "note": "Lawrence County coverage outline — the coverage test for the county's county-board dispatch entry, and what puts the county inside the coverage ring (2026-10-16, Districts 1-4 drawn by whole townships with Lawrence Township shared between 5, 6 and 7). It shipped on 2026-08-04 as gap-location geometry only.",
         "dynamic_reference": true
       },
       {
@@ -2932,6 +2971,11 @@
         "note": "Adams County Board members keyed by district (7 districts of THREE seats each, 21 in all) plus a top-level 'board' entry. PARTIAL BY CONSTRUCTION AND SAYS SO ON THE CARD: the county's own board page is a flat Akamai deny and the Internet Archive never captured it, so the roster is read from CERTIFIED ELECTION CANVASSES on platinumelectionresults.com — the THIRD results vendor, which carries Adams as county id 54 and which this county's gap record had never tested (it tested the pollresults/accessliberty pair, correctly found them empty, and stopped). Adams staggers 2 seats per district one cycle and 1 the next, so the November 2024 general names ONE of each district's three members and the other two were seated in November 2022 — a canvass the vendor returns as an empty placeholder for 2021, 2022 and 2023, which Clarity does not carry and which the county publishes only behind the same WAF. Every row renders the election that seated it (districtSource) because a canvass cannot show a mid-term appointment, and the card states the shortfall in words rather than leaving a short list to imply it. No chair is badged (ISBE's chair column measured wrong in 16 of 56 counties — the Coles rule) and no per-member contact ships, because it exists only on the unreadable page. The weekly run re-fetches the 2022 slug every time and reports it unread, so the day the county backfills it fourteen members appear instead of the gap quietly persisting (scripts/adams_county_board_scraper.py + build_adams_county_board_roster.py)."
       },
       {
+        "file": "macoupin-county-board-members.json",
+        "min_keys": 9,
+        "note": "Macoupin County Board members keyed by district (9 districts of TWO seats each, 18 in all), read from the County Clerk's elected-officials directory through the JSONP service its empty page fills itself from — the same service the county's municipal officials are read from. Each member carries the year the seat is next on the ballot, and the two the directory marks with its own legend 'Appointed to Fill Unexpired Term' carry appointed. The Chair, a separate office in the same directory, is joined to his District 5 seat by name. No party, phone or e-mail ships, because the directory publishes none per person, and its detail endpoint, which carries residence addresses, is never called. The weekly run re-reads the county's district layer by key and area and fails on a redraw (scripts/macoupin_county_board_scraper.py + build_macoupin_county_board.py)."
+      },
+      {
         "file": "knox-county-board-members.json",
         "min_keys": 6,
         "note": "Knox County Board members keyed by district (5 districts of THREE seats each, 15 in all) plus a top-level 'board' entry. THE ROSTER IS THE ROLL CALL OF THE COUNTY'S OWN BOARD MINUTES: knoxcountyil.gov answers 403 to every automated client and the Archive never captured its member page, but the same website's DOCUMENTS are served plainly from its Revize CMS, and every set of minutes opens by naming each seat with its district. Absent members are parsed exactly like present ones — a seat is not vacated by missing a meeting, and reading only the present block would have shipped fourteen of fifteen and called the county complete. Every row names the meeting it came from, because a roll call is one evening's record and cannot show a member seated the week after. The Chair is badged from the same minutes, which state it outright. No party, term, phone or e-mail ships: the minutes publish none and the page that does cannot be read, so the county's Clerk line stands for the board (the Calhoun/Clark switchboard posture). Attendance never ships (scripts/knox_county_board_scraper.py + build_knox_county_board_roster.py)."
@@ -3286,6 +3330,31 @@
         "note": "Wayne County Board members keyed by district (7 districts x 2 members = 14 seats). Scraped weekly from the county's own board page — the SAME page the district composition was read from, so re-scraping it every week is this county's redistricting tripwire (the builder fails if a district's re-read precinct list stops matching the shipped composition; District 7 is checked as the known subset, since the page has never named Fairfield 1 or Fairfield 2). Each district's paragraph names two members with an optional Chairman or Vice Chairman title — Daryl Hargrave (D1) and Gene Kollak (D7) hold the two titles the page states. No e-mail, phone, party or term is published, so none ships."
       },
       {
+        "file": "ford-county-board-members.json",
+        "min_keys": 3,
+        "note": "Ford County Board members keyed by district (3 districts x 4 members = 12 seats). A DOCUMENT ROSTER, NOT A SCRAPE: the county's board page answers with a JavaScript challenge on some reads, an access control this project does not work around, so County Clerk Kelsie Vaughn's e-mail of 2026-10-01 is the source. Built by scripts/build_ford_county_board.py from a table in that script, which checks each district's count against the seats the shipped board districts carry and prints the document's age on every run. The Chairman and Vice Chairman titles ship as the Clerk gave them; no phone, e-mail, term or party ships, because the reply gives none."
+      },
+      {
+        "file": "fayette-county-board-members.json",
+        "min_keys": 7,
+        "note": "Fayette County Board members keyed by district (7 districts x 2 members = 14 seats), scraped weekly from the county's own board page by scripts/il_county_board_pages_scraper.py and written by build_il_county_board_pages.py, which puts it in data/app because the county's drawn districts read it (2026-10-16)."
+      },
+      {
+        "file": "cumberland-county-board-members.json",
+        "min_keys": 3,
+        "note": "Cumberland County Board members keyed by district name (Western, Central, Eastern; 3 x 2 = 6 seats), scraped weekly from the county's own board page by scripts/il_county_board_pages_scraper.py and written by build_il_county_board_pages.py, which puts it in data/app because the county's drawn districts read it (2026-10-16)."
+      },
+      {
+        "file": "jersey-county-board-members.json",
+        "min_keys": 4,
+        "note": "Jersey County Board members keyed by district (4 districts x 3 members = 12 seats), scraped weekly from the county's own board page by scripts/il_county_board_pages_scraper.py and written by build_il_county_board_pages.py, which puts it in data/app because the county's drawn districts read it (2026-10-16)."
+      },
+      {
+        "file": "lawrence-county-board-members.json",
+        "min_keys": 7,
+        "note": "Lawrence County Board members keyed by district (7 single-member districts), scraped weekly from the county's own board page by scripts/il_county_board_pages_scraper.py and written by build_il_county_board_pages.py, which puts it in data/app because the county's drawn districts read it (2026-10-16)."
+      },
+      {
         "file": "christian-county-board-members.json",
         "min_keys": 4,
         "note": "Christian County Board members keyed by district (4 districts x 4 members = 16 seats). A DOCUMENT ROSTER, NOT A SCRAPE: christiancountyil.gov has answered every client with a Cloudflare managed challenge since 2026-09-15, an access control this project does not work around, so County Clerk Jodie L. Badman's e-mail of 2026-10-07 is the source — two screenshots of the county's own County Board Members list. Built by scripts/build_christian_county_board.py from a table in that script, which checks each district's count against the seats the shipped board districts carry and prints the document's age on every run. Each member's home city and ZIP, printed on the list, never ships. The list's term-length column and any chair or vice chair do not ship either: the first is a length rather than an end date, and the list marks no chair."
@@ -3363,7 +3432,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v43",
+    "cache_name": "districtry-il-shell-v45",
     "shell_urls": [
       "./",
       "./sources.html",
@@ -3667,6 +3736,11 @@
       "file": "update-adams-county-board-roster.yml",
       "purpose": "Adams County Board roster (certified canvasses on platinumelectionresults.com; also the backfill tripwire for the unread November 2022 canvass)",
       "schedule": "Sat 20:00 UTC"
+    },
+    {
+      "file": "update-macoupin-county-board-roster.yml",
+      "purpose": "Macoupin County Board roster (the County Clerk's elected-officials directory, read from the service its page fills itself from) + a redraw tripwire re-reading the county's own district layer by key and area",
+      "schedule": "Thu 10:00 UTC"
     },
     {
       "file": "update-knox-county-board-roster.yml",

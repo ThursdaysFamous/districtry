@@ -114,15 +114,11 @@ from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
 # both have a Winnebago County, Wisconsin has a county named IOWA, and eleven
 # other names are shared between the two states — a bare county name would let
 # an entry written about one state silence a real regression in another.
-NAMES_NOBODY = {
-    "nc/Tyrrell": {"date": "2026-10-11",
-                   "reason": "Tyrrell County elects its board by limited voting, "
-                             "so the State Board's results do not say how many "
-                             "seats each contest filled, and the county's website "
-                             "did not answer when the roster was built"},
-}
-# It was EMPTY from 2026-09-15 to 2026-10-11, and carried one entry
-# from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
+NAMES_NOBODY = {}
+# It is EMPTY since 2026-10-15. From 2026-10-11 it carried North Carolina's
+# Tyrrell, whose board seats the election results alone could not settle
+# until the county's own page was read. Before that it was empty from
+# 2026-09-15, and carried one entry from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
 # with an e-mail, a phone and a source URL and no name field anywhere, because
 # the card reads the member from WinGIS live. il_gis_board_scraper.py
 # snapshotted those names on 2026-09-15 and this gate FAILED the build on the
@@ -347,6 +343,53 @@ INSTANCES = [
          adapters=("tn_commissioners",),
          index_provenance="each name from the county's own published list of "
                           "its commission, read every week"),
+    # ARKANSAS'S GOVERNING BODY IS THE QUORUM COURT, AND ITS PRESIDING OFFICER
+    # IS NOT ONE OF ITS MEMBERS. Every county elects a county judge, who runs
+    # the county and presides over the quorum court without a vote (Ark.
+    # Const. amend. 55), and nine to fifteen justices of the peace, one from
+    # each district. The judge is a section of its own; a justice is named by
+    # district only where the district card names one, from the county's own
+    # numbered list or the association's 2024 results (Adam's rulings of
+    # 2026-10-13), and the justices no source places in a district are listed
+    # after the districts rather than dropped.
+    dict(tag="ar", state="Arkansas", concept="quorum-court",
+         index_page="quorum-court.html",
+         heading="%(county)s County Quorum Court",
+         page_title="%(county)s County Quorum Court",
+         phrase="quorum court", index_label="Quorum courts",
+         all_label="All Arkansas quorum courts",
+         app_name="districtry Arkansas", app_url="https://districtry.com/ar/",
+         district_word="District", member_word="Justice of the Peace",
+         adapters=("ar_quorum_courts",),
+         index_provenance="each county judge from the Arkansas Judiciary's "
+                          "directory, and each justice of the peace named by "
+                          "district from the county's own list or from the "
+                          "Association of Arkansas Counties' 2024 election "
+                          "results"),
+    # MISSISSIPPI NAMES WHAT THE SECRETARY OF STATE'S DIRECTORY PRINTS. Every
+    # county is run by a board of five supervisors, one from each district,
+    # and five counties call their districts beats, so `district_word` is
+    # empty and every label is whole ("District 3", "Beat 3"), the way the
+    # app's cards print them. The directory is published once a year, so the
+    # pages name its edition and never a schedule.
+    dict(tag="ms", state="Mississippi", concept="county-supervisor",
+         index_page="county-supervisor.html",
+         heading="%(county)s County Board of Supervisors",
+         # "Jefferson Davis County Board of Supervisors — districtry
+         # Mississippi" is 68 characters against validate_serp_lengths.py's
+         # 60; "County Supervisors" is what the members are called, and
+         # Jefferson Davis, the longest county name, lands at 59.
+         page_title="%(county)s County Supervisors",
+         phrase="board of supervisors", index_label="Boards of supervisors",
+         all_label="All Mississippi boards of supervisors",
+         app_name="districtry Mississippi", app_url="https://districtry.com/ms/",
+         district_word="", member_word="Supervisor",
+         adapters=("ms_supervisors",),
+         contacts="ms_board_contact",
+         vacancy_phrase="as the Secretary of State's directory lists it",
+         index_provenance="each name as the Mississippi Secretary of State's "
+                          "County Offices and Directory lists it, by district "
+                          "or beat"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -1985,6 +2028,422 @@ def sc_councils(inst):
     return out, problems, nameless, [path], note
 
 
+AR_INTRO = ("Every Arkansas county is governed by a county judge, who runs the "
+            "county and presides over the quorum court without a vote, and a "
+            "quorum court of justices of the peace, one elected from each of "
+            "its districts. ")
+# The date style is the one _mn_date() writes for the read dates beside it.
+AR_ELECTION = ("Every seat on the court, and the county judge's office, is "
+               "elected at the general election of November 3, 2026 for a term "
+               "that starts on January 1, 2027.")
+AR_STANDFIRST = ("The county judge and the justices of the peace of the "
+                 "%(heading)s, named by district where a source says who sits "
+                 "for it.")
+AR_DESC = ("%(county)s County's quorum court: its county judge, and the "
+           "justice of the peace for each of its %(districts)d districts where "
+           "a source names one.")
+AR_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "published by the county, the Arkansas Judiciary or the "
+                 "Association of Arkansas Counties,\nand where none of them "
+                 "says who sits for a district this page says so rather than "
+                 "filling the gap.")
+AR_CTA_NOTE = ("Opens the map with the county and quorum court district layers "
+               "on. The district lines are the state's own map of every "
+               "county's justice of the peace districts.")
+AR_RESULTS_NOTES = {
+    "notOnList": "the justice of the peace elected here in 2024 is no longer on "
+                 "the Association of Arkansas Counties' current list for the "
+                 "county",
+    "noWinner": "the association's 2024 election results list no winner for "
+                "this district",
+    "unclear": "the 2024 winner's name cannot be matched with certainty to "
+               "anyone on the association's current list",
+}
+AR_SUFFIXES = ("jr", "sr", "ii", "iii", "iv")
+
+
+def _ar_fold(name):
+    import unicodedata
+    s = unicodedata.normalize("NFKD", name or "")
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]+", " ", s.lower()).split()
+
+
+def _ar_unplaced(placed, listed):
+    """The justices on the association's list whom no district on the page
+    names, so a page can list them rather than drop them.
+
+    THIS IS NOT A SECOND READING OF WHO SITS WHERE. The district names were
+    matched to the list when the roster was built (match_results and NUMBERED
+    in ar/scripts/build_ar_county_officials.py); this asks only which list
+    names are left over, in three passes that each take a name only when one
+    candidate answers — the whole name, then a surname nobody else on the list
+    shares, then the surname with the first given name — and the caller fails
+    the build unless what is left is exactly as many people as the districts
+    left unnamed. A list name this cannot account for therefore stops the
+    build rather than appearing twice or not at all."""
+    pool = list(listed)
+    left = list(placed)
+
+    def words(n):
+        return [w for w in _ar_fold(n) if w not in AR_SUFFIXES]
+
+    def take(test):
+        for p in list(left):
+            hits = [n for n in pool if test(p, n)]
+            if len(hits) == 1:
+                pool.remove(hits[0])
+                left.remove(p)
+
+    take(lambda p, n: _ar_fold(p) == _ar_fold(n))
+    take(lambda p, n: words(p)[-1:] == words(n)[-1:]
+         and sum(1 for m in pool if words(m)[-1:] == words(n)[-1:]) == 1)
+    take(lambda p, n: words(p)[-1:] == words(n)[-1:]
+         and words(p)[:1] == words(n)[:1])
+    return pool, left
+
+
+def ar_quorum_courts(inst):
+    """Arkansas: ONE file keyed by county GEOID ("05119"), each record carrying
+    the county judge and the quorum court (ar/scripts/build_ar_county_officials.py):
+    the association's list of the court's justices, which does not number them,
+    and either the county's own numbered list (`quorumCourt.districts`) or the
+    association's 2024 results matched to that list (`quorumCourt.results`).
+
+    THE PAGE NAMES WHAT THE DISTRICT CARD NAMES, IN THE SAME ORDER OF
+    PRECEDENCE: the county's own list wherever it exists, a "Vacant" there
+    being a vacancy; otherwise the 2024 winner while the association's list
+    still includes them; otherwise the reason the card gives, and no name. The
+    number of districts is the state's map's, so a district no source names
+    still has its section. Justices on the list that no district names are
+    listed after the districts, and the county judge before them."""
+    path = os.path.join(app_data(inst["tag"]), "ar-county-officials.json")
+    map_path = os.path.join(app_data(inst["tag"]), "ar-quorum-court-districts.json")
+    drawn = {}
+    for f in _read(map_path).get("features") or []:
+        props = f.get("properties") or {}
+        drawn.setdefault(str(props.get("countyFips")), set()).add(
+            str(props.get("district")))
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+        qc = rec.get("quorumCourt") or {}
+        judge = rec.get("judge") or {}
+        labels = sorted(drawn.get(geoid) or (), key=district_sort_key)
+        read_on = _mn_date(qc.get("asOf"))
+        if not name or not labels or not read_on:
+            problems.append("ar-county-officials.json %r carries no county or no "
+                            "read date, or the district map draws none" % geoid)
+            continue
+        if labels != [str(i) for i in range(1, len(labels) + 1)]:
+            problems.append("ar %s County: the district map does not number its "
+                            "districts 1..N" % name)
+            continue
+        listed = [j["name"].strip() for j in qc.get("justices") or []
+                  if not j.get("vacant") and (j.get("name") or "").strip()]
+        list_vacant = sum(1 for j in qc.get("justices") or [] if j.get("vacant"))
+        own = qc.get("districts")
+        res = None if own else (qc.get("results") or {})
+        if own is not None and set(own) != set(labels):
+            problems.append("ar %s County: the county's own list numbers "
+                            "districts the map does not draw" % name)
+            continue
+
+        districts, placed, unnamed = [], [], 0
+        for label in labels:
+            if own is not None:
+                held = (own.get(label) or "").strip()
+                if not held or re.match(r"(?i)^vacant$", held):
+                    districts.append(district(label, vacancies=1))
+                    unnamed += 1
+                    continue
+            else:
+                held = ((res.get("districts") or {}).get(label) or "").strip()
+                if not held:
+                    why = [k for k in AR_RESULTS_NOTES
+                           if label in (res.get(k) or [])]
+                    if len(why) != 1:
+                        problems.append("ar %s County District %s: the 2024 "
+                                        "results neither name it nor say why"
+                                        % (name, label))
+                        continue
+                    districts.append(district(label,
+                                              note=AR_RESULTS_NOTES[why[0]] + "."))
+                    unnamed += 1
+                    continue
+            placed.append(held)
+            districts.append(district(label, [{"name": held,
+                                               "role": inst["member_word"]}]))
+
+        extras = []
+        if (judge.get("name") or "").strip():
+            judge_read = _mn_date(judge.get("asOf"))
+            src = (judge.get("source") or "the Arkansas Judiciary's directory of "
+                   "county judges and clerks").strip()
+            line = src[:1].upper() + src[1:] + (
+                ", read %s." % judge_read if judge_read else ".")
+            if (judge.get("note") or "").strip():
+                line += " " + judge["note"].strip()
+            p = {"name": judge["name"].strip(),
+                 "role": "County Judge, presiding without a vote",
+                 "elected": line}
+            if (judge.get("phone") or "").strip():
+                p["phone"] = judge["phone"].strip()
+            extras.append(("county-judge", "County Judge", [p]))
+        else:
+            problems.append("ar %s County carries no county judge" % name)
+
+        # Who on the list no district names. None where every district is
+        # named or vacant, which is most counties, and then the list is not
+        # read at all, so a spelling difference between two publishers of a
+        # name both have (Pulaski's Elliot and Elliott) cannot stop the build.
+        needed = unnamed - list_vacant
+        after = []
+        if needed > 0:
+            rest, unmatched = _ar_unplaced(placed, listed)
+            if unmatched or len(rest) != needed:
+                problems.append("ar %s County: %d district(s) name nobody and "
+                                "the association lists %d justice(s) no "
+                                "district names (%s); the two must agree before "
+                                "a page can list them"
+                                % (name, needed, len(rest), ", ".join(rest)))
+                continue
+            extras.append(("not-placed",
+                           "Justices not matched to a district",
+                           [{"name": n, "role": inst["member_word"]}
+                            for n in rest]))
+            after.append("not-placed")
+            for d in districts:
+                if d["note"]:
+                    d["note"] = d["note"][:-1] + (
+                        "; the justices this page cannot place in a district "
+                        "are listed after the districts.")
+
+        if own is not None:
+            how = ("%s County publishes its own list of its quorum court by "
+                   "district, and this page names each district's justice from "
+                   "it, read on %s." % (name, _mn_date(qc.get("districtAsOf"))
+                                        or read_on))
+        else:
+            how = ("No list from %s County says which justice sits for which "
+                   "district, so this page names each district's justice from "
+                   "the Association of Arkansas Counties' 2024 general election "
+                   "results, and only while the association's current list for "
+                   "the county, read on %s, still includes the winner." %
+                   (name, read_on))
+        lede = esc(AR_INTRO + how + " " + AR_ELECTION).replace("%", "%%")
+
+        def link(url, text):
+            return ('<a href="%s" rel="noopener" target="_blank">%s</a>'
+                    % (esc(url), esc(text))) if url else esc(text)
+        judge_src = (judge.get("source") or "the Arkansas Judiciary's directory "
+                     "of county judges and clerks").strip()
+        sources = ["%s for the county judge" % link(judge.get("sourceUrl"),
+                                                     judge_src),
+                   "%s for the list of justices"
+                   % link(qc.get("sourceUrl"), "the Association of Arkansas "
+                          "Counties' page for %s County" % name)]
+        if own is not None:
+            sources.append("%s for who sits for which district"
+                           % link(qc.get("districtSourceUrl"),
+                                  "%s County's own list" % name))
+        else:
+            sources.append("%s for who sits for which district"
+                           % link(res.get("sourceUrl"), "the association's 2024 "
+                                  "election results"))
+        source_html = "Sources: %s, %s and %s, each read on %s." % (
+            sources[0], sources[1], sources[2], esc(read_on))
+
+        entry = {"districts": districts, "extras": extras,
+                 "after_anchors": after, "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "lede": lede,
+                 "standfirst": AR_STANDFIRST, "desc": AR_DESC,
+                 "disclaimer": AR_DISCLAIMER, "cta_note": AR_CTA_NOTE,
+                 "source_html": source_html}
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ar %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = entry
+    note = ("%d of Arkansas's 75 counties, each county judge and every justice "
+            "of the peace on the association's list, by district where a source "
+            "places them" % len(out))
+    return out, problems, nameless, [path], note
+
+
+# The date style is the one _mn_date() writes for the edition date beside it.
+# The calendar is the directory's own (its 2026 edition, page 127, lists
+# "Supervisors" under the county offices elected in 2027 and the general
+# election on November 2); nothing here states a term or when one starts.
+MS_ELECTION = ("The Secretary of State's election calendar lists county "
+               "supervisors among the offices elected at the general election "
+               "of November 2, 2027.")
+MS_STANDFIRST = ("Who holds each of the five seats on the %(heading)s, as the "
+                 "Mississippi Secretary of State's County Offices and Directory "
+                 "lists them.")
+MS_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "printed in the Mississippi Secretary of State's County "
+                 "Offices and Directory,\nand where the directory lists a seat "
+                 "as vacant this page says so rather than filling the gap.")
+MS_SEATS = ("1", "2", "3", "4", "5")
+
+
+def ms_supervisors(inst):
+    """Mississippi: ONE file keyed by county GEOID ("28001"), each record that
+    county's page of the Secretary of State's County Offices and Directory
+    (ms/scripts/build_ms_county_officials.py): five supervisors in the county's
+    own word for a district ("District" or "Beat"), a seat the directory prints
+    as vacant marked so, and the board's office where the directory prints one
+    for the board rather than for one supervisor.
+
+    FIVE SEATS EVERYWHERE, numbered 1 to 5, and the builder already refuses a
+    county with any other count; this refuses it again, because a page with four
+    sections would read as a smaller board rather than as a defect.
+
+    THE MAP LINK OPENS WHAT THE APP DRAWS. ms-supervisor-counties.json lists the
+    counties whose current district lines the app has confirmed, and outside
+    them the supervisor district layer does not appear, so those pages open the
+    County layer, whose card lists all five, rather than a layer a reader would
+    find missing. That list is held to the districts file here: a county listed
+    without five drawn districts, or drawn without being listed, fails, and so
+    does a drawn county whose word for a district differs from the directory's.
+
+    THE ELECTION COMMISSIONERS IN THE SAME RECORDS ARE NOT ON THESE PAGES. They
+    are a separate elected body, and listing them on a board of supervisors'
+    page would mark them as its members in the page's structured data."""
+    path = os.path.join(app_data(inst["tag"]), "ms-county-officials.json")
+    listed_path = os.path.join(app_data(inst["tag"]), "ms-supervisor-counties.json")
+    map_path = os.path.join(app_data(inst["tag"]), "ms-supervisor-districts.json")
+    listed = _read(listed_path)
+    drawn = {}
+    for f in _read(map_path).get("features") or []:
+        props = f.get("properties") or {}
+        drawn.setdefault(str(props.get("countyfips")), []).append(props)
+    out, problems, nameless = {}, [], set()
+    for geoid in sorted(set(listed) ^ set(drawn)):
+        problems.append("ms %s: the list of drawn counties and the districts file "
+                        "disagree about whether this county is drawn" % geoid)
+    for geoid, rec in sorted(_read(path).items()):
+        name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+        word = rec.get("label")
+        seats = rec.get("supervisors") or []
+        published = _mn_date(rec.get("published"))
+        edition = re.search(r"\b(\d{4}) edition\b", rec.get("source") or "")
+        if not name or word not in ("District", "Beat") or not published \
+                or not edition:
+            problems.append("ms-county-officials.json %r carries no county, no "
+                            "District or Beat label, no publication date or no "
+                            "edition year" % geoid)
+            continue
+        if sorted(str(s.get("district")) for s in seats) != list(MS_SEATS):
+            problems.append("ms %s County: the directory's supervisors are not "
+                            "numbered 1 to 5" % name)
+            continue
+        districts = []
+        for s in sorted(seats, key=lambda s: int(s["district"])):
+            label = "%s %s" % (word, s["district"])
+            held = (s.get("name") or "").strip()
+            if s.get("vacant") is True:
+                districts.append(district(label, vacancies=1))
+            elif held:
+                districts.append(district(label, [{"name": held,
+                                                   "role": inst["member_word"]}]))
+            else:
+                problems.append("ms %s County %s names nobody and is not marked "
+                                "vacant" % (name, label))
+        if len(districts) != len(MS_SEATS):
+            continue
+
+        lower = word.lower()
+        props = drawn.get(geoid)
+        cta_layers = None
+        if props:
+            got = sorted(str(p.get("district")) for p in props)
+            lines = {p.get("lines") for p in props}
+            if got != list(MS_SEATS) or {p.get("label") for p in props} != {word} \
+                    or len(lines) != 1:
+                problems.append("ms %s County: the districts file does not draw "
+                                "five %ss numbered 1 to 5 from one source, in the "
+                                "directory's word" % (name, lower))
+                continue
+            how = lines.pop()
+            source = (props[0].get("source") or "").strip()
+            if how == "census":
+                drawn_note = ("The %s lines are the Census Bureau's map of %s "
+                              "County's supervisor %ss, which the Census changed "
+                              "after the 2020 census." % (lower, name, lower))
+            elif how == "county" and source:
+                drawn_note = ("The %s lines are %s, redrawn along the Census "
+                              "Bureau's 2020 census blocks." % (lower, source))
+            else:
+                problems.append("ms %s County: the districts file says neither "
+                                "where its lines come from nor that they are the "
+                                "Census Bureau's" % name)
+                continue
+            cta_note = ("Opens the map with the county and supervisor district "
+                        "layers on. " + drawn_note)
+        else:
+            cta_layers = "county"
+            cta_note = ("Opens the map with the county layer on, whose card lists "
+                        "all five supervisors. This app has not confirmed %s "
+                        "County's current supervisor %s lines, so the map does "
+                        "not draw them." % (name, lower))
+
+        calls = ("" if word == "District" else
+                 ", which %s County calls beats" % name)
+        lede = esc("Every Mississippi county is run by a board of five "
+                   "supervisors, each elected from one of the county's five "
+                   "districts%s. This page lists each of %s County's five %ss "
+                   "and its supervisor as the Mississippi Secretary of State's "
+                   "County Offices and Directory lists them, and the map's "
+                   "County card reads the same list. %s"
+                   % (calls, name, lower, MS_ELECTION)).replace("%", "%%")
+
+        link = rec.get("sourceUrl") or ""
+        page = rec.get("sourcePage")
+        if link and isinstance(page, int) and page > 0:
+            link += "#page=%d" % page
+        title = (rec.get("source") or "").strip()
+        title = title[:1].upper() + title[1:]
+        cited = ('<a href="%s" rel="noopener" target="_blank">%s</a>'
+                 % (esc(link), esc(title)) if link.startswith("https://")
+                 else esc(title))
+        printed = rec.get("printedPage")
+        source_html = ("Source: %s (dated %s)%s. The Secretary of State publishes "
+                       "it once a year, so a change on a board can take until "
+                       "the next edition to appear here."
+                       % (cited, esc(published),
+                          ", page %d" % printed if isinstance(printed, int)
+                          and printed > 0 else ""))
+        # 155 characters is validate_serp_lengths.py's ceiling, and Jefferson
+        # Davis, the longest county name, lands at 153 with "district".
+        desc = ("Who holds each of the five seats on %(county)s County's board "
+                "of supervisors, by " + lower + ", from the Mississippi Secretary "
+                "of State's " + edition.group(1) + " directory.")
+
+        entry = {"districts": districts, "extras": [], "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "lede": lede,
+                 "standfirst": MS_STANDFIRST, "desc": desc,
+                 "disclaimer": MS_DISCLAIMER, "cta_note": cta_note,
+                 "source_html": source_html}
+        if cta_layers:
+            entry["cta_layers"] = cta_layers
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ms %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = entry
+    note = ("%d of Mississippi's 82 counties, five supervisors each, %d with "
+            "their districts drawn" % (len(out), len(set(listed) & set(drawn))))
+    return out, problems, nameless, [path, listed_path, map_path], note
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -2229,6 +2688,8 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "sc_councils": sc_councils,
             "ky_county_governments": ky_county_governments,
             "tn_commissioners": tn_commissioners,
+            "ar_quorum_courts": ar_quorum_courts,
+            "ms_supervisors": ms_supervisors,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -2536,12 +2997,17 @@ def districted_body(inst, name, rec):
                "holds" if named == 1 else "hold",
                "published" if rec.get("not_read_since") and not app_reads
                else "publishes", same))
-    if inst.get("cta_layers"):
+    # A RECORD MAY OPEN A DIFFERENT LAYER FROM ITS INSTANCE'S: Mississippi
+    # draws supervisor districts only in the counties whose current lines it
+    # has confirmed, so every other county's page opens the County layer,
+    # whose card lists the board. A record without the key is unchanged.
+    cta_layers = rec.get("cta_layers") or inst.get("cta_layers")
+    if cta_layers:
         # An instance whose board has no district layer yet opens the layer
         # whose card lists it, rather than a layer id its app does not register.
         out.append('<a class="cta" href="../#layers=%s">'
                    'See %s County on the map →</a>'
-                   % (esc(inst["cta_layers"]), esc(name)))
+                   % (esc(cta_layers), esc(name)))
     else:
         out.append('<a class="cta" href="../#layers=%s,county">'
                    'Find your %s County district on the map →</a>'
@@ -2551,14 +3017,25 @@ def districted_body(inst, name, rec):
                   "Opens the map with the county and %s layers on. Search your "
                   "address or ZIP, or tap your location."
                   % esc(inst["phrase"])))
-    for anchor, heading, members in rec.get("extras") or []:
-        rows = [h for h in (member_html(m) for m in members) if h]
-        if not rows:
-            continue
-        out.append('<section class="district" id="%s">' % esc(anchor))
-        out.append('<h2>%s</h2>' % esc(heading))
-        out.append('<ul class="members">%s</ul>' % "".join(rows))
-        out.append('</section>')
+    # An extra section renders before the districts unless the record names
+    # its anchor in `after_anchors`: Arkansas lists the justices no district
+    # names AFTER the districts, where a reader who did not find a name under
+    # their own district looks next. A record without the key is unchanged.
+    after = set(rec.get("after_anchors") or ())
+
+    def extra_sections(trailing):
+        for anchor, heading, members in rec.get("extras") or []:
+            if (anchor in after) != trailing:
+                continue
+            rows = [h for h in (member_html(m) for m in members) if h]
+            if not rows:
+                continue
+            out.append('<section class="district" id="%s">' % esc(anchor))
+            out.append('<h2>%s</h2>' % esc(heading))
+            out.append('<ul class="members">%s</ul>' % "".join(rows))
+            out.append('</section>')
+
+    extra_sections(False)
     for d in rec["districts"]:
         label = d["label"]
         # A whole label ("District 2", Indiana's) anchors as #district-2, the
@@ -2599,6 +3076,7 @@ def districted_body(inst, name, rec):
             out.append('<p class="unlisted">Not listed in the county\'s '
                        'directory.</p>')
         out.append('</section>')
+    extra_sections(True)
     unnamed = seats - named
     if unnamed:
         out.append('<p class="unlisted">%d of %d listed seats are not named by '
@@ -2669,6 +3147,13 @@ def source_note(rec, at_large):
     """Where the names came from, in the page's own words. A page that names
     people without saying who published them is the thing this project refuses
     everywhere else."""
+    # A RECORD WHOSE NAMES COME FROM SEVERAL PUBLISHERS writes its own line,
+    # already escaped (Arkansas: the judiciary for the judge, the association
+    # for the list, the county or the 2024 results for the districts). It also
+    # states only the day each was read, never a schedule: the job that re-reads
+    # Arkansas's could not reach the association's site at go-live.
+    if rec.get("source_html"):
+        return '<p class="source-note">%s</p>' % rec["source_html"]
     bits = []
     if at_large:
         if rec.get("sourceDocument"):
@@ -3258,6 +3743,14 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "mn/data/app/mn-county-town-officers.json": dict(
+        date="2026-10-16",
+        reason="the supervisors, clerks and treasurers of 416 Minnesota "
+               "towns, read from the lists of township officers the counties "
+               "publish. Real officeholders, named, and town government rather "
+               "than county government: each record carries its county only "
+               "to say whose list it came from.",
+    ),
     "il/data/app/municipal-officials.json": dict(
         date="2026-09-13",
         reason="mayors, clerks and council members of 1,300 Illinois "
@@ -3278,6 +3771,13 @@ NOT_COUNTY_BOARDS = {
     "wi/data/app/wi-municipal-clerks.json": dict(
         date="2026-09-13",
         reason="municipal clerks, 1,850 of them. Municipal, not county.",
+    ),
+    "wi/data/app/wi-town-boards.json": dict(
+        date="2026-10-15",
+        reason="Wisconsin TOWN boards, a chairperson and supervisors per town, "
+               "read from each county's own directory. A town is a unit below "
+               "the county, not the county board, which is the same reason "
+               "il township-officials.json is recorded here.",
     ),
     "wi/data/app/wi-municipal-boards.json": dict(
         date="2026-10-01",
@@ -3323,19 +3823,13 @@ NOT_COUNTY_BOARDS = {
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
     ),
-    "ar/data/app/ar-county-officials.json": dict(
-        date="2026-10-13",
-        reason="Arkansas's county judges and quorum courts, which ARE the "
-               "county's governing body and belong on these pages. They are "
-               "held back for the reason South Carolina's councils were until "
-               "it went live: Arkansas is dark, and a county page, its index "
-               "and the about page's officeholder count would describe an app "
-               "nobody can open yet. Its go-live change writes the adapter and this "
-               "entry goes. The adapter has a choice to make that no other "
-               "state has posed: a district's justice comes from the county's "
-               "own numbered list or from the association's 2024 election "
-               "results, and some districts are deliberately left unnamed, "
-               "so a page must lay out only what the district cards name.",
+    "in/data/app/in-township-officials.json": dict(
+        date="2026-10-15",
+        reason="Indiana's township trustees and township boards, about a "
+               "thousand townships' own governments rather than any county's. "
+               "These pages are one per county board; a township is a "
+               "different government below the county, and the app names its "
+               "trustee and board on its own Township card.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
@@ -3570,6 +4064,30 @@ def ia_board_contact(inst):
                     % (seats, str(plan).title()))
         c = _contact("Board of Supervisors", None, [], rec.get("boardPhone"),
                      None, None, note, seats=seats)
+        if c:
+            out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
+def ms_board_contact(inst):
+    """Mississippi: the board's own office, from the same directory page that
+    names the supervisors.
+
+    THE DIRECTORY PRINTS AN ADDRESS AND A TELEPHONE BESIDE EACH SUPERVISOR, and
+    a line printed for one supervisor may be that person's own, so the builder
+    keeps a line only where the directory prints it for at least three of the
+    county's five, which makes it the board's office (build_ms_county_officials.py).
+    Nothing per supervisor is carried, and a county where no line passes that
+    test carries no contact rather than one supervisor's."""
+    path = os.path.join(app_data("ms"), "ms-county-officials.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or not (rec.get("county") or "").strip():
+            continue
+        c = _contact("Board of supervisors' office", None,
+                     [rec.get("boardAddress")], rec.get("boardPhone"))
         if c:
             out[_norm_county(rec["county"])] = c
     return out, [path]

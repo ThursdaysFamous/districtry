@@ -315,7 +315,59 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Tennessee"),
     ),
-}
+    # Arkansas joined at its go-live with both chambers named from the
+    # Legislature's own member list and every member's own page (a seat whose
+    # only row is a departed member prints as a vacancy). Ark. Const. art. 5,
+    # secs. 3 and 4 set representatives' terms at two years and senators' at
+    # four.
+    "ar": dict(
+        worksheet="ar/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Arkansas legislator?",
+            body="the Arkansas General Assembly",
+            short="Arkansas General Assembly",
+            term="Senators serve four-year terms and representatives two.",
+            chambers=[
+                dict(layer="ar-senate", name="Arkansas Senate", short="Senate",
+                     holder="Senator", roster="ar-senate-members.json"),
+                dict(layer="ar-house", name="Arkansas House of Representatives", short="House",
+                     holder="Representative", roster="ar-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Arkansas"),
+    ),
+    # Mississippi joined at its go-live with both chambers named from the
+    # Legislature's own member gallery and every member's profile (three seats
+    # the gallery shows as vacant print as vacancies). No term length is
+    # stated: the sentence is the Secretary of State's own 2026-2027 election
+    # calendar, which lists both chambers among the offices elected on
+    # November 2, 2027.
+    "ms": dict(
+        worksheet="ms/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Mississippi legislator?",
+            body="the Mississippi Legislature",
+            short="Mississippi Legislature",
+            term="The Secretary of State's election calendar lists state "
+                 "senators and state representatives among the offices elected "
+                 "at the general election of November 2, 2027.",
+            chambers=[
+                dict(layer="ms-senate", name="Mississippi Senate", short="Senate",
+                     holder="Senator", roster="ms-senate-members.json"),
+                dict(layer="ms-house", name="Mississippi House of Representatives", short="House",
+                     holder="Representative", roster="ms-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Mississippi"),
+    ),}
 
 
 def fail(msg):
@@ -555,23 +607,27 @@ def congress_page(tag, inst, worksheet, brand, app_name, landing, metros):
     return spec["file"], spec["title"], subtitle, desc, og, lede, sections, n
 
 
-def related_rows(tag, this_file, landing, metros):
+def related_rows(tag, inst, this_file, landing, metros):
     """Links to the instance's own map, its other new page, and one sibling.
 
     Derived rather than listed: the sibling is the next instance in metros.json
     order, so a new state joins these rows the day it is registered.
     """
-    other = ("congress.html" if this_file != "congress.html"
-             else "state-legislature.html")
-    other_label = ("Who is my U.S. representative?" if other == "congress.html"
-                   else "Who is my state legislator?")
     # "its other new page" is not a given: an instance in NO_LEGISLATURE_PAGE
     # ships congress.html alone, so the row would link a 404. Dropped rather
     # than replaced — there is no other half of the answer to point at, and
     # inventing a third destination to fill the slot would be filling a layout
-    # rather than answering anything.
-    if not os.path.exists(os.path.join(REPO_ROOT, tag, other)):
-        other = None
+    # rather than answering anything. Which pages exist is read from the
+    # instance entry, the same test build() uses to decide what to write, and
+    # never from the disk: a run that creates both pages finds neither on disk
+    # while it writes the first, so each would leave the other out and the
+    # next --check would report both as drift.
+    if this_file == inst["congress"]["file"]:
+        other = inst["legislature"]["file"] if "legislature" in inst else None
+        other_label = "Who is my state legislator?"
+    else:
+        other = inst["congress"]["file"]
+        other_label = "Who is my U.S. representative?"
     order = [m["tag"] for m in metros]
     sib = order[(order.index(tag) + 1) % len(order)]
     sib_name = next(m["landing_name"] for m in metros if m["tag"] == sib)
@@ -607,7 +663,7 @@ def build(tag, inst, metros, check):
         preserved = preserved_from_disk(path)
         page = head(tag, brand, app_name, page_file, title, desc, og)
         page += shell(app_name, title, subtitle, lede, sections,
-                      related_rows(tag, page_file, landing, metros), preserved,
+                      related_rows(tag, inst, page_file, landing, metros), preserved,
                       themeboot, mark, tag)
         results.append((os.path.join(tag, page_file), path, page, seats))
     return results

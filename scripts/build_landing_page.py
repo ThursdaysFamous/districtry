@@ -140,6 +140,7 @@ INSTANCE_WORKSHEET = {
     "sc": "sc/metro-worksheet.json",
     "tn": "tn/metro-worksheet.json",
     "ar": "ar/metro-worksheet.json",
+    "ms": "ms/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -231,18 +232,20 @@ CANONICAL = "https://districtry.com/"
 QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
-    # SIX NAMES FOR ONE READER'S QUESTION. A county's governing body is a
-    # board in Illinois and Wisconsin, a board of supervisors in Iowa, a board
+    # SEVEN NAMES FOR ONE READER'S QUESTION. A county's governing body is a
+    # board in Illinois and Wisconsin, a board of supervisors in Iowa and
+    # Mississippi, a board
     # of commissioners in Michigan, a county legislature in New York, a
-    # fiscal court (or a merged council) in Kentucky and a county council in
-    # South Carolina, and
+    # fiscal court (or a merged council) in Kentucky, a county council in
+    # South Carolina and a quorum court in Arkansas, and
     # somebody asking who sits on it does not know or care which word their
     # state uses. One row, so the front door asks the question once.
     ("Who sits on my county board?", ("county-board.html", "county-supervisor.html",
                                       "county-commissioner.html",
                                       "county-legislature.html",
                                       "county-government.html",
-                                      "county-council.html")),
+                                      "county-council.html",
+                                      "quorum-court.html")),
     ("Who represents me on the city council?", ("ward.html", "council-district.html",
                                                 "supervisor-district.html",
                                                 "city-council.html")),
@@ -270,6 +273,7 @@ CHIP_TOPIC = {
     "county-commissioner.html": "commissioners",
     "county-government.html": "fiscal court",
     "county-council.html": "county council",
+    "quorum-court.html": "quorum court",
     "county-legislature.html": "county legislature",
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",

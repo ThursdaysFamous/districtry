@@ -112,6 +112,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -1283,6 +1284,15 @@ jobs:
       - name: The shipped Iowa city councils still refuse an address and keep their seat counts
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_city_councils.py --check
+      # Kentucky's magisterial and council districts are composed from precincts
+      # and recap sheets the build fetches; --check holds the shipped file to the
+      # hash its builder recorded and each drawn county to its Census outline,
+      # offline, and --selftest holds the placing rules to fixed cases.
+      - name: The shipped Kentucky fiscal court districts match their record and cover their counties
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ky/scripts/build_ky_county_districts.py --selftest
+          python3 ky/scripts/build_ky_county_districts.py --check
       # FOUR COUNTIES WHOSE TWO OUTSIDE PUBLISHERS DISAGREE about their board's
       # size are read from the county's OWN board page instead, and the four
       # pages take four shapes. Three defects are declared here because each
@@ -1413,6 +1423,48 @@ jobs:
       - name: Every dropped-ring declaration's prose agrees with its own fields, and no layer is gated by half
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --check
+
+      # Mississippi's five supervisors and five election commissioners per
+      # county come from the Secretary of State's directory, which also prints
+      # their own addresses and telephones. This holds the shipped file to the
+      # shape it was built in: five seats of each kind in districts 1 to 5, a
+      # board address or telephone only where three supervisors share it, and
+      # nothing but a name for an election commissioner. Offline.
+      - name: MS county officials keep their shape, and election commissioners carry names only
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_county_officials.py --check
+
+      # Mississippi draws county supervisor districts only in the counties whose
+      # Census lines are confirmed current: changed after the 2020 census, and
+      # balanced on that census's own blocks. The blocks are not shipped, so the
+      # population cannot be re-measured here; this holds the shipped file to
+      # its build record, every district to a directory seat in the county's own
+      # word, the card to the Census edition the file was built from, and the
+      # drawn counties to the County layer at 4,000 points.
+      - name: MS supervisor districts still match their build record, the directory and the County layer
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_supervisor_districts.py --check
+
+      # Mississippi's four courts whose judges are elected from districts draw
+      # each district as the counties the court's own page and the 2025 and
+      # 2026 laws list. Those pages and laws are kept as copies, and this
+      # re-hashes every copy, re-reads every list out of it, and holds each of
+      # the six shipped maps to its counties, including the two that take over
+      # on 1 January 2027 and the further moves the same laws make in 2031.
+      - name: MS court districts still match the court's own lists and the laws that redraw them
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_court_districts.py --check
+
+      # The judges' lists lag the bench by up to fourteen months, so the weekly
+      # build applies the changes since from the court's news and the
+      # Governor's announcements, and fails once a list has caught up with one.
+      # --selftest runs that parse and those tests on literals; --check holds
+      # the shipped file to its shape, its counts and the court maps.
+      - name: MS judges hold to their parse, their change table and the court maps
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ms/scripts/build_ms_judges.py --selftest
+          python3 ms/scripts/build_ms_judges.py --check
 
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
@@ -1639,6 +1691,7 @@ jobs:
           python3 sc/scripts/validate_index.py sc/index.html
           python3 tn/scripts/validate_index.py tn/index.html
           python3 ar/scripts/validate_index.py ar/index.html
+          python3 ms/scripts/validate_index.py ms/index.html
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
       # the repo had — ca and ny were separate repos with their own CI. They
@@ -1658,7 +1711,25 @@ jobs:
           # this tree, 4,244 server lines against 785 from the probes, 76% of
           # them repeat fetches of six font files. It is still kept, and still
           # printed — on failure, below, which is the only time it says anything.
-          python3 -m http.server 8000 > /tmp/http-server.log 2>&1 &
+          #
+          # The server is http.server with ONE change: a listen queue of 1024
+          # instead of the 5 socketserver uses. Three browsers loading pages at
+          # once open far more than five connections at a time, and http.server
+          # speaks HTTP/1.0, so every request is a new connection. A connection
+          # that finds the queue full is dropped without a reply, and the
+          # browser waits 1, then 3, 7, 15 and 31 seconds before trying again,
+          # which is how a page on localhost came to miss page.goto's
+          # 30-second limit with nothing in the server's log: #1530, #1547 and
+          # #1553 in three days, never on an assertion. Measured 2026-10-16 in
+          # the sandbox, 1,500 requests at once against the stock server: 1,250
+          # connections dropped and the slowest answered in 8.8s; with a queue
+          # of 1024, none dropped and the slowest took 1.3s. Everything else is
+          # the stock server, run through runpy so its command line is
+          # unchanged. The count of dropped connections is printed after the
+          # gates, so a run shows whether this is still happening.
+          listen_overflows() { awk '/^TcpExt:/ { if (!h) { split($0, k); h = 1 } else { split($0, v); for (i in k) if (k[i] == "ListenOverflows") print v[i]; exit } }' /proc/net/netstat; }
+          overflows_before=$(listen_overflows)
+          python3 -c 'import runpy, socketserver, sys; socketserver.TCPServer.request_queue_size = 1024; sys.argv = ["http.server", "8000"]; runpy.run_module("http.server", run_name="__main__", alter_sys=True)' > /tmp/http-server.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for i in $(seq 1 40); do
@@ -1674,8 +1745,9 @@ jobs:
           # would only move the date it is hit again. The runner has four
           # cores, no gate shares a port or writes a file another reads, and
           # http.server answers each request on its own thread. If parallel
-          # runs ever make a gate flaky, lower BROWSER_GATE_JOBS rather than
-          # adding sleeps or retries.
+          # runs ever make a gate flaky, first read the dropped-connection
+          # count printed below; if it is zero, lower BROWSER_GATE_JOBS rather
+          # than adding sleeps or retries.
           #
           # The list below is read by validate_gate_counts.py,
           # validate_steward_mirror.py and validate_instance_registration.py,
@@ -1767,6 +1839,7 @@ jobs:
           BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ar/  node ar/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ms/  node ms/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
 
           # The root landing page and — the part that matters — its forwarding
@@ -1814,5 +1887,6 @@ jobs:
             fi
           done
           echo "browser gates: $n run, $BROWSER_GATE_JOBS at a time, $(( $(date +%s) - started ))s wall"
+          echo "connections dropped for a full listen queue during the gates: $(( $(listen_overflows) - overflows_before ))"
 
           exit $status

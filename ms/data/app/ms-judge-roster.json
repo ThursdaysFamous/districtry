@@ -1,0 +1,702 @@
+{
+ "courts": {
+  "supreme": {
+   "readFrom": "https://courts.ms.gov/appellatecourts/sc/scjustices.php",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "T. Kenneth Griffis",
+       "role": "Associate Justice",
+       "seat": "Place 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicegriffis.php"
+      },
+      {
+       "name": "Leslie D. King",
+       "role": "Presiding Justice",
+       "seat": "Place 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justiceking.php"
+      },
+      {
+       "name": "Jenifer B. Branning",
+       "role": "Associate Justice",
+       "seat": "Place 3",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicebranning.php"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "David M. Ishee",
+       "role": "Associate Justice",
+       "seat": "Place 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justiceishee.php"
+      },
+      {
+       "name": "David P. Sullivan",
+       "role": "Associate Justice",
+       "seat": "Place 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicesullivan.php"
+      },
+      {
+       "name": "Michael K. Randolph",
+       "role": "Chief Justice",
+       "seat": "Place 3",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicerandolph.php"
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Celeste Embrey Wilson",
+       "role": "Associate Justice",
+       "seat": "Place 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicewilson.php"
+      },
+      {
+       "name": "Amanda Jones Tollison",
+       "role": "Associate Justice",
+       "seat": "Place 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicetollison.php"
+      },
+      {
+       "name": "Josiah D. Coleman",
+       "role": "Presiding Justice",
+       "seat": "Place 3",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicecoleman.php"
+      }
+     ]
+    }
+   }
+  },
+  "appeals": {
+   "readFrom": "https://courts.ms.gov/appellatecourts/coa/coajudges.php",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "John D. Weddle",
+       "role": "Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeWeddle.php"
+      },
+      {
+       "name": "Donna M. Barnes",
+       "role": "Chief Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgebarnes.php"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "Deborah McDonald",
+       "role": "Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeMcDonald.php"
+      },
+      {
+       "name": "Latrice A. Westbrooks",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgewestbrooks.php"
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Jack L. Wilson",
+       "role": "Presiding Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgewilson.php"
+      },
+      {
+       "name": "John H. Emfinger",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeEmfinger.php"
+      }
+     ]
+    },
+    "4": {
+     "members": [
+      {
+       "name": "Virginia C. Carlton",
+       "role": "Presiding Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgecarlton.php"
+      },
+      {
+       "name": "David Neil McCarty",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeMcCarty.php"
+      }
+     ]
+    },
+    "5": {
+     "members": [
+      {
+       "name": "Anthony N. Lawrence III",
+       "role": "Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeLawrence.php"
+      },
+      {
+       "name": "Amy Lassitter St. Pé",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeSt.%20Pe%27.php"
+      }
+     ]
+    }
+   }
+  },
+  "chancery": {
+   "readFrom": "https://courts.ms.gov/trialcourts/chancerycourt/chanjud.pdf",
+   "listUpdated": "2025-08-01",
+   "structure": "until-2027",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "Jacqueline Mask"
+      },
+      {
+       "name": "Michael Malski"
+      },
+      {
+       "name": "Stephen T. Bailey"
+      },
+      {
+       "name": "Bradley D. Tennison"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "Robert M. Logan Jr."
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Mitchell M. Lundy Jr."
+      },
+      {
+       "name": "Sabrina D. Howell",
+       "note": "Appointed by the Governor from 1 July 2026, after Chancellor Percy L. Lynchard Jr. retired.",
+       "source": {
+        "label": "Mississippi Judiciary news",
+        "url": "https://courts.ms.gov/news/view_news_page.php?article=3145"
+       }
+      },
+      {
+       "name": "Vicki B. Daniels"
+      }
+     ]
+    },
+    "4": {
+     "members": [
+      {
+       "name": "Debbra K. Halford"
+      },
+      {
+       "name": "Wayne Smith"
+      }
+     ]
+    },
+    "5": {
+     "members": [
+      {
+       "name": "Tametrice E. Hodges"
+      },
+      {
+       "name": "Crystal Wise Martin"
+      },
+      {
+       "name": "Tiffany Grove"
+      }
+     ],
+     "notes": [
+      {
+       "text": "Chancellor Dewayne Thomas died on 16 September 2026. The court expects the Governor to fill the seat by appointment until a special election, expected on 2 November 2027; the Governor's office had announced no appointment by 15 October 2026.",
+       "label": "Mississippi Judiciary news",
+       "url": "https://courts.ms.gov/news/view_news_page.php?article=3162"
+      }
+     ]
+    },
+    "6": {
+     "members": [
+      {
+       "name": "Doug S. Crosby"
+      },
+      {
+       "name": "Kiley Kirk"
+      }
+     ]
+    },
+    "7": {
+     "members": [
+      {
+       "name": "Willie J. Perkins Sr."
+      },
+      {
+       "name": "Catherine Farris-Carter"
+      },
+      {
+       "name": "W. M. Sanders"
+      }
+     ]
+    },
+    "8": {
+     "members": [
+      {
+       "name": "Margaret Alfonso"
+      },
+      {
+       "name": "Jim Persons"
+      },
+      {
+       "name": "Jennifer Schloegel"
+      },
+      {
+       "name": "Carter Bise"
+      }
+     ]
+    },
+    "9": {
+     "members": [
+      {
+       "name": "Bennie L. Richard"
+      },
+      {
+       "name": "Debra M. Giles"
+      }
+     ],
+     "notes": [
+      {
+       "text": "Chancellor Vicki R. Barnes died on 27 September 2026. The Governor's office had announced no appointment to the seat by 15 October 2026.",
+       "label": "Mississippi Judiciary news",
+       "url": "https://courts.ms.gov/news/view_news_page.php?article=3166"
+      }
+     ]
+    },
+    "10": {
+     "members": [
+      {
+       "name": "Rhea H. Sheldon"
+      },
+      {
+       "name": "Sheila Havard Smallwood"
+      },
+      {
+       "name": "Chad Smith"
+      },
+      {
+       "name": "Renee McBride Porter",
+       "note": "Appointed by the Governor from 17 August 2026, after Chancellor Chase Ford Morgan retired.",
+       "source": {
+        "label": "Governor's announcement",
+        "url": "https://governorreeves.ms.gov/governor-reeves-appoints-renee-mcbride-porter-chancellor-for-the-10th-chancery-court-district/"
+       }
+      }
+     ]
+    },
+    "11": {
+     "members": [
+      {
+       "name": "Robert G. Clark III"
+      },
+      {
+       "name": "Cynthia Brewer"
+      },
+      {
+       "name": "James C. Walker"
+      }
+     ]
+    },
+    "12": {
+     "members": [
+      {
+       "name": "Amanda Rainey"
+      },
+      {
+       "name": "Austin Terry"
+      }
+     ]
+    },
+    "13": {
+     "members": [
+      {
+       "name": "David Shoemake"
+      },
+      {
+       "name": "Gerald Martin"
+      }
+     ]
+    },
+    "14": {
+     "members": [
+      {
+       "name": "Paula Drungole-Ellis"
+      },
+      {
+       "name": "Rodney Faver"
+      },
+      {
+       "name": "Joseph N. (Joe) Studdard"
+      }
+     ]
+    },
+    "15": {
+     "members": [
+      {
+       "name": "Joseph Durr"
+      }
+     ]
+    },
+    "16": {
+     "members": [
+      {
+       "name": "Mark Maples"
+      },
+      {
+       "name": "Ashlee Cole"
+      },
+      {
+       "name": "D. Neil Harris Sr."
+      }
+     ]
+    },
+    "17": {
+     "members": [
+      {
+       "name": "E. Vincent Davis"
+      },
+      {
+       "name": "George Ward"
+      }
+     ]
+    },
+    "18": {
+     "members": [
+      {
+       "name": "Lawrence L. (Larry) Little"
+      },
+      {
+       "name": "Robert Q. Whitwell"
+      }
+     ]
+    },
+    "19": {
+     "members": [
+      {
+       "name": "Jerry Sharp"
+      }
+     ]
+    },
+    "20": {
+     "members": [
+      {
+       "name": "Troy Odom"
+      },
+      {
+       "name": "John C. McLaurin Jr."
+      },
+      {
+       "name": "Haydn J. Roberts"
+      }
+     ]
+    }
+   }
+  },
+  "circuit": {
+   "readFrom": "https://courts.ms.gov/trialcourts/circuitcourt/cirjud.pdf",
+   "listUpdated": "2026-02-04",
+   "structure": "until-2027",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "Paul S. Funderburk"
+      },
+      {
+       "name": "Michael P. Mills Jr."
+      },
+      {
+       "name": "John R. White"
+      },
+      {
+       "name": "Kelly L. Mims"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "Lisa P. Dodson"
+      },
+      {
+       "name": "Randi P. Mueller"
+      },
+      {
+       "name": "Christopher L. Schmidt"
+      },
+      {
+       "name": "Lawrence Bourgeois Jr."
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Grady F. Tollison III"
+      },
+      {
+       "name": "Kent E. Smith"
+      },
+      {
+       "name": "J. Kelly Luther"
+      }
+     ]
+    },
+    "4": {
+     "members": [
+      {
+       "name": "Carol White-Richard"
+      },
+      {
+       "name": "Richard A. Smith"
+      },
+      {
+       "name": "Margaret Carey-McCray"
+      },
+      {
+       "name": "W. Ashley Hines"
+      }
+     ]
+    },
+    "5": {
+     "members": [
+      {
+       "name": "Alan \"Devo\" Lancaster"
+      },
+      {
+       "name": "Joseph H. Loper Jr."
+      }
+     ]
+    },
+    "6": {
+     "members": [
+      {
+       "name": "Carmen Brooks Drake"
+      },
+      {
+       "name": "Debra W. Blackwell"
+      }
+     ]
+    },
+    "7": {
+     "members": [
+      {
+       "name": "Adrienne H. Wooten"
+      },
+      {
+       "name": "Winston Kidd"
+      },
+      {
+       "name": "Faye Peterson"
+      },
+      {
+       "name": "Debra Gibbs"
+      },
+      {
+       "name": "Damon Stevenson"
+      }
+     ]
+    },
+    "8": {
+     "members": [
+      {
+       "name": "Christopher M. Posey"
+      },
+      {
+       "name": "Caleb E. May"
+      }
+     ]
+    },
+    "9": {
+     "members": [
+      {
+       "name": "M. James Chaney Jr."
+      },
+      {
+       "name": "Toni Walker Terrett"
+      }
+     ]
+    },
+    "10": {
+     "members": [
+      {
+       "name": "Robert T. (Bo) Bailey"
+      },
+      {
+       "name": "Charles W. Wright Jr."
+      }
+     ]
+    },
+    "11": {
+     "members": [
+      {
+       "name": "Charles E. Webster"
+      },
+      {
+       "name": "W. Hunter Nowell"
+      },
+      {
+       "name": "Linda F. Coleman"
+      }
+     ]
+    },
+    "12": {
+     "members": [
+      {
+       "name": "T. Michael Reed"
+      },
+      {
+       "name": "Burnice Wesley Curry IV"
+      }
+     ]
+    },
+    "13": {
+     "members": [
+      {
+       "name": "Matthew Sullivan"
+      },
+      {
+       "name": "Stanley Sorey"
+      }
+     ]
+    },
+    "14": {
+     "members": [
+      {
+       "name": "Michael M. Taylor"
+      },
+      {
+       "name": "David H. Strong Jr."
+      }
+     ]
+    },
+    "15": {
+     "members": [
+      {
+       "name": "Brad A. Touchstone"
+      },
+      {
+       "name": "Prentiss G. Harrell"
+      },
+      {
+       "name": "Richelle Lumpkin"
+      }
+     ]
+    },
+    "16": {
+     "members": [
+      {
+       "name": "Lee \"Jay\" Howard"
+      },
+      {
+       "name": "James T. Kitchens Jr."
+      },
+      {
+       "name": "Michelle Easterling"
+      }
+     ]
+    },
+    "17": {
+     "members": [
+      {
+       "name": "Smith Murphey"
+      },
+      {
+       "name": "James McClure III"
+      }
+     ]
+    },
+    "18": {
+     "members": [
+      {
+       "name": "Dal Williamson"
+      }
+     ]
+    },
+    "19": {
+     "members": [
+      {
+       "name": "Keith Miller"
+      },
+      {
+       "name": "Calvin D. Taylor"
+      },
+      {
+       "name": "Kathy King Jackson"
+      }
+     ]
+    },
+    "20": {
+     "members": [
+      {
+       "name": "Dewey Arthur"
+      },
+      {
+       "name": "M. Bradley Mills"
+      },
+      {
+       "name": "Steve Ratcliff"
+      }
+     ]
+    },
+    "21": {
+     "members": [
+      {
+       "name": "Craig Treadway",
+       "note": "Appointed by the Governor from 1 September 2026, after Judge Celeste Embrey Wilson joined the Mississippi Supreme Court.",
+       "source": {
+        "label": "Governor's announcement",
+        "url": "https://governorreeves.ms.gov/governor-reeves-appoints-craig-treadway-circuit-judge-for-the-21st-circuit-court-district-and-reopens-qualifying/"
+       }
+      },
+      {
+       "name": "Gerald Chatham"
+      },
+      {
+       "name": "Wayne Douglas Hollowell III"
+      }
+     ]
+    },
+    "22": {
+     "members": [
+      {
+       "name": "Jannie M. Lewis-Blackmon"
+      }
+     ]
+    },
+    "23": {
+     "members": [
+      {
+       "name": "Tomika Harris-Irving"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

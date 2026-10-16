@@ -216,7 +216,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Every county's governing body and elected officers, from the Kentucky Department for Local Government's county directory (kydlgweb.ky.gov/Counties/), one page per county; built by ky/scripts/build_ky_county_officials.py and refreshed weekly by update-ky-county-officials.yml. In 118 counties that is the fiscal court — the judge/executive and the magistrates or three commissioners; Jefferson and Fayette are merged governments, so their cards name the Louisville Metro Council and the Lexington-Fayette Urban County Council from the same directory's city entries. The officers are the county attorney, clerk, sheriff, jailer, coroner and property valuation administrator. The directory does not say which district a magistrate or commissioner holds and those lines are not drawn, so the card lists the whole court; recorded as the coverage gap ky-fiscal-court.",
+        "people": "Every county's governing body and elected officers, from the Kentucky Department for Local Government's county directory (kydlgweb.ky.gov/Counties/), one page per county; built by ky/scripts/build_ky_county_officials.py and refreshed weekly by update-ky-county-officials.yml. In 118 counties that is the fiscal court — the judge/executive and the magistrates or three commissioners; Jefferson and Fayette are merged governments, so their cards name the Louisville Metro Council and the Lexington-Fayette Urban County Council from the same directory's city entries. The officers are the county attorney, clerk, sheriff, jailer, coroner and property valuation administrator. The directory does not say which district a magistrate holds; the district beside a name comes from the 2022 general election results, and the Magistrate or Council District layer says which district a point is in.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -239,10 +239,76 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Census County Division",
+      "group": "geography",
+      "area_rank": 10,
+      "rank_note": "493 census county divisions, live from TIGERweb (no data/app file) — median 196.8 km2 of land (mean 207.4), measured 2026-10-15: smaller than a unified school district, larger than a city",
+      "source": {
+        "answers": "The census county division containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and Kentucky has no townships, so the county governs everyone outside a city. The card names the division and its county and says it governs nobody.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
+      "id": "fiscal-court",
+      "label": "Magistrate or Council District",
+      "group": "political",
+      "area_rank": 11,
+      "rank_note": "314 districts in 58 counties: the magisterial districts of 56 fiscal courts and the council districts of Louisville Metro and Lexington-Fayette, 169 km2 mean feature area over 53,163 km2, so smaller than a school district and larger than a city",
+      "source": {
+        "answers": "Which magisterial district (or, in Louisville and Lexington, which council district) contains the point, and who represents it on the fiscal court or council.",
+        "boundary": [
+          {
+            "label": "Kentucky State Board of Elections — voting precincts, composed into magisterial districts from the precincts on each magistrate race's ballot in the certified 2026 primary and 2022 general recap sheets (ky/scripts/build_ky_county_districts.py)",
+            "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0"
+          },
+          {
+            "label": "Kentucky State Board of Elections — 2026 primary recap sheets",
+            "url": "https://elect.ky.gov/results/2020-2029/Pages/2026Primary-Recap-Sheets.aspx"
+          },
+          {
+            "label": "LOJIC — Louisville Metro Council districts",
+            "url": "https://gis.lojic.org/maps/rest/services/LojicSolutions/OpenDataPolitical/MapServer/8"
+          },
+          {
+            "label": "Lexington-Fayette Urban County Government — council districts",
+            "url": "https://services1.arcgis.com/Mg7DLdfYcSWIaDnu/arcgis/rest/services/Council_District/FeatureServer/0"
+          }
+        ],
+        "people": "The magistrate or council member for the district, from the same county roster the County card reads (ky-county-officials.json, from the Kentucky Department for Local Government's directory). A magistrate's district comes from the 2022 general election results; a council member's from the government's own council map. A member the results could not match is not named on the district, and the card says so.",
+        "applies": "56 of the 104 counties whose magistrates are elected by district, plus Louisville Metro and Lexington-Fayette. The other 48 are not drawn yet because the published results did not place every one of their precincts; the 14 commissioner counties elect by the whole county and have no districts to draw."
+      }
+    },
+    {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 12,
+      "rank_note": "3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a city (12.00)",
+      "source": {
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "boundary": [
+          {
+            "label": "Kentucky State Board of Elections — Voting Precinct Boundaries in Kentucky, compiled under KRS 117.055 to 117.0557 from the precinct files each county board of elections submits and hosted by the Kentucky Division of Geographic Information (CC0 1.0); 3,194 features, pre-built for the state by ky/scripts/build_ky_precincts.py and shipped with the app. The item says it is current through the November 3, 2026 general election and that a county's own records control where the two disagree, which the card says.",
+            "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 13,
       "rank_note": "415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
       "source": {
         "answers": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.",
@@ -260,7 +326,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
       "source": {
         "answers": "The elementary-only school district covering the point, in the four places Kentucky has one.",
@@ -278,7 +344,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling",
       "source": {
         "answers": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.",
@@ -293,7 +359,7 @@
       }
     }
   ],
-  "min_register_layer": 4,
+  "min_register_layer": 6,
   "anchor_point": {
     "lat": 38.2527,
     "lng": -85.7585,
@@ -315,6 +381,10 @@
     {
       "layer": "ky-house",
       "expected": "43"
+    },
+    {
+      "layer": "voting-precinct",
+      "expected": "Precinct 168 43 District"
     }
   ],
   "negative_point": {
@@ -375,6 +445,18 @@
         "min_features": 59,
         "max_features": 59,
         "note": "The 59 judicial districts of KRS 24A.030, dissolved from the county fabric. A second version is already enacted for 2031-01-01, taking it to 58; WATCH.md carries the row."
+      },
+      {
+        "file": "ky-county-districts.json",
+        "min_features": 300,
+        "max_features": 360,
+        "note": "Magisterial and council districts, built by ky/scripts/build_ky_county_districts.py from the State Board of Elections' precinct map and recap sheets and from Louisville's and Lexington's council maps; its --check holds the file to its source record and each drawn county to its Census outline."
+      },
+      {
+        "file": "ky-precincts.json",
+        "min_features": 3194,
+        "max_features": 3194,
+        "note": "Every Kentucky voting precinct, pre-built by ky/scripts/build_ky_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 3,194 count on the fetch and the drawn file). 10.2 MB, 2.49 MB gzipped, fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [
@@ -406,7 +488,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ky-shell-v4",
+    "cache_name": "districtry-ky-shell-v6",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -483,7 +565,11 @@
     { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
       "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
-      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "sources_page": {
     "file": "ky/sources.html",

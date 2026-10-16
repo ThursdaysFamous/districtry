@@ -4291,7 +4291,11 @@ function initMichiganExplorer() {
     { id: "southcarolina", label: "South Carolina", url: "https://districtry.com/sc/", emoji: "🌴", explorerName: "districtry South Carolina",
       bbox: { minLng: -83.36, minLat: 31.99, maxLng: -78.49, maxLat: 35.16 } },
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
-      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } }
+      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
+    { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -9382,7 +9386,7 @@ function initMichiganExplorer() {
     "county-commissioner", // 619 districts across all 83 counties — the finest tiling this instance ships, smaller than a state House district
     "county-subdivision", // 1,581 records tiling the state, live from TIGERweb (no data/app file) — 1,122 general-law townships, 118 charter townships, 301 city placeholder records for 281 distinct cities (18 of which cross a county line), and 40 'not defined' records that are pure Great Lakes water
     "zip-code",          // 1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct
-    "city-ward",         // Seven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
+    "city-ward",         // Twelve cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek, Jackson, Pontiac, Midland, Muskegon, Holland and Walker. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
     "precinct",          // 3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships
     "tribal-government", // Tribal land — Michigan has 24 pieces across 12 nations, from the Isabella Reservation's 564.926 km² down to a 0.074 km² Grand Traverse parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 3.021 km² MEDIAN, below the precinct fabric's measured 6.400 — medians rather than means, because this layer's own mean of 39.8 km² is Isabella and L'Anse and describes none of the other 22 parcels. The places layer below it is live and publishes a mean rather than a median, so no claim is made here about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Michigan is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 1 of them in Michigan and it is Lac Vieux Desert's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Nine of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; three cannot be read, two behind a managed challenge and one publishing its council to its members only, and the card says which. Michigan has no current state list of tribal officials to fall back on. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean
@@ -15108,9 +15112,9 @@ function initMichiganExplorer() {
 
 
   /* ---------- 15. City Council District — Detroit and Grand Rapids ----------
-   * (Written when these were the only two. The layer now draws seven cities;
-   * Warren, Flint, Rochester Hills, Battle Creek and Jackson have their
-   * entries further down this section.)
+   * (Written when these were the only two. The layer now draws eleven cities;
+   * Warren, Flint, Rochester Hills, Battle Creek, Jackson, Pontiac, Midland,
+   * Muskegon and Holland have their entries further down this section.)
    * ONE DISPATCHED LAYER, TWO CITIES, each entry pre-built from that city's
    * own ArcGIS org and each bringing its own card, because the two bodies are
    * not alike. Grand Rapids's half is further down, after Detroit's.
@@ -15916,6 +15920,135 @@ function initMichiganExplorer() {
     }
   };
 
+  // FOUR CITIES DRAWN ON 2026-10-15, ONE SHAPE. Each ships a file of its
+  // wards (or districts) carrying the number and nothing else, built by
+  // mi/scripts/build_mi_<city>_wards.py through mi_ward_common.py, and names
+  // its members from mi-municipal-officials.json, read weekly from the city's
+  // own council page — the Flint pattern. `unit` is the city's own word for
+  // the seat, which is also the seat label that roster carries ("Ward 3",
+  // "District 3"), so the card and the roster cannot disagree about it.
+  function municipalWardEntry(cfg) {
+    var load = makeCached(function () {
+      return fetchJSONWithRetry(cfg.file, {}, 2);
+    });
+    function seatName(ward) {
+      return (ward == null || ward === "") ? null : cfg.unit + " " + String(ward);
+    }
+    return {
+      key: cfg.key,
+      label: cfg.label,
+      coverage: function (point) {
+        // The builder bounds each city's wards against the Census place by
+        // population; a load failure rejects to the engine's fail-open.
+        return load().then(function (geojson) {
+          return !!findFeatureContaining(geojson, point);
+        });
+      },
+      loadGeometry: load,
+      hoverName: function (feature) {
+        return seatName(findPropCI(feature.properties || {}, ["ward"]));
+      },
+      query: function (point, seq) {
+        return queryFeatureAt(load, point).then(function (feature) {
+          if (!feature) return null;
+          var result = { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+          return municipalBoardFor(cfg.geoid).then(function (board) {
+            result.board = board;
+            return result;
+          });
+        });
+      },
+      cardIdentifier: function (result) {
+        return seatName(result.ward) || "Unknown " + cfg.unit.toLowerCase();
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush");
+        var named = result.ward ? renderBoardSeat(result.board, seatName(result.ward)) : null;
+        if (named) {
+          wrap.appendChild(named);
+        } else {
+          // The roster could not be read, or the city's page names nobody for
+          // this seat. The ward is still right, so name it and send the
+          // reader to the city's own page for the member.
+          wrap.appendChild(renderLinkRow({
+            title: seatName(result.ward) || cfg.body,
+            note: cfg.seatsNote + " The city's own page, linked below, names who holds "
+                + "each seat; this app could not read a name for this one."
+          }));
+        }
+        wrap.appendChild(renderFieldStack([
+          { label: "Where the " + cfg.unit.toLowerCase() + " lines come from",
+            value: cfg.linesFrom }
+        ]));
+        return wrap;
+      },
+      primaryLink: function (result) {
+        var url = result && result.board && safeHttpUrl(result.board.sourceUrl)
+          ? String(result.board.sourceUrl) : cfg.bodyUrl;
+        return { label: cfg.body, url: url };
+      }
+    };
+  }
+
+  var hollandEntry = municipalWardEntry({
+    key: "holland", label: "Holland", geoid: "2638640", unit: "Ward",
+    file: "data/app/mi-holland-wards.json",
+    body: "Holland City Council",
+    bodyUrl: "https://www.cityofholland.com/941/ContactLearn-about-Council-Members",
+    seatsNote: "Holland elects one council member from each of six wards and two at large.",
+    linesFrom: "The city's own Wards and Precincts map."
+  });
+  var midlandEntry = municipalWardEntry({
+    key: "midland", label: "Midland", geoid: "2653780", unit: "Ward",
+    file: "data/app/mi-midland-wards.json",
+    body: "Midland City Council",
+    bodyUrl: "https://www.cityofmidlandmi.gov/422/City-Council",
+    seatsNote: "Midland elects one council member from each of five wards.",
+    // The city's ward layer has not yet taken in land annexed since it was
+    // drawn, so a point on that land gets no Midland ward rather than a
+    // wrong one (mi/scripts/build_mi_midland_wards.py).
+    linesFrom: "The city's own council ward map."
+  });
+  var muskegonEntry = municipalWardEntry({
+    key: "muskegon", label: "Muskegon", geoid: "2656320", unit: "Ward",
+    file: "data/app/mi-muskegon-wards.json",
+    body: "Muskegon City Commission",
+    bodyUrl: "https://muskegon-mi.gov/city-services/elected-officials/city-commission/",
+    seatsNote: "Muskegon elects one commissioner from each of four wards and two at large.",
+    linesFrom: "Muskegon County's ward map, since the city publishes no map of its own."
+  });
+  var walkerEntry = municipalWardEntry({
+    key: "walker", label: "Walker", geoid: "2682960", unit: "Ward",
+    file: "data/app/mi-walker-wards.json",
+    body: "Walker City Commission",
+    bodyUrl: "https://www.walker.city/325/Elected-City-Officials",
+    seatsNote: "Walker elects two commissioners from each of three wards, and a mayor "
+             + "at large.",
+    // The map's notice, quoted whole; mi/scripts/build_mi_walker_wards.py
+    // refuses to rebuild if it changes. Drawn on the operator's 2026-10-16
+    // ruling that this notice does not stop the wards being drawn.
+    linesFrom: "The city's own 2025 precinct map, which says: \u201cThis map does not "
+             + "represent a legal document. It is intended to serve as an aid in graphic "
+             + "representation only. Information shown on this map is not warranted for "
+             + "accuracy and should be verified through other means. Any duplication is "
+             + "restricted under copyright laws and the Enhanced Access to Public Records "
+             + "Act, PA 462 of 1996, as amended.\u201d"
+  });
+  var pontiacEntry = municipalWardEntry({
+    key: "pontiac", label: "Pontiac", geoid: "2665440", unit: "District",
+    file: "data/app/mi-pontiac-wards.json",
+    body: "Pontiac City Council",
+    bodyUrl: "https://www.pontiac.mi.us/government/city_council/index.php",
+    seatsNote: "Pontiac elects one council member from each of six districts and a "
+             + "council president at large.",
+    // The item's licence field, quoted whole (the Grand Rapids precedent);
+    // mi/scripts/build_mi_pontiac_wards.py refuses to rebuild if it changes.
+    linesFrom: "Oakland County's map of the 2026 council districts, which says: \u201cThe "
+             + "City of Pontiac retains authority over City Council districts. Data is "
+             + "informational and should not substitute for official ordinance "
+             + "verification.\u201d"
+  });
+
   registerCountyLayer({
     id: "city-ward",
     group: "political",
@@ -15931,9 +16064,11 @@ function initMichiganExplorer() {
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
     // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek,
-    // then Jackson.
+    // then Jackson; the four drawn on 2026-10-15 follow in the same order
+    // (Pontiac, Midland, Muskegon, Holland), then Walker, drawn 2026-10-16.
     entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry,
-              rochesterHillsEntry, battleCreekEntry, jacksonEntry]
+              rochesterHillsEntry, battleCreekEntry, jacksonEntry,
+              pontiacEntry, midlandEntry, muskegonEntry, hollandEntry, walkerEntry]
   });
 
 
@@ -17427,9 +17562,10 @@ function initMichiganExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "mi-senate", "mi-house", "county-commissioner",
     // The city tier sits after the county board: same Political family, one
-    // level finer. It hides outside the seven cities whose boundaries it
+    // level finer. It hides outside the eleven cities whose boundaries it
     // draws (Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle
-    // Creek and Jackson), so for most readers this slot is not there.
+    // Creek, Jackson, Pontiac, Midland, Muskegon and Holland), so for most
+    // readers this slot is not there.
     "city-ward",
     // Courts follow the elected bodies: judges are elected by district too,
     // but a reader asks first who represents them.
