@@ -482,6 +482,17 @@ PROVENANCE = [
     },
     {
         "layer": "city-ward",
+        "app_file": "mi-walker-wards.json",
+        "source_url": "https://www.walker.city/DocumentCenter/View/4311/2025-Precinct-Map-Interactive",
+        "note": (
+            "Walker's three commission wards, read from the city's own georeferenced 2025 "
+            "precinct map PDF (ArcMap export, 2025-05-08) by "
+            "mi/scripts/build_mi_walker_wards.py. The sheet's notice is quoted on the card "
+            "and the build refuses if its text changes."
+        ),
+    },
+    {
+        "layer": "city-ward",
         "app_file": "mi-jackson-council-members.json",
         "source_url": "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager",
         "note": (
