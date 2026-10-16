@@ -1472,11 +1472,14 @@ ANSWERS = {
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("wi-circuit-court", "wi-court-of-appeals"),
         # A Wisconsin town IS the general-purpose government outside a village
-        # or city, and the app draws it — but what it names there is the town
-        # CLERK, who does not govern. The standard's test is that a reader is
-        # told who governs the point, so this is open rather than answered, and
-        # `town-clerks-*.json` is named here as what was considered.
-        "sub-county-government": OPEN,
+        # or city. Until 2026-10-15 the card named only the town CLERK, who
+        # does not govern, so this was open. It now names the town BOARD
+        # wherever the county publishes a list of town officials, read county
+        # by county (wi-town-boards.json), and in every other county it says
+        # why it cannot — which is the test Adam set on 2026-10-15 for this
+        # level: it passes where a list is published, and the card says so for
+        # the towns it cannot name.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": answers("mps-school-board"),
         "precincts": answers("ward"),
         "special-districts": answers("wtcs-district", "tid-district"),
