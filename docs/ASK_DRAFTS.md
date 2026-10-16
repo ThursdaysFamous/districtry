@@ -7589,11 +7589,14 @@ the counties' own sites and the next election's results stay the route.
 
 **Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
-County's District 3 is vacant), and can draw the districts they represent in only 12 counties.
-The only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's
-county subdivisions are the supervisor districts. Measured 2026-10-15 by
-`ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
-Bureau's current edition differs from its 2020 edition in 12 counties, which the map draws; in 64
+County's District 3 is vacant), and can draw the districts they represent in only 20 counties:
+12 from the Census Bureau's current edition and 8 from the county's own published map, the 8
+added after this letter was drafted. The letter's text does not count what the map draws, so it
+is unchanged. The only statewide map of supervisor districts found is the Census
+Bureau's, where Mississippi's county subdivisions are the supervisor districts. Measured
+2026-10-15 by `ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own
+blocks: the Bureau's current edition differs from its 2020 edition in 12 counties, which the map
+draws; in 64
 counties the lines it shows are unchanged since 2020 and have a total population deviation above
 10% on the 2020 census (the largest district less the smallest, as a share of an equal district: a
 median of 37%, and as much as 304%), which suggests those counties have redrawn them since (an
