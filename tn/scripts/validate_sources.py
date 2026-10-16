@@ -201,6 +201,22 @@ PROVENANCE = [
             "tn/WATCH.md compares the fingerprint recorded at the build."
         ),
     },
+    {
+        "layer": "tn-judicial-district",
+        "app_file": "tn-judicial-districts.json",
+        "source_url": "https://tennesseeda.gov/",
+        "note": (
+            "Tennessee's 32 judicial districts, dissolved from the county "
+            "fabric by tn/scripts/build_tn_judicial_districts.py following the "
+            "District Attorneys General Conference's county selector (read "
+            "2026-10-16; snapshot in tn/data/source/courts/), checked against "
+            "31 district pages and the Comptroller's FY2019 judicial map. The "
+            "statute is not readable here: its public copy is LexisNexis's and "
+            "the General Assembly's site admits only named search engines. A "
+            "new district shows first on the conference's own selector; the "
+            "re-read is a row in tn/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [

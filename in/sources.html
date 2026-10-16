@@ -1173,6 +1173,18 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-in-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>in-court-of-appeals</code></th>
+                <td data-label="What it answers">The Court of Appeals district covering the point, whose three judges stand for retention in that district alone.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.in.gov/courts/appeals/images/coa-district-map.jpg" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by in/scripts/build_in_appeals_districts.py, following the court's own district map (read 2026-10-16), the one place it publishes which counties are in each district; the Indiana Code that sets them is published only through a site that serves this project nothing it can read.</a></li>
+                    <li><a href="https://www.in.gov/courts/appeals/districts/" target="_blank" rel="noopener">Court of Appeals of Indiana — its districts, and which judges stand for retention where</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge is named yet; recorded as gap in-court-of-appeals-judges. The card says three of the court's fifteen judges come from the district and stand for retention only there.</td>
+                <td data-label="Where it applies">Indiana — statewide, all 92 counties.</td>
+              </tr>
               <tr id="layer-us-house">
                 <th scope="row"><span class="layer-name">U.S. House</span><code>us-house</code></th>
                 <td data-label="What it answers">The U.S. House district covering the point, and the representative holding it.</td>
@@ -1388,6 +1400,33 @@ table.matrix code {
     "url": "https://overberg.co"
   },
   "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/in/sources.html#dataset-in-court-of-appeals",
+      "identifier": "in-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The Court of Appeals district covering the point, whose three judges stand for retention in that district alone. No judge is named yet; recorded as gap in-court-of-appeals-judges. The card says three of the court's fifteen judges come from the district and stand for retention only there.",
+      "url": "https://districtry.com/in/sources.html#layer-in-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/in/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by in/scripts/build_in_appeals_districts.py, following the court's own district map (read 2026-10-16), the one place it publishes which counties are in each district; the Indiana Code that sets them is published only through a site that serves this project nothing it can read.",
+          "url": "https://www.in.gov/courts/appeals/images/coa-district-map.jpg"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Court of Appeals of Indiana — its districts, and which judges stand for retention where",
+          "url": "https://www.in.gov/courts/appeals/districts/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Indiana — statewide, all 92 counties"
+      }
+    },
     {
       "@type": "Dataset",
       "@id": "https://districtry.com/in/sources.html#dataset-us-house",

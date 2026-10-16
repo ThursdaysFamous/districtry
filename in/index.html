@@ -4210,7 +4210,7 @@ function initIndianaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "in-senate": "ins", "county": "co", "in-house": "inh",
-    "county-council": "cu", "school-district-unified": "su", "zip-code": "zp",
+    "in-court-of-appeals": "ina", "county-council": "cu", "school-district-unified": "su", "zip-code": "zp",
     "county-subdivision": "cs", "voting-precinct": "vp", "municipality": "mu",
     "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
@@ -4218,7 +4218,8 @@ function initIndianaExplorer() {
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["in-senate"],
-    "state-house": ["in-house"], "county": ["county"], "county-board": ["county-council"],
+    "state-house": ["in-house"], "appellate-court-district": ["in-court-of-appeals"],
+    "county": ["county"], "county-board": ["county-council"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
@@ -9365,7 +9366,8 @@ function initIndianaExplorer() {
   // geometry library in this codebase to compute polygon area from data.
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
-    "us-house",          // 9 congressional districts — the largest districts Indiana carries below the state itself
+    "in-court-of-appeals", // the Court of Appeals' 3 geographic districts of whole counties, 31,411 km2 mean area, measured 2026-10-16 on the drawn file — the largest districts Indiana carries below the state itself, three times a congressional district (10,470 km2)
+    "us-house",          // 9 congressional districts — the largest districts Indiana carries below the state apart from the Court of Appeals' three
     "in-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 92 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "in-house",          // 100 House districts — the finest political tiling this instance ships today
@@ -13981,6 +13983,123 @@ function initIndianaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
+  /* ---------- 4b. Court of Appeals District — three groups of whole counties ----------
+   * The Court of Appeals of Indiana has fifteen judges in five districts.
+   * Three come from each of the 1st, 2nd and 3rd Districts and "stand for
+   * retention only in their districts"; the 4th and 5th Districts each take
+   * one judge from each of the first three and stand for retention statewide
+   * (the court's "Court of Appeals Districts" page, read 2026-10-16). So the
+   * first three are the only districts a voter answers to, and only they are
+   * drawn. The governor appoints each judge from a nominating commission's
+   * finalists, and a retention vote is a yes-or-no vote on keeping the seat
+   * (the judicial branch's "Judicial Selection" page).
+   *
+   * THE COUNTY LISTS ARE READ FROM THE COURT'S OWN MAP, the one place it
+   * publishes them; the Indiana Code that sets them is published only through
+   * a script-driven site that serves this project nothing it can read, which
+   * is recorded as a data-publishing hurdle.
+   * in/scripts/build_in_appeals_districts.py dissolves the county fabric this
+   * instance already ships and stops on a district that comes out in two
+   * pieces, the sign of a misread county.
+   *
+   * WHY NO TRIAL COURT LAYER: every Indiana circuit is one county except
+   * Dearborn and Ohio, which share one, so the County card already answers
+   * where a reader's trial court sits.
+   *
+   * MEAN AREA 31,411 km2 against the U.S. House's 10,470, so this is the
+   * largest district Indiana draws and comes first in the area rank.
+   *
+   * NOBODY IS NAMED: the court's own pages list its judges, and no list of
+   * them has been read yet (gap in-court-of-appeals-judges).
+   * ---------- */
+  var loadInAppealsDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-appeals-districts.json", {}, 2);
+  });
+  var IN_APPEALS_DISTRICTS = "https://www.in.gov/courts/appeals/districts/";
+
+  function inAppealsUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  function inCountyList(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    return list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+  }
+
+  registerLayer({
+    id: "in-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    overlay: {
+      load: loadInAppealsDistricts,
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = inAppealsUnit(feature);
+      return unit == null ? null : "Court of Appeals District " + unit;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadInAppealsDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: inAppealsUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var counties = result.counties || [];
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? "Court of Appeals District " + result.unit
+          : "Unknown Court of Appeals district",
+        note: counties.length
+          ? counties.length + (counties.length === 1 ? " county" : " counties")
+          : null
+      }));
+      var rows = [
+        {
+          label: "Judges",
+          value: "Three of the court's fifteen judges come from this district. " +
+            "The governor appoints each from finalists a nominating commission " +
+            "chooses, and after that the judge stands for retention, a " +
+            "yes-or-no vote on keeping the seat, in this district only. This " +
+            "app does not name them yet."
+        },
+        {
+          label: "The 4th and 5th Districts",
+          value: "Each has three more judges, one from each of the first three " +
+            "districts, and those judges stand for retention statewide, so " +
+            "they are not drawn here."
+        },
+        {
+          label: "The court",
+          value: "Indiana's middle court of appeals, between the trial courts " +
+            "and the Indiana Supreme Court."
+        }
+      ];
+      if (counties.length) {
+        rows.push({ label: "Counties in this district", value: inCountyList(counties) });
+      }
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Court of Appeals of Indiana: its districts", url: IN_APPEALS_DISTRICTS };
+    }
+  });
+
 
   /* ---------- 6. County Subdivision — live TIGERweb ----------
    * The WI/IA/MI module with Indiana's own civil-division vocabulary. Live
@@ -16195,6 +16314,9 @@ function initIndianaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "in-senate", "in-house",
+    // The Court of Appeals district follows the chambers, as Kentucky's
+    // courts do: its voters decide whether its three judges keep their seats.
+    "in-court-of-appeals",
     // The county council's districts, the finest political tiling here. The
     // commissioners are elected by the whole county and are on the County
     // card, which is why they have no layer of their own.
@@ -16687,11 +16809,11 @@ function initIndianaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
-    "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#1F6F6B": "#5DC0BB", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD",
+    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#7A5C3E": "#CFA57D",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

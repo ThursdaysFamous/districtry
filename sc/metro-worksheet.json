@@ -128,7 +128,7 @@
       "id": "sc-senate",
       "label": "South Carolina Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "46 Senate districts — the same count as the state's counties, and drawn independently of them",
       "source": {
         "answers": "The South Carolina Senate district covering the point, and the senator holding it.",
@@ -146,7 +146,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "46 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -164,7 +164,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "72 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The public school district covering the point.",
@@ -182,7 +182,7 @@
       "id": "sc-house",
       "label": "South Carolina House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "124 House districts — the smallest of the three chamber tilings",
       "source": {
         "answers": "The South Carolina House district covering the point, and the representative holding it.",
@@ -197,10 +197,36 @@
       }
     },
     {
+      "id": "sc-circuit-court",
+      "label": "Judicial Circuit",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "16 judicial circuits of whole counties, 5,185 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (1,804 km2), smaller than a congressional district",
+      "source": {
+        "answers": "The judicial circuit covering the point: the circuit court there, how many judges the General Assembly elects for it, and the solicitor its voters elect.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by sc/scripts/build_sc_judicial_circuits.py, following the county lists in S.C. Code Section 14-5-610 as the Legislature publishes it (read 2026-10-16).",
+            "url": "https://www.scstatehouse.gov/code/t14c005.php"
+          },
+          {
+            "label": "S.C. Code Section 1-7-310 — one solicitor for each circuit, elected by its voters for four years",
+            "url": "https://www.scstatehouse.gov/code/t01c007.php"
+          },
+          {
+            "label": "Constitution of South Carolina, Article V — circuit judges elected by the General Assembly for six years (section 13) and rotated around the state (section 14)",
+            "url": "https://www.scstatehouse.gov/scconstitution/A05.pdf"
+          }
+        ],
+        "people": "No judge or solicitor is named yet, because no list of them by circuit has been read; recorded as gap sc-judicial-circuit-officers. The card gives the number of judges the statute sets for the circuit and says the General Assembly, not the voters, elects them.",
+        "applies": "South Carolina — statewide, all 46 counties."
+      }
+    },
+    {
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)",
       "source": {
         "answers": "The census county division containing the point, and its county.",
@@ -218,7 +244,7 @@
       "id": "county-council",
       "label": "County Council District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes",
       "source": {
         "answers": "The county council district covering the point, the council member(s) it elects, and the members elected by the whole county.",
@@ -236,7 +262,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -254,7 +280,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "2,315 precincts tiling the state, pre-built from the Revenue and Fiscal Affairs Office's official maps — 35.84 km2 mean area, land and water (median 12.82), measured 2026-10-15 on the drawn file: smaller on average than a census county division (260.4 km2 of land), larger than a city or town (18.58)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -272,7 +298,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "271 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -290,7 +316,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -308,7 +334,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -326,7 +352,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -344,7 +370,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "Tribal land — South Carolina has 2 pieces held by one nation, the Catawba Reservation (4.123 km²) and its off-reservation trust land (0.054 km²), both in York County near Rock Hill, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since the reservation is smaller than the city of Rock Hill beside it, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — South Carolina has 2 such areas, both the Catawba Indian Nation's.",
@@ -359,7 +385,7 @@
       }
     }
   ],
-  "min_register_layer": 10,
+  "min_register_layer": 11,
   "anchor_point": {
     "lat": 34.00035,
     "lng": -81.03295,
@@ -389,6 +415,10 @@
     {
       "layer": "voting-precinct",
       "expected": "Ward 1"
+    },
+    {
+      "layer": "sc-circuit-court",
+      "expected": "5th Judicial Circuit"
     }
   ],
   "negative_point": {
@@ -449,6 +479,12 @@
         "min_features": 2315,
         "max_features": 2315,
         "note": "Every South Carolina voting precinct, pre-built by sc/scripts/build_sc_precincts.py through scripts/statewide_precincts.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,315 count on the fetch and the drawn file). 7.8 MB, 2.24 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "sc-judicial-circuits.json",
+        "min_features": 16,
+        "max_features": 16,
+        "note": "The 16 judicial circuits of S.C. Code Section 14-5-610, dissolved from the county fabric by sc/scripts/build_sc_judicial_circuits.py, each carrying the number of judges the section sets for it."
       }
     ],
     "rosters": [

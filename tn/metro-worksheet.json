@@ -128,7 +128,7 @@
       "id": "tn-senate",
       "label": "Tennessee Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "33 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The Tennessee Senate district covering the point, and the senator holding it.",
@@ -146,7 +146,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "95 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point, and whether that county is consolidated with its principal city.",
@@ -164,7 +164,7 @@
       "id": "tn-house",
       "label": "Tennessee House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "99 House districts — the smallest of the three chamber tilings",
       "source": {
         "answers": "The Tennessee House district covering the point, and the representative holding it.",
@@ -179,10 +179,32 @@
       }
     },
     {
+      "id": "tn-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "32 judicial districts of whole counties, 3,409 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (3,306 km2), smaller than a congressional district",
+      "source": {
+        "answers": "The judicial district covering the point: the circuit and chancery courts there, whose judges the district's voters elect, and the district attorney general they also elect.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by tn/scripts/build_tn_judicial_districts.py, following the Tennessee District Attorneys General Conference's own list of the counties each of its 32 districts serves (read 2026-10-16), which agrees with 31 district pages and with the Comptroller's FY2019 judicial map apart from the 21st's later split into the 21st and 32nd. The statute was not read: its public copy is published by LexisNexis, and the General Assembly's site admits only named search engines and archives.",
+            "url": "https://tennesseeda.gov/"
+          },
+          {
+            "label": "Comptroller of the Treasury, Office of Research and Education Accountability — judicial districts for fiscal year 2019, the cross-check",
+            "url": "https://www.comptroller.tn.gov/content/dam/cot/orea/advanced-search/2020/JudicialMap2019.pdf"
+          }
+        ],
+        "people": "No judge or district attorney is named yet, because no list of them by district has been read; recorded as gap tn-judicial-district-officers. The card says who elects them and for how long, and links the district attorney's own page.",
+        "applies": "Tennessee — statewide, all 95 counties."
+      }
+    },
+    {
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point, where one district runs every grade.",
@@ -200,7 +222,7 @@
       "id": "county-commissioner",
       "label": "County Commission District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district",
       "source": {
         "answers": "The county commission district covering the point, and its county. In the three consolidated counties the district elects members of the consolidated government's governing body.",
@@ -218,7 +240,7 @@
       "id": "county-subdivision",
       "label": "Civil District",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it",
       "source": {
         "answers": "The civil district containing the point, and its county.",
@@ -236,7 +258,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -254,7 +276,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "15 city and special school districts running the lower grades, live from TIGERweb",
       "source": {
         "answers": "The district running the lower grades at the point, where that is not a unified district.",
@@ -272,7 +294,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb",
       "source": {
         "answers": "The district running the high school at the point, where that is not a unified district.",
@@ -290,7 +312,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -308,7 +330,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "345 incorporated places, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any, and whether it is a consolidated city-county government.",
@@ -326,7 +348,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -344,7 +366,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -362,7 +384,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -380,7 +402,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Tennessee has 1 such area, the Mississippi Band of Choctaw Indians' trust land near Henning.",
@@ -395,7 +417,7 @@
       }
     }
   ],
-  "min_register_layer": 13,
+  "min_register_layer": 14,
   "anchor_point": {
     "lat": 36.1659,
     "lng": -86.7844,
@@ -425,6 +447,10 @@
     {
       "layer": "voting-precinct",
       "expected": "Precinct 19-4"
+    },
+    {
+      "layer": "tn-judicial-district",
+      "expected": "20"
     }
   ],
   "negative_point": {
@@ -485,6 +511,12 @@
         "min_features": 1870,
         "max_features": 1870,
         "note": "Every Tennessee voting precinct, pre-built by tn/scripts/build_tn_precincts.py through scripts/statewide_precincts.py from the Comptroller of the Treasury's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 1,870 count on the fetch and the drawn file, after Overton County's nine records published twice with identical geometry are dropped to one each). 9.4 MB, 2.45 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "tn-judicial-districts.json",
+        "min_features": 32,
+        "max_features": 32,
+        "note": "The 32 judicial districts, dissolved from the county fabric by tn/scripts/build_tn_judicial_districts.py following the District Attorneys General Conference's county list."
       }
     ],
     "rosters": [

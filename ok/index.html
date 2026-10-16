@@ -4216,15 +4216,17 @@ function initOklahomaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ok-senate": "oks", "county": "co", "ok-house": "okh",
-    "school-district-unified": "su", "zip-code": "zp", "school-district-elementary": "se",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
-    "tribal-government": "tg", "county-subdivision": "cs", "county-commissioner": "cm" };
+    "ok-judicial-district": "okj", "school-district-unified": "su", "zip-code": "zp",
+    "school-district-elementary": "se", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg",
+    "county-subdivision": "cs", "county-commissioner": "cm" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ok-senate"],
-    "state-house": ["ok-house"], "county": ["county"], "county-board": ["county-commissioner"],
+    "state-house": ["ok-house"], "trial-court-district": ["ok-judicial-district"],
+    "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
@@ -9372,6 +9374,7 @@ function initOklahomaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 5 congressional districts — the largest districts Oklahoma carries below the state itself
+    "ok-judicial-district", // 26 judicial districts of whole counties, 6,963 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (3,771 km2), smaller than a congressional district
     "ok-senate",         // 48 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 77 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ok-house",          // 101 House districts — the smallest of the three chamber tilings
@@ -13784,6 +13787,182 @@ function initOklahomaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
+  /* ---------- 4b. Judicial District — 26 groups of whole counties ----------
+   * Oklahoma's district judges are elected from 26 judicial districts, each a
+   * group of whole counties. ok/scripts/build_ok_judicial_districts.py
+   * dissolves the county fabric this instance already ships, following the
+   * State Election Board's 2024 "Roster of Oklahoma State and County
+   * Officers" (published March 2025), which lists every district judge office
+   * under its district with the counties whose voters elect it and closes
+   * with a key giving each county's district; the build stops wherever the two
+   * parts disagree. The statutes could not be read: both of the state's
+   * publishers of them shut this project out in robots.txt (the group that
+   * binds it disallows every page on each), which is recorded as a
+   * data-publishing hurdle.
+   *
+   * ONE DISTRICT CAN HAVE SEVERAL ELECTORATES. In District 4 one office is
+   * elected by five of its counties and two by the other four; in District 12
+   * the three offices are elected by three different sets of counties; in
+   * District 14 nine offices are elected by Pawnee and Tulsa Counties and five
+   * by Tulsa alone. So each district ships its offices with the counties that
+   * elect each one, the card lists them, and where they differ it says which
+   * offices the point's own county votes for — read from the county fabric,
+   * same-origin, and only for those three districts.
+   *
+   * MEAN AREA 6,963 km2 against the Senate's 3,771, which puts the layer
+   * second in the area rank, under the U.S. House.
+   *
+   * NOBODY IS NAMED YET: the roster names each judge beside their home town,
+   * which this project never copies, and reading the names alone and keeping
+   * them current between rosters is its own change (gap
+   * ok-judicial-district-judges). The card links the roster.
+   * ---------- */
+  var loadOkJudicialDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-judicial-districts.json", {}, 2);
+  });
+  var OK_OFFICER_ROSTER =
+    "https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf";
+
+  // "Pawnee and Tulsa Counties"
+  function okCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  // [1, 3, 5] -> "Offices 1, 3 and 5"; [2] -> "Office 2"
+  function okOfficePhrase(numbers) {
+    var list = numbers.map(function (n) { return String(n); });
+    if (list.length === 1) return "Office " + list[0];
+    return "Offices " + list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+  }
+
+  // The district's offices grouped by the counties that elect them, in the
+  // order of each group's lowest office number.
+  function okElectorates(offices) {
+    var groups = [], byKey = {};
+    (offices || []).forEach(function (o) {
+      var names = ((o && o.counties) || []).map(function (n) { return String(n); });
+      var key = names.join("|");
+      if (!byKey[key]) {
+        byKey[key] = { counties: names, offices: [] };
+        groups.push(byKey[key]);
+      }
+      byKey[key].offices.push(Number(o.office));
+    });
+    groups.forEach(function (g) { g.offices.sort(function (a, b) { return a - b; }); });
+    groups.sort(function (a, b) { return a.offices[0] - b.offices[0]; });
+    return groups;
+  }
+
+  function okJudicialUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  registerLayer({
+    id: "ok-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    overlay: {
+      load: loadOkJudicialDistricts,
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = okJudicialUnit(feature);
+      return unit == null ? null : "Judicial District " + unit;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadOkJudicialDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          unit: okJudicialUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          electorates: okElectorates(findPropCI(props, ["offices"])),
+          county: null
+        };
+        if (result.electorates.length < 2) return result;
+        // Only a district whose offices have different electorates needs the
+        // point's county. A failed lookup leaves the district answer standing
+        // and the card simply lists every office's counties.
+        return queryFeatureAt(loadStateCounties, point).then(function (county) {
+          var name = county ? findPropCI(county.properties || {}, ["basename"]) : null;
+          result.county = name == null ? null : String(name);
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? "Judicial District " + result.unit
+          : "Unknown judicial district",
+        note: okCountyPhrase(result.counties)
+      }));
+      var groups = result.electorates || [];
+      var total = groups.reduce(function (n, g) { return n + g.offices.length; }, 0);
+      if (groups.length === 1) {
+        wrap.appendChild(renderFieldStack([{
+          label: "District judges",
+          value: total === 1
+            ? "One district judge, elected by the voters of the whole district."
+            : "All " + total + " district judges here are elected by the voters " +
+              "of the whole district."
+        }]));
+      } else if (groups.length > 1) {
+        var mine = [];
+        groups.forEach(function (g) {
+          if (result.county && g.counties.indexOf(result.county) !== -1) {
+            mine = mine.concat(g.offices);
+          }
+        });
+        mine.sort(function (a, b) { return a - b; });
+        if (mine.length) {
+          wrap.appendChild(renderFieldStack([{
+            label: result.county + " County votes for",
+            value: mine.length === total
+              ? "Every one of the district's " + total + " district judges."
+              : okOfficePhrase(mine) + ", " + mine.length + " of the district's " +
+                total + " district judges."
+          }]));
+        }
+        wrap.appendChild(renderSectionLabel("Who elects each district judge"));
+        wrap.appendChild(renderFieldStack(groups.map(function (g) {
+          return { label: okOfficePhrase(g.offices), value: "Elected by " + okCountyPhrase(g.counties) };
+        })));
+      }
+      var rows = [
+        {
+          label: "Who holds each office",
+          value: "This app does not name the judges yet. The State Election " +
+            "Board's roster, linked below, lists who held each office when it " +
+            "was published in March 2025."
+        },
+        {
+          label: "The court",
+          value: "The district court is Oklahoma's trial court for civil and " +
+            "criminal cases. Each county also has associate district judges, " +
+            "who are not part of this map."
+        }
+      ];
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "State Election Board roster of officers", url: OK_OFFICER_ROSTER };
+    }
+  });
+
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Norman" + " city") or a prefix. Returns null when the two are equal or
   // unrelated, so a TIGER change shows up as a missing type row rather than
@@ -15796,7 +15975,10 @@ function initOklahomaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ok-senate", "ok-house", "county-commissioner",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ok-senate", "ok-house",
+    // The judicial district follows the chambers, as Kentucky's courts do:
+    // its voters elect its district judges.
+    "ok-judicial-district", "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "county", "county-subdivision", "municipality", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
@@ -16285,8 +16467,8 @@ function initOklahomaExplorer() {
     "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
     "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
     "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -1160,7 +1160,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">16 layers — 5 political and legislative, 2 public safety, 3 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">17 layers — 6 political and legislative, 2 public safety, 3 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1169,7 +1169,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1187,6 +1187,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Tennessee — statewide, all 9 districts.</td>
+              </tr>
+              <tr id="layer-tn-judicial-district">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>tn-judicial-district</code></th>
+                <td data-label="What it answers">The judicial district covering the point: the circuit and chancery courts there, whose judges the district's voters elect, and the district attorney general they also elect.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tennesseeda.gov/" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by tn/scripts/build_tn_judicial_districts.py, following the Tennessee District Attorneys General Conference's own list of the counties each of its 32 districts serves (read 2026-10-16), which agrees with 31 district pages and with the Comptroller's FY2019 judicial map apart from the 21st's later split into the 21st and 32nd. The statute was not read: its public copy is published by LexisNexis, and the General Assembly's site admits only named search engines and archives.</a></li>
+                    <li><a href="https://www.comptroller.tn.gov/content/dam/cot/orea/advanced-search/2020/JudicialMap2019.pdf" target="_blank" rel="noopener">Comptroller of the Treasury, Office of Research and Education Accountability — judicial districts for fiscal year 2019, the cross-check</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge or district attorney is named yet, because no list of them by district has been read; recorded as gap tn-judicial-district-officers. The card says who elects them and for how long, and links the district attorney's own page.</td>
+                <td data-label="Where it applies">Tennessee — statewide, all 95 counties.</td>
               </tr>
               <tr id="layer-tn-senate">
                 <th scope="row"><span class="layer-name">Tennessee Senate District</span><code>tn-senate</code></th>
@@ -1434,6 +1446,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Tennessee — statewide, all 9 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/tn/sources.html#dataset-tn-judicial-district",
+      "identifier": "tn-judicial-district",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point: the circuit and chancery courts there, whose judges the district's voters elect, and the district attorney general they also elect. No judge or district attorney is named yet, because no list of them by district has been read; recorded as gap tn-judicial-district-officers. The card says who elects them and for how long, and links the district attorney's own page.",
+      "url": "https://districtry.com/tn/sources.html#layer-tn-judicial-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/tn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by tn/scripts/build_tn_judicial_districts.py, following the Tennessee District Attorneys General Conference's own list of the counties each of its 32 districts serves (read 2026-10-16), which agrees with 31 district pages and with the Comptroller's FY2019 judicial map apart from the 21st's later split into the 21st and 32nd. The statute was not read: its public copy is published by LexisNexis, and the General Assembly's site admits only named search engines and archives.",
+          "url": "https://tennesseeda.gov/"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Comptroller of the Treasury, Office of Research and Education Accountability — judicial districts for fiscal year 2019, the cross-check",
+          "url": "https://www.comptroller.tn.gov/content/dam/cot/orea/advanced-search/2020/JudicialMap2019.pdf"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Tennessee — statewide, all 95 counties"
       }
     },
     {

@@ -218,6 +218,34 @@ PROVENANCE = [
             "ar/WATCH.md compares the fingerprint recorded at the build."
         ),
     },
+    {
+        "layer": "ar-court-of-appeals",
+        "app_file": "ar-appeals-districts.json",
+        "source_url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html",
+        "note": (
+            "The Court of Appeals' 7 districts, dissolved from the county "
+            "fabric by ar/scripts/build_ar_court_districts.py following Act "
+            "1812 of 2003 as this metadata page quotes it (read 2026-10-16; "
+            "snapshot in ar/data/source/courts/), held county by county to "
+            "the GIS Office's Appeals Court Districts layer. The official "
+            "Code is not readable here: its copy is LexisNexis's. The re-read "
+            "is a row in ar/WATCH.md."
+        ),
+    },
+    {
+        "layer": "ar-circuit-court",
+        "app_file": "ar-judicial-circuits.json",
+        "source_url": "https://arcourts.gov/directories/circuit-judges",
+        "note": (
+            "The 28 judicial circuits, dissolved from the county fabric by "
+            "ar/scripts/build_ar_court_districts.py following the "
+            "Administrative Office of the Courts' circuit judge directory "
+            "(read 2026-10-16; county-level extract in "
+            "ar/data/source/courts/), held county by county to the GIS "
+            "Office's Circuit Court Districts layer. A circuit gains a judge "
+            "by act; the re-read is a row in ar/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [

@@ -4215,19 +4215,20 @@ function initArkansasExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ar-senate": "ars", "county": "co", "ar-house": "arh",
-    "school-district-unified": "su", "zip-code": "zp", "quorum-court": "qc",
-    "county-subdivision": "cs", "voting-precinct": "vp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "ar-court-of-appeals": "ara", "ar-circuit-court": "arc",
+    "ar-senate": "ars", "county": "co", "ar-house": "arh", "school-district-unified": "su",
+    "zip-code": "zp", "quorum-court": "qc", "county-subdivision": "cs", "voting-precinct": "vp",
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ar-senate"],
-    "state-house": ["ar-house"], "county": ["county"], "county-board": ["quorum-court"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "state-house": ["ar-house"], "appellate-court-district": ["ar-court-of-appeals"],
+    "trial-court-district": ["ar-circuit-court"], "county": ["county"],
+    "county-board": ["quorum-court"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9372,6 +9373,8 @@ function initArkansasExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 4 congressional districts — the largest districts Arkansas carries below the state itself
+    "ar-court-of-appeals", // 7 Court of Appeals districts of whole counties, 19,683 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a congressional district (34,445 km2), larger than a judicial circuit (4,921 km2)
+    "ar-circuit-court",  // 28 judicial circuits of whole counties, 4,921 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a Court of Appeals district, larger than a State Senate district (3,937 km2)
     "ar-senate",         // 35 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 75 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ar-house",          // 100 House districts — smaller on average than a county, larger than a school district
@@ -13632,6 +13635,219 @@ function initArkansasExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
+  /* ---------- 4b. Court of Appeals District — 7 groups of whole counties ----------
+   * Act 1812 of 2003 divides the state into seven districts "for the
+   * election of judges to the Arkansas Court of Appeals" and names each
+   * one's counties, so no map is traced: ar/scripts/build_ar_court_districts.py
+   * dissolves the county fabric this instance already ships. The act is read
+   * as the state GIS office's metadata quotes it, because the official Code
+   * has no free readable copy, and the state's own district layer must put
+   * every county where the act does (both read 2026-10-16, kept in
+   * data/source/courts/). The court's own district map page lists two
+   * positions in five districts and one in two: twelve judges.
+   *
+   * THE DISTRICT IS WHERE THE JUDGES ARE ELECTED, NOT WHERE THE COURT SITS:
+   * the court hears appeals for the whole state. MEAN AREA 19,683 km2
+   * against a congressional district's 34,445, which puts the layer second
+   * in the area rank.
+   *
+   * NOBODY IS NAMED: the court's pages name every judge, and this app does
+   * not publish them yet (gap ar-appeals-judges). The card links the court's
+   * own district page, which does.
+   * ---------- */
+  var loadArAppealsDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-appeals-districts.json", {}, 2);
+  });
+  var AR_COA_DISTRICTS = "https://arcourts.gov/courts/court-of-appeals/map";
+  var AR_JUDGE_WORDS = ["One", "Two", "Three", "Four", "Five", "Six", "Seven",
+    "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+    "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"];
+
+  // "Pulaski, Perry and Saline Counties" — the county list a card prints
+  // under its own district.
+  function arCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  function arCourtUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  function arJudgePhrase(n) {
+    var k = Number(n);
+    return k >= 1 && k <= AR_JUDGE_WORDS.length
+      ? AR_JUDGE_WORDS[k - 1] + (k === 1 ? " judge" : " judges")
+      : null;
+  }
+
+  registerLayer({
+    id: "ar-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    overlay: {
+      load: loadArAppealsDistricts,
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = arCourtUnit(feature);
+      return unit == null ? null : "Court of Appeals District " + unit;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArAppealsDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: arCourtUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          judges: findPropCI(props, ["judge_count"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? "Court of Appeals District " + result.unit
+          : "Unknown Court of Appeals district",
+        note: arCountyPhrase(result.counties)
+      }));
+      var n = Number(result.judges);
+      var who = n === 1
+        ? "The district's voters elect one of the court's 12 judges."
+        : n >= 2 && n <= AR_JUDGE_WORDS.length
+          ? "The district's voters elect " + AR_JUDGE_WORDS[n - 1].toLowerCase() +
+            " of the court's 12 judges, one for each of its " +
+            AR_JUDGE_WORDS[n - 1].toLowerCase() + " positions."
+          : "The district's voters elect some of the court's 12 judges.";
+      var rows = [
+        {
+          label: "Judges",
+          value: who + " This app does not name them yet; the link below " +
+            "opens the court's own list by district."
+        },
+        {
+          label: "The court",
+          value: "The Court of Appeals hears appeals for the whole state. The " +
+            "districts are where its judges are elected, not where cases come from."
+        }
+      ];
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Court of Appeals districts", url: AR_COA_DISTRICTS };
+    }
+  });
+
+  /* ---------- 4c. Judicial Circuit — 28 groups of whole counties ----------
+   * Arkansas's circuit courts, its general trial courts, sit in 28 judicial
+   * circuits (the Code calls them judicial districts). The circuit's voters
+   * elect its judges in nonpartisan elections for six-year terms (the court
+   * system's circuit courts page). The county lists are read from the
+   * Administrative Office of the Courts' circuit judge directory, which lists
+   * every judge under every county the judge serves:
+   * ar/scripts/build_ar_court_districts.py stops if any judge serves only
+   * some of a circuit's counties, and the state's circuit layer must put
+   * every county in the same circuit (both read 2026-10-16).
+   *
+   * FIVE CIRCUITS HAVE ELECTION SUBDISTRICTS THAT ARE NOT DRAWN. A federal
+   * court order (Hunt v. State of Arkansas) created two subdistricts in each
+   * of the 1st, 2nd, 6th, 10th and 11th West circuits, for elections only;
+   * judges elected from them hear cases across the whole circuit. Which
+   * judgeships each subdistrict elects is set by that court and was not read,
+   * so the circuit is drawn whole and its card says so (`subdistricts`).
+   *
+   * MEAN AREA 4,921 km2 against the Senate's 3,937, which puts the layer
+   * third in the area rank, under the Court of Appeals districts.
+   *
+   * NOBODY IS NAMED (gap ar-circuit-judges). The card gives the circuit's
+   * number of judges, from the directory, and links the directory.
+   * ---------- */
+  var loadArJudicialCircuits = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-judicial-circuits.json", {}, 2);
+  });
+  var AR_CIRCUIT_DIRECTORY = "https://arcourts.gov/directories/circuit-judges";
+
+  registerLayer({
+    id: "ar-circuit-court",
+    group: "political",
+    label: "Judicial Circuit",
+    overlay: {
+      load: loadArJudicialCircuits,
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = arCourtUnit(feature);
+      return unit == null ? null : unit + " Judicial Circuit";
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArJudicialCircuits, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: arCourtUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          judges: findPropCI(props, ["judge_count"]),
+          subdistricts: findPropCI(props, ["subdistricts"]) === true
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? result.unit + " Judicial Circuit"
+          : "Unknown judicial circuit",
+        note: arCountyPhrase(result.counties)
+      }));
+      var count = arJudgePhrase(result.judges);
+      var rows = [
+        {
+          label: "Circuit judges",
+          value: (count ? count + ", elected" : "Elected") + " by the " +
+            "circuit's voters in nonpartisan elections for six-year terms. " +
+            "This app does not name them yet; the link below opens the " +
+            "court system's directory of circuit judges."
+        }
+      ];
+      if (result.subdistricts) {
+        rows.push({
+          label: "Subdistricts",
+          value: "A federal court order (Hunt v. State of Arkansas) created two " +
+            "election subdistricts in this circuit. Judges elected from them " +
+            "hear cases across the whole circuit. This map does not draw the " +
+            "subdistricts or say which judgeships they elect."
+        });
+      }
+      rows.push({
+        label: "The court",
+        value: "Circuit courts are Arkansas's general trial courts, for civil, " +
+          "criminal, probate, domestic relations and juvenile cases."
+      });
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Directory of circuit judges", url: AR_CIRCUIT_DIRECTORY };
+    }
+  });
+
   /* ---------- 5. Quorum Court District ----------
    * Pre-built from the state's own statewide layer of every county's justice
    * of the peace districts (gis.arkansas.gov Boundaries FeatureServer 19,
@@ -15849,7 +16065,10 @@ function initArkansasExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house", "quorum-court",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house",
+    // The courts follow the chambers, as Kentucky's do: the district's
+    // voters elect the Court of Appeals judges, the circuit's its trial judges.
+    "ar-court-of-appeals", "ar-circuit-court", "quorum-court",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "police-station", "fire-station", "post-office"];
@@ -16337,9 +16556,9 @@ function initArkansasExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD",
     "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#7A5C3E": "#CFA57D",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
