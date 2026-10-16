@@ -636,7 +636,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v11",
+    "cache_name": "districtry-mn-shell-v12",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
