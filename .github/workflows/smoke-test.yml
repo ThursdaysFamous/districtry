@@ -1284,6 +1284,15 @@ jobs:
       - name: The shipped Iowa city councils still refuse an address and keep their seat counts
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_city_councils.py --check
+      # Kentucky's magisterial and council districts are composed from precincts
+      # and recap sheets the build fetches; --check holds the shipped file to the
+      # hash its builder recorded and each drawn county to its Census outline,
+      # offline, and --selftest holds the placing rules to fixed cases.
+      - name: The shipped Kentucky fiscal court districts match their record and cover their counties
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ky/scripts/build_ky_county_districts.py --selftest
+          python3 ky/scripts/build_ky_county_districts.py --check
       # FOUR COUNTIES WHOSE TWO OUTSIDE PUBLISHERS DISAGREE about their board's
       # size are read from the county's OWN board page instead, and the four
       # pages take four shapes. Three defects are declared here because each

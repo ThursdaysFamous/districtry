@@ -14579,8 +14579,14 @@ function initWisconsinExplorer() {
       // The sentence is what makes the number safe to print at all.
       var board = result.board;
       if (board && board.board && board.board.length) {
+        // A BODY THE CITY DOES NOT CALL AT LARGE IS NOT LABELLED AT LARGE.
+        // Menomonee Falls says "elected by numbered seat" and Fond du Lac says
+        // nothing about the method; for those the roster carries the city's
+        // own description as `howElected` and the card prints it.
+        var boardAtLarge = board.atLarge !== false;
         wrap.appendChild(renderSectionLabel(
-          board.board.length + " members, elected at large"));
+          board.board.length + (boardAtLarge ? " members, elected at large"
+                                             : " members")));
         wrap.appendChild(renderPersonRows(board.board.map(function (m) {
           var person = { name: String(m.name) };
           if (m.role) person.badge = String(m.role);
@@ -14590,9 +14596,13 @@ function initWisconsinExplorer() {
         })));
         var boardRows = [{
           label: "How they are elected",
-          value: "Every seat on this body is elected by the whole " +
-            "municipality, so the numbers beside these names are seats rather " +
-            "than districts and there is no district to draw."
+          value: boardAtLarge
+            ? "Every seat on this body is elected by the whole " +
+              "municipality, so the numbers beside these names are seats " +
+              "rather than districts and there is no district to draw."
+            : String(board.howElected || "The municipality does not say " +
+              "how these seats are elected, and the map draws no district " +
+              "for them.")
         }];
         // A CARRIED ROSTER SAYS SO, the same posture as the executive above: the
         // whole value of a weekly re-read is that a shown name was corroborated
