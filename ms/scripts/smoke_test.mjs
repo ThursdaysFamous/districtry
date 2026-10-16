@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ms-senate", "ms-house"];
 const EXPECT_DISTRICT = { "county": "Hinds County", "us-house": "2", "ms-senate": "29", "ms-house": "67" };
 const NEGATIVE_POINT = "32.48000,-88.25000"; // near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.
 const APP_NAME = "districtry Mississippi";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 16;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -919,6 +919,11 @@ try {
   //        the card says the seat is vacant, and nobody called Vacant is
   //        listed as a supervisor. A roster with no vacancy there still runs
   //        the other assertions, so a new edition filling the seat passes.
+  //    In all four the card also names the county's five election
+  //    commissioners by district, in the directory's word for them ("District"
+  //    even in Jasper, where the supervisors' districts are beats), and quotes
+  //    the directory on what they do. Only names reach the card: the roster
+  //    carries nothing else for them, which the builder's --check holds.
   //    The non-Capitol points are interior points of each county as the
   //    shipped geometry draws it (polylabel, 2026-10-15).
   {
@@ -958,6 +963,21 @@ try {
         missing.length ? `missing=${missing.slice(0, 3)}`
           : !vacancyRight ? `unsaid=${unsaid} vacantAsName=${vacantAsName}`
           : `office=${office} ${county.text.slice(0, 90)}`);
+      const cword = o.commissionerLabel === "Beat" ? "Beat" : "District";
+      const commissioners = (o.electionCommissioners || []).filter((ec) => ec.vacant !== true);
+      // the commissioners follow their own heading, so each is looked for
+      // there; the heading is set in capitals, which innerText reports
+      const at = county.text.search(/election commissioners/i);
+      const after = at >= 0 ? county.text.slice(at) : "";
+      const unnamed = commissioners.filter((ec) => !after.includes(ec.name) ||
+        !after.includes(`${cword} ${ec.district}`)).map((ec) => ec.name);
+      check(`county card at ${c.name} names its election commissioners by ${cword.toLowerCase()} and quotes the directory on what they do`,
+        !county.error && commissioners.length > 0 && unnamed.length === 0 &&
+          /Election commissioner\b/.test(after) &&
+          /What election commissioners do/.test(county.text) &&
+          /certifying election results/.test(county.text) &&
+          /supervisor and the election commissioner elected from the/.test(county.text),
+        unnamed.length ? `unnamed=${unnamed.slice(0, 3)}` : after.slice(0, 120));
       await context.close();
     }
   }
@@ -973,7 +993,8 @@ try {
       await p.route("**/data/app/ms-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
     });
     const county = await cardText(page, "county");
-    const named = hinds.supervisors.filter((sv) => county.text.includes(sv.name)).map((sv) => sv.name);
+    const named = hinds.supervisors.concat(hinds.electionCommissioners)
+      .filter((sv) => sv.name && county.text.includes(sv.name)).map((sv) => sv.name);
     check("county card degrades to naming nobody when the roster fails",
       !county.error && /Hinds County/.test(county.text) && /did not load/.test(county.text) &&
         named.length === 0,
@@ -986,19 +1007,35 @@ try {
   //     and edition are read from the shipped files, so a rebuild that
   //     renumbers a county moves the expectation with it; what is asserted is
   //     that the card agrees with those files at the point.
-  //       - Two drawn counties: the card's "District N" is the district the
-  //         shipped file puts the point in, it names that district's
-  //         supervisor from the directory, and it says where the line and the
-  //         name come from.
-  //       - The Capitol, in Hinds, whose Census lines are the ones drawn after
-  //         the 2010 census and are not drawn: the layer HIDES, with the
-  //         layers= permalink intact. This is the half that discriminates:
-  //         without `coverage` the card would say no district is drawn here,
-  //         about a county that has five.
+  //       - Two counties drawn from the Census's lines: the card's
+  //         "District N" is the district the shipped file puts the point in, it
+  //         names that district's supervisor from the directory, and it says
+  //         where the line and the name come from, naming the Census edition.
+  //       - Two counties drawn from their own maps, Hinds at the Capitol and
+  //         Rankin: the card says whose map the line comes from and when it
+  //         was read, and never names the Census edition; in Rankin it also
+  //         says how many people the map's own population figures leave out,
+  //         and in Hinds that it leaves nobody out.
+  //       - Amite, whose Census lines place every resident as the Census's
+  //         January 1, 2010 edition does, and which publishes none of its
+  //         own: the layer HIDES, with the layers= permalink intact. This is
+  //         the half that discriminates: without `coverage` the card would
+  //         say no district is drawn here, about a county that has five.
+  //       - With the layer OFF at the Capitol, the coverage test reads the
+  //         list of drawn counties and never the districts file, which was
+  //         150 KB gzipped on every reader's first selection when the test
+  //         read it (2026-10-15), and the layer's toggle still shows there.
+  //       - Each of those cards also names the election commissioner of the
+  //         same district from the same directory, and says where the names
+  //         (plural) come from.
   //       - The roster is refused: the district still answers and names nobody.
   //       - A vacant seat, on a stubbed directory because no drawn county has
   //         one in the 2026 edition: the card says the seat is vacant and
-  //         names nobody for it.
+  //         names nobody for it. The same for a vacant commissioner's seat,
+  //         while the supervisor is still named.
+  //       - A stubbed directory that names the supervisors' districts with one
+  //         word and the commissioners' with another: no commissioner is
+  //         joined to the district on the strength of its number alone.
   //     The points are interior points of each district as the shipped file
   //     draws it (polylabel, 2026-10-15), each at least 5 km from its lines.
   {
@@ -1026,7 +1063,13 @@ try {
       const o = roster[p.countyfips] || { supervisors: [] };
       return o.supervisors.find((sv) => String(sv.district) === String(p.district)) || {};
     }
+    function commissionerOf(p) {
+      const o = roster[p.countyfips] || {};
+      return (o.electionCommissioners || []).find((ec) => String(ec.district) === String(p.district)) || {};
+    }
     const drawnPoints = ["34.92782,-90.17414", "33.34602,-88.57919"];  // DeSoto 3, Lowndes 4
+    const ownMapPoints = [POINT, "32.34382,-89.84721"];  // Hinds 5 (the Capitol), Rankin 4
+    const AMITE = "31.17456,-90.72388";  // the Amite County point check 9 uses
 
     for (const pt of drawnPoints) {
       const at = districtsAt(pt);
@@ -1037,19 +1080,43 @@ try {
       const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
       const info = await cardText(page, "county-supervisor");
       const text = info.text || "";
-      check(`county-supervisor card in ${p.county || "a drawn county"} names ${word} ${p.district} and its supervisor, with where the line and the name come from`,
-        at.length === 1 && !info.error && !!seat.name &&
+      const ec = commissionerOf(p);
+      check(`county-supervisor card in ${p.county || "a drawn county"} names ${word} ${p.district}, its supervisor and its election commissioner, with where the line and the names come from`,
+        at.length === 1 && !info.error && !!seat.name && !!ec.name &&
           new RegExp(`\\b${word} ${p.district}\\b`).test(text) &&
-          text.includes(seat.name) && text.includes(p.county) &&
+          text.includes(seat.name) && text.includes(ec.name) && /Election commissioner/.test(text) &&
+          text.includes(p.county) &&
           /Where this line comes from/.test(text) && text.includes(`${rec.vintage} edition`) &&
-          /Where the name comes from/.test(text),
+          /Where the names come from/.test(text),
         `districts here=${at.length} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+
+    for (const pt of ownMapPoints) {
+      const at = districtsAt(pt);
+      const p = at[0] || {};
+      const seat = seatOf(p);
+      const aside = Number(p.set_aside) || 0;
+      const asideText = `${aside.toLocaleString("en-US")} people in census blocks with almost no homes`;
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      const ec = commissionerOf(p);
+      check(`county-supervisor card in ${p.county || "a county drawn from its own map"} names District ${p.district}, its supervisor and its election commissioner, and says whose map the line comes from${aside ? " and whom its figures leave out" : ""}`,
+        at.length === 1 && p.lines === "county" && !info.error && !!seat.name && !!ec.name &&
+          new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
+          text.includes(seat.name) && text.includes(ec.name) && text.includes(p.county) &&
+          !!p.source && text.includes(p.source) && /, read on \d{1,2} [A-Z][a-z]+ \d{4}\./.test(text) &&
+          !text.includes(`${rec.vintage} edition`) &&
+          (aside > 0 ? text.includes(asideText) : !/almost no homes/.test(text)),
+        `districts here=${at.length} lines=${p.lines} ${text.slice(0, 160)}`);
       await context.close();
     }
 
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=county-supervisor`);
+      const page = await booted(context, `${BASE}#point=${AMITE}&layers=county-supervisor`);
       const hidden = await page
         .waitForFunction(() => {
           const box = document.getElementById("toggle-county-supervisor");
@@ -1059,9 +1126,33 @@ try {
         .then(() => true, () => false);
       const stillOn = await page.evaluate(
         (n) => window[n].state.layersOn["county-supervisor"] === true, EXPORTS_NAME);
-      check("county-supervisor hides in Hinds County, whose current lines are not confirmed, and stays switched on",
-        districtsAt(POINT).length === 0 && hidden && stillOn,
-        `drawn here=${districtsAt(POINT).length} hidden=${hidden} layersOn=${stillOn}`);
+      check("county-supervisor hides in Amite County, whose current lines are not confirmed, and stays switched on",
+        districtsAt(AMITE).length === 0 && hidden && stillOn,
+        `drawn here=${districtsAt(AMITE).length} hidden=${hidden} layersOn=${stillOn}`);
+      await context.close();
+    }
+
+    {
+      const asked = [];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (pg) => {
+        pg.on("request", (r) => asked.push(r.url()));
+      });
+      await cardText(page, "county");
+      const shown = await page
+        .waitForFunction(() => {
+          const box = document.getElementById("toggle-county-supervisor");
+          const block = box && box.closest(".layer-block");
+          return block && block.hidden === false;
+        }, null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const list = asked.some((u) => /\/data\/app\/ms-supervisor-counties\.json/.test(u));
+      const file = asked.some((u) => /\/data\/app\/ms-supervisor-districts\.json/.test(u));
+      const off = await page.evaluate(
+        (n) => !window[n].state.layersOn["county-supervisor"], EXPORTS_NAME);
+      check("with county-supervisor off, its coverage test reads the list of drawn counties and never the districts file, and its toggle shows in Hinds",
+        off && list && !file && shown,
+        `off=${off} list=${list} districts file=${file} shown=${shown}`);
       await context.close();
     }
 
@@ -1074,7 +1165,8 @@ try {
       });
       const info = await cardText(page, "county-supervisor");
       const text = info.text || "";
-      const named = (roster[p.countyfips] || { supervisors: [] }).supervisors
+      const o = roster[p.countyfips] || { supervisors: [] };
+      const named = o.supervisors.concat(o.electionCommissioners || [])
         .filter((sv) => sv.name && text.includes(sv.name)).map((sv) => sv.name);
       check("county-supervisor still names the district, and names nobody, when the roster fails",
         !info.error && new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
@@ -1101,6 +1193,303 @@ try {
         text.slice(0, 120));
       await context.close();
     }
+
+    const ec = commissionerOf(p);
+    {
+      const stub = JSON.parse(JSON.stringify(roster));
+      const coms = stub[p.countyfips].electionCommissioners;
+      coms[coms.findIndex((c) => String(c.district) === String(p.district))] =
+        { district: String(p.district), vacant: true };
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
+        await pg.route("**/data/app/ms-county-officials.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
+      });
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      check("county-supervisor says a vacant election commissioner's seat is vacant, names nobody for it, and still names the supervisor",
+        !info.error && !!ec.name && !!seat.name && text.includes(seat.name) &&
+          /Election commissioner[^.]*listed as vacant/.test(text) && !text.includes(ec.name) &&
+          /Where the name comes from/.test(text),
+        text.slice(0, 160));
+      await context.close();
+    }
+
+    {
+      const stub = JSON.parse(JSON.stringify(roster));
+      stub[p.countyfips].commissionerLabel = stub[p.countyfips].label === "Beat" ? "District" : "Beat";
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
+        await pg.route("**/data/app/ms-county-officials.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
+      });
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      check("county-supervisor joins no election commissioner where the directory names the two lists' districts with different words",
+        !info.error && !!ec.name && !!seat.name && text.includes(seat.name) &&
+          !text.includes(ec.name) && !/Election commissioner/.test(text),
+        text.slice(0, 160));
+      await context.close();
+    }
+  }
+  // 11. THE FOUR COURTS WHOSE JUDGES ARE ELECTED FROM DISTRICTS. Every
+  //     expectation is read from the shipped maps and the shipped list of
+  //     judges at the point, so a rebuild moves it with the files; what is
+  //     asserted is that each card agrees with them.
+  //       - At the Capitol, in Hinds County: the Supreme Court card names its
+  //         district and that district's three justices and no others. The
+  //         Court of Appeals divides Hinds by voting precinct, so its card
+  //         names both districts, says which one takes the listed precincts,
+  //         and names the judges of both. The chancery card names its
+  //         chancellors and the vacancy the court's news reported, with that
+  //         news as its link. The circuit card names its judges and says which
+  //         counties its district takes in on 1 January 2027, worked out here
+  //         from the two shipped circuit maps.
+  //       - In Claiborne County, whose circuit district ends on 1 January
+  //         2027: the circuit card names today's district and its judge, says
+  //         which district the point is in from that day and that today's
+  //         district will not exist; the chancery card says which chancery
+  //         district the point moves to. The point is the shipped county's
+  //         pole of inaccessibility, 13 km from its nearest edge (2026-10-16).
+  //       - With the page's clock at 2 January 2027: both trial layers draw
+  //         the 2027 maps and never fetch today's, so the Claiborne point is
+  //         in the district the 2027 file puts it in, and the cards name
+  //         nobody, because the lists of judges this app reads still describe
+  //         the earlier districts. The Supreme Court card still names its
+  //         justices, since that court is not redrawn.
+  //       - The list of judges is refused: every card still names its
+  //         district, says the names did not load, and names nobody.
+  {
+    const courtFile = (n) => JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", n), "utf8"));
+    const judges = courtFile("ms-judge-roster.json").courts;
+    const maps = {
+      supreme: courtFile("ms-supreme-court-districts.json"),
+      appeals: courtFile("ms-court-of-appeals-districts.json"),
+      chancery: courtFile("ms-chancery-court-districts.json"),
+      chancery2027: courtFile("ms-chancery-court-districts-2027.json"),
+      circuit: courtFile("ms-circuit-court-districts.json"),
+      circuit2027: courtFile("ms-circuit-court-districts-2027.json"),
+    };
+    // the app's rule: even-odd within a polygon, any part of a multipolygon
+    function inRing(x, y, ring) {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i], [xj, yj] = ring[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    }
+    function propsAt(fc, point) {
+      const [lat, lng] = point.split(",").map(Number);
+      return fc.features.filter((f) => {
+        const g = f.geometry;
+        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
+      }).map((f) => f.properties);
+    }
+    function ord(n) {
+      const t = n % 100, u = n % 10;
+      return n + ((t >= 11 && t <= 13) ? "th" : u === 1 ? "st" : u === 2 ? "nd" : u === 3 ? "rd" : "th");
+    }
+    function countyPhrase(names) {
+      const joined = names.length === 1 ? names[0] : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+      return joined + (names.length === 1 ? " County" : " Counties");
+    }
+    const namesOf = (court, unit) =>
+      ((judges[court].districts[String(unit)] || {}).members || []).map((m) => m.name);
+    const allNames = (court) =>
+      Object.values(judges[court].districts).flatMap((d) => (d.members || []).map((m) => m.name));
+    const ALL = "ms-supreme-court,ms-court-of-appeals,ms-chancery-court,ms-circuit-court";
+    const CLAIBORNE = "31.96509,-90.84966";
+    const hrefs = (page, id) => page.$$eval(`#card-${id} a[href]`, (as) => as.map((a) => a.href));
+
+    const sc = propsAt(maps.supreme, POINT);
+    const coa = propsAt(maps.appeals, POINT);
+    const ch = propsAt(maps.chancery, POINT);
+    const ci = propsAt(maps.circuit, POINT);
+    const ci27 = propsAt(maps.circuit2027, POINT);
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${ALL}`);
+
+      const s = sc[0] || {};
+      const sInfo = await cardText(page, "ms-supreme-court");
+      const sNames = namesOf("supreme", s.unit);
+      const sOthers = allNames("supreme").filter((n) => !sNames.includes(n) && sInfo.text.includes(n));
+      check("ms-supreme-court names the Capitol's district and its three justices, and no others",
+        sc.length === 1 && !sInfo.error && sNames.length === 3 &&
+          new RegExp(`Supreme Court District ${s.unit}\\b`).test(sInfo.text) &&
+          sNames.every((n) => sInfo.text.includes(n)) && sOthers.length === 0 &&
+          /where these names come from/i.test(sInfo.text),
+        `features here=${sc.length} others named=${sOthers.slice(0, 2)} ${sInfo.text.slice(0, 120)}`);
+
+      const a = coa[0] || {};
+      const aInfo = await cardText(page, "ms-court-of-appeals");
+      const units = (a.units || []).map(String);
+      const aNames = units.flatMap((u) => namesOf("appeals", u));
+      check("ms-court-of-appeals names both districts that divide Hinds, says which takes the listed precincts, and names both districts' judges",
+        coa.length === 1 && units.length === 2 && a.county === "Hinds" && !aInfo.error &&
+          aInfo.text.includes(`Court of Appeals District ${units[0]} or ${units[1]}`) &&
+          aInfo.text.includes(`are in District ${a.named}, and the rest of the county is in District ${a.rest}`) &&
+          units.every((u) => new RegExp(`judges elected from district ${u}\\b`, "i").test(aInfo.text)) &&
+          aNames.length === 4 && aNames.every((n) => aInfo.text.includes(n)),
+        `features here=${coa.length} units=${units} ${aInfo.text.slice(0, 160)}`);
+
+      const c = ch[0] || {};
+      const cInfo = await cardText(page, "ms-chancery-court");
+      const cDistrict = judges.chancery.districts[String(c.unit)] || {};
+      const cNames = namesOf("chancery", c.unit);
+      const cNotes = cDistrict.notes || [];
+      const cLinks = await hrefs(page, "ms-chancery-court");
+      check("ms-chancery-court names the Capitol's district, its chancellors and the vacancy the court's news reported, with that news as its link",
+        ch.length === 1 && !cInfo.error && cNames.length > 0 &&
+          cInfo.text.includes(`${ord(c.unit)} Chancery District`) &&
+          cNames.every((n) => cInfo.text.includes(n)) &&
+          cNotes.every((n) => cInfo.text.includes(n.text) && cLinks.includes(n.url)) &&
+          (judges.chancery.listUpdated ? /where these names come from/i.test(cInfo.text) : true),
+        `features here=${ch.length} notes=${cNotes.length} ${cInfo.text.slice(0, 160)}`);
+
+      const r = ci[0] || {}, r27 = ci27[0] || {};
+      const gains = (r27.counties || []).filter((n) => !(r.counties || []).includes(n));
+      const rInfo = await cardText(page, "ms-circuit-court");
+      const rNames = namesOf("circuit", r.unit);
+      const change = `The ${ord(r27.unit)} Circuit District takes in ${countyPhrase(gains)}.`;
+      check("ms-circuit-court names the Capitol's district and its judges, and says which counties it takes in on 1 January 2027",
+        ci.length === 1 && ci27.length === 1 && String(r.unit) === String(r27.unit) && gains.length > 0 &&
+          !rInfo.error && rNames.length > 0 &&
+          rInfo.text.includes(`${ord(r.unit)} Circuit District`) &&
+          rNames.every((n) => rInfo.text.includes(n)) && rInfo.text.includes(change) &&
+          rInfo.text.includes("filled at the election of 3 November 2026"),
+        `features here=${ci.length}/${ci27.length} want "${change}" ${rInfo.text.slice(0, 160)}`);
+      await context.close();
+    }
+
+    {
+      const r = propsAt(maps.circuit, CLAIBORNE)[0] || {};
+      const r27 = propsAt(maps.circuit2027, CLAIBORNE)[0] || {};
+      const c = propsAt(maps.chancery, CLAIBORNE)[0] || {};
+      const c27 = propsAt(maps.chancery2027, CLAIBORNE)[0] || {};
+      const ends = !maps.circuit2027.features.some((f) => String(f.properties.unit) === String(r.unit));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${CLAIBORNE}&layers=ms-chancery-court,ms-circuit-court`);
+      const rInfo = await cardText(page, "ms-circuit-court");
+      const rNames = namesOf("circuit", r.unit);
+      const moves = `This point is in the ${ord(r27.unit)} Circuit District: ${countyPhrase(r27.counties || [])}.`;
+      const gone = `There is no ${ord(r.unit)} Circuit District from that day.`;
+      check("in Claiborne County the circuit card names today's district and its judge, the district it moves to, and that today's district ends",
+        String(r.unit) !== String(r27.unit) && ends && !rInfo.error && rNames.length > 0 &&
+          rInfo.text.includes(`${ord(r.unit)} Circuit District`) &&
+          rNames.every((n) => rInfo.text.includes(n)) &&
+          rInfo.text.includes(moves) && rInfo.text.includes(gone),
+        `today=${r.unit} 2027=${r27.unit} ends=${ends} ${rInfo.text.slice(0, 200)}`);
+      const cInfo = await cardText(page, "ms-chancery-court");
+      const cMoves = `This point is in the ${ord(c27.unit)} Chancery District: ${countyPhrase(c27.counties || [])}.`;
+      check("in Claiborne County the chancery card says which chancery district the point moves to on 1 January 2027",
+        String(c.unit) !== String(c27.unit) && !cInfo.error &&
+          cInfo.text.includes(`${ord(c.unit)} Chancery District`) && cInfo.text.includes(cMoves) &&
+          !cInfo.text.includes(`There is no ${ord(c.unit)} Chancery District`),
+        `today=${c.unit} 2027=${c27.unit} ${cInfo.text.slice(0, 200)}`);
+      await context.close();
+    }
+
+    {
+      const r27 = propsAt(maps.circuit2027, CLAIBORNE)[0] || {};
+      const c27 = propsAt(maps.chancery2027, CLAIBORNE)[0] || {};
+      const s = propsAt(maps.supreme, CLAIBORNE)[0] || {};
+      const asked = [];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${CLAIBORNE}&layers=${ALL}`, async (pg) => {
+        await pg.clock.setFixedTime(new Date("2027-01-02T12:00:00Z"));
+        pg.on("request", (q) => asked.push(q.url()));
+      });
+      const rInfo = await cardText(page, "ms-circuit-court");
+      const cInfo = await cardText(page, "ms-chancery-court");
+      const sInfo = await cardText(page, "ms-supreme-court");
+      const nobody = (info, court) => allNames(court).filter((n) => info.text.includes(n));
+      const fetched = (re) => asked.some((u) => re.test(u));
+      const today = fetched(/\/ms-(circuit|chancery)-court-districts\.json/);
+      const later = fetched(/\/ms-circuit-court-districts-2027\.json/) && fetched(/\/ms-chancery-court-districts-2027\.json/);
+      const redrawn = /These districts were redrawn on 1 January 2027/;
+      check("on 2 January 2027 the trial courts draw the 2027 maps, never fetch today's, and name nobody from lists of the earlier districts",
+        later && !today && !rInfo.error && !cInfo.error &&
+          rInfo.text.includes(`${ord(r27.unit)} Circuit District`) &&
+          cInfo.text.includes(`${ord(c27.unit)} Chancery District`) &&
+          redrawn.test(rInfo.text) && redrawn.test(cInfo.text) &&
+          nobody(rInfo, "circuit").length === 0 && nobody(cInfo, "chancery").length === 0 &&
+          !/from 1 january 2027/i.test(rInfo.text) && !rInfo.text.includes("3 November 2026"),
+        `2027 files=${later} today's files=${today} named=${nobody(rInfo, "circuit").slice(0, 2)} ${rInfo.text.slice(0, 160)}`);
+      const sNames = namesOf("supreme", s.unit);
+      check("on 2 January 2027 the Supreme Court card still names its justices",
+        !sInfo.error && sNames.length === 3 && sNames.every((n) => sInfo.text.includes(n)),
+        sInfo.text.slice(0, 120));
+      await context.close();
+    }
+
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${ALL}`, async (pg) => {
+        await pg.route("**/data/app/ms-judge-roster.json", (q) => q.fulfill({ status: 503, body: "down" }));
+      });
+      const cards = [
+        ["ms-supreme-court", "supreme", `Supreme Court District ${(sc[0] || {}).unit}`],
+        ["ms-court-of-appeals", "appeals", "Court of Appeals District"],
+        ["ms-chancery-court", "chancery", `${ord((ch[0] || {}).unit)} Chancery District`],
+        ["ms-circuit-court", "circuit", `${ord((ci[0] || {}).unit)} Circuit District`],
+      ];
+      const bad = [];
+      for (const [id, court, title] of cards) {
+        const info = await cardText(page, id);
+        const named = allNames(court).filter((n) => info.text.includes(n));
+        if (info.error || !info.text.includes(title) || !/did not load/.test(info.text) || named.length) {
+          bad.push(`${id}: ${named.length ? "named " + named[0] : info.text.slice(0, 80)}`);
+        }
+      }
+      check("every court card still names its district, and names nobody, when the list of judges fails",
+        bad.length === 0, bad.join(" | "));
+      await context.close();
+    }
+  }
+
+  // ---- Tribal Government. The Mississippi Choctaw Reservation's card names
+  // the band, its seat, the Tribal Chief and the council members with the
+  // community each represents, from the band's own page; the districts
+  // sentence points at those community names rather than saying no council
+  // seat belongs to the land, which would be false here. A point off tribal
+  // land is told so in the layer's own words. The point is shapely's
+  // representative point of the shipped reservation's part in Neshoba County
+  // (2026-10-15).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const c = await at("32.79497,-89.25493");
+    const districts = c.by("Districts drawn here");
+    check("the Mississippi Choctaw Reservation names the band, its seat, its Chief and its council by community",
+          c.by("Tribal government") === "Mississippi Band of Choctaw Indians" &&
+          c.by("Seat of government") === "Choctaw, MS" &&
+          c.by("Land") === "Mississippi Choctaw Reservation" &&
+          c.text.indexOf("Cyrus Ben") !== -1 &&
+          c.text.indexOf("Tribal Chief and Tribal Council") !== -1 &&
+          c.text.indexOf("Bogue Chitto") !== -1 &&
+          c.text.indexOf("From the nation's own council page") !== -1 &&
+          districts.indexOf("beside their name below") !== -1 &&
+          districts.indexOf("no council seat") === -1 &&
+          !c.by("Why no names"),
+          JSON.stringify(c.text.slice(0, 200)));
+    const off = await at(POINT);
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
   }
 } finally {
   await browser.close();

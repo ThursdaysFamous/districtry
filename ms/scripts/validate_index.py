@@ -94,9 +94,11 @@ MIN_REGISTER_LAYER = 8
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ms-senate", "county", "ms-house", "school-district-unified",
-    "county-supervisor", "zip-code", "municipality", "police-station",
-    "fire-station", "post-office",
+    "ms-supreme-court", "us-house", "ms-court-of-appeals",
+    "ms-chancery-court", "ms-circuit-court", "ms-senate", "county",
+    "ms-house", "school-district-unified", "county-supervisor", "zip-code",
+    "municipality", "tribal-government", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,7 +108,14 @@ GEOMETRY_FILES = {
     "congress-districts.json": (4, 4),  # The 4 U.S. House districts, TIGERweb layer 0 (CD120).
     "ms-senate-districts.json": (52, 52),  # The 52 Mississippi Senate districts.
     "ms-house-districts.json": (122, 122),  # The 122 Mississippi House districts.
-    "ms-supervisor-districts.json": (60, 60),  # The county supervisor districts of the 12 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county; the coverage test for the County Supervisor District layer reads it too.
+    "ms-supervisor-districts.json": (115, 115),  # The county supervisor districts of the 23 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 11 from the county's own map, redrawn along whole 2020 census blocks.
+    "tribal-areas.json": (2, 2),  # Mississippi's tribal land (scripts/build_tribal_areas.py) — the Mississippi Choctaw Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "ms-supreme-court-districts.json": (3, 3),  # The 3 Supreme Court districts (ms/scripts/build_ms_court_districts.py), dissolved from state-counties.json.
+    "ms-court-of-appeals-districts.json": (15, 15),  # The 5 Court of Appeals districts as 15 features: the whole-county part of each district, and each of the ten counties two districts divide by voting precinct drawn on its own.
+    "ms-chancery-court-districts.json": (20, 20),  # The 20 chancery districts in force until 1 January 2027.
+    "ms-chancery-court-districts-2027.json": (20, 20),  # The 20 chancery districts from 1 January 2027 (Senate Bill 2768, 2025), which the app draws from that day.
+    "ms-circuit-court-districts.json": (23, 23),  # The 23 circuit districts in force until 1 January 2027.
+    "ms-circuit-court-districts-2027.json": (22, 22),  # The 22 circuit districts from 1 January 2027 (House Bill 1544, 2025), which the app draws from that day.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -115,7 +124,10 @@ ROSTER_FILES = {
     "ms-senate-members.json": 52,  # Mississippi Senate roster from the Mississippi Legislature's own member gallery and profiles, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 34 read vacant on 2026-10-15.
     "ms-house-members.json": 122,  # Mississippi House roster on the same terms; House 70 and 77 read vacant on 2026-10-15.
     "ms-county-officials.json": 82,  # Every county's five supervisors by district, from the Secretary of State's County Offices and Directory, one record per county, refreshed weekly by update-ms-county-officials.yml.
+    "ms-supervisor-counties.json": 23,  # The 23 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "tribal-councils.json": 1,  # The Mississippi Band of Choctaw Indians' Tribal Chief and Tribal Council, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
+    "ms-judge-roster.json": 1,  # The judges of the four courts by district (ms/scripts/build_ms_judges.py), from the courts' own pages and the Judiciary's lists of chancellors and circuit judges, with the changes since each list's date that this project confirmed applied with their sources; refreshed weekly by update-ms-judges-roster.yml. One top-level key, courts, so the floor is 1; the builder holds every court's district count and the appellate seat counts exactly.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

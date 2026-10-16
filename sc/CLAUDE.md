@@ -8,14 +8,14 @@ districtry South Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/sc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships THIRTEEN layers, and **the instance is LIVE since
+Illinois root-scripts shape. It ships FOURTEEN layers, and **the instance is LIVE since
 2026-10-13**, on Adam's word: it has a `metros.json` entry and a landing card, its folder is
 published with the siblings' narrow deploy excludes, and its question pages (`county-council.html`
 with a page per county under `county-council/`, `congress.html`, `state-legislature.html`) are in
 the sitemap. It arrived dark on 2026-10-10; `docs/SC_EXPANSION_PLAN.md` is the record of both
 changes.
 
-**The national tier** — eleven of the thirteen layers answer from a national publisher or the
+**The national tier** — eleven of the fourteen layers answer from a national publisher or the
 General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),
 **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **South Carolina Senate** and **South Carolina House**
@@ -48,6 +48,23 @@ Division") draws them live from TIGERweb, North Carolina's layer, with a card th
 division without TIGER's "CCD", names its county and says no one is elected from it. The
 statewide set is 12.2 MB, uncompressed, and downloads only when the layer is switched on; a click
 asks TIGERweb about the point alone.
+
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, WITH THE ACT THAT SET EACH ONE.**
+`voting-precinct` draws all 2,315 precincts from the Revenue and Fiscal Affairs Office's "Voter
+Precincts" layer. A precinct's lines are set by an act of the General Assembly (Title 7, Chapter 7
+of the Code) and RFA keeps the official maps, so each record carries its act and the date it took
+effect. The card prints both, beside the precinct and its county, the sentence that a precinct
+elects no one, the 8 m the lines are drawn to, and a link to the county voter registration and
+elections office each record names. It is pre-built by `sc/scripts/build_sc_precincts.py` through
+the fleet module `scripts/statewide_precincts.py` at Douglas-Peucker 8 m (7.8 MB, 2.24 MB
+gzipped), so a click is answered from the file and no point leaves the browser. **WHAT THE LAYER
+SAYS THAT THE CARD DOES NOT TRUST**: the county is not a field and is read from the map number,
+where five counties add a letter after the year; RFA's page and its service give different map
+numbers for Beaufort, Greenville and Sumter; Beaufort's records cite one act beside a link to a
+different bill; one precinct code repeats inside Beaufort; and Aiken's Savannah River Site has no
+code. So the card prints the act and the date and no bill link. Those are evidence for the
+state-publishing ask. The quarterly re-check, and the one after each legislative session, is in
+`sc/WATCH.md`.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 72 districts
 for South Carolina and its elementary and secondary tilings hold none, and the unified districts'
@@ -124,8 +141,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: South Carolina (`southcarolina`) — https://districtry.com/sc/
 - Geocoders: address Photon (South Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Carolina-bounded, serial >=1s queue)
-- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
-- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.SCExplorer`.
+- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4; voting-precinct Ward 1. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
+- Layers: 14 registered (political 5, safety 2, schools 1, geography 6); `registerLayer(` floor 10. Debug namespace `window.SCExplorer`.
 - Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `update-sc-county-council-roster.yml` (Wed 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
 - Source registry: `sc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

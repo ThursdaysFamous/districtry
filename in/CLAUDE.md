@@ -8,7 +8,9 @@ districtry Indiana: a single-file, dependency-light web app. Click a point in In
 search an address) and it reports every civic district containing that point. It serves at
 **districtry.com/in/** as a folder of the consolidated districtry repo — following the
 Wisconsin/Iowa/Michigan shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships ELEVEN layers, every one of them from a national publisher.
+root-scripts shape. It ships FOURTEEN layers; every boundary comes from a national publisher except
+two, which come from the state's mapping office: the county council districts and the voting
+precincts (below).
 
 **LIVE SINCE THE GO-LIVE CHANGE OF 2026-10-07**, eight days after it arrived dark: it is in
 `metros.json`, `fleet-outlines.json`, the sitemap, the landing page and the coverage map, and
@@ -49,7 +51,7 @@ TIGERweb's elementary (layer 1) and secondary (layer 2) school tilings both retu
 features for `STATE='18'` (measured 2026-09-29), so the state runs unified districts alone.
 Both are recorded drops rather than empty toggles.
 
-**THE COUNTY CARD NAMES BOTH COUNTY BODIES, AND THEIR DISTRICTS ARE NOT DRAWN YET** (2026-10-09).
+**THE COUNTY CARD NAMES BOTH COUNTY BODIES** (2026-10-09).
 An Indiana county is run by TWO elected bodies — a three-member board of commissioners and a
 seven-member county council (nine in St. Joseph) — and each is elected on its own district lines.
 `in/scripts/build_in_county_officials.py` reads the Indiana Election Division's archived,
@@ -68,8 +70,22 @@ legislative body is the 25-member City-County Council, elected in the MUNICIPAL 
 2026-10-11 Marion's card and county page read it from the city file below. The council file is recorded in `build_county_pages.py`'s
 `NOT_COUNTY_BOARDS` (a county council is the FISCAL body, IC 36-1-2-6; commissioners are the
 legislative and executive body), so the 91 per-county pages under `in/county-commissioner/` carry
-the commissioners. Gap `in-county-government` now records only the missing district lines, which
-IGIO publishes for 58 counties (commissioners) and 56 (councils) — the next change.
+the commissioners.
+
+**THE COUNCIL DISTRICTS OF 55 COUNTIES ARE DRAWN** (2026-10-15), as the County Council District
+layer, from the Indiana Geographic Information Office's `CountyCouncilPolygon` layer
+(`in/scripts/build_in_council_districts.py` → `in-council-districts.json`, 241 districts). Marion's
+are the City-County Council's 25. The labels are free text ("CC1", "#1", "Area 1", "Indianapolis
+001"), so only the number is read and each county must come out 1..4 (Marion 1..25); Noble's
+three at-large features and a Boone sliver labelled "N.T." are recorded in `DROP_LABELS`, and Clay,
+which files three of its four districts, is left out whole. Every district is clipped to the
+county's outline in `state-counties.json`, so it always agrees with the County card. The card
+names the district's own member and lists the at-large members apart; `--check` (run by the
+weekly roster job) holds every drawn district to a seat of that name, and Boone's District 3,
+whose race the results title "Dist 36", is recorded in `SEAT_NOT_NUMBERED` and named on no card.
+Commissioner lines are not drawn: they are elected by the whole county, except in Lake and St.
+Joseph, which the state's layers do not carry at all. Gap `in-county-government` records the 37
+counties with no lines.
 
 **THE CITY OR TOWN CARD NAMES THE MAYOR AND COUNCIL OF 36 OF THE 39 PLACES OVER 25,000**
 (2026-10-11). `in/scripts/build_in_city_officials.py` reads the same archive's certified 2023
@@ -79,20 +95,50 @@ City-County Council among them, and the towns of Merrillville and Zionsville. **
 STATED, NOT INFERRED**: `UNITS` names each place's races exactly as the results title them
 ("Ec Council 1", Kokomo's bare "City Council District 1", a mayor's race titled just "Mayor" in
 a county with several cities, matched by its jurisdiction) and the district and at-large counts
-the 2023 results carry, and the build fails if `UNITS` plus `NOT_NAMED` stops equalling the
-places `docs/expected-governments.json` counts. **THREE TOWNS ARE NOT NAMED**: a town holds no
-general election for an uncontested seat, so the results carry no Plainfield race and only three
-wards each of Brownsburg and Schererville; their cards say so rather than showing part of a
-council. New Albany's at-large race is filed as electing one and elects three
+the 2023 results carry, and the build fails if `UNITS` plus `TOWN_PAGES` stops equalling the
+places `docs/expected-governments.json` counts. **THREE TOWNS ARE READ FROM THEIR OWN PAGES**: a
+town holds no general election for an uncontested seat, so the results carry no Plainfield race
+and only three wards each of Brownsburg and Schererville. Since 2026-10-15 `TOWN_PAGES` reads each
+town's council page instead, each seat dated to the read rather than to an election, and the card
+says the names are the town's own list. Plainfield's host refuses this project's token behind
+Cloudflare and serves the stdlib client with a Chrome string and client hints (measured that day);
+its robots.txt is read with that same client. New Albany's at-large race is filed as electing one and elects three
 (`MISFILED_SEAT_COUNTS`). Council district lines are not drawn, so the card lists every seat.
 Gap `in-municipal-officeholders` records the rest.
+
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM INDIANA'S 2026 PRECINCT MAP.**
+`voting-precinct` draws all 5,121 precincts from IndianaMap's "Voting District Boundaries 2026",
+which the Indiana Geographic Information Office published from data it obtained from the General
+Assembly and the Indiana Election Division in June 2026. It is pre-built by
+`in/scripts/build_in_precincts.py` through the fleet module `scripts/statewide_precincts.py` at
+Douglas-Peucker 4 m (7.1 MB, 1.48 MB gzipped), so a click is answered from the file and no point
+leaves the browser. The card names the precinct and its county, says a precinct elects no one,
+says it is the 2026 map so a change a county made after June 2026 is not shown, states the 4 m,
+and links the state's polling-place lookup. **EACH YEAR IS A NEW SERVICE**, at a new address with the year
+in its field names (2010, 2023, 2024 and 2026 are in the catalogue, measured 2026-10-15; there is
+no 2025), so the builder's `--watch` also lists the catalogue for a later edition, and the builder
+refuses to build while the card names an edition other than the one it reads. The layer names no
+licence and carries no county name, only a three-digit code, so the county comes from this
+instance's own county file. Those two gaps and the yearly change of address are evidence for the
+state-publishing ask. The quarterly re-check is in `in/WATCH.md`.
 
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
 roster-miss path, which is the honest card until a roster is built. Recorded as gap
-`in-general-assembly-roster`. Two more gaps cover the live fabric, where the Census carries
-geography and no officeholder field at all: `in-township-officers` and
-`in-school-board-members`.
+`in-general-assembly-roster`. Gap `in-school-board-members` covers the school cards, where the
+Census carries geography and no officeholder field at all.
+
+**THE TOWNSHIP CARD NAMES THE TRUSTEE AND BOARD OF MOST TOWNSHIPS** (2026-10-15).
+`in/scripts/build_in_township_officials.py` reads the same archive's certified 2022 general
+(office categories 1021 trustee and 1023 board member) and writes `in-township-officials.json`,
+keyed by the county-subdivision layer's own Census id: 973 trustees and 921 boards across 987 of
+the 1,004 civil townships. **THE MATCH IS STATED WHERE THE CENSUS AND THE RESULTS DISAGREE**:
+`ALIASES` carries five townships the Census names differently (Hamilton's Adams Township is
+recorded as "Sheridan town", and the results call Allen's St. Joseph Township "St Joe"), `SHARED` carries Johnson County's
+one government for three townships, and `LEFT_OUT` two races filed under the wrong office; any
+other race that matches no township, or more than one, fails the build. Marion's five-member
+boards are not in that file, so its nine cards say no board race was found. Gap
+`in-township-officers` records the 97 townships named only in part or not at all.
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
@@ -111,8 +157,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Indiana (`indiana`) — https://districtry.com/in/
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
-- Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.IndianaExplorer`.
+- Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055; county-council 12. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
+- Layers: 14 registered (political 5, safety 2, schools 1, geography 6); `registerLayer(` floor 10. Debug namespace `window.IndianaExplorer`.
 - Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -173,8 +219,8 @@ its own card, never breaks the others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Eight of this
-instance's eleven layers name nobody (U.S. House, County and City or Town name people), and every
-one of their cards says so. External strings
+instance's fourteen layers name nobody (U.S. House, County, County Council District, City or Town,
+Township or City and the tribal layer name people), and every one of their cards says so. External strings
 always render through `sanitize()`/`textContent`. Roster refreshes always land as PRs for human
 review — never as direct commits to main.
 

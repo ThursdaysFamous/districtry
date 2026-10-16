@@ -183,6 +183,19 @@ PROVENANCE = [
             "land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "in-precincts.json",
+        "source_url": "https://gisdata.in.gov/server/rest/services/Hosted/Voting_District_Boundaries_2026/FeatureServer/0",
+        "note": (
+            "Indiana's 5,121 voting precincts from IndianaMap's 2026 edition, "
+            "pre-built by in/scripts/build_in_precincts.py through "
+            "scripts/statewide_precincts.py. EACH YEAR IS A NEW SERVICE at a "
+            "new address, so this row goes on passing after a 2027 edition "
+            "appears; the builder's --watch lists IndianaMap's catalogue for "
+            "a later edition, on the quarterly row in in/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -291,6 +304,16 @@ ENDPOINTS = [
                 "&geometry=-88.10%2C37.77%2C-84.78%2C41.77&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 1100,  # 1,206 measured 2026-09-29; floor set below it, not at it
+    },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in in/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://gisdata.in.gov/server/rest/services/"
+                "Hosted/Voting_District_Boundaries_2026/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 4600,  # 5,121 records measured 2026-10-15
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
