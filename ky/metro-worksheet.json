@@ -239,10 +239,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Census County Division",
+      "group": "geography",
+      "area_rank": 10,
+      "rank_note": "493 census county divisions, live from TIGERweb (no data/app file) — median 196.8 km2 of land (mean 207.4), measured 2026-10-15: smaller than a unified school district, larger than a city",
+      "source": {
+        "answers": "The census county division containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and Kentucky has no townships, so the county governs everyone outside a city. The card names the division and its county and says it governs nobody.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
       "id": "fiscal-court",
       "label": "Magistrate or Council District",
       "group": "political",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "314 districts in 58 counties: the magisterial districts of 56 fiscal courts and the council districts of Louisville Metro and Lexington-Fayette, 169 km2 mean feature area over 53,163 km2, so smaller than a school district and larger than a city",
       "source": {
         "answers": "Which magisterial district (or, in Louisville and Lexington, which council district) contains the point, and who represents it on the fiscal court or council.",
@@ -272,7 +290,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
       "source": {
         "answers": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.",
@@ -290,7 +308,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
       "source": {
         "answers": "The elementary-only school district covering the point, in the four places Kentucky has one.",
@@ -308,7 +326,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling",
       "source": {
         "answers": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.",
@@ -323,7 +341,7 @@
       }
     }
   ],
-  "min_register_layer": 4,
+  "min_register_layer": 5,
   "anchor_point": {
     "lat": 38.2527,
     "lng": -85.7585,
