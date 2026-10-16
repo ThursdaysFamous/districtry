@@ -830,6 +830,17 @@ METRO_COUNTY_FIPS = ("031", "043", "197", "097", "089", "111", "093",
                      # shrinks to those two. READ THE RING COUNT FROM --check,
                      # NEVER FROM A MAP IN YOUR HEAD.
                      "053",
+                     # Fayette and Lawrence (2026-10-16), board-only, PARTLY
+                     # DRAWN on Adam's ruling "Draw the proven parts": each
+                     # county's own publication places whole precincts or
+                     # townships in each district, and the one area it shares
+                     # between districts without publishing the line is drawn
+                     # as itself, its card naming every district it could be
+                     # (scripts/build_partial_board_districts.py). Fayette's
+                     # join leaves Marion enclosed alone; Lawrence's closes
+                     # the notch it was on the Indiana line. READ THE RING
+                     # COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
+                     "051", "101",
                      # judicial-subcircuit secondary counties (see below)
                      "005", "083", "061", "137", "171")
 STATE_FIPS = "17"
@@ -1016,6 +1027,11 @@ DISPATCH_COUNTY_FIPS = {
     # from the 22 Census 2020 voting districts per Res. 21-101 Exhibit A
     # (scripts/build_ford_boundaries.py). No precinct entry in this change.
     "ford": "053",
+    # Fayette and Lawrence (2026-10-16) — board-only, drawn where each county
+    # places whole precincts or townships, with one shared area each
+    # (scripts/build_partial_board_districts.py).
+    "fayette": "051",
+    "lawrence": "101",
 }
 # ==== TEMPLATE:END outline-county-config ====
 
@@ -1420,6 +1436,13 @@ INSIDE = {
     # current maps" (2026-08-26), which released the fleet's largest accepted
     # population deviation (scripts/build_clay_boundaries.py).
     "Flora (Clay)": (38.6688, -88.4759),
+    # Vandalia (Fayette) and Lawrenceville (Lawrence) — moved up from OUTSIDE
+    # on 2026-10-16, when both counties joined on their partly drawn board
+    # districts (scripts/build_partial_board_districts.py). Vandalia had held
+    # the Fayette-Marion pair's ground; Salem still holds Marion's, now
+    # enclosed alone. Lawrenceville had proven Lawrence's notch unwashed.
+    "Vandalia (Fayette)": (38.9606, -89.0937),
+    "Lawrenceville (Lawrence)": (38.7263, -87.6873),
     # judicial-subcircuit secondary counties
     "Greenville (Bond, 3rd Circuit)": (38.8923, -89.4131),
     "Jerseyville (Jersey, 7th Circuit)": (39.1200, -90.3284),
@@ -1460,11 +1483,6 @@ OUTSIDE = {
     # base names CENTRALIA and SALEM span three board districts each, so no
     # name can place them and the dissolve that built Clinton cannot build it.
     "Salem (Marion)": (38.6270, -88.9456),
-    # Fayette borders the subcircuit counties but is in no shipped circuit, so
-    # it must stay outside — the guard that keeps "a circuit's secondary
-    # counties" from quietly becoming "everything nearby". (Pittsfield sat
-    # beside it until Pike shipped in tranche 5.)
-    "Vandalia (Fayette)": (38.9606, -89.0937),
     # Canton and Toulon both sat here until their counties shipped. Toulon left
     # when Stark's whole GIS — one hand-maintained Google My Maps — was dated by
     # its County Clerk in an e-mail, and Canton left when Fulton was built: the
@@ -1519,7 +1537,8 @@ OUTSIDE = {
     # boundary, which the dissolve walks around rather than closing over. This
     # anchor is what proves the notch stays unwashed; the ring count is read
     # from --check, never reasoned about here.
-    "Lawrenceville (Lawrence)": (38.7263, -87.6873),
+    # (Lawrenceville moved up to INSIDE on 2026-10-16, when Lawrence joined on
+    # its partly drawn board districts and the notch closed.)
     # Newton (Jasper) — the successor anchor Cumberland's join calls for
     # (2026-08-21). Cumberland left exactly one unserved neighbour behind and
     # this is it, and Jasper is a MEASURED frontier rather than an unexamined

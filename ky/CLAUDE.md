@@ -28,7 +28,8 @@ file, its routing check gains Louisville as a case that must open `/ky/`, and it
 case moved to Butler County, Ohio. An audit that is re-run rather than trusted is the only
 reason any of that was seen before it broke.
 
-It ships four layers, the national tier every U.S. state can serve from national publishers:
+It arrived with four layers, the national tier every U.S. state can serve from national publishers,
+and ships fifteen now, each later one recorded below:
 **County** (120, from Census TIGERweb, naming its governing body and officers since 2026-10-11), **U.S. House** (6 districts, TIGERweb
 geometry joined to the public-domain unitedstates/congress-legislators roster, refreshed
 weekly), and **Kentucky Senate** / **Kentucky House** (38 and 100 districts, TIGERweb
@@ -109,8 +110,8 @@ the member, and this instance names none.
 
 - Metro: Kentucky (`kentucky`) — https://districtry.com/ky/
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
-- Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 38.80000,-83.55000 (near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
-- Layers: 14 registered (political 8, schools 3, geography 3); `registerLayer(` floor 5. Debug namespace `window.KentuckyExplorer`.
+- Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43; voting-precinct Precinct 168 43 District. Negative point 38.80000,-83.55000 (near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
+- Layers: 15 registered (political 8, schools 3, geography 4); `registerLayer(` floor 6. Debug namespace `window.KentuckyExplorer`.
 - Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC); `update-ky-judges-roster.yml` (Tue 14:40 UTC); `update-ky-city-officials.yml` (Wed 14:50 UTC); `update-ky-county-officials.yml` (Thu 14:55 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -352,6 +353,29 @@ That row is read from the Census's functional-status code (all 493 are LSADC 22,
 measured 2026-10-15), so a code the card does not carry prints no row. A click asks TIGERweb
 about the point alone; the statewide set, 19.9 MB because TIGERweb serves it uncompressed,
 downloads only when the layer is switched on.
+
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM THE STATE BOARD OF ELECTIONS' OWN LAYER.**
+`voting-precinct` draws all 3,194 precincts from "Voting Precinct Boundaries in Kentucky", which
+the Board compiles from the files each county board of elections sends it and the Division of
+Geographic Information hosts under CC0 1.0. It is pre-built by `ky/scripts/build_ky_precincts.py`
+through the fleet module `scripts/statewide_precincts.py` at Douglas-Peucker 8 m (10.2 MB, 2.49 MB
+gzipped), so a click is answered from the file and no point leaves the browser. The card names the
+precinct and its county, says a precinct elects no one, says the map is current through the
+November 3, 2026 general election because the layer's own text says so, states the 8 m, and links
+the Board's polling-place page. **THE BUILDER HOLDS THE CARD TO THOSE TWO CLAIMS**: it refuses to
+build, and its `--check` fails, while the card does not say "drawn here to within 8 metres" and
+"current through the November 3, 2026 general election", so a rebuild at another interval or after
+that election cannot leave the card describing the old file. Three things about the source are
+evidence for the state-publishing ask rather than reasons to doubt it: the Board's own site does
+not link the layer (it was found by searching ArcGIS Online); the layer is reloaded whole, with
+one creation and one edit stamp on every record, so nothing in it says when a county last changed
+its precincts; and two other copies sit under an individual's account in the same organisation.
+The magistrate districts (`fiscal-court`, above) are composed from this same layer, so when a
+re-check finds a change, rebuild both; rebuilding one alone can leave a precinct in one district on
+one map and in another on the other.
+The school-division note below says 3,193 precincts; it was written 2026-10-01 and which copy it
+counted is not recorded. The quarterly re-check, and the one after that election, are in
+`ky/WATCH.md`.
 
 **Kentucky has no tribal land.** Measured 2026-10-01 against the Census AIANNHA service over an
 envelope covering the whole state: zero features in federal reservations, off-reservation trust

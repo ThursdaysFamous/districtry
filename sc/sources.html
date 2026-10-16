@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1295,7 +1295,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1335,6 +1335,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
                 <td data-label="Where it applies">South Carolina. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code (the Georgia test point gives 30817).</td>
+              </tr>
+              <tr id="layer-voting-precinct">
+                <th scope="row"><span class="layer-name">Voting Precinct</span><code>voting-precinct</code></th>
+                <td data-label="What it answers">The voting precinct containing the point — where a reader votes and how their ballots are reported.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Voter_Precincts/FeatureServer/0" target="_blank" rel="noopener">South Carolina Revenue and Fiscal Affairs Office — Voter Precincts, the official maps of the precinct lines the General Assembly sets by act (S.C. Code Title 7, Chapter 7); 2,315 features, pre-built for the state by sc/scripts/build_sc_precincts.py and shipped with the app. Each record names the act that set its lines and the date they took effect, which the card prints, and the county's voter registration and elections office, which the card links. No licence is named, only an as-is disclaimer.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.</td>
+                <td data-label="Where it applies">South Carolina — statewide.</td>
               </tr>
               <tr id="layer-municipality">
                 <th scope="row"><span class="layer-name">City or Town</span><code>municipality</code></th>
@@ -1551,6 +1562,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "South Carolina. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code (the Georgia test point gives 30817)"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/sc/sources.html#dataset-voting-precinct",
+      "identifier": "voting-precinct",
+      "name": "Voting Precinct",
+      "description": "The voting precinct containing the point — where a reader votes and how their ballots are reported. NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+      "url": "https://districtry.com/sc/sources.html#layer-voting-precinct",
+      "isPartOf": {
+        "@id": "https://districtry.com/sc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "South Carolina Revenue and Fiscal Affairs Office — Voter Precincts, the official maps of the precinct lines the General Assembly sets by act (S.C. Code Title 7, Chapter 7); 2,315 features, pre-built for the state by sc/scripts/build_sc_precincts.py and shipped with the app. Each record names the act that set its lines and the date they took effect, which the card prints, and the county's voter registration and elections office, which the card links. No licence is named, only an as-is disclaimer.",
+          "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Voter_Precincts/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "South Carolina — statewide"
       }
     },
     {

@@ -14838,8 +14838,13 @@ function initMinnesotaExplorer() {
    * State's own local results files, every name dated to the election that
    * seated it (mn/scripts/build_mn_town_boards.py; data/app/mn-town-boards.json),
    * the city council card's posture. A March-election town's results are in
-   * no file the state publishes, so its card still names nobody; recorded as
-   * gap mn-township-officers.
+   * no file the state publishes. FOR THOSE, 29 COUNTIES' OWN LISTS OF
+   * TOWNSHIP OFFICERS name 416 more towns' boards, each dated to the list and
+   * the day it was read (mn/scripts/mn_county_town_officers_scraper.py,
+   * build_mn_county_town_officers.py; data/app/mn-county-town-officers.json,
+   * measured 2026-10-16). One source per town: a town the election results
+   * name never takes names from a county list. The rest name nobody;
+   * recorded as gap mn-township-officers.
    * ---------- */
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
@@ -14850,6 +14855,23 @@ function initMinnesotaExplorer() {
   var loadMnTownBoards = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-town-boards.json", {}, 2);
   });
+  // The officers a county's own list of township officers names, for the
+  // towns no election results file covers (the towns that vote in March),
+  // keyed by GEOID; every town carries the list it came from and the day it
+  // was read (mn/scripts/build_mn_county_town_officers.py). Names, offices
+  // and terms only: the lists also print each officer's home address and
+  // telephone, which are never read.
+  var loadMnCountyTownOfficers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-county-town-officers.json", {}, 2);
+  });
+  // "2026-03-11" -> "March 11, 2026", "2026-03" -> "March 2026", "2025" -> "2025"
+  function mnListDate(iso) {
+    var full = mnElectionDate(iso);
+    if (full) return full;
+    var m = /^(\d{4})(?:-(\d{2}))?$/.exec(String(iso || ""));
+    if (!m) return null;
+    return m[2] ? MN_MONTHS[Number(m[2]) - 1] + " " + m[1] : m[1];
+  }
 
   registerLayer({
     id: "county-subdivision",
@@ -14899,6 +14921,16 @@ function initMinnesotaExplorer() {
         }, function () {
           result.rosterFailed = true;
           return result;
+        }).then(function (result) {
+          // a town the election results name is named from them alone
+          if (result.board || result.geoid == null) return result;
+          return loadMnCountyTownOfficers().then(function (lists) {
+            result.countyList = (lists && lists[String(result.geoid)]) || null;
+            return result;
+          }, function () {
+            result.countyListFailed = true;
+            return result;
+          });
         });
       });
     },
@@ -14932,18 +14964,47 @@ function initMinnesotaExplorer() {
       // only a township has an officer this card would name: a city's people
       // belong on the city's own card, unorganized territory's on the
       // county's, and the water records have no government at all
-      if (result.kind === "township" && !result.board) {
+      if (result.kind === "township" && !result.board && result.countyList) {
+        var list = result.countyList, thisYear = new Date().getFullYear();
+        wrap.appendChild(renderPersonRows((list.officers || []).map(function (o) {
+          var badge = String(o.office).replace(" (chair)", ", chair")
+            .replace(" (vice chair)", ", vice chair");
+          if (o.seat) badge = badge.replace("Supervisor", "Supervisor " + String(o.seat));
+          var ends = Number(o.termEnds);
+          return {
+            name: String(o.name),
+            badge: badge,
+            note: ends >= thisYear ? "term ends " + ends : null
+          };
+        })));
+        var dated = mnListDate(list.asOf), read = mnListDate(list.read);
+        wrap.appendChild(renderFieldStack([{
+          label: "Where these names come from",
+          value: String(list.county) + " County's list of township officers" +
+            (dated ? ", dated " + dated : "") + ", as this app read it on " +
+            read + ". The county compiles it from what each town reports, " +
+            "so a seat that has changed hands since may not show here yet. " +
+            "This town is not in the state's election results, which carry " +
+            "no March town elections. The township's own website is the " +
+            "current source."
+        }]));
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: String(list.county) + " County's list ↗", url: String(list.sourceUrl) }]
+        }));
+      } else if (result.kind === "township" && !result.board) {
         wrap.appendChild(renderFieldStack([{
           label: "Your town board",
-          value: result.rosterFailed
-            ? "The list of election winners did not load, so no name is " +
+          value: result.rosterFailed || result.countyListFailed
+            ? "A list of town officers did not load, so no name is " +
               "shown. The township's own website names its board."
             : "Not named here. This app names the boards of the towns that " +
               "hold their town election in November, from the state's " +
-              "election results, and this town's board is not in them. That " +
-              "is the case for every town that votes in March: the state " +
-              "publishes no results file for March town elections. The " +
-              "township's own website is the current source."
+              "election results, and of the March-election towns whose " +
+              "county publishes a list of township officers this app reads. " +
+              "This town is in neither: the state publishes no results file " +
+              "for March town elections, and this app does not read a county " +
+              "list that names it. The township's own website is the current " +
+              "source."
         }]));
       } else if (result.kind === "township") {
         var people = [], rows = [];

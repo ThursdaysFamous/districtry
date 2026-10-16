@@ -4217,8 +4217,8 @@ function initNorthCarolinaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "nc-senate": "ncs", "county": "co", "nc-house": "nch",
     "school-district-unified": "su", "county-subdivision": "cs", "zip-code": "zp",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
-    "tribal-government": "tg" };
+    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4226,7 +4226,8 @@ function initNorthCarolinaExplorer() {
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["nc-senate"],
     "state-house": ["nc-house"], "county": ["county"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9378,6 +9379,7 @@ function initNorthCarolinaExplorer() {
     "county-subdivision", // 1,041 county subdivisions — North Carolina townships, the census fabric below the county
     "zip-code",          // 1,500 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope and kept where they overlap North Carolina
     "tribal-government", // Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
+    "voting-precinct",   // 2,625 precincts tiling the state, pre-built from the State Board of Elections' file as NC OneMap serves it — 53.10 km2 mean area, land and water (median 25.32), measured 2026-10-15 on the drawn file: smaller than the Qualla Boundary's pieces (median 107.2 km2), larger on average than a city or town (20.26 km2 of land)
     "municipality",      // 552 incorporated places, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13836,6 +13838,102 @@ function initNorthCarolinaExplorer() {
     }
   });
 
+  /* ---------- Voting precinct — the State Board of Elections' statewide file ----------
+   * North Carolina's 2,625 precincts, from the State Board of Elections'
+   * statewide precinct file as NC OneMap serves it (the Board posts the file
+   * as a download only). Pre-built by nc/scripts/build_nc_precincts.py
+   * through scripts/statewide_precincts.py (Douglas-Peucker at 12 m, the
+   * finest of 4, 8 and 12 that keeps the file at 2.5 MB gzipped or under;
+   * data/app/nc-precincts.json, same-origin), so a click is answered in the
+   * browser and no point is sent anywhere.
+   *
+   * A PRECINCT ELECTS NO ONE TO PUBLIC OFFICE, so the card has no
+   * officeholder row to be missing and says why. The header pill is the
+   * Board's own precinct code, left off where the name is only that code.
+   * The date the card gives is the Board file NC OneMap's copy was matched
+   * to; the builder's --watch says when the Board posts a newer one, and its
+   * --check fails if this card stops quoting that date or the interval.
+   * ---------- */
+  var loadNcPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-precincts.json", {}, 2);
+  });
+
+  // A precinct elects no one to public office, so the card says so rather
+  // than leaving a reader to wonder which name is missing.
+  var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
+    "and how your ballots are reported, not a district with a representative of its own.";
+
+  // The card's title: a name that is only a number reads "Precinct 025", so
+  // it cannot be taken for a district number; any other name is printed as
+  // the state publishes it.
+  function precinctTitle(props) {
+    var name = props.name != null ? String(props.name).trim() : "";
+    if (!name) return null;
+    return /^[0-9][0-9-]*$/.test(name) ? "Precinct " + name : name;
+  }
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadNcPrecincts,
+      // the finest tiling on this map: a light stroke, so it reads under the
+      // broader boundaries rather than competing with them
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return precinctTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadNcPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: precinctTitle(props),
+          code: props.code != null && String(props.code) !== "" ? String(props.code) : null,
+          county: props.county != null ? String(props.county) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title || "Unknown precinct",
+        note: result.county
+      }));
+      var rows = [
+        { label: "Who it elects", value: PRECINCT_ELECTS },
+        {
+          label: "How current",
+          value: "The State Board of Elections publishes this statewide map from the " +
+            "precincts each county board of elections sets. This copy matches the Board's " +
+            "file of August 24, 2026."
+        },
+        {
+          label: "How exact this line is",
+          value: "The state's lines are drawn here to within 12 metres. For a definitive " +
+            "answer, ask your county board of elections."
+        }
+      ];
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    // the state's own precinct code, as it publishes it beside the name;
+    // no pill when the name is only that code
+    cardIdentifier: function (result) {
+      if (!result.code) return null;
+      return result.title === "Precinct " + result.code ? null : result.code;
+    },
+    primaryLink: function () {
+      return {
+        label: "Find your polling place",
+        url: "https://vt.ncsbe.gov/PPLkup/"
+      };
+    }
+  });
+
   /* ---------- 7. City or Town — live TIGERweb, incorporated places ----------
    * CITY, TOWN AND VILLAGE ARE THREE WORDS FOR ONE THING HERE, which is the
    * opposite of Michigan's card and is the state's own law rather than a
@@ -15793,7 +15891,7 @@ function initNorthCarolinaExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "nc-senate", "nc-house",
     "school-district-unified",
-    "county", "county-subdivision", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16276,11 +16374,12 @@ function initNorthCarolinaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
-    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BB", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD",
+    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
+    "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
