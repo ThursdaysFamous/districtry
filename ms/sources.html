@@ -1261,14 +1261,17 @@ table.matrix code {
                 <td data-label="What it answers">The supervisor district covering the point, and the supervisor and the election commissioner elected from it, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five of each.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22" target="_blank" rel="noopener">U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries the lines drawn after the 2010 census, which are never drawn; 8 of those counties are drawn from their own maps instead (below).</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22" target="_blank" rel="noopener">U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries older lines, which are never drawn: in 54 of them every resident is in the same district as on the Census's map of January 2010 (measured 2026-10-16). 11 of the 70 are drawn from their own maps instead (below).</a></li>
                     <li><a href="https://gis.cmpdd.org/server/rest/services/Hosted" target="_blank" rel="noopener">Central Mississippi Planning and Development District — the supervisor district layers of its county map viewers for Copiah, Hinds, Madison, Rankin, Simpson and Warren counties. Five are named for the plan adopted after the 2020 census (2021 in Rankin, 2022 in Copiah, Madison, Simpson and Warren), and all six give each district's population, which matches the 2020 census's own blocks to the person (in Rankin, after setting aside two blocks the plan leaves out). Redrawn here along whole 2020 census blocks: each block goes to the district that covers most of it, so every line drawn is the Census Bureau's.</a></li>
-                    <li><a href="https://geo.co.harrison.ms.us/server/rest/services/AGO/HarrisonCounty_SupervisorDistrict/FeatureServer/0" target="_blank" rel="noopener">Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census still carries the county's earlier plan. Redrawn along whole 2020 census blocks in the same way.</a></li>
+                    <li><a href="https://geo.co.harrison.ms.us/server/rest/services/AGO/HarrisonCounty_SupervisorDistrict/FeatureServer/0" target="_blank" rel="noopener">Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census's lines there put every resident in the same district as its map of January 2010. Redrawn along whole 2020 census blocks in the same way.</a></li>
                     <li><a href="https://services1.arcgis.com/mz3jHVSffoNsLuEB/arcgis/rest/services/Lamar_Service/FeatureServer/15" target="_blank" rel="noopener">Lamar County — the supervisor district layer of the parcel viewer the county's website links to, which matches the printed map of the districts the county publishes, dated 9 August 2022. Redrawn along whole 2020 census blocks in the same way.</a></li>
+                    <li><a href="https://services3.arcgis.com/j2GTvlDqmJmX3REZ/arcgis/rest/services/New_Districts/FeatureServer/4" target="_blank" rel="noopener">Lee County — the map published online as Lee Supervisor Districts 2022, which the Lee County Circuit Clerk's 2024 voting precinct map follows: that map names each precinct piece's supervisor district, and agrees with these lines for all but 10 of the county's 83,343 residents in the 2020 census, against 13,351 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.</a></li>
+                    <li><a href="https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/91" target="_blank" rel="noopener">Pearl River County — the supervisor district layer of the Find My Supervisor map on the county's website, which matches the printed map of the districts effective 1 January 2023 that the county publishes beside it, and the 2023 voting precinct map published with it. Redrawn along whole 2020 census blocks in the same way.</a></li>
+                    <li><a href="https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9" target="_blank" rel="noopener">Perry County — the supervisor district layer of the Find My Supervisor map on the county's website, whose 2023 voting precincts each lie inside one of its districts for all but 8 of the county's 11,511 residents in the 2020 census, against 444 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">ms-county-officials.json, the roster the County card reads: the supervisor and the election commissioner elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.</td>
-                <td data-label="Where it applies">20 of Mississippi's 82 counties; hidden in the other 62, which the Data gaps panel lists and explains.</td>
+                <td data-label="Where it applies">23 of Mississippi's 82 counties; hidden in the other 59, which the Data gaps panel lists and explains.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1361,7 +1364,7 @@ table.matrix code {
                 <td data-label="What it answers">Which county contains the point, the five supervisors on its board, and its five election commissioners.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and for the election commissioners only their names are, because the directory prints each one's own address, which may be a home.</td>
@@ -1574,7 +1577,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15.",
+          "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
       ],
@@ -1640,7 +1643,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries the lines drawn after the 2010 census, which are never drawn; 8 of those counties are drawn from their own maps instead (below).",
+          "name": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries older lines, which are never drawn: in 54 of them every resident is in the same district as on the Census's map of January 2010 (measured 2026-10-16). 11 of the 70 are drawn from their own maps instead (below).",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22"
         },
         {
@@ -1650,18 +1653,33 @@ table.matrix code {
         },
         {
           "@type": "Dataset",
-          "name": "Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census still carries the county's earlier plan. Redrawn along whole 2020 census blocks in the same way.",
+          "name": "Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census's lines there put every resident in the same district as its map of January 2010. Redrawn along whole 2020 census blocks in the same way.",
           "url": "https://geo.co.harrison.ms.us/server/rest/services/AGO/HarrisonCounty_SupervisorDistrict/FeatureServer/0"
         },
         {
           "@type": "Dataset",
           "name": "Lamar County — the supervisor district layer of the parcel viewer the county's website links to, which matches the printed map of the districts the county publishes, dated 9 August 2022. Redrawn along whole 2020 census blocks in the same way.",
           "url": "https://services1.arcgis.com/mz3jHVSffoNsLuEB/arcgis/rest/services/Lamar_Service/FeatureServer/15"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Lee County — the map published online as Lee Supervisor Districts 2022, which the Lee County Circuit Clerk's 2024 voting precinct map follows: that map names each precinct piece's supervisor district, and agrees with these lines for all but 10 of the county's 83,343 residents in the 2020 census, against 13,351 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+          "url": "https://services3.arcgis.com/j2GTvlDqmJmX3REZ/arcgis/rest/services/New_Districts/FeatureServer/4"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Pearl River County — the supervisor district layer of the Find My Supervisor map on the county's website, which matches the printed map of the districts effective 1 January 2023 that the county publishes beside it, and the 2023 voting precinct map published with it. Redrawn along whole 2020 census blocks in the same way.",
+          "url": "https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/91"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Perry County — the supervisor district layer of the Find My Supervisor map on the county's website, whose 2023 voting precincts each lie inside one of its districts for all but 8 of the county's 11,511 residents in the 2020 census, against 444 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+          "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "20 of Mississippi's 82 counties; hidden in the other 62, which the Data gaps panel lists and explains"
+        "name": "23 of Mississippi's 82 counties; hidden in the other 59, which the Data gaps panel lists and explains"
       }
     },
     {

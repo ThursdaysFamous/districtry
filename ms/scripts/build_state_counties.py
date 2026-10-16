@@ -12,42 +12,47 @@ the served area IS the state.
 This is an occasional OPERATOR step, not weekly CI — county lines change
 essentially never; re-run only if TIGERweb corrects a boundary.
 
-SIMPLIFICATION IS DOUGLAS-PEUCKER WITH A FIDELITY CEILING, AND THAT IS A
-MEASUREMENT. This file was first built the way the copied builder built it,
+SIMPLIFICATION IS DOUGLAS-PEUCKER AT 5 M WITH AN 8 M FIDELITY CEILING, WHICH
+IS ADAM'S CHOICE ("Finest", 2026-10-15) FOR THE COUNTY FILES OF THE NEWER
+STATES. This file was first built the way the copied builder built it,
 Visvalingam at 10% retained, and measured on 2026-10-15 against the
 full-precision TIGERweb lines that drew a line up to 184.5 m away from where
 the county line really runs (Holmes and Attala, along their shared edge),
-with 54 of the 82 counties more than 25 m off somewhere. A reader within that
-distance of a county line could be told the wrong county, and the County
-Supervisor District layer, which is simplified with a bounded stray, would
-then disagree with this one about which county a point is in. Visvalingam
+with 54 of the 82 counties more than 25 m off somewhere. Visvalingam
 thresholds triangle AREA, which does not bound how far the drawn line strays;
-Douglas-Peucker thresholds the stray itself. The legislative builder beside
-this one already uses it, and its fidelity check is imported from there rather
-than copied.
+Douglas-Peucker thresholds the stray itself.
 
-AND THE STRAY IS ONE OF TWO MEASURES, AND ON THE OTHER interval=20 IS WORSE
-THAN THE SETTING IT REPLACED (measured later on 2026-10-15, after another
-thread measured the same trade across the newer states). The second measure is
-the ground a reader is given the wrong answer on: the area, in an equal-area
-projection (EPSG:5070), where this file names a different county than the
-full-precision TIGERweb lines do, or names none inside the state.
+THE STRAY IS ONE OF TWO MEASURES. The second is the ground a reader is given
+the wrong answer on: the area, in an equal-area projection (EPSG:5070), where
+this file names a different county than the full-precision TIGERweb lines do,
+or names none inside the state. The second setting this file shipped with, a
+20 m interval, bounded the stray and made the second measure worse than the
+first setting, because it leaves out more of the line's small bends and the
+ground those bends enclose is answered with the neighbouring county:
 
     setting                    worst stray   ground answered wrongly   gzipped
     visvalingam 10%  (first)       184.5 m          23.1 km2            134 KB
-    dp interval=20   (shipped)      21.7 m          40.7 km2            139 KB
+    dp interval=20   (second)       21.7 m          40.7 km2            139 KB
     dp interval=10                  11.1 m          18.0 km2            208 KB
-    dp interval=5                    5.6 m           8.1 km2            295 KB
+    dp interval=5    (shipped)       5.6 m           8.1 km2            295 KB
 
-At a 20 m interval the drawn line stays within about 20 m of the true one but
-leaves out more of its small bends, and the ground those bends enclose is
-answered with the neighbouring county. Every interval of 10 m or finer beats
-the first build on both measures, with a larger file. Which interval ships is a
-trade between accuracy and the size of a file every reader downloads, and Adam
-is choosing it for the ten newer states' county files (asked 2026-10-15). This
-file stays at interval=20 until he does, and Mississippi follows his choice
-before it goes live (ms/WATCH.md). Measuring only the stray is how interval=20
-looked like a fix.
+The stray column is the legislative builder's instrument. The shared module
+the build now runs reads 5.5 m on the same file, because the two convert
+degrees to metres with slightly different constants.
+
+Counted at every populated 2020 block's internal point, only the first setting
+put anyone in a different county (3 people, in one block); no Douglas-Peucker
+interval put anyone there. So for Mississippi the finer setting changes how
+much ground is answered with the wrong county and how closely a line follows
+the real one at street level, and changes no one's county. Measuring only the
+stray is how interval=20 looked like a fix.
+
+The ceiling is checked on every build by scripts/boundary_fidelity.py, the
+module the other newer states' county builders import, which measures every
+source vertex's distance to the drawn line, because measuring the other way
+answers ~0 by construction. The court maps (build_ms_court_districts.py) are
+dissolves of this file and are rebuilt whenever it is, so the two keep sharing
+their coordinates exactly.
 
 Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js
 (mapshaper via `npx mapshaper@<pinned>`).
@@ -70,6 +75,8 @@ assert os.path.dirname(os.path.abspath(blb.__file__)) == _HERE, blb.__file__
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
+sys.path.append(os.path.join(os.path.dirname(REPO_ROOT), "scripts"))
+import boundary_fidelity  # noqa: E402  (shared and stdlib only; appended, so it shadows nothing here)
 MAPSHAPER = "mapshaper@0.6.102"  # pinned for reproducible output (fleet convention)
 TIGERWEB = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
 MS_FIPS = "28"
@@ -80,12 +87,13 @@ STATE_BBOX = {"minLng": -91.85, "minLat": 29.95, "maxLng": -87.9, "maxLat": 35.1
 
 FIELDS = ["NAME", "BASENAME", "GEOID", "STATE", "COUNTY"]
 OUT_FILE = "state-counties.json"
-# Douglas-Peucker interval in METRES (keep-shapes). Measured 2026-10-15: the
-# median source step is 27.84 m, and interval=20 leaves the worst stray under
-# the 25 m ceiling the legislative builder pins (blb.FIDELITY_CEILING_M).
-# PROVISIONAL: it answers more ground with the wrong county than the setting it
-# replaced (the docstring's table), and changes to Adam's choice before go-live.
-SIMPLIFY = "interval=20"
+# Douglas-Peucker interval in METRES (keep-shapes). Measured 2026-10-15,
+# interval 5 left a worst stray of 5.6 m here and 5.6 to 6.7 m across the ten
+# other states built this way, so the ceiling is pinned with headroom rather
+# than recomputed: a ceiling derived from the build it checks can never fail.
+# The median source step (27.84 m that day) is printed beside it on every run.
+SIMPLIFY = "interval=5"
+FIDELITY_MAX_M = 8.0
 MIN_FEATURES = 82  # every Mississippi county — no water pseudo-district on this layer
 VALIDATION_KEY = "GEOID"  # unique per county, preserved through simplification
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m — the precision the app requests live
@@ -236,15 +244,11 @@ def main():
         raise RuntimeError("state-counties validation failed: %s" % msg)
 
     step = blb.median_source_step_m(source["features"])
-    worst, over = blb.check_fidelity(source["features"], simplified["features"], VALIDATION_KEY)
-    if over:
-        raise RuntimeError(
-            "state-counties: %d county(ies) stray past the %.0f m fidelity ceiling "
-            "(worst %.1f m): %s — refusing to write"
-            % (len(over), blb.FIDELITY_CEILING_M, worst, ", ".join(sorted(over)[:5])))
-    print("state-counties: median source step %.2f m, worst stray %.1f m against a "
-          "%.0f m ceiling, 0 of %d counties over"
-          % (step, worst, blb.FIDELITY_CEILING_M, n))
+    ok, fmsg = boundary_fidelity.check_fidelity(
+        source["features"], simplified["features"], VALIDATION_KEY, FIDELITY_MAX_M, "NAME")
+    if not ok:
+        raise RuntimeError("state-counties fidelity failed: %s — refusing to write" % fmsg)
+    print("state-counties: median source step %.2f m; %s" % (step, fmsg))
 
     compact = json.dumps(simplified, separators=(",", ":"))
     if json.loads(compact) != simplified:
