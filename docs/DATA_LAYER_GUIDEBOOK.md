@@ -13549,7 +13549,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `neighborhood` | Neighborhood (NTA 2020) | geography | Polygon | Socrata `9nt8-h7nd` | — |
 | `hs-zone` / `ms-zone` / `es-zone` | School Zones | schools | SchoolZone | Socrata `ruu9-egea` / `t26j-jbq7` / `cmjf-yawu` (year-versioned) | zoned-school POI |
 | `school-site` | School (nearest 3) | schools | NearestPt | NYSED ArcGIS L2/3/4 (paged), statewide (the five-county WHERE clause was dropped) | — |
-| `police-station` | Police Station | safety | NearestPt | Socrata `ji82-xba5` (FacDB) | — |
+| `police-station` | Police Station | safety | NearestPt | the 78 station houses in `nypd-precinct-info.json`: NYPD's own address per precinct page, geocoded by NYC Planning GeoSearch and kept only inside its own precinct polygon. Replaced Socrata `ji82-xba5` (FacDB) on 2026-10-16, whose 80 rows included firehouses, a juvenile centre and a landfill garage | — |
 | `fire-station` | Fire Station | safety | NearestPt | live NYS ITS `FireStations` L0, statewide (2,966 points; replaced the city's Socrata `hc8x-tcnd` set of 219, measured 2026-09-18) | — |
 | `post-office` | Post Office | geography | NearestPt | USGS National Map L38, statewide (`state='NY'`, widened from a five-county bbox) | — |
 | `library` | Library | geography | NearestPt | Socrata `feuq-due4` (216 branches, all 3 city systems) merged with live NYS `NYS_Schools` L15 outside the city (762 points, its 3 in-city rows dropped) | — |
