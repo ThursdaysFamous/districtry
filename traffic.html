@@ -886,12 +886,16 @@ footer.site-footer a { color: var(--accent-deep); }
   --s1: #1d5fd6;         /* page visits: the brand's --data-500 */
   --s1-track: #eef4fd;   /* the meter's unfilled track, a light step of the same ramp */
   --s2: #a33b2c;         /* feature interactions: the brand's --layer-fire */
+  --s3: #0f7c86;         /* Bing in the per-day sources chart */
+  --s4: #9a6412;         /* Yahoo in the per-day sources chart */
 }
 :root[data-theme="dark"] .report {
   --s1: #6ea8ff;         /* --data-500 in the dark tier */
   --s1-track: #1c3a5f;
   --s2: #d9705c;         /* the fire hue lifted for a dark ground: 5.06:1 on --panel, in the
                             dataviz lightness band; the light value would read 2.0:1 there */
+  --s3: #4fc3cc;
+  --s4: #e3b04b;
 }
 
 /* The shell asks for Barlow Condensed 700 on the page name and every h2, and
@@ -994,6 +998,22 @@ main details.tableview:last-of-type { border-bottom: 0; }
   border: 1px solid var(--slate); overflow: hidden; margin-top: 2px;
 }
 .meter .fill { height: 100%; background: var(--s1); border-radius: 6px 0 0 6px; }
+
+/* ---- where visits came from, day by day ----
+   One horizontal stacked bar per day on a shared scale, so a day's length is
+   its search-and-link visits and each segment is one source. The four engines
+   take the chart's own series colours and --s3/--s4; "Other sites" is --slate,
+   the shell's secondary ink, which is already measured on --panel. */
+.dayrefs { display: flex; flex-direction: column; gap: 7px; }
+.dayrow { display: grid; grid-template-columns: 56px minmax(0, 1fr) 44px; align-items: center; gap: 10px; font-variant-numeric: tabular-nums; }
+.dayrow .d { font-size: 13.5px; color: var(--slate); }
+.dayrow .t { font-size: 13.5px; color: var(--ink); text-align: right; font-weight: 600; }
+.dayrow .stack { display: flex; gap: 2px; height: 18px; min-width: 0; }
+.dayrow .stack i { display: block; height: 100%; flex: none; }
+.dayrow .stack i:last-child { border-radius: 0 4px 4px 0; }
+.dayscale { display: grid; grid-template-columns: 56px minmax(0, 1fr) 44px; gap: 10px; margin-top: 6px; font-size: 12px; color: var(--slate); font-variant-numeric: tabular-nums; }
+.dayscale .ticks { display: flex; justify-content: space-between; padding-right: 8px; }
+#dayRefsTable th, #dayRefsTable td { white-space: nowrap; }
 
 /* ---- one search table, two engines ---- */
 .engines {
@@ -1163,6 +1183,31 @@ code {
     </div>
   </section>
 
+  <section class="ruled" id="dayRefsSection" hidden>
+    <div class="sec-head">
+      <h2>Where visits came from, day by day<sup class="ref"><a href="#note-7" aria-label="Note 7">7</a></sup></h2>
+      <div class="legend">
+        <span class="key"><span class="swatch" style="background:var(--s1)"></span>Google</span>
+        <span class="key"><span class="swatch" style="background:var(--s2)"></span>DuckDuckGo</span>
+        <span class="key"><span class="swatch" style="background:var(--s3)"></span>Bing</span>
+        <span class="key"><span class="swatch" style="background:var(--s4)"></span>Yahoo</span>
+        <span class="key"><span class="swatch" style="background:var(--slate)"></span>Other sites</span>
+      </div>
+    </div>
+    <p class="take"><span data-stat="dayRefLead">On October 15 search engines sent 218 visits, against 136 the day before and 29 on October 2.</span></p>
+    <div class="chartcard">
+      <div class="dayrefs" id="dayRefsChart" role="group" aria-label="Visits from each search engine and other sites, per day"></div>
+      <div class="dayscale" aria-hidden="true"><span></span><div class="ticks" id="dayRefsTicks"></div><span></span></div>
+    </div>
+    <details class="tableview">
+      <summary>View as table</summary>
+      <div class="tablecard"><table class="q" id="dayRefsTable">
+        <thead><tr><th>Day</th><th class="num">Google</th><th class="num">DuckDuckGo</th><th class="num">Bing</th><th class="num">Yahoo</th><th class="num">Other sites</th><th class="num">No source</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </details>
+  </section>
+
   <section class="ruled three">
     <div class="panel">
       <h2 class="kicker">Devices and browsers</h2>
@@ -1225,6 +1270,7 @@ code {
       <li id="note-4"><strong>Layer ids share one namespace across the fleet,</strong> so a layer more than one app registers reports into ONE row and its count sums across them. <span data-stat="layerScopeNote">Five of the ten drawn here are registered by more than one app, and a toggle has carried its own app's tag since September 29; an unattributed figure is toggles from before that date, or ones whose per-app row fell below the ten each app's list holds: Congress (Illinois 49, New York 13, San Francisco 2 and 67 unattributed), County (Illinois 52, Indiana 2, Iowa 5, Kentucky 3, Michigan 10, Minnesota 6, North Carolina 4, Oklahoma 2 and Wisconsin 4), County board (Illinois 40, Wisconsin 8 and 67 unattributed), Ward (Illinois 87 and 112 unattributed) and us-house (Indiana 10, Iowa 6, Kentucky 3, Michigan 18, Minnesota 3, North Carolina 2, South Carolina 1, Tennessee 1 and Wisconsin 5). The other five are registered by one app and are unambiguous: County precinct, IL House, IL Senate, School board and Ward precinct.</span> How much blending there could be is measurable even though the blending itself is not: the other <span data-stat="otherCount">thirteen</span> instances have <span data-stat="otherInst">469</span> page visits between them against Illinois&rsquo;s <span data-stat="topInst">1,451</span>, so a shared id could carry at most that share and the single-app ids carry none of it. That ceiling grows as the other instances do, and this note is where it will be visible when it stops being small. The layer list is the top 10 of those recorded.</li>
       <li id="note-5"><strong>The referrer list is a top six.</strong> GoatCounter&rsquo;s dashboard shows a &ldquo;Show more&rdquo; beyond it that this page cannot query into. The six sum to <span data-stat="refSum">3,556</span> of <span data-stat="total">7,486</span> visits, so a named search engine&rsquo;s true total could run higher than what is shown here. <code>utm_source</code> tags count in the referrer list; the campaigns list counts only visits from links tagged with <code>?utm_campaign=&hellip;</code>.</li>
       <li id="note-6"><strong>Search counts combine <span data-stat="searchProps">2</span> Search Console properties,</strong> because the site renamed mid-window and the old domain still appears in results and redirects across; those are two different results for one search, not one counted twice. Google withholds rare queries before anyone sees them, so these will not reconcile exactly with Search Console&rsquo;s own reports. This is also the one thing the visit counter cannot see: Google strips the query from the referrer, so every one of these searches arrives in the referrer list as an anonymous &ldquo;Google&rdquo;. On Bing the figures combine <span data-stat="bingProps">2</span> verified properties: <span data-stat="bingNewHost">districtry.com</span> first appeared in these results on <span data-stat="bingNewFirst">September 13</span>, with <span data-stat="bingNewImpressions">9,259</span> impressions against chidistricts.com&rsquo;s <span data-stat="bingOldImpressions">481</span>. <span data-stat="bingSplitNote">districtry.com carries most of the figure now; chidistricts.com’s share is the early days of this window, which the rolling window is dropping.</span></li>
+      <li id="note-7"><strong>The day-by-day sources.</strong> Each day&rsquo;s referrer list is asked for on its own, so these are that day&rsquo;s counts rather than a share of the two-month list above. &ldquo;Other sites&rdquo; is any other site that sent a visit, such as LinkedIn, a news story, a smaller search engine like Ecosia, or a districtry link someone shared. &ldquo;No source&rdquo; is a visit whose browser did not say where it came from: a typed address, a bookmark, or an app that hides the link; it is in the table and not the chart. A cell ending in + is a day whose list the dashboard cut short, so the smallest sources are missing from it and the true figure is higher.</li>
     </ol>
   </section>
 
@@ -1386,6 +1432,26 @@ code {
   /* Bing Webmaster Tools, same window. `reporting` is how many of the verified
      properties returned any rows at all. */
   var bingData = {"clicks":295,"impressions":9740,"queries":305,"top":[{"q":"what district am i in","clicks":4,"impressions":474,"position":6.6},{"q":"district","clicks":0,"impressions":89,"position":7.3},{"q":"which district am i in","clicks":0,"impressions":58,"position":6.5},{"q":"nypd precinct finder","clicks":0,"impressions":55,"position":7.8},{"q":"find my ward chicago","clicks":0,"impressions":14,"position":6.9},{"q":"what district am i in?","clicks":3,"impressions":11,"position":4.2},{"q":"what district do i live in","clicks":0,"impressions":11,"position":7.0},{"q":"districts fyi","clicks":0,"impressions":10,"position":9.0},{"q":"what chicago police district am i in","clicks":0,"impressions":10,"position":5.6},{"q":"find my district","clicks":0,"impressions":8,"position":8.0},{"q":"district finder","clicks":1,"impressions":7,"position":5.4},{"q":"what il district am i in","clicks":1,"impressions":6,"position":6.0}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":294,"impressions":9259},"first":"2026-08-15","last":"2026-10-14"};
+
+  /* Where each of the last days' visits came from, each day asked for on
+     its own: [day, Google, DuckDuckGo, Bing, Yahoo, other sites, no source,
+     list cut short]. Empty when the data file predates the per-day fetch. */
+  var dayRefs = [
+    ["Oct 2", 10, 14, 4, 1, 0, 39, false],
+    ["Oct 3", 11, 16, 9, 2, 0, 42, false],
+    ["Oct 4", 7, 4, 6, 2, 1, 13, false],
+    ["Oct 5", 24, 18, 31, 4, 0, 8, false],
+    ["Oct 6", 41, 18, 17, 5, 1, 22, false],
+    ["Oct 7", 24, 10, 14, 4, 12, 22, false],
+    ["Oct 8", 22, 18, 27, 3, 6, 35, false],
+    ["Oct 9", 55, 16, 20, 14, 0, 30, false],
+    ["Oct 10", 26, 11, 8, 4, 3, 27, false],
+    ["Oct 11", 40, 20, 17, 9, 0, 20, false],
+    ["Oct 12", 44, 36, 33, 24, 2, 23, false],
+    ["Oct 13", 49, 30, 29, 8, 2, 40, false],
+    ["Oct 14", 47, 48, 26, 15, 3, 38, false],
+    ["Oct 15", 96, 55, 46, 21, 0, 20, false]
+  ];
 
   var barData = {
     instances: [
@@ -2002,6 +2068,22 @@ code {
       ? "has " + fmt(barData.seo.police) + " visits"
       : "is no longer among the ten most-visited paths, so this page cannot say how many visits it had",
     seoSchool: fmt(barData.seo.school),
+    /* The per-day sources lede: the newest day's search-engine visits against
+       the day before and the first day shown. Derived so it cannot name a
+       figure the chart below has moved past. */
+    dayRefLead: (function () {
+      if (!dayRefs.length) return "";
+      var eng = function (r) { return r[1] + r[2] + r[3] + r[4]; };
+      var last = dayRefs[dayRefs.length - 1];
+      var line = "On " + longMonth(last[0]) + " search engines sent " +
+                 fmt(eng(last)) + " visits";
+      if (dayRefs.length > 1) {
+        var prev = dayRefs[dayRefs.length - 2];
+        line += ", against " + fmt(eng(prev)) + " the day before";
+        if (dayRefs.length > 2) line += " and " + fmt(eng(dayRefs[0])) + " on " + longMonth(dayRefs[0][0]);
+      }
+      return line + ".";
+    })(),
     ref3: (barData.refs[2] || ["—"])[0],
     ref4: (barData.refs[3] || ["—"])[0],
     /* "strongest day since the rebrand" — the rebrand day itself is the
@@ -2084,6 +2166,65 @@ code {
       el.appendChild(row);
     });
   });
+
+  /* ---- where visits came from, day by day ----
+     Hidden unless the data file carried per-day lists, so a file from before
+     the per-day fetch draws nothing rather than a chart of zeroes. */
+  (function () {
+    if (!dayRefs.length) return;
+    var SER = [[1, "Google", "--s1"], [2, "DuckDuckGo", "--s2"], [3, "Bing", "--s3"],
+               [4, "Yahoo", "--s4"], [5, "Other sites", "--slate"]];
+    var shown = function (r) { return r[1] + r[2] + r[3] + r[4] + r[5]; };
+    var top = dayRefs.reduce(function (m, r) { return Math.max(m, shown(r)); }, 0);
+    /* Whole steps of 50 (100 past 300), so every tick is a round number */
+    var step = top > 300 ? 100 : 50;
+    var scale = Math.max(step, Math.ceil(top / step) * step);
+    var chart = document.getElementById("dayRefsChart");
+    var tb = document.querySelector("#dayRefsTable tbody");
+    dayRefs.forEach(function (r) {
+      var row = document.createElement("div");
+      row.className = "dayrow";
+      var d = document.createElement("span");
+      d.className = "d";
+      d.textContent = r[0];
+      var stack = document.createElement("div");
+      stack.className = "stack";
+      var parts = [];
+      SER.forEach(function (sr) {
+        var v = r[sr[0]];
+        if (v) parts.push(sr[1] + " " + fmt(v));
+        if (!v) return;
+        var seg = document.createElement("i");
+        /* 2px gaps between segments come out of the width, so subtract them */
+        seg.style.width = "calc((100% - 8px) * " + (v / scale).toFixed(4) + ")";
+        seg.style.background = "var(" + sr[2] + ")";
+        stack.appendChild(seg);
+      });
+      var t = document.createElement("span");
+      t.className = "t";
+      t.textContent = fmt(shown(r)) + (r[7] ? "+" : "");
+      row.setAttribute("role", "img");
+      row.setAttribute("aria-label", longMonth(r[0]) + ": " +
+        (parts.length ? parts.join(", ") : "none") + (r[7] ? ", list cut short" : ""));
+      row.appendChild(d); row.appendChild(stack); row.appendChild(t);
+      chart.appendChild(row);
+      var tr = document.createElement("tr");
+      [r[0], r[1], r[2], r[3], r[4], r[5], r[6]].forEach(function (v, ci) {
+        var td = document.createElement("td");
+        if (ci > 0) td.className = "num";
+        td.textContent = typeof v === "number" ? fmt(v) + (ci === 5 && r[7] ? "+" : "") : v;
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+    var ticks = document.getElementById("dayRefsTicks");
+    for (var k = 0; k <= scale; k += step) {
+      var tk = document.createElement("span");
+      tk.textContent = fmt(k);
+      ticks.appendChild(tk);
+    }
+    document.getElementById("dayRefsSection").hidden = false;
+  })();
 
   /* ---- search queries (Search Console, Bing Webmaster Tools) ----
      A card stays hidden unless its data file was present: a search panel drawn
