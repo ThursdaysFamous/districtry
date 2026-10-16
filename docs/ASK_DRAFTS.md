@@ -7596,7 +7596,7 @@ the counties' own sites and the next election's results stay the route.
 > (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
 > been searched for earlier correspondence with MARIS; do that before it goes.
 
-**Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
+**Why this is asked.** Mississippi's map names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
 County's District 3 is vacant), and can draw the districts they represent in only 23 counties: 12
 from the Census Bureau's current edition and 11 from the county's own published map, all 11 added
@@ -7644,7 +7644,7 @@ the evidence that it takes more than asking.
 >
 > I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
 > a point on a map, or type an address, and see every district that covers it and who represents
-> them there. We are building Mississippi's map now; it is not public yet.
+> them there. Mississippi's map is at https://districtry.com/ms/.
 >
 > For the county boards, we can name every sitting supervisor in all 82 counties from the
 > Secretary of State's directory. What we cannot find is a current map of the districts they
@@ -7706,8 +7706,10 @@ that needs a change in law, is then the next question; nothing here establishes 
   service shows its layer again, cut it.
 - The 52, the 49 and "about half" must still match the last line of
   `ms/scripts/build_ms_supervisor_districts.py --survey`, which re-measures them.
-- Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
-  Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
+- Mississippi's map went public on 2026-10-16, and the change that published it made the letter
+  link https://districtry.com/ms/ in place of "We are building Mississippi's map now; it is not
+  public yet". The Gmail draft was made before that, so the Letters thread makes the same edit
+  there, unless the operator has edited the draft, in which case the operator is asked.
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 

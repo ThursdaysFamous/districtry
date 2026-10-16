@@ -8,7 +8,7 @@
     "counties_unresearched": 0
   },
   "gap_records": 101,
-  "places": 14,
+  "places": 15,
   "layers": {
     "il": 41,
     "ny": 39,
@@ -23,6 +23,7 @@
     "ok": 14,
     "sc": 14,
     "tn": 16,
-    "ar": 13
+    "ar": 13,
+    "ms": 16
   }
 }
