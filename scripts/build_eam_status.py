@@ -2315,12 +2315,10 @@ WARD_MAPS = {
                              "council members by district and elects them by "
                              "the whole city"}),
     "mi": dict(
-        drawn={"2605920", "2622000", "2629000", "2634000", "2641420",
-               "2684000"},
+        drawn={"2605920", "2622000", "2629000", "2634000", "2638640",
+               "2641420", "2653780", "2656320", "2665440", "2684000"},
         owed={"2603000": "Ann Arbor", "2606020": "Bay City",
-              "2638640": "Holland", "2642820": "Kentwood",
-              "2646000": "Lansing", "2653780": "Midland",
-              "2656320": "Muskegon", "2665440": "Pontiac",
+              "2642820": "Kentwood", "2646000": "Lansing",
               "2682960": "Walker"}),
     # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
     # which reads the cities off the city council roster.
