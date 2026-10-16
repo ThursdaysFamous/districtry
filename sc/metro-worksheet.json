@@ -197,10 +197,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Census County Division",
+      "group": "geography",
+      "area_rank": 6,
+      "rank_note": "299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)",
+      "source": {
+        "answers": "The census county division containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and South Carolina has no township governments, so the county governs everyone outside a city or town. The card names the division and its county and says it governs nobody.",
+        "applies": "South Carolina — statewide."
+      }
+    },
+    {
       "id": "county-council",
       "label": "County Council District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes",
       "source": {
         "answers": "The county council district covering the point, the council member(s) it elects, and the members elected by the whole county.",
@@ -218,7 +236,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -236,7 +254,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "271 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -254,7 +272,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -272,7 +290,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -290,7 +308,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -308,7 +326,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "Tribal land — South Carolina has 2 pieces held by one nation, the Catawba Reservation (4.123 km²) and its off-reservation trust land (0.054 km²), both in York County near Rock Hill, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since the reservation is smaller than the city of Rock Hill beside it, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — South Carolina has 2 such areas, both the Catawba Indian Nation's.",
@@ -323,7 +341,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 9,
   "anchor_point": {
     "lat": 34.00035,
     "lng": -81.03295,

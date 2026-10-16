@@ -671,9 +671,9 @@ PROVENANCE = [
         "source_url": "https://www.marioncountyiowa.gov/about/elected_officials/city/",
         "note": (
             "Marion County's eight cities, Knoxville and Pella among them. NOT to be "
-            "confused with the CITY of Marion in Linn County, whose council roster is a "
-            "separate and still-open gap (marion-council-roster) -- a different unit of "
-            "government with a similar name, and the two must never be joined on it."
+            "confused with the CITY of Marion in Linn County, whose council is read from "
+            "its own page into ia-city-councils.json -- a different unit of government "
+            "with a similar name, and the two must never be joined on it."
         ),
     },
     {

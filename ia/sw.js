@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-ia-shell-v26";
+const CACHE_NAME = "districtry-ia-shell-v28";
 
 const SHELL_URLS = [
   "./",
@@ -62,6 +62,15 @@ const GEOMETRY_URLS = [
   "./data/app/ia-aeas.json",
   "./data/app/waterloo-wards.json",
   "./data/app/cedar-rapids-wards.json",
+  "./data/app/ames-wards.json",
+  "./data/app/bettendorf-wards.json",
+  "./data/app/cedar-falls-wards.json",
+  "./data/app/davenport-wards.json",
+  "./data/app/dubuque-wards.json",
+  "./data/app/marion-wards.json",
+  "./data/app/marshalltown-wards.json",
+  "./data/app/mason-city-wards.json",
+  "./data/app/west-des-moines-wards.json",
   "./data/app/adair-county-outline.json",
   "./data/app/floyd-county-outline.json",
   "./data/app/humboldt-county-outline.json",
@@ -79,14 +88,10 @@ const GEOMETRY_URLS = [
   "./data/app/palo-alto-county-outline.json",
   "./data/app/worth-county-outline.json",
   "./data/app/bremer-county-outline.json",
-  "./data/app/butler-county-outline.json",
   "./data/app/cerro-gordo-county-outline.json",
   "./data/app/franklin-county-outline.json",
   "./data/app/hamilton-county-outline.json",
   "./data/app/linn-county-outline.json",
-  "./data/app/madison-county-outline.json",
-  "./data/app/sac-county-outline.json",
-  "./data/app/taylor-county-outline.json",
   "./data/app/webster-county-outline.json",
   "./data/app/winneshiek-county-outline.json",
   "./data/app/tribal-areas.json",

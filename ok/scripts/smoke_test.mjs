@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ok-senate", "ok-house"];
 const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99" };
 const NEGATIVE_POINT = "33.65000,-97.15000"; // near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry Oklahoma";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -806,6 +806,36 @@ try {
         props: { GEOID: "4000001", NAME: "Example Elementary School District", STATE: "40" },
         want: [/Example Elementary School District/],
         reject: []
+      },
+      // The level-14 map. Every Oklahoma subdivision is a census county
+      // division (LSADC 22, FUNCSTAT S, measured 2026-10-15), so the card must
+      // say no one is elected from it, name its county from the app's own
+      // county file, and title it without TIGER's "CCD", since the card's
+      // header already says Census County Division. A status code the card
+      // does not carry prints no Government row rather than an improvised one.
+      {
+        name: "a census county division says no one is elected from it",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4010992426", NAME: "Oklahoma City Southwest CCD", BASENAME: "Oklahoma City Southwest", STATE: "40", COUNTY: "109", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Oklahoma City Southwest/, /Oklahoma County/, /no one is elected from it/, /no township governments/],
+        reject: [/\bCCD\b/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4010992426", NAME: "Oklahoma City Southwest CCD", BASENAME: "Oklahoma City Southwest", STATE: "40", COUNTY: "109", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Oklahoma City Southwest/, /no functioning government/],
+        reject: [/draws to report its counts/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4010992426", NAME: "Oklahoma City Southwest CCD", BASENAME: "Oklahoma City Southwest", STATE: "40", COUNTY: "109", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Oklahoma City Southwest/, /Oklahoma County/],
+        reject: [/Government/]
       }
     ];
 
