@@ -158,6 +158,21 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-subdivision",
+        "app_file": "ar-townships.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/57",
+        "note": (
+            "All 820 townships in 75 counties, pre-built from the state's own "
+            "TOWNSHIP_POLITICAL_DIVISION layer by "
+            "ar/scripts/build_ar_townships.py rather than from the Census, "
+            "whose township map of Arkansas disagrees with the state's about "
+            "how many townships a county has in 27 counties (2026-10-15). The "
+            "layer carries no edit date, so build_ar_townships.py --watch, the "
+            "annual row in ar/WATCH.md, is what notices a county court "
+            "redrawing; this check only says the layer still answers."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "ar-county-officials.json",
         "source_url": "https://arcourts.gov/directories/county-judge-clerk",
@@ -188,6 +203,19 @@ PROVENANCE = [
             "measured rather than predicted. Its --check is offline and holds "
             "the shipped file to one verified-interior INSIDE anchor per county "
             "(75 of 75 correct) plus eleven OUTSIDE anchors over the state line."
+        ),
+    },
+    {
+        "layer": "voting-precinct",
+        "app_file": "ar-precincts.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/11",
+        "note": (
+            "Arkansas's 2,920 voting precincts from the Arkansas GIS Office's "
+            "statewide layer of what each county reports (2,928 records: "
+            "seven precincts are published in pieces and joined), pre-built "
+            "by ar/scripts/build_ar_precincts.py through "
+            "scripts/statewide_precincts.py; the quarterly --watch row in "
+            "ar/WATCH.md compares the fingerprint recorded at the build."
         ),
     },
 ]
@@ -267,6 +295,16 @@ ENDPOINTS = [
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 850,   # 942 measured 2026-10-13
     },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in ar/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://gis.arkansas.gov/arcgis/rest/services/"
+                "FEATURESERVICES/Boundaries/FeatureServer/11/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2630,  # 2,928 records measured 2026-10-15
+    },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -292,14 +330,21 @@ def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/ar/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/ar/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/ar/)"}, label="ar-validate-sources")
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="ar-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/ar/)"},
+            headers={"User-Agent": ua},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

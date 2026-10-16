@@ -74,6 +74,15 @@ current one took effect, and none of that can be inferred from a sibling state. 
 state thread's to fill: `ia/WATCH.md`, `ky/WATCH.md` and `mn/WATCH.md` are where that work is
 tracked.
 
+**SIX MORE INSTANCES HAVE GONE LIVE SINCE THAT MEASUREMENT** — Indiana, North Carolina, Oklahoma,
+South Carolina, Tennessee and Arkansas. On 2026-10-15 Kentucky's stub and new stubs for Oklahoma,
+South Carolina, Tennessee and Arkansas gained one row each, for the township layer that change
+added, because those facts were measured in that change; every other layer in those five is still
+unwritten. A second change the same day added each state's election precincts to Kentucky,
+Indiana, North Carolina, South Carolina, Tennessee and Arkansas, so four of those stubs gained a
+precinct row and Indiana and North Carolina gained a stub each, holding that one row. In Indiana
+and North Carolina, as in those five, every other layer is still unwritten here.
+
 ### CHI (37 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
@@ -193,11 +202,79 @@ No blast-radius entries for Iowa. Owned by the Iowa thread.
 
 ### KY — NOT YET WRITTEN
 
-No blast-radius entries for Kentucky. Owned by the Kentucky thread.
+No blast-radius entries for Kentucky except the township and precinct layers, both added
+2026-10-15. Owned by the Kentucky thread.
 
-### MN — NOT YET WRITTEN
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| County subdivisions (KY census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
+| Election precincts (KY, 3,194) | **At no fixed time**: the county changes its precincts | each county board of elections, by a Precinct Establishment Order filed with the State Board of Elections, which compiles them into one statewide layer | geometry (`ky/scripts/build_ky_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `ky/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. The card also says the layer is current through the November 3, 2026 general election, as the layer itself does, and the builder's `--check` holds the card to that sentence. The quarterly `--watch` row in `ky/WATCH.md` is the tripwire |
 
-No blast-radius entries for Minnesota. Owned by the Minnesota thread.
+### MN — ONE LAYER WRITTEN OF 20
+
+Only the city council wards have an entry so far; the other nineteen layers are not yet written
+here, and `mn/WATCH.md` carries their dates. Owned by the Minnesota thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| City Council District (22 cities, 101 wards) | **Decennial, after each census**, and whenever a city changes its number of wards | each city council, by ordinance under Minn. Stat. 204B.135 and its charter; the Secretary of State carries the result on every precinct in its statewide precinct layer | geometry (`mn/scripts/build_mn_city_wards.py` rebuild). The builder refuses to write unless each city's wards are exactly its roster's ward seats in `mn-city-councils.json` and every ward's precincts are exactly those that voted in its latest council contest, read in that election's own precinct map. A city that redraws shows up as a ballot mismatch until its first election on the new lines, which is correct: until then its members still represent the old wards. A change in a city's number of wards fails the roster half until `mn/scripts/build_mn_city_councils.py` declares the new seats. Cache-first geometry, so a rebuild bumps `cache_name` |
+
+### IN — NOT YET WRITTEN
+
+No blast-radius entries for Indiana except the precinct layer, added 2026-10-15. Owned by the
+Indiana thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| Election precincts (IN, 5,121) | **At no fixed time**: the county changes its precincts | each county, gathered every year by the General Assembly and the Election Division into one statewide layer that IndianaMap publishes as a new service each year | geometry (`in/scripts/build_in_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `in/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. A new yearly edition sits at a new address with new field names, so it needs the builder's address, edition and field names changed and the card's "Indiana's 2026 precinct map" with them; the builder's `--check` holds the card to the edition it reads. The quarterly `--watch` row in `in/WATCH.md` is the tripwire |
+
+### NC — NOT YET WRITTEN
+
+No blast-radius entries for North Carolina except the precinct layer, added 2026-10-15. Owned by
+the North Carolina thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| Election precincts (NC, 2,625) | **At no fixed time**: the county changes its precincts | each county board of elections; the State Board of Elections posts the statewide file, which NC OneMap serves | geometry (`nc/scripts/build_nc_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `nc/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. The card names the date of the Board's file the copy matches (August 24, 2026), and the builder's `--check` holds the card to it. The quarterly `--watch` row in `nc/WATCH.md` is the tripwire |
+
+### OK — NOT YET WRITTEN
+
+No blast-radius entries for Oklahoma except the township layer, added 2026-10-15. Owned by the
+Oklahoma thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| County subdivisions (OK census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
+
+### SC — NOT YET WRITTEN
+
+No blast-radius entries for South Carolina except the township and precinct layers, both added
+2026-10-15. Owned by the South Carolina thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| County subdivisions (SC census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
+| Election precincts (SC, 2,315) | **At no fixed time**: an act of the General Assembly, one county at a time | the General Assembly, by act (Title 7, Chapter 7 of the Code), county by county; the Revenue and Fiscal Affairs Office keeps the official maps | geometry (`sc/scripts/build_sc_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `sc/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. A new act changes the card's act and effective-date rows with the lines, which the rebuild carries. The quarterly `--watch` row in `sc/WATCH.md` is the tripwire |
+
+### TN — NOT YET WRITTEN
+
+No blast-radius entries for Tennessee except the civil-district and precinct layers, both added
+2026-10-15. Owned by the Tennessee thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| Civil districts (TN) | TIGER-rolling | Census Bureau vintage, recording each civil district as a legal area with no functioning government (FUNCSTAT N); which body may change a civil district's lines is not measured here | nothing to rebuild: the layer is LIVE against TIGERweb, so a change reaches the app only once the Census carries it into a new vintage. The card's note that a civil district's number is not a commission district's number holds whatever the lines do |
+| Election precincts (TN, 1,870) | **At no fixed time**: the county changes its precincts | each county election commission; the Comptroller of the Treasury, who does the counties' redistricting map work, publishes the statewide layer | geometry (`tn/scripts/build_tn_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `tn/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. The builder also expects exactly nine repeated records in Overton County and eight unnamed pieces in Davidson County, so a change to either stops the rebuild until someone reads the layer. The quarterly `--watch` row in `tn/WATCH.md` is the tripwire |
+
+### AR — NOT YET WRITTEN
+
+No blast-radius entries for Arkansas except the township and precinct layers, both added
+2026-10-15. Owned by the Arkansas thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| Townships (AR) | **At no fixed time**: a county court changes its townships by order (Arkansas Code 14-14-401) | each county court; drawn by the Arkansas GIS Office's statewide township layer, which this app ships instead of the Census's out-of-date one | geometry (`ar/scripts/build_ar_townships.py` rebuild: the 820-township and 75-county guard, the agreement gate, the 25 m ceiling and the per-county cover check all re-run), the Capitol smoke anchor (Big Rock Township), and the service-worker cache name, since the file is cache-first. The state's layer carries no edit date, so `--watch` (the annual row in `ar/WATCH.md`) is the only tripwire |
+| Election precincts (AR, 2,920) | **At no fixed time**: the county changes its precincts | each county, as its voter registration system holds them; the Arkansas GIS Office publishes the statewide layer with the Secretary of State's Elections Division | geometry (`ar/scripts/build_ar_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `ar/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. The builder also expects exactly eight records that are further pieces of seven precincts, so a precinct newly published in pieces stops the rebuild until someone reads the layer. The quarterly `--watch` row in `ar/WATCH.md` is the tripwire |
 
 ---
 

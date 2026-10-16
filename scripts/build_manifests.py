@@ -38,6 +38,20 @@ so a share is answered on the phone from the start. Safari supports no share
 target, so an iPhone never shows districtry in its Share menu; the Google Play
 app takes its share target from this manifest when it is built.
 
+THE GOOGLE PLAY APP (from 2026-10-16). The Play app is a Trusted Web Activity
+that opens this site, built with PWABuilder. Android shows it full screen, with
+no address bar, only when `/.well-known/assetlinks.json` names its package and
+the certificates Play signs it with, so this script writes that file too, from
+`PLAY_PACKAGE` and `PLAY_SIGNING_KEYS`. A new app is enrolled in Play's
+quantum-ready hybrid signing, which signs with THREE keys: a classical one that
+Android 16 and earlier check, and a classical and a post-quantum one that
+Android 17 and later check instead. Play Console's ready-made "Digital Asset
+Links JSON" names only the first, so by Google's account of which key Android
+17 checks, a file pasted from it leaves the address bar on every Android 17
+phone with nothing failing (read from the help page, not yet seen on a
+phone). The Play-app block (`engine/shared/play-app.txt`) recognises the app
+by the same package name, and `--check` holds the two to each other.
+
 WHY THE ROOT SERVICE WORKER IS NOT USED. `/sw.js` is the kill switch that
 retires the pre-R2.3 root registration. It must stay exactly that, and a
 manifest needs no worker at its own scope to be installable, so the launcher's
@@ -65,7 +79,10 @@ WHAT `--check` ASSERTS, beyond byte-equality of the manifest:
     engine counts a share by under the key the engine reads;
   * the launcher's worker names no cache outside its own prefix and never
     fetches the request it was handed, and the engine block registers that
-    worker at the same script and scope the launcher does.
+    worker at the same script and scope the launcher does;
+  * `.well-known/assetlinks.json` is byte-identical to what `PLAY_SIGNING_KEYS`
+    produces, every fingerprint in it is well formed and listed once, and the
+    Play-app block recognises the app by the package name it names.
 
 Usage:
     python3 scripts/build_manifests.py            # write
@@ -99,6 +116,7 @@ INSTANCES = [
     ("sc", "sc/metro-worksheet.json"),
     ("tn", "tn/metro-worksheet.json"),
     ("ar", "ar/metro-worksheet.json"),
+    ("ms", "ms/metro-worksheet.json"),
 ]
 
 MANIFEST = "manifest.webmanifest"
@@ -109,6 +127,30 @@ LAUNCHER_SW = os.path.join("app", "sw.js")
 LAUNCHER_CACHE_PREFIX = "districtry-app-launch-v"
 ENGINE_BLOCK = os.path.join("engine", "index.html", "install-app.txt")
 PLAY_APP_BLOCK = os.path.join("engine", "shared", "play-app.txt")
+
+# The Google Play app. Its package name is permanent once published.
+PLAY_PACKAGE = "com.districtry.app"
+ASSET_LINKS = os.path.join(".well-known", "assetlinks.json")
+
+# The certificates Play signs the app with, as the SHA-256 of each certificate
+# file Play Console's "Download certificate" buttons give (measured 2026-10-16
+# on the four files Adam downloaded; the first matches the fingerprint Play
+# Console prints). Play's help page says to register all three keys of hybrid
+# signing (support.google.com/googleplay/android-developer/answer/9842756, read
+# 2026-10-16). The UPLOAD key is left out on purpose: Play re-signs every copy a
+# phone installs from it, so the upload key signs nothing a reader runs, and
+# listing it would let a copy signed on a computer rather than by Google claim
+# districtry.com as well. Play prompts for a key upgrade about every two years;
+# an upgraded key's fingerprints go in here before the upgraded build ships.
+PLAY_SIGNING_KEYS = [
+    ("92:B8:E3:B4:11:73:79:D6:74:62:57:A0:2A:A9:9E:02:A6:9A:DA:18:BE:3D:F5:A7:20:EB:98:0A:77:C0:AF:F9",
+     "classical RSA key, checked by Android 16 and earlier (deployment_cert.der)"),
+    ("66:31:30:BC:4E:61:F1:9E:FE:01:D6:EB:E5:8B:D8:5C:AA:B1:40:4B:17:6A:65:98:F2:4D:50:49:45:16:4E:F5",
+     "hybrid signing's classical RSA key, checked by Android 17 and later (hybrid_classical_cert.der)"),
+    ("1E:27:21:C7:0D:96:84:57:66:99:60:31:DB:43:0F:9B:AA:91:AF:E3:08:92:A9:F0:FB:B6:A1:58:6E:75:88:AA",
+     "hybrid signing's post-quantum ML-DSA-65 key, Android 17 and later (hybrid_pqc_cert.der)"),
+]
+FINGERPRINT_RE = re.compile(r"^(?:[0-9A-F]{2}:){31}[0-9A-F]{2}$")
 
 # What Android's Share menu sends the launcher. Android puts a shared link in
 # `text` and usually leaves `url` empty, so the launcher reads all three.
@@ -218,6 +260,60 @@ def build_manifest():
         },
     }
     return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
+
+
+def build_asset_links():
+    """The Digital Asset Links statement that lets the Play app open this site
+    full screen. A malformed fingerprint fails nothing on the site and leaves
+    the app's address bar showing, so each is checked here."""
+    fps = [fp for fp, _role in PLAY_SIGNING_KEYS]
+    bad = [fp for fp in fps if not FINGERPRINT_RE.match(fp)]
+    if bad:
+        fail("PLAY_SIGNING_KEYS holds %s, which %s not a SHA-256 fingerprint "
+             "written as 32 upper-case hex pairs joined by colons, the form "
+             "Play Console prints" % (", ".join(bad), "is" if len(bad) == 1 else "are"))
+    if len(set(fps)) != len(fps):
+        fail("PLAY_SIGNING_KEYS lists a fingerprint twice")
+    doc = [{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": PLAY_PACKAGE,
+            "sha256_cert_fingerprints": fps,
+        },
+    }]
+    return json.dumps(doc, indent=2) + "\n"
+
+
+def check_play_package():
+    """The Play-app block tells the Play app from a browser partly by the
+    app's own referrer, android-app://<package>. A package named differently
+    there and in the asset links would leave one of them describing an app
+    that does not exist, with nothing else failing."""
+    play = read(os.path.join(REPO, PLAY_APP_BLOCK), "the Play-app block")
+    want = "android-app:\\/\\/" + PLAY_PACKAGE.replace(".", "\\.")
+    if want not in play:
+        fail("%s does not recognise the referrer android-app://%s, the package "
+             "%s names. Change both together." % (PLAY_APP_BLOCK, PLAY_PACKAGE, ASSET_LINKS))
+
+
+def write_or_check(relpath, want, check, source, why):
+    """Write a generated file, or with --check fail if the copy on disk differs."""
+    path = os.path.join(REPO, relpath)
+    have = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
+    if check:
+        if have != want:
+            sys.stdout.writelines(difflib.unified_diff(
+                have.splitlines(keepends=True), want.splitlines(keepends=True),
+                fromfile="on disk", tofile="from " + source))
+            fail("%s drifted from %s. Regenerate rather than hand-editing: %s"
+                 % (relpath, source, why))
+    elif have != want:
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(want)
+        print("build-manifests: wrote %s" % relpath)
+    else:
+        print("build-manifests: %s already current" % relpath)
 
 
 def icons(check):
@@ -396,34 +492,28 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true",
-                    help="fail if the manifest, its icons, a page or the launcher drifted")
+                    help="fail if the manifest, its icons, a page, the launcher "
+                         "or the asset links drifted")
     args = ap.parse_args()
 
-    want = build_manifest()
-    path = os.path.join(REPO, MANIFEST)
-    have = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
-    if args.check:
-        if have != want:
-            sys.stdout.writelines(difflib.unified_diff(
-                have.splitlines(keepends=True), want.splitlines(keepends=True),
-                fromfile="on disk", tofile="from the brand keys"))
-            fail("%s drifted from the brand keys. Regenerate rather than "
-                 "hand-editing: a manifest that disagrees with the app is what "
-                 "puts the wrong name on someone's home screen." % MANIFEST)
-    elif have != want:
-        with open(path, "w", encoding="utf-8") as fh:
-            fh.write(want)
-        print("build-manifests: wrote %s" % MANIFEST)
-    else:
-        print("build-manifests: %s already current" % MANIFEST)
+    write_or_check(MANIFEST, build_manifest(), args.check, "the brand keys",
+                   "a manifest that disagrees with the app is what puts the "
+                   "wrong name on someone's home screen.")
+    write_or_check(ASSET_LINKS, build_asset_links(), args.check,
+                   "PLAY_SIGNING_KEYS",
+                   "Android checks this file before it opens the Play app "
+                   "without an address bar.")
+    check_play_package()
 
     icons(args.check)
     linking = check_pages()
     key, share_key = check_launcher()
     print("build-manifests: OK — one manifest for %d instances, linked by %d "
           "page(s); the launcher reads %r, the key the apps write, and marks a "
-          "shared place under %r, the key they count it by"
-          % (len(INSTANCES), linking, key, share_key))
+          "shared place under %r, the key they count it by; the asset links "
+          "name %s with %d Play signing keys"
+          % (len(INSTANCES), linking, key, share_key, PLAY_PACKAGE,
+             len(PLAY_SIGNING_KEYS)))
 
 
 if __name__ == "__main__":

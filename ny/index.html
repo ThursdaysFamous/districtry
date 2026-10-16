@@ -14613,25 +14613,37 @@ function initNycExplorer() {
 
   /* ---------- NYPD Precinct (78) ----------
    * Boundary from Socrata y76i-bdw7 (`precinct`). Joins the same-origin
-   * nypd-precinct-info.json roster (commanding officer, keyed by precinct number
-   * — empty placeholder until Thread 5) and the FacDB station houses (address +
-   * map pin, keyed on `policeprct`) so the card carries real content even before
-   * the CO scrape. Oversight is non-elected (CCRB is appointed + citywide),
-   * labeled as such; the NYPD precinct page carries the CO + community council. */
+   * nypd-precinct-info.json roster, keyed by precinct number: the commanding
+   * officer, the station house address and the precinct's desk telephone, all
+   * read weekly off the precinct's own NYPD page. The station used to come from
+   * the city's facilities list (FacDB ji82-xba5) keyed on `policeprct`, which is
+   * the precinct a facility SITS IN rather than the one it houses, so several
+   * cards named a firehouse or the wrong building (90 showed Engine 216 at 187
+   * Union Avenue; NYPD gives 211 Union Avenue). Measured 2026-10-16:
+   * nypd_precinct_scraper.py. Oversight is non-elected (CCRB is appointed +
+   * citywide), labeled as such. */
   var loadPolicePrecincts = makeCachedLoader("y76i-bdw7");
   var loadPrecinctInfo = makeCached(function () { return fetchJSONWithRetry("data/app/nypd-precinct-info.json", {}, 2); });
-  var loadPoliceStationPoints = makeSocrataPointLoader("ji82-xba5", "factype='POLICE STATION'", "latitude", "longitude");
-  function policeStationsByPrecinct(gj) {
-    if (gj && gj.__byPrecinct) return gj.__byPrecinct;
-    var idx = {};
-    ((gj && gj.features) || []).forEach(function (f) {
-      var p = f.properties || {};
-      var k = p.policeprct != null ? String(parseInt(p.policeprct, 10)) : null;
-      if (k && !idx[k]) idx[k] = p;
+  // The nearest-station card's points come from the same roster: one per
+  // precinct, at the station house NYPD names, geocoded from its address and
+  // checked against the precinct's own polygon (nypd_precinct_scraper.py). The
+  // city facilities list it used to read put firehouses, a juvenile centre and
+  // a landfill garage on this card as police stations (measured 2026-10-16).
+  var loadPoliceStationPoints = makeCached(function () {
+    return loadPrecinctInfo().then(function (info) {
+      var feats = [];
+      Object.keys(info || {}).forEach(function (pct) {
+        var row = info[pct] || {};
+        var pt = row.station_point;
+        if (!Array.isArray(pt) || pt.length !== 2 || !isFinite(pt[0]) || !isFinite(pt[1])) return;
+        feats.push({ type: "Feature", geometry: { type: "Point", coordinates: [Number(pt[0]), Number(pt[1])] },
+          properties: { precinct: pct, name: row.station_name || null,
+            address: Array.isArray(row.station_address) ? row.station_address.join(", ") : null,
+            phone: row.station_phone || null } });
+      });
+      return { type: "FeatureCollection", features: feats };
     });
-    if (gj) gj.__byPrecinct = idx;
-    return idx;
-  }
+  });
   registerLayer({
     id: "police-precinct",
     tiles: "data/app/tiles/police-precinct.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
@@ -14662,25 +14674,21 @@ function initNycExplorer() {
     query: function (point, seq) {
       return Promise.all([
         featureSetAt(loadPolicePrecincts, point),
-        loadPrecinctInfo().catch(function () { return {}; }),
-        loadPoliceStationPoints().catch(function () { return null; })
+        loadPrecinctInfo().catch(function () { return {}; })
       ]).then(function (r) {
-        var gj = r[0], info = r[1] || {}, stationGj = r[2];
+        var gj = r[0], info = r[1] || {};
         var feature = findFeatureContaining(gj, point);
         if (!feature) return null;
         var pct = findPropCI(feature.properties || {}, ["precinct"]);
         var num = (pct != null && pct !== "") ? parseInt(pct, 10) : null;
         var row = (num != null && info) ? info[String(num)] : null;
-        var station = (num != null && stationGj) ? policeStationsByPrecinct(stationGj)[String(num)] : null;
         return {
           seq: seq,
           precinct: num,
           commander: row ? (row.commander || row.commanderName) : null,
-          phone: row ? row.phone : null,
+          phone: row ? row.station_phone : null,
           sourceUrl: row ? (row.source_url || row.sourceUrl) : null,
-          stationName: station ? station.facname : null,
-          stationAddress: station ? station.address : null,
-          stationBoro: station ? station.boro : null
+          stationLines: (row && Array.isArray(row.station_address) && row.station_address.length) ? row.station_address.map(String) : null
         };
       });
     },
@@ -14705,13 +14713,9 @@ function initNycExplorer() {
           note: "No commanding officer listed on the NYPD's precinct page"
         }));
       }
-      if (result.stationAddress || result.phone) {
-        var stationLines = [];
-        if (result.stationAddress) {
-          stationLines.push((result.stationName ? toTitleCase(result.stationName) + " — " : "") + toTitleCase(result.stationAddress));
-        }
+      if (result.stationLines || result.phone) {
         wrap.appendChild(renderOfficeGroup({
-          offices: [{ label: "Station house", lines: stationLines, phone: result.phone ? String(result.phone) : null }]
+          offices: [{ label: "Station house", lines: result.stationLines || [], phone: result.phone ? String(result.phone) : null }]
         }));
       }
       wrap.appendChild(renderLinkRow({
@@ -14730,8 +14734,8 @@ function initNycExplorer() {
       return { label: "NYPD " + ordinalSuffix(result.precinct) + " Precinct", url: url };
     },
     pointOfInterest: function (result) {
-      if (!result.stationAddress) return null;
-      var addr = toTitleCase(result.stationAddress) + (result.stationBoro ? ", " + toTitleCase(result.stationBoro) : "");
+      if (!result.stationLines) return null;
+      var addr = result.stationLines.join(", ");
       var label = (result.precinct != null ? "NYPD " + ordinalSuffix(result.precinct) + " Precinct" : "Precinct") + " Station House";
       return { label: label, address: addr };
     },
@@ -14801,7 +14805,11 @@ function initNycExplorer() {
     }
   });
 
-  /* ---------- Police Station (nearest 3) — FacDB `factype='POLICE STATION'` ---------- */
+  /* ---------- Police Station (nearest 3) — NYPD's own 78 station houses ---------- */
+  function policeStationName(p) {
+    var name = p.name ? String(p.name) : "";
+    return name ? name + " Precinct station house" : "Police station";
+  }
   registerNearestPointLayer({
     id: "police-station",
     group: "safety",
@@ -14811,18 +14819,12 @@ function initNycExplorer() {
     loader: loadPoliceStationPoints,
     intro: "Nearest NYPD station houses, straight-line distance:",
     line: function (p) {
-      var name = findPropCI(p, ["facname"]);
-      var addr = findPropCI(p, ["address"]);
-      var pct = findPropCI(p, ["policeprct"]);
-      return (name ? toTitleCase(name) : "Police station") + (pct ? " (Precinct " + pct + ")" : "") + (addr ? " — " + toTitleCase(addr) : "");
+      return policeStationName(p) + (p.address ? " — " + p.address : "");
     },
     item: function (p) { // 4d two-line row: name over address
-      var name = findPropCI(p, ["facname"]);
-      var addr = findPropCI(p, ["address"]);
-      var pct = findPropCI(p, ["policeprct"]);
       return {
-        name: (name ? toTitleCase(name) : "Police station") + (pct ? " (Precinct " + pct + ")" : ""),
-        note: addr ? toTitleCase(addr) : undefined
+        name: policeStationName(p),
+        note: [p.address, p.phone].filter(Boolean).join(" · ") || undefined
       };
     }
   });

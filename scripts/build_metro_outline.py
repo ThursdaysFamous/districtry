@@ -819,6 +819,28 @@ METRO_COUNTY_FIPS = ("031", "043", "197", "097", "089", "111", "093",
                      # moves from OUTSIDE to INSIDE with this join. READ THE
                      # RING COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
                      "021",
+                     # Ford (2026-10-15), board-only. Its three districts are
+                     # whole precincts per Res. 21-101, the county's 2021 plan,
+                     # whose own table gives all 22 precinct populations and all
+                     # three district totals, each matched to the person by the
+                     # census dissolve (scripts/build_ford_boundaries.py). Its
+                     # twelve members come from the Clerk's letter. Ford was one
+                     # third of the Champaign/Ford/Piatt enclave; Champaign and
+                     # Piatt stay shut on the CCGISC licence, so the hole
+                     # shrinks to those two. READ THE RING COUNT FROM --check,
+                     # NEVER FROM A MAP IN YOUR HEAD.
+                     "053",
+                     # Fayette and Lawrence (2026-10-16), board-only, PARTLY
+                     # DRAWN on Adam's ruling "Draw the proven parts": each
+                     # county's own publication places whole precincts or
+                     # townships in each district, and the one area it shares
+                     # between districts without publishing the line is drawn
+                     # as itself, its card naming every district it could be
+                     # (scripts/build_partial_board_districts.py). Fayette's
+                     # join leaves Marion enclosed alone; Lawrence's closes
+                     # the notch it was on the Indiana line. READ THE RING
+                     # COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
+                     "051", "101",
                      # judicial-subcircuit secondary counties (see below)
                      "005", "083", "061", "137", "171")
 STATE_FIPS = "17"
@@ -1001,6 +1023,15 @@ DISPATCH_COUNTY_FIPS = {
     # district plan predates the change and all three changes fell inside one
     # district (scripts/build_christian_boundaries.py).
     "christian": "021",
+    # Ford (2026-10-15) — board-only, three districts of four members dissolved
+    # from the 22 Census 2020 voting districts per Res. 21-101 Exhibit A
+    # (scripts/build_ford_boundaries.py). No precinct entry in this change.
+    "ford": "053",
+    # Fayette and Lawrence (2026-10-16) — board-only, drawn where each county
+    # places whole precincts or townships, with one shared area each
+    # (scripts/build_partial_board_districts.py).
+    "fayette": "051",
+    "lawrence": "101",
 }
 # ==== TEMPLATE:END outline-county-config ====
 
@@ -1176,6 +1207,10 @@ INSIDE = {
     # Montgomery, so a reader saw it as a doughnut in the coverage. Its board
     # districts closed it.
     "Taylorville (Christian)": (39.5490, -89.2945),
+    # Paxton (Ford) — the county seat, moved up from OUTSIDE on 2026-10-15
+    # when Ford's board districts shipped from Res. 21-101. It had held the
+    # Champaign/Ford/Piatt enclave since Vermilion's join of 2026-08-23.
+    "Paxton (Ford)": (40.4606, -88.0953),
     # The SECOND island (pass 14, 2026-08-05): Hamilton, deep-south and five
     # unserved neighbours around it — Fairfield (Wayne) holds the corridor
     # toward Effingham OUTSIDE.
@@ -1401,6 +1436,13 @@ INSIDE = {
     # current maps" (2026-08-26), which released the fleet's largest accepted
     # population deviation (scripts/build_clay_boundaries.py).
     "Flora (Clay)": (38.6688, -88.4759),
+    # Vandalia (Fayette) and Lawrenceville (Lawrence) — moved up from OUTSIDE
+    # on 2026-10-16, when both counties joined on their partly drawn board
+    # districts (scripts/build_partial_board_districts.py). Vandalia had held
+    # the Fayette-Marion pair's ground; Salem still holds Marion's, now
+    # enclosed alone. Lawrenceville had proven Lawrence's notch unwashed.
+    "Vandalia (Fayette)": (38.9606, -89.0937),
+    "Lawrenceville (Lawrence)": (38.7263, -87.6873),
     # judicial-subcircuit secondary counties
     "Greenville (Bond, 3rd Circuit)": (38.8923, -89.4131),
     "Jerseyville (Jersey, 7th Circuit)": (39.1200, -90.3284),
@@ -1441,11 +1483,6 @@ OUTSIDE = {
     # base names CENTRALIA and SALEM span three board districts each, so no
     # name can place them and the dissolve that built Clinton cannot build it.
     "Salem (Marion)": (38.6270, -88.9456),
-    # Fayette borders the subcircuit counties but is in no shipped circuit, so
-    # it must stay outside — the guard that keeps "a circuit's secondary
-    # counties" from quietly becoming "everything nearby". (Pittsfield sat
-    # beside it until Pike shipped in tranche 5.)
-    "Vandalia (Fayette)": (38.9606, -89.0937),
     # Canton and Toulon both sat here until their counties shipped. Toulon left
     # when Stark's whole GIS — one hand-maintained Google My Maps — was dated by
     # its County Clerk in an e-mail, and Canton left when Fulton was built: the
@@ -1500,7 +1537,8 @@ OUTSIDE = {
     # boundary, which the dissolve walks around rather than closing over. This
     # anchor is what proves the notch stays unwashed; the ring count is read
     # from --check, never reasoned about here.
-    "Lawrenceville (Lawrence)": (38.7263, -87.6873),
+    # (Lawrenceville moved up to INSIDE on 2026-10-16, when Lawrence joined on
+    # its partly drawn board districts and the notch closed.)
     # Newton (Jasper) — the successor anchor Cumberland's join calls for
     # (2026-08-21). Cumberland left exactly one unserved neighbour behind and
     # this is it, and Jasper is a MEASURED frontier rather than an unexamined
@@ -1550,19 +1588,15 @@ OUTSIDE = {
     # obtained the Beacon export and Menard moved up to INSIDE. The reasoning
     # this list records is about what can be DERIVED, which was never the same
     # question as what a county will send.)
-    # Champaign, Ford and Piatt — ENCLOSED 2026-08-23 by Vermilion's join, the
-    # fleet's second multi-county enclave. Ford's every other neighbour
-    # (Iroquois, Kankakee, Livingston, McLean, Vermilion) is served and
-    # Champaign's and Piatt's are too, so the three are one interior block
-    # rather than frontier. All three carry an anchor rather than only the rim,
-    # so the whole hole is proven unwashed: mis-nested, the ring would render
-    # identically under the wash and all three would answer True here, failing
-    # the build. Each is MEASURED shut, not unexamined — Champaign and Piatt by
-    # the CCGISC licence ("All Rights Reserved"), Ford by having no vector
-    # district map and an adopted 2021 reapportionment resolution that leaves
-    # its districts "To be determined".
+    # Champaign and Piatt — ENCLOSED 2026-08-23 by Vermilion's join, the
+    # fleet's second multi-county enclave, which held Ford too until Ford's
+    # board districts shipped on 2026-10-15 (Paxton moved up to INSIDE).
+    # Both carry an anchor rather than only the rim, so the whole hole is
+    # proven unwashed. Each is MEASURED shut, not unexamined: the CCGISC
+    # licence ("All Rights Reserved"). Ford was recorded shut beside them on
+    # an adopted 2021 resolution that left its districts "To be determined";
+    # the amending resolution, 21-101, fills them in, and nobody had read it.
     "Urbana (Champaign)": (40.1106, -88.2073),
-    "Paxton (Ford)": (40.4606, -88.0953),
     "Monticello (Piatt)": (40.0281, -88.5728),
     # (Putnam's anchor moved up to INSIDE in tranche 5, and Adams's Clayton in
     # pass 8, each joining exactly as its OUTSIDE comment said it would — Adams

@@ -13469,6 +13469,16 @@ function initWisconsinExplorer() {
     }
     return townClerkCache[countyFips];
   }
+  // WHO SITS ON EACH TOWN BOARD, ONE STATEWIDE FILE: the chairperson and
+  // supervisors as each county's own list of town officials prints them,
+  // keyed by the same subdivision GEOID, plus `_counties`, which says for
+  // every county whether it publishes such a list and which document it is.
+  // ~165 KB (~31 KB compressed), and a town's card needs the county record as well as its own row,
+  // which is why it is not split per county like the clerk files
+  // (wi/scripts/build_wi_town_boards.py).
+  var loadWiTownBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wi-town-boards.json", {}, 2);
+  });
 
   registerLayer({
     id: "county",
@@ -14309,7 +14319,9 @@ function initWisconsinExplorer() {
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
           geoid: geoid,
-          clerk: null
+          clerk: null,
+          board: null,
+          boardCounty: null
         };
         // TOWNS ONLY. A city or village is told two lines below that it "also
         // answers on the City or Village card", and that is where its clerk
@@ -14320,12 +14332,20 @@ function initWisconsinExplorer() {
         var county = String(geoid).slice(2, 5);
         // A roster miss is not this layer's failure: the subdivision still
         // answers, so the card degrades to the identity it shipped with.
-        return loadTownClerks(county).catch(function () { return null; })
-          .then(function (file) {
-            if (seq !== state.sequence) return result;
-            if (file) result.clerk = file[String(geoid)] || null;
-            return result;
-          });
+        return Promise.all([
+          loadTownClerks(county).catch(function () { return null; }),
+          loadWiTownBoards().catch(function () { return null; })
+        ]).then(function (files) {
+          if (seq !== state.sequence) return result;
+          if (files[0]) result.clerk = files[0][String(geoid)] || null;
+          var boards = files[1];
+          if (boards) {
+            var row = boards[String(geoid)];
+            result.board = row && row.board && row.board.length ? row.board : null;
+            result.boardCounty = (boards._counties || {})[county] || null;
+          }
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14381,6 +14401,41 @@ function initWisconsinExplorer() {
             value: "Wisconsin Elections Commission clerk directory — this " +
               "town's record was last updated " + String(clerk.recordUpdated) + "."
           }]));
+        }
+      }
+      // THE TOWN BOARD: a chairperson and two or more supervisors (Wis. Stat.
+      // 60.21). No state agency lists them, so this is each county's own
+      // list of town officials, and the card says which county document and
+      // edition a name came from and the day it was read. Names and roles
+      // only: those lists print home addresses beside the names and none of
+      // that is carried. Where the board is not named, the card says why in
+      // the county's terms (a county that publishes no list is a different
+      // fact from a town its list leaves out), and says nothing at all when
+      // the file itself did not load, because then nothing is known.
+      if (result.kind === "town" && result.boardCounty) {
+        var bc = result.boardCounty;
+        wrap.appendChild(renderSectionLabel("Town board"));
+        if (result.board) {
+          wrap.appendChild(renderPersonRows(result.board.map(function (p) {
+            return { name: String(p.name), badge: String(p.role) };
+          })));
+          var from = String(bc.county) + " County's list of town officials" +
+            (bc.edition ? " (" + String(bc.edition) + ")" : "");
+          wrap.appendChild(renderLinkRow({
+            title: "As of",
+            note: from + ", read " + String(bc.readOn) + ".",
+            links: bc.sourceUrl ? [{ label: String(bc.county) + " County's list",
+                                     url: String(bc.sourceUrl) }] : null
+          }));
+        } else {
+          var why = bc.status === "published"
+            ? String(bc.county) + " County's list of town officials does not " +
+              "name this town's board." + (bc.note ? " " + String(bc.note) : "")
+            : String(bc.note || "");
+          var ask = result.clerk && result.clerk.clerk
+            ? " The town clerk above can say who sits on it."
+            : " The town itself can say who sits on it.";
+          wrap.appendChild(renderFieldStack([{ value: why + ask }]));
         }
       }
       return wrap;
@@ -14579,8 +14634,14 @@ function initWisconsinExplorer() {
       // The sentence is what makes the number safe to print at all.
       var board = result.board;
       if (board && board.board && board.board.length) {
+        // A BODY THE CITY DOES NOT CALL AT LARGE IS NOT LABELLED AT LARGE.
+        // Menomonee Falls says "elected by numbered seat" and Fond du Lac says
+        // nothing about the method; for those the roster carries the city's
+        // own description as `howElected` and the card prints it.
+        var boardAtLarge = board.atLarge !== false;
         wrap.appendChild(renderSectionLabel(
-          board.board.length + " members, elected at large"));
+          board.board.length + (boardAtLarge ? " members, elected at large"
+                                             : " members")));
         wrap.appendChild(renderPersonRows(board.board.map(function (m) {
           var person = { name: String(m.name) };
           if (m.role) person.badge = String(m.role);
@@ -14590,9 +14651,13 @@ function initWisconsinExplorer() {
         })));
         var boardRows = [{
           label: "How they are elected",
-          value: "Every seat on this body is elected by the whole " +
-            "municipality, so the numbers beside these names are seats rather " +
-            "than districts and there is no district to draw."
+          value: boardAtLarge
+            ? "Every seat on this body is elected by the whole " +
+              "municipality, so the numbers beside these names are seats " +
+              "rather than districts and there is no district to draw."
+            : String(board.howElected || "The municipality does not say " +
+              "how these seats are elected, and the map draws no district " +
+              "for them.")
         }];
         // A CARRIED ROSTER SAYS SO, the same posture as the executive above: the
         // whole value of a weekly re-read is that a shown name was corroborated

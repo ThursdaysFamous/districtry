@@ -55,6 +55,7 @@ python3 scripts/build_coverage_gaps.py --check --metro oklahoma  --out ok/data/a
 python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -155,6 +156,8 @@ python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the superv
 python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
 python3 ia/scripts/ia_city_council_scraper.py --selftest             # the fourteen 25k-plus cities' five parser shapes: `3rd Ward` is not a street address, a caps line can carry role and name together, and a staff title is dropped with its name printed
 python3 ia/scripts/build_ia_city_councils.py --check                 # the shipped city councils: every seat count exact, no home address in any field, and the two cities that name no mayor still naming none
+python3 ky/scripts/build_ky_county_districts.py --selftest           # the precinct-placing rules: ballots first, 2022 only where it agrees, one empty district filled, Army posts left out
+python3 ky/scripts/build_ky_county_districts.py --check              # the shipped magisterial and council districts hash to their record and cover each drawn county
 python3 ia/scripts/ia_county_board_page_scraper.py --selftest       # the four county board pages whose two outside publishers disagree: a role word at the end of a line is not a name, a committee line is not a supervisor, and a no-break space still separates `District 1` from the name
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/validate_geometry_measure.py                      # the engine's area/overlap/point-weight block, held to shapely
@@ -165,6 +168,11 @@ python3 ia/scripts/build_legislative_boundaries.py --check      # the same relat
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
+python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
+python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's supervisor districts against their build record, the directory's seats, the Census edition the card names, and the County layer
+python3 ms/scripts/build_ms_court_districts.py --check           # Mississippi's six court maps against the court's own county lists and the laws that redraw them in 2027 and 2031, every saved copy re-hashed
+python3 ms/scripts/build_ms_judges.py --selftest                 # the judges' parse and the change table's staleness tests, on literals
+python3 ms/scripts/build_ms_judges.py --check                    # the shipped judges against their shape, their counts and the court maps
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404
@@ -190,6 +198,7 @@ python3 ok/scripts/validate_index.py ok/index.html
 python3 sc/scripts/validate_index.py sc/index.html
 python3 tn/scripts/validate_index.py tn/index.html
 python3 ar/scripts/validate_index.py ar/index.html
+python3 ms/scripts/validate_index.py ms/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -207,6 +216,7 @@ BASE_URL=http://localhost:8000/ok/ node ok/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/sc/ node sc/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/tn/ node tn/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ar/ node ar/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ms/ node ms/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

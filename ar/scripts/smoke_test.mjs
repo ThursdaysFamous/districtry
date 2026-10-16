@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "34.74650,-92.28960"; // the State Capitol, Little Rock, Pulaski County
-const OFFLINE = ["county", "us-house", "ar-senate", "ar-house", "quorum-court"];
-const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74", "quorum-court": "6" };
+const OFFLINE = ["county", "us-house", "ar-senate", "ar-house", "quorum-court", "county-subdivision", "voting-precinct"];
+const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74", "quorum-court": "6", "county-subdivision": "Big Rock Township", "voting-precinct": "Precinct 098" };
 const NEGATIVE_POINT = "33.40000,-94.40000"; // near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.
 const APP_NAME = "districtry Arkansas";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -977,6 +977,34 @@ try {
         `expected=${expected} others=${others.slice(0, 3)} text=${qc.text.slice(0, 120)}`);
       await context.close();
     }
+  }
+
+  // 10. THE TOWNSHIP CARD, drawn from the state's own township map rather than
+  //    the Census's. Check 2 already holds the Capitol to Big Rock Township;
+  //    this holds what the card says there and one place where the two maps
+  //    differ. Fayetteville city hall is in Township 2 of the three Washington
+  //    County's 2013 order left, and the Census still calls the same ground
+  //    Fayetteville township (TIGERweb, read 2026-10-15). So the card must
+  //    name Township 2, never Fayetteville township; say the township has no
+  //    government of its own; say its voters elect a constable and that this
+  //    map names none; and name the county from the township's own record.
+  for (const c of [
+    { name: "the Capitol", point: POINT, township: "Big Rock Township", county: "Pulaski County", reject: [] },
+    { name: "Fayetteville city hall", point: "36.06260,-94.15740", township: "Township 2", county: "Washington County",
+      reject: [/Fayetteville township/i] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=county-subdivision`);
+    const info = await cardText(page, "county-subdivision");
+    const text = info.text || "";
+    const want = [new RegExp(c.township + "(?!\\d)"), new RegExp(c.county), /None of its own/,
+      /elect a constable/, /does not name constables/, /Arkansas GIS Office/];
+    const missing = want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`county-subdivision card at ${c.name} names ${c.township} from the state's map`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`);
+    await context.close();
   }
 } finally {
   await browser.close();

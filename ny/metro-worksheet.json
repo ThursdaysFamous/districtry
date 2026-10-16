@@ -529,7 +529,7 @@
             "url": "https://data.cityofnewyork.us/d/y76i-bdw7"
           }
         ],
-        "people": "Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
+        "people": "Commanding officers, station house addresses and precinct desk telephones are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
         "applies": "New York City."
       }
     },
@@ -666,14 +666,18 @@
       "area_rank": 34,
       "rank_note": "point marker — always topmost",
       "source": {
-        "answers": "The nearest police stations to this point, by straight-line distance.",
+        "answers": "The nearest NYPD precinct station houses to this point, by straight-line distance.",
         "boundary": [
           {
-            "label": "Police station locations from NYC Open Data (ji82-xba5)",
-            "url": "https://data.cityofnewyork.us/d/ji82-xba5"
+            "label": "Station house addresses from each precinct's own NYPD page",
+            "url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts-landing.page"
+          },
+          {
+            "label": "Located from those addresses with NYC Planning's GeoSearch geocoder",
+            "url": "https://geosearch.planninglabs.nyc/"
           }
         ],
-        "people": "No roster is joined; the card gives the station and its address.",
+        "people": "No roster is joined; the card gives each station house, its address and its desk telephone, re-read weekly from NYPD's precinct pages.",
         "applies": "New York City."
       }
     },
@@ -1006,7 +1010,7 @@
       }]
   },
   "sw": {
-    "cache_name": "nyc-district-explorer-shell-v22",
+    "cache_name": "nyc-district-explorer-shell-v23",
     "shell_urls": [
       "./",
       "./icons/app/apple-touch-icon.png",

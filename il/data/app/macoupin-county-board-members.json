@@ -1,0 +1,122 @@
+{
+  "1": {
+    "members": [
+      {
+        "name": "Holly Klausing",
+        "nextElection": "2026"
+      },
+      {
+        "name": "Ryan A. Kilduff",
+        "nextElection": "2026"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "2": {
+    "members": [
+      {
+        "appointed": true,
+        "name": "Derek Spudich",
+        "nextElection": "2026"
+      },
+      {
+        "name": "Jon C. Payne",
+        "nextElection": "2028"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "3": {
+    "members": [
+      {
+        "name": "John Trevino",
+        "nextElection": "2026"
+      },
+      {
+        "name": "Kristi Dunnagan",
+        "nextElection": "2026"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "4": {
+    "members": [
+      {
+        "name": "Mark G. Dragovich",
+        "nextElection": "2028"
+      },
+      {
+        "name": "Ross Adden",
+        "nextElection": "2028"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "5": {
+    "members": [
+      {
+        "name": "John J. Blank",
+        "nextElection": "2026"
+      },
+      {
+        "name": "Larry Schmidt",
+        "nextElection": "2026",
+        "role": "Chair"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "6": {
+    "members": [
+      {
+        "name": "Aaron Stayton",
+        "nextElection": "2026"
+      },
+      {
+        "name": "Leann Barr",
+        "nextElection": "2026"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "7": {
+    "members": [
+      {
+        "name": "Bernard C. Kiel",
+        "nextElection": "2026"
+      },
+      {
+        "name": "James Ibberson",
+        "nextElection": "2026"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "8": {
+    "members": [
+      {
+        "name": "Harry Starr IV",
+        "nextElection": "2026"
+      },
+      {
+        "name": "Robert \"Tony\" Wiggins",
+        "nextElection": "2026"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  },
+  "9": {
+    "members": [
+      {
+        "appointed": true,
+        "name": "Molly Rosentreter",
+        "nextElection": "2028"
+      },
+      {
+        "name": "Todd E. Armour",
+        "nextElection": "2028"
+      }
+    ],
+    "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
+  }
+}

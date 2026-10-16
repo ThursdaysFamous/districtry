@@ -114,11 +114,15 @@ whether the app names the sub-county *government* where one exists. This one
 asks whether the app draws the map at all. Every state is divided into county
 subdivisions: in some they are governments (Illinois and Indiana townships,
 Michigan and Wisconsin towns and townships, New York towns), and in others they
-are areas the Census draws for counting only (Kentucky, North Carolina,
-Oklahoma, South Carolina, Tennessee), or legal areas the Census records as
-having no functioning government (Arkansas's townships). The map is owed
-either way; where the
+are areas the Census draws for counting only (Kentucky, Oklahoma and South
+Carolina's census county divisions), or legal areas the Census records as
+having no functioning government (North Carolina's and Arkansas's townships,
+Tennessee's civil districts). The map is owed either way; where the
 units govern nobody, the card says so rather than implying a government.
+Arkansas's are drawn from the state's own township map rather than the
+Census's: the two disagree about how many townships a county has in 27
+counties, and in the two counties checked, Washington and Scott, the Census's
+map is the out-of-date one (measured 2026-10-15).
 
 **The Census map is the default source, not the last word.** Where a county
 publishes finer lines than the Census does, the county's lines are the better
@@ -155,10 +159,10 @@ already sit. Nor is an Indiana township, for the same reason: measured
 protection and cemeteries while the county governs an unincorporated resident.
 No active township or town in Iowa, Kentucky, Wisconsin, Minnesota, North
 Carolina, Oklahoma, South Carolina, Tennessee or Arkansas reaches 25,000 (North
-Carolina's townships govern nobody, Oklahoma, South Carolina and Tennessee are
-divided into census county divisions, which are statistical areas, and every
-Arkansas township is one the Census records as having no functioning
-government), so the question does not arise in those nine today; if one ever does, it is answered by the
+Carolina's townships and Tennessee's civil districts govern nobody, Kentucky,
+Oklahoma and South Carolina are divided into census county divisions, which are
+statistical areas, and every Arkansas township is one the Census records as
+having no functioning government), so the question does not arise in those nine today; if one ever does, it is answered by the
 general-purpose test above and not by a per-state exception.
 
 | app | units at 25,000+ | of which towns or townships |
@@ -294,8 +298,14 @@ question.
   school board is elected by division, five divisions per county, each built
   from whole precincts. Kentucky's independent school boards are elected at
   large, so they are named rather than drawn.
-- Precincts: Illinois (83 counties), Iowa, Michigan, New York, San Francisco and
-  Wisconsin's wards. Minnesota and Kentucky ship none.
+- Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
+  Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
+  Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one
+  statewide precinct map a government office in that state publishes. Oklahoma
+  ships none: its State Election Board sent the question of using its precinct
+  maps to the University of Oklahoma's Center for Spatial Analysis, which was
+  asked on 2026-10-01 and has not answered, and no precinct layer ships there
+  until it does.
 - Tribal governments: no app answers one.
 
 ## Launching is a lower bar than being done

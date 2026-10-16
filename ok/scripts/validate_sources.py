@@ -194,12 +194,18 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-10-09 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. Incorporated places 600 ·
-    # unified school districts 415 · elementary school districts 91.
+    # unified school districts 415 · elementary school districts 91. County
+    # subdivisions 305, all census county divisions, measured 2026-10-15.
     #
     # SCHOOL LAYER 1 (SECONDARY) ANSWERS ZERO FOR OKLAHOMA, measured the same
     # day; the unified and elementary layers partition the state between them.
     # Layer 1 is deliberately not watched -- a row whose count is zero on
     # purpose cannot tell a drop from the status quo.
+    {
+        "layer": "county-subdivision",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2740%27&returnCountOnly=true&f=json",
+        "min_count": 270,   # 305 measured 2026-10-15; floor set below it, not at it
+    },
     {
         "layer": "municipality",
         "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2740%27&returnCountOnly=true&f=json",
@@ -289,14 +295,21 @@ def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/ok/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/ok/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/ok/)"}, label="ok-validate-sources")
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="ok-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/ok/)"},
+            headers={"User-Agent": ua},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

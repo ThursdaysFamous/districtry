@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "36.16590,-86.78440"; // the State Capitol, Nashville, Davidson County
-const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissioner"];
-const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19" };
+const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissioner", "voting-precinct"];
+const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19", "voting-precinct": "Precinct 19-4" };
 const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.
 const APP_NAME = "districtry Tennessee";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 16;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -829,6 +829,35 @@ try {
         props: { GEOID: "4799998", NAME: "Example School District", STATE: "47", LOGRADE: "UG", HIGRADE: "12" },
         want: [/Example School District/],
         reject: [/Grades, as the Census/]
+      },
+      // The level-14 map. Every Tennessee subdivision is a civil district
+      // ("District N", LSADC 28, FUNCSTAT N, all 855, measured 2026-10-15).
+      // The card must title it "Civil District N" so neither it nor the hover
+      // row reads as a commission district, say it has no government, name
+      // its county from the app's own county file, and always say its number
+      // is not a commission district's. A name TIGER writes in another shape
+      // is shown as it stands, without that note, and a status code the card
+      // does not carry prints no Government row.
+      {
+        name: "a civil district is titled as one and says it is not a commission district",
+        layer: "county-subdivision", service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4703793458", NAME: "District 19", BASENAME: "19", STATE: "47", COUNTY: "037", LSADC: "28", FUNCSTAT: "N" },
+        want: [/Civil District 19/, /Davidson County/, /no one is elected to run it/, /not to a county commission district/],
+        reject: []
+      },
+      {
+        name: "a civil district with a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4703793458", NAME: "District 19", BASENAME: "19", STATE: "47", COUNTY: "037", LSADC: "28", FUNCSTAT: "A" },
+        want: [/Civil District 19/, /not to a county commission district/],
+        reject: [/Government/]
+      },
+      {
+        name: "a subdivision name in another shape is shown as TIGER writes it",
+        layer: "county-subdivision", service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4703799999", NAME: "Example CCD", BASENAME: "Example", STATE: "47", COUNTY: "037", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Example CCD/],
+        reject: [/Civil District Example/, /Not a commission district/]
       }
     ];
 
@@ -975,6 +1004,41 @@ try {
         missing.length ? `missing ${missing.join(" ")} in: ${text.slice(0, 160)}` : text.slice(0, 120));
       await context.close();
     }
+  }
+  // ---- Tribal Government. The Tennessee part of the Mississippi Choctaw
+  // trust land near Henning names the nation, its seat in Mississippi and its
+  // Tribal Chief and Council from the nation's own page; a point off tribal
+  // land is told so in the layer's own words. The point is shapely's
+  // representative point of the shipped land clipped to the state outline
+  // (2026-10-15).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const c = await at("35.67906,-89.59052");
+    check("the trust land near Henning names the nation, its seat and its Tribal Chief and Council",
+          c.by("Tribal government") === "Mississippi Band of Choctaw Indians" &&
+          c.by("Seat of government") === "Choctaw, MS" &&
+          c.by("Land") === "Mississippi Choctaw Off-Reservation Trust Land" &&
+          c.by("Population").indexOf("about 4% of it lies in Tennessee") !== -1 &&
+          c.text.indexOf("Cyrus Ben") !== -1 &&
+          c.text.indexOf("From the nation's own council page") !== -1 &&
+          !c.by("Why no names"),
+          JSON.stringify(c.text.slice(0, 200)));
+    const off = await at(POINT);
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("1 tribal area") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
   }
 } finally {
   await browser.close();

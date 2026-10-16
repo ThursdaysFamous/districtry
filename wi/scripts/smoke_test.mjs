@@ -849,6 +849,85 @@ try {
               `president=${presBadge} how=${JSON.stringify((how || {}).value || null)}`);
     await context.close();
   }
+
+  // ---- 10b. A BOARD THE CITY DOES NOT CALL AT LARGE IS NOT LABELLED SO ----
+  // Fond du Lac's council page describes seven members and gives none a
+  // district, but never says how the seats are elected, so its roster carries
+  // `atLarge: false` and the city's own description. The card must print that
+  // description and must NOT head the block "elected at large". Read from the
+  // shipped roster at a point in downtown Fond du Lac (2026-10-15); the
+  // assertion is the wording, so it survives an April election.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=43.77300,-88.44700&layers=municipality`);
+    await cardText(page, "municipality");
+    const labels = await page.$$eval("#card-municipality .card-section-label",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const fields = await page.$$eval("#card-municipality .card-field",
+      (els) => els.map((e) => ({
+        label: (e.querySelector(".card-field-label") || {}).textContent || "",
+        value: (e.querySelector(".card-field-value") || {}).textContent || ""
+      })));
+    const heading = labels.find((l) => /^\d+ members/.test(l));
+    const how = fields.find((f) => f.label.trim() === "How they are elected");
+    const ok = heading === "7 members" && !!how &&
+               how.value.indexOf("do not say whether the seats are elected at large") !== -1;
+    check("a board whose city does not say it is at large is not labelled at large",
+          ok, `heading=${JSON.stringify(heading || null)} ` +
+              `how=${JSON.stringify((how || {}).value || null)}`);
+    await context.close();
+  }
+  // ---- 10c. A TOWN'S CARD NAMES ITS BOARD, OR SAYS WHY IT CANNOT ----
+  // wi-town-boards.json is a network-first file the County Subdivision card
+  // merges onto the TIGER town it already answered with, so only a browser can
+  // prove the board reaches the card. Two towns, read from the shipped file at
+  // each town's Census interior point (TIGERweb, 2026-10-15): the Town of
+  // Beaver, in Clark County, whose directory names its board, and the Town of
+  // Vienna, in Dane County, which publishes no list. The assertions are the
+  // roles, the dated source line and the sentence, never a name, so an April
+  // election changes nothing here.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=44.81032,-90.50011&layers=county,county-subdivision`);
+    await cardText(page, "county-subdivision");
+    const labels = await page.$$eval("#card-county-subdivision .card-section-label",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const badges = await page.$$eval("#card-county-subdivision .card-badge",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const asOf = await page.$$eval("#card-county-subdivision .card-linkrow",
+      (els) => els.map((e) => ({
+        title: ((e.querySelector(".card-linkrow-title") || {}).textContent || "").trim(),
+        note: ((e.querySelector(".card-linkrow-note") || {}).textContent || "").trim(),
+        links: Array.from(e.querySelectorAll("a")).length
+      })).find((r) => r.title === "As of") || null);
+    const chair = badges.filter((b) => b === "Chairperson").length === 1;
+    const supv = badges.filter((b) => /^Supervisor/.test(b)).length >= 2;
+    const ok = labels.indexOf("Town board") !== -1 && chair && supv && !!asOf &&
+               asOf.note.indexOf("Clark County's list of town officials") === 0 &&
+               /read \d{4}-\d{2}-\d{2}\.$/.test(asOf.note) && asOf.links === 1;
+    check("a town's card names its board from the county's list, dated",
+          ok, `labels=${JSON.stringify(labels)} badges=${JSON.stringify(badges)} ` +
+              `asOf=${JSON.stringify(asOf)}`);
+
+    const none = await booted(
+      context, `${BASE}#point=43.24830,-89.42913&layers=county,county-subdivision`);
+    await cardText(none, "county-subdivision");
+    const noneLabels = await none.$$eval("#card-county-subdivision .card-section-label",
+                                         (els) => els.map((e) => e.textContent.trim()));
+    const values = await none.$$eval("#card-county-subdivision .card-field-value",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const noneBadges = await none.$$eval("#card-county-subdivision .card-badge",
+                                         (els) => els.map((e) => e.textContent.trim()));
+    const said = values.some((v) => v.indexOf(
+      "Dane County does not publish a list of who sits on its town boards.") === 0);
+    const okNone = noneLabels.indexOf("Town board") !== -1 && said &&
+                   !noneBadges.some((b) => b === "Chairperson");
+    check("a town in a county with no list says so and names no board",
+          okNone, `labels=${JSON.stringify(noneLabels)} values=${JSON.stringify(values)}`);
+    await context.close();
+  }
   // ---- 1x. The Tribal Government card names the nation, its seat and its
   // council. The council is what this check exists for: it lives in a SEPARATE
   // file (data/app/tribal-councils.json, network-first) that the layer's loader

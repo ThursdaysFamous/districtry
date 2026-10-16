@@ -197,10 +197,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Census County Division",
+      "group": "geography",
+      "area_rank": 6,
+      "rank_note": "299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)",
+      "source": {
+        "answers": "The census county division containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and South Carolina has no township governments, so the county governs everyone outside a city or town. The card names the division and its county and says it governs nobody.",
+        "applies": "South Carolina — statewide."
+      }
+    },
+    {
       "id": "county-council",
       "label": "County Council District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes",
       "source": {
         "answers": "The county council district covering the point, the council member(s) it elects, and the members elected by the whole county.",
@@ -218,7 +236,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -233,10 +251,28 @@
       }
     },
     {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 9,
+      "rank_note": "2,315 precincts tiling the state, pre-built from the Revenue and Fiscal Affairs Office's official maps — 35.84 km2 mean area, land and water (median 12.82), measured 2026-10-15 on the drawn file: smaller on average than a census county division (260.4 km2 of land), larger than a city or town (18.58)",
+      "source": {
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "boundary": [
+          {
+            "label": "South Carolina Revenue and Fiscal Affairs Office — Voter Precincts, the official maps of the precinct lines the General Assembly sets by act (S.C. Code Title 7, Chapter 7); 2,315 features, pre-built for the state by sc/scripts/build_sc_precincts.py and shipped with the app. Each record names the act that set its lines and the date they took effect, which the card prints, and the county's voter registration and elections office, which the card links. No licence is named, only an as-is disclaimer.",
+            "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Voter_Precincts/FeatureServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "applies": "South Carolina — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 10,
       "rank_note": "271 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -254,7 +290,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 12,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -272,7 +308,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 13,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -290,7 +326,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 14,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -308,7 +344,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 11,
       "rank_note": "Tribal land — South Carolina has 2 pieces held by one nation, the Catawba Reservation (4.123 km²) and its off-reservation trust land (0.054 km²), both in York County near Rock Hill, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since the reservation is smaller than the city of Rock Hill beside it, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — South Carolina has 2 such areas, both the Catawba Indian Nation's.",
@@ -323,7 +359,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 34.00035,
     "lng": -81.03295,
@@ -349,6 +385,10 @@
     {
       "layer": "county-council",
       "expected": "4"
+    },
+    {
+      "layer": "voting-precinct",
+      "expected": "Ward 1"
     }
   ],
   "negative_point": {
@@ -403,6 +443,12 @@
         "min_features": 2,
         "max_features": 2,
         "note": "South Carolina's tribal land (scripts/build_tribal_areas.py) — the Catawba Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "sc-precincts.json",
+        "min_features": 2315,
+        "max_features": 2315,
+        "note": "Every South Carolina voting precinct, pre-built by sc/scripts/build_sc_precincts.py through scripts/statewide_precincts.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,315 count on the fetch and the drawn file). 7.8 MB, 2.24 MB gzipped, fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [
@@ -439,7 +485,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-sc-shell-v3",
+    "cache_name": "districtry-sc-shell-v4",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
