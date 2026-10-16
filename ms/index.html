@@ -13591,8 +13591,8 @@ function initMississippiExplorer() {
    * same build writes (under 1 KB). The engine runs a coverage test on a
    * reader's first selection even with the layer off, and reading the
    * districts file for it cost 150 KB gzipped for twenty counties, measured
-   * 2026-10-15. Within a few tens of metres of a county line the two files,
-   * each simplified on its own, can put a point in different counties; there
+   * 2026-10-15. Within a few metres of a county line the two files, each
+   * simplified on its own, can put a point in different counties; there
    * this layer follows the County card, so the two cards do not name
    * different counties (the builder's county witness bounds that strip). A
    * failed fetch fails OPEN per the engine's coverage contract, and the
@@ -13629,7 +13629,7 @@ function initMississippiExplorer() {
     coverage: inConfirmedSupervisorCounty,
     // Inside the drawn counties the districts cover every point, so this is
     // reached only where the County layer's line and this layer's disagree,
-    // within a few tens of metres of a county line.
+    // within a few metres of a county line.
     emptyNote: "No supervisor district is drawn at this point. The County " +
       "card names all five of the county's supervisors.",
     overlay: {
@@ -13819,7 +13819,7 @@ function initMississippiExplorer() {
   /* ---------- 3-4. Mississippi Senate + Mississippi House ----------
    * The two chambers through the shared ENGINE chamber factory: pre-built
    * TIGERweb Legislative geometry (ms/scripts/build_legislative_boundaries.py
-   * — fetch, simplify, 2,000-point agreement gate and a 25 m fidelity
+   * — fetch, simplify, 2,000-point agreement gate and an 8 m fidelity
    * ceiling) joined by district number to same-origin rosters
    * (ms/scripts/build_ms_legislature_roster.py, refreshed weekly by
    * update-ms-legislature-roster.yml as a reviewed PR). A roster miss

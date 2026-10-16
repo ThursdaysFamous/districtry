@@ -148,16 +148,28 @@ runs on a reader's first selection whether or not the layer is on, and it used
 to read the districts file itself: 150 KB gzipped for twenty counties, measured
 2026-10-15. It now finds the point's county in state-counties.json, which the
 County card loads on every selection anyway, and looks it up in the list, which
-is under 1 KB. Within a few tens of metres of a county line the two files can
-put a point in different counties, because each was simplified on its own; the
-county witness below bounds that strip, and there the layer follows the County
-card. `--check` fails if the list and the districts file name different
+is under 1 KB. Within a few metres of a county line the two files can put a
+point in different counties, because each was simplified on its own (a drawn
+county's edge sits at most 5.0 m from the County layer's line, measured
+2026-10-16); the county witness below bounds that strip, and there the layer
+follows the County card. `--check` fails if the list and the districts file name different
 counties.
 
 SIMPLIFICATION. Douglas-Peucker in metres, the legislative builder's method,
 for the reason its docstring gives, and ALL DRAWN COUNTIES IN ONE MAPSHAPER
 RUN, so a line two districts share — inside a county or where two drawn
-counties meet — is one arc simplified once.
+counties meet — is one arc simplified once. The interval is 5 m under the
+legislative builder's 8 m ceiling, the county file's setting, which Adam chose
+for these lines before the instance opened ("Finer first", 2026-10-16).
+Measured that day against the 20 m interval it replaced, on the same sources:
+
+    setting           worst stray   people moved   county edge apart   gzipped
+    dp interval=20       20.6 m       3 (Perry)          20.4 m          176 KB
+    dp interval=5         5.6 m       0                   5.0 m          384 KB
+
+"People moved" is the residents of 2020 blocks whose district simplification
+changes; "county edge apart" is the farthest a drawn county's outer edge sits
+from the County layer's line, either way round.
 
 WHAT `--check` CAN AND CANNOT SEE. It is offline and runs in CI: the shipped
 file's counties, numbering, county names and sources, the roster join, the
@@ -477,8 +489,8 @@ MAX_DEVIATION_PCT = 10.0
 # 2026-10-15, the smallest change among the twelve moves 530 people (Choctaw),
 # and Clay's, which covers 0.07% of the county's area, moves 689.
 MIN_PEOPLE_MOVED = 50
-SIMPLIFY = "interval=20"
-EDGE_M = 60.0               # two simplified files, each within the 25 m ceiling
+SIMPLIFY = "interval=5"
+EDGE_M = 20.0               # two simplified files, each within the 8 m ceiling (5.0 m apart at most, 2026-10-16)
 AGREEMENT_SAMPLES = 2000
 WITNESS_SAMPLES = 4000
 PAGE = 20000

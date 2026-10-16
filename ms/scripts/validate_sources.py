@@ -160,8 +160,8 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
             "All 82 counties pre-built from TIGERweb by "
-            "ms/scripts/build_state_counties.py (Douglas-Peucker, held to a "
-            "25 m fidelity ceiling). The card names each county's five "
+            "ms/scripts/build_state_counties.py (Douglas-Peucker at 5 m, held "
+            "to an 8 m fidelity ceiling). The card names each county's five "
             "supervisors from ms-county-officials.json."
         ),
     },
