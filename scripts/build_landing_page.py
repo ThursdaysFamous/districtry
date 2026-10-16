@@ -140,6 +140,7 @@ INSTANCE_WORKSHEET = {
     "sc": "sc/metro-worksheet.json",
     "tn": "tn/metro-worksheet.json",
     "ar": "ar/metro-worksheet.json",
+    "ms": "ms/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -232,7 +233,8 @@ QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
     # SEVEN NAMES FOR ONE READER'S QUESTION. A county's governing body is a
-    # board in Illinois and Wisconsin, a board of supervisors in Iowa, a board
+    # board in Illinois and Wisconsin, a board of supervisors in Iowa and
+    # Mississippi, a board
     # of commissioners in Michigan, a county legislature in New York, a
     # fiscal court (or a merged council) in Kentucky, a county council in
     # South Carolina and a quorum court in Arkansas, and

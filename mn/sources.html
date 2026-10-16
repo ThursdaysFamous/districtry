@@ -1160,7 +1160,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">19 layers — 6 political and legislative, 2 public safety, 4 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">20 layers — 7 political and legislative, 2 public safety, 4 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1169,7 +1169,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1247,6 +1247,18 @@ table.matrix code {
                 <td data-label="Who it names">The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the thirteen nations publish one this project can read; for the other four the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.</td>
                 <td data-label="Where it applies">Minnesota — 22 areas across 13 nations. Most points in the state are on no tribal land.</td>
               </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, whose every precinct carries the ward it lies in: each ward is its precincts joined together, built by mn/scripts/build_mn_city_wards.py. Checked against the ballot: for all 101 wards, the precincts that voted in the ward's latest council contest since 2022 (the Secretary of State's localPrct.txt results) are exactly the precincts the same election's precinct map puts in the ward, measured 2026-10-15</a></li>
+                    <li><a href="https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt), the ballot each ward is checked against</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The winner of each ward's most recent council election, from the same city council roster the City card reads (mn/data/app/mn-city-councils.json), every name dated. A winner is not a claim about who sits today, and the card says so.</td>
+                <td data-label="Where it applies">The 22 Minnesota cities above 25,000 people whose councils elect by ward or district: Austin, Blaine, Bloomington, Brooklyn Park, Chaska, Coon Rapids, Duluth, Elk River, Fridley, Mankato, Minneapolis, Minnetonka, Moorhead, Owatonna, Plymouth, Ramsey, Richfield, Rochester, St. Cloud, St. Louis Park, St. Paul and Winona. The precinct map carries wards for 47 smaller cities too; they are not drawn, because this app does not name those councils.</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1314,11 +1326,12 @@ table.matrix code {
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt) for the 2022 to 2025 generals: each district is the precincts that voted in its seat's most recent contest, read in that election's own precincts (the Secretary of State's per-general precinct layers for 2022 and 2024, today's precincts for odd years), cut to the Census school district boundary. Built by mn/scripts/build_mn_school_board_districts.py; Minneapolis's six agree with the City of Minneapolis's own park commissioner districts at all 1,800 sampled points, measured 2026-10-08</a></li>
+                    <li><a href="https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278" target="_blank" rel="noopener">Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place</a></li>
                     <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.</td>
-                <td data-label="Where it applies">The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts).</td>
+                <td data-label="Where it applies">The 14 Minnesota school districts whose boards elect by district: Anoka-Hennepin, Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Duluth's rural townships are not placed in a district (gap mn-school-board-election-districts).</td>
               </tr>
               <tr id="layer-school-district-elementary">
                 <th scope="row"><span class="layer-name">School District (Elementary)</span><code>school-district-elementary</code></th>
@@ -1397,7 +1410,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 2,762 features for Minnesota, measured 2026-09-29</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER. A Minnesota town elects three supervisors to three-year terms plus a clerk and a treasurer in alternate years (Minn. Stat. 367.03, read at revisor.mn.gov on 2026-09-29), and no statewide roster of those officers was found, so the card names nobody. Recorded as the coverage gap mn-township-officers. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.</td>
+                <td data-label="Who it names">The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes. For 416 of those towns the card names the officers on their county's own list of township officers instead — 29 counties publish one this app reads (measured 2026-10-16) — each dated to the list and the day it was read, and only where the election results name nobody; the rest name nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py; the county lists by mn/scripts/mn_county_town_officers_scraper.py and build_mn_county_town_officers.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.</td>
                 <td data-label="Where it applies">Minnesota — statewide.</td>
               </tr>
               <tr id="layer-voting-precinct">
@@ -1629,13 +1642,18 @@ table.matrix code {
         },
         {
           "@type": "Dataset",
+          "name": "Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place",
+          "url": "https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278"
+        },
+        {
+          "@type": "Dataset",
           "name": "Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts)"
+        "name": "The 14 Minnesota school districts whose boards elect by district: Anoka-Hennepin, Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Duluth's rural townships are not placed in a district (gap mn-school-board-election-districts)"
       }
     },
     {
@@ -1724,7 +1742,7 @@ table.matrix code {
       "@id": "https://districtry.com/mn/sources.html#dataset-county-subdivision",
       "identifier": "county-subdivision",
       "name": "Township or City",
-      "description": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is. NO OFFICEHOLDER. A Minnesota town elects three supervisors to three-year terms plus a clerk and a treasurer in alternate years (Minn. Stat. 367.03, read at revisor.mn.gov on 2026-09-29), and no statewide roster of those officers was found, so the card names nobody. Recorded as the coverage gap mn-township-officers. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
+      "description": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is. The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes. For 416 of those towns the card names the officers on their county's own list of township officers instead — 29 counties publish one this app reads (measured 2026-10-16) — each dated to the list and the day it was read, and only where the election results name nobody; the rest name nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py; the county lists by mn/scripts/mn_county_town_officers_scraper.py and build_mn_county_town_officers.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
       "url": "https://districtry.com/mn/sources.html#layer-county-subdivision",
       "isPartOf": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
@@ -1805,6 +1823,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Minnesota — statewide, answering only inside an incorporated city"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mn/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects. The winner of each ward's most recent council election, from the same city council roster the City card reads (mn/data/app/mn-city-councils.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
+      "url": "https://districtry.com/mn/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/mn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, whose every precinct carries the ward it lies in: each ward is its precincts joined together, built by mn/scripts/build_mn_city_wards.py. Checked against the ballot: for all 101 wards, the precincts that voted in the ward's latest council contest since 2022 (the Secretary of State's localPrct.txt results) are exactly the precincts the same election's precinct map puts in the ward, measured 2026-10-15",
+          "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt), the ballot each ward is checked against",
+          "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 22 Minnesota cities above 25,000 people whose councils elect by ward or district: Austin, Blaine, Bloomington, Brooklyn Park, Chaska, Coon Rapids, Duluth, Elk River, Fridley, Mankato, Minneapolis, Minnetonka, Moorhead, Owatonna, Plymouth, Ramsey, Richfield, Rochester, St. Cloud, St. Louis Park, St. Paul and Winona. The precinct map carries wards for 47 smaller cities too; they are not drawn, because this app does not name those councils"
       }
     },
     {

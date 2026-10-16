@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 11
+MIN_REGISTER_LAYER = 13
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -95,8 +95,9 @@ MIN_REGISTER_LAYER = 11
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "tn-senate", "county", "tn-house", "school-district-unified",
-    "county-commissioner", "zip-code", "school-district-elementary",
-    "school-district-secondary", "municipality", "police-station",
+    "county-commissioner", "county-subdivision", "zip-code",
+    "school-district-elementary", "school-district-secondary",
+    "voting-precinct", "municipality", "tribal-government", "police-station",
     "fire-station", "post-office",
 ]
 
@@ -108,6 +109,8 @@ GEOMETRY_FILES = {
     "tn-senate-districts.json": (33, 33),  # The 33 Tennessee Senate districts.
     "tn-house-districts.json": (99, 99),  # The 99 Tennessee House districts.
     "tn-commission-districts.json": (859, 859),  # The 859 county commission districts in 95 counties, from the Comptroller of the Treasury's statewide layer (tn/scripts/build_tn_commission_districts.py).
+    "tribal-areas.json": (1, 1),  # Tennessee's tribal land (scripts/build_tribal_areas.py) — the Tennessee part of the Mississippi Choctaw Off-Reservation Trust Land near Henning. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "tn-precincts.json": (1870, 1870),  # Every Tennessee voting precinct, pre-built by tn/scripts/build_tn_precincts.py through scripts/statewide_precincts.py from the Comptroller of the Treasury's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 1,870 count on the fetch and the drawn file, after Overton County's nine records published twice with identical geometry are dropped to one each). 9.4 MB, 2.45 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -115,8 +118,9 @@ ROSTER_FILES = {
     "congress-roster.json": 9,  # U.S. House (TN) roster, refreshed weekly by update-tn-congress-roster.yml.
     "tn-senate-members.json": 33,  # Tennessee Senate roster, one record per seat, names from the Legislature's own district map on the state's TNMap service; refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "tn-house-members.json": 99,  # Tennessee House roster, one record per seat on the same terms; House 31 and 84 read vacant on 2026-10-10.
-    "tn-commissioners.json": 56,  # County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/.
+    "tn-commissioners.json": 57,  # County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "tribal-councils.json": 1,  # The Mississippi Band of Choctaw Indians' Tribal Chief and Tribal Council, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

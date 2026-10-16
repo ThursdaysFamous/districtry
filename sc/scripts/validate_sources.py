@@ -192,6 +192,19 @@ PROVENANCE = [
             "land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "sc-precincts.json",
+        "source_url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Voter_Precincts/FeatureServer/0",
+        "note": (
+            "South Carolina's 2,315 voting precincts from the Revenue and "
+            "Fiscal Affairs Office's official maps, each carrying the act "
+            "that set it, pre-built by sc/scripts/build_sc_precincts.py "
+            "through scripts/statewide_precincts.py. Lines move by act of the "
+            "General Assembly, so the quarterly --watch row in sc/WATCH.md is "
+            "also re-run after each session."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -204,12 +217,18 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-10-10 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. Incorporated places 271 ·
-    # unified school districts 72.
+    # unified school districts 72. County subdivisions 299, all census county
+    # divisions, measured 2026-10-15.
     #
     # SCHOOL LAYERS 1 (SECONDARY) AND 2 (ELEMENTARY) ANSWER ZERO FOR SOUTH
     # CAROLINA, measured the same day; the unified layer covers the state
     # alone. Neither is watched -- a row whose count is zero on purpose cannot
     # tell a drop from the status quo.
+    {
+        "layer": "county-subdivision",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2745%27&returnCountOnly=true&f=json",
+        "min_count": 265,   # 299 measured 2026-10-15; floor set below it, not at it
+    },
     {
         "layer": "municipality",
         "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2745%27&returnCountOnly=true&f=json",
@@ -269,6 +288,16 @@ ENDPOINTS = [
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 755,   # 841 measured 2026-10-10
     },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in sc/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://gis.state.sc.us/arcgis/rest/services/"
+                "Boundaries_Districts/Voter_Precincts/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2080,  # 2,315 records measured 2026-10-15
+    },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -294,14 +323,21 @@ def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/sc/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/sc/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/sc/)"}, label="sc-validate-sources")
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="sc-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/sc/)"},
+            headers={"User-Agent": ua},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

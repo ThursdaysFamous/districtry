@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read six Lake County cities' own council pages into municipal-officials payloads.
+"""Read seven Lake County cities' own council pages into municipal-officials payloads.
 
 WHY LAKE COUNTY GETS ITS OWN FILE. The fourth test of the done standard
 (`docs/DONE_STANDARD.md`) asks that every general-purpose local government above
@@ -23,15 +23,23 @@ no municipal officials source at all — and it is bounded the same way: the
 places are named in `PRESERVABLE`, one at a time, and an eighth city cannot be
 added by this file alone.
 
-SIX OF SEVEN, AND GURNEE IS THE SEVENTH. Gurnee's board page
-(`gurneeil.gov/government/village_board/index.php`) reads "Current Village Board
-members are listed below:" and then lists nobody: measured 2026-10-01, 189,943
-bytes of served HTML containing the word Trustee exactly once, in the sentence
-describing the terms. Its appointed-officials page and its "how to write your
-officials" page name no trustee either, and the site publishes no sitemap. The
-names are evidently rendered by a component this client is not served. That is a
-measured absence, recorded as the gap `gurnee-village-board-names` with an ask
-drafted for the operator, and NOT worked around.
+GURNEE IS THE SEVENTH, AND ITS NAMES WERE THERE THE WHOLE TIME. Gurnee's
+board page (`gurneeil.gov/government/village_board/index.php`) reads "Current
+Village Board members are listed below:" and then lists nobody in its served
+HTML, and on 2026-10-01 that was recorded as an absence. It was not one: the
+list is filled in after the page opens, from a feed the page names itself — a
+Revize `<slot data-type="dot-feed">` whose `data-content-feed` is
+`_includes_/published/catalogue.json` (resolved against the page's own
+`<base href>`) and whose `data-content-options` carry `"category_filter":"570"`
+and `"sort_order":"seq_no asc"`. Read that way on 2026-10-15, with this file's
+client, the feed is 220 catalogue items keyed by id with no key and no extra
+parameters, and the eight in category 570 are the Mayor, six Trustees and the
+Clerk, each `title` "<role> <name>" and each `brief` "Term ends April 30,
+<year>" — six trustees, which is what the page's own sentence about the board
+says. So the feed address, the category and the sort are re-read from the page
+on every run rather than pinned. The feed carries no per-person contact, and a
+trustee's detail page is a biography with none either, so nobody here ships a
+telephone or an e-mail.
 
 FETCH CLASS, MEASURED 2026-10-01 WITH THE CLIENT THIS FILE SENDS. All six hosts
 answer `requests` plus the districtry token with HTTP 200 and a full page. No
@@ -72,6 +80,9 @@ WHAT EACH PAGE PUBLISHES.
                     <e-mail> <telephone>". Elected at large. 847-367-3700 is the
                     village switchboard and stands against four of the seven
                     names, so a per-person value equal to it is dropped.
+  Gurnee            The board page names its feed, category and order; the
+                    feed's items in that category give role, name and the
+                    year the term ends. Elected at large.
   Waukegan          A council page of "<N>th Ward Alderperson / <NAME> / Term:
                     <from> - <to>" over nine wards, with the mayor on the city
                     officials page. THE NAMES ARE PUBLISHED IN CAPITALS and are
@@ -384,7 +395,86 @@ def read_waukegan(city, warn):
     return out
 
 
+# -------------------------------------------------------------------- Gurnee
+
+GURNEE_SLOT = re.compile(r'<slot\b[^>]*data-type="dot-feed"[^>]*>', re.S | re.I)
+GURNEE_ROLE = re.compile(r"^(Mayor|Village President|Trustee|Village Clerk|Clerk)"
+                         r"\s+(\S.*)$")
+GURNEE_TERM = re.compile(r"Term ends \w+ \d{1,2}, (\d{4})")
+
+
+def read_gurnee(city, warn):
+    markup = get(city["page"])
+    base = re.search(r'<base\s+href="([^"]+)"', markup, re.I)
+    base = base.group(1) if base else city["page"]
+    feed = options = None
+    for slot in GURNEE_SLOT.finditer(markup):
+        tag = slot.group(0)
+        f = re.search(r'data-content-feed="([^"]+)"', tag)
+        o = re.search(r"data-content-options='([^']+)'", tag)
+        if not (f and o):
+            continue
+        opts = json.loads(html.unescape(o.group(1)))
+        if opts.get("category_filter"):
+            feed, options = f.group(1), opts
+            break
+    if not feed:
+        # The page stopped naming its feed. An empty board is never shipped as
+        # a board: nobody is read, and the floor refuses the write.
+        warn("gurnee: the board page no longer names a dot-feed with a "
+             "category filter — nobody is read")
+        return []
+    from urllib.parse import urljoin
+    url = urljoin(base, feed)
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-gurnee-council-scraper")
+    items = json.loads(get(url))
+    category = str(options["category_filter"])
+    if str(options.get("sort_order", "")).split()[:1] != ["seq_no"]:
+        warn("gurnee: the page's sort order is %r, not seq_no — read anyway"
+             % options.get("sort_order"))
+    chosen = [v for v in (items.values() if isinstance(items, dict) else items)
+              if category in [str(c) for c in
+                              (v.get("options") or {}).get("category_rid") or []]]
+    chosen.sort(key=lambda v: float(v.get("seq_no") or 0))
+    out, seen = [], set()
+    for item in chosen:
+        m = GURNEE_ROLE.match(clean(html.unescape(item.get("title") or "")) or "")
+        if not m:
+            warn("gurnee: a board item's title is not '<role> <name>': %r"
+                 % item.get("title"))
+            continue
+        role, name = m.group(1), clean(m.group(2))
+        if name in seen:
+            continue
+        seen.add(name)
+        term = GURNEE_TERM.search(item.get("brief") or "")
+        if role in ("Mayor", "Village President"):
+            rec = record(city, "Mayor", name)
+        elif role == "Trustee":
+            rec = record(city, "Trustee", name, district="At Large")
+        else:
+            rec = record(city, "Village Clerk", name)
+        if term:
+            rec["term_expires"] = term.group(1)
+        out.append(rec)
+    return out
+
+
 CITIES = {
+    "gurnee": {
+        "jurisdiction": "Village of Gurnee",
+        "county": "Lake",
+        "page": "https://www.gurneeil.gov/government/village_board/index.php",
+        "office": {"office_address": "325 N O'Plaine Rd",
+                   "office_city": "Gurnee", "office_state": "IL",
+                   "office_zip": "60031", "office_phone": "847-599-7500",
+                   "office_email": None},
+        "read": read_gurnee,
+        # Mayor and six trustees, all elected at large, plus the Clerk. The
+        # page says six trustees; the floor holds the mayor and all six.
+        "min_officials": 7, "min_districts": 0, "min_heads": 1,
+    },
     "highland-park": {
         "jurisdiction": "City of Highland Park",
         "county": "Lake",

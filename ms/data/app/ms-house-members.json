@@ -1,0 +1,1339 @@
+{
+  "1": {
+    "name": "Lester Carpenter",
+    "party": "Republican",
+    "email": "lcarpenter@house.ms.gov",
+    "capitolOffice": [
+      "Room BSMNT",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-4073"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Carpenter&district=%20%201"
+  },
+  "2": {
+    "name": "Brad Mattox",
+    "party": "Republican",
+    "email": "bmattox@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Mattox&district=%20%202"
+  },
+  "3": {
+    "name": "William Tracy Arnold",
+    "party": "Republican",
+    "email": "warnold@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-E",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2420"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Arnold&district=%20%203"
+  },
+  "4": {
+    "name": "Jody Steverson",
+    "party": "Republican",
+    "email": "jsteverson@house.ms.gov",
+    "capitolOffice": [
+      "Room 201M-7",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3457"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Steverson&district=%20%204"
+  },
+  "5": {
+    "name": "John G. Faulkner",
+    "party": "Democratic",
+    "email": "jfaulkner@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2432"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Faulkner&district=%20%205"
+  },
+  "6": {
+    "name": "Justin Keen",
+    "party": "Republican",
+    "email": "jkeen@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Keen&district=%20%206"
+  },
+  "7": {
+    "name": "Kimberly Remak",
+    "party": "Republican",
+    "email": "kremak@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Remak&district=%20%207"
+  },
+  "8": {
+    "name": "John Thomas \"Trey\" Lamar, III",
+    "party": "Republican",
+    "email": "jlamar@house.ms.gov",
+    "capitolOffice": [
+      "Room 201",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3343"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Lamar&district=%20%208"
+  },
+  "9": {
+    "name": "Cedric Burnett",
+    "party": "Democratic",
+    "email": "cburnett@house.ms.gov",
+    "capitolOffice": [
+      "Room 100-A",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2420"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Burnett&district=%20%209"
+  },
+  "10": {
+    "name": "Josh Hawkins",
+    "party": "Republican",
+    "email": "jhawkins@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hawkins&district=%2010"
+  },
+  "11": {
+    "name": "Lataisha Jackson",
+    "party": "Democratic",
+    "email": "ljackson@house.ms.gov",
+    "capitolOffice": [
+      "Room Bsmnt B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-9488"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Jackson%20%2811th%29&district=%2011"
+  },
+  "12": {
+    "name": "Clay Deweese",
+    "party": "Republican",
+    "email": "cdeweese@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3497"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Deweese&district=%2012"
+  },
+  "13": {
+    "name": "Steve Massengill",
+    "party": "Republican",
+    "email": "smassengill@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-E",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3353"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Massengill&district=%2013"
+  },
+  "14": {
+    "name": "Sam Creekmore IV",
+    "party": "Republican",
+    "email": "screekmore@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Creekmore%20IV&district=%2014"
+  },
+  "15": {
+    "name": "Beth Luther Waldo",
+    "party": "Republican",
+    "email": "bwaldo@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Waldo&district=%2015"
+  },
+  "16": {
+    "name": "Rickey Thompson",
+    "party": "Democratic",
+    "email": "rthompson@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Thompson&district=%2016"
+  },
+  "17": {
+    "name": "Shane Aguirre",
+    "party": "Republican",
+    "capitolOffice": [
+      "Room 100-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3374"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Aguirre&district=%2017"
+  },
+  "18": {
+    "name": "Jerry R. Turner",
+    "party": "Republican",
+    "email": "jturner@house.ms.gov",
+    "capitolOffice": [
+      "Room 402-B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3328"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Turner&district=%2018"
+  },
+  "19": {
+    "name": "Randy P. Boyd",
+    "party": "Republican",
+    "email": "rboyd@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-E",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3373"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Boyd%20%2819th%29&district=%2019"
+  },
+  "20": {
+    "name": "Rodney Hall",
+    "party": "Republican",
+    "email": "rhall@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hall&district=%2020"
+  },
+  "21": {
+    "name": "Donnie Bell",
+    "party": "Republican",
+    "email": "dbell@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-A",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3396"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Bell%20%2821st%29&district=%2021"
+  },
+  "22": {
+    "name": "Justin Crosby",
+    "party": "Democratic",
+    "email": "jcrosby@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Crosby&district=%2022"
+  },
+  "23": {
+    "name": "Perry Bailey",
+    "party": "Republican",
+    "email": "pbailey@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Bailey%20%2823rd%29&district=%2023"
+  },
+  "24": {
+    "name": "Jeff Hale",
+    "party": "Republican",
+    "email": "jhale@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-9395"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hale&district=%2024"
+  },
+  "25": {
+    "name": "Dan Eubanks",
+    "party": "Republican",
+    "email": "deubanks@house.ms.gov",
+    "capitolOffice": [
+      "Room BSMNT",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-4082"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Eubanks&district=%2025"
+  },
+  "26": {
+    "name": "Otha Williams",
+    "party": "Democratic",
+    "email": "owilliams@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Williams&district=%2026"
+  },
+  "27": {
+    "name": "Kenji Holloway",
+    "party": "Democratic",
+    "email": "kholloway@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Holloway%20%2827th%29&district=%2027"
+  },
+  "28": {
+    "name": "W.I. \"Doc\" Harris",
+    "party": "Republican",
+    "email": "dharris@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Harris&district=%2028"
+  },
+  "29": {
+    "name": "Robert L. Sanders",
+    "party": "Democratic",
+    "email": "rsanders@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Sanders&district=%2029"
+  },
+  "30": {
+    "name": "Tracey T. Rosebud",
+    "party": "Democratic",
+    "email": "trosebud@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Rosebud&district=%2030"
+  },
+  "31": {
+    "name": "Otis Anthony",
+    "party": "Democratic",
+    "email": "oanthony@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3755"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Anthony&district=%2031"
+  },
+  "32": {
+    "name": "Solomon C. Osborne",
+    "party": "Democratic",
+    "email": "sosborne@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Osborne&district=%2032"
+  },
+  "33": {
+    "name": "Jim Estrada",
+    "party": "Republican",
+    "email": "jestrada@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Estrada&district=%2033"
+  },
+  "34": {
+    "name": "Kevin Horan",
+    "party": "Republican",
+    "email": "khoran@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3311"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Horan&district=%2034"
+  },
+  "35": {
+    "name": "Joey Hood",
+    "party": "Republican",
+    "email": "jhood@house.ms.gov",
+    "capitolOffice": [
+      "Room 112-E",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2428"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hood&district=%2035"
+  },
+  "36": {
+    "name": "Karl Gibbs",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 400F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-9390"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Gibbs%20%2836th%29&district=%2036"
+  },
+  "37": {
+    "name": "Andy Boyd",
+    "party": "Republican",
+    "email": "Aboyd@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Boyd%20%2837th%29&district=%2037"
+  },
+  "38": {
+    "name": "Cheikh Taylor",
+    "party": "Democratic",
+    "email": "ctaylor@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Taylor&district=%2038"
+  },
+  "39": {
+    "name": "Dana McLean",
+    "party": "Republican",
+    "email": "dmclean@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=McLean&district=%2039"
+  },
+  "40": {
+    "name": "Hester Jackson McCray",
+    "party": "Democratic",
+    "email": "hmccray@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=McCray&district=%2040"
+  },
+  "41": {
+    "name": "Kabir Karriem",
+    "party": "Democratic",
+    "email": "kkarriem@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3339"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Karriem&district=%2041"
+  },
+  "42": {
+    "name": "Carl Mickens",
+    "party": "Democratic",
+    "email": "cmickens@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2439"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Mickens&district=%2042"
+  },
+  "43": {
+    "name": "Rob Roberson",
+    "party": "Republican",
+    "email": "rroberson@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-D",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3359"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Roberson&district=%2043"
+  },
+  "44": {
+    "name": "C. Scott Bounds",
+    "party": "Republican",
+    "email": "sbounds@house.ms.gov",
+    "capitolOffice": [
+      "Room 115-B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3340"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Bounds&district=%2044"
+  },
+  "45": {
+    "name": "Keith Jackson",
+    "party": "Democratic",
+    "email": "kjackson@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Jackson%20%2845th%29&district=%2045"
+  },
+  "46": {
+    "name": "Karl Oliver",
+    "party": "Republican",
+    "email": "koliver@house.ms.gov",
+    "capitolOffice": [
+      "Room 201-D",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3340"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Oliver&district=%2046"
+  },
+  "47": {
+    "name": "Bryant W. Clark",
+    "party": "Democratic",
+    "email": "bclark@house.ms.gov",
+    "capitolOffice": [
+      "Room BSMNT-B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2845"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Clark&district=%2047"
+  },
+  "48": {
+    "name": "Jason White",
+    "party": "Republican",
+    "email": "jwhite@house.ms.gov",
+    "capitolOffice": [
+      "Room 306",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3300"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=White&district=%2048"
+  },
+  "49": {
+    "name": "Willie Bailey",
+    "party": "Democratic",
+    "email": "wbailey@house.ms.gov",
+    "capitolOffice": [
+      "Room 100-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3363"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Bailey%20%2849th%29&district=%2049"
+  },
+  "50": {
+    "name": "John W. Hines, Sr.",
+    "party": "Democratic",
+    "email": "jhines@house.ms.gov",
+    "capitolOffice": [
+      "Room 100-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3285"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hines&district=%2050"
+  },
+  "51": {
+    "name": "Timaka James-Jones",
+    "party": "Democratic",
+    "email": "tjamesjones@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=James-Jones&district=%2051"
+  },
+  "52": {
+    "name": "Bill Kinkade",
+    "party": "Republican",
+    "email": "bkinkade@house.ms.gov",
+    "capitolOffice": [
+      "Room 112-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3334"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Kinkade&district=%2052"
+  },
+  "53": {
+    "name": "Vince Mangold",
+    "party": "Republican",
+    "email": "vmangold@house.ms.gov",
+    "capitolOffice": [
+      "Room BSMNT",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-5140"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Mangold&district=%2053"
+  },
+  "54": {
+    "name": "Kevin Ford",
+    "party": "Republican",
+    "email": "kford@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-9473"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Ford%20%2854th%29&district=%2054"
+  },
+  "55": {
+    "name": "Oscar Denton",
+    "party": "Democratic",
+    "email": "odenton@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2438"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Denton&district=%2055"
+  },
+  "56": {
+    "name": "Clay Mansell",
+    "party": "Republican",
+    "email": "cmansell@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Mansell&district=%2056"
+  },
+  "57": {
+    "name": "Lawrence Blackmon",
+    "party": "Democratic",
+    "email": "lblackmon@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Blackmon&district=%2057"
+  },
+  "58": {
+    "name": "Jonathan McMillan",
+    "party": "Republican",
+    "email": "jmcmillan@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-5334"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=McMillan&district=%2058"
+  },
+  "59": {
+    "name": "Brent Powell",
+    "party": "Republican",
+    "email": "bpowell@house.ms.gov",
+    "capitolOffice": [
+      "Room 119",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3349"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Powell&district=%2059"
+  },
+  "60": {
+    "name": "Fred Shanks",
+    "party": "Republican",
+    "email": "fshanks@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Shanks&district=%2060"
+  },
+  "61": {
+    "name": "Gene Newman",
+    "party": "Republican",
+    "email": "gnewman@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Newman&district=%2061"
+  },
+  "62": {
+    "name": "Lance Varner",
+    "party": "Republican",
+    "email": "lvarner@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Varner&district=%2062"
+  },
+  "63": {
+    "name": "Stephanie Foster",
+    "party": "Democratic",
+    "email": "sfoster@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Foster&district=%2063"
+  },
+  "64": {
+    "name": "Shanda Yates",
+    "party": "Independent",
+    "email": "syates@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Yates&district=%2064"
+  },
+  "65": {
+    "name": "Christopher M. Bell",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2461"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Bell%20%2865th%29&district=%2065"
+  },
+  "66": {
+    "name": "Fabian Nelson",
+    "party": "Democratic",
+    "email": "fnelson@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3770"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Nelson&district=%2066"
+  },
+  "67": {
+    "name": "Earle S. Banks",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 102-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3399"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Banks&district=%2067"
+  },
+  "68": {
+    "name": "Zakiya Summers",
+    "party": "Democratic",
+    "email": "zsummers@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Summers&district=%2068"
+  },
+  "69": {
+    "name": "Tamarra Butler-Washington",
+    "party": "Democratic",
+    "email": "gbutlerwashington@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3770"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Butler-Washington&district=%2069"
+  },
+  "70": {
+    "vacant": true,
+    "vacantWhy": "The Mississippi Legislature's member list shows this seat as vacant.",
+    "sourceUrl": "https://www.legislature.ms.gov/legislators/representatives/",
+    "asOf": "2026-10-15"
+  },
+  "71": {
+    "name": "Ronnie C. Crudup",
+    "party": "Democratic",
+    "email": "rcrudup@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Crudup&district=%2071"
+  },
+  "72": {
+    "name": "Justis Gibbs",
+    "party": "Democratic",
+    "email": "jgibbs@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Gibbs%20%2872nd%29&district=%2072"
+  },
+  "73": {
+    "name": "Jill Ford",
+    "party": "Republican",
+    "email": "jford@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3770"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Ford%20%2873rd%29&district=%2073"
+  },
+  "74": {
+    "name": "Lee Yancey",
+    "party": "Republican",
+    "email": "lyancey@house.ms.gov",
+    "capitolOffice": [
+      "Room 102 B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-4000"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Yancey&district=%2074"
+  },
+  "75": {
+    "name": "Celeste Hurst",
+    "party": "Republican",
+    "email": "churst@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hurst&district=%2075"
+  },
+  "76": {
+    "name": "Gregory Holloway, Sr.",
+    "party": "Democratic",
+    "email": "gholloway@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2435"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Holloway%20%2876th%29&district=%2076"
+  },
+  "77": {
+    "vacant": true,
+    "vacantWhy": "The Mississippi Legislature's member list shows this seat as vacant.",
+    "sourceUrl": "https://www.legislature.ms.gov/legislators/representatives/",
+    "asOf": "2026-10-15"
+  },
+  "78": {
+    "name": "Randy Rushing",
+    "party": "Republican",
+    "email": "rrushing@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-H",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3371"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Rushing&district=%2078"
+  },
+  "79": {
+    "name": "Mark Tullos",
+    "party": "Republican",
+    "email": "mtullos@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2431"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Tullos&district=%2079"
+  },
+  "80": {
+    "name": "Omeria Scott",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room RM 100",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-4084"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Scott&district=%2080"
+  },
+  "81": {
+    "name": "Stephen A. Horne",
+    "party": "Republican",
+    "capitolOffice": [
+      "Room 100-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-9392"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Horne&district=%2081"
+  },
+  "82": {
+    "name": "Gregory Elliott",
+    "party": "Democratic",
+    "email": "gelliott@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Elliott&district=%2082"
+  },
+  "83": {
+    "name": "Billy Adam Calvert",
+    "party": "Republican",
+    "email": "bcalvert@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Calvert&district=%2083"
+  },
+  "84": {
+    "name": "Troy Smith",
+    "party": "Republican",
+    "email": "tsmith@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Smith&district=%2084"
+  },
+  "85": {
+    "name": "Jeffery Harness",
+    "party": "Democratic",
+    "email": "jharness@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Harness&district=%2085"
+  },
+  "86": {
+    "name": "Shane Barnett",
+    "party": "Republican",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3014"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Barnett&district=%2086"
+  },
+  "87": {
+    "name": "Joseph Tubb",
+    "party": "Republican",
+    "email": "jtubb@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Tubb&district=%2087"
+  },
+  "88": {
+    "name": "Charles Blackwell",
+    "party": "Republican",
+    "email": "cblackwell@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Blackwell&district=%2088"
+  },
+  "89": {
+    "name": "Donnie Scoggin",
+    "party": "Republican",
+    "email": "dscoggin@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Scoggin&district=%2089"
+  },
+  "90": {
+    "name": "Noah Sanford",
+    "party": "Republican",
+    "email": "nsanford@house.ms.gov",
+    "capitolOffice": [
+      "Room 201M-6",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3363"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Sanford&district=%2090"
+  },
+  "91": {
+    "name": "Bob Evans",
+    "party": "Democratic",
+    "email": "bevans@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2433"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Evans&district=%2091"
+  },
+  "92": {
+    "name": "Becky Currie",
+    "party": "Republican",
+    "email": "bcurrie@house.ms.gov",
+    "capitolOffice": [
+      "Room 401-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3131"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Currie&district=%2092"
+  },
+  "93": {
+    "name": "Timmy Ladner",
+    "party": "Republican",
+    "email": "tladner@house.ms.gov",
+    "capitolOffice": [
+      "Room 119-B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2422"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Ladner&district=%2093"
+  },
+  "94": {
+    "name": "Robert L. Johnson III",
+    "party": "Democratic",
+    "email": "rjohnson@house.ms.gov",
+    "capitolOffice": [
+      "Room 102-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3252"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Johnson&district=%2094"
+  },
+  "95": {
+    "name": "Jay McKnight",
+    "party": "Republican",
+    "email": "jmcknight@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=McKnight&district=%2095"
+  },
+  "96": {
+    "name": "Angela Cockerham",
+    "party": "Independent",
+    "email": "acockerham@house.ms.gov",
+    "capitolOffice": [
+      "Room 201",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3340"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Cockerham&district=%2096"
+  },
+  "97": {
+    "name": "Sam C. Mims, V",
+    "party": "Republican",
+    "email": "smims@house.ms.gov",
+    "capitolOffice": [
+      "Room 201-M5",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3340"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Mims&district=%2097"
+  },
+  "98": {
+    "name": "Daryl Porter",
+    "party": "Democratic",
+    "email": "dporter@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Porter&district=%2098"
+  },
+  "99": {
+    "name": "Bill Pigott",
+    "party": "Republican",
+    "email": "bpigott@house.ms.gov",
+    "capitolOffice": [
+      "Room 119-B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3069"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Pigott&district=%2099"
+  },
+  "100": {
+    "name": "Ken Morgan",
+    "party": "Republican",
+    "email": "kmorgan@house.ms.gov",
+    "capitolOffice": [
+      "Room 119-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-5334"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Morgan&district=100"
+  },
+  "101": {
+    "name": "Kent McCarty",
+    "party": "Republican",
+    "email": "kmccarty@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=McCarty&district=101"
+  },
+  "102": {
+    "name": "Missy McGee",
+    "party": "Republican",
+    "email": "mmcgee@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=McGee&district=102"
+  },
+  "103": {
+    "name": "Percy W. Watson",
+    "party": "Democratic",
+    "email": "pwatson@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Watson&district=103"
+  },
+  "104": {
+    "name": "Larry Byrd",
+    "party": "Republican",
+    "email": "lbyrd@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-B",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3337"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Byrd&district=104"
+  },
+  "105": {
+    "name": "Elliot Burch",
+    "party": "Republican",
+    "email": "eburch@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Burch&district=105"
+  },
+  "106": {
+    "name": "Jansen Owen",
+    "party": "Republican",
+    "email": "jowen@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Owen&district=106"
+  },
+  "107": {
+    "name": "Steve Lott",
+    "party": "Republican",
+    "email": "slott@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Lott&district=107"
+  },
+  "108": {
+    "name": "Stacey Hobgood-Wilkes",
+    "party": "Republican",
+    "email": "swilkes@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3744"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hobgood-Wilkes&district=108"
+  },
+  "109": {
+    "name": "Manly Barton",
+    "party": "Republican",
+    "email": "mbarton@house.ms.gov",
+    "capitolOffice": [
+      "Room 302",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3304"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Barton&district=109"
+  },
+  "110": {
+    "name": "Jeramey Anderson",
+    "party": "Democratic",
+    "email": "janderson@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2438"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Anderson%20%28110th%29&district=110"
+  },
+  "111": {
+    "name": "Jimmy Fondren",
+    "party": "Republican",
+    "email": "jfondren@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3728"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Fondren&district=111"
+  },
+  "112": {
+    "name": "John Read",
+    "party": "Republican",
+    "email": "jread@house.ms.gov",
+    "capitolOffice": [
+      "Room 201C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3340"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Read&district=112"
+  },
+  "113": {
+    "name": "Henry Zuber III",
+    "party": "Republican",
+    "email": "hzuber@house.ms.gov",
+    "capitolOffice": [
+      "Room 402-C",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-4049"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Zuber&district=113"
+  },
+  "114": {
+    "name": "Jeffrey S. Guice",
+    "party": "Republican",
+    "email": "jguice@house.ms.gov",
+    "capitolOffice": [
+      "Room 201 M-4",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2420"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Guice&district=114"
+  },
+  "115": {
+    "name": "Zachary Grady",
+    "party": "Republican",
+    "email": "zgrady@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Grady&district=115"
+  },
+  "116": {
+    "name": "Casey Eure",
+    "party": "Republican",
+    "email": "ceure@house.ms.gov",
+    "capitolOffice": [
+      "Room 201M-5",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-9466"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Eure&district=116"
+  },
+  "117": {
+    "name": "Kevin Felsher",
+    "party": "Republican",
+    "email": "kfelsher@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Felsher&district=117"
+  },
+  "118": {
+    "name": "Greg Haney",
+    "party": "Republican",
+    "email": "ghaney@house.ms.gov",
+    "capitolOffice": [
+      "Room 400-F",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-3338"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Haney&district=118"
+  },
+  "119": {
+    "name": "Jeffrey Hulum III",
+    "party": "Democratic",
+    "email": "JHulum@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Hulum&district=119"
+  },
+  "120": {
+    "name": "Richard Bennett",
+    "party": "Republican",
+    "email": "rbennett@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-2860"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Bennett&district=120"
+  },
+  "121": {
+    "name": "Carolyn Crawford",
+    "party": "Republican",
+    "email": "ccrawford@house.ms.gov",
+    "capitolOffice": [
+      "Room 201M-7",
+      "P. O. Box 1018",
+      "Jackson, MS 39215",
+      "(601) 359-4075"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Crawford&district=121"
+  },
+  "122": {
+    "name": "Brent Anderson",
+    "party": "Republican",
+    "email": "banderson@house.ms.gov",
+    "capitolOffice": [
+      "P. O. Box 1018",
+      "Jackson, MS 39215"
+    ],
+    "url": "https://www.legislature.ms.gov/member/?fiscalyear=26&chamber=H&member=Anderson%20%28122nd%29&district=122"
+  }
+}

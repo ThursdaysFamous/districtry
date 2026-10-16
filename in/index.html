@@ -4210,17 +4210,18 @@ function initIndianaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "in-senate": "ins", "county": "co", "in-house": "inh",
-    "school-district-unified": "su", "zip-code": "zp", "county-subdivision": "cs",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
-    "tribal-government": "tg" };
+    "county-council": "cu", "school-district-unified": "su", "zip-code": "zp",
+    "county-subdivision": "cs", "voting-precinct": "vp", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["in-senate"],
-    "state-house": ["in-house"], "county": ["county"],
+    "state-house": ["in-house"], "county": ["county"], "county-board": ["county-council"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4285,7 +4286,9 @@ function initIndianaExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -9368,9 +9371,11 @@ function initIndianaExplorer() {
     "in-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 92 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "in-house",          // 100 House districts — the finest political tiling this instance ships today
+    "county-council",    // 241 districts in 55 counties: four per county, and Indianapolis's 25 City-County Council districts
     "school-district-unified", // 291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
     "zip-code",          // 882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
     "county-subdivision", // 1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
+    "voting-precinct",   // 5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)
     "municipality",      // 566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
     "tribal-government", // Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // 650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -13367,6 +13372,12 @@ function initIndianaExplorer() {
     return fetchJSONWithRetry("data/app/in-city-officials.json", {}, 2);
   });
   var INDIANAPOLIS_GEOID = "1836003";
+  // Township trustees and board members, keyed by Census county-subdivision
+  // id (in/scripts/build_in_township_officials.py), for the Township or City
+  // card.
+  var loadTownshipOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-township-officials.json", {}, 2);
+  });
   var IN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
   function inElectionDate(iso) {
@@ -13382,6 +13393,7 @@ function initIndianaExplorer() {
       var when = inElectionDate(seat.election);
       var note = when ? "elected " + when : null;
       if (seat.party) note = String(seat.party) + (note ? " · " + note : "");
+      if (seat.role) note = String(seat.role) + (note ? " · " + note : "");
       return {
         name: String(seat.name),
         badge: seat.seatNotStated ? "Seat not stated" : String(seat.seat),
@@ -13415,7 +13427,14 @@ function initIndianaExplorer() {
           "keep city or town governments of their own."
       });
     }
-    rows.push({
+    var read = rec.source === "town-page" ? inElectionDate(rec.read) : null;
+    rows.push(rec.source === "town-page" ? {
+      label: "What these names are",
+      value: "The council as the town lists it on its own website" +
+        (read ? ", read " + read : "") + ". The state's election results do " +
+        "not name the whole council, because a town holds no general election " +
+        "for a seat nobody runs against."
+    } : {
       label: "What these names are",
       value: "The winner of the most recent election for each seat, from the " +
         "Indiana Election Division's certified results. They are not a list " +
@@ -13427,10 +13446,68 @@ function initIndianaExplorer() {
     });
     rows.push({
       label: "Which seat is yours",
-      value: "Every seat is listed, because this app does not draw the " +
-        "council's district lines yet. \"At large\" seats are elected by the " +
-        "whole " + (county ? "county" : rec.kind === "town" ? "town" : "city") + "."
+      value: rec.name === "Indianapolis"
+        ? "Every seat is listed. The County Council District layer shows " +
+          "which of the council's 25 districts covers this point."
+        : "Every seat is listed, because this app does not draw the " +
+          "council's district lines yet. \"At large\" seats are elected by the " +
+          "whole " + (county ? "county" : rec.kind === "town" ? "town" : "city") + "."
     });
+  }
+
+  // A township's trustee and board, for the Township or City card.
+  function inTownshipRows(wrap, rec) {
+    var rows = [];
+    if (rec.trustee) {
+      wrap.appendChild(renderSectionLabel("Township trustee"));
+      wrap.appendChild(renderPersonRows(inSeatRows({ seats: [rec.trustee] })
+        .map(function (r) { r.badge = null; return r; })));
+    } else {
+      rows.push({
+        label: "Township trustee",
+        value: "Not named here. The certified results carry no winner for " +
+          "this township's trustee."
+      });
+    }
+    if (rec.board && rec.board.length) {
+      wrap.appendChild(renderSectionLabel("Township board"));
+      wrap.appendChild(renderPersonRows(inSeatRows({ seats: rec.board })
+        .map(function (r) { r.badge = null; return r; })));
+      var open = Number(rec.boardSeats || 0) - rec.board.length;
+      if (open > 0) {
+        rows.push({
+          label: "Seats with no winner",
+          value: (open === 1 ? "One seat" : open + " seats") + " on this board " +
+            "had nobody elected at that election. " +
+            "Indiana fills a seat like that by party caucus, which the " +
+            "results do not record."
+        });
+      }
+    } else {
+      rows.push({
+        label: "Township board",
+        value: "Not named here. The certified results carry no race for this " +
+          "township's board."
+      });
+    }
+    if (rec.note) rows.push({ label: "About this township", value: String(rec.note) });
+    rows.push({
+      label: "What these names are",
+      value: "The winners of the most recent township election, from the " +
+        "Indiana Election Division's certified results. They are not a list " +
+        "the township keeps up to date: Indiana fills a vacancy by party " +
+        "caucus, so if an office has changed hands since the election this " +
+        "still shows who won it. The township's or county's own page says who " +
+        "holds each office today."
+    });
+    wrap.appendChild(renderFieldStack(rows));
+    var src = rec.trustee || (rec.board && rec.board[0]);
+    if (src && src.sourceUrl) {
+      wrap.appendChild(renderLinkRow({
+        links: [{ label: "Indiana Election Division results \u2197",
+          url: String(src.sourceUrl) }]
+      }));
+    }
   }
 
   registerLayer({
@@ -13506,10 +13583,12 @@ function initIndianaExplorer() {
         });
         rows.push({
           label: "Which seat is yours",
-          value: "Every seat in the county is listed, because this app does not " +
-            "draw either body's district lines yet. The commissioners run the " +
-            "county and the council sets its budget and taxes; \"At large\" " +
-            "council seats are elected by the whole county."
+          value: "Every seat in the county is listed. The commissioners run the " +
+            "county and are elected by the whole county; the council sets its " +
+            "budget and taxes, and its \"At large\" seats are elected by the " +
+            "whole county too. The County Council District layer shows which " +
+            "district seat covers this point, in the counties whose district " +
+            "lines are published."
         });
       } else if (result.cityCounty) {
         inCityRows(wrap, rows, result.cityCounty, true);
@@ -13544,6 +13623,159 @@ function initIndianaExplorer() {
       if (newest) {
         wrap.appendChild(renderLinkRow({
           links: [{ label: "Indiana Election Division results \u2197", url: String(newest.sourceUrl) }]
+        }));
+      }
+      return wrap;
+    }
+  });
+
+  /* ---------- County Council District — 55 counties' own lines.
+   *
+   * An Indiana county council elects four members from districts and three
+   * by the whole county (IC 36-2-3-4), so a reader is owed the one district
+   * member whose district holds the point. The lines are each county's own,
+   * collected by the Indiana Geographic Information Office (CountyCouncil
+   * Polygon), joined into one shape per district and clipped to the county
+   * by in/scripts/build_in_council_districts.py, which also checks that every
+   * drawn district has a seat of that name in the rosters. Marion County's
+   * districts are the Indianapolis City-County Council's 25, named from the
+   * city file. A county that files no lines answers nothing here, and the
+   * card says the County card lists every member.
+   *
+   * Commissioner districts are not drawn on purpose: commissioners are
+   * elected by the whole county from residency districts (IC 36-2-2-4), so a
+   * commissioner district does not decide who represents a point.
+   * ---------- */
+  var loadCouncilDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-council-districts.json", {}, 2);
+  });
+  // Both rosters a district card can need: the county councils, and the
+  // City-County Council's seats for Marion.
+  var loadCouncilRosters = makeCached(function () {
+    return Promise.all([loadCountyCouncils(), loadCityOfficials()]).then(function (both) {
+      return { councils: both[0], city: both[1] };
+    });
+  });
+  function inCouncilRecord(rosters, fips) {
+    if (!rosters) return null;
+    if (String(fips) === "18097") return rosters.city[INDIANAPOLIS_GEOID] || null;
+    return rosters.councils[String(fips)] || null;
+  }
+
+  registerLayer({
+    id: "county-council",
+    group: "political",
+    label: "County Council District",
+    overlay: {
+      load: loadCouncilDistricts,
+      // the fleet's county-board blue (layer-concepts.json `colors`), apart
+      // from the purple legislative chambers
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 }
+    },
+    coverage: insideIndiana,
+    emptyNote: "This map has no council district lines for this county. They " +
+      "are drawn for the counties that give them to the state's mapping " +
+      "office, and this one has not. The County card lists every member of " +
+      "the county council.",
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (String(p.fips) === "18097") return "City-County Council District " + String(p.district);
+      return String(p.county) + " County Council District " + String(p.district);
+    },
+    hoverOfficial: {
+      load: loadCouncilRosters,
+      name: function (feature, rosters) {
+        var p = feature.properties || {};
+        var rec = inCouncilRecord(rosters, p.fips);
+        var own = ((rec && rec.seats) || []).filter(function (s) {
+          return s.seat === "District " + String(p.district) && s.name;
+        });
+        return own.length === 1 ? String(own[0].name) : null;
+      }
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadCouncilDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        var result = { seq: seq, county: p.county, fips: p.fips, district: p.district, council: null };
+        // A roster that fails to load leaves the district answer standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadCouncilRosters().then(function (rosters) {
+          result.council = inCouncilRecord(rosters, p.fips);
+          return result;
+        }, function () { result.rosterFailed = true; return result; });
+      });
+    },
+    render: function (result) {
+      var marion = String(result.fips) === "18097";
+      var county = String(result.county || "");
+      var seatName = "District " + String(result.district);
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: marion ? "Indianapolis City-County Council " + seatName
+          : county + " County Council " + seatName,
+        note: county + " County"
+      }));
+      var seats = (result.council && result.council.seats) || [];
+      var own = seats.filter(function (s) { return s.seat === seatName; });
+      var wide = seats.filter(function (s) {
+        return s.seat === "At large" || s.seat === "Mayor";
+      });
+      var unnumbered = seats.filter(function (s) {
+        return s.seatNotStated || /^Seat titled/.test(String(s.seat || ""));
+      });
+      var rows = [];
+      if (result.rosterFailed || !result.council) {
+        rows.push({
+          label: "Who holds this seat",
+          value: "The list of election winners did not load, so no name is shown."
+        });
+      } else if (own.length) {
+        wrap.appendChild(renderPersonRows(inSeatRows({ seats: own })
+          .map(function (r) { r.badge = null; return r; })));
+      } else {
+        rows.push({
+          label: "Who holds this seat",
+          value: "Not named here. The certified results do not call any seat " +
+            "in this county " + seatName + (unnumbered.length
+              ? "; they title " + (unnumbered.length === 1 ? "one seat" : unnumbered.length + " seats") +
+                " some other way, so this map does not guess which is this district's."
+              : ".") + " The County card lists every council member."
+        });
+      }
+      rows.push({
+        label: "Who you elect here",
+        value: marion
+          ? "One of the 25 members of the City-County Council, the legislative " +
+            "body of both Indianapolis and Marion County, chosen by the voters " +
+            "of this district alone. The mayor is elected by the whole county."
+          : "One county council member, chosen by the voters of this district " +
+            "alone, and three more elected by the whole county. The council " +
+            "sets the county's budget and tax rates; the three county " +
+            "commissioners, also elected by the whole county, run it."
+      });
+      if (seats.length) {
+        rows.push({
+          label: "What these names are",
+          value: "The winner of the most recent election for each seat, from " +
+            "the Indiana Election Division's certified results. They are not " +
+            "a list the " + (marion ? "council" : "county") + " keeps up to " +
+            "date: Indiana fills a vacancy by party caucus, so if a seat has " +
+            "changed hands since the election this still shows who won it."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (wide.length) {
+        wrap.appendChild(renderSectionLabel("Elected by the whole county"));
+        wrap.appendChild(renderPersonRows(inSeatRows({ seats: wide }), { tinted: true }));
+      }
+      var newest = null;
+      seats.forEach(function (seat) {
+        if (seat.sourceUrl && (!newest || seat.election > newest.election)) newest = seat;
+      });
+      if (newest) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "Indiana Election Division results ↗", url: String(newest.sourceUrl) }]
         }));
       }
       return wrap;
@@ -13786,11 +14018,11 @@ function initIndianaExplorer() {
    * second source can go stale. Measured: the six LSADC values yield exactly
    * five suffixes, 1,012 of 1,012.
    *
-   * NO OFFICEHOLDER. An Indiana civil township elects a trustee and a
-   * township board (IC 36-6-4, IC 36-6-6), and no statewide roster of them
-   * was found — the card names the office and says plainly that this app
-   * does not know who holds it, which is the honesty floor. Recorded as gap
-   * in-township-officers. ---------- */
+   * OFFICEHOLDERS. An Indiana civil township elects a trustee and a
+   * township board (IC 36-6-4, IC 36-6-6). Since 2026-10-15 the card names
+   * the winners of the certified 2022 general from
+   * in-township-officials.json, keyed by this layer's GEOID; a township the
+   * results do not cover says so. Gap in-township-officers. ---------- */
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
@@ -13834,8 +14066,16 @@ function initIndianaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null
         };
+      }).then(function (result) {
+        if (!result) return null;
+        // A roster that fails to load leaves the subdivision answer standing.
+        return loadTownshipOfficials().then(function (r) {
+          result.officials = r[String(result.geoid)] || null;
+          return result;
+        }, function () { result.rosterFailed = true; return result; });
       });
     },
     render: function (result) {
@@ -13869,16 +14109,109 @@ function initIndianaExplorer() {
       // WHO HOLDS THE OFFICE, said as the open question it is. Only a township
       // has an officer this card would name; a city's people belong on the
       // city's own card, and the water records have no government at all.
-      if (result.kind === "township") {
+      if (result.officials) {
+        inTownshipRows(wrap, result.officials);
+      } else if (result.kind === "township") {
         wrap.appendChild(renderFieldStack([{
-          label: "Your township board",
-          value: "Not named here. No statewide roster of Indiana's township " +
-            "trustees and township board members was found, and this app does " +
-            "not guess one — your township's own page, or the county's, is " +
-            "the current source."
+          label: "Your township trustee and board",
+          value: result.rosterFailed
+            ? "The list of township officers did not load, so no names are " +
+              "shown."
+            : "Not named here. The state's certified results for the most " +
+              "recent township election carry no race for this township, " +
+              "so this app has no name to give. Your county's or township's " +
+              "own page is the current source."
         }]));
       }
       return wrap;
+    }
+  });
+
+  /* ---------- Voting precinct — IndianaMap's statewide layer ----------
+   * Indiana's 5,121 precincts from IndianaMap's "Voting District Boundaries
+   * 2026", which the state's mapping office obtained from the General
+   * Assembly and the Indiana Election Division in June 2026. Pre-built by
+   * in/scripts/build_in_precincts.py through scripts/statewide_precincts.py
+   * (Douglas-Peucker at 4 m; data/app/in-precincts.json, same-origin), so a
+   * click is answered in the browser and no point is sent anywhere.
+   *
+   * A PRECINCT ELECTS NO ONE TO PUBLIC OFFICE, so the card has no
+   * officeholder row to be missing and says why. The layer's five-digit
+   * code is the state's file key rather than a name a voter sees, so it is
+   * not shown. Each year is a new service; the builder's --watch says when
+   * a later edition is posted, and its --check fails if this card stops
+   * naming the edition or the interval the file was drawn at.
+   * ---------- */
+  var loadInPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-precincts.json", {}, 2);
+  });
+
+  // A precinct elects no one to public office, so the card says so rather
+  // than leaving a reader to wonder which name is missing.
+  var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
+    "and how your ballots are reported, not a district with a representative of its own.";
+
+  // The card's title: a name that is only a number reads "Precinct 025", so
+  // it cannot be taken for a district number; any other name is printed as
+  // the state publishes it.
+  function precinctTitle(props) {
+    var name = props.name != null ? String(props.name).trim() : "";
+    if (!name) return null;
+    return /^[0-9][0-9-]*$/.test(name) ? "Precinct " + name : name;
+  }
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadInPrecincts,
+      // the finest tiling on this map: a light stroke, so it reads under the
+      // broader boundaries rather than competing with them
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return precinctTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadInPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: precinctTitle(props),
+          county: props.county != null ? String(props.county) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title || "Unknown precinct",
+        note: result.county
+      }));
+      var rows = [
+        { label: "Who it elects", value: PRECINCT_ELECTS },
+        {
+          label: "How current",
+          value: "This is Indiana's 2026 precinct map, which the state's mapping office " +
+            "obtained from the General Assembly and the Indiana Election Division in June " +
+            "2026, so a change a county made after that is not shown."
+        },
+        {
+          label: "How exact this line is",
+          value: "The state's lines are drawn here to within 4 metres. For a definitive " +
+            "answer, ask your county's election office."
+        }
+      ];
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Find your polling place",
+        url: "https://indianavoters.in.gov/"
+      };
     }
   });
 
@@ -13915,7 +14248,9 @@ function initIndianaExplorer() {
    * data/app/in-city-officials.json, keyed by Census place id). The other
    * three are towns — Plainfield, Brownsburg and Schererville — where an
    * uncontested seat is on no ballot, so the results cannot name the whole
-   * council; their cards say so. A smaller place is not in the file yet and
+   * council; since 2026-10-15 those three are read from each town's own
+   * council page instead (source "town-page"), dated to the read, and the
+   * card says the names are the town's own list. A smaller place is not in the file yet and
    * its card says that too. Recorded as gap in-municipal-officeholders.
    * ---------- */
   var loadPlaces = tigerStatewideLoader(
@@ -13990,20 +14325,9 @@ function initIndianaExplorer() {
         ]));
       }
       var rows = [];
-      var NOT_NAMED = {
-        "1860246": 1, "1808416": 1, "1868220": 1 // Plainfield, Brownsburg, Schererville
-      };
       if (result.officials) {
         inCityRows(wrap, rows, result.officials,
           String(result.geoid) === INDIANAPOLIS_GEOID);
-      } else if (NOT_NAMED[String(result.geoid)]) {
-        rows.push({
-          label: "Your town council",
-          value: "Not named here yet. A town holds no general election for a " +
-            "seat nobody runs against, and the state's election results this " +
-            "app reads do not name the whole council. The town's own website " +
-            "is the current source."
-        });
       } else {
         rows.push({
           label: "Your mayor or council",
@@ -14018,7 +14342,9 @@ function initIndianaExplorer() {
       wrap.appendChild(renderFieldStack(rows));
       if (result.officials && result.officials.seats && result.officials.seats[0]) {
         wrap.appendChild(renderLinkRow({
-          links: [{ label: "Indiana Election Division results \u2197",
+          links: [{ label: result.officials.source === "town-page"
+            ? "The town's council page \u2197"
+            : "Indiana Election Division results \u2197",
             url: String(result.officials.seats[0].sourceUrl) }]
         }));
       }
@@ -15871,12 +16197,12 @@ function initIndianaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "in-senate", "in-house",
+    // The county council's districts, the finest political tiling here. The
+    // commissioners are elected by the whole county and are on the County
+    // card, which is why they have no layer of their own.
+    "county-council",
     "school-district-unified",
-    // Indiana's county tier is TWO elected bodies — a county council and a
-    // board of commissioners — and neither is drawn yet, so the Political
-    // family stops at the General Assembly for now and the County card below
-    // is identity only. Both bodies land here when they ship.
-    "county", "county-subdivision", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16362,8 +16688,9 @@ function initIndianaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
-    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
     "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
     "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};

@@ -1,0 +1,113 @@
+name: Update Mississippi legislature roster
+
+# Weekly refresh of the Mississippi Senate + House rosters
+# (ms/data/app/ms-senate-members.json and ms-house-members.json, fetched by
+# ms/index.html's chamber cards). Rebuilds both chambers from the Mississippi
+# Legislature's own member gallery and member profiles on
+# www.legislature.ms.gov and — if anything changed — opens a PR rather than
+# committing directly to main.
+#
+# The builder reads the two chamber pages, the gallery each embeds and every
+# member's profile (about 175 requests, one second apart, so a few minutes).
+# It reads each profile's name, district, party, Capitol office and official
+# chamber e-mail address, and never the home address, home or business
+# telephone or personal e-mail address the same profiles print. A seat whose
+# gallery card reads "Vacant" ships as a vacancy record.
+#
+# THE LEGISLATURE'S SERVER SENDS ONLY ITS OWN CERTIFICATE, NOT THE INTERMEDIATE
+# THAT SIGNED IT, so the builder completes the chain from the GlobalSign
+# intermediate pinned in scripts/aia_bundle.py (fetched from the address the
+# certificate names and checked against its SHA-256). That is why this job
+# installs requests: verification stays on, against the trusted roots plus
+# that one pinned certificate.
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN SCRAPED A
+# SECOND TIME, the update-ilga-roster.yml pattern: a second pass would ask the
+# legislature's server for the same pages again for nothing. A run where main
+# changed those same files meanwhile errors at the checkout instead of
+# pushing, which is right.
+#
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE.
+# `ms/state-legislature.html` carries a GENERATED table of both rosters, and
+# `about.html` and `sitemap.xml` count them, so all three are regenerated here
+# and staged in the same `git add`.
+
+on:
+  schedule:
+    - cron: "11 18 * * 2" # Tuesday 18:11 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests (and the certifi it carries) for the pinned-intermediate
+      # session; robots.txt is read through scraper_common with the same bundle.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Rebuild Mississippi Senate + House rosters
+        run: python3 ms/scripts/build_ms_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 ms/scripts/validate_index.py ms/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ms/data/app/ms-senate-members.json ms/data/app/ms-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ms-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add ms/data/app/ms-senate-members.json ms/data/app/ms-house-members.json ms/state-legislature.html about.html sitemap.xml
+          git commit -m "Update Mississippi Senate + House rosters from the Mississippi Legislature"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Mississippi Senate + House rosters" \
+              --body "Automated weekly refresh of the Mississippi Senate and Mississippi House chamber cards' rosters, from the Mississippi Legislature's own member gallery and member profiles on www.legislature.ms.gov. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
