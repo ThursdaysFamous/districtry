@@ -87,7 +87,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -141,7 +141,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ca/supervisor-district.html</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -393,7 +393,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ny/council-district.html</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1736,6 +1736,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/county-board/ford.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/franklin.html</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -1894,6 +1900,12 @@
   <url>
     <loc>https://districtry.com/il/county-board/macon.html</loc>
     <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/macoupin.html</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -6213,7 +6225,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/sources.html</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

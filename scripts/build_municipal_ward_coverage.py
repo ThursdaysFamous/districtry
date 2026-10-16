@@ -110,6 +110,8 @@ STATIC_ENTRY_MUNICIPALITIES = {
     "lincoln": ["Lincoln"],
     "springfield": ["Springfield"],
     "freeport": ["Freeport"],
+    # Danville's seven wards on the city's own ArcGIS server (2026-10-15).
+    "danville": ["Danville"],
     "st-clair-cities": ["Belleville", "O'Fallon"],
     # Elmwood alone of the three cities on Peoria County's own Wards layer
     # (2026-09-05). Chillicothe and West Peoria are on that same service and are
@@ -256,6 +258,7 @@ COVERAGE_PROBES = [
     (38.90913, -90.19487, "madison-cities", "Alton"),       # Alton ward 1
     (38.69008, -90.12943, "madison-cities", "Granite City"),  # Granite City ward 1
     (38.68852, -90.14947, "madison-cities", "Madison"),     # the four that name nobody
+    (40.13716, -87.62835, "danville", "Danville"),          # Danville ward 1
 ]
 
 ENTRY_COUNTY_FIPS = {"cook-suburban": "031", "evanston": "031",
@@ -265,7 +268,7 @@ ENTRY_COUNTY_FIPS = {"cook-suburban": "031", "evanston": "031",
                      "mchenry-city": "111", "kendall-cities": "093",
                      "madison-cities": "119",
                      "pontiac": "105", "mclean-cities": "113", "lincoln": "107",
-                     "springfield": "167", "freeport": "177",
+                     "springfield": "167", "freeport": "177", "danville": "183",
                      "st-clair-cities": "163", "rock-island": "161",
                      "whiteside-cities": "195",
                      "galesburg": "095",
