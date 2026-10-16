@@ -97,8 +97,8 @@ EXPECT_LAYER_IDS = [
     "us-house", "tn-senate", "county", "tn-house", "school-district-unified",
     "county-commissioner", "county-subdivision", "zip-code",
     "school-district-elementary", "school-district-secondary",
-    "voting-precinct", "municipality", "tribal-government",
-    "police-station", "fire-station", "post-office",
+    "voting-precinct", "municipality", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.

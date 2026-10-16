@@ -8,16 +8,16 @@ districtry Arkansas: a single-file, dependency-light web app. Click a point in A
 search an address) and it reports every civic district containing that point and who represents
 you there. It serves at **districtry.com/ar/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships TWELVE layers, and **IT IS PUBLISHED** since Adam's word of
+root-scripts shape. It ships THIRTEEN layers, and **IT IS PUBLISHED** since Adam's word of
 2026-10-15 ("turn on arkansas"). It arrived dark on 2026-10-13 (no `metros.json` entry, `ar/**`
 blanket-excluded from the Pages deploy), and the go-live change narrowed that exclude to the build
 inputs the siblings exclude, registered the instance and regenerated every surface that counts the
 fleet. `ar/WATCH.md` keeps the go-live row with its date, and `docs/AR_EXPANSION_PLAN.md` is the
 record of the launch.
 
-**The national tier** — ten of the twelve layers draw their shapes from a national publisher and
-name people from a national roster or the Arkansas State Legislature; the other two, the quorum
-court and the townships, below, are drawn from the state's own maps. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
+**The national tier** — ten of the thirteen layers draw their shapes from a national publisher and
+name people from a national roster or the Arkansas State Legislature; the other three, the quorum
+court, the townships and the voting precincts, below, are drawn from the state's own maps. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
 county judge and lists the justices of the peace), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **Arkansas Senate** and **Arkansas House** (35 and 100
 districts, TIGERweb geometry joined to the legislature's own member list and member pages), the

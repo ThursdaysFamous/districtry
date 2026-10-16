@@ -8,7 +8,8 @@ districtry Indiana: a single-file, dependency-light web app. Click a point in In
 search an address) and it reports every civic district containing that point. It serves at
 **districtry.com/in/** as a folder of the consolidated districtry repo — following the
 Wisconsin/Iowa/Michigan shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships ELEVEN layers, every one of them from a national publisher.
+root-scripts shape. It ships THIRTEEN layers, all but one from a national publisher: the voting precincts come
+from the state's own IndianaMap (below).
 
 **LIVE SINCE THE GO-LIVE CHANGE OF 2026-10-07**, eight days after it arrived dark: it is in
 `metros.json`, `fleet-outlines.json`, the sitemap, the landing page and the coverage map, and
@@ -188,9 +189,9 @@ after every await) and **per-layer failure isolation** (a layer's failure shows 
 its own card, never breaks the others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
-roster source exists, cards link to the official body instead of inventing a name. Eight of this
-instance's eleven layers name nobody (U.S. House, County and City or Town name people), and every
-one of their cards says so. External strings
+roster source exists, cards link to the official body instead of inventing a name. Nine of this
+instance's thirteen layers name nobody (U.S. House, County, City or Town and Tribal Government
+name people), and every one of their cards says so. External strings
 always render through `sanitize()`/`textContent`. Roster refreshes always land as PRs for human
 review — never as direct commits to main.
 

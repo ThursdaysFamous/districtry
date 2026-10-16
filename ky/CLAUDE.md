@@ -28,7 +28,8 @@ file, its routing check gains Louisville as a case that must open `/ky/`, and it
 case moved to Butler County, Ohio. An audit that is re-run rather than trusted is the only
 reason any of that was seen before it broke.
 
-It ships four layers, the national tier every U.S. state can serve from national publishers:
+It arrived with four layers, the national tier every U.S. state can serve from national publishers,
+and ships fifteen now, each later one recorded below:
 **County** (120, from Census TIGERweb, naming its governing body and officers since 2026-10-11), **U.S. House** (6 districts, TIGERweb
 geometry joined to the public-domain unitedstates/congress-legislators roster, refreshed
 weekly), and **Kentucky Senate** / **Kentucky House** (38 and 100 districts, TIGERweb

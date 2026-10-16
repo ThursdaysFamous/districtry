@@ -8,7 +8,7 @@ districtry Tennessee: a single-file, dependency-light web app. Click a point in 
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/tn/** as a folder of the consolidated
 districtry repo, following the statewide shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships FIFTEEN layers, and **IT IS PUBLISHED** since Adam's word
+Illinois root-scripts shape. It ships SIXTEEN layers, and **IT IS PUBLISHED** since Adam's word
 of 2026-10-13. It arrived dark on 2026-10-10 (no `metros.json` entry, `tn/**` blanket-excluded
 from the Pages deploy) and the go-live change narrowed that exclude to the build inputs the
 siblings exclude, registered the instance and regenerated every surface that counts the fleet,
@@ -220,7 +220,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Tennessee (`tennessee`) — https://districtry.com/tn/
 - Geocoders: address Photon (Tennessee-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Tennessee-bounded, serial >=1s queue)
 - Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19; voting-precinct Precinct 19-4. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
-- Layers: 15 registered (political 4, safety 2, schools 3, geography 6); `registerLayer(` floor 13. Debug namespace `window.TennesseeExplorer`.
+- Layers: 16 registered (political 5, safety 2, schools 3, geography 6); `registerLayer(` floor 13. Debug namespace `window.TennesseeExplorer`.
 - Scheduled workflows: `update-tn-congress-roster.yml` (Mon 17:15 UTC); `update-tn-legislature-roster.yml` (Tue 17:15 UTC); `update-tn-commissioner-roster.yml` (Wed 17:15 UTC); `tn-validate-sources.yml` (1st of month 19:30 UTC).
 - Source registry: `tn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

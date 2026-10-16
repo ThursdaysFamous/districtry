@@ -171,7 +171,7 @@ All 46 counties and their county council districts: cities and towns, voting pre
 
 All 95 counties and their county commission districts: civil districts, cities and towns, voting precincts, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Tennessee Senate, House and U.S. House districts, with who holds each seat. County commissioners are named from each county's own pages where the county publishes a current list, and the Data gaps panel lists the counties not named yet and why.
 
-- [Tennessee district lookup](https://districtry.com/tn/): 15 layers, all 95 counties.
+- [Tennessee district lookup](https://districtry.com/tn/): 16 layers, all 95 counties.
 - [Who is my U.S. representative?](https://districtry.com/tn/congress.html)
 - [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 57 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/tn/sources.html)
