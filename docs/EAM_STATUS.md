@@ -50,7 +50,7 @@ different thing from one it failed.
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 7 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 14 | all | 10 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 13 of 14 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 12 of 14 levels |
+| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 19 | all | 13 of 14 levels |
 | nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 11 | all | 9 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 9 of 14 levels |
@@ -149,9 +149,8 @@ this instance is in maintenance.
 
 ### mn — EAM·
 
-- **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-commissioner-districts.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-watershed-districts.json`, `state-counties.json`
-- **Covered: no.** 2 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 21 of 43 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 22 more name a body elected by ward or district whose wards are not drawn; unanswered: Austin city, Blaine city, Bloomington city, Brooklyn Park city, Chaska city, Coon Rapids city, Duluth city, Elk River city and 14 more
+- **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-watershed-districts.json`, `state-counties.json`
+- **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
 
 ### nc — EAM·

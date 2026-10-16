@@ -138,7 +138,7 @@ prose.
 | wi | 1 | 32 |
 | ia | 0 | 21 |
 | mi | 0 | 19 |
-| mn | 6 | 19 |
+| mn | 6 | 20 |
 | ky | 5 | 14 |
 | in | 4 | 12 |
 | nc | 4 | 12 |
@@ -272,7 +272,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`, `tribal-government`, `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 
-#### mn — 6 of 19 layers fetch their shapes
+#### mn — 6 of 20 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -285,6 +285,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `mn-judicial-district`, `mn-senate`, `county`, `mn-house`, `watershed-district`, `school-board-district`, `county-commissioner`, `voting-precinct`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `city-ward`.
 
 #### ky — 4 of 14 layers fetch their shapes
 
@@ -375,7 +376,7 @@ measured until the next run describes it.
 | wi | 92 | 265 | 5 |
 | ia | 71 | 65 | 0 |
 | mi | 32 | 61 | 1 |
-| mn | 28 | 17 | 0 |
+| mn | 29 | 19 | 0 |
 | ky | 19 | 14 | 0 |
 | in | 14 | 12 | 0 |
 | nc | 17 | 11 | 0 |
@@ -383,7 +384,7 @@ measured until the next run describes it.
 | sc | 18 | 13 | 0 |
 | tn | 18 | 11 | 0 |
 | ar | 18 | 12 | 0 |
-| **total** | **532** | **936** | **12** |
+| **total** | **533** | **938** | **12** |
 
 **150 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

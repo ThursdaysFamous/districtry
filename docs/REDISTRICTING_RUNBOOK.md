@@ -206,9 +206,14 @@ Kentucky thread.
 |---|---|---|---|
 | County subdivisions (KY census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
 
-### MN — NOT YET WRITTEN
+### MN — ONE LAYER WRITTEN OF 20
 
-No blast-radius entries for Minnesota. Owned by the Minnesota thread.
+Only the city council wards have an entry so far; the other nineteen layers are not yet written
+here, and `mn/WATCH.md` carries their dates. Owned by the Minnesota thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| City Council District (22 cities, 101 wards) | **Decennial, after each census**, and whenever a city changes its number of wards | each city council, by ordinance under Minn. Stat. 204B.135 and its charter; the Secretary of State carries the result on every precinct in its statewide precinct layer | geometry (`mn/scripts/build_mn_city_wards.py` rebuild). The builder refuses to write unless each city's wards are exactly its roster's ward seats in `mn-city-councils.json` and every ward's precincts are exactly those that voted in its latest council contest, read in that election's own precinct map. A city that redraws shows up as a ballot mismatch until its first election on the new lines, which is correct: until then its members still represent the old wards. A change in a city's number of wards fails the roster half until `mn/scripts/build_mn_city_councils.py` declares the new seats. Cache-first geometry, so a rebuild bumps `cache_name` |
 
 ### OK — NOT YET WRITTEN
 
