@@ -1010,7 +1010,7 @@
       }]
   },
   "sw": {
-    "cache_name": "nyc-district-explorer-shell-v22",
+    "cache_name": "nyc-district-explorer-shell-v23",
     "shell_urls": [
       "./",
       "./icons/app/apple-touch-icon.png",
