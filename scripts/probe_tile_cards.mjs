@@ -257,8 +257,13 @@ async function openPage(tag, held, referenceSet) {
 }
 
 // curl for the sets a mirrored layer was built from: it honours a proxy where
-// Node's fetch does not, and it waits 1, 2, 4, 8, 16 and 32 s between tries
-const CURL_RETRY = ["--retry", "6", "--retry-all-errors", "--retry-max-time", "240"];
+// Node's fetch does not, and it waits 1, 2, 4, 8, 16 and 32 s between tries.
+// A request the server accepts and then answers with nothing is dropped after
+// a minute and asked again: on 2026-10-16 New York City's open data site held
+// one open for the whole ten minutes --max-time allows with no byte sent,
+// which left no time for a second try, and the layer failed on that alone.
+const CURL_RETRY = ["--retry", "6", "--retry-all-errors", "--retry-max-time", "240",
+  "--speed-limit", "1", "--speed-time", "60"];
 
 const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
