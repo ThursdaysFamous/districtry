@@ -536,7 +536,7 @@
         "file": "tn-school-board-districts.json",
         "min_features": 114,
         "max_features": 114,
-        "note": "Every school board district on the Comptroller of the Treasury's map, pre-built by tn/scripts/build_tn_school_board_districts.py through scripts/published_school_board_districts.py (Douglas-Peucker at 4 m; a 400-point agreement gate on every county's extent, measured 100.00% with zero overlaps; an exact 114 count, after the layer's one record with no county and no shape is skipped). 1.3 MB, 0.35 MB gzipped, fetched only when a reader switches the layer on."
+        "note": "Every school board district on the Comptroller of the Treasury's map, pre-built by tn/scripts/build_tn_school_board_districts.py through scripts/published_district_layers.py (Douglas-Peucker at 4 m; a 400-point agreement gate on every county's extent, measured 100.00% with zero overlaps; an exact 114 count, after the layer's one record with no county and no shape is skipped). 1.3 MB, 0.35 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "tn-judicial-districts.json",

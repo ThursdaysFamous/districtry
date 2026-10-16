@@ -228,7 +228,7 @@ PROVENANCE = [
             "State compiles (966 records: Jasper's zone 3 is published in two "
             "pieces and joined), pre-built by "
             "ar/scripts/build_ar_school_board_districts.py through "
-            "scripts/published_school_board_districts.py; the quarterly "
+            "scripts/published_district_layers.py; the quarterly "
             "--watch row in ar/WATCH.md compares the fingerprint recorded at "
             "the build, and the eight boards changing to at large are re-read "
             "whenever their zones move."

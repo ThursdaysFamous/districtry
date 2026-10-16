@@ -468,7 +468,7 @@
         "file": "in-school-board-districts.json",
         "min_features": 5,
         "max_features": 5,
-        "note": "The five Indianapolis Public Schools board districts, pre-built by in/scripts/build_in_school_board_districts.py through scripts/published_school_board_districts.py from the City of Indianapolis's layer (Douglas-Peucker at 4 m; a 400-point agreement gate, measured 100.00% with zero overlaps). 24 KB, fetched only when a reader switches the layer on."
+        "note": "The five Indianapolis Public Schools board districts, pre-built by in/scripts/build_in_school_board_districts.py through scripts/published_district_layers.py from the City of Indianapolis's layer (Douglas-Peucker at 4 m; a 400-point agreement gate, measured 100.00% with zero overlaps). 24 KB, fetched only when a reader switches the layer on."
       },
       {
         "file": "in-appeals-districts.json",

@@ -515,7 +515,7 @@
         "file": "ar-school-board-zones.json",
         "min_features": 965,
         "max_features": 965,
-        "note": "Every Arkansas school board zone, pre-built by ar/scripts/build_ar_school_board_districts.py through scripts/published_school_board_districts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 965 count, after the Jasper district's zone 3, published in two pieces, is joined into one). 5.1 MB, 1.40 MB gzipped, fetched only when a reader switches the layer on."
+        "note": "Every Arkansas school board zone, pre-built by ar/scripts/build_ar_school_board_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 965 count, after the Jasper district's zone 3, published in two pieces, is joined into one). 5.1 MB, 1.40 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "ar-appeals-districts.json",

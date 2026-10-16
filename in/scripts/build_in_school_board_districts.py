@@ -8,9 +8,9 @@ Indianapolis's map of school board districts.
     python3 in/scripts/build_in_school_board_districts.py --check    # offline
     python3 in/scripts/build_in_school_board_districts.py --watch    # has the layer changed?
 
-The work is scripts/published_school_board_districts.py, shared with three
-other states; this file says where Indianapolis's layer is, how to read one
-record and what to expect.
+The work is scripts/published_district_layers.py, which other builders
+share; this file says where Indianapolis's layer is, how to read one record
+and what to expect.
 
 WHY ONLY INDIANAPOLIS PUBLIC SCHOOLS. Indiana publishes no statewide map of
 school board election districts: how each board is elected is set school
@@ -46,7 +46,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
 
-import published_school_board_districts as psb  # noqa: E402
+import published_district_layers as psb  # noqa: E402
 
 LAYER = ("https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/"
          "MapServer/9")
@@ -73,7 +73,7 @@ SPEC = psb.Spec(
     user_agent="districtry/1.0 (+https://districtry.com/in/)",
     out_fields="SCHOOLDIST,BOARDDISTR,BRDDISTRIC",
     expect=5,
-    expect_boards=1,
+    expect_groups=1,
     read=read,
     out_file="in-school-board-districts.json",
     interval="4",

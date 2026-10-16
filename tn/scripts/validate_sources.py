@@ -210,7 +210,7 @@ PROVENANCE = [
             "Comptroller of the Treasury's School Board Districts New layer "
             "(115 records: one has no county and no shape and is skipped), "
             "pre-built by tn/scripts/build_tn_school_board_districts.py "
-            "through scripts/published_school_board_districts.py; the "
+            "through scripts/published_district_layers.py; the "
             "quarterly --watch row in tn/WATCH.md compares the fingerprint "
             "recorded at the build."
         ),

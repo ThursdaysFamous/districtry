@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 """
-Build one state's school board election districts from the map a government
-office publishes of them, for the app to read same-origin.
+Build one state's layer of districts from the map a government office
+publishes of them, for the app to read same-origin.
 
-Four instances use this, each through a short builder of its own
-(<tag>/scripts/build_<tag>_school_board_districts.py): South Carolina (the
-Revenue and Fiscal Affairs Office's map of every school district's board
-districts), Arkansas (the GIS Office's map of school board zones, which the
-Secretary of State compiles), Tennessee (the Comptroller of the Treasury's map
-of new school board districts, for eighteen counties) and Indiana (the City of
-Indianapolis's map, from which only the Indianapolis Public Schools districts
-are taken). Each was measured on 2026-10-16. A state's builder says where its
-layer is, how to read one record, what to expect and what its card must say;
-everything else lives here once.
+Each layer that uses this has a short builder of its own, which says where
+the layer is, how to read one record, what to expect and what its card must
+say; everything else lives here once. Measured on 2026-10-16:
+
+  * School board election districts, through
+    <tag>/scripts/build_<tag>_school_board_districts.py: South Carolina (the
+    Revenue and Fiscal Affairs Office's map of every school district's board
+    districts), Arkansas (the GIS Office's map of school board zones, which
+    the Secretary of State compiles), Tennessee (the Comptroller of the
+    Treasury's map of new school board districts, for eighteen counties) and
+    Indiana (the City of Indianapolis's map, from which only the Indianapolis
+    Public Schools districts are taken).
+
+A builder names the property its districts are grouped by (`group`): the
+school board, for a school board district. The counts, the record and the
+agreement test below are all made per group, and the default is "board".
 
 THE SHAPE IS THE PRECINCT BUILDER'S (scripts/statewide_precincts.py), whose
 fetch, simplification and card check this imports rather than copies: fetch the
@@ -21,9 +27,9 @@ the simplified file answers as the source does, and ship it as a data/app file.
 A reader's click is answered from that file, so no point is sent to anyone.
 
 WHAT IS DIFFERENT FROM PRECINCTS. A precinct map tiles its state, so the
-precinct builder checks every county is covered. Board districts tile only the
-school districts that elect by district, and nowhere else, so there is no
-county test here. Instead:
+precinct builder checks every county is covered. These layers tile only part
+of a state (board districts cover only the school districts that elect by
+district), so there is no county test here. Instead:
   1. Every record goes through the state's `read()`, which returns the
      feature's properties, or None for a record the builder declares it skips
      (Tennessee's layer carries one record with no county and no shape). The
@@ -33,22 +39,22 @@ county test here. Instead:
      publishes one zone of the Jasper district in two pieces), and their
      properties must agree.
   3. The count after reading equals EXPECT exactly, and so does the number of
-     boards (school districts) the file draws; the key is unique and every
-     property the card prints is populated.
+     groups (for school board districts, the boards) the file draws; the key
+     is unique and every property the card prints is populated.
   4. Douglas-Peucker at `interval` metres with keep-shapes, in one mapshaper
      run, so a line two districts share is simplified once, and the drawn line
      strays no further than the interval by construction.
   5. No district is lost in simplification, and points sampled inside each
-     board's own extent get the same district from the drawn file as from the
-     source at least 99.5% of the time overall and 98% for every board, with no
-     point in two drawn districts where the source has one.
+     group's own extent get the same district from the drawn file as from the
+     source at least 99.5% of the time overall and 98% for every group, with
+     no point in two drawn districts where the source has one.
   6. Points the builder names (`inside`, `outside`) must land where it says:
      a known district, or no district at all. Tennessee uses the second to
      hold the measurement that its Shelby County districts leave out the
      suburban municipal school districts.
   7. A record (data/source/<file>.source.json) keeps the fetch date, the
      layer's own edit date where it publishes one, a fingerprint of what a
-     redistricting changes, the count of districts on every board and the
+     redistricting changes, the count of districts in every group and the
      shipped file's hash. `--check` holds the shipped file to it offline;
      `--watch` reads the live layer's attributes, no geometry, and compares
      the fingerprint.
@@ -80,9 +86,9 @@ if FLEET_SCRIPTS not in sys.path:
 
 import statewide_precincts as sp  # noqa: E402
 
-SAMPLES_PER_BOARD = 400
+SAMPLES_PER_GROUP = 400
 MIN_AGREE_ALL = 99.5
-MIN_AGREE_BOARD = 98.0
+MIN_AGREE_GROUP = 98.0
 
 
 class Spec(object):
@@ -90,17 +96,24 @@ class Spec(object):
     required, so a builder cannot leave one out by accident."""
 
     def __init__(self, tag, label, layer, user_agent, out_fields, expect,
-                 expect_boards, read, out_file, interval="4", pace=0.0,
-                 page=None, where="1=1", measure_field=None, skipped_records=0,
-                 multipart_records=0, required=("key", "board", "label"),
-                 extra_check=None, card_claims=(), inside=(), outside=()):
+                 expect_groups, read, out_file, group="board",
+                 group_nouns=("board", "boards"), card_noun="school board card",
+                 interval="4", pace=0.0, page=None, where="1=1",
+                 measure_field=None, skipped_records=0, multipart_records=0,
+                 required=None, extra_check=None, card_claims=(), inside=(),
+                 outside=()):
         self.tag = tag
         self.label = label
         self.layer = layer.rstrip("/")
         self.user_agent = user_agent
         self.out_fields = out_fields
         self.expect = expect
-        self.expect_boards = expect_boards
+        self.expect_groups = expect_groups
+        # the property districts are counted and sampled by, and what to call
+        # one and several of them in a message
+        self.group = group
+        self.group_nouns = tuple(group_nouns)
+        self.card_noun = card_noun
         self.read = read
         self.out_file = out_file
         self.interval = interval
@@ -110,7 +123,7 @@ class Spec(object):
         self.measure_field = measure_field
         self.skipped_records = skipped_records
         self.multipart_records = multipart_records
-        self.required = tuple(required)
+        self.required = tuple(required or ("key", group, "label"))
         # extra_check(features) raises through fail() on anything wrong; it
         # runs in all three modes, on what the builder read.
         self.extra_check = extra_check
@@ -183,23 +196,31 @@ def normalise(spec, records, with_geometry=True):
     return feats
 
 
-def per_board(feats):
+def per_group(spec, feats):
     out = {}
     for f in feats:
-        b = f["properties"]["board"]
+        b = f["properties"][spec.group]
         out[b] = out.get(b, 0) + 1
     return dict(sorted(out.items()))
 
 
-def fingerprint(feats):
+def record_key(spec):
+    return "districts_per_" + spec.group
+
+
+def nouns(spec, n):
+    return spec.group_nouns[0] if n == 1 else spec.group_nouns[1]
+
+
+def fingerprint(spec, feats):
     """A digest of what a redistricting changes: every district's key, label
-    and board and, where the layer publishes one, its area in whole units of
+    and group and, where the layer publishes one, its area in whole units of
     the layer's own. Sorted, so record order cannot move it."""
     lines = []
     for f in feats:
         p = f["properties"]
         measure = p.get("_measure")
-        lines.append("%s|%s|%s|%s" % (p["key"], p["label"], p["board"],
+        lines.append("%s|%s|%s|%s" % (p["key"], p["label"], p[spec.group],
                                       "" if measure is None else int(round(float(measure)))))
     lines.sort()
     return {"districts": len(lines),
@@ -212,9 +233,10 @@ def gate_counts(spec, feats):
         problems.append("%d districts, expected %d. A redistricting moves this number "
                         "legitimately: read the layer, then change EXPECT deliberately"
                         % (len(feats), spec.expect))
-    boards = per_board(feats)
-    if len(boards) != spec.expect_boards:
-        problems.append("%d boards drawn, expected %d" % (len(boards), spec.expect_boards))
+    groups = per_group(spec, feats)
+    if len(groups) != spec.expect_groups:
+        problems.append("%d %s drawn, expected %d" % (len(groups), spec.group_nouns[1],
+                                                      spec.expect_groups))
     keys = [f["properties"]["key"] for f in feats]
     if len(set(keys)) != len(keys):
         problems.append("a district key appears twice")
@@ -245,10 +267,10 @@ class Index(object):
         return hits
 
 
-def board_extents(feats):
+def group_extents(spec, feats):
     out = {}
     for f in feats:
-        b = f["properties"]["board"]
+        b = f["properties"][spec.group]
         bb = sp.bbox(f["geometry"])
         e = out.get(b)
         out[b] = bb if e is None else [min(e[0], bb[0]), min(e[1], bb[1]),
@@ -257,30 +279,31 @@ def board_extents(feats):
 
 
 def validate(spec, source_feats, drawn_feats, seed=2026):
-    """Points sampled over each board's extent, compared between the source
+    """Points sampled over each group's extent, compared between the source
     and the drawn file. Returns (problems, report line)."""
     src, new = Index(source_feats), Index(drawn_feats)
     rng = random.Random(seed)
     problems = []
     agree = total = overlaps = 0
     worst = (101.0, None)
-    for board, bb in sorted(board_extents(source_feats).items()):
+    extents = group_extents(spec, source_feats)
+    for group, bb in sorted(extents.items()):
         a = 0
-        for _ in range(SAMPLES_PER_BOARD):
+        for _ in range(SAMPLES_PER_GROUP):
             pt = (rng.uniform(bb[0], bb[2]), rng.uniform(bb[1], bb[3]))
             s = sorted(src.at(pt))
             d = sorted(new.at(pt))
             if len(d) > 1 and len(s) <= 1:
                 overlaps += 1
             a += s == d
-        pct = 100.0 * a / SAMPLES_PER_BOARD
+        pct = 100.0 * a / SAMPLES_PER_GROUP
         if pct < worst[0]:
-            worst = (pct, board)
-        if pct < MIN_AGREE_BOARD:
+            worst = (pct, group)
+        if pct < MIN_AGREE_GROUP:
             problems.append("%s: the drawn file agrees with the source at only %.2f%% of "
-                            "points over its extent (need %.1f%%)" % (board, pct, MIN_AGREE_BOARD))
+                            "points over its extent (need %.1f%%)" % (group, pct, MIN_AGREE_GROUP))
         agree += a
-        total += SAMPLES_PER_BOARD
+        total += SAMPLES_PER_GROUP
     pct_all = 100.0 * agree / total
     if pct_all < MIN_AGREE_ALL:
         problems.append("the drawn file agrees with the source at only %.2f%% of points "
@@ -288,9 +311,9 @@ def validate(spec, source_feats, drawn_feats, seed=2026):
     if overlaps:
         problems.append("%d points fell in two drawn districts where the source has one "
                         "or none" % overlaps)
-    line = ("%d/%d (%.2f%%) agreement over %d boards' extents, %d overlaps; lowest board "
-            "%.2f%% (%s)" % (agree, total, pct_all, len(board_extents(source_feats)),
-                             overlaps, worst[0], worst[1]))
+    line = ("%d/%d (%.2f%%) agreement over %d %s' extents, %d overlaps; lowest %s "
+            "%.2f%% (%s)" % (agree, total, pct_all, len(extents), spec.group_nouns[1],
+                             overlaps, spec.group_nouns[0], worst[0], worst[1]))
     return problems, line
 
 
@@ -320,8 +343,8 @@ def write_record(spec, meta, feats, shipped_bytes):
         "item": meta.get("item"),
         "skipped_records": spec.skipped_records,
         "part_records_joined": spec.multipart_records,
-        "fingerprint": fingerprint(feats),
-        "districts_per_board": per_board(feats),
+        "fingerprint": fingerprint(spec, feats),
+        record_key(spec): per_group(spec, feats),
         "shipped_sha256": hashlib.sha256(shipped_bytes).hexdigest(),
     }
     with open(spec.record_path, "w", encoding="utf-8") as fh:
@@ -352,17 +375,19 @@ def run_check(spec):
     if hashlib.sha256(raw).hexdigest() != record.get("shipped_sha256"):
         problems.append("the shipped file does not hash to what the builder recorded — "
                         "rebuild it rather than editing it by hand")
-    if per_board(feats) != record.get("districts_per_board"):
-        problems.append("the shipped file's districts per board differ from the record")
+    if per_group(spec, feats) != record.get(record_key(spec)):
+        problems.append("the shipped file's districts per %s differ from the record"
+                        % spec.group_nouns[0])
     problems += check_points(spec, feats)
-    problems += sp.check_card(spec, "school board card")
+    problems += sp.check_card(spec, spec.card_noun)
     if problems:
         for p in problems:
             print("%s --check: FAIL: %s" % (spec.label, p))
         raise SystemExit(1)
-    print("%s --check: OK — %d districts on %d board(s), matching the record of %s; the "
-          "card says %s" % (spec.label, len(feats), len(per_board(feats)), record["fetched"],
-                            "; ".join(repr(c) for c in sp.card_claims(spec))))
+    n = len(per_group(spec, feats))
+    print("%s --check: OK — %d districts in %d %s, matching the record of %s; the card "
+          "says %s" % (spec.label, len(feats), n, nouns(spec, n), record["fetched"],
+                       "; ".join(repr(c) for c in sp.card_claims(spec))))
 
 
 def run_watch(spec):
@@ -371,29 +396,32 @@ def run_watch(spec):
     feats = normalise(spec, records, with_geometry=False)
     if spec.extra_check:
         spec.extra_check(feats)
-    live = fingerprint(feats)
+    live = fingerprint(spec, feats)
     if live != record["fingerprint"]:
-        before = record.get("districts_per_board") or {}
-        after = per_board(feats)
+        before = record.get(record_key(spec)) or {}
+        after = per_group(spec, feats)
         changed = sorted(b for b in set(before) | set(after) if before.get(b) != after.get(b))
         print("%s --watch: THE LAYER HAS CHANGED since %s: %d districts recorded, %d now "
-              "(fingerprint %s -> %s). Boards whose count moved: %s. Rebuild the file, bump "
-              "the service worker's cache name, and say which boards moved."
+              "(fingerprint %s -> %s). %s whose count moved: %s. Rebuild the file, bump "
+              "the service worker's cache name, and say which %s moved."
               % (spec.label, record["fetched"], record["fingerprint"]["districts"],
                  live["districts"], record["fingerprint"]["sha256"][:12], live["sha256"][:12],
-                 ", ".join(changed) or "none (labels or areas moved within a board)"))
+                 spec.group_nouns[1].capitalize(), ", ".join(changed) or
+                 "none (labels or areas moved within a %s)" % spec.group_nouns[0],
+                 spec.group_nouns[1]))
         raise SystemExit(1)
     note = ""
     if (meta.get("layer_edited") and record.get("layer_edited")
             and meta["layer_edited"] != record["layer_edited"]):
         note = (" The layer's own edit date moved (%s -> %s) without changing any district's "
-                "key, label, board or area." % (record["layer_edited"], meta["layer_edited"]))
+                "key, label, %s or area." % (record["layer_edited"], meta["layer_edited"],
+                                              spec.group_nouns[0]))
     print("%s --watch: unchanged since %s (%d districts).%s"
           % (spec.label, record["fetched"], live["districts"], note))
 
 
 def run_build(spec, source_path=None, save_source=None):
-    stale = sp.check_card(spec, "school board card")
+    stale = sp.check_card(spec, spec.card_noun)
     if stale:
         fail(spec, "; ".join(stale) + " — change the card before building, so the file "
              "and what the card says about it ship together")
@@ -436,9 +464,10 @@ def run_build(spec, source_path=None, save_source=None):
     with open(spec.out_path, "wb") as fh:
         fh.write(data)
     write_record(spec, meta, feats, data)
-    print("wrote %s: %d districts on %d board(s), %d bytes (dp interval=%s m, 6dp)"
-          % (os.path.relpath(spec.out_path, REPO_ROOT), len(drawn["features"]),
-             len(per_board(feats)), len(data), spec.interval))
+    n = len(per_group(spec, feats))
+    print("wrote %s: %d districts in %d %s, %d bytes (dp interval=%s m, 6dp)"
+          % (os.path.relpath(spec.out_path, REPO_ROOT), len(drawn["features"]), n,
+             nouns(spec, n), len(data), spec.interval))
 
 
 def main(spec, doc):

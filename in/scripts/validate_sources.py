@@ -205,7 +205,7 @@ PROVENANCE = [
             "City of Indianapolis's School Board Districts layer (26 areas; "
             "only IPS's five are election districts), pre-built by "
             "in/scripts/build_in_school_board_districts.py through "
-            "scripts/published_school_board_districts.py; the quarterly "
+            "scripts/published_district_layers.py; the quarterly "
             "--watch row in in/WATCH.md compares the fingerprint recorded at "
             "the build."
         ),

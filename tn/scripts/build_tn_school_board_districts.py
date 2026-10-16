@@ -8,9 +8,9 @@ Treasury's map of them.
     python3 tn/scripts/build_tn_school_board_districts.py --check    # offline
     python3 tn/scripts/build_tn_school_board_districts.py --watch    # has the layer changed?
 
-The work is scripts/published_school_board_districts.py, shared with three
-other states; this file says where Tennessee's layer is, how to read one record
-and what to expect.
+The work is scripts/published_district_layers.py, which other builders
+share; this file says where Tennessee's layer is, how to read one record and
+what to expect.
 
 THE SOURCE. "School Board Districts New", layer 5 of the Comptroller's
 Redistricting_Address_Lookup service (item 8ad9190272dc44eaa2c81e146b8d20c8),
@@ -54,7 +54,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
 
-import published_school_board_districts as psb  # noqa: E402
+import published_district_layers as psb  # noqa: E402
 
 LAYER = ("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/"
          "Redistricting_Address_Lookup/FeatureServer/5")
@@ -116,7 +116,7 @@ SPEC = psb.Spec(
     user_agent="districtry/1.0 (+https://districtry.com/tn/)",
     out_fields="COUNTY,NEWSBDDISTRICT",
     expect=sum(COUNTIES.values()),
-    expect_boards=len(COUNTIES),
+    expect_groups=len(COUNTIES),
     read=read,
     out_file="tn-school-board-districts.json",
     interval="4",
