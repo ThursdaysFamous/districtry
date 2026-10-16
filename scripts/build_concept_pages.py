@@ -709,9 +709,10 @@ def city_council_page(tag, spec, worksheet):
     exactly the sentence that survives a seventh city unread.
 
     THE CITIES DRAWN WITHOUT A ROSTER ARE NAMED RATHER THAN OMITTED. Michigan
-    draws Flint, Warren and Rochester Hills and names nobody in them; a page
-    that listed three cities and said nothing about the other three would read
-    as though the map covered three.
+    draws Rochester Hills and names nobody there, and draws six more whose cards
+    name their members from the weekly city-board file this page prints no
+    table for; a page that listed only the cities it has tables for would read
+    as though the map covered only those.
     """
     wards = {name: len(load(path)["features"])
              for name, path in spec["wards"]}
@@ -750,13 +751,34 @@ def city_council_page(tag, spec, worksheet):
     rostered = ({label for label, _p, a in spec["rosters"]
                  if a not in ("city_officials", "ward_city_councils")}
                 | ward_city_names)
-    unrostered = sorted(c for c in wards if c not in rostered)
+    # CITIES WHOSE CARDS NAME THEIR MEMBERS FROM THE WEEKLY CITY-BOARD FILE
+    # (Michigan's mi-municipal-officials.json) are named apart, because this
+    # page prints no table for them and so cannot count their members, while
+    # saying the map names nobody there would be false — it said exactly that
+    # of Flint and Warren from the day their cards started naming members.
+    # The claim is CHECKED against that file: a city it no longer carries, or
+    # carries with no member for any seat, fails the build rather than being
+    # described as named.
+    on_card = []
+    for city, (path, geoid) in sorted((spec.get("named_on_card") or {}).items()):
+        board = load(path).get(geoid) or {}
+        if not any(m.get("name") and m.get("seat") for m in board.get("members") or []):
+            fail("%s: %s names no member by seat for %s (%s), so the page cannot say "
+                 "its card names them" % (spec["file"], path, city, geoid))
+        if city in wards:
+            on_card.append(city)
+    unrostered = sorted(c for c in wards if c not in rostered and c not in on_card)
     place = spec["place"]
 
-    missing = ("" if not unrostered else
-               " The map also draws %s, where this app does not name the "
-               "members yet, so those cards give the ward and a link to the "
-               "city rather than a name." % _join(unrostered))
+    missing = ("" if not on_card else
+               " The map also draws %s, whose cards name the members as each "
+               "city's own council page lists them." % _join(on_card))
+    if unrostered:
+        missing += ((" It also draws %s" if on_card else " The map also draws %s")
+                    % _join(unrostered)
+                    + ", where this app does not name the members yet, so %s the ward "
+                      "and a link to the city rather than a name."
+                    % ("that card gives" if len(unrostered) == 1 else "those cards give"))
     elsewhere = ("" if not at_large_named else
                  " %d more sit on the councils of %d smaller %s cities that "
                  "elect at large and have no wards to draw; their own county "
@@ -1374,9 +1396,16 @@ PAGES = [
                 ("Detroit", "mi/data/app/mi-detroit-council-districts.json"),
                 ("Flint", "mi/data/app/mi-flint-wards.json"),
                 ("Grand Rapids", "mi/data/app/mi-grand-rapids-wards.json"),
+                ("Holland", "mi/data/app/mi-holland-wards.json"),
                 ("Jackson", "mi/data/app/mi-jackson-wards.json"),
+                ("Midland", "mi/data/app/mi-midland-wards.json"),
+                ("Muskegon", "mi/data/app/mi-muskegon-wards.json"),
+                ("Pontiac", "mi/data/app/mi-pontiac-wards.json"),
                 ("Rochester Hills", "mi/data/app/mi-rochester-hills-wards.json"),
                 ("Warren", "mi/data/app/mi-warren-wards.json")],
+         named_on_card={c: ("mi/data/app/mi-municipal-officials.json", g) for c, g in (
+             ("Flint", "2629000"), ("Holland", "2638640"), ("Midland", "2653780"),
+             ("Muskegon", "2656320"), ("Pontiac", "2665440"), ("Warren", "2684000"))},
          rosters=[("Detroit", "mi/data/app/mi-detroit-council-members.json", "city_council"),
                   ("Grand Rapids", "mi/data/app/mi-grand-rapids-council-members.json",
                    "city_council"),
@@ -1392,7 +1421,11 @@ PAGES = [
                  "mi/data/app/mi-detroit-council-districts.json",
                  "mi/data/app/mi-flint-wards.json",
                  "mi/data/app/mi-grand-rapids-wards.json",
+                 "mi/data/app/mi-holland-wards.json",
                  "mi/data/app/mi-jackson-wards.json",
+                 "mi/data/app/mi-midland-wards.json",
+                 "mi/data/app/mi-muskegon-wards.json",
+                 "mi/data/app/mi-pontiac-wards.json",
                  "mi/data/app/mi-rochester-hills-wards.json",
                  "mi/data/app/mi-warren-wards.json"],
          sibling=dict(page="county-commissioner.html",
