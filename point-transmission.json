@@ -236,6 +236,7 @@
       "atpoint_hooks_fired": 1,
       "layer_ids": [
         "county",
+        "fiscal-court",
         "ky-circuit-court",
         "ky-court-of-appeals",
         "ky-district-court",
@@ -307,6 +308,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-commissioner",
         "county-subdivision",

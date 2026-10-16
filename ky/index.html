@@ -4217,8 +4217,8 @@ function initKentuckyExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ky-supreme-court": "kyj", "ky-court-of-appeals": "kya",
     "ky-senate": "kys", "ky-circuit-court": "kyc", "ky-district-court": "kyd",
-    "ky-house": "kyh", "county": "co", "school-district-unified": "su", "municipality": "mu",
-    "school-district-elementary": "se", "school-district-secondary": "sh" };
+    "ky-house": "kyh", "county": "co", "school-district-unified": "su", "fiscal-court": "fc",
+    "municipality": "mu", "school-district-elementary": "se", "school-district-secondary": "sh" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4227,7 +4227,8 @@ function initKentuckyExplorer() {
     "state-house": ["ky-house"], "supreme-court-district": ["ky-supreme-court"],
     "appellate-court-district": ["ky-court-of-appeals"],
     "trial-court-district": ["ky-circuit-court"], "county": ["county"],
-    "municipality": ["municipality"], "school-district-unified": ["school-district-unified"],
+    "county-board": ["fiscal-court"], "municipality": ["municipality"],
+    "city-council": ["fiscal-court"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9379,6 +9380,7 @@ function initKentuckyExplorer() {
     "ky-house",          // 100 House districts, drawn independently of the 38 Senate districts
     "county",            // 120 counties, pre-built from TIGERweb; this instance's offline anchor layer, and smaller on average than a House district
     "school-district-unified", // 170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county
+    "fiscal-court",      // 314 districts in 58 counties: the magisterial districts of 56 fiscal courts and the council districts of Louisville Metro and Lexington-Fayette, 169 km2 mean feature area over 53,163 km2, so smaller than a school district and larger than a city
     "municipality",      // 415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land
     "school-district-elementary", // 4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points
     "school-district-secondary" // 4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling
@@ -13255,21 +13257,18 @@ function initKentuckyExplorer() {
    * Lexington-Fayette Urban County Council (KRS 67A). The two certified
    * elections agreed in every county with no conflicts.
    *
-   * ITS GEOMETRY IS WHAT IS NOT SETTLED, and that is why no district layer
-   * ships here yet: 27 counties publish their magisterial district boundaries
-   * as map data, each confirmed geometrically against TIGERweb, and that is a
-   * FLOOR rather than a total. The rest would have to be composed from whole
-   * precincts, which is a per-county question. The ROSTER is settled — the
-   * Department for Local Government publishes officials for all 120 counties —
-   * and it carries no district number, so the join between a person and a
-   * district is the open work. Recorded as the coverage gap ky-fiscal-court.
+   * ITS GEOMETRY SHIPS FOR 56 MAGISTRATE COUNTIES AND THE TWO MERGED
+   * COUNCILS (2026-10-15) as the fiscal-court layer (1b below). No agency
+   * publishes the magisterial districts, so they are composed from the State
+   * Board of Elections' precincts and certified recap sheets; the other 48
+   * magistrate counties are the coverage gap ky-fiscal-court. The ROSTER is
+   * the Department for Local Government's directory for all 120 counties, and
+   * the district beside a magistrate's name comes from the 2022 results.
    *
-   * A COMMISSIONER COUNTY IS DRAWN AND NAMES NOBODY ON ITS DISTRICTS, following
-   * Iowa's precedent for the same shape: KRS 67.060(1) elects each of the three
-   * commissioners "by the voters of the entire county, one from each district",
-   * so the district is a residence requirement and not an electorate. Iowa
-   * already ships that case by drawing the district, saying it is drawn for
-   * residence, and naming nobody on it.
+   * A COMMISSIONER COUNTY IS NOT DRAWN: KRS 67.060(1) elects each of the
+   * three commissioners "by the voters of the entire county, one from each
+   * district", so the district is a residence requirement and not an
+   * electorate, and the card says so instead of showing a district.
    * ======================================================================= */
 
   // The one state fact every TIGERweb where-clause reads.
@@ -13369,9 +13368,9 @@ function initKentuckyExplorer() {
    * Board of Elections' 2022 recap sheets do, and the builder gives a member
    * a `district` only when one 2022 contest for that county's office was won
    * under the member's name. A member with none took the seat after that
-   * election or could not be matched, and is still listed. The district lines
-   * are not drawn, so the card cannot say which district this point is in and
-   * lists the whole court (gap ky-fiscal-court). A seat the directory lists
+   * election or could not be matched, and is still listed. The card lists the
+   * whole court; the fiscal-court layer (1b) answers which district this
+   * point is in, where the lines can be drawn. A seat the directory lists
    * with no name is counted, never filled.
    *
    * A roster that fails to load does not take the county answer down with it:
@@ -13483,11 +13482,13 @@ function initKentuckyExplorer() {
               ? "Kentucky elects each of a county's three commissioners by the " +
                 "whole county's voters, one living in each district, so every " +
                 "member is listed here." + fromResults
-              : "Each magistrate is elected from a magisterial district. Those " +
-                "district lines are not drawn here yet, so this map cannot say " +
-                "which one this point is in, and every member is listed." + fromResults)
-            : "This council is elected by district. Its districts are not drawn " +
-              "here yet, so every member is listed."
+              : "Each magistrate is elected from a magisterial district. The " +
+                "Magistrate or Council District layer shows which one this point " +
+                "is in, in the counties where this map can draw them; every member " +
+                "is listed here." + fromResults)
+            : "This council is elected by district. The Magistrate or Council " +
+              "District layer shows which one this point is in; every member is " +
+              "listed here."
         });
       }
       if (c && c.formNote) fields.push({ label: "Form of government", value: String(c.formNote) });
@@ -13519,6 +13520,188 @@ function initKentuckyExplorer() {
           }]
         }));
       }
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var c = result && result.officials;
+      return {
+        label: "Kentucky Department for Local Government — county directory",
+        url: c && c.sourceUrl ? String(c.sourceUrl) : KY_COUNTY_DIRECTORY
+      };
+    }
+  });
+
+  /* ---------- 1b. Magistrate or council district ----------
+   * data/app/ky-county-districts.json, built by
+   * ky/scripts/build_ky_county_districts.py (2026-10-15). No agency publishes
+   * Kentucky's magisterial districts, so they are COMPOSED: KRS 67.045(7) and
+   * KRS 117.055(1)(f) keep every precinct inside one magisterial district,
+   * and the State Board of Elections' certified recap sheets show which
+   * magistrate race was on each precinct's ballot (2026 primary, with 2022
+   * where the two agree). A county is drawn only when every precinct is
+   * placed; the Army posts at Fort Knox and Fort Campbell are in no
+   * district. Louisville Metro's and Lexington-Fayette's council districts
+   * are their own governments' maps.
+   *
+   * The names are the County card's roster (ky-county-officials.json): a
+   * magistrate's district is the one the 2022 results name them for, a
+   * council member's the one their government's map does. A member with no
+   * district is not placed on one; the card says the name is not matched and
+   * points at the County card, which lists the whole court.
+   *
+   * A county the file does not draw still gets a card naming the county and
+   * why its districts are not drawn, so a reader there is not told this
+   * point is in no district.
+   * ---------- */
+  var loadKyCountyDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-county-districts.json", {}, 2);
+  });
+  var KY_ARMY_POSTS = { "21029": "Fort Knox", "21093": "Fort Knox", "21047": "Fort Campbell" };
+
+  function kyDistrictMembers(rec, district) {
+    return ((rec && rec.members) || []).filter(function (m) {
+      return m.district != null && String(m.district) === String(district) &&
+        m.role !== "County Judge/Executive";
+    });
+  }
+
+  function kyDistrictTitle(p) {
+    if (p.body === "metro") return "Louisville Metro Council District " + String(p.district);
+    if (p.body === "urban-county") return "Lexington-Fayette Urban County Council District " + String(p.district);
+    return String(p.county) + " County Magisterial " + kyDistrictLabel(p.district);
+  }
+
+  registerLayer({
+    id: "fiscal-court",
+    group: "political",
+    label: "Magistrate or Council District",
+    overlay: {
+      load: loadKyCountyDistricts,
+      // the fleet's county-board blue (layer-concepts.json `colors`)
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return kyDistrictTitle(feature.properties || {});
+    },
+    hoverOfficial: {
+      load: loadKyCountyOfficials,
+      name: function (feature, roster) {
+        var p = feature.properties || {};
+        var names = kyDistrictMembers(roster ? roster[String(p.countyFips)] : null, p.district)
+          .map(function (m) { return String(m.name); });
+        return names.length ? names.join(" and ") : null;
+      }
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadKyCountyDistricts, point).then(function (feature) {
+        var p = feature ? feature.properties || {} : null;
+        var whereCounty = p ? Promise.resolve(null) : queryFeatureAt(loadStateCounties, point);
+        return whereCounty.then(function (county) {
+          if (!p && !county) return null;
+          var cp = county ? county.properties || {} : {};
+          var result = {
+            seq: seq,
+            drawn: !!p,
+            county: p ? p.county : findPropCI(cp, ["basename", "name"]),
+            fips: p ? p.countyFips : findPropCI(cp, ["geoid"]),
+            district: p ? p.district : null,
+            body: p ? p.body : null,
+            title: p ? kyDistrictTitle(p) : null
+          };
+          return loadKyCountyOfficials().then(function (roster) {
+            result.officials = (roster || {})[String(result.fips)] || null;
+            return result;
+          }, function () {
+            result.rosterFailed = true;
+            return result;
+          });
+        });
+      });
+    },
+    render: function (result) {
+      // Card convention: identity -> officeholder -> office -> contact -> link.
+      var wrap = cardEl("div", "card-flush");
+      var county = String(result.county || "").replace(/ County$/, "");
+      var c = result.officials;
+      var fields = [];
+      if (!result.drawn) {
+        wrap.appendChild(renderBodyIntro({ title: county + " County", note: "Districts not drawn here" }));
+        var form = c ? c.form : null;
+        var post = KY_ARMY_POSTS[String(result.fips)];
+        fields.push({
+          label: "Your district",
+          value: form === "commissioner"
+            ? "This county's fiscal court is the judge/executive and three " +
+              "commissioners, and Kentucky elects every commissioner by the whole " +
+              "county, so there is no district to show. The County card names them."
+            : post
+              ? county + " County's magisterial districts are drawn, but this point " +
+                "is in none of them. The State Board of Elections maps the Army post " +
+                "at " + post + " outside every magisterial district."
+              : "This county's magistrates are elected from districts, but this map " +
+                "does not draw them yet: no agency publishes them, and the State " +
+                "Board of Elections' results did not place every one of the county's " +
+                "precincts in a district. The County card lists the whole fiscal court."
+        });
+        wrap.appendChild(renderFieldStack(fields));
+        return wrap;
+      }
+      var merged = result.body !== "magistrate";
+      wrap.appendChild(renderBodyIntro({
+        title: String(result.title),
+        note: merged ? (c && c.body ? String(c.body) : county + " County")
+          : county + " County Fiscal Court"
+      }));
+      var own = kyDistrictMembers(c, result.district);
+      if (own.length) {
+        wrap.appendChild(renderPersonRows(own.map(function (m) {
+          return kyCountyPersonRow(m, merged ? "Council member" : "Magistrate");
+        })));
+      } else {
+        fields.push({
+          label: merged ? "Council member" : "Magistrate",
+          value: result.rosterFailed
+            ? "The list of county officials could not be loaded just now, so no " +
+              "name is shown. The district above is still the right answer."
+            : merged
+              ? "Not named here. The state's directory does not list a member this " +
+                "council's map names for this district, and this app does not guess."
+              : "Not named here. The state's directory lists the county's " +
+                "magistrates without their districts, and the 2022 results did not " +
+                "match a name to this one. The County card lists the whole court."
+        });
+      }
+      if (!merged && c && c.members) {
+        var judge = c.members.filter(function (m) { return m.role === "County Judge/Executive"; })[0];
+        if (judge) {
+          fields.push({
+            label: "Also on the fiscal court",
+            value: String(judge.name) + ", the county judge/executive, elected by the whole county."
+          });
+        }
+      }
+      if (merged && c && c.executive) {
+        fields.push({ label: "Mayor", value: String(c.executive.name) + ", elected by the whole county." });
+      }
+      fields.push({
+        label: "How these lines were drawn",
+        value: merged
+          ? "From " + (result.body === "metro" ? "LOJIC, Louisville's mapping consortium"
+            : "the Lexington-Fayette Urban County Government") + ", as published."
+          : "No agency publishes Kentucky's magisterial districts, so this map " +
+            "builds them from the State Board of Elections' voting precincts: state " +
+            "law keeps every precinct inside one magisterial district, and the " +
+            "certified results of the 2026 primary and the 2022 general election " +
+            "show which magistrate race was on each precinct's ballot."
+      });
+      if (!merged && own.length) {
+        fields.push({
+          label: "How the name was matched",
+          value: "The state's directory names each magistrate without a district; " +
+            "this one won this district's race in the 2022 general election."
+        });
+      }
+      wrap.appendChild(renderFieldStack(fields));
       return wrap;
     },
     primaryLink: function (result) {
@@ -15767,10 +15950,11 @@ function initKentuckyExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   // The four courts sit after the two legislatures and before the services:
   // representation first, and a judge elected from a district is
-  // representation, highest court first.
+  // representation, highest court first. The fiscal court or council district
+  // closes the representation group, the most local of them.
   var LAYER_SIDEBAR_RANK = ["us-house", "ky-senate", "ky-house",
     "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
-    "ky-district-court",
+    "ky-district-court", "fiscal-court",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary", "county", "municipality"];
   (function applySidebarRank() {
@@ -16260,11 +16444,12 @@ function initKentuckyExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#2F6B3A": "#6FBE7B", "#2F7A6A": "#69CAB3",
-    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4AA893": "#74EFD3",
-    "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
-    "#8163AE": "#CAAAFF", "#8A692C": "#DDB061", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
-    "#A05F00": "#FBA33D", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B",
+    "#2F7A6A": "#69CAB3", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4AA893": "#74EFD3", "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5",
+    "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#8163AE": "#CAAAFF", "#8A692C": "#DDB061",
+    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#B0316E": "#FD88B8",
+    "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

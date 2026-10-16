@@ -20,7 +20,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 - [Illinois district lookup](https://districtry.com/il/): 41 layers, 93 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
-- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 94 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 95 of them, each naming every member with whatever contact details that county publishes.
 - [Who runs my fire protection district?](https://districtry.com/il/fire-district.html)
 - [What judicial subcircuit am I in?](https://districtry.com/il/judicial-subcircuit.html)
 - [Who runs my library district?](https://districtry.com/il/library-district.html)
@@ -109,7 +109,7 @@ All 83 counties: commissioner districts, compiled by the state from the plan eac
 
 All 87 counties and their county commissioner districts: judicial and watershed districts, townships and cities, voting precincts, school districts and school board districts, ZIP codes, tribal land, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. County commissioners, school board members and the councils of the cities over 25,000 people are named for the winner of each seat's most recent election in the Secretary of State's results, and a tribal council is named where the nation publishes its own list. Nobody is named yet on the judges' benches, the two state chambers or the smaller cities' councils, and the Data gaps panel says why.
 
-- [Minnesota district lookup](https://districtry.com/mn/): 19 layers, all 87 counties.
+- [Minnesota district lookup](https://districtry.com/mn/): 20 layers, all 87 counties.
 - [Who is my U.S. representative?](https://districtry.com/mn/congress.html)
 - [County commissioner district lookup](https://districtry.com/mn/county-commissioner.html): links a page per county, 87 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/mn/sources.html)
@@ -118,7 +118,7 @@ All 87 counties and their county commissioner districts: judicial and watershed 
 
 All 120 counties: each county's fiscal court and elected officers, cities with their mayors and councils, school districts, and the Supreme Court, Court of Appeals, circuit court and district court districts — plus the Kentucky Senate, House and U.S. House districts, with the member named for each U.S. House seat. County and city officials are named from the Department for Local Government's directories, and judges from the Court of Justice's own pages. Nobody is named yet on the two state chambers or the school boards, and the Data gaps panel says why.
 
-- [Kentucky district lookup](https://districtry.com/ky/): 12 layers, all 120 counties.
+- [Kentucky district lookup](https://districtry.com/ky/): 13 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
 - [Who runs my county?](https://districtry.com/ky/county-government.html): links a page per county, 120 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ky/sources.html)
@@ -140,7 +140,7 @@ All 100 counties: each county's board of commissioners, townships, cities and to
 
 - [North Carolina district lookup](https://districtry.com/nc/): 12 layers, all 100 counties.
 - [Who is my U.S. representative?](https://districtry.com/nc/congress.html)
-- [Who are my county commissioners?](https://districtry.com/nc/county-commissioner.html): links a page per county, 99 of them, each naming every member with whatever contact details that county publishes.
+- [Who are my county commissioners?](https://districtry.com/nc/county-commissioner.html): links a page per county, 100 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/nc/sources.html)
 - [Who is my NC legislator?](https://districtry.com/nc/state-legislature.html)
 - [District questions](https://districtry.com/nc/faq.html)
@@ -173,7 +173,7 @@ All 95 counties and their county commission districts: cities and towns, school 
 
 - [Tennessee district lookup](https://districtry.com/tn/): 13 layers, all 95 counties.
 - [Who is my U.S. representative?](https://districtry.com/tn/congress.html)
-- [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 56 of them, each naming every member with whatever contact details that county publishes.
+- [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 57 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/tn/sources.html)
 - [Who is my Tennessee legislator?](https://districtry.com/tn/state-legislature.html)
 - [Tennessee district questions](https://districtry.com/tn/faq.html)
