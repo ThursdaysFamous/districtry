@@ -22,10 +22,22 @@ Midtown South, 357 W 35 St, inside precinct 14; Midtown North, 306 W 54 St,
 inside 18; Central Park inside 22. NYPD's own precinct landing page independently
 confirms these are the only three named precincts.
 
-Writes an intermediate JSON with source_url + scraped_at per record; the CO name
-is the only field taken here (the precinct card already gets station address/phone
-from FacDB). A page that WAF-blocks or omits the label yields a null commander —
-never guessed. build_nypd_roster.py resolves this into data/app/nypd-precinct-info.json.
+THE STATION HOUSE COMES FROM THIS PAGE TOO, NOT FROM THE CITY'S FACILITIES LIST
+(2026-10-16). The card used to take its station address from FacDB (ji82-xba5),
+the first `factype='POLICE STATION'` row whose `policeprct` matched — and
+`policeprct` is the precinct a facility SITS IN, not the one it houses. Measured
+that day against each precinct's own page: precinct 90's card named "ENG 216, LAD
+108, BAT. 35, 187 Union Avenue", a firehouse, where NYPD gives 211 Union Avenue;
+84 named Engine 207 at 172 Tillary where NYPD gives 301 Gold Street; 23 named
+Engine 53 at 1836 Third Avenue where NYPD gives 164 East 102 Street. Other rows
+are a firehouse name on the right shared building (7, 100), a stray unit that
+happened to come first (18's Mounted Unit, 40's planned station, 121's landfill
+garage), or a spreadsheet date where an address was ("May-47 50 Avenue" for
+108's 5-47 50 Avenue). Each page's "Contact Information" block states the
+station's address and its desk telephone, so both are read here.
+
+Writes an intermediate JSON with source_url + scraped_at per record. A page
+that WAF-blocks or omits a label yields a null field — never guessed. build_nypd_roster.py resolves this into data/app/nypd-precinct-info.json.
 
 Usage:
     python3 scripts/nypd_precinct_scraper.py [--out PATH] [--limit N]
@@ -133,6 +145,45 @@ def commander_from_html(page_html):
     return name if 4 <= len(name) <= 60 else None
 
 
+# The "Contact Information" heading (an h2 on most pages, an h3 on some) is
+# followed by the address paragraph (street, <br>, "City, NY, ZIP") and then the
+# telephone paragraph whose first entry is the precinct's own desk line.
+CONTACT_RE = re.compile(
+    r"<h[23]>\s*Contact Information\s*</h[23]>\s*<p>(.*?)</p>\s*<p>(.*?)</p>",
+    re.S | re.I)
+PHONE_RE = re.compile(r"^\s*Precinct\s*:\s*\((\d{3})\)\s*(\d{3})\s*-\s*(\d{4})\b")
+CITY_RE = re.compile(r"^(.+?),\s*NY,?\s*(\d{5})(?:-\d{4})?$")
+
+
+def _plain(fragment):
+    text = re.sub(r"<[^>]+>", " ", fragment)
+    return re.sub(r"\s+", " ", html_lib.unescape(text).replace("\u00a0", " ")).strip()
+
+
+def contact_from_html(page_html):
+    """The station address lines and the precinct desk telephone, or Nones.
+
+    The address is kept only in its exact published shape — a street line,
+    then "City, NY, ZIP" — so a page that changes layout yields nothing rather
+    than a half-parsed address on a card."""
+    m = CONTACT_RE.search(page_html)
+    if not m:
+        return None, None
+    lines = [_plain(x) for x in re.split(r"<br\s*/?>", m.group(1), flags=re.I)]
+    lines = [x for x in lines if x]
+    address = None
+    if len(lines) == 2 and re.match(r"^\d", lines[0]):
+        cm = CITY_RE.match(lines[1])
+        if cm:
+            address = [lines[0].rstrip(" ,"), "%s, NY %s" % (cm.group(1).strip(), cm.group(2))]
+    first = _plain(re.split(r"<br\s*/?>", m.group(2), flags=re.I)[0])
+    pm = PHONE_RE.match(first)
+    # Spacing inside the number varies by page ("(718)590-5511", "439- 4211"),
+    # so it is written back in one shape.
+    phone = "(%s) %s-%s" % pm.groups() if pm else None
+    return address, phone
+
+
 def main():
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
@@ -144,25 +195,31 @@ def main():
     scraped_at = os.environ.get("SCRAPED_AT") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
     records = {}
-    found = 0
+    found = with_address = 0
     for n in nums:
         url = page_url(n)
-        commander = None
+        commander = address = phone = None
         try:
-            commander = commander_from_html(_get(url))
+            page = _get(url)
+            commander = commander_from_html(page)
+            address, phone = contact_from_html(page)
         except urllib.error.HTTPError as e:
             commander = None  # 404/403 -> no CO for this precinct, never guessed
         except Exception:
             commander = None
         if commander:
             found += 1
-        records[str(n)] = {"commander": commander, "source_url": url, "scraped_at": scraped_at}
+        if address:
+            with_address += 1
+        records[str(n)] = {"commander": commander, "address": address, "phone": phone,
+                           "source_url": url, "scraped_at": scraped_at}
         time.sleep(0.3)  # courteous to nyc.gov
 
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w") as f:
         json.dump({"precincts": records}, f, indent=2, ensure_ascii=False)
-    print("wrote %s: %d precincts, %d with a commander" % (out_path, len(records), found), file=sys.stderr)
+    print("wrote %s: %d precincts, %d with a commander, %d with a station address"
+          % (out_path, len(records), found, with_address), file=sys.stderr)
 
 
 if __name__ == "__main__":

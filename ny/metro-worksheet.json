@@ -529,7 +529,7 @@
             "url": "https://data.cityofnewyork.us/d/y76i-bdw7"
           }
         ],
-        "people": "Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
+        "people": "Commanding officers, station house addresses and precinct desk telephones are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
         "applies": "New York City."
       }
     },
