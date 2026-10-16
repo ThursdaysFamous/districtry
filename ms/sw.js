@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-ms-shell-v2";
+const CACHE_NAME = "districtry-ms-shell-v4";
 
 const SHELL_URLS = [
   "./",
@@ -50,6 +50,13 @@ const GEOMETRY_URLS = [
   "./data/app/ms-senate-districts.json",
   "./data/app/ms-house-districts.json",
   "./data/app/ms-supervisor-districts.json",
+  "./data/app/tribal-areas.json",
+  "./data/app/ms-supreme-court-districts.json",
+  "./data/app/ms-court-of-appeals-districts.json",
+  "./data/app/ms-chancery-court-districts.json",
+  "./data/app/ms-chancery-court-districts-2027.json",
+  "./data/app/ms-circuit-court-districts.json",
+  "./data/app/ms-circuit-court-districts-2027.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -60,7 +67,10 @@ const ROSTER_URLS = [
   "./data/app/ms-senate-members.json",
   "./data/app/ms-house-members.json",
   "./data/app/ms-county-officials.json",
+  "./data/app/ms-supervisor-counties.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/tribal-councils.json",
+  "./data/app/ms-judge-roster.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

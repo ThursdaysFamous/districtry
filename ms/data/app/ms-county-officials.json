@@ -2,7 +2,30 @@
  "28001": {
   "boardAddress": "314 State St., Natchez 39120",
   "boardPhone": "601-442-2431",
+  "commissionerLabel": "District",
   "county": "Adams County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Tracy Meng Gaude"
+   },
+   {
+    "district": "2",
+    "name": "Larry E. Gardner"
+   },
+   {
+    "district": "3",
+    "name": "Frances T. Bailey"
+   },
+   {
+    "district": "4",
+    "name": "Shelly (Shirley) F. Frazier"
+   },
+   {
+    "district": "5",
+    "name": "Doris Marie Rice"
+   }
+  ],
   "label": "District",
   "printedPage": 45,
   "published": "2026-05-06",
@@ -35,7 +58,30 @@
  "28003": {
   "boardAddress": "P.O. Box 69, Corinth 38835-0069",
   "boardPhone": "662-286-7707",
+  "commissionerLabel": "District",
   "county": "Alcorn County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bobby McDaniel"
+   },
+   {
+    "district": "2",
+    "name": "John H. Peebles"
+   },
+   {
+    "district": "3",
+    "name": "Kim M. Ratliff"
+   },
+   {
+    "district": "4",
+    "name": "Keith Conaway"
+   },
+   {
+    "district": "5",
+    "name": "Timmy Wilbanks"
+   }
+  ],
   "label": "District",
   "printedPage": 46,
   "published": "2026-05-06",
@@ -66,7 +112,30 @@
   ]
  },
  "28005": {
+  "commissionerLabel": "District",
   "county": "Amite County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Annete Wicker"
+   },
+   {
+    "district": "2",
+    "name": "Vergia Tobias Bradley"
+   },
+   {
+    "district": "3",
+    "name": "Cynthia Whittington Slay"
+   },
+   {
+    "district": "4",
+    "name": "Jeanne Williams"
+   },
+   {
+    "district": "5",
+    "name": "Frank Noto"
+   }
+  ],
   "label": "District",
   "printedPage": 47,
   "published": "2026-05-06",
@@ -99,7 +168,30 @@
  "28007": {
   "boardAddress": "230 W. Washington St., Kosciusko 39090",
   "boardPhone": "662-289-2898",
+  "commissionerLabel": "District",
   "county": "Attala County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kay Chipley"
+   },
+   {
+    "district": "2",
+    "name": "Annie Winters"
+   },
+   {
+    "district": "3",
+    "name": "Theresa Henry"
+   },
+   {
+    "district": "4",
+    "name": "Virginia Clark"
+   },
+   {
+    "district": "5",
+    "name": "Andre Libroth"
+   }
+  ],
   "label": "District",
   "printedPage": 48,
   "published": "2026-05-06",
@@ -132,7 +224,30 @@
  "28009": {
   "boardAddress": "P.O. Box 218, Ashland 38603",
   "boardPhone": "662-224-6300",
+  "commissionerLabel": "District",
   "county": "Benton County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Leatrice Steward Wooden"
+   },
+   {
+    "district": "2",
+    "name": "Freda Spight"
+   },
+   {
+    "district": "3",
+    "name": "Charlie Walls"
+   },
+   {
+    "district": "4",
+    "name": "Ashley Wilkerson"
+   },
+   {
+    "district": "5",
+    "name": "Lanell Hutchison Poff"
+   }
+  ],
   "label": "District",
   "printedPage": 49,
   "published": "2026-05-06",
@@ -165,7 +280,30 @@
  "28011": {
   "boardAddress": "P.O. Box 698, Cleveland 38732-0698",
   "boardPhone": "662-846-5877",
+  "commissionerLabel": "District",
   "county": "Bolivar County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kimberly Green"
+   },
+   {
+    "district": "2",
+    "name": "Dianne Schattner"
+   },
+   {
+    "district": "3",
+    "name": "Eulah Peterson"
+   },
+   {
+    "district": "4",
+    "name": "Kazondria Blockett"
+   },
+   {
+    "district": "5",
+    "name": "Ora Jackson"
+   }
+  ],
   "label": "District",
   "printedPage": 50,
   "published": "2026-05-06",
@@ -198,7 +336,30 @@
  "28013": {
   "boardAddress": "P.O. Box 36, Pittsboro 38951",
   "boardPhone": "662-412-3126",
+  "commissionerLabel": "District",
   "county": "Calhoun County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bernadette Coleman"
+   },
+   {
+    "district": "2",
+    "name": "Jerry Brasher"
+   },
+   {
+    "district": "3",
+    "name": "Faye Morris"
+   },
+   {
+    "district": "4",
+    "name": "Phillip Lucius"
+   },
+   {
+    "district": "5",
+    "name": "Robert Easley"
+   }
+  ],
   "label": "District",
   "printedPage": 51,
   "published": "2026-05-06",
@@ -230,7 +391,30 @@
  },
  "28015": {
   "boardAddress": "P.O. Box 60, Carrollton 38917",
+  "commissionerLabel": "District",
   "county": "Carroll County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Chris Downs"
+   },
+   {
+    "district": "2",
+    "name": "Rebecca Touchstone"
+   },
+   {
+    "district": "3",
+    "name": "Randy Tackett"
+   },
+   {
+    "district": "4",
+    "name": "David Burkhead"
+   },
+   {
+    "district": "5",
+    "name": "Lesa Clark Fletcher"
+   }
+  ],
   "label": "Beat",
   "printedPage": 52,
   "published": "2026-05-06",
@@ -263,7 +447,30 @@
  "28017": {
   "boardAddress": "1 Pinson Sq., Houston 38851",
   "boardPhone": "662-456-2513",
+  "commissionerLabel": "District",
   "county": "Chickasaw County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Brenda Crawford"
+   },
+   {
+    "district": "2",
+    "name": "Gary E. Huffman"
+   },
+   {
+    "district": "3",
+    "name": "Dennis Griffin"
+   },
+   {
+    "district": "4",
+    "name": "Amy Anderson"
+   },
+   {
+    "district": "5",
+    "name": "Gus Clark"
+   }
+  ],
   "label": "District",
   "printedPage": 53,
   "published": "2026-05-06",
@@ -296,7 +503,30 @@
  "28019": {
   "boardAddress": "P.O. Box 250, Ackerman 39735",
   "boardPhone": "662-285-6329",
+  "commissionerLabel": "District",
   "county": "Choctaw County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Juliette Ashford"
+   },
+   {
+    "district": "2",
+    "name": "Sharon Brooks"
+   },
+   {
+    "district": "3",
+    "name": "Shannon Myers"
+   },
+   {
+    "district": "4",
+    "name": "Willie Mae Guillory"
+   },
+   {
+    "district": "5",
+    "name": "Betty Bruce"
+   }
+  ],
   "label": "District",
   "printedPage": 54,
   "published": "2026-05-06",
@@ -329,7 +559,30 @@
  "28021": {
   "boardAddress": "P.O. Box 689, Port Gibson 39150",
   "boardPhone": "601-437-5216",
+  "commissionerLabel": "District",
   "county": "Claiborne County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Stella Greenwood"
+   },
+   {
+    "district": "2",
+    "name": "Kanika Young"
+   },
+   {
+    "district": "3",
+    "name": "Ava Torrain"
+   },
+   {
+    "district": "4",
+    "name": "Vernester L. Watts"
+   },
+   {
+    "district": "5",
+    "name": "Rita Farmer"
+   }
+  ],
   "label": "District",
   "printedPage": 55,
   "published": "2026-05-06",
@@ -362,7 +615,30 @@
  "28023": {
   "boardAddress": "P.O. Box 616, Quitman 39355",
   "boardPhone": "601-776-5873",
+  "commissionerLabel": "District",
   "county": "Clarke County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Dora Sumrall McKenzie"
+   },
+   {
+    "district": "2",
+    "name": "Viola W. Davis"
+   },
+   {
+    "district": "3",
+    "name": "Troy A Dew"
+   },
+   {
+    "district": "4",
+    "name": "James W. (Bill) Avera, Jr."
+   },
+   {
+    "district": "5",
+    "name": "Dorothy Dikes Rolison"
+   }
+  ],
   "label": "District",
   "printedPage": 56,
   "published": "2026-05-06",
@@ -395,7 +671,30 @@
  "28025": {
   "boardAddress": "P.O. Box 815, West Point 39773",
   "boardPhone": "662-494-3313",
+  "commissionerLabel": "District",
   "county": "Clay County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Linda Ivy"
+   },
+   {
+    "district": "2",
+    "name": "Thomas D. (Tommy) Bryan"
+   },
+   {
+    "district": "3",
+    "name": "Julie Campbell Gray"
+   },
+   {
+    "district": "4",
+    "name": "Sonya Orr"
+   },
+   {
+    "district": "5",
+    "name": "Dorothy Heard"
+   }
+  ],
   "label": "District",
   "printedPage": 57,
   "published": "2026-05-06",
@@ -426,7 +725,30 @@
   ]
  },
  "28027": {
+  "commissionerLabel": "District",
   "county": "Coahoma County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jo Ann Gates"
+   },
+   {
+    "district": "2",
+    "name": "Andrew Thompson, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Startavian Victory"
+   },
+   {
+    "district": "4",
+    "name": "Eva Cole-Lee"
+   },
+   {
+    "district": "5",
+    "name": "Virginia T. Burchfield"
+   }
+  ],
   "label": "District",
   "printedPage": 58,
   "published": "2026-05-06",
@@ -459,7 +781,30 @@
  "28029": {
   "boardAddress": "P.O. Box 551, Hazlehurst 39083",
   "boardPhone": "601-894-1858",
+  "commissionerLabel": "District",
   "county": "Copiah County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Anne Thrasher"
+   },
+   {
+    "district": "2",
+    "name": "Frances Taylor"
+   },
+   {
+    "district": "3",
+    "name": "Ernest L. Munn"
+   },
+   {
+    "district": "4",
+    "name": "Lydia Claiborne Green"
+   },
+   {
+    "district": "5",
+    "name": "Lisa Rials"
+   }
+  ],
   "label": "District",
   "printedPage": 59,
   "published": "2026-05-06",
@@ -492,7 +837,30 @@
  "28031": {
   "boardAddress": "P.O. Box 1679, Collins 39428",
   "boardPhone": "601-765-8605",
+  "commissionerLabel": "District",
   "county": "Covington County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Mary Glover Walters"
+   },
+   {
+    "district": "2",
+    "name": "Lesia Taormina"
+   },
+   {
+    "district": "3",
+    "name": "Rhonda McCall Purvis"
+   },
+   {
+    "district": "4",
+    "name": "Mary Deloris Thornton"
+   },
+   {
+    "district": "5",
+    "name": "Dorothy A. Magee"
+   }
+  ],
   "label": "District",
   "printedPage": 60,
   "published": "2026-05-06",
@@ -525,7 +893,30 @@
  "28033": {
   "boardAddress": "365 Losher St., Hernando 38632",
   "boardPhone": "662-469-8002",
+  "commissionerLabel": "District",
   "county": "DeSoto County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Billy Johnson"
+   },
+   {
+    "district": "2",
+    "name": "Tim Snyder"
+   },
+   {
+    "district": "3",
+    "name": "Chad Engelke"
+   },
+   {
+    "district": "4",
+    "name": "Sissie Ferguson"
+   },
+   {
+    "district": "5",
+    "name": "David H. Ross"
+   }
+  ],
   "label": "District",
   "printedPage": 61,
   "published": "2026-05-06",
@@ -558,7 +949,30 @@
  "28035": {
   "boardAddress": "P.O. Box 1310, Hattiesburg 39403-1310",
   "boardPhone": "601-545-6000",
+  "commissionerLabel": "District",
   "county": "Forrest County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Neil Harvison"
+   },
+   {
+    "district": "2",
+    "name": "Johneice Dupree"
+   },
+   {
+    "district": "3",
+    "name": "Lucretia Sug Jenkins"
+   },
+   {
+    "district": "4",
+    "name": "Nancy Faye Noble"
+   },
+   {
+    "district": "5",
+    "name": "Butch Benedict, Jr."
+   }
+  ],
   "label": "District",
   "printedPage": 62,
   "published": "2026-05-06",
@@ -591,7 +1005,30 @@
  "28037": {
   "boardAddress": "P.O. Box 297, Meadville 39653",
   "boardPhone": "601-384-2330",
+  "commissionerLabel": "District",
   "county": "Franklin County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Gloria Bonds"
+   },
+   {
+    "district": "2",
+    "name": "Hilda Peeler"
+   },
+   {
+    "district": "3",
+    "name": "Margie McNair"
+   },
+   {
+    "district": "4",
+    "name": "Faye Davis Enzman"
+   },
+   {
+    "district": "5",
+    "name": "Jane Coleman"
+   }
+  ],
   "label": "District",
   "printedPage": 63,
   "published": "2026-05-06",
@@ -624,7 +1061,30 @@
  "28039": {
   "boardAddress": "355 Cox St., Ste. D, Lucedale 39452",
   "boardPhone": "601-947-7506",
+  "commissionerLabel": "District",
   "county": "George County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Joanie Evans"
+   },
+   {
+    "district": "2",
+    "name": "Caleb R. Howell"
+   },
+   {
+    "district": "3",
+    "name": "Darlene Steede"
+   },
+   {
+    "district": "4",
+    "name": "Matthew Lamb"
+   },
+   {
+    "district": "5",
+    "name": "Rebecca (Becky) Berry"
+   }
+  ],
   "label": "Beat",
   "printedPage": 64,
   "published": "2026-05-06",
@@ -657,7 +1117,30 @@
  "28041": {
   "boardAddress": "P.O. Box 460, Leakesville 39451",
   "boardPhone": "601-394-2394",
+  "commissionerLabel": "District",
   "county": "Greene County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Stacy Wilson"
+   },
+   {
+    "district": "2",
+    "name": "Jarita Bivens"
+   },
+   {
+    "district": "3",
+    "name": "Deborah Walley"
+   },
+   {
+    "district": "4",
+    "name": "Elizabeth Freeman"
+   },
+   {
+    "district": "5",
+    "name": "Terri Ware Denmark"
+   }
+  ],
   "label": "District",
   "printedPage": 65,
   "published": "2026-05-06",
@@ -690,7 +1173,30 @@
  "28043": {
   "boardAddress": "P.O. Box 1208, Grenada 38902",
   "boardPhone": "662-226-1821",
+  "commissionerLabel": "District",
   "county": "Grenada County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Susan Williams"
+   },
+   {
+    "district": "2",
+    "name": "Karen A. James"
+   },
+   {
+    "district": "3",
+    "name": "James Russel Carver, Sr."
+   },
+   {
+    "district": "4",
+    "name": "Elizabeth Moore"
+   },
+   {
+    "district": "5",
+    "name": "Celina Hayward"
+   }
+  ],
   "label": "District",
   "printedPage": 66,
   "published": "2026-05-06",
@@ -723,7 +1229,30 @@
  "28045": {
   "boardAddress": "854 Hwy. 90, Ste. A, Bay St. Louis 39520",
   "boardPhone": "228-467-0172",
+  "commissionerLabel": "District",
   "county": "Hancock County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Reba McCaleb"
+   },
+   {
+    "district": "2",
+    "name": "Tad Shaw"
+   },
+   {
+    "district": "3",
+    "name": "Eugene “E.J.” Bice"
+   },
+   {
+    "district": "4",
+    "name": "Donna Henry"
+   },
+   {
+    "district": "5",
+    "name": "Breezy Bice"
+   }
+  ],
   "label": "District",
   "printedPage": 67,
   "published": "2026-05-06",
@@ -755,7 +1284,30 @@
  },
  "28047": {
   "boardAddress": "P.O. Drawer CC, Gulfport 39502",
+  "commissionerLabel": "District",
   "county": "Harrison County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Toni Jo Kuljis-Diaz"
+   },
+   {
+    "district": "2",
+    "name": "Becky Payne"
+   },
+   {
+    "district": "3",
+    "name": "Jennifer Smith"
+   },
+   {
+    "district": "4",
+    "name": "Christene F. Brice"
+   },
+   {
+    "district": "5",
+    "name": "Carolyn Handler"
+   }
+  ],
   "label": "District",
   "printedPage": 68,
   "published": "2026-05-06",
@@ -787,7 +1339,30 @@
  },
  "28049": {
   "boardAddress": "P.O. Box 686, Jackson 39205",
+  "commissionerLabel": "District",
   "county": "Hinds County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kidada Brown"
+   },
+   {
+    "district": "2",
+    "name": "Bobbie Graves"
+   },
+   {
+    "district": "3",
+    "name": "Jermal Clark"
+   },
+   {
+    "district": "4",
+    "name": "Yvonne Robinson Horton"
+   },
+   {
+    "district": "5",
+    "name": "Felicia McClinton"
+   }
+  ],
   "label": "District",
   "printedPage": 70,
   "published": "2026-05-06",
@@ -820,7 +1395,30 @@
  "28051": {
   "boardAddress": "P.O. Box 239, Lexington 39095",
   "boardPhone": "662-834-0911",
+  "commissionerLabel": "District",
   "county": "Holmes County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Elnora Johnson-Patton"
+   },
+   {
+    "district": "2",
+    "name": "Loretta Tidwell"
+   },
+   {
+    "district": "3",
+    "name": "Henry L. Simpson"
+   },
+   {
+    "district": "4",
+    "name": "Augustine Winstead"
+   },
+   {
+    "district": "5",
+    "name": "Kahaliah Hogan-Cook"
+   }
+  ],
   "label": "District",
   "printedPage": 71,
   "published": "2026-05-06",
@@ -851,7 +1449,30 @@
   ]
  },
  "28053": {
+  "commissionerLabel": "District",
   "county": "Humphreys County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Daliah “Bit” Hooker Randle"
+   },
+   {
+    "district": "2",
+    "name": "Lizzie Powell"
+   },
+   {
+    "district": "3",
+    "name": "Constance Burley"
+   },
+   {
+    "district": "4",
+    "name": "Tina Jones Gullett"
+   },
+   {
+    "district": "5",
+    "name": "Joseph Lee"
+   }
+  ],
   "label": "District",
   "printedPage": 72,
   "published": "2026-05-06",
@@ -883,7 +1504,30 @@
  },
  "28055": {
   "boardAddress": "P.O. Box 27, Mayersville 39113",
+  "commissionerLabel": "District",
   "county": "Issaquena County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jimmy C. Newman"
+   },
+   {
+    "district": "2",
+    "name": "Wanda Fulton"
+   },
+   {
+    "district": "3",
+    "name": "Erma Peterson"
+   },
+   {
+    "district": "4",
+    "name": "Corinder C. Williams"
+   },
+   {
+    "district": "5",
+    "name": "Tommy Boyles"
+   }
+  ],
   "label": "District",
   "printedPage": 73,
   "published": "2026-05-06",
@@ -916,7 +1560,30 @@
  "28057": {
   "boardAddress": "P.O. Box 776, Fulton 38843",
   "boardPhone": "662-862-5600",
+  "commissionerLabel": "District",
   "county": "Itawamba County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "James G. Dickens"
+   },
+   {
+    "district": "2",
+    "name": "Barry Davis"
+   },
+   {
+    "district": "3",
+    "name": "Dennis Farris, Sr."
+   },
+   {
+    "district": "4",
+    "name": "Tommy Gholston"
+   },
+   {
+    "district": "5",
+    "name": "Steve Johnson"
+   }
+  ],
   "label": "District",
   "printedPage": 74,
   "published": "2026-05-06",
@@ -948,7 +1615,30 @@
  },
  "28059": {
   "boardAddress": "P.O. Box 998, Pascagoula 39568-0998",
+  "commissionerLabel": "District",
   "county": "Jackson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Danny Glaskox"
+   },
+   {
+    "district": "2",
+    "name": "Katrina Viverette"
+   },
+   {
+    "district": "3",
+    "name": "Debra Loris Hodges"
+   },
+   {
+    "district": "4",
+    "name": "Kevin Bonner"
+   },
+   {
+    "district": "5",
+    "name": "Deborah J. Parker"
+   }
+  ],
   "label": "District",
   "printedPage": 75,
   "published": "2026-05-06",
@@ -981,7 +1671,30 @@
  "28061": {
   "boardAddress": "P.O. Box 406, Bay Springs 39422",
   "boardPhone": "601-764-3469",
+  "commissionerLabel": "District",
   "county": "Jasper County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Linda Graham"
+   },
+   {
+    "district": "2",
+    "name": "Vernell Thigpen Lofton"
+   },
+   {
+    "district": "3",
+    "name": "Laura Lee Parker"
+   },
+   {
+    "district": "4",
+    "name": "Larry N. Dykes"
+   },
+   {
+    "district": "5",
+    "name": "Samantha Riley Parker"
+   }
+  ],
   "label": "Beat",
   "printedPage": 76,
   "published": "2026-05-06",
@@ -1014,7 +1727,30 @@
  "28063": {
   "boardAddress": "P.O. Box 145, Fayette 39069",
   "boardPhone": "601-786-3021",
+  "commissionerLabel": "District",
   "county": "Jefferson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Henry Wilson, Jr."
+   },
+   {
+    "district": "2",
+    "name": "Nicole Davis"
+   },
+   {
+    "district": "3",
+    "name": "Sharon Doss"
+   },
+   {
+    "district": "4",
+    "name": "David Franklin"
+   },
+   {
+    "district": "5",
+    "name": "Shirley S. Brown"
+   }
+  ],
   "label": "District",
   "printedPage": 77,
   "published": "2026-05-06",
@@ -1047,7 +1783,30 @@
  "28065": {
   "boardAddress": "P.O. Box 1317, Prentiss 39474",
   "boardPhone": "601-792-4336",
+  "commissionerLabel": "District",
   "county": "Jefferson Davis County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Linda J. Speights"
+   },
+   {
+    "district": "2",
+    "name": "Ann Stringer"
+   },
+   {
+    "district": "3",
+    "name": "Towonder Applewhite"
+   },
+   {
+    "district": "4",
+    "name": "Stephen Abram"
+   },
+   {
+    "district": "5",
+    "name": "Mattie N. Lewis"
+   }
+  ],
   "label": "District",
   "printedPage": 78,
   "published": "2026-05-06",
@@ -1080,7 +1839,30 @@
  "28067": {
   "boardAddress": "P.O. Box 1468, Laurel 39441",
   "boardPhone": "601-428-3139",
+  "commissionerLabel": "District",
   "county": "Jones County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bart Gavin"
+   },
+   {
+    "district": "2",
+    "name": "Michelle Blackwell"
+   },
+   {
+    "district": "3",
+    "name": "Dione Hodge"
+   },
+   {
+    "district": "4",
+    "name": "John Herrington"
+   },
+   {
+    "district": "5",
+    "name": "Addie Wash Chinn"
+   }
+  ],
   "label": "Beat",
   "printedPage": 79,
   "published": "2026-05-06",
@@ -1112,7 +1894,30 @@
  },
  "28069": {
   "boardAddress": "P.O. Box 188, DeKalb 39328",
+  "commissionerLabel": "District",
   "county": "Kemper County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Roy Boyd"
+   },
+   {
+    "district": "2",
+    "name": "Charles Hollingsworth, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Zac Clay"
+   },
+   {
+    "district": "4",
+    "name": "Kathy W. Clemons"
+   },
+   {
+    "district": "5",
+    "name": "Mary L. Bennamon"
+   }
+  ],
   "label": "District",
   "printedPage": 80,
   "published": "2026-05-06",
@@ -1145,7 +1950,30 @@
  "28071": {
   "boardAddress": "P.O. Box 1240, Oxford 38655",
   "boardPhone": "662-236-2717",
+  "commissionerLabel": "District",
   "county": "Lafayette County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Faye Phillips"
+   },
+   {
+    "district": "2",
+    "name": "Lisa Barber"
+   },
+   {
+    "district": "3",
+    "name": "Lola M. Pearson"
+   },
+   {
+    "district": "4",
+    "name": "Laura Antonow"
+   },
+   {
+    "district": "5",
+    "name": "Tiffany Babb"
+   }
+  ],
   "label": "District",
   "printedPage": 81,
   "published": "2026-05-06",
@@ -1178,7 +2006,30 @@
  "28073": {
   "boardAddress": "P.O. Box 1240, Purvis 39475",
   "boardPhone": "601-794-8504",
+  "commissionerLabel": "District",
   "county": "Lamar County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Misty Hood"
+   },
+   {
+    "district": "2",
+    "name": "Carrie Humphries"
+   },
+   {
+    "district": "3",
+    "name": "Melissa Love"
+   },
+   {
+    "district": "4",
+    "name": "Fleetwood Loustalot"
+   },
+   {
+    "district": "5",
+    "name": "Shirley Haddox"
+   }
+  ],
   "label": "District",
   "printedPage": 82,
   "published": "2026-05-06",
@@ -1211,7 +2062,30 @@
  "28075": {
   "boardAddress": "612 22nd Ave. S., Meridian 39301-6116",
   "boardPhone": "601-482-9746",
+  "commissionerLabel": "District",
   "county": "Lauderdale County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Chuck Overby"
+   },
+   {
+    "district": "2",
+    "name": "Brenda Faye Harris"
+   },
+   {
+    "district": "3",
+    "name": "Awana Daniels Simmons"
+   },
+   {
+    "district": "4",
+    "name": "Gloria Dancy"
+   },
+   {
+    "district": "5",
+    "name": "Russell Keene"
+   }
+  ],
   "label": "District",
   "printedPage": 83,
   "published": "2026-05-06",
@@ -1244,7 +2118,30 @@
  "28077": {
   "boardAddress": "P.O. Box 1160, Monticello 39654",
   "boardPhone": "601-587-7351",
+  "commissionerLabel": "District",
   "county": "Lawrence County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Angela Buchanan"
+   },
+   {
+    "district": "2",
+    "name": "Tori Martin"
+   },
+   {
+    "district": "3",
+    "name": "Shanta Killingsworth"
+   },
+   {
+    "district": "4",
+    "name": "Pam Melzer"
+   },
+   {
+    "district": "5",
+    "name": "Karen Hartwell"
+   }
+  ],
   "label": "District",
   "printedPage": 84,
   "published": "2026-05-06",
@@ -1277,7 +2174,30 @@
  "28079": {
   "boardAddress": "P.O. Box 595, Carthage 39051",
   "boardPhone": "601-267-8002",
+  "commissionerLabel": "District",
   "county": "Leake County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sandra Grundy"
+   },
+   {
+    "district": "2",
+    "name": "Donna Rawson"
+   },
+   {
+    "district": "3",
+    "name": "Margaret Smith"
+   },
+   {
+    "district": "4",
+    "name": "Linda Sanders"
+   },
+   {
+    "district": "5",
+    "name": "Rose Ann Weathers"
+   }
+  ],
   "label": "District",
   "printedPage": 85,
   "published": "2026-05-06",
@@ -1310,7 +2230,30 @@
  "28081": {
   "boardAddress": "P.O. Box 1785, Tupelo 38802",
   "boardPhone": "662-432-2000",
+  "commissionerLabel": "District",
   "county": "Lee County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kristen Buse"
+   },
+   {
+    "district": "2",
+    "name": "Shelia Lansdell"
+   },
+   {
+    "district": "3",
+    "name": "Jamie Gunnells"
+   },
+   {
+    "district": "4",
+    "name": "Jacque Grayson"
+   },
+   {
+    "district": "5",
+    "name": "Jim Armstrong"
+   }
+  ],
   "label": "District",
   "printedPage": 86,
   "published": "2026-05-06",
@@ -1343,7 +2286,30 @@
  "28083": {
   "boardAddress": "P.O. Box 250, Greenwood 38935",
   "boardPhone": "662-455-3904",
+  "commissionerLabel": "District",
   "county": "Leflore County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Deveda J. Dillon"
+   },
+   {
+    "district": "2",
+    "name": "Emma F. Baker"
+   },
+   {
+    "district": "3",
+    "name": "Preston Ratliff, Jr."
+   },
+   {
+    "district": "4",
+    "name": "Cora Denise Lowe"
+   },
+   {
+    "district": "5",
+    "name": "Gloria White"
+   }
+  ],
   "label": "District",
   "printedPage": 87,
   "published": "2026-05-06",
@@ -1374,7 +2340,30 @@
   ]
  },
  "28085": {
+  "commissionerLabel": "District",
   "county": "Lincoln County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Vernastine Bryd"
+   },
+   {
+    "district": "2",
+    "name": "Janice Haley"
+   },
+   {
+    "district": "3",
+    "name": "Missy Rhodus"
+   },
+   {
+    "district": "4",
+    "name": "Denise White"
+   },
+   {
+    "district": "5",
+    "name": "Jane James"
+   }
+  ],
   "label": "District",
   "printedPage": 88,
   "published": "2026-05-06",
@@ -1407,7 +2396,30 @@
  "28087": {
   "boardAddress": "P.O. Box 1364, Columbus 39703",
   "boardPhone": "662-329-5844",
+  "commissionerLabel": "District",
   "county": "Lowndes County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Donna Egger"
+   },
+   {
+    "district": "2",
+    "name": "Jean N. Bigelow"
+   },
+   {
+    "district": "3",
+    "name": "Yuvonda C. Youngblood"
+   },
+   {
+    "district": "4",
+    "name": "Sherry Guyton Odneal"
+   },
+   {
+    "district": "5",
+    "name": "Frances Olivia Stewart"
+   }
+  ],
   "label": "District",
   "printedPage": 89,
   "published": "2026-05-06",
@@ -1440,7 +2452,30 @@
  "28089": {
   "boardAddress": "P.O. Box 608, Canton 39046",
   "boardPhone": "601-855-5500",
+  "commissionerLabel": "District",
   "county": "Madison County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Helen Carney"
+   },
+   {
+    "district": "2",
+    "name": "Barbara Gross"
+   },
+   {
+    "district": "3",
+    "name": "Pat Truesdale"
+   },
+   {
+    "district": "4",
+    "name": "Anthony Denton"
+   },
+   {
+    "district": "5",
+    "name": "Leroy Lacy"
+   }
+  ],
   "label": "District",
   "printedPage": 90,
   "published": "2026-05-06",
@@ -1473,7 +2508,30 @@
  "28091": {
   "boardAddress": "215 Broad St., Columbia 39429",
   "boardPhone": "601-736-7382",
+  "commissionerLabel": "District",
   "county": "Marion County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Van Lowry, Jr."
+   },
+   {
+    "district": "2",
+    "name": "Mike Bennett"
+   },
+   {
+    "district": "3",
+    "name": "Dale Bracey"
+   },
+   {
+    "district": "4",
+    "name": "Stacy Reagan"
+   },
+   {
+    "district": "5",
+    "name": "Ada Hammond"
+   }
+  ],
   "label": "District",
   "printedPage": 91,
   "published": "2026-05-06",
@@ -1506,7 +2564,30 @@
  "28093": {
   "boardAddress": "P.O. Box 219, Holly Springs 38635",
   "boardPhone": "662-252-7903",
+  "commissionerLabel": "District",
   "county": "Marshall County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jamarr (Jack) Walton"
+   },
+   {
+    "district": "2",
+    "name": "Marsha Taylor"
+   },
+   {
+    "district": "3",
+    "name": "Amy Cole"
+   },
+   {
+    "district": "4",
+    "name": "Naomi Thomas Taylor"
+   },
+   {
+    "district": "5",
+    "name": "Betty Whaley"
+   }
+  ],
   "label": "District",
   "printedPage": 92,
   "published": "2026-05-06",
@@ -1539,7 +2620,30 @@
  "28095": {
   "boardAddress": "P.O. Box 578, Aberdeen 39730",
   "boardPhone": "662-369-8143",
+  "commissionerLabel": "District",
   "county": "Monroe County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Lowell Worthey"
+   },
+   {
+    "district": "2",
+    "name": "Jason D. Gallop, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Andrew (Drew) Garvin"
+   },
+   {
+    "district": "4",
+    "name": "Earnestine Metcalf"
+   },
+   {
+    "district": "5",
+    "name": "Doris Beans Suggs"
+   }
+  ],
   "label": "District",
   "printedPage": 93,
   "published": "2026-05-06",
@@ -1572,7 +2676,30 @@
  "28097": {
   "boardAddress": "P.O. Box 71, Winona 38967",
   "boardPhone": "662-283-2333",
+  "commissionerLabel": "District",
   "county": "Montgomery County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Melodie Corley"
+   },
+   {
+    "district": "2",
+    "name": "Jeanette Pyron"
+   },
+   {
+    "district": "3",
+    "name": "Tracy Campbell"
+   },
+   {
+    "district": "4",
+    "name": "Ken Holifield"
+   },
+   {
+    "district": "5",
+    "name": "Orman Knox"
+   }
+  ],
   "label": "District",
   "printedPage": 94,
   "published": "2026-05-06",
@@ -1605,7 +2732,30 @@
  "28099": {
   "boardAddress": "401 E. Beacon St., Ste. 201, Philadelphia 39350",
   "boardPhone": "601-656-6281",
+  "commissionerLabel": "District",
   "county": "Neshoba County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sherry Nance"
+   },
+   {
+    "district": "2",
+    "name": "Deaneen Whittle Savell"
+   },
+   {
+    "district": "3",
+    "name": "J. Dewayne Sharp"
+   },
+   {
+    "district": "4",
+    "name": "Melanie Barnett"
+   },
+   {
+    "district": "5",
+    "name": "Charlene Kirksey"
+   }
+  ],
   "label": "District",
   "printedPage": 95,
   "published": "2026-05-06",
@@ -1638,7 +2788,30 @@
  "28101": {
   "boardAddress": "P.O. Box 68, Decatur 39327",
   "boardPhone": "601-635-4150",
+  "commissionerLabel": "District",
   "county": "Newton County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Nancy Darlene Kidd-Smith"
+   },
+   {
+    "district": "2",
+    "name": "Cindy Alexander"
+   },
+   {
+    "district": "3",
+    "name": "Lesia Taylor"
+   },
+   {
+    "district": "4",
+    "name": "Amy Hollingsworth"
+   },
+   {
+    "district": "5",
+    "name": "Debby Walker"
+   }
+  ],
   "label": "District",
   "printedPage": 96,
   "published": "2026-05-06",
@@ -1671,7 +2844,30 @@
  "28103": {
   "boardAddress": "P.O. Box 147, Macon 39341",
   "boardPhone": "662-726-5181",
+  "commissionerLabel": "District",
   "county": "Noxubee County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sylvester Tate"
+   },
+   {
+    "district": "2",
+    "name": "Teretha Rena Conner"
+   },
+   {
+    "district": "3",
+    "name": "Janice Harlan"
+   },
+   {
+    "district": "4",
+    "name": "Nicole Stewart"
+   },
+   {
+    "district": "5",
+    "name": "Margaret Baker"
+   }
+  ],
   "label": "District",
   "printedPage": 97,
   "published": "2026-05-06",
@@ -1704,7 +2900,30 @@
  "28105": {
   "boardAddress": "P.O. Box 80285, Starkville 39760",
   "boardPhone": "662-323-1520",
+  "commissionerLabel": "District",
   "county": "Oktibbeha County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sheryl Elmore"
+   },
+   {
+    "district": "2",
+    "name": "Sissy Smitherman"
+   },
+   {
+    "district": "3",
+    "name": "Dennis Daniels"
+   },
+   {
+    "district": "4",
+    "name": "Dave Holley"
+   },
+   {
+    "district": "5",
+    "name": "Ernest Rogers, Jr."
+   }
+  ],
   "label": "District",
   "printedPage": 98,
   "published": "2026-05-06",
@@ -1737,7 +2956,30 @@
  "28107": {
   "boardAddress": "P.O. Box 807, Batesville 38606",
   "boardPhone": "662-563-6200",
+  "commissionerLabel": "District",
   "county": "Panola County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Dorothy Kerney Wilbourn"
+   },
+   {
+    "district": "2",
+    "name": "Brenda Rucker"
+   },
+   {
+    "district": "3",
+    "name": "Wayne Belk"
+   },
+   {
+    "district": "4",
+    "name": "Wanda Lawrence Carmichael"
+   },
+   {
+    "district": "5",
+    "name": "Kaye Smythe"
+   }
+  ],
   "label": "District",
   "printedPage": 99,
   "published": "2026-05-06",
@@ -1770,7 +3012,30 @@
  "28109": {
   "boardAddress": "P.O. Box 569, Poplarville 39470",
   "boardPhone": "601-403-2302",
+  "commissionerLabel": "District",
   "county": "Pearl River County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Katrina Brown"
+   },
+   {
+    "district": "2",
+    "name": "Jamie Garner"
+   },
+   {
+    "district": "3",
+    "name": "Tommy Breland"
+   },
+   {
+    "district": "4",
+    "name": "Reggie W. Hanberry"
+   },
+   {
+    "district": "5",
+    "name": "Alana Campo"
+   }
+  ],
   "label": "District",
   "printedPage": 100,
   "published": "2026-05-06",
@@ -1803,7 +3068,30 @@
  "28111": {
   "boardAddress": "P.O. Box 345, New Augusta 39462",
   "boardPhone": "601-964-8370",
+  "commissionerLabel": "District",
   "county": "Perry County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sherry Dean Hartfield"
+   },
+   {
+    "district": "2",
+    "name": "Diane Lillian Carter"
+   },
+   {
+    "district": "3",
+    "name": "Janet B. Mayo"
+   },
+   {
+    "district": "4",
+    "name": "Dianne JefcoatTossy"
+   },
+   {
+    "district": "5",
+    "name": "Dianna Cooley Clark"
+   }
+  ],
   "label": "District",
   "printedPage": 101,
   "published": "2026-05-06",
@@ -1836,7 +3124,30 @@
  "28113": {
   "boardAddress": "P.O. Box 431, Magnolia 39652",
   "boardPhone": "601-783-6569",
+  "commissionerLabel": "District",
   "county": "Pike County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jemika Bates"
+   },
+   {
+    "district": "2",
+    "name": "Alicia Forrest"
+   },
+   {
+    "district": "3",
+    "name": "Faye Greer"
+   },
+   {
+    "district": "4",
+    "name": "Julie E. Etheridge"
+   },
+   {
+    "district": "5",
+    "name": "Stacee Ott"
+   }
+  ],
   "label": "District",
   "printedPage": 102,
   "published": "2026-05-06",
@@ -1869,7 +3180,30 @@
  "28115": {
   "boardAddress": "P.O. Box 209, Pontotoc 38863",
   "boardPhone": "662-489-3900",
+  "commissionerLabel": "District",
   "county": "Pontotoc County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Donna Shoemaker"
+   },
+   {
+    "district": "2",
+    "name": "Nicky Moore"
+   },
+   {
+    "district": "3",
+    "name": "John Logan"
+   },
+   {
+    "district": "4",
+    "name": "Shirley Dillard"
+   },
+   {
+    "district": "5",
+    "name": "Larry E. Poe"
+   }
+  ],
   "label": "District",
   "printedPage": 103,
   "published": "2026-05-06",
@@ -1902,7 +3236,30 @@
  "28117": {
   "boardAddress": "P.O. Box 477, Booneville 38829",
   "boardPhone": "662-728-4610",
+  "commissionerLabel": "District",
   "county": "Prentiss County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Barbara M. Shackleford"
+   },
+   {
+    "district": "2",
+    "name": "Joe D. Eaton"
+   },
+   {
+    "district": "3",
+    "name": "Cindi Burns"
+   },
+   {
+    "district": "4",
+    "name": "Kay Depoyster Crow"
+   },
+   {
+    "district": "5",
+    "name": "Christine Grove"
+   }
+  ],
   "label": "District",
   "printedPage": 104,
   "published": "2026-05-06",
@@ -1935,7 +3292,30 @@
  "28119": {
   "boardAddress": "220 Chestnut St., Ste. 2, Marks 38646",
   "boardPhone": "662-326-2661",
+  "commissionerLabel": "District",
   "county": "Quitman County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Palestine Presley Flood"
+   },
+   {
+    "district": "2",
+    "name": "Terry L. Williams, Sr."
+   },
+   {
+    "district": "3",
+    "name": "Taylor Flowers"
+   },
+   {
+    "district": "4",
+    "name": "Dwight A. Barfield"
+   },
+   {
+    "district": "5",
+    "name": "Lynette W. Bland"
+   }
+  ],
   "label": "District",
   "printedPage": 105,
   "published": "2026-05-06",
@@ -1968,7 +3348,30 @@
  "28121": {
   "boardAddress": "211 E. Government St., Ste. A, Brandon 39042",
   "boardPhone": "601-825-1475",
+  "commissionerLabel": "District",
   "county": "Rankin County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kelly Golf Wedgeworth"
+   },
+   {
+    "district": "2",
+    "name": "Andrew Sorrentino"
+   },
+   {
+    "district": "3",
+    "name": "Tonya Duke Rivers"
+   },
+   {
+    "district": "4",
+    "name": "Madison Hill"
+   },
+   {
+    "district": "5",
+    "name": "Trey Fontaine"
+   }
+  ],
   "label": "District",
   "printedPage": 106,
   "published": "2026-05-06",
@@ -2001,7 +3404,30 @@
  "28123": {
   "boardAddress": "P.O. Box 630, Forest 39074",
   "boardPhone": "601-469-1926",
+  "commissionerLabel": "District",
   "county": "Scott County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sherrell Ann Brown"
+   },
+   {
+    "district": "2",
+    "name": "Lois M. Gray"
+   },
+   {
+    "district": "3",
+    "name": "Virginia R. Hannah"
+   },
+   {
+    "district": "4",
+    "name": "Bettye Nelson Wallace"
+   },
+   {
+    "district": "5",
+    "name": "Delie Shepard"
+   }
+  ],
   "label": "Beat",
   "printedPage": 107,
   "published": "2026-05-06",
@@ -2034,7 +3460,30 @@
  "28125": {
   "boardAddress": "P.O. Box 218, Rolling Fork 39159",
   "boardPhone": "662-873-2755",
+  "commissionerLabel": "District",
   "county": "Sharkey County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bertha Lindsey"
+   },
+   {
+    "district": "2",
+    "name": "Vickey Seaton"
+   },
+   {
+    "district": "3",
+    "name": "Dorothy K. Pearson"
+   },
+   {
+    "district": "4",
+    "name": "Paul A. Alford"
+   },
+   {
+    "district": "5",
+    "name": "Linda Steveson"
+   }
+  ],
   "label": "District",
   "printedPage": 108,
   "published": "2026-05-06",
@@ -2067,7 +3516,30 @@
  "28127": {
   "boardAddress": "P.O. Box 308, Mendenhall 39114",
   "boardPhone": "601-847-1418",
+  "commissionerLabel": "District",
   "county": "Simpson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Calvin Edwards"
+   },
+   {
+    "district": "2",
+    "name": "Eugene Blair"
+   },
+   {
+    "district": "3",
+    "name": "Donna Magee"
+   },
+   {
+    "district": "4",
+    "name": "Diane McPhail"
+   },
+   {
+    "district": "5",
+    "name": "Wanda Bridges"
+   }
+  ],
   "label": "District",
   "printedPage": 109,
   "published": "2026-05-06",
@@ -2100,7 +3572,30 @@
  "28129": {
   "boardAddress": "P.O. Box 160, Raleigh 39153",
   "boardPhone": "601-782-4000",
+  "commissionerLabel": "District",
   "county": "Smith County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Willie Grace Myatt"
+   },
+   {
+    "district": "2",
+    "name": "Perry E. Duckworth"
+   },
+   {
+    "district": "3",
+    "name": "Sherri H. Darden"
+   },
+   {
+    "district": "4",
+    "name": "Jimmy Burns"
+   },
+   {
+    "district": "5",
+    "name": "Glendell O. Webb"
+   }
+  ],
   "label": "District",
   "printedPage": 110,
   "published": "2026-05-06",
@@ -2133,7 +3628,30 @@
  "28131": {
   "boardAddress": "P.O. Drawer 7, Wiggins 39577",
   "boardPhone": "601-928-5266",
+  "commissionerLabel": "District",
   "county": "Stone County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kathi Hilburn"
+   },
+   {
+    "district": "2",
+    "name": "Clifton D. Anderson"
+   },
+   {
+    "district": "3",
+    "name": "Joey Bentz"
+   },
+   {
+    "district": "4",
+    "name": "Penny Naramore"
+   },
+   {
+    "district": "5",
+    "name": "Cindy Breland"
+   }
+  ],
   "label": "District",
   "printedPage": 111,
   "published": "2026-05-06",
@@ -2164,7 +3682,30 @@
   ]
  },
  "28133": {
+  "commissionerLabel": "District",
   "county": "Sunflower County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Terosa Bradley"
+   },
+   {
+    "district": "2",
+    "name": "Porchia Anthony"
+   },
+   {
+    "district": "3",
+    "name": "Margaret Rushing"
+   },
+   {
+    "district": "4",
+    "name": "David Ruffin"
+   },
+   {
+    "district": "5",
+    "name": "Shirley Meeks"
+   }
+  ],
   "label": "District",
   "printedPage": 112,
   "published": "2026-05-06",
@@ -2197,7 +3738,30 @@
  "28135": {
   "boardAddress": "P.O. Box 350, Charleston 38921",
   "boardPhone": "662-647-5551",
+  "commissionerLabel": "District",
   "county": "Tallahatchie County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Margaret McIntyre Simmons"
+   },
+   {
+    "district": "2",
+    "name": "Dennis Brown"
+   },
+   {
+    "district": "3",
+    "name": "Yolanda D. Cotton"
+   },
+   {
+    "district": "4",
+    "name": "LaTrenda C. (Trina) Bounds"
+   },
+   {
+    "district": "5",
+    "name": "Charles Huddleston"
+   }
+  ],
   "label": "District",
   "printedPage": 113,
   "published": "2026-05-06",
@@ -2230,7 +3794,30 @@
  "28137": {
   "boardAddress": "201 Ward St., Senatobia 38668",
   "boardPhone": "662-562-5661",
+  "commissionerLabel": "District",
   "county": "Tate County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Dolores B. Wooten"
+   },
+   {
+    "district": "2",
+    "name": "Tammy F. Johnston"
+   },
+   {
+    "district": "3",
+    "name": "Joycelynn S. Dowl"
+   },
+   {
+    "district": "4",
+    "name": "Edith S. Floate"
+   },
+   {
+    "district": "5",
+    "name": "Ellis Blount"
+   }
+  ],
   "label": "District",
   "printedPage": 114,
   "published": "2026-05-06",
@@ -2263,7 +3850,30 @@
  "28139": {
   "boardAddress": "101 E. Spring St., Ripley 38663",
   "boardPhone": "662-837-3655",
+  "commissionerLabel": "District",
   "county": "Tippah County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Randale Keith Hall"
+   },
+   {
+    "district": "2",
+    "name": "Larry Nabors"
+   },
+   {
+    "district": "3",
+    "name": "Bruce Alt"
+   },
+   {
+    "district": "4",
+    "name": "Mary Hodges"
+   },
+   {
+    "district": "5",
+    "name": "Jimmy Benefield"
+   }
+  ],
   "label": "District",
   "printedPage": 115,
   "published": "2026-05-06",
@@ -2296,7 +3906,30 @@
  "28141": {
   "boardAddress": "1008 Battleground Dr., Iuka 38852",
   "boardPhone": "662-423-7032",
+  "commissionerLabel": "District",
   "county": "Tishomingo County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Robert Dexter"
+   },
+   {
+    "district": "2",
+    "name": "Susan Emmons"
+   },
+   {
+    "district": "3",
+    "name": "Mellissa Henson"
+   },
+   {
+    "district": "4",
+    "name": "Kerri Mitchel"
+   },
+   {
+    "district": "5",
+    "name": "Nancy Collier"
+   }
+  ],
   "label": "District",
   "printedPage": 116,
   "published": "2026-05-06",
@@ -2329,7 +3962,30 @@
  "28143": {
   "boardAddress": "P.O. Box 217, Tunica 38676",
   "boardPhone": "662-363-1465",
+  "commissionerLabel": "District",
   "county": "Tunica County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jalen Dunn"
+   },
+   {
+    "district": "2",
+    "name": "Evelyn Paige"
+   },
+   {
+    "district": "3",
+    "name": "Virginia Tenia Fullilove"
+   },
+   {
+    "district": "4",
+    "name": "Marilyn Gordon"
+   },
+   {
+    "district": "5",
+    "name": "Lela Powers"
+   }
+  ],
   "label": "District",
   "printedPage": 117,
   "published": "2026-05-06",
@@ -2362,7 +4018,30 @@
  "28145": {
   "boardAddress": "P.O. Box 847, New Albany 38652",
   "boardPhone": "662-534-1902",
+  "commissionerLabel": "District",
   "county": "Union County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Donald Schuman"
+   },
+   {
+    "district": "2",
+    "name": "Wanona Lea Jumper"
+   },
+   {
+    "district": "3",
+    "name": "Mike Conway"
+   },
+   {
+    "district": "4",
+    "name": "T. Michael (Mike) Beam"
+   },
+   {
+    "district": "5",
+    "name": "Wayne Wilhite"
+   }
+  ],
   "label": "District",
   "printedPage": 118,
   "published": "2026-05-06",
@@ -2395,7 +4074,30 @@
  "28147": {
   "boardAddress": "P.O. Box 351, Tylertown 39667",
   "boardPhone": "601-876-4947",
+  "commissionerLabel": "District",
   "county": "Walthall County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Beth Cowart"
+   },
+   {
+    "district": "2",
+    "name": "Ricky Dowell"
+   },
+   {
+    "district": "3",
+    "name": "William Ratliff"
+   },
+   {
+    "district": "4",
+    "name": "Christy Alford Planche"
+   },
+   {
+    "district": "5",
+    "name": "Paulette Hammond Jackson"
+   }
+  ],
   "label": "District",
   "printedPage": 119,
   "published": "2026-05-06",
@@ -2428,7 +4130,30 @@
  "28149": {
   "boardAddress": "913 Jackson St., Vicksburg 39183",
   "boardPhone": "601-634-8073",
+  "commissionerLabel": "District",
   "county": "Warren County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "James Harper"
+   },
+   {
+    "district": "2",
+    "name": "Bobbie Bingham Morrow"
+   },
+   {
+    "district": "3",
+    "name": "Elva A. Smith"
+   },
+   {
+    "district": "4",
+    "name": "Sara Carlson Dionne"
+   },
+   {
+    "district": "5",
+    "name": "Debra Breland Grayson"
+   }
+  ],
   "label": "District",
   "printedPage": 120,
   "published": "2026-05-06",
@@ -2461,7 +4186,30 @@
  "28151": {
   "boardAddress": "P.O. Box 158, Greenville 38702",
   "boardPhone": "662-378-8355",
+  "commissionerLabel": "District",
   "county": "Washington County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jacqueline Thompson"
+   },
+   {
+    "district": "2",
+    "name": "Sandra L. Reed"
+   },
+   {
+    "district": "3",
+    "name": "Rosie Sturdevant"
+   },
+   {
+    "district": "4",
+    "name": "Sadie Seard-Sheldon"
+   },
+   {
+    "district": "5",
+    "name": "Naomi Curtis"
+   }
+  ],
   "label": "District",
   "printedPage": 121,
   "published": "2026-05-06",
@@ -2494,7 +4242,30 @@
  "28153": {
   "boardAddress": "609 Azalea Dr., Waynesboro 39367",
   "boardPhone": "601-735-3414",
+  "commissionerLabel": "District",
   "county": "Wayne County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Katrina Bender"
+   },
+   {
+    "district": "2",
+    "name": "Dennis McRae"
+   },
+   {
+    "district": "3",
+    "name": "Kathy McInnis Odom"
+   },
+   {
+    "district": "4",
+    "name": "Avangelia Davis"
+   },
+   {
+    "district": "5",
+    "name": "Imogene Walley"
+   }
+  ],
   "label": "District",
   "printedPage": 122,
   "published": "2026-05-06",
@@ -2526,7 +4297,30 @@
  },
  "28155": {
   "boardAddress": "6333 MS Hwy. 9, Ste. 123, Walthall 39771",
+  "commissionerLabel": "District",
   "county": "Webster County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Pauline Quinn"
+   },
+   {
+    "district": "2",
+    "name": "Stephanie Langston"
+   },
+   {
+    "district": "3",
+    "name": "Cathy Chandler"
+   },
+   {
+    "district": "4",
+    "name": "Annie Heard"
+   },
+   {
+    "district": "5",
+    "name": "Dianne Wright"
+   }
+  ],
   "label": "District",
   "printedPage": 123,
   "published": "2026-05-06",
@@ -2558,7 +4352,30 @@
  },
  "28157": {
   "boardAddress": "P.O. Box 1284, Woodville 39669",
+  "commissionerLabel": "District",
   "county": "Wilkinson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Vicie Rogers"
+   },
+   {
+    "district": "2",
+    "name": "Tracey Smith-Ferguson"
+   },
+   {
+    "district": "3",
+    "name": "Monique Moore-Arbuthnot"
+   },
+   {
+    "district": "4",
+    "name": "Edna Roy Harvey"
+   },
+   {
+    "district": "5",
+    "name": "Carla Rowe"
+   }
+  ],
   "label": "District",
   "printedPage": 124,
   "published": "2026-05-06",
@@ -2591,7 +4408,30 @@
  "28159": {
   "boardAddress": "P.O. Drawer 69, Louisville 39339",
   "boardPhone": "662-773-7170",
+  "commissionerLabel": "District",
   "county": "Winston County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Tracy McCully"
+   },
+   {
+    "district": "2",
+    "name": "Bryon Foster"
+   },
+   {
+    "district": "3",
+    "name": "Dean Miller"
+   },
+   {
+    "district": "4",
+    "name": "Mattie Cooper"
+   },
+   {
+    "district": "5",
+    "name": "Julia Lovorn"
+   }
+  ],
   "label": "District",
   "printedPage": 125,
   "published": "2026-05-06",
@@ -2622,7 +4462,30 @@
   ]
  },
  "28161": {
+  "commissionerLabel": "District",
   "county": "Yalobusha County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Colleen Craven"
+   },
+   {
+    "district": "2",
+    "name": "Missy Kimzey"
+   },
+   {
+    "district": "3",
+    "name": "Brad Willingham"
+   },
+   {
+    "district": "4",
+    "name": "Gerald Booker"
+   },
+   {
+    "district": "5",
+    "name": "Vivian Simmons"
+   }
+  ],
   "label": "District",
   "printedPage": 126,
   "published": "2026-05-06",
@@ -2655,7 +4518,30 @@
  "28163": {
   "boardAddress": "P.O. Box 1106, Yazoo City 39194",
   "boardPhone": "662-746-8668",
+  "commissionerLabel": "District",
   "county": "Yazoo County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Thad Hood"
+   },
+   {
+    "district": "2",
+    "name": "Chilah Boddy"
+   },
+   {
+    "district": "3",
+    "name": "Gretta Winters"
+   },
+   {
+    "district": "4",
+    "name": "Lynn McCallister III"
+   },
+   {
+    "district": "5",
+    "name": "Claude Collum"
+   }
+  ],
   "label": "District",
   "printedPage": 127,
   "published": "2026-05-06",

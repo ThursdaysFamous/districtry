@@ -711,7 +711,27 @@ def _population_sentence(people, counted, share, state, cls):
 _LONG_DISTRICT_LIST = 12
 
 
-def _districts_note(district_names, cls=None):
+# WHERE A COUNCIL IS ELECTED BY DISTRICT, "NO COUNCIL SEAT BELONGS TO IT" IS
+# FALSE, and the card says so a few lines further down: the Mississippi
+# Choctaw's council page gives each of its seventeen members a community, and
+# the card lists each member's community beside the name. So the clause is
+# written only where the carried council names no district. A card built before
+# this rule keeps the clause until its state's file is rebuilt, which is a
+# change readers there would see (measured 2026-10-15: live cards in Michigan,
+# Minnesota, New York, Tennessee and Wisconsin carried it beside a council
+# listed by district).
+_COUNCIL_DISTRICTS_NOTE = ("None. The Census draws no tribal district on this land. "
+                           "Where the nation's own page names the district a "
+                           "council member represents, it is beside their name below.")
+
+
+def council_has_districts(code, councils):
+    """Whether the council carried for this land names a district for anyone."""
+    rec = (councils or {}).get(code) or {}
+    return any(m.get("district") for m in rec.get("members") or [])
+
+
+def _districts_note(district_names, cls=None, council_districts=False):
     """Whether any district is drawn on this land, in the card's own words."""
     if cls in _STATISTICAL_NOTE:
         if not district_names:
@@ -721,6 +741,8 @@ def _districts_note(district_names, cls=None):
                     % len(district_names))
         return ", ".join(sorted(district_names))
     if not district_names:
+        if council_districts:
+            return _COUNCIL_DISTRICTS_NOTE
         return ("None. The Census draws no tribal district on this land, so no "
                 "council seat belongs to it.")
     return ", ".join(sorted(district_names))
@@ -763,7 +785,8 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
             # raw fields would be guessing at what this builder measured. The
             # raw values stay beside them for anything that wants to compute.
             "populationNote": _population_note(counts, known, code, cls, clip["share"], state, renamed),
-            "districtsNote": _districts_note(district_names, cls),
+            "districtsNote": _districts_note(district_names, cls,
+                                             council_has_districts(code, councils)),
             "areaKm2": round(clip["inside_km2"], 4),
             "wholeAreaKm2": round(clip["whole_km2"], 4),
             "shareInState": round(clip["share"], 6),
@@ -1366,6 +1389,16 @@ def selftest():
         "4 people at the 2020 census.")
     assert _districts_note([]).startswith("None.")
     assert _districts_note(["B District", "A District"]) == "A District, B District"
+    # A council elected by district never reads "no council seat belongs to it".
+    assert "no council seat" in _districts_note([])
+    assert _districts_note([], "reservation", True) == _COUNCIL_DISTRICTS_NOTE
+    assert "no council seat" not in _COUNCIL_DISTRICTS_NOTE
+    assert _districts_note(["B", "A"], "reservation", True) == "A, B"
+    assert council_has_districts("1", {"1": {"members": [{"name": "A B", "role": "Chair"},
+                                                          {"name": "C D", "role": "Member",
+                                                           "district": "East"}]}})
+    assert not council_has_districts("1", {"1": {"members": [{"name": "A B", "role": "Chair"}]}})
+    assert not council_has_districts("2", {"1": {"members": []}})
 
     # Every declared reason names a host and a date, so a later pass can tell a
     # measured block from a remembered one.

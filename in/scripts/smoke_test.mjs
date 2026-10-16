@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "39.76860,-86.16260"; // the Indiana Statehouse, downtown Indianapolis (Marion County)
-const OFFLINE = ["county", "us-house", "in-senate", "in-house", "voting-precinct"];
-const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97", "voting-precinct": "CN055" };
+const OFFLINE = ["county", "us-house", "in-senate", "in-house", "voting-precinct", "county-council"];
+const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97", "voting-precinct": "CN055", "county-council": "12" };
 const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.
 const APP_NAME = "districtry Indiana";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -108,10 +108,16 @@ const STRAGGLER_POINT = "0,0";
 // exercised by in/scripts/validate_sources.py instead, which is the fleet's
 // rule — a browser gate that needs a government server up fails on somebody
 // else's schedule.
-const NEGATIVE_HIDDEN = ["zip-code"];
-// The ids checked at the negative point: the offline anchors plus the one
-// coverage-declaring layer above.
-const NEGATIVE_IDS = OFFLINE.concat(NEGATIVE_HIDDEN);
+//
+// COUNTY COUNCIL DISTRICT HIDES TOO, for a different reason: it answers only
+// in the counties whose lines are drawn, and its empty card says this county's
+// lines are not published, which is true in Indiana and wrong in Kentucky. It
+// is an offline anchor as well, so it is checked hidden here and named at the
+// anchor in check 2.
+const NEGATIVE_HIDDEN = ["zip-code", "county-council"];
+// The ids checked at the negative point: the offline anchors plus the
+// coverage-declaring layers above, each once.
+const NEGATIVE_IDS = Array.from(new Set(OFFLINE.concat(NEGATIVE_HIDDEN)));
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
 
@@ -690,6 +696,87 @@ try {
         /At large/.test(fw.text) && /elected November 7, 2023/.test(fw.text),
       fw.text.slice(0, 160));
     await context.close();
+  }
+
+
+  // 2g2. A town the election results cannot name whole (an uncontested town
+  //      seat is on no ballot) is named from the town's own council page, and
+  //      the card says so rather than calling the names election winners.
+  //      Plainfield's polygon is stubbed the way 2g stubs Fort Wayne's.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const [la, ln] = [39.7042, -86.3994];
+    const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
+      [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    const page = await booted(context, `${BASE}#point=${la},${ln}&layers=municipality`, (p) =>
+      p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/4\/query/, (route) =>
+        route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
+          features: [{
+            attributes: { GEOID: "1860246", NAME: "Plainfield town", BASENAME: "Plainfield",
+                          STATE: "18", LSADC: "43" },
+            geometry: { rings: [ring] },
+          }],
+        }) })));
+    const pf = await cardText(page, "municipality");
+    check("City or Town card names Plainfield's council from the town's own page, dated to the read",
+      !pf.error && /PLAINFIELD TOWN COUNCIL/i.test(pf.text) && /District 5/.test(pf.text) &&
+        /as the town lists it on its own website, read [A-Z][a-z]+ \d+, 20\d\d/.test(pf.text) &&
+        !/elected November/.test(pf.text) && /council page/.test(pf.text),
+      pf.text.slice(0, 200));
+    await context.close();
+  }
+
+
+  // 2h. The Township or City card names the township's trustee and board,
+  //     from the same-origin township file joined by the subdivision's Census
+  //     id. The township polygon is TIGERweb's, so it is stubbed: a square
+  //     around downtown Fort Wayne carrying Wayne Township's id.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const [la, ln] = [41.0793, -85.1394];
+    const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
+      [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    const page = await booted(context, `${BASE}#point=${la},${ln}&layers=county-subdivision`, (p) =>
+      p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/1\/query/, (route) =>
+        route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
+          features: [{
+            attributes: { GEOID: "1800381620", NAME: "Wayne township", BASENAME: "Wayne",
+                          STATE: "18", COUNTY: "003", LSADC: "44" },
+            geometry: { rings: [ring] },
+          }],
+        }) })));
+    const tw = await cardText(page, "county-subdivision");
+    check("Township card names Wayne Township's trustee and board as dated winners",
+      !tw.error && /Wayne/.test(tw.text) && /TOWNSHIP TRUSTEE/i.test(tw.text) &&
+        /Austin R Knox/.test(tw.text) && /TOWNSHIP BOARD/i.test(tw.text) &&
+        /elected November 8, 2022/.test(tw.text) && /party caucus/.test(tw.text),
+      tw.text.slice(0, 200));
+    await context.close();
+  }
+
+
+  // 2i. The County Council District card names the district's own member and
+  //     lists the at-large members apart; at the Statehouse it names the
+  //     City-County Council district's member and the mayor; and Boone's
+  //     District 3, whose seat the results title "Dist 36", names nobody
+  //     rather than guessing. All same-origin, so nothing third-party decides.
+  {
+    const cases = [
+      { at: "41.0793,-85.1394", name: "Allen District 4", re: [/Allen County Council District 4/, /Don Wyss/,
+        /Elected by the whole county/i, /Ken Fries/, /party caucus/] },
+      { at: POINT, name: "Marion District 12", re: [/City-County Council District 12/, /Vop Osili/,
+        /Joe Hogsett/, /party caucus/] },
+      { at: "40.04,-86.40", name: "Boone District 3", re: [/Boone County Council District 3/,
+        /Not named here/, /does not guess/] },
+    ];
+    for (const c of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.at}&layers=county-council`);
+      const card = await cardText(page, "county-council");
+      check(`County Council District card at ${c.name} names the right people`,
+        !card.error && c.re.every((r) => r.test(card.text)), card.text.slice(0, 200));
+      await context.close();
+    }
   }
 
 

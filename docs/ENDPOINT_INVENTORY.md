@@ -141,7 +141,7 @@ prose.
 | mi | 0 | 19 |
 | mn | 6 | 20 |
 | ky | 5 | 15 |
-| in | 4 | 13 |
+| in | 4 | 14 |
 | nc | 4 | 13 |
 | ok | 5 | 14 |
 | sc | 4 | 14 |
@@ -300,7 +300,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
 - **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`, `voting-precinct`.
 
-#### in — 4 of 13 layers fetch their shapes
+#### in — 4 of 14 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -311,7 +311,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `in-senate`, `county`, `in-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `county-council`, `voting-precinct`, `tribal-government`.
 
 #### nc — 4 of 13 layers fetch their shapes
 
@@ -379,13 +379,13 @@ measured until the next run describes it.
 | mi | 36 | 65 | 1 |
 | mn | 29 | 19 | 0 |
 | ky | 21 | 15 | 0 |
-| in | 16 | 13 | 0 |
+| in | 16 | 15 | 0 |
 | nc | 19 | 12 | 0 |
 | ok | 18 | 12 | 0 |
 | sc | 20 | 14 | 0 |
 | tn | 21 | 14 | 0 |
 | ar | 20 | 13 | 0 |
-| **total** | **550** | **960** | **12** |
+| **total** | **550** | **962** | **12** |
 
 **155 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
