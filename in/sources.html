@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1165,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1205,6 +1205,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO ROSTER SHIPS IN THIS CHANGE — the same gap as the Senate layer (in-general-assembly-roster); the card names the district and links the chamber's own directory.</td>
                 <td data-label="Where it applies">Indiana — statewide, all 100 districts.</td>
+              </tr>
+              <tr id="layer-county-council">
+                <th scope="row"><span class="layer-name">County Council District</span><code>county-council</code></th>
+                <td data-label="What it answers">Which county council district contains the point, and who won that district's seat and the county's three at-large seats; in Marion County, the Indianapolis City-County Council district and its member.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gisdata.in.gov/server/rest/services/Hosted/Administrative_Boundaries_of_Indiana_Current/FeatureServer/4" target="_blank" rel="noopener">Indiana Geographic Information Office — Administrative Boundaries of Indiana, layer 4 (CountyCouncilPolygon), each county's own council districts, joined into one shape per district, clipped to the county and shipped with the app by in/scripts/build_in_council_districts.py; 56 counties file, 55 are drawn (Clay files three of its four districts), measured 2026-10-15.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The district's council member and the county's at-large members, each the winner of that seat's most recent election in the Indiana Election Division's certified results (in-county-councils.json; for Marion County, the 2023 municipal general in in-city-officials.json). A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Boone County's District 3 seat is titled &quot;Dist 36&quot; in the results, so its card does not guess which member holds it.</td>
+                <td data-label="Where it applies">Indiana — the 55 counties whose council districts the state's mapping office publishes in full. In the other 37 the card says the lines are not published, and the County card lists every council member.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1322,7 +1333,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,012 features for Indiana, measured 2026-09-29</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET, AND THE CARD SAYS SO. An Indiana township elects a trustee and a three-member township board (five in Marion County), and some townships also elect an assessor — all four are separate certified office categories in the Election Division's own returns, so the people exist and are fetchable. This change ships the boundary and names the offices without naming who holds them. Recorded as gap in-township-officers.</td>
+                <td data-label="Who it names">The township trustee and the three-member township board, as elected at the November 2022 general, from the Indiana Election Division's certified results (in-township-officials.json): 973 trustees and 921 boards of the 1,004 civil townships. A township the results do not cover, including Marion County's five-member boards, says so on the card, and the names are election winners rather than a roster the township keeps. Recorded as gap in-township-officers.</td>
                 <td data-label="Where it applies">Indiana — statewide. The card distinguishes a civil township from the eight records that are Census bookkeeping rather than a government.</td>
               </tr>
               <tr id="layer-municipality">
@@ -1333,7 +1344,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 566 features for Indiana, measured 2026-09-29</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">The mayor and council of 36 of the 39 places over 25,000 people (all 33 cities and three of six towns), each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election and rebuilt weekly by in/scripts/build_in_city_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so the results cannot name the whole council; smaller places are not named yet. Recorded as gap in-municipal-officeholders.</td>
+                <td data-label="Who it names">The mayor and council of all 39 places over 25,000 people. For 36 of them (all 33 cities and three of six towns) each name is the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election; a winner is not a sitting member, because Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so their councils are read from each town's own council page and dated to the read. Rebuilt weekly by in/scripts/build_in_city_officials.py. Smaller places are not named yet. Recorded as gap in-municipal-officeholders.</td>
                 <td data-label="Where it applies">Indiana — statewide, all 566 incorporated places. 'Indianapolis city (balance)' is the Census record for the part of the consolidated Indianapolis–Marion County government outside its included towns, not a separate municipality.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1456,6 +1467,28 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/in/sources.html#dataset-county-council",
+      "identifier": "county-council",
+      "name": "County Council District",
+      "description": "Which county council district contains the point, and who won that district's seat and the county's three at-large seats; in Marion County, the Indianapolis City-County Council district and its member. The district's council member and the county's at-large members, each the winner of that seat's most recent election in the Indiana Election Division's certified results (in-county-councils.json; for Marion County, the 2023 municipal general in in-city-officials.json). A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Boone County's District 3 seat is titled \"Dist 36\" in the results, so its card does not guess which member holds it.",
+      "url": "https://districtry.com/in/sources.html#layer-county-council",
+      "isPartOf": {
+        "@id": "https://districtry.com/in/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Indiana Geographic Information Office — Administrative Boundaries of Indiana, layer 4 (CountyCouncilPolygon), each county's own council districts, joined into one shape per district, clipped to the county and shipped with the app by in/scripts/build_in_council_districts.py; 56 counties file, 55 are drawn (Clay files three of its four districts), measured 2026-10-15.",
+          "url": "https://gisdata.in.gov/server/rest/services/Hosted/Administrative_Boundaries_of_Indiana_Current/FeatureServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Indiana — the 55 counties whose council districts the state's mapping office publishes in full. In the other 37 the card says the lines are not published, and the County card lists every council member"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/in/sources.html#dataset-school-district-unified",
       "identifier": "school-district-unified",
       "name": "School District",
@@ -1503,7 +1536,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-county-subdivision",
       "identifier": "county-subdivision",
       "name": "Township",
-      "description": "The civil township covering the point — in Indiana a real unit of government, not a Census construct. NO OFFICEHOLDER YET, AND THE CARD SAYS SO. An Indiana township elects a trustee and a three-member township board (five in Marion County), and some townships also elect an assessor — all four are separate certified office categories in the Election Division's own returns, so the people exist and are fetchable. This change ships the boundary and names the offices without naming who holds them. Recorded as gap in-township-officers.",
+      "description": "The civil township covering the point — in Indiana a real unit of government, not a Census construct. The township trustee and the three-member township board, as elected at the November 2022 general, from the Indiana Election Division's certified results (in-township-officials.json): 973 trustees and 921 boards of the 1,004 civil townships. A township the results do not cover, including Marion County's five-member boards, says so on the card, and the names are election winners rather than a roster the township keeps. Recorded as gap in-township-officers.",
       "url": "https://districtry.com/in/sources.html#layer-county-subdivision",
       "isPartOf": {
         "@id": "https://districtry.com/in/sources.html#catalog"
@@ -1525,7 +1558,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point. The mayor and council of 36 of the 39 places over 25,000 people (all 33 cities and three of six towns), each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election and rebuilt weekly by in/scripts/build_in_city_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so the results cannot name the whole council; smaller places are not named yet. Recorded as gap in-municipal-officeholders.",
+      "description": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point. The mayor and council of all 39 places over 25,000 people. For 36 of them (all 33 cities and three of six towns) each name is the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election; a winner is not a sitting member, because Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so their councils are read from each town's own council page and dated to the read. Rebuilt weekly by in/scripts/build_in_city_officials.py. Smaller places are not named yet. Recorded as gap in-municipal-officeholders.",
       "url": "https://districtry.com/in/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/in/sources.html#catalog"
