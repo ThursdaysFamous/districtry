@@ -1858,9 +1858,10 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # One piece of off-reservation trust land, 0.695 km2 near Henning; the
-        # fleet-wide tribal-government thread owns it.
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
+        # Mississippi Band of Choctaw Indians' trust land near Henning, named
+        # with the nation's Tribal Chief and Tribal Council.
+        "tribal-government": answers("tribal-government"),
     },
     # Arkansas, added at its go-live with the national tier and the quorum
     # court layer.
@@ -2292,12 +2293,10 @@ WARD_MAPS = {
     "wi": dict(drawn="all"),
     "ny": dict(drawn="all"),
     "ia": dict(
-        drawn={"1912000", "1921000", "1982425"},
-        owed={"1901855": "Ames", "1906355": "Bettendorf",
-              "1911755": "Cedar Falls", "1919000": "Davenport",
-              "1922395": "Dubuque", "1949485": "Marion",
-              "1949755": "Marshalltown", "1950160": "Mason City",
-              "1983910": "West Des Moines"},
+        drawn={"1912000", "1921000", "1982425",
+               # nine more on 2026-10-15, ia/scripts/build_ia_city_wards.py
+               "1901855", "1906355", "1911755", "1919000", "1922395",
+               "1949485", "1949755", "1950160", "1983910"},
         at_large={"1938595": "Iowa City's charter nominates its district "
                              "council members by district and elects them by "
                              "the whole city"}),

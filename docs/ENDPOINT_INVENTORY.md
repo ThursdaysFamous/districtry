@@ -144,7 +144,7 @@ prose.
 | nc | 4 | 12 |
 | ok | 5 | 14 |
 | sc | 4 | 13 |
-| tn | 6 | 14 |
+| tn | 6 | 15 |
 | ar | 3 | 12 |
 
 ### Where each layer's shapes come from
@@ -350,7 +350,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `county-subdivision`, `tribal-government`.
 
-#### tn — 5 of 14 layers fetch their shapes
+#### tn — 5 of 15 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -362,7 +362,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `tn-senate`, `county`, `tn-house`, `county-commissioner`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `county-subdivision`.
+- **Not measured** — declared since the probe ran: `county-subdivision`, `tribal-government`.
 
 #### ar — not measured
 
@@ -374,7 +374,7 @@ measured until the next run describes it.
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 265 | 5 |
-| ia | 71 | 65 | 0 |
+| ia | 71 | 70 | 0 |
 | mi | 32 | 61 | 1 |
 | mn | 29 | 19 | 0 |
 | ky | 19 | 14 | 0 |
@@ -382,9 +382,9 @@ measured until the next run describes it.
 | nc | 17 | 11 | 0 |
 | ok | 18 | 12 | 0 |
 | sc | 18 | 13 | 0 |
-| tn | 18 | 11 | 0 |
+| tn | 19 | 13 | 0 |
 | ar | 18 | 12 | 0 |
-| **total** | **533** | **938** | **12** |
+| **total** | **534** | **945** | **12** |
 
 **150 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

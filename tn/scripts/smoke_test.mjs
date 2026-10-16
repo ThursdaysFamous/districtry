@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissi
 const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19" };
 const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.
 const APP_NAME = "districtry Tennessee";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -1004,6 +1004,41 @@ try {
         missing.length ? `missing ${missing.join(" ")} in: ${text.slice(0, 160)}` : text.slice(0, 120));
       await context.close();
     }
+  }
+  // ---- Tribal Government. The Tennessee part of the Mississippi Choctaw
+  // trust land near Henning names the nation, its seat in Mississippi and its
+  // Tribal Chief and Council from the nation's own page; a point off tribal
+  // land is told so in the layer's own words. The point is shapely's
+  // representative point of the shipped land clipped to the state outline
+  // (2026-10-15).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const c = await at("35.67906,-89.59052");
+    check("the trust land near Henning names the nation, its seat and its Tribal Chief and Council",
+          c.by("Tribal government") === "Mississippi Band of Choctaw Indians" &&
+          c.by("Seat of government") === "Choctaw, MS" &&
+          c.by("Land") === "Mississippi Choctaw Off-Reservation Trust Land" &&
+          c.by("Population").indexOf("about 4% of it lies in Tennessee") !== -1 &&
+          c.text.indexOf("Cyrus Ben") !== -1 &&
+          c.text.indexOf("From the nation's own council page") !== -1 &&
+          !c.by("Why no names"),
+          JSON.stringify(c.text.slice(0, 200)));
+    const off = await at(POINT);
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("1 tribal area") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
   }
 } finally {
   await browser.close();
