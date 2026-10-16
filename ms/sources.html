@@ -1258,7 +1258,7 @@ table.matrix code {
               </tr>
               <tr id="layer-county-supervisor">
                 <th scope="row"><span class="layer-name">County Supervisor District</span><code>county-supervisor</code></th>
-                <td data-label="What it answers">Which of the county's five supervisors represents the point, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five.</td>
+                <td data-label="What it answers">The supervisor district covering the point, and the supervisor and the election commissioner elected from it, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five of each.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22" target="_blank" rel="noopener">U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries the lines drawn after the 2010 census, which are never drawn; 8 of those counties are drawn from their own maps instead (below).</a></li>
@@ -1267,7 +1267,7 @@ table.matrix code {
                     <li><a href="https://services1.arcgis.com/mz3jHVSffoNsLuEB/arcgis/rest/services/Lamar_Service/FeatureServer/15" target="_blank" rel="noopener">Lamar County — the supervisor district layer of the parcel viewer the county's website links to, which matches the printed map of the districts the county publishes, dated 9 August 2022. Redrawn along whole 2020 census blocks in the same way.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ms-county-officials.json, the roster the County card reads: the supervisor elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.</td>
+                <td data-label="Who it names">ms-county-officials.json, the roster the County card reads: the supervisor and the election commissioner elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.</td>
                 <td data-label="Where it applies">20 of Mississippi's 82 counties; hidden in the other 62, which the Data gaps panel lists and explains.</td>
               </tr>
               <tr id="layer-tribal-government">
@@ -1358,13 +1358,13 @@ table.matrix code {
             <tbody>
               <tr id="layer-county">
                 <th scope="row"><span class="layer-name">County</span><code>county</code></th>
-                <td data-label="What it answers">Which county contains the point, and the five supervisors on its board.</td>
+                <td data-label="What it answers">Which county contains the point, the five supervisors on its board, and its five election commissioners.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and neither is anything the directory prints for the election commissioners.</td>
+                <td data-label="Who it names">ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and for the election commissioners only their names are, because the directory prints each one's own address, which may be a home.</td>
                 <td data-label="Where it applies">Mississippi — statewide, all 82 counties.</td>
               </tr>
               <tr id="layer-zip-code">
@@ -1566,7 +1566,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point, and the five supervisors on its board. ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and neither is anything the directory prints for the election commissioners.",
+      "description": "Which county contains the point, the five supervisors on its board, and its five election commissioners. ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and for the election commissioners only their names are, because the directory prints each one's own address, which may be a home.",
       "url": "https://districtry.com/ms/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"
@@ -1632,7 +1632,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-county-supervisor",
       "identifier": "county-supervisor",
       "name": "County Supervisor District",
-      "description": "Which of the county's five supervisors represents the point, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five. ms-county-officials.json, the roster the County card reads: the supervisor elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.",
+      "description": "The supervisor district covering the point, and the supervisor and the election commissioner elected from it, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five of each. ms-county-officials.json, the roster the County card reads: the supervisor and the election commissioner elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.",
       "url": "https://districtry.com/ms/sources.html#layer-county-supervisor",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"

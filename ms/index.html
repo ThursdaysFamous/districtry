@@ -13357,6 +13357,12 @@ function initMississippiExplorer() {
    * The builder keeps one only where at least three of the five supervisors
    * print the same one, so this card can only ever show a shared office.
    *
+   * THE ELECTION COMMISSIONERS, BY NAME ONLY. The same directory names the
+   * county's five election commissioners, one elected from each supervisor
+   * district, and prints each one's own address, which may be a home. The
+   * builder keeps nothing from those lines but the name, so this card names
+   * them and can show no contact for them.
+   *
    * WHICH OF THE FIVE REPRESENTS THE POINT is the County Supervisor District
    * layer's answer, and it answers only where a county's current lines are
    * confirmed. This card lists the whole board and claims no district for
@@ -13401,9 +13407,43 @@ function initMississippiExplorer() {
     return source.charAt(0).toUpperCase() + source.slice(1) +
       (dated ? " (dated " + dated + ")" : "") +
       (printed ? ", page " + printed : "") + ". The Secretary of State " +
-      "publishes it once a year, so a change on the board can take until " +
+      "publishes it once a year, so a change of officeholder can take until " +
       "the next edition to appear here; this app checks for a new edition " +
       "every week.";
+  }
+  // A list of five seats, as person rows and the seats the directory prints
+  // as vacant, each named in `label`'s word ("District 3", "Beat 3").
+  function msSeats(seats, label, badge) {
+    var people = [];
+    var vacant = [];
+    (seats || []).forEach(function (s) {
+      if (!s) return;
+      if (s.vacant === true) {
+        vacant.push(msDistrictName(label, s.district));
+        return;
+      }
+      if (!s.name) return;
+      people.push({ name: String(s.name), badge: badge, note: msDistrictName(label, s.district) });
+    });
+    return { people: people, vacant: vacant };
+  }
+  // "District 3 is listed as vacant ..." for the seats msSeats found vacant.
+  function msVacancyField(vacant) {
+    var seats = vacant.length === 1 ? vacant[0]
+      : vacant.slice(0, -1).join(", ") + " and " + vacant[vacant.length - 1];
+    return {
+      label: vacant.length === 1 ? "Vacant seat" : "Vacant seats",
+      value: seats + (vacant.length === 1 ? " is" : " are") +
+        " listed as vacant in the Secretary of State's directory."
+    };
+  }
+  // The same-numbered seat in a list of five, or null.
+  function msSeatFor(seats, district) {
+    var found = null;
+    (seats || []).forEach(function (s) {
+      if (s && district != null && String(s.district) === String(district)) found = s;
+    });
+    return found;
   }
   // The board's shared office as one office block, or null where the
   // directory prints none the builder could keep.
@@ -13470,50 +13510,53 @@ function initMississippiExplorer() {
         }]));
         return wrap;
       }
-      var people = [];
       // A seat the directory prints as "Vacant" is said to be vacant, never
       // listed as a person, and never silently dropped, which would read as a
       // board of four.
-      var vacant = [];
-      (o.supervisors || []).forEach(function (s) {
-        if (!s) return;
-        if (s.vacant === true) {
-          vacant.push(msDistrictName(o.label, s.district));
-          return;
-        }
-        if (!s.name) return;
-        people.push({ name: String(s.name), badge: "Supervisor",
-          note: msDistrictName(o.label, s.district) });
-      });
-      if (people.length || vacant.length) {
+      var board = msSeats(o.supervisors, o.label, "Supervisor");
+      if (board.people.length || board.vacant.length) {
         wrap.appendChild(renderSectionLabel("Board of supervisors"));
       }
-      if (people.length) {
-        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      if (board.people.length) {
+        wrap.appendChild(renderPersonRows(board.people, { tinted: true }));
       }
-      if (vacant.length) {
-        var seats = vacant.length === 1 ? vacant[0]
-          : vacant.slice(0, -1).join(", ") + " and " + vacant[vacant.length - 1];
-        wrap.appendChild(renderFieldStack([{
-          label: vacant.length === 1 ? "Vacant seat" : "Vacant seats",
-          value: seats + (vacant.length === 1 ? " is" : " are") +
-            " listed as vacant in the Secretary of State's directory."
-        }]));
-      }
+      if (board.vacant.length) wrap.appendChild(renderFieldStack([msVacancyField(board.vacant)]));
       var office = msBoardOffice(o);
       if (office) wrap.appendChild(office);
+      // Names only: the directory prints each commissioner's own address,
+      // and the builder keeps nothing else from the line.
+      var commission = msSeats(o.electionCommissioners, o.commissionerLabel,
+        "Election commissioner");
+      var hasCommission = commission.people.length > 0 || commission.vacant.length > 0;
+      if (hasCommission) {
+        wrap.appendChild(renderSectionLabel("Election commissioners"));
+      }
+      if (commission.people.length) {
+        wrap.appendChild(renderPersonRows(commission.people, { tinted: true }));
+      }
+      if (commission.vacant.length) {
+        wrap.appendChild(renderFieldStack([msVacancyField(commission.vacant)]));
+      }
       var word = o.label === "Beat" ? "beat" : "district";
-      wrap.appendChild(renderFieldStack([
-        {
-          label: "Which one represents this point",
-          value: "The supervisor elected from the " + word + " this point is " +
-            "in. The County Supervisor District layer shows which " + word +
-            " that is in the counties where this app has confirmed the " +
-            "current lines; in the others it does not appear, rather than " +
-            "draw lines that may be out of date."
-        },
-        { label: "Where these names come from", value: msDirectoryCredit(o) }
-      ]));
+      var fields = [{
+        label: "Which one represents this point",
+        value: "The supervisor " + (hasCommission ? "and the election " +
+          "commissioner " : "") + "elected from the " + word + " this point " +
+          "is in. The County Supervisor District layer shows which " + word +
+          " that is in the counties where this app has confirmed the " +
+          "current lines; in the others it does not appear, rather than " +
+          "draw lines that may be out of date."
+      }];
+      if (hasCommission) {
+        fields.push({
+          label: "What election commissioners do",
+          value: "The Secretary of State's directory says their duties include " +
+            "\u201cconducting general and special elections, certifying " +
+            "election results, and purging voter rolls.\u201d"
+        });
+      }
+      fields.push({ label: "Where these names come from", value: msDirectoryCredit(o) });
+      wrap.appendChild(renderFieldStack(fields));
       return wrap;
     },
     primaryLink: function (result) {
@@ -13639,27 +13682,43 @@ function initMississippiExplorer() {
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
       var o = result.officials;
-      var seat = null;
-      ((o && o.supervisors) || []).forEach(function (s) {
-        if (s && result.district != null && String(s.district) === String(result.district)) seat = s;
-      });
+      var seat = msSeatFor(o && o.supervisors, result.district);
+      // The commissioner elected from the same district. The directory numbers
+      // both lists 1 to 5; they are joined only where it also names them with
+      // the same word, so a county that calls its supervisor districts beats
+      // while numbering its commissioners as districts is not joined on a
+      // guess (none of the drawn counties does, measured 2026-10-16).
+      var commissioner = (o && o.commissionerLabel === o.label)
+        ? msSeatFor(o.electionCommissioners, result.district) : null;
       var word = result.label === "Beat" ? "beat" : "district";
+      var people = [];
+      var notes = [];
       if (seat && seat.vacant === true) {
-        wrap.appendChild(renderFieldStack([{
+        notes.push({
           label: "Supervisor",
           value: "This seat is listed as vacant in the Secretary of State's directory."
-        }]));
+        });
       } else if (seat && seat.name) {
-        wrap.appendChild(renderPersonRows([{ name: String(seat.name), badge: "Supervisor" }]));
+        people.push({ name: String(seat.name), badge: "Supervisor" });
       } else {
-        wrap.appendChild(renderFieldStack([{
+        notes.push({
           label: "Supervisor",
           value: result.rosterFailed
             ? "The list of supervisors did not load, so no one is named here."
             : "The Secretary of State's directory names no supervisor for this " +
               word + ", so no one is named here."
-        }]));
+        });
       }
+      if (commissioner && commissioner.vacant === true) {
+        notes.push({
+          label: "Election commissioner",
+          value: "This seat is listed as vacant in the Secretary of State's directory."
+        });
+      } else if (commissioner && commissioner.name) {
+        people.push({ name: String(commissioner.name), badge: "Election commissioner" });
+      }
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      if (notes.length) wrap.appendChild(renderFieldStack(notes));
       var office = msBoardOffice(o);
       if (office) wrap.appendChild(office);
       var rows = [{
@@ -13696,7 +13755,12 @@ function initMississippiExplorer() {
               "figures published with this map leave out" : "") + "."
         });
       }
-      if (o) rows.push({ label: "Where the name comes from", value: msDirectoryCredit(o) });
+      if (o) {
+        rows.push({
+          label: people.length > 1 ? "Where the names come from" : "Where the name comes from",
+          value: msDirectoryCredit(o)
+        });
+      }
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
     },

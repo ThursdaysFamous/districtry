@@ -919,6 +919,11 @@ try {
   //        the card says the seat is vacant, and nobody called Vacant is
   //        listed as a supervisor. A roster with no vacancy there still runs
   //        the other assertions, so a new edition filling the seat passes.
+  //    In all four the card also names the county's five election
+  //    commissioners by district, in the directory's word for them ("District"
+  //    even in Jasper, where the supervisors' districts are beats), and quotes
+  //    the directory on what they do. Only names reach the card: the roster
+  //    carries nothing else for them, which the builder's --check holds.
   //    The non-Capitol points are interior points of each county as the
   //    shipped geometry draws it (polylabel, 2026-10-15).
   {
@@ -958,6 +963,21 @@ try {
         missing.length ? `missing=${missing.slice(0, 3)}`
           : !vacancyRight ? `unsaid=${unsaid} vacantAsName=${vacantAsName}`
           : `office=${office} ${county.text.slice(0, 90)}`);
+      const cword = o.commissionerLabel === "Beat" ? "Beat" : "District";
+      const commissioners = (o.electionCommissioners || []).filter((ec) => ec.vacant !== true);
+      // the commissioners follow their own heading, so each is looked for
+      // there; the heading is set in capitals, which innerText reports
+      const at = county.text.search(/election commissioners/i);
+      const after = at >= 0 ? county.text.slice(at) : "";
+      const unnamed = commissioners.filter((ec) => !after.includes(ec.name) ||
+        !after.includes(`${cword} ${ec.district}`)).map((ec) => ec.name);
+      check(`county card at ${c.name} names its election commissioners by ${cword.toLowerCase()} and quotes the directory on what they do`,
+        !county.error && commissioners.length > 0 && unnamed.length === 0 &&
+          /Election commissioner\b/.test(after) &&
+          /What election commissioners do/.test(county.text) &&
+          /certifying election results/.test(county.text) &&
+          /supervisor and the election commissioner elected from the/.test(county.text),
+        unnamed.length ? `unnamed=${unnamed.slice(0, 3)}` : after.slice(0, 120));
       await context.close();
     }
   }
@@ -973,7 +993,8 @@ try {
       await p.route("**/data/app/ms-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
     });
     const county = await cardText(page, "county");
-    const named = hinds.supervisors.filter((sv) => county.text.includes(sv.name)).map((sv) => sv.name);
+    const named = hinds.supervisors.concat(hinds.electionCommissioners)
+      .filter((sv) => sv.name && county.text.includes(sv.name)).map((sv) => sv.name);
     check("county card degrades to naming nobody when the roster fails",
       !county.error && /Hinds County/.test(county.text) && /did not load/.test(county.text) &&
         named.length === 0,
@@ -1004,10 +1025,17 @@ try {
   //         list of drawn counties and never the districts file, which was
   //         150 KB gzipped on every reader's first selection when the test
   //         read it (2026-10-15), and the layer's toggle still shows there.
+  //       - Each of those cards also names the election commissioner of the
+  //         same district from the same directory, and says where the names
+  //         (plural) come from.
   //       - The roster is refused: the district still answers and names nobody.
   //       - A vacant seat, on a stubbed directory because no drawn county has
   //         one in the 2026 edition: the card says the seat is vacant and
-  //         names nobody for it.
+  //         names nobody for it. The same for a vacant commissioner's seat,
+  //         while the supervisor is still named.
+  //       - A stubbed directory that names the supervisors' districts with one
+  //         word and the commissioners' with another: no commissioner is
+  //         joined to the district on the strength of its number alone.
   //     The points are interior points of each district as the shipped file
   //     draws it (polylabel, 2026-10-15), each at least 5 km from its lines.
   {
@@ -1035,6 +1063,10 @@ try {
       const o = roster[p.countyfips] || { supervisors: [] };
       return o.supervisors.find((sv) => String(sv.district) === String(p.district)) || {};
     }
+    function commissionerOf(p) {
+      const o = roster[p.countyfips] || {};
+      return (o.electionCommissioners || []).find((ec) => String(ec.district) === String(p.district)) || {};
+    }
     const drawnPoints = ["34.92782,-90.17414", "33.34602,-88.57919"];  // DeSoto 3, Lowndes 4
     const ownMapPoints = [POINT, "32.34382,-89.84721"];  // Hinds 5 (the Capitol), Rankin 4
     const AMITE = "31.17456,-90.72388";  // the Amite County point check 9 uses
@@ -1048,12 +1080,14 @@ try {
       const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
       const info = await cardText(page, "county-supervisor");
       const text = info.text || "";
-      check(`county-supervisor card in ${p.county || "a drawn county"} names ${word} ${p.district} and its supervisor, with where the line and the name come from`,
-        at.length === 1 && !info.error && !!seat.name &&
+      const ec = commissionerOf(p);
+      check(`county-supervisor card in ${p.county || "a drawn county"} names ${word} ${p.district}, its supervisor and its election commissioner, with where the line and the names come from`,
+        at.length === 1 && !info.error && !!seat.name && !!ec.name &&
           new RegExp(`\\b${word} ${p.district}\\b`).test(text) &&
-          text.includes(seat.name) && text.includes(p.county) &&
+          text.includes(seat.name) && text.includes(ec.name) && /Election commissioner/.test(text) &&
+          text.includes(p.county) &&
           /Where this line comes from/.test(text) && text.includes(`${rec.vintage} edition`) &&
-          /Where the name comes from/.test(text),
+          /Where the names come from/.test(text),
         `districts here=${at.length} ${text.slice(0, 120)}`);
       await context.close();
     }
@@ -1068,10 +1102,11 @@ try {
       const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
       const info = await cardText(page, "county-supervisor");
       const text = info.text || "";
-      check(`county-supervisor card in ${p.county || "a county drawn from its own map"} names District ${p.district} and its supervisor, and says whose map the line comes from${aside ? " and whom its figures leave out" : ""}`,
-        at.length === 1 && p.lines === "county" && !info.error && !!seat.name &&
+      const ec = commissionerOf(p);
+      check(`county-supervisor card in ${p.county || "a county drawn from its own map"} names District ${p.district}, its supervisor and its election commissioner, and says whose map the line comes from${aside ? " and whom its figures leave out" : ""}`,
+        at.length === 1 && p.lines === "county" && !info.error && !!seat.name && !!ec.name &&
           new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
-          text.includes(seat.name) && text.includes(p.county) &&
+          text.includes(seat.name) && text.includes(ec.name) && text.includes(p.county) &&
           !!p.source && text.includes(p.source) && /, read on \d{1,2} [A-Z][a-z]+ \d{4}\./.test(text) &&
           !text.includes(`${rec.vintage} edition`) &&
           (aside > 0 ? text.includes(asideText) : !/almost no homes/.test(text)),
@@ -1130,7 +1165,8 @@ try {
       });
       const info = await cardText(page, "county-supervisor");
       const text = info.text || "";
-      const named = (roster[p.countyfips] || { supervisors: [] }).supervisors
+      const o = roster[p.countyfips] || { supervisors: [] };
+      const named = o.supervisors.concat(o.electionCommissioners || [])
         .filter((sv) => sv.name && text.includes(sv.name)).map((sv) => sv.name);
       check("county-supervisor still names the district, and names nobody, when the roster fails",
         !info.error && new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
@@ -1155,6 +1191,44 @@ try {
         !info.error && !!seat.name && /listed as vacant/.test(text) && !text.includes(seat.name) &&
           !/Vacant/.test(text),
         text.slice(0, 120));
+      await context.close();
+    }
+
+    const ec = commissionerOf(p);
+    {
+      const stub = JSON.parse(JSON.stringify(roster));
+      const coms = stub[p.countyfips].electionCommissioners;
+      coms[coms.findIndex((c) => String(c.district) === String(p.district))] =
+        { district: String(p.district), vacant: true };
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
+        await pg.route("**/data/app/ms-county-officials.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
+      });
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      check("county-supervisor says a vacant election commissioner's seat is vacant, names nobody for it, and still names the supervisor",
+        !info.error && !!ec.name && !!seat.name && text.includes(seat.name) &&
+          /Election commissioner[^.]*listed as vacant/.test(text) && !text.includes(ec.name) &&
+          /Where the name comes from/.test(text),
+        text.slice(0, 160));
+      await context.close();
+    }
+
+    {
+      const stub = JSON.parse(JSON.stringify(roster));
+      stub[p.countyfips].commissionerLabel = stub[p.countyfips].label === "Beat" ? "District" : "Beat";
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
+        await pg.route("**/data/app/ms-county-officials.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
+      });
+      const info = await cardText(page, "county-supervisor");
+      const text = info.text || "";
+      check("county-supervisor joins no election commissioner where the directory names the two lists' districts with different words",
+        !info.error && !!ec.name && !!seat.name && text.includes(seat.name) &&
+          !text.includes(ec.name) && !/Election commissioner/.test(text),
+        text.slice(0, 160));
       await context.close();
     }
   }

@@ -1424,6 +1424,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --check
 
+      # Mississippi's five supervisors and five election commissioners per
+      # county come from the Secretary of State's directory, which also prints
+      # their own addresses and telephones. This holds the shipped file to the
+      # shape it was built in: five seats of each kind in districts 1 to 5, a
+      # board address or telephone only where three supervisors share it, and
+      # nothing but a name for an election commissioner. Offline.
+      - name: MS county officials keep their shape, and election commissioners carry names only
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_county_officials.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the

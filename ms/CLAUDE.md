@@ -68,8 +68,14 @@ DIRECTORY ALSO PRINTS SUPERVISORS' OWN ADDRESSES AND TELEPHONES IN SOME COUNTIES
 homes: a board address or telephone is carried only where at least three of the five supervisors
 print the same one, because five people do not share a home — 76 counties have an address and 68 a
 telephone on the 2026 edition, and Amite, Coahoma, Humphreys, Lincoln, Sunflower and Yalobusha,
-which print a different address for each supervisor, have none. No supervisor's own line and
-nothing printed for the election commissioners is ever carried.
+which print a different address for each supervisor, have none. No supervisor's own line is ever
+carried. **THE SAME DIRECTORY NAMES THE FIVE ELECTION COMMISSIONERS, AND ONLY THEIR NAMES ARE
+CARRIED**: each commissioner's line runs on from the name to the commissioner's own address, which
+may be a home, so the builder cuts the line at its first run of dots and keeps nothing after the
+name, and its errors name only the county and the district. All 410 were named on the 2026
+edition, numbered District 1 to 5 in every county, even the five whose supervisor districts are
+beats. The County card lists them; the supervisor-district card names the one with the same
+number only where the directory uses the same word for both lists.
 
 **A COUNTY'S SUPERVISOR DISTRICTS ARE DRAWN ONLY WHEN TWO MEASUREMENTS AGREE, AND TWELVE PASS**
 (`ms/scripts/build_ms_supervisor_districts.py`, its `--check` in CI). Its Census lines changed

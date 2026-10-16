@@ -168,6 +168,7 @@ python3 ia/scripts/build_legislative_boundaries.py --check      # the same relat
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
+python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
 python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's supervisor districts against their build record, the directory's seats, the Census edition the card names, and the County layer
 python3 ms/scripts/build_ms_court_districts.py --check           # Mississippi's six court maps against the court's own county lists and the laws that redraw them in 2027 and 2031, every saved copy re-hashed
 python3 ms/scripts/build_ms_judges.py --selftest                 # the judges' parse and the change table's staleness tests, on literals
