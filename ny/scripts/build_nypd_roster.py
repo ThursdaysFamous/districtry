@@ -2,7 +2,12 @@
 """
 Resolve the NYPD precinct scrape (nypd_precinct_scraper.py) into
 data/app/nypd-precinct-info.json
-  { "<precinct>": {"commander", "address", "phone", "source_url"} }.
+  { "<precinct>": {"commander", "station_address", "station_phone", "source_url"} }.
+
+The station fields are named for the station, not `address`/`phone`, because
+build_officeholder_tables.py derives a Phone column from any `phone` key and
+would print the precinct's desk line beside the commanding officer's name as
+if it were theirs.
 
 Stage 2 of the pipeline (METRO_EXPANSION_PLAYBOOK §9). Keeps every precinct the
 scrape saw (so the layer always has a key per precinct) but REFUSES to write if
@@ -63,8 +68,8 @@ def main():
         address = rec.get("address") or None
         if address:
             addresses += 1
-        roster[str(int(pct))] = {"commander": commander, "address": address,
-                                 "phone": rec.get("phone") or None,
+        roster[str(int(pct))] = {"commander": commander, "station_address": address,
+                                 "station_phone": rec.get("phone") or None,
                                  "source_url": rec.get("source_url")}
 
     if commanders < MIN_COMMANDERS:

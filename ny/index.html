@@ -14667,9 +14667,9 @@ function initNycExplorer() {
           seq: seq,
           precinct: num,
           commander: row ? (row.commander || row.commanderName) : null,
-          phone: row ? row.phone : null,
+          phone: row ? row.station_phone : null,
           sourceUrl: row ? (row.source_url || row.sourceUrl) : null,
-          stationLines: (row && Array.isArray(row.address) && row.address.length) ? row.address.map(String) : null
+          stationLines: (row && Array.isArray(row.station_address) && row.station_address.length) ? row.station_address.map(String) : null
         };
       });
     },
