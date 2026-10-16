@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ky-senate", "ky-house"];
 const EXPECT_DISTRICT = { "county": "Jefferson County", "us-house": "3", "ky-senate": "33", "ky-house": "43" };
 const NEGATIVE_POINT = "38.80000,-83.55000"; // near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.
 const APP_NAME = "districtry Kentucky";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -640,6 +640,39 @@ try {
     check(`county names ${c.label} County's governing body and officers from the directory`,
       !info.error && names.length > 5 && names.every((n) => text.includes(n)) && c.body.test(text),
       `roster names ${names.length}; missing: ${names.filter((n) => !text.includes(n)).join(", ") || "none"} | card: ${text.slice(0, 160)}`);
+    await context.close();
+  }
+
+  // 2h. The Magistrate or Council District layer (ky-county-districts.json,
+  //     composed by ky/scripts/build_ky_county_districts.py). At the anchor it
+  //     answers a Louisville Metro Council district and names the member the
+  //     roster gives that district; at Elizabethtown it answers a Hardin County
+  //     magisterial district and names its magistrate where the 2022 results
+  //     matched one; at Frankfort (Franklin, not drawn) it says the county's
+  //     districts are not drawn rather than "no district".
+  for (const c of [
+    { point: POINT, geoid: "21111", title: /Louisville Metro Council District (\d+)/ },
+    { point: "37.69390,-85.85910", geoid: "21093", title: /Hardin County Magisterial District (\d+)/ },
+    { point: "38.20090,-84.87330", geoid: "21073", title: null }
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=fiscal-court`);
+    const roster = await page.evaluate(() =>
+      fetch("data/app/ky-county-officials.json").then((r) => r.json()));
+    const rec = roster[c.geoid] || {};
+    const info = await cardText(page, "fiscal-court");
+    const text = info.text || "";
+    if (!c.title) {
+      check("fiscal-court says Franklin County's districts are not drawn yet",
+        !info.error && /Districts not drawn here/.test(text) && /does not draw them yet/.test(text),
+        text.slice(0, 160));
+    } else {
+      const m = c.title.exec(text);
+      const own = m ? (rec.members || []).filter((x) => String(x.district) === m[1]) : [];
+      check(`fiscal-court answers ${c.geoid} with its district and the member the roster gives it`,
+        !info.error && !!m && own.length > 0 && own.every((x) => text.includes(x.name)),
+        `district ${m ? m[1] : "none"}; roster members there ${own.map((x) => x.name).join(", ") || "none"} | card: ${text.slice(0, 160)}`);
+    }
     await context.close();
   }
 

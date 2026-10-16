@@ -742,15 +742,15 @@ try {
       // layer's; the same point now names the district's supervisor.
       [41.0216555, -94.6969059, "Adams County", "District 2 Tony Hardisty",
        null, "Adams, whose numbering agrees with this layer's"],
-      // THE WITHHELD BRANCH. Madison County's numbering has not been
-      // measured, so its district card names nobody at all -- not the
-      // supervisor its own page puts in the district of this number, not
-      // anyone. Its supervisors are still on the County card. (Washington
-      // and then Adams were this case until their numbering was checked.)
-      // The point is an interior point of this layer's Madison district 1.
-      [41.3280415, -94.141708, "Madison County", "District",
-       "Heather Stancil",
-       "Madison, unchecked, names nobody on a district card"]
+      // Madison was THE WITHHELD BRANCH until 2026-10-15, when its 2026
+      // primary returns settled its numbering, which agrees with this layer's
+      // (ia/scripts/check_county_district_numbering.py). Every county in
+      // ia-supervisor-members.json is now checked, so no shipped county
+      // exercises the withheld branch; the same point now names the district's
+      // supervisor. The point is an interior point of this layer's Madison
+      // district 1.
+      [41.3280415, -94.141708, "Madison County", "District 1 Heather Stancil",
+       null, "Madison, whose numbering agrees with this layer's"]
     ]) {
       const page = await booted(context,
         `${BASE}#point=${lat},${lng}&layers=county-supervisor`);
@@ -766,6 +766,32 @@ try {
         check(`supervisor district, ${why} — the other county's number`,
           !info.text.includes(absent), info.text.slice(0, 200));
       }
+      await page.close();
+    }
+    await context.close();
+  }
+
+
+  // 2a3. City council wards in the cities ia/scripts/build_ia_city_wards.py
+  //      builds (2026-10-15). Each point is an interior point of that ward in
+  //      the shipped file. A city whose council ia-city-councils.json names
+  //      must show the ward and the members the whole city elects; Mason City,
+  //      whose council page cannot be read, must say it names nobody rather
+  //      than show an empty card. Names are not asserted, because the roster
+  //      is refreshed weekly.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, city, want, why] of [
+      [41.52006, -90.587932, "Davenport", "Ward 3", "ELECTED BY THE WHOLE CITY"],
+      [42.0561, -93.636512, "Ames", "Ward 2", "ELECTED BY THE WHOLE CITY"],
+      [41.586389, -93.816438, "West Des Moines", "Ward 2", "ELECTED BY THE WHOLE CITY"],
+      [43.165503, -93.15575, "Mason City", "Ward 1", "no member is named here"]
+    ]) {
+      const page = await booted(context, `${BASE}#point=${lat},${lng}&layers=city-ward`);
+      const info = await cardText(page, "city-ward");
+      check(`city ward, ${city} ${want}`,
+        !info.error && info.text.includes(city) && info.text.includes(want) &&
+          info.text.includes(why), (info.text || info.error || "").slice(0, 200));
       await page.close();
     }
     await context.close();

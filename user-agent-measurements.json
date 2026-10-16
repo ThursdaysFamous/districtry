@@ -10,16 +10,16 @@
   "all-refused": 10,
   "answers-nothing": 4,
   "challenged": 2,
-  "crawl-delay-too-long": 5,
+  "crawl-delay-too-long": 6,
   "path-answers-nothing": 7,
   "proxy-denied": 1,
   "robots-disallows-this-path": 11,
-  "robots-unreadable": 5,
-  "stack-not-token": 7,
+  "robots-unreadable": 4,
+  "stack-not-token": 8,
   "tls-chain": 1,
-  "token-ok": 242,
+  "token-ok": 252,
   "token-refused": 3,
-  "token-refused-and-stack": 23
+  "token-refused-and-stack": 24
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -43,7 +43,11 @@
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/validate_sources.py": "self",
     "in/scripts/validate_sources.py": "self",
-    "nc/scripts/validate_sources.py": "self"
+    "nc/scripts/validate_sources.py": "self",
+    "ok/scripts/validate_sources.py": "self",
+    "sc/scripts/validate_sources.py": "self",
+    "tn/scripts/validate_sources.py": "self",
+    "ar/scripts/validate_sources.py": "self"
    }
   },
   "arcgispublicmap.co.st-clair.il.us": {
@@ -75,7 +79,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /bos \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /bos — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -184,7 +188,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 72398 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "bloomingtonelectionsil.gov": {
@@ -307,7 +311,11 @@
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/validate_sources.py": "self",
     "in/scripts/validate_sources.py": "self",
-    "nc/scripts/validate_sources.py": "self"
+    "nc/scripts/validate_sources.py": "self",
+    "ok/scripts/validate_sources.py": "self",
+    "sc/scripts/validate_sources.py": "self",
+    "tn/scripts/validate_sources.py": "self",
+    "ar/scripts/validate_sources.py": "self"
    }
   },
   "ccpsa.chicago.gov": {
@@ -452,7 +460,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 27054 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "cityoffreeport.org": {
@@ -505,7 +513,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 32613 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "cityofnekoosa.org": {
@@ -523,7 +531,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 64969 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "cityofnewholstein.org": {
@@ -541,7 +549,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 524157 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "cityofnewlisbon.com": {
@@ -559,7 +567,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 31635 bytes (page carries a captcha widget)",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "cityofracinewi.gov": {
@@ -577,9 +585,36 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 794193 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-09-13"
+  },
+  "cityofsunprairie.com": {
+   "host": "cityofsunprairie.com",
+   "url": "https://cityofsunprairie.com/801/City-Council-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "error",
+     "note": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+    },
+    "stdlib+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 120729 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "stack-not-token",
+   "note": "requests+token ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')); stdlib+token HTTP 200, 120729 bytes; the front door answers the token (HTTP 200, 151068 bytes), so the refusal is this path",
+   "root": {
+    "kind": "ok",
+    "note": "HTTP 200, 151068 bytes"
+   },
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "cityofwaupaca.org": {
    "host": "cityofwaupaca.org",
@@ -596,7 +631,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 206563 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "clerk.kanecountyil.gov": {
@@ -1122,7 +1157,7 @@
     "crawl-delay": 60.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 60.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 60.0 — not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "scripts/lake_municipal_officials_scraper.py": "browser"
    }
@@ -1168,7 +1203,7 @@
     "wi/scripts/build_mke_polling_places.py": "self",
     "wi/scripts/build_mps_school_board_districts.py": "self",
     "wi/scripts/validate_sources.py": "both",
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "data.openstates.org": {
@@ -1187,7 +1222,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 82866 bytes",
    "callers": {
-    "ca/scripts/build_ca_legislature_roster.py": "unknown",
+    "ca/scripts/build_ca_legislature_roster.py": "self",
     "wi/scripts/build_wi_legislature_roster.py": "unknown",
     "wi/scripts/validate_sources.py": "both",
     "ia/scripts/build_ia_legislature_roster.py": "unknown",
@@ -1196,7 +1231,11 @@
     "mi/scripts/build_mi_legislature_roster.py": "unknown",
     "mi/scripts/validate_sources.py": "self",
     "nc/scripts/build_nc_legislature_roster.py": "unknown",
-    "nc/scripts/validate_sources.py": "self"
+    "nc/scripts/validate_sources.py": "self",
+    "ok/scripts/build_ok_legislature_roster.py": "unknown",
+    "ok/scripts/validate_sources.py": "self",
+    "tn/scripts/build_tn_legislature_roster.py": "self",
+    "tn/scripts/validate_sources.py": "self"
    }
   },
   "dekalbcounty.org": {
@@ -1319,19 +1358,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (ConnectionError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (ConnectionError) — not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (URLError) — not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (ReadTimeout) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (ReadTimeout) — not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (TimeoutError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (TimeoutError) — not fetched by this client"
     }
    },
    "robots": {
@@ -1342,7 +1381,7 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_bluebook_municipal_scraper.py": "browser",
@@ -1379,7 +1418,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /treasurer \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /treasurer — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -1401,7 +1440,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 68806 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "eauclairecounty.gov": {
@@ -1571,6 +1610,25 @@
     "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
+  "fitchburgwi.gov": {
+   "host": "fitchburgwi.gov",
+   "url": "https://fitchburgwi.gov/2924/Mayor-City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 101938 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 101938 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "fliphtml5.com": {
    "host": "fliphtml5.com",
    "url": "https://fliphtml5.com",
@@ -1607,19 +1665,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (URLError) — not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (URLError) — not fetched by this client"
     }
    },
    "robots": {
@@ -1630,10 +1688,10 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_gallatin_precincts.py": "unknown",
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    },
    "measured": "2026-09-13"
   },
@@ -1653,7 +1711,7 @@
    "note": "requests+token HTTP 200, 9620 bytes",
    "callers": {
     "wi/scripts/validate_sources.py": "both",
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-09-13"
   },
@@ -1691,6 +1749,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 9005 bytes",
    "callers": {
+    "scripts/build_chicago_townships.py": "self",
     "scripts/build_municipal_ward_coverage.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/cook_county_board_scraper.py": "self",
@@ -1846,7 +1905,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 83200 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "hancockcounty-il.gov": {
@@ -2068,7 +2127,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /ViewPublisher.php?view_id=1&count=20 \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /ViewPublisher.php?view_id=1&count=20 — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
@@ -2544,7 +2603,7 @@
     "requests+token": "read, 1 group(s) bind this client with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /arcgis/rest/services/MPD/MPD_geography/MapServer/1 \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /arcgis/rest/services/MPD/MPD_geography/MapServer/1 — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_milwaukee_city_layers.py": "unknown",
     "wi/scripts/build_mke_polling_places.py": "self",
@@ -2569,7 +2628,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 66178 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "montgomerycountyil.gov": {
@@ -2609,7 +2668,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 688552 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "morgancounty-il.com": {
@@ -2627,7 +2686,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 37314 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "myvote.wi.gov": {
@@ -2672,7 +2731,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 133534 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "ozaukeecounty.gov": {
@@ -2736,6 +2795,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 395639 bytes",
    "callers": {
+    "wi/scripts/build_wi_aldermanic_districts.py": "unknown",
+    "wi/scripts/wi_alderperson_scraper.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
@@ -2754,7 +2815,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 25835 bytes (page carries a captcha widget)",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "putnamil.gov": {
@@ -2772,7 +2833,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 61563 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "racinecounty.gov": {
@@ -2823,7 +2884,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 96544 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "richlandcountywi.gov": {
@@ -2834,7 +2895,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /index.asp?SEC=DB387A4E-E124-4584-B32C-2C95880C63F0 \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /index.asp?SEC=DB387A4E-E124-4584-B32C-2C95880C63F0 — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
@@ -2904,7 +2965,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /supervisors \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /supervisors — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
@@ -2925,7 +2986,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 87070 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "sangamonil.gov": {
@@ -2999,12 +3060,13 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 26654 bytes",
    "callers": {
     "scripts/build_dewitt_board_districts.py": "self",
+    "scripts/build_hamilton_precincts.py": "self",
     "scripts/build_logan_park_districts.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/build_statewide_library_districts.py": "unknown",
@@ -3029,7 +3091,8 @@
     "ia/scripts/build_ia_school_districts.py": "self",
     "ia/scripts/build_ia_school_sites.py": "unknown",
     "ia/scripts/build_ia_supervisor_districts.py": "self",
-    "ia/scripts/validate_sources.py": "self"
+    "ia/scripts/validate_sources.py": "self",
+    "ok/scripts/build_ok_commissioner_districts.py": "unknown"
    },
    "measured": "2026-09-13"
   },
@@ -3043,7 +3106,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 17115 bytes",
@@ -3058,7 +3121,7 @@
     "wi/scripts/build_wi_polling_places.py": "self",
     "wi/scripts/build_wi_supervisory_districts.py": "self",
     "wi/scripts/validate_sources.py": "both",
-    "wi/scripts/wi_alderperson_scraper.py": "browser",
+    "wi/scripts/wi_alderperson_scraper.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both",
     "ia/scripts/build_waterloo_council.py": "self",
     "ia/scripts/build_waterloo_wards.py": "self",
@@ -3077,7 +3140,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 42858 bytes",
@@ -3092,7 +3155,9 @@
     "mi/scripts/build_mi_detroit_council.py": "unknown",
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "tn/scripts/build_tn_commission_districts.py": "self",
+    "tn/scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3106,7 +3171,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 8466 bytes",
@@ -3120,6 +3185,7 @@
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
+    "mi/scripts/build_mi_isd_districts.py": "unknown",
     "mi/scripts/build_mi_jackson_wards.py": "self",
     "mi/scripts/build_mi_lansing_wards.py": "unknown",
     "mi/scripts/build_mi_precincts.py": "unknown",
@@ -3139,7 +3205,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 5034 bytes",
@@ -3149,7 +3215,9 @@
     "scripts/validate_sources.py": "self",
     "ny/scripts/validate_sources.py": "self",
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "ok/scripts/build_ok_commissioner_districts.py": "unknown",
+    "ok/scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3163,7 +3231,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 5868 bytes",
@@ -3208,7 +3276,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 11210 bytes",
@@ -3311,7 +3379,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 105034 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "tazewell-il.gov": {
@@ -3353,6 +3421,7 @@
     "scripts/build_block_population.py": "self",
     "scripts/build_carroll_board_districts.py": "self",
     "scripts/build_cass_board_districts.py": "self",
+    "scripts/build_chicago_townships.py": "self",
     "scripts/build_clay_boundaries.py": "unknown",
     "scripts/build_dewitt_board_districts.py": "self",
     "scripts/build_district_search.py": "self",
@@ -3394,6 +3463,7 @@
     "wi/scripts/build_wi_municipal_clerks.py": "unknown",
     "wi/scripts/validate_sources.py": "both",
     "ia/scripts/build_cedar_rapids_wards.py": "self",
+    "ia/scripts/build_county_supplied_supervisor_districts.py": "self",
     "ia/scripts/build_ia_city_contact.py": "self",
     "ia/scripts/build_ia_school_districts.py": "self",
     "ia/scripts/build_ia_township_officers.py": "self",
@@ -3420,7 +3490,23 @@
     "nc/scripts/build_legislative_boundaries.py": "unknown",
     "nc/scripts/build_metro_outline.py": "self",
     "nc/scripts/build_state_counties.py": "unknown",
-    "nc/scripts/validate_sources.py": "self"
+    "nc/scripts/validate_sources.py": "self",
+    "ok/scripts/build_legislative_boundaries.py": "unknown",
+    "ok/scripts/build_metro_outline.py": "self",
+    "ok/scripts/build_state_counties.py": "unknown",
+    "ok/scripts/validate_sources.py": "self",
+    "sc/scripts/build_legislative_boundaries.py": "unknown",
+    "sc/scripts/build_metro_outline.py": "self",
+    "sc/scripts/build_state_counties.py": "unknown",
+    "sc/scripts/validate_sources.py": "self",
+    "tn/scripts/build_legislative_boundaries.py": "unknown",
+    "tn/scripts/build_metro_outline.py": "self",
+    "tn/scripts/build_state_counties.py": "unknown",
+    "tn/scripts/validate_sources.py": "self",
+    "ar/scripts/build_legislative_boundaries.py": "unknown",
+    "ar/scripts/build_metro_outline.py": "self",
+    "ar/scripts/build_state_counties.py": "unknown",
+    "ar/scripts/validate_sources.py": "self"
    }
   },
   "unitedstates.github.io": {
@@ -3450,7 +3536,15 @@
     "in/scripts/build_congress_roster.py": "unknown",
     "in/scripts/validate_sources.py": "self",
     "nc/scripts/build_congress_roster.py": "unknown",
-    "nc/scripts/validate_sources.py": "self"
+    "nc/scripts/validate_sources.py": "self",
+    "ok/scripts/build_congress_roster.py": "unknown",
+    "ok/scripts/validate_sources.py": "self",
+    "sc/scripts/build_congress_roster.py": "unknown",
+    "sc/scripts/validate_sources.py": "self",
+    "tn/scripts/build_congress_roster.py": "unknown",
+    "tn/scripts/validate_sources.py": "self",
+    "ar/scripts/build_congress_roster.py": "unknown",
+    "ar/scripts/validate_sources.py": "self"
    }
   },
   "villageofcrete.org": {
@@ -3498,7 +3592,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 67516 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-09-13"
   },
@@ -3538,7 +3632,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 116512 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser",
+    "wi/scripts/wi_alderperson_scraper.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both"
    },
    "measured": "2026-09-13"
@@ -3652,7 +3746,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 51647 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.altoonawi.gov": {
@@ -3670,7 +3764,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 60701 bytes (page carries a captcha widget)",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.ankenyiowa.gov": {
@@ -3708,7 +3802,7 @@
    "note": "requests+token HTTP 200, 138226 bytes",
    "callers": {
     "wi/scripts/build_wi_aldermanic_districts.py": "unknown",
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-09-13"
   },
@@ -3763,7 +3857,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /index.asp?SEC=%7bB7F5AB49-3697-4A2E-8327-26847A43F33E%7d&Type=B_BASIC \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /index.asp?SEC=%7bB7F5AB49-3697-4A2E-8327-26847A43F33E%7d&Type=B_BASIC — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser"
    }
@@ -3859,7 +3953,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 80886 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "www.browncountywi.gov": {
@@ -3939,7 +4033,7 @@
    "note": "requests+token HTTP 200, 110323 bytes",
    "callers": {
     "scripts/build_calhoun_precincts.py": "unknown",
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "www.carrollcountyil.gov": {
@@ -4003,7 +4097,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 200, 60267 bytes",
@@ -4034,6 +4128,25 @@
    "callers": {
     "scripts/cpd_district_scraper.py": "self"
    }
+  },
+  "www.ci.brookfield.wi.us": {
+   "host": "www.ci.brookfield.wi.us",
+   "url": "https://www.ci.brookfield.wi.us/170/Your-Aldermen",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 110920 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 110920 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.ci.galesburg.il.us": {
    "host": "www.ci.galesburg.il.us",
@@ -4068,7 +4181,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 97686 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
   },
@@ -4087,43 +4200,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 191428 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
-  },
-  "www.ci.oshkosh.wi.us": {
-   "host": "www.ci.oshkosh.wi.us",
-   "url": "https://www.ci.oshkosh.wi.us/CityCouncil/",
-   "cells": {
-    "requests+token": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
-    },
-    "stdlib+token": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
-    },
-    "requests+chrome": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
-    },
-    "stdlib+chrome": {
-     "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
-    }
-   },
-   "robots": {
-    "requests+token": "unreadable (SSLError)",
-    "stdlib+token": "unreadable (URLError)",
-    "requests+chrome": "unreadable (SSLError)",
-    "stdlib+chrome": "unreadable (URLError)",
-    "policy": "unreadable to every client on the ladder"
-   },
-   "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
-   "callers": {
-    "wi/scripts/wi_municipal_board_scraper.py": "both"
-   },
-   "measured": "2026-10-01"
   },
   "www.cityofames.org": {
    "host": "www.cityofames.org",
@@ -4171,9 +4249,9 @@
     "crawl-delay": 15.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 15.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 15.0 — not fetched; four rungs at that pace is not a polite probe",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.cityofdubuque.org": {
@@ -4194,6 +4272,25 @@
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
+  },
+  "www.cityoflacrosse.org": {
+   "host": "www.cityoflacrosse.org",
+   "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council/City-Council-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 106218 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 61 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 106218 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.cityoflockport.net": {
    "host": "www.cityoflockport.net",
@@ -4231,7 +4328,7 @@
     "wi/scripts/build_madison_city_layers.py": "self",
     "wi/scripts/build_madison_polling_places.py": "self",
     "wi/scripts/validate_sources.py": "both",
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.cityofmarion.org": {
@@ -4256,7 +4353,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 88065 bytes (page carries a captcha widget)",
@@ -4268,6 +4365,41 @@
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
+  },
+  "www.cityofmequonwi.gov": {
+   "host": "www.cityofmequonwi.gov",
+   "url": "https://www.cityofmequonwi.gov/commoncouncil",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 71722 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 51 rule(s)"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 71722 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.cityofwautoma.com": {
    "host": "www.cityofwautoma.com",
@@ -4284,7 +4416,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 48842 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.cityofwestby.org": {
@@ -4303,7 +4435,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 34178 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.citywd.org": {
@@ -4321,7 +4453,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 55802 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.clarkcountywi.gov": {
@@ -4489,7 +4621,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /vertical/sites/%7B4C09F8F2-A8A2-4929-9E2A-A836851B00CC%7D/uploads/2026_-_2027_County_Boar \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /vertical/sites/%7B4C09F8F2-A8A2-4929-9E2A-A836851B00CC%7D/uploads/2026_-_2027_County_Boar — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
@@ -4610,7 +4742,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')); stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 150224 bytes (page carries a captcha widget)",
@@ -4632,7 +4764,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /bos \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /bos — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -4724,7 +4856,7 @@
     "crawl-delay": 15.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 15.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 15.0 — not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
@@ -4755,19 +4887,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (URLError) — not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (URLError) — not fetched by this client"
     }
    },
    "robots": {
@@ -4778,7 +4910,7 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_coles_board_roster.py": "unknown",
     "scripts/coles_county_board_scraper.py": "browser",
@@ -4937,6 +5069,21 @@
    },
    "measured": "2026-10-01"
   },
+  "www.deperewi.gov": {
+   "host": "www.deperewi.gov",
+   "url": "https://www.deperewi.gov/department/index.php?structureid=3",
+   "cells": {},
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 5 rule(s)",
+    "crawl-delay": 300.0
+   },
+   "verdict": "crawl-delay-too-long",
+   "note": "Crawl-delay: 300.0 — not fetched; four rungs at that pace is not a polite probe",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.desmoinescounty.iowa.gov": {
    "host": "www.desmoinescounty.iowa.gov",
    "url": "https://www.desmoinescounty.iowa.gov/board_of_supervisors/meetings_minutes/",
@@ -4991,7 +5138,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 113555 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.elections.il.gov": {
@@ -5035,6 +5182,25 @@
    "callers": {
     "scripts/ewg_municipal_officials_scraper.py": "self"
    }
+  },
+  "www.fdl.wi.gov": {
+   "host": "www.fdl.wi.gov",
+   "url": "https://www.fdl.wi.gov/city-council/",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 100591 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 16 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 100591 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.fdlco.wi.gov": {
    "host": "www.fdlco.wi.gov",
@@ -5110,7 +5276,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 75642 bytes (page carries a captcha widget)",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
   },
@@ -5129,7 +5295,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 130974 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.grandrapidsmi.gov": {
@@ -5167,7 +5333,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 662036 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.greenlakecountywi.gov": {
@@ -5219,7 +5385,7 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
     },
     "stdlib+token": {
      "kind": "ok",
@@ -5231,14 +5397,14 @@
     "stdlib+token": "read, 1 group(s) bind this client with 2 rule(s)"
    },
    "verdict": "stack-not-token",
-   "note": "requests+token robots.txt unreadable (SSLError) \u2014 not fetched by this client; stdlib+token HTTP 200, 531282 bytes; the front door answers the token (HTTP 200, 167240 bytes), so the refusal is this path",
+   "note": "requests+token robots.txt unreadable (SSLError) — not fetched by this client; stdlib+token HTTP 200, 531282 bytes; the front door answers the token (HTTP 200, 167240 bytes), so the refusal is this path",
    "root": {
     "kind": "ok",
     "note": "HTTP 200, 167240 bytes"
    },
    "callers": {
     "scripts/build_hamilton_precinct_polling.py": "browser",
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    },
    "measured": "2026-09-13"
   },
@@ -5279,7 +5445,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 37334 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.horiconwi.gov": {
@@ -5297,7 +5463,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 100860 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.icgov.org": {
@@ -5322,7 +5488,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 121809 bytes (page carries a captcha widget)",
@@ -5366,6 +5532,7 @@
    "verdict": "tls-chain",
    "note": "requests+token SSLError: HTTPSConnectionPool(host='www.ilga.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: ; stdlib+token URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>; requests+chrome SSLError: HTTPSConnectionPool(host='www.ilga.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: ; stdlib+chrome URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>",
    "callers": {
+    "scripts/build_concept_pages.py": "unknown",
     "scripts/ilga_scraper.py": "browser"
    }
   },
@@ -5435,7 +5602,7 @@
     "crawl-delay": 30.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 30.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 30.0 — not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "ia/scripts/build_ia_judicial_district.py": "unknown",
     "ia/scripts/ia_judicial_district_scraper.py": "self",
@@ -5503,7 +5670,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 119328 bytes (page carries a captcha widget)",
@@ -5653,7 +5820,7 @@
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/verify_kenosha_supervisory_map.py": "self",
-    "wi/scripts/wi_alderperson_scraper.py": "browser",
+    "wi/scripts/wi_alderperson_scraper.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
@@ -5802,7 +5969,9 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 98444 bytes",
    "callers": {
+    "ia/scripts/build_county_supplied_supervisor_districts.py": "self",
     "ia/scripts/build_ia_judicial_district.py": "unknown",
+    "ia/scripts/build_ia_legislature_roster.py": "unknown",
     "ia/scripts/build_story_supervisor_districts.py": "self",
     "ia/scripts/ia_legislature_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
@@ -5856,7 +6025,7 @@
     "requests+token": "read, 1 group(s) bind this client with 15 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /images/Reference_and_Yearbook_2025-2026_updated.pdf \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /images/Reference_and_Yearbook_2025-2026_updated.pdf — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_logan_board_roster.py": "unknown",
     "scripts/build_logan_precinct_polling.py": "browser",
@@ -5932,7 +6101,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 101470 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.marathoncounty.gov": {
@@ -6046,7 +6215,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 143391 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "www.mchenrycountyil.gov": {
@@ -6142,9 +6311,28 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 55468 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-09-13"
+  },
+  "www.menomoneefalls.gov": {
+   "host": "www.menomoneefalls.gov",
+   "url": "https://www.menomoneefalls.gov/1410/Village-Board-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 219404 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 219404 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.menomonie-wi.gov": {
    "host": "www.menomonie-wi.gov",
@@ -6161,7 +6349,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 88665 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.mercercountyil.org": {
@@ -6220,8 +6408,27 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 50799 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
+  },
+  "www.mtpleasantwi.gov": {
+   "host": "www.mtpleasantwi.gov",
+   "url": "https://www.mtpleasantwi.gov/319/Village-Board",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 214196 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 214196 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.muskego.wi.gov": {
    "host": "www.muskego.wi.gov",
@@ -6238,7 +6445,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 82128 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
   },
@@ -6257,8 +6464,27 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 189921 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
+  },
+  "www.oakcreekwi.gov": {
+   "host": "www.oakcreekwi.gov",
+   "url": "https://www.oakcreekwi.gov/388/Common-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 104477 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 104477 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.ocontocountywi.gov": {
    "host": "www.ocontocountywi.gov",
@@ -6322,6 +6548,25 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.oshkoshwi.gov": {
+   "host": "www.oshkoshwi.gov",
+   "url": "https://www.oshkoshwi.gov/CityCouncil/FormOfGovernment.aspx",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 35887 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 35887 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.ottumwa.us": {
    "host": "www.ottumwa.us",
@@ -6396,7 +6641,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 102558 bytes",
    "callers": {
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
   },
   "www.polkcountywi.gov": {
@@ -6407,7 +6652,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /government/elected_officials/sheriff/index.php \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /government/elected_officials/sheriff/index.php — not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -6430,7 +6675,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 62660 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.revenue.wi.gov": {
@@ -6508,8 +6753,27 @@
    "note": "requests+token HTTP 200, 91992 bytes",
    "callers": {
     "scripts/build_schuyler_precincts.py": "unknown",
-    "scripts/il_county_commissioners_scraper.py": "browser"
+    "scripts/il_county_commissioners_scraper.py": "both"
    }
+  },
+  "www.scottcoil.gov": {
+   "host": "www.scottcoil.gov",
+   "url": "https://www.scottcoil.gov/commissioners",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 121382 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 121382 bytes",
+   "callers": {
+    "scripts/il_county_commissioners_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.sheboygancounty.com": {
    "host": "www.sheboygancounty.com",
@@ -6533,7 +6797,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 99869 bytes (page carries a captcha widget)",
@@ -6563,7 +6827,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 110107 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.shelbycounty-il.gov": {
@@ -6608,7 +6872,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 148379 bytes (page carries a captcha widget)",
@@ -6674,7 +6938,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 54348 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-09-13"
   },
@@ -6693,7 +6957,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 110150 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.tomahwi.gov": {
@@ -6705,9 +6969,9 @@
     "crawl-delay": 15.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 15.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 15.0 — not fetched; four rungs at that pace is not a polite probe",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.twp.northville.mi.us": {
@@ -6732,7 +6996,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 139795 bytes (page carries a captcha widget)",
@@ -6770,19 +7034,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (URLError) — not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+     "note": "robots.txt unreadable (URLError) — not fetched by this client"
     }
    },
    "robots": {
@@ -6793,7 +7057,7 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_vermilion_boundaries.py": "unknown",
     "scripts/vermilion_county_board_scraper.py": "browser"
@@ -6854,7 +7118,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 91395 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-09-13"
   },
@@ -6933,7 +7197,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 79040 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    }
   },
   "www.waukeshacounty.gov": {
@@ -6997,7 +7261,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 116342 bytes (page carries a captcha widget)",
@@ -7006,7 +7270,7 @@
     "note": "HTTP 403"
    },
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
   },
@@ -7060,7 +7324,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 140038 bytes (page carries a captcha widget)",
@@ -7069,7 +7333,7 @@
     "note": "HTTP 403"
    },
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
   },
@@ -7114,7 +7378,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+    "requests+token": "refused to this client (HTTP 403) — no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 104325 bytes (page carries a captcha widget)",
@@ -7146,6 +7410,25 @@
    },
    "measured": "2026-09-13"
   },
+  "www.westalliswi.gov": {
+   "host": "www.westalliswi.gov",
+   "url": "https://www.westalliswi.gov/page/contact-your-alderperson",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 1461946 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 2 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 1461946 bytes (page carries a captcha widget)",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.westbendwi.gov": {
    "host": "www.westbendwi.gov",
    "url": "https://www.westbendwi.gov/government/elected_officials/west_bend_common_council/index.php",
@@ -7161,7 +7444,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 101259 bytes",
    "callers": {
-    "wi/scripts/wi_alderperson_scraper.py": "browser"
+    "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
   },
@@ -7339,5 +7622,5 @@
    }
   }
  },
- "callers_refreshed": "2026-10-01"
+ "callers_refreshed": "2026-10-15"
 }
