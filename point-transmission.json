@@ -34,6 +34,7 @@
         "quorum-court",
         "school-district-unified",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -207,6 +208,7 @@
       "atpoint_hooks_fired": 2,
       "layer_ids": [
         "county",
+        "county-council",
         "county-subdivision",
         "fire-station",
         "in-house",
@@ -217,6 +219,7 @@
         "school-district-unified",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -250,7 +253,8 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
-        "us-house"
+        "us-house",
+        "voting-precinct"
       ]
     },
     "mi": {
@@ -395,6 +399,7 @@
         "school-district-unified",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -523,6 +528,7 @@
         "school-district-unified",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -559,6 +565,7 @@
         "tn-senate",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },

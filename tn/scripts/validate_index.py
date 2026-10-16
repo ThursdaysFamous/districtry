@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 12
+MIN_REGISTER_LAYER = 13
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -96,8 +96,9 @@ MIN_REGISTER_LAYER = 12
 EXPECT_LAYER_IDS = [
     "us-house", "tn-senate", "county", "tn-house", "school-district-unified",
     "county-commissioner", "county-subdivision", "zip-code",
-    "school-district-elementary", "school-district-secondary", "municipality",
-    "tribal-government", "police-station", "fire-station", "post-office",
+    "school-district-elementary", "school-district-secondary",
+    "voting-precinct", "municipality", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +110,7 @@ GEOMETRY_FILES = {
     "tn-house-districts.json": (99, 99),  # The 99 Tennessee House districts.
     "tn-commission-districts.json": (859, 859),  # The 859 county commission districts in 95 counties, from the Comptroller of the Treasury's statewide layer (tn/scripts/build_tn_commission_districts.py).
     "tribal-areas.json": (1, 1),  # Tennessee's tribal land (scripts/build_tribal_areas.py) — the Tennessee part of the Mississippi Choctaw Off-Reservation Trust Land near Henning. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "tn-precincts.json": (1870, 1870),  # Every Tennessee voting precinct, pre-built by tn/scripts/build_tn_precincts.py through scripts/statewide_precincts.py from the Comptroller of the Treasury's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 1,870 count on the fetch and the drawn file, after Overton County's nine records published twice with identical geometry are dropped to one each). 9.4 MB, 2.45 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).

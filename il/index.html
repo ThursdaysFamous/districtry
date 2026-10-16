@@ -4683,7 +4683,9 @@ function initChiExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -16024,6 +16026,173 @@ function initChiExplorer() {
   var loadFordBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/ford-county-board-members.json", {}, 2);
   });
+  /* Fayette, Cumberland, Jersey and Lawrence — the four counties whose board
+   * districts are PROVEN EVERYWHERE BUT ONE AREA (2026-10-16, Adam's choice
+   * "Draw the proven parts"; build_partial_board_districts.py). Each county's
+   * own publication places whole precincts or townships in each district, and
+   * those are drawn. The area it says is SHARED between districts, without
+   * publishing where the line runs, is drawn as its own feature carrying
+   * `between` and no district number, and its card names every district it
+   * could be in and says why it cannot say which — never a guess. */
+  var loadFayetteCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/fayette-county-outline.json", {}, 2);
+  });
+  function fayetteCountyCoverage(point) {
+    return loadFayetteCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadJerseyCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/jersey-county-outline.json", {}, 2);
+  });
+  function jerseyCountyCoverage(point) {
+    return loadJerseyCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadLawrenceCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/lawrence-county-outline.json", {}, 2);
+  });
+  function lawrenceCountyCoverage(point) {
+    return loadLawrenceCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadFayetteBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/fayette-county-board-districts.json", {}, 2);
+  });
+  var loadFayetteBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/fayette-county-board-members.json", {}, 2);
+  });
+  var loadCumberlandBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/cumberland-county-board-districts.json", {}, 2);
+  });
+  var loadCumberlandBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/cumberland-county-board-members.json", {}, 2);
+  });
+  var loadJerseyBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/jersey-county-board-districts.json", {}, 2);
+  });
+  var loadJerseyBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/jersey-county-board-members.json", {}, 2);
+  });
+  var loadLawrenceBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/lawrence-county-board-districts.json", {}, 2);
+  });
+  var loadLawrenceBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/lawrence-county-board-members.json", {}, 2);
+  });
+  // "District 3 or 5", "District 5, 6 or 7", "Western or Central District":
+  // the districts a shared area lies between, in the county's own words.
+  function sharedDistrictLabel(between, named) {
+    var list = between.map(String);
+    var joined = list.length > 1
+      ? list.slice(0, -1).join(", ") + " or " + list[list.length - 1]
+      : list.join("");
+    return named ? joined + " District" : "District " + joined;
+  }
+  // One dispatch entry for a county drawn this way. spec: { key, title,
+  // coverage, loadGeometry, loadMembers, url, named (districts are words, not
+  // numbers), seatsNote (what to say when a district's list is empty) }.
+  function partialBoardEntry(spec) {
+    function districtName(d) {
+      return spec.named ? String(d) + " District" : "District " + String(d);
+    }
+    function membersOf(roster, d) {
+      var e = roster && d != null ? roster[String(d)] : null;
+      return (e && e.members) || [];
+    }
+    return {
+      key: spec.key,
+      coverage: spec.coverage,
+      loadGeometry: spec.loadGeometry,
+      hoverName: function (feature) {
+        var props = feature.properties || {};
+        var between = findPropCI(props, ["between"]);
+        if (between && between.length) {
+          var label = sharedDistrictLabel(between, spec.named);
+          return spec.named ? label : label.replace(/^District /, "");
+        }
+        var v = findPropCI(props, ["district"]);
+        return (v == null || v === "") ? null : String(v);
+      },
+      query: function (point, seq) {
+        return Promise.all([
+          featureSetAt(spec.loadGeometry, point),
+          spec.loadMembers().catch(function () { return {}; })
+        ]).then(function (results) {
+          var feature = findFeatureContaining(results[0], point);
+          if (!feature) return null;
+          var props = feature.properties || {};
+          var between = findPropCI(props, ["between"]);
+          return {
+            seq: seq,
+            district: findPropCI(props, ["district"]),
+            between: between && between.length ? between.map(String) : null,
+            area: findPropCI(props, ["area"]),
+            note: findPropCI(props, ["note"]),
+            precincts: findPropCI(props, ["precincts"]),
+            roster: results[1] || {}
+          };
+        });
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush");
+        if (result.between) {
+          wrap.appendChild(renderBodyIntro({
+            title: spec.title,
+            note: "This point is in " + String(result.area || "an area")
+              + ", which the county divides between "
+              + sharedDistrictLabel(result.between, spec.named).replace(/^District /, "Districts ")
+              + "."
+          }));
+          if (result.note) {
+            wrap.appendChild(renderFieldStack([
+              { label: "Why it can't say which", value: String(result.note) }
+            ]));
+          }
+          result.between.forEach(function (d) {
+            var members = membersOf(result.roster, d);
+            wrap.appendChild(renderBodyIntro({
+              title: districtName(d),
+              note: members.length ? boardCountNote(members.length, null) : spec.seatsNote
+            }));
+            if (members.length) wrap.appendChild(renderPersonRows(members.map(boardMemberPerson)));
+          });
+          return wrap;
+        }
+        var people = membersOf(result.roster, result.district);
+        wrap.appendChild(renderBodyIntro({
+          title: spec.title,
+          note: people.length ? boardCountNote(people.length, null) : spec.seatsNote
+        }));
+        if (people.length) wrap.appendChild(renderPersonRows(people.map(boardMemberPerson)));
+        if (result.precincts && result.precincts.length) {
+          wrap.appendChild(renderFieldStack([
+            { label: "Precincts", value: result.precincts.join(", ") }
+          ]));
+        }
+        return wrap;
+      },
+      cardIdentifier: function (result) {
+        if (result.between) return sharedDistrictLabel(result.between, spec.named);
+        return result.district != null && result.district !== ""
+          ? districtName(result.district) : null;
+      },
+      primaryLink: function () {
+        return { label: spec.title + " (official)", url: spec.url };
+      },
+      hoverOfficial: {
+        load: spec.loadMembers,
+        name: function (feature, roster) {
+          var d = findPropCI(feature.properties || {}, ["district"]);
+          var members = membersOf(roster, d);
+          if (!members.length) return null;
+          return members.map(function (m) { return m.name; }).join(", ");
+        }
+      }
+    };
+  }
   /* Jackson (the 87th county, 2026-08-23) — the first county served whose board
    * districts SPLIT precincts. Its own certified 2024 General canvass reports
    * three of its 56 precincts TWICE, under two districts each with their
@@ -16260,9 +16429,9 @@ function initChiExplorer() {
    * Central 6, Eastern 5 and Western 3 precincts, fourteen against a county of
    * twelve, identically for both parties, while every countywide contest on the
    * same canvass reports exactly twelve. So no union of whole precincts can draw
-   * the board and only the county's own boundary ever will — the board is shut,
-   * nothing rides the County card, and the precinct answer is the whole of what
-   * this county gains. Its twelve precincts ARE the Census 2020 voting districts,
+   * the WHOLE board: since 2026-10-16 the county-board entry draws the ten whole
+   * precincts and ships Neoga Township as one shared area naming Western and
+   * Central (build_partial_board_districts.py). Its twelve precincts ARE the Census 2020 voting districts,
    * the Jasper test passing 12/12 with the population identity to the person.
    * See build_cumberland_precincts.py. */
   var loadCumberlandCountyOutline = makeCached(function () {
@@ -29682,7 +29851,35 @@ function initChiExplorer() {
             return e.members.map(function (m) { return m.name; }).join(", ");
           }
         }
-      }
+      },
+      // Fayette, Cumberland, Jersey and Lawrence — districts drawn where the
+      // county places whole precincts or townships, and the one shared area in
+      // each drawn as itself (build_partial_board_districts.py; the helper's
+      // comment above says why). Members from each county's own board page.
+      partialBoardEntry({
+        key: "fayette", title: "Fayette County Board", coverage: fayetteCountyCoverage,
+        loadGeometry: loadFayetteBoardDistricts, loadMembers: loadFayetteBoardMembers,
+        url: "https://www.fayettecountyillinois.gov/county-offices/county-board/",
+        seatsNote: "Two members represent this district."
+      }),
+      partialBoardEntry({
+        key: "cumberland", title: "Cumberland County Board", coverage: cumberlandCountyCoverage,
+        loadGeometry: loadCumberlandBoardDistricts, loadMembers: loadCumberlandBoardMembers,
+        url: "https://cumberlandcoil.gov/county-board-members-committees/",
+        named: true, seatsNote: "Two members represent this district."
+      }),
+      partialBoardEntry({
+        key: "jersey", title: "Jersey County Board", coverage: jerseyCountyCoverage,
+        loadGeometry: loadJerseyBoardDistricts, loadMembers: loadJerseyBoardMembers,
+        url: "https://jerseycounty-il.gov/county-board/",
+        seatsNote: "Three members represent this district."
+      }),
+      partialBoardEntry({
+        key: "lawrence", title: "Lawrence County Board", coverage: lawrenceCountyCoverage,
+        loadGeometry: loadLawrenceBoardDistricts, loadMembers: loadLawrenceBoardMembers,
+        url: "https://lawrencecounty.illinois.gov/boards/county-board",
+        seatsNote: "One member represents this district."
+      })
     ]
   });
 
@@ -34728,8 +34925,8 @@ function initChiExplorer() {
       // here that is not because the board is at large: Cumberland elects six
       // members from three compass-point districts that SPLIT PRECINCTS, which
       // its own returns prove by counting Central 6 + Eastern 5 + Western 3
-      // against a county of twelve. Only the county's own boundary can express
-      // that, so the board rides nothing here and nothing is invented for it.
+      // against a county of twelve. The county-board entry draws the whole
+      // precincts and names both districts over the split Neoga ground.
       // NO POLLING PLACE: the county publishes a list, and that belongs with a
       // roster guard rather than inside a geometry file.
       {

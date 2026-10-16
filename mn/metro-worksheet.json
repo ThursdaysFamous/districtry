@@ -312,7 +312,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
-        "people": "The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes, so its card names nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
+        "people": "The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes. For 416 of those towns the card names the officers on their county's own list of township officers instead — 29 counties publish one this app reads (measured 2026-10-16) — each dated to the list and the day it was read, and only where the election results name nobody; the rest name nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py; the county lists by mn/scripts/mn_county_town_officers_scraper.py and build_mn_county_town_officers.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
         "applies": "Minnesota — statewide."
       }
     },
@@ -619,6 +619,11 @@
         "note": "The board of each Minnesota town that holds its town election in November, keyed by the town's Census county subdivision GEOID, each seat naming the winner of its most recent November election in the Secretary of State's local results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_town_boards.py (update-mn-city-councils.yml)."
       },
       {
+        "file": "mn-county-town-officers.json",
+        "min_keys": 360,
+        "note": "The officers of each Minnesota town the election results do not name that a county's own list of township officers names, keyed by the town's Census county subdivision GEOID: names, offices and terms only, with the county, the list's own date where it gives one, the day it was read and the list's address; read by mn/scripts/mn_county_town_officers_scraper.py and built by mn/scripts/build_mn_county_town_officers.py. No scheduled refresh yet."
+      },
+      {
         "file": "mn-school-boards.json",
         "min_keys": 310,
         "note": "The elected board of each Minnesota school district whose elections the Secretary of State reports, keyed by the Census district id, each seat naming the winner of its most recent election and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_school_boards.py (update-mn-school-boards.yml)."
@@ -636,7 +641,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v11",
+    "cache_name": "districtry-mn-shell-v12",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -715,7 +720,9 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "sources_page": {
     "file": "mn/sources.html",

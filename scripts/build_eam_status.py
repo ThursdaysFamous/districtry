@@ -180,7 +180,8 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
-                  "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75}
+                  "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75,
+                  "ms": 82}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1593,8 +1594,13 @@ ANSWERS = {
         # no state file, BUT a town clerk certifies its officers to the county
         # each spring, and a survey of all 87 counties on 2026-10-15 found 42
         # that publish a list of them (mn/data/source/
-        # mn-county-township-officer-survey.json). Those 42 are owed before
-        # this level passes. Gap mn-township-officers carries both halves.
+        # mn-county-township-officer-survey.json). 29 of those lists are READ
+        # since 2026-10-16 (mn/scripts/build_mn_county_town_officers.py): 2,019
+        # officers in 416 March towns. The other 13 are not: five behind a
+        # robots.txt Disallow, three behind a Cloudflare 403, one 5xx, one a
+        # scanned image, and three that name no March town's officers in a
+        # form that can be read (Anoka, Olmsted, Goodhue). Until those are
+        # settled the level stays open. Gap mn-township-officers carries it.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.
@@ -1681,7 +1687,9 @@ ANSWERS = {
         # independent school boards are elected at large and so are named rather
         # than drawn.
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The State Board of Elections compiles all 3,194 precincts statewide
+        # from the counties' own files, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # NO TRIBAL LAND IN KENTUCKY, measured 2026-10-01 against the Census
         # AIANNHA service over an envelope covering the whole state: zero
@@ -1710,7 +1718,10 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("in-senate", "in-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # Since 2026-10-15 the council districts of 55 counties are drawn
+        # (Marion's are the City-County Council's 25); COUNTY_MAPS_DRAWN reads
+        # which from the shipped file.
+        "county-government": depth("county-council"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         # UNIFIED ALONE TILES THE STATE: TIGERweb's elementary and secondary
@@ -1719,9 +1730,19 @@ ANSWERS = {
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
-        "sub-county-government": OPEN,
+        # Since 2026-10-15 the Township or City card names each civil
+        # township's trustee and board from the Election Division's certified
+        # 2022 general (in-township-officials.json): 973 trustees and 921
+        # boards of 1,004 townships. The rest are recorded on the card (no
+        # race in the results, and Marion's boards are not in them). Adam's
+        # 2026-10-15 rule passes a level once its boards are named wherever a
+        # list is published, so it is answered.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # IndianaMap's 2026 layer, from the General Assembly and the Election
+        # Division, carries all 5,121 precincts, and the app draws them
+        # (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-10 (#1496): the Pokagon Band's trust land, the one
         # piece of tribal land in Indiana, with the band's council named.
@@ -1747,7 +1768,9 @@ ANSWERS = {
             "the Census marks every one non-functioning — so outside a city or "
             "town limit the county governs."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The State Board of Elections' statewide file carries all 2,625
+        # precincts, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-10 (#1496): the Eastern Band of Cherokee Indians'
         # Qualla Boundary and its one piece of trust land, the only tribal
@@ -1819,7 +1842,10 @@ ANSWERS = {
             "sub-county units the Census publishes for South Carolina are "
             "census county divisions: statistical areas, not governments."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Revenue and Fiscal Affairs Office keeps the official maps of all
+        # 2,315 precincts the General Assembly sets by act, and the app draws
+        # them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-12: the Catawba Nation's reservation and its trust
         # land in York County, the only tribal land in the state, named with
@@ -1859,7 +1885,9 @@ ANSWERS = {
             "the Census publishes for Tennessee are civil districts, which the "
             "Census records as having no functioning government."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Comptroller of the Treasury's layer carries all 1,870 precincts the
+        # county election commissions set, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
         # Mississippi Band of Choctaw Indians' trust land near Henning, named
@@ -1899,7 +1927,9 @@ ANSWERS = {
             "the Census publishes for Arkansas are townships, which the Census "
             "records as having no functioning government."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Arkansas GIS Office's layer carries all 2,920 precincts as the
+        # counties report them, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # NO TRIBAL LAND IN ARKANSAS, measured 2026-10-15 with
         # validate_tribal_join's own queries: the reservation, trust-land and
@@ -1911,6 +1941,58 @@ ANSWERS = {
             "Arkansas has no tribal land. The Census publishes no federal or "
             "state reservation and no off-reservation trust land in the state, "
             "measured 2026-10-15 with a control in Tennessee."),
+    },
+    # Mississippi, added at its go-live with the national tier, the
+    # supervisor-district layer, the four courts and the Choctaw land.
+    "ms": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ms-senate", "ms-house"),
+        "county-boundaries": answers("county"),
+        # Every county elects a board of five supervisors, each from one of
+        # the county's five districts, and the Secretary of State's directory
+        # names all of them. The layer draws a county's districts only where
+        # its current lines are confirmed (Adam, "Confirmed only",
+        # 2026-10-15), so the other counties owe a map. Recorded in
+        # ms/CLAUDE.md.
+        "county-government": depth("county-supervisor"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # TIGER's unified tiling holds all 137 districts and the other two hold
+        # none, measured in ms/CLAUDE.md, so one layer is the whole level.
+        "school-district-boundaries": answers("school-district-unified"),
+        # MISSISSIPPI'S COUNTY SUBDIVISIONS ARE ITS SUPERVISOR DISTRICTS, so
+        # this map is the supervisor-district layer's, and it is drawn only in
+        # the counties whose current lines are confirmed. In 70 counties the
+        # Census's own copy still carries the lines of its 2020 edition, which
+        # in 64 of them are more than 10% out of balance on the 2020 blocks, so
+        # it is not drawn instead (ms/CLAUDE.md). Open until every county is
+        # drawn.
+        "subdivision-boundaries": OPEN,
+        # The Supreme Court, the Court of Appeals and the chancery and circuit
+        # courts, each district a list of whole counties on the court's own
+        # page or in the Code. Two parts are recorded as missing rather than
+        # drawn: the ten counties the Court of Appeals splits by precinct, and
+        # the parts of a district some chancery and circuit judges are elected
+        # from. The justice courts, whose judges the directory lists by
+        # district or post within a county, are not drawn.
+        "courts-by-district": answers(
+            "ms-supreme-court", "ms-court-of-appeals", "ms-chancery-court",
+            "ms-circuit-court"),
+        # MISSISSIPPI HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 410
+        # county subdivisions the Census carries for the state are supervisor
+        # districts with FUNCSTAT N. Recorded in ms/CLAUDE.md.
+        "sub-county-government": na(
+            "Mississippi has no sub-county general-purpose government — outside "
+            "a city, town or village the county governs. The 410 sub-county "
+            "units the Census publishes for Mississippi are its supervisor "
+            "districts, which the Census records as having no functioning "
+            "government."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # The Mississippi Band of Choctaw Indians' reservation and trust land,
+        # named with the band's Tribal Chief and Tribal Council.
+        "tribal-government": answers("tribal-government"),
     },
     "ny": {
         "us-house": answers("congress"),
@@ -2094,7 +2176,9 @@ def _in_county_maps_owed(B):
     map. Daviess labels its four district seats only as "County Council
     Member", which is why the test is "not at large" rather than "says
     District". County commissioners are elected by the whole county from
-    residency districts (IC 36-2-2-4) and owe none. Marion County is governed by
+    residency districts (IC 36-2-2-4) and owe none, except in Lake and St.
+    Joseph, which elect them by district; both councils are elected by district
+    too, so those two counties are owed a map either way. Marion County is governed by
     the Indianapolis City-County Council, elected from 25 districts, and is not
     in the council file.
     """
@@ -2109,6 +2193,25 @@ def _in_county_maps_owed(B):
             owed.add(B.slug_of(rec["county"]))
     owed.add(B.slug_of("Marion"))
     return owed
+
+
+def _in_county_maps_drawn(B):
+    """Indiana counties whose council districts the app draws.
+
+    Read off the shipped district file itself (in/scripts/
+    build_in_council_districts.py), so a county counts as drawn exactly when a
+    reader can click inside one of its districts. Marion's features are the
+    Indianapolis City-County Council's 25 districts.
+    """
+    rel = "in/data/app/in-council-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    return {B.slug_of(f["properties"]["county"]) for f in doc["features"]}
+
+
+def _in_county_maps_undrawn(B, records):
+    """Indiana counties owed a council map that the shipped file does not draw."""
+    return _in_county_maps_owed(B) - _in_county_maps_drawn(B)
 
 
 def _il_county_maps_owed(B, records):
@@ -2178,6 +2281,29 @@ def _ia_county_maps_owed(B, records):
     return owed
 
 
+def _ms_county_maps_owed(B, records):
+    """Mississippi counties whose supervisor districts are not drawn.
+
+    Every county's five supervisors are each elected from one of its five
+    districts, so every county owes a map. Which counties the layer draws is
+    read off the shipped districts file, never listed here; build_county_pages'
+    own Mississippi adapter already holds that file to the app's list of drawn
+    counties, and this holds it to the roster.
+    """
+    rel = "ms/data/app/ms-supervisor-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        drawn = {(f.get("properties") or {}).get("county")
+                 for f in json.load(fh).get("features") or []}
+    named = {re.sub(r" County$", "", name) for name in records}
+    drawn = {re.sub(r" County$", "", name or "") for name in drawn}
+    stray = sorted(drawn - named)
+    if stray:
+        fail("ms: `%s` draws %s, which the county roster does not name"
+             % (rel, ", ".join(stray)))
+    return {B.slug_of(name) for name in records
+            if re.sub(r" County$", "", name) not in drawn}
+
+
 def _no_layer(derive):
     """A state whose county-government level draws no county district."""
     def wrapped(B, records):
@@ -2186,15 +2312,16 @@ def _no_layer(derive):
     return wrapped
 
 
-# A STATE WHOSE ENTRY DRAWS NO DISTRICT (Indiana) is wrapped in `_no_layer`,
+# A STATE WHOSE ENTRY DRAWS NO DISTRICT is wrapped in `_no_layer`,
 # and the audit below fails the day its county-government entry gains a layer,
 # because which counties that layer draws then has to be measured. A state
-# whose entry draws some (Illinois, Iowa, Kentucky) measures it itself.
+# whose entry draws some (Illinois, Iowa, Kentucky, Indiana) measures it itself.
 COUNTY_MAPS_OWED = {
     "ky": _ky_county_maps_owed,
-    "in": _no_layer(_in_county_maps_owed),
+    "in": _in_county_maps_undrawn,
     "il": _il_county_maps_owed,
     "ia": _ia_county_maps_owed,
+    "ms": _ms_county_maps_owed,
 }
 
 
@@ -2305,10 +2432,10 @@ WARD_MAPS = {
                              "the whole city"}),
     "mi": dict(
         drawn={"2605920", "2622000", "2629000", "2634000", "2638640",
-               "2641420", "2653780", "2656320", "2665440", "2684000"},
+               "2641420", "2653780", "2656320", "2665440", "2682960",
+               "2684000"},
         owed={"2603000": "Ann Arbor", "2606020": "Bay City",
-              "2642820": "Kentwood", "2646000": "Lansing",
-              "2682960": "Walker"}),
+              "2642820": "Kentwood", "2646000": "Lansing"}),
     # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
     # which reads the cities off the city council roster.
     "mn": dict(
@@ -2325,21 +2452,24 @@ WARD_MAPS = {
     "ky": dict(
         drawn={"2148006", "2148000", "2146027"},
         declared={"2148006", "2148000", "2146027"}),
+    # Indianapolis's council districts are the City-County Council's, drawn by
+    # the County Council District layer for Marion County.
     "in": dict(
-        drawn=set(),
+        drawn={"1836003"},
         owed={"1801468": "Anderson", "1805860": "Bloomington",
+              "1808416": "Brownsburg",
               "1810342": "Carmel", "1814734": "Columbus",
               "1820728": "Elkhart", "1822000": "Evansville",
               "1823278": "Fishers", "1825000": "Fort Wayne",
               "1825450": "Franklin", "1828386": "Goshen",
-              "1829898": "Greenwood", "1836003": "Indianapolis",
+              "1829898": "Greenwood",
               "1838358": "Jeffersonville", "1840392": "Kokomo",
               "1840788": "Lafayette", "1842426": "Lawrence",
               "1846908": "Marion", "1848528": "Merrillville",
               "1848798": "Michigan City", "1849932": "Mishawaka",
               "1851876": "Muncie", "1852326": "New Albany",
-              "1854180": "Noblesville", "1861092": "Portage",
-              "1864260": "Richmond", "1871000": "South Bend",
+              "1854180": "Noblesville", "1860246": "Plainfield", "1861092": "Portage",
+              "1864260": "Richmond", "1868220": "Schererville", "1871000": "South Bend",
               "1875428": "Terre Haute", "1878326": "Valparaiso",
               "1882700": "Westfield", "1882862": "West Lafayette",
               "1886372": "Zionsville"}),
