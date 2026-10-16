@@ -3564,6 +3564,13 @@ NOT_COUNTY_BOARDS = {
         date="2026-09-13",
         reason="municipal clerks, 1,850 of them. Municipal, not county.",
     ),
+    "wi/data/app/wi-town-boards.json": dict(
+        date="2026-10-15",
+        reason="Wisconsin TOWN boards, a chairperson and supervisors per town, "
+               "read from each county's own directory. A town is a unit below "
+               "the county, not the county board, which is the same reason "
+               "il township-officials.json is recorded here.",
+    ),
     "wi/data/app/wi-municipal-boards.json": dict(
         date="2026-10-01",
         reason="the governing body of the Wisconsin municipalities that elect "

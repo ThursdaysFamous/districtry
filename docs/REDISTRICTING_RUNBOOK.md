@@ -74,6 +74,12 @@ current one took effect, and none of that can be inferred from a sibling state. 
 state thread's to fill: `ia/WATCH.md`, `ky/WATCH.md` and `mn/WATCH.md` are where that work is
 tracked.
 
+**SIX MORE INSTANCES HAVE GONE LIVE SINCE THAT MEASUREMENT** — Indiana, North Carolina, Oklahoma,
+South Carolina, Tennessee and Arkansas. On 2026-10-15 Kentucky's stub and new stubs for Oklahoma,
+South Carolina, Tennessee and Arkansas gained one row each, for the township layer that change
+added, because those facts were measured in that change; every other layer in those five is still
+unwritten, and Indiana and North Carolina have no section at all.
+
 ### CHI (37 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
@@ -193,7 +199,12 @@ No blast-radius entries for Iowa. Owned by the Iowa thread.
 
 ### KY — NOT YET WRITTEN
 
-No blast-radius entries for Kentucky. Owned by the Kentucky thread.
+No blast-radius entries for Kentucky except the township layer, added 2026-10-15. Owned by the
+Kentucky thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| County subdivisions (KY census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
 
 ### MN — ONE LAYER WRITTEN OF 20
 
@@ -203,6 +214,42 @@ here, and `mn/WATCH.md` carries their dates. Owned by the Minnesota thread.
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | City Council District (22 cities, 101 wards) | **Decennial, after each census**, and whenever a city changes its number of wards | each city council, by ordinance under Minn. Stat. 204B.135 and its charter; the Secretary of State carries the result on every precinct in its statewide precinct layer | geometry (`mn/scripts/build_mn_city_wards.py` rebuild). The builder refuses to write unless each city's wards are exactly its roster's ward seats in `mn-city-councils.json` and every ward's precincts are exactly those that voted in its latest council contest, read in that election's own precinct map. A city that redraws shows up as a ballot mismatch until its first election on the new lines, which is correct: until then its members still represent the old wards. A change in a city's number of wards fails the roster half until `mn/scripts/build_mn_city_councils.py` declares the new seats. Cache-first geometry, so a rebuild bumps `cache_name` |
+
+### OK — NOT YET WRITTEN
+
+No blast-radius entries for Oklahoma except the township layer, added 2026-10-15. Owned by the
+Oklahoma thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| County subdivisions (OK census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
+
+### SC — NOT YET WRITTEN
+
+No blast-radius entries for South Carolina except the township layer, added 2026-10-15. Owned by
+the South Carolina thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| County subdivisions (SC census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
+
+### TN — NOT YET WRITTEN
+
+No blast-radius entries for Tennessee except the civil-district layer, added 2026-10-15. Owned by
+the Tennessee thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| Civil districts (TN) | TIGER-rolling | Census Bureau vintage, recording each civil district as a legal area with no functioning government (FUNCSTAT N); which body may change a civil district's lines is not measured here | nothing to rebuild: the layer is LIVE against TIGERweb, so a change reaches the app only once the Census carries it into a new vintage. The card's note that a civil district's number is not a commission district's number holds whatever the lines do |
+
+### AR — NOT YET WRITTEN
+
+No blast-radius entries for Arkansas except the township layer, added 2026-10-15. Owned by the
+Arkansas thread.
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| Townships (AR) | **At no fixed time**: a county court changes its townships by order (Arkansas Code 14-14-401) | each county court; drawn by the Arkansas GIS Office's statewide township layer, which this app ships instead of the Census's out-of-date one | geometry (`ar/scripts/build_ar_townships.py` rebuild: the 820-township and 75-county guard, the agreement gate, the 25 m ceiling and the per-county cover check all re-run), the Capitol smoke anchor (Big Rock Township), and the service-worker cache name, since the file is cache-first. The state's layer carries no edit date, so `--watch` (the annual row in `ar/WATCH.md`) is the only tripwire |
 
 ---
 

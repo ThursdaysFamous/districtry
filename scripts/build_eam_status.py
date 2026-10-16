@@ -1472,11 +1472,14 @@ ANSWERS = {
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("wi-circuit-court", "wi-court-of-appeals"),
         # A Wisconsin town IS the general-purpose government outside a village
-        # or city, and the app draws it — but what it names there is the town
-        # CLERK, who does not govern. The standard's test is that a reader is
-        # told who governs the point, so this is open rather than answered, and
-        # `town-clerks-*.json` is named here as what was considered.
-        "sub-county-government": OPEN,
+        # or city. Until 2026-10-15 the card named only the town CLERK, who
+        # does not govern, so this was open. It now names the town BOARD
+        # wherever the county publishes a list of town officials, read county
+        # by county (wi-town-boards.json), and in every other county it says
+        # why it cannot — which is the test Adam set on 2026-10-15 for this
+        # level: it passes where a list is published, and the card says so for
+        # the towns it cannot name.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": answers("mps-school-board"),
         "precincts": answers("ward"),
         "special-districts": answers("wtcs-district", "tid-district"),
@@ -1644,6 +1647,10 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
+        # The Census's 493 county divisions, drawn live from TIGERweb as North
+        # Carolina's townships are, with a card saying no one is elected from
+        # them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         # ALL FOUR COURTS ANSWER, from statute text alone. Every Kentucky
         # judge is elected from a district or circuit made of WHOLE COUNTIES
         # named in the statute (KRS 21A.010, 22A.010(2), 23A.020, 24A.030), so
@@ -1655,7 +1662,6 @@ ANSWERS = {
         # named since 2026-10-07 (Louisville's from the three Jefferson court
         # sites its Court of Justice page links), though the standard asks
         # whether the app answers the level and would count it without them.
-        "subdivision-boundaries": OPEN,
         "courts-by-district": answers(
             "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
             "ky-district-court"),
@@ -1774,7 +1780,9 @@ ANSWERS = {
         # and the secondary tiling is empty. Recorded in ok/CLAUDE.md.
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary"),
-        "subdivision-boundaries": OPEN,
+        # The Census's 305 county divisions, drawn live from TIGERweb with a
+        # card saying no one is elected from them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # OKLAHOMA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 305 county
         # subdivisions TIGERweb carries for the state are census county
@@ -1808,7 +1816,9 @@ ANSWERS = {
         # TIGER's unified tiling holds all 72 districts and the other two hold
         # none, measured in sc/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
-        "subdivision-boundaries": OPEN,
+        # The Census's 299 county divisions, drawn live from TIGERweb with a
+        # card saying no one is elected from them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # SOUTH CAROLINA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 299
         # county subdivisions TIGERweb carries for the state are census county
@@ -1844,7 +1854,10 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
-        "subdivision-boundaries": OPEN,
+        # The 855 civil districts, drawn live from TIGERweb and titled "Civil
+        # District N", with a card saying no one is elected to run one and that
+        # the number is not a county commission district's (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # TENNESSEE HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 855 county
         # subdivisions TIGERweb carries for the state are civil districts
@@ -1880,7 +1893,11 @@ ANSWERS = {
         # TIGER's unified tiling holds all 234 districts and the other two hold
         # none, measured in ar/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
-        "subdivision-boundaries": OPEN,
+        # The 820 townships of the state's own map (ar/data/app/ar-townships.json),
+        # not the Census's, which disagrees with it about how many townships a
+        # county has in 27 counties and, in the two checked, is the out-of-date
+        # one (2026-10-15, ar/scripts/build_ar_townships.py).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # ARKANSAS HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 1,051
         # county subdivisions TIGERweb carries for the state are townships and
@@ -2305,8 +2322,8 @@ WARD_MAPS = {
                "1738570", "1744225", "1749867", "1753559", "1754638",
                "1754820", "1755249", "1757225", "1757875", "1759000",
                "1762367", "1765000", "1765078", "1770122", "1772000",
-               "1779293"},
-        owed={"1712385": "Champaign", "1718563": "Danville"}),
+               "1779293", "1718563"},
+        owed={"1712385": "Champaign"}),
     "wi": dict(drawn="all"),
     "ny": dict(drawn="all"),
     "ia": dict(
@@ -2318,12 +2335,10 @@ WARD_MAPS = {
                              "council members by district and elects them by "
                              "the whole city"}),
     "mi": dict(
-        drawn={"2605920", "2622000", "2629000", "2634000", "2641420",
-               "2684000"},
+        drawn={"2605920", "2622000", "2629000", "2634000", "2638640",
+               "2641420", "2653780", "2656320", "2665440", "2684000"},
         owed={"2603000": "Ann Arbor", "2606020": "Bay City",
-              "2638640": "Holland", "2642820": "Kentwood",
-              "2646000": "Lansing", "2653780": "Midland",
-              "2656320": "Muskegon", "2665440": "Pontiac",
+              "2642820": "Kentwood", "2646000": "Lansing",
               "2682960": "Walker"}),
     # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
     # which reads the cities off the city council roster.

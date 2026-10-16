@@ -233,10 +233,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Township",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town",
+      "source": {
+        "answers": "The township containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "Arkansas GIS Office — FEATURESERVICES/Boundaries, layer 57 (TOWNSHIP_POLITICAL_DIVISION), pre-built for the state and shipped with the app (ar/scripts/build_ar_townships.py); 820 townships in 75 counties, measured 2026-10-15. Chosen over the Census's map, which differs from it in at least 27 counties: TIGERweb still draws 38 townships in Washington County, where a 2013 county court order upheld in Clowers v. Edwards (2020) left 3.",
+            "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/57"
+          }
+        ],
+        "people": "NO OFFICEHOLDER NAMED. A township has no government of its own, but its voters elect a constable for a two-year term (Arkansas Constitution, article 7, section 47). No source naming constables by township has been read, so the card says so and names nobody.",
+        "applies": "Arkansas — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "501 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -254,7 +272,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -272,7 +290,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -290,7 +308,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -305,7 +323,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 34.7465,
     "lng": -92.2896,
@@ -331,6 +349,10 @@
     {
       "layer": "quorum-court",
       "expected": "6"
+    },
+    {
+      "layer": "county-subdivision",
+      "expected": "Big Rock Township"
     }
   ],
   "negative_point": {
@@ -378,6 +400,12 @@
         "min_features": 775,
         "max_features": 775,
         "note": "The 775 justice of the peace districts of all 75 counties, from the state's own layer (ar/scripts/build_ar_quorum_court_districts.py)."
+      },
+      {
+        "file": "ar-townships.json",
+        "min_features": 820,
+        "max_features": 820,
+        "note": "The 820 townships of all 75 counties, from the state's own layer (ar/scripts/build_ar_townships.py)."
       }
     ],
     "rosters": [
@@ -409,7 +437,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ar-shell-v2",
+    "cache_name": "districtry-ar-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

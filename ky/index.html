@@ -4217,8 +4217,9 @@ function initKentuckyExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ky-supreme-court": "kyj", "ky-court-of-appeals": "kya",
     "ky-senate": "kys", "ky-circuit-court": "kyc", "ky-district-court": "kyd",
-    "ky-house": "kyh", "county": "co", "school-district-unified": "su", "fiscal-court": "fc",
-    "municipality": "mu", "school-district-elementary": "se", "school-district-secondary": "sh" };
+    "ky-house": "kyh", "county": "co", "school-district-unified": "su",
+    "county-subdivision": "cs", "fiscal-court": "fc", "municipality": "mu",
+    "school-district-elementary": "se", "school-district-secondary": "sh" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4227,8 +4228,9 @@ function initKentuckyExplorer() {
     "state-house": ["ky-house"], "supreme-court-district": ["ky-supreme-court"],
     "appellate-court-district": ["ky-court-of-appeals"],
     "trial-court-district": ["ky-circuit-court"], "county": ["county"],
-    "county-board": ["fiscal-court"], "municipality": ["municipality"],
-    "city-council": ["fiscal-court"], "school-district-unified": ["school-district-unified"],
+    "county-board": ["fiscal-court"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "city-council": ["fiscal-court"],
+    "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9380,6 +9382,7 @@ function initKentuckyExplorer() {
     "ky-house",          // 100 House districts, drawn independently of the 38 Senate districts
     "county",            // 120 counties, pre-built from TIGERweb; this instance's offline anchor layer, and smaller on average than a House district
     "school-district-unified", // 170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county
+    "county-subdivision", // 493 census county divisions, live from TIGERweb (no data/app file) — median 196.8 km2 of land (mean 207.4), measured 2026-10-15: smaller than a unified school district, larger than a city
     "fiscal-court",      // 314 districts in 58 counties: the magisterial districts of 56 fiscal courts and the council districts of Louisville Metro and Lexington-Fayette, 169 km2 mean feature area over 53,163 km2, so smaller than a school district and larger than a city
     "municipality",      // 415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land
     "school-district-elementary", // 4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points
@@ -13997,6 +14000,111 @@ function initKentuckyExplorer() {
     primaryLink: kySchoolLink
   });
 
+  // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
+  // ("Ashland" + " CCD") or a prefix. Returns null when the two are equal or
+  // unrelated, so a TIGER change shows up as a missing type row rather than
+  // as an improvised one.
+  function subdivisionKind(name, base) {
+    if (name == null || base == null) return null;
+    var n = String(name), b = String(base);
+    if (n === b || b === "") return null;
+    var i = n.indexOf(b);
+    if (i === 0) return n.slice(b.length).trim().toLowerCase() || null;
+    if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
+    return null;
+  }
+
+  /* ---------- Census County Division — live TIGERweb, the level-14 map ----------
+   * Which county subdivision a point is in, owed in every state whether or
+   * not the units govern anyone (docs/DONE_STANDARD.md, level 14, Adam's
+   * ruling of 2026-10-14). Kentucky has no township tier, and every one of
+   * the 493 county subdivisions TIGERweb carries for STATE='21' is a census
+   * county division (LSADC 22, FUNCSTAT S, measured 2026-10-15): an area the
+   * Census Bureau draws to report its counts, which governs nobody. The
+   * statewide set is 19.9 MB at geometryPrecision=5 and downloads only when
+   * the layer is switched on. The card says that rather than implying a
+   * government: it names the division and its county, and its Government row
+   * is read from the Census's own functional-status code, so a FUNCSTAT this
+   * card does not know prints no row rather than an improvised one. North
+   * Carolina's layer with Kentucky's unit, point-first through
+   * tigerStatewideLoader, so a first click asks TIGERweb about the selected
+   * point while the statewide set downloads for the map. ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // A census county division's own name ("Ashland" of "Ashland CCD"): the
+  // card's header already says what kind of area it is, and the hover row
+  // prints the same value beside the same label.
+  function subdivisionTitle(props) {
+    var name = findPropCI(props, ["name"]), base = findPropCI(props, ["basename"]);
+    if (subdivisionKind(name, base) === "ccd" && base != null && String(base) !== "") return String(base);
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Census County Division",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return subdivisionTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: subdivisionTitle(props),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title != null ? result.title : "Unknown division",
+        note: result.county
+      }));
+      var GOVERNMENT = {
+        S: "None. A census county division is an area the U.S. Census " +
+          "Bureau draws to report its counts, and no one is elected from it. " +
+          "Kentucky has no townships, so outside a city the county governs.",
+        N: "None. The U.S. Census Bureau records this area as having no " +
+          "functioning government, and no one is elected to run it."
+      };
+      var gov = result.funcstat != null ? GOVERNMENT[String(result.funcstat)] : null;
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
+  });
+
   /* ---------- 6. City ----------
    * TIGERweb's incorporated places, point-first. Measured 2026-10-01 for
    * STATE='21': 415 features over 4,978.5 km2 of land — under 5% of Kentucky,
@@ -15956,7 +16064,8 @@ function initKentuckyExplorer() {
     "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
     "ky-district-court", "fiscal-court",
     "school-district-unified", "school-district-elementary",
-    "school-district-secondary", "county", "municipality"];
+    "school-district-secondary", "county", "county-subdivision",
+    "municipality"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -16447,9 +16556,9 @@ function initKentuckyExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B",
     "#2F7A6A": "#69CAB3", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
     "#4A2E8C": "#9B7CFD", "#4AA893": "#74EFD3", "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5",
-    "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#8163AE": "#CAAAFF", "#8A692C": "#DDB061",
-    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+    "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF",
+    "#8A692C": "#DDB061", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

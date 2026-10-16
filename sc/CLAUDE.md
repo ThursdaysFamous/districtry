@@ -8,14 +8,14 @@ districtry South Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/sc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships TWELVE layers, and **the instance is LIVE since
+Illinois root-scripts shape. It ships THIRTEEN layers, and **the instance is LIVE since
 2026-10-13**, on Adam's word: it has a `metros.json` entry and a landing card, its folder is
 published with the siblings' narrow deploy excludes, and its question pages (`county-council.html`
 with a page per county under `county-council/`, `congress.html`, `state-legislature.html`) are in
 the sitemap. It arrived dark on 2026-10-10; `docs/SC_EXPANSION_PLAN.md` is the record of both
 changes.
 
-**The national tier** — ten of the twelve layers answer from a national publisher or the
+**The national tier** — eleven of the thirteen layers answer from a national publisher or the
 General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),
 **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **South Carolina Senate** and **South Carolina House**
@@ -39,9 +39,15 @@ TELEPHONE, AND THE BUILDER NEVER READS THEM** — its parse is confined to the b
 "Columbia Address". The General Assembly publishes no e-mail address for any member (each page
 offers a message form), so the cards carry none.
 
-**THERE IS NO TOWNSHIP LAYER, AND THAT IS A MEASUREMENT.** All 299 county subdivisions TIGERweb
-carries for STATE='45' are census county divisions (LSADC 22, FUNCSTAT S): statistical areas
-drawn for counting, which govern nobody.
+**THE COUNTY DIVISIONS ARE DRAWN, AND THE CARD SAYS THEY GOVERN NOBODY.** All 299 county
+subdivisions TIGERweb carries for STATE='45' are census county divisions (LSADC 22, FUNCSTAT S,
+measured 2026-10-15): statistical areas drawn for counting. They were left out at arrival; since
+2026-10-15 the done standard's level 14 (Adam, 2026-10-14) asks every state to draw its
+subdivision boundaries whether or not they govern anyone, so `county-subdivision` ("Census County
+Division") draws them live from TIGERweb, North Carolina's layer, with a card that names the
+division without TIGER's "CCD", names its county and says no one is elected from it. The
+statewide set is 12.2 MB, uncompressed, and downloads only when the layer is switched on; a click
+asks TIGERweb about the point alone.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 72 districts
 for South Carolina and its elementary and secondary tilings hold none, and the unified districts'
@@ -119,7 +125,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: South Carolina (`southcarolina`) — https://districtry.com/sc/
 - Geocoders: address Photon (South Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Carolina-bounded, serial >=1s queue)
 - Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
-- Layers: 12 registered (political 5, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SCExplorer`.
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.SCExplorer`.
 - Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `update-sc-county-council-roster.yml` (Wed 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
 - Source registry: `sc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
