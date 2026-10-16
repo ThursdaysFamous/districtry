@@ -46,6 +46,22 @@ Carthage", so `subdivisionKind` reads what NAME carries beyond BASENAME at eithe
 null when the two are unrelated — a TIGER change then shows up as a missing type row rather than
 as an improvised one.
 
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM THE STATE BOARD OF ELECTIONS' FILE.**
+`voting-precinct` draws all 2,625 precincts. The Board posts its statewide precinct shapefile only
+as dated zips in a download folder (the newest on 2026-10-15 was `SBE_PRECINCTS_20260824.zip`),
+and NC OneMap serves a queryable copy that carries no date of its own; the builder reads that
+copy, and matched it to the 2026-08-24 zip by the count in all 100 counties and by the largest,
+smallest and summed record ids. It is pre-built by `nc/scripts/build_nc_precincts.py` through the
+fleet module `scripts/statewide_precincts.py` at Douglas-Peucker 12 m (8.2 MB, 2.43 MB gzipped),
+so a click is answered from the file and no point leaves the browser. The card names the precinct
+and its county, says a precinct elects no one, names the Board's file of August 24, 2026 that the
+copy matches, states the 12 m, and links the Board's polling-place lookup; the builder holds the
+card to both the date and the interval. **THE BOARD NUMBERS ITS COUNTIES IN A DIFFERENT ORDER FROM
+THE CENSUS** (it puts Macon, 56, before McDowell; the Census puts McDowell first), so the county
+is joined by name, which a first draft found by failing on Macon. An undated copy and a zip with
+no metadata are evidence for the state-publishing ask. The quarterly re-check, which also lists
+the Board's folder for a newer zip, is in `nc/WATCH.md`.
+
 **THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS `county-commissioner`, AND ITS TWO HALVES
 SEPARATE CLEANLY.** All 100 counties elect a board, 587 commissioners in all, and the
 **form** of every board is answerable today from one document: NCACC's *County Commissioner
@@ -92,8 +108,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: North Carolina (`northcarolina`) — https://districtry.com/nc/
 - Geocoders: address Photon (North Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, North Carolina-bounded, serial >=1s queue)
-- Ground truth: 35.78040,-78.63910 (the State Capitol block, downtown Raleigh, Wake County) → county Wake County; us-house 2; nc-senate 14; nc-house 38. Negative point 35.60000,-75.30000 (the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 8. Debug namespace `window.NCExplorer`.
+- Ground truth: 35.78040,-78.63910 (the State Capitol block, downtown Raleigh, Wake County) → county Wake County; us-house 2; nc-senate 14; nc-house 38; voting-precinct Precinct 01-14. Negative point 35.60000,-75.30000 (the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.).
+- Layers: 13 registered (political 4, safety 2, schools 1, geography 6); `registerLayer(` floor 9. Debug namespace `window.NCExplorer`.
 - Scheduled workflows: `update-nc-congress-roster.yml` (Mon 15:30 UTC); `update-nc-legislature-roster.yml` (Tue 15:30 UTC); `update-nc-county-commissioners.yml` (Wed 15:30 UTC); `nc-validate-sources.yml` (1st of month 16:00 UTC).
 - Source registry: `nc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

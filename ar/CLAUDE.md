@@ -65,6 +65,23 @@ line. The state's layer has no description, no edit date and no record of change
 `ar/scripts/build_ar_townships.py --watch` is the only way to tell that it moved
 (`ar/WATCH.md`).
 
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM WHAT EACH COUNTY REPORTS TO THE STATE.**
+`voting-precinct` draws all 2,920 precincts from the Arkansas GIS Office's statewide layer,
+published with the Secretary of State's Elections Division as each county's voter registration
+system holds them. It is pre-built by `ar/scripts/build_ar_precincts.py` through the fleet module
+`scripts/statewide_precincts.py` at Douglas-Peucker 4 m (9.3 MB, 2.44 MB gzipped), so a click is
+answered from the file and no point leaves the browser. **A PRECINCT IN PIECES IS SEVERAL
+RECORDS**: the layer has 2,928 records for 2,920 precincts, seven precincts in Washington,
+Franklin, Sebastian and Pope counties being published one record per piece, and they are joined
+into one precinct each so a reader in any piece gets its card. The card names the precinct and its
+county, says a precinct elects no one, gives the date the county's last change was recorded where
+the layer has one (on about half the records; a precinct with none says the state's map gives no
+date), states the 4 m, and links the state's polling-place lookup. Half the records undated, a layer
+description that still says the data was finalized in 2012, and pieces of one precinct dated more
+than three years apart are evidence for the state-publishing ask. The layer answers 200 records a
+request and the office's open-data host asks for 60 seconds between requests, so a build or a
+re-check takes about fifteen minutes. The quarterly re-check is in `ar/WATCH.md`.
+
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 234 districts
 for Arkansas and its elementary and secondary tilings hold none, and the unified districts' land
 area sums to the 75-county total (134,659 km²) — so the layer is "School District", the North
@@ -152,8 +169,8 @@ other instance via `scripts/compose_app.py`.
 
 - Metro: Arkansas (`arkansas`) — https://districtry.com/ar/
 - Geocoders: address Photon (Arkansas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Arkansas-bounded, serial >=1s queue)
-- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74; quorum-court 6; county-subdivision Big Rock Township. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.ArkansasExplorer`.
+- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74; quorum-court 6; county-subdivision Big Rock Township; voting-precinct Precinct 098. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
+- Layers: 13 registered (political 4, safety 2, schools 1, geography 6); `registerLayer(` floor 11. Debug namespace `window.ArkansasExplorer`.
 - Scheduled workflows: `update-ar-congress-roster.yml` (Mon 17:23 UTC); `update-ar-legislature-roster.yml` (Tue 17:23 UTC); `update-ar-county-officials.yml` (Wed 17:23 UTC); `ar-validate-sources.yml` (1st of month 19:43 UTC).
 - Source registry: `ar/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

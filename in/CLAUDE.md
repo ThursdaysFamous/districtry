@@ -87,6 +87,22 @@ council. New Albany's at-large race is filed as electing one and elects three
 (`MISFILED_SEAT_COUNTS`). Council district lines are not drawn, so the card lists every seat.
 Gap `in-municipal-officeholders` records the rest.
 
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM INDIANA'S 2026 PRECINCT MAP.**
+`voting-precinct` draws all 5,121 precincts from IndianaMap's "Voting District Boundaries 2026",
+which the Indiana Geographic Information Office published from data it obtained from the General
+Assembly and the Indiana Election Division in June 2026. It is pre-built by
+`in/scripts/build_in_precincts.py` through the fleet module `scripts/statewide_precincts.py` at
+Douglas-Peucker 4 m (7.1 MB, 1.48 MB gzipped), so a click is answered from the file and no point
+leaves the browser. The card names the precinct and its county, says a precinct elects no one,
+says it is the 2026 map so a change a county made after June 2026 is not shown, states the 4 m,
+and links the state's polling-place lookup. **EACH YEAR IS A NEW SERVICE**, at a new address with the year
+in its field names (2010, 2023, 2024 and 2026 are in the catalogue, measured 2026-10-15; there is
+no 2025), so the builder's `--watch` also lists the catalogue for a later edition, and the builder
+refuses to build while the card names an edition other than the one it reads. The layer names no
+licence and carries no county name, only a three-digit code, so the county comes from this
+instance's own county file. Those two gaps and the yearly change of address are evidence for the
+state-publishing ask. The quarterly re-check is in `in/WATCH.md`.
+
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
 roster-miss path, which is the honest card until a roster is built. Recorded as gap
@@ -111,8 +127,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Indiana (`indiana`) — https://districtry.com/in/
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
-- Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.IndianaExplorer`.
+- Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
+- Layers: 13 registered (political 4, safety 2, schools 1, geography 6); `registerLayer(` floor 10. Debug namespace `window.IndianaExplorer`.
 - Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

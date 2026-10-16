@@ -78,6 +78,25 @@ each county commission sets; which counties still use the civil districts for th
 measured. The statewide set is 28.9 MB, uncompressed, and downloads only when the layer is
 switched on; a click asks TIGERweb about the point alone.
 
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM THE COMPTROLLER'S STATEWIDE LAYER.**
+`voting-precinct` draws all 1,870 precincts from "Voting Precincts New", the layer behind the
+Comptroller of the Treasury's Voter District Lookup; the Comptroller does the counties'
+redistricting map work and each county election commission sets its precincts. It is pre-built by
+`tn/scripts/build_tn_precincts.py` through the fleet module `scripts/statewide_precincts.py` at
+Douglas-Peucker 8 m (9.4 MB, 2.45 MB gzipped), so a click is answered from the file and no point
+leaves the browser. Three things in the layer are read around, each measured: the county is a
+number written two ways ("3" and "003"); Overton County's nine precincts each appear twice with
+identical geometry, dropped to one each only because the builder declares nine; and Davidson
+County has eight small pieces named "Precinct Created by Split CCD & Senate Districts" rather than
+a precinct, whose card says the state's map does not name their precinct rather than calling the
+ground part of no precinct. "CCD" is spelled out nowhere in the service; it most likely means a
+county commission district, which is inferred from the service's layer list. The card names the
+precinct and its county, says a precinct elects no one, says a precinct name that includes a
+polling place may not be where a reader votes now, states the 8 m, and links the Secretary of
+State's voter registration lookup. The service states no licence and no description, and the
+Comptroller's site does not link the layer; both are evidence for the state-publishing ask. The
+quarterly re-check is in `tn/WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE TENNESSEE.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (Bowling Green, Kentucky gives 42101; a
 point just over the Alabama line 35773; the Capitol 37219). The envelope the app downloads
@@ -200,8 +219,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Tennessee (`tennessee`) — https://districtry.com/tn/
 - Geocoders: address Photon (Tennessee-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Tennessee-bounded, serial >=1s queue)
-- Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
-- Layers: 15 registered (political 5, safety 2, schools 3, geography 5); `registerLayer(` floor 12. Debug namespace `window.TennesseeExplorer`.
+- Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19; voting-precinct Precinct 19-4. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
+- Layers: 15 registered (political 4, safety 2, schools 3, geography 6); `registerLayer(` floor 13. Debug namespace `window.TennesseeExplorer`.
 - Scheduled workflows: `update-tn-congress-roster.yml` (Mon 17:15 UTC); `update-tn-legislature-roster.yml` (Tue 17:15 UTC); `update-tn-commissioner-roster.yml` (Wed 17:15 UTC); `tn-validate-sources.yml` (1st of month 19:30 UTC).
 - Source registry: `tn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
