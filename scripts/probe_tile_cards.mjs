@@ -79,7 +79,8 @@
 
 import { chromium, request } from "playwright";
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT, instances, vendorDir } from "./probe_points.mjs";
 
@@ -265,6 +266,22 @@ async function openPage(tag, held, referenceSet) {
 const CURL_RETRY = ["--retry", "6", "--retry-all-errors", "--retry-max-time", "240",
   "--speed-limit", "1", "--speed-time", "60"];
 
+// The body goes to a file, never to stdout. curl truncates a file before it
+// tries again, but it cannot take back what it already wrote to stdout, so a
+// download that stalled part-way and was retried came back as the partial
+// body followed by the whole one, and JSON.parse failed where the two met
+// (il:cps-high and ny:es-zone on 2026-10-16, on two runs of one commit).
+function curlBody(args) {
+  const dir = mkdtempSync(join(tmpdir(), "probe-tile-cards-"));
+  const out = join(dir, "body");
+  try {
+    execFileSync("curl", [...args.slice(0, -1), "-o", out, args[args.length - 1]], { stdio: ["ignore", "ignore", "inherit"] });
+    return readFileSync(out);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
 function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
@@ -418,8 +435,8 @@ try {
         const tok = appToken(tag);
         const url = rec.query + (tok ? (rec.query.includes("?") ? "&" : "?") + "$$app_token=" + tok : "");
         try {
-          const raw = execFileSync("curl", ["-sS", "--fail", "-L", "--max-redirs", "5", ...CURL_RETRY, "--max-time", "600",
-            "-A", "districtry portal-tile mirror (+https://districtry.com/)", url], { maxBuffer: 1 << 30 });
+          const raw = curlBody(["-sS", "--fail", "-L", "--max-redirs", "5", ...CURL_RETRY, "--max-time", "600",
+            "-A", "districtry portal-tile mirror (+https://districtry.com/)", url]);
           const fc = JSON.parse(raw);
           for (const f of fc.features || []) if (f.geometry) feats.push(f);
           // the app's whole-set loader calls this same route with this same
@@ -440,8 +457,8 @@ try {
             // --retry-all-errors: without it curl's --retry skips a reset
             // connection (exit 35), which is how a CI run lost ia:municipality
             // on 2026-09-27 with three retries unspent.
-            const raw = execFileSync("curl", ["-sS", "--fail", ...CURL_RETRY, "--max-time", "300",
-              "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url], { maxBuffer: 1 << 30 });
+            const raw = curlBody(["-sS", "--fail", ...CURL_RETRY, "--max-time", "300",
+              "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url]);
             const page = JSON.parse(raw);
             // a set fetched whole is held under its own query, which the app's
             // loader may or may not ask in exactly this form

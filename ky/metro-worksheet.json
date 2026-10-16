@@ -287,10 +287,28 @@
       }
     },
     {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 12,
+      "rank_note": "3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a city (12.00)",
+      "source": {
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "boundary": [
+          {
+            "label": "Kentucky State Board of Elections — Voting Precinct Boundaries in Kentucky, compiled under KRS 117.055 to 117.0557 from the precinct files each county board of elections submits and hosted by the Kentucky Division of Geographic Information (CC0 1.0); 3,194 features, pre-built for the state by ky/scripts/build_ky_precincts.py and shipped with the app. The item says it is current through the November 3, 2026 general election and that a county's own records control where the two disagree, which the card says.",
+            "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
       "source": {
         "answers": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.",
@@ -308,7 +326,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
       "source": {
         "answers": "The elementary-only school district covering the point, in the four places Kentucky has one.",
@@ -326,7 +344,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling",
       "source": {
         "answers": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.",
@@ -341,7 +359,7 @@
       }
     }
   ],
-  "min_register_layer": 5,
+  "min_register_layer": 6,
   "anchor_point": {
     "lat": 38.2527,
     "lng": -85.7585,
@@ -363,6 +381,10 @@
     {
       "layer": "ky-house",
       "expected": "43"
+    },
+    {
+      "layer": "voting-precinct",
+      "expected": "Precinct 168 43 District"
     }
   ],
   "negative_point": {
@@ -429,6 +451,12 @@
         "min_features": 300,
         "max_features": 360,
         "note": "Magisterial and council districts, built by ky/scripts/build_ky_county_districts.py from the State Board of Elections' precinct map and recap sheets and from Louisville's and Lexington's council maps; its --check holds the file to its source record and each drawn county to its Census outline."
+      },
+      {
+        "file": "ky-precincts.json",
+        "min_features": 3194,
+        "max_features": 3194,
+        "note": "Every Kentucky voting precinct, pre-built by ky/scripts/build_ky_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 3,194 count on the fetch and the drawn file). 10.2 MB, 2.49 MB gzipped, fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [

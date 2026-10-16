@@ -298,8 +298,14 @@ question.
   school board is elected by division, five divisions per county, each built
   from whole precincts. Kentucky's independent school boards are elected at
   large, so they are named rather than drawn.
-- Precincts: Illinois (83 counties), Iowa, Michigan, New York, San Francisco and
-  Wisconsin's wards. Minnesota and Kentucky ship none.
+- Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
+  Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
+  Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one
+  statewide precinct map a government office in that state publishes. Oklahoma
+  ships none: its State Election Board sent the question of using its precinct
+  maps to the University of Oklahoma's Center for Spatial Analysis, which was
+  asked on 2026-10-01 and has not answered, and no precinct layer ships there
+  until it does.
 - Tribal governments: no app answers one.
 
 ## Launching is a lower bar than being done

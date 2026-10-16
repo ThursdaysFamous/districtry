@@ -15,11 +15,11 @@
   "proxy-denied": 1,
   "robots-disallows-this-path": 11,
   "robots-unreadable": 4,
-  "stack-not-token": 8,
+  "stack-not-token": 9,
   "tls-chain": 1,
-  "token-ok": 252,
+  "token-ok": 253,
   "token-refused": 3,
-  "token-refused-and-stack": 24
+  "token-refused-and-stack": 25
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -79,7 +79,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /bos — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /bos \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -1157,7 +1157,7 @@
     "crawl-delay": 60.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 60.0 — not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 60.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "scripts/lake_municipal_officials_scraper.py": "browser"
    }
@@ -1358,19 +1358,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (ConnectionError) — not fetched by this client"
+     "note": "robots.txt unreadable (ConnectionError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) — not fetched by this client"
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (ReadTimeout) — not fetched by this client"
+     "note": "robots.txt unreadable (ReadTimeout) \u2014 not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (TimeoutError) — not fetched by this client"
+     "note": "robots.txt unreadable (TimeoutError) \u2014 not fetched by this client"
     }
    },
    "robots": {
@@ -1381,7 +1381,7 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_bluebook_municipal_scraper.py": "browser",
@@ -1418,7 +1418,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /treasurer — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /treasurer \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -1665,19 +1665,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) — not fetched by this client"
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) — not fetched by this client"
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     }
    },
    "robots": {
@@ -1688,7 +1688,7 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_gallatin_precincts.py": "unknown",
     "scripts/il_county_commissioners_scraper.py": "both"
@@ -2127,7 +2127,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /ViewPublisher.php?view_id=1&count=20 — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /ViewPublisher.php?view_id=1&count=20 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
@@ -2603,7 +2603,7 @@
     "requests+token": "read, 1 group(s) bind this client with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /arcgis/rest/services/MPD/MPD_geography/MapServer/1 — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /arcgis/rest/services/MPD/MPD_geography/MapServer/1 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_milwaukee_city_layers.py": "unknown",
     "wi/scripts/build_mke_polling_places.py": "self",
@@ -2895,7 +2895,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /index.asp?SEC=DB387A4E-E124-4584-B32C-2C95880C63F0 — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /index.asp?SEC=DB387A4E-E124-4584-B32C-2C95880C63F0 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
@@ -2965,7 +2965,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /supervisors — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /supervisors \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
@@ -3060,7 +3060,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 26654 bytes",
@@ -3106,7 +3106,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 17115 bytes",
@@ -3140,7 +3140,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 42858 bytes",
@@ -3171,7 +3171,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 8466 bytes",
@@ -3205,7 +3205,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 5034 bytes",
@@ -3231,7 +3231,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 5868 bytes",
@@ -3276,7 +3276,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 11210 bytes",
@@ -3857,7 +3857,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /index.asp?SEC=%7bB7F5AB49-3697-4A2E-8327-26847A43F33E%7d&Type=B_BASIC — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /index.asp?SEC=%7bB7F5AB49-3697-4A2E-8327-26847A43F33E%7d&Type=B_BASIC \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser"
    }
@@ -3976,6 +3976,34 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.brownsburg.org": {
+   "host": "www.brownsburg.org",
+   "url": "https://www.brownsburg.org/288/Town-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (ConnectionError) \u2014 not fetched by this client"
+    },
+    "stdlib+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 131358 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "unreadable (ConnectionError)",
+    "stdlib+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "stack-not-token",
+   "note": "requests+token robots.txt unreadable (ConnectionError) \u2014 not fetched by this client; stdlib+token HTTP 200, 131358 bytes; the front door answers the token (HTTP 200, 172096 bytes), so the refusal is this path",
+   "root": {
+    "kind": "ok",
+    "note": "HTTP 200, 172096 bytes"
+   },
+   "callers": {
+    "in/scripts/build_in_city_officials.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.buffalocountywi.gov": {
    "host": "www.buffalocountywi.gov",
@@ -4097,7 +4125,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 200, 60267 bytes",
@@ -4249,7 +4277,7 @@
     "crawl-delay": 15.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 15.0 — not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 15.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "both"
    }
@@ -4353,7 +4381,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 88065 bytes (page carries a captcha widget)",
@@ -4621,7 +4649,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /vertical/sites/%7B4C09F8F2-A8A2-4929-9E2A-A836851B00CC%7D/uploads/2026_-_2027_County_Boar — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /vertical/sites/%7B4C09F8F2-A8A2-4929-9E2A-A836851B00CC%7D/uploads/2026_-_2027_County_Boar \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
@@ -4742,7 +4770,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')); stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 150224 bytes (page carries a captcha widget)",
@@ -4764,7 +4792,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /bos — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /bos \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -4856,7 +4884,7 @@
     "crawl-delay": 15.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 15.0 — not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 15.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
@@ -4887,19 +4915,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) — not fetched by this client"
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) — not fetched by this client"
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     }
    },
    "robots": {
@@ -4910,7 +4938,7 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_coles_board_roster.py": "unknown",
     "scripts/coles_county_board_scraper.py": "browser",
@@ -5078,7 +5106,7 @@
     "crawl-delay": 300.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 300.0 — not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 300.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "both"
    },
@@ -5385,7 +5413,7 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
      "kind": "ok",
@@ -5397,7 +5425,7 @@
     "stdlib+token": "read, 1 group(s) bind this client with 2 rule(s)"
    },
    "verdict": "stack-not-token",
-   "note": "requests+token robots.txt unreadable (SSLError) — not fetched by this client; stdlib+token HTTP 200, 531282 bytes; the front door answers the token (HTTP 200, 167240 bytes), so the refusal is this path",
+   "note": "requests+token robots.txt unreadable (SSLError) \u2014 not fetched by this client; stdlib+token HTTP 200, 531282 bytes; the front door answers the token (HTTP 200, 167240 bytes), so the refusal is this path",
    "root": {
     "kind": "ok",
     "note": "HTTP 200, 167240 bytes"
@@ -5488,7 +5516,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 121809 bytes (page carries a captcha widget)",
@@ -5602,7 +5630,7 @@
     "crawl-delay": 30.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 30.0 — not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 30.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "ia/scripts/build_ia_judicial_district.py": "unknown",
     "ia/scripts/ia_judicial_district_scraper.py": "self",
@@ -5670,7 +5698,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 119328 bytes (page carries a captcha widget)",
@@ -6025,7 +6053,7 @@
     "requests+token": "read, 1 group(s) bind this client with 15 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /images/Reference_and_Yearbook_2025-2026_updated.pdf — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /images/Reference_and_Yearbook_2025-2026_updated.pdf \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_logan_board_roster.py": "unknown",
     "scripts/build_logan_precinct_polling.py": "browser",
@@ -6652,7 +6680,7 @@
     "requests+token": "read, * group with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /government/elected_officials/sheriff/index.php — not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /government/elected_officials/sheriff/index.php \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
@@ -6737,6 +6765,25 @@
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
+  "www.schererville.org": {
+   "host": "www.schererville.org",
+   "url": "https://www.schererville.org/council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 27200 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 27200 bytes",
+   "callers": {
+    "in/scripts/build_in_city_officials.py": "both"
+   },
+   "measured": "2026-10-15"
+  },
   "www.schuylercounty.org": {
    "host": "www.schuylercounty.org",
    "url": "https://www.schuylercounty.org/elections/voting-locations/",
@@ -6797,7 +6844,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 99869 bytes (page carries a captcha widget)",
@@ -6872,7 +6919,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 148379 bytes (page carries a captcha widget)",
@@ -6969,10 +7016,45 @@
     "crawl-delay": 15.0
    },
    "verdict": "crawl-delay-too-long",
-   "note": "Crawl-delay: 15.0 — not fetched; four rungs at that pace is not a polite probe",
+   "note": "Crawl-delay: 15.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "both"
    }
+  },
+  "www.townofplainfield.com": {
+   "host": "www.townofplainfield.com",
+   "url": "https://www.townofplainfield.com/1287/Town-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 218306 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 218306 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "in/scripts/build_in_city_officials.py": "both"
+   },
+   "measured": "2026-10-15"
   },
   "www.twp.northville.mi.us": {
    "host": "www.twp.northville.mi.us",
@@ -6996,7 +7078,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 139795 bytes (page carries a captcha widget)",
@@ -7034,19 +7116,19 @@
    "cells": {
     "requests+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) — not fetched by this client"
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     },
     "requests+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (SSLError) — not fetched by this client"
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+chrome": {
      "kind": "not-fetched",
-     "note": "robots.txt unreadable (URLError) — not fetched by this client"
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     }
    },
    "robots": {
@@ -7057,7 +7139,7 @@
     "policy": "unreadable to every client on the ladder"
    },
    "verdict": "robots-unreadable",
-   "note": "robots.txt could not be read by any rung — no page was fetched, so this host carries no user-agent measurement",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_vermilion_boundaries.py": "unknown",
     "scripts/vermilion_county_board_scraper.py": "browser"
@@ -7261,7 +7343,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 116342 bytes (page carries a captcha widget)",
@@ -7324,7 +7406,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 140038 bytes (page carries a captcha widget)",
@@ -7378,7 +7460,7 @@
     }
    },
    "robots": {
-    "requests+token": "refused to this client (HTTP 403) — no readable policy"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
    "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 104325 bytes (page carries a captcha widget)",

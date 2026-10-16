@@ -4215,9 +4215,11 @@ function initMississippiExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ms-senate": "mss", "county": "co", "ms-house": "msh",
-    "school-district-unified": "su", "county-supervisor": "cv", "zip-code": "zp",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "ms-supreme-court": "msj", "us-house": "us", "ms-court-of-appeals": "msa",
+    "ms-chancery-court": "msq", "ms-circuit-court": "msc", "ms-senate": "mss", "county": "co",
+    "ms-house": "msh", "school-district-unified": "su", "county-supervisor": "cv",
+    "zip-code": "zp", "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -9366,7 +9368,11 @@ function initMississippiExplorer() {
   // geometry library in this codebase to compute polygon area from data.
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
-    "us-house",          // 4 congressional districts — the largest districts Mississippi carries below the state itself
+    "ms-supreme-court",  // 3 districts of about 41,840 km2 each on the map (water included), measured 2026-10-15 — larger than a congressional district
+    "us-house",          // 4 congressional districts — smaller than a Supreme Court district, larger than a Court of Appeals district
+    "ms-court-of-appeals", // 5 districts of about 25,100 km2 each on the map (water included) — smaller than a congressional district, larger than a chancery district
+    "ms-chancery-court", // 20 districts of about 6,280 km2 each on the map, today and from 1 January 2027 — larger than a circuit district
+    "ms-circuit-court",  // 23 districts of about 5,460 km2 each on the map today, 22 of about 5,700 km2 from 1 January 2027 — larger than a Senate district
     "ms-senate",         // 52 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 82 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ms-house",          // 122 House districts — smaller on average than a county, larger than a school district
@@ -9374,6 +9380,7 @@ function initMississippiExplorer() {
     "county-supervisor", // 410 supervisor districts statewide, five per county, about 296 km2 of land on average against 887 km2 for a school district; drawn only in the counties whose current lines are confirmed
     "zip-code",          // 827 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Mississippi
     "municipality",      // 300 incorporated places, live from TIGERweb
+    "tribal-government", // Tribal land — Mississippi has 2 pieces held by one nation, the Mississippi Choctaw Reservation (123.468 km², in 56 separate parts, 77.1 km² of it in Neshoba County) and its off-reservation trust land (16.396 km² in Mississippi), MEASURED by scripts/build_tribal_areas.py on 2026-10-15. Ranked after municipalities and before the point layers, as South Carolina's and Indiana's are. Its parts are small — the reservation's 56 run from 51.6 km² down to under 0.01 km² and the trust land's 29 from 3.55 km² down — so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13350,6 +13357,12 @@ function initMississippiExplorer() {
    * The builder keeps one only where at least three of the five supervisors
    * print the same one, so this card can only ever show a shared office.
    *
+   * THE ELECTION COMMISSIONERS, BY NAME ONLY. The same directory names the
+   * county's five election commissioners, one elected from each supervisor
+   * district, and prints each one's own address, which may be a home. The
+   * builder keeps nothing from those lines but the name, so this card names
+   * them and can show no contact for them.
+   *
    * WHICH OF THE FIVE REPRESENTS THE POINT is the County Supervisor District
    * layer's answer, and it answers only where a county's current lines are
    * confirmed. This card lists the whole board and claims no district for
@@ -13394,9 +13407,43 @@ function initMississippiExplorer() {
     return source.charAt(0).toUpperCase() + source.slice(1) +
       (dated ? " (dated " + dated + ")" : "") +
       (printed ? ", page " + printed : "") + ". The Secretary of State " +
-      "publishes it once a year, so a change on the board can take until " +
+      "publishes it once a year, so a change of officeholder can take until " +
       "the next edition to appear here; this app checks for a new edition " +
       "every week.";
+  }
+  // A list of five seats, as person rows and the seats the directory prints
+  // as vacant, each named in `label`'s word ("District 3", "Beat 3").
+  function msSeats(seats, label, badge) {
+    var people = [];
+    var vacant = [];
+    (seats || []).forEach(function (s) {
+      if (!s) return;
+      if (s.vacant === true) {
+        vacant.push(msDistrictName(label, s.district));
+        return;
+      }
+      if (!s.name) return;
+      people.push({ name: String(s.name), badge: badge, note: msDistrictName(label, s.district) });
+    });
+    return { people: people, vacant: vacant };
+  }
+  // "District 3 is listed as vacant ..." for the seats msSeats found vacant.
+  function msVacancyField(vacant) {
+    var seats = vacant.length === 1 ? vacant[0]
+      : vacant.slice(0, -1).join(", ") + " and " + vacant[vacant.length - 1];
+    return {
+      label: vacant.length === 1 ? "Vacant seat" : "Vacant seats",
+      value: seats + (vacant.length === 1 ? " is" : " are") +
+        " listed as vacant in the Secretary of State's directory."
+    };
+  }
+  // The same-numbered seat in a list of five, or null.
+  function msSeatFor(seats, district) {
+    var found = null;
+    (seats || []).forEach(function (s) {
+      if (s && district != null && String(s.district) === String(district)) found = s;
+    });
+    return found;
   }
   // The board's shared office as one office block, or null where the
   // directory prints none the builder could keep.
@@ -13463,50 +13510,53 @@ function initMississippiExplorer() {
         }]));
         return wrap;
       }
-      var people = [];
       // A seat the directory prints as "Vacant" is said to be vacant, never
       // listed as a person, and never silently dropped, which would read as a
       // board of four.
-      var vacant = [];
-      (o.supervisors || []).forEach(function (s) {
-        if (!s) return;
-        if (s.vacant === true) {
-          vacant.push(msDistrictName(o.label, s.district));
-          return;
-        }
-        if (!s.name) return;
-        people.push({ name: String(s.name), badge: "Supervisor",
-          note: msDistrictName(o.label, s.district) });
-      });
-      if (people.length || vacant.length) {
+      var board = msSeats(o.supervisors, o.label, "Supervisor");
+      if (board.people.length || board.vacant.length) {
         wrap.appendChild(renderSectionLabel("Board of supervisors"));
       }
-      if (people.length) {
-        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      if (board.people.length) {
+        wrap.appendChild(renderPersonRows(board.people, { tinted: true }));
       }
-      if (vacant.length) {
-        var seats = vacant.length === 1 ? vacant[0]
-          : vacant.slice(0, -1).join(", ") + " and " + vacant[vacant.length - 1];
-        wrap.appendChild(renderFieldStack([{
-          label: vacant.length === 1 ? "Vacant seat" : "Vacant seats",
-          value: seats + (vacant.length === 1 ? " is" : " are") +
-            " listed as vacant in the Secretary of State's directory."
-        }]));
-      }
+      if (board.vacant.length) wrap.appendChild(renderFieldStack([msVacancyField(board.vacant)]));
       var office = msBoardOffice(o);
       if (office) wrap.appendChild(office);
+      // Names only: the directory prints each commissioner's own address,
+      // and the builder keeps nothing else from the line.
+      var commission = msSeats(o.electionCommissioners, o.commissionerLabel,
+        "Election commissioner");
+      var hasCommission = commission.people.length > 0 || commission.vacant.length > 0;
+      if (hasCommission) {
+        wrap.appendChild(renderSectionLabel("Election commissioners"));
+      }
+      if (commission.people.length) {
+        wrap.appendChild(renderPersonRows(commission.people, { tinted: true }));
+      }
+      if (commission.vacant.length) {
+        wrap.appendChild(renderFieldStack([msVacancyField(commission.vacant)]));
+      }
       var word = o.label === "Beat" ? "beat" : "district";
-      wrap.appendChild(renderFieldStack([
-        {
-          label: "Which one represents this point",
-          value: "The supervisor elected from the " + word + " this point is " +
-            "in. The County Supervisor District layer shows which " + word +
-            " that is in the counties where this app has confirmed the " +
-            "current lines; in the others it does not appear, rather than " +
-            "draw lines that may be out of date."
-        },
-        { label: "Where these names come from", value: msDirectoryCredit(o) }
-      ]));
+      var fields = [{
+        label: "Which one represents this point",
+        value: "The supervisor " + (hasCommission ? "and the election " +
+          "commissioner " : "") + "elected from the " + word + " this point " +
+          "is in. The County Supervisor District layer shows which " + word +
+          " that is in the counties where this app has confirmed the " +
+          "current lines; in the others it does not appear, rather than " +
+          "draw lines that may be out of date."
+      }];
+      if (hasCommission) {
+        fields.push({
+          label: "What election commissioners do",
+          value: "The Secretary of State's directory says their duties include " +
+            "\u201cconducting general and special elections, certifying " +
+            "election results, and purging voter rolls.\u201d"
+        });
+      }
+      fields.push({ label: "Where these names come from", value: msDirectoryCredit(o) });
+      wrap.appendChild(renderFieldStack(fields));
       return wrap;
     },
     primaryLink: function (result) {
@@ -13521,21 +13571,32 @@ function initMississippiExplorer() {
    * in the counties whose current lines this app has confirmed
    * (data/app/ms-supervisor-districts.json, built by
    * ms/scripts/build_ms_supervisor_districts.py). The Census carries every
-   * county's districts, but in most counties it still carries the lines
-   * drawn after the 2010 census, which would name the wrong supervisor for
-   * many readers. A county is drawn when its Census lines changed after the
-   * 2020 census AND hold nearly equal numbers of people on the 2020 census's
-   * own blocks; everywhere else the layer is hidden (coverage), and gap
+   * county's districts, but in most counties it still carries older lines,
+   * in most of them placing every resident as its January 1, 2010 edition
+   * does, which would name the wrong supervisor for many readers. A county
+   * is drawn from the Census's lines when they changed after the 2020
+   * census AND hold nearly equal numbers of people on the 2020 census's
+   * own blocks (lines "census"), or from a map the county
+   * or its planning and development district publishes, where that map
+   * shows its own currency and passes the same population test (lines
+   * "county", redrawn along whole 2020 blocks so every vertex is the
+   * Census's). Everywhere else the layer is hidden (coverage), and gap
    * ms-supervisor-district-lines says why. The County card names all five
    * supervisors in every county either way.
    *
-   * THE COVERAGE TEST READS THIS LAYER'S OWN FILE, because a point is in a
-   * drawn county exactly when it is in one of its districts (the Census's
-   * districts tile each county). It costs the file's download on a reader's
-   * first selection even with the layer off: 83 KB gzipped for twelve
-   * counties, measured 2026-10-15. A failed fetch fails OPEN per the
-   * engine's coverage contract, and the query then answers from the same
-   * file or shows its own Retry.
+   * THE COVERAGE TEST ASKS THE COUNTY LAYER, NOT THIS LAYER'S FILE. It finds
+   * the point's county in state-counties.json, which the County card loads
+   * on every selection anyway, and looks it up in
+   * data/app/ms-supervisor-counties.json, the list of drawn counties the
+   * same build writes (under 1 KB). The engine runs a coverage test on a
+   * reader's first selection even with the layer off, and reading the
+   * districts file for it cost 150 KB gzipped for twenty counties, measured
+   * 2026-10-15. Within a few tens of metres of a county line the two files,
+   * each simplified on its own, can put a point in different counties; there
+   * this layer follows the County card, so the two cards do not name
+   * different counties (the builder's county witness bounds that strip). A
+   * failed fetch fails OPEN per the engine's coverage contract, and the
+   * query then answers from the districts file or shows its own Retry.
    *
    * THE NAME IS THE DIRECTORY'S AND THE LINE IS THE CENSUS'S. The district
    * number joins the two, and each feature carries the county's own word
@@ -13544,11 +13605,18 @@ function initMississippiExplorer() {
   var loadSupervisorDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ms-supervisor-districts.json", {}, 2);
   });
+  var loadSupervisorCounties = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-supervisor-counties.json", {}, 2);
+  });
   function inConfirmedSupervisorCounty(point) {
-    return loadSupervisorDistricts().then(function (fc) {
-      var feats = (fc && fc.features) || [];
+    return Promise.all([loadStateCounties(), loadSupervisorCounties()]).then(function (got) {
+      var feats = (got[0] && got[0].features) || [];
+      var drawn = got[1] || {};
       for (var i = 0; i < feats.length; i++) {
-        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+          var geoid = findPropCI(feats[i].properties || {}, ["geoid"]);
+          return geoid != null && Object.prototype.hasOwnProperty.call(drawn, String(geoid));
+        }
       }
       return false;
     });
@@ -13560,7 +13628,8 @@ function initMississippiExplorer() {
     label: "County Supervisor District",
     coverage: inConfirmedSupervisorCounty,
     // Inside the drawn counties the districts cover every point, so this is
-    // reached only if the file and the coverage test ever disagree.
+    // reached only where the County layer's line and this layer's disagree,
+    // within a few tens of metres of a county line.
     emptyNote: "No supervisor district is drawn at this point. The County " +
       "card names all five of the county's supervisors.",
     overlay: {
@@ -13589,6 +13658,9 @@ function initMississippiExplorer() {
           district: findPropCI(props, ["district"]),
           label: findPropCI(props, ["label"]),
           lines: findPropCI(props, ["lines"]),
+          source: findPropCI(props, ["source"]),
+          read: findPropCI(props, ["read"]),
+          setAside: findPropCI(props, ["set_aside"]),
           officials: null,
           rosterFailed: false
         };
@@ -13611,27 +13683,43 @@ function initMississippiExplorer() {
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
       var o = result.officials;
-      var seat = null;
-      ((o && o.supervisors) || []).forEach(function (s) {
-        if (s && result.district != null && String(s.district) === String(result.district)) seat = s;
-      });
+      var seat = msSeatFor(o && o.supervisors, result.district);
+      // The commissioner elected from the same district. The directory numbers
+      // both lists 1 to 5; they are joined only where it also names them with
+      // the same word, so a county that calls its supervisor districts beats
+      // while numbering its commissioners as districts is not joined on a
+      // guess (none of the drawn counties does, measured 2026-10-16).
+      var commissioner = (o && o.commissionerLabel === o.label)
+        ? msSeatFor(o.electionCommissioners, result.district) : null;
       var word = result.label === "Beat" ? "beat" : "district";
+      var people = [];
+      var notes = [];
       if (seat && seat.vacant === true) {
-        wrap.appendChild(renderFieldStack([{
+        notes.push({
           label: "Supervisor",
           value: "This seat is listed as vacant in the Secretary of State's directory."
-        }]));
+        });
       } else if (seat && seat.name) {
-        wrap.appendChild(renderPersonRows([{ name: String(seat.name), badge: "Supervisor" }]));
+        people.push({ name: String(seat.name), badge: "Supervisor" });
       } else {
-        wrap.appendChild(renderFieldStack([{
+        notes.push({
           label: "Supervisor",
           value: result.rosterFailed
             ? "The list of supervisors did not load, so no one is named here."
             : "The Secretary of State's directory names no supervisor for this " +
               word + ", so no one is named here."
-        }]));
+        });
       }
+      if (commissioner && commissioner.vacant === true) {
+        notes.push({
+          label: "Election commissioner",
+          value: "This seat is listed as vacant in the Secretary of State's directory."
+        });
+      } else if (commissioner && commissioner.name) {
+        people.push({ name: String(commissioner.name), badge: "Election commissioner" });
+      }
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      if (notes.length) wrap.appendChild(renderFieldStack(notes));
       var office = msBoardOffice(o);
       if (office) wrap.appendChild(office);
       var rows = [{
@@ -13649,8 +13737,31 @@ function initMississippiExplorer() {
             "lines drawn after it should. It draws supervisor " + word + "s " +
             "only in counties where both are true."
         });
+      } else if (result.lines === "county") {
+        var read = msDate(result.read);
+        var aside = Number(result.setAside) || 0;
+        rows.push({
+          label: "Where this line comes from",
+          value: String(result.source || "The county's own map of its supervisor " +
+            word + "s") + (read ? ", read on " + read : "") + ". The Census " +
+            "Bureau's map of this county still shows its " + word + "s from " +
+            "before the 2020 census, so this app draws the county's own instead, " +
+            "along the 2020 census blocks: each block goes to the " + word +
+            " that covers most of it on the county's map. It checked that these " +
+            word + "s differ from the Census Bureau's and that the five hold " +
+            "nearly equal numbers of people in the 2020 census" +
+            (aside > 0 ? ", not counting the " +
+              String(aside).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " people in " +
+              "census blocks with almost no homes, which the population " +
+              "figures published with this map leave out" : "") + "."
+        });
       }
-      if (o) rows.push({ label: "Where the name comes from", value: msDirectoryCredit(o) });
+      if (o) {
+        rows.push({
+          label: people.length > 1 ? "Where the names come from" : "Where the name comes from",
+          value: msDirectoryCredit(o)
+        });
+      }
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
     },
@@ -13892,6 +14003,122 @@ function initMississippiExplorer() {
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
     }
+  });
+
+  /* ---------- 5a. Tribal Government — Mississippi's tribal land, 2 pieces, one nation.
+   *
+   * The Mississippi Choctaw Reservation (123.468 km², 7,749 people at the
+   * 2020 census) and the Mississippi Choctaw Off-Reservation Trust Land
+   * (17.092 km², 331 people), both held by the Mississippi Band of Choctaw
+   * Indians, which the Bureau of Indian Affairs seats at Choctaw. Measured
+   * 2026-10-15 by scripts/build_tribal_areas.py: the reservation lies wholly
+   * in Mississippi, in 56 separate parts, 77.1 km² of it in Neshoba County
+   * (measured against this app's own county outlines); 16.396 km² of the
+   * trust land is in Mississippi and the other 0.695 km² in Tennessee, and
+   * the file carries the whole trust land, as every instance's does. The
+   * Census draws no tribal subdivision on either.
+   *
+   * WHO THE CARD NAMES. The Tribal Chief and the seventeen members of the
+   * Tribal Council, from the band's own page at choctaw.org, read weekly by
+   * scripts/tribal_council_scraper.py. Each member represents one of the
+   * band's communities, which the page gives beside the name, so each is
+   * carried as that member's district — as a word, never as a shape: the
+   * Census draws no tribal subdivision on this land, so this app has no
+   * outline for any community. The card's districts sentence points at
+   * those words instead of saying "no council seat belongs to it", which
+   * would be false here.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND AS A WHOLE: by
+   * Adam's ruling of 2026-09-30, a government answers for that ground, so a
+   * reader who clicks it should be told which one.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadMsTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadMsTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE CHIEF AND THE COUNCIL, where the nation's own page names them,
+    // merged onto the land by the loader above, so the card makes no request
+    // of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Tribal Chief and Tribal Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Mississippi has 2 tribal areas, the Mississippi Choctaw Reservation and its off-reservation trust land, both the Mississippi Band of Choctaw Indians', and this point is on neither."
   });
 
   /* ---------- 6. School District — live TIGERweb, unified districts ----------
@@ -14177,6 +14404,487 @@ function initMississippiExplorer() {
     intro: "Nearest fire and EMS stations (USGS National Map structures data), straight-line distance. " +
       "These are station buildings, not service areas — they do not say which department is dispatched here:",
     line: usgsStructureLine("Fire station")
+  });
+
+  /* ---------- 11. The four courts whose judges are elected from districts ----------
+   * The Supreme Court (3 districts), the Court of Appeals (5), the chancery
+   * courts (20) and the circuit courts (23 now, 22 from 1 January 2027).
+   * Every district is a list of whole counties, so each map is a dissolve of
+   * the county fabric this instance already ships
+   * (ms/scripts/build_ms_court_districts.py), and neighbouring districts share
+   * their edges exactly.
+   *
+   * THE CHANCERY AND CIRCUIT MAPS CHANGE ON 1 JANUARY 2027. Senate Bill 2768
+   * and House Bill 1544 (2025) wrote both the map in force now and the map
+   * from that day into the Code, and both maps ship. The app draws today's
+   * map until midnight in Mississippi on that day (06:00 UTC by the reader's
+   * clock, decided once when the page loads, so the map and the cards cannot
+   * disagree within one visit) and the 2027 map from then on. Until then a
+   * card says what changes at its point, because the judges elected on 3
+   * November 2026 take office in the 2027 districts: HB 1544 says candidates
+   * for "the chancellorships and the circuit judgeships that begin January 1,
+   * 2027" run in the November 2026 election, and SB 2768 section 25 says the
+   * same of the chancellorships it creates.
+   *
+   * THE COURT OF APPEALS SPLITS TEN COUNTIES BY VOTING PRECINCT. Its own page
+   * names the precincts on one side of each line, and this app has no map of
+   * those precincts, so each of the ten counties is its own feature naming
+   * both districts, and its card lists both districts' judges.
+   *
+   * THE JUDGES COME FROM THE COURTS' OWN LISTS (ms/scripts/build_ms_judges.py,
+   * refreshed weekly as a reviewed PR): the Supreme Court's and the Court of
+   * Appeals' pages of their judges, and the Judiciary's PDF lists of
+   * chancellors and circuit judges, which trail the bench by months (the
+   * chancery list read 2026-10-15 is dated 1 August 2025). A change since a
+   * list's date that this project confirmed from the court's own news or the
+   * Governor's announcements is applied by the builder with its source, and
+   * the builder fails once the list catches up, so the entry is retired
+   * rather than left to shadow the list. Names only: the lists also print
+   * court staff, some with street addresses, and the builder never carries
+   * them.
+   *
+   * A LIST WHOSE DISTRICTS ARE NOT THE MAP'S NAMES NOBODY. The builder records
+   * which map each trial-court list describes (until-2027 or from-2027), and a
+   * card names judges only when that is the map it draws, so after 1 January
+   * 2027 a list still describing the old districts is not read against the new
+   * ones.
+   * ---------- */
+  var MS_COURT_REDRAW = Date.UTC(2027, 0, 1, 6, 0, 0);
+  var MS_COURTS_REDRAWN = Date.now() >= MS_COURT_REDRAW;
+  var MS_COURT_MAP = MS_COURTS_REDRAWN ? "from-2027" : "until-2027";
+
+  var loadMsSupremeCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-supreme-court-districts.json", {}, 2);
+  });
+  var loadMsAppealsDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-court-of-appeals-districts.json", {}, 2);
+  });
+  var loadMsChancery2027 = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-chancery-court-districts-2027.json", {}, 2);
+  });
+  var loadMsCircuit2027 = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-circuit-court-districts-2027.json", {}, 2);
+  });
+  // The map each layer draws: today's until the redraw, the 2027 map from it.
+  var loadMsChanceryDistricts = MS_COURTS_REDRAWN ? loadMsChancery2027 : makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-chancery-court-districts.json", {}, 2);
+  });
+  var loadMsCircuitDistricts = MS_COURTS_REDRAWN ? loadMsCircuit2027 : makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-circuit-court-districts.json", {}, 2);
+  });
+  var loadMsJudgeRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-judge-roster.json", {}, 2);
+  });
+
+  // One district's judges. The roster's own failure is not the layer's: the
+  // district is already answered from a file in the browser, and the card
+  // says the names did not load.
+  function msBench(court, unit) {
+    return loadMsJudgeRoster().then(function (roster) {
+      var c = ((roster || {}).courts || {})[court] || {};
+      var d = (c.districts || {})[String(unit)] || {};
+      return {
+        members: d.members || [],
+        notes: d.notes || [],
+        structure: c.structure || null,
+        listUpdated: c.listUpdated || null,
+        failed: false
+      };
+    }, function () {
+      return { members: [], notes: [], structure: null, listUpdated: null, failed: true };
+    });
+  }
+
+  // "Ballard, Carlisle and Hickman Counties"
+  function msCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1 ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  // 1 -> "1st", 12 -> "12th", 22 -> "22nd": the courts' own way of naming a
+  // trial district ("21st Circuit District").
+  function msOrdinal(n) {
+    var v = Number(n);
+    if (!(v > 0) || Math.floor(v) !== v) return String(n);
+    var t = v % 100, u = v % 10;
+    var suffix = (t >= 11 && t <= 13) ? "th" : u === 1 ? "st" : u === 2 ? "nd" : u === 3 ? "rd" : "th";
+    return String(v) + suffix;
+  }
+
+  function msJudgeRow(member) {
+    var row = { name: String(member.name) };
+    if (member.role) row.badge = String(member.role);
+    var notes = [];
+    if (member.seat) notes.push(String(member.seat));
+    if (member.note) notes.push(String(member.note));
+    if (notes.length) row.note = notes.join(" · ");
+    var links = [];
+    if (member.profileUrl) links.push({ label: "Profile", url: String(member.profileUrl) });
+    if (member.source && member.source.url) {
+      links.push({ label: String(member.source.label || "Source"), url: String(member.source.url) });
+    }
+    if (links.length) row.links = links;
+    return row;
+  }
+
+  var MS_ROSTER_FAILED = "The list of judges did not load just now, so no one is " +
+    "named here. The district above is still the answer for this point: it " +
+    "comes from a file already in your browser.";
+
+  /* ---------- the two appellate courts ---------- */
+  function msAppellateUnits(feature) {
+    var props = (feature || {}).properties || {};
+    var units = findPropCI(props, ["units"]);
+    if (units && units.length) return units.map(function (u) { return String(u); });
+    var unit = findPropCI(props, ["unit"]);
+    return unit == null ? [] : [String(unit)];
+  }
+
+  function msAppellateHover(word) {
+    return function (feature) {
+      var units = msAppellateUnits(feature);
+      return units.length ? word + " " + units.join(" or ") : null;
+    };
+  }
+
+  function msAppellateQuery(load, court) {
+    return function (point, seq) {
+      return queryFeatureAt(load, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          units: msAppellateUnits(feature),
+          counties: findPropCI(props, ["counties"]),
+          county: findPropCI(props, ["county"]),
+          named: findPropCI(props, ["named"]),
+          rest: findPropCI(props, ["rest"]),
+          precincts: findPropCI(props, ["precincts"]),
+          benches: {}
+        };
+        return Promise.all(result.units.map(function (u) {
+          return msBench(court, u);
+        })).then(function (benches) {
+          result.units.forEach(function (u, i) { result.benches[u] = benches[i]; });
+          return result;
+        });
+      });
+    };
+  }
+
+  // opts: { word, people, seats, bench, lines, list }
+  function msAppellateCard(opts) {
+    return function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var split = result.units.length > 1;
+      wrap.appendChild(renderBodyIntro({
+        title: result.units.length
+          ? opts.word + " " + result.units.join(" or ")
+          : "Unknown " + opts.word.toLowerCase(),
+        note: split
+          ? (result.county != null ? String(result.county) + " County, which two districts divide" : null)
+          : msCountyPhrase(result.counties)
+      }));
+      if (split && result.county != null && result.precincts != null) {
+        wrap.appendChild(renderFieldStack([{
+          label: "Which of the two",
+          value: "In " + String(result.county) + " County, " + String(result.precincts) +
+            " are in District " + String(result.named) + ", and the rest of the county " +
+            "is in District " + String(result.rest) + ". This app does not draw voting " +
+            "precincts, so it cannot tell which side of that line this point is on, " +
+            "and it lists the judges of both districts."
+        }]));
+      }
+      var failed = false, named = false, missing = [];
+      result.units.forEach(function (u) {
+        var bench = result.benches[u];
+        if (!bench || bench.failed) { failed = true; return; }
+        if (!bench.members.length) { missing.push(u); return; }
+        named = true;
+        wrap.appendChild(renderSectionLabel(split
+          ? opts.people + " elected from District " + u
+          : opts.people + " elected from this district"));
+        wrap.appendChild(renderPersonRows(bench.members.map(msJudgeRow)));
+      });
+      var rows = [];
+      if (failed) {
+        rows.push({ label: opts.people, value: MS_ROSTER_FAILED });
+      } else if (missing.length) {
+        rows.push({
+          label: opts.people,
+          value: "The court's own list names no one for District " + missing.join(" or ") +
+            ", so no one is named here."
+        });
+      }
+      rows.push({ label: "How the seats are filled", value: opts.seats });
+      rows.push({ label: "The court", value: opts.bench });
+      rows.push({ label: "Where this line comes from", value: opts.lines });
+      if (named) rows.push({ label: "Where these names come from", value: opts.list });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    };
+  }
+
+  registerLayer({
+    id: "ms-supreme-court",
+    group: "political",
+    label: "Supreme Court District",
+    overlay: {
+      load: loadMsSupremeCourtDistricts,
+      style: { color: "#8A692C", weight: 2, fillColor: "#8A692C", fillOpacity: 0.05 }
+    },
+    hoverName: msAppellateHover("Supreme Court District"),
+    query: msAppellateQuery(loadMsSupremeCourtDistricts, "supreme"),
+    render: msAppellateCard({
+      word: "Supreme Court District",
+      people: "Justices",
+      seats: "Three justices are elected from each district, in staggered " +
+        "non-partisan elections, for eight-year terms.",
+      bench: "Mississippi's highest court. Every justice takes part in deciding " +
+        "appeals from the whole state.",
+      lines: "The Supreme Court's own page lists the counties in each district. " +
+        "This app draws the district along those counties' lines.",
+      list: "The Supreme Court's own page of its justices, which this app checks " +
+        "every week."
+    }),
+    primaryLink: function () {
+      return { label: "Mississippi Supreme Court", url: "https://courts.ms.gov/appellatecourts/sc/sc.php" };
+    }
+  });
+
+  registerLayer({
+    id: "ms-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    overlay: {
+      load: loadMsAppealsDistricts,
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
+    },
+    hoverName: msAppellateHover("Court of Appeals District"),
+    query: msAppellateQuery(loadMsAppealsDistricts, "appeals"),
+    render: msAppellateCard({
+      word: "Court of Appeals District",
+      people: "Judges",
+      seats: "Two judges are elected from each district, in staggered " +
+        "non-partisan elections, for eight-year terms.",
+      bench: "Mississippi's Court of Appeals. Its judges hear cases from all over " +
+        "the state, though each is elected from one district.",
+      lines: "The Court of Appeals' own page lists the counties in each district, " +
+        "and the voting precincts by which two districts divide each of ten " +
+        "counties. This app draws the districts along the county lines, and draws " +
+        "each of those ten counties on its own, naming both districts.",
+      list: "The Court of Appeals' own page of its judges, which this app checks " +
+        "every week."
+    }),
+    primaryLink: function () {
+      return { label: "Mississippi Court of Appeals", url: "https://courts.ms.gov/appellatecourts/coa/coa.php" };
+    }
+  });
+
+  /* ---------- the two trial courts ---------- */
+  function msTrialHover(word) {
+    return function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : msOrdinal(unit) + " " + word + " District";
+    };
+  }
+
+  // `later` is the 2027 map's loader, passed only until the redraw; its own
+  // failure drops just the row that would have described the change.
+  function msTrialQuery(load, later, court) {
+    return function (point, seq) {
+      return queryFeatureAt(load, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          unit: findPropCI(props, ["unit"]),
+          counties: findPropCI(props, ["counties"]) || [],
+          law: findPropCI(props, ["law"]),
+          later: null,
+          bench: null
+        };
+        var work = [msBench(court, result.unit).then(function (bench) { result.bench = bench; })];
+        if (later) {
+          work.push(queryFeatureAt(later, point).then(function (next) {
+            if (!next) return;
+            var p2 = next.properties || {};
+            var all = (later.cached() || {}).features || [];
+            result.later = {
+              unit: findPropCI(p2, ["unit"]),
+              counties: findPropCI(p2, ["counties"]) || [],
+              // whether today's district still exists on the 2027 map
+              continues: all.some(function (f) {
+                return String(findPropCI(f.properties || {}, ["unit"])) === String(result.unit);
+              })
+            };
+          }, function () {}));
+        }
+        return Promise.all(work).then(function () { return result; });
+      });
+    };
+  }
+
+  // What 1 January 2027 changes at this point, or null when nothing does.
+  function msTrialChange(result, opts) {
+    var later = result.later;
+    if (!later || later.unit == null) return null;
+    var now = result.counties || [], next = later.counties || [];
+    var nextName = msOrdinal(later.unit) + " " + opts.word + " District";
+    var why = " " + opts.law + " redrew the " + opts.word.toLowerCase() +
+      " districts from that day.";
+    if (String(later.unit) !== String(result.unit)) {
+      return "This point is in the " + nextName + ": " + msCountyPhrase(next) + "." +
+        (later.continues ? "" : " There is no " + msOrdinal(result.unit) + " " +
+          opts.word + " District from that day.") + why;
+    }
+    var gains = next.filter(function (c) { return now.indexOf(c) < 0; });
+    var losses = now.filter(function (c) { return next.indexOf(c) < 0; });
+    if (!gains.length && !losses.length) return null;
+    var parts = [];
+    if (gains.length) parts.push("takes in " + msCountyPhrase(gains));
+    if (losses.length) parts.push("no longer includes " + msCountyPhrase(losses));
+    return "The " + nextName + " " + parts.join(" and ") + "." + why;
+  }
+
+  // opts: { word, people, list, law, bench }
+  function msTrialCard(opts) {
+    return function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var name = result.unit != null ? msOrdinal(result.unit) + " " + opts.word + " District"
+        : "Unknown " + opts.word.toLowerCase() + " district";
+      wrap.appendChild(renderBodyIntro({ title: name, note: msCountyPhrase(result.counties) }));
+      var bench = result.bench || { members: [], notes: [], failed: true };
+      var rows = [];
+      var named = false, changed = false;
+      if (bench.failed) {
+        rows.push({ label: opts.people, value: MS_ROSTER_FAILED });
+      } else if (bench.structure !== MS_COURT_MAP) {
+        rows.push({
+          label: opts.people,
+          value: MS_COURTS_REDRAWN
+            ? "These districts were redrawn on 1 January 2027, and the " + opts.list +
+              " this app reads still describes the earlier districts, so no one is named here."
+            : "The " + opts.list + " this app reads already describes the districts " +
+              "that take effect on 1 January 2027, so no one is named for this district " +
+              "as it is drawn today."
+        });
+      } else {
+        if (bench.members.length) {
+          named = true;
+          wrap.appendChild(renderSectionLabel(opts.people + " of the " + name));
+          wrap.appendChild(renderPersonRows(bench.members.map(msJudgeRow)));
+          changed = bench.members.some(function (m) { return !!m.source; });
+        }
+        bench.notes.forEach(function (n) {
+          changed = true;
+          wrap.appendChild(renderLinkRow({
+            title: "Vacancy",
+            note: String(n.text),
+            links: n.url ? [{ label: String(n.label || "Source"), url: String(n.url) }] : []
+          }));
+        });
+        if (!bench.members.length && !bench.notes.length) {
+          rows.push({
+            label: opts.people,
+            value: "The " + opts.list + " names no one for this district, so no one is named here."
+          });
+        }
+      }
+      if (!MS_COURTS_REDRAWN) {
+        var change = msTrialChange(result, opts);
+        if (change) rows.push({ label: "From 1 January 2027", value: change });
+      }
+      rows.push({
+        label: "Elections",
+        value: opts.people + " are elected in non-partisan elections for four-year " +
+          "terms." + (MS_COURTS_REDRAWN ? "" : " The terms that begin on 1 January " +
+          "2027 are filled at the election of 3 November 2026, in the districts as " +
+          "they are drawn from that day.")
+      });
+      if (named) {
+        rows.push({
+          label: "Parts of a district",
+          value: "In some districts a judge is elected from only part of the " +
+            "district, or must live in a named part of it. This app does not draw " +
+            "those parts, so it lists every judge of the district."
+        });
+      }
+      rows.push({ label: "The court", value: opts.bench });
+      rows.push({
+        label: "Where this line comes from",
+        value: (result.law != null
+          ? "Mississippi law names the counties of each district (" + String(result.law) + ")" +
+            (MS_COURTS_REDRAWN ? "" : ", and the State of Mississippi Judiciary's own list agrees") + "."
+          : "The State of Mississippi Judiciary's own list of the district's counties, " +
+            "which the 2025 laws that redrew other districts did not change.") +
+          " This app draws the district along those counties' lines."
+      });
+      if (named) {
+        var dated = msDate(bench.listUpdated);
+        rows.push({
+          label: "Where these names come from",
+          value: "The State of Mississippi Judiciary's " + opts.list +
+            (dated ? ", dated " + dated : "") + ", which this app checks every week." +
+            (changed ? " Changes since then that this app has confirmed are shown " +
+              "above with their sources." : "")
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    };
+  }
+
+  registerLayer({
+    id: "ms-chancery-court",
+    group: "political",
+    label: "Chancery Court District",
+    overlay: {
+      load: loadMsChanceryDistricts,
+      style: { color: "#3E5C76", weight: 1.5, fillColor: "#3E5C76", fillOpacity: 0.05 }
+    },
+    hoverName: msTrialHover("Chancery"),
+    query: msTrialQuery(loadMsChanceryDistricts, MS_COURTS_REDRAWN ? null : loadMsChancery2027, "chancery"),
+    render: msTrialCard({
+      word: "Chancery",
+      people: "Chancellors",
+      list: "list of chancellors",
+      law: "Senate Bill 2768 (2025)",
+      bench: "Chancery courts hear matters of equity; family matters including " +
+        "adoptions, custody disputes and divorces; guardianships; sanity " +
+        "hearings; wills; and challenges to the constitutionality of state laws. " +
+        "Land records are filed in chancery court."
+    }),
+    primaryLink: function () {
+      return { label: "Mississippi chancery courts", url: "https://courts.ms.gov/trialcourts/chancerycourt/chancerycourt.php" };
+    }
+  });
+
+  registerLayer({
+    id: "ms-circuit-court",
+    group: "political",
+    label: "Circuit Court District",
+    overlay: {
+      load: loadMsCircuitDistricts,
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: msTrialHover("Circuit"),
+    query: msTrialQuery(loadMsCircuitDistricts, MS_COURTS_REDRAWN ? null : loadMsCircuit2027, "circuit"),
+    render: msTrialCard({
+      word: "Circuit",
+      people: "Circuit judges",
+      list: "list of circuit judges",
+      law: "House Bill 1544 (2025)",
+      bench: "Circuit courts hear felony criminal cases and civil lawsuits, and " +
+        "appeals from the county, justice and municipal courts and from " +
+        "administrative boards and commissions."
+    }),
+    primaryLink: function () {
+      return { label: "Mississippi circuit courts", url: "https://courts.ms.gov/trialcourts/circuitcourt/circuitcourt.php" };
+    }
   });
 
 
@@ -15669,9 +16377,10 @@ function initMississippiExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ms-senate", "ms-house", "county-supervisor",
-    "school-district-unified",
-    "county", "municipality", "zip-code",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ms-senate", "ms-house",
+    "ms-supreme-court", "ms-court-of-appeals", "ms-chancery-court", "ms-circuit-court",
+    "county-supervisor", "school-district-unified",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16154,11 +16863,12 @@ function initMississippiExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#77BBFD",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
+    "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E5C76": "#82ABD0",
+    "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
+    "#88637C": "#DAA7C9", "#8A692C": "#DDB061", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
+    "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

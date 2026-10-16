@@ -90,7 +90,7 @@
     "county-board": {
       "il": "county-board", "ny": ["county-legislature", "county-supervisor"], "ca": "supervisor-district",
       "wi": "county-board", "ia": "county-supervisor", "mi": "county-commissioner", "mn": "county-commissioner",
-      "ok": "county-commissioner", "sc": "county-council", "tn": "county-commissioner", "ar": "quorum-court",
+      "ok": "county-commissioner", "in": "county-council", "sc": "county-council", "tn": "county-commissioner", "ar": "quorum-court",
       "ky": "fiscal-court"
     },
     "county-subdivision": {
@@ -110,7 +110,9 @@
     },
     "voting-precinct": {
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",
-      "wi": "ward", "ia": "precinct", "mi": "precinct", "mn": "voting-precinct"
+      "wi": "ward", "ia": "precinct", "mi": "precinct", "mn": "voting-precinct", "ky": "voting-precinct",
+      "in": "voting-precinct", "nc": "voting-precinct", "sc": "voting-precinct", "tn": "voting-precinct",
+      "ar": "voting-precinct"
     },
     "early-voting": { "il": "early-voting", "ny": "early-voting", "ca": "early-voting" },
     "zip-code": {

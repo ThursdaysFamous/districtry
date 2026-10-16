@@ -109,11 +109,29 @@
   ],
   "layers": [
     {
+      "id": "ms-supreme-court",
+      "label": "Supreme Court District",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "3 districts of about 41,840 km2 each on the map (water included), measured 2026-10-15 — larger than a congressional district",
+      "source": {
+        "answers": "The Mississippi Supreme Court district covering the point, and the three justices elected from it.",
+        "boundary": [
+          {
+            "label": "State of Mississippi Judiciary — the Supreme Court's district page, which lists the counties in each of the three districts; read 2026-10-15 and kept in ms/data/source/courts/ with its SHA-256. Drawn by dissolving this app's own county outlines, so every line is a county line.",
+            "url": "https://courts.ms.gov/appellatecourts/sc/scdistricts.php"
+          }
+        ],
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Supreme Court's own page of its justices: each justice's name, title and place, and a link to the justice's page on the court's site.",
+        "applies": "Mississippi — statewide, all 3 districts."
+      }
+    },
+    {
       "id": "us-house",
       "label": "U.S. House",
       "group": "political",
-      "area_rank": 1,
-      "rank_note": "4 congressional districts — the largest districts Mississippi carries below the state itself",
+      "area_rank": 2,
+      "rank_note": "4 congressional districts — smaller than a Supreme Court district, larger than a Court of Appeals district",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
         "boundary": [
@@ -127,10 +145,72 @@
       }
     },
     {
+      "id": "ms-court-of-appeals",
+      "label": "Court of Appeals District",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "5 districts of about 25,100 km2 each on the map (water included) — smaller than a congressional district, larger than a chancery district",
+      "source": {
+        "answers": "The Mississippi Court of Appeals district covering the point, and the two judges elected from it. In the ten counties two districts divide by voting precinct, the card names both districts, says which takes the listed precincts, and lists the judges of both.",
+        "boundary": [
+          {
+            "label": "State of Mississippi Judiciary — the Court of Appeals' district page, which lists the counties in each of the five districts and, for Attala, Grenada, Hinds, Jones, Leake, Madison, Montgomery, Panola, Tallahatchie and Wayne Counties, the precincts that belong to one of two districts; read 2026-10-15 and kept in ms/data/source/courts/. Drawn by dissolving this app's own county outlines; each of the ten divided counties is drawn on its own, because this app has no map of those precincts.",
+            "url": "https://courts.ms.gov/appellatecourts/coa/coadistricts.php"
+          }
+        ],
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Court of Appeals' own page of its judges: each judge's name, title and position, and a link to the judge's page on the court's site.",
+        "applies": "Mississippi — statewide, all 5 districts."
+      }
+    },
+    {
+      "id": "ms-chancery-court",
+      "label": "Chancery Court District",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "20 districts of about 6,280 km2 each on the map, today and from 1 January 2027 — larger than a circuit district",
+      "source": {
+        "answers": "The chancery court district covering the point and its chancellors, and, until 1 January 2027, what the redrawn map changes at the point.",
+        "boundary": [
+          {
+            "label": "State of Mississippi Judiciary — the chancery courts' page, which lists each district's counties; read 2026-10-15. Held district by district to the map Senate Bill 2768 (2025) writes for the time before 1 January 2027.",
+            "url": "https://courts.ms.gov/trialcourts/chancerycourt/chancerycourt.php"
+          },
+          {
+            "label": "Mississippi Legislature — Senate Bill 2768 (2025), as sent to the Governor, which writes each chancery district's counties until and from 1 January 2027, and House Bill 1 (2026), which rewrote the Third Chancery District's section with the same counties. Both kept in ms/data/source/courts/. The app draws the 2027 map from midnight on that day in Mississippi.",
+            "url": "https://billstatus.ls.state.ms.us/documents/2025/html/SB/2700-2799/SB2768SG.htm"
+          }
+        ],
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors (names only; the list also prints court staff, some with street addresses, which are never carried). The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.",
+        "applies": "Mississippi — statewide, all 20 districts."
+      }
+    },
+    {
+      "id": "ms-circuit-court",
+      "label": "Circuit Court District",
+      "group": "political",
+      "area_rank": 5,
+      "rank_note": "23 districts of about 5,460 km2 each on the map today, 22 of about 5,700 km2 from 1 January 2027 — larger than a Senate district",
+      "source": {
+        "answers": "The circuit court district covering the point and its circuit judges, and, until 1 January 2027, what the redrawn map changes at the point.",
+        "boundary": [
+          {
+            "label": "State of Mississippi Judiciary — the circuit courts' page, which lists each district's counties; read 2026-10-15. Held district by district to the map House Bill 1544 (2025) writes for the time before 1 January 2027.",
+            "url": "https://courts.ms.gov/trialcourts/circuitcourt/circuitcourt.php"
+          },
+          {
+            "label": "Mississippi Legislature — House Bill 1544 (2025), as sent to the Governor, which writes each circuit district's counties until and from 1 January 2027 (the 23rd Circuit District ends on that day), and House Bill 580 (2026), which rewrote the Fourth and Seventh Circuit Districts' sections with the same counties. Both kept in ms/data/source/courts/. The app draws the 2027 map from midnight on that day in Mississippi.",
+            "url": "https://billstatus.ls.state.ms.us/documents/2025/html/HB/1500-1599/HB1544SG.htm"
+          }
+        ],
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges (names only, as for the chancellors). The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.",
+        "applies": "Mississippi — statewide, all 23 districts (22 from 1 January 2027)."
+      }
+    },
+    {
       "id": "ms-senate",
       "label": "Mississippi Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 6,
       "rank_note": "52 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The Mississippi Senate district covering the point, and the senator holding it.",
@@ -148,17 +228,17 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 7,
       "rank_note": "82 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
-        "answers": "Which county contains the point, and the five supervisors on its board.",
+        "answers": "Which county contains the point, the five supervisors on its board, and its five election commissioners.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and neither is anything the directory prints for the election commissioners.",
+        "people": "ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and for the election commissioners only their names are, because the directory prints each one's own address, which may be a home.",
         "applies": "Mississippi — statewide, all 82 counties."
       }
     },
@@ -166,7 +246,7 @@
       "id": "ms-house",
       "label": "Mississippi House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 8,
       "rank_note": "122 House districts — smaller on average than a county, larger than a school district",
       "source": {
         "answers": "The Mississippi House district covering the point, and the representative holding it.",
@@ -184,7 +264,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 9,
       "rank_note": "137 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The public school district covering the point.",
@@ -202,25 +282,49 @@
       "id": "county-supervisor",
       "label": "County Supervisor District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 10,
       "rank_note": "410 supervisor districts statewide, five per county, about 296 km2 of land on average against 887 km2 for a school district; drawn only in the counties whose current lines are confirmed",
       "source": {
-        "answers": "Which of the county's five supervisors represents the point, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five.",
+        "answers": "The supervisor district covering the point, and the supervisor and the election commissioner elected from it, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five of each.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. Elsewhere the Census still carries the lines drawn after the 2010 census, which are not drawn.",
+            "label": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries older lines, which are never drawn: in 54 of them every resident is in the same district as on the Census's map of January 2010 (measured 2026-10-16). 11 of the 70 are drawn from their own maps instead (below).",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22"
+          },
+          {
+            "label": "Central Mississippi Planning and Development District — the supervisor district layers of its county map viewers for Copiah, Hinds, Madison, Rankin, Simpson and Warren counties. Five are named for the plan adopted after the 2020 census (2021 in Rankin, 2022 in Copiah, Madison, Simpson and Warren), and all six give each district's population, which matches the 2020 census's own blocks to the person (in Rankin, after setting aside two blocks the plan leaves out). Redrawn here along whole 2020 census blocks: each block goes to the district that covers most of it, so every line drawn is the Census Bureau's.",
+            "url": "https://gis.cmpdd.org/server/rest/services/Hosted"
+          },
+          {
+            "label": "Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census's lines there put every resident in the same district as its map of January 2010. Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://geo.co.harrison.ms.us/server/rest/services/AGO/HarrisonCounty_SupervisorDistrict/FeatureServer/0"
+          },
+          {
+            "label": "Lamar County — the supervisor district layer of the parcel viewer the county's website links to, which matches the printed map of the districts the county publishes, dated 9 August 2022. Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services1.arcgis.com/mz3jHVSffoNsLuEB/arcgis/rest/services/Lamar_Service/FeatureServer/15"
+          },
+          {
+            "label": "Lee County — the map published online as Lee Supervisor Districts 2022, which the Lee County Circuit Clerk's 2024 voting precinct map follows: that map names each precinct piece's supervisor district, and agrees with these lines for all but 10 of the county's 83,343 residents in the 2020 census, against 13,351 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services3.arcgis.com/j2GTvlDqmJmX3REZ/arcgis/rest/services/New_Districts/FeatureServer/4"
+          },
+          {
+            "label": "Pearl River County — the supervisor district layer of the Find My Supervisor map on the county's website, which matches the printed map of the districts effective 1 January 2023 that the county publishes beside it, and the 2023 voting precinct map published with it. Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/91"
+          },
+          {
+            "label": "Perry County — the supervisor district layer of the Find My Supervisor map on the county's website, whose 2023 voting precincts each lie inside one of its districts for all but 8 of the county's 11,511 residents in the 2020 census, against 444 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9"
           }
         ],
-        "people": "ms-county-officials.json, the roster the County card reads: the supervisor elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.",
-        "applies": "12 of Mississippi's 82 counties; hidden in the other 70, which the Data gaps panel lists and explains."
+        "people": "ms-county-officials.json, the roster the County card reads: the supervisor and the election commissioner elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.",
+        "applies": "23 of Mississippi's 82 counties; hidden in the other 59, which the Data gaps panel lists and explains."
       }
     },
     {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 11,
       "rank_note": "827 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Mississippi",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -238,7 +342,7 @@
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 12,
       "rank_note": "300 incorporated places, live from TIGERweb",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
@@ -253,10 +357,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 13,
+      "rank_note": "Tribal land — Mississippi has 2 pieces held by one nation, the Mississippi Choctaw Reservation (123.468 km², in 56 separate parts, 77.1 km² of it in Neshoba County) and its off-reservation trust land (16.396 km² in Mississippi), MEASURED by scripts/build_tribal_areas.py on 2026-10-15. Ranked after municipalities and before the point layers, as South Carolina's and Indiana's are. Its parts are small — the reservation's 56 run from 51.6 km² down to under 0.01 km² and the trust land's 29 from 3.55 km² down — so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Mississippi has 2 such areas, both the Mississippi Band of Choctaw Indians'.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The Mississippi Band of Choctaw Indians' Tribal Chief and its seventeen-member Tribal Council, each member with the community they represent, from the band's own page at choctaw.org, read weekly by scripts/tribal_council_scraper.py and dated on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Mississippi — the Mississippi Choctaw Reservation and its off-reservation trust land, most of the reservation in Neshoba County. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -274,7 +396,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -292,7 +414,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -374,9 +496,51 @@
       },
       {
         "file": "ms-supervisor-districts.json",
-        "min_features": 60,
-        "max_features": 60,
-        "note": "The county supervisor districts of the 12 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county; the coverage test for the County Supervisor District layer reads it too."
+        "min_features": 115,
+        "max_features": 115,
+        "note": "The county supervisor districts of the 23 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 11 from the county's own map, redrawn along whole 2020 census blocks."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 2,
+        "max_features": 2,
+        "note": "Mississippi's tribal land (scripts/build_tribal_areas.py) — the Mississippi Choctaw Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "ms-supreme-court-districts.json",
+        "min_features": 3,
+        "max_features": 3,
+        "note": "The 3 Supreme Court districts (ms/scripts/build_ms_court_districts.py), dissolved from state-counties.json."
+      },
+      {
+        "file": "ms-court-of-appeals-districts.json",
+        "min_features": 15,
+        "max_features": 15,
+        "note": "The 5 Court of Appeals districts as 15 features: the whole-county part of each district, and each of the ten counties two districts divide by voting precinct drawn on its own."
+      },
+      {
+        "file": "ms-chancery-court-districts.json",
+        "min_features": 20,
+        "max_features": 20,
+        "note": "The 20 chancery districts in force until 1 January 2027."
+      },
+      {
+        "file": "ms-chancery-court-districts-2027.json",
+        "min_features": 20,
+        "max_features": 20,
+        "note": "The 20 chancery districts from 1 January 2027 (Senate Bill 2768, 2025), which the app draws from that day."
+      },
+      {
+        "file": "ms-circuit-court-districts.json",
+        "min_features": 23,
+        "max_features": 23,
+        "note": "The 23 circuit districts in force until 1 January 2027."
+      },
+      {
+        "file": "ms-circuit-court-districts-2027.json",
+        "min_features": 22,
+        "max_features": 22,
+        "note": "The 22 circuit districts from 1 January 2027 (House Bill 1544, 2025), which the app draws from that day."
       }
     ],
     "rosters": [
@@ -401,14 +565,29 @@
         "note": "Every county's five supervisors by district, from the Secretary of State's County Offices and Directory, one record per county, refreshed weekly by update-ms-county-officials.yml."
       },
       {
+        "file": "ms-supervisor-counties.json",
+        "min_keys": 23,
+        "note": "The 23 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      },
+      {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The Mississippi Band of Choctaw Indians' Tribal Chief and Tribal Council, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
+        "file": "ms-judge-roster.json",
+        "min_keys": 1,
+        "note": "The judges of the four courts by district (ms/scripts/build_ms_judges.py), from the courts' own pages and the Judiciary's lists of chancellors and circuit judges, with the changes since each list's date that this project confirmed applied with their sources; refreshed weekly by update-ms-judges-roster.yml. One top-level key, courts, so the floor is 1; the builder holds every court's district count and the appellate seat counts exactly."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-ms-shell-v2",
+    "cache_name": "districtry-ms-shell-v5",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -433,8 +612,13 @@
     },
     {
       "file": "update-ms-county-officials.yml",
-      "purpose": "Mississippi county boards of supervisors (the Secretary of State's County Offices and Directory)",
+      "purpose": "Mississippi county boards of supervisors and election commissioners (the Secretary of State's County Offices and Directory)",
       "schedule": "Wed 18:11 UTC"
+    },
+    {
+      "file": "update-ms-judges-roster.yml",
+      "purpose": "Mississippi's Supreme Court, Court of Appeals, chancery and circuit judges (the courts' own pages and the Judiciary's lists)",
+      "schedule": "Thu 18:11 UTC"
     },
     {
       "file": "ms-validate-sources.yml",
