@@ -139,13 +139,31 @@ MIN_DISTRICTS = 16
 # Only places are recorded: a supervisor's street address is never written down
 # here or anywhere else in this repository.
 #
-# BUTLER IS DELIBERATELY ABSENT AND IS THE REASON THIS TABLE DEMANDS A
-# BIJECTION. Thirteen of its fifteen named townships move, consistently, as
-# though county 1 <-> layer 2 with 3 fixed -- but Ripley Township, which the
-# county puts in its District 3, lies WHOLLY inside the layer's district 1,
-# sampled 144 of 144 interior points. A renumbering cannot do that, so the two
-# sides are not describing one plan and the county has to be asked which is
-# current. A partial map would have shipped two wrong districts out of three.
+# BUTLER WAS DELIBERATELY ABSENT UNTIL 2026-10-15, AND IS THE REASON THIS
+# TABLE DEMANDS A BIJECTION. Thirteen of its fifteen named townships move,
+# consistently, as though county 1 <-> layer 2 with 3 fixed -- but Ripley
+# Township, which the county's board page puts in its District 3, lies WHOLLY
+# inside the layer's district 1, sampled 144 of 144 interior points. A
+# renumbering cannot do that, so the two sides were not describing one plan and
+# a partial map would have shipped two wrong districts out of three. What
+# settled it is how the county actually RAN its 2026 primary: the Secretary of
+# State's certified returns list the precincts that voted in each district's
+# contest, and those precincts compose this layer's districts exactly (see the
+# Butler entry). So the county's elections follow this layer's plan, and the
+# township list on its board page is what disagrees.
+#
+# THE CERTIFIED 2026 PRIMARY IS THE ROUTE THAT REACHES THE MOST COUNTIES. Every
+# Plan 3 county has some districts on that ballot, and the Secretary of State's
+# Clarity archive (electionresults.iowa.gov/IA/<County>/<eid>/<ver>/reports/
+# detailxml.zip) lists, per contest, the precincts entitled to vote in it.
+# Matched to this instance's own precinct layer, each district on the ballot is
+# placed directly, and AT MOST ONE district may then be placed by elimination
+# -- the precincts left over after every contest is placed. A county with two
+# or more districts off the ballot is NOT settled this way; the measurement is
+# recorded per county in ia/scripts/check_county_district_numbering.py's
+# PRECINCT_COUNTIES and re-runs offline. The incumbents who ran in that primary
+# are a second witness to the county page's own numbering, since a supervisor
+# must live in the district they hold and run for.
 NUMBERING_CHECKED = {
     "Howard": {
         "map": {"1": "1", "2": "2", "3": "3"},
@@ -324,6 +342,58 @@ NUMBERING_CHECKED = {
                    "the same five groups and puts the county's District 1 "
                    "(precincts 2, 3 and 11) on the west side of Osage, where "
                    "this layer's district 2 is",
+    },
+    "Butler": {
+        "map": {"1": "2", "2": "1", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Butler/126094/374762) list the "
+                   "precincts voting in each supervisor contest: District 2 in 1-GR, "
+                   "3-DU and 4-AL, all wholly inside this layer's district 1, and "
+                   "District 3 in 5-AP, 7-PB and 8-NH, all inside its district 3; "
+                   "District 1 was not on that ballot, and the two precincts left, "
+                   "2-CL and 6-SR, both lie inside this layer's district 2; the "
+                   "incumbents Wayne Dralle and Rusty Eddy ran in Districts 2 and 3, "
+                   "where the county's own board page lists them. The board page's "
+                   "township list puts Ripley Township in District 3, which the "
+                   "precincts the county voted do not"),
+    },
+    "Madison": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Madison/126143/375499) list the "
+                   "precincts voting in each supervisor contest: District 1's four "
+                   "precincts all lie wholly inside this layer's district 1 and "
+                   "District 3's three inside its district 3; District 2 was not on "
+                   "that ballot, and the three precincts left, Lincoln NE and "
+                   "Winterset's North and South wards, all lie inside this layer's "
+                   "district 2"),
+    },
+    "Sac": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Sac/126163/374521) list the "
+                   "precincts voting in each supervisor contest: District 2's three "
+                   "precincts all lie wholly inside this layer's district 2 and "
+                   "District 3's three inside its district 3; District 1 was not on "
+                   "that ballot, and the three precincts left, Early, Odebolt and "
+                   "Schaller, all lie inside this layer's district 1; the incumbents "
+                   "Mike Fischer and Jim Wissler ran in Districts 2 and 3, where the "
+                   "county's own board page lists them"),
+    },
+    "Taylor": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Taylor/126169/374410) list the "
+                   "precincts voting in each supervisor contest: District 1 in "
+                   "Precincts 1, 4 and 5, all wholly inside this layer's district 1, "
+                   "and District 3 in Precinct 3, inside its district 3; District 2 "
+                   "was not on that ballot, and the one precinct left, Precinct 2, "
+                   "lies inside this layer's district 2; the incumbent Jack Beggs "
+                   "ran in District 3, where the county's own board page lists him"),
     },
     "Cass": {
         "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},

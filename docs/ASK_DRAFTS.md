@@ -177,15 +177,15 @@ which is a claim about the ask and never about the source.
 | Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
 | Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
 | Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
-| Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered |
+| Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered. **SENT 2026-10-07**, no reply as of 2026-10-15 |
 | Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
 | Will County Clerk | none | first contact, correct |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct  **SENT 2026-10-01** (redrafted to the GIS Director after the office mailbox bounced) and **ANSWERED 2026-10-08**: the fee schedule does not apply to outlines derived from the public map service; the county will not vouch for them; a source notice is optional (Ask 18) |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belford the third (she first wrote "Belfor" and corrected it herself at 19:27 the same day: "I left the d off"). That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
 | Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none **ANSWERED 2026-10-07**: Clerk Robin Harper-Whitehead named all three commissioners — Jason Taylor (Chairman), Matthew Hayden (Vice Chairman) and John McCuan — with one e-mail for the board and her own office's telephone. They ship on the County card and the `johnson-county-board` gap record is retired |
-| Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three |
-| Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note" |
+| Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three. **SENT 2026-10-07**, no reply as of 2026-10-15 |
+| Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note". **SENT 2026-10-07**, no reply as of 2026-10-15 |
 | Scott County Clerk (IL) | the same | **NOT a first letter**: the Clerk was written to 07-19 about the seal and the State's Attorney's office answered 07-20 | drafted 2026-10-01 with both acknowledged. Illinois's note recorded Scott as having no prior contact |
 | Ford County Clerk (IL) | a readable copy of the board list | **three letters: 08-03, 08-16 and 09-04**, none answered | drafted 2026-10-01. Illinois's note said two and the letter said "in August"; corrected to name September as well |
 | Village of Bellevue Clerk (WI) | is the village board elected at large | none, checked rather than assumed | drafted 2026-10-01 from Wisconsin's own wording, after the county clerk endorsed asking the village ("Indeed. That's the place to start") |
@@ -1727,7 +1727,12 @@ file route is closed. No reply → one follow-up at about three weeks.
 
 ## Ask 15 — City of Marion, Iowa: four names and the ward each holds
 
-> **NOT YET ASKED — DRAFTED 2026-09-05.** Not queued in Gmail; there is no existing thread
+> **WITHDRAWN 2026-10-15, NEVER SENT.** The city's council page has been read since
+> 2026-10-01 by `ia/scripts/ia_city_council_scraper.py` with the browser client the city's
+> edge measurably requires, so all four ward members are named and Marion's wards shipped
+> on 2026-10-15. `marion-council-roster` is retired. Nothing below should be sent.
+>
+> *Original status:* NOT YET ASKED — DRAFTED 2026-09-05. Not queued in Gmail; there is no existing thread
 > with this office. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
 > `marion-council-roster` blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in the Marion row
 > of `ia/WATCH.md` — Iowa keeps the ledger in both, unlike Illinois.
@@ -1958,7 +1963,9 @@ note is drafted and waits on a route rather than on a send.
 
 ## Ask 17 — League of Wisconsin Municipalities: terms, before any money changes hands
 
-**NOT YET ASKED — DRAFTED 2026-09-05.** Nothing here has been bought, and nothing should
+**SENT 2026-10-01 16:17:55 UTC to `league@lwm-info.org`, subject "Reuse terms for the
+Directory of City and Village Officials". NO REPLY as of 2026-10-15** (read off the operator's
+mailbox that day). Drafted 2026-09-05. Nothing here has been bought, and nothing should
 be until this is answered.
 
 **The sweep this draft was waiting on has landed, and the draft names its figures.**
@@ -2883,7 +2890,7 @@ supervisor and this project has never carried them.
 
 ## Ask 26 — Henderson County Clerk: who is on the county board, and how are they elected?
 
-**Status: NOT YET ASKED — DRAFTED (2026-09-14).** Gap `henderson-county-website`.
+**Status: ASKED 2026-10-07** (sent as the 2026-10-01 redraft; no reply as of 2026-10-15, follow-up due about 2026-10-28). Gap `henderson-county-website`.
 
 **To:** Amanda Van Arsdale, Henderson County Clerk & Recorder —
 `avanarsdale.coclerk@hendersoncountyil.gov`
@@ -4823,7 +4830,9 @@ government to weaken a protection for one visitor's convenience.
 
 ## Ask wi-town-boards — Wisconsin Towns Association: is there a list of town board members?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** A first approach to this organisation. It asks
+> **SENT 2026-10-01 14:44:02 UTC to `wtowns@wisctowns.com`, subject "districtry.com — is there
+> a list of town board members?". NO REPLY as of 2026-10-15** (read off the operator's mailbox
+> that day). A follow-up is due about 2026-10-22. A first approach to this organisation. It asks
 > whether a list exists and on what terms, not for anything free: the association is a
 > membership body, not a government, and a list it compiles from its members is its own work
 > to price as it likes.
@@ -6487,20 +6496,20 @@ numbering being checked.
 | County | Auditor | Districts drawn | Note |
 | --- | --- | --- | --- |
 | Adams | Betsy Stormer | 5 | **ANSWERED 2026-10-08, USABLE and SHIPPED the same day.** Kandi Miller, the county's election and real estate deputy, e-mailed a district map and seven minutes later a second one, writing that the first was the wrong map; only the second was read. It labels five equal-population areas Precinct 1 to 5, so each precinct is a district, and each lies where this instance's same-numbered district does, so the numbering is CHECKED (identity) and Adams's supervisors are keyed. Nothing further is owed. |
-| Butler | Leslie Groen | 3 | **Measured: two different plans.** The letter should ask which of the county's two published surfaces is current. |
+| Butler | Leslie Groen | 3 | **Measured: two different plans.** The letter should ask which of the county's two published surfaces is current. **SETTLED WITHOUT A REPLY 2026-10-15** from the Secretary of State's certified 2026 primary returns, which list the precincts voting in each supervisor contest; matched to this instance's precinct layer they place every district (one by elimination), so the numbering is CHECKED and the supervisors are keyed. A reply is still welcome and would be a second witness; nothing further is owed. The precincts the county voted in 2026 compose this instance's districts exactly, so the board page's township list (Ripley Township in District 3) is the surface that disagrees. |
 | Cerro Gordo | Adam Wedmore | 3 | |
 | Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. The operator asked for it on 2026-10-07 and a follow-up was drafted below the table, then **WITHDRAWN UNSENT the same evening**: the county's own GIS map (its supervisor-district layer, supplied by the operator as a screenshot) numbers the five districts exactly as this instance does, so **the numbering is CHECKED and Chickasaw's supervisors SHIPPED keyed 2026-10-07**. |
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | **ANSWERED 2026-10-07, USABLE and SHIPPED the same day.** The auditor replied "Here is a map of the precincts and supervisor districts" with the county's own precinct map (PDF, dated 2026-02-03), which the operator put in Drive. It draws each of the county's seven precincts wholly inside one district, and those precincts sit in the same-numbered districts of this instance's layer, so the numbering is CHECKED (identity) and Grundy's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
 | Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
 | Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
-| Madison | Michele Brant | 3 | |
+| Madison | Michele Brant | 3 | **SETTLED WITHOUT A REPLY 2026-10-15** from the Secretary of State's certified 2026 primary returns, which list the precincts voting in each supervisor contest; matched to this instance's precinct layer they place every district (one by elimination), so the numbering is CHECKED and the supervisors are keyed. A reply is still welcome and would be a second witness; nothing further is owed. |
 | Mitchell | Rachel Foster | 5 | **ANSWERED 2026-10-12 (13:54 UTC), USABLE and SHIPPED.** The auditor replied from `rfoster@mitchellcountyiowa.gov` (a different address from the `mitchellcoia.us` one the auditors roster carries), listing the precincts in each district: 2, 3 and 11 in District 1; 1, 4 and 12 in 2; 5 and 6 in 3; 7 and 8 in 4; 9 and 10 in 5. Each of this instance's twelve Mitchell precincts lies at least 99.7% inside one district of our layer, and the county's Districts 1 and 2 are our 2 and 1 (3 to 5 match). The county's own supervisor-district map, which she pointed to (robots.txt checked first: none published, so allowed), colours the same five groups and puts District 1 on the west side of Osage, where our district 2 is. So the numbering is CHECKED and Mitchell's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
 | Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. **Re-checked 2026-10-06 and it stands**: the county's site still answers its robots.txt with HTTP 202, the captcha shape, so nothing on it can be read and the letter is the only route. **ANSWERED 2026-10-06 (20:37 UTC) — AND SHE CORRECTED HER 1 OCTOBER LIST.** Jerry Helmers is District 4 and Jeff Loring District 5; the first list had them swapped. The held pairing in `build_ia_supervisor_roster.py` was corrected on 2026-10-07; it had never reached a reader, because Osceola's numbering is unchecked and its board ships unkeyed. She also linked the county's district maps (a Word document on osceolacountyia.gov), which this project cannot fetch: re-checked 2026-10-07 14:05 UTC, that host answers robots.txt with HTTP 202 and a SiteGround captcha. The operator saved the file and shared it on 2026-10-07; its map labels Districts 1-5 the same way our layer numbers them, so Osceola joined `NUMBERING_CHECKED` that day and its five cards name the supervisors from the corrected pairing. |
 | Polk | Jamie Fitzgerald | 5 | The address the roster carries is the elections desk rather than a person; the letter goes there as published. **ANSWERED 2026-10-06 (sent 16:48, reply 16:57) — THE COUNTY PUBLISHES THE ANSWER AND OUR NUMBERING MATCHES IT.** The elections office pointed to the county's own web map. It draws from the county's own ArcGIS Server (`gis4.polkcountyiowa.gov/server/rest/services/Elections/Board_of_Supervisors/FeatureServer/0`, owner `portadmin` on the county's portal, copyright "Polk County, Iowa"), whose five district polygons each carry the supervisor's name, term and contact. Compared on a 160x160 grid over the county, 22,799 of the 22,860 sampled points inside either map get the SAME district number from the county's polygons and ours (99.7%); the 61 that differ are slivers along shared edges, and no district number is swapped. Fetch note: the county's Akamai edge answers our token with 403 on robots.txt and every page of both `maps.` and `gis4.`, and serves Chrome with client hints — the same measurement `ia_county_minutes_chair_scraper.py` records for `www.` — so both were read with that client; `maps.` then has no robots.txt (it serves its HTML at that path) and `gis4.` answers 404, allow all. So Polk can be keyed to its own district numbers in a later change. |
-| Sac | Renee Roland | 3 | |
+| Sac | Renee Roland | 3 | **SETTLED WITHOUT A REPLY 2026-10-15** from the Secretary of State's certified 2026 primary returns, which list the precincts voting in each supervisor contest; matched to this instance's precinct layer they place every district (one by elimination), so the numbering is CHECKED and the supervisors are keyed. A reply is still welcome and would be a second witness; nothing further is owed. |
 | Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. **Re-checked 2026-10-06 and it stands**: robots.txt still answers HTTP 202. **ANSWERED 2026-10-06 — THE COUNTY'S GIS TECHNICIAN (Joey Reid) SENT THE DISTRICT MAP.** "Sioux County Supervisor Districts", county GIS, as of 6 April 2022, labelling each district and drawing its townships. All 17 of this instance's Sioux precincts lie inside the same-numbered district of our layer, so the numbering is the same and Sioux was added to `NUMBERING_CHECKED` on 2026-10-07; its five district cards now name the supervisors from the 1 October pairing. |
-| Taylor | Judy Henry | 3 | |
+| Taylor | Judy Henry | 3 | **SETTLED WITHOUT A REPLY 2026-10-15** from the Secretary of State's certified 2026 primary returns, which list the precincts voting in each supervisor contest; matched to this instance's precinct layer they place every district (one by elimination), so the numbering is CHECKED and the supervisors are keyed. A reply is still welcome and would be a second witness; nothing further is owed. |
 | Washington | Tamera Stewart | 5 | **WITHDRAWN 2026-10-06, NEVER SENT — THE AUDITOR HAD ALREADY SENT THE ANSWER.** Her 2026-10-01 reply linked the county's own district map (`washingtoncounty.iowa.gov/DocumentCenter/View/2095/Map-of-Supervisor-Districts---Final`, county GIS, 2022, drawn to the 2020 census). It is a vector PDF with the townships drawn and labelled inside each district. Ten townships lie wholly inside one district (Brighton, Clay, Dutch Creek, Lime Creek and Seventy-Six in 1; English River in 2; Crawford, Highland, Iowa and Oregon in 3), and every interior point lands in the same-numbered district of the statewide layer. Districts 4 and 5 hold no whole township, so they are settled by the split ones: Franklin township's interior point lands in the layer's 4 and the county's map puts Franklin only in 1 and 4, while Jackson's lands in the layer's 5 and the map puts Jackson only in 2 and 5, so the layer's 4 and 5 cannot be swapped. The two numberings agree in all five districts. |
 | Webster | Krystal Lloyd | 5 | |
 | Winnebago | Karla Weiss | 3 | **ANSWERED 2026-10-06 (18:09 UTC) by Lori Jacobs of the Auditor's office**, listing the precincts in each of the three districts in the body of her e-mail. All ten of this instance's Winnebago precincts lie inside the same-numbered district of our layer (each at least 99.7% of its area), so Winnebago was added to `NUMBERING_CHECKED` on 2026-10-07 and its three cards name the supervisors from the county's own board page. An auto-reply also came on 2026-10-06 (auditor out); it needed nothing. |
@@ -7411,6 +7420,67 @@ found one error of ours.
 - The cross-check dates are promises. If the operator wants them kept, they need a reminder
   routine; none exists yet (offered to the operator 2026-10-13).
 
+## Ask mn-mat-town-officers — Minnesota Association of Townships: a list of each town's supervisors, clerk and treasurer
+
+> **NOT SENT.** Drafted 2026-10-15 by the Minnesota thread, to the association's general address,
+> `info@mntownships.org`, which its own Contact Us page gives for general questions (read
+> 2026-10-15 after its robots.txt, whose `*` group permits that page). The pages read first, so
+> the letter asks only for what is not already public: the home page, About, Contact Us, Township
+> Team, Information Library, Township Population and Update Officer Information. None lists
+> officers. The Update Officer Information page says MAT keeps officer records and asks towns to
+> report changes, and the Township Team page says MAT serves "over 9,000 township officers" in
+> "1,772 of the 1,776 townships".
+
+**Why this is asked.** Minnesota's map draws every one of the state's organized towns, and since
+2026-10-15 the Township or City card names the board of the 704 towns that hold their town
+election in November, from the Secretary of State's local results files, each name dated to the
+election that seated it. The other towns hold their election in March, which the towns run
+themselves, and those results are in no file the state publishes (the four March election days
+2023-2026 answer 404 on the Secretary of State's results host). So for roughly 1,090 towns the
+card names nobody. MAT is the one body that keeps a statewide record of town officers. One list
+from it would cover every March town at once, and would also tell us who holds a November town's
+seat today rather than who last won it — which is also the kind of change in how Minnesota
+publishes this information that the project exists to encourage.
+
+> Subject: A list of Minnesota's town supervisors, clerks and treasurers
+>
+> Hello,
+>
+> I run districtry (https://districtry.com/mn/), a free, non-commercial website where anyone can
+> click a point on a map of Minnesota, or type an address, and see every district that covers it
+> and who represents them there.
+>
+> The map shows every Minnesota township. For the towns that hold their town election in November,
+> it names the supervisors, clerk and treasurer from the Secretary of State's election results,
+> with the date of the election that seated each one. For the towns that vote in March, it names
+> nobody, because those results are not published anywhere statewide.
+>
+> Your website says MAT keeps a record of town officers for its member towns. Would MAT be willing
+> to share a list of each town's supervisors, clerk and treasurer, by name and office, that we may
+> show on the map and credit to MAT? Or, if it suits MAT better, to publish such a list on your own
+> website, where we could read it? Either would let a resident of any township see who serves on
+> their town board.
+>
+> We would show only each officer's name and office, and never a home address, phone number or
+> e-mail address. The map would link to MAT for anyone who wants to know more.
+>
+> A one-line reply is plenty. If this is not something MAT can do, a "no" is a genuinely useful
+> answer too, and we will keep reading the election results and each town's own website.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A list shared with us: recorded with its date and any terms MAT gives,
+and read into the Township or City card for every town it covers, each name dated to the list,
+with the November towns' election winners kept beside it so a reader can see where the two
+differ. A list published on MAT's site: read weekly after its robots.txt, the same way. Only names
+and offices are ever read. A no: recorded in gap `mn-township-officers` with its date, the
+November towns stay named from the election results, and the March towns stay unnamed until a
+statewide source appears.
+
 ## Ask ar-aac-county-pages — Association of Arkansas Counties: a way for our weekly program to read the county pages, and each justice's district
 
 > **NOT YET ASKED — DRAFTED 2026-10-15**, to Christy L. Smith, Communications Director, at
@@ -7501,6 +7571,117 @@ district from the association's own list, a district the county's own site also 
 with it or the build fails as it does today, and the 2024 results rule is retired wherever the
 association gives a district. A no to that: recorded in gap `ar-quorum-court` with its date, and
 the counties' own sites and the next election's results stay the route.
+
+## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
+
+> **NOT YET ASKED — DRAFTED 2026-10-15.** To Jim Steil, Director of MARIS (the Mississippi
+> Automated Resource Information System, created by Miss. Code § 57-13-23 as "the mechanism
+> within state government for the storing, processing, extracting and disseminating of useful
+> data and information relating to the state's resources"), at `jsteil@mississippi.edu`. MARIS's
+> About page names him as Director with that address and asks "For better service, please use
+> email if possible" (read 2026-10-15, after the host's robots.txt, which answers 404 and so
+> permits every path). Postal: 3825 Ridgewood Road, Jackson, MS 39211; telephone (601) 432-6354.
+> On 2026-10-15 the operator chose to have it made into a Gmail draft ("Make the draft" on the
+> Mississippi thread's decision card), ahead of letters to the counties, because one office could
+> cover all 82 counties, which is the choice made for Tennessee on 2026-10-11
+> (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
+> been searched for earlier correspondence with MARIS; do that before it goes.
+
+**Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
+counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
+County's District 3 is vacant), and can draw the districts they represent in only 12 counties.
+The only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's
+county subdivisions are the supervisor districts. Measured 2026-10-15 by
+`ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
+Bureau's current edition differs from its 2020 edition in 12 counties, which the map draws; in 64
+counties the lines it shows are unchanged since 2020 and have a total population deviation above
+10% on the 2020 census (the largest district less the smallest, as a share of an equal district: a
+median of 37%, and as much as 304%), which suggests those counties have redrawn them since (an
+inference: nothing published says which counties redrew); in the last 6 they are
+unchanged and balanced, which proves nothing either way. MARIS publishes the Bureau's 2020 file
+as its supervisor district layer (`MS_SupervDists_2020`, publication date 2021-02-01, source
+"Census MAF/TIGER database" of 2021-01-29, read from its metadata 2026-10-15), and its
+`Political/MS_SupervisorDistricts_2020` map service listed no layers when read the same day,
+while it publishes the 2025 legislative maps and county parcels and point addresses county by
+county. A survey the same day of every county's website and planning and development district
+(the record is `/mnt/project-files/ms/supervisor-map-survey/`) found 25 counties publishing a
+usable map: 14 whose own lines differ from the Bureau's current ones, where across those 14
+counties the Bureau's lines place 146,842 of 1,065,116 residents in a different district; 10 whose
+own map confirms the Bureau's; and Tippah, whose current plan was found with its publisher not
+established. 21 counties had nothing online, 20 publish only a copy of the Bureau's lines, 15 only
+older or unresolved layers, and Yazoo a planning-district plan whose date is not established. Two
+planning and development districts publish supervisor maps for many of their counties: the
+Central Mississippi PDD from its own server, and the Golden Triangle PDD from an ArcGIS Online
+organisation whose portal record names it. One state office collecting the counties' current maps
+is the change in how Mississippi publishes this information that the project exists to
+encourage, and a no from MARIS is the evidence that it takes more than asking.
+
+> Subject: Mississippi's county supervisor district maps
+>
+> Dear Mr. Steil,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
+> a point on a map, or type an address, and see every district that covers it and who represents
+> them there. We are building Mississippi's map now; it is not public yet.
+>
+> For the county boards, we can name every sitting supervisor in all 82 counties from the
+> Secretary of State's directory. What we cannot find is a current map of the districts they
+> represent. The only statewide map I have found is the Census Bureau's, and MARIS's supervisor
+> district layer is the Bureau's 2020 file. The Bureau's current edition has new lines for only 12
+> counties. In 64 others the lines it still shows are the ones it showed in 2020, and they are out
+> of balance on the 2020 census, most of them badly, which suggests those counties have redrawn
+> them since.
+>
+> On 15 October I looked for each county's own map on its website and its planning and development
+> district's. 25 counties publish one that can be used. In 14 of them the county's map differs from
+> the Census Bureau's, and across those 14 counties the Bureau's lines place 146,842 of 1,065,116
+> residents in a different district from the county's own map. The Central Mississippi and Golden
+> Triangle planning and development districts already publish supervisor maps for many of their
+> counties. For 21 counties I found no map online, and 20 publish only a copy of the Census lines.
+>
+> I'd like to ask whether MARIS would consider either of two things:
+>
+> 1. If MARIS already has, or knows of, a newer collection of the counties' supervisor district
+>    lines than the 2020 Census file, a pointer to it would answer most of this letter.
+> 2. Otherwise, collect each county's current supervisor district map, as MARIS already publishes
+>    county parcels and point addresses county by county, and publish them in one place, free,
+>    ideally as one statewide layer that is updated whenever a county redraws.
+>
+> This is only about district boundaries, not voter records or any personal information. I'd be
+> glad to send the county-by-county list of what I found, with links to the 25 maps. I also
+> noticed that the supervisor districts map service currently shows no layers, in case that is
+> not already known.
+>
+> A short answer either way is useful, including a no, or the name of the right person to ask. If
+> another office, such as the Secretary of State's, is the better place for this, I'd be grateful
+> to know.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A pointer to a newer collection: each county's lines are taken from it
+only after the same checks the county-published maps get (five districts tiling the county,
+balanced on the 2020 census, and a sign the plan was adopted after 2020), and the gap
+`ms-supervisor-district-lines` shrinks by the counties it settles. A yes to collecting them: the
+map reads MARIS's layer as each county lands, after the host's robots.txt, and credits MARIS on
+the card. A no, or no answer after the follow-ups: recorded in that gap with its date, the map
+keeps drawing counties from their own published maps, and letters go to the counties with no
+current map online. Which state office could require counties to send in their maps, and whether
+that needs a change in law, is then the next question; nothing here establishes it.
+
+**Before sending:**
+
+- Re-read MARIS's About page in a browser and confirm the Director and the address are unchanged.
+- The counts must still match `/mnt/project-files/ms/supervisor-map-survey/` and
+  `ms/data/app/ms-supervisor-districts.json` on the day it goes; if the map has drawn more counties
+  since, say so.
+- The sentence about the empty map service is a courtesy and can be cut. Check it first: if the
+  service shows its layer again, cut it.
+- Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
+  Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 

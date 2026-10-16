@@ -1581,6 +1581,17 @@ ANSWERS = {
         # control (gap mn-judicial-roster).
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mn-judicial-district"),
+        # STILL OPEN 2026-10-15, one half done. The standard's township rule
+        # passes a state where boards are named wherever a list of them is
+        # published. The Township or City card now names the board of each of
+        # the 704 towns that hold their town election in November, from the
+        # Secretary of State's local results files
+        # (mn/scripts/build_mn_town_boards.py). The March towns' results are in
+        # no state file, BUT a town clerk certifies its officers to the county
+        # each spring, and a survey of all 87 counties on 2026-10-15 found 42
+        # that publish a list of them (mn/data/source/
+        # mn-county-township-officer-survey.json). Those 42 are owed before
+        # this level passes. Gap mn-township-officers carries both halves.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.
@@ -1589,10 +1600,11 @@ ANSWERS = {
         # 2026-10-08 (#1429): the Secretary of State's precinct results name
         # which boards file district offices, and school-board-district draws
         # the 59 districts of the 13 that elect by geography, each from the
-        # precincts that voted in its seat's latest contest. Anoka-Hennepin is
-        # the one not drawn — its odd-year results are by shared polling place
-        # — and carries gap mn-school-board-election-districts, the shape
-        # Wisconsin's mps-school-board answer already has.
+        # precincts that voted in its seat's latest contest. Anoka-Hennepin,
+        # whose odd-year results are by shared polling place, joined
+        # 2026-10-15 from the district's own 2022 board map, read precinct by
+        # precinct (65 districts on 14 boards); Duluth's rural townships carry
+        # gap mn-school-board-election-districts.
         "school-boards-by-district": answers("school-board-district"),
         # The Secretary of State publishes all 4,105 precincts statewide, from
         # the office that maintains them, and the app draws them.
@@ -1616,7 +1628,11 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("ky-senate", "ky-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # The magisterial districts of the fiscal courts the State Board's
+        # precinct results can place whole, and the Louisville and Lexington
+        # council districts (2026-10-15). Which counties that is, is read off
+        # the shipped file by _ky_county_maps_owed.
+        "county-government": depth("fiscal-court"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         # All three Census tilings, because Kentucky needs all three: measured
@@ -1628,6 +1644,10 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
+        # The Census's 493 county divisions, drawn live from TIGERweb as North
+        # Carolina's townships are, with a card saying no one is elected from
+        # them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         # ALL FOUR COURTS ANSWER, from statute text alone. Every Kentucky
         # judge is elected from a district or circuit made of WHOLE COUNTIES
         # named in the statute (KRS 21A.010, 22A.010(2), 23A.020, 24A.030), so
@@ -1639,7 +1659,6 @@ ANSWERS = {
         # named since 2026-10-07 (Louisville's from the three Jefferson court
         # sites its Court of Justice page links), though the standard asks
         # whether the app answers the level and would count it without them.
-        "subdivision-boundaries": OPEN,
         "courts-by-district": answers(
             "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
             "ky-district-court"),
@@ -1748,7 +1767,9 @@ ANSWERS = {
         # and the secondary tiling is empty. Recorded in ok/CLAUDE.md.
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary"),
-        "subdivision-boundaries": OPEN,
+        # The Census's 305 county divisions, drawn live from TIGERweb with a
+        # card saying no one is elected from them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # OKLAHOMA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 305 county
         # subdivisions TIGERweb carries for the state are census county
@@ -1782,7 +1803,9 @@ ANSWERS = {
         # TIGER's unified tiling holds all 72 districts and the other two hold
         # none, measured in sc/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
-        "subdivision-boundaries": OPEN,
+        # The Census's 299 county divisions, drawn live from TIGERweb with a
+        # card saying no one is elected from them (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # SOUTH CAROLINA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 299
         # county subdivisions TIGERweb carries for the state are census county
@@ -1818,7 +1841,10 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
-        "subdivision-boundaries": OPEN,
+        # The 855 civil districts, drawn live from TIGERweb and titled "Civil
+        # District N", with a card saying no one is elected to run one and that
+        # the number is not a county commission district's (2026-10-15).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # TENNESSEE HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 855 county
         # subdivisions TIGERweb carries for the state are civil districts
@@ -1832,9 +1858,10 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # One piece of off-reservation trust land, 0.695 km2 near Henning; the
-        # fleet-wide tribal-government thread owns it.
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
+        # Mississippi Band of Choctaw Indians' trust land near Henning, named
+        # with the nation's Tribal Chief and Tribal Council.
+        "tribal-government": answers("tribal-government"),
     },
     # Arkansas, added at its go-live with the national tier and the quorum
     # court layer.
@@ -1853,7 +1880,11 @@ ANSWERS = {
         # TIGER's unified tiling holds all 234 districts and the other two hold
         # none, measured in ar/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
-        "subdivision-boundaries": OPEN,
+        # The 820 townships of the state's own map (ar/data/app/ar-townships.json),
+        # not the Census's, which disagrees with it about how many townships a
+        # county has in 27 counties and, in the two checked, is the out-of-date
+        # one (2026-10-15, ar/scripts/build_ar_townships.py).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # ARKANSAS HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 1,051
         # county subdivisions TIGERweb carries for the state are townships and
@@ -2014,7 +2045,7 @@ CITY_FILES = {
 # at-large seat and owes no map.
 # ---------------------------------------------------------------------------
 
-def _ky_county_maps_owed(B):
+def _ky_county_maps_owed(B, records=None):
     """Kentucky counties whose fiscal court is elected by district.
 
     Read off each county's own `form` in the Department for Local Government's
@@ -2022,10 +2053,22 @@ def _ky_county_maps_owed(B):
     and so are the Louisville Metro Council and the Lexington-Fayette Urban
     County Council. A commissioner-form court elects its commissioners
     countywide from residency districts (KRS 67.060), which owes no map.
+
+    A county the fiscal-court layer draws owes nothing more, and which counties
+    it draws is MEASURED off the shipped file, never listed here: the builder
+    (ky/scripts/build_ky_county_districts.py) writes a county only when every
+    one of its precincts is placed, and its --check holds that.
     """
     rel = "ky/data/app/ky-county-officials.json"
     with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
         doc = json.load(fh)
+    drawn_rel = "ky/data/app/ky-county-districts.json"
+    with open(os.path.join(REPO_ROOT, drawn_rel), encoding="utf-8") as fh:
+        drawn = {f["properties"]["countyFips"] for f in json.load(fh)["features"]}
+    stray = sorted(drawn - set(doc))
+    if stray:
+        fail("ky: `%s` draws counties %s, which the county roster does not carry"
+             % (drawn_rel, ", ".join(stray)))
     by_district = {"magistrate", "metro", "urban-county"}
     at_large = {"commissioner"}
     owed = set()
@@ -2035,7 +2078,7 @@ def _ky_county_maps_owed(B):
             fail("ky: `%s` gives county %s the form %r, which the county-map "
                  "test does not know. Say whether that court is elected by "
                  "district before it is scored." % (rel, fips, form))
-        if form in by_district:
+        if form in by_district and fips not in drawn:
             owed.add(B.slug_of(rec["county"]))
     return owed
 
@@ -2140,12 +2183,12 @@ def _no_layer(derive):
     return wrapped
 
 
-# A STATE WHOSE ENTRY DRAWS NO DISTRICT (Kentucky, Indiana) is wrapped in
-# `_no_layer`, and the audit below fails the day its county-government entry
-# gains a layer, because which counties that layer draws then has to be
-# measured. A state whose entry draws some (Illinois, Iowa) measures it itself.
+# A STATE WHOSE ENTRY DRAWS NO DISTRICT (Indiana) is wrapped in `_no_layer`,
+# and the audit below fails the day its county-government entry gains a layer,
+# because which counties that layer draws then has to be measured. A state
+# whose entry draws some (Illinois, Iowa, Kentucky) measures it itself.
 COUNTY_MAPS_OWED = {
-    "ky": _no_layer(_ky_county_maps_owed),
+    "ky": _ky_county_maps_owed,
     "in": _no_layer(_in_county_maps_owed),
     "il": _il_county_maps_owed,
     "ia": _ia_county_maps_owed,
@@ -2170,8 +2213,9 @@ def county_maps_owed(tag, counties, B):
     stray = sorted(owed - known)
     # Illinois and Iowa may owe a map for a county they do not name yet; that
     # county is open on names already, and the set is intersected with the
-    # named counties before it is scored. Kentucky and Indiana name every
-    # county they derive from, so a stray there is a misread file.
+    # named counties before it is scored. Indiana names every county it
+    # derives from, so a stray there is a misread file; Kentucky's derive
+    # checks its own drawn file against its roster.
     if stray and getattr(derive, "draws_none", False):
         fail("%s: COUNTY_MAPS_OWED names %s, which is not a county this state's "
              "rosters carry" % (tag, ", ".join(stray)))
@@ -2244,17 +2288,15 @@ WARD_MAPS = {
                "1738570", "1744225", "1749867", "1753559", "1754638",
                "1754820", "1755249", "1757225", "1757875", "1759000",
                "1762367", "1765000", "1765078", "1770122", "1772000",
-               "1779293"},
-        owed={"1712385": "Champaign", "1718563": "Danville"}),
+               "1779293", "1718563"},
+        owed={"1712385": "Champaign"}),
     "wi": dict(drawn="all"),
     "ny": dict(drawn="all"),
     "ia": dict(
-        drawn={"1912000", "1921000", "1982425"},
-        owed={"1901855": "Ames", "1906355": "Bettendorf",
-              "1911755": "Cedar Falls", "1919000": "Davenport",
-              "1922395": "Dubuque", "1949485": "Marion",
-              "1949755": "Marshalltown", "1950160": "Mason City",
-              "1983910": "West Des Moines"},
+        drawn={"1912000", "1921000", "1982425",
+               # nine more on 2026-10-15, ia/scripts/build_ia_city_wards.py
+               "1901855", "1906355", "1911755", "1919000", "1922395",
+               "1949485", "1949755", "1950160", "1983910"},
         at_large={"1938595": "Iowa City's charter nominates its district "
                              "council members by district and elects them by "
                              "the whole city"}),
@@ -2264,26 +2306,21 @@ WARD_MAPS = {
         owed={"2603000": "Ann Arbor", "2606020": "Bay City",
               "2642820": "Kentwood", "2646000": "Lansing",
               "2682960": "Walker"}),
+    # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
+    # which reads the cities off the city council roster.
     "mn": dict(
-        drawn=set(),
-        owed={"2702908": "Austin", "2706382": "Blaine",
-              "2706616": "Bloomington", "2707966": "Brooklyn Park",
-              "2710972": "Chaska", "2713114": "Coon Rapids",
-              "2717000": "Duluth", "2718674": "Elk River",
-              "2722814": "Fridley", "2739878": "Mankato",
-              "2743000": "Minneapolis", "2743252": "Minnetonka",
-              "2743864": "Moorhead", "2749300": "Owatonna",
-              "2751730": "Plymouth", "2753026": "Ramsey",
-              "2754214": "Richfield", "2754880": "Rochester",
-              "2756896": "St. Cloud", "2757220": "St. Louis Park",
-              "2758000": "St. Paul", "2771032": "Winona"}),
+        drawn={"2702908", "2706382", "2706616", "2707966", "2710972",
+               "2713114", "2717000", "2718674", "2722814", "2739878",
+               "2743000", "2743252", "2743864", "2749300", "2751730",
+               "2753026", "2754214", "2754880", "2756896", "2757220",
+               "2758000", "2771032"}),
     # Kentucky's city roster carries no ward labels, so the sweep finds nothing
     # there; the two councils elected by district are declared. Louisville's
-    # Metro Council answers both of the Census's Louisville places.
+    # Metro Council answers both of the Census's Louisville places. Both are
+    # drawn by the fiscal-court layer from the governments' own council maps
+    # (2026-10-15).
     "ky": dict(
-        drawn=set(),
-        owed={"2148006": "Louisville Metro", "2148000": "Louisville",
-              "2146027": "Lexington-Fayette"},
+        drawn={"2148006", "2148000", "2146027"},
         declared={"2148006", "2148000", "2146027"}),
     "in": dict(
         drawn=set(),

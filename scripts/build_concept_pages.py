@@ -722,8 +722,20 @@ def city_council_page(tag, spec, worksheet):
     # of 46 beside "draws the wards of 3 cities" reads as though all 46 sat in
     # those three. The first draft printed exactly that.
     in_wards, at_large_cities, at_large_named = 0, 0, 0
+    ward_city_names = set()
     for _label, path, adapter in spec["rosters"]:
         data = load(path)
+        if adapter == "ward_city_councils":
+            # Iowa's council file holds every city above 25,000 the app can
+            # read; the ones that elect by ward are the ones it names a "Ward N"
+            # seat for, and only those whose wards are DRAWN count here.
+            for rec in data.values():
+                members = rec.get("members") or []
+                if rec.get("city") in wards and any(
+                        re.match(r"Ward \d+$", m.get("seat") or "") for m in members):
+                    ward_city_names.add(rec["city"])
+                    in_wards += sum(1 for m in members if m.get("name"))
+            continue
         if adapter == "city_officials":
             at_large_cities += len(data)
             at_large_named += sum(1 for rec in data.values()
@@ -736,7 +748,9 @@ def city_council_page(tag, spec, worksheet):
                 if m.get("name"):
                     in_wards += 1
     named = in_wards + at_large_named
-    rostered = {label for label, _p, a in spec["rosters"] if a != "city_officials"}
+    rostered = ({label for label, _p, a in spec["rosters"]
+                 if a not in ("city_officials", "ward_city_councils")}
+                | ward_city_names)
     # CITIES WHOSE CARDS NAME THEIR MEMBERS FROM THE WEEKLY CITY-BOARD FILE
     # (Michigan's mi-municipal-officials.json) are named apart, because this
     # page prints no table for them and so cannot count their members, while
@@ -1427,16 +1441,27 @@ PAGES = [
          layers="city-ward", make=city_council_page, place="Iowa",
          wards=[("Cedar Rapids", "ia/data/app/cedar-rapids-wards.json"),
                 ("Des Moines", "ia/data/app/dsm-wards.json"),
-                ("Waterloo", "ia/data/app/waterloo-wards.json")],
+                ("Waterloo", "ia/data/app/waterloo-wards.json"),
+                ("Ames", "ia/data/app/ames-wards.json"),
+                ("Bettendorf", "ia/data/app/bettendorf-wards.json"),
+                ("Cedar Falls", "ia/data/app/cedar-falls-wards.json"),
+                ("Davenport", "ia/data/app/davenport-wards.json"),
+                ("Dubuque", "ia/data/app/dubuque-wards.json"),
+                ("Marion", "ia/data/app/marion-wards.json"),
+                ("Marshalltown", "ia/data/app/marshalltown-wards.json"),
+                ("Mason City", "ia/data/app/mason-city-wards.json"),
+                ("West Des Moines", "ia/data/app/west-des-moines-wards.json")],
          rosters=[("Des Moines", "ia/data/app/dsm-council-members.json", "city_council"),
                   ("Cedar Rapids", "ia/data/app/cedar-rapids-council-members.json",
                    "city_council"),
                   ("Waterloo", "ia/data/app/waterloo-council-members.json", "city_council"),
+                  ("ward cities", "ia/data/app/ia-city-councils.json", "ward_city_councils"),
                   ("small cities", "ia/data/app/ia-city-officials.json", "city_officials")],
          counts=["ia/data/app/dsm-council-members.json",
                  "ia/data/app/cedar-rapids-council-members.json",
                  "ia/data/app/waterloo-council-members.json",
                  "ia/data/app/ia-city-officials.json",
+                 "ia/data/app/ia-city-councils.json",
                  "ia/data/app/cedar-rapids-wards.json",
                  "ia/data/app/dsm-wards.json",
                  "ia/data/app/waterloo-wards.json"],

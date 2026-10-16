@@ -90,11 +90,14 @@
     "county-board": {
       "il": "county-board", "ny": ["county-legislature", "county-supervisor"], "ca": "supervisor-district",
       "wi": "county-board", "ia": "county-supervisor", "mi": "county-commissioner", "mn": "county-commissioner",
-      "ok": "county-commissioner", "sc": "county-council", "tn": "county-commissioner", "ar": "quorum-court"
+      "ok": "county-commissioner", "sc": "county-council", "tn": "county-commissioner", "ar": "quorum-court",
+      "ky": "fiscal-court"
     },
     "county-subdivision": {
       "il": "township", "ny": "municipality", "wi": "county-subdivision", "ia": "county-subdivision",
-      "mi": "county-subdivision", "mn": "county-subdivision", "in": "county-subdivision", "nc": "county-subdivision"
+      "mi": "county-subdivision", "mn": "county-subdivision", "in": "county-subdivision", "nc": "county-subdivision",
+      "ky": "county-subdivision", "ok": "county-subdivision", "sc": "county-subdivision", "tn": "county-subdivision",
+      "ar": "county-subdivision"
     },
     "municipality": {
       "il": "municipality", "ny": ["municipality", "village"], "wi": "municipality", "ia": "municipality",
@@ -103,7 +106,7 @@
     },
     "city-council": {
       "il": "ward", "ny": "council", "ca": "supervisor-district", "wi": "aldermanic-district",
-      "ia": "city-ward", "mi": "city-ward"
+      "ia": "city-ward", "mi": "city-ward", "mn": "city-ward", "ky": "fiscal-court"
     },
     "voting-precinct": {
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",
@@ -166,7 +169,7 @@
     "tribal-government": {
       "il": "tribal-government", "ny": "tribal-government", "wi": "tribal-government", "ia": "tribal-government",
       "mi": "tribal-government", "mn": "tribal-government", "in": "tribal-government",
-      "nc": "tribal-government", "ok": "tribal-government", "sc": "tribal-government"
+      "nc": "tribal-government", "ok": "tribal-government", "sc": "tribal-government", "tn": "tribal-government"
     }
   },
   "colors": {
