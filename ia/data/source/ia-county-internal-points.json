@@ -1,5 +1,5 @@
 {
- "measured": "2026-10-12",
+ "measured": "2026-10-15",
  "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
@@ -22,13 +22,6 @@
    "lng": -92.3273559,
    "name": "Bremer County",
    "slug": "bremer"
-  },
-  "butler": {
-   "fips": "023",
-   "lat": 42.734757,
-   "lng": -92.780153,
-   "name": "Butler County",
-   "slug": "butler"
   },
   "calhoun": {
    "fips": "025",
@@ -114,13 +107,6 @@
    "name": "Linn County",
    "slug": "linn"
   },
-  "madison": {
-   "fips": "121",
-   "lat": 41.3306216,
-   "lng": -94.0151842,
-   "name": "Madison County",
-   "slug": "madison"
-  },
   "montgomery": {
    "fips": "137",
    "lat": 41.0217348,
@@ -142,26 +128,12 @@
    "name": "Pottawattamie County",
    "slug": "pottawattamie"
   },
-  "sac": {
-   "fips": "161",
-   "lat": 42.3875259,
-   "lng": -95.1052244,
-   "name": "Sac County",
-   "slug": "sac"
-  },
   "tama": {
    "fips": "171",
    "lat": 42.074848,
    "lng": -92.5294115,
    "name": "Tama County",
    "slug": "tama"
-  },
-  "taylor": {
-   "fips": "173",
-   "lat": 40.7379489,
-   "lng": -94.6971082,
-   "name": "Taylor County",
-   "slug": "taylor"
   },
   "warren": {
    "fips": "181",

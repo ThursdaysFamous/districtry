@@ -30,12 +30,13 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 324 hosts, of which 234 are reached by a browser-string
-caller, 95 of them measured or re-measured since — 61 on 2026-09-13 at the page a
+2026-09-12 across 336 hosts, of which 246 are reached by a browser-string
+caller, 107 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
-2026-09-15, and www.cpsboe.org on 2026-09-23, when the Chicago school board roster
-began reading it: 243 serve UA_ROSTER_BOT a full page, 27 refuse it and answer the
-browser string, and 8 refuse the `requests` STACK while serving the same token
+2026-09-15, www.cpsboe.org on 2026-09-23, when the Chicago school board roster
+began reading it, and www.scottcoil.gov on 2026-10-15 for Scott County's
+commissioners: 253 serve UA_ROSTER_BOT a full page, 28 refuse it and answer the
+browser string, and 9 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
@@ -44,8 +45,8 @@ page sat under; not one re-probe moved a host INTO a refusal.) Per file
 and the artifact rather than remembered): 45 files send a browser string; 2
 of them reach only hosts that serve the token a full page, 21 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 22 reach at least one host that refuses it -- and 234 of
-the 324 measured hosts are still reached by such a caller. The pair 101/62 that
+`requests` stack), and 22 reach at least one host that refuses it -- and 246 of
+the 336 measured hosts are still reached by such a caller. The pair 101/62 that
 stood here until 2026-10-01 was the state before SIXTY scrapers were switched
 off a Chrome string onto our own token in one change: every page each of them
 fetches was re-read with the token on that file's own HTTP stack and answered in
@@ -232,7 +233,19 @@ def _robots_client(verify):
         return None
     import requests
 
-    session = requests.Session()
+    class _PinnedSession(requests.Session):
+        # verify= on every request, never on the session alone: requests lets
+        # REQUESTS_CA_BUNDLE and then CURL_CA_BUNDLE win over session.verify, so
+        # a pinned chain set only on the session is silently replaced wherever
+        # either is set. Measured 2026-10-15 on www.legislature.ms.gov, whose
+        # server omits its intermediate: SSLError through session.verify, and
+        # the robots.txt answer (404) with the same bundle passed per request.
+        def request(self, method, url, **kwargs):
+            if kwargs.get("verify") is None:
+                kwargs["verify"] = self.verify
+            return requests.Session.request(self, method, url, **kwargs)
+
+    session = _PinnedSession()
     session.verify = verify
     return session
 

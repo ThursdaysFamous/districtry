@@ -7,7 +7,7 @@
     "counties_researched_unserved": 9,
     "counties_unresearched": 0
   },
-  "gap_records": 104,
+  "gap_records": 103,
   "places": 14,
   "layers": {
     "il": 41,
@@ -16,13 +16,13 @@
     "wi": 32,
     "ia": 21,
     "mi": 19,
-    "mn": 19,
-    "ky": 12,
+    "mn": 20,
+    "ky": 13,
     "in": 13,
     "nc": 12,
     "ok": 13,
     "sc": 12,
-    "tn": 13,
+    "tn": 14,
     "ar": 11
   }
 }

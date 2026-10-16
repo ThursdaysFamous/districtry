@@ -114,15 +114,11 @@ from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
 # both have a Winnebago County, Wisconsin has a county named IOWA, and eleven
 # other names are shared between the two states — a bare county name would let
 # an entry written about one state silence a real regression in another.
-NAMES_NOBODY = {
-    "nc/Tyrrell": {"date": "2026-10-11",
-                   "reason": "Tyrrell County elects its board by limited voting, "
-                             "so the State Board's results do not say how many "
-                             "seats each contest filled, and the county's website "
-                             "did not answer when the roster was built"},
-}
-# It was EMPTY from 2026-09-15 to 2026-10-11, and carried one entry
-# from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
+NAMES_NOBODY = {}
+# It is EMPTY since 2026-10-15. From 2026-10-11 it carried North Carolina's
+# Tyrrell, whose board seats the election results alone could not settle
+# until the county's own page was read. Before that it was empty from
+# 2026-09-15, and carried one entry from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
 # with an e-mail, a phone and a source URL and no name field anywhere, because
 # the card reads the member from WinGIS live. il_gis_board_scraper.py
 # snapshotted those names on 2026-09-15 and this gate FAILED the build on the
@@ -3619,6 +3615,15 @@ NOT_COUNTY_BOARDS = {
                "These pages are one per county board; a township is a "
                "different government below the county, and the app names its "
                "trustee and board on its own Township card.",
+    ),
+    "ms/data/app/ms-county-officials.json": dict(
+        date="2026-10-15",
+        reason="Mississippi's county boards of supervisors, which ARE the "
+               "county's governing body and belong on these pages. They are "
+               "held back because Mississippi is dark, and a county page, its "
+               "index and the about page's officeholder count would describe "
+               "an app nobody can open yet. Its go-live change writes the "
+               "adapter and this entry goes.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",

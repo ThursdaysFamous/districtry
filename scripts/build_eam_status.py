@@ -1581,6 +1581,17 @@ ANSWERS = {
         # control (gap mn-judicial-roster).
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mn-judicial-district"),
+        # STILL OPEN 2026-10-15, one half done. The standard's township rule
+        # passes a state where boards are named wherever a list of them is
+        # published. The Township or City card now names the board of each of
+        # the 704 towns that hold their town election in November, from the
+        # Secretary of State's local results files
+        # (mn/scripts/build_mn_town_boards.py). The March towns' results are in
+        # no state file, BUT a town clerk certifies its officers to the county
+        # each spring, and a survey of all 87 counties on 2026-10-15 found 42
+        # that publish a list of them (mn/data/source/
+        # mn-county-township-officer-survey.json). Those 42 are owed before
+        # this level passes. Gap mn-township-officers carries both halves.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.
@@ -1589,10 +1600,11 @@ ANSWERS = {
         # 2026-10-08 (#1429): the Secretary of State's precinct results name
         # which boards file district offices, and school-board-district draws
         # the 59 districts of the 13 that elect by geography, each from the
-        # precincts that voted in its seat's latest contest. Anoka-Hennepin is
-        # the one not drawn — its odd-year results are by shared polling place
-        # — and carries gap mn-school-board-election-districts, the shape
-        # Wisconsin's mps-school-board answer already has.
+        # precincts that voted in its seat's latest contest. Anoka-Hennepin,
+        # whose odd-year results are by shared polling place, joined
+        # 2026-10-15 from the district's own 2022 board map, read precinct by
+        # precinct (65 districts on 14 boards); Duluth's rural townships carry
+        # gap mn-school-board-election-districts.
         "school-boards-by-district": answers("school-board-district"),
         # The Secretary of State publishes all 4,105 precincts statewide, from
         # the office that maintains them, and the app draws them.
@@ -1616,7 +1628,11 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("ky-senate", "ky-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # The magisterial districts of the fiscal courts the State Board's
+        # precinct results can place whole, and the Louisville and Lexington
+        # council districts (2026-10-15). Which counties that is, is read off
+        # the shipped file by _ky_county_maps_owed.
+        "county-government": depth("fiscal-court"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         # All three Census tilings, because Kentucky needs all three: measured
@@ -1842,9 +1858,10 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # One piece of off-reservation trust land, 0.695 km2 near Henning; the
-        # fleet-wide tribal-government thread owns it.
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
+        # Mississippi Band of Choctaw Indians' trust land near Henning, named
+        # with the nation's Tribal Chief and Tribal Council.
+        "tribal-government": answers("tribal-government"),
     },
     # Arkansas, added at its go-live with the national tier and the quorum
     # court layer.
@@ -2024,7 +2041,7 @@ CITY_FILES = {
 # at-large seat and owes no map.
 # ---------------------------------------------------------------------------
 
-def _ky_county_maps_owed(B):
+def _ky_county_maps_owed(B, records=None):
     """Kentucky counties whose fiscal court is elected by district.
 
     Read off each county's own `form` in the Department for Local Government's
@@ -2032,10 +2049,22 @@ def _ky_county_maps_owed(B):
     and so are the Louisville Metro Council and the Lexington-Fayette Urban
     County Council. A commissioner-form court elects its commissioners
     countywide from residency districts (KRS 67.060), which owes no map.
+
+    A county the fiscal-court layer draws owes nothing more, and which counties
+    it draws is MEASURED off the shipped file, never listed here: the builder
+    (ky/scripts/build_ky_county_districts.py) writes a county only when every
+    one of its precincts is placed, and its --check holds that.
     """
     rel = "ky/data/app/ky-county-officials.json"
     with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
         doc = json.load(fh)
+    drawn_rel = "ky/data/app/ky-county-districts.json"
+    with open(os.path.join(REPO_ROOT, drawn_rel), encoding="utf-8") as fh:
+        drawn = {f["properties"]["countyFips"] for f in json.load(fh)["features"]}
+    stray = sorted(drawn - set(doc))
+    if stray:
+        fail("ky: `%s` draws counties %s, which the county roster does not carry"
+             % (drawn_rel, ", ".join(stray)))
     by_district = {"magistrate", "metro", "urban-county"}
     at_large = {"commissioner"}
     owed = set()
@@ -2045,7 +2074,7 @@ def _ky_county_maps_owed(B):
             fail("ky: `%s` gives county %s the form %r, which the county-map "
                  "test does not know. Say whether that court is elected by "
                  "district before it is scored." % (rel, fips, form))
-        if form in by_district:
+        if form in by_district and fips not in drawn:
             owed.add(B.slug_of(rec["county"]))
     return owed
 
@@ -2091,12 +2120,96 @@ def _in_county_maps_drawn(B):
     return {B.slug_of(f["properties"]["county"]) for f in doc["features"]}
 
 
-# A state is listed in COUNTY_MAPS_OWED while some county names a body elected
-# by district. Where its county-government entry draws a layer, which counties
-# that layer draws has to be MEASURED, by a function in COUNTY_MAPS_DRAWN, and
-# the audit below fails until somebody writes one.
-COUNTY_MAPS_OWED = {"ky": _ky_county_maps_owed, "in": _in_county_maps_owed}
-COUNTY_MAPS_DRAWN = {"in": _in_county_maps_drawn}
+def _in_county_maps_undrawn(B, records):
+    """Indiana counties owed a council map that the shipped file does not draw."""
+    return _in_county_maps_owed(B) - _in_county_maps_drawn(B)
+
+
+def _il_county_maps_owed(B, records):
+    """Illinois counties whose board is elected by district and is not drawn.
+
+    A county's roster keys its members by district when its board is elected
+    that way, and a board elected at large rides the shared commissioners file,
+    which carries no districts. The county-board layer draws a county exactly
+    when its dispatch table carries that county's `key:`, so a named county
+    with districted members and no key is owed a map. Read from il/index.html
+    rather than listed, because counties join the dispatch table weekly.
+    """
+    with open(os.path.join(REPO_ROOT, "il", "index.html"), encoding="utf-8") as fh:
+        text = fh.read()
+    mark = '    id: "county-board",\n'
+    if mark not in text:
+        fail("il: il/index.html no longer registers county-board in the shape "
+             "the county-map test reads, so it cannot tell which counties draw "
+             "their board districts.")
+    start = text.index(mark)
+    end = re.compile(r"\n  \}\);\n").search(text, start)
+    drawn = set(re.findall(r'key: "([a-z-]+)"', text[start:end.start()]
+                           if end else ""))
+    if len(drawn) < 2:
+        fail("il: parsed %d counties out of the county-board dispatch table — "
+             "it has changed shape" % len(drawn))
+    owed = set()
+    for name, rec in records.items():
+        if rec.get("districts") and B.slug_of(name) not in drawn:
+            owed.add(B.slug_of(name))
+    return owed
+
+
+def _ia_county_maps_owed(B, records):
+    """Iowa counties whose supervisors are elected by district and unmatched.
+
+    The county board directory gives each county's plan: Plan 1 elects at
+    large, Plan 2 at large from residency districts, and Plan 3 by district
+    (Iowa Code 331.206). A county "transitioning" to districts still has a
+    board elected at large. The supervisor-district layer draws every Plan 3
+    county, so what a Plan 3 county can still lack is the pairing: a roster
+    that names its supervisors without saying which district each holds tells
+    a reader the board, not the one member whose district holds the point.
+    """
+    rel = "ia/data/app/ia-county-board-directory.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    rel_geo = "ia/data/app/ia-supervisor-districts.json"
+    with open(os.path.join(REPO_ROOT, rel_geo), encoding="utf-8") as fh:
+        drawn = {f["properties"].get("COUNTY")
+                 for f in json.load(fh).get("features") or []}
+    by_district = {"PLAN 3"}
+    at_large = {"PLAN 1", "PLAN 2", "TRANSITIONING"}
+    owed = set()
+    for fips, rec in doc.items():
+        plan = rec.get("plan")
+        if plan not in by_district | at_large:
+            fail("ia: `%s` gives county %s the plan %r, which the county-map "
+                 "test does not know. Say whether that board is elected by "
+                 "district before it is scored." % (rel, fips, plan))
+        if plan not in by_district:
+            continue
+        name = rec["county"]
+        named = records.get(name) or {}
+        if name not in drawn or not named.get("districts"):
+            owed.add(B.slug_of(name))
+    return owed
+
+
+def _no_layer(derive):
+    """A state whose county-government level draws no county district."""
+    def wrapped(B, records):
+        return derive(B)
+    wrapped.draws_none = True
+    return wrapped
+
+
+# A STATE WHOSE ENTRY DRAWS NO DISTRICT is wrapped in `_no_layer`,
+# and the audit below fails the day its county-government entry gains a layer,
+# because which counties that layer draws then has to be measured. A state
+# whose entry draws some (Illinois, Iowa, Kentucky, Indiana) measures it itself.
+COUNTY_MAPS_OWED = {
+    "ky": _ky_county_maps_owed,
+    "in": _in_county_maps_undrawn,
+    "il": _il_county_maps_owed,
+    "ia": _ia_county_maps_owed,
+}
 
 
 def county_maps_owed(tag, counties, B):
@@ -2105,24 +2218,22 @@ def county_maps_owed(tag, counties, B):
     if derive is None:
         return set()
     entry = ANSWERS[tag]["county-government"]
-    drawn = set()
-    if entry.verdict != "depth":
-        fail("%s: the county-map test reads a depth entry, and this state's "
-             "county-government entry is %s" % (tag, entry.verdict))
-    if entry.layers:
-        measure = COUNTY_MAPS_DRAWN.get(tag)
-        if measure is None:
-            fail("%s: the county-government entry now names %s. Measure which "
-                 "counties that layer draws in COUNTY_MAPS_DRAWN."
-                 % (tag, ", ".join(entry.layers)))
-        drawn = measure(B)
-    elif tag in COUNTY_MAPS_DRAWN:
-        fail("%s: COUNTY_MAPS_DRAWN measures drawn counties and the "
-             "county-government entry names no layer" % tag)
-    owed = derive(B) - drawn
-    known = {B.slug_of(n) for n in counties.get(tag, {})}
+    if getattr(derive, "draws_none", False) and (
+            entry.verdict != "depth" or entry.layers):
+        fail("%s: the county-map test assumes this state draws no county "
+             "district, and its county-government entry now names %s. Measure "
+             "which counties that layer draws and narrow COUNTY_MAPS_OWED."
+             % (tag, ", ".join(entry.layers) or entry.verdict))
+    records = counties.get(tag, {})
+    owed = derive(B, records)
+    known = {B.slug_of(n) for n in records}
     stray = sorted(owed - known)
-    if stray:
+    # Illinois and Iowa may owe a map for a county they do not name yet; that
+    # county is open on names already, and the set is intersected with the
+    # named counties before it is scored. Indiana names every county it
+    # derives from, so a stray there is a misread file; Kentucky's derive
+    # checks its own drawn file against its roster.
+    if stray and getattr(derive, "draws_none", False):
         fail("%s: COUNTY_MAPS_OWED names %s, which is not a county this state's "
              "rosters carry" % (tag, ", ".join(stray)))
     return owed
@@ -2199,12 +2310,10 @@ WARD_MAPS = {
     "wi": dict(drawn="all"),
     "ny": dict(drawn="all"),
     "ia": dict(
-        drawn={"1912000", "1921000", "1982425"},
-        owed={"1901855": "Ames", "1906355": "Bettendorf",
-              "1911755": "Cedar Falls", "1919000": "Davenport",
-              "1922395": "Dubuque", "1949485": "Marion",
-              "1949755": "Marshalltown", "1950160": "Mason City",
-              "1983910": "West Des Moines"},
+        drawn={"1912000", "1921000", "1982425",
+               # nine more on 2026-10-15, ia/scripts/build_ia_city_wards.py
+               "1901855", "1906355", "1911755", "1919000", "1922395",
+               "1949485", "1949755", "1950160", "1983910"},
         at_large={"1938595": "Iowa City's charter nominates its district "
                              "council members by district and elects them by "
                              "the whole city"}),
@@ -2216,26 +2325,21 @@ WARD_MAPS = {
               "2646000": "Lansing", "2653780": "Midland",
               "2656320": "Muskegon", "2665440": "Pontiac",
               "2682960": "Walker"}),
+    # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
+    # which reads the cities off the city council roster.
     "mn": dict(
-        drawn=set(),
-        owed={"2702908": "Austin", "2706382": "Blaine",
-              "2706616": "Bloomington", "2707966": "Brooklyn Park",
-              "2710972": "Chaska", "2713114": "Coon Rapids",
-              "2717000": "Duluth", "2718674": "Elk River",
-              "2722814": "Fridley", "2739878": "Mankato",
-              "2743000": "Minneapolis", "2743252": "Minnetonka",
-              "2743864": "Moorhead", "2749300": "Owatonna",
-              "2751730": "Plymouth", "2753026": "Ramsey",
-              "2754214": "Richfield", "2754880": "Rochester",
-              "2756896": "St. Cloud", "2757220": "St. Louis Park",
-              "2758000": "St. Paul", "2771032": "Winona"}),
+        drawn={"2702908", "2706382", "2706616", "2707966", "2710972",
+               "2713114", "2717000", "2718674", "2722814", "2739878",
+               "2743000", "2743252", "2743864", "2749300", "2751730",
+               "2753026", "2754214", "2754880", "2756896", "2757220",
+               "2758000", "2771032"}),
     # Kentucky's city roster carries no ward labels, so the sweep finds nothing
     # there; the two councils elected by district are declared. Louisville's
-    # Metro Council answers both of the Census's Louisville places.
+    # Metro Council answers both of the Census's Louisville places. Both are
+    # drawn by the fiscal-court layer from the governments' own council maps
+    # (2026-10-15).
     "ky": dict(
-        drawn=set(),
-        owed={"2148006": "Louisville Metro", "2148000": "Louisville",
-              "2146027": "Lexington-Fayette"},
+        drawn={"2148006", "2148000", "2146027"},
         declared={"2148006", "2148000", "2146027"}),
     # Indianapolis's council districts are the City-County Council's, drawn by
     # the County Council District layer for Marion County.
@@ -2925,7 +3029,8 @@ def score_covered(tag, counties_named, total_counties, expected, records,
                     if county_maps_owed:
                         detail += (" and draw it where it is elected by "
                                    "district; %d more name a body elected by "
-                                   "district whose districts are not drawn"
+                                   "district whose districts are not drawn, "
+                                   "or not matched to their members"
                                    % len(county_maps_owed))
                     # THE COUNTY UNIVERSE IS A COUNT, NOT A LIST. STATE_COUNTIES
                     # holds a number on purpose (every derivable list is a

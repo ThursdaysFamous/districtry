@@ -136,6 +136,8 @@ PINNED_CHAINS = {
                                  "scripts/coles_county_board_scraper.py"),
     "www.vercounty.org": ("gogetssl-rsa-dv",
                           "scripts/vermilion_county_board_scraper.py"),
+    "www.legislature.ms.gov": ("globalsign-rsa-ov-2018",
+                               "ms/scripts/build_ms_legislature_roster.py"),
 }
 
 
