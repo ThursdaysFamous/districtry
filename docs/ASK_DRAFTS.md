@@ -6873,8 +6873,9 @@ weekly refresh will keep proposing the change until the county's page is correct
 > before sending, keeping its substance: the same counts, the page link, the State Board plan and
 > the three ways he can be named, with the public-record note and the offer to wait. The two
 > questions went as a numbered pair, the Brace sentence was left out, and "A few sentences is
-> plenty" and the line about staying out of it were dropped. **No answer yet**; the follow-up clock
-> runs to about 2026-11-01.
+> plenty" and the line about staying out of it were dropped. **ANSWERED 2026-10-16** by telephone
+> to the operator. Nothing further is owed and no follow-up is due. What he said is deliberately not
+> recorded in this public file.
 
 **Why this is asked.** The operator spoke with him by phone after Ask 18 was answered; he suggested
 Kimball Brace (Election Data Services, which collected Illinois's precinct maps for the Census's
@@ -6927,9 +6928,9 @@ Board letter goes without them.
 
 ## Ask il-state-board-precinct-maps — Illinois State Board of Elections: publish the precinct maps it receives in one place
 
-> **NOT YET ASKED — DRAFTED 2026-10-10. HELD** until Dave Ostrander answers
-> `il-grundy-gis-state-board-view` (sent 2026-10-11) or two weeks pass with no answer, which is
-> 2026-10-25. `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director (named in a 7 July 2026
+> **NOT YET ASKED — DRAFTED 2026-10-10, REVISED 2026-10-16**, waiting for the operator's approval.
+> The hold on `il-grundy-gis-state-board-view` ended when it was answered on 2026-10-16.
+> `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director (named in a 7 July 2026
 > Justice Department letter reported by Capitol News Illinois). The Board's website refuses
 > automated readers (`User-agent: *` / `Disallow: /`), so its e-mail contact was not read from here:
 > the operator takes it from the Board's contact page in a browser. Postal: 2329 S. MacArthur Blvd.,
@@ -6954,7 +6955,7 @@ sending.
 > I live in Chicago and run districtry (https://districtry.com/il/), a free, non-commercial website.
 > Anyone can click a point on the map or type an address and see every district that covers it, from
 > their voting precinct and county board district up to Congress, and who represents them there. It
-> now covers 93 of Illinois's 102 counties.
+> now covers 96 of Illinois's 102 counties.
 >
 > The hardest part of keeping it accurate is the precinct map. Since 2014 the Election Code
 > (10 ILCS 5/11-6) has had each election authority send the Board a PDF map of its current precincts,
@@ -6974,9 +6975,8 @@ sending.
 > https://districtry.com/il/precinct-maps.html. So the maps mostly exist; they just aren't published
 > in one place in a form people can use.
 >
-> [ONLY WITH DAVE OSTRANDER'S PERMISSION, IN HIS WORDS, NAMED AS HE CHOOSES. For example: "I asked
-> Dave Ostrander, GIS Director for Grundy County, what this would mean for a county GIS office. He
-> told me: '...'" Delete this paragraph if he declines or does not answer.]
+> [One more paragraph goes here in the version that is sent. It is kept out of this public file to
+> protect a source who is not named.]
 >
 > I'd like to ask whether the Board would consider three things. Any one of them would help.
 >
@@ -7004,7 +7004,7 @@ sending.
 > <YOUR E-MAIL>
 > https://districtry.com/il/
 
-**Before sending:** the counts and the 93 must still match `il/precinct-maps.html` and
+**Before sending:** the counts and the 96 must still match `il/precinct-maps.html` and
 `docs/COUNTY_STATUS.md` on the day it goes. The Board has four members from each party by law, so
 nothing is added that reads as favouring either. The line about voter records is there because in
 April 2024 the Board asked a media company to take down voters' birth dates and addresses it had
