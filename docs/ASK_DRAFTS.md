@@ -7583,7 +7583,11 @@ the counties' own sites and the next election's results stay the route.
 
 ## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
 
-> **NOT YET ASKED — DRAFTED 2026-10-15.** To Jim Steil, Director of MARIS (the Mississippi
+> **ASKED 2026-10-16 — DRAFTED 2026-10-15.** The operator rewrote this draft and sent it on
+> 2026-10-16 at 15:05 UTC to `jsteil@mississippi.edu`, and the Letters thread logged it as sent, so
+> the text below is the draft and not the letter that went. If there is no answer by about 6
+> November, the follow-up can point to the live map at https://districtry.com/ms/. To Jim Steil,
+> Director of MARIS (the Mississippi
 > Automated Resource Information System, created by Miss. Code § 57-13-23 as "the mechanism
 > within state government for the storing, processing, extracting and disseminating of useful
 > data and information relating to the state's resources"), at `jsteil@mississippi.edu`. MARIS's
@@ -7593,17 +7597,16 @@ the counties' own sites and the next election's results stay the route.
 > On 2026-10-15 the operator chose to have it made into a Gmail draft ("Make the draft" on the
 > Mississippi thread's decision card), ahead of letters to the counties, because one office could
 > cover all 82 counties, which is the choice made for Tennessee on 2026-10-11
-> (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
-> been searched for earlier correspondence with MARIS; do that before it goes.
+> (`tn-ctas-commissioner-districts`).
 
 **Why this is asked.** Mississippi's map names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
-County's District 3 is vacant), and can draw the districts they represent in only 23 counties: 12
-from the Census Bureau's current edition and 11 from the county's own published map, all 11 added
-after this letter was drafted (8 on 2026-10-15, and Lee, Pearl River and Perry on 2026-10-16). The
-letter's text does not count what the map draws, so that left it unchanged; its body gained two
-sentences on 2026-10-16, about the Bureau's 2010 edition (below), and the Letters thread added them
-to the Gmail draft the same day, while it was still unsent and the operator had not edited it. The
+County's District 3 is vacant), and can draw the districts they represent in only 25 counties: 12
+from the Census Bureau's current edition and 13 from other published maps, all 13 added after this
+letter was drafted (8 on 2026-10-15, and Lee, Pearl River, Perry, Covington and Tippah on
+2026-10-16). The letter's text does not count what the map draws, so that left it unchanged; its
+body gained two sentences on 2026-10-16, about the Bureau's 2010 edition (below), and the Letters
+thread added them to the Gmail draft the same day, while it was still unsent and the operator had not edited it. The
 only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's county
 subdivisions are the supervisor districts. Measured 2026-10-15 by
 `ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
