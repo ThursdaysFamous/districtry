@@ -43,19 +43,19 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
-| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 12 | all | 9 of 14 levels |
+| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 13 | all | 10 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 89 | 89 | all | 70 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 644 | 1,119 | all | 419 | all | 12 of 14 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 14 | all | 8 of 14 levels |
-| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 14 | all | 10 of 14 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 15 | all | 9 of 14 levels |
+| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 15 | all | 11 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 65 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 20 | all | 13 of 14 levels |
-| nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 11 | all | 9 of 14 levels |
+| nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 12 | all | 10 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 9 of 14 levels |
-| sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 13 | all | 9 of 14 levels |
-| tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 13 | all | 8 of 14 levels |
+| sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 14 | all | 10 of 14 levels |
+| tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 14 | all | 9 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 266 | all | 13 of 14 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -69,12 +69,11 @@ per county, so each one is named under its state below.
 ### ar — EAM·
 
 - **Watched, not rewritten:** `ar/data/app/ar-quorum-court-districts.json`, by `.github/workflows/update-ar-county-officials.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `ar-house-districts.json`, `ar-senate-districts.json`, `ar-townships.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `ar-house-districts.json`, `ar-precincts.json`, `ar-senate-districts.json`, `ar-townships.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 19 units at 25,000+ name a governing body; unanswered: Bella Vista city, Benton city, Bentonville city, Cabot city, Conway city, Fayetteville city, Fort Smith city, Hot Springs city and 11 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Arkansas has no sub-county general-purpose government — outside a city or town limit the county governs. The 1,051 sub-county units the Census publishes for Arkansas are townships, which the Census records as having no functioning government.
@@ -115,23 +114,21 @@ this instance is in maintenance.
 
 ### in — EAM·
 
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-council-districts.json`, `in-house-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-council-districts.json`, `in-house-districts.json`, `in-precincts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 55 of 92 counties name a governing body and draw it where it is elected by district; 37 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 6 of 39 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 33 more name a body elected by ward or district whose wards are not drawn; unanswered: Anderson city, Bloomington city, Brownsburg town, Carmel city, Columbus city, Elkhart city, Evansville city, Fishers city and 25 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 
 ### ky — EAM·
 
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ky-circuit-court-districts.json`, `ky-county-districts.json`, `ky-district-court-districts.json`, `ky-house-districts.json`, `ky-senate-districts.json`, `ky-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ky-circuit-court-districts.json`, `ky-county-districts.json`, `ky-district-court-districts.json`, `ky-house-districts.json`, `ky-precincts.json`, `ky-senate-districts.json`, `ky-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 72 of 120 counties name a governing body and draw it where it is elected by district; 48 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Kentucky has no sub-county general-purpose government — outside a city limit the county governs. The 493 sub-county units the Census publishes for Kentucky are Census County Divisions: statistical areas, not governments.
@@ -153,12 +150,11 @@ this instance is in maintenance.
 
 ### nc — EAM·
 
-- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nc-house-districts.json`, `nc-senate-districts.json`, `state-counties.json`
-- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nc-house-districts.json`, `nc-precincts.json`, `nc-senate-districts.json`, `state-counties.json`
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 42 units at 25,000+ name a governing body; unanswered: Apex town, Asheboro city, Asheville city, Burlington city, Cary town, Chapel Hill town, Charlotte city, Clayton town and 34 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — North Carolina's townships are boundaries without governments — the Census marks every one non-functioning — so outside a city or town limit the county governs.
@@ -187,12 +183,11 @@ this instance is in maintenance.
 ### sc — EAM·
 
 - **Watched, not rewritten:** `sc/data/app/sc-county-council-districts.json`, by `.github/workflows/update-sc-county-council-roster.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `sc-house-districts.json`, `sc-senate-districts.json`, `state-counties.json`
-- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `sc-house-districts.json`, `sc-precincts.json`, `sc-senate-districts.json`, `state-counties.json`
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 17 units at 25,000+ name a governing body; unanswered: Aiken city, Anderson city, Bluffton town, Charleston city, Columbia city, Florence city, Goose Creek city, Greenville city and 9 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — South Carolina has no sub-county general-purpose government — outside a city or town limit the county governs. The 299 sub-county units the Census publishes for South Carolina are census county divisions: statistical areas, not governments.
@@ -200,13 +195,12 @@ this instance is in maintenance.
 ### tn — EAM·
 
 - **Examined by a statewide record:** `tn-county-commissioners` accounts for every county in the state, which is what Examined rests on here: 57 of 95 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-senate-districts.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-precincts.json`, `tn-senate-districts.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 57 of 95 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 28 units at 25,000+ name a governing body; unanswered: Bartlett city, Brentwood city, Bristol city, Chattanooga city, Clarksville city, Cleveland city, Collierville town, Columbia city and 20 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Tennessee has no sub-county general-purpose government — outside a city or town limit the county governs. The 855 sub-county units the Census publishes for Tennessee are civil districts, which the Census records as having no functioning government.

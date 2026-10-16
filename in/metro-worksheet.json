@@ -221,10 +221,28 @@
       }
     },
     {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 9,
+      "rank_note": "5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)",
+      "source": {
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "boundary": [
+          {
+            "label": "Indiana Geographic Information Office (IndianaMap) — Voting District Boundaries 2026, which the item says was obtained from the Indiana General Assembly and the Indiana Election Division in June 2026; 5,121 features, pre-built for the state by in/scripts/build_in_precincts.py and shipped with the app. A precinct a county changed after June 2026 is not shown, which the card says. The item names no licence, only a limitation of warranties.",
+            "url": "https://gisdata.in.gov/server/rest/services/Hosted/Voting_District_Boundaries_2026/FeatureServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "applies": "Indiana — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29",
       "source": {
         "answers": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point.",
@@ -242,7 +260,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -260,7 +278,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer",
       "source": {
         "answers": "The three nearest fire or EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -278,7 +296,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "1,012 post-office points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -296,7 +314,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Indiana has one such area, the Pokagon Band of Potawatomi's.",
@@ -311,7 +329,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 39.7686,
     "lng": -86.1626,
@@ -333,6 +351,10 @@
     {
       "layer": "in-house",
       "expected": "97"
+    },
+    {
+      "layer": "voting-precinct",
+      "expected": "CN055"
     },
     {
       "layer": "county-council",
@@ -385,6 +407,12 @@
         "min_features": 1,
         "max_features": 1,
         "note": "Indiana's tribal land (scripts/build_tribal_areas.py) — one piece of the Pokagon Band of Potawatomi's trust land, which crosses from Michigan. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "in-precincts.json",
+        "min_features": 5121,
+        "max_features": 5121,
+        "note": "Every Indiana voting precinct, pre-built by in/scripts/build_in_precincts.py through scripts/statewide_precincts.py from IndianaMap's 2026 layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 5,121 count on the fetch and the drawn file). 7.1 MB, 1.48 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "in-council-districts.json",

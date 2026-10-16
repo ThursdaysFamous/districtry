@@ -1686,7 +1686,9 @@ ANSWERS = {
         # independent school boards are elected at large and so are named rather
         # than drawn.
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The State Board of Elections compiles all 3,194 precincts statewide
+        # from the counties' own files, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # NO TRIBAL LAND IN KENTUCKY, measured 2026-10-01 against the Census
         # AIANNHA service over an envelope covering the whole state: zero
@@ -1736,7 +1738,10 @@ ANSWERS = {
         # list is published, so it is answered.
         "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # IndianaMap's 2026 layer, from the General Assembly and the Election
+        # Division, carries all 5,121 precincts, and the app draws them
+        # (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-10 (#1496): the Pokagon Band's trust land, the one
         # piece of tribal land in Indiana, with the band's council named.
@@ -1762,7 +1767,9 @@ ANSWERS = {
             "the Census marks every one non-functioning — so outside a city or "
             "town limit the county governs."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The State Board of Elections' statewide file carries all 2,625
+        # precincts, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-10 (#1496): the Eastern Band of Cherokee Indians'
         # Qualla Boundary and its one piece of trust land, the only tribal
@@ -1834,7 +1841,10 @@ ANSWERS = {
             "sub-county units the Census publishes for South Carolina are "
             "census county divisions: statistical areas, not governments."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Revenue and Fiscal Affairs Office keeps the official maps of all
+        # 2,315 precincts the General Assembly sets by act, and the app draws
+        # them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-12: the Catawba Nation's reservation and its trust
         # land in York County, the only tribal land in the state, named with
@@ -1874,7 +1884,9 @@ ANSWERS = {
             "the Census publishes for Tennessee are civil districts, which the "
             "Census records as having no functioning government."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Comptroller of the Treasury's layer carries all 1,870 precincts the
+        # county election commissions set, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
         # Mississippi Band of Choctaw Indians' trust land near Henning, named
@@ -1914,7 +1926,9 @@ ANSWERS = {
             "the Census publishes for Arkansas are townships, which the Census "
             "records as having no functioning government."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Arkansas GIS Office's layer carries all 2,920 precincts as the
+        # counties report them, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # NO TRIBAL LAND IN ARKANSAS, measured 2026-10-15 with
         # validate_tribal_join's own queries: the reservation, trust-land and

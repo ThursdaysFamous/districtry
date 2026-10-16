@@ -4211,8 +4211,8 @@ function initIndianaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "in-senate": "ins", "county": "co", "in-house": "inh",
     "county-council": "cu", "school-district-unified": "su", "zip-code": "zp",
-    "county-subdivision": "cs", "municipality": "mu", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "county-subdivision": "cs", "voting-precinct": "vp", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4220,7 +4220,8 @@ function initIndianaExplorer() {
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["in-senate"],
     "state-house": ["in-house"], "county": ["county"], "county-board": ["county-council"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9372,6 +9373,7 @@ function initIndianaExplorer() {
     "school-district-unified", // 291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
     "zip-code",          // 882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
     "county-subdivision", // 1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
+    "voting-precinct",   // 5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)
     "municipality",      // 566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
     "tribal-government", // Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // 650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -14123,6 +14125,94 @@ function initIndianaExplorer() {
     }
   });
 
+  /* ---------- Voting precinct — IndianaMap's statewide layer ----------
+   * Indiana's 5,121 precincts from IndianaMap's "Voting District Boundaries
+   * 2026", which the state's mapping office obtained from the General
+   * Assembly and the Indiana Election Division in June 2026. Pre-built by
+   * in/scripts/build_in_precincts.py through scripts/statewide_precincts.py
+   * (Douglas-Peucker at 4 m; data/app/in-precincts.json, same-origin), so a
+   * click is answered in the browser and no point is sent anywhere.
+   *
+   * A PRECINCT ELECTS NO ONE TO PUBLIC OFFICE, so the card has no
+   * officeholder row to be missing and says why. The layer's five-digit
+   * code is the state's file key rather than a name a voter sees, so it is
+   * not shown. Each year is a new service; the builder's --watch says when
+   * a later edition is posted, and its --check fails if this card stops
+   * naming the edition or the interval the file was drawn at.
+   * ---------- */
+  var loadInPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-precincts.json", {}, 2);
+  });
+
+  // A precinct elects no one to public office, so the card says so rather
+  // than leaving a reader to wonder which name is missing.
+  var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
+    "and how your ballots are reported, not a district with a representative of its own.";
+
+  // The card's title: a name that is only a number reads "Precinct 025", so
+  // it cannot be taken for a district number; any other name is printed as
+  // the state publishes it.
+  function precinctTitle(props) {
+    var name = props.name != null ? String(props.name).trim() : "";
+    if (!name) return null;
+    return /^[0-9][0-9-]*$/.test(name) ? "Precinct " + name : name;
+  }
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadInPrecincts,
+      // the finest tiling on this map: a light stroke, so it reads under the
+      // broader boundaries rather than competing with them
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return precinctTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadInPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: precinctTitle(props),
+          county: props.county != null ? String(props.county) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title || "Unknown precinct",
+        note: result.county
+      }));
+      var rows = [
+        { label: "Who it elects", value: PRECINCT_ELECTS },
+        {
+          label: "How current",
+          value: "This is Indiana's 2026 precinct map, which the state's mapping office " +
+            "obtained from the General Assembly and the Indiana Election Division in June " +
+            "2026, so a change a county made after that is not shown."
+        },
+        {
+          label: "How exact this line is",
+          value: "The state's lines are drawn here to within 4 metres. For a definitive " +
+            "answer, ask your county's election office."
+        }
+      ];
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Find your polling place",
+        url: "https://indianavoters.in.gov/"
+      };
+    }
+  });
+
   /* ---------- 7. City or Town — live TIGERweb, incorporated places ----------
    * Indiana incorporates BOTH cities and towns and they are not the same kind
    * of thing, which is why this card carries a type row where Iowa's (cities
@@ -16110,7 +16200,7 @@ function initIndianaExplorer() {
     // card, which is why they have no layer of their own.
     "county-council",
     "school-district-unified",
-    "county", "county-subdivision", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16596,12 +16686,12 @@ function initIndianaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
-    "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
-    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
+    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
