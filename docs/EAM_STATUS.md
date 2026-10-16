@@ -46,8 +46,8 @@ different thing from one it failed.
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 15 | all | 11 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 89 | 89 | all | 70 | all | 13 of 14 levels |
-| il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 411 | all | 12 of 14 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 14 | all | 9 of 14 levels |
+| il | **EAM·** | 102 | 102/102 | 644 | 1,119 | all | 419 | all | 12 of 14 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 16 | all | 10 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 15 | all | 11 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 65 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 20 | all | 13 of 14 levels |
@@ -56,7 +56,7 @@ different thing from one it failed.
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 13 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 15 | all | 11 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 15 | all | 10 of 14 levels |
-| wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 12 of 14 levels |
+| wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 266 | all | 13 of 14 levels |
 
 § Examined in part by a record covering the whole state rather
 than county by county. That is a weaker statement than a record
@@ -113,11 +113,10 @@ this instance is in maintenance.
 
 ### in — EAM·
 
-- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-appeals-districts.json`, `in-house-districts.json`, `in-precincts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 0 of 92 counties name a governing body and draw it where it is elected by district; 92 more name a body elected by district whose districts are not drawn, or not matched to their members
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 5 of 39 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 31 more name a body elected by ward or district whose wards are not drawn; unanswered: Anderson city, Bloomington city, Brownsburg town, Carmel city, Columbus city, Elkhart city, Evansville city, Fishers city and 26 more
-  - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-appeals-districts.json`, `in-council-districts.json`, `in-house-districts.json`, `in-precincts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **4. The county governing body, in every county of the state** — open. 55 of 92 counties name a governing body and draw it where it is elected by district; 37 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 6 of 39 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 33 more name a body elected by ward or district whose wards are not drawn; unanswered: Anderson city, Bloomington city, Brownsburg town, Carmel city, Columbus city, Elkhart city, Evansville city, Fishers city and 25 more
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 
