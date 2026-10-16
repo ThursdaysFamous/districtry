@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **251 distinct hosts** those files
-name, **44 are fetched by the browser**; the other 207 are links.
+makes from a link a reader clicks. Of **257 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 212 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -91,13 +91,14 @@ a font CDN would be a recipient the privacy page does not name.
 | `data.sf.gov` | ca |
 | `data.sfgov.org` | ca |
 
-### ArcGIS — 26 host(s)
+### ArcGIS — 27 host(s)
 
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
 | `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar |
 | `gis.aurora.il.us` | il |
+| `gis.cityofdanville.org` | il |
 | `gis.cookcountyil.gov` | il |
 | `gis.fultoncountyil.gov` | il |
 | `gis.lasallecounty.org` | il |
@@ -172,7 +173,7 @@ measured until the next run describes it.
 | Township / County Subdivision (`township`) | `tigerweb.geo.census.gov` | — |
 | Municipality (`municipality`) | `tigerweb.geo.census.gov` | — |
 | Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
-| County Board District (`county-board`) | 26 of 64 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 37 shipped with the app; 1 did not answer the probe (kane) | `gis.cookcountyil.gov` |
+| County Board District (`county-board`) | 26 of 66 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 39 shipped with the app; 1 did not answer the probe (kane) | `gis.cookcountyil.gov` |
 | Fire Protection District (`fire-district`) | 17 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
 | DuPage Special Police District (`dupage-county-special-police`) | `services.arcgis.com` | — |
 | Park District (`park-district`) | 10 of 18 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 8 shipped with the app | — |
@@ -370,12 +371,12 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 394 | 6 |
+| il | 131 | 398 | 6 |
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
-| wi | 92 | 265 | 5 |
+| wi | 92 | 266 | 5 |
 | ia | 71 | 70 | 0 |
-| mi | 32 | 61 | 1 |
+| mi | 36 | 65 | 1 |
 | mn | 29 | 19 | 0 |
 | ky | 19 | 14 | 0 |
 | in | 14 | 12 | 0 |
@@ -384,9 +385,9 @@ measured until the next run describes it.
 | sc | 18 | 13 | 0 |
 | tn | 19 | 13 | 0 |
 | ar | 18 | 12 | 0 |
-| **total** | **534** | **945** | **12** |
+| **total** | **538** | **954** | **12** |
 
-**150 distinct source hosts** across the six manifests. Each instance's
+**153 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check
