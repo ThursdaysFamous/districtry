@@ -4224,7 +4224,14 @@ function initMississippiExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ms-senate"],
+    "state-house": ["ms-house"], "supreme-court-district": ["ms-supreme-court"],
+    "appellate-court-district": ["ms-court-of-appeals"],
+    "trial-court-district": ["ms-circuit-court"], "county": ["county"],
+    "county-board": ["county-supervisor"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4288,7 +4295,7 @@ function initMississippiExplorer() {
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
       bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
-    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🎷", explorerName: "districtry Mississippi",
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
       bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber

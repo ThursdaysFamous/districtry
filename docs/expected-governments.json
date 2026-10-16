@@ -1,7 +1,7 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-15",
+ "measured": "2026-10-16",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
@@ -13,6 +13,7 @@
   "ky": null,
   "mi": true,
   "mn": null,
+  "ms": null,
   "nc": null,
   "ny": true,
   "ok": null,
@@ -2182,6 +2183,113 @@
     "lsadc": "25",
     "name": "Rosemount city",
     "pop": 25650
+   }
+  ],
+  "ms": [
+   {
+    "geoid": "2836000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jackson city",
+    "pop": 153701
+   },
+   {
+    "geoid": "2829700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gulfport city",
+    "pop": 72926
+   },
+   {
+    "geoid": "2869280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Southaven city",
+    "pop": 54648
+   },
+   {
+    "geoid": "2806220",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Biloxi city",
+    "pop": 49449
+   },
+   {
+    "geoid": "2831020",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hattiesburg city",
+    "pop": 48730
+   },
+   {
+    "geoid": "2854040",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Olive Branch city",
+    "pop": 39711
+   },
+   {
+    "geoid": "2874840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tupelo city",
+    "pop": 37923
+   },
+   {
+    "geoid": "2846640",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Meridian city",
+    "pop": 35052
+   },
+   {
+    "geoid": "2829180",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greenville city",
+    "pop": 29670
+   },
+   {
+    "geoid": "2814420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Clinton city",
+    "pop": 28100
+   },
+   {
+    "geoid": "2844520",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Madison city",
+    "pop": 27747
+   },
+   {
+    "geoid": "2855760",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pearl city",
+    "pop": 27115
+   },
+   {
+    "geoid": "2833700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Horn Lake city",
+    "pop": 26736
+   },
+   {
+    "geoid": "2854840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Oxford city",
+    "pop": 25416
+   },
+   {
+    "geoid": "2808300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Brandon city",
+    "pop": 25138
    }
   ],
   "nc": [

@@ -70,6 +70,7 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q1456 (South Carolina) | the `/sc/` instance |
 | P1001 (applies to jurisdiction) | Q1509 (Tennessee) | the `/tn/` instance |
 | P1001 (applies to jurisdiction) | Q1612 (Arkansas) | the `/ar/` instance |
+| P1001 (applies to jurisdiction) | Q1494 (Mississippi) | the `/ms/` instance |
 
 ### What is deliberately absent
 
@@ -123,6 +124,7 @@ endpoint used.
 | `Q1415` | Indiana |
 | `Q1454` | North Carolina |
 | `Q1456` | South Carolina |
+| `Q1494` | Mississippi |
 | `Q1509` | Tennessee |
 | `Q1527` | Minnesota |
 | `Q1537` | Wisconsin |

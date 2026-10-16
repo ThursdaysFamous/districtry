@@ -117,8 +117,14 @@ Michigan and Wisconsin towns and townships, New York towns), and in others they
 are areas the Census draws for counting only (Kentucky, Oklahoma and South
 Carolina's census county divisions), or legal areas the Census records as
 having no functioning government (North Carolina's and Arkansas's townships,
-Tennessee's civil districts). The map is owed either way; where the
-units govern nobody, the card says so rather than implying a government.
+Tennessee's civil districts, Mississippi's supervisor districts). The map is
+owed either way; where the units govern nobody, the card says so rather than
+implying a government. Mississippi's county subdivisions ARE its supervisor
+districts, so its supervisor district map is its answer to this level, and the
+level stays open until every county's current lines are drawn: in 70 counties
+the Census's own copy still carries the lines of its 2020 edition, and in 54 of
+them those lines put every resident in the same district as its January 2010
+edition did (measured 2026-10-16).
 Arkansas's are drawn from the state's own township map rather than the
 Census's: the two disagree about how many townships a county has in 27
 counties, and in the two counties checked, Washington and Scott, the Census's
@@ -158,11 +164,14 @@ already sit. Nor is an Indiana township, for the same reason: measured
 2026-10-11, 61 clear the line, and the trustee runs township assistance, fire
 protection and cemeteries while the county governs an unincorporated resident.
 No active township or town in Iowa, Kentucky, Wisconsin, Minnesota, North
-Carolina, Oklahoma, South Carolina, Tennessee or Arkansas reaches 25,000 (North
-Carolina's townships and Tennessee's civil districts govern nobody, Kentucky,
-Oklahoma and South Carolina are divided into census county divisions, which are
-statistical areas, and every Arkansas township is one the Census records as
-having no functioning government), so the question does not arise in those nine today; if one ever does, it is answered by the
+Carolina, Oklahoma, South Carolina, Tennessee, Arkansas or Mississippi reaches
+25,000 (North Carolina's townships and Tennessee's civil districts govern
+nobody, Kentucky, Oklahoma and South Carolina are divided into census county
+divisions, which are statistical areas, every Arkansas township is one the
+Census records as having no functioning government, and Mississippi's county
+subdivisions are its supervisor districts, which elect a member of the county's
+board and govern nobody themselves), so the question does not arise in those
+ten today; if one ever does, it is answered by the
 general-purpose test above and not by a per-state exception.
 
 | app | units at 25,000+ | of which towns or townships |
@@ -180,9 +189,11 @@ general-purpose test above and not by a per-state exception.
 | Kentucky | 17 | — |
 | South Carolina | 17 | — |
 | Oklahoma | 16 | — |
+| Mississippi | 15 | — |
 
-That is 549 governments across the thirteen statewide apps. The first seven rows
-were measured 2026-10-01, Arkansas's 2026-10-15 and the rest 2026-10-11;
+That is 564 governments across the fourteen statewide apps. The first seven rows
+were measured 2026-10-01, Arkansas's 2026-10-15, Mississippi's 2026-10-16 and the
+rest 2026-10-11;
 until then the scoring tool read a state it had not measured as one with nothing
 to answer, so Indiana, North Carolina and Oklahoma passed this entry unchecked.
 San Francisco is one city, so its city tier is the whole app.

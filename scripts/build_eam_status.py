@@ -180,7 +180,8 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
-                  "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75}
+                  "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75,
+                  "ms": 82}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1941,6 +1942,58 @@ ANSWERS = {
             "state reservation and no off-reservation trust land in the state, "
             "measured 2026-10-15 with a control in Tennessee."),
     },
+    # Mississippi, added at its go-live with the national tier, the
+    # supervisor-district layer, the four courts and the Choctaw land.
+    "ms": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ms-senate", "ms-house"),
+        "county-boundaries": answers("county"),
+        # Every county elects a board of five supervisors, each from one of
+        # the county's five districts, and the Secretary of State's directory
+        # names all of them. The layer draws a county's districts only where
+        # its current lines are confirmed (Adam, "Confirmed only",
+        # 2026-10-15), so the other counties owe a map. Recorded in
+        # ms/CLAUDE.md.
+        "county-government": depth("county-supervisor"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # TIGER's unified tiling holds all 137 districts and the other two hold
+        # none, measured in ms/CLAUDE.md, so one layer is the whole level.
+        "school-district-boundaries": answers("school-district-unified"),
+        # MISSISSIPPI'S COUNTY SUBDIVISIONS ARE ITS SUPERVISOR DISTRICTS, so
+        # this map is the supervisor-district layer's, and it is drawn only in
+        # the counties whose current lines are confirmed. In 70 counties the
+        # Census's own copy still carries the lines of its 2020 edition, which
+        # in 64 of them are more than 10% out of balance on the 2020 blocks, so
+        # it is not drawn instead (ms/CLAUDE.md). Open until every county is
+        # drawn.
+        "subdivision-boundaries": OPEN,
+        # The Supreme Court, the Court of Appeals and the chancery and circuit
+        # courts, each district a list of whole counties on the court's own
+        # page or in the Code. Two parts are recorded as missing rather than
+        # drawn: the ten counties the Court of Appeals splits by precinct, and
+        # the parts of a district some chancery and circuit judges are elected
+        # from. The justice courts, whose judges the directory lists by
+        # district or post within a county, are not drawn.
+        "courts-by-district": answers(
+            "ms-supreme-court", "ms-court-of-appeals", "ms-chancery-court",
+            "ms-circuit-court"),
+        # MISSISSIPPI HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 410
+        # county subdivisions the Census carries for the state are supervisor
+        # districts with FUNCSTAT N. Recorded in ms/CLAUDE.md.
+        "sub-county-government": na(
+            "Mississippi has no sub-county general-purpose government — outside "
+            "a city, town or village the county governs. The 410 sub-county "
+            "units the Census publishes for Mississippi are its supervisor "
+            "districts, which the Census records as having no functioning "
+            "government."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # The Mississippi Band of Choctaw Indians' reservation and trust land,
+        # named with the band's Tribal Chief and Tribal Council.
+        "tribal-government": answers("tribal-government"),
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -2228,6 +2281,29 @@ def _ia_county_maps_owed(B, records):
     return owed
 
 
+def _ms_county_maps_owed(B, records):
+    """Mississippi counties whose supervisor districts are not drawn.
+
+    Every county's five supervisors are each elected from one of its five
+    districts, so every county owes a map. Which counties the layer draws is
+    read off the shipped districts file, never listed here; build_county_pages'
+    own Mississippi adapter already holds that file to the app's list of drawn
+    counties, and this holds it to the roster.
+    """
+    rel = "ms/data/app/ms-supervisor-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        drawn = {(f.get("properties") or {}).get("county")
+                 for f in json.load(fh).get("features") or []}
+    named = {re.sub(r" County$", "", name) for name in records}
+    drawn = {re.sub(r" County$", "", name or "") for name in drawn}
+    stray = sorted(drawn - named)
+    if stray:
+        fail("ms: `%s` draws %s, which the county roster does not name"
+             % (rel, ", ".join(stray)))
+    return {B.slug_of(name) for name in records
+            if re.sub(r" County$", "", name) not in drawn}
+
+
 def _no_layer(derive):
     """A state whose county-government level draws no county district."""
     def wrapped(B, records):
@@ -2245,6 +2321,7 @@ COUNTY_MAPS_OWED = {
     "in": _in_county_maps_undrawn,
     "il": _il_county_maps_owed,
     "ia": _ia_county_maps_owed,
+    "ms": _ms_county_maps_owed,
 }
 
 

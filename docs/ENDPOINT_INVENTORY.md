@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **267 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 222 are links.
+makes from a link a reader clicks. Of **269 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 224 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,7 +32,7 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
@@ -44,9 +44,9 @@ names it as a recipient.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -56,7 +56,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -64,7 +64,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 | `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
@@ -77,7 +77,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 ### Socrata — 7 host(s)
 
@@ -96,7 +96,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar, ms |
 | `gis.aurora.il.us` | il |
 | `gis.cityofdanville.org` | il |
 | `gis.cookcountyil.gov` | il |
@@ -147,6 +147,7 @@ prose.
 | sc | 4 | 14 |
 | tn | 6 | 16 |
 | ar | 3 | 13 |
+| ms | 3 | 16 |
 
 ### Where each layer's shapes come from
 
@@ -367,6 +368,8 @@ measured until the next run describes it.
 
 #### ar — not measured
 
+#### ms — not measured
+
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
@@ -385,9 +388,10 @@ measured until the next run describes it.
 | sc | 20 | 14 | 0 |
 | tn | 21 | 14 | 0 |
 | ar | 20 | 13 | 0 |
-| **total** | **550** | **972** | **12** |
+| ms | 37 | 21 | 0 |
+| **total** | **587** | **993** | **12** |
 
-**156 distinct source hosts** across the six manifests. Each instance's
+**163 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

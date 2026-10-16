@@ -252,6 +252,24 @@
       "landing_name": "Arkansas",
       "blurb": "All 75 counties and their quorum court districts: townships, cities and towns, voting precincts, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Arkansas Senate, House and U.S. House districts, with who holds each seat. Every county judge is named, and so is the justice of the peace for nearly every district, from the county's own site where it numbers its justices and otherwise from the 2024 election results while the winner is still on the Association of Arkansas Counties' list. Nobody is named yet on the city councils or school boards, and the Data gaps panel says why.",
       "scope": "all 75 counties"
+    },
+    {
+      "id": "mississippi",
+      "explorer_name": "districtry Mississippi",
+      "label": "Mississippi",
+      "url": "https://districtry.com/ms/",
+      "emoji": "🧸",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -91.66,
+        "minLat": 30.13,
+        "maxLng": -88.09,
+        "maxLat": 35.0
+      },
+      "tag": "ms",
+      "landing_name": "Mississippi",
+      "blurb": "All 82 counties and their boards of supervisors: cities and towns, school districts, ZIP codes, the Mississippi Band of Choctaw Indians' land, the Supreme Court, Court of Appeals, chancery and circuit court districts, and the nearest police station, fire station and post office — plus the Mississippi Senate, House and U.S. House districts, with who holds each seat. Every county's five supervisors and five election commissioners are named from the Secretary of State's directory, and the court districts' judges from the Judiciary's own lists. Supervisor district lines are drawn in the 23 counties whose current map is confirmed, and the Data gaps panel says why the other 59 are not.",
+      "scope": "all 82 counties"
     }
   ]
 }

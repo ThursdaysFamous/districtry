@@ -82,6 +82,18 @@ SUMMARY_TEMPLATE = ("Click a point, or type an address, and see every civic "
                     "%(count)s instances across %(places)s. Every boundary and "
                     "every name comes from a published source and is cited to it.")
 
+# What a per-county page carries besides the names, where the default sentence
+# in render() is not true of an instance. Mississippi's pages take their names
+# from the Secretary of State's directory, not from the counties, and carry no
+# member's own contact details: the directory prints an address and telephone
+# beside each supervisor, which may be a home, so a page carries only the one
+# it prints for at least three of the five, which is the board's office.
+CONTACT_NOTE = {
+    "ms": "with the board of supervisors' office address and telephone where "
+          "the Secretary of State's directory prints them",
+}
+DEFAULT_CONTACT_NOTE = "with whatever contact details that county publishes"
+
 # Written out to twelve because "6 instances" reads as a log line; past that the
 # digit is used, which is honest rather than wrong.
 COUNT_WORDS = ("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
@@ -309,9 +321,9 @@ def render():
         for rel in by_tag.get(tag, []):
             if rel in indexes:
                 lines.append("- [%s](%s/%s): links a page per county, %d of "
-                             "them, each naming every member with whatever "
-                             "contact details that county publishes."
-                             % (title_of(rel), SITE, rel, indexes[rel]))
+                             "them, each naming every member %s."
+                             % (title_of(rel), SITE, rel, indexes[rel],
+                                CONTACT_NOTE.get(tag, DEFAULT_CONTACT_NOTE)))
             else:
                 lines.append("- [%s](%s/%s)" % (title_of(rel), SITE, rel))
         lines.append("")

@@ -491,6 +491,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       <a href="/sc/">South Carolina</a>
       <a href="/tn/">Tennessee</a>
       <a href="/ar/">Arkansas</a>
+      <a href="/ms/">Mississippi</a>
     </div>
   </div>
 </header>
@@ -658,6 +659,14 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <td>Photon / Komoot (address search), Nominatim / OpenStreetMap (office pins)</td>
             <td>3 layers</td>
           </tr>
+          <tr>
+            <th scope="row"><a href="/ms/">Mississippi</a><small>/ms/</small></th>
+            <td><em>None.</em></td>
+            <td><code class="k">https://districtry.goatcounter.com/count</code></td>
+            <td><code class="k">districtry-app-launch</code><small>session</small> <code class="k">districtry-play-app</code><small>session</small> <code class="k">districtry-share-in</code><small>session</small> <code class="k">districtry-boundary-streets</code><small>kept</small> <code class="k">districtry-install-invite</code><small>kept</small> <code class="k">districtry-last-app</code><small>kept</small> <code class="k">districtry-theme</code><small>kept</small></td>
+            <td>Photon / Komoot (address search), Nominatim / OpenStreetMap (office pins)</td>
+            <td>3 layers</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -667,14 +676,14 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <h2>What stays on your device</h2>
     <p>All of it is yours to clear at any time through your browser's &#34;clear site data&#34;.</p>
     <div class="card">
-      <p><strong>Boundary street names.</strong> If you switch the map's “Boundary streets” button off or back on, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-boundary-streets</code> on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. It is one word, and it never leaves your browser.</p>
-      <p><strong>The install invitation.</strong> On a phone, the map offers once to add districtry to your home screen. It records that it has asked in <code class="k">localStorage</code> under <code class="k">districtry-install-invite</code>, so it does not ask again. This is on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. It is one word, and it never leaves your browser.</p>
-      <p><strong>Which state you used last.</strong> Each app keeps its own two-letter tag (<code class="k">il</code>, <code class="k">ny</code> and so on) in <code class="k">localStorage</code> under <code class="k">districtry-last-app</code> on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. The installed app's launcher at <code class="k">/app/</code> reads it to open that state's map. It is two letters, the next state you open replaces it, and it never leaves your browser.</p>
-      <p><strong>Light or dark.</strong> If you use the theme toggle, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-theme</code> on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas, so the site does not flash white on your next visit. It is one word, and it never leaves your browser. The front door reads it and never writes it, which is how the choice follows you off the map.</p>
+      <p><strong>Boundary street names.</strong> If you switch the map's “Boundary streets” button off or back on, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-boundary-streets</code> on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. It is one word, and it never leaves your browser.</p>
+      <p><strong>The install invitation.</strong> On a phone, the map offers once to add districtry to your home screen. It records that it has asked in <code class="k">localStorage</code> under <code class="k">districtry-install-invite</code>, so it does not ask again. This is on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. It is one word, and it never leaves your browser.</p>
+      <p><strong>Which state you used last.</strong> Each app keeps its own two-letter tag (<code class="k">il</code>, <code class="k">ny</code> and so on) in <code class="k">localStorage</code> under <code class="k">districtry-last-app</code> on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. The installed app's launcher at <code class="k">/app/</code> reads it to open that state's map. It is two letters, the next state you open replaces it, and it never leaves your browser.</p>
+      <p><strong>Light or dark.</strong> If you use the theme toggle, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-theme</code> on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi, so the site does not flash white on your next visit. It is one word, and it never leaves your browser. The front door reads it and never writes it, which is how the choice follows you off the map.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">chi-school-type-filter</code> on Illinois. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
-      <p><strong>A launch already counted.</strong> When you open the installed app, the launch is counted once. A mark in <code class="k">sessionStorage</code> under <code class="k">districtry-app-launch</code> records that, so moving between states in the same window does not count it again. This is on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. It is erased when you close the app, and it never leaves your browser.</p>
-      <p><strong>Opened in the Google Play app.</strong> If you open districtry from its Android app on Google Play, a mark in <code class="k">sessionStorage</code> under <code class="k">districtry-play-app</code> records that, so the pages in that window leave out the links asking for sponsorship: Google Play does not allow an app from its store to send readers to an outside payment page. The website keeps those links. This is on the front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas, and on the installed app's launcher at <code class="k">/app/</code>. It is erased when you close the app, and it never leaves your browser.</p>
-      <p><strong>A place shared into the app.</strong> When you share a place into the installed app, its launcher at <code class="k">/app/</code> leaves a mark in <code class="k">sessionStorage</code> under <code class="k">districtry-share-in</code>, so the map it opens can count that a share arrived. The map removes the mark as soon as it has counted it. This is on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. It says nothing about the place, and it never leaves your browser.</p>
+      <p><strong>A launch already counted.</strong> When you open the installed app, the launch is counted once. A mark in <code class="k">sessionStorage</code> under <code class="k">districtry-app-launch</code> records that, so moving between states in the same window does not count it again. This is on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. It is erased when you close the app, and it never leaves your browser.</p>
+      <p><strong>Opened in the Google Play app.</strong> If you open districtry from its Android app on Google Play, a mark in <code class="k">sessionStorage</code> under <code class="k">districtry-play-app</code> records that, so the pages in that window leave out the links asking for sponsorship: Google Play does not allow an app from its store to send readers to an outside payment page. The website keeps those links. This is on the front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi, and on the installed app's launcher at <code class="k">/app/</code>. It is erased when you close the app, and it never leaves your browser.</p>
+      <p><strong>A place shared into the app.</strong> When you share a place into the installed app, its launcher at <code class="k">/app/</code> leaves a mark in <code class="k">sessionStorage</code> under <code class="k">districtry-share-in</code>, so the map it opens can count that a share arrived. The map removes the mark as soon as it has counted it. This is on Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. It says nothing about the place, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">nyc-school-type-filter</code> on New York. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">sf-school-type-filter</code> on San Francisco. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell
@@ -707,25 +716,25 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <td class="who"><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Pages</a><small>hosting</small></td>
             <td>The ordinary web-server request for each file — your IP address, browser, and the page you asked for. GitHub, not this project, keeps those logs. In Illinois, New York, San Francisco, Wisconsin, Iowa and Michigan, a layer drawn from vector tiles requests its map a piece at a time, so those requests also describe the area you are looking at and, to answer its card, <strong>the square of about 7 km around the point you select</strong>.</td>
             <td>Every visit.</td>
-            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://carto.com/privacy/" target="_blank" rel="noopener">CARTO</a><small>basemap tiles</small></td>
             <td>The map tiles you request — which, taken together, describe the area you are looking at and how far you zoomed in.</td>
             <td>Whenever the map draws or moves.</td>
-            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare (cdnjs)</a><small>mapping library</small></td>
             <td>A request for one JavaScript file, Leaflet 1.9.4, pinned by hash.</td>
             <td>Every visit to a map.</td>
-            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://deno.com/privacy" target="_blank" rel="noopener">Deno Deploy</a><small>short map-link lookup</small></td>
             <td>Only when you paste a <strong>short</strong> Google Maps or Apple Maps link (maps.app.goo.gl, maps.apple) into a search box, or share one into the installed app: that link, sent to districtry&#39;s own lookup, which runs on Deno&#39;s servers, follows it to the full link and sends that back. Deno receives your IP address and the short link. The lookup&#39;s own code stores neither; Deno, not this project, keeps whatever request logs its platform keeps. A full map link or a coordinate pair is read in your browser and goes nowhere.</td>
             <td>Only when you paste or share a short map link.</td>
-            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://www.nyc.gov/home/privacy-policy.page" target="_blank" rel="noopener">GeoSearch / NYC Planning</a><small>address search, office pins</small></td>
@@ -737,13 +746,13 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <td class="who"><a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Nominatim / OpenStreetMap</a><small>office pins</small></td>
             <td><em>Public office addresses from the datasets</em> — a clerk's office, a school — to place their map pins; that is data about buildings, not about you. Nothing you type into the search box is sent here.</td>
             <td>Only when a card places an office pin.</td>
-            <td class="which">Illinois, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas.</td>
+            <td class="which">Illinois, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://www.komoot.com/privacy" target="_blank" rel="noopener">Photon / Komoot</a><small>address search</small></td>
             <td><strong>The text you type into the search box</strong> — sent as you type on the apps' type-ahead boxes, and only when you press the button on the front door. <strong>Illinois</strong> also offers a batch check for people working from a list — a petition sheet, a canvass list. That sends <strong>every address in the list you paste</strong>, one lookup a second until it is done. Those are usually other people&#39;s addresses rather than your own, and the list itself is never uploaded anywhere: it stays in your browser, and only the address text goes to this geocoder.</td>
             <td>Only while you are searching for an address. A batch check sends its whole list, one address a second.</td>
-            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who">Public GIS services<small>the district data itself</small></td>
@@ -797,7 +806,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 
     <h3>Google Analytics</h3>
 
-    <p>GA4 (<code class="k">G-YPJ570LWJB</code>) runs on Illinois and New York — and <strong>only there</strong>: never on a local copy, never inside an iframe embed, and not at all on The front door, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. It sets its own cookies and records the standard GA4 page view, which <strong>includes the page URL</strong> — so if you arrived on a shared permalink, the point encoded in that link is part of what Google sees. Google's handling is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">its own privacy policy</a>.</p>
+    <p>GA4 (<code class="k">G-YPJ570LWJB</code>) runs on Illinois and New York — and <strong>only there</strong>: never on a local copy, never inside an iframe embed, and not at all on The front door, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. It sets its own cookies and records the standard GA4 page view, which <strong>includes the page URL</strong> — so if you arrived on a shared permalink, the point encoded in that link is part of what Google sees. Google's handling is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">its own privacy policy</a>.</p>
 
     <p class="cta-note">Blocking either one is fine. The analytics calls are written so that a blocked or failed counter is a no-op — nothing about the map changes.</p>
   </section>
@@ -905,6 +914,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       <a href="/sc/">South Carolina</a>
       <a href="/tn/">Tennessee</a>
       <a href="/ar/">Arkansas</a>
+      <a href="/ms/">Mississippi</a>
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
         <p class="footer-byline">Written and maintained by
