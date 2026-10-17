@@ -2287,6 +2287,21 @@ trusted.
     "blocker": "Per county, measured 2026-10-15: six publish no list (Buffalo, Calumet, Dane, Green Lake, La Crosse, Rock); fifteen ask automated readers not to read their websites, turn them away, or could not be reached; Dodge's directory is a scan with no text in it, Vilas's only directory is from 2023, and Menominee's names the town chair only; Eau Claire, Oconto, Sawyer and Trempealeau publish the board for some towns and not the rest. MEASURED 2026-10-15 by wi/scripts/wi_town_board_scraper.py and build_wi_town_boards.py: 794 towns and 2,614 board members named from 47 counties' own lists, read weekly; `NOT_READ` in the builder records each county here and the sentence its card prints. Adam ruled on 2026-10-15 that this level passes where a list of town boards is published, county by county, with the card saying so for the towns it cannot name. Ask wi-town-boards went to the Wisconsin Towns Association on 2026-10-01 at 14:44 UTC and had no reply when the mailbox was read on 2026-10-15; its follow-up is due about 2026-10-22, and a statewide list from it would cover these counties."
   },
     {
+      "id": "wi-town-board-phone-area-code",
+      "concept": "Town boards",
+      "area": "Grant and Marathon counties",
+      "counties": [
+        "grant",
+        "marathon"
+      ],
+      "kind": "data-quality",
+      "layer": "county-subdivision",
+      "summary": "In Grant and Marathon counties the town board members' phone numbers show as seven digits with no area code, because that is how the county directories print them.",
+      "why": "Both directories list members' numbers without an area code. Most of each county is in one area code, but a mobile can be issued anywhere and a wrong guess reaches a stranger.",
+      "wanted": "The members' numbers with area codes, from the county's directory or the town's own page.",
+      "blocker": "Found 2026-10-17, when the town board members' own numbers began to ship under Adam's ruling of that day (\"if the official government source uses personal phone numbers, we publish those\"). Measured on the directories as read that day by wi/scripts/wi_town_board_scraper.py: Grant County's 2026-2027 County Directory prints 97 of the 103 numbers it gives its town board members as seven digits (\"Phone: 555.0100\"), across all 33 towns, and Marathon County's directory prints all 117 as seven digits, across all 39 towns. Prefixing the county's area code is the obvious fix and it is the class of mistake this project refuses elsewhere (`macon-board-phone-area-code`): a member's mobile can be issued anywhere, and a wrong prefix does not fail visibly, it reaches a stranger. So the numbers ship exactly as printed, with the directory's own labels where it gives one, which is less useful to someone dialling from outside the county and claims only what the source says. The counts are a measurement of that day and move with each edition."
+    },
+    {
       "id": "municipal-officers",
       "covers": ["local-government"],
       "concept": "Municipal officials",

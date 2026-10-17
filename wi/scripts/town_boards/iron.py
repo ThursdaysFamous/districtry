@@ -3,8 +3,8 @@
 The "Municipalities" page (/170/Municipalities) links a page for each of the
 ten towns. Each town page carries a table of Title / Name / Phone / Email, one
 cell per line in the page text: "Chairman", then the name; "Supervisor", then
-the name. Only the name is kept. Read with the token on 2026-10-15 (robots.txt:
-816 bytes, no rule matches these paths)."""
+the name. The name and the Phone cell are kept. Read with the token on
+2026-10-15 (robots.txt: 816 bytes, no rule matches these paths)."""
 
 import re
 import urllib.parse

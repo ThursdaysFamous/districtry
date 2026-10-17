@@ -3,6 +3,8 @@
 Each town has its own page under a "TOWN OF <NAME>" heading. Each officer is
 one line, "Town Board Chair – Name (telephone)" or "Supervisor 1 – Name
 (telephone)", with the home address and an e-mail on the lines after it. The
+number after the name ships on the officer (Adam, 2026-10-17;
+`role_then_name`); the home address and the e-mail address are not read. The
 towns run up to "VILLAGE OF ARLINGTON". Read with the token on 2026-10-15
 (robots.txt: 218 bytes, no group binds this client)."""
 

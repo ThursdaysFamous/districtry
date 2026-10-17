@@ -7,16 +7,17 @@ the next page, that page repeats the heading as "TOWN OF <NAME> (Cont'd…)"
 (Bovina, Kaukauna, Oneida and others), so the two parts are read as one town.
 Under upper-case office headings (CHAIRPERSON, SUPERVISORS, CLERK, ...) each
 officer has one line, "#1 – Name – home address • town ...... phone", and a
-second line of term and e-mail. Only the text before the first dash after the
-seat number is read; the address, phone and e-mail are not. The PDF draws some
-names without a space character ("JosephCoenen"), so the text is extracted
-with a one-point x tolerance, which restores the gap. Read with the token on
+second line of term and e-mail. The name is the text before the first dash
+after the seat number; the telephone number is the part of that line after
+its dot leader, read only when it holds nothing but a number. The home address
+before the leader and the e-mail line are not read. The PDF draws some names
+without a space character ("JosephCoenen"), so the text is extracted with a
+one-point x tolerance, which restores the gap. Read with the token on
 2026-10-15 (robots.txt: 16,010 bytes, no rule matches the page)."""
 
-import io
 import re
 
-from . import clean
+from . import clean, person, phones_after_name
 
 COUNTY_FIPS = "087"
 COUNTY_NAME = "Outagamie"
@@ -28,15 +29,8 @@ _HEADING = re.compile(r"^[A-Z][A-Z /&’'.,()-]+$")
 _ROW = re.compile(r"^(?:#\s*(\d+)\s*[–-]\s*)?(.+?)\s*–")
 
 
-def _text(data):
-    import pdfplumber
-    with pdfplumber.open(io.BytesIO(data)) as pdf:
-        return "\n".join((p.extract_text(x_tolerance=1) or "")
-                         for p in pdf.pages)
-
-
 def scrape(ctx):
-    text = _text(ctx.fetch_bytes(SOURCES[0]))
+    text = ctx.pdf_text(SOURCES[0], x_tolerance=1)
     start = text.find("\nTOWN OF ")
     if start < 0:
         raise RuntimeError("no 'TOWN OF' heading was found")
@@ -66,8 +60,9 @@ def scrape(ctx):
             continue
         label = role + (" #" + r.group(1) if role == "Supervisor" and r.group(1)
                         else "")
-        towns.setdefault(town, []).append({"name": clean(r.group(2)),
-                                           "role": label})
+        name = clean(r.group(2))
+        towns.setdefault(town, []).append(
+            person(name, label, phones_after_name(line, name)))
     m = re.search(r"\b(20\d\d)\s*[-–]\s*(20\d\d)\b", text[:600])
     return {"towns": towns,
             "edition": ("%s-%s" % m.groups()) if m else None}

@@ -4,13 +4,14 @@ file dated 09-10-26).
 The "TOWNS" section lists each town under a "TOWN OF <NAME>" heading (repeated
 with "ELECTED OFFICIALS" or "STAFF" when a town runs over a page), and each
 office on one line as "Chairman ........ NAME", with the officer's address,
-telephone and e-mail on the dotted lines after it. Only the role line is read.
-The section ends at "ONEIDA NATION". Read with the token on 2026-10-15
-(robots.txt served empty, allow all)."""
+telephone and e-mail on the dotted lines after it. The role line is read for
+the name, and the "Telephone:" lines below it, up to the next office, for the
+numbers; the address line is not read. The section ends at "ONEIDA NATION".
+Read with the token on 2026-10-15 (robots.txt served empty, allow all)."""
 
 import re
 
-from . import clean, looks_like_person, norm_role, person
+from . import clean, following_phones, looks_like_person, norm_role, person
 
 COUNTY_FIPS = "009"
 COUNTY_NAME = "Brown"
@@ -31,8 +32,8 @@ def scrape(ctx):
     section = text[start.start():end if end > 0 else len(text)]
     towns = {}
     town = None
-    for ln in section.split("\n"):
-        ln = ln.strip()
+    lines = [ln.strip() for ln in section.split("\n") if ln.strip()]
+    for i, ln in enumerate(lines):
         m = _HEAD.match(ln)
         if m:
             town = clean(m.group(1)).title()
@@ -43,6 +44,7 @@ def scrape(ctx):
         role = norm_role(m.group(1))
         name = clean(m.group(2).strip(". …"))
         if role and looks_like_person(name):
-            towns.setdefault(town, []).append(person(name, role))
+            towns.setdefault(town, []).append(
+                person(name, role, following_phones(lines, i + 1, stop_re=_HEAD)))
     m = re.search(r"(\d{4}-\d{4}) BROWN COUNTY DIRECTORY", text)
     return {"towns": towns, "edition": m.group(1) if m else None}

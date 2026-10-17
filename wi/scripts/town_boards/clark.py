@@ -2,7 +2,10 @@
 
 "OFFICIALS OF THE MUNICIPALITIES / Clark County Towns" lists each town under a
 "TOWN OF <NAME>" heading, then each office on its own line with the officer's
-name on the next. Read with the token on 2026-10-15 (robots.txt: 495 bytes,
+name on the next, and the officer's telephone numbers after the name or on the
+lines below it. Those numbers ship on the officer (Adam, 2026-10-17;
+`role_then_name`), with the label the directory prints; an address or an e-mail
+address is not read. Read with the token on 2026-10-15 (robots.txt: 495 bytes,
 Allow: /)."""
 
 import re

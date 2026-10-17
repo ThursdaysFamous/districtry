@@ -14641,18 +14641,26 @@ function initWisconsinExplorer() {
       // THE TOWN BOARD: a chairperson and two or more supervisors (Wis. Stat.
       // 60.21). No state agency lists them, so this is each county's own
       // list of town officials, and the card says which county document and
-      // edition a name came from and the day it was read. Names and roles
-      // only: those lists print home addresses beside the names and none of
-      // that is carried. Where the board is not named, the card says why in
-      // the county's terms (a county that publishes no list is a different
-      // fact from a town its list leaves out), and says nothing at all when
-      // the file itself did not load, because then nothing is known.
+      // edition a name came from and the day it was read. Each member's
+      // telephone numbers ship as the county prints them, with its label
+      // (Adam, 2026-10-17: "if the official government source uses personal
+      // phone numbers, we publish those"); the home addresses those lists
+      // print beside the names are not carried. Where the board is not
+      // named, the card says why in the county's terms (a county that
+      // publishes no list is a different fact from a town its list leaves
+      // out), and says nothing at all when the file itself did not load,
+      // because then nothing is known.
       if (result.kind === "town" && result.boardCounty) {
         var bc = result.boardCounty;
         wrap.appendChild(renderSectionLabel("Town board"));
         if (result.board) {
           wrap.appendChild(renderPersonRows(result.board.map(function (p) {
-            return { name: String(p.name), badge: String(p.role) };
+            return {
+              name: String(p.name),
+              badge: String(p.role),
+              phone: p.phone ? String(p.phone) : null,
+              phonesExtra: (p.phonesExtra || []).map(String)
+            };
           })));
           var from = String(bc.county) + " County's list of town officials" +
             (bc.edition ? " (" + String(bc.edition) + ")" : "");

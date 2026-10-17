@@ -4,12 +4,16 @@
 office is a line of its own ("Chair (2-Year Term Expires April 2027)",
 "Supervisor I (...)", "Supervisor #1 (...)") and the next line holds the
 officer's name, then a comma and the home address; telephone and e-mail lines
-follow. Only the text before the address is kept. Read with the token on
-2026-10-15 (robots.txt: 5,869 bytes, no rule matches the file)."""
+follow ("Phone: (608) 555-0100", "Cell: ...", "Home: ..."). The name is the
+text before the address, which is not read. The telephone lines below it ship,
+each with the county's label, up to the next office; a line naming a place
+("Town Hall: ...") and a fax line do not. Read with the token on 2026-10-15
+(robots.txt: 5,869 bytes, no rule matches the file)."""
 
 import re
 
-from . import clean, looks_like_person, norm_role, person, split_blocks
+from . import (clean, following_phones, looks_like_person, norm_role,
+               person, split_blocks)
 
 COUNTY_FIPS = "111"
 COUNTY_NAME = "Sauk"
@@ -57,7 +61,8 @@ def scrape(ctx):
             role = norm_role(m.group(1))
             name = name_part(lines[i + 1])
             if role and name and looks_like_person(name):
-                people.append(person(name, role))
+                people.append(person(name, role, following_phones(
+                    lines, i + 2, limit=4, stop_re=_ROLE.pattern)))
         if people:
             towns[town] = people
     m = re.search(r"(May\s+\d{4}\s*[-–]\s*April\s+\d{4})", text)

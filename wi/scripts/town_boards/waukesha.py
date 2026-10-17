@@ -2,9 +2,10 @@
 
 Each town has its own page headed "Town of <Name>", listing each office on a
 line of its own ("Chairperson", "Supervisor") with the officer's name on the
-next line, followed on that line by a telephone number or e-mail address, which
-are taken off. Some towns print a home address on a further line, which is not
-read. Read with the token on 2026-10-15 (robots.txt: 188 bytes, no rule matches
+next line, followed on that line by a telephone number or e-mail address. The
+number ships on the officer (Adam, 2026-10-17; `role_then_name`); the e-mail
+address is not read. Some towns print a home address on a further line, which
+is not read. Read with the token on 2026-10-15 (robots.txt: 188 bytes, no rule matches
 the file)."""
 
 import re

@@ -4,8 +4,12 @@ Under "Towns, Villages and Cities Information" each town has a "TOWN OF <NAME>"
 heading, then a "CHAIRPERSON" line with the chair's name on the next line and a
 "SUPERVISORS" line with one supervisor per line after it, sometimes numbered
 ("1. Teresa Van Aacken"). Each name line carries telephone numbers and often an
-e-mail address after the name, which are taken off. The numbers are printed as
-a list, not called seats, so the role is plain "Supervisor".
+e-mail address after the name. The numbers printed after the name ship as that
+officer's (Adam, 2026-10-17), with the label the directory gives ("Cell:");
+the e-mail address is not read. Lines after the chair's own line ("Emails may
+be sent to the Town Clerk: ...") are not the chair's and are not read. The
+supervisors are printed as a list, not called seats, so the role is plain
+"Supervisor".
 
 CLIENT. Measured 2026-10-15: with the districtry token, robots.txt and the file
 both answered HTTP 403 (the survey of the same day recorded a Cloudflare
@@ -15,7 +19,8 @@ served."""
 
 import re
 
-from . import looks_like_person, person, split_blocks, strip_contact
+from . import (looks_like_person, person, phones_after_name, split_blocks,
+               strip_contact)
 
 COUNTY_FIPS = "139"
 COUNTY_NAME = "Winnebago"
@@ -64,7 +69,7 @@ def scrape(ctx):
                 continue
             name = _name(line)
             if looks_like_person(name):
-                people.append(person(name, role))
+                people.append(person(name, role, phones_after_name(line, name)))
             if role == "Chairperson":
                 # one chair; a following line is contact text, not a person
                 role = "_after_chair"

@@ -943,6 +943,33 @@ try {
           ok, `labels=${JSON.stringify(labels)} badges=${JSON.stringify(badges)} ` +
               `asOf=${JSON.stringify(asOf)}`);
 
+    // ...and each member's telephone numbers as the county prints them, which
+    // ship since Adam's ruling of 2026-10-17. The numbers expected are read
+    // from the shipped file's record for the Town of Beaver (GEOID
+    // 5501905750, the town the point above is in), so a weekly refresh that
+    // changes them changes what is expected; a board carrying none is
+    // reported, never passed. The card writes hyphens as U+2011, folded back
+    // before comparing, and a failure prints counts, not the numbers.
+    const wantNumbers = await page.evaluate(async () => {
+      const r = await fetch("data/app/wi-town-boards.json").then((x) => x.json());
+      const out = [];
+      ((r["5501905750"] || {}).board || []).forEach((p) => {
+        [p.phone].concat(p.phonesExtra || []).forEach((n) => { if (n) out.push(n); });
+      });
+      return out;
+    });
+    const shown = ((await cardText(page, "county-subdivision")).text || "")
+      .replace(/\u2011/g, "-");
+    if (!wantNumbers.length) {
+      console.log("  SKIP  town board members' own numbers — the Town of Beaver's " +
+                  "board carries none in the shipped file");
+    } else {
+      const missing = wantNumbers.filter((n) => !shown.includes(n));
+      check("a town's card shows each board member's number the county prints",
+            missing.length === 0,
+            `${wantNumbers.length} numbers in the file, ${missing.length} not on the card`);
+    }
+
     const none = await booted(
       context, `${BASE}#point=43.24830,-89.42913&layers=county,county-subdivision`);
     await cardText(none, "county-subdivision");

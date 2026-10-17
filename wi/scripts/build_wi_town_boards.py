@@ -8,11 +8,23 @@ the county clerk's yearly Official Directory; `wi_town_board_scraper.py` reads
 them, one module per county under `town_boards/`, and this file decides what
 ships.
 
-WHAT SHIPS, PER TOWN: the board members' names and the role the county prints,
-keyed by the town's 10-digit county-subdivision GEOID — the key the County
-Subdivision card already holds, so the card needs no name matching of its own.
-Never an address, a telephone number or an e-mail: the directories print home
-details beside these names, and a town supervisor's house is not an office.
+WHAT SHIPS, PER TOWN: the board members' names, the role the county prints, and
+the telephone numbers the county prints beside each member — the first in
+`phone`, any further ones in `phonesExtra`, each with the county's own label
+("cell 715-555-0100") — keyed by the town's 10-digit county-subdivision GEOID,
+the key the County Subdivision card already holds, so the card needs no name
+matching of its own. The numbers ship whosever line they are, because the
+county prints them for the public (Adam, 2026-10-17: "if the official
+government source uses personal phone numbers, we publish those"); until that
+day none shipped. A number printed for two officers, or for the town hall, is
+the town's line and the scraper takes it off (`town_boards.normalize`), and a
+number printed without an area code ships exactly as printed. Never an address
+or an e-mail address: the directories print home addresses beside these names,
+and a town supervisor's house is not an office. Every number that ships must
+have the shape of one telephone number (`check_phones`), and a county whose
+directory was read must ship at least its floor of members with a number
+(`MIN_PHONES`), so a layout change that stops the numbers being read fails the
+build instead of emptying them quietly.
 
 WHAT SHIPS, PER COUNTY (`_counties`): whether the county publishes a list, the
 document cited and its edition, and the day it was last actually read. The
@@ -130,6 +142,99 @@ def town_index(fips):
     return out
 
 
+# The keys a board member's record may carry. Anything else a county module
+# returns is dropped here, so a parser change can never put an address on a
+# card.
+FIELDS = ("name", "role", "phone", "phonesExtra")
+
+# MEMBERS WITH A NUMBER, PER COUNTY, a floor at about two thirds of what the
+# directories gave on the first read after Adam's ruling of 2026-10-17, read
+# live on 2026-10-17 (the measured count is the comment beside each).
+# Trempealeau's directory prints no numbers for its town boards and has no
+# floor. Checked only for a county whose directory was read this run; a county
+# carried forward keeps what it had.
+MIN_PHONES = {
+    "007": 55,   # Bayfield, 83 measured
+    "009": 26,   # Brown, 40 measured
+    "013": 39,   # Burnett, 59 measured
+    "017": 50,   # Chippewa, 75 measured
+    "019": 63,   # Clark, 95 measured
+    "021": 46,   # Columbia, 69 measured
+    "023": 7,    # Crawford, 11 measured
+    "029": 36,   # Door, 55 measured
+    "031": 28,   # Douglas, 43 measured
+    "035": 7,    # Eau Claire, 11 measured
+    "037": 14,   # Florence, 21 measured
+    "039": 41,   # Fond du Lac, 62 measured
+    "043": 64,   # Grant, 97 measured
+    "045": 30,   # Green, 46 measured
+    "051": 19,   # Iron, 29 measured
+    "055": 32,   # Jefferson, 49 measured
+    "057": 38,   # Juneau, 58 measured
+    "059": 10,   # Kenosha, 15 measured
+    "061": 18,   # Kewaunee, 28 measured
+    "067": 32,   # Langlade, 48 measured
+    "071": 36,   # Manitowoc, 54 measured
+    "073": 78,   # Marathon, 117 measured
+    "077": 25,   # Marquette, 38 measured
+    "081": 46,   # Monroe, 70 measured
+    "083": 4,    # Oconto, 6 measured
+    "085": 42,   # Oneida, 64 measured
+    "087": 39,   # Outagamie, 59 measured
+    "089": 13,   # Ozaukee, 20 measured
+    "093": 36,   # Pierce, 55 measured
+    "097": 36,   # Portage, 55 measured
+    "099": 32,   # Price, 48 measured
+    "101": 12,   # Racine, 18 measured
+    "109": 54,   # St. Croix, 81 measured
+    "111": 50,   # Sauk, 75 measured
+    "113": 7,    # Sawyer, 11 measured
+    "115": 50,   # Shawano, 76 measured
+    "117": 42,   # Sheboygan, 64 measured
+    "119": 42,   # Taylor, 64 measured
+    "123": 41,   # Vernon, 62 measured
+    "127": 38,   # Walworth, 57 measured
+    "129": 41,   # Washburn, 62 measured
+    "131": 14,   # Washington, 22 measured
+    "133": 20,   # Waukesha, 30 measured
+    "135": 38,   # Waupaca, 57 measured
+    "139": 32,   # Winnebago, 48 measured
+    "141": 48,   # Wood, 73 measured
+}
+
+# A telephone number as `town_boards.phones_in` writes one: an optional label
+# word, the number (with or without its area code, exactly as printed) and an
+# optional extension, and nothing else — no street word, ZIP code, "@" or
+# second number can match.
+_PHONE_SHAPE = re.compile(
+    r"^(?:(?:cell|home|work|business|office|mobile|personal|residence)\s+)?"
+    r"(?:(?:\(\d{3}\)\s*[-.]?\s*|\d{3}\s?[-./ ]\s?)?\d{3}\s?[-.]\s?\d{4}"
+    r"|\d{3} \d{3} \d{4})"
+    r"(?:\s*(?:ext\.?|x)\s*\d{1,5})?$", re.I)
+
+
+def check_phones(towns, county_names):
+    """Every `phone` and `phonesExtra` value that would ship has the shape
+    of one telephone number. A failure names the county, the town's GEOID
+    and the member's role, never the value."""
+    problems = []
+    for geoid, rec in sorted(towns.items()):
+        for p in rec.get("board") or []:
+            values = [p.get("phone")] if "phone" in p else []
+            extra = p.get("phonesExtra")
+            if extra is not None and not isinstance(extra, list):
+                values.append(None)
+            else:
+                values += list(extra or [])
+            for v in values:
+                if not isinstance(v, str) or "@" in v or not _PHONE_SHAPE.match(v):
+                    problems.append("%s County, town %s, %s: a telephone value "
+                                    "is not the shape of one telephone number"
+                                    % (county_names.get(rec.get("county"), "?"),
+                                       geoid, p.get("role")))
+    return problems
+
+
 def floor_for(module, n_towns):
     explicit = getattr(module, "MIN_TOWNS", None)
     if explicit is not None:
@@ -174,19 +279,30 @@ def build(raw, previous):
                 problems.append("%s: two directory blocks for %s" %
                                 (mod.COUNTY_NAME, town))
                 continue
-            towns_out[geoid] = {"county": fips, "board": people}
+            towns_out[geoid] = {"county": fips, "board": [
+                {k: p[k] for k in FIELDS if p.get(k)} for p in people]}
             # a town counts as named with any member: a chair the county prints
             # as vacant leaves the supervisors it does name
             matched += 1
         need = floor_for(mod, len(index))
-        line = "%-12s %3d of %3d towns named (floor %d)" % (
-            mod.COUNTY_NAME, matched, len(index), need)
+        members = [p for g, t in towns_out.items() if t["county"] == fips
+                   for p in t["board"]]
+        with_phone = sum(1 for p in members if p.get("phone"))
+        phone_floor = MIN_PHONES.get(fips, 0)
+        line = "%-12s %3d of %3d towns named (floor %d); %d of %d members " \
+               "with a number (floor %d), %d with a second" % (
+                   mod.COUNTY_NAME, matched, len(index), need, with_phone,
+                   len(members), phone_floor,
+                   sum(1 for p in members if p.get("phonesExtra")))
         if unmatched:
             line += "; unmatched: " + ", ".join(unmatched)
         print(line)
         if matched < need:
             problems.append("%s: %d towns named, floor %d" %
                             (mod.COUNTY_NAME, matched, need))
+        if with_phone < phone_floor:
+            problems.append("%s: %d members with a telephone number, floor %d"
+                            % (mod.COUNTY_NAME, with_phone, phone_floor))
         counties[fips] = {
             "county": mod.COUNTY_NAME,
             "status": "published",
@@ -202,6 +318,12 @@ def build(raw, previous):
             continue
         counties[fips] = {"county": name, "status": status,
                           "note": why.format(c=name)}
+    for fips in MIN_PHONES:
+        if fips not in counties or counties[fips].get("status") != "published":
+            problems.append("MIN_PHONES names county %s, which has no "
+                            "published list" % fips)
+    problems += check_phones(towns_out, {f: c["county"]
+                                         for f, c in counties.items()})
     return towns_out, counties, problems, notes
 
 
@@ -228,8 +350,10 @@ def main():
     out = {
         "_meta": {
             "builtOn": datetime.date.today().isoformat(),
-            "about": "Wisconsin town boards as each county publishes them; "
-                     "names and roles only. wi/scripts/build_wi_town_boards.py",
+            "about": "Wisconsin town boards as each county publishes them: "
+                     "names, roles and the telephone numbers the county "
+                     "prints beside each member (Adam, 2026-10-17). "
+                     "wi/scripts/build_wi_town_boards.py",
         },
         "_counties": dict(sorted(counties.items())),
     }
@@ -241,8 +365,12 @@ def main():
             json.dumps(k) + ":" + json.dumps(v, ensure_ascii=False,
                                              separators=(",", ":"))
             for k, v in out.items()) + "\n}\n")
-    print("OK  %d towns, %d people, %d of %d counties publish a list"
-          % (len(towns), people, published, len(counties)))
+    members = [p for t in towns.values() for p in t["board"]]
+    print("OK  %d towns, %d people (%d with a telephone number, %d with a "
+          "second), %d of %d counties publish a list"
+          % (len(towns), people, sum(1 for p in members if p.get("phone")),
+             sum(1 for p in members if p.get("phonesExtra")), published,
+             len(counties)))
 
 
 if __name__ == "__main__":

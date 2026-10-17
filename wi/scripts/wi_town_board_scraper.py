@@ -4,8 +4,15 @@
 One module per county under `town_boards/` (see that package's docstring for
 the contract). This runner imports each, runs it with failure isolation — one
 county's dead link or changed layout is that county's failure and never the
-run's — and writes what each returned, untouched, to the cache. Matching town
-names to the map and deciding what ships is `build_wi_town_boards.py`'s job.
+run's — and writes what each returned to the cache, after
+`town_boards.normalize`: rows that are not a board member are dropped, and a
+telephone number that is an office's line rather than the officer's own (one
+printed more than once anywhere in what the module read, or one a page links
+as tel: to a different number than it shows) is taken off every officer who
+carries it. The rest of each officer's numbers are kept, with the county's
+labels (Adam, 2026-10-17: "if the official government source uses personal
+phone numbers, we publish those"). Matching town names to the map and deciding
+what ships is `build_wi_town_boards.py`'s job.
 
     python3 wi/scripts/wi_town_board_scraper.py              # every county
     python3 wi/scripts/wi_town_board_scraper.py --county clark,door
@@ -52,20 +59,10 @@ def run_one(slug):
     }
     try:
         got = mod.scrape(ctx)
-        towns = got.get("towns") or {}
-        clean_towns = {}
-        dropped = 0
-        for town, people in towns.items():
-            keep = []
-            for p in people:
-                if not p.get("role") or not town_boards.looks_like_person(p.get("name")):
-                    dropped += 1
-                    continue
-                keep.append(town_boards.person(p["name"], p["role"]))
-            if keep:
-                clean_towns[town_boards.clean(town)] = keep
+        clean_towns, dropped, taken = town_boards.normalize(
+            got.get("towns") or {}, ctx)
         rec.update(ok=True, towns=clean_towns, edition=got.get("edition"),
-                   droppedRows=dropped)
+                   droppedRows=dropped, numbersTakenOff=taken)
     except Exception as exc:  # noqa: BLE001 — one county's failure, recorded
         rec.update(ok=False, error="%s: %s" % (type(exc).__name__, exc))
         traceback.print_exc()
@@ -99,13 +96,23 @@ def main():
             towns = rec["towns"]
             chairs = sum(1 for ps in towns.values()
                          if any(p["role"] == "Chairperson" for p in ps))
-            print("%-14s ok   %3d towns, %3d with a chair, %3d people, %d rows dropped"
-                  % (slug, len(towns), chairs, sum(len(v) for v in towns.values()),
-                     rec["droppedRows"]))
+            people = [p for ps in towns.values() for p in ps]
+            print("%-14s ok   %3d towns, %3d with a chair, %3d people, "
+                  "%3d with a number (%d with a second), %d rows dropped, "
+                  "%d office numbers taken off"
+                  % (slug, len(towns), chairs, len(people),
+                     sum(1 for p in people if p.get("phone")),
+                     sum(1 for p in people if p.get("phonesExtra")),
+                     rec["droppedRows"], rec["numbersTakenOff"]))
             if args.show:
+                # names and roles only: --print is for checking a parser's
+                # reading of names, and a run log is no place for numbers
                 for town, ps in sorted(towns.items()):
                     print("    %s: %s" % (town, "; ".join(
-                        "%s %s" % (p["role"], p["name"]) for p in ps)))
+                        "%s %s%s" % (p["role"], p["name"],
+                                     " [%d numbers]" % len(town_boards.phones_of(p))
+                                     if p.get("phone") else "")
+                        for p in ps)))
         else:
             print("%-14s FAIL %s" % (slug, rec["error"]))
     os.makedirs(os.path.dirname(args.out), exist_ok=True)

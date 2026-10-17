@@ -2,13 +2,15 @@
 
 One page lists every town under a "Town of <Name>" heading; each officer is a
 line "Chairman Brian Phelps" or "Supervisor Earl Hinkel", followed by the
-officer's telephone number and home address on lines of their own, which are
-skipped. The page prints no edition or date. Read with the token on 2026-10-15
-over https (robots.txt: 116 bytes, no rule matches the page)."""
+officer's telephone number and home address on lines of their own. The number
+line below the officer's line ships; the address line is not read. The page
+prints no edition or date. Read with the token on 2026-10-15 over https
+(robots.txt: 116 bytes, no rule matches the page)."""
 
 import re
 
-from . import clean, html_text, looks_like_person, norm_role, person, split_blocks
+from . import (clean, following_phones, html_text, looks_like_person,
+               norm_role, person, split_blocks)
 
 COUNTY_FIPS = "119"
 COUNTY_NAME = "Taylor"
@@ -23,13 +25,15 @@ def scrape(ctx):
     towns = {}
     for town, block in split_blocks(text, r"(?m)^Town of ([A-Za-z .'\-]+?)\s*$"):
         people = []
-        for ln in block.split("\n"):
-            m = _LINE.match(ln.strip())
+        lines = [ln.strip() for ln in block.split("\n") if ln.strip()]
+        for i, ln in enumerate(lines):
+            m = _LINE.match(ln)
             if not m:
                 continue
             role, name = norm_role(m.group(1)), clean(m.group(2))
             if role and looks_like_person(name):
-                people.append(person(name, role))
+                people.append(person(name, role, following_phones(
+                    lines, i + 1, limit=2, stop_re=_LINE.pattern)))
         if people:
             towns[town] = people
     return {"towns": towns, "edition": None}

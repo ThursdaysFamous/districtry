@@ -4,7 +4,10 @@ PDF.
 Each town is under a "TOWN OF <NAME>" heading; each office is a line of its own
 ("Chairman", "Supervisor", "Clerk (appointed)") with the officer's name and a
 dotted leader to a telephone number on the next line, then the address and
-e-mail. The towns are followed by "VILLAGE OF GRANTSBURG". One supervisor entry
+e-mail. The number after the leader, and any on the lines below it up to the
+next office, ship on the officer (Adam, 2026-10-17; `role_then_name`); the
+address and the e-mail address are not read. The towns are followed by
+"VILLAGE OF GRANTSBURG". One supervisor entry
 in Blaine is printed twice across a page break, so repeated entries are
 dropped. Read with the token on 2026-10-15 (robots.txt: 816 bytes, no rule
 matches the document's path)."""

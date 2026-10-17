@@ -3,8 +3,10 @@
 The page's "Town Officials" section has a "TOWN OF <NAME>" heading per town,
 then each office on a line of its own ("Chair", "Supervisor 1", sometimes with
 a second duty after a slash, "Supervisor 2/Animal Control") with the officer's
-name on the next line, followed by a home address, a telephone number and an
-e-mail address, none of which is read. Fremont prints its two supervisors as
+name on the next line, followed by a home address, a "Phone" line with the
+telephone number below it and an "Email" line. The telephone number ships (a
+number under a "Fax" line does not); the home address and the e-mail address
+are not read. Fremont prints its two supervisors as
 "East Side Supervisor" and "West Side Supervisor", kept as "Supervisor (East
 Side)". Read with the token on 2026-10-15
 (robots.txt: HTTP 404, so no policy). The page prints "Directory of Public
@@ -12,7 +14,8 @@ Officials 2026" and "Directory updated" with a date."""
 
 import re
 
-from . import html_text, looks_like_person, person, split_blocks, strip_contact
+from . import (following_phones, html_text, looks_like_person, person,
+               split_blocks, strip_contact)
 
 COUNTY_FIPS = "135"
 COUNTY_NAME = "Waupaca"
@@ -44,7 +47,8 @@ def _board(block):
                 role += " (%s Side)" % m.group(1)
         name = strip_contact(lines[i + 1])
         if looks_like_person(name):
-            people.append(person(name, role))
+            people.append(person(name, role, following_phones(
+                lines, i + 2, limit=8, stop_re=_ROLE.pattern)))
     return people
 
 

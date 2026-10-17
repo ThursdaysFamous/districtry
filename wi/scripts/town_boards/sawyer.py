@@ -5,13 +5,17 @@ the sixteen towns (Couderay, Meadowbrook, Ojibwa, Radisson, Sand Lake,
 Weirgor); the other ten link out to each town's own website, which this
 module does not read. Each county town page lists one officer per line as
 "<office> – <name>, <address> - <telephone>" ("Chairman – James Bassett.
-12353W Chafer Rd. ..."); only the name is kept. Read with the token on
-2026-10-15 (robots.txt: 816 bytes, no rule matches these paths)."""
+12353W Chafer Rd. ..."), or (Meadowbrook) the office and name on one line and
+the address, a dot leader and the telephone on the next. The name is kept, and
+so is the telephone number that ends the officer's line, or the one after the
+leader on the line below; the address before it is not read. Read with the
+token on 2026-10-15 (robots.txt: 816 bytes, no rule matches these paths)."""
 
 import re
 import urllib.parse
 
-from . import clean, html_text, looks_like_person, norm_role, person
+from . import (clean, end_phones, following_phones, html_text,
+               looks_like_person, norm_role, person)
 
 COUNTY_FIPS = "113"
 COUNTY_NAME = "Sawyer"
@@ -27,9 +31,10 @@ _LINE = re.compile(r"^((?:town\s+)?(?:chair\w*|supervisor)"
 def _name(rest):
     """The name is what comes before the first comma, or before a full stop
     that is followed by an address number ("James Bassett. 12353W Chafer
-    Rd."), or before a " - " that leads to a telephone number."""
-    rest = re.split(r",|\.\s+(?=\S*\d)|\s+[-–—]\s*(?=\(?\d)", rest, maxsplit=1)[0]
-    return clean(rest)
+    Rd."), or before a " - " that leads to a telephone number. Returns the
+    name and the rest of the line after it."""
+    parts = re.split(r",|\.\s+(?=\S*\d)|\s+[-–—]\s*(?=\(?\d)", rest, maxsplit=1)
+    return clean(parts[0]), (rest[len(parts[0]):] if len(parts) > 1 else "")
 
 
 def scrape(ctx):
@@ -49,14 +54,17 @@ def scrape(ctx):
         if start < 0:
             continue
         people = []
-        for ln in text[start + len(head):].split("\n")[:40]:
-            m = _LINE.match(ln.strip())
+        lines = [ln.strip() for ln in text[start + len(head):].split("\n")[:40]]
+        for i, ln in enumerate(lines):
+            m = _LINE.match(ln)
             if not m:
                 continue
             role = norm_role(m.group(1))
-            name = _name(m.group(2))
+            name, after = _name(m.group(2))
             if role and looks_like_person(name):
-                people.append(person(name, role))
+                phones = end_phones(after)
+                phones += following_phones(lines, i + 1, limit=1)
+                people.append(person(name, role, phones))
         if people:
             towns[town] = people
     return {"towns": towns, "edition": None}

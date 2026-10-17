@@ -3,8 +3,9 @@
 The municipalities page (/government/municipalities/) links each of the eight
 towns as ?i=<id>. Each town page lists its elected officials as the office on
 one line ("Chairman", "Supervisor") and the name on the next, followed by
-telephone, e-mail link and mailing-address lines, which are not kept. Read
-with the token on 2026-10-15 (robots.txt served empty, so allow all)."""
+telephone, e-mail link and mailing-address lines. The "Phone:" line ships on
+the officer; the address is not read. Read with the token on 2026-10-15
+(robots.txt served empty, so allow all)."""
 
 import re
 import urllib.parse

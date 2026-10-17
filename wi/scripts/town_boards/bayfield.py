@@ -8,11 +8,15 @@ telephone number on the first line, then the street address and an e-mail line.
 An asterisk before a name marks a staggered even-year term and is dropped. Some
 pages set the offices in two columns, so the page is rebuilt from word positions:
 the left column is read before the right one. Read with the token on 2026-10-15
-(robots.txt: 816 bytes, no rule matches the document's path)."""
+(robots.txt: 816 bytes, no rule matches the document's path).
+
+The numbers printed after the name on its first line ship on the officer
+("Cell:" kept as the label); the address line below it is not read."""
 
 import re
 
-from . import clean, looks_like_person, person, strip_contact
+from . import (clean, looks_like_person, person, phones_after_name,
+               strip_contact)
 
 COUNTY_FIPS = "007"
 COUNTY_NAME = "Bayfield"
@@ -87,7 +91,7 @@ def _people(block):
         name = re.split(r"\(|\bNo Phone\b|\d{3}-\d{4}", ln)[0]
         name = strip_contact(name).lstrip("*").strip()
         if looks_like_person(name):
-            people.append(person(name, role))
+            people.append(person(name, role, phones_after_name(ln, name)))
             if role == "Chairperson":
                 role = None     # one chair; what follows is the address
     return people

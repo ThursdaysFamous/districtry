@@ -4,13 +4,14 @@ The "TOWN OFFICIALS" section (ending at "VILLAGE OFFICIALS") opens each town
 with a line "Town of <Name> – (Town Hall – address)". Each office is an
 all-capital heading ("CHAIRMAN", "SUPERVISORS", "CLERK", ...) followed by one
 line per officer: "Name – (telephone) ...... home address", sometimes with an
-e-mail line after it. Only the text before the telephone is read. Read with the
-token on 2026-10-15 (robots.txt: 816 bytes, no rule matches the document's
-path)."""
+e-mail line after it. The name is the text before the telephone, and the
+numbers between the name and the dot leader ship on the officer; the address
+after the leader is not read. Read with the token on 2026-10-15 (robots.txt:
+816 bytes, no rule matches the document's path)."""
 
 import re
 
-from . import clean, looks_like_person, person
+from . import clean, looks_like_person, person, phones_after_name
 
 COUNTY_FIPS = "017"
 COUNTY_NAME = "Chippewa"
@@ -46,7 +47,7 @@ def _people(block):
             continue
         name = _name(ln)
         if looks_like_person(name):
-            people.append(person(name, role))
+            people.append(person(name, role, phones_after_name(ln, name)))
             if role == "Chairperson":
                 role = None
     return people

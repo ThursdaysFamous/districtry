@@ -3,14 +3,16 @@
 Each town has a page headed "TOWN OF <NAME>". An office is printed as a
 heading on its own line ("Chairperson", "Supervisors", "Clerk/Treasurer"),
 followed by each holder's name with a dot leader and telephone, then the
-holder's street address, town and e-mail on the lines below. A heading can
-cover two names ("Supervisors"). Read with the token on 2026-10-15 (the file
+holder's street address, town and e-mail on the lines below. The telephone
+after the leader ships on the officer; the address lines are not read. A
+heading can cover two names ("Supervisors"). Read with the token on 2026-10-15 (the file
 is served from cms2.revize.com, whose robots.txt allows /*.pdf; the county
 host has no robots.txt)."""
 
 import re
 
-from . import looks_like_person, norm_role, person, split_blocks, strip_contact
+from . import (looks_like_person, norm_role, person, phones_after_name,
+               split_blocks, strip_contact)
 
 COUNTY_FIPS = "057"
 COUNTY_NAME = "Juneau"
@@ -42,7 +44,7 @@ def _officers(block):
         if _LEADER.search(ln):
             name = strip_contact(_CUT.sub("", ln))
             if role and looks_like_person(name):
-                people.append(person(name, role))
+                people.append(person(name, role, phones_after_name(ln, name)))
             elif not looks_like_person(name):
                 # a leader line that is a place ("Polling Place ......") ends
                 # the office it follows

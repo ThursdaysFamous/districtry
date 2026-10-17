@@ -5,7 +5,9 @@ The "Towns" page (/community/area-cities-villages-and-townships/towns) links a
 page for each of the 21 towns. Each town page has a table of Position /
 Address / Contact, one cell per line in the page text: the office
 ("Chairperson", "Supervisor I", "Supervisor II"), then the name, then the
-officer's home address, telephone and e-mail, which are not kept.
+officer's home address, telephone and e-mail. The telephone cells ship on the
+officer, with the label the county puts after a number ("~ Home", "~ Cell");
+a number marked "~ Fax" does not, and the address is not read.
 
 CLIENT. Measured 2026-10-15: the token got HTTP 403 Forbidden on the Towns
 page (urllib, UA_ROSTER_BOT); the same page served in full (about 154 KB) to

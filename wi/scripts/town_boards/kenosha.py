@@ -5,7 +5,8 @@ DocumentCenter/View/14781 on the same host).
 Each town has a page headed "TOWN OF <NAME>" giving the town hall, then each
 office as a heading line ("Chairperson", "Chairman", "Supervisor",
 "Supervisor #1") with the holder's name, a dot leader and a telephone on the
-next line. The county-board members for the town follow under "County Board
+next line. The number after the leader ships on the officer (Adam, 2026-10-17;
+`role_then_name`). The county-board members for the town follow under "County Board
 Supervisor(s)" and are not read.
 
 CLIENT. Read with Chrome on 2026-10-15. The same day this project's token got

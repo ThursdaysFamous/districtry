@@ -7,13 +7,15 @@ name and "Terms Expire April 2027" on one line; villages and the city are
 headed "Village of ..." and "City of ..." and are skipped. Each officer is two
 lines: the name with a dotted leader to a telephone number, then the office
 ("Chairman", "Supervisor #1") with a leader to the home address; one entry
-prints the name and the office on the same line. A note such as
-"(Term expires April 2028)" after a name is dropped. Read with the token on
-2026-10-15 (robots.txt: 816 bytes, no rule matches the page's path)."""
+prints the name and the office on the same line. The telephone at the end of
+the name line ships on the officer; an address after the office is not read.
+A note such as "(Term expires April 2028)" after a name is dropped. Read with
+the token on 2026-10-15 (robots.txt: 816 bytes, no rule matches the page's
+path)."""
 
 import re
 
-from . import clean, looks_like_person, norm_role, person
+from . import clean, looks_like_person, norm_role, person, phones_after_name
 
 COUNTY_FIPS = "029"
 COUNTY_NAME = "Door"
@@ -33,7 +35,7 @@ def scrape(ctx):
     if start < 0:
         raise RuntimeError("the town, village and city officers section was not found")
     lines = [ln.strip() for ln in text[start:].split("\n") if ln.strip()]
-    towns, town, prev = {}, None, None
+    towns, town, prev, prev_line = {}, None, None, None
     for ln in lines:
         m = _HEAD.match(ln)
         if m:
@@ -44,22 +46,25 @@ def scrape(ctx):
                 town = None
             else:
                 town = name
-            prev = None
+            prev = prev_line = None
             continue
         if re.fullmatch(r"\d{1,3}", ln):
             continue                # a page number between a name and its office
         lead = _lead(ln)
         role = norm_role(lead) if re.match(r"^(Chair|Supervisor)", ln, re.I) else None
         if town and role and prev and looks_like_person(prev):
-            towns.setdefault(town, []).append(person(prev, role))
+            towns.setdefault(town, []).append(
+                person(prev, role, phones_after_name(prev_line, prev)))
         elif town and not role:
             # the name and the office on one line ("Steven Sullivan Chairman")
             both = re.match(r"^(.+?)\s+((?:Chair\w*|Supervisor)\b.*)$", lead)
             if both and norm_role(both.group(2)) and looks_like_person(both.group(1)):
+                # the leader after the office runs to the telephone
                 towns.setdefault(town, []).append(
-                    person(both.group(1), norm_role(both.group(2))))
+                    person(both.group(1), norm_role(both.group(2)),
+                           phones_after_name(ln, both.group(1))))
                 lead = None
-        prev = lead
+        prev, prev_line = lead, ln
     m = re.search(r"OFFICIAL\s*\nDIRECTORY\s*\n(\d{4})\s*-\s*(\d{4})", text)
     edition = ("%s-%s" % m.groups()) if m else None
     return {"towns": towns, "edition": edition}
