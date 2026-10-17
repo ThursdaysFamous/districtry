@@ -64,6 +64,7 @@ from question_page import (METROS, PageError, check_layer, head, load,  # noqa: 
 # Importing it keeps ONE reader of that question; grouping the file again here
 # is how the page and the table come to disagree about how many districts exist.
 from build_officeholder_tables import afr_people, afr_units  # noqa: E402
+from build_county_pages import dial_digits  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -217,7 +218,7 @@ def township_page(tag, spec, worksheet):
             "<td>%s</td></tr>" % (
                 esc(rec["name"]),
                 esc(office["address"]),
-                ('<a href="tel:%s">%s</a>' % (re.sub(r"[^0-9+]", "", office["phone"]),
+                ('<a href="tel:%s">%s</a>' % (esc(dial_digits(office["phone"])),
                                               esc(office["phone"]))
                  if office.get("phone") else ""),
                 ('<a href="%s" target="_blank" rel="noopener">Website</a>'
@@ -902,7 +903,7 @@ def office_table(units, noun, plural):
             "      <tr><td>%s</td><td>%s</td><td>%s</td></tr>"
             % (esc(name), esc(where),
                ('<a href="tel:%s">%s</a>'
-                % (re.sub(r"[^0-9+]", "", phone), esc(phone))) if phone else ""))
+                % (esc(dial_digits(phone)), esc(phone))) if phone else ""))
     if not rows:
         raise PageError("no %s publishes an office in its filing — the page's "
                         "office table would be empty" % noun)

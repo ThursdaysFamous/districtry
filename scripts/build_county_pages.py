@@ -2742,6 +2742,63 @@ def schema_telephone(value):
     return PHONE_LABEL_RE.sub("", (value or "").strip())
 
 
+# Where an extension begins in a printed number ("ext. 12", "EXT 105",
+# "x 236"). A tel: link dials the number before it: run onto the end of the
+# number, the extension's digits would dial a different number. The extension
+# stays in the text, where a reader sees it. The apps' cardPhoneDial (engine
+# card-helpers) reads a number the same way.
+EXTENSION_RE = re.compile(r"(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d", re.I)
+
+
+def dial_digits(value):
+    """What a tel: link dials for one printed number: its digits (and a
+    leading +), stopping where an extension begins."""
+    value = value or ""
+    m = EXTENSION_RE.search(value)
+    if m:
+        value = value[:m.start() + len(m.group(1))]
+    return re.sub(r"[^0-9+]", "", value)
+
+
+# Made-up numbers, each with what its tel: link must dial. "fax" is there for
+# the x a word can end in, which is not an extension.
+DIAL_CASES = (
+    ("(402) 555-0101 ext. 3203", "4025550101"),
+    ("608-555-0102 EXT 105", "6085550102"),
+    ("(217) 555-0103 x 236", "2175550103"),
+    ("(712) 555-0104 x2", "7125550104"),
+    ("555-0105 Ext: 7", "5550105"),
+    ("cell 555-0106", "5550106"),
+    ("+1 608 555 0107", "+16085550107"),
+    ("fax 555-0108", "5550108"),
+)
+CARD_HELPERS = os.path.join(REPO_ROOT, "engine", "index.html", "card-helpers.txt")
+
+
+def check_dial_rule():
+    """[] or the problems with how a tel: link is built: dial_digits must
+    answer DIAL_CASES, and the apps' cardPhoneDial must read an extension with
+    the same pattern, so a card and a page cannot dial a number differently."""
+    out = ["dial_digits(%r) gives %r, not %r" % (v, dial_digits(v), want)
+           for v, want in DIAL_CASES if dial_digits(v) != want]
+    try:
+        block = open(CARD_HELPERS, encoding="utf-8").read()
+    except OSError:
+        return out + ["%s is missing: cardPhoneDial cannot be compared with "
+                      "dial_digits" % os.path.relpath(CARD_HELPERS, REPO_ROOT)]
+    m = re.search(r"function cardPhoneDial\(phone\) \{.*?var m = /(.+?)/i\.exec\(s\);",
+                  block, re.S)
+    if not m:
+        out.append("cardPhoneDial in %s no longer reads an extension with one "
+                   "/.../i pattern, so it cannot be compared with dial_digits"
+                   % os.path.relpath(CARD_HELPERS, REPO_ROOT))
+    elif m.group(1) != EXTENSION_RE.pattern:
+        out.append("cardPhoneDial reads an extension as /%s/i and dial_digits as "
+                   "/%s/i: a card and a page would dial a number differently"
+                   % (m.group(1), EXTENSION_RE.pattern))
+    return out
+
+
 def member_phones(m):
     """Every number a roster carries for one person, first one first: `phone`,
     then `phonesExtra`, the further numbers a source prints for the same
@@ -2909,7 +2966,7 @@ def member_html(m):
         contact.append('<a href="mailto:%s">%s</a>' % (esc(email), esc(email)))
     for phone in member_phones(m):
         contact.append('<a href="tel:%s">%s</a>'
-                       % (esc(re.sub(r"[^0-9+]", "", phone)), esc(phone)))
+                       % (esc(dial_digits(phone)), esc(phone)))
     for field, label in (("url", "Official profile"),
                          ("profileUrl", "Official profile"),
                          ("documentUrl", "County directory")):
@@ -4156,7 +4213,7 @@ def contact_html(c):
     details = []
     if c["phone"]:
         details.append('<a href="tel:%s">%s</a>'
-                       % (esc(re.sub(r"[^0-9+]", "", c["phone"])), esc(c["phone"])))
+                       % (esc(dial_digits(c["phone"])), esc(c["phone"])))
     if c["email"]:
         details.append('<a href="mailto:%s">%s</a>'
                        % (esc(c["email"]), esc(c["email"])))
@@ -4247,6 +4304,7 @@ def main():
         nameless_keys |= {_nobody_key(inst, c) for c in nameless}
         read_by_instance[inst_key(inst)] = {os.path.basename(p) for p in paths}
     problems += check_workflows(read_by_instance)
+    problems += check_dial_rule()
     reg_problems, candidates = check_registration(all_paths)
     problems += reg_problems
     for key, rec in sorted(NAMES_NOBODY.items()):

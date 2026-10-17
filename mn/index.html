@@ -11892,7 +11892,8 @@ function initMinnesotaExplorer() {
    *   - mailto:/tel: hrefs are built HERE from a raw address/number — an
    *     email address is never printed (the "Email" label is the link), and
    *     a phone number displays with non-breaking hyphens while its tel:
-   *     href keeps only dialable characters.
+   *     href keeps only dialable characters, and stops where an extension
+   *     begins.
    * A render() returns one wrapper element with class "card-flush"; the
    * styles-card-v2 rules key row padding/borders off that marker. */
   function cardEl(tag, className, text) {
@@ -11911,8 +11912,19 @@ function initMinnesotaExplorer() {
     a.textContent = String(label || safe);
     return a;
   }
+  function cardPhoneDial(phone) {
+    // What a tel: link dials for one printed number: its digits (and a
+    // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
+    // "x 236"). Run onto the end of the number, an extension's digits would
+    // dial a different number; the extension stays in the text, where the
+    // reader sees it.
+    var s = String(phone);
+    var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+    if (m) s = s.slice(0, m.index + m[1].length);
+    return s.replace(/[^\d+]/g, "");
+  }
   function cardPhoneLink(phone) {
-    var dial = String(phone).replace(/[^\d+]/g, "");
+    var dial = cardPhoneDial(phone);
     if (!dial) return null;
     var a = cardEl("a", "card-phone", String(phone).replace(/-/g, "‑"));
     a.href = "tel:" + dial;

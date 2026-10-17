@@ -42,7 +42,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from build_county_pages import member_phones, party_name, schema_telephones    # noqa: E402
+from build_county_pages import dial_digits, member_phones, party_name, schema_telephones  # noqa: E402
 from build_legislator_pages import INSTANCES as LEGISLATOR_INSTANCES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -1166,7 +1166,7 @@ def render_section(tag, section, verified):
 def tel_link(value):
     if not value:
         return ""
-    return '<a href="tel:%s">%s</a>' % (re.sub(r"[^0-9+]", "", value),
+    return '<a href="tel:%s">%s</a>' % (html.escape(dial_digits(value)),
                                         html.escape(value))
 
 
