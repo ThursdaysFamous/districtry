@@ -1,5 +1,5 @@
 {
- "_about": "Kept by hand. The mayor and council of each of Tennessee's 28 cities and towns above 25,000 people, transcribed from each one's own pages and keyed by its Census place id. tn/scripts/build_tn_city_councils.py re-reads every page cited here and refuses to write tn/data/app/tn-city-councils.json unless every name is on the page its seat cites. 'by' is 'ward' for a seat the ward's or district's own voters elect and 'city' for one the whole city or town elects; 'as' is the page's own spelling where it differs.",
+ "_about": "Kept by hand. The mayor and council of each of Tennessee's 28 cities and towns above 25,000 people, transcribed from each one's own pages and keyed by its Census place id. tn/scripts/build_tn_city_councils.py re-reads every page cited here and refuses to write tn/data/app/tn-city-councils.json unless every name is on the page its seat cites. 'by' is 'ward' for a seat the ward's or district's own voters elect and 'city' for one the whole city or town elects; 'as' is the page's own spelling where it differs. 'email', 'phone' and 'phonesExtra' are what the page a seat cites prints beside that member alone (scripts/city_councils.py, CONTACTS), and the build proves each on that page; 'officeLines' and 'officeMailboxes' are the office's own lines and mailboxes the city's pages print, which no seat may carry.",
  "cities": {
   "4703440": {
    "name": "Bartlett",
@@ -9,48 +9,58 @@
    "sources": {
     "board": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
    },
+   "officeLines": [
+    "901-385-6400"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "David Parsons",
-     "from": "board"
+     "from": "board",
+     "email": "dparsons@cityofbartlett.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Brad King",
-     "from": "board"
+     "from": "board",
+     "email": "bking@cityofbartlett.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Robert Griffin",
-     "from": "board"
+     "from": "board",
+     "email": "rgriffin@cityofbartlett.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "David Reaves",
-     "from": "board"
+     "from": "board",
+     "email": "dreaves@cityofbartlett.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Monique Williams",
-     "from": "board"
+     "from": "board",
+     "email": "mowilliams@cityofbartlett.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Jack Young",
-     "from": "board"
+     "from": "board",
+     "email": "jyoung@cityofbartlett.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Kevin Quinn",
-     "from": "board"
+     "from": "board",
+     "email": "kquinn@cityofbartlett.org"
     }
    ]
   },
@@ -62,48 +72,63 @@
    "sources": {
     "board": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
    },
+   "officeLines": [
+    "615-371-2200",
+    "(615) 371-0060"
+   ],
+   "officeMailboxes": [
+    "citycommissioners@brentwoodtn.gov",
+    "info@brentwoodtn.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Nelson Andrews",
-     "from": "board"
+     "from": "board",
+     "phone": "cell 615-917-1384"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Rhea E. Little III",
-     "from": "board"
+     "from": "board",
+     "phone": "home 615-571-2628"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Anne Dunn",
-     "from": "board"
+     "from": "board",
+     "phone": "home 615-370-3702"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Janet Donahue",
-     "from": "board"
+     "from": "board",
+     "phone": "cell 615-927-6512"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Kim Smithson Gawrys",
-     "from": "board"
+     "from": "board",
+     "phone": "cell 615-927-5104"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Ken Travis",
-     "from": "board"
+     "from": "board",
+     "phone": "cell 615-981-9572"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Stevan Pippin",
-     "from": "board"
+     "from": "board",
+     "phone": "cell 615-866-7249"
     }
    ]
   },
@@ -156,6 +181,13 @@
     "council": "https://chattanooga.gov/government/city-council",
     "mayor": "https://chattanooga.gov/government/mayors-office"
    },
+   "officeLines": [
+    "(423) 643-7170",
+    "(423) 643-7800"
+   ],
+   "officeMailboxes": [
+    "council-clerk@chattanooga.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
@@ -168,63 +200,72 @@
      "ward": "1",
      "by": "ward",
      "name": "Chip Henderson",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7186"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Jenny Hill",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7187"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Jeff Davis",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7188"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Cody Harvey",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7184"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Dennis Clark",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7183"
     },
     {
      "seat": "District 6",
      "ward": "6",
      "by": "ward",
      "name": "Jenni Berz",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7181"
     },
     {
      "seat": "District 7",
      "ward": "7",
      "by": "ward",
      "name": "Raquetta Dotley",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7180"
     },
     {
      "seat": "District 8",
      "ward": "8",
      "by": "ward",
      "name": "Marvene Noel",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7182"
     },
     {
      "seat": "District 9",
      "ward": "9",
      "by": "ward",
      "name": "Ron Elliott",
-     "from": "council"
+     "from": "council",
+     "phone": "(423) 643-7185"
     }
    ]
   },
@@ -236,12 +277,16 @@
     "council": "https://www.clarksvilletn.gov/522/City-Council",
     "mayor": "https://www.clarksvilletn.gov/283/Mayors-Office"
    },
+   "officeLines": [
+    "931-645-7444"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Joe Pitts",
-     "from": "mayor"
+     "from": "mayor",
+     "email": "joe.pitts@clarksvilletn.gov"
     },
     {
      "seat": "Ward 1",
@@ -337,12 +382,17 @@
    "sources": {
     "council": "https://www.clevelandtn.gov/122/Mayor-City-Council"
    },
+   "officeLines": [
+    "(423) 472-4551"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Kevin Brooks",
-     "from": "council"
+     "from": "council",
+     "email": "kbrooks@clevelandtn.gov",
+     "phone": "(423) 476-8931"
     },
     {
      "seat": "District 1",
@@ -447,6 +497,9 @@
    "sources": {
     "council": "https://www.columbiatn.gov/773/Meet-the-Council"
    },
+   "officeLines": [
+    "931-560-1500"
+   ],
    "seats": [
     {
      "seat": "Mayor",
@@ -458,42 +511,48 @@
      "seat": "Vice Mayor",
      "by": "city",
      "name": "Randy McBroom",
-     "from": "council"
+     "from": "council",
+     "email": "rmcbroom@columbiatn.gov"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "ward",
      "name": "Carl McCullen",
-     "from": "council"
+     "from": "council",
+     "email": "cmccullen@columbiatn.gov"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "ward",
      "name": "Charlie Huffman",
-     "from": "council"
+     "from": "council",
+     "email": "chuffman@columbiatn.gov"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "ward",
      "name": "Cheryl Secrest",
-     "from": "council"
+     "from": "council",
+     "email": "csecrest@columbiatn.gov"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "ward",
      "name": "Kenny Marshall",
-     "from": "council"
+     "from": "council",
+     "email": "kmarshall@columbiatn.gov"
     },
     {
      "seat": "Ward 5",
      "ward": "5",
      "by": "ward",
      "name": "Brian McKelvy",
-     "from": "council"
+     "from": "council",
+     "email": "bmckelvy@columbiatn.gov"
     }
    ]
   },
@@ -504,36 +563,45 @@
    "sources": {
     "council": "https://cookeville-tn.gov/358/City-Council"
    },
+   "officeLines": [
+    "931-526-9591",
+    "931-520-5241"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Chad Gilbert",
-     "from": "council"
+     "from": "council",
+     "email": "cgilbert@cookeville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Luke Eldridge",
-     "from": "council"
+     "from": "council",
+     "email": "leldridge@cookeville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Cigi England",
-     "from": "council"
+     "from": "council",
+     "email": "cengland@cookeville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Ali Bagci",
-     "from": "council"
+     "from": "council",
+     "email": "abagci@cookeville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Kelly Parkison",
-     "from": "council"
+     "from": "council",
+     "email": "kparkison@cookeville-tn.gov"
     }
    ]
   },
@@ -545,64 +613,79 @@
    "sources": {
     "board": "https://www.franklintn.gov/government/board-of-mayor-aldermen"
    },
+   "officeLines": [
+    "615-791-3217"
+   ],
+   "officeMailboxes": [
+    "recorder@franklintn.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Ken Moore",
-     "from": "board"
+     "from": "board",
+     "email": "ken.moore@franklintn.gov"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "ward",
      "name": "Beverly Burger",
-     "from": "board"
+     "from": "board",
+     "email": "bev@aldermanburger.com"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "ward",
      "name": "Matt Brown",
-     "from": "board"
+     "from": "board",
+     "email": "matt.brown@franklintn.gov"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "ward",
      "name": "Jason Potts",
-     "from": "board"
+     "from": "board",
+     "email": "alderman.potts@franklintn.gov"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "ward",
      "name": "Patrick Baggett",
-     "from": "board"
+     "from": "board",
+     "email": "patrick.baggett@franklintn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Ann Petersen",
-     "from": "board"
+     "from": "board",
+     "email": "annpetersen@comcast.net"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Clyde Barnhill",
-     "from": "board"
+     "from": "board",
+     "email": "clyde.barnhill@franklintn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Brandy Blanton",
-     "from": "board"
+     "from": "board",
+     "email": "brandy.blanton@franklintn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Greg Caesar",
-     "from": "board"
+     "from": "board",
+     "email": "greg.caesar@franklintn.gov"
     }
    ]
   },
@@ -614,59 +697,74 @@
    "sources": {
     "council": "https://www.gallatintn.gov/497/Mayor-City-Council"
    },
+   "officeLines": [
+    "615-451-5900",
+    "615-451-5961"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Paige Brown",
-     "from": "council"
+     "from": "council",
+     "email": "paige.brown@gallatintn.gov"
     },
     {
      "seat": "District 1",
      "ward": "1",
      "by": "ward",
      "name": "Paul Jones",
-     "from": "council"
+     "from": "council",
+     "email": "paul.jones@gallatintn.gov"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Todd Alexander",
-     "from": "council"
+     "from": "council",
+     "email": "todd.alexander@gallatintn.gov"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Pascal Jouvence",
-     "from": "council"
+     "from": "council",
+     "email": "pascal.jouvence@gallatintn.gov",
+     "phone": "615-983-2663"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Craig Hayes",
-     "from": "council"
+     "from": "council",
+     "email": "craig.hayes@gallatintn.gov",
+     "phone": "615-347-8677"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Steven Carter",
-     "from": "council"
+     "from": "council",
+     "email": "steven.carter@gallatintn.gov",
+     "phone": "615-483-6549"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Steve Fann",
-     "from": "council"
+     "from": "council",
+     "phone": "615-967-6885"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Shawn Fennell",
-     "from": "council"
+     "from": "council",
+     "email": "shawn.fennell@gallatintn.gov"
     }
    ]
   },
@@ -725,96 +823,124 @@
    "sources": {
     "board": "https://hvilletn.org/409/Board-of-Mayor-Aldermen"
    },
+   "officeLines": [
+    "615-822-1000"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Jamie Clary",
-     "from": "board"
+     "from": "board",
+     "email": "jclary@hvilletn.org"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "ward",
      "name": "Mark Burgdorf",
-     "from": "board"
+     "from": "board",
+     "email": "mburgdorf@hvilletn.org",
+     "phone": "615-957-6264"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "ward",
      "name": "Mark Skidmore",
-     "from": "board"
+     "from": "board",
+     "email": "mskidmore@hvilletn.org",
+     "phone": "615-824-0033"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "ward",
      "name": "Don Ward",
-     "from": "board"
+     "from": "board",
+     "email": "dward@hvilletn.org",
+     "phone": "615-405-3236"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "ward",
      "name": "Michael Martin",
-     "from": "board"
+     "from": "board",
+     "email": "mmartin@hvilletn.org",
+     "phone": "615-545-4547"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "ward",
      "name": "Jeffrey Sasse",
-     "from": "board"
+     "from": "board",
+     "email": "jsasse@hvilletn.org",
+     "phone": "615-348-7838"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "ward",
      "name": "Bob Garza",
-     "from": "board"
+     "from": "board",
+     "email": "bgarza@hvilletn.org",
+     "phone": "615-714-7920"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "ward",
      "name": "Terri Goodwin",
-     "from": "board"
+     "from": "board",
+     "email": "tgoodwin@hvilletn.org",
+     "phone": "615-973-4431"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "ward",
      "name": "Karen Dixon",
-     "from": "board"
+     "from": "board",
+     "email": "kdixon@hvilletn.org",
+     "phone": "615-766-5739"
     },
     {
      "seat": "Ward 5",
      "ward": "5",
      "by": "ward",
      "name": "Rachel Collins",
-     "from": "board"
+     "from": "board",
+     "email": "rcollins@hvilletn.org",
+     "phone": "615-477-3541"
     },
     {
      "seat": "Ward 5",
      "ward": "5",
      "by": "ward",
      "name": "Janna Garton",
-     "from": "board"
+     "from": "board",
+     "email": "jgarton@hvilletn.org",
+     "phone": "615-509-9425"
     },
     {
      "seat": "Ward 6",
      "ward": "6",
      "by": "ward",
      "name": "Eddie Roberson",
-     "from": "board"
+     "from": "board",
+     "email": "eroberson@hvilletn.org",
+     "phone": "615-618-6704"
     },
     {
      "seat": "Ward 6",
      "ward": "6",
      "by": "ward",
      "name": "Mark Evans",
-     "from": "board"
+     "from": "board",
+     "email": "mevans@hvilletn.org",
+     "phone": "615-957-5687"
     }
    ]
   },
@@ -949,48 +1075,58 @@
    "sources": {
     "board": "https://www.kingsporttn.gov/government/bma/"
    },
+   "officeLines": [
+    "423-229-9412"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Paul W. Montgomery",
-     "from": "board"
+     "from": "board",
+     "email": "paulmontgomery@kingsporttn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Darrell Duncan",
-     "from": "board"
+     "from": "board",
+     "email": "darrellduncan@kingsporttn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Morris Baker",
-     "from": "board"
+     "from": "board",
+     "email": "morrisbaker@kingsporttn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Julie Byers",
-     "from": "board"
+     "from": "board",
+     "email": "juliebyers@kingsporttn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Calvin Clifton",
-     "from": "board"
+     "from": "board",
+     "email": "calvinclifton@kingsporttn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Richard Isaacs",
-     "from": "board"
+     "from": "board",
+     "email": "richardisaacs@kingsporttn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "James Phillips",
-     "from": "board"
+     "from": "board",
+     "email": "jamesphillips@kingsporttn.gov"
     }
    ]
   },
@@ -1004,6 +1140,12 @@
     "council": "https://www.knoxvilletn.gov/1340/City-Council-Members",
     "mayor": "https://www.knoxvilletn.gov/248/Mayor-Indya-Kincannons-Office"
    },
+   "officeLines": [
+    "865-215-2040"
+   ],
+   "officeMailboxes": [
+    "mayor@knoxvilletn.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
@@ -1016,60 +1158,78 @@
      "ward": "1",
      "by": "ward",
      "name": "Karyn Adams",
-     "from": "council"
+     "from": "council",
+     "email": "kadams@knoxvilletn.gov",
+     "phone": "865-207-6944"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Nathan Honeycutt",
-     "from": "council"
+     "from": "council",
+     "email": "nhoneycutt@knoxvilletn.gov",
+     "phone": "865-236-1218"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Doug Lloyd",
-     "from": "council"
+     "from": "council",
+     "email": "dlloyd@knoxvilletn.gov",
+     "phone": "865-369-8675"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Matthew DeBardelaben",
-     "from": "council"
+     "from": "council",
+     "email": "mdebardelaben@knoxvilletn.gov",
+     "phone": "865-809-8480"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Charles Thomas",
-     "from": "council"
+     "from": "council",
+     "email": "cathomas@knoxvilletn.gov",
+     "phone": "865-687-6090"
     },
     {
      "seat": "District 6",
      "ward": "6",
      "by": "ward",
      "name": "Denzel Grant",
-     "from": "council"
+     "from": "council",
+     "email": "dgrant@knoxvilletn.gov",
+     "phone": "865-770-8290"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Lynne Fugate",
-     "from": "council"
+     "from": "council",
+     "email": "lfugate@knoxvilletn.gov",
+     "phone": "865-566-7414"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Debbie Helsley",
-     "from": "council"
+     "from": "council",
+     "email": "dhelsley@knoxvilletn.gov",
+     "phone": "865-789-8875"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Amelia Parker",
-     "from": "council"
+     "from": "council",
+     "email": "amparker@knoxvilletn.gov",
+     "phone": "865-851-8561"
     }
    ]
   },
@@ -1124,54 +1284,68 @@
     "council": "https://www.lebanontn.org/m/directory/department?did=30",
     "mayor": "https://www.lebanontn.org/m/directory/department?did=16"
    },
+   "officeLines": [
+    "615-443-2839"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Rick Bell",
-     "from": "mayor"
+     "from": "mayor",
+     "email": "rick.bell@lebanontn.org"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "ward",
      "name": "Joey W. Carmack",
-     "from": "council"
+     "from": "council",
+     "email": "joey.carmack@lebanontn.org",
+     "phone": "615-969-6419"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "ward",
      "name": "Geri Ashley",
-     "from": "council"
+     "from": "council",
+     "email": "geri.ashley@lebanontn.org"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "ward",
      "name": "Camille Burdine",
-     "from": "council"
+     "from": "council",
+     "email": "camille.burdine@lebanontn.org",
+     "phone": "615-706-0885"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "ward",
      "name": "Chris Crowell",
-     "from": "council"
+     "from": "council",
+     "email": "chris.crowell@lebanontn.org"
     },
     {
      "seat": "Ward 5",
      "ward": "5",
      "by": "ward",
      "name": "Tick Bryan",
-     "from": "council"
+     "from": "council",
+     "email": "tick.bryan@lebanontn.org",
+     "phone": "615-476-8605"
     },
     {
      "seat": "Ward 6",
      "ward": "6",
      "by": "ward",
      "name": "Phil Morehead",
-     "from": "council"
+     "from": "council",
+     "email": "phil.morehead@lebanontn.org",
+     "phone": "615-964-4124"
     }
    ]
   },
@@ -1182,36 +1356,45 @@
    "sources": {
     "council": "https://www.maryvillegov.com/city-council-members.html"
    },
+   "officeLines": [
+    "(865) 273-3401",
+    "(865) 273-3300"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Andy White",
-     "from": "council"
+     "from": "council",
+     "email": "awhite@maryville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Fred Metz",
-     "from": "council"
+     "from": "council",
+     "email": "fmetz@maryville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Tommy Hunt",
-     "from": "council"
+     "from": "council",
+     "email": "thunt@maryville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Sarah Herron",
-     "from": "council"
+     "from": "council",
+     "email": "sherron@maryville-tn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Drew Miles",
-     "from": "council"
+     "from": "council",
+     "email": "dmiles@maryville-tn.gov"
     }
    ]
   },
@@ -1240,103 +1423,120 @@
     "super-9-2": "https://memphistn.gov/city_council/super-district-9-2/",
     "super-9-3": "https://memphistn.gov/city_council/super-district-9-3/"
    },
+   "officeLines": [
+    "(901) 636-6500"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Paul Young",
-     "from": "mayor"
+     "from": "mayor",
+     "email": "mayor@memphistn.gov"
     },
     {
      "seat": "District 1",
      "ward": "1",
      "by": "ward",
      "name": "Rhonda Logan",
-     "from": "district-1"
+     "from": "district-1",
+     "email": "rhonda.logan@memphistn.gov"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Jerri Green",
-     "from": "district-2"
+     "from": "district-2",
+     "email": "jerri.green@memphistn.gov"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Pearl Eva Walker",
-     "from": "district-3"
+     "from": "district-3",
+     "email": "pearl.walker@memphistn.gov"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Jana Swearengen-Washington",
-     "from": "district-4"
+     "from": "district-4",
+     "email": "jana.swearengen-wash@memphistn.gov"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Philip Spinosa",
-     "from": "district-5"
+     "from": "district-5",
+     "email": "philip.spinosa@memphistn.gov"
     },
     {
      "seat": "District 6",
      "ward": "6",
      "by": "ward",
      "name": "Edmund Ford, Sr.",
-     "from": "district-6"
+     "from": "district-6",
+     "email": "edmund.fordsr@memphistn.gov"
     },
     {
      "seat": "District 7",
      "ward": "7",
      "by": "ward",
      "name": "Michalyn Easter-Thomas",
-     "from": "district-7"
+     "from": "district-7",
+     "email": "michalyn.easter-thomas@memphistn.gov"
     },
     {
      "seat": "Super District 8, Position 1",
      "ward": "8",
      "by": "ward",
      "name": "JB Smiley, Jr.",
-     "from": "super-8-1"
+     "from": "super-8-1",
+     "email": "jb.smileyjr@memphistn.gov"
     },
     {
      "seat": "Super District 8, Position 2",
      "ward": "8",
      "by": "ward",
      "name": "Janika White",
-     "from": "super-8-2"
+     "from": "super-8-2",
+     "email": "janika.white@memphistn.gov"
     },
     {
      "seat": "Super District 8, Position 3",
      "ward": "8",
      "by": "ward",
      "name": "Yolanda Cooper-Sutton",
-     "from": "super-8-3"
+     "from": "super-8-3",
+     "email": "yolanda.coopersutton@memphistn.gov"
     },
     {
      "seat": "Super District 9, Position 1",
      "ward": "9",
      "by": "ward",
      "name": "Chase Carlisle",
-     "from": "super-9-1"
+     "from": "super-9-1",
+     "email": "chase.carlisle@memphistn.gov"
     },
     {
      "seat": "Super District 9, Position 2",
      "ward": "9",
      "by": "ward",
      "name": "J. Ford Canale",
-     "from": "super-9-2"
+     "from": "super-9-2",
+     "email": "jford.canale@memphistn.gov"
     },
     {
      "seat": "Super District 9, Position 3",
      "ward": "9",
      "by": "ward",
      "name": "Jeff Warren",
-     "from": "super-9-3"
+     "from": "super-9-3",
+     "email": "jeff.warren@memphistn.gov"
     }
    ]
   },
@@ -1405,40 +1605,48 @@
    "sources": {
     "commission": "https://mtjuliet-tn.gov/256/City-Commission"
    },
+   "officeLines": [
+    "615-754-2552"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "James Maness",
-     "from": "commission"
+     "from": "commission",
+     "email": "jmaness@mtjuliet-tn.gov"
     },
     {
      "seat": "District 1",
      "ward": "1",
      "by": "ward",
      "name": "Art Giles",
-     "from": "commission"
+     "from": "commission",
+     "email": "agiles@mtjuliet-tn.gov"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Bill Trivett",
-     "from": "commission"
+     "from": "commission",
+     "email": "btrivett@mtjuliet-tn.gov"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Scott Hefner",
-     "from": "commission"
+     "from": "commission",
+     "email": "shefner@mtjuliet-tn.gov"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Jennifer Milele",
-     "from": "commission"
+     "from": "commission",
+     "email": "jmilele@mtjuliet-tn.gov"
     }
    ]
   },
@@ -1503,6 +1711,13 @@
     "mayor": "https://www.nashville.gov/departments/mayor/people/freddie-oconnell",
     "vice": "https://www.nashville.gov/departments/council/districts/vice-mayor"
    },
+   "officeLines": [
+    "615-862-6780",
+    "615-862-6000"
+   ],
+   "officeMailboxes": [
+    "mayor@nashville.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
@@ -1514,7 +1729,9 @@
      "seat": "Vice Mayor",
      "by": "city",
      "name": "Angie Emery Henderson",
-     "from": "vice"
+     "from": "vice",
+     "email": "angie.henderson@nashville.gov",
+     "phone": "615-880-3357"
     }
    ]
   },
@@ -1525,48 +1742,59 @@
    "sources": {
     "council": "https://www.oakridgetn.gov/208/City-Council"
    },
+   "officeLines": [
+    "865-425-3411",
+    "865-425-3400"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Warren L. Gooch",
-     "from": "council"
+     "from": "council",
+     "email": "wgooch@oakridgetn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Jim Dodson",
-     "from": "council"
+     "from": "council",
+     "email": "jdodson@oakridgetn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Chuck Hope",
-     "from": "council"
+     "from": "council",
+     "email": "chope@oakridgetn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Ellen Smith",
-     "from": "council"
+     "from": "council",
+     "email": "esmith@oakridgetn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Charles Hensley",
-     "from": "council"
+     "from": "council",
+     "email": "chensley@oakridgetn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Derrick Hammond",
-     "from": "council"
+     "from": "council",
+     "email": "dhammond@oakridgetn.gov"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Sean Gleason",
-     "from": "council"
+     "from": "council",
+     "email": "sgleason@oakridgetn.gov"
     }
    ]
   },
@@ -1577,48 +1805,59 @@
    "sources": {
     "council": "https://www.townofsmyrna.org/government/town_council.php"
    },
+   "officeLines": [
+    "(615) 459-9742",
+    "(615) 459-2553"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Mary Esther Reed",
-     "from": "council"
+     "from": "council",
+     "email": "me.reed@townofsmyrna.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Marc Adkins",
-     "from": "council"
+     "from": "council",
+     "email": "marc.adkins@townofsmyrna.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "H.G. Cole",
-     "from": "council"
+     "from": "council",
+     "email": "hg.cole@townofsmyrna.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Jerome Dempsey",
-     "from": "council"
+     "from": "council",
+     "email": "jerome.dempsey@townofsmyrna.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Racquel Peebles",
-     "from": "council"
+     "from": "council",
+     "email": "racquel.peebles@townofsmyrna.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Gerry Short",
-     "from": "council"
+     "from": "council",
+     "email": "gerry.short@townofsmyrna.org"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Steve Sullivan",
-     "from": "council"
+     "from": "council",
+     "email": "steve.sullivan@townofsmyrna.org"
     }
    ]
   },
@@ -1630,68 +1869,83 @@
    "sources": {
     "board": "https://springhilltn.org/122/Board-of-Mayor-Aldermen"
    },
+   "officeLines": [
+    "931-486-2252"
+   ],
+   "officeMailboxes": [
+    "boma@springhilltn.org"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Matt Fitterer",
-     "from": "board"
+     "from": "board",
+     "email": "mfitterer@springhilltn.org"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "city",
      "name": "John Canepari",
-     "from": "board"
+     "from": "board",
+     "email": "jcanepari@springhilltn.org"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "city",
      "name": "Alex Jimenez",
-     "from": "board"
+     "from": "board",
+     "email": "ajimenez@springhilltn.org"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "city",
      "name": "Scott Wernert",
-     "from": "board"
+     "from": "board",
+     "email": "swernert@springhilltn.org"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "city",
      "name": "Jaimee Davis",
-     "from": "board"
+     "from": "board",
+     "email": "jdavis@springhilltn.org"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "city",
      "name": "Brent Murray",
-     "from": "board"
+     "from": "board",
+     "email": "bmurray@springhilltn.org"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "city",
      "name": "Erinn Hartwell",
-     "from": "board"
+     "from": "board",
+     "email": "ehartwell@springhilltn.org"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "city",
      "name": "Vincent Fuqua",
-     "from": "board"
+     "from": "board",
+     "email": "vfuqua@springhilltn.org"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "city",
      "name": "Trent Linville",
-     "from": "board"
+     "from": "board",
+     "email": "tlinville@springhilltn.org"
     }
    ]
   }

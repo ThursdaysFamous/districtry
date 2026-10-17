@@ -99,6 +99,16 @@ function check(name, ok, detail) {
   if (!ok) failures.push(name);
 }
 
+// A council member's own e-mail address and numbers now ride the city cards,
+// and a log names a city and a seat but never a member's contact, so the card
+// text the city checks print has every number and address replaced first (the
+// card prints a number with no-break hyphens, U+2011, so those count as well).
+function noContacts(text) {
+  return String(text)
+    .replace(/[^\s<>"'(),;:@]+@[^\s<>"'(),;:@]+\.[A-Za-z]{2,}/g, "<e-mail>")
+    .replace(/\(?\b\d{3}\)?[\s.\-\u2011]*\d{3}[\s.\-\u2011]*\d{4}\b/g, "<number>");
+}
+
 // Each check runs in its own context with service workers BLOCKED. The app's
 // SW serves data/app/* cache-first and — critically — its requests are not
 // interceptable by page.route, so an active SW would defeat the failure
@@ -930,6 +940,9 @@ try {
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
+        // The municipality layer reads its tile archive before it asks the
+        // Census, so the archive is refused and the stubbed query answers.
+        await p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
         // Both the point query and the statewide overlay download go to the
         // same service path, so one route answers both with the same feature —
         // which also proves the card comes from the POINT query rather than
@@ -943,8 +956,59 @@ try {
       const present = c.reject.filter((re) => re.test(text));
       check(c.name, !info.error && missing.length === 0 && present.length === 0,
         missing.length || present.length
-          ? `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`
-          : text.slice(0, 90));
+          ? `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 160)}`
+          : noContacts(text).slice(0, 90));
+      await context.close();
+    }
+
+    // (e) A member's own e-mail address and numbers reach that member's row
+    //     as links. Where a city's page prints them beside one member, the
+    //     seat carries them (scripts/city_councils.py, CONTACTS), and the
+    //     build proved every one in the shipped file on the page its seat
+    //     cites. The expected links are read from that file, so this check
+    //     prints counts and never a value; a member the file gives nothing
+    //     must show no link.
+    {
+      const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/sc-city-councils.json"), "utf8"));
+      const props = { GEOID: "4501360", NAME: "Anderson city", BASENAME: "Anderson", STATE: "45", LSADC: "25", FUNCSTAT: "A" };
+      const dial = (phone) => {
+        // the engine's cardPhoneDial: the digits, stopping at an extension
+        let s = String(phone);
+        const m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+        if (m) s = s.slice(0, m.index + m[1].length);
+        return "tel:" + s.replace(/[^\d+]/g, "");
+      };
+      const want = roster[props.GEOID].seats.filter((s) => s.name).map((s) => ({
+        name: s.name,
+        mails: s.email ? ["mailto:" + s.email] : [],
+        tels: [s.phone].concat(s.phonesExtra || []).filter(Boolean).map(dial)
+      }));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+        // The municipality layer reads its tile archive before it asks the
+        // Census, so the archive is refused and the stubbed query answers.
+        await p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
+        await p.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: esriBody(props) }));
+      });
+      await cardText(page, "municipality");
+      const rows = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-municipality .card-person")).map((row) => ({
+          name: (row.querySelector(".card-person-name") || {}).textContent || "",
+          mails: Array.from(row.querySelectorAll('a[href^="mailto:"]')).map((a) => a.getAttribute("href")),
+          tels: Array.from(row.querySelectorAll('a[href^="tel:"]')).map((a) => a.getAttribute("href"))
+        })));
+      const differ = want.filter((w) => {
+        const row = rows.find((r) => r.name === w.name);
+        return !row || JSON.stringify(row.mails) !== JSON.stringify(w.mails) ||
+          JSON.stringify(row.tels) !== JSON.stringify(w.tels);
+      }).length;
+      const mails = want.filter((w) => w.mails.length).length;
+      const tels = want.reduce((n, w) => n + w.tels.length, 0);
+      check(`${props.BASENAME}'s members' own e-mail addresses and numbers are links on their own rows`,
+        mails > 0 && tels > 0 && differ === 0,
+        `${mails} e-mail links and ${tels} numbers across ${want.length} named members; ` +
+        `${differ} rows differ from the shipped file`);
       await context.close();
     }
   }
@@ -1095,7 +1159,7 @@ try {
     const present = c.reject.filter((re) => re.test(text));
     check(`city-ward card at ${c.name} names only what that district elects, in the place's own word`,
       !info.error && missing.length === 0 && present.length === 0,
-      `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
     await context.close();
   }
 } finally {

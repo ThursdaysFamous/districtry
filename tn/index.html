@@ -14477,7 +14477,10 @@ function initTennesseeExplorer() {
       return {
         name: String(seat.name),
         badge: tnCouncilBadge(seat),
-        note: tnSeatElectedBy(council, seat, where)
+        note: tnSeatElectedBy(council, seat, where),
+        phone: seat.phone,
+        phonesExtra: seat.phonesExtra,
+        email: seat.email
       };
     });
   }

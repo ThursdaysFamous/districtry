@@ -1,5 +1,5 @@
 {
- "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, and the names found on it.",
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, the names found on it, and the e-mail addresses and the ten digits of the numbers its seats carry that were found on it.",
  "pages": {
   "https://citycouncil.columbiasc.gov/": {
    "bytes": 75956,
@@ -14,12 +14,21 @@
     "Tyler D. Bailey",
     "Will Brennan"
    ],
-   "read": "2026-10-16",
-   "sha256": "e8443b22de90def62ee86be4c0ac618a91a7f839e023f1021bf539bb806c4f6f"
+   "read": "2026-10-17",
+   "sha256": "e4d42402d18a20dbe6658d56ed8eaf4e057979316535bdfa1dd4615f358f2d8c"
   },
   "https://hiltonheadislandsc.gov/government/town_council/index.php": {
    "bytes": 161770,
    "client": "token",
+   "emails": [
+    "alanp@hiltonheadislandsc.gov",
+    "alexb@hiltonheadislandsc.gov",
+    "melindat@hiltonheadislandsc.gov",
+    "patsyb@hiltonheadislandsc.gov",
+    "stevea@hiltonheadislandsc.gov",
+    "steved@hiltonheadislandsc.gov",
+    "tamarab@hiltonheadislandsc.gov"
+   ],
    "final": "https://hiltonheadislandsc.gov/government/town_council/index.php",
    "names": [
     "Alan Perry",
@@ -30,18 +39,27 @@
     "Steve DeSimone",
     "Tamara Becker"
    ],
-   "read": "2026-10-16",
+   "phones": [
+    "8432905943",
+    "8433842421",
+    "8433842895",
+    "8433844181",
+    "8438166372",
+    "8542727114",
+    "8542727115"
+   ],
+   "read": "2026-10-17",
    "sha256": "0d7066434cf9cea5c2d38d42431e8f960fe718ce57e75dcd265f7148b3604dde"
   },
   "https://www.andersonobserver.com/news/roberts-reelected-as-mayor-winbush-wins-council-seat-5": {
-   "bytes": 301446,
+   "bytes": 234728,
    "client": "token",
    "final": "https://www.andersonobserver.com/news/roberts-reelected-as-mayor-winbush-wins-council-seat-5",
    "names": [
     "Tonya Winbush"
    ],
-   "read": "2026-10-16",
-   "sha256": "935b3b3d9a61cc05a3d39bfabb14e355c21361b8381db5c2de53a850976c8f22"
+   "read": "2026-10-17",
+   "sha256": "f44f8f42c15ba3b17a3eaf43d47f10e7eacff906ff5b908f24efd2a0f78dae04"
   },
   "https://www.charleston-sc.gov/180/Members-Districts": {
    "bytes": 99710,
@@ -61,17 +79,23 @@
     "Stephen Bowden",
     "William P. Tinkler"
    ],
-   "read": "2026-10-16",
+   "read": "2026-10-17",
    "sha256": "0ed96018f766bf2d25d053b1ca9b83dbd5642a8aed61639457be485abeb64b09"
   },
   "https://www.charleston-sc.gov/400/Mayor": {
    "bytes": 94341,
    "client": "token",
+   "emails": [
+    "cogswellw@charleston-sc.gov"
+   ],
    "final": "https://www.charleston-sc.gov/400/Mayor",
    "names": [
     "William S. Cogswell Jr."
    ],
-   "read": "2026-10-16",
+   "phones": [
+    "8437247396"
+   ],
+   "read": "2026-10-17",
    "sha256": "5adceb2f6bfbf80c22de0eedefb10225f699319c68dbbf75d56c215a9b12786e"
   },
   "https://www.cityofaikensc.gov/government/city-council/": {
@@ -87,12 +111,27 @@
     "Pete Messina",
     "Teddy Milner"
    ],
-   "read": "2026-10-16",
-   "sha256": "7ab9b716d7dfd46b39e219a27c7aae3348e12e485361c5de630b7c584de161c1"
+   "phones": [
+    "8032936704",
+    "8032952850",
+    "8034398292",
+    "8036428386"
+   ],
+   "read": "2026-10-17",
+   "sha256": "f30128a37f56c8bf5c985812b83b968f555e64dfa275db1b58484983a726cceb"
   },
   "https://www.cityofandersonsc.com/city-council-members/": {
    "bytes": 103841,
    "client": "token",
+   "emails": [
+    "gsteele@cityofandersonsc.com",
+    "jeffroberts@cityofandersonsc.com",
+    "jroberts@cityofandersonsc.com",
+    "knewton@cityofandersonsc.com",
+    "mharbin@cityofandersonsc.com",
+    "mpickens@cityofandersonsc.com",
+    "troberts@cityofandersonsc.com"
+   ],
    "final": "https://www.cityofandersonsc.com/city-council-members/",
    "names": [
     "Greg Steele",
@@ -104,11 +143,22 @@
     "Terence Roberts",
     "Tony Stewart"
    ],
-   "read": "2026-10-16",
-   "sha256": "98181a625ced6c1974fb2c72c9d8c281bff3c126d99537f413f18ba7297b8822"
+   "phones": [
+    "8642262531",
+    "8642268837",
+    "8642311135",
+    "8642611311",
+    "8643264468",
+    "8643764968",
+    "8646512351",
+    "8648445928",
+    "8649151122"
+   ],
+   "read": "2026-10-17",
+   "sha256": "907a3da5cf7bc6c3220e5b8efd929f8964b6d97f9ab3634bb370a0f7d2d65297"
   },
   "https://www.cityofflorencesc.gov/city-council": {
-   "bytes": 173884,
+   "bytes": 173923,
    "client": "token",
    "final": "https://www.cityofflorencesc.gov/city-council",
    "names": [
@@ -120,12 +170,21 @@
     "Lethonia Barnes",
     "Zach McKay"
    ],
-   "read": "2026-10-16",
-   "sha256": "9c9b39e3a271acfc2607c6a83b0e1cd52d66a343a5593c574dc0f3ac3f5d7a6f"
+   "read": "2026-10-17",
+   "sha256": "48374f1a6fb956b2b1c7610cc584edab68d32c2c4a4c6a96fcb545b40ce8188a"
   },
   "https://www.cityofgreersc.gov/page/city-council": {
-   "bytes": 1720563,
+   "bytes": 1720606,
    "client": "token",
+   "emails": [
+    "clander@cityofgreersc.gov",
+    "jarrowood@cityofgreersc.gov",
+    "kbooker@cityofgreersc.gov",
+    "mhopper@cityofgreersc.gov",
+    "plamb@cityofgreersc.gov",
+    "rdanner@cityofgreersc.gov",
+    "wbettis@cityofgreersc.gov"
+   ],
    "final": "https://www.cityofgreersc.gov/page/city-council",
    "names": [
     "Charles Lander",
@@ -136,12 +195,29 @@
     "Rick Danner",
     "Wryley Bettis"
    ],
-   "read": "2026-10-16",
-   "sha256": "117ea6362c7df1c66bf9fd4100d2953c9ad61564d3f5186644537ce2ca1b7173"
+   "phones": [
+    "8644696540",
+    "8646304805",
+    "8648012027",
+    "8648779388",
+    "8648792371",
+    "8649010453",
+    "8649050882"
+   ],
+   "read": "2026-10-17",
+   "sha256": "9fa376a831121eef6e1f4f310ca338e763d88043fe0579ca35838c1309046811"
   },
   "https://www.cityofmyrtlebeach.com/government/mayor___city_council/index.php": {
    "bytes": 75326,
    "client": "token",
+   "emails": [
+    "bmcclure@cityofmyrtlebeach.com",
+    "dconner@cityofmyrtlebeach.com",
+    "mchestnut@cityofmyrtlebeach.com",
+    "mkruea@cityofmyrtlebeach.com",
+    "mlowder@cityofmyrtlebeach.com",
+    "prender@cityofmyrtlebeach.com"
+   ],
    "final": "https://www.cityofmyrtlebeach.com/government/mayor___city_council/index.php",
    "names": [
     "Bill McClure",
@@ -152,7 +228,7 @@
     "Mike Lowder",
     "Philip Render"
    ],
-   "read": "2026-10-16",
+   "read": "2026-10-17",
    "sha256": "c54e80d4f16c1cfec3ea822bc0995b4245aa0adc587da8b990919e9240a81a1e"
   },
   "https://www.cityofrockhill.com/government/city-council/members": {
@@ -168,12 +244,21 @@
     "Nikita L. Jackson",
     "Sarah Vining"
    ],
-   "read": "2026-10-16",
-   "sha256": "72a00e4b0792e6fa81e3def6ecacc9ac2272f45930d50c3dff3b70bb08e3ebd5"
+   "read": "2026-10-17",
+   "sha256": "f6771b11f522657dccfa7ad81eb648c424067a3a3d8c2b9e3b4d44b157a4ca1d"
   },
   "https://www.cityofspartanburg.org/316/City-Council": {
    "bytes": 106181,
    "client": "token",
+   "emails": [
+    "ebrown@cityofspartanburg.org",
+    "jerome.rice@cityofspartanburg.org",
+    "jfulmer@cityofspartanburg.org",
+    "jsalley@cityofspartanburg.org",
+    "lrodgers@cityofspartanburg.org",
+    "mesmith@cityofspartanburg.org",
+    "rlittlejohn@cityofspartanburg.org"
+   ],
    "final": "https://www.cityofspartanburg.org/316/City-Council",
    "names": [
     "Erica Brown",
@@ -184,7 +269,7 @@
     "Meghan Smith",
     "Ruth Littlejohn"
    ],
-   "read": "2026-10-16",
+   "read": "2026-10-17",
    "sha256": "febd6960db768af12fc824d1703cb6df56b5421d6719cc25ec5ffb440577650f"
   },
   "https://www.goosecreeksc.gov/government/mayor-and-city-council": {
@@ -200,11 +285,11 @@
     "Jerry Tekac",
     "Melissa Enos-Sims"
    ],
-   "read": "2026-10-16",
-   "sha256": "35fe719c78131feb9eee1684d72e1ec61942d4816e14664f6c3ebe9394666421"
+   "read": "2026-10-17",
+   "sha256": "e632abecf8249446cc1e3be0f0f6822e7f47846079493e24cf3ea9a00c313afb"
   },
   "https://www.greenvillesc.gov/city-council": {
-   "bytes": 468651,
+   "bytes": 468921,
    "client": "token",
    "final": "https://www.greenvillesc.gov/city-council",
    "names": [
@@ -216,12 +301,24 @@
     "Tina Belge",
     "Wil Brasington"
    ],
-   "read": "2026-10-16",
-   "sha256": "510fdeeda7c5c54f9b199520cfb3da6e87bd55ae836eadcecfa4b1e125a36239"
+   "read": "2026-10-17",
+   "sha256": "f7e41b686d5fe977a10166d3292aaa2a9c09b4ca31c11608a09dcc341e269fe9"
   },
   "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php": {
    "bytes": 134071,
    "client": "token",
+   "emails": [
+    "bhudson@northcharleston.org",
+    "bmichaelchr@aol.com",
+    "cemde@northcharleston.org",
+    "cpalmerroberts@northcharleston.org",
+    "gperry@northcharleston.org",
+    "kskipper@northcharleston.org",
+    "mibrown@northcharleston.org",
+    "nbrown@northcharleston.org",
+    "rjerome@northcharleston.org",
+    "sganawaypasley@northcharleston.org"
+   ],
    "final": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
    "names": [
     "Brandon Hudson",
@@ -235,8 +332,20 @@
     "Rhonda Jerome",
     "Stephanie Ganaway-Pasley"
    ],
-   "read": "2026-10-16",
-   "sha256": "c280660f3a7965b59b9be60c12887e11005fcc3e9f0bc998541106abdab8201f"
+   "phones": [
+    "8032926044",
+    "8432007520",
+    "8432701961",
+    "8433673714",
+    "8435575351",
+    "8437473531",
+    "8437516214",
+    "8437904098",
+    "8438134404",
+    "8438199170"
+   ],
+   "read": "2026-10-17",
+   "sha256": "60534aef48e62b57af2bb0a1de188be3c08b1ba306b59099205c48c6aefe8ed8"
   },
   "https://www.northcharleston.org/government/office_of_the_mayor/index.php": {
    "bytes": 79075,
@@ -245,12 +354,21 @@
    "names": [
     "Reginald L. \"Reggie\" Burgess"
    ],
-   "read": "2026-10-16",
-   "sha256": "8ea1ca6a334bafd73f66cf248e6bbbcf9b46dc024b23f95044a61f1d03d055d1"
+   "read": "2026-10-17",
+   "sha256": "73b2a14d66d273dc08ed7abc5b74a5dc784ec1c022f34ed4f7399ec1d4656c4c"
   },
   "https://www.summervillesc.gov/253/Elected-Officials": {
    "bytes": 129124,
    "client": "token",
+   "emails": [
+    "bjackson@summervillesc.gov",
+    "dmack@summervillesc.gov",
+    "kgarten@summervillesc.gov",
+    "mhalter@summervillesc.gov",
+    "rtouchberry@summervillesc.gov",
+    "rwaring@summervillesc.gov",
+    "tjohnson@summervillesc.gov"
+   ],
    "final": "https://www.summervillesc.gov/253/Elected-Officials",
    "names": [
     "Bob Jackson",
@@ -261,12 +379,26 @@
     "Russ Touchberry",
     "Tiffany Johnson"
    ],
-   "read": "2026-10-16",
+   "phones": [
+    "8436938707",
+    "8438100449",
+    "8438219337"
+   ],
+   "read": "2026-10-17",
    "sha256": "60df3f42c7f0168918c457d3b3df65aa79b8955c0d49f0ad776d086f5bb1bd40"
   },
   "https://www.sumtersc.gov/city-council": {
-   "bytes": 126179,
+   "bytes": 126487,
    "client": "token",
+   "emails": [
+    "agibson@sumtersc.gov",
+    "cdavis@sumtersc.gov",
+    "chastie@sumtersc.gov",
+    "dmerchant@sumtersc.gov",
+    "gshaw@cu-tigers.com",
+    "jbblass@usa.net",
+    "rkennedy@sumtersc.gov"
+   ],
    "final": "https://www.sumtersc.gov/city-council",
    "names": [
     "Anthony Gibson",
@@ -277,8 +409,8 @@
     "James B. Blassingame",
     "Rebecca Lynn Kennedy"
    ],
-   "read": "2026-10-16",
-   "sha256": "5ab2c862c1e8bd713f9e04f0d3671e47db82c5963709759fd3ce9cc19a52a901"
+   "read": "2026-10-17",
+   "sha256": "f5605342606d4950a7e72696f72c03a81b2174af21da4e73c31d4f95630bbc44"
   },
   "https://www.tompsc.com/91/Town-Council": {
    "bytes": 110789,
@@ -295,7 +427,7 @@
     "Mike Tinkey",
     "Will Haynie"
    ],
-   "read": "2026-10-16",
+   "read": "2026-10-17",
    "sha256": "eb1948afa27c1f059331bd47f4df57f69bc75e2e135fe4649f7b26284c6d2bfa"
   },
   "https://www.townofbluffton.sc.gov/292/Mayor-Town-Council": {
@@ -309,7 +441,7 @@
     "Fred Hamilton",
     "Larry Toomer"
    ],
-   "read": "2026-10-16",
+   "read": "2026-10-17",
    "sha256": "10584abd320df028d880880ed4340b9e9e62444a8b2d041227f9c614b532afc1"
   }
  }

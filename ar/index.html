@@ -14561,7 +14561,10 @@ function initArkansasExplorer() {
       return {
         name: String(seat.name),
         badge: arSeatBadge(seat),
-        note: arSeatElectedBy(council, seat)
+        note: arSeatElectedBy(council, seat),
+        phone: seat.phone,
+        phonesExtra: seat.phonesExtra,
+        email: seat.email
       };
     });
   }

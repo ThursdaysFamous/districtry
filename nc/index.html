@@ -14443,7 +14443,10 @@ function initNorthCarolinaExplorer() {
         name: seat.name != null ? String(seat.name)
           : (seat.vacant ? "Vacant" : "Not named here"),
         badge: ncCouncilBadge(seat),
-        note: ncSeatElectedBy(council, seat, kind)
+        note: ncSeatElectedBy(council, seat, kind),
+        phone: seat.phone,
+        phonesExtra: seat.phonesExtra,
+        email: seat.email
       };
     });
   }
