@@ -1,0 +1,1817 @@
+{
+ "4703440": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "All six aldermen are elected by the voters of the whole city, each to a numbered position, as is the mayor.",
+  "name": "Bartlett",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "David Parsons",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Brad King",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Robert Griffin",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "David Reaves",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Monique Williams",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Jack Young",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Kevin Quinn",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen"
+   }
+  ]
+ },
+ "4708280": {
+  "body": "Board of Commissioners",
+  "how": "All seven commissioners are elected by the voters of the whole city, and the board appoints the mayor and vice mayor from among them.",
+  "name": "Brentwood",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Nelson Andrews",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
+   },
+   {
+    "byWard": false,
+    "name": "Rhea E. Little III",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
+   },
+   {
+    "byWard": false,
+    "name": "Anne Dunn",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
+   },
+   {
+    "byWard": false,
+    "name": "Janet Donahue",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
+   },
+   {
+    "byWard": false,
+    "name": "Kim Smithson Gawrys",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
+   },
+   {
+    "byWard": false,
+    "name": "Ken Travis",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
+   },
+   {
+    "byWard": false,
+    "name": "Stevan Pippin",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners"
+   }
+  ]
+ },
+ "4708540": {
+  "body": "City Council",
+  "how": "All five council members are elected by the voters of the whole city, three of them from the city's East, South and West council districts. Each January the council chooses one of its members to serve as mayor for a year.",
+  "name": "Bristol",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Vince Turner",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.bristoltn.gov/337/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Rae Akard",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.bristoltn.gov/337/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Margaret Feierabend",
+    "role": "Council member",
+    "seat": "South District",
+    "sourceUrl": "https://www.bristoltn.gov/337/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Lea Powers",
+    "role": "Council member",
+    "seat": "West District",
+    "sourceUrl": "https://www.bristoltn.gov/337/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Kelly Graham",
+    "role": "Council member",
+    "seat": "East District",
+    "sourceUrl": "https://www.bristoltn.gov/337/City-Council"
+   }
+  ]
+ },
+ "4714000": {
+  "body": "City Council",
+  "how": "Each of the city's nine districts elects its own council member. The mayor is elected by the whole city.",
+  "name": "Chattanooga",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Tim Kelly",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://chattanooga.gov/government/mayors-office"
+   },
+   {
+    "byWard": true,
+    "name": "Chip Henderson",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Jenny Hill",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Jeff Davis",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Cody Harvey",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Dennis Clark",
+    "role": "Council member",
+    "seat": "District 5",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Jenni Berz",
+    "role": "Council member",
+    "seat": "District 6",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Raquetta Dotley",
+    "role": "Council member",
+    "seat": "District 7",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "Marvene Noel",
+    "role": "Council member",
+    "seat": "District 8",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "8"
+   },
+   {
+    "byWard": true,
+    "name": "Ron Elliott",
+    "role": "Council member",
+    "seat": "District 9",
+    "sourceUrl": "https://chattanooga.gov/government/city-council",
+    "ward": "9"
+   }
+  ],
+  "wardWord": "District"
+ },
+ "4715160": {
+  "body": "City Council",
+  "how": "Each of the city's twelve wards elects its own council member. The mayor is elected by the whole city.",
+  "name": "Clarksville",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Joe Pitts",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.clarksvilletn.gov/283/Mayors-Office"
+   },
+   {
+    "byWard": true,
+    "name": "Brian Zacharias",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Eric Claunch",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Carlos \"Pete\" Peters",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Tim Chandler",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Ambar Marquis",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Wanda Smith",
+    "role": "Council member",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Travis Holleman",
+    "role": "Council member",
+    "seat": "Ward 7",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "Jerry Haywood",
+    "role": "Council member",
+    "seat": "Ward 8",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "8"
+   },
+   {
+    "byWard": true,
+    "name": "Jimmy Brown",
+    "role": "Council member",
+    "seat": "Ward 9",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "9"
+   },
+   {
+    "byWard": true,
+    "name": "Stacey Streetman",
+    "role": "Council member",
+    "seat": "Ward 10",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "10"
+   },
+   {
+    "byWard": true,
+    "name": "Joe Shakeenab",
+    "role": "Council member",
+    "seat": "Ward 11",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "11"
+   },
+   {
+    "byWard": true,
+    "name": "Keri Lovato",
+    "role": "Council member",
+    "seat": "Ward 12",
+    "sourceUrl": "https://www.clarksvilletn.gov/522/City-Council",
+    "ward": "12"
+   }
+  ]
+ },
+ "4715400": {
+  "body": "City Council",
+  "how": "Each of the city's five districts elects its own council member, and two more are elected by the whole city. The mayor is elected by the whole city.",
+  "name": "Cleveland",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Kevin Brooks",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Hiawatha Brown",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Bill Estes",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Tom Cassada",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "David May",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Duane Goff",
+    "role": "Council member",
+    "seat": "District 5",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": false,
+    "name": "Dan Moore",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Ken Webb",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.clevelandtn.gov/122/Mayor-City-Council"
+   }
+  ],
+  "wardWord": "District"
+ },
+ "4716420": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "All five aldermen are elected by the voters of the whole town, each to a numbered position, as is the mayor.",
+  "name": "Collierville",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Maureen Fraser",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Charles Hall",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Jewel Jordan",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Nick Robbins",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Missy Marshall",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "John E. Stamps",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen"
+   }
+  ]
+ },
+ "4716540": {
+  "body": "City Council",
+  "how": "Each of the city's five wards elects its own council member. The mayor and the vice mayor are each elected by the whole city.",
+  "name": "Columbia",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Chaz Molder",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.columbiatn.gov/773/Meet-the-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Randy McBroom",
+    "role": "Vice Mayor",
+    "seat": "Vice Mayor",
+    "sourceUrl": "https://www.columbiatn.gov/773/Meet-the-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Carl McCullen",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.columbiatn.gov/773/Meet-the-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Charlie Huffman",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.columbiatn.gov/773/Meet-the-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Cheryl Secrest",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.columbiatn.gov/773/Meet-the-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Kenny Marshall",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.columbiatn.gov/773/Meet-the-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Brian McKelvy",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.columbiatn.gov/773/Meet-the-Council",
+    "ward": "5"
+   }
+  ]
+ },
+ "4716920": {
+  "body": "City Council",
+  "how": "All five council members are elected by the voters of the whole city. By long-standing practice the council chooses as mayor the member who received the most votes.",
+  "name": "Cookeville",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Chad Gilbert",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://cookeville-tn.gov/358/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Luke Eldridge",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://cookeville-tn.gov/358/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Cigi England",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://cookeville-tn.gov/358/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Ali Bagci",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://cookeville-tn.gov/358/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Kelly Parkison",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://cookeville-tn.gov/358/City-Council"
+   }
+  ]
+ },
+ "4727740": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "Each of the city's four wards elects its own alderman, and four more aldermen are elected by the whole city. The mayor is elected by the whole city.",
+  "name": "Franklin",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Ken Moore",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen"
+   },
+   {
+    "byWard": true,
+    "name": "Beverly Burger",
+    "role": "Alderman",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Matt Brown",
+    "role": "Alderman",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Jason Potts",
+    "role": "Alderman",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Patrick Baggett",
+    "role": "Alderman",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen",
+    "ward": "4"
+   },
+   {
+    "byWard": false,
+    "name": "Ann Petersen",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Clyde Barnhill",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Brandy Blanton",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Greg Caesar",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.franklintn.gov/government/board-of-mayor-aldermen"
+   }
+  ]
+ },
+ "4728540": {
+  "body": "City Council",
+  "how": "Each of the city's five districts elects its own council member, and two more are elected by the whole city. The mayor is elected by the whole city.",
+  "name": "Gallatin",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Paige Brown",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Paul Jones",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Todd Alexander",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Pascal Jouvence",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Craig Hayes",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Steven Carter",
+    "role": "Council member",
+    "seat": "District 5",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": false,
+    "name": "Steve Fann",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Shawn Fennell",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.gallatintn.gov/497/Mayor-City-Council"
+   }
+  ],
+  "wardWord": "District"
+ },
+ "4728960": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "All five aldermen are elected by the voters of the whole city, each to a numbered position, as is the mayor.",
+  "name": "Germantown",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Mike Palazzolo",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Scott Sanders",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Mary Anne Gibson",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Sherrie Hicks",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Brian Ueleke",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Tony Salvaggio",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen"
+   }
+  ]
+ },
+ "4733280": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "Each of the city's six wards elects its own two aldermen. The mayor is elected by the whole city.",
+  "name": "Hendersonville",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Jamie Clary",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen"
+   },
+   {
+    "byWard": true,
+    "name": "Mark Burgdorf",
+    "role": "Alderman",
+    "seat": "Ward 1",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Mark Skidmore",
+    "role": "Alderman",
+    "seat": "Ward 1",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Don Ward",
+    "role": "Alderman",
+    "seat": "Ward 2",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Michael Martin",
+    "role": "Alderman",
+    "seat": "Ward 2",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Jeffrey Sasse",
+    "role": "Alderman",
+    "seat": "Ward 3",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Bob Garza",
+    "role": "Alderman",
+    "seat": "Ward 3",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Terri Goodwin",
+    "role": "Alderman",
+    "seat": "Ward 4",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Karen Dixon",
+    "role": "Alderman",
+    "seat": "Ward 4",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Rachel Collins",
+    "role": "Alderman",
+    "seat": "Ward 5",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Janna Garton",
+    "role": "Alderman",
+    "seat": "Ward 5",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Eddie Roberson",
+    "role": "Alderman",
+    "seat": "Ward 6",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Mark Evans",
+    "role": "Alderman",
+    "seat": "Ward 6",
+    "sourceUrl": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+    "ward": "6"
+   }
+  ]
+ },
+ "4737640": {
+  "body": "City Council",
+  "how": "Each of the city's nine districts elects its own council member. The mayor is elected by the whole city.",
+  "name": "Jackson",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Scott Conger",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.jacksontn.gov/government/mayorsoffice/aboutmayorconger"
+   },
+   {
+    "byWard": true,
+    "name": "J.P. Stovall",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Johnny Lee Dodd",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Candice Busby",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Richard Donnell",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Frank McMeen",
+    "role": "Council member",
+    "seat": "District 5",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Larry Lowrance",
+    "role": "Council member",
+    "seat": "District 6",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Marda Wallace",
+    "role": "Council member",
+    "seat": "District 7",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "Russ McKelvey",
+    "role": "Council member",
+    "seat": "District 8",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "8"
+   },
+   {
+    "byWard": true,
+    "name": "Julie Faulder Holt",
+    "role": "Council member",
+    "seat": "District 9",
+    "sourceUrl": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+    "ward": "9"
+   }
+  ],
+  "wardWord": "District"
+ },
+ "4738320": {
+  "body": "Board of Commissioners",
+  "how": "All five commissioners are elected by the voters of the whole city, and the board chooses the mayor from among them.",
+  "name": "Johnson City",
+  "note": "The board's own list of its members is on a site whose robots.txt does not let this app read it, so these names come from the city's own page about the board's vote of 20 November 2025.",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Greg Cox",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.johnsoncitytn.org/topics_of_interest/2025_class_action_settlement/index.php"
+   },
+   {
+    "byWard": false,
+    "name": "Jenny Brock",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.johnsoncitytn.org/topics_of_interest/2025_class_action_settlement/index.php"
+   },
+   {
+    "byWard": false,
+    "name": "Joe Wise",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.johnsoncitytn.org/topics_of_interest/2025_class_action_settlement/index.php"
+   },
+   {
+    "byWard": false,
+    "name": "Whitney Goetz",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.johnsoncitytn.org/topics_of_interest/2025_class_action_settlement/index.php"
+   },
+   {
+    "byWard": false,
+    "name": "Todd Fowler",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.johnsoncitytn.org/topics_of_interest/2025_class_action_settlement/index.php"
+   }
+  ]
+ },
+ "4739560": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "All six aldermen are elected by the voters of the whole city, as is the mayor.",
+  "name": "Kingsport",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Paul W. Montgomery",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.kingsporttn.gov/government/bma/"
+   },
+   {
+    "byWard": false,
+    "name": "Darrell Duncan",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.kingsporttn.gov/government/bma/"
+   },
+   {
+    "byWard": false,
+    "name": "Morris Baker",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.kingsporttn.gov/government/bma/"
+   },
+   {
+    "byWard": false,
+    "name": "Julie Byers",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.kingsporttn.gov/government/bma/"
+   },
+   {
+    "byWard": false,
+    "name": "Calvin Clifton",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.kingsporttn.gov/government/bma/"
+   },
+   {
+    "byWard": false,
+    "name": "Richard Isaacs",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.kingsporttn.gov/government/bma/"
+   },
+   {
+    "byWard": false,
+    "name": "James Phillips",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.kingsporttn.gov/government/bma/"
+   }
+  ]
+ },
+ "4740000": {
+  "body": "City Council",
+  "how": "Each of the city's six districts elects its own council member, and three more members are elected by the whole city, as is the mayor. Until 2025 the whole city also voted in each district's final election: District 5's member was elected that way in 2023, and the other five were elected by their own districts' voters in November 2025.",
+  "name": "Knoxville",
+  "note": "The city's six districts are not drawn on this map yet: the only copy of their lines published as data, from Knoxville and Knox County's mapping agency (KGIS), reserves all rights and allows no copy without its written permission.",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Indya Kincannon",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.knoxvilletn.gov/248/Mayor-Indya-Kincannons-Office"
+   },
+   {
+    "byWard": true,
+    "name": "Karyn Adams",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Nathan Honeycutt",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Doug Lloyd",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Matthew DeBardelaben",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Charles Thomas",
+    "role": "Council member",
+    "seat": "District 5",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Denzel Grant",
+    "role": "Council member",
+    "seat": "District 6",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+    "ward": "6"
+   },
+   {
+    "byWard": false,
+    "name": "Lynne Fugate",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members"
+   },
+   {
+    "byWard": false,
+    "name": "Debbie Helsley",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members"
+   },
+   {
+    "byWard": false,
+    "name": "Amelia Parker",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.knoxvilletn.gov/1340/City-Council-Members"
+   }
+  ],
+  "wardWord": "District",
+  "wardsDrawn": false
+ },
+ "4741200": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "All four aldermen are elected by the voters of the whole city, as is the mayor.",
+  "name": "La Vergne",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Jason Cole",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.lavergnetn.gov/164/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Steve Noe",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.lavergnetn.gov/164/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Graeme Coates",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.lavergnetn.gov/164/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Carol Haas",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.lavergnetn.gov/164/Board-of-Mayor-and-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "Kara Hobbs",
+    "role": "Alderman",
+    "seat": "At large",
+    "sourceUrl": "https://www.lavergnetn.gov/164/Board-of-Mayor-and-Aldermen"
+   }
+  ]
+ },
+ "4741520": {
+  "body": "City Council",
+  "how": "Each of the city's six wards elects its own councilor. The mayor is elected by the whole city.",
+  "name": "Lebanon",
+  "note": "The mayor's name is from the city's staff directory listing for the Mayor's Office. The city's six wards are not drawn on this map yet: they are published only as the Wilson County Election Commission's PDF files.",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Rick Bell",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.lebanontn.org/m/directory/department?did=16"
+   },
+   {
+    "byWard": true,
+    "name": "Joey W. Carmack",
+    "role": "Councilor",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.lebanontn.org/m/directory/department?did=30",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Geri Ashley",
+    "role": "Councilor",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.lebanontn.org/m/directory/department?did=30",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Camille Burdine",
+    "role": "Councilor",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.lebanontn.org/m/directory/department?did=30",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Chris Crowell",
+    "role": "Councilor",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.lebanontn.org/m/directory/department?did=30",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Tick Bryan",
+    "role": "Councilor",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.lebanontn.org/m/directory/department?did=30",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Phil Morehead",
+    "role": "Councilor",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.lebanontn.org/m/directory/department?did=30",
+    "ward": "6"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "4746380": {
+  "body": "City Council",
+  "how": "All five council members are elected by the voters of the whole city, and the council chooses the mayor from among them.",
+  "name": "Maryville",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Andy White",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.maryvillegov.com/city-council-members.html"
+   },
+   {
+    "byWard": false,
+    "name": "Fred Metz",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.maryvillegov.com/city-council-members.html"
+   },
+   {
+    "byWard": false,
+    "name": "Tommy Hunt",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.maryvillegov.com/city-council-members.html"
+   },
+   {
+    "byWard": false,
+    "name": "Sarah Herron",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.maryvillegov.com/city-council-members.html"
+   },
+   {
+    "byWard": false,
+    "name": "Drew Miles",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.maryvillegov.com/city-council-members.html"
+   }
+  ]
+ },
+ "4748000": {
+  "body": "City Council",
+  "how": "Each of the city's seven districts elects its own council member, and each of its two super districts elects three more, one to each of its three positions. The mayor is elected by the whole city.",
+  "name": "Memphis",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Paul Young",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://memphistn.gov/government-mayor/"
+   },
+   {
+    "byWard": true,
+    "name": "Rhonda Logan",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://memphistn.gov/city_council/district-1/",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Jerri Green",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://memphistn.gov/city_council/district-2/",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Pearl Eva Walker",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://memphistn.gov/city_council/district-3/",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Jana Swearengen-Washington",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://memphistn.gov/city_council/district-4/",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Philip Spinosa",
+    "role": "Council member",
+    "seat": "District 5",
+    "sourceUrl": "https://memphistn.gov/city_council/district-5/",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Edmund Ford, Sr.",
+    "role": "Council member",
+    "seat": "District 6",
+    "sourceUrl": "https://memphistn.gov/city_council/district-6/",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Michalyn Easter-Thomas",
+    "role": "Council member",
+    "seat": "District 7",
+    "sourceUrl": "https://memphistn.gov/city_council/district-7/",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "JB Smiley, Jr.",
+    "role": "Council member",
+    "seat": "Super District 8, Position 1",
+    "sourceUrl": "https://memphistn.gov/super-district-8-1/",
+    "ward": "8"
+   },
+   {
+    "byWard": true,
+    "name": "Janika White",
+    "role": "Council member",
+    "seat": "Super District 8, Position 2",
+    "sourceUrl": "https://memphistn.gov/city_council/super-district-8-2/",
+    "ward": "8"
+   },
+   {
+    "byWard": true,
+    "name": "Yolanda Cooper-Sutton",
+    "role": "Council member",
+    "seat": "Super District 8, Position 3",
+    "sourceUrl": "https://memphistn.gov/city_council/super-district-8-3/",
+    "ward": "8"
+   },
+   {
+    "byWard": true,
+    "name": "Chase Carlisle",
+    "role": "Council member",
+    "seat": "Super District 9, Position 1",
+    "sourceUrl": "https://memphistn.gov/city_council/district-9-1/",
+    "ward": "9"
+   },
+   {
+    "byWard": true,
+    "name": "J. Ford Canale",
+    "role": "Council member",
+    "seat": "Super District 9, Position 2",
+    "sourceUrl": "https://memphistn.gov/city_council/super-district-9-2/",
+    "ward": "9"
+   },
+   {
+    "byWard": true,
+    "name": "Jeff Warren",
+    "role": "Council member",
+    "seat": "Super District 9, Position 3",
+    "sourceUrl": "https://memphistn.gov/city_council/super-district-9-3/",
+    "ward": "9"
+   }
+  ],
+  "wardWord": "District"
+ },
+ "4750280": {
+  "body": "City Council",
+  "how": "Each of the city's four wards elects its own council member, and two more are elected by the whole city. The mayor is elected by the whole city.",
+  "name": "Morristown",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Gary Chesney",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.mymorristown.com/government/council/index.php"
+   },
+   {
+    "byWard": true,
+    "name": "Bob Garrett",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.mymorristown.com/government/council/index.php",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Chris Bivens",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.mymorristown.com/government/council/index.php",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Kay Senter",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.mymorristown.com/government/council/index.php",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Al A'Hearn",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.mymorristown.com/government/council/index.php",
+    "ward": "4"
+   },
+   {
+    "byWard": false,
+    "name": "Joseph Senter",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.mymorristown.com/government/council/index.php"
+   },
+   {
+    "byWard": false,
+    "name": "Tommy Pedigo",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.mymorristown.com/government/council/index.php"
+   }
+  ]
+ },
+ "4750780": {
+  "body": "Board of Commissioners",
+  "how": "Each of the city's four districts elects its own commissioner. The mayor is elected by the whole city.",
+  "name": "Mount Juliet",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "James Maness",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://mtjuliet-tn.gov/256/City-Commission"
+   },
+   {
+    "byWard": true,
+    "name": "Art Giles",
+    "role": "Commissioner",
+    "seat": "District 1",
+    "sourceUrl": "https://mtjuliet-tn.gov/256/City-Commission",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Bill Trivett",
+    "role": "Commissioner",
+    "seat": "District 2",
+    "sourceUrl": "https://mtjuliet-tn.gov/256/City-Commission",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Scott Hefner",
+    "role": "Commissioner",
+    "seat": "District 3",
+    "sourceUrl": "https://mtjuliet-tn.gov/256/City-Commission",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Jennifer Milele",
+    "role": "Commissioner",
+    "seat": "District 4",
+    "sourceUrl": "https://mtjuliet-tn.gov/256/City-Commission",
+    "ward": "4"
+   }
+  ],
+  "wardWord": "District"
+ },
+ "4751560": {
+  "body": "City Council",
+  "how": "All six council members are elected by the voters of the whole city, as is the mayor.",
+  "name": "Murfreesboro",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Shane McFarland",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.murfreesborotn.gov/424/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Shawn Wright",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.murfreesborotn.gov/424/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Jami Averwater",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.murfreesborotn.gov/424/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Madelyn Scales Harris",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.murfreesborotn.gov/424/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Austin Maxwell",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.murfreesborotn.gov/424/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Bill Shacklett",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.murfreesborotn.gov/424/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Kirt Wade",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.murfreesborotn.gov/424/City-Council"
+   }
+  ]
+ },
+ "4752006": {
+  "body": "Metropolitan Council",
+  "how": "The mayor and the vice mayor, who presides over the Metropolitan Council, are each elected by the voters of the whole county. The council's 35 district members and its 5 members elected countywide are named on the County Commission District card.",
+  "name": "Nashville",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Freddie O'Connell",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.nashville.gov/departments/mayor/people/freddie-oconnell"
+   },
+   {
+    "byWard": false,
+    "name": "Angie Emery Henderson",
+    "role": "Vice Mayor",
+    "seat": "Vice Mayor",
+    "sourceUrl": "https://www.nashville.gov/departments/council/districts/vice-mayor"
+   }
+  ]
+ },
+ "4755120": {
+  "body": "City Council",
+  "how": "All seven council members are elected by the voters of the whole city, and after each city election the council chooses one of them as mayor for two years.",
+  "name": "Oak Ridge",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Warren L. Gooch",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.oakridgetn.gov/208/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Jim Dodson",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.oakridgetn.gov/208/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Chuck Hope",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.oakridgetn.gov/208/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Ellen Smith",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.oakridgetn.gov/208/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Charles Hensley",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.oakridgetn.gov/208/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Derrick Hammond",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.oakridgetn.gov/208/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Sean Gleason",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.oakridgetn.gov/208/City-Council"
+   }
+  ]
+ },
+ "4769420": {
+  "body": "Town Council",
+  "how": "All six council members are elected by the voters of the whole town, as is the mayor.",
+  "name": "Smyrna",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Mary Esther Reed",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.townofsmyrna.org/government/town_council.php"
+   },
+   {
+    "byWard": false,
+    "name": "Marc Adkins",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.townofsmyrna.org/government/town_council.php"
+   },
+   {
+    "byWard": false,
+    "name": "H.G. Cole",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.townofsmyrna.org/government/town_council.php"
+   },
+   {
+    "byWard": false,
+    "name": "Jerome Dempsey",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.townofsmyrna.org/government/town_council.php"
+   },
+   {
+    "byWard": false,
+    "name": "Racquel Peebles",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.townofsmyrna.org/government/town_council.php"
+   },
+   {
+    "byWard": false,
+    "name": "Gerry Short",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.townofsmyrna.org/government/town_council.php"
+   },
+   {
+    "byWard": false,
+    "name": "Steve Sullivan",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.townofsmyrna.org/government/town_council.php"
+   }
+  ]
+ },
+ "4770580": {
+  "body": "Board of Mayor and Aldermen",
+  "how": "All eight aldermen are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's four wards. The mayor is elected by the whole city.",
+  "name": "Spring Hill",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Matt Fitterer",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen"
+   },
+   {
+    "byWard": false,
+    "name": "John Canepari",
+    "role": "Alderman",
+    "seat": "Ward 1",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "1"
+   },
+   {
+    "byWard": false,
+    "name": "Alex Jimenez",
+    "role": "Alderman",
+    "seat": "Ward 1",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "1"
+   },
+   {
+    "byWard": false,
+    "name": "Scott Wernert",
+    "role": "Alderman",
+    "seat": "Ward 2",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "2"
+   },
+   {
+    "byWard": false,
+    "name": "Jaimee Davis",
+    "role": "Alderman",
+    "seat": "Ward 2",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "2"
+   },
+   {
+    "byWard": false,
+    "name": "Brent Murray",
+    "role": "Alderman",
+    "seat": "Ward 3",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "3"
+   },
+   {
+    "byWard": false,
+    "name": "Erinn Hartwell",
+    "role": "Alderman",
+    "seat": "Ward 3",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "3"
+   },
+   {
+    "byWard": false,
+    "name": "Vincent Fuqua",
+    "role": "Alderman",
+    "seat": "Ward 4",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "4"
+   },
+   {
+    "byWard": false,
+    "name": "Trent Linville",
+    "role": "Alderman",
+    "seat": "Ward 4",
+    "sourceUrl": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+    "ward": "4"
+   }
+  ]
+ }
+}

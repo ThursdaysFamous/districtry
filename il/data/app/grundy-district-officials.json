@@ -28,7 +28,7 @@
           "role": "Acting President"
         },
         {
-          "name": "RANDY BERRY",
+          "name": "Randy Berry",
           "role": "Sec./Treas."
         }
       ],
@@ -126,11 +126,11 @@
     "DWIGHT FIRE": {
       "board": [
         {
-          "name": "BRIAN PERSCHNICK",
+          "name": "Brian Perschnick",
           "role": "President"
         },
         {
-          "name": "ERIC STEWART",
+          "name": "Eric Stewart",
           "role": "Treasurer"
         }
       ],
@@ -289,7 +289,7 @@
       "filesIn": "Livingston",
       "heads": [
         {
-          "name": "SUE BERGAN",
+          "name": "Sue Bergan",
           "role": "C.E.O."
         }
       ],
@@ -375,7 +375,7 @@
         }
       ],
       "comptrollerCode": "099/060/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Will",
       "heads": [
         {
@@ -410,7 +410,7 @@
       }
     }
   },
-  "generated": "2026-10-10T01:37:46Z",
+  "generated": "2026-10-17T00:16:02Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

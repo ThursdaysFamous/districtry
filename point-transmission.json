@@ -27,8 +27,10 @@
         "ar-court-of-appeals",
         "ar-house",
         "ar-senate",
+        "city-ward",
         "county",
         "county-subdivision",
+        "fire-district",
         "fire-station",
         "municipality",
         "police-station",
@@ -210,6 +212,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "conservancy-district",
         "county",
         "county-council",
         "county-subdivision",
@@ -255,6 +258,7 @@
         "ky-senate",
         "ky-supreme-court",
         "municipality",
+        "school-board-district",
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
@@ -393,6 +397,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",
@@ -401,6 +406,7 @@
         "nc-senate",
         "police-station",
         "post-office",
+        "school-board-district",
         "school-district-unified",
         "tribal-government",
         "us-house",
@@ -488,6 +494,8 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
+        "conservation-district",
         "county",
         "county-commissioner",
         "county-subdivision",
@@ -522,6 +530,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-council",
         "county-subdivision",
@@ -559,6 +568,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-commissioner",
         "county-subdivision",

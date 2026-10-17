@@ -1,0 +1,27 @@
+{
+ "districts_per_geoid": {
+  "0505290": 5,
+  "0515190": 4,
+  "0523290": 4,
+  "0524550": 4,
+  "0533400": 6,
+  "0541000": 7,
+  "0550450": 4,
+  "0553390": 4,
+  "0555310": 4,
+  "0561670": 4,
+  "0563800": 4,
+  "0568810": 6
+ },
+ "fetched": "2026-10-16",
+ "fingerprint": {
+  "districts": 56,
+  "sha256": "e8c1d6e72bee5a7191ddd7fc24c79f8ffd87ad6a6094a1f176965e346e8c5040"
+ },
+ "item": null,
+ "layer": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/50",
+ "layer_edited": null,
+ "part_records_joined": 0,
+ "shipped_sha256": "1c29fe93f2c76157838bea6d939ab7ce1793eb11edc95c6a5d0bc34fe7d0c335",
+ "skipped_records": 0
+}

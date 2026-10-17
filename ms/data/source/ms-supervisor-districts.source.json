@@ -78,6 +78,49 @@
    "simplification_people_moved": 0,
    "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Copiah_County_Feature_Layer/FeatureServer/15"
   },
+  "28031": {
+   "block_share_worst_populated": 0.879,
+   "blocks_read": 1340,
+   "blocks_split_evenly": 3,
+   "blocks_split_evenly_km2": 0.094,
+   "census_people_moved_from_2020_edition": 0,
+   "county": "Covington County",
+   "deviation_2020_edition_pct": 28.63,
+   "deviation_pct": 6.54,
+   "district_people": {
+    "1": 3740,
+    "2": 3767,
+    "3": 3757,
+    "4": 3527,
+    "5": 3549
+   },
+   "evidence": {
+    "layer_name": "NEW_DISTRICTS",
+    "precincts": {
+     "layer_name": "Covington_Precincts_2022_11_17_region",
+     "name_field": "NAME",
+     "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/Covington_Precincts_2022_11_17_region/FeatureServer/0"
+    }
+   },
+   "layer_name": "NEW_DISTRICTS",
+   "lines": "county",
+   "names_checked": 0,
+   "numbering_kept_people": 17427,
+   "people": 18340,
+   "people_in_no_district": 0,
+   "people_in_two_districts": 0,
+   "people_moved_from_2020_edition": 913,
+   "people_set_aside": 0,
+   "plan_population": null,
+   "precinct_people_in_none": 0,
+   "precinct_people_in_two": 0,
+   "precinct_people_off": 17,
+   "precinct_people_off_census": 896,
+   "precincts_read": 15,
+   "read": "2026-10-16",
+   "simplification_people_moved": 0,
+   "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/NEW_DISTRICTS/FeatureServer/0"
+  },
   "28033": {
    "county": "DeSoto County",
    "deviation_2020_edition_pct": 85.61,
@@ -596,6 +639,50 @@
    "people_in_two_districts": 0,
    "people_moved_from_2020_edition": 1275,
    "simplification_people_moved": 0
+  },
+  "28139": {
+   "block_share_worst_populated": 0.721,
+   "blocks_read": 966,
+   "blocks_split_evenly": 1,
+   "blocks_split_evenly_km2": 0.011,
+   "census_people_moved_from_2020_edition": 0,
+   "county": "Tippah County",
+   "deviation_2020_edition_pct": 20.56,
+   "deviation_pct": 7.33,
+   "district_people": {
+    "1": 4228,
+    "2": 4548,
+    "3": 4355,
+    "4": 4360,
+    "5": 4324
+   },
+   "evidence": {
+    "layer_name": "Supervisor_Districts",
+    "precincts": {
+     "district_field": "BOS_DIST",
+     "layer_name": "Voter_Precinct_2024",
+     "name_field": "PRECINCT",
+     "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Voter_Precinct_2024/FeatureServer/0"
+    }
+   },
+   "layer_name": "Supervisor_Districts",
+   "lines": "county",
+   "names_checked": 0,
+   "numbering_kept_people": 21146,
+   "people": 21815,
+   "people_in_no_district": 0,
+   "people_in_two_districts": 0,
+   "people_moved_from_2020_edition": 669,
+   "people_set_aside": 0,
+   "plan_population": null,
+   "precinct_people_in_none": 0,
+   "precinct_people_in_two": 0,
+   "precinct_people_off": 0,
+   "precinct_people_off_census": 669,
+   "precincts_read": 22,
+   "read": "2026-10-16",
+   "simplification_people_moved": 0,
+   "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Administrative_Boundaries/FeatureServer/4"
   },
   "28149": {
    "block_share_worst_populated": 0.977,

@@ -753,6 +753,10 @@ try {
     check("a pasted map link is never sent to the search geocoder", geocoderCalls === 0, `${geocoderCalls} Photon request(s)`);
     check("selecting a pasted map link is counted by kind, once",
       got.events.filter((e) => /^map-link\//.test(e)).join() === "map-link/google", JSON.stringify(got.events));
+    // the read itself is counted once, with what it showed and nothing of the place
+    check("reading a map link handed over in the address is counted once, by kind and result",
+      got.events.filter((e) => /^map-link-read\//.test(e)).join() === "map-link-read/il/google/full/opened/point",
+      JSON.stringify(got.events));
     await context.close();
   }
 
@@ -810,6 +814,11 @@ try {
         return route.fulfill({ status: 200, contentType: "application/json",
           body: JSON.stringify({ url: "https://www.google.com/maps/place/Daley+Plaza/@41.8836,-87.6314,17z/data=!3m1!4b1!8m2!3d41.88395!4d-87.63022" }) });
       });
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
     });
     await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
     const point = await page.evaluate((ns) => window[ns].state.selectedPoint, EXPORTS_NAME);
@@ -822,6 +831,11 @@ try {
     check("a short link the lookup never reaches is asked three times, then says districtry couldn't reach the lookup",
       tries[deadLink] === 3 && /couldn't be read just now \(districtry couldn't reach the service that reads short links\)/.test(msg) &&
       !/address bar/.test(msg), `${tries[deadLink]} lookup(s): ${JSON.stringify(msg)}`);
+    const reads = await page.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^map-link-read\//.test(v.path)).map((v) => v.path));
+    check("a short link read on a retry, and one never read after its retries, are each counted once with why",
+      reads.join() === "map-link-read/il/google/short-retried/opened/point,map-link-read/il/google/short-retried/pasted/failed-unreached",
+      JSON.stringify(reads));
     await context.close();
   }
 
@@ -948,7 +962,11 @@ try {
       }, [EXPORTS_NAME, [[41.8221975, -87.9794965], [41.8217156, -87.9794932]]]);
       const box = await page.locator("#map").boundingBox();
       await page.touchscreen.tap(box.x + (frame.ends[0].x + frame.ends[1].x) / 2, box.y + (frame.ends[0].y + frame.ends[1].y) / 2);
-      await page.waitForTimeout(300);
+      // A tap is selected at once only when the coverage wash has already
+      // painted; before that the app asks fleet-outlines.json who serves
+      // the point and selects when it answers. On a busy runner that took
+      // longer than a fixed 300 ms (2026-10-17), so wait for the selection.
+      await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
       return { frame, ...(await read()) };
     };
     const street = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),

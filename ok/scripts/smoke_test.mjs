@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ok-senate", "ok-house", "ok-judicial-dis
 const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99", "ok-judicial-district": "7" };
 const NEGATIVE_POINT = "33.65000,-97.15000"; // near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry Oklahoma";
-const EXPECT_LAYERS = 15;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -771,6 +771,13 @@ try {
   //        records none.
   //    (c) Both school tilings answer, because the unified and elementary
   //        districts partition the state between them.
+  //    (d) A city above 25,000 names its mayor and every council seat from
+  //        the roster, joined on the Census id the stub carries, with who
+  //        elects each seat: a ward's own voters, or the whole city, and for
+  //        a mayor the council chose from its members, the ward that member
+  //        holds. A place outside the 16 says it names nobody. The roster is
+  //        the shipped data/app file, so this also holds the join to it.
+  //        Each id and NAME is the Census's own (TIGERweb, read 2026-10-16).
   {
     function esriPolygon(props) {
       return {
@@ -789,12 +796,68 @@ try {
 
     const cases = [
       {
-        name: "a city names itself a city",
+        name: "a city below 25,000 names itself a city and names nobody",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4000200", NAME: "Ada city", BASENAME: "Ada", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Ada city/, /Incorporated city/, /Not named here/, /16 cities above 25,000/],
+        reject: [/INACTIVE/, /Incorporated town/, /Mayor/]
+      },
+      {
+        name: "a city names its mayor and council, and who elected each seat",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "4055000", NAME: "Oklahoma City city", BASENAME: "Oklahoma City", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Oklahoma City city/, /Incorporated city/, /Not named here/],
-        reject: [/INACTIVE/, /Incorporated town/]
+        want: [/Oklahoma City city/, /Incorporated city/, /David Holt/, /Bradley Carter/, /Council, Ward 1/,
+          /elected by Ward 1/, /elected by the whole city/, /How the seats are elected/, /Read on/,
+          /As listed on Oklahoma City's own website/, /Which ward this point is in/],
+        reject: [/INACTIVE/, /Not named here/]
+      },
+      {
+        name: "a mayor the council chose keeps the ward the voters gave",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4004450", NAME: "Bartlesville city", BASENAME: "Bartlesville", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Bartlesville city/, /Jim Curd, Jr\./, /elected by Ward 3/, /Tim Sherrick/,
+          /The council chooses the mayor and vice mayor from among its members/, /Which ward this point is in/],
+        reject: [/elected by the whole city/, /Not named here/]
+      },
+      {
+        name: "a city that ties seats to wards and elects them all citywide says so",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4009050", NAME: "Broken Arrow city", BASENAME: "Broken Arrow", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Broken Arrow city/, /Debra Wimpee/, /Ward 1, elected by the whole city/, /Council, Ward 2/,
+          /Council, At large/, /elected by the voters of the whole city/],
+        reject: [/elected by Ward/, /this point is in/, /Not named here/]
+      },
+      {
+        name: "Tulsa's seats are districts and its members councilors",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4075000", NAME: "Tulsa city", BASENAME: "Tulsa", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Tulsa city/, /Monroe Nichols/, /Vanessa Hall-Harper/, /Councilor, District 1/,
+          /elected by District 1/, /Which district this point is in/],
+        reject: [/elected by Ward/, /Not named here/]
+      },
+      {
+        name: "a city whose wards are not drawn says why",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4041850", NAME: "Lawton city", BASENAME: "Lawton", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Lawton city/, /Stan Booker/, /elected by Ward 1/,
+          /As listed on Lawton's own website\. The city's eight wards are not drawn on this map yet/],
+        reject: [/this point is in/, /Not named here/]
+      },
+      {
+        name: "a city whose website this app cannot read says where its names come from",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4050050", NAME: "Muskogee city", BASENAME: "Muskogee", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Muskogee city/, /Ryan Michael Lowe/, /Dale Boots/, /elected by Ward 2/,
+          /Muskogee's website does not let this app read it/, /official results for February 10, 2026/,
+          /not drawn on this map yet/],
+        reject: [/As listed on Muskogee's own website/, /this point is in/, /Not named here/]
       },
       {
         name: "a town names itself a town, not a city",
@@ -1056,6 +1119,66 @@ try {
     check("the Capitol is outside every tribal area and is told so in the layer's own words",
           off.text.indexOf("not on any tribal area the Census draws in Oklahoma") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- City Council District, drawn for the nine cities above 25,000
+  // people whose wards elect their own members and are drawn, and answered
+  // from the shipped files alone, so nothing here is stubbed. In Oklahoma
+  // City, Tulsa, Moore and Enid it names the member or members that ward
+  // elects and no other, in the city's own word for the unit, and says whose
+  // map the line comes from; in Bartlesville's Ward 3 it names the mayor, the
+  // council having chosen that ward's member, and says nobody is elected by
+  // the whole city there; in Edmond, which elects every seat citywide, in
+  // Lawton, whose wards are not drawn, and in Stillwater, whose council has
+  // no wards, there is nothing to answer and the card says why. The
+  // Oklahoma City point is the Capitol; the Tulsa, Moore and Enid points and
+  // the three outside points are the ward builder's own anchors; the
+  // Bartlesville point is shapely's representative point of its Ward 3 pulled
+  // in from the edge. Each lies inside the Census outline of the city named
+  // (TIGERweb, read 2026-10-16).
+  for (const c of [
+    { name: "Oklahoma City", point: POINT,
+      want: [/Ward 7\b/, /Oklahoma City City Council/, /Camal Pennington/, /Council, Ward 7/,
+        /elected by Ward 7/, /The mayor\. The City or Town card names the mayor\./,
+        /the City of Oklahoma City's own map/, /within 4 metres/],
+      reject: [/David Holt/, /JoBeth Hamon/, /Mark Stonecipher/, /elected by District/] },
+    { name: "Tulsa", point: "36.09500,-95.94000",
+      want: [/District 9\b/, /Tulsa City Council/, /Carol Bush/, /Councilor, District 9/,
+        /elected by District 9/, /The mayor\./, /the City of Tulsa's own map/],
+      reject: [/Monroe Nichols/, /Vanessa Hall-Harper/, /elected by Ward/] },
+    { name: "Moore", point: "35.33000,-97.49000",
+      want: [/Ward 3\b/, /Moore City Council/, /Sid Porter/, /Louie Williams/, /elected by Ward 3/,
+        /the City of Moore's own map/],
+      reject: [/Mark Hamm/, /Adam Webb/, /Melissa Hunt/] },
+    { name: "Enid", point: "36.39560,-97.87840",
+      want: [/Ward 5\b/, /Enid City Commission/, /Rob Stallings/, /Commissioner, Ward 5/,
+        /elected by Ward 5/, /the City of Enid's own map/],
+      reject: [/David Mason/, /Cheryl Patterson/] },
+    { name: "Bartlesville's Ward 3", point: "36.72616,-95.96557",
+      want: [/Ward 3\b/, /Bartlesville City Council/, /Jim Curd, Jr\./, /Mayor/, /elected by Ward 3/,
+        /The council chooses the mayor and vice mayor from among its members/],
+      reject: [/Elected by the whole city/, /Tim Sherrick/, /Trevor Dorsey/] },
+    { name: "Edmond", point: "35.65280,-97.47810",
+      want: [/not in a council ward or district this map draws/, /Broken Arrow, Owasso, Jenks and Edmond/],
+      reject: [/Edmond City Council/] },
+    { name: "Lawton", point: "34.60360,-98.39590",
+      want: [/not in a council ward or district this map draws/, /Lawton's and Muskogee's wards are not drawn yet/],
+      reject: [/Lawton City Council/] },
+    { name: "Stillwater", point: "36.11560,-97.05840",
+      want: [/not in a council ward or district this map draws/, /Stillwater's council has no wards/,
+        /names the mayor and council of all 16/],
+      reject: [/Stillwater City Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that ward elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
     await context.close();
   }
 } finally {

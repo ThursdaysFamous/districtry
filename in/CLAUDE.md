@@ -8,10 +8,11 @@ districtry Indiana: a single-file, dependency-light web app. Click a point in In
 search an address) and it reports every civic district containing that point. It serves at
 **districtry.com/in/** as a folder of the consolidated districtry repo — following the
 Wisconsin/Iowa/Michigan shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships SIXTEEN layers, all but four from a national publisher: the county
+root-scripts shape. It ships SEVENTEEN layers, all but five from a national publisher: the county
 council districts and the voting precincts come from the state's mapping office, the Court of
-Appeals districts group the Census's counties as the court's own district map does, and the
-Indianapolis Public Schools board districts come from the City of Indianapolis (all below).
+Appeals districts group the Census's counties as the court's own district map does, the
+Indianapolis Public Schools board districts come from the City of Indianapolis, and the
+conservancy districts come from the Department of Natural Resources (all below).
 
 **LIVE SINCE THE GO-LIVE CHANGE OF 2026-10-07**, eight days after it arrived dark: it is in
 `metros.json`, `fleet-outlines.json`, the sitemap, the landing page and the coverage map, and
@@ -149,6 +150,30 @@ the 2022 and 2024 certified results point to about forty other boards electing s
 district (gap `in-school-board-districts`). The card names nobody (gap `in-school-board-members`).
 The layer states no licence. The quarterly re-check is in `in/WATCH.md`.
 
+**CONSERVANCY DISTRICTS ARE DRAWN SINCE 2026-10-16, WITH THEIR BOARDS NAMED FROM THE STATE'S
+DIRECTORY.** A conservancy district is a unit of local government a circuit court sets up, when
+property owners petition, for flooding, drainage, sewers, water supply or a lake (IC 14-33); its
+directors are elected by the property owners in the district. `conservancy-district` draws the 100
+the Department of Natural Resources' map marks active (layer 54 of "Conservancy Districts of
+Indiana"), pre-built by `in/scripts/build_in_conservancy_districts.py` through the fleet module
+`scripts/published_district_layers.py`; they cover 8.0% of the state and some overlap, so the card
+lists every district at the point. The boards come from the department's yearly Indiana
+Conservancy District Directory, which each board's chair must keep current, read by
+`in/scripts/build_in_conservancy_directors.py`: names and roles only, 465 people and 6 vacant seats
+across 93 districts in the 2026 edition. Hired staff are left out, and the home towns and the
+directors' own telephones and e-mails the directory gives as contacts are never carried. Six
+districts sent no list and one is missing from the directory, so those cards name nobody (gap
+`in-conservancy-district-records`). **THE MAP AND THE DIRECTORY DISAGREE, AND THE BUILDERS SAY
+WHERE.** The directory gives four districts another district's id, so the join runs through a
+table of corrections; the name and county each source gives a district must agree before a board
+is attached; the map files Nature Works under a court whose county holds none of its land, so the
+card names no court for it; one establishment date predates the 1947 act, so the card prints none;
+and thirteen of the map's 35 website addresses reach nobody or the wrong place, so the card prefers
+the directory's. Every correction table stops the build once its entry no longer applies, and all
+of it is recorded in the gap as evidence for the state-publishing ask. The card and the hover use
+the directory's name for a district, which differs from the map's for 21. The quarterly map check
+and the yearly directory rebuild are in `in/WATCH.md`.
+
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
 roster-miss path, which is the honest card until a roster is built. Recorded as gap
@@ -185,7 +210,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Indiana (`indiana`) — https://districtry.com/in/
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
 - Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055; county-council 12; in-court-of-appeals 2. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
-- Layers: 16 registered (political 6, safety 2, schools 2, geography 6); `registerLayer(` floor 12. Debug namespace `window.IndianaExplorer`.
+- Layers: 17 registered (political 6, safety 2, schools 2, geography 7); `registerLayer(` floor 13. Debug namespace `window.IndianaExplorer`.
 - Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
