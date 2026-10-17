@@ -3,6 +3,9 @@
     "clerk": "Stacy Hedmark",
     "municipality": "Aurora",
     "phone": "715-589-2282",
+    "phonesExtra": [
+      "715-528-3369"
+    ],
     "recordUpdated": "2022-01-12"
   },
   "5503716550": {
@@ -15,6 +18,9 @@
     "clerk": "Theresa Smith",
     "municipality": "Fence",
     "phone": "715-336-2407",
+    "phonesExtra": [
+      "906-396-5347"
+    ],
     "recordUpdated": "2025-06-06",
     "url": "https://www.townoffencewi.com/"
   },
@@ -31,6 +37,9 @@
     "deputyClerk": "Jennifer Penegor",
     "municipality": "Florence",
     "phone": "715-528-3595 EXT 202",
+    "phonesExtra": [
+      "715-528-3595 EXT 201"
+    ],
     "recordUpdated": "2025-10-29",
     "url": "http://www.townofflorencewisconsin.com/"
   },

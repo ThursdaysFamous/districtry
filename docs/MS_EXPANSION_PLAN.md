@@ -76,8 +76,10 @@ was built from and that figure is 13.0 km². The four files are about twice the 
 and Directory names all 410 supervisors and all 410 election commissioners by district, once a
 year, so every County card lists its board even where the map draws no districts. The directory
 also prints addresses and telephones that may be homes: a board's address or telephone is carried
-only where at least three of its five supervisors print the same one, and nothing after a
-commissioner's name is kept.
+only where at least three of its five supervisors print the same one, and no other address is
+kept. Since Adam's ruling of 2026-10-17 ("if the official government source uses personal phone
+numbers, we publish those") a supervisor's or commissioner's own telephone is carried on that
+person, and the addresses still never are.
 
 **Mississippi has no township government.** All 410 county subdivisions the Census publishes are
 the supervisor districts, recorded as having no functioning government.

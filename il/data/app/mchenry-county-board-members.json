@@ -39,7 +39,7 @@
     "members": [
       {
         "name": "Carolyn Campbell",
-        "phone": "815-345-9429",
+        "phone": "mobile 815-345-9429",
         "email": "CMCampbell@mchenrycountyil.gov",
         "url": "https://www.mchenrycountyil.gov/departments/county-board/meet-your-county-board-members/carolyn-campbell"
       },
@@ -56,7 +56,10 @@
     "members": [
       {
         "name": "Joseph Gottemoller",
-        "phone": "(815)382-9940",
+        "phone": "cell (815)382-9940",
+        "phonesExtra": [
+          "work (815)459-5152"
+        ],
         "email": "jxgottemoller@mchenrycountyil.gov",
         "url": "https://www.mchenrycountyil.gov/departments/county-board/meet-your-county-board-members/joseph-gottemoller"
       },
@@ -128,13 +131,13 @@
     "members": [
       {
         "name": "Larry Smith",
-        "phone": "(815) 353-8043",
+        "phone": "home (815) 353-8043",
         "email": "lwsmith@mchenrycountyil.gov",
         "url": "https://www.mchenrycountyil.gov/departments/county-board/meet-your-county-board-members/larry-w-smith"
       },
       {
         "name": "Tracie Von Bergen",
-        "phone": "815-790-9002",
+        "phone": "home 815-790-9002",
         "email": "TLVonBergen@mchenrycountyil.gov",
         "url": "https://www.mchenrycountyil.gov/departments/county-board/meet-your-county-board-members/tracie-von-bergen"
       }
@@ -163,7 +166,7 @@
   "chair": {
     "name": "Michael Buehler",
     "role": "Chairman",
-    "phone": "815-334-4224",
+    "phone": "work 815-334-4224",
     "email": "MJBuehler@mchenrycountyil.gov",
     "url": "https://www.mchenrycountyil.gov/departments/county-board/meet-your-county-board-members/michael-buehler"
   }

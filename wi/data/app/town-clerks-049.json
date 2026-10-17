@@ -4,6 +4,9 @@
     "deputyClerk": "Julie Jensen",
     "municipality": "Arena",
     "phone": "608-753-2185",
+    "phonesExtra": [
+      "608-753-2650"
+    ],
     "recordUpdated": "2024-01-10",
     "url": "https://www.townofarena.org/"
   },
@@ -11,6 +14,9 @@
     "clerk": "Kirstin K Melton",
     "municipality": "Brigham",
     "phone": "608-924-1013",
+    "phonesExtra": [
+      "608-924-7054"
+    ],
     "recordUpdated": "2025-06-30",
     "url": "https://brighamtown.com/"
   },
@@ -64,6 +70,9 @@
     "clerk": "Mary Kolb",
     "municipality": "Moscow",
     "phone": "608-523-1381",
+    "phonesExtra": [
+      "608-523-4704"
+    ],
     "recordUpdated": "2026-02-02"
   },
   "5504965700": {
@@ -71,6 +80,9 @@
     "deputyClerk": "Lori Peat",
     "municipality": "Pulaski",
     "phone": "608-604-5627",
+    "phonesExtra": [
+      "608-532-6599"
+    ],
     "recordUpdated": "2025-06-30",
     "url": "https://townofpulaskiwi.gov/"
   },
@@ -94,6 +106,9 @@
     "deputyClerk": "Mary Lloyd-Jones",
     "municipality": "Wyoming",
     "phone": "608-512-7327",
+    "phonesExtra": [
+      "608-588-4335"
+    ],
     "recordUpdated": "2025-12-22",
     "url": "https://townofwyomingwi.gov/"
   },

@@ -3,7 +3,8 @@
 The "Town Officers" section lists each town under its bare name ("Bridgeport"),
 then "Chairman ........ Name" with the chair's telephone and home address on the
 lines after it, and "Supervisor ........ Name, Post office" for each
-supervisor. The text after the last comma is the supervisor's post office and
+supervisor. The chair's telephone line ships on the chair; the address lines
+are not read. The text after a supervisor's last comma is the post office and
 is dropped unless it is a suffix such as "Jr". The section ends at "Village
 Officers". The cover title is set in doubled letters in the text layer
 ("22002266--22002277"), so the edition is read from it by taking every second
@@ -11,7 +12,7 @@ character. Read with the token on 2026-10-15 (robots.txt: 156 bytes, Allow: /)."
 
 import re
 
-from . import clean, looks_like_person, norm_role, person
+from . import clean, following_phones, looks_like_person, norm_role, person
 
 COUNTY_FIPS = "023"
 COUNTY_NAME = "Crawford"
@@ -51,7 +52,8 @@ def scrape(ctx):
         role = norm_role(m.group(1))
         name = _name(m.group(2))
         if town and role and looks_like_person(name):
-            towns.setdefault(town, []).append(person(name, role))
+            towns.setdefault(town, []).append(
+                person(name, role, following_phones(lines, i + 1)))
     edition = None
     m = re.search(r"(?m)^([\d\-]{18})\s*$", text[:2000])
     if m and m.group(1)[::2] == m.group(1)[1::2]:

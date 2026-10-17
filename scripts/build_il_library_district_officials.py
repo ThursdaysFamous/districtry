@@ -45,6 +45,30 @@ Every record carries `filesIn`, and here that is not a footnote: a card in one
 county routinely carries a library that files in another — Fossil Ridge files in
 Will, Cordova in Rock Island — so the county a reader would search the Warehouse
 for is part of the answer.
+
+AN OFFICER'S OWN TELEPHONE SHIPS ON THAT OFFICER, since Adam's ruling of
+2026-10-17 ("if the official government source uses personal phone numbers, we
+publish those"). comptroller_afr.py decides which number a filing prints beside
+one officer alone. This builder then takes off any such number that is the
+library's own line in the library systems' directory (il-library-contacts.json),
+which the card prints as the library's telephone: that number belongs to the
+library, not to the person, so it rides nobody, as before the ruling. Measured
+2026-10-17, that is 22 of the 113 numbers the filings print beside one officer:
+19 beside a director, a librarian or another appointed head, and 3 beside a
+board president. MIN_OFFICER_PHONES refuses a run that stops
+reading the numbers, and suspect_phones_in refuses a value not shaped like a
+telephone number, naming the library and the officer's place in its list and
+never the value.
+
+AN OFFICER'S OWN E-MAIL ADDRESS SHIPS ON THAT OFFICER TOO, since Adam chose
+"E-mails too" the same day: comptroller_afr.py's OFFICER E-MAIL section says
+which address a filing gives one officer alone, a gmail or yahoo account
+included. The directory carries no e-mail address, so nothing is taken off
+here. MIN_OFFICER_EMAILS and suspect_emails_in guard it as the two telephone
+checks guard the numbers. An address the roster's filings give beside two
+different people is nobody's, and so is one that another roster built from
+these filings gives beside a different person; each is taken off before
+anything is counted (drop_mail_given_for_two).
 """
 
 import argparse
@@ -56,11 +80,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scraper_common import substantive_changes, emit_changes_output  # noqa: E402  (shared machinery — do not fork)
 from il_library_district_officials_scraper import (  # noqa: E402
     shipped_cards, statewide_library_counties)
-from comptroller_afr import suspect_names_in  # noqa: E402  (shared — do not fork)
+from comptroller_afr import (  # noqa: E402  (shared — do not fork)
+    count_officer_emails, count_officer_phones, drop_lines_from_officers,
+    drop_mail_given_for_two, library_directory_lines, mail_elsewhere,
+    MAIL_GIVEN_FOR_TWO, suspect_emails_in, suspect_names_in, suspect_phones_in)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
-                        "il-library-district-officials.json")
+APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
+OUT_PATH = os.path.join(APP_DIR, "il-library-district-officials.json")
 
 # Measured 2026-09-11: 197 libraries / 339 cards / 294 board / 96 appointed /
 # 175 with an office BLOCK (123 of those name a street) / 145 with a telephone.
@@ -71,6 +98,20 @@ MIN_BOARD = 250
 MIN_HEADS = 80
 MIN_WITH_OFFICE = 150
 MIN_WITH_PHONE = 122
+# Officers carrying their own telephone, since Adam's ruling of 2026-10-17
+# ("if the official government source uses personal phone numbers, we publish
+# those"). Measured 2026-10-17: 91 of 391, none with a second number, after the
+# 22 numbers that are the library's own directory line are taken off. About two
+# thirds of 91, so a change that stops the numbers being read fails the build
+# instead of emptying them quietly.
+MIN_OFFICER_PHONES = 61
+# Officers carrying their own e-mail address, since Adam chose "E-mails too"
+# on 2026-10-17. Measured 2026-10-17: 249 of 391, 210 of them on a domain
+# that neither carries the district's name nor is a government's, after 2
+# were taken off as given beside two different people in this roster's
+# filings or another's. About two thirds of 249, so a change that stops the
+# addresses being read fails the build instead of emptying them quietly.
+MIN_OFFICER_EMAILS = 166
 
 
 def fail(msg):
@@ -90,6 +131,36 @@ def main():
     if not isinstance(libraries, dict):
         fail("the scraper's output has no libraries object")
 
+    # THE LIBRARY'S OWN LINE RIDES NOBODY. The card prints the directory's
+    # telephone as the library's (withLibraryOfficials in il/index.html), so an
+    # officer's number that is the same line is the library's, not the
+    # person's. The filing's own district number is already kept off every
+    # officer by comptroller_afr; it is passed too, and takes nothing today.
+    try:
+        directory_lines, _by_code = library_directory_lines(APP_DIR)
+    except (OSError, ValueError) as exc:
+        fail("cannot read the library directory's telephones: %s" % exc)
+    library_lines = 0
+    for name, record in libraries.items():
+        if isinstance(record, dict):
+            library_lines += drop_lines_from_officers(
+                record, [(record.get("office") or {}).get("phone"),
+                         directory_lines.get(name)])
+
+    # AN ADDRESS GIVEN BESIDE TWO PEOPLE IN TWO FILINGS IS NOBODY'S, as one
+    # given beside two people in one filing already is (comptroller_afr.
+    # drop_mail_given_for_two): an accounting firm's mailbox typed beside a
+    # different officer in each of several reports is no officer's own.
+    # The same holds across the seven rosters these filings feed, so the other
+    # six are read as shipped, and what this one takes off is recorded under
+    # MAIL_GIVEN_FOR_TWO for them to read in turn.
+    mail_withheld = {}
+    elsewhere = mail_elsewhere(os.path.dirname(OUT_PATH),
+                               os.path.basename(OUT_PATH))
+    shared_mail = drop_mail_given_for_two(libraries, elsewhere, mail_withheld)
+    print("  %d officer address(es) taken off as given beside two people, "
+          "in this roster's filings or another's" % shared_mail)
+
     _, where = shipped_cards(statewide_library_counties())
     cards = sum(len(where.get(name) or []) for name in libraries)
     orphans = sorted(name for name in libraries if not where.get(name))
@@ -99,6 +170,8 @@ def main():
     with_office = sum(1 for v in libraries.values() if (v.get("office") or {}))
     with_phone = sum(1 for v in libraries.values()
                      if (v.get("office") or {}).get("phone"))
+    officer_phones = count_officer_phones(libraries)
+    officer_emails = count_officer_emails(libraries)
     nobody = sorted(k for k, v in libraries.items()
                     if not (v.get("board") or []) and not (v.get("heads") or []))
     undated = sorted(k for k, v in libraries.items() if not v.get("filedFor"))
@@ -112,7 +185,11 @@ def main():
                                (with_office, MIN_WITH_OFFICE,
                                 "librar(ies) with an office"),
                                (with_phone, MIN_WITH_PHONE,
-                                "librar(ies) with a telephone")):
+                                "librar(ies) with a telephone"),
+                               (officer_phones["withPhone"], MIN_OFFICER_PHONES,
+                                "officer(s) with their own telephone"),
+                               (officer_emails["withEmail"], MIN_OFFICER_EMAILS,
+                                "officer(s) with their own e-mail address")):
         if count < floor:
             problems.append("%d %s < floor %d" % (count, what, floor))
     if orphans:
@@ -140,6 +217,13 @@ def main():
     # `Jaclyn G,` in two of its three populated slots.
     for where, name, why in suspect_names_in(libraries):
         problems.append("%s: %r has %s" % (where, name, why))
+    # AN OFFICER'S TELEPHONE MUST BE SHAPED LIKE ONE (comptroller_afr.
+    # OFFICER_PHONE_SHAPE). The refusal names the library and the officer's
+    # place in its list, never the value.
+    for where, why in suspect_phones_in(libraries):
+        problems.append("%s: %s" % (where, why))
+    for where, why in suspect_emails_in(libraries):
+        problems.append("%s: %s" % (where, why))
 
     if problems:
         for problem in problems:
@@ -154,6 +238,8 @@ def main():
         "generated": payload.get("generated"),
         "libraries": libraries,
     }
+    if mail_withheld:
+        out[MAIL_GIVEN_FOR_TWO] = mail_withheld
     text = json.dumps(out, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
 
     if args.check:
@@ -167,8 +253,11 @@ def main():
         if a != b:
             fail("%s does not match a fresh read of the filings" % OUT_PATH)
         print("build-il-library-district-officials: OK — shipped file matches "
-              "(%d librar(ies) on %d card(s), %d board officer(s))"
-              % (len(libraries), cards, board))
+              "(%d librar(ies) on %d card(s), %d board officer(s), %d officer(s) "
+              "with their own telephone, %d with their own e-mail address, %d "
+              "number(s) taken off as the library's own line)"
+              % (len(libraries), cards, board, officer_phones["withPhone"],
+                 officer_emails["withEmail"], library_lines))
         return
 
     # WHAT MOVED BESIDES THE STAMP. `generated` is rewritten every run, so
@@ -191,9 +280,13 @@ def main():
         fh.write(text)
     print("build-il-library-district-officials: wrote %s — %d librar(ies) on %d "
           "card(s), %d board officer(s), %d appointed, %d with an office, %d "
-          "with a telephone"
+          "with a telephone, %d officer(s) with their own telephone (%d with a "
+          "second), %d with their own e-mail address, %d number(s) taken off "
+          "as the library's own line"
           % (OUT_PATH, len(libraries), cards, board, heads, with_office,
-             with_phone))
+             with_phone, officer_phones["withPhone"],
+             officer_phones["withSecond"], officer_emails["withEmail"],
+             library_lines))
 
 
 if __name__ == "__main__":

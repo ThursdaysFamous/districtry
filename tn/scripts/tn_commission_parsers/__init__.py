@@ -13,8 +13,17 @@ on the day the parser was written:
   SEATS          seats per district as the county elects them, a vacant seat
                  included
   AT_LARGE       the seats elected countywide
-  PHONES         True only where every phone the parser keeps is a government
-                 office line (default False)
+  OFFICE_LINES   the county's, the commission's or the mayor's own numbers
+                 printed on the page, which belong to the office and never land
+                 on a member's record (optional). Since Adam's ruling of
+                 2026-10-17 every other number the page prints beside a member
+                 is kept, whosever line it is; the PHONES flag that once
+                 limited phones to office lines is retired
+  member_pages(pages)  {roster URL: page text} -> the member pages the roster
+                 links, on the county's own domain, where the numbers are
+                 printed on each member's own page rather than the roster
+                 (optional); the scraper reads them like URLS and hands them
+                 to parse() in the same table
   TITLE, BODY    what the county calls a member and the body, where that is not
                  "Commissioner" of the "County Commission" (text only: a
                  pattern of the parser's own takes another name)

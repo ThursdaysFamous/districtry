@@ -67,6 +67,9 @@
     "clerk": "Jane Kolpack",
     "municipality": "Polar",
     "phone": "715-216-1715",
+    "phonesExtra": [
+      "715-627-4486"
+    ],
     "recordUpdated": "2023-11-21"
   },
   "5506765550": {
@@ -92,6 +95,9 @@
     "deputyClerk": "Irene Buck",
     "municipality": "Upham",
     "phone": "715-216-1263",
+    "phonesExtra": [
+      "715-275-4229"
+    ],
     "recordUpdated": "2024-06-21",
     "url": "http://townofupham.org"
   },
@@ -105,6 +111,9 @@
     "clerk": "Heather Baker",
     "municipality": "Wolf River",
     "phone": "715-882-4492",
+    "phonesExtra": [
+      "715-484-5922"
+    ],
     "recordUpdated": "2023-12-11"
   },
   "_source": {

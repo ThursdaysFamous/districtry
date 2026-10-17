@@ -37,8 +37,10 @@ name: Update Stark County Board roster
 # that are worth reading in the log rather than the diff:
 #   * Stark gives each SEAT its own mailbox (boarddist1-1 … boarddist2-4) rather
 #     than publishing members' personal addresses. The builder FAILS if a
-#     personal address ever appears in that slot — that would be a change in
-#     county policy, not a data update.
+#     member holds the other district's mailbox. Until 2026-10-17 it also
+#     failed on a personal address in a seat's place; since Adam's choice that
+#     day to publish personal e-mail addresses ("E-mails too"), one printed
+#     beside a single member ships on that member.
 #   * The same page also lists the Circuit Clerk, County Clerk, Sheriff, State's
 #     Attorney and Treasurer under their own headings. The scraper walks
 #     category by category and takes only the two District headings, so those

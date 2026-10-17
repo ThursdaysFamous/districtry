@@ -263,8 +263,20 @@ last good record for 45 days, dated to the day it was read, and past that the we
 (`update-tn-commissioner-roster.yml`, Wednesday) fails. **PRIVACY IS A WHITELIST, NOT A
 FILTER**: county pages print home addresses, personal mobile numbers and personal e-mail beside
 the official ones, so a member record can carry only a name, a seat, a role, an e-mail on the
-county's own domain, and a telephone only for the one county (Davidson) whose numbers are the
-Council's own office lines. **NASHVILLE IS A METROPOLITAN COUNCIL, NOT A COMMISSION**, with 35
+county's own domain, telephone numbers and a link to the member's page on the county's site, and
+never an address. **SINCE 2026-10-17 A MEMBER'S OWN NUMBERS SHIP**, on Adam's ruling for every
+state ("if the official government source uses personal phone numbers, we publish those"): a
+number the county prints beside a member is kept as printed, with the page's own label ("cell",
+"home"), the first in `phone` and any others in `phonesExtra`. Until that day only Davidson's
+numbers, the Council's own office lines, were kept, under a `PHONES` flag that is now retired
+and that the scraper refuses if a module still sets it. A number printed for two or more members,
+or equal to one of a module's `OFFICE_LINES`, stays the office's; a fax and a number whose tel:
+link dials something other than the number printed stay out; a number printed without an area
+code ships without one (Warren, gap `warren-commission-phone-area-code`); and the builder refuses
+anything in a phone field that is not one telephone number, with a floor on how many members
+carry one. Six counties print the numbers on each member's own page (Coffee, Lawrence, Maury,
+Montgomery, Washington, Wilson), which the scraper reads only where the roster page links it
+(`member_pages`). **NASHVILLE IS A METROPOLITAN COUNCIL, NOT A COMMISSION**, with 35
 district members and 5 elected countywide, so its record carries its own body name and member
 title, and its generated page is titled "Davidson County Metro Council". The per-county pages
 under `tn/county-commissioner/` and their index on `tn/county-commissioner.html` are generated

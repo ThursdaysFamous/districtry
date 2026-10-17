@@ -509,6 +509,31 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A LEGISLATOR'S OWN NUMBERS RIDE THE PERSON ROW, each with the label
+    //     the member's page prints ("home (803) ...", "business (803) ..."),
+    //     since Adam's ruling of 2026-10-17 ("if the official government
+    //     source uses personal phone numbers, we publish those"). The numbers
+    //     expected are read from the shipped roster for the anchor's House
+    //     district, so a weekly refresh that changes them changes what is
+    //     expected; a record carrying none is reported, never passed as a
+    //     check. The card shows numbers with no-break hyphens, folded back
+    //     before comparing.
+    {
+      const want = await page.evaluate(async (d) => {
+        const r = await fetch("data/app/sc-house-members.json").then((x) => x.json());
+        const m = r[d] || {};
+        return [m.phone].concat(m.phonesExtra || []).filter(Boolean);
+      }, EXPECT_DISTRICT["sc-house"]);
+      const info = await cardText(page, "sc-house");
+      const text = (info.text || "").replace(/\u2011/g, "-");
+      if (!want.length) {
+        console.log("  SKIP  legislator's own numbers — the anchor's House member prints none");
+      } else {
+        check("a legislator's own numbers ride the person row, with the page's labels",
+          !info.error && want.every((n) => text.includes(n)),
+          `want ${want.join(" / ")}; got ${text.slice(0, 200)}`);
+      }
+    }
     await context.close();
   }
 

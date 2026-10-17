@@ -110,9 +110,22 @@ leak into an output. **Do not add them back.** The standing rule is that home
 addresses never ship, and here the file cannot say which ones they are.
 
 What does ship: the clerk's name, the deputy clerk's name where the file gives
-one, `Phone 1`, the municipality's own website, and the record's **own
+one, `Phone 1`, `Phone 2` where the file gives one (since 2026-10-17, below),
+the municipality's own website, and the record's **own
 last-updated date** — which ranges from 2023 to 2026 and is per record, so the
 card dates each answer rather than implying the whole file is current.
+
+**`Phone 2` ships since 2026-10-17.** Until that day only `Phone 1` was read,
+because a second number beside a clerk is often the clerk's own cell or home
+line. Adam ruled that day, for every state: "if the official government source
+uses personal phone numbers, we publish those." So `Phone 2` ships after
+`Phone 1` in the record's `phonesExtra`, unlabelled because the file gives it no
+label. Measured 2026-10-17, 547 records carry a `Phone 2` and 533 of them ship.
+The other 14 do not, and `build_wi_municipal_clerks.py` counts each kind on
+every run: 4 repeat `Phone 1`, 7 equal the record's own `Fax`, 2 are printed
+under another municipality for a different clerk (a line two officials share
+is an office's, not either person's), and 1 is printed with digits missing
+(`MALFORMED_PHONE_2`). No e-mail and no address ships, for the reasons above.
 
 ## THE TOWNS COME OUT OF THIS SAME FILE
 

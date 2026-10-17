@@ -8,11 +8,16 @@ telephone number on the first line, then the street address and an e-mail line.
 An asterisk before a name marks a staggered even-year term and is dropped. Some
 pages set the offices in two columns, so the page is rebuilt from word positions:
 the left column is read before the right one. Read with the token on 2026-10-15
-(robots.txt: 816 bytes, no rule matches the document's path)."""
+(robots.txt: 816 bytes, no rule matches the document's path).
+
+The numbers printed after the name on its first line ship on the officer
+("Cell:" kept as the label), and so does the e-mail address on the entry's
+"Email:" line; the street address line between them is not read."""
 
 import re
 
-from . import clean, looks_like_person, person, strip_contact
+from . import (add_emails, clean, line_emails, looks_like_person, person,
+               phones_after_name, strip_contact)
 
 COUNTY_FIPS = "007"
 COUNTY_NAME = "Bayfield"
@@ -67,6 +72,7 @@ def _page_text(words):
 def _people(block):
     people = []
     role = None
+    last = None         # the officer whose entry the lines below belong to
     for ln in block.split("\n"):
         ln = ln.strip()
         if not ln:
@@ -78,16 +84,23 @@ def _people(block):
                 role = "Supervisor"
             else:
                 role = None
+            last = None
+            continue
+        if re.match(r"^e-?mail\b", ln, re.I):
+            # the e-mail line of the board member's entry above it
+            if last is not None:
+                add_emails(last, line_emails(ln))
             continue
         if role is None:
             continue
-        if re.match(r"^(e-?mail|phone|fax|website)\b", ln, re.I):
+        if re.match(r"^(phone|fax|website)\b", ln, re.I):
             continue
         # the name ends where a telephone number or "No Phone" starts
         name = re.split(r"\(|\bNo Phone\b|\d{3}-\d{4}", ln)[0]
         name = strip_contact(name).lstrip("*").strip()
         if looks_like_person(name):
-            people.append(person(name, role))
+            last = person(name, role, phones_after_name(ln, name))
+            people.append(last)
             if role == "Chairperson":
                 role = None     # one chair; what follows is the address
     return people

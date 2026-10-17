@@ -3,14 +3,17 @@
 Each town has a page headed "TOWN OF <NAME>". An office is printed as a
 heading on its own line ("Chairperson", "Supervisors", "Clerk/Treasurer"),
 followed by each holder's name with a dot leader and telephone, then the
-holder's street address, town and e-mail on the lines below. A heading can
-cover two names ("Supervisors"). Read with the token on 2026-10-15 (the file
+holder's street address, town and e-mail on the lines below. The telephone
+after the leader ships on the officer, and so does the e-mail address on the
+entry's last line; the address lines are not read. A
+heading can cover two names ("Supervisors"). Read with the token on 2026-10-15 (the file
 is served from cms2.revize.com, whose robots.txt allows /*.pdf; the county
 host has no robots.txt)."""
 
 import re
 
-from . import looks_like_person, norm_role, person, split_blocks, strip_contact
+from . import (add_emails, line_emails, looks_like_person, norm_role, person,
+               phones_after_name, split_blocks, strip_contact)
 
 COUNTY_FIPS = "057"
 COUNTY_NAME = "Juneau"
@@ -30,6 +33,7 @@ def _officers(block):
     people = []
     role = None
     after_heading = False
+    last = None         # the board member whose entry the lines below are
     for ln in (x.strip() for x in block.split("\n")):
         if not ln or ln.startswith("=====") or re.fullmatch(r"\d+", ln):
             continue
@@ -38,11 +42,14 @@ def _officers(block):
             word = h.group(1)
             role = norm_role(re.sub(r"(?i)^supervisors$", "Supervisor", word))
             after_heading = True
+            last = None
             continue
         if _LEADER.search(ln):
             name = strip_contact(_CUT.sub("", ln))
+            last = None
             if role and looks_like_person(name):
-                people.append(person(name, role))
+                last = person(name, role, phones_after_name(ln, name))
+                people.append(last)
             elif not looks_like_person(name):
                 # a leader line that is a place ("Polling Place ......") ends
                 # the office it follows
@@ -50,11 +57,16 @@ def _officers(block):
             after_heading = False
             continue
         if _ADDRESS.search(ln):
+            # the entry's e-mail line; its address lines are not read
+            if last is not None and "@" in ln:
+                add_emails(last, line_emails(ln))
             continue
         # a name printed without a leader is read only directly under its
         # heading; any other line ends the office
+        last = None
         if after_heading and role and looks_like_person(ln):
-            people.append(person(ln, role))
+            last = person(ln, role)
+            people.append(last)
         else:
             role = None
         after_heading = False

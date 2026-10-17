@@ -34,6 +34,9 @@
     "clerk": "Jennifer Jacobson",
     "municipality": "Elk Grove",
     "phone": "608-778-5336",
+    "phonesExtra": [
+      "608-348-8175"
+    ],
     "recordUpdated": "2024-01-17"
   },
   "5506525475": {
@@ -52,6 +55,9 @@
     "clerk": "Lisa Caya",
     "municipality": "Kendall",
     "phone": "608-279-2651",
+    "phonesExtra": [
+      "608-762-5387"
+    ],
     "recordUpdated": "2024-06-17"
   },
   "5506542175": {
@@ -101,6 +107,9 @@
     "clerk": "Luann Donahoe",
     "municipality": "Willow Springs",
     "phone": "608-482-2550",
+    "phonesExtra": [
+      "608-776-4550"
+    ],
     "recordUpdated": "2025-04-22",
     "url": "https://www.lafayettecountywi.org/community/page/town-willow-springs"
   },

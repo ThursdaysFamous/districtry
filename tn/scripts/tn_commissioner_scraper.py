@@ -56,10 +56,34 @@ record forward.
 
 PRIVACY. Many of these pages print each commissioner's home address and home
 or cell telephone beside the name. No parser reads an address, a town or a ZIP
-code; an e-mail is kept only on the county's own domain (`DOMAINS`); and a
-telephone is kept only where the page makes plain it is a government office
-line. A module keeps a phone only where it says PHONES = True, and the
-builder refuses a record that breaks any of this, whatever a parser returns.
+code. AN E-MAIL ADDRESS the county prints in a member's own block is kept,
+whatever its domain, since Adam chose on 2026-10-17 to show a personal address
+a government page prints beside an official ("E-mails too"); until that day
+one was kept only on the county's own domains (`DOMAINS`). Where a block
+prints a county address and another, the county's is kept. An address printed
+for two or more members is the office's and is left out, and so is one that
+carries another member's name (tn_commission_parsers._common.settle_emails).
+A TELEPHONE NUMBER the county prints beside a member is kept, whosever line it
+is, under Adam's ruling of 2026-10-17 for every state: "if the official
+government source uses personal phone numbers, we publish those." It is kept as
+printed, with the page's own label ("cell", "home") in front of it, the first
+in `phone` and any others in `phonesExtra`. Until that day a module kept a
+phone only where it said PHONES = True (an office line), and every other
+county's numbers were refused here. What still stays out: a fax; a number
+whose tel: link dials something else; and a number printed for two or more
+members or equal to the county's or the commission's own line (a module's
+OFFICE_LINES), which belongs to the office and not the person
+(tn_commission_parsers._common.settle_phones). The builder refuses a record
+that carries an address, a ZIP code or anything in a phone field that is not a
+telephone number, whatever a parser returns.
+
+A MEMBER'S OWN PAGE IS READ ONLY WHERE THE ROSTER LINKS IT. Six counties print
+the numbers on each member's own page rather than on the roster (Coffee,
+Lawrence, Maury, Montgomery, Washington, Wilson). Their modules name those
+pages (`member_pages`), each one linked from the roster page and on the
+county's own domain, and they are read with the same robots.txt check, client
+and pacing as the roster page. A member page that cannot be read leaves the
+whole county unread for the week, exactly as a roster page would.
 
 NO PARSER INFERS A DISTRICT FROM LIST ORDER. Each pairs a name with the
 district label inside the same block, row or heading, and raises ValueError
@@ -89,7 +113,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(HERE)), "scripts"))
 from robots_policy import RobotsGate, HostPacer  # noqa: E402  (FLEET_SHARED)
 from scraper_common import UA_ROSTER_BOT, UA_HEADERS_ROSTER_BOT  # noqa: E402  (FLEET_SHARED)
-from tn_commission_parsers._common import strip_comments  # noqa: E402  (same tree)
+from tn_commission_parsers._common import (  # noqa: E402  (same tree)
+    strip_comments, settle_phones, settle_emails, NUMBER)
 
 CACHE = os.path.join(HERE, ".cache", "tn_commissioner_roster.json")
 TIMEOUT = 60
@@ -112,7 +137,9 @@ def load_counties():
                      "urls": list(mod.URLS), "seats": dict(mod.SEATS),
                      "source": getattr(mod, "SOURCE_URL", mod.URLS[0]),
                      "at_large": mod.AT_LARGE, "domains": list(mod.DOMAINS),
-                     "phones": bool(getattr(mod, "PHONES", False)),
+                     "member_pages": getattr(mod, "member_pages", None),
+                     "office_lines": getattr(mod, "OFFICE_LINES", ()),
+                     "phones_flag": getattr(mod, "PHONES", None),
                      "title": getattr(mod, "TITLE", None),
                      "body": getattr(mod, "BODY", None),
                      "labels": getattr(mod, "DISTRICT_LABELS", None), "module": info.name})
@@ -128,6 +155,19 @@ def load_counties():
                 raise SystemExit("tn-commissioner-scraper: FAIL - %s.%s is %s, not text; "
                                  "name a pattern of your own something else"
                                  % (row["module"], key.upper(), type(row[key]).__name__))
+        lines = row["office_lines"]
+        if not isinstance(lines, (tuple, list)) or not all(
+                isinstance(x, str) and NUMBER.fullmatch(x.strip()) for x in lines):
+            raise SystemExit("tn-commissioner-scraper: FAIL - %s.OFFICE_LINES is not a list "
+                             "of telephone numbers" % row["module"])
+        if isinstance(row.pop("phones_flag"), bool):
+            # PHONES = True marked a county whose phones were office lines,
+            # when only those were kept; since Adam's ruling of 2026-10-17 a
+            # member's own number is kept too, and the flag means nothing.
+            # (Henry's parser keeps a pattern of its own named PHONES.)
+            raise SystemExit("tn-commissioner-scraper: FAIL - %s still sets PHONES, which "
+                             "was retired on 2026-10-17; name the county's own lines in "
+                             "OFFICE_LINES instead" % row["module"])
         labels = row["labels"]
         if labels is not None and not (isinstance(labels, dict) and all(
                 isinstance(k, str) and isinstance(v, str) and v.strip()
@@ -224,6 +264,21 @@ def read_page(url, session, gate, pacer):
     return resp, None, None, gate, pacer
 
 
+def member_urls(spec, pages):
+    """The member pages a county's module names from its roster page, each
+    checked to be https on the county's own domains, in order, once each."""
+    out = []
+    for url in spec["member_pages"](pages):
+        parts = urlsplit(url)
+        host = (parts.hostname or "").lower()
+        if parts.scheme != "https" or not any(host == d or host.endswith("." + d)
+                                              for d in spec["domains"]):
+            raise ValueError("member page %r is not https on the county's own domains" % url)
+        if url not in out and url not in spec["urls"]:
+            out.append(url)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--county", help="scrape one county by name and merge it into the cache")
@@ -251,6 +306,21 @@ def main():
                 break
             resp.encoding = resp.encoding or "utf-8"
             pages[url] = strip_comments(resp.text)
+        if not failed and spec["member_pages"]:
+            # The pages the roster itself links for each member, read the same
+            # way; parse() then finds each one in `pages` under its own URL.
+            try:
+                more = member_urls(spec, pages)
+            except (ValueError, KeyError, IndexError) as exc:
+                failed = ("PARSE REFUSED - %s" % exc, "parse")
+                more = []
+            for url in more:
+                resp, why, kind, gate, pacer = read_page(url, session, gate, pacer)
+                if resp is None:
+                    failed = ("member page %s: %s" % (url, why), kind)
+                    break
+                resp.encoding = resp.encoding or "utf-8"
+                pages[url] = strip_comments(resp.text)
         if failed:
             # A COUNTY THAT WAS NOT READ IS RECORDED, NOT DROPPED, so the
             # builder can carry its last good record forward (the operator's
@@ -262,6 +332,14 @@ def main():
             continue
         try:
             parsed = spec["parse"](pages)
+            # A number printed for two or more members, or equal to one of
+            # the county's own lines, is the office's and is left out; a
+            # member whose numbers a parser withheld gets a note. An e-mail
+            # address printed for two or more members is the office's too,
+            # and one carrying another member's name is that member's. Notes
+            # name the member and never a number or an address.
+            notes = settle_phones(parsed, spec["office_lines"])
+            notes += settle_emails(parsed)
         except (ValueError, KeyError, IndexError) as exc:
             unread.append({"fips": spec["fips"], "county": county,
                            "why": "PARSE REFUSED - %s" % exc, "kind": "parse"})
@@ -274,7 +352,6 @@ def main():
             "seatsByDistrict": spec["seats"],
             "atLargeSeats": spec["at_large"],
             "domains": spec["domains"],
-            "phones": bool(spec.get("phones")),
             "seatTitle": spec.get("title") or "Commissioner",
             "bodyName": spec.get("body") or "County Commission",
             "districts": districts,
@@ -284,9 +361,14 @@ def main():
             # global stamp would date every county to a run that read one.
             "readAt": read_date,
         }
-        print("  %-10s %2d districts, %3d seats, %d at-large (%s)"
+        recs = [r for v in districts.values() for r in v] + list(parsed.get("atLarge") or [])
+        print("  %-10s %2d districts, %3d seats, %d at-large, %d with a number, %d with "
+              "two or more (%s)"
               % (county, len(districts), sum(len(v) for v in districts.values()),
-                 len(parsed.get("atLarge") or []), spec["urls"][0]))
+                 len(parsed.get("atLarge") or []), sum(1 for r in recs if r.get("phone")),
+                 sum(1 for r in recs if r.get("phonesExtra")), spec["urls"][0]))
+        for note in notes:
+            print("             %s" % note)
 
     if args.county and os.path.exists(CACHE):
         # --county MERGES; a full run REPLACES, and its `unread` list is what

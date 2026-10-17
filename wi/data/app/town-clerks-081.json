@@ -10,6 +10,9 @@
     "deputyClerk": "Angela Bunker",
     "municipality": "Angelo",
     "phone": "608-386-8520",
+    "phonesExtra": [
+      "608-633-7357"
+    ],
     "recordUpdated": "2026-07-30",
     "url": "https://angelowi.gov/"
   },
@@ -18,12 +21,18 @@
     "deputyClerk": "Ann Grygleski",
     "municipality": "Byron",
     "phone": "608-387-9222",
+    "phonesExtra": [
+      "608-343-7985"
+    ],
     "recordUpdated": "2026-06-17"
   },
   "5508115550": {
     "clerk": "Mary Cook",
     "municipality": "Clifton",
     "phone": "608-463-7379",
+    "phonesExtra": [
+      "608-427-6814"
+    ],
     "recordUpdated": "2024-01-17"
   },
   "5508129450": {
@@ -42,6 +51,9 @@
     "clerk": "Debra Stott",
     "municipality": "Greenfield",
     "phone": "608-387-1214",
+    "phonesExtra": [
+      "608-343-1032"
+    ],
     "recordUpdated": "2026-01-30",
     "url": "https://townofgreenfield.wi.gov/"
   },
@@ -83,6 +95,9 @@
     "clerk": "Cassandra Schober",
     "municipality": "Little Falls",
     "phone": "608-272-3175",
+    "phonesExtra": [
+      "715-896-4826"
+    ],
     "recordUpdated": "2024-09-18"
   },
   "5508156950": {
@@ -110,6 +125,9 @@
     "clerk": "Rita M Williams",
     "municipality": "Ridgeville",
     "phone": "608-823-7459",
+    "phonesExtra": [
+      "608-823-7725"
+    ],
     "recordUpdated": "2026-04-04",
     "url": "http://ridgevilletown.com/"
   },
@@ -118,6 +136,9 @@
     "deputyClerk": "Lorry Erickson",
     "municipality": "Scott",
     "phone": "608-378-4714",
+    "phonesExtra": [
+      "608-378-3014"
+    ],
     "recordUpdated": "2025-05-09",
     "url": "https://townofscottmonroe.com/"
   },
@@ -153,6 +174,9 @@
     "clerk": "Diane Schwarz",
     "municipality": "Wells",
     "phone": "608-632-6662",
+    "phonesExtra": [
+      "608-654-8435"
+    ],
     "recordUpdated": "2026-07-03",
     "url": "https://www.townofwellswi.com/"
   },

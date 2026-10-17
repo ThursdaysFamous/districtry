@@ -24,11 +24,16 @@ full per-precinct re-read — it counts rather than names — and says so: it
 catches a re-precincting or a redistricting, which are the two events that
 would invalidate the boundary, and it costs two requests instead of thirty-five.
 
-WHAT SHIPS: name, district, the role the county prints beside the member, phone
-and e-mail. WHAT DOES NOT: the Address column, which is every member's HOME
-address (the Madison/Peoria rule, enforced in the scraper by discarding the
-column and asserted again here), and party, which the members page does not
-publish.
+WHAT SHIPS: name, district, the role the county prints beside the member, the
+Mobile column's number ("mobile 618-..."), any home number the county prints in
+its "Home or E-Mail" column (`phonesExtra`, "home 618-...", which ships since
+Adam's ruling of 2026-10-17: "if the official government source uses personal
+phone numbers, we publish those"), and e-mail. WHAT DOES NOT: the Address
+column, which is every member's HOME address (the Madison/Peoria rule, enforced
+in the scraper by discarding the column and asserted again here), and party,
+which the members page does not publish. Every number is checked for its shape
+(scraper_common.person_phone_problem): one telephone number, led by its label,
+and nothing else.
 
 THE CHAIR IS THE COUNTY'S OWN LABEL, not an inference from the canvasses.
 §3.5.1 warns against badging a chair derived from returns, because a
@@ -49,13 +54,17 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_franklin_boundaries import COMPOSITION, SEATS_PER_DISTRICT  # noqa: E402
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import make_fail, person_phone_problem  # noqa: E402  (shared machinery — do not fork)
 
 BOARD_URL = "https://franklincountyil.gov/county-board-members/"
 
 EXPECT_DISTRICTS = 3
 EXPECT_MEMBERS = EXPECT_DISTRICTS * SEATS_PER_DISTRICT      # 9 seats
 MIN_PHONES = 7          # measured 8/9 — one member's row carries no number
+# No floor for home numbers: measured on 2026-10-17 the "Home or E-Mail" column
+# held one e-mail address and eight empty cells, so the count is 0 and a floor of
+# two thirds of it would guard nothing. MIN_PHONES above still fails the build if
+# the Mobile column stops being read.
 STREET_RE = re.compile(
     r"\d+\s+\S+\s*(st|street|ave|avenue|rd|road|dr|drive|ln|lane|ct|court|"
     r"blvd|hwy|way|circle|cir|place|pl|trail|heights)\b", re.I)
@@ -106,6 +115,10 @@ def main():
             for key in ("role", "phone", "email"):
                 if rec.get(key):
                     member[key] = re.sub(r"\s+", " ", str(rec[key])).strip()
+            extras = [re.sub(r"\s+", " ", str(p)).strip()
+                      for p in (rec.get("phonesExtra") or []) if p]
+            if extras:
+                member["phonesExtra"] = extras
             entry["members"].append(member)
 
     if len(roster) != EXPECT_DISTRICTS:
@@ -124,14 +137,26 @@ def main():
     if phones < MIN_PHONES:
         fail("only %d/%d members carry a phone (floor %d) — the members page "
              "changed shape" % (phones, EXPECT_MEMBERS, MIN_PHONES))
-    # The privacy invariant, asserted again on what is about to be written.
+    # The privacy invariant, asserted again on what is about to be written. The
+    # message names the member and the field and never the value.
     for entry in roster.values():
         for member in entry["members"]:
             for key, value in member.items():
                 if STREET_RE.search(str(value)):
-                    fail("a residence reached %s's %s (%r) — the members page's "
-                         "Address column is never read"
-                         % (member["name"], key, value))
+                    fail("a residence reached %s's %s — the members page's "
+                         "Address column is never read" % (member["name"], key))
+    # The shape of every number: one telephone number led by its label. The
+    # message names the district and the seat's place in it, never the value.
+    for dnum, entry in sorted(roster.items()):
+        for seat, member in enumerate(entry["members"], 1):
+            values = [("phone", member.get("phone"))] if member.get("phone") else []
+            values += [("phonesExtra[%d]" % i, v)
+                       for i, v in enumerate(member.get("phonesExtra") or [])]
+            for field, value in values:
+                problem = person_phone_problem(value)
+                if problem:
+                    fail("Franklin County District %s, seat %d of %d: %s %s"
+                         % (dnum, seat, len(entry["members"]), field, problem))
     chairs = sorted(m["name"] for v in roster.values() for m in v["members"]
                     if (m.get("role") or "").lower() == "chairman")
     if len(chairs) > 1:
@@ -144,10 +169,11 @@ def main():
         handle.write("\n")
     emails = sum(1 for v in roster.values() for m in v["members"] if m.get("email"))
     roles = sum(1 for v in roster.values() for m in v["members"] if m.get("role"))
+    homes = sum(1 for v in roster.values() for m in v["members"] if m.get("phonesExtra"))
     print("franklin-board-roster: wrote %s — %d districts of %d (%d phones, "
-          "%d e-mail, %d roles printed by the county%s)"
+          "%d with a home number too, %d e-mail, %d roles printed by the county%s)"
           % (os.path.relpath(out_path, REPO_ROOT), EXPECT_DISTRICTS,
-             SEATS_PER_DISTRICT, phones, emails, roles,
+             SEATS_PER_DISTRICT, phones, homes, emails, roles,
              "; chairman %s" % chairs[0] if chairs else "; no chairman printed"))
     print("  composition verified against the shipped dissolve: %s precincts per "
           "district, %d county-wide" % (got, shipped_precincts))

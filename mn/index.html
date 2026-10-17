@@ -12334,7 +12334,8 @@ function initMinnesotaExplorer() {
    *   - mailto:/tel: hrefs are built HERE from a raw address/number — an
    *     email address is never printed (the "Email" label is the link), and
    *     a phone number displays with non-breaking hyphens while its tel:
-   *     href keeps only dialable characters.
+   *     href keeps only dialable characters, and stops where an extension
+   *     begins.
    * A render() returns one wrapper element with class "card-flush"; the
    * styles-card-v2 rules key row padding/borders off that marker. */
   function cardEl(tag, className, text) {
@@ -12353,21 +12354,37 @@ function initMinnesotaExplorer() {
     a.textContent = String(label || safe);
     return a;
   }
+  function cardPhoneDial(phone) {
+    // What a tel: link dials for one printed number: its digits (and a
+    // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
+    // "x 236"). Run onto the end of the number, an extension's digits would
+    // dial a different number; the extension stays in the text, where the
+    // reader sees it.
+    var s = String(phone);
+    var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+    if (m) s = s.slice(0, m.index + m[1].length);
+    return s.replace(/[^\d+]/g, "");
+  }
   function cardPhoneLink(phone) {
-    var dial = String(phone).replace(/[^\d+]/g, "");
+    var dial = cardPhoneDial(phone);
     if (!dial) return null;
     var a = cardEl("a", "card-phone", String(phone).replace(/-/g, "‑"));
     a.href = "tel:" + dial;
     return a;
   }
   function cardContactLine(spec) {
-    // spec: { phone?, email?, links?: [{label, url}] } -> one wrapping line of
-    // phone / Email / external links separated by middots; null when empty.
+    // spec: { phone?, phonesExtra?: [string], email?, links?: [{label, url}] }
+    // -> one wrapping line of phones / Email / external links separated by
+    // middots; null when empty. phonesExtra are further numbers the source
+    // prints for the same person, each as printed: a label the source gives
+    // ("cell 519-3104") stays in the text, and only the digits reach the
+    // tel: href, so a label never changes the number dialled.
     var items = [];
-    if (spec.phone) {
-      var p = cardPhoneLink(spec.phone);
+    [spec.phone].concat(spec.phonesExtra || []).forEach(function (phone) {
+      if (!phone) return;
+      var p = cardPhoneLink(phone);
       if (p) items.push(p);
-    }
+    });
     if (spec.email) {
       var e = document.createElement("a");
       e.href = "mailto:" + String(spec.email);
@@ -12428,8 +12445,8 @@ function initMinnesotaExplorer() {
     return el;
   }
   function renderPersonRows(people, opts) {
-    // people: [{ name, badge?, note?, phone?, email?, links?, details?:
-    // {label, items}, detailsOpen? }]. A person with details renders as a
+    // people: [{ name, badge?, note?, phone?, phonesExtra?, email?, links?,
+    // details?: {label, items}, detailsOpen? }]. A person with details renders as a
     // native <details> expander; absent fields render nothing (no
     // placeholders, no guessed officeholders — honesty rules).
     var tinted = opts && opts.tinted;
@@ -13651,8 +13668,9 @@ function initMinnesotaExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, districtOffice?, capitolOffice? }; office fields only
-    // render when the roster supplies them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
+    // districtOffice?, capitolOffice? }; office fields only render when the
+    // roster supplies them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -13821,6 +13839,25 @@ function initMinnesotaExplorer() {
         }
         var person = { name: String(member.name) };
         if (member.party) person.badge = String(member.party);
+        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+        // the chamber prints for the member apart from the office blocks
+        // below, such as a home or cell line. Published since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is shown even where it may be the official's own; a label
+        // the source prints ("home 803-555-0100") rides inside the string.
+        if (member.phone) person.phone = String(member.phone);
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
+        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+        // 2026-10-17 this card showed no legislator's address at all, though
+        // eight states' rosters carried one for nearly every seat. Measured
+        // that day, every one of them is the chamber's own mailbox except
+        // fifteen Arkansas members' personal addresses, which the
+        // legislature's own member pages print and which Adam chose to show
+        // ("E-mails too"). A roster reads it from the legislature's pages or
+        // from Open States' compilation of them.
+        if (member.email) person.email = String(member.email);
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
@@ -14642,6 +14679,11 @@ function initMinnesotaExplorer() {
         if (m.note) notes.push(String(m.note));
         if (notes.length) person.note = notes.join(" · ");
         if (m.phone) person.phone = String(m.phone);
+        // a member's own line beside the office one, as the nation prints it
+        // ("cell 218-…"), since Adam's ruling of 2026-10-17
+        if (m.phonesExtra && m.phonesExtra.length) {
+          person.phonesExtra = m.phonesExtra.map(String);
+        }
         if (m.email) person.email = String(m.email);
         return person;
       })));
@@ -15470,9 +15512,12 @@ function initMinnesotaExplorer() {
    * TOWNSHIP OFFICERS name 416 more towns' boards, each dated to the list and
    * the day it was read (mn/scripts/mn_county_town_officers_scraper.py,
    * build_mn_county_town_officers.py; data/app/mn-county-town-officers.json,
-   * measured 2026-10-16). One source per town: a town the election results
-   * name never takes names from a county list. The rest name nobody;
-   * recorded as gap mn-township-officers.
+   * measured 2026-10-16), with the telephone each list prints beside an
+   * officer, whosever line it is (Adam's ruling of 2026-10-17: "if the
+   * official government source uses personal phone numbers, we publish
+   * those"). One source per town: a town the election results name never
+   * takes names from a county list. The rest name nobody; recorded as gap
+   * mn-township-officers.
    * ---------- */
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
@@ -15486,9 +15531,12 @@ function initMinnesotaExplorer() {
   // The officers a county's own list of township officers names, for the
   // towns no election results file covers (the towns that vote in March),
   // keyed by GEOID; every town carries the list it came from and the day it
-  // was read (mn/scripts/build_mn_county_town_officers.py). Names, offices
-  // and terms only: the lists also print each officer's home address and
-  // telephone, which are never read.
+  // was read (mn/scripts/build_mn_county_town_officers.py). Names, offices,
+  // terms, each officer's telephone as the list prints it (`phone`, and
+  // `phonesExtra` for a second number, each with the list's own label) and,
+  // since Adam's choice of 2026-10-17 ("E-mails too"), the e-mail address the
+  // list prints beside that officer alone (`email`); the home address the
+  // lists also print is never read.
   var loadMnCountyTownOfficers = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-county-town-officers.json", {}, 2);
   });
@@ -15602,7 +15650,12 @@ function initMinnesotaExplorer() {
           return {
             name: String(o.name),
             badge: badge,
-            note: ends >= thisYear ? "term ends " + ends : null
+            note: ends >= thisYear ? "term ends " + ends : null,
+            // as the county's list prints it, a seven-digit number too:
+            // an area code is never guessed
+            phone: o.phone ? String(o.phone) : null,
+            phonesExtra: (o.phonesExtra || []).map(String),
+            email: o.email ? String(o.email) : null
           };
         })));
         var dated = mnListDate(list.asOf), read = mnListDate(list.read);
