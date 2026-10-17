@@ -1,0 +1,428 @@
+{
+ "_about": "Written by the builder, never by hand: every page and document read for this file, the date it was last read, the address it ended at, its size and hash, and for each document how many boards and names it gave.",
+ "documents": {
+  "https://dnr.sc.gov/conservation/districtsdnr/abbeville.html": {
+   "boards": 1,
+   "bytes": 7537,
+   "county": "Abbeville",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/abbeville.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "6770b7734d30864f69b24f7061c77318065e5b536565028d0b61681d5119ec43"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/aiken.html": {
+   "boards": 1,
+   "bytes": 7389,
+   "county": "Aiken",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/aiken.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "425fb9a02caa6f91c85aab9ebb2984c5963273a8c42f4fe0bf86ccfc584b7bac"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/allendale.html": {
+   "boards": 1,
+   "bytes": 7409,
+   "county": "Allendale",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/allendale.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "2b8caa984fed42b4b498d8ae2ed3c68f1f8d52345766a0334304356c63b764b1"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/anderson.html": {
+   "boards": 1,
+   "bytes": 7281,
+   "county": "Anderson",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/anderson.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "91fc0e8bb47db890520aa229ceb369a23eac00928e9a047792c1d828b9b6bf46"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/bamberg.html": {
+   "boards": 1,
+   "bytes": 7239,
+   "county": "Bamberg",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/bamberg.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "2e21037dd427a9ded26391b840983f5504140e1b4091378df64f0c4df5aa8224"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/barnwell.html": {
+   "boards": 1,
+   "bytes": 7388,
+   "county": "Barnwell",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/barnwell.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "57fe7644e717b9ecfa68e5599760a671aeebe7abd4018cd8086f990907f96db9"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/beaufort.html": {
+   "boards": 1,
+   "bytes": 7515,
+   "county": "Beaufort",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/beaufort.html",
+   "names": 4,
+   "read": "2026-10-16",
+   "sha256": "d27bc006ed2438b5c6fd7f5d9c43f19642ba02dd33bf4e978d4d2cb44b2cfd18"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/berkeley.html": {
+   "boards": 1,
+   "bytes": 7244,
+   "county": "Berkeley",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/berkeley.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "2ba0b98337fe2755e0922d04564ac9c5090ffcf0e90ec1eec45a8798110761f6"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/calhoun.html": {
+   "boards": 1,
+   "bytes": 7474,
+   "county": "Calhoun",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/calhoun.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "22f1d3f0836340149bef441eec296713db708ee3a1d4caadbe1db202cfe62571"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/charleston.html": {
+   "boards": 1,
+   "bytes": 7463,
+   "county": "Charleston",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/charleston.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "23d01441b40da679e36e0efee80d335a7e6bd60dc1a864bfb20f8ce372121182"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/cherokee.html": {
+   "boards": 1,
+   "bytes": 7228,
+   "county": "Cherokee",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/cherokee.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "ba62b3ffa57b2a3d3a456baaab16f885f1661f78802b24f0bc8895b300d74c07"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/chester.html": {
+   "boards": 1,
+   "bytes": 7477,
+   "county": "Chester",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/chester.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "946516100adaf1e1c5863e870f7491c42b2509b78d192ffc735f959fa1ffd420"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/chesterfield.html": {
+   "boards": 1,
+   "bytes": 7572,
+   "county": "Chesterfield",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/chesterfield.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "af5a55cfd471c1a75b95f8b86b1fd2dcd68a39b6c2f3af9db10227386de5b57d"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/clarendon.html": {
+   "boards": 1,
+   "bytes": 7538,
+   "county": "Clarendon",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/clarendon.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "39d80e118d47bb7f2ab01801c8366dab43b9d804ff86bb15eb2354b3e8b4e158"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/colleton.html": {
+   "boards": 1,
+   "bytes": 6724,
+   "county": "Colleton",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/colleton.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "c699cf04a4405bb8e355f697c2815667d688951313fe5b4fed9a12e6831cd7dd"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/darlington.html": {
+   "boards": 1,
+   "bytes": 7403,
+   "county": "Darlington",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/darlington.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "a24285fedae350b03329b592255d29e758223d703db64fe22633356b71474262"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/dillon.html": {
+   "boards": 1,
+   "bytes": 7283,
+   "county": "Dillon",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/dillon.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "d74f4b47bbfb708da31ddfd13ee2220b246ffe4d00cc2681dff6c58c248761eb"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/dorchester.html": {
+   "boards": 1,
+   "bytes": 8057,
+   "county": "Dorchester",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/dorchester.html",
+   "names": 4,
+   "read": "2026-10-16",
+   "sha256": "9f87a30106158a507133e97273f01c97d1f3be49df0632fb223565f829e4b2ff"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/edgefield.html": {
+   "boards": 1,
+   "bytes": 7446,
+   "county": "Edgefield",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/edgefield.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "1972f0ef12940d6ec785b13b7aef43c6301952c12e50799f6774710e277371f1"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/fairfield.html": {
+   "boards": 1,
+   "bytes": 7413,
+   "county": "Fairfield",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/fairfield.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "eaf5e213ed761fdc48fe899f7f740e0bd855413be6816ed2b49ad3fc2ebf0d19"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/florence.html": {
+   "boards": 1,
+   "bytes": 7365,
+   "county": "Florence",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/florence.html",
+   "names": 4,
+   "read": "2026-10-16",
+   "sha256": "0651ada486f2a9bdc068d9014b1d4d3fd45aaac07c81765833e066ad049eb75c"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/georgetown.html": {
+   "boards": 1,
+   "bytes": 7429,
+   "county": "Georgetown",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/georgetown.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "4f7c8a54b7fbe0a32a841625869f4b498d7741237e643462031bda515b6e3db9"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/greenville.html": {
+   "boards": 1,
+   "bytes": 8137,
+   "county": "Greenville",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/greenville.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "ac6fd6ca494c4b7900bcf4f6b549f6e47ad1d77f738d7d2fa28921c277521c0f"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/greenwood.html": {
+   "boards": 1,
+   "bytes": 7486,
+   "county": "Greenwood",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/greenwood.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "bcf31d234758e31600549e6a7fe9a483eeb6cd8bd607f4c73a8f994261a23ead"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/hampton.html": {
+   "boards": 1,
+   "bytes": 7364,
+   "county": "Hampton",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/hampton.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "ca2d1e8fc9741af0c84aba07fb8c27a20cdb13bceec7c5cc3be32ce1f6735700"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/horry.html": {
+   "boards": 1,
+   "bytes": 7704,
+   "county": "Horry",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/horry.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "29555aea1e75cae40496ecfe22610b94c344ccc2233c1a9d84cc91293a95fe7a"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/jasper.html": {
+   "boards": 1,
+   "bytes": 8026,
+   "county": "Jasper",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/jasper.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "6c422eb43f88211d52ea36d7b10e19349a02ac232b6f15357915e90ff8a79489"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/kershaw.html": {
+   "boards": 1,
+   "bytes": 7343,
+   "county": "Kershaw",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/kershaw.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "d29fb1a3b48edb04cd7e398bf0d1df0f34518ffa2fcc4e72cc2713d0d26504d0"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/lancaster.html": {
+   "boards": 1,
+   "bytes": 7649,
+   "county": "Lancaster",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/lancaster.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "95e90c314f2cda533644cfd7670e151e10d2abcb698c23b69f726a04f6114ab2"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/laurens.html": {
+   "boards": 1,
+   "bytes": 7386,
+   "county": "Laurens",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/laurens.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "db33150eb9504063590bb5605af685dac29295cd78c551dfa7040bb5e1939f5a"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/lee.html": {
+   "boards": 1,
+   "bytes": 7326,
+   "county": "Lee",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/lee.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "5ce635eb30f133a5fdd6098f0c6b7cd8da99c9b8628238641544ef26ea35cefb"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/lexington.html": {
+   "boards": 1,
+   "bytes": 7585,
+   "county": "Lexington",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/lexington.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "7962d0ce777a6e08c46556a6b0653d7db83eb032d0c2815567ba6ff32f4f450b"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/marion.html": {
+   "boards": 1,
+   "bytes": 7182,
+   "county": "Marion",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/marion.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "7dc5d387890c39d174caa80216eaad6b31579624bd4c9e88cb7fd0eacf827340"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/marlboro.html": {
+   "boards": 1,
+   "bytes": 7415,
+   "county": "Marlboro",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/marlboro.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "89964106b321be369928727a158b5dbd9d64f7b04e7d9ec8b5343e0b080df09b"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/mccormick.html": {
+   "boards": 1,
+   "bytes": 7581,
+   "county": "McCormick",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/mccormick.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "b2f9d91c1048eb0143168af1290a9f26cc33582bc64d084f714d4c0e00af0443"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/newberry.html": {
+   "boards": 1,
+   "bytes": 7377,
+   "county": "Newberry",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/newberry.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "f497294601aa4ceb556a179fc034cf47d1dae3f4ff5b1c8a9a925cb9e0a0677b"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/oconee.html": {
+   "boards": 1,
+   "bytes": 7326,
+   "county": "Oconee",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/oconee.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "f9dfdeac1061580c1f6a165cb83de24cb3b3344134fe30352b9e1804ba5937cf"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/orangeburg.html": {
+   "boards": 1,
+   "bytes": 7523,
+   "county": "Orangeburg",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/orangeburg.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "8fcb31d5f4ab5edee2b9890680670a3d680dabd3a0e1d9b94a2e36b098cd7732"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/pickens.html": {
+   "boards": 1,
+   "bytes": 6754,
+   "county": "Pickens",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/pickens.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "76deedb60b069c87bc33123fb1259eb08b52af9b9174e695fc413e00e16e52c6"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/richland.html": {
+   "boards": 1,
+   "bytes": 8119,
+   "county": "Richland",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/richland.html",
+   "names": 4,
+   "read": "2026-10-16",
+   "sha256": "1d8dbd72dfe5ba5f59cfb11da79d7f152ca43e681b94413e6084db45036b5fa7"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/saluda.html": {
+   "boards": 1,
+   "bytes": 7281,
+   "county": "Saluda",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/saluda.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "2bc50659875fc4ad688e2ae4ec8c3273aefee1527ce97e90d7f15c279296020f"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/spartanburg.html": {
+   "boards": 1,
+   "bytes": 7395,
+   "county": "Spartanburg",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/spartanburg.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "fa0ec0657cceb852925538c6adb52090062ba25ac3714d46539350f4626e59d3"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/sumter.html": {
+   "boards": 1,
+   "bytes": 7416,
+   "county": "Sumter",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/sumter.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "41b7e64ca9e099d85e820d86ad4149485ca7d62dff9cc41f9c6cf2df1881d1b4"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/union.html": {
+   "boards": 1,
+   "bytes": 7358,
+   "county": "Union",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/union.html",
+   "names": 4,
+   "read": "2026-10-16",
+   "sha256": "fd085a5a3dbc10088e680416f488d08ee44fdfd532b378206d441bc0d0b2b121"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/williamsburg.html": {
+   "boards": 1,
+   "bytes": 8103,
+   "county": "Williamsburg",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/williamsburg.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "38cb30be928138935be7261244178339fd6395ef4d1a28edd778b168ce30f2b3"
+  },
+  "https://dnr.sc.gov/conservation/districtsdnr/york.html": {
+   "boards": 1,
+   "bytes": 7509,
+   "county": "York",
+   "final": "https://dnr.sc.gov/conservation/districtsdnr/york.html",
+   "names": 5,
+   "read": "2026-10-16",
+   "sha256": "a0469fe062caa142b83284921f6ec298b083fe65f29d6d57aed7290dfaec42d3"
+  }
+ },
+ "index": {
+  "https://dnr.sc.gov/conservation/index.html": {
+   "bytes": 10713,
+   "documents": 46,
+   "final": "https://dnr.sc.gov/conservation/index.html",
+   "read": "2026-10-16",
+   "sha256": "a1f702f8cb9a71ad8a3353ed6b1357348d295020ccb6be60d64ad9de1b37e456"
+  }
+ }
+}

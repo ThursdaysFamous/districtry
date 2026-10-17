@@ -347,6 +347,20 @@ PROVENANCE = [
             "state's copy names took effect (see the Charleston row)."
         ),
     },
+    {
+        "layer": "county",
+        "app_file": "sc-conservation-boards.json",
+        "source_url": "https://dnr.sc.gov/conservation/index.html",
+        "note": (
+            "The commissioners of each county's conservation district, read "
+            "from the Department of Natural Resources' page for each of the 46 "
+            "districts, which this index links, by "
+            "sc/scripts/build_sc_conservation_boards.py and named on the County "
+            "card. The pages carry no date. Re-read quarterly and in February "
+            "2027, after the elected terms that end on 31 January; WATCH.md "
+            "carries the row."
+        ),
+    },
 ]
 
 ENDPOINTS = [

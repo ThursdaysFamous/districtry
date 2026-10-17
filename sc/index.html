@@ -13834,6 +13834,107 @@ function initSouthCarolinaExplorer() {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
 
+  /* ---------- The conservation district, on the County card.
+   *
+   * The Department of Natural Resources publishes a page for each county's
+   * conservation district naming its five commissioners
+   * (sc/scripts/build_sc_conservation_boards.py;
+   * data/app/sc-conservation-boards.json, keyed by county GEOID): three
+   * elected without party labels and two appointed by the department's board
+   * (S.C. Code sections 48-9-1220 and 48-9-1210). A commissioner whose term
+   * has ended holds office until a successor qualifies (section 48-9-1230),
+   * so a date that has passed is shown as the date the term ended and never
+   * as a vacancy; a seat the page marks "Vacant" is shown as vacant. The
+   * builder's --check requires the sentence on how a board is chosen to stay
+   * as the builder states it.
+   * ---------- */
+  var loadConservationBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-conservation-boards.json", {}, 2);
+  });
+  var SC_CONSERVATION_CHOSEN = "Five commissioners: " +
+    "three elected by the county's voters without party labels at the " +
+    "general election, and " +
+    "two appointed by the board of the state Department of Natural Resources, " +
+    "each for four years. A commissioner whose term has ended " +
+    "serves until a successor takes office, so a date that has passed " +
+    "does not mean the seat is empty.";
+  function scConservationFor(result) {
+    return loadConservationBoards().then(function (r) {
+      result.conservation = r[String(result.geoid)] || null;
+    }, function () {
+      result.conservationFailed = true;
+    });
+  }
+  function conservationRank(role) {
+    var r = String(role || "");
+    if (/^chair/i.test(r)) return 0;
+    if (/^vice/i.test(r)) return 1;
+    if (/secretary|treasurer|financial/i.test(r)) return 2;
+    return 3;
+  }
+  function scTodayIso() {
+    var d = new Date();
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  }
+  // The board's officers first, then the page's own order.
+  function scConservationRows(members) {
+    var today = scTodayIso();
+    return (members || []).map(function (m, i) {
+      return { m: m, i: i };
+    }).sort(function (a, b) {
+      return (conservationRank(a.m.role) - conservationRank(b.m.role)) || (a.i - b.i);
+    }).map(function (x) {
+      var m = x.m;
+      var bits = [];
+      if (m.chosen) {
+        bits.push((m.chosen === "appointed" ? "Appointed" : "Elected") +
+          (m.vacant ? " seat" : ""));
+      }
+      var ends = scDate(m.termEnds);
+      if (ends) bits.push((String(m.termEnds) < today ? "term ended " : "term ends ") + ends);
+      return {
+        name: m.vacant ? "Vacant" : String(m.name),
+        badge: m.role ? String(m.role) : null,
+        note: bits.length ? bits.join(" · ") : null
+      };
+    });
+  }
+  function scConservationSection(wrap, result) {
+    var districts = (result.conservation && result.conservation.districts) || [];
+    if (!districts.length) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Conservation district",
+        value: result.conservationFailed
+          ? "The list of conservation district commissioners did not load, so " +
+            "no names are shown."
+          : "Not shown: the state's list of conservation districts has no page " +
+            "for this county."
+      }]));
+      return;
+    }
+    districts.forEach(function (d) {
+      wrap.appendChild(renderSectionLabel(String(d.name)));
+      wrap.appendChild(renderPersonRows(scConservationRows(d.members)));
+      var read = scDate(d.read);
+      wrap.appendChild(renderFieldStack([
+        { label: "How the board is chosen", value: SC_CONSERVATION_CHOSEN },
+        {
+          label: "Where these names come from",
+          value: "The South Carolina Department of Natural Resources' page for " +
+            "this district" + (read ? ", read on " + read : "") + ". The page " +
+            "carries no date, so the district's office can say whether it is " +
+            "current."
+        }
+      ]));
+      if (d.sourceUrl) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "This district's page at SC DNR ↗", url: String(d.sourceUrl) }]
+        }));
+      }
+    });
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -13857,10 +13958,12 @@ function initSouthCarolinaExplorer() {
           geoid: findPropCI(props, ["geoid"]),
           council: null
         };
-        return loadScCouncilRoster().then(function (roster) {
-          result.council = roster[String(result.geoid)] || null;
-          return result;
-        }, function () {
+        return Promise.all([
+          loadScCouncilRoster().then(function (roster) {
+            result.council = roster[String(result.geoid)] || null;
+          }, function () {}),
+          scConservationFor(result)
+        ]).then(function () {
           return result;
         });
       });
@@ -13895,6 +13998,7 @@ function initSouthCarolinaExplorer() {
           return scSeatPerson(s, true);
         }), { tinted: true }));
       }
+      scConservationSection(wrap, result);
       return wrap;
     },
     primaryLink: function (result) {

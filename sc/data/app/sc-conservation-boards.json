@@ -1,0 +1,1888 @@
+{
+ "45001": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Fred L. Raines, Jr.",
+      "role": "Chairman",
+      "termEnds": "2026-10-28"
+     },
+     {
+      "chosen": "elected",
+      "name": "Barry N. Edmunds",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Susie K. New",
+      "role": "Treasurer",
+      "termEnds": "2028-10-27"
+     },
+     {
+      "chosen": "elected",
+      "name": "Eric McCall",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Bonnie Cann",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Abbeville Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/abbeville.html"
+   }
+  ]
+ },
+ "45003": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Yvonne Kling",
+      "role": "Chairwoman",
+      "termEnds": "2026-07-02"
+     },
+     {
+      "chosen": "elected",
+      "name": "Timothy J. Watkins",
+      "role": "Vice Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Austin Jackson",
+      "role": "Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Laura Bagwell",
+      "role": "Commissioner",
+      "termEnds": "2029-07-05"
+     },
+     {
+      "chosen": "elected",
+      "name": "Terrence Wyatt",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Aiken Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/aiken.html"
+   }
+  ]
+ },
+ "45005": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "John Rice",
+      "role": "Chairman",
+      "termEnds": "2028-03-27"
+     },
+     {
+      "chosen": "elected",
+      "name": "Mark Connelly",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Diane O. Bosler",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2028-10-13"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jonathan M. Brabham",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Joseph Oswald, IV",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Allendale Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/allendale.html"
+   }
+  ]
+ },
+ "45007": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Thomas E. Garrison, III",
+      "role": "Chairman",
+      "termEnds": "2029-08-26"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jay Copelan",
+      "role": "Vice Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Van M. James",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-08-25"
+     },
+     {
+      "chosen": "elected",
+      "name": "Art Garrison",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Alex Kostik",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Anderson Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/anderson.html"
+   }
+  ]
+ },
+ "45009": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Joe Varn",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Johney L. Haralson",
+      "role": "Vice Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Kevin Sease",
+      "role": "Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Landis A. Hiers",
+      "role": "Commissioner",
+      "termEnds": "2028-09-01"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Steven Chassereau",
+      "role": "Commissioner",
+      "termEnds": "2030-03-25"
+     }
+    ],
+    "name": "Bamberg Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/bamberg.html"
+   }
+  ]
+ },
+ "45011": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Fleming McMaster",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Rebecca H. Davis",
+      "role": "Vice Chair",
+      "termEnds": "2027-07-05"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Susan A. Birt",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2028-08-20"
+     },
+     {
+      "chosen": "elected",
+      "name": "Curtis L Hogg Jr",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Mindy Sandifer",
+      "role": "Commissioner",
+      "termEnds": "2028-01-31"
+     }
+    ],
+    "name": "Barnwell Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/barnwell.html"
+   }
+  ]
+ },
+ "45013": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Denise M. Parsick",
+      "role": "Chairwoman and Secretary/Treasurer",
+      "termEnds": "2030-10-04"
+     },
+     {
+      "chosen": "elected",
+      "name": "Daniel Lesesne, Jr.",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Alan A. Ulmer, Jr.",
+      "role": "Commissioner",
+      "termEnds": "2026-10-04"
+     },
+     {
+      "chosen": "elected",
+      "name": "Grant McClure",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31",
+      "vacant": true
+     }
+    ],
+    "name": "Beaufort Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/beaufort.html"
+   }
+  ]
+ },
+ "45015": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Barry H. Jurs",
+      "role": "Chairman",
+      "termEnds": "2029-04-29"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Troy M. Diel",
+      "role": "Vice Chairman",
+      "termEnds": "2027-04-29"
+     },
+     {
+      "chosen": "elected",
+      "name": "Lynn B. Curtis, II",
+      "role": "Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Nicholas Yoder",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Charles E. Glover",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Berkeley Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/berkeley.html"
+   }
+  ]
+ },
+ "45017": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Joshua Johnson",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Frederick Hay Gantt, III",
+      "role": "Vice Chairman",
+      "termEnds": "2029-03-02"
+     },
+     {
+      "chosen": "elected",
+      "name": "Joel Grubb",
+      "role": "Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Ronnie L. Bozard",
+      "role": "Secretary",
+      "termEnds": "2030-03-03"
+     },
+     {
+      "chosen": "elected",
+      "name": "Brad Stowe",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Calhoun Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/calhoun.html"
+   }
+  ]
+ },
+ "45019": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "William H. Hanvey, Jr.",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Thomas Legare",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Elizabeth Bernat",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Francis Preston Wilson",
+      "role": "Commissioner",
+      "termEnds": "2027-04-30"
+     },
+     {
+      "chosen": "appointed",
+      "name": "John H. Smoak",
+      "role": "Commissioner",
+      "termEnds": "2025-02-28"
+     }
+    ],
+    "name": "Charleston Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/charleston.html"
+   }
+  ]
+ },
+ "45021": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Jane O. Waters",
+      "role": "Chairwoman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Willie D. Sarratt",
+      "role": "Vice Chairman",
+      "termEnds": "2027-04-07"
+     },
+     {
+      "chosen": "elected",
+      "name": "Beverly Norton",
+      "role": "Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Christopher LeMaster, Sr.",
+      "role": "Commissioner",
+      "termEnds": "2030-04-07"
+     },
+     {
+      "chosen": "elected",
+      "name": "Sarah Allen",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Cherokee Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/cherokee.html"
+   }
+  ]
+ },
+ "45023": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Allen Beer",
+      "role": "Chairman",
+      "termEnds": "2026-07-01"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Jefferson H. Wilson",
+      "role": "Vice Chairman",
+      "termEnds": "2029-06-30"
+     },
+     {
+      "chosen": "elected",
+      "name": "Mac Turner",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Ethan Bedford",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Robin Beam",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Chester Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/chester.html"
+   }
+  ]
+ },
+ "45025": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Roger Smith",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Dwight R. Johnson",
+      "role": "Vice Chairman",
+      "termEnds": "2024-10-13"
+     },
+     {
+      "chosen": "appointed",
+      "name": "William H. Griggs",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2026-09-13"
+     },
+     {
+      "chosen": "elected",
+      "name": "Owen P. Gulledge",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jimmie Rivers",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Chesterfield Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/chesterfield.html"
+   }
+  ]
+ },
+ "45027": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Jason M. Gamble",
+      "role": "Chairman",
+      "termEnds": "2025-07-05"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Justin Woodard",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2024-09-18"
+     },
+     {
+      "chosen": "elected",
+      "name": "David F. Richburg",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "W. Kevin Ross",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jay McElveen",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Clarendon Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/clarendon.html"
+   }
+  ]
+ },
+ "45029": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Gary S. Herndon",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "William Graham Drawdy",
+      "role": "Vice Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Cleveland C. Hiott, III",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-04-23"
+     },
+     {
+      "chosen": "elected",
+      "name": "Calvin Bailey",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "I.M. Benton",
+      "role": "Commissioner",
+      "termEnds": "2027-04-23"
+     }
+    ],
+    "name": "Colleton Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/colleton.html"
+   }
+  ]
+ },
+ "45031": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Alton B. Jeffords",
+      "role": "Chairman",
+      "termEnds": "2028-08-20"
+     },
+     {
+      "chosen": "elected",
+      "name": "Thomas G. Chaplin",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "C. Randell Ewing, Sr.",
+      "role": "Commissioner",
+      "termEnds": "2029-07-24"
+     },
+     {
+      "chosen": "elected",
+      "name": "Greg Brown",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "William Kirven IV",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Darlington Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/darlington.html"
+   }
+  ]
+ },
+ "45033": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Keith Allen",
+      "role": "Chairman",
+      "termEnds": "2028-08-15"
+     },
+     {
+      "chosen": "elected",
+      "name": "Bruce G. Price",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Alan W. Gaddy",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2026-08-15"
+     },
+     {
+      "chosen": "elected",
+      "name": "Joe Hayes",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Daniel Baxley",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Dillon Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/dillon.html"
+   }
+  ]
+ },
+ "45035": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "James E. Fender",
+      "role": "Chairman",
+      "termEnds": "2028-09-18"
+     },
+     {
+      "chosen": "elected",
+      "name": "Marie S. Dantzler",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Douglas A. Reeves",
+      "role": "Treasurer",
+      "termEnds": "2030-09-18"
+     },
+     {
+      "chosen": "elected",
+      "name": "Arlene Wheeler",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31",
+      "vacant": true
+     }
+    ],
+    "name": "Dorchester Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/dorchester.html"
+   }
+  ]
+ },
+ "45037": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "William G. Smith, III",
+      "role": "Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Malcolm J. O'Neal",
+      "role": "Vice Chairman",
+      "termEnds": "2024-07-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Joe A. Derrick",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2026-07-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Theo Reginal Williams",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Joesph Lee Holmes",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Edgefield Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/edgefield.html"
+   }
+  ]
+ },
+ "45039": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Eric Cathcart",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Kerry H. Matthews",
+      "role": "Vice Chairwoman",
+      "termEnds": "2029-07-01"
+     },
+     {
+      "chosen": "elected",
+      "name": "William Ladd, Jr.",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Sabie D. Cathcart, Jr.",
+      "role": "Commissioner",
+      "termEnds": "2026-07-01"
+     },
+     {
+      "chosen": "elected",
+      "name": "Austin Daniel Cathcart",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Fairfield Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/fairfield.html"
+   }
+  ]
+ },
+ "45041": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Jimmy Poston",
+      "role": "Chairman",
+      "termEnds": "2027-02-11"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Sterling Sadler",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Richard B. Sansbury, Jr.",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2023-02-11"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jason Eaddy",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31",
+      "vacant": true
+     }
+    ],
+    "name": "Florence Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/florence.html"
+   }
+  ]
+ },
+ "45043": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Mark Johnson",
+      "role": "Chairman",
+      "termEnds": "2029-06-25"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Morris Johnson",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-04-28"
+     },
+     {
+      "chosen": "elected",
+      "name": "Myrtle Milton",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Justin Sutton",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Marty K. Avant",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Georgetown Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/georgetown.html"
+   }
+  ]
+ },
+ "45045": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Michael Stewart",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Robert Hanley",
+      "role": "Vice Chair",
+      "termEnds": "2026-06-20"
+     },
+     {
+      "chosen": "elected",
+      "name": "James Blackwell",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Margaret Harrison",
+      "role": "Commissioner",
+      "termEnds": "2026-03-03"
+     },
+     {
+      "chosen": "elected",
+      "name": "Christopher Hall",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Greenville Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/greenville.html"
+   }
+  ]
+ },
+ "45047": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "William G. Henderson",
+      "role": "Chairman",
+      "termEnds": "2025-03-03"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Lonnie C. Gillespie",
+      "role": "Vice Chairman",
+      "termEnds": "2026-03-03"
+     },
+     {
+      "chosen": "elected",
+      "name": "Brad Martin",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Andrew C. Warner",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Myra W. Jones",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Greenwood Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/greenwood.html"
+   }
+  ]
+ },
+ "45049": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Ray Crapse",
+      "role": "Chairman",
+      "termEnds": "2029-04-29"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jimmy Mole",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Terrell Smith",
+      "role": "Treasurer",
+      "termEnds": "2027-04-29"
+     },
+     {
+      "chosen": "elected",
+      "name": "Neal Murdaugh",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Ernest Todd Benton",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Hampton Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/hampton.html"
+   }
+  ]
+ },
+ "45051": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Barry Shane Willoughby",
+      "role": "Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "English Warren Dixon",
+      "role": "Vice Chairman",
+      "termEnds": "2028-08-20"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Benjamin Hardee",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2026-09-18"
+     },
+     {
+      "chosen": "elected",
+      "name": "Glenn Winburn",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Matthew Gene Johnson",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Horry Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/horry.html"
+   }
+  ]
+ },
+ "45053": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Thomas G. Stanley, Jr.",
+      "role": "Chairman",
+      "termEnds": "2030-10-03"
+     },
+     {
+      "chosen": "elected",
+      "name": "Stanley E. Wells",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "R. Michael Davis",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "C.M. Dantzler, Jr",
+      "role": "Commissioner",
+      "termEnds": "2030-10-03"
+     },
+     {
+      "chosen": "elected",
+      "name": "Brodie Etheridge",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Jasper Soil and Water Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/jasper.html"
+   }
+  ]
+ },
+ "45055": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Jeff Clark",
+      "role": "Chairman",
+      "termEnds": "2029-05-11"
+     },
+     {
+      "chosen": "elected",
+      "name": "Edwin W. Estridge",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Sarah Williams",
+      "role": "Treasurer",
+      "termEnds": "2029-05-11"
+     },
+     {
+      "chosen": "elected",
+      "name": "Will Galloway",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Keith Willoughby",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Kershaw Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/kershaw.html"
+   }
+  ]
+ },
+ "45057": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Joe H. Ghent, Jr.",
+      "role": "Chairman",
+      "termEnds": "2029-07-01"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Gary Moore",
+      "role": "Vice Chairman",
+      "termEnds": "2026-07-01"
+     },
+     {
+      "chosen": "elected",
+      "name": "Douglas M Bailey",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Kevin Stilwell",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Rodney Troy Helms",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Lancaster Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/lancaster.html"
+   }
+  ]
+ },
+ "45059": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "David R. Coggins",
+      "role": "Chairman",
+      "termEnds": "2028-11-01"
+     },
+     {
+      "chosen": "elected",
+      "name": "Patrick Jackson",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jay Wham",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Nelson Crisp",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "F. Michael Seymour",
+      "role": "Commissioner",
+      "termEnds": "2026-11-01"
+     }
+    ],
+    "name": "Laurens Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/laurens.html"
+   }
+  ]
+ },
+ "45061": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Steven Wallace Welsh",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Robert A. Boyce",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-07-21"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jim Ridenhour",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Don D. Grant, Jr.",
+      "role": "Commissioner",
+      "termEnds": "2024-07-21"
+     },
+     {
+      "chosen": "elected",
+      "name": "C.B. Player, III",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Lee Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/lee.html"
+   }
+  ]
+ },
+ "45063": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Jamie Gunter",
+      "role": "Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Brad Sease",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Barbara Padget",
+      "role": "Treasurer",
+      "termEnds": "2025-09-27"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Larry E. Nates",
+      "role": "Commissioner",
+      "termEnds": "2028-09-12"
+     },
+     {
+      "chosen": "elected",
+      "name": "Kathryn E. Hensley",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Lexington Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/lexington.html"
+   }
+  ]
+ },
+ "45065": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Bobby F. Edmonds",
+      "role": "Chairman",
+      "termEnds": "2028-11-23"
+     },
+     {
+      "chosen": "elected",
+      "name": "Julie Davis",
+      "role": "Vice Chairwoman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Thomas Ware",
+      "role": "Treasurer",
+      "termEnds": "2025-11-23"
+     },
+     {
+      "chosen": "elected",
+      "name": "Weasly White",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Edward Deason",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "McCormick Soil & Water Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/mccormick.html"
+   }
+  ]
+ },
+ "45067": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "David B. Owens",
+      "role": "Chairman",
+      "termEnds": "2029-11-28"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jimmy Taylor",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "H. Bruce Baker",
+      "role": "Commissioner",
+      "termEnds": "2026-11-26"
+     },
+     {
+      "chosen": "elected",
+      "name": "Harold Tanner, Jr.",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Richard Tyler Seagroves",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Marion Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/marion.html"
+   }
+  ]
+ },
+ "45069": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Patrick T. Rogers",
+      "role": "Chairman",
+      "termEnds": "2029-02-10"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Beverly L. O'Neal",
+      "role": "Vice Chairwoman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "John Rhett Covington",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Malcolm Calhoun",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Joseph Hunsucker",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Marlboro Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/marlboro.html"
+   }
+  ]
+ },
+ "45071": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Doug Heydt",
+      "role": "Chairman",
+      "termEnds": "2030-03-03"
+     },
+     {
+      "chosen": "appointed",
+      "name": "C. Benjamin Setzler, III",
+      "role": "Vice Chairman",
+      "termEnds": "2029-03-03"
+     },
+     {
+      "chosen": "elected",
+      "name": "Danielle Himsey",
+      "role": "Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Rolf Mark Kiser",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Toni Warren",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Newberry Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/newberry.html"
+   }
+  ]
+ },
+ "45073": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Kim Alexander",
+      "role": "Chairwoman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Bob Winchester",
+      "role": "Vice Chairman",
+      "termEnds": "2028-08-20"
+     },
+     {
+      "chosen": "elected",
+      "name": "Carol Hendrix",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Lee Keese",
+      "role": "Commissioner",
+      "termEnds": "2026-03-25"
+     },
+     {
+      "chosen": "elected",
+      "name": "Trenton M. Smith",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Oconee Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/oconee.html"
+   }
+  ]
+ },
+ "45075": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Harold Donnelly",
+      "role": "Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Jackie R. Folge",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "George Ulmer",
+      "role": "Treasurer",
+      "termEnds": "2025-01-04"
+     },
+     {
+      "chosen": "elected",
+      "name": "Benjamin Fogle",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Samuel E. Felder",
+      "role": "Commissioner",
+      "termEnds": "2030-01-04"
+     }
+    ],
+    "name": "Orangeburg Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/orangeburg.html"
+   }
+  ]
+ },
+ "45077": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Chuck Owens",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "W. Kirby Player",
+      "role": "Vice Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Clayton Kerr",
+      "role": "Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Roddey E. Gettys, III",
+      "role": "Commissioner",
+      "termEnds": "2028-07-05"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Amy Wilson",
+      "role": "Commissioner",
+      "termEnds": "2025-08-26"
+     }
+    ],
+    "name": "Pickens Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/pickens.html"
+   }
+  ]
+ },
+ "45079": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "J. Kenneth Mullis, Jr.",
+      "role": "Chairman",
+      "termEnds": "2028-03-27"
+     },
+     {
+      "chosen": "appointed",
+      "name": "James W. Rhodes",
+      "role": "Vice Chairman",
+      "termEnds": "2028-03-27"
+     },
+     {
+      "chosen": "elected",
+      "name": "Mary Burts",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Timothy McSwain",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31",
+      "vacant": true
+     }
+    ],
+    "name": "Richland Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/richland.html"
+   }
+  ]
+ },
+ "45081": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "James Nichols",
+      "role": "Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Jason R. Price",
+      "role": "Vice Chairman",
+      "termEnds": "2027-02-27"
+     },
+     {
+      "chosen": "elected",
+      "name": "Carey Frick",
+      "role": "Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Kevin P. Yon",
+      "role": "Commissioner",
+      "termEnds": "2030-02-27"
+     },
+     {
+      "chosen": "elected",
+      "name": "Frazier D. Riley",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Saluda Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/saluda.html"
+   }
+  ]
+ },
+ "45083": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Gary Sayre, Jr.",
+      "role": "Chairman",
+      "termEnds": "2026-04-07"
+     },
+     {
+      "chosen": "elected",
+      "name": "Mike Brady",
+      "role": "Vice Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Ronnie Bullard",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2023-04-07"
+     },
+     {
+      "chosen": "elected",
+      "name": "William Heatley, Jr.",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Bill Bledsoe",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Spartanburg Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/spartanburg.html"
+   }
+  ]
+ },
+ "45085": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "John T. Rivers III",
+      "role": "Chairman",
+      "termEnds": "2026-01-04"
+     },
+     {
+      "chosen": "elected",
+      "name": "Tommy Laney",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Rowland Alston",
+      "role": "Commissioner",
+      "termEnds": "2025-01-03"
+     },
+     {
+      "chosen": "elected",
+      "name": "John L. Newman",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Chris Sumpter II",
+      "role": "Commissioner",
+      "termEnds": "2029-01-31"
+     }
+    ],
+    "name": "Sumter Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/sumter.html"
+   }
+  ]
+ },
+ "45087": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Norris Fowler, Jr.",
+      "role": "Chairman",
+      "termEnds": "2023-02-28"
+     },
+     {
+      "chosen": "elected",
+      "name": "John Kingsmore",
+      "role": "Vice Chairman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Michael Landcaster",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Dudley Adams",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "role": "Commissioner",
+      "termEnds": "2026-02-28",
+      "vacant": true
+     }
+    ],
+    "name": "Union Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/union.html"
+   }
+  ]
+ },
+ "45089": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "appointed",
+      "name": "Frances McClary",
+      "role": "Chairwoman",
+      "termEnds": "2028-09-18"
+     },
+     {
+      "chosen": "elected",
+      "name": "Samuel S. Williamson",
+      "role": "Vice Chair",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Ruth Brown",
+      "role": "Secretary/Treasurer",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Brian McClam",
+      "role": "Commissioner",
+      "termEnds": "2026-09-18"
+     },
+     {
+      "chosen": "elected",
+      "name": "Atwood I. McIntosh, Jr.",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     }
+    ],
+    "name": "Williamsburg Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/williamsburg.html"
+   }
+  ]
+ },
+ "45091": {
+  "districts": [
+   {
+    "members": [
+     {
+      "chosen": "elected",
+      "name": "Catherine White",
+      "role": "Chairwoman",
+      "termEnds": "2029-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Rusty Thomson",
+      "role": "Vice Chairman",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "elected",
+      "name": "Beth White",
+      "role": "Commissioner",
+      "termEnds": "2027-01-31"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Clarence W. Senn",
+      "role": "Treasurer",
+      "termEnds": "2022-02-28"
+     },
+     {
+      "chosen": "appointed",
+      "name": "Peggy Palmer",
+      "role": "Commissioner",
+      "termEnds": "2026-02-28"
+     }
+    ],
+    "name": "York Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://dnr.sc.gov/conservation/districtsdnr/york.html"
+   }
+  ]
+ }
+}
