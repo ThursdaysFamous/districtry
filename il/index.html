@@ -15556,7 +15556,9 @@ function initChiExplorer() {
    * list (scripts/build_macoupin_board_districts.py). The members are the
    * County Clerk's elected-officials directory, read from the service its page
    * fills itself from: two per district, the year each seat is next on the
-   * ballot, and the page's own mark for an appointee. */
+   * ballot, the page's own mark for an appointee, and since 2026-10-17 the
+   * e-mail in the seat's second-contact slot where its local part carries the
+   * member's surname (12 of 18 seats that day; Adam's "E-mails too"). */
   var loadMacoupinBoardDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/macoupin-county-board-districts.json", {}, 2);
   });
@@ -27967,7 +27969,9 @@ function initChiExplorer() {
       // fabric nests in exactly as Ordinance O-2021.06 writes the plan. The
       // roster is the County Clerk's directory; the Chair holds a District 5
       // seat and is marked on it. Two members carry the directory's mark for
-      // an appointee filling an unexpired term, which rides their row.
+      // an appointee filling an unexpired term, which rides their row. A
+      // member's e-mail, where one ships, is the seat's second-contact
+      // address and renders through boardMemberPerson like any other.
       {
         key: "macoupin",
         coverage: macoupinCountyCoverage,

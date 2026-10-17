@@ -67,24 +67,31 @@ vacant seat).
 
 `office.phone2` / `email2` / `website2` are the vendor's second-contact slot and
 sit beside address2, the residence; a county board member's pair there is a
-mobile number and a gmail address. They are not read, and since 2026-10-17 the
-reason is attribution, not privacy. Adam's ruling that day ("if the official
-government source uses personal phone numbers, we publish those") would ship a
-member's mobile number, and his choice the same day to publish personal e-mail
-addresses as well ("E-mails too") would ship the gmail address, but only if
-each is the member's: the slot belongs to the OFFICE, as the stale primary
-e-mails above show, and measured that day it could not be shown to follow the
-person. Of 231 held municipal offices 30 carry a phone2, and two of those
-numbers are each printed on two trustees of one village; where the slot also
-carries an e-mail it names the holder on 3 of 5 municipal offices and 11 of 13
-county board seats; and the one independent government witness available,
-Sangamon County's direct numbers for Virden's nine officeholders, cannot test
-it because no Virden office carries a phone2. So no `person_phone` ships until
-a check can tie the slot to the person holding the office, and no
+mobile number and a gmail address. This module does not read them, and since
+2026-10-17 the reason is attribution, not privacy. Adam's ruling that day ("if
+the official government source uses personal phone numbers, we publish those")
+would ship a member's mobile number, and his choice the same day to publish
+personal e-mail addresses as well ("E-mails too") would ship the gmail address,
+but only if each is the member's: the slot belongs to the OFFICE, as the stale
+primary e-mails above show, and measured that day it could not be shown to
+follow the person. Of 231 held municipal offices 30 carry a phone2, and two of
+those numbers are each printed on two trustees of one village; where the slot
+also carries an e-mail it names the holder on 3 of 5 municipal offices and 11
+of 13 county board seats; and the one independent government witness
+available, Sangamon County's direct numbers for Virden's nine officeholders,
+cannot test it because no Virden office carries a phone2. So no `person_phone`
+ships until a check can tie the slot to the person holding the office, and no
 `person_email` either. Counted over every office rather than only those with a
 phone2, the slot carries an e-mail on 14 of the 19 board offices and 8 of the
 231 held municipal offices, with the holder's name in the address on 12 and 5
 of them. The domain of an address was never the reason one is withheld here.
+
+THE COUNTY BOARD'S SLOT E-MAIL SHIPS SINCE 2026-10-17, by a name test that
+ties the address to the member. macoupin_county_board_scraper.py reads
+`office.email2` (and nothing else from the detail record) for each board seat,
+and build_macoupin_county_board.py ships it where the letters of its local part
+contain the member's surname: 12 of the 14 that day. The municipal offices'
+slot is still not read here; the same test would pass 5 of their 8 addresses.
 
 Usage:
     python3 scripts/macoupin_municipal_officials_scraper.py --out macoupin_muni.json

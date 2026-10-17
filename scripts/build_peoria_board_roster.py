@@ -13,6 +13,16 @@ every labelled number ships, the first in `phone` and any further ones in
 `phonesExtra`, each led by its label, and each is checked for its shape
 (scraper_common.person_phone_problem).
 
+Each e-mail is the one address the member's own page shows a reader, on
+whatever domain the page gives it (Adam's choice of 2026-10-17, "E-mails
+too"); since that day the scraper decodes them from Cloudflare's e-mail
+protection, whose arrival had stopped the weekly runs at the e-mail floor below.
+Each must be exactly one address (scraper_common.person_email_problem; the
+error names the district, never the address), an address
+scripts/undeliverable.py lists is left out, and one address on two members'
+rows fails the build, because the scraper should already have kept an address
+shown on two pages off both.
+
 The Chairperson and Vice-Chairperson are marked on the member who holds each
 role. Both also hold a district seat (Peoria elects them from among the 18),
 so the role rides that member's district row rather than becoming a separate
@@ -35,7 +45,9 @@ import json
 import os
 import re
 import sys
-from scraper_common import make_fail, person_phone_problem  # noqa: E402  (shared machinery — do not fork)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import undeliverable  # noqa: E402  (the fleet's withhold list)
+from scraper_common import make_fail, person_email_problem, person_phone_problem  # noqa: E402  (shared machinery — do not fork)
 
 SOURCE_URL = "https://www.peoriacounty.gov/755/County-Board-Members"
 
@@ -48,6 +60,9 @@ MIN_PHONES = 9
 # measured on 5 of the 18 members on 2026-10-17. Two thirds of 5, so a page
 # change that stops the second number being read fails the build.
 MIN_SECOND_NUMBERS = 3
+# E-mails: 18 of 18 members on 2026-10-17, one of them on a non-county
+# domain. This floor is what refused the runs of 2026-10-02 to 10-16,
+# when the addresses went behind Cloudflare's protection.
 MIN_EMAILS = 16
 MIN_PARTIES = 16
 ALLOWED_ROLES = ("Chairperson", "Vice-Chairperson")
@@ -131,6 +146,15 @@ def main():
             problem = person_phone_problem(value)
             if problem:
                 fail("Peoria County District %s: %s %s" % (d, field, problem))
+        if member.get("email"):
+            problem = person_email_problem(member["email"])
+            if problem:
+                fail("Peoria County District %s: the member page's e-mail %s" % (d, problem))
+            if member["email"].lower() in undeliverable.UNDELIVERABLE:
+                print("peoria-board-roster: note — District %s: "
+                      "scripts/undeliverable.py lists the member's e-mail as an "
+                      "address that cannot receive mail; not shipped" % d)
+                del member["email"]
         if rec.get("url") and re.match(r"^https://", rec["url"]):
             member["url"] = rec["url"]
         roster.setdefault(d, {"members": [], "sourceUrl": SOURCE_URL})
@@ -145,6 +169,16 @@ def main():
                  % (d, len(entry["members"]), MEMBERS_PER_DISTRICT))
 
     members = [m for e in roster.values() for m in e["members"]]
+    holders = {}
+    for d, entry in roster.items():
+        for m in entry["members"]:
+            if m.get("email"):
+                holders.setdefault(m["email"].lower(), []).append(d)
+    for where in holders.values():
+        if len(where) > 1:
+            fail("Districts %s carry the same e-mail, which is an office's rather "
+                 "than either member's; the scraper should have kept it off both"
+                 % ", ".join(sorted(where, key=int)))
     phones = sum(1 for m in members if m.get("phone"))
     seconds = sum(1 for m in members if m.get("phonesExtra"))
     emails = sum(1 for m in members if m.get("email"))

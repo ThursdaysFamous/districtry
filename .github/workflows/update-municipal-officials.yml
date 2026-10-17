@@ -748,8 +748,10 @@ jobs:
       # same reason: a failed Cook scrape carries all three Cook-fed files
       # forward together, and the builder refuses partial input on its own.
       # continue-on-error, deliberately: this builder's FATALs are strict on
-      # purpose (completeness, one-seat-per-office, personal-domain refusals)
-      # and each one means THIS file stands while a human looks — never that
+      # purpose (completeness, one-seat-per-office, a hall e-mail that is not
+      # one address; the personal-domain refusal was retired on 2026-10-17,
+      # Adam's "E-mails too") and each one means THIS file stands while a
+      # human looks — never that
       # the whole ~30-county municipal refresh should miss its week. The
       # refusal is surfaced on a standing issue below, because a green run
       # is invisible to the roster-health watchdog.
