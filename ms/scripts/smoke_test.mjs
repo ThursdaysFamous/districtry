@@ -1370,6 +1370,18 @@ try {
           rNames.every((n) => rInfo.text.includes(n)) && rInfo.text.includes(change) &&
           rInfo.text.includes("filled at the election of 3 November 2026"),
         `features here=${ci.length}/${ci27.length} want "${change}" ${rInfo.text.slice(0, 160)}`);
+
+      // Each judge the court's list prints a number of their own for shows it
+      // on the card (read since 2026-10-17). The card writes hyphens as U+2011.
+      const plain = (s) => s.replace(/\u2011/g, "-");
+      const phoned = [["chancery", c.unit, cInfo.text], ["circuit", r.unit, rInfo.text]]
+        .flatMap(([court, unit, text]) =>
+          ((judges[court].districts[String(unit)] || {}).members || [])
+            .filter((m) => m.phone).map((m) => ({ court, phone: m.phone, text: plain(text) })));
+      const missing = phoned.filter((p) => !p.text.includes(p.phone));
+      check("the chancery and circuit cards at the Capitol show each judge's own telephone from the court's list",
+        phoned.length > 0 && missing.length === 0,
+        `numbers in the list here=${phoned.length} not on the card=${missing.map((p) => p.court).join(",")}`);
       await context.close();
     }
 

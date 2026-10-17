@@ -180,7 +180,7 @@
             "url": "https://billstatus.ls.state.ms.us/documents/2025/html/SB/2700-2799/SB2768SG.htm"
           }
         ],
-        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors (names only; the list also prints court staff, some with street addresses, which are never carried). The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.",
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors: each chancellor's name and, since 2026-10-17, the chancellor's own telephone, where the list prints one for no other judge (a number several judges share is the court office's line). The list also prints court staff, some with street addresses, which are never carried. The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.",
         "applies": "Mississippi — statewide, all 20 districts."
       }
     },
@@ -202,7 +202,7 @@
             "url": "https://billstatus.ls.state.ms.us/documents/2025/html/HB/1500-1599/HB1544SG.htm"
           }
         ],
-        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges (names only, as for the chancellors). The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.",
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges: names and, as for the chancellors, each judge's own telephone. The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.",
         "applies": "Mississippi — statewide, all 23 districts (22 from 1 January 2027)."
       }
     },

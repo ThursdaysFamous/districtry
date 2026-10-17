@@ -14733,6 +14733,10 @@ function initMississippiExplorer() {
   function msJudgeRow(member) {
     var row = { name: String(member.name) };
     if (member.role) row.badge = String(member.role);
+    // A chancellor's or circuit judge's own number from the court's list, read
+    // since 2026-10-17; a number the list prints for two judges is carried on
+    // neither (ms/scripts/build_ms_judges.py).
+    if (member.phone) row.phone = String(member.phone);
     var notes = [];
     if (member.seat) notes.push(String(member.seat));
     if (member.note) notes.push(String(member.note));

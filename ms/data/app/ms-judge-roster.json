@@ -173,21 +173,24 @@
        "name": "Stephen T. Bailey"
       },
       {
-       "name": "Bradley D. Tennison"
+       "name": "Bradley D. Tennison",
+       "phone": "(662)728-2366"
       }
      ]
     },
     "2": {
      "members": [
       {
-       "name": "Robert M. Logan Jr."
+       "name": "Robert M. Logan Jr.",
+       "phone": "(601)627-0154"
       }
      ]
     },
     "3": {
      "members": [
       {
-       "name": "Mitchell M. Lundy Jr."
+       "name": "Mitchell M. Lundy Jr.",
+       "phone": "(662)226-1343"
       },
       {
        "name": "Sabrina D. Howell",
@@ -198,30 +201,36 @@
        }
       },
       {
-       "name": "Vicki B. Daniels"
+       "name": "Vicki B. Daniels",
+       "phone": "(662)563-8715"
       }
      ]
     },
     "4": {
      "members": [
       {
-       "name": "Debbra K. Halford"
+       "name": "Debbra K. Halford",
+       "phone": "(601)384-3833"
       },
       {
-       "name": "Wayne Smith"
+       "name": "Wayne Smith",
+       "phone": "(601)657-8588"
       }
      ]
     },
     "5": {
      "members": [
       {
-       "name": "Tametrice E. Hodges"
+       "name": "Tametrice E. Hodges",
+       "phone": "(601)968-6545"
       },
       {
-       "name": "Crystal Wise Martin"
+       "name": "Crystal Wise Martin",
+       "phone": "(601)968-6549"
       },
       {
-       "name": "Tiffany Grove"
+       "name": "Tiffany Grove",
+       "phone": "(601)968-6547"
       }
      ],
      "notes": [
@@ -235,23 +244,28 @@
     "6": {
      "members": [
       {
-       "name": "Doug S. Crosby"
+       "name": "Doug S. Crosby",
+       "phone": "(662)289-0800"
       },
       {
-       "name": "Kiley Kirk"
+       "name": "Kiley Kirk",
+       "phone": "(662)773-6686"
       }
      ]
     },
     "7": {
      "members": [
       {
-       "name": "Willie J. Perkins Sr."
+       "name": "Willie J. Perkins Sr.",
+       "phone": "(662)453-1432"
       },
       {
-       "name": "Catherine Farris-Carter"
+       "name": "Catherine Farris-Carter",
+       "phone": "(662)843-2111"
       },
       {
-       "name": "W. M. Sanders"
+       "name": "W. M. Sanders",
+       "phone": "(662)451-7289"
       }
      ]
     },
@@ -274,10 +288,12 @@
     "9": {
      "members": [
       {
-       "name": "Bennie L. Richard"
+       "name": "Bennie L. Richard",
+       "phone": "(662)334-2685"
       },
       {
-       "name": "Debra M. Giles"
+       "name": "Debra M. Giles",
+       "phone": "(662)887-7070"
       }
      ],
      "notes": [
@@ -312,13 +328,16 @@
     "11": {
      "members": [
       {
-       "name": "Robert G. Clark III"
+       "name": "Robert G. Clark III",
+       "phone": "(662)834-1285"
       },
       {
-       "name": "Cynthia Brewer"
+       "name": "Cynthia Brewer",
+       "phone": "(601)855-5512"
       },
       {
-       "name": "James C. Walker"
+       "name": "James C. Walker",
+       "phone": "(601)855-5707"
       }
      ]
     },
@@ -335,10 +354,12 @@
     "13": {
      "members": [
       {
-       "name": "David Shoemake"
+       "name": "David Shoemake",
+       "phone": "(601)765-8284"
       },
       {
-       "name": "Gerald Martin"
+       "name": "Gerald Martin",
+       "phone": "(601)822-5017"
       }
      ]
     },
@@ -351,27 +372,32 @@
        "name": "Rodney Faver"
       },
       {
-       "name": "Joseph N. (Joe) Studdard"
+       "name": "Joseph N. (Joe) Studdard",
+       "phone": "(662)329-5844"
       }
      ]
     },
     "15": {
      "members": [
       {
-       "name": "Joseph Durr"
+       "name": "Joseph Durr",
+       "phone": "(601)835-3437"
       }
      ]
     },
     "16": {
      "members": [
       {
-       "name": "Mark Maples"
+       "name": "Mark Maples",
+       "phone": "(228)769-3035"
       },
       {
-       "name": "Ashlee Cole"
+       "name": "Ashlee Cole",
+       "phone": "(228)769-3036"
       },
       {
-       "name": "D. Neil Harris Sr."
+       "name": "D. Neil Harris Sr.",
+       "phone": "(228)769-3034"
       }
      ]
     },
@@ -388,30 +414,36 @@
     "18": {
      "members": [
       {
-       "name": "Lawrence L. (Larry) Little"
+       "name": "Lawrence L. (Larry) Little",
+       "phone": "(662)236-0232"
       },
       {
-       "name": "Robert Q. Whitwell"
+       "name": "Robert Q. Whitwell",
+       "phone": "(662)236-0233"
       }
      ]
     },
     "19": {
      "members": [
       {
-       "name": "Jerry Sharp"
+       "name": "Jerry Sharp",
+       "phone": "(601)428-7625"
       }
      ]
     },
     "20": {
      "members": [
       {
-       "name": "Troy Odom"
+       "name": "Troy Odom",
+       "phone": "(601)825-9208"
       },
       {
-       "name": "John C. McLaurin Jr."
+       "name": "John C. McLaurin Jr.",
+       "phone": "(601)591-4722"
       },
       {
-       "name": "Haydn J. Roberts"
+       "name": "Haydn J. Roberts",
+       "phone": "(601)824-2448"
       }
      ]
     }
@@ -441,226 +473,276 @@
     "2": {
      "members": [
       {
-       "name": "Lisa P. Dodson"
+       "name": "Lisa P. Dodson",
+       "phone": "(228)865-4220"
       },
       {
-       "name": "Randi P. Mueller"
+       "name": "Randi P. Mueller",
+       "phone": "(228)865-4158"
       },
       {
-       "name": "Christopher L. Schmidt"
+       "name": "Christopher L. Schmidt",
+       "phone": "(228)865-4104"
       },
       {
-       "name": "Lawrence Bourgeois Jr."
+       "name": "Lawrence Bourgeois Jr.",
+       "phone": "(228)865-4262"
       }
      ]
     },
     "3": {
      "members": [
       {
-       "name": "Grady F. Tollison III"
+       "name": "Grady F. Tollison III",
+       "phone": "(662)234-3013"
       },
       {
-       "name": "Kent E. Smith"
+       "name": "Kent E. Smith",
+       "phone": "(662)252-6311"
       },
       {
-       "name": "J. Kelly Luther"
+       "name": "J. Kelly Luther",
+       "phone": "(662)837-7884"
       }
      ]
     },
     "4": {
      "members": [
       {
-       "name": "Carol White-Richard"
+       "name": "Carol White-Richard",
+       "phone": "(662)445-1996"
       },
       {
-       "name": "Richard A. Smith"
+       "name": "Richard A. Smith",
+       "phone": "(662)453-1429"
       },
       {
-       "name": "Margaret Carey-McCray"
+       "name": "Margaret Carey-McCray",
+       "phone": "(662)334-2797"
       },
       {
-       "name": "W. Ashley Hines"
+       "name": "W. Ashley Hines",
+       "phone": "(662)334-2652"
       }
      ]
     },
     "5": {
      "members": [
       {
-       "name": "Alan \"Devo\" Lancaster"
+       "name": "Alan \"Devo\" Lancaster",
+       "phone": "(662)283-2134"
       },
       {
-       "name": "Joseph H. Loper Jr."
+       "name": "Joseph H. Loper Jr.",
+       "phone": "(662)285-3818"
       }
      ]
     },
     "6": {
      "members": [
       {
-       "name": "Carmen Brooks Drake"
+       "name": "Carmen Brooks Drake",
+       "phone": "(601)445-7933"
       },
       {
-       "name": "Debra W. Blackwell"
+       "name": "Debra W. Blackwell",
+       "phone": "(601)442-8363"
       }
      ]
     },
     "7": {
      "members": [
       {
-       "name": "Adrienne H. Wooten"
+       "name": "Adrienne H. Wooten",
+       "phone": "(601)968-6679"
       },
       {
-       "name": "Winston Kidd"
+       "name": "Winston Kidd",
+       "phone": "(601)968-6677"
       },
       {
-       "name": "Faye Peterson"
+       "name": "Faye Peterson",
+       "phone": "(601)714-6222"
       },
       {
-       "name": "Debra Gibbs"
+       "name": "Debra Gibbs",
+       "phone": "(601)968-6658"
       },
       {
-       "name": "Damon Stevenson"
+       "name": "Damon Stevenson",
+       "phone": "(601)968-0441"
       }
      ]
     },
     "8": {
      "members": [
       {
-       "name": "Christopher M. Posey"
+       "name": "Christopher M. Posey",
+       "phone": "(601)656-5776"
       },
       {
-       "name": "Caleb E. May"
+       "name": "Caleb E. May",
+       "phone": "(601)656-4830"
       }
      ]
     },
     "9": {
      "members": [
       {
-       "name": "M. James Chaney Jr."
+       "name": "M. James Chaney Jr.",
+       "phone": "(601)638-8981"
       },
       {
-       "name": "Toni Walker Terrett"
+       "name": "Toni Walker Terrett",
+       "phone": "(601)634-8042"
       }
      ]
     },
     "10": {
      "members": [
       {
-       "name": "Robert T. (Bo) Bailey"
+       "name": "Robert T. (Bo) Bailey",
+       "phone": "(601)482-9742"
       },
       {
-       "name": "Charles W. Wright Jr."
+       "name": "Charles W. Wright Jr.",
+       "phone": "(601)482-9741"
       }
      ]
     },
     "11": {
      "members": [
       {
-       "name": "Charles E. Webster"
+       "name": "Charles E. Webster",
+       "phone": "(662)624-3039"
       },
       {
-       "name": "W. Hunter Nowell"
+       "name": "W. Hunter Nowell",
+       "phone": "(662)843-3346"
       },
       {
-       "name": "Linda F. Coleman"
+       "name": "Linda F. Coleman",
+       "phone": "(662)846-2939"
       }
      ]
     },
     "12": {
      "members": [
       {
-       "name": "T. Michael Reed"
+       "name": "T. Michael Reed",
+       "phone": "(601)544-5495"
       },
       {
-       "name": "Burnice Wesley Curry IV"
+       "name": "Burnice Wesley Curry IV",
+       "phone": "(601)544-8230"
       }
      ]
     },
     "13": {
      "members": [
       {
-       "name": "Matthew Sullivan"
+       "name": "Matthew Sullivan",
+       "phone": "(601)782-4413"
       },
       {
-       "name": "Stanley Sorey"
+       "name": "Stanley Sorey",
+       "phone": "(601)782-9999"
       }
      ]
     },
     "14": {
      "members": [
       {
-       "name": "Michael M. Taylor"
+       "name": "Michael M. Taylor",
+       "phone": "(601)835-1576"
       },
       {
-       "name": "David H. Strong Jr."
+       "name": "David H. Strong Jr.",
+       "phone": "(601)684-3400"
       }
      ]
     },
     "15": {
      "members": [
       {
-       "name": "Brad A. Touchstone"
+       "name": "Brad A. Touchstone",
+       "phone": "(601)794-1051"
       },
       {
-       "name": "Prentiss G. Harrell"
+       "name": "Prentiss G. Harrell",
+       "phone": "(601)794-3482"
       },
       {
-       "name": "Richelle Lumpkin"
+       "name": "Richelle Lumpkin",
+       "phone": "(601)749-7722"
       }
      ]
     },
     "16": {
      "members": [
       {
-       "name": "Lee \"Jay\" Howard"
+       "name": "Lee \"Jay\" Howard",
+       "phone": "(662)323-6765"
       },
       {
-       "name": "James T. Kitchens Jr."
+       "name": "James T. Kitchens Jr.",
+       "phone": "(662)329-5919"
       },
       {
-       "name": "Michelle Easterling"
+       "name": "Michelle Easterling",
+       "phone": "(662)391-1070"
       }
      ]
     },
     "17": {
      "members": [
       {
-       "name": "Smith Murphey"
+       "name": "Smith Murphey",
+       "phone": "(662)385-4261"
       },
       {
-       "name": "James McClure III"
+       "name": "James McClure III",
+       "phone": "(662)487-2072"
       }
      ]
     },
     "18": {
      "members": [
       {
-       "name": "Dal Williamson"
+       "name": "Dal Williamson",
+       "phone": "(601)428-4572"
       }
      ]
     },
     "19": {
      "members": [
       {
-       "name": "Keith Miller"
+       "name": "Keith Miller",
+       "phone": "(228)769-3438"
       },
       {
-       "name": "Calvin D. Taylor"
+       "name": "Calvin D. Taylor",
+       "phone": "(228)769-3434"
       },
       {
-       "name": "Kathy King Jackson"
+       "name": "Kathy King Jackson",
+       "phone": "(228)769-3244"
       }
      ]
     },
     "20": {
      "members": [
       {
-       "name": "Dewey Arthur"
+       "name": "Dewey Arthur",
+       "phone": "(601)855-5555"
       },
       {
-       "name": "M. Bradley Mills"
+       "name": "M. Bradley Mills",
+       "phone": "(601)824-6529"
       },
       {
-       "name": "Steve Ratcliff"
+       "name": "Steve Ratcliff",
+       "phone": "(601)855-5570"
       }
      ]
     },
@@ -675,24 +757,28 @@
        }
       },
       {
-       "name": "Gerald Chatham"
+       "name": "Gerald Chatham",
+       "phone": "(662)469-8315"
       },
       {
-       "name": "Wayne Douglas Hollowell III"
+       "name": "Wayne Douglas Hollowell III",
+       "phone": "(662)469-8263"
       }
      ]
     },
     "22": {
      "members": [
       {
-       "name": "Jannie M. Lewis-Blackmon"
+       "name": "Jannie M. Lewis-Blackmon",
+       "phone": "(662)834-1452"
       }
      ]
     },
     "23": {
      "members": [
       {
-       "name": "Tomika Harris-Irving"
+       "name": "Tomika Harris-Irving",
+       "phone": "(601)786-9600"
       }
      ]
     }

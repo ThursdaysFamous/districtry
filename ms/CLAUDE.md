@@ -265,8 +265,12 @@ announcement, are applied on top (`CHANGES`): two chancellors replaced; two chan
 the 5th and 9th Chancery Districts, whose cards say so and that no appointment had been announced
 when the news was read; and a circuit judge who joined the Supreme Court and was replaced. Every entry fails the build once the list catches up with
 it, and a person then re-reads the list and deletes the entry. **THE PDF LISTS ALSO PRINT THE JUDGES'
-STAFF, SOME WITH STREET ADDRESSES**: the parse reads only each judge's name, the judges' own
-addresses and telephones are not carried, and neither PDF is ever written into the repository. A
+STAFF, SOME WITH STREET ADDRESSES**: the parse reads each judge's name and, since 2026-10-17 on
+Adam's ruling that a number an official government source prints beside an official is published,
+the judge's own telephone, read by position from the list's Phone column so the fax beside it is
+never taken for it; a number the list prints for two or more judges is the court office's line and
+rides none of them. Nothing of the staff's is read, the judges' own addresses are not carried, and
+neither PDF is ever written into the repository. A
 trial list's district headings name their counties, so the builder records which map the list
 describes, and a card names chancellors or circuit judges only from a list describing the map it
 draws. **SO FROM 1 JANUARY 2027 THE CHANCERY AND CIRCUIT CARDS NAME NOBODY** until a list describing
