@@ -197,6 +197,32 @@ PROVENANCE = [
             "posted is a row in ok/WATCH.md."
         ),
     },
+    {
+        "layer": "conservation-district",
+        "app_file": "ok-conservation-districts.json",
+        "source_url": "https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/cons_dis/FeatureServer/0",
+        "note": (
+            "Oklahoma's 84 conservation districts from the Conservation "
+            "Commission's map (106 records, five districts split across several "
+            "records each), pre-built by "
+            "ok/scripts/build_ok_conservation_districts.py through "
+            "scripts/published_district_layers.py; the quarterly --watch row in "
+            "ok/WATCH.md compares the fingerprint recorded at the build. A "
+            "district merged or redrawn reaches the app only through a rebuild."
+        ),
+    },
+    {
+        "layer": "conservation-district",
+        "app_file": "ok-conservation-offices.json",
+        "source_url": "https://conservation.ok.gov/conservation-district-directory/",
+        "note": (
+            "Each district's office, telephone and e-mail from the Conservation "
+            "Commission's directory of district offices (modified 2026-10-15), "
+            "read by ok/scripts/build_ok_conservation_offices.py. The page names "
+            "no directors. Rebuilt by hand on the quarterly row in ok/WATCH.md; "
+            "this row notices the page going away."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -284,6 +310,17 @@ ENDPOINTS = [
                 "&geometry=-103.10%2C33.50%2C-94.30%2C37.10&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 950,   # 1,058 measured 2026-10-09
+    },
+    # The conservation district records the builder reads (2026-10-16): 106,
+    # drawing 84 districts. A floor, not the count: the quarterly --watch
+    # notices a changed district; this row notices the query failing or the
+    # layer emptying.
+    {
+        "layer": "conservation-district",
+        "url": ("https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/"
+                "cons_dis/FeatureServer/0/query"
+                "?where=1%3D1&returnCountOnly=true&f=json"),
+        "min_count": 95,    # 106 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

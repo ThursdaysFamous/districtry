@@ -163,10 +163,28 @@
       }
     },
     {
+      "id": "conservation-district",
+      "label": "Conservation District",
+      "group": "geography",
+      "area_rank": 5,
+      "rank_note": "The 84 conservation districts on the Oklahoma Conservation Commission's map, pre-built with the app — 2,155 km2 mean area (median 1,931, smallest 779, largest 5,967), measured 2026-10-16 on the drawn file: smaller on average than a county (2,351) and larger than a House district (1,792). 77 of the 84 lie within one county; they cover the state bar 67 km2 of slivers.",
+      "source": {
+        "answers": "The conservation district covering the point — the primary local unit of government Oklahoma law makes responsible for conserving the state's renewable natural resources — and the district's office.",
+        "boundary": [
+          {
+            "label": "Oklahoma Conservation Commission — cons_dis, layer 0 on ArcGIS Online: 84 districts in 106 records, measured 2026-10-16, pre-built by ok/scripts/build_ok_conservation_districts.py and shipped with the app. The layer states no licence.",
+            "url": "https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/cons_dis/FeatureServer/0"
+          }
+        ],
+        "people": "Nobody. The Commission's directory of district offices, read by ok/scripts/build_ok_conservation_offices.py, gives each district's office, telephone and e-mail, and the card shows them, credited to the Commission, whose website terms of use allow personal, non-commercial use of its content. The directory names none of a district's five directors, so the card names no one and says how the board is chosen.",
+        "applies": "Oklahoma — statewide; the 84 districts cover the state bar 67 km2 of slivers, most of them along the Kansas line in Texas County."
+      }
+    },
+    {
       "id": "ok-house",
       "label": "Oklahoma House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "101 House districts — the smallest of the three chamber tilings",
       "source": {
         "answers": "The Oklahoma House district covering the point, and the representative holding it.",
@@ -202,7 +220,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
@@ -220,7 +238,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -238,7 +256,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
@@ -256,7 +274,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "600 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -274,7 +292,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -292,7 +310,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -310,7 +328,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -328,7 +346,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "Tribal areas — Oklahoma has 31, MEASURED by scripts/build_tribal_areas.py: the Osage Reservation, the Shawnee Tribe's 0.430 km² of trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas; median 523.7 km², between a House district and a unified school district. The statistical areas are drawn by Adam's exception for Oklahoma (2026-10-10), labelled on every card as areas the Census draws to count people.",
       "source": {
         "answers": "Whether this address is in a tribal area the Census draws, and which nation's government (or nations' governments) it names — 31 areas across 33 nations, most of them Oklahoma Tribal Statistical Areas, which the card says are drawn to count people and are not legal boundaries.",
@@ -346,7 +364,7 @@
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "305 census county divisions, live from TIGERweb (no data/app file) — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)",
       "source": {
         "answers": "The census county division containing the point, and its county.",
@@ -364,7 +382,7 @@
       "id": "county-commissioner",
       "label": "County Commissioner District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "231 districts, three in each of the 77 counties; median 715.8 km² (mean 785, from 33.5 to 3,704.5), measured 2026-10-11 — smaller than a House district and larger than the median tribal area",
       "source": {
         "answers": "Which of the county's three commissioner districts covers the point, and the commissioner the State Election Board lists for it.",
@@ -379,7 +397,7 @@
       }
     }
   ],
-  "min_register_layer": 10,
+  "min_register_layer": 11,
   "anchor_point": {
     "lat": 35.4923,
     "lng": -97.5034,
@@ -465,6 +483,12 @@
         "min_features": 26,
         "max_features": 26,
         "note": "The 26 judicial districts, dissolved from the county fabric by ok/scripts/build_ok_judicial_districts.py, each carrying its 75 district judge offices' electorates from the State Election Board's 2024 roster."
+      },
+      {
+        "file": "ok-conservation-districts.json",
+        "min_features": 84,
+        "max_features": 84,
+        "note": "Oklahoma's 84 conservation districts, pre-built by ok/scripts/build_ok_conservation_districts.py through scripts/published_district_layers.py from the Conservation Commission's map (Douglas-Peucker at 4 m; 106 records joined into 84 shapes; a 33,600-point agreement gate, one group per district, and a coverage check against the county file, both measured 2026-10-16). 635 KB, fetched only when a reader switches the layer on. The floor and the ceiling are equal because the map and the Commission's directory both count 84."
       }
     ],
     "rosters": [
@@ -487,6 +511,11 @@
         "file": "ok-county-commissioners.json",
         "min_keys": 231,
         "note": "One record per commissioner seat from the State Election Board's officer roster, refreshed weekly by update-ok-commissioner-roster.yml. Every seat has a record; a vacant seat carries vacant: true."
+      },
+      {
+        "file": "ok-conservation-offices.json",
+        "min_keys": 80,
+        "note": "Each conservation district's office, telephone and e-mail from the Conservation Commission's directory of district offices, keyed by the district's number on the map, built by ok/scripts/build_ok_conservation_offices.py: 84 offices, no people. The directory is a web page the Commission edits by hand, so this is rebuilt by hand when it changes (ok/WATCH.md)."
       },
       {
         "file": "coverage-gaps.json",

@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 14
+MIN_REGISTER_LAYER = 15
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -96,9 +96,9 @@ MIN_REGISTER_LAYER = 14
 EXPECT_LAYER_IDS = [
     "us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate",
     "county", "ar-house", "school-district-unified", "zip-code",
-    "quorum-court", "county-subdivision", "school-board-district",
-    "voting-precinct", "municipality", "police-station", "fire-station",
-    "post-office",
+    "quorum-court", "county-subdivision", "fire-district",
+    "school-board-district", "voting-precinct", "municipality",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -112,6 +112,7 @@ GEOMETRY_FILES = {
     "ar-townships.json": (820, 820),  # The 820 townships of all 75 counties, from the state's own layer (ar/scripts/build_ar_townships.py).
     "ar-precincts.json": (2920, 2920),  # Every Arkansas voting precinct, pre-built by ar/scripts/build_ar_precincts.py through scripts/statewide_precincts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,920 count on the drawn file, after the eight records that are further pieces of seven precincts are joined into them). 9.3 MB, 2.44 MB gzipped, fetched only when a reader switches the layer on.
     "ar-school-board-zones.json": (965, 965),  # Every Arkansas school board zone, pre-built by ar/scripts/build_ar_school_board_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 965 count, after the Jasper district's zone 3, published in two pieces, is joined into one). 5.1 MB, 1.40 MB gzipped, fetched only when a reader switches the layer on.
+    "ar-fire-districts.json": (971, 971),  # Every Arkansas fire district, pre-built by ar/scripts/build_ar_fire_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on each set of counties' extent, measured 99.98%, with no point in two drawn districts where the source has one or none; an exact 971 count, after Siloam Springs, filed in three records, is joined into one). 6.6 MB, 1.99 MB gzipped, fetched only when a reader switches the layer on.
     "ar-appeals-districts.json": (7, 7),  # The 7 Court of Appeals districts, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following Act 1812 of 2003's county lists.
     "ar-judicial-circuits.json": (28, 28),  # The 28 judicial circuits, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following the circuit judge directory's county lists.
 }
