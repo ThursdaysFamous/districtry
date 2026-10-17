@@ -152,6 +152,7 @@ MAP_LINKS_FROM = "2026-10-17"
 # not read; both are grouped below rather than listed here per value.
 MAP_LINK_OUTCOMES = {"point": "Position in link",
                      "found": "Address found",
+                     "pin": "House pinned",
                      "street": "Street only",
                      "name": "By place name",
                      "other-state": "Another state",

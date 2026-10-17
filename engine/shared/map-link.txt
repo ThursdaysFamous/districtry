@@ -248,28 +248,35 @@
    * and the reader taps the place (ENGINE geocoder-search showStreetOnly),
    * and the front door opens the app that covers it.
    *
-   * addressParts splits an address into its house number, street, town and
-   * ZIP code, or returns null unless it opens with a house number and has a
-   * part after the street. labelOnStreet says whether a geocoder's answer is
-   * on that street in that town: one part of the answer, less any house
-   * number, must name the same street once both are written in the
-   * abbreviations above, and another part must be the town or the ZIP code,
-   * because most street names are in many towns. A direction written on one
-   * side and not the other still matches; two different directions do not,
-   * because West and East Madison Street are miles apart. */
-  function addressParts(address) {
-    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
-    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(parts[0] || "");
-    if (!m || parts.length < 2) return null;
+   * addressStreet reads the house number and the street from an address's
+   * first part, or returns null unless it opens with a house number.
+   * addressParts adds the town and the ZIP code, and returns null unless
+   * there is a part after the street. labelOnStreet says whether a
+   * geocoder's answer is on that street in that town: one part of the
+   * answer, less any house number, must name the same street once both are
+   * written in the abbreviations above, and another part must be the town or
+   * the ZIP code, because most street names are in many towns. A direction
+   * written on one side and not the other still matches; two different
+   * directions do not, because West and East Madison Street are miles
+   * apart. */
+  function addressStreet(address) {
+    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(String(address || "").split(",")[0].trim());
+    if (!m) return null;
     // a unit at the end of the street line is not part of the street's name
     var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
+    return { number: m[1], street: street };
+  }
+  function addressParts(address) {
+    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
+    var a = addressStreet(parts[0]);
+    if (!a || parts.length < 2) return null;
     var town = parts[1], zip = "", i, s;
     for (i = 2; i < parts.length; i++) {
       s = /^[a-z]{2}(?:\s+(\d{5})(?:-\d{4})?)?$/i.exec(parts[i]);  // "IL 60559", "IL"
       if (s) { town = parts[i - 1]; zip = s[1] || ""; break; }
     }
     if (!zip) zip = (/(?:^|[\s,])(\d{5})(?:-\d{4})?(?=[\s,]|$)/.exec(parts.slice(1).join(", ")) || [])[1] || "";
-    return { number: m[1], street: street, town: town, zip: zip };
+    return { number: a.number, street: a.street, town: town, zip: zip };
   }
   // A street's name as a matching key: every word in its abbreviation, so
   // "Drive" and "Dr" agree wherever they stand, then a leading and a
@@ -290,6 +297,13 @@
     key.core = words.join(" ");
     return key;
   }
+  // Whether one part of an answer's label, less any house number, names the
+  // street `want` (a streetNameKey) names
+  function partNamesStreet(part, want) {
+    var got = streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
+    return got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
+      (!got.post || !want.post || got.post === want.post);
+  }
   function labelOnStreet(label, address) {
     var a = addressParts(address);
     if (!a) return false;
@@ -299,11 +313,47 @@
     String(label || "").split(",").forEach(function (part) {
       var low = part.trim().toLowerCase();
       if (low && (low === town || low === a.zip)) inTown = true;
-      var got = streetNameKey(part.trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
-      if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
-          (!got.post || !want.post || got.post === want.post)) onStreet = true;
+      if (partNamesStreet(part, want)) onStreet = true;
     });
     return onStreet && inTown;
+  }
+
+  /* ---------- the town an answer puts a typed address in ----------
+   * An address typed into a state's app often names no town ("1600 W
+   * North Ave"), or names it with no comma before it ("1600 W North Ave
+   * Chicago"), and the map's search may answer the street in one town or
+   * in several. addressInTownOf gives the address in the town and state of
+   * an answer on its street ("1600 W North Ave, Chicago, IL"), read
+   * from the answer's label: the part before a state's name is the town.
+   * When the address names a town, after a comma (labelOnStreet) or as the
+   * words after the street, and the answer is not in it, the result is
+   * null, as it is for an answer on another street or a label that names no
+   * state. The ZIP code is left out, because one long street runs through
+   * several. */
+  function addressInTownOf(address, label) {
+    var a = addressStreet(address);
+    if (!a || (addressParts(address) && !labelOnStreet(label, address))) return null;
+    var parts = String(label || "").split(",").map(function (p) { return p.trim(); });
+    var at = -1, tag = "", j, n, i;
+    for (j = parts.length - 1; j >= 2 && !tag; j--) {
+      tag = stateTagOfName(parts[j]);
+      if (tag) at = j;
+    }
+    if (!tag) return null;
+    var town = parts[at - 1], low = town.toLowerCase();
+    var words = a.street.split(/\s+/);
+    for (n = words.length; n >= 1; n--) {
+      var rest = words.slice(n).join(" ").toLowerCase();
+      if (rest && rest !== low && rest.indexOf(low + " ") !== 0) continue;
+      var want = streetNameKey(words.slice(0, n).join(" "));
+      if (!want.core) continue;
+      for (i = 0; i < at - 1; i++) {
+        if (partNamesStreet(parts[i], want)) {
+          return a.number + " " + words.slice(0, n).join(" ") + ", " + town + ", " + tag.toUpperCase();
+        }
+      }
+    }
+    return null;
   }
 
   /* ---------- the state a place's address names ----------
@@ -342,11 +392,13 @@
       return m[1].toLowerCase();
     }
     m = /,\s*([a-z][a-z .]*?)(?:\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
-    if (m) {
-      var name = m[1].replace(/\s+/g, " ").toLowerCase();
-      for (var k in US_STATE_NAMES) {
-        if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
-      }
+    return m ? stateTagOfName(m[1]) : "";
+  }
+  // The tag of the state a name names ("Wisconsin" -> "wi"), or ""
+  function stateTagOfName(text) {
+    var name = String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
+    for (var k in US_STATE_NAMES) {
+      if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
     }
     return "";
   }
@@ -377,8 +429,12 @@
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one
-   * or shares one into the installed app.
+   * A short link is sent to it only when a reader pastes one or shares one
+   * into the installed app. An app's search also sends it an address a
+   * reader searched for, typed or carried by a map link, for the Census
+   * Bureau's geocoder, when the map's own search holds the street and not
+   * the house number (ENGINE geocoder-search lookupAddressRanges); the front
+   * door never does.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
