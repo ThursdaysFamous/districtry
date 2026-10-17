@@ -3817,8 +3817,10 @@ replacing the four-name statewide directory; the telephone numbers on that page
 were held back because the Auditor had not said which are county lines, and they
 ship since 2026-10-17, when Adam ruled for the whole fleet that a number an
 official government source prints beside an official is published even where it
-may be the official's own. Iowa's county-supervisor layer now covers all 99
-counties.
+may be the official's own. The personal e-mail address that page prints for
+District 1, which the record below says was not kept, ships since the same day,
+when Adam chose to show a personal address a government page prints beside an
+official. Iowa's county-supervisor layer now covers all 99 counties.
 
 Each record's `blocker`, as it stood when it closed, follows verbatim.
 
