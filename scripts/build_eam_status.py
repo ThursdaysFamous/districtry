@@ -1691,8 +1691,13 @@ ANSWERS = {
         # Kentucky owes these: its thread has confirmed every county school board
         # is elected by division, five per county from whole precincts, while its
         # independent school boards are elected at large and so are named rather
-        # than drawn.
-        "school-boards-by-district": OPEN,
+        # than drawn. PART DRAWN 2026-10-17: the divisions of 2 of the 120 county
+        # boards, Jefferson's from the precinct lists in KRS 160.211 and Rowan's
+        # from the 2022 and 2024 general election results
+        # (ky/scripts/build_ky_school_board_divisions.py), so the level stays
+        # open on gap ky-school-board-members. The layer is named here so the
+        # unclaimed-layer print does not list it.
+        "school-boards-by-district": Entry("open", ("school-board-district",)),
         # The State Board of Elections compiles all 3,194 precincts statewide
         # from the counties' own files, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),

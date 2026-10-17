@@ -4218,8 +4218,9 @@ function initKentuckyExplorer() {
   var LAYER_CODES = { "us-house": "us", "ky-supreme-court": "kyj", "ky-court-of-appeals": "kya",
     "ky-senate": "kys", "ky-circuit-court": "kyc", "ky-district-court": "kyd",
     "ky-house": "kyh", "county": "co", "school-district-unified": "su",
-    "county-subdivision": "cs", "fiscal-court": "fc", "voting-precinct": "vp",
-    "municipality": "mu", "school-district-elementary": "se", "school-district-secondary": "sh" };
+    "county-subdivision": "cs", "fiscal-court": "fc", "school-board-district": "bd",
+    "voting-precinct": "vp", "municipality": "mu", "school-district-elementary": "se",
+    "school-district-secondary": "sh" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4233,7 +4234,8 @@ function initKentuckyExplorer() {
     "voting-precinct": ["voting-precinct"],
     "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
-    "school-district-secondary": ["school-district-secondary"] };
+    "school-district-secondary": ["school-district-secondary"],
+    "school-board-district": ["school-board-district"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -9641,7 +9643,8 @@ function initKentuckyExplorer() {
     "school-district-unified", // 170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county
     "county-subdivision", // 493 census county divisions, live from TIGERweb (no data/app file) — median 196.8 km2 of land (mean 207.4), measured 2026-10-15: smaller than a unified school district, larger than a city
     "fiscal-court",      // 314 districts in 58 counties: the magisterial districts of 56 fiscal courts and the council districts of Louisville Metro and Lexington-Fayette, 169 km2 mean feature area over 53,163 km2, so smaller than a school district and larger than a city
-    "voting-precinct",   // 3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a city (12.00)
+    "school-board-district", // 13 features in 2 counties — the 5 divisions of the Jefferson County board, from the precinct lists in KRS 160.211, the 5 of the Rowan County board, from the 2022 and 2024 general election results, and 3 Jefferson precincts placed in no division — 136.22 km2 mean area (median 126.46), measured 2026-10-17 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a voting precinct (32.75)
+    "voting-precinct",   // 3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a school board division (136.22 km2), larger than a city (12.00)
     "municipality",      // 415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land
     "school-district-elementary", // 4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points
     "school-district-secondary" // 4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling
@@ -14363,6 +14366,251 @@ function initKentuckyExplorer() {
     return null;
   }
 
+  /* ---------- 5b. School board division — the divisions county boards are elected from ----------
+   * Kentucky elects every county board of education from five divisions made
+   * of whole voting precincts, and every independent district's board at
+   * large (KRS 160.210, as amended effective April 14, 2026). No office
+   * publishes the divisions for the whole state, so this layer draws them two
+   * ways, and each card says which. Pre-built by
+   * ky/scripts/build_ky_school_board_divisions.py (Douglas-Peucker at 8 m, in
+   * one run, so a line two divisions share is drawn once;
+   * data/app/ky-school-board-divisions.json, same-origin, so a click is
+   * answered in the browser and no point is sent anywhere).
+   *
+   * JEFFERSON COUNTY, FROM THE STATUTE. The 2026 law that cut the Jefferson
+   * County board from seven members to five (2026 Ky. Acts ch. 154) lists
+   * each division's precinct codes in section 160.211 of the Kentucky Revised
+   * Statutes. Each division here is the union of its listed precincts on the
+   * State Board of Elections' precinct map, cut to the Census Bureau's
+   * boundary of the Jefferson County School District, so the part of a
+   * precinct in the Anchorage Independent School District, whose board is
+   * elected at large, is in no division. Three current precincts are on no
+   * list (F154, F155 and F183). The statute has the county board of elections
+   * add the part of such a precinct inside the county district to a division
+   * next to it; no such assignment was found published, so each of the three
+   * is drawn whole as its own area, marked as placed in no division, and its
+   * card says so rather than guessing. The builder reads LOJIC's precinct
+   * layer and two published maps of the divisions (LOJIC's and the school
+   * district's) as checks on its reading of the statute, never as sources.
+   *
+   * ROWAN COUNTY, FROM ELECTION RESULTS. Each division is the precincts whose
+   * ballots carried that division's board race in the 2022 or 2024 general
+   * election, by the State Board's recap sheet for the county, cut to the
+   * Census boundary of the Rowan County School District. The builder tests
+   * nine counties this way and draws a county only if every one of its
+   * precincts is placed, each board race was on every ballot its precinct
+   * cast, and the precincts have not changed since; Rowan alone passed,
+   * measured 2026-10-17.
+   *
+   * NO MEMBER IS NAMED (gap ky-school-board-members): no list of members by
+   * division has been read for this app. The builder's --check fails if this
+   * card stops stating the interval the file was drawn at, the statute's
+   * citation or the date of the Jefferson divisions' first election.
+   * ---------- */
+  var loadKySchoolBoardDivisions = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-school-board-divisions.json", {}, 2);
+  });
+
+  var KY_BOARD_MEMBERS = "Not named here. No list of this board's members by " +
+    "division has been read for this app, so it names no one rather than " +
+    "guessing. The board's own page is linked below.";
+
+  // The seven members elected under the old map serve until December 31,
+  // 2026 (2026 Ky. Acts ch. 154, sections 17 and 18), so the card stops
+  // describing that arrangement once it has ended.
+  var KY_JEFFERSON_INTERIM_ENDS = Date.UTC(2027, 0, 1);
+
+  function kyBoardDivisionRows(result) {
+    var rows = [];
+    var board = result.board || "the county board of education";
+    if (result.drawnFrom === "statute") {
+      var shortTerm = result.division === "4" || result.division === "5";
+      rows.push({
+        label: "Who it elects",
+        value: "One of the five members of the " + board + ". A 2026 law " +
+          "(2026 Ky. Acts ch. 154) cut the board from seven members to five and " +
+          "set out its five divisions, precinct by precinct, in KRS 160.211. " +
+          "The law sets their first election for the November 3, 2026 general " +
+          "election, " + (shortTerm
+            ? "when the member for this division is elected for two years; after that the term is four years."
+            : "when the member for this division is elected for four years.") +
+          " The new board is called to its first meeting within ten days of January 1, 2027."
+      });
+      if (Date.now() < KY_JEFFERSON_INTERIM_ENDS) {
+        rows.push({
+          label: "Until the new board takes office",
+          value: "The seven members elected from the old seven divisions serve " +
+            "until their terms end on December 31, 2026. Until then the same law " +
+            "gives each new division one of them: the member who lives in it, " +
+            "chosen by drawing lots if two or more do, or drawn by lot from the " +
+            "others if none does. Any member left over serves the whole district."
+        });
+      }
+      rows.push({ label: "Members", value: KY_BOARD_MEMBERS });
+      rows.push({
+        label: "How this line is drawn",
+        value: "From the law: KRS 160.211 lists the precincts that make up each " +
+          "division, as the county clerk's office kept them on March 19, 2026. " +
+          "This map joins that list to the State Board of Elections' precinct map " +
+          "and cuts it to the Census Bureau's boundary of the Jefferson County " +
+          "School District, so the part of the county in the Anchorage " +
+          "Independent School District, whose board is elected at large, is in " +
+          "no division." + (result.precincts != null
+            ? " This division is made of " + String(result.precincts) + " precincts."
+            : "") +
+          " The lines are drawn here to within 8 metres; for a definitive answer, " +
+          "ask the county board of elections."
+      });
+      return rows;
+    }
+    // drawn from election results
+    var day = kyConservationDate(result.election);
+    rows.push({
+      label: "Who it elects",
+      value: "One of the five members of the " + board + ", who serve four-year " +
+        "terms." + (day && result.contest
+          ? " This division's seat was on the ballot in the " + day + " general " +
+            "election, as “" + result.contest + "”."
+          : "")
+    });
+    rows.push({ label: "Members", value: KY_BOARD_MEMBERS });
+    rows.push({
+      label: "How this line is drawn",
+      value: "From election results: the precincts whose ballots carried this " +
+        "division's race" + (day ? " in the " + day + " general election" : "") +
+        ", by the State Board of Elections' recap sheet for " +
+        (result.county ? result.county + " County" : "the county") + ", cut to " +
+        "the Census Bureau's boundary of the county school district. Every " +
+        "precinct in the county voted whole in one division's race, and the " +
+        "precincts have not changed since, so this is taken to be the division " +
+        "as it stands." + (result.precincts != null
+          ? " It is made of " + String(result.precincts) + " precincts." : "") +
+        " The lines are drawn here to within 8 metres; for a definitive answer, " +
+        "ask the board of education."
+    });
+    return rows;
+  }
+
+  // A precinct the statute's lists leave out. It lies across the line
+  // between the county and Anchorage school districts, so the card describes
+  // the whole precinct, both sides, with its size and its 2022 ballots, and
+  // places none of it in a division.
+  function kyUnplacedRows(result) {
+    var rows = [];
+    var code = result.precinct || "this precinct";
+    rows.push({
+      label: "Why no division",
+      value: "Precinct " + code + " lies across the line between the Jefferson " +
+        "County and Anchorage Independent school districts, and it is on none of " +
+        "the five lists of precincts in KRS 160.211, the law that drew the " +
+        "Jefferson County board's divisions. That law has the county board of " +
+        "elections add the part of such a precinct inside the Jefferson County " +
+        "School District to a division next to it. No such assignment has been " +
+        "found published, so this map does not guess which division that part " +
+        "is in; the county board of elections can say. The part in the Anchorage " +
+        "district is in no division, because that board is elected at large."
+    });
+    if (result.km2 != null) {
+      rows.push({
+        label: "Size",
+        value: String(result.km2) + " km\u00b2 in all." + (result.anchorageKm2 != null
+          ? " The Census Bureau's map of the school districts puts " +
+            String(result.anchorageKm2) + " km\u00b2 of it in the Anchorage " +
+            "Independent School District and the rest in the Jefferson County " +
+            "School District."
+          : "")
+      });
+    }
+    if (result.ballots2022 != null && result.countyBoard2022 != null && result.anchorage2022 != null) {
+      rows.push({
+        label: "Ballots in 2022",
+        value: "In the November 8, 2022 general election the precinct cast " +
+          String(result.ballots2022) + " ballots: " + String(result.countyBoard2022) +
+          " carried a Jefferson County board race and " + String(result.anchorage2022) +
+          " carried the Anchorage board's, so it had voters in both school districts."
+      });
+    }
+    return rows;
+  }
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board Division",
+    emptyNote: "This point is not in a school board division this map draws. " +
+      "Kentucky elects each county board of education from five divisions and " +
+      "each independent district's board at large, and no office publishes the " +
+      "divisions for the whole state. This map draws two counties' divisions: " +
+      "Jefferson County's, from the precinct lists in KRS 160.211, and Rowan " +
+      "County's, from the 2022 and 2024 general election results. In Jefferson " +
+      "County, the part in the Anchorage Independent School District is in no " +
+      "division, because that board is elected at large. Other counties' " +
+      "divisions are not drawn here yet.",
+    overlay: {
+      load: loadKySchoolBoardDivisions,
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (p.kind === "unplaced") {
+        return p.precinct != null ? "Precinct " + String(p.precinct) + ", placed in no division" : null;
+      }
+      return p.county != null && p.division != null
+        ? String(p.county) + " County board, Division " + String(p.division) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadKySchoolBoardDivisions, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        function text(v) { return v != null && String(v) !== "" ? String(v) : null; }
+        return {
+          seq: seq,
+          kind: text(p.kind),
+          county: text(p.county),
+          board: text(p.board),
+          web: text(p.web),
+          division: text(p.division),
+          drawnFrom: text(p.drawnFrom),
+          election: text(p.election),
+          contest: text(p.contest),
+          precincts: p.precincts != null ? p.precincts : null,
+          precinct: text(p.precinct),
+          km2: p.km2 != null ? p.km2 : null,
+          anchorageKm2: p.anchorageKm2 != null ? p.anchorageKm2 : null,
+          ballots2022: p.ballots2022 != null ? p.ballots2022 : null,
+          countyBoard2022: p.countyBoard2022 != null ? p.countyBoard2022 : null,
+          anchorage2022: p.anchorage2022 != null ? p.anchorage2022 : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      if (result.kind === "unplaced") {
+        wrap.appendChild(renderBodyIntro({
+          title: "Placed in no division",
+          note: "Precinct " + (result.precinct || "unknown") +
+            (result.county ? ", " + result.county + " County" : "")
+        }));
+        wrap.appendChild(renderFieldStack(kyUnplacedRows(result)));
+        return wrap;
+      }
+      wrap.appendChild(renderBodyIntro({
+        title: result.division ? "Division " + result.division : "Unknown division",
+        note: result.board
+      }));
+      wrap.appendChild(renderFieldStack(kyBoardDivisionRows(result)));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      if (result && result.web) {
+        return { label: result.board || "The county board of education", url: result.web };
+      }
+      return kySchoolLink();
+    }
+  });
+
   /* ---------- Census County Division — live TIGERweb, the level-14 map ----------
    * Which county subdivision a point is in, owed in every state whether or
    * not the units govern anyone (docs/DONE_STANDARD.md, level 14, Adam's
@@ -16510,7 +16758,11 @@ function initKentuckyExplorer() {
     "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
     "ky-district-court", "fiscal-court",
     "school-district-unified", "school-district-elementary",
-    "school-district-secondary", "county", "county-subdivision",
+    "school-district-secondary",
+    // The board division sits under the school tilings it divides, and
+    // answers only in the two counties whose divisions are drawn.
+    "school-board-district",
+    "county", "county-subdivision",
     "municipality", "voting-precinct"];
   (function applySidebarRank() {
     var pos = {};
@@ -17002,10 +17254,10 @@ function initKentuckyExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1F6FB2": "#74BBFF",
     "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#2F7A6A": "#69CAB3", "#3B8FD4": "#A2D2FF",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4AA893": "#74EFD3",
-    "#4C8F59": "#82DB92", "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
-    "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#8A692C": "#DDB061", "#8C2E4A": "#F47294",
-    "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE",
+    "#753B07": "#D7864B", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#8A692C": "#DDB061",
+    "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

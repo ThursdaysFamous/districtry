@@ -118,7 +118,7 @@ All 87 counties and their county commissioner districts: judicial and watershed 
 
 All 120 counties: each county's fiscal court and elected officers, cities with their mayors and councils, voting precincts and census county divisions, school districts, and the Supreme Court, Court of Appeals, circuit court and district court districts — plus the Kentucky Senate, House and U.S. House districts, with the member named for each U.S. House seat. County and city officials are named from the Department for Local Government's directories, and judges from the Court of Justice's own pages. Nobody is named yet on the two state chambers or the school boards, and the Data gaps panel says why.
 
-- [Kentucky district lookup](https://districtry.com/ky/): 15 layers, all 120 counties.
+- [Kentucky district lookup](https://districtry.com/ky/): 16 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
 - [Who runs my county?](https://districtry.com/ky/county-government.html): links a page per county, 120 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ky/sources.html)

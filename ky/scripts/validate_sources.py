@@ -274,6 +274,40 @@ PROVENANCE = [
             "each district turn over; WATCH.md carries the row."
         ),
     },
+    {
+        "layer": "school-board-district",
+        "app_file": "ky-school-board-divisions.json",
+        "source_url": "https://apps.legislature.ky.gov/law/acts/26RS/documents/0154.pdf",
+        "note": (
+            "The five Jefferson County board of education divisions, each made "
+            "of the precincts KRS 160.211 lists for it, joined by precinct code "
+            "to the State Board of Elections' precinct map and cut to the "
+            "Census Bureau's boundary of the Jefferson County School District, "
+            "by ky/scripts/build_ky_school_board_divisions.py (2026-10-17). "
+            "This url is the act that wrote the lists, 2026 Ky. Acts ch. 154; "
+            "the builder reads its section 9 on every build and stops if the "
+            "lists differ from the codified text in "
+            "data/source/statutes/krs160.211.txt. Three current precincts the "
+            "statute does not list are shipped as placed in no division. "
+            "Rebuild after the county board of elections changes a precinct or "
+            "the General Assembly amends the section; ky/WATCH.md carries the row."
+        ),
+    },
+    {
+        "layer": "school-board-district",
+        "app_file": "ky-school-board-divisions.json",
+        "source_url": "https://elect.ky.gov/results/2020-2029/Pages/2024General-Recap-Sheets.aspx",
+        "note": (
+            "The five Rowan County board of education divisions, each made of "
+            "the precincts whose ballots carried that division's race in the "
+            "2022 or 2024 general election, read from the State Board of "
+            "Elections' recap sheets (this page and the 2022 one) and cut to "
+            "the Census Bureau's boundary of the Rowan County School District. "
+            "The builder tests eight more counties the same way on every build, "
+            "draws none of them, and records why. Re-read after the November 3, "
+            "2026 general election; ky/WATCH.md carries the row."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -367,6 +401,66 @@ ENDPOINTS = [
                 "Ky_SBE_VTD_Boundaries_WM/FeatureServer/0/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 2900,  # 3,194 records measured 2026-10-15
+    },
+    # The school-board-district layer's inputs (build_ky_school_board_divisions.py,
+    # counts measured 2026-10-17): the precinct map once more, under this
+    # layer's own name; the three Census school districts the divisions are
+    # cut to or measured against; the Census 2020 voting districts of the nine
+    # counties the election-results test compares against; and the three
+    # Louisville layers the build reads as CHECKS on the statute and never as
+    # sources -- LOJIC's precinct layer, whose SCHOOLDIST column must agree with
+    # the statute for every listed precinct, and the two maps of the divisions
+    # drawn by LOJIC and by JCPS. LOJIC's board layer holds six records: the
+    # five divisions and the Anchorage school district.
+    {
+        "layer": "school-board-district",
+        "url": ("https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/"
+                "Ky_SBE_VTD_Boundaries_WM/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2900,
+    },
+    {
+        "layer": "school-board-district",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "School/MapServer/0/query?where=GEOID+IN+%28%272102990%27%2C%272105100%27%29"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2,  # the Jefferson County and Rowan County school districts
+    },
+    {
+        "layer": "school-board-district",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "School/MapServer/2/query?where=GEOID%3D%272100090%27"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 1,  # the Anchorage Independent School District
+    },
+    {
+        "layer": "school-board-district",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "tigerWMS_Census2020/MapServer/58/query?where=STATE%3D%2721%27+AND+COUNTY+IN+"
+                "%28%27085%27%2C%27097%27%2C%27101%27%2C%27113%27%2C%27171%27%2C%27177%27"
+                "%2C%27181%27%2C%27205%27%2C%27233%27%29&returnCountOnly=true&f=json"),
+        "min_count": 196,  # the 2020 count is fixed: 196 measured 2026-10-17
+    },
+    {
+        "layer": "school-board-district",
+        "url": ("https://gis.lojic.org/maps/rest/services/LojicSolutions/"
+                "OpenDataPolitical/MapServer/6/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 600,  # 646 measured 2026-10-17
+    },
+    {
+        "layer": "school-board-district",
+        "url": ("https://gis.lojic.org/maps/rest/services/LojicSolutions/"
+                "OpenDataPolitical/MapServer/2/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 6,
+    },
+    {
+        "layer": "school-board-district",
+        "url": ("https://services5.arcgis.com/aPhGC3Kc78PZRGIh/arcgis/rest/services/"
+                "BoardDistricts_PostSB4NoAnchorage/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 5,
     },
 ]
 
