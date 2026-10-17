@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.districtry.app",
+      "sha256_cert_fingerprints": [
+        "92:B8:E3:B4:11:73:79:D6:74:62:57:A0:2A:A9:9E:02:A6:9A:DA:18:BE:3D:F5:A7:20:EB:98:0A:77:C0:AF:F9",
+        "66:31:30:BC:4E:61:F1:9E:FE:01:D6:EB:E5:8B:D8:5C:AA:B1:40:4B:17:6A:65:98:F2:4D:50:49:45:16:4E:F5",
+        "1E:27:21:C7:0D:96:84:57:66:99:60:31:DB:43:0F:9B:AA:91:AF:E3:08:92:A9:F0:FB:B6:A1:58:6E:75:88:AA"
+      ]
+    }
+  }
+]

@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **266 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 221 are links.
+makes from a link a reader clicks. Of **276 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 231 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,7 +32,7 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
@@ -44,9 +44,9 @@ names it as a recipient.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -56,7 +56,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -64,7 +64,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 | `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
@@ -77,7 +77,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms |
 
 ### Socrata — 7 host(s)
 
@@ -96,7 +96,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar, ms |
 | `gis.aurora.il.us` | il |
 | `gis.cityofdanville.org` | il |
 | `gis.cookcountyil.gov` | il |
@@ -141,12 +141,13 @@ prose.
 | mi | 0 | 19 |
 | mn | 6 | 20 |
 | ky | 5 | 15 |
-| in | 4 | 14 |
+| in | 4 | 16 |
 | nc | 4 | 13 |
-| ok | 5 | 14 |
-| sc | 4 | 14 |
-| tn | 6 | 16 |
-| ar | 3 | 13 |
+| ok | 5 | 15 |
+| sc | 4 | 16 |
+| tn | 6 | 18 |
+| ar | 3 | 16 |
+| ms | 3 | 16 |
 
 ### Where each layer's shapes come from
 
@@ -173,7 +174,7 @@ measured until the next run describes it.
 | Township / County Subdivision (`township`) | `tigerweb.geo.census.gov` | — |
 | Municipality (`municipality`) | `tigerweb.geo.census.gov` | — |
 | Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
-| County Board District (`county-board`) | 26 of 70 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 43 shipped with the app; 1 did not answer the probe (kane) | `gis.cookcountyil.gov` |
+| County Board District (`county-board`) | 26 of 71 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 44 shipped with the app; 1 did not answer the probe (kane) | `gis.cookcountyil.gov` |
 | Fire Protection District (`fire-district`) | 17 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
 | DuPage Special Police District (`dupage-county-special-police`) | `services.arcgis.com` | — |
 | Park District (`park-district`) | 10 of 18 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 8 shipped with the app | — |
@@ -300,7 +301,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
 - **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`, `voting-precinct`.
 
-#### in — 4 of 14 layers fetch their shapes
+#### in — 4 of 16 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -311,7 +312,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `in-senate`, `county`, `in-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `county-council`, `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `county-council`, `in-court-of-appeals`, `school-board-district`, `voting-precinct`, `tribal-government`.
 
 #### nc — 4 of 13 layers fetch their shapes
 
@@ -326,7 +327,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `voting-precinct`, `tribal-government`.
 
-#### ok — 4 of 14 layers fetch their shapes
+#### ok — 4 of 15 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -337,9 +338,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `ok-senate`, `county`, `ok-house`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `county-subdivision`, `county-commissioner`.
+- **Not measured** — declared since the probe ran: `ok-judicial-district`, `county-subdivision`, `county-commissioner`.
 
-#### sc — 3 of 14 layers fetch their shapes
+#### sc — 3 of 16 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -349,9 +350,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `sc-senate`, `county`, `sc-house`, `county-council`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `county-subdivision`, `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `sc-circuit-court`, `county-subdivision`, `school-board-district`, `voting-precinct`, `tribal-government`.
 
-#### tn — 5 of 16 layers fetch their shapes
+#### tn — 5 of 18 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -363,31 +364,34 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `tn-senate`, `county`, `tn-house`, `county-commissioner`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `county-subdivision`, `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `tn-judicial-district`, `school-board-district`, `county-subdivision`, `voting-precinct`, `tribal-government`.
 
 #### ar — not measured
+
+#### ms — not measured
 
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 406 | 6 |
+| il | 131 | 408 | 6 |
 | ny | 38 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 266 | 5 |
-| ia | 71 | 70 | 0 |
-| mi | 36 | 65 | 1 |
+| ia | 71 | 69 | 0 |
+| mi | 37 | 66 | 1 |
 | mn | 29 | 20 | 0 |
 | ky | 21 | 15 | 0 |
-| in | 16 | 15 | 0 |
+| in | 19 | 17 | 0 |
 | nc | 19 | 12 | 0 |
-| ok | 18 | 12 | 0 |
-| sc | 20 | 14 | 0 |
-| tn | 21 | 14 | 0 |
-| ar | 20 | 13 | 0 |
-| **total** | **549** | **971** | **12** |
+| ok | 19 | 13 | 0 |
+| sc | 23 | 16 | 0 |
+| tn | 24 | 16 | 0 |
+| ar | 24 | 16 | 0 |
+| ms | 41 | 21 | 0 |
+| **total** | **605** | **1004** | **12** |
 
-**155 distinct source hosts** across the six manifests. Each instance's
+**166 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

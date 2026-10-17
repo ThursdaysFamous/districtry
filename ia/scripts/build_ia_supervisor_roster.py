@@ -395,6 +395,17 @@ NUMBERING_CHECKED = {
                    "lies inside this layer's district 2; the incumbent Jack Beggs "
                    "ran in District 3, where the county's own board page lists him"),
     },
+    "Humboldt": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-16",
+        "witness": ("the county's own 2021 supervisor district map, sent to "
+                   "this project by the county on 2026-10-16 in answer to its "
+                   "letter, colours every section by district and names each "
+                   "district's supervisor, the same five the county's board page "
+                   "names; all twelve townships' and eight towns' census interior "
+                   "points each land in this layer's district with the number "
+                   "the map paints there, every district spoken for"),
+    },
     "Cass": {
         "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
         "checked": "2026-10-07",

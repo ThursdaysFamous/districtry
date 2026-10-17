@@ -146,7 +146,12 @@ jobs:
           python3 scripts/build_officeholder_tables.py
           python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add mi/data/app/mi-detroit-council-members.json mi/city-council.html about.html sitemap.xml
+          # docs/EAM_STATUS.md counts the places this roster names, so a
+          # refresh that moves a count fails the smoke gate's
+          # `build_eam_status.py --check` on this PR unless it is rebuilt here,
+          # after the cut onto main (#1572 went red that way on 2026-10-15).
+          python3 scripts/build_eam_status.py
+          git add mi/data/app/mi-detroit-council-members.json mi/city-council.html about.html sitemap.xml docs/EAM_STATUS.md
           # The commit message carries the same verdict as the PR title, so
           # `git log` on main reads as what each week actually did rather than
           # as a column of identical lines.

@@ -80,6 +80,7 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "sc": "South Carolina",
                   "tn": "Tennessee",
                   "ar": "Arkansas",
+                  "ms": "Mississippi",
                   "landing": "Fleet landing"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
@@ -98,13 +99,24 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 "mn": "2026-09-30", "ky": "2026-09-30",
                 "in": "2026-10-07", "nc": "2026-10-09",
                 "ok": "2026-10-10", "sc": "2026-10-13",
-                "tn": "2026-10-13", "ar": "2026-10-15"}
+                "tn": "2026-10-13", "ar": "2026-10-15",
+                "ms": "2026-10-16"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",
              "go.bsky.app": "Bluesky", "www.bing.com": "Bing",
              "bsky.app": "Bluesky", "www.google.com": "Google",
              "search.brave.com": "Brave", "www.reddit.com": "Reddit"}
+# The per-day source chart's groups. A referrer key in none of these, other
+# than "(unknown)", counts as "Other sites", which is where a smaller search
+# engine (Brave, Ecosia) lands too; the page's note says so.
+DAY_REF_GROUPS = [
+    ("Google", {"Google", "www.google.com", "google.com"}),
+    ("DuckDuckGo", {"duckduckgo.com", "noai.duckduckgo.com", "DuckDuckGo"}),
+    ("Bing", {"www.bing.com", "bing.com", "cn.bing.com", "Bing"}),
+    ("Yahoo", {"Yahoo", "search.yahoo.com", "yahoo.com"}),
+]
+NO_SOURCE = "(unknown)"
 LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                "congress": "Congress", "il-house": "IL House",
                "il-senate": "IL Senate", "county-board": "County board",
@@ -394,6 +406,37 @@ def split_by_instance(gc, pageviews):
     return named_rows, residual
 
 
+def day_refs(gc):
+    """One row per fetched day: [label, google, ddg, bing, yahoo, other,
+    no-source, cut-short].
+
+    A file fetched before the per-day lists existed has no
+    `daily_referrers`, and the page then hides the section rather than
+    drawing a chart of zeroes, which would read as "nobody arrived".
+
+    A day whose list the dashboard cut short keeps its flag, because the
+    rows it did not send are the smallest ones and would have landed in
+    "Other sites": that cell is then a floor, and the page marks it.
+    """
+    out = []
+    for d in gc.get("daily_referrers", []):
+        counts = {name: 0 for name, _ in DAY_REF_GROUPS}
+        other = none = 0
+        for r in d["rows"]:
+            for name, keys in DAY_REF_GROUPS:
+                if r["key"] in keys or r["label"] in keys:
+                    counts[name] += r["count"]
+                    break
+            else:
+                if r["key"] == NO_SOURCE:
+                    none += r["count"]
+                else:
+                    other += r["count"]
+        out.append([label(d["date"])] + [counts[n] for n, _ in DAY_REF_GROUPS]
+                   + [other, none, bool(d.get("more"))])
+    return out
+
+
 def build():
     gc = load("goatcounter-traffic.json")
     gsc = load("search-performance.json")
@@ -458,6 +501,13 @@ def build():
   /* Bing Webmaster Tools, same window. `reporting` is how many of the verified
      properties returned any rows at all. */
   var bingData = %s;
+
+  /* Where each of the last days' visits came from, each day asked for on
+     its own: [day, Google, DuckDuckGo, Bing, Yahoo, other sites, no source,
+     list cut short]. Empty when the data file predates the per-day fetch. */
+  var dayRefs = [
+    %s
+  ];
 
   var barData = {
     instances: [
@@ -544,6 +594,7 @@ def build():
         BEGIN, start, end, daily,
         json.dumps(engine(gsc, start, end), separators=(",", ":")),
         json.dumps(engine(bing, start, end), separators=(",", ":")),
+        ",\n    ".join(json.dumps(r, separators=(", ", ": ")) for r in day_refs(gc)),
         rows(instances), rows(layers),
         rows(named(gc["referrers"], REF_NAMES)),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["systems"]]),

@@ -87,18 +87,18 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 13
+MIN_REGISTER_LAYER = 15
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "tn-senate", "county", "tn-house", "school-district-unified",
-    "county-commissioner", "county-subdivision", "zip-code",
-    "school-district-elementary", "school-district-secondary",
-    "voting-precinct", "municipality", "tribal-government", "police-station",
-    "fire-station", "post-office",
+    "us-house", "tn-judicial-district", "tn-senate", "county", "tn-house",
+    "school-district-unified", "school-board-district", "county-commissioner",
+    "county-subdivision", "zip-code", "school-district-elementary",
+    "school-district-secondary", "voting-precinct", "municipality",
+    "tribal-government", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -111,6 +111,8 @@ GEOMETRY_FILES = {
     "tn-commission-districts.json": (859, 859),  # The 859 county commission districts in 95 counties, from the Comptroller of the Treasury's statewide layer (tn/scripts/build_tn_commission_districts.py).
     "tribal-areas.json": (1, 1),  # Tennessee's tribal land (scripts/build_tribal_areas.py) — the Tennessee part of the Mississippi Choctaw Off-Reservation Trust Land near Henning. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
     "tn-precincts.json": (1870, 1870),  # Every Tennessee voting precinct, pre-built by tn/scripts/build_tn_precincts.py through scripts/statewide_precincts.py from the Comptroller of the Treasury's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 1,870 count on the fetch and the drawn file, after Overton County's nine records published twice with identical geometry are dropped to one each). 9.4 MB, 2.45 MB gzipped, fetched only when a reader switches the layer on.
+    "tn-school-board-districts.json": (114, 114),  # Every school board district on the Comptroller of the Treasury's map, pre-built by tn/scripts/build_tn_school_board_districts.py through scripts/published_district_layers.py (Douglas-Peucker at 4 m; a 400-point agreement gate on every county's extent, measured 100.00% with zero overlaps; an exact 114 count, after the layer's one record with no county and no shape is skipped). 1.3 MB, 0.35 MB gzipped, fetched only when a reader switches the layer on.
+    "tn-judicial-districts.json": (32, 32),  # The 32 judicial districts, dissolved from the county fabric by tn/scripts/build_tn_judicial_districts.py following the District Attorneys General Conference's county list.
 }
 
 # file -> minimum key count (officeholder rosters).

@@ -761,13 +761,6 @@
         "note": "Floyd County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Floyd County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
-        "file": "humboldt-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Humboldt County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Humboldt County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
         "file": "pottawattamie-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -1199,6 +1192,8 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ]
 }

@@ -82,14 +82,15 @@ in Coahoma and Sunflower; the other 47 held 1,456,843 residents.
 
 A survey of every county's own website and its planning and development
 district's on 2026-10-15 found 14 counties publishing lines of their own that
-differ from the Census's; the eleven in COUNTY_SOURCES are the ones whose
-publication names or proves its own currency, and the other three wait for
-more evidence (ms/WATCH.md). Three of the eleven (Lee, Pearl River and Perry,
-added 2026-10-16) are proved by the county's own map of its voting precincts,
-which follows the county's lines and not the Census's; precinct_witness() says
-what is measured.
+differ from the Census's, and in Tippah a current plan whose publisher it did
+not establish. COUNTY_SOURCES holds twelve of the 14 and Tippah, the ones whose
+publication names or proves its own currency; the other two (Coahoma and
+Wilkinson) wait for more evidence (ms/WATCH.md). Five of the thirteen are
+proved by a map of the county's voting precincts, which follows those lines
+and not the Census's: Lee, Pearl River, Perry, Covington and Tippah, all added
+2026-10-16; precinct_witness() says what is measured.
 
-NOTHING TRACED SHIPS, from a county's own map: its lines only decide which
+NOTHING TRACED SHIPS, from any map: its lines only decide which
 district each 2020 census block belongs to (the one covering most of the
 block's area), and each district is drawn as the union of its blocks, so every
 vertex this file ships is the Census Bureau's — the method
@@ -111,7 +112,12 @@ blocks with nobody in them are split about evenly on 0.010 km2 in Lee (one
 block) and 0.160 km2 in Perry (seven). In those three the precinct map checks
 that the blocks went to the right districts: it puts 10 of Lee's 83,343
 residents, none of Pearl River's 56,145 and 8 of Perry's 11,511 in a different
-district from the drawn lines.
+district from the drawn lines. Covington and Tippah, added later the same
+day: the worst populated block is 88% inside one district in Covington and
+72% in Tippah, blocks with nobody in them are split about evenly on 0.094 km2
+in Covington (three blocks) and 0.011 km2 in Tippah (one), and the precinct
+maps put 17 of Covington's 18,340 residents and none of Tippah's 21,815 in a
+different district from the drawn lines.
 
 GATES BEFORE ANYTHING IS WRITTEN:
   - every drawn county has exactly five districts numbered 1 to 5;
@@ -122,7 +128,7 @@ GATES BEFORE ANYTHING IS WRITTEN:
     numbers;
   - the confirmations above, with every populated 2020 block in exactly one
     district, and the county's block total equal to its tract total;
-  - for a county's own map, its numbering is the 2020 edition's (the
+  - for a map other than the Census's, its numbering is the 2020 edition's (the
     one-to-one pairing of the two that keeps the most residents in a district
     of the same number is 1-1 to 5-5), and every block's assignment is clear:
     a populated block at least MIN_POPULATED_SHARE inside one district;
@@ -148,27 +154,38 @@ runs on a reader's first selection whether or not the layer is on, and it used
 to read the districts file itself: 150 KB gzipped for twenty counties, measured
 2026-10-15. It now finds the point's county in state-counties.json, which the
 County card loads on every selection anyway, and looks it up in the list, which
-is under 1 KB. Within a few tens of metres of a county line the two files can
-put a point in different counties, because each was simplified on its own; the
-county witness below bounds that strip, and there the layer follows the County
-card. `--check` fails if the list and the districts file name different
+is under 1 KB. Within a few metres of a county line the two files can put a
+point in different counties, because each was simplified on its own (a drawn
+county's edge sits at most 5.0 m from the County layer's line, measured
+2026-10-16); the county witness below bounds that strip, and there the layer
+follows the County card. `--check` fails if the list and the districts file name different
 counties.
 
 SIMPLIFICATION. Douglas-Peucker in metres, the legislative builder's method,
 for the reason its docstring gives, and ALL DRAWN COUNTIES IN ONE MAPSHAPER
 RUN, so a line two districts share — inside a county or where two drawn
-counties meet — is one arc simplified once.
+counties meet — is one arc simplified once. The interval is 5 m under the
+legislative builder's 8 m ceiling, the county file's setting, which Adam chose
+for these lines before the instance opened ("Finer first", 2026-10-16).
+Measured that day against the 20 m interval it replaced, on the same sources:
+
+    setting           worst stray   people moved   county edge apart   gzipped
+    dp interval=20       20.6 m       3 (Perry)          20.4 m          176 KB
+    dp interval=5         5.6 m       0                   5.0 m          384 KB
+
+"People moved" is the residents of 2020 blocks whose district simplification
+changes; "county edge apart" is the farthest a drawn county's outer edge sits
+from the County layer's line, either way round.
 
 WHAT `--check` CAN AND CANNOT SEE. It is offline and runs in CI: the shipped
 file's counties, numbering, county names and sources, the roster join, the
 record in data/source/ms-supervisor-districts.source.json (each county's
-measurements, held again to the gates above, and for a county's own map the
-evidence it was read with), the
-Census edition the app's card names, and the county witness against the
-shipped state-counties.json. It cannot re-measure population or re-read a
-county's map, because neither is shipped; the figures it prints are the ones
-the build measured and recorded, and a hand edit to them is not something it
-can catch.
+measurements, held again to the gates above, and for a map other than the
+Census's the evidence it was read with), the Census edition the app's card
+names, and the county witness against the shipped state-counties.json. It
+cannot re-measure population or re-read a county's map, because neither is
+shipped; the figures it prints are the ones the build measured and recorded,
+and a hand edit to them is not something it can catch.
 
 robots.txt: tigerweb.geo.census.gov serves a 189-byte HTML page at
 /robots.txt rather than a policy (HTTP 200, read 2026-10-15), which the shared
@@ -259,12 +276,14 @@ CENSUS_COUNTIES = {
 }
 
 # The counties drawn from a map the county publishes, or its planning and
-# development district publishes for it, because the Census still carries its
-# 2020 edition there, which in six of them (Copiah, Harrison, Hinds, Perry,
-# Simpson and Warren) puts every resident in the same district as its 2010
-# edition (measured 2026-10-16 by `--survey`). STATED, never derived, like the
-# list above. Each entry names the evidence that its lines are the ones adopted
-# after the 2020 census, and the build re-reads that evidence every time:
+# development district publishes for it, or, in Lee and Tippah, a map published
+# online that only its own name ties to the county, because the Census still
+# carries its 2020 edition there, which in eight of them (Copiah, Covington,
+# Harrison, Hinds, Perry, Simpson, Tippah and Warren) puts every resident in
+# the same district as its 2010 edition (measured 2026-10-16 by `--survey`).
+# STATED, never derived, like the list above. Each entry names the evidence
+# that its lines are the ones adopted after the 2020 census, and the build
+# re-reads that evidence every time:
 #   layer_name       the layer's own name, compared exactly; "Supervisor
 #                    Districts Adopted 2022" names its own adoption;
 #   service_says     a phrase the map service's own description must carry;
@@ -274,7 +293,7 @@ CENSUS_COUNTIES = {
 #                    a person compares the new one;
 #   plan_population  a population field published with each district, which
 #                    must equal the 2020 census's own block counts;
-#   precincts        the county's own map of its voting precincts, which must
+#   precincts        a published map of the county's voting precincts, which must
 #                    follow these lines and not the Census's: `url` and
 #                    `layer_name` as above, `name_field` naming each precinct,
 #                    and `district_field` where each precinct names its
@@ -282,7 +301,9 @@ CENSUS_COUNTIES = {
 #                    the district holding most of its residents under the lines
 #                    being tested. precinct_witness() says what is measured.
 # `label_field` is a field naming the district in words ("Supervisor District
-# 3"), which must name the same number as `field`. `names` is a field naming
+# 3"), which must name the same number as `field`. `parts` says the layer draws
+# a district as more than one feature, which are joined into one district
+# (Covington's District 2). `names` is a field naming
 # each district's supervisor, which must agree with the Secretary of State's
 # directory. `set_aside` names blocks a plan's own population figures leave
 # out, with their 2020 population: each is re-read from the Census and must
@@ -300,6 +321,28 @@ COUNTY_SOURCES = {
             "layer_name": "Supervisor Districts Adopted 2022",
             "plan_population": "population",
             "source": _CMPDD_SOURCE % "Copiah"},
+    # The county website's County Mapping page links the Covington Parcel
+    # Viewer, whose map draws this layer as "Supervisor Districts 2023" and the
+    # precinct layer below as "Precincts 2023" (read 2026-10-16). The layer
+    # draws District 2 as two features, which the entry joins. The precincts
+    # name no district, so they are tested on whether they nest inside these
+    # lines. A layer in another account puts every resident in the same
+    # district as this one and names each district's supervisor, and the names
+    # are the directory's (measured 2026-10-16); it is not read, because
+    # nothing found ties that account to the county.
+    "031": {"county": "Covington",
+            "url": ("https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/"
+                    "NEW_DISTRICTS/FeatureServer/0"),
+            "field": "BEAT", "parts": True,
+            "layer_name": "NEW_DISTRICTS",
+            "precincts": {
+                "url": ("https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/"
+                        "Covington_Precincts_2022_11_17_region/FeatureServer/0"),
+                "layer_name": "Covington_Precincts_2022_11_17_region",
+                "name_field": "NAME"},
+            "source": ("Covington County's supervisor districts as drawn in the parcel viewer "
+                       "the county's website links to, whose 2023 voting precincts follow the "
+                       "same lines")},
     # The layer's own description and the service's description still name the
     # plan adopted in 2013 on the 2010 census; the service's serviceDescription
     # says these lines were approved in 2023 from the 2020 census (all three
@@ -432,6 +475,34 @@ COUNTY_SOURCES = {
             "layer_name": "Supervisor Districts Adopted 2022",
             "plan_population": "population",
             "source": _CMPDD_SOURCE % "Simpson"},
+    # Nothing found says who publishes this layer. The county's website could
+    # not be read from here (its robots.txt resets the connection, 2026-10-15
+    # and 2026-10-16), so whether it links this map is not known. The account
+    # holding the layer is a mapping company's, and three of its maps titled
+    # for the county draw it as the supervisor districts: the
+    # Tippah County 2022 Redistricting Map, as "2022 Supervisor Districts"
+    # beside a copy of the Census Bureau's 2010 county subdivisions it calls
+    # "2010 Supervisor Districts" and a layer called "Areas Of Change
+    # Redistricting 2022"; the Tippah County Circuit Clerk Map, beside the 2024
+    # voting precincts below; and the Tippah County Administration map, last
+    # changed in February 2026 (all read 2026-10-16). The layer's own
+    # description reads "Supervisor_Districts_2010", and its population fields
+    # sum to 22,833 people, not the county's 21,815 in the 2020 census, so
+    # neither is read as evidence. The witness is the precinct map, in the same
+    # account, whose precincts each name their supervisor district.
+    "139": {"county": "Tippah",
+            "url": ("https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/"
+                    "Administrative_Boundaries/FeatureServer/4"),
+            "field": "DistName",
+            "layer_name": "Supervisor_Districts",
+            "precincts": {
+                "url": ("https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/"
+                        "Voter_Precinct_2024/FeatureServer/0"),
+                "layer_name": "Voter_Precinct_2024",
+                "name_field": "PRECINCT", "district_field": "BOS_DIST"},
+            "source": ("Tippah County's supervisor districts from the map published online as "
+                       "the Tippah County 2022 Redistricting Map, which the 2024 voting "
+                       "precincts in the Tippah County Circuit Clerk Map follow")},
     "149": {"county": "Warren",
             "url": CMPDD + "Warren_County_Feature_Layer/FeatureServer/21",
             "field": "district", "label_field": "name",
@@ -452,20 +523,23 @@ WITNESS_KEYS = ("layer_name", "service_says", "document", "plan_population", "na
 # from the drawn lines, while putting at least MIN_PEOPLE_MOVED in a different
 # district from the Census's, so that it tells the two apart; and it must place
 # all but PRECINCT_MAX_UNPLACED_SHARE of them in exactly one precinct. Measured
-# 2026-10-16 on the three counties that use one, with residents placed by their
+# 2026-10-16 on the five counties that use one, with residents placed by their
 # 2020 block's internal point: Lee 10 of 83,343 residents against 13,351 for
-# the Census's lines, Pearl River 0 of 56,145 against 4,919, and Perry 8 of
-# 11,511 against 444.
+# the Census's lines, Pearl River 0 of 56,145 against 4,919, Perry 8 of 11,511
+# against 444, Covington 17 of 18,340 against 896, and Tippah 0 of 21,815
+# against 669.
 PRECINCT_MAX_OFF_SHARE = 0.005
 PRECINCT_MAX_UNPLACED_SHARE = 0.01
 # Resolving a county's map to whole 2020 blocks. A populated block must lie at
 # least MIN_POPULATED_SHARE inside one district, or the people in it could be
 # given either supervisor (measured worst 2026-10-15: Lamar 0.721, the other
-# seven 0.933 or more; 2026-10-16: Lee 0.789, Pearl River 0.745, Perry 0.639).
+# seven 0.933 or more; 2026-10-16: Lee 0.789, Pearl River 0.745, Perry 0.639,
+# Covington 0.879, Tippah 0.721).
 # A block with nobody in it that no district covers to EVEN_SHARE is split
 # about evenly; it goes to the larger share, and the ground in such blocks is
 # bounded per county by MAX_EVEN_KM2 (measured Lamar 0.586 km2 in 17 blocks,
-# Perry 0.160 km2 in 7 and Lee 0.010 km2 in 1, the other eight none).
+# Perry 0.160 km2 in 7, Covington 0.094 km2 in 3, Tippah 0.011 km2 in 1 and Lee
+# 0.010 km2 in 1, the other eight none).
 MIN_POPULATED_SHARE = 0.6
 EVEN_SHARE = 0.55
 MAX_EVEN_KM2 = 1.0
@@ -477,8 +551,8 @@ MAX_DEVIATION_PCT = 10.0
 # 2026-10-15, the smallest change among the twelve moves 530 people (Choctaw),
 # and Clay's, which covers 0.07% of the county's area, moves 689.
 MIN_PEOPLE_MOVED = 50
-SIMPLIFY = "interval=20"
-EDGE_M = 60.0               # two simplified files, each within the 25 m ceiling
+SIMPLIFY = "interval=5"
+EDGE_M = 20.0               # two simplified files, each within the 8 m ceiling (5.0 m apart at most, 2026-10-16)
 AGREEMENT_SAMPLES = 2000
 WITNESS_SAMPLES = 4000
 PAGE = 20000
@@ -658,14 +732,23 @@ def checked_shape(geom, what):
     return fixed
 
 
+def layer_fields(spec):
+    """The fields the checks read from a county's own layer, and no others:
+    such a layer can carry population by race (Tippah's and Coahoma's do, read
+    2026-10-16), and none of that is asked for."""
+    return list(dict.fromkeys(f for f in (spec["field"], spec.get("label_field"),
+                                          spec.get("plan_population"), spec.get("names"))
+                              if f))
+
+
 def fetch_county_layer(spec):
     """The county's own layer: its name, the service's descriptions, and its
-    features at full precision."""
+    features at full precision, with only layer_fields(spec)."""
     meta = _fetch_json(spec["url"], {"f": "json"})
     service = _fetch_json(spec["url"].rsplit("/", 1)[0], {"f": "json"})
     fc = _fetch_json(spec["url"] + "/query", {
-        "where": "1=1", "outFields": "*", "returnGeometry": "true", "outSR": "4326",
-        "geometryPrecision": "6", "f": "json"})
+        "where": "1=1", "outFields": ",".join(layer_fields(spec)), "returnGeometry": "true",
+        "outSR": "4326", "geometryPrecision": "6", "f": "json"})
     if fc.get("exceededTransferLimit"):
         raise SystemExit("FAIL: %s hit its transfer limit" % spec["url"])
     return {"name": meta.get("name"),
@@ -821,13 +904,14 @@ def measure_county(c3, cur, old, blocks):
     }
 
 
-_NUMBER = re.compile(r"^\s*(?:SD|(?:Supervisor\s+)?District\s*)?0*([1-5])\s*$", re.I)
+_NUMBER = re.compile(r"^\s*(?:SD|BEAT\s*|(?:Supervisor\s+)?District\s*)?0*([1-5])\s*$", re.I)
 _WORDS = re.compile(r"\bDistrict\s+0*([1-5])\s*$", re.I)
 _SUFFIXES = {"jr", "sr", "ii", "iii", "iv"}
 
 
 def district_number(value):
-    """'SD3', 'District 3', '3' and 3 all read as '3'; anything else as None."""
+    """'SD3', 'BEAT 3', 'District 3', '3' and 3 all read as '3'; anything else
+    as None."""
     if isinstance(value, bool) or value is None:
         return None
     if isinstance(value, (int, float)):
@@ -836,16 +920,25 @@ def district_number(value):
     return m.group(1) if m else None
 
 
+def _polygons(geom):
+    """A GeoJSON Polygon or MultiPolygon's polygons, as a list."""
+    return [geom["coordinates"]] if geom["type"] == "Polygon" else list(geom["coordinates"])
+
+
 def districts_of(spec, features):
-    """{district: feature} from a county's own layer, and what is wrong with it."""
-    out, problems = {}, []
+    """{district: feature} from a county's own layer, and what is wrong with it.
+    A layer the entry says draws a district in `parts` has every feature naming
+    that district joined into one; in any other layer a district named twice is
+    a problem, and so is an entry saying `parts` of a layer that draws each
+    district once, so the key cannot outlive the layer it describes."""
+    out, problems, joined = {}, [], set()
     for f in features:
         p = f.get("properties") or {}
         d = district_number(p.get(spec["field"]))
         if d is None:
             problems.append("%s %r is not a district 1-5" % (spec["field"], p.get(spec["field"])))
             continue
-        if d in out:
+        if d in out and not spec.get("parts"):
             problems.append("district %s appears twice" % d)
             continue
         if (f.get("geometry") or {}).get("type") not in ("Polygon", "MultiPolygon"):
@@ -856,7 +949,17 @@ def districts_of(spec, features):
             m = _WORDS.search(str(p.get(label) or ""))
             if not m or m.group(1) != d:
                 problems.append("district %s is called %r in %s" % (d, p.get(label), label))
+        if d in out:
+            out[d] = {"type": "Feature", "properties": out[d]["properties"],
+                      "geometry": {"type": "MultiPolygon",
+                                   "coordinates": (_polygons(out[d]["geometry"])
+                                                   + _polygons(f["geometry"]))}}
+            joined.add(d)
+            continue
         out[d] = f
+    if spec.get("parts") and not joined:
+        problems.append("the layer now draws each district as one feature, so the entry's "
+                        "`parts` describes nothing: remove it")
     if sorted(out) != list(DISTRICTS):
         problems.append("the layer draws districts %s, not 1-5" % sorted(out))
     return out, problems
@@ -1574,7 +1677,7 @@ def build(args):
         json.dump(rec, fh, indent=1, sort_keys=True)
         fh.write("\n")
     print("supervisor-districts -> %s: %d districts in %d counties (%d from the Census, %d from "
-          "the county's own map), %d bytes (dp %s)"
+          "other published maps), %d bytes (dp %s)"
           % (os.path.relpath(OUT, INSTANCE), len(fc["features"]), len(expected),
              len(CENSUS_COUNTIES), len(COUNTY_SOURCES), len(compact), SIMPLIFY), file=sys.stderr)
 
@@ -1738,7 +1841,7 @@ def check():
     recorded = rec["counties"]
     devs = sorted(m["deviation_pct"] for m in recorded.values())
     print("OK: ms-supervisor-districts.json draws %d districts in %d counties (%d from the "
-          "Census, %d from the county's own map), each numbered 1-5 and named in the "
+          "Census, %d from other published maps), each numbered 1-5 and named in the "
           "directory; recorded deviations %.2f%%-%.2f%% on 2020 population (ceiling %.0f%%, "
           "measured at build, not re-measured here); county witness %d/%d agree, %d differ "
           "within %.0f m of a county line"
@@ -1775,7 +1878,7 @@ def survey():
                    "changed, unbalanced" if m["people_moved_from_2020_edition"] >= MIN_PEOPLE_MOVED
                    else "stale")
         listed = ("listed" if c3 in CENSUS_COUNTIES else
-                  "the county's own map" if c3 in COUNTY_SOURCES else
+                  "a published map" if c3 in COUNTY_SOURCES else
                   "NOT LISTED" if current else "")
         then10 = older.get(c3) or {}
         if old.get(c3) and sorted(then10) == list(DISTRICTS):

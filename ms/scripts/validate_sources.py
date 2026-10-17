@@ -160,8 +160,8 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
             "All 82 counties pre-built from TIGERweb by "
-            "ms/scripts/build_state_counties.py (Douglas-Peucker, held to a "
-            "25 m fidelity ceiling). The card names each county's five "
+            "ms/scripts/build_state_counties.py (Douglas-Peucker at 5 m, held "
+            "to an 8 m fidelity ceiling). The card names each county's five "
             "supervisors from ms-county-officials.json."
         ),
     },
@@ -170,15 +170,15 @@ PROVENANCE = [
         "app_file": "ms-supervisor-districts.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
         "note": (
-            "The supervisor districts of the 23 counties whose current lines "
+            "The supervisor districts of the 25 counties whose current lines "
             "are confirmed, pre-built by "
             "ms/scripts/build_ms_supervisor_districts.py: 12 from the Census's "
             "county subdivisions (January 1, 2026 vintage), where the lines "
             "changed after the 2020 census and balance on that census's own "
-            "blocks, and 11 from the county's own map, redrawn along whole 2020 "
-            "blocks (their layers, and the three precinct maps that witness "
-            "Lee's, Pearl River's and Perry's, are counted under ENDPOINTS "
-            "below). --survey "
+            "blocks, and 13 from other published maps, redrawn along whole 2020 "
+            "blocks (their layers, and the five precinct maps that witness "
+            "Lee's, Pearl River's, Perry's, Covington's and Tippah's, are "
+            "counted under ENDPOINTS below). --survey "
             "re-measures all 82, and a new vintage needs a survey and a "
             "rebuild, which stops if the Census has received a county's own "
             "lines."
@@ -346,22 +346,29 @@ ENDPOINTS = [
         "min_count": 745,   # 827 measured 2026-10-15
     },
     # The county maps ms/scripts/build_ms_supervisor_districts.py reads for the
-    # eleven counties drawn from their own lines. Unlike the rows above these have
-    # a builder and a committed file; they are COUNTED here because all three
-    # servers answer a deleted layer with HTTP 200 (an empty page, an
-    # "Application Error" page or a blank one, measured 2026-10-15), so a status
-    # check would read a layer that is gone as reachable. A count query on a
-    # missing layer answers HTTP 200 with an Esri error envelope instead, which
-    # the check below reports. Each layer held exactly 5 districts that day; a
-    # change is a reason to rebuild, which re-reads the evidence each county's
-    # lines were confirmed with. Check 1 holds these rows to the builder's own
-    # COUNTY_SOURCES, so the two cannot name different layers. Lee's, Pearl
-    # River's and Perry's maps, added 2026-10-16, are on ArcGIS Online like
+    # thirteen counties drawn from published maps of their own lines. Unlike the
+    # rows above these have a builder and a committed file; they are COUNTED here
+    # because all three servers answer a deleted layer with HTTP 200 (an empty
+    # page, an "Application Error" page or a blank one, measured 2026-10-15), so
+    # a status check would read a layer that is gone as reachable. A count query
+    # on a missing layer answers HTTP 200 with an Esri error envelope instead,
+    # which the check below reports. Each layer held exactly 5 districts the day
+    # it was added, except Covington's, which draws District 2 as two features
+    # and so counts 6; a change is a reason to rebuild, which re-reads the
+    # evidence each county's lines were confirmed with. Check 1 holds these rows
+    # to the builder's own COUNTY_SOURCES, so the two cannot name different
+    # layers. Lee's, Pearl River's and Perry's maps, added 2026-10-16, and
+    # Covington's and Tippah's, added later that day, are on ArcGIS Online like
     # Lamar's.
     {
         "layer": "county-supervisor",   # Copiah
         "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Copiah_County_Feature_Layer/FeatureServer/15/query?where=1%3D1&returnCountOnly=true&f=json",
         "min_count": 5,
+    },
+    {
+        "layer": "county-supervisor",   # Covington (District 2 is two features)
+        "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/NEW_DISTRICTS/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 6,
     },
     {
         "layer": "county-supervisor",   # Harrison
@@ -409,11 +416,16 @@ ENDPOINTS = [
         "min_count": 5,
     },
     {
+        "layer": "county-supervisor",   # Tippah
+        "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Administrative_Boundaries/FeatureServer/4/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 5,
+    },
+    {
         "layer": "county-supervisor",   # Warren
         "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Warren_County_Feature_Layer/FeatureServer/21/query?where=1%3D1&returnCountOnly=true&f=json",
         "min_count": 5,
     },
-    # The precinct maps that witness three of those counties' lines (the
+    # The precinct maps that witness five of those counties' lines (the
     # builder's precinct_witness). Each floor is the count read on 2026-10-16:
     # a precinct map that loses precincts has been redrawn, which is a reason to
     # rebuild, and the rebuild re-measures whether it still follows the lines.
@@ -432,6 +444,16 @@ ENDPOINTS = [
         "layer": "county-supervisor (precincts)",   # Perry
         "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/PRECINCTS_2023/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
         "min_count": 16,
+    },
+    {
+        "layer": "county-supervisor (precincts)",   # Covington
+        "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/Covington_Precincts_2022_11_17_region/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 15,
+    },
+    {
+        "layer": "county-supervisor (precincts)",   # Tippah
+        "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Voter_Precinct_2024/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 22,
     },
 ]
 
