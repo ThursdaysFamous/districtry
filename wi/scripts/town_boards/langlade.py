@@ -6,13 +6,15 @@ of its own ("ACKLEY"). Each office is one line, "CHAIR: <name>, <home
 address>" or "SUPV: #1 <name>, <home address>", with the town, ZIP code and
 telephone on the line below; only the text before the first comma is read
 for the name, so the address is never kept, and on the line below only the
-telephone after the dot leader is read, never the town and ZIP before it.
+telephone after the dot leader is read, never the town and ZIP before it. An
+e-mail address printed on a line of its own under that ships on the officer.
 Read with the token on 2026-10-15 (robots.txt served empty, so everything is
 allowed)."""
 
 import re
 
-from . import following_phones, looks_like_person, norm_role, person, split_blocks
+from . import (following_emails, following_phones, looks_like_person,
+               norm_role, person, split_blocks)
 
 COUNTY_FIPS = "067"
 COUNTY_NAME = "Langlade"
@@ -43,7 +45,8 @@ def _officers(block):
             name += ", " + parts[1]
         if looks_like_person(name):
             people.append(person(name, role,
-                                 following_phones(lines, i + 1, limit=2)))
+                                 following_phones(lines, i + 1, limit=2),
+                                 emails=following_emails(lines, i + 1, limit=2)))
     return people
 
 

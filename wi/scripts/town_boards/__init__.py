@@ -14,21 +14,23 @@ each county gets one small module here exposing:
                   "chrome" only where the token was MEASURED refused
     def scrape(ctx) -> dict
         returns {"towns": {town name: [{"name", "role",
-                                         "phone"?, "phonesExtra"?}, ...]},
+                                         "phone"?, "phonesExtra"?,
+                                         "emails"?}, ...]},
                  "edition": str or None}
 
 and `wi_town_board_scraper.py` runs every module with failure isolation.
 
 WHAT A MODULE MAY RETURN, AND WHAT IT MUST NEVER RETURN. A name, the role the
-county prints ("Chairperson", "Supervisor #1"), and the telephone numbers the
-county prints beside that officer — nothing else. These directories print home
-addresses, telephone numbers and e-mail addresses beside the names. The
-telephone numbers ship, whosever line they are, because the county prints them
-for the public (Adam, 2026-10-17: "if the official government source uses
-personal phone numbers, we publish those"): the first in `phone`, any further
-ones in `phonesExtra`, each with the label the county gives it ("cell
-715-555-0100"; a one-letter label is written out as the word). The rest stays
-out:
+county prints ("Chairperson", "Supervisor #1"), and the telephone numbers and
+e-mail addresses the county prints beside that officer — nothing else. These
+directories print home addresses, telephone numbers and e-mail addresses beside
+the names. The telephone numbers ship, whosever line they are, because the
+county prints them for the public (Adam, 2026-10-17: "if the official
+government source uses personal phone numbers, we publish those"): the first in
+`phone`, any further ones in `phonesExtra`, each with the label the county
+gives it ("cell 715-555-0100"; a one-letter label is written out as the word).
+So does one e-mail address per officer, whatever its domain (Adam, 2026-10-17:
+"E-mails too"), in `email`. The rest stays out:
 
   * A home address is never read into a record. A module reads numbers only
     through the readers below, each of which reads numbers and their labels
@@ -51,7 +53,23 @@ out:
     county.
   * A fax number, a number marked confidential, and a number whose label
     names a place rather than a person ("Shop:", "Town Hall:") never ship.
-  * E-mail addresses are not read, as before.
+  * E-mail addresses are read the way numbers are: `emails_in()` reads a
+    part of a line only when it holds nothing but addresses, numbers and
+    their labels, or else the addresses that open or end it when the rest
+    names no office or place; `line_emails()`, `emails_after_name()` and
+    `following_emails()` apply it as the number readers do. A module
+    returns every address read beside the officer in `emails`, and
+    `normalize()` ships one in `email`: an address printed for anyone else
+    or where no officer is named (`shared_emails`), one a link writes to
+    while showing another (`mail_disagreements`,
+    `docx_mail_disagreements`), and a mailbox named for an office — the
+    clerk's, the town hall's, a general box on a town's own domain
+    (`office_mailbox`) — never ship on a person; of the rest, the first on a
+    government's own domain ships, else the first printed (`choose_email`).
+    An address is lower-cased and otherwise kept as printed; one whose last
+    part is not a top-level domain (cut off at the end of a line, or
+    misspelt) is not read, and an address a page hides behind a script
+    (Cloudflare's "email protection") is not decoded.
 
 A module that cannot tell a name from an address must drop the row rather than
 guess. Nothing is ever invented to fill a gap: a number printed without an area
@@ -116,8 +134,10 @@ class Ctx:
         # `read_text` can count a number across all of them
         self.read = {}
         self._texts = {}
-        # numbers a page links as tel: to a different number than it shows
+        # numbers a page links as tel: to a different number than it shows,
+        # and addresses it links as mailto: to a different address
         self.tel_disagree = set()
+        self.mail_disagree = set()
 
     def _pace(self, host):
         last = self._last.get(host)
@@ -170,6 +190,7 @@ class Ctx:
         page = self.fetch_bytes(url, **kw).decode("utf-8", "replace")
         self._texts.setdefault(url, html_text(page))
         self.tel_disagree |= tel_disagreements(page)
+        self.mail_disagree |= mail_disagreements(page)
         return page
 
     def pdf_text(self, url, layout=False, x_tolerance=3, **kw):
@@ -201,8 +222,10 @@ class Ctx:
         return out
 
     def docx_text(self, url, **kw):
-        text = docx_text(self.fetch_bytes(url, **kw))
+        data = self.fetch_bytes(url, **kw)
+        text = docx_text(data)
         self._texts.setdefault(url, text)
+        self.mail_disagree |= docx_mail_disagreements(data)
         return text
 
     def read_text(self):
@@ -266,9 +289,12 @@ def document_text(data):
 
 def docx_text(data):
     """Paragraph text of a .docx, one paragraph per line, table cells tab-joined.
-    Read straight out of the zip so no library is needed."""
+    Read straight out of the zip so no library is needed. A field's
+    instruction (`<w:instrText>`, such as 'HYPERLINK "mailto:..."') is not
+    text the document shows, so it is left out and the field's result read."""
     with zipfile.ZipFile(io.BytesIO(data)) as z:
         xml = z.read("word/document.xml").decode("utf-8", "replace")
+    xml = re.sub(r"(?s)<w:instrText\b[^>]*>.*?</w:instrText>", "", xml)
     xml = re.sub(r"</w:tc>", "\t", xml)
     xml = re.sub(r"</w:p>|</w:tr>", "\n", xml)
     xml = re.sub(r"<w:tab/>", "\t", xml)
@@ -277,8 +303,140 @@ def docx_text(data):
     return H.unescape(text)
 
 
+def _docx_shown(xml):
+    return H.unescape("".join(re.findall(r"<w:t(?:\s[^>]*)?>([^<]*)</w:t>",
+                                         xml or "")))
+
+
+def docx_mail_disagreements(data):
+    """`mail_disagreements` for a .docx: the addresses a link sends to as
+    mailto: (a hyperlink's target, or a HYPERLINK field's instruction) where
+    it shows a different address, both the one shown and the one linked.
+    Measured 2026-10-17: seven links in St. Croix County's directory show
+    one address and send to another."""
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        xml = z.read("word/document.xml").decode("utf-8", "replace")
+        try:
+            rels = z.read("word/_rels/document.xml.rels").decode("utf-8",
+                                                                 "replace")
+        except KeyError:
+            rels = ""
+    target = {}
+    for m in re.finditer(r"<Relationship\b[^>]*>", rels):
+        rid = re.search(r'\bId="([^"]+)"', m.group(0))
+        tgt = re.search(r'\bTarget="([^"]*)"', m.group(0))
+        if rid and tgt:
+            target[rid.group(1)] = H.unescape(tgt.group(1))
+    pairs = []
+    for m in re.finditer(r"(?s)<w:hyperlink\b([^>]*)>(.*?)</w:hyperlink>", xml):
+        rid = re.search(r'\br:id="([^"]+)"', m.group(1))
+        tgt = target.get(rid.group(1)) if rid else None
+        if tgt and tgt.lower().startswith("mailto:"):
+            pairs.append((tgt[7:], _docx_shown(m.group(2))))
+    # a field: begin, its instruction, separate, the text it shows, end
+    instr, shown, depth, state = "", "", 0, None
+    for m in re.finditer(r'(?s)<w:fldChar\b[^>]*w:fldCharType="(begin|separate|end)"'
+                         r"[^>]*/?>|<w:instrText\b[^>]*>(.*?)</w:instrText>|"
+                         r"<w:t(?:\s[^>]*)?>([^<]*)</w:t>", xml):
+        kind = m.group(1)
+        if kind == "begin":
+            depth += 1
+            if depth == 1:
+                instr, shown, state = "", "", "instr"
+        elif kind == "separate":
+            if depth == 1:
+                state = "shown"
+        elif kind == "end":
+            if depth == 1:
+                hit = re.search(r'(?i)HYPERLINK\s+"mailto:([^"]*)"', H.unescape(instr))
+                if hit:
+                    pairs.append((hit.group(1), H.unescape(shown)))
+                state = None
+            depth = max(0, depth - 1)
+        elif m.group(2) is not None and depth == 1 and state == "instr":
+            instr += m.group(2)
+        elif m.group(3) is not None and depth == 1 and state == "shown":
+            shown += m.group(3)
+    out = set()
+    for href, text in pairs:
+        linked = _mailto_address(href)
+        seen = email_tokens(text)
+        if linked and seen and any(a != linked.lower() for a in seen):
+            out.update(seen)
+            out.add(linked.lower())
+    return out
+
+
+# A mailto link whose text is a label rather than an address ("Email",
+# "Click here to email") is how some pages print an officer's address: the
+# page shows the label beside the officer and the link holds the address.
+# `html_text` reads such a link as "Email: <address>". The address is read
+# from the link as written, never decoded from anything else; an address a
+# page hides behind a script (Cloudflare's "email protection") stays hidden.
+_MAILTO = re.compile(r"(?is)<a\b[^>]*?href\s*=\s*[\"']mailto:([^\"']*)[\"'][^>]*>"
+                     r"(.*?)</a>")
+_MAIL_LABEL = re.compile(r"(?i)^(?:click\s+here\s+to\s+)?(?:send\s+(?:an?\s+)?)?"
+                         r"e-?\s?mail(?:\s+(?:me|us|him|her|address))?:?$")
+
+
+def _inner_text(inner):
+    return re.sub(r"\s+", " ", H.unescape(re.sub(r"<[^>]+>", " ", inner or ""))).strip()
+
+
+def _mailto_address(href):
+    """The one address a mailto link sends to, as written, or None. A link
+    written "mailto:mailto:..." (Green County's town pages) sends to the
+    address after the second "mailto:"."""
+    addr = urllib.parse.unquote(H.unescape(href or "")).split("?", 1)[0].strip()
+    addr = re.sub(r"(?i)^(?:mailto:)+", "", addr)
+    return addr if addr.count("@") == 1 and not re.search(r"[\s,;:<>]", addr) else None
+
+
+# two links to the same address set one after the other with nothing
+# between them show one address split in two ("<a href=X>jdoe</a><a
+# href=X>55@example.com</a>"); they are read as one link
+_SPLIT_LINK = re.compile(r"(?is)(<a\b[^>]*?href\s*=\s*([\"'])(mailto:[^\"']*)\2[^>]*>)"
+                         r"((?:(?!</a>).)*)</a><a\b[^>]*?href\s*=\s*([\"'])\3\5[^>]*>")
+
+
+def _merge_split_links(page):
+    while True:
+        merged = _SPLIT_LINK.sub(r"\1\4", page or "")
+        if merged == page:
+            return merged
+        page = merged
+
+
+def _expand_mailto(page):
+    def sub(m):
+        addr = _mailto_address(m.group(1))
+        if addr and _MAIL_LABEL.match(_inner_text(m.group(2))):
+            return " Email: %s " % addr
+        return m.group(0)
+    return _MAILTO.sub(sub, page or "")
+
+
+def mail_disagreements(page):
+    """The addresses a page links as mailto: to a different address than the
+    link shows: both the one shown and the one linked, so that neither ships
+    (a link that writes to one address while showing another cannot say
+    which is the officer's), as `tel_disagreements` does for numbers."""
+    out = set()
+    for href, inner in _MAILTO.findall(_merge_split_links(page or "")):
+        shown = email_tokens(_inner_text(inner))
+        linked = _mailto_address(href)
+        if not shown or not linked:
+            continue
+        if any(a != linked.lower() for a in shown):
+            out.update(shown)
+            out.add(linked.lower())
+    return out
+
+
 def html_text(page):
-    """A page's visible text, one block per line."""
+    """A page's visible text, one block per line, with a mailto link that
+    shows a label read as "Email: <address>" (`_expand_mailto`)."""
+    page = _expand_mailto(_merge_split_links(page))
     page = re.sub(r"(?is)<(script|style|noscript)\b.*?</\1>", " ", page)
     page = re.sub(r"(?i)<br\s*/?>|</(p|div|li|tr|h[1-6]|td|th|dt|dd)>", "\n", page)
     page = re.sub(r"<[^>]+>", " ", page)
@@ -337,10 +495,14 @@ def looks_like_person(name):
     return 2 <= len(words) <= 6 and any(w[:1].isupper() for w in words)
 
 
-def person(name, role, phones=(), shared=()):
+def person(name, role, phones=(), shared=(), emails=(), shared_emails=None):
     """One board member's record. `phones` are strings from `phones_in()` in
     the county's order; a number in `shared` (`shared_numbers()`) is the
-    town's line and is left off, and a number printed twice is kept once."""
+    town's line and is left off, and a number printed twice is kept once.
+    `emails` are the addresses read beside the officer (`emails_in()`): as a
+    module returns a record they are all kept, in `emails`, and once
+    `normalize` passes `shared_emails` (`shared_emails()`) the one that ships
+    is chosen into `email` (`choose_email`)."""
     name = clean(name)
     # a sentence's full stop left on a surname ("Bruce Elmer."), never an
     # initial's ("Roger B.")
@@ -357,6 +519,18 @@ def person(name, role, phones=(), shared=()):
         out["phone"] = keep[0]
     if len(keep) > 1:
         out["phonesExtra"] = keep[1:]
+    mails = []
+    for e in emails or ():
+        e = (e or "").strip().lower()
+        if e and e not in mails:
+            mails.append(e)
+    if shared_emails is None:
+        if mails:
+            out["emails"] = mails
+    else:
+        chosen = choose_email(mails, shared_emails)
+        if chosen:
+            out["email"] = chosen
     return out
 
 
@@ -364,6 +538,25 @@ def phones_of(rec):
     """The numbers a record carries, `phone` first, in the county's order."""
     return [p for p in [rec.get("phone")] + list(rec.get("phonesExtra") or [])
             if p]
+
+
+def emails_of(rec):
+    """The addresses a record carries: every one read beside the officer as
+    a module returns it, or the one chosen once `normalize` has run."""
+    return list(rec.get("emails") or ([rec["email"]] if rec.get("email") else []))
+
+
+def add_emails(rec, emails):
+    """Add the addresses read on a later line of an officer's entry (an
+    "Email:" line under the name) to the record `person()` made for them."""
+    mails = list(rec.get("emails") or [])
+    for e in emails or ():
+        e = (e or "").strip().lower()
+        if e and e not in mails:
+            mails.append(e)
+    if mails:
+        rec["emails"] = mails
+    return rec
 
 
 _LEADER = re.compile(r"\s*\.{3,}.*$")
@@ -478,10 +671,31 @@ def shared_numbers(text, owners=()):
     line directly above it when that line names an officer.
     A number printed for two officers, for an officer and the town hall, or
     where no officer is named, never ships on a person."""
+    return _shared(text, owners, numbers_in, _phone_line)
+
+
+def shared_emails(text, owners=()):
+    """`shared_numbers` for e-mail addresses: every address printed more than
+    once in `text`, unless each place it is printed names one and the same
+    officer. An address printed for two officers, for an officer and the
+    town hall or its clerk, or where no officer is named, is the office's
+    and never ships on a person. The officer a line holding nothing but
+    addresses belongs to is looked for further up than for a number, across
+    up to eight lines, because an e-mail line can sit below the whole entry
+    (Waupaca County prints the name, two address lines, "Phone", the number
+    and "Email" above it)."""
+    return _shared(text, owners, email_tokens, contact_line, reach=8)
+
+
+def _shared(text, owners, keys_of, solo_line, reach=4):
+    """What `shared_numbers` and `shared_emails` share: `keys_of(line)` reads
+    the keys a line holds, and `solo_line(line)` says the line holds nothing
+    but such contacts, so that its owner is the officer named above it,
+    looked for across at most `reach` lines."""
     lines = [ln for ln in (text or "").split("\n") if ln.strip()]
     where = {}
     for i, ln in enumerate(lines):
-        for k in numbers_in(ln):
+        for k in keys_of(ln):
             if k:
                 where.setdefault(k, []).append(i)
     owners = sorted({clean(o) for o in owners if o})
@@ -493,20 +707,20 @@ def shared_numbers(text, owners=()):
         # the officer whose entry a numbers-only line belongs to: the nearest
         # line above it that names one, passing only address, e-mail and
         # other number lines; another office or another name ends the search
-        for j in range(i - 1, max(-1, i - 5), -1):
+        for j in range(i - 1, max(-1, i - 1 - reach), -1):
             on = named(j)
             if on:
                 return on
             if OTHER_OFFICE.search(_EMAIL.sub(" ", lines[j])) or (
-                    not _phone_line(lines[j])
+                    not solo_line(lines[j])
                     and looks_like_person(strip_contact(lines[j]))):
                 return []
         return []
 
     def address_owner(i):
         # a line holding a home address and a number, directly under the
-        # line naming the officer it belongs to ("District 2 ..... JIM
-        # ASHBACH" / "N1234 County Rd, Ellsworth ..... (715) 555-0100"); a
+        # line naming the officer it belongs to ("District 2 ..... JANE
+        # DOE" / "N1234 County Rd, Anytown ..... (715) 555-0100"); a
         # town hall's, a shop's or an office's address line is never one
         ln = lines[i]
         if (i == 0 or OTHER_OFFICE.search(_EMAIL.sub(" ", ln))
@@ -522,7 +736,7 @@ def shared_numbers(text, owners=()):
         for i in rows:
             on = named(i)
             if not on:
-                on = above(i) if _phone_line(lines[i]) else address_owner(i)
+                on = above(i) if solo_line(lines[i]) else address_owner(i)
             if len(on) != 1:
                 holders = None
                 break
@@ -538,10 +752,14 @@ def normalize(towns, ctx):
     member's own — a number `shared_numbers` finds anywhere in what the
     module read (`ctx.read_text()`) is taken off every member who carries
     it, and so is a number a page links as tel: to a different number than
-    it shows (`tel_disagreements`). Returns (towns, rows dropped, numbers
-    taken off)."""
+    it shows (`tel_disagreements`). The same is done for e-mail addresses
+    (`shared_emails`, `mail_disagreements`), and of the addresses left the
+    one that ships is chosen (`choose_email`). Returns (towns, rows dropped,
+    numbers taken off)."""
     owners = [p.get("name") for ps in towns.values() for p in ps]
-    shared = shared_numbers(ctx.read_text(), owners) | ctx.tel_disagree
+    text = ctx.read_text()
+    shared = shared_numbers(text, owners) | ctx.tel_disagree
+    shared_mail = shared_emails(text, owners) | ctx.mail_disagree
     out, dropped, taken = {}, 0, 0
     for town, people in towns.items():
         keep = []
@@ -549,7 +767,8 @@ def normalize(towns, ctx):
             if not p.get("role") or not looks_like_person(p.get("name")):
                 dropped += 1
                 continue
-            rec = person(p["name"], p["role"], phones_of(p), shared)
+            rec = person(p["name"], p["role"], phones_of(p), shared,
+                         emails_of(p), shared_mail)
             taken += len(phones_of(p)) - len(phones_of(rec))
             keep.append(rec)
         if keep:
@@ -742,6 +961,175 @@ def phones_after_name(line, name):
     return line_phones(text[m.end():])
 
 
+# ---- e-mail addresses ---------------------------------------------------
+#
+# Since Adam's choice of 2026-10-17 ("E-mails too") the address a county
+# prints beside one officer ships on that officer, whatever its domain: a town
+# supervisor's Gmail address is how the county says to reach them. One address
+# per person (`choose_email`). An address is read as printed, lower-cased and
+# with any typo left in; the only change is taking out a space a PDF draws
+# beside the "@" or a dot inside the address ("name@town .com",
+# "tn.x.wi. gov"), because the page shows one address. An address whose last
+# part is not a top-level domain is not read at all: it is an address cut off
+# at the end of a line ("...@tn.oakland.jefferson" over "wi.gov") or one with
+# a typo in its domain ("...@yahoo.ocm"), and what can be read of it is not an
+# address anybody could write to.
+_TLDS = ("com", "net", "org", "gov", "us", "edu", "mil", "info", "biz", "name",
+         "pro", "me", "co", "io", "tv", "cc", "ca", "email", "town", "law",
+         "legal", "school", "coop", "ag", "app", "dev", "online", "site",
+         "store", "tech", "life", "live", "family", "farm", "church",
+         "community", "services", "solutions", "club")
+_LOCAL = r"[A-Za-z0-9_%+'-]+"
+_DLABEL = r"[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?"
+_ADDRESS = re.compile(
+    r"(?<![\w.%%+'@-])(%s(?:\s?\.%s)*)\s?@\s?(%s(?:\s?\.(?:\s(?=(?:%s)\b))?%s)+)"
+    r"(?![\w@-])" % (_LOCAL, _LOCAL, _DLABEL, "|".join(_TLDS), _DLABEL), re.I)
+# the words a part may hold beside its addresses and still be read whole
+_MAIL_FILLER = re.compile(r"(?i)\b(?:e-?\s?mail|address|or|and|n/a|none)\b")
+
+
+def _address(m):
+    """The address a match of `_ADDRESS` reads, lower-cased with the spaces
+    a PDF drew inside it taken out, or None where it is not one an address
+    could be (its last part not a top-level domain)."""
+    addr = re.sub(r"\s+", "", m.group(1) + "@" + m.group(2)).lower()
+    local, domain = addr.split("@", 1)
+    if (domain.rsplit(".", 1)[-1] not in _TLDS or local.startswith(".")
+            or local.endswith(".") or ".." in addr):
+        return None
+    return addr
+
+
+def email_tokens(text):
+    """Every address printed in `text`, in order, a line at a time and cut at
+    dot leaders: what `shared_emails` counts."""
+    out = []
+    for line in (text or "").split("\n"):
+        for part in leader_parts(line):
+            out.extend(a for a in (_address(m) for m in _ADDRESS.finditer(part))
+                       if a)
+    return out
+
+
+def contact_only(part):
+    """True when a part of a line holds at least one telephone number or
+    e-mail address and nothing else but their labels and punctuation."""
+    text = _DASHES.sub("-", part or "")
+    if not (_ADDRESS.search(text) or _TEL.search(text)):
+        return False
+    rest = _TEL.sub(" ", _ADDRESS.sub(" ", text))
+    rest = _MAIL_FILLER.sub(" ", _FILLER.sub(" ", rest))
+    return not re.search(r"[A-Za-z0-9]", rest)
+
+
+def contact_line(line):
+    """A line holding nothing but telephone numbers, e-mail addresses and
+    their labels, dot leaders aside."""
+    parts = leader_parts(line)
+    return bool(parts) and all(contact_only(p) or not re.search(r"[A-Za-z0-9]", p)
+                               for p in parts) and any(contact_only(p) for p in parts)
+
+
+# what else a part may hold when an address opens or ends it: never an
+# office, a board seat or a place (a town hall's address and its mailbox)
+_NOT_THE_OFFICER = re.compile(
+    r"(?i)\b(?:clerk|treasurer|assessor|constable|deputy|zoning|building|"
+    r"inspector|administrator|attorney|engineer|patrol|judge|chair\w*|"
+    r"supervisor\w*|supv|town\s+hall|website|www|meetings?)\b")
+
+
+def emails_in(part):
+    """The addresses in a part of a line, in the order printed: every one
+    where the part holds nothing but addresses, telephone numbers and their
+    labels (`contact_only`); else the ones that open or end it, the rest
+    being the officer's own address or telephone ("N1234 Cty Rd A, Anytown
+    jdoe@example.com"), and none at all when that rest names an office, a seat
+    or a place. The text beside an address is never read."""
+    text = re.sub(r"\s+", " ", _DASHES.sub("-", part or ""))
+    if _WITHHELD.search(text):
+        return []
+    hits = list(_ADDRESS.finditer(text))
+    if not hits:
+        return []
+    if contact_only(text):
+        return [a for a in (_address(m) for m in hits) if a]
+    # the addresses that open the part, and those that end it
+    edge = []
+    for m in hits:
+        if re.search(r"[A-Za-z0-9]", _MAIL_FILLER.sub(" ", text[:m.start()])):
+            break
+        edge.append(m)
+    for m in reversed(hits):
+        if m in edge or re.search(r"[A-Za-z0-9]", text[m.end():]):
+            break
+        edge.append(m)
+    if not edge:
+        return []
+    rest = text
+    for m in sorted(edge, key=lambda m: -m.start()):
+        rest = rest[:m.start()] + " " + rest[m.end():]
+    if _NOT_THE_OFFICER.search(rest) or _PLACE_WORDS.search(rest):
+        return []
+    return [a for a in (_address(m) for m in sorted(edge, key=lambda m: m.start()))
+            if a]
+
+
+def line_emails(line):
+    """The addresses in every leader-part of a line (`emails_in`)."""
+    out = []
+    for part in leader_parts(line):
+        out.extend(emails_in(part))
+    return out
+
+
+def emails_after_name(line, name):
+    """`line_emails` of the text AFTER an officer's name on the line that
+    carries it, or [] when the name cannot be found on the line exactly."""
+    text = _DASHES.sub("-", line or "")
+    words = clean(name).split()
+    if not words:
+        return []
+    m = re.search(r"\s*".join(re.escape(w) for w in words), text, re.I)
+    return line_emails(text[m.end():]) if m else []
+
+
+# A mailbox named for an office other than a board seat — the clerk's, the
+# treasurer's, the town hall's — is the office's however it is printed, and
+# never ships on a board member; so is a general mailbox ("info@",
+# "office@") on a government's own domain. A seat's own mailbox ("chair@",
+# "supervisor2@") is the seat holder's, and a general mailbox on another
+# domain is the one a member gives for their own business.
+_OFFICE_BOX = re.compile(
+    r"(?i)^(?:[a-z]*town(?:of)?[a-z]*?[-_.]?)?(?:(?:clerk|treasurer|treas|"
+    r"deputy|hall|assessor|constable|zoning|building|permits?)[-_.]?)+\d*$")
+_GENERAL_BOX = re.compile(r"(?i)^(?:[a-z]*town(?:of)?[a-z]*?[-_.]?)?"
+                          r"(?:info|office|contact|admin\w*|inquiries|mail|"
+                          r"general)\d*$")
+# a town's own domain, which wins where an officer has two addresses
+_GOV_DOMAIN = re.compile(r"(?i)\.(?:gov|us|town)$|@(?:[\w-]+\.)*[\w-]*"
+                         r"(?:town|twp|township)[\w-]*\.")
+
+
+def office_mailbox(addr):
+    """True when an address's mailbox names an office other than a board
+    seat (`_OFFICE_BOX`), or is a general mailbox on a government's own
+    domain (`_GENERAL_BOX`, `_GOV_DOMAIN`)."""
+    local = addr.split("@", 1)[0]
+    return bool(_OFFICE_BOX.match(local)) or bool(
+        _GENERAL_BOX.match(local) and _GOV_DOMAIN.search(addr))
+
+
+def choose_email(addrs, shared=()):
+    """The one address that ships on an officer: of those printed beside
+    them, not printed for anyone else (`shared`) and not an office's mailbox,
+    the first on a government's own domain, else the first printed."""
+    keep = [a for a in addrs if a and a not in shared and not office_mailbox(a)]
+    for a in keep:
+        if _GOV_DOMAIN.search(a):
+            return a
+    return keep[0] if keep else None
+
+
 # A line that opens another office ends the lines a board member's numbers
 # are read from. Board roles end it too (see `role_then_name`).
 OTHER_OFFICE = re.compile(
@@ -756,6 +1144,29 @@ OTHER_OFFICE = re.compile(
 # ("Phone" / "(920) 555-0100", "Fax" / "(920) 555-0101")
 _LABEL_LINE = re.compile(r"(?i)^\(?\s*(?:%s)\s*\)?\.?\s*(?:#|no\.)?\s*:?\s*$" % _WORDS)
 
+# an office or a board seat named anywhere on a line once its numbers and
+# addresses are taken off ("2nd Supervisor:", "Interim Clerk – ..."): the
+# next entry, which `OTHER_OFFICE` misses when a word comes before the
+# office. Measured 2026-10-17: Green County's "2nd Supervisor:" line, which
+# had let the Town of Clarno's first supervisor carry the number printed for
+# the second.
+_OFFICE_WORD = re.compile(
+    r"(?i)\b(?:clerk|treasurer|assessor|constable|deputy|zoning|inspector|"
+    r"administrator|attorney|engineer|patrol|judge|chair\w*|supervisor\w*|"
+    r"supv)\b")
+
+
+def _next_entry(line, stop_re=None):
+    """True when a line opens another entry: an office at its start
+    (`OTHER_OFFICE`), an office or seat anywhere in it (`_OFFICE_WORD`) once
+    its numbers and addresses are taken off, or a match of `stop_re`. An
+    e-mail address can open with an office ("chair@town..."), so it is taken
+    off before either test."""
+    bare = _EMAIL.sub(" ", _ADDRESS.sub(" ", _DASHES.sub("-", line or "")))
+    return bool(OTHER_OFFICE.search(bare)
+                or _OFFICE_WORD.search(strip_contact(bare))
+                or (stop_re and re.search(stop_re, line)))
+
 
 def following_phones(lines, start, limit=4, stop_re=None):
     """Numbers on the lines after an officer's name line, `lines[start:]`: a
@@ -766,9 +1177,7 @@ def following_phones(lines, start, limit=4, stop_re=None):
     out = []
     label = ""
     for ln in lines[start:start + limit]:
-        # an e-mail address can open with an office ("chair@town...")
-        if (OTHER_OFFICE.search(_EMAIL.sub(" ", ln))
-                or (stop_re and re.search(stop_re, ln))):
+        if _next_entry(ln, stop_re):
             break
         if _LABEL_LINE.match(ln):
             label = ln
@@ -778,6 +1187,24 @@ def following_phones(lines, start, limit=4, stop_re=None):
         if not _phone_line(ln) and looks_like_person(strip_contact(ln)):
             break
         out.extend(line_phones(ln))
+    return out
+
+
+def following_emails(lines, start, limit=4, stop_re=None):
+    """`following_phones` for e-mail addresses: the addresses on the lines
+    after an officer's name line, `lines[start:]`, read with `line_emails`
+    and stopped where `following_phones` stops — at the next office, the
+    next name, or after `limit` lines."""
+    out = []
+    for ln in lines[start:start + limit]:
+        if _next_entry(ln, stop_re):
+            break
+        if _LABEL_LINE.match(ln):
+            continue
+        if (not _phone_line(ln) and not contact_line(ln)
+                and looks_like_person(strip_contact(ln))):
+            break
+        out.extend(line_emails(ln))
     return out
 
 
@@ -829,20 +1256,25 @@ def role_then_name(block, stop_re=None, follow=True):
             rest = clean(m.group(2))
             if rest and looks_like_person(rest):
                 phones = phones_after_name(ln, rest)
+                emails = emails_after_name(ln, rest)
                 if follow:
                     phones += following_phones(lines, i + 1, stop_re=stop_re)
-                people.append(person(rest, role, phones))
+                    emails += following_emails(lines, i + 1, stop_re=stop_re)
+                people.append(person(rest, role, phones, emails=emails))
             elif i + 1 < len(lines):
                 nxt = strip_contact(lines[i + 1])
                 if looks_like_person(nxt):
-                    # a number printed after the office on its own line
-                    # ("Supervisor ...... 262-555-0100" / "Lyle Boucher
-                    # email") is the officer's below it
+                    # a number or address printed after the office on its
+                    # own line ("Supervisor ...... 262-555-0100" / "Lyle
+                    # Boucher email") is the officer's below it
                     phones = phones_after_name(ln, m.group(1))
                     phones += phones_after_name(lines[i + 1], nxt)
+                    emails = emails_after_name(ln, m.group(1))
+                    emails += emails_after_name(lines[i + 1], nxt)
                     if follow:
                         phones += following_phones(lines, i + 2, stop_re=stop_re)
-                    people.append(person(nxt, role, phones))
+                        emails += following_emails(lines, i + 2, stop_re=stop_re)
+                    people.append(person(nxt, role, phones, emails=emails))
                     i += 1
         i += 1
     return people

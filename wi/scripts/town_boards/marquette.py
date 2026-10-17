@@ -6,15 +6,18 @@ Its "Town, Village, and City Officers" pages list each town under a "Town of
 up to two "Role Name" pairs ("Chairperson Scott Kempley Supervisor Roger
 Wallis"), followed by the two people's home addresses, phones and e-mails. The
 names are read from the lines that open with Chairperson or Supervisor. Each
-person's number is read by position: on the rows below the role line, the part
-of a row that sits in that person's column (from their role word to the next
-role word) is read only when it holds nothing but telephone numbers, so a
-number is never handed across columns and an address is never read. Read with
+person's number and e-mail address are read by position: on the rows below the
+role line, the part of a row that sits in that person's column (from their
+role word to the next role word) is read only when it holds nothing but
+telephone numbers or an e-mail address, so neither is ever handed across
+columns and an address is never read. An e-mail address the directory breaks
+over two rows is not read. Read with
 the token on 2026-10-15 (robots.txt: 190 bytes, no rule matches the file)."""
 
 import re
 
-from . import clean, norm_role, phone_line_numbers, person, split_blocks
+from . import (clean, contact_line, line_emails, norm_role,
+               phone_line_numbers, person, split_blocks)
 
 COUNTY_FIPS = "077"
 COUNTY_NAME = "Marquette"
@@ -43,12 +46,17 @@ def _key(text):
 
 
 def _numbers_by_line(ctx):
-    """{role line: [the numbers in each role's column]}, read from the
-    directory's word positions. A column runs from its role word to 20 points
-    before the next one; on the six rows below the role line (up to the next
-    role line or town), the first part of each column that holds nothing but
-    telephone numbers is that person's. A role line printed twice is left
-    out, so a number cannot be given to the wrong one."""
+    """{role line: [(the numbers, the e-mail addresses) in each role's
+    column]}, read from the directory's word positions. For numbers a column
+    runs from its role word to 20 points before the next one; on the six rows
+    below the role line (up to the next role line or town), the first part of
+    each column that holds nothing but telephone numbers is that person's.
+    For e-mail addresses each word goes to the column whose role word is
+    nearest its start, because a long address can start further left of its
+    column than 20 points (measured 2026-10-17: Newton's second column,
+    25 points), and the first part of a column that holds nothing but an
+    e-mail address is that person's. A role line printed twice is left out,
+    so neither can be given to the wrong one."""
     out, twice = {}, set()
     for _, words in ctx.pdf_words(SOURCES[0]):
         rows = _rows(words)
@@ -59,21 +67,28 @@ def _numbers_by_line(ctx):
             xs = [w["x0"] for w in row if re.match(r"^(Chairperson|Supervisor)",
                                                     w["text"])]
             cols = [[] for _ in xs]
+            mails = [[] for _ in xs]
             for below in rows[k + 1:k + 7]:
                 if re.match(r"^(Chairperson|Supervisor)\b|^-?\s*Town of ",
                             " ".join(w["text"] for w in below)):
                     break
                 for c, x in enumerate(xs):
-                    if cols[c]:
-                        continue
                     hi = xs[c + 1] - 20 if c + 1 < len(xs) else float("inf")
                     part = " ".join(w["text"] for w in below
                                     if x - 20 <= w["x0"] < hi)
-                    cols[c] = phone_line_numbers(part)
+                    if not cols[c]:
+                        cols[c] = phone_line_numbers(part)
+                    near = " ".join(
+                        w["text"] for w in below
+                        if w["x0"] >= xs[0] - 20 and min(
+                            range(len(xs)),
+                            key=lambda n: abs(xs[n] - w["x0"])) == c)
+                    if not mails[c] and contact_line(near):
+                        mails[c] = line_emails(near)
             key = _key(text)
             if key in out:
                 twice.add(key)
-            out[key] = cols
+            out[key] = list(zip(cols, mails))
     for key in twice:
         del out[key]
     return out
@@ -88,13 +103,14 @@ def _people(block, numbers):
         hits = list(_ROLE.finditer(line))
         cols = numbers.get(_key(line))
         if not cols or len(cols) != len(hits):
-            cols = [[] for _ in hits]
+            cols = [([], []) for _ in hits]
         for i, m in enumerate(hits):
             end = hits[i + 1].start() if i + 1 < len(hits) else len(line)
             name = re.sub(r"\(\d{4}\)", "", line[m.end():end])
             role = norm_role(m.group(1))
             if role and clean(name):
-                out.append(person(clean(name), role, cols[i]))
+                phones, emails = cols[i]
+                out.append(person(clean(name), role, phones, emails=emails))
     return out
 
 

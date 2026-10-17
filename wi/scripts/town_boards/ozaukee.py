@@ -5,14 +5,14 @@ whose list runs onto a second page repeats the heading there). Each officer is
 one line, the office in capitals, a dot leader, then the name
 ("CHAIRPERSON……Thomas Winker", "SEAT 1 SUPERVISOR……Wayne Pipkorn"), followed by
 a line of e-mail and telephone number and lines of home address. The number
-is read from the lines below the officer's line that hold nothing but an
-e-mail address and numbers, up to the next office; the home address lines
-and the e-mail address are not read. Read with the token on 2026-10-15
+and the e-mail address are read from the lines below the officer's line that
+hold nothing but an e-mail address and numbers, up to the next office; the
+home address lines are not read. Read with the token on 2026-10-15
 (robots.txt: 816 bytes, no rule matches the file)."""
 
 import re
 
-from . import clean, following_phones, person
+from . import clean, following_emails, following_phones, person
 
 COUNTY_FIPS = "089"
 COUNTY_NAME = "Ozaukee"
@@ -45,10 +45,11 @@ def scrape(ctx):
             continue
         role = "Chairperson" if r.group(2).startswith("CHAIR") else (
             "Supervisor" + (" #" + r.group(1) if r.group(1) else ""))
-        phones = following_phones([ln for ln in lines[i + 1:i + 5] if ln], 0,
-                                  limit=3, stop_re=_STOP)
+        below = [ln for ln in lines[i + 1:i + 5] if ln]
+        phones = following_phones(below, 0, limit=3, stop_re=_STOP)
+        emails = following_emails(below, 0, limit=3, stop_re=_STOP)
         towns.setdefault(town, []).append(person(clean(r.group(3)), role,
-                                                 phones))
+                                                 phones, emails=emails))
     m = re.search(r"\b(20\d\d)\s*[-–]\s*(20\d\d)\b", text[:400])
     return {"towns": towns,
             "edition": ("%s-%s" % m.groups()) if m else None}

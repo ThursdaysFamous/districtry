@@ -10,12 +10,14 @@ wrap, never a new person. The name is the text before the first comma of an
 entry. The entry's telephone numbers ship: a part of the entry or of its wrap
 lines that holds nothing but numbers and an e-mail address, and a number that
 ends the entry's address ("..., Elkhorn, WI 53121, 262-555-0100"), read on its
-own. The address and the e-mail address are not read. Read with the token on
+own. The e-mail address in those parts ships too (Adam, 2026-10-17: "E-mails
+too"), read the same way; the address is not read. Read with the token on
 2026-10-15 (robots.txt: 816 bytes, no rule matches the document)."""
 
 import re
 
-from . import clean, end_phones, looks_like_person, norm_role, person, phones_in
+from . import (clean, end_phones, line_emails, looks_like_person, norm_role,
+               person, phones_in)
 
 COUNTY_FIPS = "127"
 COUNTY_NAME = "Walworth"
@@ -37,8 +39,13 @@ def _numbers(text):
     return phones_in(text) or end_phones(text)
 
 
+def _after_name(text):
+    """An entry's text after the name, which ends at the first comma."""
+    return text[text.find(",") + 1:] if "," in text else ""
+
+
 def read_block(block):
-    people = []            # [name, role, numbers]
+    people = []            # [name, role, numbers, e-mail addresses]
     plural = None
     current = None         # the entry whose wrap lines are being read
     prev = ""
@@ -58,8 +65,8 @@ def read_block(block):
                 continue
             name = first_part(m.group(2))
             if looks_like_person(name):
-                current = [name, role, _numbers(m.group(2)[m.group(2).find(",") + 1:]
-                                                if "," in m.group(2) else "")]
+                rest = _after_name(m.group(2))
+                current = [name, role, _numbers(rest), line_emails(rest)]
                 people.append(current)
             if m.group(1).lower().startswith("supervisors"):
                 plural = role
@@ -67,13 +74,15 @@ def read_block(block):
         if plural and not wrapped and not re.match(r"^[\d(]", ln) and "@" not in ln:
             name = first_part(ln)
             if looks_like_person(name):
-                current = [name, plural, _numbers(ln[ln.find(",") + 1:]
-                                                  if "," in ln else "")]
+                rest = _after_name(ln)
+                current = [name, plural, _numbers(rest), line_emails(rest)]
                 people.append(current)
                 continue
         if current is not None:
             current[2].extend(_numbers(ln))
-    return [person(name, role, numbers) for name, role, numbers in people]
+            current[3].extend(line_emails(ln))
+    return [person(name, role, numbers, emails=emails)
+            for name, role, numbers, emails in people]
 
 
 def scrape(ctx):

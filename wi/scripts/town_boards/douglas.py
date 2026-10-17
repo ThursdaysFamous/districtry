@@ -5,16 +5,18 @@ sixteen towns (/508/Amnicon through /528/Wascott). Each town page lists the
 town hall, then each officer as "<office>, <name>" on one line ("Chair, Arthur
 E. Amys", "Town Supervisor, Dennis Hill") or as the office alone with the name
 on the next line ("Town & County Board Supervisor" / "Mark Liebaert"), each
-followed by address lines and "Ph:" / "Cell:" lines. The telephone lines ship
-on the officer; the address lines are not read. Summit prints three
+followed by address lines, "Ph:" / "Cell:" lines and an "Email" link. The
+telephone lines ship on the officer, and so does the address the "Email" link
+writes to (the page shows the word, and the link holds the address); the
+address lines are not read. Summit prints three
 supervisors and no chair, and is returned as printed. Read with the
 token on 2026-10-15 (robots.txt: 816 bytes, no rule matches these paths)."""
 
 import re
 import urllib.parse
 
-from . import (clean, following_phones, html_text, looks_like_person,
-               norm_role, person)
+from . import (clean, following_emails, following_phones, html_text,
+               looks_like_person, norm_role, person)
 
 COUNTY_FIPS = "031"
 COUNTY_NAME = "Douglas"
@@ -44,7 +46,8 @@ def _board(text):
             # two address lines, then a "Ph:" line and sometimes "Cell:"
             after = i + 1 if m.group(3) else i + 2
             people.append(person(name, role,
-                                 following_phones(lines, after, limit=6)))
+                                 following_phones(lines, after, limit=6),
+                                 emails=following_emails(lines, after, limit=6)))
     return people
 
 

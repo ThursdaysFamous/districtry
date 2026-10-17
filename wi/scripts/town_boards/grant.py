@@ -4,9 +4,9 @@ The section "Town, Village and City Officials" gives each town a page headed
 "Town of <Name>", with one office per line in the form "Chairperson – <name>"
 or "Supervisor – <name>" and the officer's telephone and e-mail on the line
 below. The numbers on that line ship on the officer with the label the
-directory prints (Adam, 2026-10-17; `role_then_name`); the e-mail address is
-not read. Read with the token on 2026-10-15 (robots.txt: 134 bytes, no rule
-matches the file)."""
+directory prints (Adam, 2026-10-17; `role_then_name`), and so does the e-mail
+address (Adam, 2026-10-17: "E-mails too"). Read with the token on 2026-10-15
+(robots.txt: 134 bytes, no rule matches the file)."""
 
 import re
 

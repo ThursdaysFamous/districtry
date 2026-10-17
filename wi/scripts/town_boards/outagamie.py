@@ -9,15 +9,16 @@ Under upper-case office headings (CHAIRPERSON, SUPERVISORS, CLERK, ...) each
 officer has one line, "#1 – Name – home address • town ...... phone", and a
 second line of term and e-mail. The name is the text before the first dash
 after the seat number; the telephone number is the part of that line after
-its dot leader, read only when it holds nothing but a number. The home address
-before the leader and the e-mail line are not read. The PDF draws some names
+its dot leader, read only when it holds nothing but a number, and the e-mail
+address is the one that ends the second line. The home address before the
+leader and the term are not read. The PDF draws some names
 without a space character ("JosephCoenen"), so the text is extracted with a
 one-point x tolerance, which restores the gap. Read with the token on
 2026-10-15 (robots.txt: 16,010 bytes, no rule matches the page)."""
 
 import re
 
-from . import clean, person, phones_after_name
+from . import add_emails, clean, line_emails, person, phones_after_name
 
 COUNTY_FIPS = "087"
 COUNTY_NAME = "Outagamie"
@@ -38,10 +39,17 @@ def scrape(ctx):
     section = text[start:end] if end > 0 else text[start:]
     towns = {}
     town = role = None
+    last = None         # the board member on the line above
     for line in section.split("\n"):
         line = line.strip()
         if not line or re.match(r"^-\s*\d+\s*-$", line):
             continue
+        if line.startswith(".") and last is not None:
+            # the member's second line: "...... Term Expires ... E-mail: <address>"
+            add_emails(last, line_emails(line))
+            last = None
+            continue
+        last = None
         m = _TOWN.match(line)
         if m:
             town = m.group(1).title()
@@ -61,8 +69,8 @@ def scrape(ctx):
         label = role + (" #" + r.group(1) if role == "Supervisor" and r.group(1)
                         else "")
         name = clean(r.group(2))
-        towns.setdefault(town, []).append(
-            person(name, label, phones_after_name(line, name)))
+        last = person(name, label, phones_after_name(line, name))
+        towns.setdefault(town, []).append(last)
     m = re.search(r"\b(20\d\d)\s*[-–]\s*(20\d\d)\b", text[:600])
     return {"towns": towns,
             "edition": ("%s-%s" % m.groups()) if m else None}

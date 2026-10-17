@@ -6,13 +6,16 @@ and Wilson), as a directory of cards: each card has the officer's name in an
 <h2> and a description "Chair<br />Town of Fairchild" or "First Supervisor<br
 />Town of ...", followed by a telephone link, e-mail and home address. The
 number the telephone link shows ships on the officer (and neither ships when
-the link dials a different number); the address is not read. The page prints
+the link dials a different number), and so does the address the e-mail link
+shows (neither ships when the link writes to a different address); the home
+address is not read. The page prints
 no edition or date. Read with the token on 2026-10-15 (no robots.txt, HTTP 404,
 allow all)."""
 
 import re
 
-from . import clean, html_text, looks_like_person, norm_role, person, phones_in
+from . import (clean, html_text, line_emails, looks_like_person, norm_role,
+               person, phones_in)
 
 COUNTY_FIPS = "035"
 COUNTY_NAME = "Eau Claire"
@@ -27,6 +30,7 @@ _CARD = re.compile(r"<h2>([^<]+)</h2>\s*(?:<!--[^>]*-->\s*)*"
                    r"Town of ([^<]+)</span>", re.I)
 _ORDINAL = {"first": "1", "second": "2", "third": "3", "fourth": "4"}
 _TEL_LINK = re.compile(r"(?is)<a\b[^>]*href\s*=\s*[\"']tel:[^\"']*[\"'][^>]*>(.*?)</a>")
+_MAIL_LINK = re.compile(r"(?is)<a\b[^>]*href\s*=\s*[\"']mailto:[^\"']*[\"'][^>]*>.*?</a>")
 
 
 def _card_phones(card):
@@ -34,6 +38,14 @@ def _card_phones(card):
     out = []
     for inner in _TEL_LINK.findall(card):
         out.extend(phones_in(html_text(inner)))
+    return out
+
+
+def _card_emails(card):
+    """The addresses the card's e-mail links show, nothing else of it."""
+    out = []
+    for link in _MAIL_LINK.findall(card):
+        out.extend(line_emails(html_text(link)))
     return out
 
 
@@ -53,5 +65,5 @@ def scrape(ctx):
         name = clean(name)
         if role and looks_like_person(name):
             towns.setdefault(clean(town), []).append(
-                person(name, role, _card_phones(card)))
+                person(name, role, _card_phones(card), emails=_card_emails(card)))
     return {"towns": towns, "edition": None}

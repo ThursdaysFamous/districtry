@@ -11,8 +11,11 @@ printed more than once anywhere in what the module read, or one a page links
 as tel: to a different number than it shows) is taken off every officer who
 carries it. The rest of each officer's numbers are kept, with the county's
 labels (Adam, 2026-10-17: "if the official government source uses personal
-phone numbers, we publish those"). Matching town names to the map and deciding
-what ships is `build_wi_town_boards.py`'s job.
+phone numbers, we publish those"). E-mail addresses are treated the same way
+(Adam, 2026-10-17: "E-mails too"): one printed for anyone else, one a link
+writes to while showing another, and a mailbox named for an office are taken
+off, and one address per officer is kept. Matching town names to the map and
+deciding what ships is `build_wi_town_boards.py`'s job.
 
     python3 wi/scripts/wi_town_board_scraper.py              # every county
     python3 wi/scripts/wi_town_board_scraper.py --county clark,door
@@ -98,20 +101,23 @@ def main():
                          if any(p["role"] == "Chairperson" for p in ps))
             people = [p for ps in towns.values() for p in ps]
             print("%-14s ok   %3d towns, %3d with a chair, %3d people, "
-                  "%3d with a number (%d with a second), %d rows dropped, "
-                  "%d office numbers taken off"
+                  "%3d with a number (%d with a second), %3d with an e-mail, "
+                  "%d rows dropped, %d office numbers taken off"
                   % (slug, len(towns), chairs, len(people),
                      sum(1 for p in people if p.get("phone")),
                      sum(1 for p in people if p.get("phonesExtra")),
+                     sum(1 for p in people if p.get("email")),
                      rec["droppedRows"], rec["numbersTakenOff"]))
             if args.show:
                 # names and roles only: --print is for checking a parser's
-                # reading of names, and a run log is no place for numbers
+                # reading of names, and a run log is no place for numbers or
+                # e-mail addresses
                 for town, ps in sorted(towns.items()):
                     print("    %s: %s" % (town, "; ".join(
-                        "%s %s%s" % (p["role"], p["name"],
-                                     " [%d numbers]" % len(town_boards.phones_of(p))
-                                     if p.get("phone") else "")
+                        "%s %s%s%s" % (p["role"], p["name"],
+                                       " [%d numbers]" % len(town_boards.phones_of(p))
+                                       if p.get("phone") else "",
+                                       " [e-mail]" if p.get("email") else "")
                         for p in ps)))
         else:
             print("%-14s FAIL %s" % (slug, rec["error"]))

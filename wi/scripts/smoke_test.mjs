@@ -970,6 +970,33 @@ try {
             `${wantNumbers.length} numbers in the file, ${missing.length} not on the card`);
     }
 
+    // ...and the one e-mail address the county prints beside a member, which
+    // ships since Adam's choice of 2026-10-17 ("E-mails too") as that
+    // member's "Email" link. Beaver's members carry none, so this is the Town
+    // of Thorp, also in Clark County (GEOID 5501979650), at its Census
+    // interior point (TIGERweb, 2026-10-17; the same query gives Beaver the
+    // point above). The addresses expected are read from the shipped file's
+    // record for that town, so a refresh moves them; a board carrying none is
+    // reported, never passed, and a failure prints counts, not the addresses.
+    const mailPage = await booted(
+      context, `${BASE}#point=44.99591,-90.87056&layers=county,county-subdivision`);
+    await cardText(mailPage, "county-subdivision");
+    const wantEmails = await mailPage.evaluate(async () => {
+      const r = await fetch("data/app/wi-town-boards.json").then((x) => x.json());
+      return ((r["5501979650"] || {}).board || []).map((p) => p.email).filter(Boolean);
+    });
+    const mailtos = await mailPage.$$eval("#card-county-subdivision a[href^='mailto:']",
+      (els) => els.map((e) => e.getAttribute("href").slice("mailto:".length)));
+    if (!wantEmails.length) {
+      console.log("  SKIP  town board members' e-mail addresses — the Town of " +
+                  "Thorp's board carries none in the shipped file");
+    } else {
+      const missingMail = wantEmails.filter((e) => mailtos.indexOf(e) === -1);
+      check("a town's card links each board member's e-mail the county prints",
+            missingMail.length === 0,
+            `${wantEmails.length} addresses in the file, ${missingMail.length} not linked on the card`);
+    }
+
     const none = await booted(
       context, `${BASE}#point=43.24830,-89.42913&layers=county,county-subdivision`);
     await cardText(none, "county-subdivision");

@@ -5,8 +5,9 @@ then each office on a line of its own ("Chair", "Supervisor 1", sometimes with
 a second duty after a slash, "Supervisor 2/Animal Control") with the officer's
 name on the next line, followed by a home address, a "Phone" line with the
 telephone number below it and an "Email" line. The telephone number ships (a
-number under a "Fax" line does not); the home address and the e-mail address
-are not read. Fremont prints its two supervisors as
+number under a "Fax" line does not), and so does the e-mail address (Adam,
+2026-10-17: "E-mails too"); the home address is not read. Fremont prints its
+two supervisors as
 "East Side Supervisor" and "West Side Supervisor", kept as "Supervisor (East
 Side)". Read with the token on 2026-10-15
 (robots.txt: HTTP 404, so no policy). The page prints "Directory of Public
@@ -14,8 +15,8 @@ Officials 2026" and "Directory updated" with a date."""
 
 import re
 
-from . import (following_phones, html_text, looks_like_person, person,
-               split_blocks, strip_contact)
+from . import (following_emails, following_phones, html_text,
+               looks_like_person, person, split_blocks, strip_contact)
 
 COUNTY_FIPS = "135"
 COUNTY_NAME = "Waupaca"
@@ -48,7 +49,9 @@ def _board(block):
         name = strip_contact(lines[i + 1])
         if looks_like_person(name):
             people.append(person(name, role, following_phones(
-                lines, i + 2, limit=8, stop_re=_ROLE.pattern)))
+                lines, i + 2, limit=8, stop_re=_ROLE.pattern),
+                emails=following_emails(lines, i + 2, limit=8,
+                                        stop_re=_ROLE.pattern)))
     return people
 
 

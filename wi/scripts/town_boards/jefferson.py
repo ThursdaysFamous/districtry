@@ -5,16 +5,18 @@ laid out in two columns: the officer's name and "PH: <telephone>" on the first
 line (or the name alone with the telephone on the next line), and the office
 ("Chair", "Supervisor", "Supervisor 2", "Clerk"...) in a left-hand column at
 the start of a following line, beside the officer's home address. The "PH:"
-number ships on the officer; the address beside the office is not read. The
-county-board members who represent the town follow at the foot of the page
-and carry no "PH:" line. Read with the token on 2026-10-15 (the file is
-served from cms4files.revize.com, whose robots.txt allows /*.pdf$; the county
-host has no robots.txt)."""
+number ships on the officer, and so does the e-mail address that ends the line
+under the office; the address beside the office, and the post office and ZIP
+code before the e-mail address, are not read. The county-board members who
+represent the town follow at the foot of the page and carry no "PH:" line. Read
+with the token on 2026-10-15 (the file is served from cms4files.revize.com,
+whose robots.txt allows /*.pdf$; the county host has no robots.txt)."""
 
 import re
 
-from . import (following_phones, line_phones, looks_like_person, norm_role,
-               person, phones_after_name, split_blocks, strip_contact)
+from . import (following_emails, following_phones, line_phones,
+               looks_like_person, norm_role, person, phones_after_name,
+               split_blocks, strip_contact)
 
 COUNTY_FIPS = "055"
 COUNTY_NAME = "Jefferson"
@@ -76,7 +78,9 @@ def _officers(block):
                 elif j == i - 1:
                     name = _name_part(prev)
         if looks_like_person(name):
-            people.append(person(name, role, phones))
+            # the e-mail address ends the post-office line under the office
+            people.append(person(name, role, phones,
+                                 emails=following_emails(lines, i + 1, limit=3)))
     return people
 
 

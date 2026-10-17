@@ -4,15 +4,16 @@
 page for each of the sixteen towns. Each town page lists its officers as a
 label line ("Chair:", "1st Supervisor:", "2nd Supervisor:") followed by the
 officer's name on the next line, then address, telephone and e-mail lines. The
-"Phone:" and "Cell:" lines ship on the officer; the address is not read. Read
+"Phone:", "Cell:" and "Email:" lines ship on the officer; the address is not
+read. Read
 with the token on 2026-10-15 (robots.txt: 816 bytes, no rule matches these
 paths)."""
 
 import re
 import urllib.parse
 
-from . import (clean, following_phones, html_text, looks_like_person,
-               norm_role, person)
+from . import (clean, following_emails, following_phones, html_text,
+               looks_like_person, norm_role, person)
 
 COUNTY_FIPS = "045"
 COUNTY_NAME = "Green"
@@ -60,7 +61,8 @@ def _board(text):
         if looks_like_person(name):
             after = i + 1 if clean(rest) else i + 2
             people.append(person(name, role,
-                                 following_phones(lines, after, limit=6)))
+                                 following_phones(lines, after, limit=6),
+                                 emails=following_emails(lines, after, limit=6)))
     return people
 
 

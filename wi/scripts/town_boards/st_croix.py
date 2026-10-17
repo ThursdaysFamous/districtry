@@ -7,15 +7,16 @@ Veenendall – 715-222-9408" (one Warren line uses a dot leader instead of the
 tab), followed by home-address and e-mail paragraphs. The numbers after the
 name ship, with the label the county gives a second one ("715-... (Cell)
 715-..."); so does a number at the end of the address paragraph below when a
-label naming a person's line stands before it. The address and the e-mail
-address are not read. A label such as "Supervisor/Plan Committee Chairman" is
-read by its first part only, so it stays a supervisor. Read with the token on
+label naming a person's line stands before it. The e-mail address in the
+paragraphs below the officer's ships too (Adam, 2026-10-17: "E-mails too");
+the address is not read. A label such as "Supervisor/Plan Committee Chairman"
+is read by its first part only, so it stays a supervisor. Read with the token on
 2026-10-15 (robots.txt: 816 bytes, no rule matches the document)."""
 
 import re
 
-from . import (clean, following_phones, looks_like_person, norm_role, person,
-               phones_after_name)
+from . import (clean, emails_after_name, following_emails, following_phones,
+               looks_like_person, norm_role, person, phones_after_name)
 
 COUNTY_FIPS = "109"
 COUNTY_NAME = "St. Croix"
@@ -52,7 +53,10 @@ def scrape(ctx):
                 phones = phones_after_name(ln, name)
                 phones += following_phones(lines, k + 1, limit=2,
                                            stop_re=_LINE.pattern)
-                people.append(person(name, role, phones))
+                emails = emails_after_name(ln, name)
+                emails += following_emails(lines, k + 1, limit=2,
+                                           stop_re=_LINE.pattern)
+                people.append(person(name, role, phones, emails=emails))
         if people:
             towns[clean(m.group(1)).title()] = people
     ed = re.search(r"(\d{4}\s*[-–]\s*\d{4})", text[:2000])

@@ -6,9 +6,10 @@ heading, then each office on a line of its own ("Town Chairperson",
 "Supervisor No. 1", "Clerk") with the officer's name on the next line, a dot
 leader and a telephone number after it, and then lines of address and e-mail.
 The number after the leader ships, and so does a number on a following line
-that holds nothing but numbers, up to the next office; the address and e-mail
-lines are not read. Each town's page ends with the county board supervisors
-who represent it, which is a different office and is not read.
+that holds nothing but numbers, up to the next office, and the e-mail address
+on the "Email:" line; the address lines are not read. Each town's page ends
+with the county board supervisors who represent it, which is a different
+office and is not read.
 
 CLIENT. On 2026-10-15 this project's token got HTTP 403 Forbidden for the
 document (the same answer the 2026-10-15 survey recorded); the Chrome client
@@ -17,8 +18,9 @@ no rule matching the document's path."""
 
 import re
 
-from . import (following_phones, looks_like_person, norm_role, person,
-               phones_after_name, split_blocks, strip_contact)
+from . import (emails_after_name, following_emails, following_phones,
+               looks_like_person, norm_role, person, phones_after_name,
+               split_blocks, strip_contact)
 
 COUNTY_FIPS = "101"
 COUNTY_NAME = "Racine"
@@ -45,7 +47,10 @@ def _people(block):
             phones = phones_after_name(lines[i + 1], name)
             phones += following_phones(lines, i + 2, limit=3,
                                        stop_re=_ROLE.pattern)
-            out.append(person(name, role, phones))
+            emails = emails_after_name(lines[i + 1], name)
+            emails += following_emails(lines, i + 2, limit=3,
+                                       stop_re=_ROLE.pattern)
+            out.append(person(name, role, phones, emails=emails))
     return out
 
 

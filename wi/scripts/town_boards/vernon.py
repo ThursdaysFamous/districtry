@@ -6,15 +6,17 @@ is one dot-leader line, "Chair.......... Jeff Cermak" or "Supervisor No. 1
 ........ Jeff Benson", followed by a line with the home address and telephone
 number ("... WI 54665 608-555-0100"), and sometimes a line of e-mail address
 and a second number. The number that ends the address line is read on its own
-and ships, and so does the number on an e-mail line below it; the address and
-the e-mail address are not read. Read with the token on 2026-10-15; the
+and ships, and so does the number on an e-mail line below it. The e-mail
+address on that line ships too (Adam, 2026-10-17: "E-mails too"); the address
+is not read. Read with the token on 2026-10-15; the
 county's link redirects to cms8.revize.com, whose robots.txt (312 bytes)
 allows *.pdf."""
 
 import re
 
-from . import (OTHER_OFFICE, clean, end_phones, following_phones,
-               looks_like_person, norm_role, person, split_blocks)
+from . import (OTHER_OFFICE, clean, end_phones, following_emails,
+               following_phones, looks_like_person, norm_role, person,
+               split_blocks)
 
 COUNTY_FIPS = "123"
 COUNTY_NAME = "Vernon"
@@ -41,7 +43,7 @@ def scrape(ctx):
                 continue
             role, name = norm_role(m.group(1)), clean(m.group(2))
             if role and looks_like_person(name):
-                phones = []
+                phones, emails = [], []
                 nxt = lines[i + 1] if i + 1 < len(lines) else ""
                 if nxt and not (_LINE.match(nxt) or OTHER_OFFICE.search(nxt)):
                     # the officer's own address line: only the number that
@@ -49,7 +51,9 @@ def scrape(ctx):
                     phones = end_phones(nxt)
                     phones += following_phones(lines, i + 2, limit=1,
                                                stop_re=_LINE.pattern)
-                people.append(person(name, role, phones))
+                    emails = following_emails(lines, i + 2, limit=1,
+                                              stop_re=_LINE.pattern)
+                people.append(person(name, role, phones, emails=emails))
         if people:
             towns[town.title()] = people
     ed = re.search(r"Official Directory\s*\n\s*(\d{4}\s*-\s*\d{4})\s*\n\s*"

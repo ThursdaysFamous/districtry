@@ -8,15 +8,16 @@ phone" followed by a line of home address, which often ends in a second number
 CHAIRPERSON and SUPERVISORS headings are used. The name is the text before the
 leader, with the e-mail in brackets taken off; the number after the leader
 ships, and so does a number at the end of the address line below when a label
-naming a person's line ("Cell:", "Home:") stands before it. The address itself
-is not read. The page's "COUNTY BOARD SUPERVISOR" heading is a different office
+naming a person's line ("Cell:", "Home:") stands before it. The e-mail address
+after the name ships too, as does one on an "Email:" line below. The address
+itself is not read. The page's "COUNTY BOARD SUPERVISOR" heading is a different office
 and ends the board. Read with the token on 2026-10-15 (robots.txt on
 cms5.revize.com: 312 bytes, "Allow: /*.pdf$")."""
 
 import re
 
-from . import (clean, following_phones, person, phones_after_name,
-               split_blocks)
+from . import (clean, emails_after_name, following_emails, following_phones,
+               person, phones_after_name, split_blocks)
 
 COUNTY_FIPS = "093"
 COUNTY_NAME = "Pierce"
@@ -46,7 +47,10 @@ def _people(block):
                 phones = phones_after_name(line, name)
                 phones += following_phones(lines, i + 1, limit=2,
                                            stop_re=_HEADING)
-                out.append(person(name, role, phones))
+                emails = emails_after_name(line, name)
+                emails += following_emails(lines, i + 1, limit=2,
+                                           stop_re=_HEADING)
+                out.append(person(name, role, phones, emails=emails))
     return out
 
 

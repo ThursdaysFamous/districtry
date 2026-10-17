@@ -9,13 +9,14 @@ the opening line is read for the name; the city line is told apart by the ZIP
 code right after its comma. The officer's numbers ship (Adam, 2026-10-17): the
 one that ends the city line, read from the number onward only (`end_phones`),
 so the street, city and ZIP code are never read, and any on the label lines
-after it ("Cell: ..."), up to the next entry. The e-mail line is not read.
-Read with the token on 2026-10-15 (robots.txt: HTTP 404, so no policy)."""
+after it ("Cell: ..."), up to the next entry. The e-mail address on those
+label lines ships too (Adam, 2026-10-17: "E-mails too"). Read with the token
+on 2026-10-15 (robots.txt: HTTP 404, so no policy)."""
 
 import re
 
-from . import (end_phones, looks_like_person, person, phone_line_numbers,
-               split_blocks)
+from . import (end_phones, line_emails, looks_like_person, person,
+               phone_line_numbers, split_blocks)
 
 COUNTY_FIPS = "141"
 COUNTY_NAME = "Wood"
@@ -46,6 +47,19 @@ def _numbers(lines, i):
         j += 1
     while j < len(lines) and _LABELLED.match(lines[j]):
         out += phone_line_numbers(lines[j])
+        j += 1
+    return out
+
+
+def _emails(lines, i):
+    """The e-mail addresses on the label lines ("Email: ...") of the entry
+    that opens at lines[i], the lines `_numbers` reads."""
+    out = []
+    j = i + 1
+    if j < len(lines) and _is_city(lines[j]):
+        j += 1
+    while j < len(lines) and _LABELLED.match(lines[j]):
+        out += line_emails(lines[j])
         j += 1
     return out
 
@@ -84,7 +98,8 @@ def scrape(ctx):
             seat = role
             if role == "Supervisor" and m.group(1):
                 seat = "Supervisor #" + m.group(1)
-            people.append(person(name, seat, _numbers(lines, i)))
+            people.append(person(name, seat, _numbers(lines, i),
+                                 emails=_emails(lines, i)))
             if role == "Chairperson":
                 role = "_done"
         if people:

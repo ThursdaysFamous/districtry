@@ -6,14 +6,15 @@ office is a line of its own ("Chair (2-Year Term Expires April 2027)",
 officer's name, then a comma and the home address; telephone and e-mail lines
 follow ("Phone: (608) 555-0100", "Cell: ...", "Home: ..."). The name is the
 text before the address, which is not read. The telephone lines below it ship,
-each with the county's label, up to the next office; a line naming a place
-("Town Hall: ...") and a fax line do not. Read with the token on 2026-10-15
-(robots.txt: 5,869 bytes, no rule matches the file)."""
+each with the county's label, up to the next office, and so does the e-mail
+address on its "E-mail:" line; a line naming a place ("Town Hall: ...") and a
+fax line do not. Read with the token on 2026-10-15 (robots.txt: 5,869 bytes,
+no rule matches the file)."""
 
 import re
 
-from . import (clean, following_phones, looks_like_person, norm_role,
-               person, split_blocks)
+from . import (clean, following_emails, following_phones, looks_like_person,
+               norm_role, person, split_blocks)
 
 COUNTY_FIPS = "111"
 COUNTY_NAME = "Sauk"
@@ -22,15 +23,15 @@ SOURCES = ["https://www.co.sauk.wi.us/sites/default/files/fileattachments/"
 
 _ROLE = re.compile(r"^(Chair(?:person|man)?|Supervisor(?:\s*#?\s*\d+|\s+[IVX]+)?)"
                    r"\s*(?:\(.*)?$")
-# an address part: a rural number ("E10003 Hoot Owl"), a street number, or a
-# P.O. Box
+# an address part: a rural number ("E1234 County Road A"), a street number,
+# or a P.O. Box
 _ADDR = re.compile(r"^([NSEW]?\d|P\.?\s?O\.?\s)", re.I)
 
 
 def name_part(line):
-    """The name in "William F. Klemm, E10003 Hoot Owl Valley Road, Baraboo,
-    WI 53913": the comma-separated parts before the first that is an address
-    ("Bob Giebel, Jr., E9304 ..." keeps "Bob Giebel, Jr.")."""
+    """The name in "Jane Q. Doe, E1234 County Road A, Anytown, WI 53000":
+    the comma-separated parts before the first that is an address ("John
+    Doe, Jr., E1234 ..." keeps "John Doe, Jr.")."""
     parts = [p.strip() for p in line.split(",")]
     keep = []
     for p in parts:
@@ -62,7 +63,9 @@ def scrape(ctx):
             name = name_part(lines[i + 1])
             if role and name and looks_like_person(name):
                 people.append(person(name, role, following_phones(
-                    lines, i + 2, limit=4, stop_re=_ROLE.pattern)))
+                    lines, i + 2, limit=4, stop_re=_ROLE.pattern),
+                    emails=following_emails(lines, i + 2, limit=4,
+                                            stop_re=_ROLE.pattern)))
         if people:
             towns[town] = people
     m = re.search(r"(May\s+\d{4}\s*[-–]\s*April\s+\d{4})", text)
