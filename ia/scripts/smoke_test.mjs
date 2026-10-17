@@ -614,8 +614,13 @@ try {
   //      them the county's own board page settles it, so those names rest on
   //      a publisher no other county's do and the card says so.
   //
+  //      Wright is the withheld row since 2026-10-17, when the statewide
+  //      directory stopped listing a sixth Pottawattamie supervisor and that
+  //      county's five shipped; Wright is then the one board still withheld.
+  //      If Wright resolves too, this row needs another withheld county.
+  //
   //      BOTH BRANCHES, for the reason 2a4 already gives. Adair must name a
-  //      supervisor AND carry the county-named sentence; Pottawattamie must
+  //      supervisor AND carry the county-named sentence; Wright must
   //      carry the withheld sentence and NOT the county-named one, because a
   //      county-named line over a board we do not publish would credit a
   //      page we were refused; and Marshall, the anchor county, comes from the
@@ -633,8 +638,8 @@ try {
        null, "Adair, named by the county's own page"],
       [41.33000, -94.47000, "Adair County", "Jerry Walker",
        null, "Adair names a supervisor the statewide directory lost"],
-      [41.23000, -95.850000, "Pottawattamie County", "Not shown",
-       "Named by the county", "Pottawattamie, withheld and not credited"],
+      [42.73160, -93.73270, "Wright County", "Not shown",
+       "Named by the county", "Wright, withheld and not credited"],
       [42.04940, -92.90710, "Marshall County", "Supervisor",
        "Named by the county", "Marshall, from the statewide directory"]
     ]) {
