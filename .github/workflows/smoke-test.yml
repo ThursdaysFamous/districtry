@@ -1466,6 +1466,22 @@ jobs:
           python3 ms/scripts/build_ms_judges.py --selftest
           python3 ms/scripts/build_ms_judges.py --check
 
+      # Mississippi's City card names the mayor and council of the 15 cities of
+      # 25,000 people or more as each city's own website names them, and the City
+      # Ward layer draws nine of those cities' wards. No weekly job re-reads the
+      # cities' pages yet, so these hold the shipped files to their build, offline:
+      # --selftest runs the page readers on literals; the councils' --check holds
+      # every city to its declared seats and every name to the name test; the
+      # wards' --check holds each city's wards to its council's ward seats, the
+      # card's empty state and the sources page to the cities drawn, and the
+      # record of what each ward layer served to the cities the builder reads.
+      - name: MS city councils and wards hold to their readers, their seats and their records
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ms/scripts/build_ms_city_councils.py --selftest
+          python3 ms/scripts/build_ms_city_councils.py --check
+          python3 ms/scripts/build_ms_city_wards.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it

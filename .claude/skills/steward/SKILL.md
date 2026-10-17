@@ -173,6 +173,9 @@ python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's
 python3 ms/scripts/build_ms_court_districts.py --check           # Mississippi's six court maps against the court's own county lists and the laws that redraw them in 2027 and 2031, every saved copy re-hashed
 python3 ms/scripts/build_ms_judges.py --selftest                 # the judges' parse and the change table's staleness tests, on literals
 python3 ms/scripts/build_ms_judges.py --check                    # the shipped judges against their shape, their counts and the court maps
+python3 ms/scripts/build_ms_city_councils.py --selftest           # the city council page readers, on literals: the four seat shapes, the name test, the seat labels a page prints
+python3 ms/scripts/build_ms_city_councils.py --check              # the 15 cities' councils against their declared seats and the name test, Greenville naming nobody with its reason
+python3 ms/scripts/build_ms_city_wards.py --check                 # the nine cities' wards against their councils' ward seats, the card's empty state, the sources page and the record of what each ward layer served
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404

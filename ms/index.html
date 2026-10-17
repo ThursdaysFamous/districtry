@@ -4218,8 +4218,8 @@ function initMississippiExplorer() {
   var LAYER_CODES = { "ms-supreme-court": "msj", "us-house": "us", "ms-court-of-appeals": "msa",
     "ms-chancery-court": "msq", "ms-circuit-court": "msc", "ms-senate": "mss", "county": "co",
     "ms-house": "msh", "school-district-unified": "su", "county-supervisor": "cv",
-    "zip-code": "zp", "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+    "zip-code": "zp", "municipality": "mu", "city-ward": "cw", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4229,7 +4229,8 @@ function initMississippiExplorer() {
     "appellate-court-district": ["ms-court-of-appeals"],
     "trial-court-district": ["ms-circuit-court"], "county": ["county"],
     "county-board": ["county-supervisor"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -9571,6 +9572,7 @@ function initMississippiExplorer() {
     "county-supervisor", // 410 supervisor districts statewide, five per county, about 296 km2 of land on average against 887 km2 for a school district; drawn only in the counties whose current lines are confirmed
     "zip-code",          // 827 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Mississippi
     "municipality",      // 300 incorporated places, live from TIGERweb
+    "city-ward",         // 57 wards in the 9 cities whose ward maps this app has confirmed, a mean 20.8 km2 (median 15.0, from 3.6 for Pearl's Ward 3 to 61.6 for Jackson's Ward 7), measured 2026-10-17 — ranked just after City, which each one divides, so a ward draws on top of its city
     "tribal-government", // Tribal land — Mississippi has 2 pieces held by one nation, the Mississippi Choctaw Reservation (123.468 km², in 56 separate parts, 77.1 km² of it in Neshoba County) and its off-reservation trust land (16.396 km² in Mississippi), MEASURED by scripts/build_tribal_areas.py on 2026-10-15. Ranked after municipalities and before the point layers, as South Carolina's and Indiana's are. Its parts are small — the reservation's 56 run from 51.6 km² down to under 0.01 km² and the trust land's 29 from 3.55 km² down — so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -14111,13 +14113,38 @@ function initMississippiExplorer() {
    * village (5,634 of 121,535 km2 by the Census's own AREALAND), and the
    * county is the general-purpose local government everywhere else.
    *
-   * NO OFFICEHOLDER. No statewide source naming Mississippi's mayors,
-   * aldermen and council members has been read here, so the card names no
-   * one rather than guessing. Recorded as gap ms-municipal-officeholders.
+   * THE MAYOR AND COUNCIL OF THE 15 CITIES OF 25,000 PEOPLE OR MORE, seat by
+   * seat, as each city's own website names them
+   * (data/app/ms-city-councils.json, built by
+   * ms/scripts/build_ms_city_councils.py, which reads the seat and the name
+   * and nothing else). Fourteen of the fifteen print every member; Greenville's
+   * site names none, and its record says why instead of naming anyone. No
+   * weekly job reads those pages again yet, so the card prints the date they
+   * were read rather than claiming to be current. Every other municipality
+   * names nobody here (gap ms-municipal-officeholders): no
+   * statewide source naming Mississippi's mayors and aldermen has been read,
+   * and the card says so rather than guessing. The City Ward layer (5b) draws
+   * the wards of nine of the fifteen and names the member for the point.
    * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  // The mayor and council of each city of 25,000 people or more, keyed by the
+  // city's Census id, with the date its pages were read.
+  var loadMsCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-city-councils.json", {}, 2);
+  });
+  // "Mayor", "At large", "Ward 3": a seat as a badge, in the city's own words
+  // and with no title a city does not print.
+  function msCitySeatBadge(seat) {
+    return seat === "At Large" ? "At large" : String(seat);
+  }
+  // "Ward 2", "Ward 2 and Ward 4", "Jackson, Gulfport and Pearl"
+  function msAndList(items) {
+    var list = (items || []).map(function (s) { return String(s); });
+    return list.length < 2 ? (list[0] || "")
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+  }
   var MS_PLACE_KINDS = {
     city: "Incorporated city — a general-purpose local government over this point, alongside the county.",
     town: "Incorporated town — a general-purpose local government over this point, alongside the county.",
@@ -14150,7 +14177,7 @@ function initMississippiExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // NAME minus BASENAME, so the style can never contradict the name
@@ -14160,8 +14187,20 @@ function initMississippiExplorer() {
           // an inactive municipality rather than implying a working one
           // (Tillatoba, measured 2026-10-15)
           funcstat: findPropCI(props, ["funcstat"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null,
+          rosterFailed: false
         };
+        // A roster that fails to load leaves the place card standing and says
+        // so, rather than taking the boundary answer down with it.
+        return loadMsCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14184,15 +14223,81 @@ function initMississippiExplorer() {
             "legally in existence, but with no government operating."
         });
       }
-      rows.push({
-        label: "Your mayor and board",
-        value: "Not named here. No statewide source naming Mississippi's " +
-          "mayors, aldermen and council members has been read yet, and this " +
-          "app does not guess — this municipality's own website is the " +
-          "current source."
+      var council = result.council;
+      if (!council) {
+        rows.push({
+          label: "Your mayor and board",
+          value: result.rosterFailed
+            ? "The list of mayors and councils did not load, so no name is " +
+              "shown. This municipality's own website names its mayor and board."
+            : "Not named here. This app names the mayor and council of " +
+              "Mississippi's 15 cities of 25,000 people or more, as each " +
+              "city's own website names them, and this " +
+              (result.kind || "place") + " is not one of them. Its own " +
+              "website is the current source."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat is the name the
+      // city's own website printed for it; no office or contact is carried,
+      // because whether a number printed beside a member is an office line
+      // or the member's own is not established.
+      var read = msDate(council.read);
+      var people = [], after = [];
+      (council.seats || []).forEach(function (seat) {
+        var badge = msCitySeatBadge(seat.seat);
+        if (seat.name) {
+          var person = { name: String(seat.name), badge: badge };
+          if (seat.seat === "Mayor" && council.mayorUrl) {
+            person.links = [{ label: "The mayor's page", url: council.mayorUrl }];
+          }
+          people.push(person);
+        } else if (seat.vacant === true) {
+          after.push({
+            label: badge + ": vacant",
+            value: String(council.name) + "'s own website shows this seat as vacant."
+          });
+        }
       });
-      wrap.appendChild(renderFieldStack(rows));
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      if (council.unnamed) {
+        after.push({
+          label: "Your mayor and council: not named here",
+          value: String(council.unnamed) + "." +
+            (read ? " This app read the website on " + read + "." : "")
+        });
+      } else {
+        after.push({
+          label: "Who these are",
+          value: "The mayor and the members of the " + String(council.body) +
+            ", as " + String(council.name) + "'s own website named them" +
+            (read ? " on " + read : "") + ". This app has not read the " +
+            "website again since, so a change after that is not shown here; " +
+            "the website says who holds each seat today."
+        });
+        var byWard = (council.seats || []).some(function (s) { return /^Ward /.test(s.seat); });
+        if (byWard) {
+          after.push({
+            label: "Your ward",
+            value: "Where this app draws the city's wards, the City Ward " +
+              "layer shows which ward this point is in and names its member."
+          });
+        }
+      }
+      wrap.appendChild(renderFieldStack(after));
       return wrap;
+    },
+    primaryLink: function (result) {
+      var council = result && result.council;
+      if (!council || !council.councilUrl) return null;
+      return {
+        label: council.seats
+          ? String(council.name) + "'s " + String(council.body) + " page"
+          : String(council.name) + "'s website",
+        url: council.councilUrl
+      };
     }
   });
 
@@ -14310,6 +14415,211 @@ function initMississippiExplorer() {
       return wrap;
     },
     emptyNote: "This point is not on tribal land. Mississippi has 2 tribal areas, the Mississippi Choctaw Reservation and its off-reservation trust land, both the Mississippi Band of Choctaw Indians', and this point is on neither."
+  });
+
+  /* ---------- 5b. City Ward ----------
+   * The wards of the cities whose mayor and council the City card names and
+   * whose current ward map is confirmed: nine of the fifteen
+   * (data/app/ms-city-wards.json, built by ms/scripts/build_ms_city_wards.py,
+   * which records why each of the other six is not drawn). Every line between
+   * two wards is the city's own published map, never redrawn; the outer edge
+   * is the Census Bureau's map of the city, the one the City card reads, so
+   * the two cards never put a point in different cities. Each feature carries
+   * the sentence saying whose map it is, and the card prints it.
+   *
+   * EVERY WARD AT A POINT IS NAMED. Oxford's map and DeSoto County's map of
+   * Southaven draw neighbouring wards over each other in a few slivers
+   * (measured 2026-10-17: 5,328 m2 of Oxford and 466 m2 of Southaven in the
+   * drawn file, none holding a 2020 census point), and on the line between
+   * Jackson and Pearl the two cities' drawn lines cross by a hairline. So the
+   * query keeps every ward covering the point and the card names each,
+   * rather than choosing one.
+   *
+   * The member is the City card's roster, joined by the city's Census id and
+   * the ward seat; a roster that fails to load leaves the ward standing and
+   * says so. The toggle says "City Ward" because all nine elect by ward,
+   * whether their body is a city council or a board of aldermen.
+   * ---------- */
+  var loadMsCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ms-city-wards.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Ward",
+    coverage: inMississippi,
+    // Gated by ms/scripts/build_ms_city_wards.py --check, which fails when
+    // this sentence and the ward file disagree about which cities are drawn.
+    emptyNote: "No ward is drawn at this point. This map draws the wards of " +
+      "nine of Mississippi's 15 cities of 25,000 people or more (Jackson, " +
+      "Gulfport, Southaven, Olive Branch, Tupelo, Clinton, Pearl, Oxford and " +
+      "Brandon), and a few small pieces of ground inside them are in no ward " +
+      "on the city's own map. The City card names the mayor and council of " +
+      "all 15 where the city's own website does.",
+    overlay: {
+      load: loadMsCityWards,
+      // the fleet's city-council blue and width (root layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.seat != null ? String(p.city) + ", " + String(p.seat) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadMsCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        hits.sort(function (a, b) {
+          if (String(a.city) !== String(b.city)) return String(a.city) < String(b.city) ? -1 : 1;
+          return Number(a.ward) - Number(b.ward);
+        });
+        var result = { seq: seq, hits: hits, councils: {}, rosterFailed: false };
+        return loadMsCityCouncils().then(function (roster) {
+          hits.forEach(function (h) {
+            result.councils[String(h.geoid)] = roster ? roster[String(h.geoid)] || null : null;
+          });
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var hits = result.hits;
+      var cities = [];
+      hits.forEach(function (h) {
+        if (cities.indexOf(String(h.city)) === -1) cities.push(String(h.city));
+      });
+      var oneCity = cities.length === 1;
+      var councilOf = function (h) { return result.councils[String(h.geoid)] || null; };
+      var first = councilOf(hits[0]);
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: msAndList(hits.map(function (h) {
+          return (oneCity ? "" : String(h.city) + " ") + String(h.seat);
+        })),
+        note: oneCity
+          ? cities[0] + (first && first.body ? " " + String(first.body) : "")
+          : null
+      }));
+      // Card convention: identity -> officeholder. The member is the name the
+      // city's own website printed for the seat.
+      var people = [], rows = [];
+      hits.forEach(function (h) {
+        var council = councilOf(h);
+        var seat = null;
+        ((council && council.seats) || []).forEach(function (s) {
+          if (s.seat === h.seat) seat = s;
+        });
+        var badge = hits.length === 1
+          ? (council && council.body ? String(council.body) : String(h.seat))
+          : (oneCity ? String(h.seat) : String(h.city) + ", " + String(h.seat));
+        if (seat && seat.name) {
+          people.push({ name: String(seat.name), badge: badge });
+        } else if (seat && seat.vacant === true) {
+          rows.push({
+            label: badge + ": vacant",
+            value: String(h.city) + "'s own website shows this seat as vacant."
+          });
+        } else if (!result.rosterFailed) {
+          rows.push({
+            label: badge + ": not named here",
+            value: String(h.city) + "'s own website, as this app read it, names " +
+              "no member for this seat."
+          });
+        }
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Member",
+          value: "The list of mayors and councils did not load, so no name is shown."
+        });
+      }
+      if (hits.length > 1 && oneCity) {
+        rows.push({
+          label: "More than one ward here",
+          value: cities[0] + "'s own ward map draws " +
+            msAndList(hits.map(function (h) { return String(h.seat); })) +
+            " over this spot, so this app names " +
+            (hits.length === 2 ? "both" : "each") + " rather than choosing one."
+        });
+      } else if (!oneCity) {
+        rows.push({
+          label: "More than one city here",
+          value: "Along the line between " + msAndList(cities) + ", their " +
+            "wards as drawn here overlap by a hairline, so this app names " +
+            "both cities' wards. The City card says which city this point is in."
+        });
+      }
+      if (oneCity && first && first.seats) {
+        var atLarge = first.seats.some(function (s) { return s.seat === "At Large"; });
+        rows.push({
+          label: "Also on this " + (first.body === "Board of Aldermen" ? "board" : "council"),
+          value: "The mayor" + (atLarge ? " and the member elected by the whole city" : "") +
+            ". The City card names them."
+        });
+      }
+      var read = first ? msDate(first.read) : null;
+      if (people.length) {
+        rows.push({
+          label: people.length > 1 ? "Who these are" : "Who this is",
+          value: "The member" + (people.length > 1 ? "s" : "") + " for " +
+            (hits.length > 1 ? "these wards" : "this ward") + ", as " +
+            (oneCity ? cities[0] + "'s own website" : "each city's own website") +
+            " named them" +
+            (read && oneCity ? " on " + read : "") + ". This app has not read " +
+            "the website again since, so a change after that is not shown here."
+        });
+      }
+      cities.forEach(function (city) {
+        var h = null;
+        hits.forEach(function (x) { if (!h && String(x.city) === city) h = x; });
+        var src = h && h.source != null ? String(h.source) : "";
+        if (!src) return;
+        rows.push({
+          label: oneCity ? "How this line is drawn" : "How " + city + "'s line is drawn",
+          value: src.charAt(0).toUpperCase() + src.slice(1) + ". The line drawn " +
+            "here is within 4 metres of that map's own."
+        });
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      // the city's page for its ward map, where it is not the council page the
+      // footer links
+      var mapLinks = [];
+      cities.forEach(function (city) {
+        var h = null;
+        hits.forEach(function (x) { if (!h && String(x.city) === city) h = x; });
+        var council = h ? councilOf(h) : null;
+        if (h && h.sourceUrl && (!council || council.councilUrl !== h.sourceUrl)) {
+          mapLinks.push({
+            label: (oneCity ? "The city's" : city + "'s") + " page for this ward map",
+            url: h.sourceUrl
+          });
+        }
+      });
+      if (mapLinks.length) wrap.appendChild(renderLinkRow({ links: mapLinks }));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var h = result && result.hits && result.hits[0];
+      var council = h ? result.councils[String(h.geoid)] : null;
+      if (council && council.councilUrl) {
+        return { label: String(council.name) + "'s " + String(council.body) + " page",
+                 url: council.councilUrl };
+      }
+      return h && h.sourceUrl
+        ? { label: String(h.city) + "'s page for this ward map", url: h.sourceUrl } : null;
+    }
   });
 
   /* ---------- 6. School District — live TIGERweb, unified districts ----------
@@ -16570,7 +16880,7 @@ function initMississippiExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ms-senate", "ms-house",
     "ms-supreme-court", "ms-court-of-appeals", "ms-chancery-court", "ms-circuit-court",
-    "county-supervisor", "school-district-unified",
+    "county-supervisor", "city-ward", "school-district-unified",
     "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -17054,12 +17364,12 @@ function initMississippiExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
-    "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E5C76": "#82ABD0",
-    "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
-    "#88637C": "#DAA7C9", "#8A692C": "#DDB061", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
-    "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD",
+    "#3E5C76": "#82ABD0", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
+    "#753B07": "#D7864B", "#88637C": "#DAA7C9", "#8A692C": "#DDB061", "#8C2E4A": "#F47294",
+    "#9550B2": "#E09BFE", "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

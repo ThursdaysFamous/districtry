@@ -111,7 +111,8 @@
     },
     "city-council": {
       "il": "ward", "ny": "council", "ca": "supervisor-district", "wi": "aldermanic-district",
-      "ia": "city-ward", "mi": "city-ward", "mn": "city-ward", "ky": "fiscal-court"
+      "ia": "city-ward", "mi": "city-ward", "mn": "city-ward", "ky": "fiscal-court",
+      "ms": "city-ward"
     },
     "voting-precinct": {
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",
