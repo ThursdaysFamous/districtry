@@ -84,6 +84,22 @@ wi/scripts/wi_phone_shape.py — no street word, no ZIP code, no "@", no second
 number run in — and a failure names the county and district, never the value.
 MIN_PHONES_EXTRA fails the build when the second numbers stop being read.
 
+EVERY E-MAIL ADDRESS A COUNTY PRINTS BESIDE A SUPERVISOR SHIPS, WHATEVER ITS
+DOMAIN, since 2026-10-17, on Adam's choice that day ("E-mails too"), for every
+state. Until then several of the scraper's readers kept an address only when it
+was on the county's own domain; now a Gmail, internet-provider or business
+address ships exactly as the county prints it, and where a county prints two
+for one supervisor the county's own is kept, because the card shows one "Email"
+link. Three things still keep an address off a row. undeliverable.py's list, as
+before. An address printed for two or more of one county's districts, which is
+an office's and not one supervisor's: drop_shared_emails() ships it for none of
+them and names its domain and districts on the log, never the address (Green
+Lake's rule in the scraper, applied to the whole file). And a value that is not
+one address: every row's `email` must be one "@" with no space anywhere and a
+dot and two letters after it (EMAIL_SHAPE), and a failure names the county and
+district, never the value. MIN_EMAILS fails the build when the addresses stop
+being read.
+
 Usage:
     python3 wi/scripts/build_wi_county_board_roster.py
     python3 wi/scripts/build_wi_county_board_roster.py --check
@@ -128,6 +144,41 @@ MIN_PHONES_EXTRA = 4   # seats carrying a second number (`phonesExtra`), counted
                        # on the file as written, carried counties included;
                        # measured 2026-10-17: 6 (Green Lake 1, Monroe 2,
                        # Waupaca 3), and the floor is about two thirds of that
+MIN_EMAILS = 385       # seats carrying an e-mail, counted on the file as
+                       # written, carried counties included; measured
+                       # 2026-10-17: 577, 22 of them on a domain that is not a
+                       # government's (Clark 17, Florence 5), and the floor is
+                       # about two thirds of that
+EMAIL_SHAPE = re.compile(r"^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$")
+
+
+def drop_shared_emails(roster):
+    """AN ADDRESS ON TWO OR MORE OF ONE COUNTY'S DISTRICTS IS NOT A PERSONAL ONE.
+
+    It is an office's — a clerk's, the board's — printed where a supervisor
+    publishes none, and shipping it would give a reader somebody else's inbox in
+    their supervisor's name. So it is removed from every district row that
+    carries it, and the log names the county, the address's domain and the
+    districts, never the address. Addresses are compared without case. Returns
+    the number of rows it emptied.
+    """
+    seats = {}
+    for key, row in roster.items():
+        if "district" in row and row.get("email"):
+            seats.setdefault((row["county"], row["email"].lower()), []).append(key)
+    emptied = 0
+    for (county, address), keys in sorted(seats.items()):
+        if len(keys) < 2:
+            continue
+        for key in keys:
+            roster[key].pop("email", None)
+            emptied += 1
+        print("  e-mail %-12s an address on %s is printed for districts %s — not "
+              "one supervisor's, dropped from all"
+              % (county, address.rsplit("@", 1)[-1],
+                 ", ".join(str(roster[k]["district"]) for k in sorted(keys))),
+              file=sys.stderr)
+    return emptied
 
 
 def read_on_for(entry):
@@ -449,6 +500,25 @@ def main():
                            "page has changed and its further numbers are no longer "
                            "being read" % (seconds, MIN_PHONES_EXTRA))
 
+    # ONE ADDRESS PER SUPERVISOR, AND ONLY THEIR OWN: an address on two or
+    # more of a county's districts is an office's (drop_shared_emails), and
+    # every value left must be one address. The error names the county and
+    # district only, for the reason the phone check above gives.
+    drop_shared_emails(roster)
+    bad = ["%s district %s" % (row.get("county"), row["district"])
+           for key, row in sorted(roster.items())
+           if "district" in row and row.get("email") is not None
+           and not EMAIL_SHAPE.match(str(row["email"]))]
+    if bad:
+        raise RuntimeError("%d e-mail value(s) are not one address: %s"
+                           % (len(bad), "; ".join(bad)))
+    emails = sum(1 for row in roster.values()
+                 if "district" in row and row.get("email"))
+    if emails < MIN_EMAILS:
+        raise RuntimeError("%d seats carry an e-mail, floor is %d — a county's page "
+                           "has changed and its addresses are no longer being read"
+                           % (emails, MIN_EMAILS))
+
     for fips, entry in sorted(counties.items()):
         # A county read from anywhere but its own live page says so on the log,
         # so the weekly PR's reviewer can see which rung of the ladder answered.
@@ -472,10 +542,10 @@ def main():
         for (day, via), cs in sorted(per_day.items())), file=sys.stderr)
     dated = sorted({r["county"] for r in roster.values() if r.get("asOf")})
     print("county-board-members: %d counties, %d seats (%d named, %d vacant%s, "
-          "%d with a phone, %d with a second number)%s%s"
+          "%d with a phone, %d with a second number, %d with an e-mail)%s%s"
           % (len(counties) + len(carry), total, total - vacant - withheld, vacant,
              ", %d withheld" % withheld if withheld else "",
-             sum(1 for row in roster.values() if row.get("phone")), seconds,
+             sum(1 for row in roster.values() if row.get("phone")), seconds, emails,
              "; carried from a document: %s" % ", ".join(dated) if dated else "",
              "; NOT READ THIS RUN, last read kept: %s" % ", ".join(sorted(carry))
              if carry else ""),
