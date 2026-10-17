@@ -1881,8 +1881,11 @@ footer .support b { color: var(--ink); }
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one
-   * or shares one into the installed app.
+   * A short link is sent to it only when a reader pastes one or shares one
+   * into the installed app. An app's search also sends it the address such
+   * a link carried, for the Census Bureau's geocoder, when the map's own
+   * search holds the street and not the house number (ENGINE geocoder-search
+   * lookupAddressRanges); the front door never does.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host

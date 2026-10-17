@@ -732,13 +732,19 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
           </tr>
           <tr>
             <td class="who"><a href="https://deno.com/privacy" target="_blank" rel="noopener">Deno Deploy</a><small>short map-link lookup</small></td>
-            <td>Only when you paste a <strong>short</strong> Google Maps or Apple Maps link (maps.app.goo.gl, maps.apple) into a search box, or share one into the installed app: that link, sent to districtry&#39;s own lookup, which runs on Deno&#39;s servers, follows it to the full link and sends that back. Deno receives your IP address and the short link. The lookup&#39;s own code stores neither; Deno, not this project, keeps whatever request logs its platform keeps. A full map link or a coordinate pair is read in your browser and goes nowhere.</td>
-            <td>Only when you paste or share a short map link.</td>
+            <td>Only when you paste a <strong>short</strong> Google Maps or Apple Maps link (maps.app.goo.gl, maps.apple) into a search box, or share one into the installed app: that link, sent to districtry&#39;s own lookup, which runs on Deno&#39;s servers, follows it to the full link and sends that back. Deno receives your IP address and the short link. The lookup&#39;s own code stores neither; Deno, not this project, keeps whatever request logs its platform keeps. A map link or a coordinate pair that carries its position is read in your browser and goes nowhere; a map link that names a place without one is searched like typed text, by the address search below. In every app, when a map link names a place by its street address and the map&#39;s own search knows that street but not the house number on it, the lookup also receives <strong>that address</strong> and asks the U.S. Census Bureau where the number falls (the next row).</td>
+            <td>Only when you paste or share a short map link, or, in every app, a map link whose house number the map&#x27;s search does not know.</td>
             <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
+            <td class="who"><a href="https://www.census.gov/about/policies/privacy.html" target="_blank" rel="noopener">U.S. Census Bureau</a><small>house-number lookup</small></td>
+            <td>Only when a map link you paste or share names a place by its street address, and the map&#39;s own address search knows that street but not the house number on it: the address, sent through districtry&#39;s lookup on Deno Deploy, which asks the Census Bureau&#39;s geocoder where that number falls on the street and sends its estimate back. The Census Bureau receives the address and the lookup&#39;s IP address, not yours. An address you type yourself is never sent this way.</td>
+            <td>Only when a shared map link&#x27;s house number is not in the map&#x27;s search.</td>
+            <td class="which">Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
+          </tr>
+          <tr>
             <td class="who"><a href="https://www.nyc.gov/home/privacy-policy.page" target="_blank" rel="noopener">GeoSearch / NYC Planning</a><small>address search, office pins</small></td>
-            <td><strong>The text you type into the search box</strong>, sent as you type so suggestions can appear. It also receives <em>public office addresses from the datasets</em> to place their map pins.</td>
+            <td><strong>The text you type into the search box</strong>, or the place&#39;s name and address from a map link you paste or share, sent as you type so suggestions can appear. It also receives <em>public office addresses from the datasets</em> to place their map pins.</td>
             <td>Only while you are searching for an address, or when a card places an office pin.</td>
             <td class="which">New York.</td>
           </tr>
@@ -750,7 +756,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
           </tr>
           <tr>
             <td class="who"><a href="https://www.komoot.com/privacy" target="_blank" rel="noopener">Photon / Komoot</a><small>address search</small></td>
-            <td><strong>The text you type into the search box</strong> — sent as you type on the apps' type-ahead boxes, and only when you press the button on the front door. <strong>Illinois</strong> also offers a batch check for people working from a list — a petition sheet, a canvass list. That sends <strong>every address in the list you paste</strong>, one lookup a second until it is done. Those are usually other people&#39;s addresses rather than your own, and the list itself is never uploaded anywhere: it stays in your browser, and only the address text goes to this geocoder.</td>
+            <td><strong>The text you type into the search box</strong>, or the place&#39;s name and address from a map link you paste or share — sent as you type on the apps' type-ahead boxes, and only when you press the button on the front door. <strong>Illinois</strong> also offers a batch check for people working from a list — a petition sheet, a canvass list. That sends <strong>every address in the list you paste</strong>, one lookup a second until it is done. Those are usually other people&#39;s addresses rather than your own, and the list itself is never uploaded anywhere: it stays in your browser, and only the address text goes to this geocoder.</td>
             <td>Only while you are searching for an address. A batch check sends its whole list, one address a second.</td>
             <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
@@ -837,7 +843,9 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
         request. The launcher hands it to the map after the <span class="k">#</span>, and the map
         reads it as it would a link pasted into its search box: a link that carries its position
         is read on your phone, a short link goes to the short-link lookup in the table above, and
-        a place name or an address goes to the address search. The launcher keeps that copy from
+        a place name or an address goes to the address search. When that search knows the
+        address's street and not its house number, the address also goes through the lookup to
+        the Census Bureau, which the table above names too. The launcher keeps that copy from
         the first time the installed app opens, or from the moment you install districtry from a
         state's map. A share sent before then reaches this site's host, GitHub Pages, in the
         address of that request.</p>
@@ -848,8 +856,9 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <h2>What there isn't</h2>
     <ul class="nope">
       <li>No accounts, logins, or passwords.</li>
-      <li>No database or back end operated by this project — there is nowhere for us to keep
-        anything.</li>
+      <li>No database operated by this project, and nowhere for us to keep anything. The one
+        service it runs, the map-link lookup in the table above, answers each request and keeps
+        no record of it.</li>
       <li>No advertising, ad networks, retargeting pixels, or social trackers.</li>
       <li>No sale or sharing of data. There is no data of yours to sell.</li>
       <li>No cross-site tracking or profile built by this project.</li>

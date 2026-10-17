@@ -217,9 +217,33 @@ LINK_LOOKUP_ROW = (
     "own lookup, which runs on Deno&#39;s servers, follows it to the full link and "
     "sends that back. Deno receives your IP address and the short link. The lookup&#39;s "
     "own code stores neither; Deno, not this project, keeps whatever request logs its "
-    "platform keeps. A full map link or a coordinate pair is read in "
-    "your browser and goes nowhere.",
+    "platform keeps. A map link or a coordinate pair that carries its position is read in "
+    "your browser and goes nowhere; a map link that names a place without one is searched "
+    "like typed text, by the address search below.",
     "Only when you paste or share a short map link.", "link_lookup")
+
+# THE ADDRESS ROUTE OF THAT LOOKUP (from 2026-10-17). A place shared from the
+# Google Maps app is its name and its street address with no position, and the
+# map's own search often holds the street and not the house number on it. An
+# app then asks the same lookup, at `?a=`, for the Census Bureau's estimate of
+# where the number falls on the street (engine geocoder-search
+# lookupAddressRanges), and shows it as a pin to tap. That sends the address to
+# Deno and from Deno to the Census Bureau, which sees Deno's address and not the
+# reader's. MEASURED from the call itself, so the row names exactly the
+# surfaces that make it: the front door reads the same map-link block and
+# carries the lookup's host, and never makes this call.
+HOUSE_LOOKUP_CALL = re.compile(r'MAP_LINK_LOOKUP\s*\+\s*"\?a="')
+HOUSE_LOOKUP_ROW = (
+    "U.S. Census Bureau", "house-number lookup",
+    "https://www.census.gov/about/policies/privacy.html",
+    "Only when a map link you paste or share names a place by its street address, and the "
+    "map&#39;s own address search knows that street but not the house number on it: the "
+    "address, sent through districtry&#39;s lookup on Deno Deploy, which asks the Census "
+    "Bureau&#39;s geocoder where that number falls on the street and sends its estimate "
+    "back. The Census Bureau receives the address and the lookup&#39;s IP address, not "
+    "yours. An address you type yourself is never sent this way.",
+    "Only when a shared map link's house number is not in the map's search.",
+    "house_lookup")
 
 
 # Geocoders, keyed by the host the measurement finds. What a geocoder receives is
@@ -239,8 +263,9 @@ LINK_LOOKUP_ROW = (
 GEOCODERS = {
     "photon.komoot.io": (
         "Photon / Komoot", "address search", "https://www.komoot.com/privacy",
-        "<strong>The text you type into the search box</strong> — sent as you type on the "
-        "apps' type-ahead boxes, and only when you press the button on the front door.",
+        "<strong>The text you type into the search box</strong>, or the place&#39;s name "
+        "and address from a map link you paste or share — sent as you type on the apps' "
+        "type-ahead boxes, and only when you press the button on the front door.",
         "Only while you are searching for an address."),
     "nominatim.openstreetmap.org": (
         "Nominatim / OpenStreetMap", "office pins",
@@ -252,7 +277,8 @@ GEOCODERS = {
     "geosearch.planninglabs.nyc": (
         "GeoSearch / NYC Planning", "address search, office pins",
         "https://www.nyc.gov/home/privacy-policy.page",
-        "<strong>The text you type into the search box</strong>, sent as you type so "
+        "<strong>The text you type into the search box</strong>, or the place&#39;s name "
+        "and address from a map link you paste or share, sent as you type so "
         "suggestions can appear. It also receives <em>public office addresses from the "
         "datasets</em> to place their map pins.",
         "Only while you are searching for an address, or when a card places an office "
@@ -523,6 +549,7 @@ def measure(rel, name, url, tag):
     app["tiles"] = "basemaps.cartocdn.com" in src_all
     app["cdn"] = "cdnjs.cloudflare.com" in src_all
     app["link_lookup"] = LINK_LOOKUP_HOST in src_all
+    app["house_lookup"] = bool(HOUSE_LOOKUP_CALL.search(src_all))
     # A layer drawn from a vector-tile archive (engine tile-overlay block)
     # asks this site's host for its map a piece at a time — the pieces under
     # the view and, for the card, the one under the selected point — where
@@ -1030,13 +1057,23 @@ def render_app_rows(apps):
 
 def render_recipient_rows(apps):
     rows = []
-    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW]:
+    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW, HOUSE_LOOKUP_ROW]:
         users = apps if key is None else [a for a in apps if a[key]]
         if not users:
             fail("no surface requests %s any more — the recipients table names it, "
                  "so either the fleet changed or the measurement is broken" % label)
         tiled = [a["name"] for a in users if a.get("vector_tiles")]
         mapped = [a["name"] for a in users if a.get("has_map")]
+        housed = [a["name"] for a in users if a.get("house_lookup")]
+        if key == "link_lookup" and housed:
+            where = ("every app" if set(housed) == set(mapped) else
+                     ", ".join(housed[:-1]) + " and " + housed[-1] if len(housed) > 1 else housed[0])
+            what += (" In %s, when a map link names a place by its street address and the "
+                     "map&#39;s own search knows that street but not the house number on it, "
+                     "the lookup also receives <strong>that address</strong> and asks the U.S. "
+                     "Census Bureau where the number falls (the next row)." % esc(where))
+            when = ("Only when you paste or share a short map link, or, in %s, a map link "
+                    "whose house number the map's search does not know." % where)
         if label == "GitHub Pages" and tiled:
             where = ("every app" if set(tiled) == set(mapped) else
                      ", ".join(tiled[:-1]) + " and " + tiled[-1] if len(tiled) > 1 else tiled[0])
@@ -1707,7 +1744,9 @@ PRIVACY_BODY = """
         request. The launcher hands it to the map after the <span class="k">#</span>, and the map
         reads it as it would a link pasted into its search box: a link that carries its position
         is read on your phone, a short link goes to the short-link lookup in the table above, and
-        a place name or an address goes to the address search. The launcher keeps that copy from
+        a place name or an address goes to the address search. When that search knows the
+        address's street and not its house number, the address also goes through the lookup to
+        the Census Bureau, which the table above names too. The launcher keeps that copy from
         the first time the installed app opens, or from the moment you install districtry from a
         state's map. A share sent before then reaches this site's host, GitHub Pages, in the
         address of that request.</p>
@@ -1718,8 +1757,9 @@ PRIVACY_BODY = """
     <h2>What there isn't</h2>
     <ul class="nope">
       <li>No accounts, logins, or passwords.</li>
-      <li>No database or back end operated by this project — there is nowhere for us to keep
-        anything.</li>
+      <li>No database operated by this project, and nowhere for us to keep anything. The one
+        service it runs, the map-link lookup in the table above, answers each request and keeps
+        no record of it.</li>
       <li>No advertising, ad networks, retargeting pixels, or social trackers.</li>
       <li>No sale or sharing of data. There is no data of yours to sell.</li>
       <li>No cross-site tracking or profile built by this project.</li>

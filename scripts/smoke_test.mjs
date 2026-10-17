@@ -852,9 +852,11 @@ try {
     const THIRD = feature(-89.0619, 41.2918, { name: "West 3rd Street", city: "Oglesby", state: "Illinois" });
     const LODGE = feature(-88.9945, 41.3190, { name: "Starved Rock Lodge", street: "Fox Canyon Bridge", state: "Illinois" });
     const PHONE = { viewport: { width: 412, height: 915 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true };
-    const run = async (hash, answer, settled, full = FULL, act = null, phone = false) => {
+    // ranges answers the lookup's ?a= route, the Census Bureau's estimate of
+    // where a house number falls (lookupAddressRanges); unset, it finds none
+    const run = async (hash, answer, settled, full = FULL, act = null, phone = false, ranges = null) => {
       const context = await browser.newContext(phone ? { serviceWorkers: "block", ...PHONE } : { serviceWorkers: "block" });
-      const asked = [];
+      const asked = [], lookedUp = [];
       const page = await booted(context, `${BASE}#q=${encodeURIComponent(hash)}`, async (p) => {
         await p.route("**/photon.komoot.io/**", (route) => {
           const u = new URL(route.request().url());
@@ -865,22 +867,39 @@ try {
             body: JSON.stringify({ type: "FeatureCollection", features: answer(q, bounded) }) });
         });
         await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+          const u = new URL(route.request().url());
+          if (u.searchParams.has("a")) {
+            lookedUp.push(u.searchParams.get("a"));
+            const r = ranges ? ranges(u.searchParams.get("a")) : { status: 200, matches: [] };
+            route.fulfill({ status: r.status, contentType: "application/json",
+              body: JSON.stringify(r.status === 200 ? { matches: r.matches } : { error: "stubbed failure" }) });
+            return;
+          }
           route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: full }) });
         });
       });
       await page.waitForFunction(settled, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
       await page.waitForTimeout(300); // a selection, if one were coming, follows the list
-      const read = () => page.evaluate((ns) => ({
-        point: window[ns].state.selectedPoint,
-        status: document.getElementById("geo-status").textContent,
-        rows: [...document.querySelectorAll("#geocode-results li")].map((li) => ({ cls: li.className, text: li.textContent })),
-        centre: window[ns].map.getCenter(),
-        zoom: window[ns].map.getZoom(),
-      }), EXPORTS_NAME);
+      const read = () => page.evaluate((ns) => {
+        const m = window[ns].map.getContainer().getBoundingClientRect();
+        const el = document.querySelector('.leaflet-marker-icon[aria-label^="Where the Census Bureau puts"]');
+        const r = el && el.getBoundingClientRect();
+        return {
+          point: window[ns].state.selectedPoint,
+          status: document.getElementById("geo-status").textContent,
+          rows: [...document.querySelectorAll("#geocode-results li")].map((li) => ({ cls: li.className, text: li.textContent })),
+          centre: window[ns].map.getCenter(),
+          zoom: window[ns].map.getZoom(),
+          height: m.height,
+          panelBelow: document.getElementById("search-extra").getBoundingClientRect().bottom - m.top,
+          pin: el ? { label: el.getAttribute("aria-label"), role: el.getAttribute("role"), tabindex: el.getAttribute("tabindex"),
+            top: r.top - m.top, bottom: r.bottom - m.top, left: r.left - m.left, right: r.right - m.left } : null,
+        };
+      }, EXPORTS_NAME);
       const got = await read();
       const after = act ? await act(page, read) : null;
       await context.close();
-      return { asked, got, after };
+      return { asked, lookedUp, got, after };
     };
     const selected = (ns) => !!window[ns].state.selectedPoint;
     const found = await run(SHARED, (q, bounded) => (bounded && q === BARE ? [HOUSE] : []), selected);
@@ -951,8 +970,15 @@ try {
       await page.waitForTimeout(300);
       return { frame, ...(await read()) };
     };
+    // The Census Bureau's estimates, made up: one on the address's street and
+    // near it, one on another street, and one on the address's street about
+    // 4 km from the part of it the map found.
+    const PIN_AT = { lat: 41.82195, lng: -87.97955 };
+    const ON_RANGE = { address: "9 W OAKLEY DR NW, WESTMONT, IL, 60559", ...PIN_AT };
+    const OTHER_STREET = { address: "9 OAKLEY LN, WESTMONT, IL, 60559", lat: 41.8100, lng: -87.9700 };
+    const FAR_ON_STREET = { address: "9 W OAKLEY DR NW, WESTMONT, IL, 60559", lat: 41.8400, lng: -87.9300 };
     const street = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),
-      onStreet, S_FULL, tap, true);
+      onStreet, S_FULL, tap, true, () => ({ status: 200, matches: [OTHER_STREET, FAR_ON_STREET] }));
     const g = street.got, t = street.after, f = t.frame;
     check("a shared address whose house number the search lacks frames its street clear of the search panel and selects nothing",
       !g.point && g.zoom >= 16 && f.below > 0 &&
@@ -966,12 +992,73 @@ try {
     check("a tap on the street then selects the point tapped and the message goes",
       !!t.point && Math.abs(t.point.lat - 41.8219565) < 0.0003 && Math.abs(t.point.lng + 87.9794949) < 0.0003 && t.status === "",
       JSON.stringify(t));
+    check("the Census Bureau is asked for the address, and an estimate on another street or far along this one draws no pin",
+      street.lookedUp.length === 1 && street.lookedUp[0] === S_BARE && !g.pin,
+      JSON.stringify({ lookedUp: street.lookedUp, pin: g.pin }));
     const near = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR, CLOSE] : []),
-      () => /A search for its name/.test(document.getElementById("geo-status").textContent), S_FULL);
+      () => /A search for its name/.test(document.getElementById("geo-status").textContent), S_FULL, null, false,
+      () => ({ status: 502 }));
     check("an answer to the place's name near its street is listed, marked, and never selected",
       !near.got.point && near.got.rows.length === 1 && near.got.rows[0].cls === "name-result" &&
         near.got.rows[0].text.indexOf(S_NAME) >= 0 && near.got.status.indexOf("showing that street") >= 0,
       JSON.stringify(near.got));
+    check("a Census lookup that fails draws no pin and leaves the street's message as it was",
+      near.lookedUp.length === 1 && !near.got.pin, JSON.stringify({ lookedUp: near.lookedUp, pin: near.got.pin }));
+
+    // THE CENSUS BUREAU'S PIN (lookupAddressRanges). The one estimate on the
+    // address's street, in its town and near the street the map found, is a
+    // pin to tap: the map frames it below the search panel and selects
+    // nothing, a tap on it selects its point, the keyboard can press it, and
+    // a point selected any other way takes it away.
+    const ranged = () => ({ status: 200, matches: [ON_RANGE] });
+    const PIN = '[aria-label^="Where the Census Bureau puts"]';
+    const pinShown = () => /The pin is where the Census Bureau/.test(document.getElementById("geo-status").textContent);
+    const tapPin = async (page, read) => {
+      await page.locator(PIN).tap();
+      await page.waitForTimeout(300);
+      return read();
+    };
+    const pinned = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),
+      pinShown, S_FULL, tapPin, true, ranged);
+    const pg = pinned.got, pa = pinned.after;
+    check("the Census Bureau's estimate is a pin below the search panel, and nothing is selected",
+      !pg.point && !!pg.pin && pg.zoom >= 17.5 && pg.pin.top >= pg.panelBelow && pg.pin.bottom <= pg.height &&
+        pg.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The pin is where the Census Bureau's " +
+          "street records put that number, which can be a few doors off. Tap the pin to use it, or tap the place you meant.") >= 0 &&
+        pg.pin.label === "Where the Census Bureau puts 9 W Oakley Dr NW. Select this point." &&
+        pg.pin.role === "button" && pg.pin.tabindex === "0",
+      JSON.stringify(pg));
+    check("a tap on the pin selects the pin's point, and the pin and the message go",
+      !!pa.point && Math.abs(pa.point.lat - PIN_AT.lat) < 1e-7 && Math.abs(pa.point.lng - PIN_AT.lng) < 1e-7 &&
+        !pa.pin && pa.status === "",
+      JSON.stringify(pa));
+    const pressPin = async (page, read) => {
+      await page.focus(PIN);
+      await page.keyboard.press("Enter");
+      await page.waitForTimeout(300);
+      return read();
+    };
+    const keyed = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR, CLOSE] : []),
+      () => /also found the place below/.test(document.getElementById("geo-status").textContent), S_FULL, pressPin, false, ranged);
+    check("with an answer to the place's name near the street as well, both are offered and neither is selected",
+      !keyed.got.point && !!keyed.got.pin && keyed.got.rows.length === 1 && keyed.got.rows[0].cls === "name-result" &&
+        keyed.got.status.indexOf("also found the place below. Pick it if it's the one you meant, tap the pin, or tap the map.") >= 0,
+      JSON.stringify(keyed.got));
+    check("Enter on the focused pin selects its point",
+      !!keyed.after.point && Math.abs(keyed.after.point.lat - PIN_AT.lat) < 1e-7 &&
+        Math.abs(keyed.after.point.lng - PIN_AT.lng) < 1e-7 && !keyed.after.pin,
+      JSON.stringify(keyed.after));
+    const otherwise = async (page, read) => {
+      await page.evaluate((ns) => window[ns].setSelectedPoint(41.8240, -87.9760, { skipPan: true }), EXPORTS_NAME);
+      await page.waitForTimeout(200);
+      return read();
+    };
+    const moved = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : []),
+      pinShown, S_FULL, otherwise, false, ranged);
+    check("a point selected another way takes the pin away, and the message asking for a tap on it",
+      !!moved.got.pin && !!moved.after.point && Math.abs(moved.after.point.lat - 41.8240) < 1e-9 && !moved.after.pin &&
+        moved.after.status === "",
+      JSON.stringify({ before: moved.got.pin, after: moved.after }));
   }
 
   // 1d5. A LINK TO A PLACE IN ANOTHER STATE OPENS THAT STATE'S APP (ENGINE
