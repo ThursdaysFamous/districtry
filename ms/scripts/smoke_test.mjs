@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ms-senate", "ms-house"];
 const EXPECT_DISTRICT = { "county": "Hinds County", "us-house": "2", "ms-senate": "29", "ms-house": "67" };
 const NEGATIVE_POINT = "32.48000,-88.25000"; // near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.
 const APP_NAME = "districtry Mississippi";
-const EXPECT_LAYERS = 16;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -762,16 +762,16 @@ try {
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "2836000", NAME: "Jackson city", BASENAME: "Jackson", STATE: "28", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Jackson city/, /Incorporated city/, /Not named here/],
-        reject: [/INACTIVE/, /Incorporated town/, /Incorporated village/]
+        want: [/Jackson city/, /Incorporated city/, /Mayor/],
+        reject: [/INACTIVE/, /Incorporated town/, /Incorporated village/, /Not named here/]
       },
       {
         name: "a town names itself a town, not a city",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "2824940", NAME: "Flora town", BASENAME: "Flora", STATE: "28", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Flora town/, /Incorporated town/],
-        reject: [/INACTIVE/, /Incorporated city/, /Incorporated village/]
+        want: [/Flora town/, /Incorporated town/, /this town is not one of them/],
+        reject: [/INACTIVE/, /Incorporated city/, /Incorporated village/, /Who these are/]
       },
       {
         name: "a village names itself a village",
@@ -1489,6 +1489,168 @@ try {
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
     await context.close();
+  }
+
+  // 12. THE MAYOR AND COUNCIL OF THE 15 CITIES OF 25,000 PEOPLE OR MORE, AND
+  //     THE WARDS OF NINE. Every name expected is read from the shipped
+  //     roster (data/app/ms-city-councils.json) and every ward from the
+  //     shipped ward file (data/app/ms-city-wards.json) at the point, so a
+  //     rebuild moves the expectation with the files; what is asserted is
+  //     that each card agrees with them and says where they come from.
+  //       - The City card in Jackson (the place query stubbed, as in 7) names
+  //         the mayor and every member by seat, says when the city's page was
+  //         read, links the mayor's page and, in its footer, the council's,
+  //         and says the City Ward layer draws Jackson's wards. In Biloxi,
+  //         whose wards are not drawn, it says so.
+  //       - Greenville's names nobody and says why; a roster that fails to
+  //         load leaves the place standing and says no name is shown.
+  //       - The City Ward card at the Capitol names its ward, the ward's
+  //         member and whose map the line is, and links the city's ward-map
+  //         page and the council page.
+  //       - Where Oxford's own map draws two wards over one spot it names
+  //         both. The point is shapely's polylabel of the largest Ward 2 /
+  //         Ward 4 sliver in the drawn file, 2.5 m from its edge (2026-10-17).
+  //       - In Biloxi, whose wards are not drawn, the card says which nine
+  //         cities' wards are.
+  {
+    const councils = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-city-councils.json"), "utf8"));
+    const wards = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-city-wards.json"), "utf8"));
+    function inRing(x, y, ring) {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i], [xj, yj] = ring[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    }
+    function wardsAt(point) {
+      const [lat, lng] = point.split(",").map(Number);
+      return wards.features.filter((f) => {
+        const g = f.geometry;
+        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
+      }).map((f) => f.properties);
+    }
+    const memberOf = (p) => ((councils[p.geoid] || {}).seats || []).find((s) => s.seat === p.seat) || {};
+    const placeBody = (props) => JSON.stringify({
+      geometryType: "esriGeometryPolygon", spatialReference: { wkid: 4326 },
+      fields: Object.keys(props).map((n) => ({ name: n, type: "esriFieldTypeString", alias: n })),
+      features: [{ attributes: props,
+                   geometry: { rings: [[[-91, 31.5], [-89.5, 31.5], [-89.5, 33], [-91, 33], [-91, 31.5]]] } }]
+    });
+    const links = (page, id) => page.evaluate((cid) => {
+      const el = document.getElementById("card-" + cid);
+      const block = el && el.closest(".layer-block");
+      return {
+        body: el ? Array.from(el.querySelectorAll("a[href]")).map((a) => a.href) : [],
+        footer: block ? Array.from(block.querySelectorAll(".card-footer a[href]")).map((a) => a.href) : []
+      };
+    }, id);
+    const cityAt = async (props, routeExtra) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (pg) => {
+        await pg.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: placeBody(props) }));
+        if (routeExtra) await routeExtra(pg);
+      });
+      const info = await cardText(page, "municipality");
+      const got = await links(page, "municipality");
+      await context.close();
+      return { text: info.text || "", error: info.error, links: got };
+    };
+
+    {
+      const j = councils["2836000"];
+      const c = await cityAt({ GEOID: "2836000", NAME: "Jackson city", BASENAME: "Jackson", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
+      const names = j.seats.filter((s) => s.name).map((s) => s.name);
+      const missing = names.filter((n) => !c.text.includes(n));
+      check("the City card in Jackson names the mayor and every council member by seat, says when the city's page was read, and links the mayor's and the council's pages",
+        !c.error && names.length === j.seats.length && missing.length === 0 &&
+          /Mayor/.test(c.text) && /Ward 7/.test(c.text) &&
+          /as Jackson's own website named them on \d{1,2} [A-Z][a-z]+ \d{4}/.test(c.text) &&
+          /Your ward/.test(c.text) && /The City Ward layer draws Jackson's wards/.test(c.text) &&
+          !/Not named here/.test(c.text) &&
+          c.links.body.includes(j.mayorUrl) && c.links.footer.includes(j.councilUrl),
+        `missing=${missing} links=${JSON.stringify(c.links)} ${c.text.slice(0, 140)}`);
+    }
+    {
+      const c = await cityAt({ GEOID: "2806220", NAME: "Biloxi city", BASENAME: "Biloxi", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
+      check("the City card in Biloxi, whose wards are not drawn, names its council and says this app does not draw its wards",
+        !c.error && c.text.includes(councils["2806220"].seats[0].name) &&
+          /This app does not draw Biloxi's wards/.test(c.text) && !/City Ward layer draws/.test(c.text),
+        c.text.slice(0, 200));
+    }
+    {
+      const c = await cityAt({ GEOID: "2829180", NAME: "Greenville city", BASENAME: "Greenville", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
+      check("the City card in Greenville names nobody and says the city's own website names no member",
+        !c.error && /Your mayor and council: not named here/.test(c.text) &&
+          /does not name its mayor or its council members/.test(c.text) &&
+          !/Who these are/.test(c.text) && !/\bMayor\b/.test(c.text),
+        c.text.slice(0, 200));
+    }
+    {
+      const c = await cityAt({ GEOID: "2836000", NAME: "Jackson city", BASENAME: "Jackson", STATE: "28", LSADC: "25", FUNCSTAT: "A" },
+        async (pg) => {
+          await pg.route("**/data/app/ms-city-councils.json", (r) => r.fulfill({ status: 500, body: "down" }));
+        });
+      check("the City card still names the place, and names nobody, when the list of mayors and councils fails",
+        !c.error && /Jackson city/.test(c.text) && /did not load, so no name is shown/.test(c.text) &&
+          !c.text.includes(councils["2836000"].seats[0].name),
+        c.text.slice(0, 160));
+    }
+
+    const wardCard = async (pt, routeExtra) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=city-ward`, routeExtra);
+      const info = await cardText(page, "city-ward");
+      const got = await links(page, "city-ward");
+      await context.close();
+      return { text: info.text || "", error: info.error, links: got };
+    };
+    {
+      const at = wardsAt(POINT);
+      const p = at[0] || {};
+      const m = memberOf(p);
+      const council = councils[p.geoid] || {};
+      const c = await wardCard(POINT);
+      check(`the City Ward card at the Capitol names ${p.city} ${p.seat}, its member and whose map the line is, and links the city's ward-map page and the council's page`,
+        at.length === 1 && !c.error && !!m.name && c.text.includes(m.name) &&
+          c.text.includes(String(p.seat)) && c.text.includes(`${p.city} ${council.body}`) &&
+          /How this line is drawn/.test(c.text) && c.text.includes("Jackson Adopted Wards 2024") &&
+          /as Jackson's own website named them on \d{1,2} [A-Z][a-z]+ \d{4}/.test(c.text) &&
+          c.links.body.includes(p.sourceUrl) && c.links.footer.includes(council.councilUrl),
+        `wards here=${at.length} links=${JSON.stringify(c.links)} ${c.text.slice(0, 160)}`);
+    }
+    {
+      const OXFORD_TWO = "34.354137,-89.508531";
+      const at = wardsAt(OXFORD_TWO);
+      const names = at.map((p) => memberOf(p).name).filter(Boolean);
+      const c = await wardCard(OXFORD_TWO);
+      check("where Oxford's own map draws two wards over one spot, the City Ward card names both and both members",
+        at.length === 2 && names.length === 2 && !c.error &&
+          names.every((n) => c.text.includes(n)) &&
+          /Ward 2 and Ward 4/.test(c.text) && /More than one ward here/.test(c.text),
+        `wards here=${at.map((p) => p.seat)} ${c.text.slice(0, 160)}`);
+    }
+    {
+      const BILOXI = "30.3958,-88.8853";
+      const c = await wardCard(BILOXI);
+      check("in Biloxi, whose wards are not drawn, the City Ward card says which nine cities' wards are",
+        wardsAt(BILOXI).length === 0 && !c.error && /No ward is drawn at this point/.test(c.text) &&
+          /nine of Mississippi's 15 cities/.test(c.text) && /Brandon/.test(c.text),
+        c.text.slice(0, 160));
+    }
+    {
+      const at = wardsAt(POINT);
+      const p = at[0] || {};
+      const c = await wardCard(POINT, async (pg) => {
+        await pg.route("**/data/app/ms-city-councils.json", (r) => r.fulfill({ status: 500, body: "down" }));
+      });
+      check("the City Ward card still names the ward, and names nobody, when the list of mayors and councils fails",
+        !c.error && c.text.includes(String(p.seat)) && /did not load, so no name is shown/.test(c.text) &&
+          !c.text.includes(memberOf(p).name || "(none)"),
+        c.text.slice(0, 160));
+    }
   }
 } finally {
   await browser.close();
