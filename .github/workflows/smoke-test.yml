@@ -1516,7 +1516,16 @@ jobs:
       # 2026-09-27. It drives contact_block over fixture markup and covers the
       # only two places this module overrides a filing: LOCALITY_CORRECTIONS in
       # all three directions, and the middle initial's comma restored to a
-      # period, printed once, with a filed suffix comma left alone. Eight
+      # period, printed once, with a filed suffix comma left alone. Since
+      # 2026-10-17 it also holds which telephone rides an officer (Adam's ruling
+      # that day: "if the official government source uses personal phone
+      # numbers, we publish those"): a number printed beside one officer alone
+      # is that officer's, one another name also filed is the district's, and
+      # two numbers for one person a digit apart ship as neither. Since he
+      # chose "E-mails too" the same day it holds the e-mail address too: one
+      # printed in the officer's own slot rides that officer, and one printed
+      # beside a second person, named for another filer or for the district
+      # itself, or kept by an accountant or a bank rides nobody. Eight
       # scrapers import that parser, so a regression in it reaches eight weekly
       # rosters. Stdlib only, no network.
       - name: The AFR parser still corrects only what it declares

@@ -7,7 +7,8 @@
       "213 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6220"
-    ]
+    ],
+    "phone": "home (864) 638-2153"
   },
   "2": {
     "name": "Rex F. Rice",
@@ -57,7 +58,8 @@
       "502 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6108"
-    ]
+    ],
+    "phone": "business (864) 235-5308"
   },
   "7": {
     "name": "Karl B. Allen",
@@ -67,7 +69,8 @@
       "610 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6040"
-    ]
+    ],
+    "phone": "business (864) 235-9049"
   },
   "8": {
     "name": "Ross Turner",
@@ -77,6 +80,10 @@
       "512 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6148"
+    ],
+    "phone": "home (864) 987-0596",
+    "phonesExtra": [
+      "business (864) 288-9513"
     ]
   },
   "9": {
@@ -87,7 +94,8 @@
       "412 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6250"
-    ]
+    ],
+    "phone": "business (864) 984-4129"
   },
   "10": {
     "name": "Billy Garrett",
@@ -117,6 +125,10 @@
       "608 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6000"
+    ],
+    "phone": "home (864) 576-6742",
+    "phonesExtra": [
+      "business (864) 978-9522"
     ]
   },
   "13": {
@@ -137,6 +149,10 @@
       "111 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6430"
+    ],
+    "phone": "home (864) 489-3766",
+    "phonesExtra": [
+      "business (864) 489-9994"
     ]
   },
   "15": {
@@ -147,7 +163,8 @@
       "404 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6230"
-    ]
+    ],
+    "phone": "business (803) 752-0052"
   },
   "16": {
     "name": "Michael Johnson",
@@ -177,7 +194,8 @@
       "410 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6240"
-    ]
+    ],
+    "phone": "home (803) 364-3950"
   },
   "19": {
     "name": "Tameika Isaac Devine",
@@ -207,7 +225,8 @@
       "612 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6048"
-    ]
+    ],
+    "phone": "home (803) 776-1238"
   },
   "22": {
     "name": "Overture Walker",
@@ -237,6 +256,10 @@
       "303 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6320"
+    ],
+    "phone": "home (803) 215-3631",
+    "phonesExtra": [
+      "business (803) 649-0000"
     ]
   },
   "25": {
@@ -247,7 +270,8 @@
       "311 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6330"
-    ]
+    ],
+    "phone": "home (803) 480-0419"
   },
   "26": {
     "name": "Russell L. Ott",
@@ -277,7 +301,8 @@
       "402 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6350"
-    ]
+    ],
+    "phone": "business (843) 946-6556"
   },
   "29": {
     "name": "JD Chaplin",
@@ -297,7 +322,8 @@
       "608 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6000"
-    ]
+    ],
+    "phone": "home (843) 362-0307"
   },
   "31": {
     "name": "Mike Reichenbach",
@@ -317,6 +343,10 @@
       "613 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6056"
+    ],
+    "phone": "home (843) 426-4138",
+    "phonesExtra": [
+      "business (843) 355-5349"
     ]
   },
   "33": {
@@ -327,6 +357,10 @@
       "101 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6610"
+    ],
+    "phone": "home (843) 626-6269",
+    "phonesExtra": [
+      "business (843) 248-2405"
     ]
   },
   "34": {
@@ -397,6 +431,10 @@
       "513 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6140"
+    ],
+    "phone": "home (803) 536-1808",
+    "phonesExtra": [
+      "business (803) 534-5218"
     ]
   },
   "41": {
@@ -407,7 +445,8 @@
       "504 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6032"
-    ]
+    ],
+    "phone": "home (843) 227-1331"
   },
   "42": {
     "name": "Deon T. Tedder",
@@ -457,6 +496,7 @@
       "203 Gressette Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6080"
-    ]
+    ],
+    "phone": "business (843) 524-3109"
   }
 }

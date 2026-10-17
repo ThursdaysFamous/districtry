@@ -40,10 +40,15 @@ their row, and only the member's own page says why, in bold under the name ("Dec
 VACANCY RECORD naming the page that says so, and a seat with two sitting members fails the build.
 That day three seats read vacant — Senate 1 and 18 and House 8 — so the cards name 33 of 35
 senators and 99 of 100 representatives, each with a party, an e-mail address (the list's) and a
-link to the member's own page. **THE SAME PAGES PRINT A MAILING ADDRESS AND A TELEPHONE, AND THE
-BUILDER NEVER READS THEM**: on a senator's page the bold line under the name is that address,
-sometimes a street address that may be a home, and the telephone is not labelled as to whose line
-it is. A bold line that is neither a known status word nor an address stops the build.
+link to the member's own page. **THE SAME PAGES PRINT A MAILING ADDRESS AND A TELEPHONE; THE
+TELEPHONE SHIPS AND THE ADDRESS NEVER IS READ**: on a senator's page the bold line under the name
+is that address, sometimes a street address that may be a home, and the telephone is not labelled
+as to whose line it is. The builder read neither until Adam's fleet-wide ruling of 2026-10-17 ("if
+the official government source uses personal phone numbers, we publish those"), so the telephone
+now ships on the member's row as printed — 97 of the 132 sitting members on 2026-10-17 — while a
+number two or more members share ships on none of their rows (one that day, a state government line
+printed for four members), and a value in that row that is not a telephone number stops the build.
+A bold line that is neither a known status word nor an address stops the build.
 
 **THE TOWNSHIPS ARE THE STATE'S, NOT THE CENSUS'S, AND THE CARD NAMES NOBODY.** The layer was
 left out at arrival: all 1,051 county subdivisions TIGERweb carries for STATE='05' are FUNCSTAT N,

@@ -748,8 +748,10 @@ jobs:
       # same reason: a failed Cook scrape carries all three Cook-fed files
       # forward together, and the builder refuses partial input on its own.
       # continue-on-error, deliberately: this builder's FATALs are strict on
-      # purpose (completeness, one-seat-per-office, personal-domain refusals)
-      # and each one means THIS file stands while a human looks — never that
+      # purpose (completeness, one-seat-per-office, a hall e-mail that is not
+      # one address; the personal-domain refusal was retired on 2026-10-17,
+      # Adam's "E-mails too") and each one means THIS file stands while a
+      # human looks — never that
       # the whole ~30-county municipal refresh should miss its week. The
       # refusal is surfaced on a standing issue below, because a green run
       # is invisible to the roster-health watchdog.
@@ -766,7 +768,7 @@ jobs:
         run: |
           title="Township officials: the Cook build refused the write"
           existing="$(gh issue list --search "$title in:title" --state open --json number --jq '.[0].number')"
-          body="build_township_officials.py exited non-zero on $(date -u +%Y-%m-%d) — its guards read the TWNSP feed as changed (a township missing, a duplicated seat, a personal-domain hall contact, or an address-type change). The shipped township-officials.json is unchanged and still serves its last verified values. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          body="build_township_officials.py exited non-zero on $(date -u +%Y-%m-%d) — its guards read the TWNSP feed as changed (a township missing, a duplicated seat, a hall e-mail that is not one address, too few hall e-mails, or an address-type change). The shipped township-officials.json is unchanged and still serves its last verified values. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           if [ -n "$existing" ]; then
             gh issue comment "$existing" --body "$body"
           else

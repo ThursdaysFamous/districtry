@@ -3,6 +3,9 @@
     "clerk": "Gary M Kane",
     "municipality": "Amnicon",
     "phone": "715-364-2316",
+    "phonesExtra": [
+      "218-391-9134"
+    ],
     "recordUpdated": "2026-06-25",
     "url": "https://townofamnicon.wi.gov/"
   },
@@ -10,6 +13,9 @@
     "clerk": "Morgan Fowler",
     "municipality": "Bennett",
     "phone": "715-817-5994",
+    "phonesExtra": [
+      "715-375-2394"
+    ],
     "recordUpdated": "2025-01-17",
     "url": "https://townofbennett.wi.gov/"
   },
@@ -31,6 +37,9 @@
     "clerk": "Tammy Baer",
     "municipality": "Dairyland",
     "phone": "715-244-3000",
+    "phonesExtra": [
+      "715-244-3635"
+    ],
     "recordUpdated": "2024-06-27",
     "url": "http://townofdairyland.com"
   },
@@ -46,6 +55,9 @@
     "deputyClerk": "Jessica Dupree",
     "municipality": "Hawthorne",
     "phone": "715-374-3641",
+    "phonesExtra": [
+      "218-591-1080"
+    ],
     "recordUpdated": "2026-07-22",
     "url": "https://townofhawthorne.wi.gov/"
   },
@@ -53,6 +65,9 @@
     "clerk": "Nora Anne Moss",
     "municipality": "Highland",
     "phone": "715-374-2046",
+    "phonesExtra": [
+      "218-391-3754"
+    ],
     "recordUpdated": "2025-11-21",
     "url": "https://townofhighland.net/"
   },
@@ -60,6 +75,9 @@
     "clerk": "Jon Winter",
     "municipality": "Lakeside",
     "phone": "715-364-2359",
+    "phonesExtra": [
+      "218-391-3326"
+    ],
     "recordUpdated": "2025-02-26",
     "url": "https://www.townoflakeside.us/"
   },
@@ -89,6 +107,9 @@
     "clerk": "Mick Salmen",
     "municipality": "Solon Springs",
     "phone": "715-378-2295",
+    "phonesExtra": [
+      "715-816-0107"
+    ],
     "recordUpdated": "2024-01-11",
     "url": "https://townofsolonsprings.com/"
   },

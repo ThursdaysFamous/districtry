@@ -21,10 +21,21 @@ Source (Granicus CMS pages):
            -> a content_area whose first block holds a
               <strong|span class="subtitle"> ("District N" / "County Board
               Chairman"), the member's phone as text (sometimes annotated
-              "(work)"/"(home)"/"(mobile)", sometimes two numbers — the
-              first is taken, annotation dropped), and an entity-encoded
-              mailto with visible text. "Current Term Ends" rides a labeled
-              paragraph.
+              "(work)"/"(home)"/"(mobile)"/"(Cell)", sometimes two numbers),
+              and an entity-encoded mailto with visible text. "Current Term
+              Ends" rides a labeled paragraph.
+
+EVERY NUMBER ON A MEMBER'S OWN BLOCK SHIPS, WITH ITS ANNOTATION. Until
+2026-10-17 the first number was taken and its annotation dropped, so a member
+who lists a cell and a work line lost the second, and "(home)" never reached a
+reader. Since Adam's ruling that day ("if the official government source uses
+personal phone numbers, we publish those") the first number goes in `phone` and
+any others in `phonesExtra`, in the page's order, each led by the word in its
+annotation ("home 815-...", "cell 815-...", "work 815-...", "mobile 815-...").
+A plain "Phone:" adds no word, a number marked as a fax never ships, and a
+number printed on two or more member pages is an office line and is not added
+to anyone as their own. Measured 2026-10-17 on the 19 member pages: 18 print a
+number, 5 annotate theirs, and one prints two (a cell and a work line).
 
 Fetch engines (`--engine`): the county fronts the site with bot management
 that 403s datacenter HTTP clients — including, live-verified on the first CI
@@ -118,6 +129,16 @@ MEMBER_LINK_RE = re.compile(r"/departments/county-board/meet-your-county-board-m
 DISTRICT_RE = re.compile(r"district\s*#?\s*(\d+)", re.IGNORECASE)
 CHAIR_RE = re.compile(r"\bchairman\b", re.IGNORECASE)
 PHONE_RE = re.compile(r"\(?\d{3}\)?[.\-\s]?\d{3}[.\-\s]\d{4}")
+# The annotation the member pages write after a number, "(work)", and the word
+# it ships as. One-letter forms are the fleet's convention (scraper_common's
+# PERSON_PHONE_LABELS); an annotation outside this table ships no word, and a
+# fax never ships at all.
+ANNOTATION_RE = re.compile(r"\s*\(\s*([A-Za-z]+)\s*\)")
+PHONE_LABELS = {"cell": "cell", "c": "cell", "home": "home", "h": "home",
+                "work": "work", "w": "work", "business": "business",
+                "b": "business", "office": "office", "o": "office",
+                "mobile": "mobile", "personal": "personal"}
+FAX_RE = re.compile(r"\bfax\b\W*$", re.IGNORECASE)
 
 
 def _looks_blocked(html):
@@ -534,7 +555,8 @@ def parse_member_page(html):
         if area is not None:
             break
     if area is None:
-        return {"district": None, "chair": False, "email": None, "phone": None, "term": None}
+        return {"district": None, "chair": False, "email": None, "phones": [],
+                "tel_ok": True, "term": None}
 
     district = None
     chair = False
@@ -555,13 +577,14 @@ def parse_member_page(html):
             email = addr
             break
 
-    # the first phone-shaped number in the member's own block; the pages
-    # annotate some numbers ("(work)"/"(home)"/"(mobile)") and one member
-    # lists two — the regex takes just the number, first match wins
-    phone = None
-    m = PHONE_RE.search(area.get_text())
-    if m:
-        phone = clean(m.group(0))
+    # every phone-shaped number in the member's own block, in the page's
+    # order, as (label, number); see the module docstring
+    phones = member_phones(area)
+    # a tel: link that dials a number the block does not show: ship none
+    shown = {re.sub(r"\D", "", m.group(0)) for m in PHONE_RE.finditer(area.get_text())}
+    dialled = {re.sub(r"\D", "", a["href"])[-10:]
+               for a in area.find_all("a", href=re.compile(r"^tel:", re.IGNORECASE))}
+    tel_ok = not (dialled - shown)
 
     term = None
     for strong in area.find_all("strong"):
@@ -573,7 +596,54 @@ def parse_member_page(html):
                 term = clean(parent_text[idx + len(label):].lstrip(" :"))
             break
 
-    return {"district": district, "chair": chair, "email": email, "phone": phone, "term": term}
+    return {"district": district, "chair": chair, "email": email, "phones": phones,
+            "tel_ok": tel_ok, "term": term}
+
+
+def member_phones(area):
+    """Every number in a member's block as (label or None, number as printed),
+    in the page's order: the label is the word in the annotation after it, a
+    number the block marks as a fax is left out, and a repeat is kept once."""
+    text = re.sub(r"\s+", " ", area.get_text())
+    out, seen = [], set()
+    for m in PHONE_RE.finditer(text):
+        digits = re.sub(r"\D", "", m.group(0))
+        note = ANNOTATION_RE.match(text, m.end())
+        word = note.group(1).lower() if note else None
+        if word == "fax" or FAX_RE.search(text[max(0, m.start() - 12):m.start()]):
+            continue
+        if digits in seen:
+            continue
+        seen.add(digits)
+        out.append((PHONE_LABELS.get(word), clean(m.group(0))))
+    return out
+
+
+def assign_phones(records, details):
+    """Set each record's `phone` and `phonesExtra` from its page's numbers. A
+    number printed on two or more member pages is an office line: it stays
+    where the first-number rule has always put it, and is never added to a
+    member as a further number."""
+    pages = {}
+    for detail in details.values():
+        for _label, number in detail["phones"]:
+            key = re.sub(r"\D", "", number)
+            pages[key] = pages.get(key, 0) + 1
+    for rec in records:
+        detail = details.get(rec["slug"])
+        if detail is None:
+            continue
+        numbers = detail["phones"] if detail["tel_ok"] else []
+        if not detail["tel_ok"]:
+            print("%s: a tel: link dials a number the page does not show — no "
+                  "number shipped" % rec["slug"], file=sys.stderr)
+        labelled = []
+        for label, number in numbers:
+            if labelled and pages.get(re.sub(r"\D", "", number), 0) > 1:
+                continue
+            labelled.append("%s %s" % (label, number) if label else number)
+        rec["phone"] = labelled[0] if labelled else None
+        rec["phonesExtra"] = labelled[1:]
 
 
 def scrape_all(fetcher, delay=0.75, verbose=True, listing_html=None):
@@ -583,7 +653,7 @@ def scrape_all(fetcher, delay=0.75, verbose=True, listing_html=None):
     if verbose:
         print("listing yielded %d member link(s) [engine=%s]" % (len(listing), fetcher.engine),
               file=sys.stderr)
-    records = []
+    records, details = [], {}
     for i, m in enumerate(listing, 1):
         if verbose:
             print("[%d/%d] fetching %s" % (i, len(listing), m["url"]), file=sys.stderr)
@@ -602,8 +672,8 @@ def scrape_all(fetcher, delay=0.75, verbose=True, listing_html=None):
             if detail["chair"] and not rec["role"]:
                 rec["role"] = "Chairman"
             rec["email"] = detail["email"]
-            rec["phone"] = detail["phone"]
             rec["term_expiration"] = detail["term"]
+            details[m["slug"]] = detail
             archived = getattr(fetcher, "last_archived_at", None)
             if archived:
                 rec["archived_at"] = archived  # provenance: the archive copy used
@@ -611,6 +681,7 @@ def scrape_all(fetcher, delay=0.75, verbose=True, listing_html=None):
             rec["error"] = str(e)
         records.append(rec)
         time.sleep(delay)
+    assign_phones(records, details)
     return records
 
 

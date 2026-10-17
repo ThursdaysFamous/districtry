@@ -13,9 +13,20 @@ WHAT MAKES STARK'S ROSTER UNUSUAL: the e-mail addresses belong to the SEAT, not
 the person — `boarddist1-1@starkco.illinois.gov` through
 `boarddist2-4@starkco.illinois.gov`. A county of 5,300 people bothering to run
 positional mailboxes is better practice than most of the fleet manages, and it
-means these addresses stay correct through turnover. EMAIL_SHAPE_RE asserts the
-pattern holds, because a personal address appearing in that slot would be a
-change in county policy worth a human look, not something to ship quietly.
+means these addresses stay correct through turnover. SEAT_MAILBOX_RE reads the
+district out of a seat mailbox, and the build fails when a member holds the
+other district's mailbox, because then the page's rows and its seat numbering
+disagree.
+
+A PERSONAL ADDRESS SHIPS, SINCE 2026-10-17. Until that day this builder failed
+on any address that was not a seat mailbox, so that a person would decide
+whether a personal address in a seat's place should ship. Adam decided it on
+2026-10-17 with his choice to publish personal e-mail addresses ("E-mails
+too"): an address the page prints beside one member ships on that member,
+checked only for its shape (scraper_common.person_email_problem). An
+address printed beside two or more members is an office's or a shared inbox
+and ships on neither, and one scripts/undeliverable.py lists ships nowhere.
+Measured 2026-10-17, all eight addresses are seat mailboxes.
 
 COUNT GUARDS. The board seats eight members, four from each of two districts,
 and that count is pinned independently: the county's own map splits the county
@@ -40,6 +51,10 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import undeliverable  # noqa: E402  (the fleet's withhold list)
+from scraper_common import person_email_problem  # noqa: E402  (shared machinery — do not fork)
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "stark-county-board-members.json")
@@ -47,7 +62,12 @@ OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
 MIN_MEMBERS = 6
 EXPECTED_DISTRICTS = ("1", "2")
 SEATS_PER_DISTRICT = 4
-EMAIL_SHAPE_RE = re.compile(r"(?i)^boarddist(\d)-(\d)@starkco\.illinois\.gov$")
+# Measured 8 of 8 on 2026-10-17, all seat mailboxes; about two thirds of that,
+# so a page change that stops the addresses being read fails the build.
+MIN_EMAILS = 5
+# A seat mailbox, boarddist<district>-<seat>. No longer the only shape that
+# ships (see above); it is read to check the mailbox's district.
+SEAT_MAILBOX_RE = re.compile(r"(?i)^boarddist(\d)-(\d)@starkco\.illinois\.gov$")
 # Any key matching one of these would be a residence leaking into shipped data.
 FORBIDDEN_KEY_PARTS = ("address", "addr", "street", "residence", "home")
 YEAR_RE = re.compile(r"(20\d\d)")
@@ -59,27 +79,54 @@ def build(payload):
         raise RuntimeError("%d members < floor %d — refusing to write"
                            % (len(members), MIN_MEMBERS))
 
-    by_district = collections.defaultdict(list)
-    off_pattern = []
+    # Each member's place on the page, so an error or a note can name the seat
+    # without printing the address.
+    on_page = collections.defaultdict(list)
     for member in members:
+        on_page[str(member.get("district") or "").strip()].append(member)
+
+    def seat_of(member, district):
+        same = on_page[district]
+        place = next(i for i, m in enumerate(same, 1) if m is member)
+        return ("Stark County District %s, member %d of %d in page order"
+                % (district, place, len(same)))
+
+    # How many members each address is printed beside. One printed beside two
+    # or more is an office's or a shared inbox, not either member's own.
+    printed = collections.Counter(
+        (m.get("email") or "").strip().lower() for m in members
+        if (m.get("email") or "").strip())
+
+    by_district = collections.defaultdict(list)
+    withheld = []
+    for index, member in enumerate(members, 1):
         district = str(member.get("district") or "").strip()
         name = (member.get("name") or "").strip()
         if not district or not name:
-            raise RuntimeError("a member row carries no district or no name: %r"
-                               % member)
+            raise RuntimeError("member row %d of %d carries no district or no "
+                               "name" % (index, len(members)))
 
         record = {"name": name}
         email = (member.get("email") or "").strip()
         if email:
-            shape = EMAIL_SHAPE_RE.match(email)
-            if not shape:
-                off_pattern.append("%s <%s>" % (name, email))
-            elif shape.group(1) != district:
+            seat = seat_of(member, district)
+            problem = person_email_problem(email)
+            if problem:
+                raise RuntimeError("%s: the page's e-mail %s" % (seat, problem))
+            mailbox = SEAT_MAILBOX_RE.match(email)
+            if mailbox and mailbox.group(1) != district:
                 raise RuntimeError(
-                    "%s sits in district %s but holds the district %s mailbox "
-                    "(%s) — the roster and the seat numbering disagree"
-                    % (name, district, shape.group(1), email))
-            record["email"] = email
+                    "%s holds the district %s seat mailbox — the roster and the "
+                    "seat numbering disagree" % (seat, mailbox.group(1)))
+            if email.lower() in undeliverable.UNDELIVERABLE:
+                withheld.append((seat, "scripts/undeliverable.py lists it as an "
+                                       "address that cannot receive mail"))
+            elif printed[email.lower()] > 1:
+                withheld.append((seat, "the page prints it beside %d members, so "
+                                       "it is not this member's own"
+                                       % printed[email.lower()]))
+            else:
+                record["email"] = email
         if member.get("phone"):
             record["phone"] = member["phone"].strip()
         term = (member.get("term_expires") or "").strip()
@@ -99,12 +146,14 @@ def build(payload):
                                    % (key, name))
         by_district[district].append(record)
 
-    if off_pattern:
-        raise RuntimeError(
-            "these seats no longer use the county's positional mailboxes: %s. "
-            "Stark gives each seat its own address rather than the member their "
-            "own, so a personal address here is a policy change worth checking "
-            "before it ships." % "; ".join(off_pattern))
+    emails = sum(1 for records in by_district.values() for r in records
+                 if r.get("email"))
+    if emails < MIN_EMAILS:
+        raise RuntimeError("only %d members carry an e-mail (floor %d) — the "
+                           "page changed shape" % (emails, MIN_EMAILS))
+    for seat, why in withheld:
+        print("  WITHHELD the e-mail the page prints for %s: %s" % (seat, why),
+              file=sys.stderr)
 
     missing = [d for d in EXPECTED_DISTRICTS if d not in by_district]
     if missing:

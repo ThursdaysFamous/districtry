@@ -18,11 +18,16 @@ order. Each section must hold exactly the seats the county elects there.
 E-mail: an address is recorded only when it is on unioncountytn.gov and its
 local part carries the member's surname (R.L. Jones's is roy.jones@, Angela
 Conner-Murphy's angela.conner.murphy@). A county address in a block that does
-not carry the surname raises rather than being attached to the wrong person.
+not carry the surname raises rather than being attached to the wrong person. An
+address on another domain in a member's own block is kept as printed when it
+prints no county one, under Adam's ruling of 2026-10-17 that an e-mail address
+a government page prints beside an official ships too.
 
-PRIVACY: every block prints a phone number with no label saying it is a
-county line (the numbers differ member to member), so no phone is recorded.
-The page prints no member address.
+PRIVACY: every block prints one phone number with no label (the numbers differ
+member to member). Under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is, it is read
+from the block's `person-content` box into `phone`, as printed. The page
+prints no member address.
 
 Currency, checked 2026-10-15: every member on this page is a winner of the
 6 August 2026 election in the district the page gives. The Union County
@@ -51,7 +56,7 @@ Held until then: on 2026-10-11 and 2026-10-13 the election commission's
 site answered HTTP 500 (its robots.txt on the second day, which RFC 9309
 reads as a refusal of the whole host), so nothing could check the page."""
 import re
-from ._common import txt, mailtos, district_number, member
+from ._common import txt, mailtos, district_number, member, read_phones, other_email
 
 COUNTY = "Union"; FIPS = "173"
 DOMAINS = ("unioncountytn.gov",)
@@ -102,7 +107,7 @@ def _email(n, name, block):
         if keep and keep.lower() != a.lower():
             raise ValueError("District %s: %r's block holds two county addresses" % (n, name))
         keep = a
-    return keep
+    return keep or other_email(block, DOMAINS)
 
 
 def parse(pages):
@@ -139,7 +144,9 @@ def parse(pages):
                 raise ValueError("District %s section holds %r titled %r" % (n, name, title))
             if re.search(r"\bvacan", name, re.I) or not re.fullmatch(r"[A-Z][A-Za-z.'’ -]+", name):
                 raise ValueError("District %s: %r does not look like a name" % (n, name))
-            seats.append(member(name, email=_email(n, name, b)))
+            content = CONTENT_RE.search(b)
+            seats.append(member(name, email=_email(n, name, b),
+                                phones=read_phones(content.group(1)) if content else None))
         if len(seats) != SEATS.get(n):
             raise ValueError("District %s section has %d seat blocks, the county elects %s"
                              % (n, len(seats), SEATS.get(n)))

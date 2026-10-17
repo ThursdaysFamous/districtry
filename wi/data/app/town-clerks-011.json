@@ -10,6 +10,9 @@
     "clerk": "Deborah M. Ruff",
     "municipality": "Belvidere",
     "phone": "507-450-1207",
+    "phonesExtra": [
+      "608-248-1245"
+    ],
     "recordUpdated": "2025-12-02",
     "url": "https://townofbelvidere.com/"
   },
@@ -55,6 +58,9 @@
     "clerk": "Lori Dahl",
     "municipality": "Lincoln",
     "phone": "608-685-4394",
+    "phonesExtra": [
+      "715-495-0433"
+    ],
     "recordUpdated": "2023-12-18",
     "url": "https://www.bc-lincoln.com/"
   },
@@ -70,6 +76,9 @@
     "clerk": "Kalene Engel",
     "municipality": "Milton",
     "phone": "507-458-9924",
+    "phonesExtra": [
+      "608-687-4800"
+    ],
     "recordUpdated": "2023-07-09",
     "url": "https://townofmiltonwi.gov/"
   },

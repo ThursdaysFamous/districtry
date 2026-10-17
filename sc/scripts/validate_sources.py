@@ -121,8 +121,9 @@ PROVENANCE = [
             "The General Assembly's own Senate list, plus each senator's own "
             "page for the business telephone; rebuilt weekly by "
             "sc/scripts/build_sc_legislature_roster.py. The member pages also "
-            "print a home address and telephone, which the builder never reads, "
-            "and no e-mail address."
+            "print a home and a business telephone, which ship as printed (Adam, "
+            "2026-10-17), a home address, which the builder never reads, and no "
+            "e-mail address."
         ),
     },
     {

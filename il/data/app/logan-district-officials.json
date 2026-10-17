@@ -4,10 +4,13 @@
       "board": [
         {
           "name": "Brad Robbins",
+          "phone": "(309) 208-0019",
           "role": "President"
         },
         {
+          "email": "vdemkey@yahoo.com",
           "name": "Vicky McDaniel",
+          "phone": "(309) 824-5712",
           "role": "Treasurer"
         }
       ],
@@ -20,11 +23,15 @@
     "Atlanta": {
       "board": [
         {
+          "email": "pigjock76@hotmail.com",
           "name": "Amy Naughton",
+          "phone": "(217) 304-6511",
           "role": "President"
         },
         {
+          "email": "dtfarm77@gmail.com",
           "name": "Doug Thompson",
+          "phone": "(217) 871-2285",
           "role": "V-President"
         }
       ],
@@ -36,11 +43,14 @@
     "Chestnut Beason": {
       "board": [
         {
+          "email": "chase.lowery1231@yahoo.com",
           "name": "Chase Lowery",
+          "phone": "(217) 433-9259",
           "role": "President"
         },
         {
           "name": "Lindsey Guy",
+          "phone": "(217) 828-2883",
           "role": "Sec./Treas."
         }
       ],
@@ -56,11 +66,15 @@
     "Emden": {
       "board": [
         {
+          "email": "clessen@mchsi.com",
           "name": "Craig Lessen",
+          "phone": "(217) 871-3763",
           "role": "President"
         },
         {
+          "email": "elias.klokkenga@gmail.com",
           "name": "Elias Klokkenga",
+          "phone": "(217) 671-7074",
           "role": "Trustee"
         }
       ],
@@ -74,6 +88,7 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "bstrait@lincolnparkdistrict.com",
           "name": "Becky Strait",
           "role": "Director"
         },
@@ -94,6 +109,7 @@
       "board": [
         {
           "name": "Jodi Deibert",
+          "phone": "(217) 414-7241",
           "role": "President"
         }
       ],
@@ -108,14 +124,19 @@
     "San Jose": {
       "board": [
         {
+          "email": "phildelgadillo59@gmail.com",
           "name": "Philip Delgadillo",
+          "phone": "(309) 253-5340",
           "role": "Acting President"
         },
         {
+          "email": "leahbwilliams92@gmail.com",
           "name": "Leah Williams",
+          "phone": "(309) 241-4687",
           "role": "Treasurer"
         },
         {
+          "email": "alex.iamwater@gmail.com",
           "name": "Alex Hamilton",
           "role": "Trustee"
         }
@@ -129,7 +150,7 @@
       }
     }
   },
-  "generated": "2026-10-12T01:09:53Z",
+  "generated": "2026-10-17T18:04:47Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

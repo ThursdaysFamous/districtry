@@ -30,6 +30,19 @@ RESIDENCE (street plus its town). The fleet does not collect member residences
 those two columns are located precisely in order to be dropped, and nothing
 downstream ever sees them.
 
+BOTH NUMBER COLUMNS SHIP. The table has a Phone column and a column headed
+"Cell/Work". Until 2026-10-17 a member got one number: the Phone column's, or
+the Cell/Work column's when Phone was empty. Since Adam's ruling that day ("if
+the official government source uses personal phone numbers, we publish those")
+a member who has both gets both: the Phone column's number first, as printed,
+then the Cell/Work number in `phonesExtra`. Every Cell/Work number is led by
+"cell or work", because that is what the county's heading says and it does not
+say which of the two a number is. Measured on 2026-10-17: 3 members print a
+Phone number, 11 a Cell/Work number, 2 both, and no number is printed twice in
+the document. The same column position holds "Fax" on the county officers'
+table above the board, so the column is read only under a "Cell/Work" heading
+inside the board section, and a fax number can never ship as a member's.
+
 FETCH POSTURE: open. Plain requests with a browser UA returns the PDF.
 
 Usage:
@@ -65,6 +78,11 @@ COL_PHONE, COL_EMAIL, COL_CELL, COL_TERM = 324.0, 376.0, 512.0, 568.0
 DISTRICT_RE = re.compile(r"DISTRICT\s*#\s*(\d+)\s*[-–]\s*(.+)$", re.I)
 SECTION_RE = re.compile(r"COUNTY BOARD MEMBERS", re.I)
 END_RE = re.compile(r"COMMITTEE ASSIGNMENTS", re.I)
+HEADER_RE = re.compile(r"^\s*Official:", re.I)
+# The heading the board section prints over the column at COL_CELL, and the
+# label every number read from that column carries.
+CELL_WORK_HEADING_RE = re.compile(r"^Cell\s*[/-]\s*Work:?$", re.I)
+CELL_WORK_LABEL = "cell or work"
 PHONE_RE = re.compile(r"(\d{3})\D?(\d{3})\D?(\d{4})")
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 # "TODD PERONA APPT 10/12/23" / "JUSTIN MEIERKORD Appt 09/19/21)"
@@ -178,17 +196,27 @@ def main():
     import io
     records, compositions = [], {}
     with pdfplumber.open(io.BytesIO(data)) as pdf:
-        in_board, district = False, None
+        # How many times each number is printed in the whole document: one
+        # printed for two or more officials is an office line, and is never
+        # added to a member as a second number.
+        printed = {}
+        for page in pdf.pages:
+            for groups in PHONE_RE.findall(page.extract_text() or ""):
+                printed["-".join(groups)] = printed.get("-".join(groups), 0) + 1
+        in_board, district, cell_heading = False, None, None
         for page in pdf.pages:
             for row in rows_of(page):
                 line = " ".join(w["text"] for w in row).strip()
                 if SECTION_RE.search(line):
-                    in_board = True
+                    in_board, cell_heading = True, None
                     continue
                 if in_board and END_RE.search(line):
                     in_board = False
                     continue
                 if not in_board:
+                    continue
+                if HEADER_RE.match(line):
+                    cell_heading = cell(row, COL_CELL, COL_TERM)
                     continue
                 m = DISTRICT_RE.search(line)
                 if m:
@@ -208,7 +236,22 @@ def main():
                 cellwork = cell(row, COL_CELL, COL_TERM)
                 term = cell(row, COL_TERM, 10 ** 6)
 
-                pm = PHONE_RE.search(phone) or PHONE_RE.search(cellwork)
+                # The Phone column's numbers first, as printed; then the
+                # Cell/Work column's, under the county's heading, and only
+                # where the board section's heading over that column says
+                # Cell/Work (the same position is "Fax" elsewhere).
+                numbers = [(None, "-".join(g)) for g in PHONE_RE.findall(phone)]
+                if cell_heading and CELL_WORK_HEADING_RE.match(cell_heading):
+                    numbers += [(CELL_WORK_LABEL, "-".join(g))
+                                for g in PHONE_RE.findall(cellwork)]
+                labelled, taken = [], set()
+                for label, number in numbers:
+                    if number in taken:
+                        continue
+                    if labelled and printed.get(number, 0) > 1:
+                        continue  # an office line, not this member's own
+                    taken.add(number)
+                    labelled.append("%s %s" % (label, number) if label else number)
                 em = EMAIL_RE.search(email)
                 role = None
                 if re.match(r"^Vice", title, re.I):
@@ -219,7 +262,8 @@ def main():
                     "name": tidy_name(name),
                     "district": district,
                     "role": role,
-                    "phone": "-".join(pm.groups()) if pm else None,
+                    "phone": labelled[0] if labelled else None,
+                    "phonesExtra": labelled[1:],
                     "email": em.group(0).lower() if em else None,
                     "termExpires": int(term) if re.fullmatch(r"\d{4}", term) else None,
                     "composition": compositions.get(district),

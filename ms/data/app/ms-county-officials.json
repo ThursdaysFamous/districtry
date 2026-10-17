@@ -145,23 +145,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Warren Leake"
+    "name": "Warren Leake",
+    "phone": "601-657-1024"
    },
    {
     "district": "2",
-    "name": "Earl Guy McNabb, Jr."
+    "name": "Earl Guy McNabb, Jr.",
+    "phone": "601-730-4155"
    },
    {
     "district": "3",
-    "name": "J.P. \"Jackie\" Whittington"
+    "name": "J.P. \"Jackie\" Whittington",
+    "phone": "601-597-1638"
    },
    {
     "district": "4",
-    "name": "Melvin Quin (Butch) Graves"
+    "name": "Melvin Quin (Butch) Graves",
+    "phone": "601-567-2495"
    },
    {
     "district": "5",
-    "name": "Tony Patterson"
+    "name": "Tony Patterson",
+    "phone": "601-248-1003"
    }
   ]
  },
@@ -396,23 +401,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Chris Downs"
+    "name": "Chris Downs",
+    "phone": "662-229-7700"
    },
    {
     "district": "2",
-    "name": "Rebecca Touchstone"
+    "name": "Rebecca Touchstone",
+    "phone": "662-458-0960"
    },
    {
     "district": "3",
-    "name": "Randy Tackett"
+    "name": "Randy Tackett",
+    "phone": "662-392-0888"
    },
    {
     "district": "4",
-    "name": "David Burkhead"
+    "name": "David Burkhead",
+    "phone": "662-237-6919"
    },
    {
     "district": "5",
-    "name": "Lesa Clark Fletcher"
+    "name": "Lesa Clark Fletcher",
+    "phone": "662-464-5476"
    }
   ],
   "label": "Beat",
@@ -424,23 +434,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Jim Neill"
+    "name": "Jim Neill",
+    "phone": "662-277-5295"
    },
    {
     "district": "2",
-    "name": "Joshua Hurst"
+    "name": "Joshua Hurst",
+    "phone": "662-858-0109"
    },
    {
     "district": "3",
-    "name": "Edward Dill Tucker"
+    "name": "Edward Dill Tucker",
+    "phone": "662-602-0015"
    },
    {
     "district": "4",
-    "name": "Claude Fluker"
+    "name": "Claude Fluker",
+    "phone": "662-458-3053"
    },
    {
     "district": "5",
-    "name": "Randy Browning"
+    "name": "Randy Browning",
+    "phone": "601-862-8117"
    }
   ]
  },
@@ -552,7 +567,8 @@
    },
    {
     "district": "5",
-    "name": "Rodney Bowman"
+    "name": "Rodney Bowman",
+    "phone": "662-769-7366"
    }
   ]
  },
@@ -758,23 +774,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Paul Pearson"
+    "name": "Paul Pearson",
+    "phone": "662-624-3028"
    },
    {
     "district": "2",
-    "name": "Pat Davis, Jr."
+    "name": "Pat Davis, Jr.",
+    "phone": "662-302-1761"
    },
    {
     "district": "3",
-    "name": "Derrell Washington"
+    "name": "Derrell Washington",
+    "phone": "662-902-8221"
    },
    {
     "district": "4",
-    "name": "Jesse Harris"
+    "name": "Jesse Harris",
+    "phone": "662-902-5666"
    },
    {
     "district": "5",
-    "name": "Will Young"
+    "name": "Will Young",
+    "phone": "662-902-5276"
    }
   ]
  },
@@ -814,23 +835,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Daryl McMillian"
+    "name": "Daryl McMillian",
+    "phone": "cell 601-953-9901"
    },
    {
     "district": "2",
-    "name": "John Smith"
+    "name": "John Smith",
+    "phone": "cell 601-953-9902"
    },
    {
     "district": "3",
-    "name": "Perry Hood"
+    "name": "Perry Hood",
+    "phone": "cell 601-953-9903"
    },
    {
     "district": "4",
-    "name": "Kenneth Powell"
+    "name": "Kenneth Powell",
+    "phone": "cell 601-953-9904"
    },
    {
     "district": "5",
-    "name": "Judson Jackson"
+    "name": "Judson Jackson",
+    "phone": "cell 601-953-9905"
    }
   ]
  },
@@ -898,23 +924,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Billy Johnson"
+    "name": "Billy Johnson",
+    "phone": "662-469-8072"
    },
    {
     "district": "2",
-    "name": "Tim Snyder"
+    "name": "Tim Snyder",
+    "phone": "662-469-8461"
    },
    {
     "district": "3",
-    "name": "Chad Engelke"
+    "name": "Chad Engelke",
+    "phone": "662-469-8072"
    },
    {
     "district": "4",
-    "name": "Sissie Ferguson"
+    "name": "Sissie Ferguson",
+    "phone": "662-469-8072"
    },
    {
     "district": "5",
-    "name": "David H. Ross"
+    "name": "David H. Ross",
+    "phone": "662-469-8072"
    }
   ],
   "label": "District",
@@ -1317,23 +1348,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Dan Cuevas"
+    "name": "Dan Cuevas",
+    "phone": "228-435-8272"
    },
    {
     "district": "2",
-    "name": "Rebecca Powers"
+    "name": "Rebecca Powers",
+    "phone": "228-865-4122"
    },
    {
     "district": "3",
-    "name": "Marlin R. Ladner"
+    "name": "Marlin R. Ladner",
+    "phone": "228-867-6528"
    },
    {
     "district": "4",
-    "name": "Kent Jones"
+    "name": "Kent Jones",
+    "phone": "228-865-4204"
    },
    {
     "district": "5",
-    "name": "Nathan Barrett"
+    "name": "Nathan Barrett",
+    "phone": "228-865-4123"
    }
   ]
  },
@@ -1344,23 +1380,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Kidada Brown"
+    "name": "Kidada Brown",
+    "phone": "601-968-6685"
    },
    {
     "district": "2",
-    "name": "Bobbie Graves"
+    "name": "Bobbie Graves",
+    "phone": "601-968-6557"
    },
    {
     "district": "3",
-    "name": "Jermal Clark"
+    "name": "Jermal Clark",
+    "phone": "601-968-6682"
    },
    {
     "district": "4",
-    "name": "Yvonne Robinson Horton"
+    "name": "Yvonne Robinson Horton",
+    "phone": "601-668-6556"
    },
    {
     "district": "5",
-    "name": "Felicia McClinton"
+    "name": "Felicia McClinton",
+    "phone": "601-968-6684"
    }
   ],
   "label": "District",
@@ -1372,23 +1413,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Robert Graham"
+    "name": "Robert Graham",
+    "phone": "601-968-6689"
    },
    {
     "district": "2",
-    "name": "Tony Smith"
+    "name": "Tony Smith",
+    "phone": "601-968-6690"
    },
    {
     "district": "3",
-    "name": "Deborah Butler-Dixon"
+    "name": "Deborah Butler-Dixon",
+    "phone": "601-968-6768"
    },
    {
     "district": "4",
-    "name": "Wanda Evers"
+    "name": "Wanda Evers",
+    "phone": "601-973-5558"
    },
    {
     "district": "5",
-    "name": "Bobby McGowan"
+    "name": "Bobby McGowan",
+    "phone": "601-968-6699"
    }
   ]
  },
@@ -1432,7 +1478,8 @@
    },
    {
     "district": "2",
-    "name": "James H. Young"
+    "name": "James H. Young",
+    "phone": "662-967-0911"
    },
    {
     "district": "3",
@@ -1482,23 +1529,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "James Bankhead"
+    "name": "James Bankhead",
+    "phone": "662-247-2296"
    },
    {
     "district": "2",
-    "name": "Nailon \"Jake\" Lee"
+    "name": "Nailon \"Jake\" Lee",
+    "phone": "662-820-4289"
    },
    {
     "district": "3",
-    "name": "Woodrow Johnson, Sr."
+    "name": "Woodrow Johnson, Sr.",
+    "phone": "662-836-6982"
    },
    {
     "district": "4",
-    "name": "Delrick Henderson"
+    "name": "Delrick Henderson",
+    "phone": "662-247-2285"
    },
    {
     "district": "5",
-    "name": "Reggie Pinkston"
+    "name": "Reggie Pinkston",
+    "phone": "662-836-8567"
    }
   ]
  },
@@ -1537,23 +1589,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Eddie Hatcher"
+    "name": "Eddie Hatcher",
+    "phone": "662-873-7800"
    },
    {
     "district": "2",
-    "name": "Jerry Wayne Britton"
+    "name": "Jerry Wayne Britton",
+    "phone": "662-820-6308"
    },
    {
     "district": "3",
-    "name": "Stallard U. Williams, Sr."
+    "name": "Stallard U. Williams, Sr.",
+    "phone": "662-907-0266"
    },
    {
     "district": "4",
-    "name": "James McFarland III"
+    "name": "James McFarland III",
+    "phone": "662-873-7100"
    },
    {
     "district": "5",
-    "name": "Eddie Holcomb"
+    "name": "Eddie Holcomb",
+    "phone": "662-907-7288"
    }
   ]
  },
@@ -1620,23 +1677,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Danny Glaskox"
+    "name": "Danny Glaskox",
+    "phone": "228-769-3362"
    },
    {
     "district": "2",
-    "name": "Katrina Viverette"
+    "name": "Katrina Viverette",
+    "phone": "228-769-3006"
    },
    {
     "district": "3",
-    "name": "Debra Loris Hodges"
+    "name": "Debra Loris Hodges",
+    "phone": "228-769-3008"
    },
    {
     "district": "4",
-    "name": "Kevin Bonner"
+    "name": "Kevin Bonner",
+    "phone": "228-471-1355"
    },
    {
     "district": "5",
-    "name": "Deborah J. Parker"
+    "name": "Deborah J. Parker",
+    "phone": "228-769-3007"
    }
   ],
   "label": "District",
@@ -1648,23 +1710,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Barry Cumbest"
+    "name": "Barry Cumbest",
+    "phone": "228-769-3403"
    },
    {
     "district": "2",
-    "name": "Ennit Morris"
+    "name": "Ennit Morris",
+    "phone": "228-769-3170"
    },
    {
     "district": "3",
-    "name": "Kenneth Taylor"
+    "name": "Kenneth Taylor",
+    "phone": "228-762-7641"
    },
    {
     "district": "4",
-    "name": "Troy Ross"
+    "name": "Troy Ross",
+    "phone": "228-769-3457"
    },
    {
     "district": "5",
-    "name": "Randy Bosarge"
+    "name": "Randy Bosarge",
+    "phone": "228-769-3378"
    }
   ]
  },
@@ -1844,23 +1911,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Bart Gavin"
+    "name": "Bart Gavin",
+    "phone": "601-498-2278"
    },
    {
     "district": "2",
-    "name": "Michelle Blackwell"
+    "name": "Michelle Blackwell",
+    "phone": "601-498-6316"
    },
    {
     "district": "3",
-    "name": "Dione Hodge"
+    "name": "Dione Hodge",
+    "phone": "601-319-6727"
    },
    {
     "district": "4",
-    "name": "John Herrington"
+    "name": "John Herrington",
+    "phone": "601-517-5560"
    },
    {
     "district": "5",
-    "name": "Addie Wash Chinn"
+    "name": "Addie Wash Chinn",
+    "phone": "601-428-1604"
    }
   ],
   "label": "Beat",
@@ -1927,23 +1999,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Roy Vandevender"
+    "name": "Roy Vandevender",
+    "phone": "601-504-2125"
    },
    {
     "district": "2",
-    "name": "Johnny B. Whitsett"
+    "name": "Johnny B. Whitsett",
+    "phone": "601-917-5636"
    },
    {
     "district": "3",
-    "name": "Scott Johnson"
+    "name": "Scott Johnson",
+    "phone": "601-562-5401"
    },
    {
     "district": "4",
-    "name": "Lee McDonald"
+    "name": "Lee McDonald",
+    "phone": "601-562-9848"
    },
    {
     "district": "5",
-    "name": "Chris Cole"
+    "name": "Chris Cole",
+    "phone": "601-513-6060"
    }
   ]
  },
@@ -2067,23 +2144,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Chuck Overby"
+    "name": "Chuck Overby",
+    "phone": "601-484-3981"
    },
    {
     "district": "2",
-    "name": "Brenda Faye Harris"
+    "name": "Brenda Faye Harris",
+    "phone": "601-484-3980"
    },
    {
     "district": "3",
-    "name": "Awana Daniels Simmons"
+    "name": "Awana Daniels Simmons",
+    "phone": "601-482-9809"
    },
    {
     "district": "4",
-    "name": "Gloria Dancy"
+    "name": "Gloria Dancy",
+    "phone": "601-482-9808"
    },
    {
     "district": "5",
-    "name": "Russell Keene"
+    "name": "Russell Keene",
+    "phone": "601-484-3982"
    }
   ],
   "label": "District",
@@ -2235,23 +2317,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Kristen Buse"
+    "name": "Kristen Buse",
+    "phone": "662-432-2300"
    },
    {
     "district": "2",
-    "name": "Shelia Lansdell"
+    "name": "Shelia Lansdell",
+    "phone": "662-432-2300"
    },
    {
     "district": "3",
-    "name": "Jamie Gunnells"
+    "name": "Jamie Gunnells",
+    "phone": "662-432-2300"
    },
    {
     "district": "4",
-    "name": "Jacque Grayson"
+    "name": "Jacque Grayson",
+    "phone": "662-432-2300"
    },
    {
     "district": "5",
-    "name": "Jim Armstrong"
+    "name": "Jim Armstrong",
+    "phone": "662-432-2300"
    }
   ],
   "label": "District",
@@ -2373,23 +2460,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Jerry L. Wilson"
+    "name": "Jerry L. Wilson",
+    "phone": "601-833-7172"
    },
    {
     "district": "2",
-    "name": "Keith Lewis"
+    "name": "Keith Lewis",
+    "phone": "601-757-2037"
    },
    {
     "district": "3",
-    "name": "John David Hart"
+    "name": "John David Hart",
+    "phone": "601-835-8761"
    },
    {
     "district": "4",
-    "name": "Eli Ferguson"
+    "name": "Eli Ferguson",
+    "phone": "601-757-7117"
    },
    {
     "district": "5",
-    "name": "Doug Falvey"
+    "name": "Doug Falvey",
+    "phone": "601-833-2680"
    }
   ]
  },
@@ -2401,23 +2493,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Donna Egger"
+    "name": "Donna Egger",
+    "phone": "662-329-5900"
    },
    {
     "district": "2",
-    "name": "Jean N. Bigelow"
+    "name": "Jean N. Bigelow",
+    "phone": "662-329-5900"
    },
    {
     "district": "3",
-    "name": "Yuvonda C. Youngblood"
+    "name": "Yuvonda C. Youngblood",
+    "phone": "662-386-6484"
    },
    {
     "district": "4",
-    "name": "Sherry Guyton Odneal"
+    "name": "Sherry Guyton Odneal",
+    "phone": "662-329-5900"
    },
    {
     "district": "5",
-    "name": "Frances Olivia Stewart"
+    "name": "Frances Olivia Stewart",
+    "phone": "662-329-5900"
    }
   ],
   "label": "District",
@@ -2457,23 +2554,28 @@
   "electionCommissioners": [
    {
     "district": "1",
-    "name": "Helen Carney"
+    "name": "Helen Carney",
+    "phone": "601-790-2541"
    },
    {
     "district": "2",
-    "name": "Barbara Gross"
+    "name": "Barbara Gross",
+    "phone": "601-790-2542"
    },
    {
     "district": "3",
-    "name": "Pat Truesdale"
+    "name": "Pat Truesdale",
+    "phone": "601-790-2543"
    },
    {
     "district": "4",
-    "name": "Anthony Denton"
+    "name": "Anthony Denton",
+    "phone": "601-790-2544"
    },
    {
     "district": "5",
-    "name": "Leroy Lacy"
+    "name": "Leroy Lacy",
+    "phone": "601-790-2545"
    }
   ],
   "label": "District",
@@ -2597,7 +2699,8 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Goston Glover"
+    "name": "Goston Glover",
+    "phone": "662-629-2940"
    },
    {
     "district": "2",
@@ -2605,7 +2708,8 @@
    },
    {
     "district": "3",
-    "name": "Terry Rogers"
+    "name": "Terry Rogers",
+    "phone": "662-216-7706"
    },
    {
     "district": "4",
@@ -2993,7 +3097,8 @@
    },
    {
     "district": "2",
-    "name": "Earl L. Burdette"
+    "name": "Earl L. Burdette",
+    "phone": "662-703-0102"
    },
    {
     "district": "3",
@@ -3715,11 +3820,13 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Glenn Donald"
+    "name": "Glenn Donald",
+    "phone": "662-303-8877"
    },
    {
     "district": "2",
-    "name": "Riley Rice"
+    "name": "Riley Rice",
+    "phone": "662-303-5324"
    },
    {
     "district": "3",
@@ -3727,11 +3834,13 @@
    },
    {
     "district": "4",
-    "name": "Anthony Clark"
+    "name": "Anthony Clark",
+    "phone": "662-303-9108"
    },
    {
     "district": "5",
-    "name": "Gloria Dickerson"
+    "name": "Gloria Dickerson",
+    "phone": "662-303-9049"
    }
   ]
  },
@@ -3827,7 +3936,8 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Leigh Ann Darby"
+    "name": "Leigh Ann Darby",
+    "phone": "662-562-0013"
    },
    {
     "district": "2",
@@ -3995,7 +4105,8 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "James Earl Dunn"
+    "name": "James Earl Dunn",
+    "phone": "662-363-1304"
    },
    {
     "district": "2",
@@ -4330,23 +4441,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Curtis C. Morris"
+    "name": "Curtis C. Morris",
+    "phone": "662-552-0168"
    },
    {
     "district": "2",
-    "name": "Patrick Scott Cummings"
+    "name": "Patrick Scott Cummings",
+    "phone": "662-552-2290"
    },
    {
     "district": "3",
-    "name": "Randy Rico"
+    "name": "Randy Rico",
+    "phone": "662-552-6134"
    },
    {
     "district": "4",
-    "name": "William P. Crowley"
+    "name": "William P. Crowley",
+    "phone": "662-552-2627"
    },
    {
     "district": "5",
-    "name": "Doug Burgess"
+    "name": "Doug Burgess",
+    "phone": "662-418-5742"
    }
   ]
  },
@@ -4385,23 +4501,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Earnest Newman, Jr."
+    "name": "Earnest Newman, Jr.",
+    "phone": "601-645-2096"
    },
    {
     "district": "2",
-    "name": "Marvin Tolliver"
+    "name": "Marvin Tolliver",
+    "phone": "601-888-0242"
    },
    {
     "district": "3",
-    "name": "Terry Sterling"
+    "name": "Terry Sterling",
+    "phone": "601-645-2888"
    },
    {
     "district": "4",
-    "name": "Kenyon Jackson"
+    "name": "Kenyon Jackson",
+    "phone": "601-888-0452"
    },
    {
     "district": "5",
-    "name": "Bobby Wayne Johnson, Jr."
+    "name": "Bobby Wayne Johnson, Jr.",
+    "phone": "601-639-6385"
    }
   ]
  },
@@ -4495,23 +4616,28 @@
   "supervisors": [
    {
     "district": "1",
-    "name": "Cayce Washington"
+    "name": "Cayce Washington",
+    "phone": "662-473-6797"
    },
    {
     "district": "2",
-    "name": "Kenneth E. Rogers"
+    "name": "Kenneth E. Rogers",
+    "phone": "662-473-6795"
    },
    {
     "district": "3",
-    "name": "Kenny Harmon"
+    "name": "Kenny Harmon",
+    "phone": "662-457-1483"
    },
    {
     "district": "4",
-    "name": "Eddie B. Harris"
+    "name": "Eddie B. Harris",
+    "phone": "662-809-7010"
    },
    {
     "district": "5",
-    "name": "Gaylon Gray"
+    "name": "Gaylon Gray",
+    "phone": "662-473-8324"
    }
   ]
  },

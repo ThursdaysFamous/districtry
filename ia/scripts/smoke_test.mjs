@@ -776,6 +776,51 @@ try {
     await context.close();
   }
 
+  // 2a7. A SUPERVISOR'S OWN NUMBER, ON THE DISTRICT CARD. Humboldt's board
+  //      page prints a different number beside each of its five supervisors,
+  //      and since Adam's ruling of 2026-10-17 ("if the official government
+  //      source uses personal phone numbers, we publish those") the district
+  //      card carries it on the supervisor's own row. The point is Humboldt
+  //      township's census interior point, which the county's own map paints
+  //      District 4 (ia/scripts/check_county_district_numbering.py). The
+  //      name and number expected are read from the shipped roster, so a
+  //      weekly refresh that changes them changes what is expected, and a
+  //      record carrying no number is reported rather than passed. The number
+  //      is shown with no-break hyphens, so those are folded back before
+  //      comparing.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context,
+      `${BASE}#point=42.8693050,-94.1377566&layers=county-supervisor`);
+    const seat = await page.evaluate(async () => {
+      const r = await fetch("data/app/ia-supervisor-members.json").then((x) => x.json());
+      return ((r["091"] || {}).districts || {})["4"] || {};
+    });
+    const info = await cardText(page, "county-supervisor");
+    const text = (info.text || "").replace(/\u2011/g, "-");
+    if (!seat.name || !seat.phone) {
+      console.log("  SKIP  supervisor's own number — Humboldt District 4 carries no number");
+    } else {
+      check("supervisor district card shows the number the county prints beside its supervisor",
+        !info.error && text.includes("Humboldt County") && text.includes("District 4") &&
+          text.includes(seat.name) && text.includes(seat.phone), text.slice(0, 240));
+    }
+    // ...and the e-mail address the same page prints beside that supervisor
+    // (Adam chose "E-mails too", 2026-10-17). The row shows it as a link
+    // labelled Email, so the link's own address is what is compared.
+    if (!seat.name || !seat.email) {
+      console.log("  SKIP  supervisor's own e-mail — Humboldt District 4 carries no address");
+    } else {
+      const hrefs = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-county-supervisor a[href^='mailto:']"))
+          .map((a) => a.getAttribute("href")));
+      check("supervisor district card links the e-mail address the county prints beside its supervisor",
+        hrefs.includes("mailto:" + seat.email), JSON.stringify(hrefs));
+    }
+    await page.close();
+    await context.close();
+  }
+
 
   // 2a3. City council wards in the cities ia/scripts/build_ia_city_wards.py
   //      builds (2026-10-15). Each point is an interior point of that ward in

@@ -519,6 +519,37 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A COMMISSIONER'S OWN NUMBERS RIDE THE PERSON ROW, as the county's
+    //     page prints them, since Adam's ruling of 2026-10-17 ("if the
+    //     official government source uses personal phone numbers, we publish
+    //     those"). The numbers expected are read from the shipped roster for
+    //     the anchor's own district, so a weekly refresh that changes them
+    //     changes what is expected; a district whose members carry none is
+    //     reported, never passed as a check. The card shows numbers with
+    //     no-break hyphens, folded back before comparing.
+    {
+      const id = "county-commissioner";
+      const want = await page.evaluate(async (d) => {
+        const r = await fetch("data/app/tn-commissioners.json").then((x) => x.json());
+        const county = r["47037"] || {};
+        const out = [];
+        ((county.districts || {})[d] || []).forEach((m) => {
+          if (m.phone) out.push(String(m.phone));
+          (m.phonesExtra || []).forEach((p) => out.push(String(p)));
+        });
+        return out;
+      }, EXPECT_DISTRICT[id]);
+      const info = await cardText(page, id);
+      const text = (info.text || "").replace(/\u2011/g, "-");
+      if (!want.length) {
+        console.log(`  SKIP  ${id} member's own number — the anchor district's members print none`);
+      } else {
+        const missing = want.filter((p) => !text.includes(p));
+        check(`${id} card shows every number the county prints for the anchor district`,
+          !info.error && missing.length === 0,
+          missing.length ? `${missing.length} of ${want.length} missing in: ${text.slice(0, 160)}` : `${want.length} shown`);
+      }
+    }
     await context.close();
   }
 
@@ -993,7 +1024,10 @@ try {
   // county-commissioner NAMES THE DISTRICT'S SEATS FROM THE ROSTER, and says
   // so when it cannot. The roster is stubbed so this holds the CARD to a
   // fixture rather than to whichever names this week's refresh shipped: one
-  // district with a named seat carrying a seat label and a role, a vacancy the
+  // district with a named seat carrying a seat label, a role and two
+  // telephone numbers (the second with the county's own label, which the
+  // card must print, since Adam's ruling of 2026-10-17 that a number a
+  // government prints beside an official ships), a vacancy the
   // county states, and a countywide member, which must render under its own
   // label, and the county's own name for a district the state numbers
   // (Dyer letters its districts), beside the state's number. The second half
@@ -1004,9 +1038,10 @@ try {
       "47037": {
         county: "Davidson County", seatTitle: "Council Member", bodyName: "Metro Council",
         sourceUrl: "https://www.nashville.gov/departments/council/districts",
-        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"], phones: true,
+        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"],
         districts: { "19": [
-          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov" },
+          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov",
+            phone: "615-555-0100", phonesExtra: ["cell 615-555-0199"] },
           { vacant: true, seat: "B" }
         ] },
         districtLabels: { "19": "District S" },
@@ -1017,6 +1052,7 @@ try {
       ["names the district's seats, a stated vacancy and the countywide members",
        roster,
        [/Fixture Member/, /Council Member/, /Seat A/, /Chair/, /Seat B/, /Vacant/,
+        /615-555-0100/, /cell 615-555-0199/,
         /elects 2 members: 1 named above and 1 seat empty\./,
         /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/,
         /District S\. The state's map numbers it District 19\./],
@@ -1030,7 +1066,9 @@ try {
           r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) }));
       });
       const info = await cardText(page, "county-commissioner");
-      const text = info.text || "";
+      // the card prints a number's hyphens as U+2011 so it never breaks
+      // across a line; fold them back before comparing
+      const text = (info.text || "").replace(/\u2011/g, "-");
       const missing = want.filter((re) => !re.test(text)).map(String);
       check(`county-commissioner ${label}`,
         !info.error && missing.length === 0 && !wantNot.test(text),

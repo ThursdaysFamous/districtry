@@ -184,7 +184,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
-        "people": "ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail and the member's page). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.",
+        "people": "ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail, the telephone the page prints, which may be the member's own, and the member's page; never the mailing address the page also prints). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.",
         "applies": "Arkansas — statewide, all 35 districts."
       }
     },

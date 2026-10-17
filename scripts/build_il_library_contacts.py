@@ -46,8 +46,10 @@ most of them falls under the floor and this refuses to write.
 
 NO E-MAIL SHIPS EITHER. 633 of the 641 directory rows carry one, mixing
 institutional mailboxes with named individuals' work addresses, and a directory
-row gives no way to tell them apart. The AFR route ships an e-mail only where the
-filing witnesses it as the unit's.
+row gives no way to tell them apart. The AFR route ships an e-mail as the
+library's only where the filing witnesses it as the library's, and as a person's
+only where the filing prints it in that person's own slot (since 2026-10-17,
+comptroller_afr.py's OFFICER E-MAIL section); a directory row says neither.
 
 THE FLOORS SIT UNDER THE MEASURED VALUES because a library renamed in either
 publisher is a real event and must not freeze the other 364. Setting them at the

@@ -3,7 +3,9 @@
     "Benson Fire District": {
       "board": [
         {
+          "email": "donr19@aol.com",
           "name": "Donald Rients",
+          "phone": "(309) 394-2610",
           "role": "President"
         }
       ],
@@ -11,6 +13,7 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "murphy_paul_r@cat.com",
           "name": "Paul Murphy",
           "role": "Treas./Admin."
         }
@@ -21,11 +24,15 @@
     "Carlock Fire District": {
       "board": [
         {
+          "email": "rdmiller2000@gmail.com",
           "name": "Randy Miller",
+          "phone": "(309) 830-6389",
           "role": "President"
         },
         {
+          "email": "nolanschenk@icloud.com",
           "name": "Nolan Schenk",
+          "phone": "(309) 750-7806",
           "role": "Treasurer"
         }
       ],
@@ -35,6 +42,7 @@
       "heads": [
         {
           "name": "Paul Lemek",
+          "phone": "(309) 275-4947",
           "role": "Chief"
         }
       ],
@@ -48,11 +56,14 @@
     "Carlock Library District": {
       "board": [
         {
+          "email": "bethwagner85@gmail.com",
           "name": "Beth Wagner",
           "role": "President"
         },
         {
+          "email": "garrisond44@yahoo.com",
           "name": "David Garrison",
+          "phone": "(309) 846-0656",
           "role": "Treasurer"
         }
       ],
@@ -70,7 +81,9 @@
     "Central Fire District": {
       "board": [
         {
+          "email": "meyerscg78@gmail.com",
           "name": "chris meyers",
+          "phone": "(309) 657-2904",
           "role": "Secretary"
         }
       ],
@@ -79,11 +92,15 @@
       "filesIn": "Tazewell",
       "heads": [
         {
+          "email": "paa1024@yahoo.com",
           "name": "paul anglin",
+          "phone": "(309) 369-9001",
           "role": "C.E.O."
         },
         {
+          "email": "jtharp7753@gmail.com",
           "name": "john tharp",
+          "phone": "(309) 339-8684",
           "role": "C.F.O."
         }
       ],
@@ -94,10 +111,13 @@
       "board": [
         {
           "name": "Jared Schieber",
+          "phone": "(309) 222-0168",
           "role": "Trustee"
         },
         {
+          "email": "cesteffen@gmail.com",
           "name": "Craig Steffen",
+          "phone": "(309) 208-7437",
           "role": "Trustee"
         }
       ],
@@ -112,11 +132,15 @@
       "filesIn": "LaSalle",
       "heads": [
         {
+          "email": "sadey63@yahoo.com",
           "name": "Karl Moore",
+          "phone": "(815) 970-3129",
           "role": "C.E.O."
         },
         {
+          "email": "msnyder_58@yahoo.com",
           "name": "Michael Snyder",
+          "phone": "(815) 257-9085",
           "role": "C.F.O."
         }
       ],
@@ -126,15 +150,21 @@
     "Deer Creek Fire District": {
       "board": [
         {
-          "name": "DOUG STEWART",
+          "email": "DOUGLASSTEWART52@YAHOO.COM",
+          "name": "Doug Stewart",
+          "phone": "(309) 251-4910",
           "role": "President"
         },
         {
-          "name": "GORDON ROBERTSON",
+          "email": "GROBERTSON11954@GMAIL.COM",
+          "name": "Gordon Robertson",
+          "phone": "(309) 210-9755",
           "role": "Secretary"
         },
         {
-          "name": "TRACI KRAEMER",
+          "email": "DCFDTREASURER@GMAIL.COM",
+          "name": "Traci Kraemer",
+          "phone": "(309) 642-0924",
           "role": "Treasurer"
         }
       ],
@@ -148,10 +178,13 @@
       "board": [
         {
           "name": "Shea Kamp",
+          "phone": "(815) 540-4650",
           "role": "President"
         },
         {
+          "email": "linda.brown1240@frontier.com",
           "name": "Linda Brown",
+          "phone": "(309) 712-6144",
           "role": "Treasurer"
         }
       ],
@@ -170,7 +203,9 @@
           "role": "Librarian"
         },
         {
+          "email": "dfever@elpasoil.org",
           "name": "David Fever",
+          "phone": "(309) 275-0139",
           "role": "Bookkeeper"
         }
       ],
@@ -183,6 +218,7 @@
       "board": [
         {
           "name": "Tim Ruestman",
+          "phone": "(309) 527-4000",
           "role": "President"
         }
       ],
@@ -190,7 +226,9 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "jhinshaw@hinshawcpa.com",
           "name": "Judy Hinshaw",
+          "phone": "(309) 527-2300",
           "role": "Accountant"
         }
       ],
@@ -203,10 +241,12 @@
     "Eureka Library District": {
       "board": [
         {
+          "email": "dwhitmanepld@gmail.com",
           "name": "Don Whitman",
           "role": "President"
         },
         {
+          "email": "lreinmannepld@gmail.com",
           "name": "Lisa Reinmann",
           "role": "Treasurer"
         }
@@ -223,10 +263,12 @@
     "Eureka-Goodfield Fire District": {
       "board": [
         {
+          "email": "bookkeeper@egfpd.org",
           "name": "Nick Agnew",
           "role": "President"
         },
         {
+          "email": "shendricks@egfpd.org",
           "name": "Samuel Hendricks",
           "role": "Treasurer"
         }
@@ -244,6 +286,7 @@
       "board": [
         {
           "name": "Bruce Mathes",
+          "phone": "(309) 383-4890",
           "role": "Treasurer"
         }
       ],
@@ -257,11 +300,15 @@
     "Grant Memorial Park District": {
       "board": [
         {
+          "email": "Strauch17@yahoo.com",
           "name": "Sarah Strauch",
+          "phone": "(309) 231-7475",
           "role": "President"
         },
         {
+          "email": "g_strauch@yahoo.com",
           "name": "Gretchen Strauch",
+          "phone": "(309) 370-6351",
           "role": "Sec./Treas."
         }
       ],
@@ -273,15 +320,21 @@
     "Gridley Fire Protection District": {
       "board": [
         {
+          "email": "presgfpd@gridcom.net",
           "name": "Donna Lou Baner",
+          "phone": "(309) 824-6612",
           "role": "President"
         },
         {
+          "email": "broth@doylemfg.com",
           "name": "Bill Roth",
+          "phone": "(309) 825-6716",
           "role": "V-President"
         },
         {
+          "email": "tresgfpd@gridcom.net",
           "name": "Tiffney Palmer",
+          "phone": "(309) 747-2823",
           "role": "Treasurer"
         }
       ],
@@ -294,11 +347,14 @@
     "Hudson Fire District": {
       "board": [
         {
+          "email": "mburton@hudsonfire.org",
           "name": "Mike Burton",
+          "phone": "(309) 242-3467",
           "role": "President"
         },
         {
           "name": "Kim Baird",
+          "phone": "(815) 342-0967",
           "role": "Treasurer"
         }
       ],
@@ -313,7 +369,9 @@
     "IL Prairie Library District": {
       "board": [
         {
+          "email": "jackaweddle@gmail.com",
           "name": "Jack Weddle",
+          "phone": "(309) 645-0963",
           "role": "Treasurer"
         }
       ],
@@ -321,6 +379,7 @@
       "filedFor": "2026",
       "heads": [
         {
+          "email": "dawn@ipdpl.org",
           "name": "Dawn Smith",
           "role": "Mgr./Director"
         }
@@ -334,6 +393,7 @@
     "Metamora Park District": {
       "board": [
         {
+          "email": "rudell@metamoraparks.org",
           "name": "Renee Udell",
           "role": "President"
         },
@@ -355,7 +415,9 @@
     "Metamora Rural Fire District": {
       "board": [
         {
+          "email": "cct@mtco.com",
           "name": "Jeff Bernitt",
+          "phone": "(309) 369-8048",
           "role": "Secretary"
         }
       ],
@@ -363,11 +425,15 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "springer@mtco.com",
           "name": "Jim Springer",
+          "phone": "(309) 367-2453",
           "role": "C.E.O."
         },
         {
+          "email": "billa@mtco.com",
           "name": "BILL Alread",
+          "phone": "(309) 367-9277",
           "role": "Treas./Admin."
         }
       ],
@@ -377,11 +443,15 @@
     "Minonk Fire District": {
       "board": [
         {
+          "email": "lewisstanj@gmail.com",
           "name": "Gary Wolf",
+          "phone": "(309) 432-2687",
           "role": "President"
         },
         {
+          "email": "pv2109@frontier.com",
           "name": "Paul Vallow",
+          "phone": "(309) 432-2863",
           "role": "Sec./Treas."
         }
       ],
@@ -393,15 +463,20 @@
     "Roanoke Fire District": {
       "board": [
         {
+          "email": "madams1945@outlook.com",
           "name": "Michael Adams",
+          "phone": "(309) 923-7614",
           "role": "President"
         },
         {
+          "email": "frerichsj@mchsi.com",
           "name": "Jayne Frerichs",
+          "phone": "(309) 231-6865",
           "role": "Treasurer"
         },
         {
           "name": "April Wagner",
+          "phone": "(309) 923-8351",
           "role": "Trustee"
         }
       ],
@@ -414,6 +489,7 @@
       "board": [
         {
           "name": "Melinda Knepp",
+          "phone": "(309) 242-1874",
           "role": "Treasurer"
         }
       ],
@@ -421,7 +497,9 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "jasonmknepp@gmail.com",
           "name": "Jason Knepp",
+          "phone": "(309) 208-2871",
           "role": "Administrator"
         }
       ],
@@ -433,7 +511,9 @@
     "Secor Fire District": {
       "board": [
         {
+          "email": "gslayton@hotmail.com",
           "name": "Greg Slayton",
+          "phone": "(309) 922-0816",
           "role": "Treasurer"
         }
       ],
@@ -441,6 +521,7 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "dotlou49@gmail.com",
           "name": "Bob Seggerman",
           "role": "C.E.O."
         }
@@ -480,11 +561,15 @@
     "Washburn Fire District": {
       "board": [
         {
+          "email": "harmsl1800@gmail.com",
           "name": "Ladd Harms",
+          "phone": "(309) 645-2249",
           "role": "President"
         },
         {
+          "email": "stormsmike@gmail.com",
           "name": "Mike Storms",
+          "phone": "(309) 645-3052",
           "role": "Secretary"
         }
       ],
@@ -492,7 +577,9 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "lisa@kullscape.com",
           "name": "Lisa Kull",
+          "phone": "(309) 361-9701",
           "role": "Treas./Admin."
         }
       ],
@@ -500,7 +587,7 @@
       "office": {}
     }
   },
-  "generated": "2026-10-13T02:46:56Z",
+  "generated": "2026-10-17T18:07:00Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
