@@ -81,15 +81,19 @@ def _roster(pages):
     for href, title in re.findall(r'<a href="(/\d+/)([^"/]+)" target="_self"><img\b', page):
         profiles[txt(title)] = BASE + href + "-".join(txt(title).split())
     districts = {}
-    for w in WIDGET.finditer(page, members_at):
+    for i, w in enumerate(WIDGET.finditer(page, members_at), 1):
         body = w.group(1)
         heads = HEADING.findall(body)
+        # These two messages say WHERE the widget is and never quote its
+        # text, which can carry a member's street address.
         if not heads:
             if txt(body):
-                raise ValueError("a text widget under Members with no name heading: %r" % txt(body)[:80])
+                raise ValueError("text widget %d under Members has no name "
+                                 "heading (%d characters)" % (i, len(txt(body))))
             continue
         if len(heads) != 1:
-            raise ValueError("a member widget with %d headings: %r" % (len(heads), txt(body)[:80]))
+            raise ValueError("member widget %d has %d headings: %r"
+                             % (i, len(heads), [txt(h) for h in heads]))
         label = txt(heads[0])
         m = ENTRY.match(label)
         if not m or district_number(label) != int(m.group("d")):

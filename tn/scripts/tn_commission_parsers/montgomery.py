@@ -55,15 +55,18 @@ def _roster(pages):
     if not cards:
         raise ValueError("no commissioner cards on the page")
     districts = {}
-    for c in cards:
+    for i, c in enumerate(cards, 1):
         body = re.search(r'<div class="card-body">(.*?)</div>', c, re.S)
         if not body:
-            raise ValueError("a commissioner card with no card body")
+            raise ValueError("commissioner card %d has no card body" % i)
         body = body.group(1)
         nm = re.search(r"^\s*<strong>(.*?)</strong>", body, re.S)
         lab = re.search(r'<a href="[^"]*/maps/District(\d+)\.pdf"><strong>(.*?)</strong></a>', body)
         if not nm or not lab:
-            raise ValueError("card body without a name and a district label: %r" % txt(body)[:80])
+            # Says which card and never quotes it: a card's text can carry a
+            # member's street address.
+            raise ValueError("commissioner card %d of %d lacks a name or a "
+                             "district label" % (i, len(cards)))
         num = district_number(txt(lab.group(2)))
         if num is None or str(num) != lab.group(1):
             raise ValueError("district label %r disagrees with its map link" % txt(lab.group(2)))
