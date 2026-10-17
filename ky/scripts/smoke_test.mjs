@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ky-senate", "ky-house", "voting-precinct
 const EXPECT_DISTRICT = { "county": "Jefferson County", "us-house": "3", "ky-senate": "33", "ky-house": "43", "voting-precinct": "Precinct 168 43 District" };
 const NEGATIVE_POINT = "38.80000,-83.55000"; // near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.
 const APP_NAME = "districtry Kentucky";
-const EXPECT_LAYERS = 15;
+const EXPECT_LAYERS = 16;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -775,6 +775,97 @@ try {
         `district ${m ? m[1] : "none"}; roster members there ${own.map((x) => x.name).join(", ") || "none"} | card: ${text.slice(0, 160)}`);
     }
     await context.close();
+  }
+
+  // 2j. The School Board Division layer (ky-school-board-divisions.json,
+  //     composed by ky/scripts/build_ky_school_board_divisions.py). No list
+  //     of members by division has been read (gap ky-school-board-members), so
+  //     every card MUST say the members are not named and MUST NOT render a
+  //     person row or any field beyond the ones the module writes; each card
+  //     must also say how its line was drawn and link the board's own page.
+  //     The anchor is in Jefferson County's Division 4, drawn from KRS 160.211.
+  //     38.27000,-85.55000 is in precinct F155, which the statute's lists leave
+  //     out, so its card must place it in no division and name no division.
+  //     Morehead is in Rowan County's Division 4, drawn from the 2024 general
+  //     election's results. Frankfort, in Franklin County, is in no division
+  //     this map draws, and the card must say so rather than name one.
+  {
+    const SB = "school-board-district";
+    const interim = Date.now() < Date.UTC(2027, 0, 1);
+    const cases = [
+      { what: "Jefferson County Division 4, drawn from KRS 160.211", point: POINT,
+        title: "Division 4", note: "Jefferson County Board of Education",
+        must: ["KRS 160.211", "November 3, 2026", "within 8 metres",
+               "Anchorage Independent School District", "127 precincts"],
+        labels: interim
+          ? ["Who it elects", "Until the new board takes office", "Members", "How this line is drawn"]
+          : ["Who it elects", "Members", "How this line is drawn"],
+        link: "https://www.jefferson.kyschools.us/page/board-of-education" },
+      { what: "precinct F155, on none of the statute's lists", point: "38.27000,-85.55000",
+        title: "Placed in no division", note: "Precinct F155, Jefferson County",
+        must: ["KRS 160.211", "No such assignment has been found published",
+               "3.31 km² in all", "597 ballots"],
+        mustNot: [/Division\s+[1-5]\b/],
+        labels: ["Why no division", "Size", "Ballots in 2022"],
+        link: "https://www.jefferson.kyschools.us/page/board-of-education" },
+      { what: "Rowan County Division 4, drawn from election results", point: "38.18400,-83.43270",
+        title: "Division 4", note: "Rowan County Board of Education",
+        must: ["From election results", "November 5, 2024", "within 8 metres",
+               "4th Educational District"],
+        labels: ["Who it elects", "Members", "How this line is drawn"],
+        link: "https://www.rowan.kyschools.us/page/board-of-education" },
+      { what: "Frankfort, in a county whose divisions are not drawn", point: "38.20090,-84.87330",
+        empty: true }
+    ];
+    for (const c of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.point}&layers=${SB}`);
+      const info = await cardText(page, SB);
+      const text = info.text || "";
+      if (c.empty) {
+        check(`${SB} at ${c.what} says no division is drawn there`,
+          !info.error && info.empty && /not drawn here yet/.test(text) && !/Division\s+[1-5]\b/.test(text),
+          text.slice(0, 160));
+        await context.close();
+        continue;
+      }
+      const dom = await page.evaluate((cid) => {
+        const el = document.getElementById("card-" + cid);
+        const block = el && el.closest(".layer-block");
+        const pick = (sel) => { const n = el && el.querySelector(sel); return n ? n.textContent.trim() : null; };
+        const link = block && block.querySelector(".card-footer-link");
+        return {
+          title: pick(".card-intro-title"),
+          note: pick(".card-intro-note"),
+          labels: el ? Array.from(el.querySelectorAll(".card-field-label")).map((n) => n.textContent.trim()) : [],
+          fields: el ? Array.from(el.querySelectorAll(".card-field")).map((f) => {
+            const l = f.querySelector(".card-field-label");
+            const v = f.querySelector(".card-field-value");
+            return { label: l ? l.textContent.trim() : null, value: v ? v.textContent.trim() : "" };
+          }) : [],
+          persons: el ? el.querySelectorAll(".card-person, .card-person-name").length : -1,
+          href: link ? link.getAttribute("href") : null
+        };
+      }, SB);
+      const missing = c.must.filter((m) => !text.includes(m));
+      const unwanted = (c.mustNot || []).filter((re) => re.test(text)).map(String);
+      check(`${SB} at ${c.what}: names the division and says how it was drawn`,
+        !info.error && dom.title === c.title && dom.note === c.note &&
+          missing.length === 0 && unwanted.length === 0 &&
+          JSON.stringify(dom.labels) === JSON.stringify(c.labels) && dom.href === c.link,
+        `title=${dom.title} note=${dom.note} labels=${JSON.stringify(dom.labels)} href=${dom.href}` +
+          ` missing=${JSON.stringify(missing)} unwanted=${JSON.stringify(unwanted)} | ${text.slice(0, 120)}`);
+      // The member half: no person row anywhere on the card, and where the
+      // card has a Members field it says nobody is named.
+      const members = dom.fields.filter((f) => f.label === "Members");
+      const membersOk = c.labels.includes("Members")
+        ? members.length === 1 && /^Not named here\./.test(members[0].value)
+        : members.length === 0;
+      check(`${SB} at ${c.what}: names no board member`,
+        !info.error && dom.persons === 0 && membersOk,
+        `person rows=${dom.persons} members=${JSON.stringify(members)}`);
+      await context.close();
+    }
   }
 
   // 2e. Share control: the point chip carries ONE "Share" button whose popover

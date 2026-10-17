@@ -8292,3 +8292,103 @@ the districts are not drawn.
 - Re-read the city's Planning and Development page and confirm the address and telephone number.
 - Check the state's municipal council district map for Anderson on the day it goes; if Anderson has
   been added, measure it before sending.
+
+---
+
+## Ask ky-kde-school-board-divisions — Kentucky Department of Education, KDE Data Services: each county school board's members by division, and the precincts in each division
+
+> **NOT YET ASKED — DRAFTED 2026-10-17.** To KDE Data Services (Office of Education Technology,
+> Division of School Data Services) at `kdedatarequest@education.ky.gov`. That is the address the
+> "KDE Data Services" link in the Page Contact box points to on the Department's "KY K-12 Data
+> Requests and Governance" page (`www.education.ky.gov/districts/tech/Pages/DataRequests.aspx`),
+> read 2026-10-17 after the host's robots.txt, which was served empty and so disallows nothing. The
+> same box gives 300 Sower Blvd., 4th Floor, Frankfort, KY 40601, and (502) 564-2020. The mailbox
+> has not been searched for earlier correspondence with the Department of Education; do that
+> before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap
+> `ky-school-board-members` and add the record's `ask` block.
+
+**Why this is asked.** Each of Kentucky's 120 county school boards is elected from five
+divisions, and every division is a set of whole voting precincts (KRS 160.210); the boards of
+its independent school districts are elected at large. districtry's Kentucky map now draws the
+divisions of two county boards: Jefferson County's, from the precinct lists KRS 160.211 writes
+into law, and Rowan County's, from the precincts each board race was on in the 2022 and 2024
+general elections. Election results cannot place every precinct in most counties: a survey of
+the State Board of Elections' county reports on 2026-10-16 placed 2,019 of the 3,194 current
+precincts in one division, and 67 of the 2022 reports are scans with no text. They also name
+only who won each race, so a member a board appoints to fill a vacancy under KRS 160.190
+appears in none of them. No card names a member, because no list of members by division has
+been found. The Department is asked first because two of its duties touch both halves:
+KRS 160.210(6) has a board of education publish any change in its division lines in a
+newspaper and file a copy of that newspaper with the chief state school officer within ten days
+(the subsection opens with large school districts, and whether that rule reaches every county
+board is not settled here), and the Department's FAQ on local board vacancies, revised
+12 August 2026, has a board that fails to fill a vacancy within 60 days notify the Commissioner.
+Whether the Department keeps a list of members by division, or of the precincts in each
+division, is not known; the letter asks. It goes to Data Services rather than through the
+Department's Online Data Request Form because it first asks whether the data exists (see
+**Before sending**).
+
+> Subject: Kentucky's county school board members and their divisions
+>
+> Dear KDE Data Services team,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Kentucky's map is at https://districtry.com/ky/.
+>
+> I would like it to show, for any address in a county school district, which of the board's
+> five divisions it is in and who represents that division. Today it draws the divisions of only
+> two of the 120 county boards, and it names no members. Jefferson County's divisions are drawn
+> from the precinct lists in KRS 160.211, and Rowan County's from the precincts each board race
+> appeared on in the 2022 and 2024 general elections. For most counties the published election
+> results cannot place every precinct, and they do not show members appointed to fill a vacancy.
+>
+> I have two questions, and a short answer to either is useful:
+>
+> 1. Does the Department hold, or could it collect, a list of each county board of education's
+>    members with the division each represents?
+> 2. Does it hold each county board's divisions, either as lists of the precincts in each
+>    division or as the newspaper notices boards file when they change their division lines?
+>
+> If either exists, one statewide file would be ideal, but any form is welcome. Nothing I am
+> asking about concerns students. If this should go through the Online Data Request Form
+> instead, I am glad to submit one, and a pointer to whoever does hold this information would
+> help just as much. A no is a useful answer too: it lets the site tell its readers that the
+> Department was asked.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A list of members by division: in the counties the map draws, each
+division's card names its member with the list's date, and the other counties' members wait for
+their divisions; a list the Department publishes is read after its host's robots.txt on a
+schedule, and one sent once is dated on every card that uses it. Division precinct lists, or
+copies of the newspaper notices: each county is drawn as Jefferson is, from the union of its
+listed precincts on the State Board of Elections' current precinct map, cut to the Census
+boundary of its school district, and held to the same tests (every current precinct in exactly
+one division, and the election results used only as a check). Neither is held: recorded in gap
+`ky-school-board-members` with its date, the results-based drawing continues county by county
+as the 2026 general's reports arrive, and the next route is each county board of education,
+which KRS 160.210(6) has keep the record of its own changes; that is 118 letters, which is why
+the Department is asked first. Use the Online Data Request Form: submit it, stating the purpose;
+if an outside request needs an associate commissioner's sponsorship and none is offered, record
+that answer in the gap rather than pressing. No reply after the follow-up cadence: recorded as
+asked, and nothing changes on the map.
+
+**Before sending:**
+
+- Re-read the Data Requests page and confirm the Page Contact box and the address its link
+  points to. The page says every internal and external data request must go through the KDE
+  Online Data Request Form, and that an external request must be sponsored by a KDE associate
+  commissioner. This letter asks whether the data exists before any request is made, which is
+  why it goes to the page contact; if the answer is to use the form, use it.
+- The Department's open records page offers copies of its records to residents of Kentucky, on
+  a written and signed application to its General Counsel (read 2026-10-17). The newspaper copies
+  KRS 160.210(6) has boards file with the Commissioner would be records of that kind. That route
+  is open only if the sender is a Kentucky resident; do not use it otherwise.
+- Confirm the letter's figures against the shipped file on the day it goes: two county boards
+  drawn, Jefferson and Rowan. If another county has been drawn since, change the number and the
+  names.

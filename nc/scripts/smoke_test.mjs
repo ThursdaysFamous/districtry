@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "nc-senate", "nc-house", "voting-precinct
 const EXPECT_DISTRICT = { "county": "Wake County", "us-house": "2", "nc-senate": "14", "nc-house": "38", "voting-precinct": "Precinct 01-14" };
 const NEGATIVE_POINT = "35.60000,-75.30000"; // the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.
 const APP_NAME = "districtry North Carolina";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -1114,6 +1114,71 @@ try {
     check(`city-ward card at ${c.name} names only what that district elects, in the city's own word`,
       !info.error && missing.length === 0 && present.length === 0,
       `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
+    await context.close();
+  }
+
+  // ---- School Board District, drawn from the State Board of Elections'
+  // precinct-level results and answered from the shipped file alone, so
+  // nothing here is stubbed. Each point is shapely's representative point of
+  // the shipped piece shrunk by about 200 m, so it is no nearer an edge than
+  // that (nc/data/app/nc-school-board-districts.json, 2026-10-17). The State
+  // Capitol is in Wake's District 6, last elected on November 5, 2024: the card
+  // names the seat, the election it is drawn from and the school district's
+  // website, and must NOT name either candidate in that contest (Sam Hershey
+  // won it), because the app names no member. A split precinct names both
+  // seats and says the results do not place the line; ground two elections put
+  // different seats on names both elections and chooses neither; Watauga's
+  // ground that no district seat's latest contest reached says so; Durham
+  // names the consolidated district over its district; and Smithfield, whose
+  // Johnston County board labels seats by district while every precinct votes
+  // on each, gets the empty card and no district.
+  for (const c of [
+    { name: "the State Capitol (Wake District 6)", point: POINT,
+      want: [/District 6\b/, /Wake County Schools \(Wake County Board of Education\)/,
+        /The election of November 5, 2024: the precincts whose ballots carried this seat's contest/,
+        /Members Not named here/, /Results by precinct/, /Look up your voter registration/],
+      reject: [/Sam Hershey/, /Josh Points/, /Members elected at large/, /Districts from/],
+      footer: ["Wake County Schools website", "https://www.wcpss.net/"] },
+    { name: "Bladen's COLLY precinct (split)", point: "34.66595,-78.49338",
+      want: [/District 1 or District 3/, /Why two districts/,
+        /COLLY precinct carried the contests for District 1 and District 3 in the ballot of November 3, 2026, which the State Board posted on October 5, 2026, before the election was held/,
+        /the results do not say where/, /Members elected at large/],
+      reject: [/Drawn from/, /Districts from/] },
+    { name: "Duplin ground two elections disagree on (overlap)", point: "34.79927,-77.82405",
+      want: [/Districts from two elections/, /The ballot of November 3, 2026, which the State Board posted on October 5, 2026, before the election was held District 3/,
+        /The election of November 5, 2024 District 4/, /chooses none/,
+        /Results of November 3, 2026/, /Results of November 5, 2024/],
+      reject: [/Drawn from/] },
+    { name: "Watauga ground no district contest reached (unplaced)", point: "36.23570,-81.83690",
+      want: [/No district placed here/, /On the ballot here/, /At large \(November 5, 2024\)/,
+        /The results do not say which/],
+      reject: [/Drawn from/, /Districts from/] },
+    { name: "Durham District 1 under Consolidated District A", point: "35.97381,-78.88550",
+      want: [/District 1\b/, /Durham Public Schools \(Durham County Board of Education\)/,
+        /Also elects Consolidated District A, which covers District 1 and District 2 and elects a member of its own/],
+      reject: [/Districts from/, /No district placed here/] },
+    { name: "Smithfield (Johnston, district-labelled seats voted on everywhere)", point: "35.50850,-78.33940",
+      empty: true,
+      want: [/No school board election district is drawn at this point/, /elected at large/],
+      reject: [/Not named here/, /Drawn from/, /District \d/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=school-board-district`);
+    const info = await cardText(page, "school-board-district");
+    const text = info.text || "";
+    const footer = await page.evaluate(() => {
+      const el = document.getElementById("card-school-board-district");
+      const block = el && el.closest(".layer-block");
+      const a = block && block.querySelector(".card-footer-link");
+      return a ? [a.textContent.trim(), a.getAttribute("href")] : null;
+    });
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    const footerOk = !c.footer || (!!footer && footer[0] === c.footer[0] && footer[1] === c.footer[1]);
+    check(`school-board-district card at ${c.name} says what the results place there and names no member`,
+      !info.error && (c.empty ? info.empty : !info.empty) &&
+        missing.length === 0 && present.length === 0 && footerOk,
+      `missing=${missing} unwanted=${present} footer=${JSON.stringify(footer)} text=${text.slice(0, 240)}`);
     await context.close();
   }
 } finally {

@@ -4216,9 +4216,9 @@ function initNorthCarolinaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "nc-senate": "ncs", "county": "co", "nc-house": "nch",
-    "school-district-unified": "su", "county-subdivision": "cs", "zip-code": "zp",
-    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "school-district-unified": "su", "county-subdivision": "cs", "school-board-district": "bd",
+    "zip-code": "zp", "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4228,8 +4228,9 @@ function initNorthCarolinaExplorer() {
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
+    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -10005,6 +10006,7 @@ function initNorthCarolinaExplorer() {
     "nc-house",          // 120 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 118 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "county-subdivision", // 1,041 county subdivisions — North Carolina townships, the census fabric below the county
+    "school-board-district", // 423 pieces on the boards of 38 school districts that elect members by district, pre-built from the State Board of Elections' precinct-level results — the 421 under Durham's two consolidated districts a mean 117.0 km2 (median 74.5), measured 2026-10-17 on the drawn file: smaller on average than a county subdivision (1,041 tiling the state's 139,389 km2, a mean 133.9), larger than a voting precinct (median 25.32)
     "zip-code",          // 1,500 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope and kept where they overlap North Carolina
     "tribal-government", // Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "voting-precinct",   // 2,625 precincts tiling the state, pre-built from the State Board of Elections' file as NC OneMap serves it — 53.10 km2 mean area, land and water (median 25.32), measured 2026-10-15 on the drawn file: smaller than the Qualla Boundary's pieces (median 107.2 km2), larger on average than a city or town (20.26 km2 of land)
@@ -15117,6 +15119,263 @@ function initNorthCarolinaExplorer() {
     compact: true, compactMetaField: "geoid" // 4b name-only card
   });
 
+  /* ---------- 8b. School Board District — drawn from the State Board's results ----------
+   * Most North Carolina school boards are elected at large, by the whole
+   * school district. Some elect each member from one part of it, and no map
+   * of those parts is published that this project found: the State Board of
+   * Elections' ShapeFiles folder carries its precinct maps and nothing else.
+   * So they are drawn from the State Board's own precinct-level results. A
+   * seat's contest is on the ballots of the precincts of its district, and
+   * those precincts, read in the State Board's precinct map of that election
+   * and cut to the Census school district's boundary, are the district
+   * (nc/scripts/build_nc_school_board_districts.py;
+   * data/app/nc-school-board-districts.json, same-origin, so a click is
+   * answered in the browser and no point is sent anywhere). Which boards
+   * elect by district is MEASURED from the results rather than listed: 38
+   * boards and 214 seats, measured 2026-10-17, each seat drawn from its
+   * latest contest in its board's two most recent election years. Seats on
+   * the November 3, 2026 ballot are drawn from that ballot, which the State
+   * Board posted before the election, and the card says so.
+   *
+   * FOUR KINDS OF PIECE, AND THE CARD SAYS WHICH. A "district" is ground
+   * where one seat's latest contest was on the ballot. A "split" is a
+   * precinct whose ballots carried two or more seats of one election, so a
+   * line between them runs through it and the results do not say where. An
+   * "overlap" is ground where different elections put different seats on
+   * the ballot: a board elects its members in different years, so a precinct
+   * a district line runs through shows each district in the year its seat
+   * is on the ballot, and a board can also redraw its districts between
+   * elections. The results do not say which, so the card names every
+   * election and seat and chooses none. "Unplaced" ground is in the school
+   * district and on no current district seat's latest ballot. Durham's two
+   * consolidated districts are a second tier ("tier": "overlay") over its
+   * four districts, and the card names both.
+   *
+   * NO MEMBER IS NAMED. The results name each contest's winner, but a board
+   * fills a vacancy by appointment, which no results file shows, and the
+   * seats on the November 3, 2026 ballot stay with the members serving now
+   * until that election's winners take office. Recorded as gap
+   * nc-school-board-members. The card's footer links the board's school
+   * district website instead ("website" on every piece), the address NCES's
+   * Common Core of Data district directory gives for the district, kept only
+   * where it answered with a page when the file was built: all 38, measured
+   * 2026-10-17. A piece with no website keeps the State Board's voter search
+   * in the footer.
+   * ---------- */
+  var loadNcSchoolBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-school-board-districts.json", {}, 2);
+  });
+  // "District 1, District 6 or District 7"
+  function ncJoinList(items, word) {
+    var list = (items || []).map(String);
+    if (list.length < 2) return list.join("");
+    return list.slice(0, -1).join(", ") + " " + word + " " + list[list.length - 1];
+  }
+  // a piece's election, as a reader is told it
+  function ncBoardElection(iso, posted) {
+    var when = ncDate(iso) || String(iso);
+    return posted
+      ? "the ballot of " + when + ", which the State Board posted on " +
+        (ncDate(posted) || String(posted)) + ", before the election was held"
+      : "the election of " + when;
+  }
+  function ncCapital(text) {
+    var s = String(text);
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  var NC_BALLOT_NAMES = "When your district's seat is on the ballot, your sample " +
+    "ballot names it.";
+  // the State Board's voter search, a `url:` literal so the monthly link
+  // check reads it
+  function ncVoterSearch() {
+    return { label: "Look up your voter registration", url: "https://vt.ncsbe.gov/RegLkup/" };
+  }
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board District",
+    coverage: inNorthCarolina,
+    emptyNote: "No school board election district is drawn at this point. Most " +
+      "North Carolina school boards are elected at large, by the whole school " +
+      "district, and the School District (Unified) card names the district. Where " +
+      "a board elects by district, this map draws its districts from the precincts " +
+      "that voted in each one. It leaves out strips no more than 90 metres wide, " +
+      "where precinct maps of different elections draw a line a little apart, and a " +
+      "few small patches that no precinct of the State Board's map covers.",
+    overlay: {
+      load: loadNcSchoolBoardDistricts,
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (p.school == null) return null;
+      var school = String(p.school);
+      if (p.kind === "district" && p.seat != null) return school + ", " + String(p.seat);
+      if (p.kind === "split" && p.seats) return school + ", " + ncJoinList(p.seats, "or");
+      if (p.kind === "overlap") return school + ", districts from more than one election";
+      return school + ", no district placed";
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadNcSchoolBoardDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var base = null, over = null;
+        for (var i = 0; i < feats.length; i++) {
+          var f = feats[i];
+          if (!f.geometry || !pointInGeometry(point, f.geometry)) continue;
+          var p = f.properties || {};
+          if (p.tier === "overlay") {
+            if (!over) over = p;
+          } else if (!base) {
+            base = p;
+          }
+        }
+        if (!base && !over) return null;
+        return { seq: seq, props: base || over, overlay: base ? over : null };
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var wrap = cardEl("div", "card-flush");
+      var rows = [];
+      var links = [];
+      var title;
+      if (p.kind === "district") {
+        title = String(p.seat);
+        rows.push({
+          label: "Drawn from",
+          value: ncCapital(ncBoardElection(p.election, p.posted)) +
+            (p.unexpired ? ", which filled the rest of a term" : "") +
+            ": the precincts whose ballots carried this seat's contest, its latest " +
+            "in the State Board's results."
+        });
+        if (p.tier === "overlay" && p.within) {
+          rows.push({
+            label: "Covers",
+            value: ncJoinList(p.within, "and") + ", which each elect a member of their own."
+          });
+        }
+      } else if (p.kind === "split") {
+        title = ncJoinList(p.seats, "or");
+        rows.push({
+          label: "Why " + (NC_SMALL_NUMBERS[p.seats.length] || String(p.seats.length)) + " districts",
+          value: "Ballots in the " + String(p.precinct) + " precinct carried the contests for " +
+            ncJoinList(p.seats, "and") + " in " + ncBoardElection(p.election, p.posted) +
+            ", so a line between these districts runs through the precinct, and the " +
+            "results do not say where. " + NC_BALLOT_NAMES
+        });
+      } else if (p.kind === "overlap") {
+        var claims = p.claims || [];
+        title = "Districts from " + (NC_SMALL_NUMBERS[claims.length] || String(claims.length)) +
+          " elections";
+        claims.forEach(function (c) {
+          var seats = c.seats || [];
+          rows.push({
+            label: ncCapital(ncBoardElection(c.election, c.posted)),
+            value: ncJoinList(seats, "or") +
+              (seats.length > 1 && c.precinct
+                ? ": a line between them runs through the " + String(c.precinct) + " precinct"
+                : "")
+          });
+          if (c.sourceUrl) {
+            links.push({ label: "Results of " + (ncDate(c.election) || String(c.election)), url: String(c.sourceUrl) });
+          }
+        });
+        rows.push({
+          label: "Why more than one",
+          value: "Ballots here carried this board's contests for different districts in " +
+            "different elections. A board elects its members in different years, so where " +
+            "a district line runs through a precinct, the precinct shows each district in " +
+            "the year that district's seat is on the ballot; a board can also redraw its " +
+            "districts between elections. The results do not say which, or where a line " +
+            "runs, so this map names each election's districts and chooses none. " +
+            NC_BALLOT_NAMES
+        });
+      } else {
+        title = "No district placed here";
+        if (p.votedIn && p.votedIn.length) {
+          rows.push({
+            label: "On the ballot here",
+            value: p.votedIn.map(function (v) {
+              return ncJoinList(v.seats, "and") + " (" + (ncDate(v.election) || String(v.election)) + ")";
+            }).join("; ")
+          });
+          rows.push({
+            label: "Why",
+            value: "None of these is the latest contest of one of the board's district " +
+              "seats, each drawn here from its latest contest in the board's elections of " +
+              ncJoinList(p.cycle, "and") + ", so the results do not place this ground in " +
+              "a district. It may be in a district whose seat has not been on the ballot " +
+              "since the board began electing by district, or since its districts were " +
+              "redrawn, or in no district at all, if its voters elect only members chosen " +
+              "by the whole school district. The results do not say which."
+          });
+        } else {
+          rows.push({
+            label: (p.precincts || []).length > 1 ? "Precincts" : "Precinct",
+            value: ncJoinList(p.precincts, "and")
+          });
+          rows.push({
+            label: "Why",
+            value: "This ground is inside the Census's outline of the school district, and " +
+              "none of this board's contests in the elections read since 2022 was on the " +
+              "ballot across most of it. The results do not say why; the Census's school " +
+              "district line and the State Board's precinct lines may be drawn apart here."
+          });
+        }
+      }
+      wrap.appendChild(renderBodyIntro({
+        title: title,
+        note: String(p.school) + " (" + String(p.board) + ")"
+      }));
+      if (result.overlay) {
+        var o = result.overlay;
+        rows.push({
+          label: "Also elects",
+          value: String(o.seat) + ", which covers " + ncJoinList(o.within, "and") +
+            " and elects a member of its own."
+        });
+      }
+      rows.push({
+        label: "Members",
+        value: "Not named here. This app has not yet matched the State Board's " +
+          "election results to the members serving now, so it names no one rather " +
+          "than guessing."
+      });
+      if (p.atLarge) {
+        rows.push({
+          label: "Also on this board",
+          value: "Members elected at large, by the whole school district."
+        });
+      }
+      rows.push({
+        label: "How this line is drawn",
+        value: "From the precincts whose ballots carried each seat's latest contest in " +
+          "the State Board of Elections' precinct-level results, read in the State " +
+          "Board's precinct map of that election and cut to the school district's " +
+          "boundary. Where two elections' maps draw a line less than 60 metres apart, " +
+          "the newer one's line is kept, and the lines are drawn here to within 15 " +
+          "metres of those maps. For a definitive answer, look up your registration " +
+          "with the State Board: its voter search shows your jurisdictions and, when one " +
+          "is available, your sample ballot, which lists the contests you vote in."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      if (p.sourceUrl) links.unshift({ label: "Results by precinct", url: String(p.sourceUrl) });
+      // the footer carries the school district's website where there is one,
+      // so the voter search moves up into the body's links
+      if (p.website) links.push(ncVoterSearch());
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var p = (result && result.props) || {};
+      if (p.website) return { label: String(p.school) + " website", url: String(p.website) };
+      return ncVoterSearch();
+    }
+  });
+
 
 
   /* ---------- 11. ZIP Code — live TIGERweb ZCTAs ----------
@@ -16909,6 +17168,9 @@ function initNorthCarolinaExplorer() {
     // districts are drawn.
     "city-ward",
     "school-district-unified",
+    // the election districts of the boards that elect by district, inside
+    // the school district above
+    "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -17395,9 +17657,9 @@ function initNorthCarolinaExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
     "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE",
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

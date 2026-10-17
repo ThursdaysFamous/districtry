@@ -402,11 +402,18 @@ question.
   Tennessee the districts of 18 of its 95 county boards of education, the
   counties the Comptroller of the Treasury maps, and Indiana the five districts
   of the Indianapolis Public Schools board, the only ones a government office
-  in Indiana publishes as a map. Kentucky ships none and owes them: its thread
-  has confirmed that every county school board is elected by division, five
-  divisions per county, each built from whole precincts. Kentucky's independent
-  school boards are elected at large, so they are named rather than drawn.
-  North Carolina and Oklahoma owe them too.
+  in Indiana publishes as a map. Kentucky draws part of what it owes: since
+  2026-10-17 the divisions of 2 of its 120 county boards of education,
+  Jefferson County's from the precinct lists in KRS 160.211 and Rowan County's
+  from the 2022 and 2024 general election results. Every Kentucky county school
+  board is elected by division, five divisions per county, each built from
+  whole precincts; its independent school boards are elected at large, so they
+  are named rather than drawn.
+  Since 2026-10-17 North Carolina draws the 214 district seats of the 38
+  boards whose election results show them elected by district, each from the
+  precincts whose ballots carried the seat's latest contest, because this
+  project found no map of these districts published anywhere; where the
+  results cannot place a line, the card says so. Oklahoma owes them too.
 - Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
   Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
   Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one

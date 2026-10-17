@@ -1691,8 +1691,13 @@ ANSWERS = {
         # Kentucky owes these: its thread has confirmed every county school board
         # is elected by division, five per county from whole precincts, while its
         # independent school boards are elected at large and so are named rather
-        # than drawn.
-        "school-boards-by-district": OPEN,
+        # than drawn. PART DRAWN 2026-10-17: the divisions of 2 of the 120 county
+        # boards, Jefferson's from the precinct lists in KRS 160.211 and Rowan's
+        # from the 2022 and 2024 general election results
+        # (ky/scripts/build_ky_school_board_divisions.py), so the level stays
+        # open on gap ky-school-board-members. The layer is named here so the
+        # unclaimed-layer print does not list it.
+        "school-boards-by-district": Entry("open", ("school-board-district",)),
         # The State Board of Elections compiles all 3,194 precincts statewide
         # from the counties' own files, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
@@ -1812,7 +1817,16 @@ ANSWERS = {
             "North Carolina's townships are boundaries without governments — "
             "the Census marks every one non-functioning — so outside a city or "
             "town limit the county governs."),
-        "school-boards-by-district": OPEN,
+        # ANSWERED 2026-10-17: no published map of these districts was found,
+        # so school-board-district draws them from the State Board of Elections'
+        # precinct-level results (nc/scripts/build_nc_school_board_districts.py).
+        # The results show which boards elect by district, 38 of the 115 with a
+        # contest since 2022, and each of their 214 district seats is drawn from
+        # the precincts whose ballots carried its latest contest. Ground the
+        # results cannot place (a precinct a line runs through, a seat not on
+        # the ballot lately) is drawn as what it is and the card says so, gap
+        # nc-school-board-districts.
+        "school-boards-by-district": answers("school-board-district"),
         # The State Board of Elections' statewide file carries all 2,625
         # precincts, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
