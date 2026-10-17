@@ -1160,7 +1160,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">15 layers — 8 political and legislative, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">16 layers — 8 political and legislative, 4 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#schools">Schools</a>
@@ -1273,7 +1273,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">3 layers</span></h2>
+        <h2>Schools <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1291,6 +1291,21 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.</td>
                 <td data-label="Where it applies">Kentucky — statewide, except the four areas the Census places in its elementary and secondary tilings.</td>
+              </tr>
+              <tr id="layer-school-board-district">
+                <th scope="row"><span class="layer-name">School Board Division</span><code>school-board-district</code></th>
+                <td data-label="What it answers">The division of a Kentucky county board of education that contains the point, in the counties whose divisions this map draws (Jefferson and Rowan), and, in Jefferson County, the three precincts the statute leaves for the county board of elections to place.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://apps.legislature.ky.gov/law/acts/26RS/documents/0154.pdf" target="_blank" rel="noopener">KRS 160.211, created by 2026 Ky. Acts ch. 154, sec. 9 (effective April 14, 2026) — the precinct codes of the Jefferson County board's five divisions; the repository's copy (ky/data/source/statutes/krs160.211.txt) is held to section 9 of the act as enacted on every build</a></li>
+                    <li><a href="https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0" target="_blank" rel="noopener">Kentucky State Board of Elections — voting precincts, joined to the statute's codes and to the election results by precinct code (ky/scripts/build_ky_school_board_divisions.py)</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts): the Jefferson County and Rowan County school district boundaries each division is cut to</a></li>
+                    <li><a href="https://elect.ky.gov/results/2020-2029/Pages/2024General-Recap-Sheets.aspx" target="_blank" rel="noopener">Kentucky State Board of Elections — 2024 general election recap sheets, which with the 2022 sheets place every Rowan County precinct in one division's race</a></li>
+                    <li><a href="https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx" target="_blank" rel="noopener">Kentucky State Board of Elections — 2022 general election recap sheets</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER NAMED. No list of a county board's members by division has been read for this app, so the card names the division, says how it was drawn and links the board's own page. Recorded as the coverage gap ky-school-board-members.</td>
+                <td data-label="Where it applies">Jefferson County, inside the Jefferson County School District (the Anchorage Independent School District, whose board is elected at large, is in no division), and Rowan County. Elsewhere the card says the county's divisions are not drawn here yet.</td>
               </tr>
               <tr id="layer-school-district-elementary">
                 <th scope="row"><span class="layer-name">School District (Elementary)</span><code>school-district-elementary</code></th>
@@ -1646,6 +1661,48 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "56 of the 104 counties whose magistrates are elected by district, plus Louisville Metro and Lexington-Fayette. The other 48 are not drawn yet because the published results did not place every one of their precincts; the 14 commissioner counties elect by the whole county and have no districts to draw"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-school-board-district",
+      "identifier": "school-board-district",
+      "name": "School Board Division",
+      "description": "The division of a Kentucky county board of education that contains the point, in the counties whose divisions this map draws (Jefferson and Rowan), and, in Jefferson County, the three precincts the statute leaves for the county board of elections to place. NO OFFICEHOLDER NAMED. No list of a county board's members by division has been read for this app, so the card names the division, says how it was drawn and links the board's own page. Recorded as the coverage gap ky-school-board-members.",
+      "url": "https://districtry.com/ky/sources.html#layer-school-board-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "KRS 160.211, created by 2026 Ky. Acts ch. 154, sec. 9 (effective April 14, 2026) — the precinct codes of the Jefferson County board's five divisions; the repository's copy (ky/data/source/statutes/krs160.211.txt) is held to section 9 of the act as enacted on every build",
+          "url": "https://apps.legislature.ky.gov/law/acts/26RS/documents/0154.pdf"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Kentucky State Board of Elections — voting precincts, joined to the statute's codes and to the election results by precinct code (ky/scripts/build_ky_school_board_divisions.py)",
+          "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts): the Jefferson County and Rowan County school district boundaries each division is cut to",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Kentucky State Board of Elections — 2024 general election recap sheets, which with the 2022 sheets place every Rowan County precinct in one division's race",
+          "url": "https://elect.ky.gov/results/2020-2029/Pages/2024General-Recap-Sheets.aspx"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Kentucky State Board of Elections — 2022 general election recap sheets",
+          "url": "https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Jefferson County, inside the Jefferson County School District (the Anchorage Independent School District, whose board is elected at large, is in no division), and Rowan County. Elsewhere the card says the county's divisions are not drawn here yet"
       }
     },
     {

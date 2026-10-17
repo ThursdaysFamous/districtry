@@ -54,6 +54,7 @@ const GEOMETRY_URLS = [
   "./data/app/ky-district-court-districts.json",
   "./data/app/ky-county-districts.json",
   "./data/app/ky-precincts.json",
+  "./data/app/ky-school-board-divisions.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

@@ -217,10 +217,36 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 7,
+      "rank_note": "423 pieces on the boards of 38 school districts that elect members by district, pre-built from the State Board of Elections' precinct-level results — the 421 under Durham's two consolidated districts a mean 117.0 km2 (median 74.5), measured 2026-10-17 on the drawn file: smaller on average than a county subdivision (1,041 tiling the state's 139,389 km2, a mean 133.9), larger than a voting precinct (median 25.32)",
+      "source": {
+        "answers": "The election district of a North Carolina school board that elects members by district, and the school district whose board it is. Where one election's ballots in a precinct carried two of a board's districts, both are named; where different elections put different districts on the ballot, each election's are named and none is chosen; where the results place no current district seat, the card says so.",
+        "boundary": [
+          {
+            "label": "North Carolina State Board of Elections — precinct-level election results (results_pct_<date>.zip), one file for each election from May 17, 2022 to the November 3, 2026 ballot the State Board posted on October 5, 2026: each district is the precincts whose ballots carried its seat's latest contest, cut to the school district. Read 2026-10-17 and pre-built by nc/scripts/build_nc_school_board_districts.py, shipped with the app. The State Board's ShapeFiles folder carries its precinct maps and no map of these districts.",
+            "url": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip"
+          },
+          {
+            "label": "North Carolina State Board of Elections — its statewide precinct maps (SBE_PRECINCTS_<date>.zip), nine dated January 18, 2022 to August 24, 2026: each election's precincts are read in the map holding the most of that election's precinct codes, read 2026-10-17.",
+            "url": "https://dl.ncsbe.gov/ShapeFiles/Precinct/SBE_PRECINCTS_20260824.zip"
+          },
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts): the boundary each board's districts are cut to, read 2026-10-17.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "NO MEMBER IS NAMED YET. The results name each contest's winner, but a board fills a vacancy by appointment, which no results file records, and the seats on the November 3, 2026 ballot stay with the members serving now until that election's winners take office. Matching the winners to the members serving now has not been done, so the card names no one rather than guessing — recorded as gap nc-school-board-members. The card links each board's school district website instead: the address that the National Center for Education Statistics' Common Core of Data district directory for the 2025-26 school year gives, kept where it answered with a page when the file was built, which all 38 did on 2026-10-17.",
+        "applies": "The 38 North Carolina school districts whose boards elect members by district, measured 2026-10-17 from the results as the boards whose district seats are each voted on in only part of the school district: Alexander, Anson, Beaufort, Bladen, Buncombe, Caswell, Charlotte-Mecklenburg, Craven, Cumberland, Duplin, Durham, Edenton-Chowan, Edgecombe, Forsyth, Franklin, Granville, Guilford, Harnett, Hickory City, Iredell-Statesville, Lenoir, Lexington City, Madison, Martin, Montgomery, Nash-Rocky Mount, Newton-Conover City, Pamlico, Pitt, Robeson, Rockingham, Union, Vance, Wake, Watauga, Wayne, Whiteville City and Wilson. 45 boards are elected at large, and 32 more label seats by district while every precinct votes on each of them; neither kind has districts to draw, and the empty card says so."
+      }
+    },
+    {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "1,500 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope and kept where they overlap North Carolina",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -238,7 +264,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "2,625 precincts tiling the state, pre-built from the State Board of Elections' file as NC OneMap serves it — 53.10 km2 mean area, land and water (median 25.32), measured 2026-10-15 on the drawn file: smaller than the Qualla Boundary's pieces (median 107.2 km2), larger on average than a city or town (20.26 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -256,7 +282,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "552 incorporated places, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -274,7 +300,7 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "100 council districts and wards in the 17 cities above 25,000 people that elect council members by district or ward, ranked just after City or Town, which each one divides, so a district draws on top of its city",
       "source": {
         "answers": "The city council district or ward containing the point, in the 17 North Carolina cities above 25,000 people that elect council members by district or ward, and the member for it.",
@@ -356,7 +382,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -374,7 +400,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -392,7 +418,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -410,7 +436,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — North Carolina has 2 such areas, both the Eastern Band of Cherokee Indians'.",
@@ -425,7 +451,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 12,
   "anchor_point": {
     "lat": 35.7804,
     "lng": -78.6391,
@@ -511,6 +537,12 @@
         "min_features": 100,
         "max_features": 100,
         "note": "The 100 council districts and wards of the 17 cities above 25,000 people that elect council members by district or ward, pre-built by nc/scripts/build_nc_city_wards.py through scripts/city_ward_maps.py from the map each city or its county publishes (Douglas-Peucker at 4 m; a 6,800-point agreement gate over the seventeen cities' extents, measured 99.94%, with no overlap; each map held to its city's Census outline). 1.46 MB, 410 KB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "nc-school-board-districts.json",
+        "min_features": 423,
+        "max_features": 423,
+        "note": "The election districts of the 38 school boards that elect members by district, pre-built by nc/scripts/build_nc_school_board_districts.py from the State Board of Elections' precinct-level results and precinct maps, cut to the Census school districts (Douglas-Peucker at 15 m in one shared pass; an 8,443-point agreement gate, measured 99.657% with no point in two pieces; the widest hole between a board's pieces held under 90 m). 3.70 MB, 986 KB gzipped, fetched only when a reader switches the layer on. The floor and ceiling are equal because the pieces follow the results: a new results file can move them, and that wants reading."
       }
     ],
     "rosters": [
