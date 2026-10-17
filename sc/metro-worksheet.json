@@ -261,10 +261,32 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 9,
+      "rank_note": "383 districts on the boards of 54 school districts, pre-built from the Revenue and Fiscal Affairs Office's layer — 195.4 km2 mean area (median 128.5), measured 2026-10-16 on the drawn file: smaller than a county council district (median 172.0 km2), larger than most ZIP codes",
+      "source": {
+        "answers": "The district a school board elects a member from, the school district whose board it is, how many members the district elects, and who votes for them, as the board's own act of the General Assembly says: the district's voters, every voter in the school district, or not stated.",
+        "boundary": [
+          {
+            "label": "South Carolina Revenue and Fiscal Affairs Office — \"School Board Districts\", layer 0 of the Boundaries_Districts service on gis.state.sc.us: 383 districts on the boards of 54 school districts and one record marked “At Large” for each of the other 18, measured 2026-10-16, pre-built by sc/scripts/build_sc_school_board_districts.py and shipped with the app. The service states no licence, only an as-is disclaimer.",
+            "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/School_Board_Districts/FeatureServer/0"
+          },
+          {
+            "label": "South Carolina General Assembly — each board's own act, read in its ratified text on 2026-10-16 (for example Act 230 of 2024, which sets the Aiken County board), for how many members each district elects and who votes for them; the builder lists all 54",
+            "url": "https://www.scstatehouse.gov/sess125_2023-2024/bills/1025.htm"
+          }
+        ],
+        "people": "NO NAMES YET. No statewide list of South Carolina's school board members has been read — the School Boards Association sends its directory on request, and the State Election Commission's results site answers GitHub's servers with no page — so the card names no one rather than guessing, and links the school district's own website; recorded as gap sc-school-board-members.",
+        "applies": "The 54 South Carolina school districts whose boards are elected from districts. The other 18 are marked “At Large” on the state's map and have no districts to draw; the empty card says so."
+      }
+    },
+    {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -282,7 +304,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "2,315 precincts tiling the state, pre-built from the Revenue and Fiscal Affairs Office's official maps — 35.84 km2 mean area, land and water (median 12.82), measured 2026-10-15 on the drawn file: smaller on average than a census county division (260.4 km2 of land), larger than a city or town (18.58)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -300,7 +322,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "271 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -318,7 +340,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -336,7 +358,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -354,7 +376,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -372,7 +394,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "Tribal land — South Carolina has 2 pieces held by one nation, the Catawba Reservation (4.123 km²) and its off-reservation trust land (0.054 km²), both in York County near Rock Hill, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since the reservation is smaller than the city of Rock Hill beside it, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — South Carolina has 2 such areas, both the Catawba Indian Nation's.",
@@ -387,7 +409,7 @@
       }
     }
   ],
-  "min_register_layer": 11,
+  "min_register_layer": 12,
   "anchor_point": {
     "lat": 34.00035,
     "lng": -81.03295,
@@ -481,6 +503,12 @@
         "min_features": 2315,
         "max_features": 2315,
         "note": "Every South Carolina voting precinct, pre-built by sc/scripts/build_sc_precincts.py through scripts/statewide_precincts.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,315 count on the fetch and the drawn file). 7.8 MB, 2.24 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "sc-school-board-districts.json",
+        "min_features": 383,
+        "max_features": 383,
+        "note": "Every South Carolina school board district, pre-built by sc/scripts/build_sc_school_board_districts.py through scripts/published_district_layers.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 383 count, after the 18 records marked “At Large” are skipped). 4.6 MB, 1.43 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "sc-judicial-circuits.json",

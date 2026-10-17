@@ -8,9 +8,10 @@ districtry Indiana: a single-file, dependency-light web app. Click a point in In
 search an address) and it reports every civic district containing that point. It serves at
 **districtry.com/in/** as a folder of the consolidated districtry repo — following the
 Wisconsin/Iowa/Michigan shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships FIFTEEN layers, all but three from a national publisher: the county
-council districts and the voting precincts come from the state's mapping office, and the Court of
-Appeals districts group the Census's counties as the court's own district map does (all below).
+root-scripts shape. It ships SIXTEEN layers, all but four from a national publisher: the county
+council districts and the voting precincts come from the state's mapping office, the Court of
+Appeals districts group the Census's counties as the court's own district map does, and the
+Indianapolis Public Schools board districts come from the City of Indianapolis (all below).
 
 **LIVE SINCE THE GO-LIVE CHANGE OF 2026-10-07**, eight days after it arrived dark: it is in
 `metros.json`, `fleet-outlines.json`, the sitemap, the landing page and the coverage map, and
@@ -138,6 +139,16 @@ THE TRIAL COURTS ARE NOT DRAWN: every judicial circuit is one county except the 
 and Ohio share (the Prosecuting Attorneys Council's list, citing IC 33-33, which was not read), so a
 circuit map would redraw the county map. The annual re-check is in `in/WATCH.md`.
 
+**THE INDIANAPOLIS PUBLIC SCHOOLS BOARD'S FIVE DISTRICTS ARE DRAWN SINCE 2026-10-16, AND NO OTHER
+BOARD'S ARE.** `school-board-district` draws them from the City of Indianapolis and Marion County's
+School Board Districts layer, pre-built by `in/scripts/build_in_school_board_districts.py` through
+the fleet module `scripts/published_district_layers.py`. The same layer draws residence districts
+for the Lawrence and Washington township boards, which are not drawn because the whole township
+votes for every seat. Indiana publishes no statewide map of school board election districts, and
+the 2022 and 2024 certified results point to about forty other boards electing some members by
+district (gap `in-school-board-districts`). The card names nobody (gap `in-school-board-members`).
+The layer states no licence. The quarterly re-check is in `in/WATCH.md`.
+
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
 roster-miss path, which is the honest card until a roster is built. Recorded as gap
@@ -174,7 +185,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Indiana (`indiana`) — https://districtry.com/in/
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
 - Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055; county-council 12; in-court-of-appeals 2. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
-- Layers: 15 registered (political 6, safety 2, schools 1, geography 6); `registerLayer(` floor 11. Debug namespace `window.IndianaExplorer`.
+- Layers: 16 registered (political 6, safety 2, schools 2, geography 6); `registerLayer(` floor 12. Debug namespace `window.IndianaExplorer`.
 - Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

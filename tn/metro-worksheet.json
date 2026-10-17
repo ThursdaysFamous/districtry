@@ -221,10 +221,28 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 7,
+      "rank_note": "114 districts on the boards of education of 18 counties, pre-built from the Comptroller of the Treasury's layer — 200.6 km2 mean area (median 143.7), measured 2026-10-16 on the drawn file: smaller on average than a unified school district, larger than a county commission district, of which 859 tile the state",
+      "source": {
+        "answers": "The district a county board of education is elected from, and its county. The map does not say how many members a district elects, so the card says a district may elect more than one.",
+        "boundary": [
+          {
+            "label": "Tennessee Comptroller of the Treasury, Office of Local Government — \"School Board Districts New\", layer 5 of its Redistricting_Address_Lookup service: the districts drawn after the 2020 Census for eighteen counties' boards of education, 114 districts, measured 2026-10-16, pre-built by tn/scripts/build_tn_school_board_districts.py and shipped with the app. In Shelby County they leave out the six towns that run their own school districts. The service states no licence.",
+            "url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/5"
+          }
+        ],
+        "people": "NO NAMES YET. No statewide list of Tennessee's school board members has been read, so the card names no one rather than guessing; recorded as gap tn-school-board-members.",
+        "applies": "The eighteen counties on the Comptroller's map: Blount, Chester, Claiborne, Crockett, Davidson, Fayette, Hardeman, Henry, Jefferson, Johnson, Lawrence, Macon, Madison, Sevier, Shelby, Sumner, Washington and Wilson. Tennessee's county boards of education are elected from districts under state law, and the other counties' districts are not drawn yet (gap tn-school-board-districts)."
+      }
+    },
+    {
       "id": "county-commissioner",
       "label": "County Commission District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district",
       "source": {
         "answers": "The county commission district covering the point, and its county. In the three consolidated counties the district elects members of the consolidated government's governing body.",
@@ -242,7 +260,7 @@
       "id": "county-subdivision",
       "label": "Civil District",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it",
       "source": {
         "answers": "The civil district containing the point, and its county.",
@@ -260,7 +278,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -278,7 +296,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "15 city and special school districts running the lower grades, live from TIGERweb",
       "source": {
         "answers": "The district running the lower grades at the point, where that is not a unified district.",
@@ -296,7 +314,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb",
       "source": {
         "answers": "The district running the high school at the point, where that is not a unified district.",
@@ -314,7 +332,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -332,7 +350,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "345 incorporated places, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any, and whether it is a consolidated city-county government.",
@@ -350,7 +368,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -368,7 +386,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -386,7 +404,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -404,7 +422,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Tennessee has 1 such area, the Mississippi Band of Choctaw Indians' trust land near Henning.",
@@ -419,7 +437,7 @@
       }
     }
   ],
-  "min_register_layer": 14,
+  "min_register_layer": 15,
   "anchor_point": {
     "lat": 36.1659,
     "lng": -86.7844,
@@ -513,6 +531,12 @@
         "min_features": 1870,
         "max_features": 1870,
         "note": "Every Tennessee voting precinct, pre-built by tn/scripts/build_tn_precincts.py through scripts/statewide_precincts.py from the Comptroller of the Treasury's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 1,870 count on the fetch and the drawn file, after Overton County's nine records published twice with identical geometry are dropped to one each). 9.4 MB, 2.45 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "tn-school-board-districts.json",
+        "min_features": 114,
+        "max_features": 114,
+        "note": "Every school board district on the Comptroller of the Treasury's map, pre-built by tn/scripts/build_tn_school_board_districts.py through scripts/published_district_layers.py (Douglas-Peucker at 4 m; a 400-point agreement gate on every county's extent, measured 100.00% with zero overlaps; an exact 114 count, after the layer's one record with no county and no shape is skipped). 1.3 MB, 0.35 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "tn-judicial-districts.json",

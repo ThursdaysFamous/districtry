@@ -1749,7 +1749,15 @@ ANSWERS = {
         # 2026-10-15 rule passes a level once its boards are named wherever a
         # list is published, so it is answered.
         "sub-county-government": answers("county-subdivision"),
-        "school-boards-by-district": OPEN,
+        # PART DRAWN 2026-10-16: the five districts the Indianapolis Public
+        # Schools board is elected from, from the City of Indianapolis's map
+        # (in/scripts/build_in_school_board_districts.py). Indiana publishes no
+        # statewide map of these districts, and the vote counts in the 2022 and
+        # 2024 results point to about forty school corporations, IPS among
+        # them, electing some seats by district, so the level stays open on gap
+        # in-school-board-districts. The layer is named here so the
+        # unclaimed-layer print does not list it.
+        "school-boards-by-district": Entry("open", ("school-board-district",)),
         # IndianaMap's 2026 layer, from the General Assembly and the Election
         # Division, carries all 5,121 precincts, and the app draws them
         # (2026-10-15).
@@ -1868,7 +1876,13 @@ ANSWERS = {
             "outside a city or town limit the county governs. The 299 "
             "sub-county units the Census publishes for South Carolina are "
             "census county divisions: statistical areas, not governments."),
-        "school-boards-by-district": OPEN,
+        # ANSWERED 2026-10-16: the Revenue and Fiscal Affairs Office's
+        # statewide map draws the 383 districts of the 54 boards elected by
+        # district and marks the other 18 school districts At Large
+        # (sc/scripts/build_sc_school_board_districts.py). Who votes for each
+        # seat is read from each board's own act; for 16 boards the act does
+        # not say, which the card states (gap sc-school-board-who-votes).
+        "school-boards-by-district": answers("school-board-district"),
         # The Revenue and Fiscal Affairs Office keeps the official maps of all
         # 2,315 precincts the General Assembly sets by act, and the app draws
         # them (2026-10-15).
@@ -1918,7 +1932,15 @@ ANSWERS = {
             "city or town limit the county governs. The 855 sub-county units "
             "the Census publishes for Tennessee are civil districts, which the "
             "Census records as having no functioning government."),
-        "school-boards-by-district": OPEN,
+        # PART DRAWN 2026-10-16: the 114 districts the boards of education of
+        # eighteen counties are elected from, from the Comptroller of the
+        # Treasury's map (tn/scripts/build_tn_school_board_districts.py). County
+        # boards of education are elected from districts (Tenn. Code Ann.
+        # 49-2-201, as quoted in Bradley County's private act), and the map
+        # holds 18 of the 95 counties, so the level stays open on gap
+        # tn-school-board-districts. The layer is named here so the
+        # unclaimed-layer print does not list it.
+        "school-boards-by-district": Entry("open", ("school-board-district",)),
         # The Comptroller of the Treasury's layer carries all 1,870 precincts the
         # county election commissions set, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
@@ -1969,7 +1991,13 @@ ANSWERS = {
             "city or town limit the county governs. The 1,051 sub-county units "
             "the Census publishes for Arkansas are townships, which the Census "
             "records as having no functioning government."),
-        "school-boards-by-district": OPEN,
+        # ANSWERED 2026-10-16: the GIS Office's statewide layer of school board
+        # zones, compiled by the Secretary of State, draws 965 zones on the 176
+        # boards that elect by zone (ar/scripts/build_ar_school_board_districts
+        # .py). The layer's own description says the districts missing from it
+        # elect their boards at large, and the eight boards moving to at large
+        # seat by seat keep only the zones whose terms have not ended.
+        "school-boards-by-district": answers("school-board-district"),
         # The Arkansas GIS Office's layer carries all 2,920 precincts as the
         # counties report them, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),

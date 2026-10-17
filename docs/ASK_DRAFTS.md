@@ -6873,8 +6873,9 @@ weekly refresh will keep proposing the change until the county's page is correct
 > before sending, keeping its substance: the same counts, the page link, the State Board plan and
 > the three ways he can be named, with the public-record note and the offer to wait. The two
 > questions went as a numbered pair, the Brace sentence was left out, and "A few sentences is
-> plenty" and the line about staying out of it were dropped. **No answer yet**; the follow-up clock
-> runs to about 2026-11-01.
+> plenty" and the line about staying out of it were dropped. **ANSWERED 2026-10-16** by telephone
+> to the operator. Nothing further is owed and no follow-up is due. What he said is deliberately not
+> recorded in this public file.
 
 **Why this is asked.** The operator spoke with him by phone after Ask 18 was answered; he suggested
 Kimball Brace (Election Data Services, which collected Illinois's precinct maps for the Census's
@@ -6927,42 +6928,67 @@ Board letter goes without them.
 
 ## Ask il-state-board-precinct-maps — Illinois State Board of Elections: publish the precinct maps it receives in one place
 
-> **NOT YET ASKED — DRAFTED 2026-10-10. HELD** until Dave Ostrander answers
-> `il-grundy-gis-state-board-view` (sent 2026-10-11) or two weeks pass with no answer, which is
-> 2026-10-25. `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director (named in a 7 July 2026
-> Justice Department letter reported by Capitol News Illinois). The Board's website refuses
-> automated readers (`User-agent: *` / `Disallow: /`), so its e-mail contact was not read from here:
-> the operator takes it from the Board's contact page in a browser. Postal: 2329 S. MacArthur Blvd.,
-> Springfield, IL 62704.
+> **SENT 2026-10-17, 00:35:12 UTC, to `webmaster@elections.il.gov`**, subject "For Executive
+> Director Matthews: publishing Illinois's precinct maps in one place", from the operator's own
+> mailbox (read off the sent folder). Drafted 2026-10-10 and revised twice on 2026-10-16: the
+> operator approved the revised letter that evening, then allowed one read of the Board's own
+> website to check it (nothing from the site was saved).
+>
+> **The operator reworded the draft below before sending it, and the sent wording is what was
+> asked.** It is shorter and keeps the substance: the county counts and the page link, the three
+> numbered asks (digital files with the PDFs, one place to download both, and in time a statewide
+> map like Wisconsin's and Minnesota's, with the Census Bureau's 2028 program), the law-change
+> paragraph, the line that this is not about voter records, and the offer to wait until the canvass
+> is done. The law-change paragraph went as "Section 11-6 could be amended to require
+> machine-readable submissions during precinct redraws", without the district lines, the Board
+> publishing the files, or Wisconsin as the precedent. No staff member is named, and the paragraph
+> on what the Board already has became one clause.
+>
+> **Follow-up: not before 2026-12-07**, the Monday after the canvass ends on 4 December, because the
+> letter says no answer is expected before then. The Board's 17 November meeting takes public
+> comment while its spring legislative proposals are likely still being chosen.
+>
+> The hold on `il-grundy-gis-state-board-view` ended when it was answered on 2026-10-16.
+>
+> `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director
+> (named on the Board's Executive Staff page). The Board publishes no e-mail address for her: its
+> contact page sends general questions to `webmaster@elections.il.gov`, so the letter goes there
+> with her name in the subject. Postal: 2329 S. MacArthur Blvd., Springfield, IL 62704.
 
 **Why this is asked.** Section 11-6 of the Election Code (10 ILCS 5/11-6, as amended by Public Act
 98-691 in 2014) has every election authority send the Board a PDF map of its current precincts and
 post it on any website it maintains, with new maps at least 90 days before the next election after
-precincts change. So the Board already receives every county's map, but only as a PDF, and nothing
-publishes them in one place. Wisconsin's counties file ward maps with the Legislature's technology
-bureau every 15 January and 15 July (Wis. Stat. 5.15(4)(br)), and Minnesota's Secretary of State
-publishes one statewide precinct layer. The asks run smallest first, so that a no to the statewide
-map does not sink the two the Board may be able to do without a change in law (an inference, not a
-lawyer's reading). The section's wording was read through FindLaw's copy of the code, current to
-1 January 2025, because the legislature's site did not answer from here: check it there before
-sending.
+precincts change. So the Board should already receive every election authority's map, but only as a
+PDF, and nothing publishes them in one place. Wisconsin's counties file ward maps with the
+Legislature's technology bureau every 15 January and 15 July (Wis. Stat. 5.15(4)(br)), and
+Minnesota's Secretary of State publishes one statewide precinct layer. The asks run smallest first,
+so that a no to the statewide map does not sink the two the Board may be able to do without a change
+in law (an inference, not a lawyer's reading). The section's wording is as the Board's own 2026
+Guide for Election Authorities states it in its "Precinct Maps" section, which also names Michael
+Gianasi as the Board's contact for counties whose precinct boundaries change. The law-proposal
+paragraph is there because the Board's 15 September 2026 minutes say staff are reviewing legislative
+requests for the spring session, to be presented for Board approval at a future meeting; it is
+conditional and kept apart from the three numbered asks so that a no to it does not sink them. It
+asks for a requirement, from each election authority's next redraw, because the same section already
+requires the PDF to show every district line, so the file adds a format rather than new content, and
+Wisconsin already requires its counties to file these lines.
 
-> Subject: Publishing Illinois's precinct maps in one place
+> Subject: For Executive Director Matthews: publishing Illinois's precinct maps in one place
 >
 > Dear Ms. Matthews,
 >
 > I live in Chicago and run districtry (https://districtry.com/il/), a free, non-commercial website.
 > Anyone can click a point on the map or type an address and see every district that covers it, from
 > their voting precinct and county board district up to Congress, and who represents them there. It
-> now covers 93 of Illinois's 102 counties.
+> now covers 96 of Illinois's 102 counties.
 >
-> The hardest part of keeping it accurate is the precinct map. Since 2014 the Election Code
-> (10 ILCS 5/11-6) has had each election authority send the Board a PDF map of its current precincts,
-> post it on its website, and send new maps at least 90 days before an election whenever its
-> precincts change. So the Board receives every county's map. But a computer cannot tell from a PDF
-> which side of a line an address falls on, so anyone who needs the actual boundaries, whether a
-> newsroom, a civic group, a researcher, a local government or a site like mine, has to collect them
-> from 102 counties one at a time.
+> The hardest part of keeping it accurate is the precinct map. Since 2014 the Election Code (10 ILCS
+> 5/11-6) has had each election authority send the Board a PDF map of its current precincts, post it
+> on its own website, and send new maps at least 90 days before an election whenever its precincts
+> change. So the Board should already receive every election authority's map. But a computer cannot
+> tell from a PDF which side of a line an address falls on, so anyone who needs the actual
+> boundaries, whether a newsroom, a civic group, a researcher, a local government or a site like
+> mine, has to collect them from more than a hundred election offices one at a time.
 >
 > On 10 October I checked what every county publishes. 44 counties publish their precinct map as
 > data a computer can read. 26 post it only in a form a person can look at but a computer cannot
@@ -6974,29 +7000,44 @@ sending.
 > https://districtry.com/il/precinct-maps.html. So the maps mostly exist; they just aren't published
 > in one place in a form people can use.
 >
-> [ONLY WITH DAVE OSTRANDER'S PERMISSION, IN HIS WORDS, NAMED AS HE CHOOSES. For example: "I asked
-> Dave Ostrander, GIS Director for Grundy County, what this would mean for a county GIS office. He
-> told me: '...'" Delete this paragraph if he declines or does not answer.]
+> [One more paragraph goes here in the version that is sent. It is kept out of this public file to
+> protect a source who is not named.]
+>
+> The Board already has much of what this would take. Its guide for election authorities names a
+> staff contact for counties whose precinct boundaries change, and its "Find My Elected Officials"
+> locator already serves legislative, congressional and other districts as map data. As far as I can
+> find, though, the Board's website does not post the precinct maps it receives. If it does and I
+> missed them, a pointer would answer most of this letter.
 >
 > I'd like to ask whether the Board would consider three things. Any one of them would help.
 >
-> 1. Where a county already keeps its precinct map as a digital file, accept that file alongside the
->    PDF the law already asks for.
-> 2. Publish the maps the Board receives in one place on its website, free, so anyone can find every
->    county's current map.
-> 3. In time, combine the digital files into one statewide precinct map, updated on a fixed
->    schedule. Wisconsin's Legislature does this from county filings every January and July, and
->    Minnesota's Secretary of State publishes one statewide precinct map.
+> 1. When a county's precincts change and it keeps the new map as a digital file, ask for that file
+>    along with the PDF the law already requires. If the Board already collects these files, I'd be
+>    glad to know.
+> 2. Publish the precinct maps the Board receives in one place, free: the PDFs for people to read
+>    and, wherever a county has sent one, the map file itself in a standard format anyone can
+>    download and a computer can read. The Board's locator already serves its districts as map data
+>    this way, so precincts could sit beside them.
+> 3. In time, combine those files into one statewide precinct map, updated on a fixed schedule and
+>    free to download. Wisconsin's Legislature does this from county filings every January and July,
+>    and Minnesota's Secretary of State publishes one statewide precinct map. Illinois took part in
+>    the Census Bureau's 2020 voting district program, and the Bureau will ask states for precinct
+>    maps again starting in early 2028, so a map kept up to date would serve that too.
+>
+> If the Board agrees that a change in the law would help, Section 11-6 could require each election
+> authority, starting with its next redraw, to send its precinct map as a map file a computer can
+> read and not only as a PDF, including the district lines the map must already show, and have the
+> Board publish those files for download. Wisconsin's law already has every county file its ward and
+> county board district lines with the state twice a year, so Illinois would not be the first. The
+> Board's legislative proposals for the spring session would be a natural place for such a change.
 >
 > This is only about precinct boundaries. I'm not asking about voter records or any personal
 > information.
 >
-> Your website asks automated programs not to read it, and I respect that, so I haven't checked what
-> the Board itself already posts. If the Board publishes the maps it receives, a pointer to them
-> would answer most of this letter.
->
-> A short answer either way is useful, including a no, or the name of the right person on staff. I'd
-> be glad to share everything I've gathered, or to meet with staff.
+> I know the Board is in the middle of the general election, so I don't expect an answer before the
+> canvass is done. A short answer either way is useful, including a no. I'd be glad to share
+> everything I've gathered, or to talk with Michael Gianasi or whoever on staff works with precinct
+> maps.
 >
 > Thank you for your time.
 >
@@ -7004,17 +7045,20 @@ sending.
 > <YOUR E-MAIL>
 > https://districtry.com/il/
 
-**Before sending:** the counts and the 93 must still match `il/precinct-maps.html` and
+**Before sending:** the counts and the 96 must still match `il/precinct-maps.html` and
 `docs/COUNTY_STATUS.md` on the day it goes. The Board has four members from each party by law, so
 nothing is added that reads as favouring either. The line about voter records is there because in
 April 2024 the Board asked a media company to take down voters' birth dates and addresses it had
 published (Northern Public Radio, 23 April 2024); it heads off that worry. Asking the Board to let
 automated readers back onto its own site is deliberately left out: it would dilute this ask and can
-be its own letter.
+be its own letter. The Board's meetings take up to 5 minutes of comment from anyone who signs in
+(its Public Comment Guidelines, adopted 17 October 2023), and the 17 November 2026 meeting comes
+before its spring proposals are likely approved, so the operator may want to speak there as well.
 
 **Any answer is useful.** A yes to the first two would let every county's current map be found in
 one place; a pointer to maps the Board already posts would answer most of the letter; a clean no
-closes the policy route and leaves a narrow change in law as the fallback.
+closes the policy route and leaves a narrow change in law as the fallback, which the law-proposal
+paragraph has already put in front of the Board.
 
 ## Ask sc-results-site-runner — South Carolina State Election Commission: a way for our weekly program to read the county council results
 

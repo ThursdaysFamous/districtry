@@ -52,6 +52,7 @@ const GEOMETRY_URLS = [
   "./data/app/tn-commission-districts.json",
   "./data/app/tribal-areas.json",
   "./data/app/tn-precincts.json",
+  "./data/app/tn-school-board-districts.json",
   "./data/app/tn-judicial-districts.json",
 ];
 
