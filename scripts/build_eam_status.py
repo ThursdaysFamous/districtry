@@ -180,7 +180,8 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
-                  "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75}
+                  "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75,
+                  "ms": 82}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1686,7 +1687,9 @@ ANSWERS = {
         # independent school boards are elected at large and so are named rather
         # than drawn.
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The State Board of Elections compiles all 3,194 precincts statewide
+        # from the counties' own files, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # NO TRIBAL LAND IN KENTUCKY, measured 2026-10-01 against the Census
         # AIANNHA service over an envelope covering the whole state: zero
@@ -1736,7 +1739,10 @@ ANSWERS = {
         # list is published, so it is answered.
         "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # IndianaMap's 2026 layer, from the General Assembly and the Election
+        # Division, carries all 5,121 precincts, and the app draws them
+        # (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-10 (#1496): the Pokagon Band's trust land, the one
         # piece of tribal land in Indiana, with the band's council named.
@@ -1762,7 +1768,9 @@ ANSWERS = {
             "the Census marks every one non-functioning — so outside a city or "
             "town limit the county governs."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The State Board of Elections' statewide file carries all 2,625
+        # precincts, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-10 (#1496): the Eastern Band of Cherokee Indians'
         # Qualla Boundary and its one piece of trust land, the only tribal
@@ -1834,7 +1842,10 @@ ANSWERS = {
             "sub-county units the Census publishes for South Carolina are "
             "census county divisions: statistical areas, not governments."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Revenue and Fiscal Affairs Office keeps the official maps of all
+        # 2,315 precincts the General Assembly sets by act, and the app draws
+        # them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-12: the Catawba Nation's reservation and its trust
         # land in York County, the only tribal land in the state, named with
@@ -1874,7 +1885,9 @@ ANSWERS = {
             "the Census publishes for Tennessee are civil districts, which the "
             "Census records as having no functioning government."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Comptroller of the Treasury's layer carries all 1,870 precincts the
+        # county election commissions set, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
         # Mississippi Band of Choctaw Indians' trust land near Henning, named
@@ -1914,7 +1927,9 @@ ANSWERS = {
             "the Census publishes for Arkansas are townships, which the Census "
             "records as having no functioning government."),
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Arkansas GIS Office's layer carries all 2,920 precincts as the
+        # counties report them, and the app draws them (2026-10-15).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # NO TRIBAL LAND IN ARKANSAS, measured 2026-10-15 with
         # validate_tribal_join's own queries: the reservation, trust-land and
@@ -1926,6 +1941,58 @@ ANSWERS = {
             "Arkansas has no tribal land. The Census publishes no federal or "
             "state reservation and no off-reservation trust land in the state, "
             "measured 2026-10-15 with a control in Tennessee."),
+    },
+    # Mississippi, added at its go-live with the national tier, the
+    # supervisor-district layer, the four courts and the Choctaw land.
+    "ms": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ms-senate", "ms-house"),
+        "county-boundaries": answers("county"),
+        # Every county elects a board of five supervisors, each from one of
+        # the county's five districts, and the Secretary of State's directory
+        # names all of them. The layer draws a county's districts only where
+        # its current lines are confirmed (Adam, "Confirmed only",
+        # 2026-10-15), so the other counties owe a map. Recorded in
+        # ms/CLAUDE.md.
+        "county-government": depth("county-supervisor"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # TIGER's unified tiling holds all 137 districts and the other two hold
+        # none, measured in ms/CLAUDE.md, so one layer is the whole level.
+        "school-district-boundaries": answers("school-district-unified"),
+        # MISSISSIPPI'S COUNTY SUBDIVISIONS ARE ITS SUPERVISOR DISTRICTS, so
+        # this map is the supervisor-district layer's, and it is drawn only in
+        # the counties whose current lines are confirmed. In 70 counties the
+        # Census's own copy still carries the lines of its 2020 edition, which
+        # in 64 of them are more than 10% out of balance on the 2020 blocks, so
+        # it is not drawn instead (ms/CLAUDE.md). Open until every county is
+        # drawn.
+        "subdivision-boundaries": OPEN,
+        # The Supreme Court, the Court of Appeals and the chancery and circuit
+        # courts, each district a list of whole counties on the court's own
+        # page or in the Code. Two parts are recorded as missing rather than
+        # drawn: the ten counties the Court of Appeals splits by precinct, and
+        # the parts of a district some chancery and circuit judges are elected
+        # from. The justice courts, whose judges the directory lists by
+        # district or post within a county, are not drawn.
+        "courts-by-district": answers(
+            "ms-supreme-court", "ms-court-of-appeals", "ms-chancery-court",
+            "ms-circuit-court"),
+        # MISSISSIPPI HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 410
+        # county subdivisions the Census carries for the state are supervisor
+        # districts with FUNCSTAT N. Recorded in ms/CLAUDE.md.
+        "sub-county-government": na(
+            "Mississippi has no sub-county general-purpose government — outside "
+            "a city, town or village the county governs. The 410 sub-county "
+            "units the Census publishes for Mississippi are its supervisor "
+            "districts, which the Census records as having no functioning "
+            "government."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # The Mississippi Band of Choctaw Indians' reservation and trust land,
+        # named with the band's Tribal Chief and Tribal Council.
+        "tribal-government": answers("tribal-government"),
     },
     "ny": {
         "us-house": answers("congress"),
@@ -2214,6 +2281,29 @@ def _ia_county_maps_owed(B, records):
     return owed
 
 
+def _ms_county_maps_owed(B, records):
+    """Mississippi counties whose supervisor districts are not drawn.
+
+    Every county's five supervisors are each elected from one of its five
+    districts, so every county owes a map. Which counties the layer draws is
+    read off the shipped districts file, never listed here; build_county_pages'
+    own Mississippi adapter already holds that file to the app's list of drawn
+    counties, and this holds it to the roster.
+    """
+    rel = "ms/data/app/ms-supervisor-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        drawn = {(f.get("properties") or {}).get("county")
+                 for f in json.load(fh).get("features") or []}
+    named = {re.sub(r" County$", "", name) for name in records}
+    drawn = {re.sub(r" County$", "", name or "") for name in drawn}
+    stray = sorted(drawn - named)
+    if stray:
+        fail("ms: `%s` draws %s, which the county roster does not name"
+             % (rel, ", ".join(stray)))
+    return {B.slug_of(name) for name in records
+            if re.sub(r" County$", "", name) not in drawn}
+
+
 def _no_layer(derive):
     """A state whose county-government level draws no county district."""
     def wrapped(B, records):
@@ -2231,6 +2321,7 @@ COUNTY_MAPS_OWED = {
     "in": _in_county_maps_undrawn,
     "il": _il_county_maps_owed,
     "ia": _ia_county_maps_owed,
+    "ms": _ms_county_maps_owed,
 }
 
 
@@ -2341,10 +2432,10 @@ WARD_MAPS = {
                              "the whole city"}),
     "mi": dict(
         drawn={"2605920", "2622000", "2629000", "2634000", "2638640",
-               "2641420", "2653780", "2656320", "2665440", "2684000"},
+               "2641420", "2653780", "2656320", "2665440", "2682960",
+               "2684000"},
         owed={"2603000": "Ann Arbor", "2606020": "Bay City",
-              "2642820": "Kentwood", "2646000": "Lansing",
-              "2682960": "Walker"}),
+              "2642820": "Kentwood", "2646000": "Lansing"}),
     # Minnesota's 22 are drawn by one layer, mn/scripts/build_mn_city_wards.py,
     # which reads the cities off the city council roster.
     "mn": dict(
@@ -3749,6 +3840,23 @@ def render(rows):
     return "\n".join(out).rstrip() + "\n"
 
 
+def city_surface():
+    """Every city roster the report counts, read off the tables that count them.
+
+    A path named in one of those tables and missing from the tree is reported
+    by the measurement itself, so it is skipped here rather than failed twice.
+    """
+    rels = set()
+    for rows in CITY_ROSTERS.values():
+        rels.update(rel for rel, _key in rows)
+    for files in CITY_FILES.values():
+        rels.update(files.values())
+    for _names, rel in CITY_GOVERNED_COUNTIES.values():
+        rels.add(rel)
+    return sorted(r for r in rels
+                  if os.path.exists(os.path.join(REPO_ROOT, r)))
+
+
 def check_workflows(paths, staged):
     """A scheduled workflow that rewrites a roster this report COUNTS must
     regenerate it and commit it.
@@ -3775,9 +3883,20 @@ def check_workflows(paths, staged):
     because `people` counts the districts these adapters name and not every
     officeholder an instance ships. Requiring the step on the other five would
     ask 59 workflows across the fleet to regenerate a file they cannot change.
+
+    THE CITY TIER IS COUNTED TOO, AND THE FIRST VERSION OF THIS GATE NEVER ASKED
+    ABOUT IT (2026-10-16). The adapter surface is the county boards; the report
+    also counts the city rosters `CITY_ROSTERS`, `CITY_FILES` and
+    `CITY_GOVERNED_COUNTIES` name, and the jobs that rewrite those had no step
+    and no gate. Wisconsin's #1572 went red on its own pull request that way on
+    2026-10-15. So the surface is both sets, each read from the table the
+    measurement itself uses. The files `ROLE_NAME_KEYS` and `SHAPE_CASES` name
+    are NOT on it: they are fixtures for the self-tests, and nothing the report
+    prints is counted from them.
     """
     surface = sorted({os.path.relpath(p, REPO_ROOT)
-                      for tag in paths for p in paths[tag]})
+                      for tag in paths for p in paths[tag]}
+                     | set(city_surface()))
     named = {}
     for rel in surface:
         for workflow in refreshed_by(rel, staged):

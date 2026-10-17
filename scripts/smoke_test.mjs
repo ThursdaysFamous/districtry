@@ -136,7 +136,7 @@ function check(name, ok, detail) {
 // injection in check 3 (it did, flakily, on the first CI run). The SW is a
 // delivery optimization, not what this behaviour test targets, so we take it
 // out of the picture; the app's layer behaviour is identical without it.
-async function booted(context, url, routeFn) {
+async function booted(context, url, routeFn, leaves) {
   const page = await context.newPage();
   if (VENDORED_LEAFLET) {
     await page.route("**/cdnjs.cloudflare.com/**/leaflet.js", (r) =>
@@ -149,6 +149,18 @@ async function booted(context, url, routeFn) {
       r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_MAPLIBRE.js }));
   }
   if (routeFn) await routeFn(page);
+  if (leaves) {
+    // A page that may hand itself to a sibling app while it boots (a link in
+    // #q= to a place in another state is followed at once, check 1d5) is
+    // ready when the app is up OR the page has left this app, whichever
+    // comes first: once it has left, the namespace never appears.
+    await page.goto(url, { waitUntil: "commit" });
+    const gone = page.waitForURL((u) => !u.href.startsWith(BASE), { timeout: BOOT_TIMEOUT });
+    const up = page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT })
+      .then(() => true, () => gone);
+    await Promise.race([up, gone]);
+    return page;
+  }
   await page.goto(url, { waitUntil: "domcontentloaded" });
   await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
   return page;
@@ -960,6 +972,94 @@ try {
       !near.got.point && near.got.rows.length === 1 && near.got.rows[0].cls === "name-result" &&
         near.got.rows[0].text.indexOf(S_NAME) >= 0 && near.got.status.indexOf("showing that street") >= 0,
       JSON.stringify(near.got));
+  }
+
+  // 1d5. A LINK TO A PLACE IN ANOTHER STATE OPENS THAT STATE'S APP (ENGINE
+  //      geocoder-search showLinkElsewhere). The installed app's launcher
+  //      opens a shared place in the state the reader used last, and on
+  //      2026-10-16 a place in Wisconsin shared from the Google Maps app was
+  //      searched for here. Its address names Wisconsin, so this app opens
+  //      /wi/ with the link, rebuilt from its words, as #q=, and asks the
+  //      geocoder nothing; a short link is read by the lookup first. A link
+  //      to a place in a state no app covers says so. A link in California
+  //      is searched here as before, because San Francisco's app covers one
+  //      city and the address alone does not say the place is in it. And
+  //      among several answers to a link, the one that is the place itself
+  //      (its name, house number and street) is selected (markLinkPlace),
+  //      while the same answers without its number select nothing. The
+  //      sibling apps and the lookup are stubbed.
+  {
+    const WI_FULL = "https://maps.google.com/?q=Devil's+Lake+State+Park,+S5975+Park+Rd,+Baraboo,+WI+53913&ftid=0x0:0x1&entry=gps";
+    const WI_REBUILT = "https://www.google.com/maps?q=Devil's+Lake+State+Park,+S5975+Park+Rd,+Baraboo,+WI+53913";
+    const OH_FULL = "https://maps.google.com/?q=Union+Terminal,+1301+Western+Ave,+Cincinnati,+OH+45203&ftid=0x0:0x2&entry=gps";
+    const CA_FULL = "https://maps.google.com/?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013&ftid=0x0:0x3&entry=gps";
+    const IL_FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x0:0x4&entry=gps";
+    const IL_NAMED = "Starved Rock Lodge, 2668 E 875th Rd, Oglesby, IL 61348";
+    const feature = (lng, lat, props) => ({ type: "Feature", geometry: { type: "Point", coordinates: [lng, lat] }, properties: props });
+    const LODGE = feature(-88.9893, 41.3196, { name: "Starved Rock Lodge", housenumber: "2668", street: "East 875th Road",
+      city: "Oglesby", state: "Illinois", postcode: "61348" });
+    const PARK = feature(-88.9750, 41.3150, { name: "Starved Rock State Park", city: "Oglesby", state: "Illinois" });
+    const BRIDGE = feature(-88.9945, 41.3190, { name: "Starved Rock Lodge", street: "Fox Canyon Bridge", state: "Illinois" });
+    const run = async (hash, answer, settled) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const asked = [], looked = [];
+      const page = await booted(context, `${BASE}#q=${encodeURIComponent(hash)}`, async (p) => {
+        await p.route("https://districtry.com/**", (route) =>
+          route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+        await p.route("**/photon.komoot.io/**", (route) => {
+          const q = new URL(route.request().url()).searchParams.get("q");
+          asked.push(q);
+          route.fulfill({ status: 200, contentType: "application/json",
+            body: JSON.stringify({ type: "FeatureCollection", features: answer ? answer(q) : [] }) });
+        });
+        await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+          looked.push(new URL(route.request().url()).searchParams.get("u"));
+          route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: WI_FULL }) });
+        });
+      }, true);
+      const went = await page.waitForURL((u) => !u.href.startsWith(BASE), { timeout: settled ? 3000 : QUERY_TIMEOUT })
+        .then(() => page.url(), () => null);
+      if (settled) await page.waitForFunction(settled, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForTimeout(300); // a selection or a hand-off, if one were coming, follows the list
+      const got = went ? null : await page.evaluate((ns) => ({
+        point: window[ns].state.selectedPoint,
+        status: document.getElementById("geo-status").textContent,
+        rows: [...document.querySelectorAll("#geocode-results li")].map((li) => li.className),
+      }), EXPORTS_NAME);
+      await context.close();
+      return { went, asked, looked, got };
+    };
+    const handed = (url) => {
+      const m = url && /^https:\/\/districtry\.com\/wi\/#(.*)$/.exec(url);
+      return m ? new URLSearchParams(m[1]).get("q") : null;
+    };
+    const short = await run("https://maps.app.goo.gl/AbCdEf123", null, null);
+    check("a short link to a place in Wisconsin, read here, opens /wi/ with the link rebuilt from its words",
+      handed(short.went) === WI_REBUILT && short.looked.length === 1 && short.asked.length === 0,
+      JSON.stringify(short));
+    const full = await run(WI_FULL, null, null);
+    check("a Google Maps link to a place in Wisconsin opens /wi/ and asks the geocoder nothing",
+      handed(full.went) === WI_REBUILT && full.asked.length === 0, JSON.stringify(full));
+    const ohio = await run(OH_FULL, null, () => /Ohio/.test(document.getElementById("geo-status").textContent));
+    check("a link to a place in a state no app covers says so, and nothing is searched or selected",
+      !ohio.went && !ohio.got.point && ohio.asked.length === 0 &&
+        /That Google Maps link is to a place in Ohio, which districtry doesn't cover yet\./.test(ohio.got.status),
+      JSON.stringify(ohio));
+    const ca = await run(CA_FULL, null, () => /match|doesn't say/.test(document.getElementById("geo-status").textContent));
+    check("a link to a place in California is searched here, not handed to San Francisco's app",
+      !ca.went && ca.asked[0] === "Grand Central Market, 317 S Broadway, Los Angeles, CA 90013", JSON.stringify(ca));
+    const place = await run(IL_FULL, (q) => (q === IL_NAMED ? [PARK, LODGE, BRIDGE] : []),
+      (ns) => !!window[ns].state.selectedPoint);
+    check("among several answers to a link, the one that is the place itself is selected",
+      !place.went && !!place.got.point && Math.abs(place.got.point.lat - 41.3196) < 1e-6 && Math.abs(place.got.point.lng + 88.9893) < 1e-6,
+      JSON.stringify(place));
+    const NO_NUMBER = feature(-88.9893, 41.3196, { name: "Starved Rock Lodge", street: "East 875th Road",
+      city: "Oglesby", state: "Illinois", postcode: "61348" });
+    const unsure = await run(IL_FULL, (q) => (q === IL_NAMED ? [PARK, NO_NUMBER, BRIDGE] : []),
+      () => document.querySelectorAll("#geocode-results li").length === 3);
+    check("the same answers without the place's house number select nothing and stay listed",
+      !unsure.went && !unsure.got.point && unsure.got.rows.length === 3 && unsure.got.rows.every((c) => c !== "link-place"),
+      JSON.stringify(unsure));
   }
 
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end

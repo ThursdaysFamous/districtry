@@ -24,9 +24,10 @@ name: Validate layer sources (Mississippi)
 # monthly runs. A scheduled run here starts hours late anyway (measured across
 # the fleet: 3 to 5.3 hours), so the slot is a request rather than an ordering.
 #
-# MISSISSIPPI IS DARK and this job still runs, on purpose: a publisher that
-# supersedes a dataset while the instance is unserved is exactly the drift a
-# go-live would otherwise inherit silently.
+# This job was scheduled while Mississippi was dark, from 2026-10-15 until its
+# go-live, on purpose: a publisher that supersedes a dataset while the
+# instance is unserved is exactly the drift a go-live would otherwise inherit
+# silently.
 
 on:
   schedule:

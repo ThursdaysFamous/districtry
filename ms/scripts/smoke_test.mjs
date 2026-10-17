@@ -368,10 +368,9 @@ try {
   //     state line, and measured against fleet-outlines.json it lies inside
   //     Arkansas's outline and no other, and outside this app's coverage ring.
   //     Alabama is served by nobody, so a click near York, Alabama must stay
-  //     here (1a2-ii below). This instance is also DARK, so it has no entry in
-  //     fleet-outlines.json at all and answers its own side from the coverage
-  //     rings the wash retained — no fetch. Chicago proves the file is still
-  //     read for ground far from here.
+  //     here (1a2-ii below). This instance answers its own side from the
+  //     coverage rings the wash retained — no fetch. Chicago proves the file
+  //     is still read for ground far from here.
   //
   //     LOUISIANA IS DELIBERATELY NOT A CASE. It is on the next-states list,
   //     so a "stays here" case there would start failing the day it goes
@@ -1016,11 +1015,11 @@ try {
   //         was read, and never names the Census edition; in Rankin it also
   //         says how many people the map's own population figures leave out,
   //         and in Hinds that it leaves nobody out.
-  //       - Amite, whose Census lines are the ones drawn after the 2010 census
-  //         and which publishes none of its own: the layer HIDES, with the
-  //         layers= permalink intact. This is the half that discriminates:
-  //         without `coverage` the card would say no district is drawn here,
-  //         about a county that has five.
+  //       - Amite, whose Census lines place every resident as the Census's
+  //         January 1, 2010 edition does, and which publishes none of its
+  //         own: the layer HIDES, with the layers= permalink intact. This is
+  //         the half that discriminates: without `coverage` the card would
+  //         say no district is drawn here, about a county that has five.
   //       - With the layer OFF at the Capitol, the coverage test reads the
   //         list of drawn counties and never the districts file, which was
   //         150 KB gzipped on every reader's first selection when the test

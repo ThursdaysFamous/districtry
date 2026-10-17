@@ -17,7 +17,7 @@ import path from "node:path";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const src = readFileSync(path.join(root, "engine/shared/map-link.txt"), "utf8");
-const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, addressParts, labelOnStreet };")();
+const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, addressParts, labelOnStreet, addressStateTag, stateInSentence, mapLinkForText };")();
 
 const near = (a, b) => Math.abs(a - b) < 1e-6;
 const cases = [
@@ -192,7 +192,13 @@ const bare = [
   ["Cozy Dog Drive In, 2935 S 6th St, Springfield, IL 62703, United States", "2935 S 6th St, Springfield, IL 62703, United States"],
   ["Joe's, Suite 4, 100 Main St, Peoria, IL", "100 Main St, Peoria, IL"],
   ["Queens Library, 89-11 Merrick Blvd, Jamaica, NY 11432", "89-11 Merrick Blvd, Jamaica, NY 11432"],
+  // a Wisconsin grid number, as Photon holds Devil's Lake State Park's (2026-10-16)
+  ["Devil's Lake State Park, S5975 Park Rd, Baraboo, WI 53913", "S5975 Park Rd, Baraboo, WI 53913"],
+  ["Farm Stand, W123N4567 Main St, Menomonee Falls, WI 53051", "W123N4567 Main St, Menomonee Falls, WI 53051"],
+  ["N2 Bar, 100 Main St, Peoria, IL 61602", "100 Main St, Peoria, IL 61602"],   // a name, not a grid number
+  ["7-Eleven, 100 Main St, Peoria, IL 61602", "100 Main St, Peoria, IL 61602"], // a name that opens with a digit
   ["233 S Wacker Dr, Chicago, IL 60606", null],          // already an address
+  ["W123N4567 Main St, Menomonee Falls, WI 53051", null], // already an address, with a grid number
   ["Daley Plaza", null],                                // a name and nothing else
   ["Starved Rock State Park, Oglesby, IL 61348", null], // no house number to fall back to
   ["Willis Tower, 2", null],                            // half-typed: a number, no street yet
@@ -217,6 +223,10 @@ const carry = [
   ["26680 Main Street, Oglesby, Illinois", "2668 E 875th Rd, Oglesby, IL 61348", false], // a longer number
   ["Lodge, 12668 Road, Illinois", "2668 E 875th Rd, Oglesby, IL 61348", false],
   ["89-11 Merrick Boulevard, Queens, New York, NY, USA", "89-11 Merrick Blvd, Jamaica, NY 11432", true],
+  ["Devil's Lake State Park, S5975 Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", true],
+  ["N5975 Park Road, Baraboo, Wisconsin", "S5975 Park Rd, Baraboo, WI 53913", false],  // north of the line, not south
+  ["5975 Park Road, Baraboo, Wisconsin", "S5975 Park Rd, Baraboo, WI 53913", false],
+  ["W123N4567 Main Street, Menomonee Falls, Wisconsin", "W123N4567 Main St, Menomonee Falls, WI 53051", true],
   ["2668", "2668 E 875th Rd, Oglesby, IL 61348", true],                                // a housenumber alone
   ["", "2668 E 875th Rd, Oglesby, IL 61348", false],
   [undefined, "2668 E 875th Rd, Oglesby, IL 61348", false],
@@ -237,6 +247,8 @@ const parts = [
   ["2935 S 6th St, Springfield, IL 62703, United States", { number: "2935", street: "S 6th St", town: "Springfield", zip: "62703" }],
   ["100 Main St Suite 4, Peoria, IL", { number: "100", street: "Main St", town: "Peoria", zip: "" }],
   ["89-11 Merrick Blvd, Jamaica, NY 11432", { number: "89-11", street: "Merrick Blvd", town: "Jamaica", zip: "11432" }],
+  ["S5975 Park Rd, Baraboo, WI 53913", { number: "S5975", street: "Park Rd", town: "Baraboo", zip: "53913" }],
+  ["W123N4567 Main St, Menomonee Falls, WI 53051", { number: "W123N4567", street: "Main St", town: "Menomonee Falls", zip: "53051" }],
   ["Starved Rock Lodge", null],
   ["2668 E 875th Rd", null],  // no town or ZIP to hold a street to
 ];
@@ -274,6 +286,8 @@ const street = [
   ["North Avenue, Chicago, Illinois", "1600 W Ave, Chicago, IL 60622", false],
   ["North Northwest Highway, Chicago, Illinois", "5555 N Northwest Hwy, Chicago, IL 60630", true],
   ["West Oakley Drive Northwest, Westmont, Illinois, 60559", "Oakley Cake Shop", false],    // a name, no address
+  ["Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", true],
+  ["S5975 Park Road, Baraboo, Wisconsin", "S5975 Park Rd, Baraboo, WI 53913", true],       // its grid number left off
 ];
 for (const [label, address, want] of street) {
   const got = api.labelOnStreet(label, address);
@@ -283,11 +297,70 @@ for (const [label, address, want] of street) {
   }
 }
 
-const total = cases.length + 2 + lookups.length + 2 + said.length + bare.length + carry.length + parts.length + street.length;
+// The state a place's address names, read from its end: a postal code in
+// capitals or before a ZIP code, or a state's name. A link to a place in
+// another state is that state's app's to search (ENGINE geocoder-search
+// showLinkElsewhere, and the front door's namedState).
+const states = [
+  ["Devil's Lake State Park, S5975 Park Rd, Baraboo, WI 53913", "wi"],
+  ["Cozy Dog Drive In, 2935 S 6th St, Springfield, IL 62703, United States", "il"],
+  ["Lambeau Field, 1265 Lombardi Ave, Green Bay, WI 54304, USA", "wi"],
+  ["Wisconsin Dells Inn, 1 Main St, Rockford, IL 61101", "il"],     // only the end is read
+  ["A Place, 1 Main St, Baraboo, Wisconsin", "wi"],
+  ["A Place, 1 Main St, Grand Rapids, Michigan 49503", "mi"],
+  ["The White House, 1600 Pennsylvania Ave NW, Washington, DC 20500", "dc"],
+  ["Union Terminal, 1301 Western Ave, Cincinnati, OH 45203", "oh"],
+  ["Queens Library, 89-11 Merrick Blvd, Jamaica, NY 11432", "ny"],
+  ["Monument Circle, Indianapolis, IN 46204", "in"],
+  ["A Place, 5 Main St, Juneau, ak 99801", "ak"],                   // lower case before a ZIP code
+  ["Starved Rock Lodge, Oglesby, il", ""],                           // lower case alone: a word, maybe
+  ["Daley Plaza", ""],
+  ["Lake Michigan", ""],
+  ["Come on in", ""],
+  ["CN Tower, 290 Bremner Blvd, Toronto, ON M5V 3L9, Canada", ""],
+];
+for (const [text, want] of states) {
+  const got = api.addressStateTag(text);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL addressStateTag(" + JSON.stringify(text) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  }
+}
+for (const [tag, want] of [["oh", "Ohio"], ["dc", "the District of Columbia"], ["wi", "Wisconsin"]]) {
+  if (api.stateInSentence(tag) !== want) {
+    failed++; console.error("map-link: FAIL stateInSentence(" + tag + ") reads " + JSON.stringify(api.stateInSentence(tag)));
+  }
+}
+
+// A link handed to another app is rebuilt from its words, and that app's
+// parser reads it back as the same words from the same maker, punctuation at
+// the end included, alone or inside the words a share puts around it.
+const rebuilt = [
+  ["Devil's Lake State Park, S5975 Park Rd, Baraboo, WI 53913", "google"],
+  ["A+B Hardware & Co, 12 Main St #4, Peoria, IL 61602", "apple"],
+  ["Caf\u00e9 Lulu, 1 1st Ave, Rockford, Illinois 61101", "google"],
+  ["Joe's Diner (Main St)", "google"],
+  ["Yum!", "apple"],
+  ["Acme Inc.,", "google"],
+];
+for (const [text, source] of rebuilt) {
+  const url = api.mapLinkForText({ text, source });
+  for (const pasted of [url, "Shared from a phone\n" + url]) {
+    const got = api.parseMapLink(pasted);
+    if (!got || got.kind !== "text" || got.source !== source || got.text !== text) {
+      failed++;
+      console.error("map-link: FAIL mapLinkForText(" + JSON.stringify(text) + ") = " + JSON.stringify(url) + " reads back as " + JSON.stringify(got));
+    }
+  }
+}
+
+const total = cases.length + 2 + lookups.length + 2 + said.length + bare.length + carry.length + parts.length + street.length +
+  states.length + 3 + rebuilt.length * 2;
 if (failed) { console.error("map-link: " + failed + " of " + total + " checks failed"); process.exit(1); }
 console.log("map-link: OK — " + cases.length + " pasted texts read as expected; a short link is sent only to the lookup; " +
   lookups.length + " lookup answers tried again or not as expected, a cancelled lookup stops, and " + said.length +
   " short-link messages say which side failed; " +
   bare.length + " place names split from their addresses as expected; " + carry.length +
   " answers held to the address's house number as expected; " + parts.length + " addresses split into their parts and " +
-  street.length + " answers held to the address's street as expected");
+  street.length + " answers held to the address's street as expected; " + states.length +
+  " addresses read for their state and " + rebuilt.length + " links rebuilt from their words as expected");

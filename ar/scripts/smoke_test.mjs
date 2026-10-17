@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "34.74650,-92.28960"; // the State Capitol, Little Rock, Pulaski County
-const OFFLINE = ["county", "us-house", "ar-senate", "ar-house", "quorum-court", "county-subdivision"];
-const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74", "quorum-court": "6", "county-subdivision": "Big Rock Township" };
+const OFFLINE = ["county", "us-house", "ar-senate", "ar-house", "quorum-court", "county-subdivision", "voting-precinct"];
+const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74", "quorum-court": "6", "county-subdivision": "Big Rock Township", "voting-precinct": "Precinct 098" };
 const NEGATIVE_POINT = "33.40000,-94.40000"; // near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.
 const APP_NAME = "districtry Arkansas";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -362,9 +362,8 @@ try {
   //     ARKANSAS HAS NEIGHBOURS THE FLEET SERVES AND NEIGHBOURS IT DOES NOT,
   //     so both halves are its own. Oklahoma is live, so a click on Sallisaw
   //     must open that app; Texas is served by nobody, so a click on
-  //     Texarkana, Texas must stay here (1a2-ii below). This instance is also
-  //     DARK, so it has no entry in fleet-outlines.json at all and answers its
-  //     own side from the coverage rings the wash retained — no fetch.
+  //     Texarkana, Texas must stay here (1a2-ii below). This instance answers
+  //     its own side from the coverage rings the wash retained — no fetch.
   //     Chicago proves the file is still read for ground far from here.
   //     Tennessee went live while this instance was being built, so Memphis
   //     joined as a case when that go-live was merged in: Overton Park sits
@@ -374,11 +373,16 @@ try {
   //     and correctly: this dark instance's sibling list (`metro_explorers`,
   //     hand-seeded until go-live runs --sync-fleet) still lacked South
   //     Carolina and Tennessee, so the hand-off had nowhere to send the point.
+  //     Mississippi joined as a case in the change that published it
+  //     (2026-10-16): Clarksdale, the Coahoma County seat, sits about 15 km
+  //     east of this app's own outline, inside Mississippi's outline in
+  //     fleet-outlines.json and no other.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Sallisaw, Oklahoma", lat: 35.4604, lng: -94.7875, want: "https://districtry.com/ok/" },
       { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
+      { name: "Clarksdale, Mississippi", lat: 34.2001, lng: -90.5709, want: "https://districtry.com/ms/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -413,8 +417,11 @@ try {
     }, { n: EXPORTS_NAME });
     await page.waitForTimeout(3000);
     const url = page.url();
+    // Still under BASE means still this app. This asked for the URL NOT to
+    // name one of a list of sibling tags, and a list needs a new entry each
+    // time a state goes live: the tag it lacks reads as staying here.
     check("a click on Texarkana, Texas stays in this app",
-      !/districtry\.com\/(il|wi|ia|mi|ny|ca|mn|ky|in|nc|ok|sc|tn)\//.test(url), url);
+      url.startsWith(BASE), url);
     await context.close();
   }
 

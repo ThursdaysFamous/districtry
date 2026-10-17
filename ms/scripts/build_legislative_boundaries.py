@@ -50,6 +50,28 @@ bytes); every later instance has re-measured the Douglas-Peucker side on its
 own geometry, and Mississippi's run prints its own worst stray against the
 ceiling below on every build.
 
+THE INTERVAL IS 5 M UNDER AN 8 M CEILING, THE COUNTY FILE'S SETTING, AND THAT
+IS ADAM'S CHOICE ("Finer first", 2026-10-16, before the instance opened).
+These maps were first built at a 20 m interval under a 25 m ceiling. Measured
+that day against the full-precision TIGERweb lines by the two measures
+build_state_counties.py records (the worst stray, and the ground, equal-area
+in EPSG:5070, that the file answers with a different district or none inside
+the state), and by the people at every populated 2020 block's internal point
+whom the file tells a different district (a block's internal point is not
+where its residents live, so this counts blocks whose representative point
+moves):
+
+    chamber     setting       worst stray   ground answered wrongly   people   gzipped
+    us-house    interval=20      20.6 m            16.6 km2              0       50 KB
+                interval=5        5.2 m             3.2 km2              0       97 KB
+    ms-senate   interval=20      21.4 m            43.2 km2             20      202 KB
+                interval=5        5.5 m             9.3 km2              5      426 KB
+    ms-house    interval=20      20.6 m            58.4 km2              5      307 KB
+                interval=5        5.5 m            13.0 km2              5      655 KB
+
+The 20 m rows were rebuilt from the same fetch and matched the files they
+replaced byte for byte, so both settings are measured on one source.
+
 THE INTERVAL IS ABSOLUTE METRES, WHICH IS WHY EACH CHAMBER IS SIMPLIFIED ON
 ITS OWN HERE. Illinois had to put all three chambers through ONE mapshaper
 topology, because two Illinois House districts make up one Senate district
@@ -106,21 +128,21 @@ LAYERS = {
         # instances still name CD119 and would fail the same way on a rebuild.
         "fields": ["CD120", "NAME", "BASENAME", "GEOID", "STATE"],
         "out": "congress-districts.json",
-        "simplify": "interval=20",
+        "simplify": "interval=5",
         "min_features": 4,  # 4 Mississippi congressional districts
     },
     "ms-senate": {
         "layer": 1,
         "fields": ["SLDU", "NAME", "BASENAME", "GEOID", "STATE"],
         "out": "ms-senate-districts.json",
-        "simplify": "interval=20",
+        "simplify": "interval=5",
         "min_features": 52,  # 52 Mississippi Senate districts
     },
     "ms-house": {
         "layer": 2,
         "fields": ["SLDL", "NAME", "BASENAME", "GEOID", "STATE"],
         "out": "ms-house-districts.json",
-        "simplify": "interval=20",
+        "simplify": "interval=5",
         "min_features": 122,  # 122 Mississippi House districts
     },
 }
@@ -128,16 +150,17 @@ DEFAULT_TARGETS = ["us-house", "ms-senate", "ms-house"]  # all three — see doc
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m — the precision the app requests live
 VALIDATION_KEY = "GEOID"  # unique per district, preserved through simplification
 
-# 25 m, PINNED rather than recomputed each run. It is "about one step of the
-# true line's own detail" as the copied builder measured it. On Mississippi's
-# geometry (2026-10-15) the median source segment is 27.90 m (us-house),
-# 23.28 m (ms-senate) and 22.90 m (ms-house), so here the ceiling is about
-# one step, the same relation North Carolina's 25 m bore to its own
-# 21.9-26.1 m. That run's worst strays were 20.6, 21.4 and 20.6 m with no
-# district over. Every run prints the measured step beside this value,
-# because a ceiling derived from the source each run can never fail — it rises
-# whenever the source gets coarser.
-FIDELITY_CEILING_M = 25.0
+# 8 m, PINNED rather than recomputed each run: the ceiling
+# build_state_counties.py holds the county file to, and the setting Adam chose
+# for these maps before the instance opened ("Finer first", 2026-10-16). The
+# first build pinned 25 m, about one step of the true line's own detail as the
+# copied builder measured it (the median source segment is 27.90 m for
+# us-house, 23.28 m for ms-senate and 22.90 m for ms-house, 2026-10-15), and
+# its 20 m interval left worst strays of 20.6, 21.4 and 20.6 m; the 5 m
+# interval leaves 5.2, 5.5 and 5.5 m. Every run prints the measured step
+# beside this value, because a ceiling derived from the source each run can
+# never fail — it rises whenever the source gets coarser.
+FIDELITY_CEILING_M = 8.0
 
 
 def _rings_of(geom):

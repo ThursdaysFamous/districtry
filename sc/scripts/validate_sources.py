@@ -192,6 +192,19 @@ PROVENANCE = [
             "land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "sc-precincts.json",
+        "source_url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Voter_Precincts/FeatureServer/0",
+        "note": (
+            "South Carolina's 2,315 voting precincts from the Revenue and "
+            "Fiscal Affairs Office's official maps, each carrying the act "
+            "that set it, pre-built by sc/scripts/build_sc_precincts.py "
+            "through scripts/statewide_precincts.py. Lines move by act of the "
+            "General Assembly, so the quarterly --watch row in sc/WATCH.md is "
+            "also re-run after each session."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -274,6 +287,16 @@ ENDPOINTS = [
                 "&geometry=-83.45%2C31.90%2C-78.40%2C35.30&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 755,   # 841 measured 2026-10-10
+    },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in sc/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://gis.state.sc.us/arcgis/rest/services/"
+                "Boundaries_Districts/Voter_Precincts/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2080,  # 2,315 records measured 2026-10-15
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

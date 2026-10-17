@@ -89,7 +89,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -98,8 +98,8 @@ MIN_REGISTER_LAYER = 9
 EXPECT_LAYER_IDS = [
     "us-house", "in-senate", "county", "in-house", "county-council",
     "school-district-unified", "zip-code", "county-subdivision",
-    "municipality", "tribal-government", "police-station", "fire-station",
-    "post-office",
+    "voting-precinct", "municipality", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +110,7 @@ GEOMETRY_FILES = {
     "in-senate-districts.json": (50, 50),  # Indiana Senate districts, pre-built by in/scripts/build_legislative_boundaries.py (2,000-point agreement gate).
     "in-house-districts.json": (100, 100),  # Indiana House districts, pre-built by in/scripts/build_legislative_boundaries.py (2,000-point agreement gate).
     "tribal-areas.json": (1, 1),  # Indiana's tribal land (scripts/build_tribal_areas.py) — one piece of the Pokagon Band of Potawatomi's trust land, which crosses from Michigan. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "in-precincts.json": (5121, 5121),  # Every Indiana voting precinct, pre-built by in/scripts/build_in_precincts.py through scripts/statewide_precincts.py from IndianaMap's 2026 layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 5,121 count on the fetch and the drawn file). 7.1 MB, 1.48 MB gzipped, fetched only when a reader switches the layer on.
     "in-council-districts.json": (241, 241),  # County council districts in 55 counties and Indianapolis's 25 City-County Council districts, from the Indiana Geographic Information Office's CountyCouncilPolygon layer, built by in/scripts/build_in_council_districts.py.
 }
 
