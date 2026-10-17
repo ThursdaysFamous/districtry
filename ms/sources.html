@@ -1160,7 +1160,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">16 layers — 9 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">17 layers — 10 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1169,7 +1169,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">9 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">10 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1274,6 +1274,24 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ms-county-officials.json, the roster the County card reads: the supervisor and the election commissioner elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.</td>
                 <td data-label="Where it applies">25 of Mississippi's 82 counties; hidden in the other 57, which the Data gaps panel lists and explains.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Ward</span><code>city-ward</code></th>
+                <td data-label="What it answers">The ward containing the point, in the nine Mississippi cities of 25,000 people or more whose current ward map this app has confirmed, and the member of the city council or board of aldermen elected from it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services2.arcgis.com/n0wqzAPJddc1vROD/arcgis/rest/services/Jackson_Adopted_Wards_2024/FeatureServer/0" target="_blank" rel="noopener">City of Jackson — its ward layer Jackson Adopted Wards 2024, the one the city's Ward Maps page shows; its own population figures match the 2020 census's people inside its lines, ward by ward</a></li>
+                    <li><a href="https://maps.gulfport-ms.gov/arcgis/rest/services/CityServices/GPT_WardsVotingPrecinct_2025/MapServer/2" target="_blank" rel="noopener">City of Gulfport — the wards layer of the city's own map server's 2025 service for wards, voting precincts and polling places (no adoption date was found; the seven wards are 8.1% apart on the 2020 census)</a></li>
+                    <li><a href="https://services6.arcgis.com/4Zxj9BGpFPVGgwpo/arcgis/rest/services/Municipal_Wards/FeatureServer/17" target="_blank" rel="noopener">DeSoto County — its map of its cities' wards, which records that Southaven adopted its wards on June 18, 2024 (and that Olive Branch adopted its own on June 7, 2022)</a></li>
+                    <li><a href="https://services9.arcgis.com/VGtdH6iTQlVulSnr/arcgis/rest/services/Olive_Branch_Wards/FeatureServer/0" target="_blank" rel="noopener">City of Olive Branch — its ward layer Municipal_Wards_FINAL_2022, which the city's Find My Ward map links</a></li>
+                    <li><a href="https://services1.arcgis.com/K2lG4DOeDaa3nZkf/arcgis/rest/services/WARDS/FeatureServer/0" target="_blank" rel="noopener">City of Tupelo — its ward layer, which the city's GIS maps page links as its ward map, described as the current aldermen wards (created July 2023; no adoption date was found)</a></li>
+                    <li><a href="https://services3.arcgis.com/HJKXwJwr6cXL7ioD/arcgis/rest/services/2023_Wards/FeatureServer/0" target="_blank" rel="noopener">City of Oxford — its 2023 Wards layer, the Interactive Ward Map the city's Board of Aldermen page links, which matches the ward map the board approved on May 19, 2023</a></li>
+                    <li><a href="https://gis.cmpdd.org/server/rest/services/Hosted" target="_blank" rel="noopener">Central Mississippi Planning and Development District — the ward layers of Clinton (Wards 12-5-2023, the date of the city's Adopted Ward Plan), Pearl (Adopted Pearl Wards Effective 9-1-24) and Brandon (Wards (Adopted 1/18/2022)); each city's website links or embeds the planning district's map viewer that shows its wards</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its wards are cut so the City Ward and City cards agree about which city a point is in</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The member for each ward as the city's own website names them, from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.</td>
+                <td data-label="Where it applies">Jackson, Gulfport, Southaven, Olive Branch, Tupelo, Clinton, Pearl, Oxford and Brandon. The other six cities of 25,000 people or more (Biloxi, Hattiesburg, Meridian, Greenville, Madison and Horn Lake) are not drawn, each for a reason ms/scripts/build_ms_city_wards.py records, and the City card still names their mayor and council where the city's own website does.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1391,7 +1409,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 300 features for Mississippi (113 cities, 167 towns and 20 villages, one of the towns recorded by the Census as inactive), measured 2026-10-15.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. Mississippi's cities, towns and villages elect a mayor and a board of aldermen or a council, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ms-municipal-officeholders.</td>
+                <td data-label="Who it names">The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.</td>
                 <td data-label="Where it applies">Mississippi — statewide. A point outside every city, town and village is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1721,7 +1739,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City, Town or Village",
-      "description": "The city, town or village containing the point, if any. NO OFFICEHOLDER YET. Mississippi's cities, towns and villages elect a mayor and a board of aldermen or a council, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ms-municipal-officeholders.",
+      "description": "The city, town or village containing the point, if any. The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.",
       "url": "https://districtry.com/ms/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"
@@ -1736,6 +1754,63 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Mississippi — statewide. A point outside every city, town and village is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ms/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Ward",
+      "description": "The ward containing the point, in the nine Mississippi cities of 25,000 people or more whose current ward map this app has confirmed, and the member of the city council or board of aldermen elected from it. The member for each ward as the city's own website names them, from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.",
+      "url": "https://districtry.com/ms/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/ms/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Jackson — its ward layer Jackson Adopted Wards 2024, the one the city's Ward Maps page shows; its own population figures match the 2020 census's people inside its lines, ward by ward",
+          "url": "https://services2.arcgis.com/n0wqzAPJddc1vROD/arcgis/rest/services/Jackson_Adopted_Wards_2024/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Gulfport — the wards layer of the city's own map server's 2025 service for wards, voting precincts and polling places (no adoption date was found; the seven wards are 8.1% apart on the 2020 census)",
+          "url": "https://maps.gulfport-ms.gov/arcgis/rest/services/CityServices/GPT_WardsVotingPrecinct_2025/MapServer/2"
+        },
+        {
+          "@type": "Dataset",
+          "name": "DeSoto County — its map of its cities' wards, which records that Southaven adopted its wards on June 18, 2024 (and that Olive Branch adopted its own on June 7, 2022)",
+          "url": "https://services6.arcgis.com/4Zxj9BGpFPVGgwpo/arcgis/rest/services/Municipal_Wards/FeatureServer/17"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Olive Branch — its ward layer Municipal_Wards_FINAL_2022, which the city's Find My Ward map links",
+          "url": "https://services9.arcgis.com/VGtdH6iTQlVulSnr/arcgis/rest/services/Olive_Branch_Wards/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Tupelo — its ward layer, which the city's GIS maps page links as its ward map, described as the current aldermen wards (created July 2023; no adoption date was found)",
+          "url": "https://services1.arcgis.com/K2lG4DOeDaa3nZkf/arcgis/rest/services/WARDS/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Oxford — its 2023 Wards layer, the Interactive Ward Map the city's Board of Aldermen page links, which matches the ward map the board approved on May 19, 2023",
+          "url": "https://services3.arcgis.com/HJKXwJwr6cXL7ioD/arcgis/rest/services/2023_Wards/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Central Mississippi Planning and Development District — the ward layers of Clinton (Wards 12-5-2023, the date of the city's Adopted Ward Plan), Pearl (Adopted Pearl Wards Effective 9-1-24) and Brandon (Wards (Adopted 1/18/2022)); each city's website links or embeds the planning district's map viewer that shows its wards",
+          "url": "https://gis.cmpdd.org/server/rest/services/Hosted"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its wards are cut so the City Ward and City cards agree about which city a point is in",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Jackson, Gulfport, Southaven, Olive Branch, Tupelo, Clinton, Pearl, Oxford and Brandon. The other six cities of 25,000 people or more (Biloxi, Hattiesburg, Meridian, Greenville, Madison and Horn Lake) are not drawn, each for a reason ms/scripts/build_ms_city_wards.py records, and the City card still names their mayor and council where the city's own website does"
       }
     },
     {
