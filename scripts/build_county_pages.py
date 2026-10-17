@@ -2735,6 +2735,31 @@ def schema_telephone(value):
     return PHONE_LABEL_RE.sub("", (value or "").strip())
 
 
+def member_phones(m):
+    """Every number a roster carries for one person, first one first: `phone`,
+    then `phonesExtra`, the further numbers a source prints for the same
+    person (a home and a cell line, say), each with its label in the text."""
+    extras = m.get("phonesExtra") or []
+    if isinstance(extras, str):
+        extras = [extras]
+    out = []
+    for value in [m.get("phone")] + list(extras):
+        value = (value or "").strip() if isinstance(value, str) else ""
+        if value and value not in out:
+            out.append(value)
+    return out
+
+
+def schema_telephones(m):
+    """The structured-data telephone: one number as a string, several as a
+    list, none as None."""
+    numbers = [schema_telephone(p) for p in member_phones(m)]
+    numbers = [n for n in numbers if n]
+    if not numbers:
+        return None
+    return numbers[0] if len(numbers) == 1 else numbers
+
+
 def member_node(m):
     """One officeholder as a schema.org Person, from the same fields
     member_html renders. Every field is optional: a roster that does not publish
@@ -2746,7 +2771,7 @@ def member_node(m):
     email = (m.get("email") or "").strip()
     if email:
         person["email"] = email
-    phone = schema_telephone(m.get("phone"))
+    phone = schema_telephones(m)
     if phone:
         person["telephone"] = phone
     # `url` and `profileUrl` are the same field under two names — Illinois's
@@ -2875,8 +2900,7 @@ def member_html(m):
     email = (m.get("email") or "").strip()
     if email:
         contact.append('<a href="mailto:%s">%s</a>' % (esc(email), esc(email)))
-    phone = (m.get("phone") or "").strip()
-    if phone:
+    for phone in member_phones(m):
         contact.append('<a href="tel:%s">%s</a>'
                        % (esc(re.sub(r"[^0-9+]", "", phone)), esc(phone)))
     for field, label in (("url", "Official profile"),

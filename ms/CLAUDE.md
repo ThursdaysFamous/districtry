@@ -90,7 +90,7 @@ Humphreys, Lincoln, Sunflower and Yalobusha, which print a different address for
 have none. **A SUPERVISOR'S OWN TELEPHONE IS CARRIED AND THEIR OWN ADDRESS NEVER IS** (Adam,
 2026-10-17, for the whole fleet: "if the official government source uses personal phone numbers,
 we publish those"): a number printed for one supervisor that is not the board's, and Copiah's
-"(c)" numbers, ride on that supervisor's row, 81 of them on the 2026 edition. **THE SAME DIRECTORY
+"(c)" numbers (kept as "cell"), ride on that supervisor's row, 81 of them on the 2026 edition. **THE SAME DIRECTORY
 NAMES THE FIVE ELECTION COMMISSIONERS, AND THEIR NAMES AND OWN TELEPHONES ARE CARRIED**: each
 commissioner's line runs on from the name to the commissioner's own address, which may be a home,
 and on 45 lines in nine counties to a telephone. The builder keeps the name (everything before the

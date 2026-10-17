@@ -68,7 +68,8 @@ same one, because five people do not share a home, and an address printed for
 one supervisor alone is never carried. The board's telephone is found by the
 same test. A supervisor's OWN number is carried on the supervisor: the number
 the directory prints for that supervisor where it is not the board's, and
-Copiah's "(c)" cell numbers. Some of those are office extensions and some may
+Copiah's "(c)" cell numbers, written "cell 601-953-9901" so the card says what
+the directory says about them. Some of those are office extensions and some may
 be a supervisor's own cell or home line; the directory does not say which, and
 it prints them beside the name. Until 2026-10-17 no supervisor's own number
 was carried, on the reasoning that it might be personal; that day Adam ruled
@@ -183,6 +184,8 @@ CELL_RE = re.compile(r"\(c\)\s*(\d{3})[-. ]?(\d{3})-(\d{4})", re.I)
 PHONE_ONLY_RE = re.compile(r"^(\d{3})[-. ](\d{3})-(\d{4})$")
 # How every telephone in the file is written.
 PHONE_SHAPE_RE = re.compile(r"^\d{3}-\d{3}-\d{4}$")
+# A supervisor's own number, which may carry the directory's "(c)" as "cell ".
+OWN_PHONE_SHAPE_RE = re.compile(r"^(?:cell )?\d{3}-\d{3}-\d{4}$")
 # A line inside a supervisors block that belongs to the entry above it: a fax
 # line, a stray period, or another number ("County Barn 662-...").
 CONT_RE = re.compile(r"^(?:\(f\)|\.$|.*\b\d{3}-\d{4}\b)")
@@ -296,7 +299,8 @@ def parse_entry(label, number, rest, where):
         # The board test reads this, and own_phone() keeps it on the
         # supervisor when it is not the board's.
         "_phone": "%s-%s-%s" % phone_m.groups() if phone_m else None,
-        "_cell": "%s-%s-%s" % cell_m.groups() if cell_m else None,
+        # Kept with the directory's own word for it, as "cell 601-953-9901".
+        "_cell": "cell %s-%s-%s" % cell_m.groups() if cell_m else None,
     }
 
 
@@ -563,11 +567,12 @@ def check_shape(data):
                     or VACANT_RE.match(str(s.get("name"))):
                 problems.append("%s supervisor district %s carries fields %s"
                                 % (geoid, s.get("district"), sorted(s)))
-            elif "phone" in s and not PHONE_SHAPE_RE.match(str(s["phone"])):
+            elif "phone" in s and not OWN_PHONE_SHAPE_RE.match(str(s["phone"])):
                 problems.append("%s supervisor district %s: the telephone is not "
-                                "written NNN-NNN-NNNN (not printed)"
+                                "written NNN-NNN-NNNN or cell NNN-NNN-NNNN (not printed)"
                                 % (geoid, s.get("district")))
-            elif "phone" in s and s["phone"] == rec.get("boardPhone"):
+            elif "phone" in s and re.sub(r"\D", "", str(s["phone"])) == \
+                    re.sub(r"\D", "", str(rec.get("boardPhone") or "")):
                 problems.append("%s supervisor district %s carries the board's own "
                                 "telephone, which the board's office block shows"
                                 % (geoid, s.get("district")))

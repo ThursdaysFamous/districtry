@@ -42,7 +42,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from build_county_pages import party_name, schema_telephone    # noqa: E402
+from build_county_pages import member_phones, party_name, schema_telephones    # noqa: E402
 from build_legislator_pages import INSTANCES as LEGISLATOR_INSTANCES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -1025,7 +1025,7 @@ def render_section(tag, section, verified):
         fail("%s/%s carries a role and the section names no role_label — a "
              "column heading cannot be derived from one"
              % (tag, section["roster"]))
-    has_phone = any(rec.get("phone") for rec in named)
+    has_phone = any(member_phones(rec) for rec in named)
     has_term = any(rec.get("termExpires") for rec in named)
     # A CITATION COLUMN WHERE THE ROSTER CITES PER RECORD. Measured 2026-09-15
     # across every roster these tables read, `source_url` appears on exactly one
@@ -1079,7 +1079,11 @@ def render_section(tag, section, verified):
             cells.append('<td itemprop="address">%s</td>'
                          % html.escape(rec.get(office_key) or ""))
         if has_phone:
-            cells.append("<td>%s</td>" % tel_link(rec.get("phone")))
+            # Every number the roster carries for the person, `phone` first and
+            # then `phonesExtra`, one to a line: South Carolina prints a home and
+            # a business number for some members, and the card shows both.
+            cells.append("<td>%s</td>" % "<br>".join(
+                tel_link(p) for p in member_phones(rec)))
         if has_term:
             cells.append("<td>%s</td>" % html.escape(rec.get("termExpires") or ""))
         if link_key:
@@ -1174,8 +1178,9 @@ def person_node(rec, name_field, section):
     person = {"@type": "Person", "name": who}
     if rec.get("party"):
         person["affiliation"] = party_name(rec["party"]) or rec["party"]
-    if rec.get("phone"):
-        person["telephone"] = schema_telephone(rec["phone"])
+    telephone = schema_telephones(rec)
+    if telephone:
+        person["telephone"] = telephone
     office = next((rec[f] for f in ("office", "districtOffice")
                    if isinstance(rec.get(f), str) and rec[f]), None)
     if office:
