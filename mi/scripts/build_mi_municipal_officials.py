@@ -32,6 +32,11 @@ from datetime import datetime, timezone
 HERE = os.path.dirname(os.path.abspath(__file__))
 INSTANCE = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
+# the fleet's withhold list lives at the repo root; after this folder, so a
+# root script never shadows one of this instance's own
+sys.path.append(os.path.join(os.path.dirname(INSTANCE), "scripts"))
+
+import undeliverable  # noqa: E402
 CACHE = os.path.join(HERE, ".cache", "mi_municipal_officials.json")
 OUT = os.path.join(INSTANCE, "data", "app", "mi-municipal-officials.json")
 LABEL = "mi-municipal-officials"
@@ -58,7 +63,9 @@ PRESERVE_MAX_AGE_DAYS = 45
 # rather than shipped unreviewed. phonesExtra is the list of further numbers a
 # page prints for the same member, each with the page's own label; it carries
 # a member's own line since Adam's ruling of 2026-10-17 ("if the official
-# government source uses personal phone numbers, we publish those").
+# government source uses personal phone numbers, we publish those"). email is
+# one address, a personal one included where a parser takes it through
+# mi_municipal_common.own_email (Adam's choice of 2026-10-17, "E-mails too").
 FIELDS = ("name", "role", "seat", "phone", "phonesExtra", "email")
 
 
@@ -84,6 +91,14 @@ def clean(geoid, entry, unit):
     """The shipped row for one unit, re-checked against the unit table."""
     from mi_municipal_common import check_roster
     members = [{k: m[k] for k in FIELDS if m.get(k)} for m in entry.get("members") or []]
+    for m in members:
+        # an address scripts/undeliverable.py lists cannot receive mail and
+        # is withheld; the module prints which record lost it
+        if m.get("email"):
+            address, _why = undeliverable.withhold(
+                m["email"], "%s, %s" % (unit["name"], m.get("seat") or m["role"]))
+            if not address:
+                del m["email"]
     if unit["kind"] == "township":
         # A township board in its statutory order (MCL 41.70): supervisor,
         # clerk, treasurer, then trustees in the order the page lists them.

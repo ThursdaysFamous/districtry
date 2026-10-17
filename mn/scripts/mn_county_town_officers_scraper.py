@@ -2,7 +2,7 @@
 """The town officers Minnesota counties publish for their own towns, read from
 each county's own list: the board of supervisors, the clerk and the treasurer,
 by name, office, the year the term ends where the list prints one, and the
-telephone the list prints beside each officer.
+telephone and the e-mail address the list prints beside each officer.
 
 WHY THIS EXISTS. mn/scripts/build_mn_town_boards.py names the boards of the 704
 towns that hold their town election in November, from the Secretary of State's
@@ -14,20 +14,25 @@ found 42 counties that publish that list. This reads them.
 
 WHAT IS KEPT AND WHAT IS NOT. These lists print each officer's home address,
 telephone and e-mail beside the name. A parser takes the office, the name, a
-term year and the telephone; the address and the e-mail are never read into
-the output. The telephone ships as the list prints it, whosever line it is,
+term year, the telephone and the e-mail; the address is never read into the
+output. The telephone ships as the list prints it, whosever line it is,
 under Adam's ruling of 2026-10-17 ("if the official government source uses
 personal phone numbers, we publish those"), with the label the list prints
 beside it ("cell", "home"); a number printed without an area code ships
-without one, never with a guessed one. A parser hands `numbers()` only the
-column or line where its list prints an officer's telephone, and `numbers()`
-returns only text with a telephone's shape, so an address sharing that line
-never reaches a record; `check_record` refuses a name carrying a digit, an
-"@", or a street word, so a column that slips cannot carry an address
-through. A number marked as a fax is not read, and `settle_numbers` leaves
-out a number printed beside two or more people or printed more often than
-beside the officers who carry it: those are a town's or an office's line,
-not the person's.
+without one, never with a guessed one. The e-mail ships the same way, under
+his choice of the same day ("E-mails too"), lower-cased and otherwise as the
+list prints it, one per officer. A parser hands `numbers()` and `emails()`
+only the column or line where its list prints an officer's telephone or
+e-mail, and each returns only text with a telephone's or an address's shape,
+so a street address sharing that line never reaches a record;
+`check_record` refuses a name carrying a digit, an "@", or a street word, so
+a column that slips cannot carry an address through. A number marked as a
+fax is not read, and `settle_numbers` and `settle_emails` leave out a number
+or an e-mail printed beside two or more people or printed more often than
+beside the officers who carry it: those are a town's or an office's, not the
+person's. `settle_emails` also leaves out a mailbox named for the town itself
+or for another office, and the addresses of an officer whose mail link sends
+somewhere other than the address it shows.
 
 A LIST IS A DATED STATEMENT, NOT A LIVE ONE. Each county's list carries the
 date it prints ("Updated as of 10/09/2026") where it prints one, and every town
@@ -268,7 +273,7 @@ def town_key(raw):
 # officer's telephone, and `numbers()` returns only what has a telephone's
 # shape plus the label word printed beside it. The street address, the town
 # and the ZIP code that share those lines never reach a record, and neither
-# does the e-mail.
+# does the e-mail, which `emails()` reads on its own (below).
 
 # A number as the lists print it: with an area code, bracketed or not, or
 # with none (several lists print seven digits), and an extension. One list
@@ -334,6 +339,108 @@ def number_key(number):
     m = NUMBER_RE.search(number)
     digits = re.sub(r"\D", "", re.sub(r"(?i)\s*(?:ext\.?|x)\s*\d+$", "", m.group(0) if m else number))
     return digits[-7:]
+
+
+# ---------------------------------------------------------------- e-mail
+#
+# Since Adam's choice of 2026-10-17 ("E-mails too"), the e-mail address a
+# list prints beside one officer ships on that officer's record, whosever
+# mailbox it is. A parser hands `emails()` only the cell or line where its
+# list prints an officer's e-mail, as it does for telephones, and
+# `settle_emails` keeps one address per officer and leaves out any address
+# that belongs to a town or an office rather than to the person.
+
+# An address as a list prints it: one whitespace-free token, one "@", and a
+# domain ending in a top-level name.
+EMAIL_RE = re.compile(r"[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
+EMAIL_SHAPE = re.compile(r"^%s$" % EMAIL_RE.pattern)
+# The words a list prints before an address to say what it is.
+EMAIL_LABELS = {"email", "e-mail", "email:", "e-mail:", "mail", "mail:", "e:"}
+
+
+def emails(text):
+    """Every e-mail address in `text`, lower-cased and otherwise exactly as
+    the list prints it. An address with a bare lower-case word printed hard
+    against it, before or after with no comma or semicolon between, is left
+    out: it may be one address printed with a space in it, and part of an
+    address would send mail to a stranger."""
+    toks = str(text).replace("\xa0", " ").split()
+    out = []
+    for i, tok in enumerate(toks):
+        if "@" not in tok:
+            continue
+        lead = re.match(r"^(?:e-?mail:)", tok, re.I)
+        core = tok[lead.end():] if lead else tok
+        core = core.strip("<>()[]{}\"").rstrip(",;:.")
+        if not EMAIL_SHAPE.match(core):
+            continue
+        prev = toks[i - 1] if i and not lead else ""
+        nxt = toks[i + 1] if i + 1 < len(toks) and not re.search(r"[,;]$", tok) else ""
+        if (re.fullmatch(r"[a-z][a-z'-]*", prev) and prev.lower() not in EMAIL_LABELS) or \
+                re.fullmatch(r"[a-z][a-z'-]*", nxt):
+            continue
+        core = core.lower()
+        if core not in out:
+            out.append(core)
+    return out
+
+
+def add_emails(rec, found):
+    """Put addresses on a record, in the order its list prints them, for
+    `settle_emails` to choose from."""
+    if rec is not None and found:
+        rec.setdefault("_emails", []).extend(found)
+
+
+def government_mailbox(address):
+    """An address on a government's own domain (a .gov or .mn.us domain, or
+    one naming a township), which an officer's record keeps over a personal
+    one when the list prints both."""
+    domain = address.rsplit("@", 1)[-1]
+    return bool(re.search(r"\.gov$|\.mn\.us$", domain) or re.search(r"township|twp|townof", domain))
+
+
+def mailbox_offices(address):
+    """The town offices an address names in its own name ("clerk.lakeview@",
+    "sup1.lakeview@", "lakeview_treasurer@"); a chair is a supervisor."""
+    found = set()
+    for word in re.findall(r"[a-z]+", address.split("@")[0].lower()):
+        if "clerk" in word:
+            found.add("clerk")
+        if "treas" in word:
+            found.add("treasurer")
+        if word.startswith(("supervisor", "supv", "chair")) or re.fullmatch(r"sup[a-e]?", word):
+            found.add("supervisor")
+    return found
+
+
+def mailbox_of(address, town, office):
+    """Whose mailbox an address is by its own name, where the name says:
+    "office" for the office the officer beside it holds, "other office" for
+    a different office's, "town" for the town's own (the town's name, or the
+    initials of its words, with or without "township", "twp" or "town of",
+    and nothing else), and None for anything else: a person's own address,
+    or a name that says nothing."""
+    named = mailbox_offices(address)
+    if named:
+        return "office" if any(o in office.lower() for o in named) else "other office"
+    letters = re.sub(r"[^a-z]", "", address.split("@")[0].lower())
+    words = re.findall(r"[a-z]+", town.lower())
+    for key in ("".join(words), "".join(w[0] for w in words) if len(words) > 1 else ""):
+        if key and key in letters and \
+                not re.sub(r"township|twp|townof|town|of|mn", "", letters.replace(key, "", 1)):
+            return "town"
+    return None
+
+
+MAILTO_RE = re.compile(r"^\s*mailto:", re.I)
+
+
+def mailto_address(href):
+    """The one address a mailto link sends to, lower-cased, or None when the
+    link names none or more than one."""
+    target = urllib.parse.unquote(MAILTO_RE.sub("", href).split("?")[0]).strip()
+    return target.lower() if EMAIL_SHAPE.match(target) else None
 
 
 # ---------------------------------------------------------------- documents
@@ -507,7 +614,7 @@ def cells_from(cells, x0, x1=None):
 
 def generic(lines, header, name_side="after", term=None, term_ahead=0,
             office_anywhere=True, stop=STOP_RE, phone_x=None, phone_label=None,
-            phone_below=False):
+            phone_below=False, email_x=None, email_below=False):
     """The shape most lists share: a town header, then one line per officer
     carrying an office word and a name.
 
@@ -519,6 +626,9 @@ def generic(lines, header, name_side="after", term=None, term_ahead=0,
     telephone in: the numbers in it on the officer's own line are the
     officer's, and with phone_below so are the ones under it until the next
     officer or town. phone_label is the side the list prints a label on.
+    email_x is (left, right) of the cells a list prints each officer's
+    e-mail in, read the same way, with email_below for the lines under the
+    officer's own.
     """
     towns, cur, last = {}, None, None
     ahead = 0
@@ -560,9 +670,13 @@ def generic(lines, header, name_side="after", term=None, term_ahead=0,
             last, ahead = rec, term_ahead
             if phone_x is not None:
                 add_numbers(rec, numbers(cells_from(cells, phone_x), phone_label))
+            if email_x is not None:
+                add_emails(rec, emails(cells_from(cells, *email_x)))
             continue
         if phone_below and last is not None:
             add_numbers(last, numbers(cells_from(cells, phone_x), phone_label))
+        if email_below and last is not None:
+            add_emails(last, emails(cells_from(cells, *email_x)))
         if term and last is not None and ahead > 0 and "termEnds" not in last:
             m = term.search(" ".join(texts))
             if m:
@@ -587,7 +701,9 @@ def beltrami(f):
     url = "https://www.beltramicountymn.gov/media/e4vfs1jr/town-officers.pdf"
     data, final = f.get(url)
     lines = pdf_lines(data)
-    # the telephone ends each officer's line, after the city, state and ZIP
+    # the telephone ends each officer's line, after the city, state and ZIP.
+    # The e-mail the list prints is a town's, under the town's name, and not
+    # an officer's, so it is not read.
     return (generic(lines, caps_header(), phone_x=440), first_date(pdf_text(data)),
             [final])
 
@@ -604,6 +720,8 @@ def benton(f):
     left_rx = re.compile(r"^([A-Z][A-Z .']+?)\s*(?:TOWNSHIP|TWP)?\s*(?:\(CONTINUED\))?:?$")
     # The telephone column, read from x 440: one number on the officer's own
     # line, and a second, where an officer gives one, on the line under it.
+    # The e-mail is the last line of the officer's block in the name column
+    # (x 285), under the street and the city.
     towns, cur, last, dial = {}, None, None, None
     for k, cells in enumerate(lines):
         left = [t for x, t in cells if x < 150]
@@ -643,6 +761,7 @@ def benton(f):
                 last["termEnds"] = m.group(1)
             continue
         add_numbers(dial, numbers(cells_from(cells, 440)))
+        add_emails(dial, emails(cells_from(cells, 280, 440)))
         m = re.search(r"TERM EXP\.?\s*(20\d\d)", " ".join(texts))
         if m and last is not None and "termEnds" not in last:
             last["termEnds"] = m.group(1)
@@ -666,9 +785,10 @@ def brown(f):
     lines = pdf_lines(data)
     # the township section ends where the city listing begins. The telephone
     # ends each officer's line, seven digits with a "(w)", "(c)" or "(h)"
-    # after some, and a second number sits under it on the e-mail line.
+    # after some, and a second number sits under it on the e-mail line, whose
+    # "e-mail:" opens the address column.
     return (generic(lines, header, office_anywhere=False, phone_x=440, phone_label="after",
-                    phone_below=True), None, [final])
+                    phone_below=True, email_x=(190, None), email_below=True), None, [final])
 
 
 @county("Carlton", 15)
@@ -680,8 +800,9 @@ def carlton(f):
     def header(texts):
         m = rx.match(texts[0])
         return town_key(m.group(1)) if m else None
+    # the e-mail column, between the name and the term
     towns = generic(pdf_lines(data), header, term=re.compile(r"(?:^|\s)(20[2-3]\d)$"),
-                    office_anywhere=False)
+                    office_anywhere=False, email_x=(330, 560))
     return towns, first_date(pdf_text(data)), [final]
 
 
@@ -727,9 +848,10 @@ def chippewa(f):
             return town_key(t).title()
         return None
     # two telephone columns, "PHONE" and "PHONE (2)", between the e-mail and
-    # the term
+    # the term; the e-mail is printed after the state and ZIP code, often in
+    # the same cell, and only its address is taken from it
     towns = generic(pdf_lines(data), header, term=re.compile(r"\b(20[2-3]\d)\s*$"),
-                    office_anywhere=False, phone_x=440)
+                    office_anywhere=False, phone_x=440, email_x=(240, 440))
     return towns, None, [final]
 
 
@@ -742,9 +864,10 @@ def waseca(f):
     def header(texts):
         m = rx.match(texts[0])
         return town_key(m.group(1)) if m else None
-    # the telephone is the last column; a number marked "(FAX)" is not read
+    # the telephone is the last column; a number marked "(FAX)" is not read.
+    # The e-mail follows the name in the name's own cell ("Name - address").
     towns = generic(pdf_lines(data), header, name_side="before",
-                    term=re.compile(r"^(20[2-3]\d)\b"), phone_x=690)
+                    term=re.compile(r"^(20[2-3]\d)\b"), phone_x=690, email_x=(130, 300))
     m = re.search(r"Current as of\s*:?\s*(\d{1,2})-([A-Za-z]{3})-(\d{2})", pdf_text(data))
     as_of = None
     if m:
@@ -812,8 +935,10 @@ def lincoln(f):
             rec["termEnds"] = m.group(1)
         # the telephone column, after the name and before the address; a
         # number the town's own column prints under its name is the town's,
-        # and is not read
+        # and is not read, nor is an e-mail it prints there. The officer's
+        # e-mail has a column of its own, after the telephone.
         add_numbers(rec, numbers(cells_from(cells, 200, 420), "after"))
+        add_emails(rec, emails(cells_from(cells, 265, 425)))
         cur.append(rec)
     m = re.search(r"(20\d\d) Township Listing", pdf_text(data))
     return towns, (m.group(1) if m else None), [final]
@@ -853,7 +978,7 @@ def roseau(f):
     data, final = f.get(url)
     lines = pdf_lines(data)
     words = pdf_word_rows(data)
-    towns, cur, offices, phoned = {}, None, None, True
+    towns, cur, offices, phoned, named = {}, None, None, True, False
     for k, cells in enumerate(lines):
         texts = [t for _, t in cells]
         # A town's heading is a lone word at the left margin, and the
@@ -868,14 +993,16 @@ def roseau(f):
                     and ("Election" in beside or "Election" in nxt or "MB" in beside):
                 cur = towns.setdefault(town_key(texts[0]), [])
                 offices = None
+                named = False
                 continue
         if cur is None:
             continue
         if all(office_of(t) for t in texts) and len(texts) >= 3:
             offices = [(x, office_of(t)) for x, t in cells]
             # a row of offices after the names is a town whose heading was
-            # not read; its numbers belong to nobody here
+            # not read; its numbers and e-mails belong to nobody here
             phoned = bool(cur)
+            named = named and not cur
             continue
         if offices and not cur and all(
                 looks_like_name(tidy_name(t.lstrip("* "))) or t.startswith("*") for t in texts):
@@ -889,6 +1016,7 @@ def roseau(f):
                 cur.append(row(office, seat, t.lstrip("* ")))
                 cur[-1]["_x"] = x
                 phoned = False
+                named = True
             continue
         head = texts[0].lower() if texts else ""
         if cur and head.startswith("phone") and not phoned:
@@ -900,6 +1028,14 @@ def roseau(f):
             col = {r["_x"]: r for r in cur}
             for x, text in by_column(words[k], list(col)).items():
                 add_numbers(col[x], numbers(text))
+            continue
+        if cur and named and any("@" in w for _, w in words[k]):
+            # "Email:", then each officer's address under the officer's name;
+            # the label and the addresses sometimes land on separate lines,
+            # so any line of the town's block carrying an address is read
+            col = {r["_x"]: r for r in cur}
+            for x, text in by_column(words[k], list(col)).items():
+                add_emails(col[x], emails(text))
             continue
         if cur and (head.startswith("term expires") or head.startswith("current term")):
             # "term expires 2028" names the year a term ends; "Current Term
@@ -957,12 +1093,13 @@ def marshall(f):
         # Under each name, in its own column: the address, the telephone, a
         # second telephone where the officer gives one, and the e-mail, down
         # to the next block. A column shifts a line when a cell above it
-        # wraps, so the numbers are read by column, not by line.
+        # wraps, so the numbers and the e-mail are read by column, not by line.
         col = {x: rec for (x, _), rec in zip(lines[k + 2], recs)}
         end = min([j for j in starts if j > k] + [len(lines)])
         for j in range(k + 3, end):
             for x, text in by_column(words[j], list(col)).items():
                 add_numbers(col[x], numbers(text))
+                add_emails(col[x], emails(text))
         towns[town_key(texts[0]).title()] = recs
     m = re.search(r"\b((?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, 20\d\d)\b",
                   pdf_text(data))
@@ -1006,6 +1143,10 @@ def pennington(f):
         if kind and under:
             for x, text in by_column(words[k], list(under)).items():
                 add_numbers(under[x], [kind.group(1) + " " + n for n in numbers(text)])
+        # and a row headed "email" carries each officer's address, the same way
+        if texts and texts[0].startswith("email") and under:
+            for x, text in by_column(words[k], list(under)).items():
+                add_emails(under[x], emails(text))
     return towns, "2025", [final]
 
 
@@ -1040,7 +1181,8 @@ def norman(f):
     lines, words = pdf_lines(data), pdf_word_rows(data)
     # Under each name, in its column: the end of term, the address, the
     # telephone ("C:", "H:" or "O:" before some; an "F:" fax is not read)
-    # and the e-mail, down to the next row of names.
+    # and the e-mail, down to the next row of names. The telephone and the
+    # e-mail are read; the address is not.
     towns, cur, header, last, under = {}, None, None, [], {}
     for k, cells in enumerate(lines):
         texts = [t for _, t in cells]
@@ -1077,6 +1219,7 @@ def norman(f):
             continue
         for x, text in by_column(words[k], list(under)).items():
             add_numbers(under[x], numbers(text, "before"))
+            add_emails(under[x], emails(text))
     m = re.search(r"Township Officers\s+(20\d\d)\b", pdf_text(data))
     return towns, (m.group(1) if m else None), [final]
 
@@ -1085,7 +1228,9 @@ def norman(f):
 def clay(f):
     # One table per township: a row of offices, a row of names, then "Term
     # Limit: 2027" under some of them (the year the term ends), then the
-    # officers' mailing addresses, which are not read.
+    # officers' mailing addresses, which are not read.  The e-mail link beside
+    # a table ("Email ... Township") is the town's own address, not an
+    # officer's, and is not read either.
     data, final = f.get("https://claycountymn.gov/277/Townships")
     page = soup(data)
     towns = {}
@@ -1109,8 +1254,8 @@ def clay(f):
 @county("Kanabec", 12)
 def kanabec(f):
     # One table of townships and cities together: town, first name, last
-    # name, position, a telephone, and an e-mail that is not read.  A place
-    # with a Mayor or Council row is a city and is left out whole.
+    # name, position, a telephone and an e-mail, both read.  A place with a
+    # Mayor or Council row is a city and is left out whole.
     data, final = f.get("https://www.kanabeccounty.org/community/township_information/index.php")
     page = soup(data)
     rows = []
@@ -1121,7 +1266,7 @@ def kanabec(f):
             rows.append(cells)
     cities = {c[0] for c in rows if re.match(r"^(?:Mayor|Council)", c[3])}
     towns = {}
-    for place, first, last, position, phone in ((c + [""])[:5] for c in rows):
+    for place, first, last, position, phone, email in ((c + ["", ""])[:6] for c in rows):
         if place in cities:
             continue
         hit = office_of(position)
@@ -1129,6 +1274,9 @@ def kanabec(f):
             continue
         rec = row(hit[0], hit[1], first + " " + last)
         add_numbers(rec, numbers(phone))
+        # the address as the cell shows it; a mailto link that sends mail
+        # somewhere else is caught by `settle_emails`
+        add_emails(rec, emails(email))
         towns.setdefault(town_key(place), []).append(rec)
     m = re.search(r"\b(20\d\d) TOWNSHIP & CITY OFFICERS", page.get_text(" "))
     return towns, (m.group(1) if m else None), [final]
@@ -1155,11 +1303,13 @@ def red_lake(f):
     # One sheet: township in the first column on a town's first row only,
     # with "B" or "March elections" notes under it; then office, name, a
     # telephone (most of them seven digits), the term as "2024-2027", an
-    # address and an e-mail.  Office, name, telephone and the term's last
-    # year are read.
+    # address and an e-mail under an "Email" heading.  Office, name,
+    # telephone, the term's last year and the e-mail are read; the address
+    # is not.
     data, final = f.get("https://www.redlakecounty.gov/Documents/Government/"
                         "Township%20Officers%202025.xlsx")
     rows = xlsx_rows(data)
+    mail = next((r.index(c) for r in rows for c in r if str(c).strip().lower() == "email"), None)
     towns, cur = {}, None
     for r in rows:
         place, office, name, phone, term = (str(c).strip() for c in (r + [""] * 5)[:5])
@@ -1172,6 +1322,8 @@ def red_lake(f):
         m = re.search(r"20[2-3]\d\s*-\s*(20[2-3]\d)", term)
         cur.append(row(hit[0], hit[1], name, m.group(1) if m else None))
         add_numbers(cur[-1], numbers(phone))
+        if mail is not None and mail < len(r):
+            add_emails(cur[-1], emails(r[mail]))
     title = " ".join(str(c) for r in rows[:3] for c in r)
     m = re.search(r"TOWNSHIP OFFICERS\s+(20\d\d)", title)
     return towns, (m.group(1) if m else None), [final]
@@ -1182,9 +1334,10 @@ def itasca(f):
     # One sheet: township on a town's first row, the town hall's address and
     # an "Upd. 1/27/26" note down the next column; then position, the date the
     # term ends ("Appt." for an appointed clerk), first and last name, a
-    # telephone, and an e-mail that is not read.
+    # telephone and an e-mail, both read; the town hall's address is not.
     data, final = f.get("https://www.itascacountymn.gov/DocumentCenter/View/12319/Township-Officials")
     rows = xlsx_rows(data)
+    mail = 7 if rows and len(rows[0]) > 7 and str(rows[0][7]).strip().lower() == "email" else None
     towns, cur, updated, key = {}, None, {}, None
     for r in rows[1:]:
         r = (r + [""] * 8)[:8]
@@ -1206,6 +1359,8 @@ def itasca(f):
         if name:
             cur.append(row(hit[0], hit[1], name, term))
             add_numbers(cur[-1], numbers(r[6]))
+            if mail is not None:
+                add_emails(cur[-1], emails(r[mail]))
     # Each town carries its own "Upd." date, so each town is dated by its own.
     return towns, updated, [final]
 
@@ -1218,8 +1373,10 @@ def polk(f):
     # first line; "November" / "Election" notes sit under it.  Under each
     # clerk's and treasurer's name, in the same column, come the address, the
     # telephone and the e-mail; a supervisor's telephone sits in the last
-    # column under that supervisor's address.  Only the telephones are read
-    # from those cells, with the "(c)", "©", "(h)" or "- Cell" printed after.
+    # column under that supervisor's address, and the supervisor's e-mail in
+    # the supervisor's own column under the name.  Only the telephones, with
+    # the "(c)", "©", "(h)" or "- Cell" printed after, and the e-mails are
+    # read from those cells; the addresses are not.
     data, final = f.get("https://www.co.polk.mn.us/DocumentCenter/View/3712/Township-Officers-2026")
     towns, cur, dial = {}, None, {}
 
@@ -1257,6 +1414,9 @@ def polk(f):
             dial[7] = cur[-1]
         for col, rec in dial.items():
             add_numbers(rec, numbers(cols[col], "after"))
+            # the supervisor's e-mail is under the name (column 5), not in
+            # the telephone's column
+            add_emails(rec, emails(cols[5 if col == 7 else col]))
     return towns, "2026", [final]
 
 
@@ -1264,11 +1424,13 @@ def polk(f):
 def meeker(f):
     # Each township is three supervisor lines ("2025-2028 A Name, Ch., then
     # the supervisor's address", with the supervisor's telephone in the
-    # PHONE column before it); the first carries the clerk and treasurer
-    # ("2026-2027 Name (phone)") and the second the town's name.  The name
-    # before the first comma, the seat letter, "Ch.", each term's last year
-    # and the telephones are read; the addresses are not.  The cities follow
-    # under a CITY header.
+    # PHONE column before it and the supervisor's e-mail after it); the first
+    # carries the clerk and treasurer ("2026-2027 Name (phone)") and the
+    # second the town's name, and the clerk's and treasurer's addresses and
+    # e-mails run down their own columns under them.  The name before the
+    # first comma, the seat letter, "Ch.", each term's last year, the
+    # telephones and the e-mails are read; the addresses are not.  The cities
+    # follow under a CITY header.
     data, final = f.get("https://www.meekercountymn.gov/DocumentCenter/View/8143/"
                         "Township--City-Officers-Listing-Feb-2-2026")
     # A supervisor cell starts with its term, its seat letter or both (one
@@ -1278,7 +1440,7 @@ def meeker(f):
                         r"([^,(]+(?:\([^)]*\)[^,]*)?),\s*(Ch\.)?")
     off_re = re.compile(r"^(?:\d{4}-(\d{4})|N/A) #?([A-Z][^()]+?)\s*\(\d{3}\)")
     town_re = re.compile(r"^(?:\d+ )?([A-Z][A-Z .]{2,}?)[*& ]*$")
-    towns, block = {}, None
+    towns, block, pending = {}, None, None
     for cells in pdf_lines(data):
         texts = []
         for _, t in cells:  # a term or "N/A" printed apart from its name
@@ -1297,6 +1459,7 @@ def meeker(f):
                 add_numbers(block[-1], numbers(t[m.end() - 5:]))
         if block is None:
             continue
+        sup = None
         for t in texts:
             m = town_re.match(t)
             if m and t is texts[0] and cells[0][0] < 40:
@@ -1308,6 +1471,22 @@ def meeker(f):
                 seat = (m.group(2) or m.group(3) or "").strip() or None
                 block.append(row(office, seat, nm, m.group(1)))
                 add_numbers(block[-1], numbers(cells_from(cells, 100, 180)))
+                sup = block[-1]
+        # The supervisor's e-mail ends the supervisor's cell or stands in the
+        # column after it (x 429). That column's line sits a point or two
+        # below the supervisor's, so it is sometimes read as a line of its
+        # own, directly under the supervisor's; it is that supervisor's when
+        # the supervisor's own line carried none.
+        found = emails(cells_from(cells, 180, 505))
+        if sup is not None:
+            add_emails(sup, found)
+            pending = None if found else sup
+        elif found and all(420 <= x < 510 for x, _ in cells):
+            add_emails(pending, found)
+            pending = None
+        # the clerk's and the treasurer's e-mails, in their own columns
+        add_emails(block[0], emails(cells_from(cells, 505, 680)))
+        add_emails(block[1], emails(cells_from(cells, 680, 860)))
     m = re.search(r"Last Updated\s+\w+\s+(\d{1,2}),\s*(20\d\d)", pdf_text(data))
     return towns, ("%s-02-%02d" % (m.group(2), int(m.group(1))) if m else None), [final]
 
@@ -1356,9 +1535,17 @@ def wadena(f):
 
 
 def page_lines(data):
+    """A page's visible text, one line per line it shows.  A link to an
+    e-mail address whose text is a word ("E-mail") shows the address it
+    sends to on a line of its own after that word, where the page prints
+    it."""
     page = soup(data)
     for t in page(["script", "style", "nav", "header", "footer"]):
         t.decompose()
+    for a in page.find_all("a", href=MAILTO_RE):
+        address = mailto_address(a["href"])
+        if address and "@" not in a.get_text(" "):
+            a.insert_after("\n%s\n" % address)
     return [re.sub(r"[ \t\xa0]+", " ", ln).strip() if not re.search(r"\s{2,}\S", ln.strip())
             else ln.strip() for ln in page.get_text("\n").splitlines() if ln.strip()]
 
@@ -1412,10 +1599,12 @@ def label_pairs(lines, term=False):
                     break
         out.append(row(hit[0], seat, name, year))
         add_numbers(out[-1], numbers(lines[i + 1][len(name):], "before"))
+        add_emails(out[-1], emails(lines[i + 1][len(name):]))
         for nxt in lines[i + 2:i + 7]:
             if office_cell(re.sub(r"^Township\s+", "", nxt)) or names_someone(nxt):
                 break
             add_numbers(out[-1], numbers(nxt, "before"))
+            add_emails(out[-1], emails(nxt))
     return out
 
 
@@ -1448,6 +1637,9 @@ def per_page(f, index_url, link_re, term=False):
 
 @county("Aitkin", 30)
 def aitkin(f):
+    # The town pages hide each e-mail address behind Cloudflare's e-mail
+    # protection, which this file does not decode, so no Aitkin officer
+    # carries one.
     towns, urls = per_page(f, "https://www.aitkincountymn.gov/towns/", r"/towns/towns-[\w-]+-twp\.php$")
     return towns, None, urls
 
@@ -1597,6 +1789,98 @@ def settle_numbers(towns, docs):
     return left
 
 
+def doc_emails(data):
+    """Every e-mail address a document prints, lower-cased, once for each
+    time it is printed.  In a page an address shown as a link's text is
+    counted once, not again for the link's target, and a link whose text is
+    a word ("E-mail") prints the address it sends to."""
+    if data[:4] == b"%PDF" or data[:2] == b"PK":
+        return [m.group(0).lower() for m in EMAIL_RE.finditer(doc_text(data))]
+    page = soup(data)
+    for t in page(["script", "style"]):
+        t.decompose()
+    out = [m.group(0).lower() for m in EMAIL_RE.finditer(page.get_text("\n"))]
+    for a in page.find_all("a", href=MAILTO_RE):
+        address = mailto_address(a["href"])
+        if address and "@" not in a.get_text(" "):
+            out.append(address)
+    return out
+
+
+def mail_disagreements(data):
+    """Every address a page shows as a link's text where the link sends mail
+    to a different address, and the address it sends to."""
+    if data[:4] == b"%PDF" or data[:2] == b"PK":
+        return set()
+    bad = set()
+    for a in soup(data).find_all("a", href=MAILTO_RE):
+        shown = [m.group(0).lower() for m in EMAIL_RE.finditer(a.get_text(" "))]
+        target = mailto_address(a["href"])
+        if shown and shown != [target]:
+            bad |= set(shown) | ({target} if target else set())
+    return bad
+
+
+def settle_emails(towns, docs):
+    """Give each record one `email` from the addresses its list prints
+    beside the officer, and return how many were left out and why.
+
+    Left out, the same way as a telephone: an address printed beside two or
+    more different people, or printed in the county's documents more often
+    than beside the officers who carry it (a town's or an office's mailbox),
+    since either belongs to an office rather than to the person; and every
+    address of an officer whose mail link sends to a different address from
+    the one it shows.  Left out as well, by what the address's own name says
+    (`mailbox_of`): the town's own mailbox, which is the town's general
+    address and not the officer's, and a mailbox named for a different
+    office from the one the officer holds, which is printed on the wrong
+    row.  A mailbox named for the officer's own office ("clerk@" beside the
+    clerk) is how the list says to reach that officer, and is kept.  Where a
+    list prints two addresses for one officer, the record keeps one: an
+    address on a government's own domain over any other, otherwise the first
+    the list prints."""
+    printed = collections.Counter()
+    bad = set()
+    for data in docs:
+        printed.update(doc_emails(data))
+        bad |= mail_disagreements(data)
+    people = collections.defaultdict(set)
+    attached = collections.Counter()
+    for recs in towns.values():
+        for rec in recs:
+            for e in rec.get("_emails", []):
+                people[e].add(re.sub(r"[^a-z]", "", rec["name"].lower()))
+                attached[e] += 1
+    shared = {e for e, names in people.items() if len(names) > 1}
+    elsewhere = {e for e in attached if printed[e] > attached[e]}
+    left = collections.Counter()
+    for town, recs in towns.items():
+        for rec in recs:
+            found = rec.pop("_emails", [])
+            if any(e in bad for e in found):
+                left["a mail link sends to another address"] += len(set(found))
+                continue
+            keep = []
+            for e in found:
+                if e in keep:
+                    continue
+                if e in shared:
+                    left["printed beside two or more people"] += 1
+                elif e in elsewhere:
+                    left["printed again away from the officer"] += 1
+                elif mailbox_of(e, town, rec["office"]) == "town":
+                    left["the town's own mailbox"] += 1
+                elif mailbox_of(e, town, rec["office"]) == "other office":
+                    left["named for another office"] += 1
+                else:
+                    keep.append(e)
+            if keep:
+                rec["email"] = ([e for e in keep if government_mailbox(e)] or keep)[0]
+                if len(keep) > 1:
+                    left["a second address for the same officer"] += len(keep) - 1
+    return left
+
+
 # ---------------------------------------------------------------- main
 
 def run_county(name, f):
@@ -1623,13 +1907,19 @@ def run_county(name, f):
         raise ValueError("%s: %d of %d records failed the name check" % (name, dropped, total))
     if len(towns) < floor:
         raise ValueError("%s: %d towns read, floor %d" % (name, len(towns), floor))
-    # Counts only: a number, like an address, is never printed in a log.
+    # Counts only: a number or an e-mail, like an address, is never printed
+    # in a log.
     left = settle_numbers(towns, f.docs)
+    left_mail = settle_emails(towns, f.docs)
     recs = [r for t in towns.values() for r in t]
     print("  %s: %d of %d officers carry a telephone, %d a second one; %s" % (
         name, sum(1 for r in recs if r.get("phone")), len(recs),
         sum(1 for r in recs if r.get("phonesExtra")),
         "; ".join("%d left out, %s" % (n, why) for why, n in sorted(left.items()))
+        or "none left out"), file=sys.stderr)
+    print("  %s: %d of %d officers carry an e-mail; %s" % (
+        name, sum(1 for r in recs if r.get("email")), len(recs),
+        "; ".join("%d left out, %s" % (n, why) for why, n in sorted(left_mail.items()))
         or "none left out"), file=sys.stderr)
     out = {"towns": towns, "asOf": as_of, "urls": urls}
     if isinstance(urls, dict):  # a county with a page per town

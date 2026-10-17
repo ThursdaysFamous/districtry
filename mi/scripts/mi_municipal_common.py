@@ -46,6 +46,10 @@ infer a ward from position on the page. `phonesExtra` is a list of further
 numbers the page prints for the same member after the one in `phone`, each
 with the page's own label where it gives one ("cell 810-555-0100"); the
 member's own line ships whosever it is (Adam's ruling of 2026-10-17).
+`email` is one address; a parser that moves off a city-domain filter takes it
+through `own_email`, so a personal address printed for that member alone
+ships (Adam's choice of 2026-10-17, "E-mails too") and one printed for two
+or more members, or elsewhere on the page, stays the office's.
 
 A parser RAISES ValueError when the page no longer has the shape it was written
 for. Returning fewer people is worse than raising, because the count gate would
@@ -114,6 +118,34 @@ def emails_in(fragment):
         if e not in out:
             out.append(e)
     return out
+
+
+def own_email(block, others, page, own_domains, never_domains=()):
+    """The one e-mail address a member's own block of a page gives for that
+    member, or None.
+
+    An address on one of the city's own domains (`own_domains`) is taken
+    first, as these parsers always took it. Otherwise, since Adam's choice of
+    2026-10-17 ("E-mails too"), the block's other address is taken, whosever
+    mailbox it is, when the block prints exactly one, no other member's block
+    (`others`) prints it, and the page prints it nowhere outside this block:
+    an address printed for two or more members, or the council's or the
+    city's own address printed elsewhere on the page, is the office's and not
+    the member's. An address on a domain in `never_domains` (a misspelt copy
+    of the city's own) is never taken, and never corrected."""
+    found = [e for e in emails_in(block) if e.rsplit("@", 1)[-1] not in never_domains]
+    mine = [e for e in found if e.rsplit("@", 1)[-1] in own_domains]
+    if mine:
+        return mine[0]
+    if len(found) != 1:
+        return None
+    address = found[0]
+    if any(address in emails_in(o) for o in others):
+        return None
+    outside = page.replace(block, " ", 1)
+    if address in emails_in(outside):
+        return None
+    return address
 
 
 def phone(raw):
@@ -190,7 +222,10 @@ def check_roster(unit, roster):
         seen.add(key)
         if not m.get("role"):
             raise ValueError("%r has no role" % name)
+        # One e-mail address alone. The message names the seat (the caller
+        # names the city), never the value.
         for e in [m.get("email")] if m.get("email") else []:
             if not re.match(r"^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", e):
-                raise ValueError("%r carries a malformed address %r" % (name, e))
+                raise ValueError("the %s's e-mail is not one address alone"
+                                 % (m.get("seat") or m.get("role")))
     return roster

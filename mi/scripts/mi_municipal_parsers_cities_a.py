@@ -12,7 +12,7 @@ import json
 import re
 from datetime import datetime, timezone
 
-from mi_municipal_common import txt, emails_in, phones_in, phone, member
+from mi_municipal_common import txt, emails_in, phones_in, phone, member, own_email
 
 
 def _section(h, start_pat, end_pat=None, unit=""):
@@ -297,11 +297,18 @@ def parse_flint(h, also):
     read 2026-10-17) as the bare number, since that label says nothing the
     number does not. A row whose tel: link and printed number disagree is not
     carried, nor a number printed for a second member or equal to the office
-    line."""
+    line.
+
+    The e-mail is the member's address on cityofflint.com, as it always was
+    (each of the nine articles printed one, read 2026-10-17). Where an article
+    prints none, `own_email` takes the one other address it prints, since
+    Adam's choice of 2026-10-17 ("E-mails too"), unless another member's
+    article or the rest of the page prints it too."""
     sec = _section(h, r'<section class="content-block block-directory[^"]*" id="council-members">',
                    r"</section>", "Flint")
     members, own_rows, offices = [], [], set()
-    for a in re.findall(r'<article class="directory-item.*?</article>', sec, re.S):
+    articles = re.findall(r'<article class="directory-item.*?</article>', sec, re.S)
+    for a in articles:
         hd = re.search(r"<header>\s*<h3[^>]*>(.*?)</h3>(.*?)<div>", a, re.S)
         if not hd:
             raise ValueError("Flint: directory item without a name heading")
@@ -324,9 +331,9 @@ def parse_flint(h, also):
                 if dial != re.sub(r"\D", "", shown):
                     continue
                 own.append(("cell " if label == "Cell" else "") + shown)
-        em = [e for e in emails_in(a) if e.endswith("@cityofflint.com")]
+        em = own_email(a, [o for o in articles if o is not a], h, ("cityofflint.com",))
         members.append(member(hd.group(1), "Council Member", "Ward %d" % _ORDINAL[w.group(1)],
-                              office, em[0] if em else None))
+                              office, em))
         own_rows.append(own)
     digits = [re.sub(r"\D", "", n) for own in own_rows for n in own]
     for rec, own in zip(members, own_rows):

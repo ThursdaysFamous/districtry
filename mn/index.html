@@ -15090,9 +15090,11 @@ function initMinnesotaExplorer() {
   // towns no election results file covers (the towns that vote in March),
   // keyed by GEOID; every town carries the list it came from and the day it
   // was read (mn/scripts/build_mn_county_town_officers.py). Names, offices,
-  // terms and each officer's telephone as the list prints it (`phone`, and
-  // `phonesExtra` for a second number, each with the list's own label); the
-  // home address and the e-mail the lists also print are never read.
+  // terms, each officer's telephone as the list prints it (`phone`, and
+  // `phonesExtra` for a second number, each with the list's own label) and,
+  // since Adam's choice of 2026-10-17 ("E-mails too"), the e-mail address the
+  // list prints beside that officer alone (`email`); the home address the
+  // lists also print is never read.
   var loadMnCountyTownOfficers = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-county-town-officers.json", {}, 2);
   });
@@ -15210,7 +15212,8 @@ function initMinnesotaExplorer() {
             // as the county's list prints it, a seven-digit number too:
             // an area code is never guessed
             phone: o.phone ? String(o.phone) : null,
-            phonesExtra: (o.phonesExtra || []).map(String)
+            phonesExtra: (o.phonesExtra || []).map(String),
+            email: o.email ? String(o.email) : null
           };
         })));
         var dated = mnListDate(list.asOf), read = mnListDate(list.read);
