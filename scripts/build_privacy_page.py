@@ -384,15 +384,28 @@ def measure_address_list(src, name):
 # place shared into the app opened that app, and nothing about the place,
 # which travels in the address hash and reaches analytics only as the
 # rounded `select` any selection sends.
+# `map-link-read/` joined on 2026-10-17, to count how often places are shared
+# or pasted as Google Maps and Apple Maps links and whether the search found
+# them: `map-link-read/<tag>/<source>/<form>/<via>/<outcome>`, sent once per
+# link the search box reads (engine geocoder-search countLinkRead). It names
+# the app, google or apple, whether the link was short, whether it came in
+# the page's address or was pasted, and what the reader was shown (a
+# position, an address, a street, another state's app, nothing, or why the
+# short link could not be read). It never carries the link, the place's
+# name, its address or its position. The front page sends the same event
+# with `front` for the tag (ROOT_EVENTS).
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
+# What the front page (the one untagged surface) sends: only the map-link
+# count above, from its address box. Gated, because the page says so.
+ROOT_EVENTS = ["map-link-read/front/"]
 
 
 def event_phrase(event, apps):
@@ -807,6 +820,11 @@ def gate_fleet_claims(apps):
     maps = [a for a in apps if a["has_map"]]
     if not maps:
         fail("no app measured as carrying a map — the measurement is broken")
+    for a in apps:
+        if not a["has_map"] and a["events"] != ROOT_EVENTS:
+            fail("%s sends analytics events %s, and this page says the front page "
+                 "sends %s and nothing else. Change the page's sentence and "
+                 "ROOT_EVENTS together." % (a["file"], a["events"], ROOT_EVENTS))
     for a in maps:
         if a["events"] != EXPECTED_EVENTS:
             fail("%s sends analytics events %s, not the fleet set %s. The page "
@@ -1090,8 +1108,8 @@ def render_recipient_rows(apps):
             "GoatCounter", "analytics", "https://www.goatcounter.com/help/privacy",
             "A page count and a few named events. See "
             '<a href="#analytics">Analytics, precisely</a>.',
-            "Every visit to any page. The named events come from an app\u2019s map "
-            "only.", counter_who(), once=True))
+            "Every visit to any page. The named events come from an app\u2019s map, "
+            "and one from the front page\u2019s address box.", counter_who(), once=True))
     ga_users = [a["name"] for a in apps if a["ga"]]
     if ga_users:
         rows.append(recipient_row(
@@ -1287,9 +1305,15 @@ def render_analytics_section(apps):
         'rel="noopener">GoatCounter</a> is cookieless and does not build a profile across '
         "sites. %s. Besides the "
         "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
-        "coordinates, <strong>rounded to %d decimal places</strong>. A page that is not an "
-        "app — a county list, a question page, this one — sends the page view and nothing "
-        "else. <strong>Nothing you type is ever sent to it.</strong></p>"
+        "coordinates, <strong>rounded to %d decimal places</strong>. When the search box reads a "
+        "Google Maps or Apple Maps link, map-link-read/ says which app it was in, which of the "
+        "two the link came from, whether it was a short link, whether it was pasted or "
+        "arrived in the page\u2019s address (as a place shared into the installed app does), "
+        "and what the search showed; it never carries the link, the place or its position. "
+        "The front page sends that one event, as map-link-read/front/, when its address box "
+        "reads such a link. Any other page that is not an app — a county list, a question "
+        "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
+        "ever sent to it.</strong></p>"
         % (where,
            esc(", ".join(event_phrase(e, apps) for e in EXPECTED_EVENTS)),
            esc(" and ".join(EXPECTED_COORD_EVENTS)), COORD_DECIMALS))
