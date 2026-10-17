@@ -716,8 +716,13 @@ def cf_email(fragment, label, domain=None):
     THE SCRAMBLING IS NOT AN ACCESS CONTROL (Adam, 2026-10-09): the page hands
     the key to every visitor inside the same bytes, so decoding it reads the
     page as published. Two tokens decoding to different addresses, or a token
-    that does not decode to an address (on DOMAIN, where the city has one),
-    fails — a wrong address on a card is worse than none.
+    that does not decode to an address (on DOMAIN, where a caller passes one),
+    fails — a wrong address on a card is worse than none. No caller passes a
+    DOMAIN since 2026-10-17: Green Bay's did, which would have stopped the
+    build on a member's personal address, and Adam chose that day that a
+    personal address a government page prints beside an official is shown
+    ("E-mails too"). The shape test still refuses a token that does
+    not decode to an address.
     """
     got = set()
     for t in CF_TOKEN.findall(fragment):
@@ -953,7 +958,7 @@ def scrape_green_bay():
         if em:
             entry["email"] = em.group(1).strip()
         else:
-            entry.update(cf_email(li, "green bay D%d" % n, "greenbaywi.gov"))
+            entry.update(cf_email(li, "green bay D%d" % n))
         ph = re.search(r'href="tel:([^",]+)', li)
         if ph:
             entry["phone"] = ph.group(1).strip()
