@@ -2,10 +2,12 @@
 """Mirror the Census TIGERweb layers the apps fetch live into tile archives
 (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 6).
 
-Sixteen polygon layers across four apps download a whole state from
-tigerweb.geo.census.gov the first time they are switched on — Illinois's
-county subdivisions alone are 14.5 MB — and ask that server about the reader's
-point on every first click. Phase 5 put every layer whose shapes an app SHIPS
+Forty-eight polygon layers across thirteen apps — sixteen in four apps at
+phase 6a, thirty-two in the nine newest at phase 6d (2026-10-17) — download a
+whole state from tigerweb.geo.census.gov the first time they are switched on —
+Illinois's county subdivisions alone are 14.5 MB — and ask that server about
+the reader's point on every first click; the ZIP layers (ZIP_MIRRORS, phases
+6b and 6d) do the same by bounding box. Phase 5 put every layer whose shapes an app SHIPS
 on vector tiles; these ship nothing, so they were left. This mirrors them:
 it fetches each set exactly as the app does, builds a tile archive through
 scripts/build_vector_tiles.py's own build and gate, commits the archive, and
@@ -75,7 +77,9 @@ ARCGIS_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "arcgis-loader.tx
 # esriRingsToParts assigns a hole to its shell with pointInRing, which lives here
 PIP_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "point-in-polygon.txt")
 SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
-STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06"}
+STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06",
+              "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
+              "tn": "47", "ar": "05", "ms": "28"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -115,6 +119,38 @@ MIRRORS = [
     ("wi", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
     ("wi", "school-district-secondary", "School", 1, "GEOID,NAME,STATE"),
     ("wi", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
+    ("mn", "school-district-unified", "School", 0, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("mn", "school-district-elementary", "School", 2, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("mn", "school-district-secondary", "School", 1, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("mn", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC"),
+    ("mn", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
+    ("ky", "school-district-unified", "School", 0, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ky", "school-district-elementary", "School", 2, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ky", "school-district-secondary", "School", 1, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ky", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ky", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
+    ("in", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC"),
+    ("in", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
+    ("in", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nc", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC"),
+    ("nc", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("nc", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ok", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ok", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ok", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("ok", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
+    ("sc", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("sc", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("sc", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("tn", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("tn", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("tn", "school-district-unified", "School", 0, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("tn", "school-district-elementary", "School", 2, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("tn", "school-district-secondary", "School", 1, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ar", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ar", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("ms", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ms", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -141,6 +177,14 @@ ZIP_MIRRORS = [
     ("wi", "zip-code", "WI_BBOX_ENVELOPE", (-93.09, 42.29, -86.04, 47.51)),
     ("ny", "nys-zip-code", "NY_ZCTA_ENVELOPE", (-79.77, 40.47, -71.77, 45.02)),
     ("ca", "zip-code", "SF_BBOX_ENVELOPE", (-122.62, 37.58, -122.28, 37.96)),
+    ("mn", "zip-code", "MN_BBOX_ENVELOPE", (-97.30, 43.44, -89.43, 49.44)),
+    ("in", "zip-code", "IN_BBOX_ENVELOPE", (-88.10, 37.77, -84.78, 41.77)),
+    ("nc", "zip-code", "NC_BBOX_ENVELOPE", (-84.50, 33.60, -75.10, 36.75)),
+    ("ok", "zip-code", "OK_BBOX_ENVELOPE", (-103.10, 33.50, -94.30, 37.10)),
+    ("sc", "zip-code", "SC_BBOX_ENVELOPE", (-83.45, 31.90, -78.40, 35.30)),
+    ("tn", "zip-code", "TN_BBOX_ENVELOPE", (-90.40, 34.90, -81.55, 36.75)),
+    ("ar", "zip-code", "AR_BBOX_ENVELOPE", (-94.70, 32.95, -89.55, 36.55)),
+    ("ms", "zip-code", "MS_BBOX_ENVELOPE", (-91.75, 30.05, -88.00, 35.10)),
 ]
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250
@@ -153,16 +197,24 @@ PAGE_SIZE = 250
 # host) by more than this many square degrees, about 100 m² at these latitudes:
 # a ZCTA that merely touches the state line shares an edge, not ground. What it
 # costs is stated rather than implied: a reader who clicks OUTSIDE the state
-# gets no ZIP card where the live layer answered one, and each app's emptyNote
-# says so. THE FILTER changes no answer inside the state (measured 2026-09-27:
-# every dropped ZCTA that touches the state holds 0.00 m2 of it). FULL DETAIL,
-# the other half of the same change, DOES: the app's own loader asks for a
-# maxAllowableOffset=0.0005 simplification and this archive is the Census's own
-# drawing, so ground near an edge moves to the ZCTA the Census puts it in.
-# Measured that day around Chicago, 0.49% of 3,514 km2 (218 ZCTAs) and 0.71% of
-# 1,426 km2 (140 ZCTAs), the share depending on the box; every change is toward
-# the Census's edges, and it is largest for small ZCTAs, where an edge's move is
-# a bigger share of the whole (5.6% of 60208's area in the second box).
+# gets no ZIP card where the live layer answered one — and since 2026-09-30
+# every ZIP layer mirrored here but San Francisco's hides outside its state
+# anyway, through the app's coverage test against its own state outline, so the
+# archive and the live loader agree there (San Francisco's is ungated on
+# purpose: its box, the city and the inner Bay, reaches no other state). THE
+# FILTER changes no answer inside the state (measured 2026-09-27: every dropped
+# ZCTA that touches the state holds 0.00 m2 of it; measured again 2026-10-17 for
+# the eight phase-6d layers, where 87, 75, 103, 116, 64, 110, 96 and 68 dropped
+# ZCTAs touch Minnesota, Indiana, North Carolina, Oklahoma, South Carolina,
+# Tennessee, Arkansas and Mississippi and none holds more than 0.0000 m2 of it).
+# FULL DETAIL, the other half of the same change, DOES: the app's own loader
+# asks for a maxAllowableOffset=0.0005 simplification and this archive is the
+# Census's own drawing, so ground near an edge moves to the ZCTA the Census puts
+# it in. Measured that day around Chicago, 0.49% of 3,514 km2 (218 ZCTAs) and
+# 0.71% of 1,426 km2 (140 ZCTAs), the share depending on the box; every change
+# is toward the Census's edges, and it is largest for small ZCTAs, where an
+# edge's move is a bigger share of the whole (5.6% of 60208's area in the second
+# box).
 STATE_OVERLAP_MIN = 1e-8
 
 

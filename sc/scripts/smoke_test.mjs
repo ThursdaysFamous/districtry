@@ -775,6 +775,11 @@ try {
   //    tigerweb.geo.census.gov, with the same query answering 200 to curl
   //    through the agent proxy in the same minute).
   //
+  //    SINCE 2026-10-17 THESE LAYERS ARE ANSWERED FROM SAME-ORIGIN TILE
+  //    ARCHIVES, and the stubs stay anyway: several cases below exist in no
+  //    archive (an affix no table carries, an inactive municipality), so
+  //    each case refuses its layer's archive and the stub decides the card.
+  //
   //    WHAT IS ACTUALLY WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of
   //    it is exercised by a live fetch that happens to work. Three claims, each
   //    wrong in a way a reader would see:
@@ -905,10 +910,12 @@ try {
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
-        // Both the point query and the statewide overlay download go to the
-        // same service path, so one route answers both with the same feature —
-        // which also proves the card comes from the POINT query rather than
-        // from the statewide set: the app renders before that finishes.
+        // The layer is drawn and answered from a tile archive since 2026-10-17,
+        // so the archive is refused here: the card then falls back to the
+        // census loader, whose point query and whole-set download go to the
+        // same service path, and this one route answers either with the same
+        // feature (the archive-failure path il's smoke check 2d also holds).
+        await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
       });
@@ -963,6 +970,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("29201") }));
       });
@@ -977,6 +988,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("30817") }));
       });

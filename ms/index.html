@@ -9637,10 +9637,10 @@ function initMississippiExplorer() {
     "ms-senate",         // 52 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 82 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ms-house",          // 122 House districts — smaller on average than a county, larger than a school district
-    "school-district-unified", // 137 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
+    "school-district-unified", // 137 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
     "county-supervisor", // 410 supervisor districts statewide, five per county, about 296 km2 of land on average against 887 km2 for a school district; drawn only in the counties whose current lines are confirmed
-    "zip-code",          // 827 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Mississippi
-    "municipality",      // 300 incorporated places, live from TIGERweb
+    "zip-code",          // 428 ZIP Code Tabulation Areas overlapping Mississippi, of the 827 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Mississippi
+    "municipality",      // 300 incorporated places, from TIGERweb, drawn from a mirrored tile archive
     "tribal-government", // Tribal land — Mississippi has 2 pieces held by one nation, the Mississippi Choctaw Reservation (123.468 km², in 56 separate parts, 77.1 km² of it in Neshoba County) and its off-reservation trust land (16.396 km² in Mississippi), MEASURED by scripts/build_tribal_areas.py on 2026-10-15. Ranked after municipalities and before the point layers, as South Carolina's and Indiana's are. Its parts are small — the reservation's 56 run from 51.6 km² down to under 0.01 km² and the trust land's 29 from 3.55 km² down — so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13575,8 +13575,17 @@ function initMississippiExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE TWO LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14196,6 +14205,7 @@ function initMississippiExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City, Town or Village",
     // the honest words for "outside every incorporated place in Mississippi",
@@ -14404,6 +14414,7 @@ function initMississippiExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
     loader: loadSchoolDistrictsUnified,
@@ -14433,10 +14444,12 @@ function initMississippiExplorer() {
    * the exact trap loadTigerLayer's own guard exists for.
    *
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
-   * THAT: the envelope returns 827 ZCTAs (measured 2026-10-15) and
-   * necessarily reaches into Louisiana, Arkansas, Tennessee and Alabama.
-   * The card answers from a point query, and the coverage test below hides
-   * the layer outside the state.
+   * THAT: the envelope returns 827 ZCTAs (measured 2026-10-15) and necessarily
+   * reaches into Louisiana, Arkansas, Tennessee and Alabama. Since 2026-10-17
+   * the card and the overlay read a tile archive that keeps only the ZCTAs
+   * overlapping Mississippi, so the neighbours appear only where the whole set
+   * is drawn (on the raster basemap, or after the archive fails to load), and
+   * the coverage test below hides the layer outside the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -14495,6 +14508,7 @@ function initMississippiExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

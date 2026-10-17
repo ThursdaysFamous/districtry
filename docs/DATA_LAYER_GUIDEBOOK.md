@@ -5180,6 +5180,17 @@ v1.0.6) · **CountyDispatch** `registerCountyLayer` (CHI fork-level dispatcher: 
 concept layer holding a per-county entry table — see
 `docs/EXPANSION_GUIDE.md` Part 2; adding a county is a table entry, not a layer).
 
+**A cell below that says live TIGERweb describes the whole set, not what the card reads** (added
+2026-10-17). Every layer `tiger-mirror.json` lists is drawn and answered from a tile archive
+committed under its app's `data/app/tiles/` and built by `scripts/mirror_tiger_tiles.py`:
+Illinois's, Iowa's, Michigan's and Wisconsin's census layers and the six older apps' ZIP layers
+since 2026-09-27, and the nine newest apps' census layers since 2026-10-17. On 2026-10-17 that
+is every cell here that says live TIGERweb. The whole set is still fetched from TIGERweb wherever
+an app needs all of it, such as for a comparison, a pinned district or the raster basemap, so "no
+committed `data/app` file" and "a vintage roll reaches it on its own" are true of that set only:
+a new census vintage reaches the card and the tiled map through the weekly pull request
+`update-tiger-tiles.yml` opens.
+
 Fleet totals: **Chicago 41 · New York 39 · SF 16 · Wisconsin 32 · Iowa 21 · Michigan 19** layers.
 
 ---

@@ -315,7 +315,7 @@
         "answers": "The civil township, or incorporated-city subdivision record, covering the point — and its type.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file)",
+            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
@@ -333,7 +333,7 @@
         "answers": "The incorporated city covering the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file)",
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
@@ -429,7 +429,7 @@
         "answers": "The ZIP Code Tabulation Area (ZCTA) covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — PUMA/TAD/TAZ/UGA/ZCTA, layer 11, queried live by an Iowa bounding envelope (ZCTAs cross state lines, so there is no STATE field to filter on)",
+            "label": "U.S. Census TIGERweb — PUMA/TAD/TAZ/UGA/ZCTA, layer 11, fetched by an Iowa bounding envelope, copied into a tile archive served from this site, re-fetched from the Census weekly (ZCTAs cross state lines, so there is no STATE field to filter on)",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
