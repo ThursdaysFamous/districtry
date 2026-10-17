@@ -4387,7 +4387,9 @@ function initNycExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8328,6 +8330,21 @@ function initNycExplorer() {
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a house number ----------
+   * Digits with an optional letter or a hyphenated second part ("2668",
+   * "123A", "89-11" in Queens), or a Wisconsin grid number: a direction and
+   * digits, once or twice ("N1234", "W123N4567"), which rural Wisconsin and
+   * the counties around Milwaukee use for every address. Photon holds them
+   * as written: asked on 2026-10-16 for Devil's Lake State Park's address,
+   * S5975 Park Rd in Baraboo, and for a two-part number in Menomonee Falls,
+   * it answered both numbers. Until that day only digits were read here, so
+   * a place shared with a grid address had no address to fall back to, and
+   * an answer at one could not count as carrying its number. A grid
+   * number's digits run to three or more, so a place named "N2 Bar" is
+   * still a name. Read with the "i" flag. */
+  var HOUSE_NUMBER = "(?:\\d+[a-z]?(?:-\\d+)?|[nsew]\\d+[nsew]\\d{3,}[a-z]?|[nsew]\\d{3,}[a-z]?)";
+  var OPENS_WITH_ADDRESS = new RegExp("^\\s*" + HOUSE_NUMBER + "\\s+\\S", "i");
+
   /* ---------- a place's name before its address ----------
    * A Google Maps link shared from the Android app carries no position. It
    * names the place as one string, its name and then its address
@@ -8337,12 +8354,13 @@ function initNycExplorer() {
    * Lodge string, though it holds the lodge by name. So when text a map link
    * carried matches nothing whole, the app's search box and the front
    * door's both try the address alone. Returns null unless the text opens
-   * with words and a later part, after a comma, opens with a house number. */
+   * with a name (not itself an address) and a later part, after a comma,
+   * opens with a house number. */
   function addressAfterName(q) {
     var parts = String(q).split(",");
-    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    if (parts.length < 2 || OPENS_WITH_ADDRESS.test(parts[0])) return null;
     for (var i = 1; i < parts.length; i++) {
-      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+      if (OPENS_WITH_ADDRESS.test(parts[i])) return parts.slice(i).join(",").trim();
     }
     return null;
   }
@@ -8357,7 +8375,7 @@ function initNycExplorer() {
    * in the town of Oglesby, about 6 km from the lodge. A single such answer
    * would be selected as the place that was shared. */
   function labelCarriesNumber(label, address) {
-    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    var m = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s", "i").exec(String(address || ""));
     if (!m) return false;
     return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
   }
@@ -8428,7 +8446,7 @@ function initNycExplorer() {
    * because West and East Madison Street are miles apart. */
   function addressParts(address) {
     var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
-    var m = /^(\d+[a-z]?(?:-\d+)?)\s+(.+)$/i.exec(parts[0] || "");
+    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(parts[0] || "");
     if (!m || parts.length < 2) return null;
     // a unit at the end of the street line is not part of the street's name
     var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
@@ -8468,11 +8486,77 @@ function initNycExplorer() {
     String(label || "").split(",").forEach(function (part) {
       var low = part.trim().toLowerCase();
       if (low && (low === town || low === a.zip)) inTown = true;
-      var got = streetNameKey(part.trim().replace(/^\d+[a-z]?(?:-\d+)?\s+/i, ""));
+      var got = streetNameKey(part.trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
       if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
           (!got.post || !want.post || got.post === want.post)) onStreet = true;
     });
     return onStreet && inTown;
+  }
+
+  /* ---------- the state a place's address names ----------
+   * The installed app's launcher opens a shared place in the state the
+   * reader used last, and until 2026-10-16 that app searched for it there:
+   * a place in Wisconsin shared from a phone whose last map was Illinois's
+   * was looked for in Illinois, where a search bounded to the state either
+   * found nothing and offered a row to tap for Wisconsin, or found an
+   * Illinois street of the same name. An address names its own state, so
+   * the text a map link carries is read for it first (ENGINE
+   * geocoder-search, and the front door's address box): a postal code at
+   * the end, after a comma, in capitals or before a ZIP code ("Baraboo, WI
+   * 53913", "Peoria, IL"), or a state's name there ("Baraboo, Wisconsin").
+   * Only the end is read, so "Wisconsin Dells Inn, 1 Main St, Rockford, IL
+   * 61101" is in Illinois. Returns the code in lower case, which is also
+   * the tag of the app for that state, or "" when the text names none. */
+  var US_STATE_NAMES = {
+    al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
+    co: "Colorado", ct: "Connecticut", de: "Delaware", dc: "District of Columbia",
+    fl: "Florida", ga: "Georgia", hi: "Hawaii", id: "Idaho", il: "Illinois",
+    "in": "Indiana", ia: "Iowa", ks: "Kansas", ky: "Kentucky", la: "Louisiana",
+    me: "Maine", md: "Maryland", ma: "Massachusetts", mi: "Michigan", mn: "Minnesota",
+    ms: "Mississippi", mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada",
+    nh: "New Hampshire", nj: "New Jersey", nm: "New Mexico", ny: "New York",
+    nc: "North Carolina", nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon",
+    pa: "Pennsylvania", ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota",
+    tn: "Tennessee", tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia",
+    wa: "Washington", wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming"
+  };
+  function addressStateTag(text) {
+    // a country written after the address ("…, WI 53913, USA") is not a state
+    var t = String(text || "").trim()
+      .replace(/(?:,\s*|\s+)(?:usa|u\.s\.a\.?|u\.s\.?|us|united states(?: of america)?)\s*$/i, "").trim();
+    var m = /,\s*([a-z]{2})(\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase()) && (m[2] || /^[A-Z]{2}$/.test(m[1]))) {
+      return m[1].toLowerCase();
+    }
+    m = /,\s*([a-z][a-z .]*?)(?:\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m) {
+      var name = m[1].replace(/\s+/g, " ").toLowerCase();
+      for (var k in US_STATE_NAMES) {
+        if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
+      }
+    }
+    return "";
+  }
+  // A state's name as it reads in a sentence: "in Ohio", "in the District
+  // of Columbia".
+  function stateInSentence(tag) {
+    return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
+  }
+  /* The link handed to another app for a place it should search: the text
+   * rebuilt as a link of the kind it came in, which that app's parseMapLink
+   * reads back as the same text from the same maker, so its search treats it
+   * as a link's text (the address alone, the street, the name), not as
+   * typing, and the short link is not looked up a second time. Spaces are
+   * written "+" and commas as they are, the way the makers write their own
+   * links, so it reads as words in the search box it lands in; punctuation
+   * at the very end is written in % form, since mapLinkUrl drops it from a
+   * link as the end of a sentence. */
+  function mapLinkForText(link) {
+    var q = encodeURIComponent(link.text).replace(/%20/g, "+").replace(/%2C/gi, ",")
+      .replace(/[.,;:!?)\]]+$/, function (tail) {
+        return tail.replace(/[\s\S]/g, function (ch) { return "%" + ch.charCodeAt(0).toString(16).toUpperCase(); });
+      });
+    return (link.source === "apple" ? "https://maps.apple.com/?q=" : "https://www.google.com/maps?q=") + q;
   }
 
   /* A SHORT LINK holds no position: only Google or Apple knows where it
@@ -8668,7 +8752,7 @@ function initNycExplorer() {
    * row that hands off to that fork with the address pre-selected via its
    * #point= permalink. Only runs after a zero-result home search, so the
    * extra request never fires for normal in-city typing. */
-  function buildSiblingResultRow(metro, r) {
+  function siblingRow(metro, label, go) {
     var li = document.createElement("li");
     li.className = "sibling-result";
     var btn = document.createElement("button");
@@ -8676,7 +8760,7 @@ function initNycExplorer() {
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + r.display_name;
+    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";
@@ -8685,11 +8769,68 @@ function initNycExplorer() {
     btn.addEventListener("click", function () {
       clearTimeout(debounceTimer);
       if (inFlightController) inFlightController.abort();
-      trackEvent("metro-portal-go/" + metro.id, "search");
-      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+      go();
     });
     li.appendChild(btn);
     return li;
+  }
+  function buildSiblingResultRow(metro, r) {
+    return siblingRow(metro, r.display_name, function () {
+      trackEvent("metro-portal-go/" + metro.id, "search");
+      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+    });
+  }
+
+  /* ---------- a link to a place in another state ----------
+   * A link whose text names another state in its address (ENGINE map-link
+   * addressStateTag) is that state's to search: this app's search is bounded
+   * to its own state, so it would find nothing there, or a street of the same
+   * name here. It draws one row, which opens that state's app with the link
+   * as #q=, where the search reads it as a link and tries the address alone,
+   * the street and the name as it would here; #q= follows the row
+   * (prefillGeocodeSearch), so a place shared into the installed app opens in
+   * its own state whichever state the launcher chose. A state with no app is
+   * named, and nothing is searched.
+   *
+   * ONLY A WHOLE STATE'S APP. San Francisco's app carries California's tag
+   * and answers for one city, so an address in California does not say the
+   * place is in it: such a link is searched here as before, and the sibling
+   * lookup decides by the place's position. It returns false then, and true
+   * when it has answered. */
+  function metroForTag(tag) {
+    for (var i = 0; i < METRO_EXPLORERS.length; i++) {
+      var m = METRO_EXPLORERS[i], path = /\/([a-z]{2})\/?$/.exec(m.url || "");
+      if (m.id !== THIS_METRO && path && path[1] === tag) return m;
+    }
+    return null;
+  }
+  function showLinkElsewhere(link, tag) {
+    var metro = metroForTag(tag);
+    if (metro && metro.label !== US_STATE_NAMES[tag]) return false;
+    var maker = link.source === "apple" ? "Apple Maps" : "Google Maps";
+    if (inFlightController) inFlightController.abort();
+    clearResultRows(true);
+    clearResultRows(false);
+    if (!metro) {
+      geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
+        ", which districtry doesn't cover yet.";
+      geoStatus.className = "geo-status err";
+      return true;
+    }
+    var row = siblingRow(metro, link.text, function () {
+      if (metroHandedOff) return;
+      metroHandedOff = true;
+      geoStatus.textContent = "Opening " + siblingDisplayName(metro) + "\u2026";
+      geoStatus.className = "geo-status";
+      trackEvent("metro-portal-go/" + metro.id, "map-link");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(mapLinkForText(link));
+    });
+    row.className += " map-link-away";
+    geoResultsList.appendChild(row);
+    geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
+    geoStatus.className = "geo-status";
+    return true;
   }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
@@ -9294,6 +9435,8 @@ function initNycExplorer() {
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
+    var tag = fromLink ? addressStateTag(q) : "";
+    if (tag && tag !== METRO_BRAND.instanceTag && showLinkElsewhere(fromLink, tag)) return Promise.resolve();
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
       renderDistrictSection(found);
@@ -9358,7 +9501,11 @@ function initNycExplorer() {
         keepStreet(results);
         results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
       }
-      if (results && results.length) return renderGeocodeResults(results);
+      if (results && results.length) {
+        renderGeocodeResults(results);
+        if (bare) markLinkPlace(name, bare);
+        return;
+      }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
@@ -9387,6 +9534,35 @@ function initNycExplorer() {
   function searchEverywhere(text) {
     inFlightController = new AbortController();
     return geocodeUnbounded(text, inFlightController.signal);
+  }
+
+  /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
+   * name and address can answer the place and others beside it: on
+   * 2026-10-16 Photon, asked for a Wisconsin state park's name and address,
+   * answered three places, the park first. An answer whose label opens with
+   * the link's name, carries its house number and is on its street in its
+   * town (labelCarriesNumber, labelOnStreet, ENGINE map-link) is the place
+   * itself, so its row is marked, and #q= selects it when it is the only one
+   * (prefillGeocodeSearch). A name alone is not enough: a chain's stores
+   * share one. */
+  function markLinkPlace(name, bare) {
+    var rows = geoResultsList.querySelectorAll("li");
+    for (var k = 0; k < rows.length; k++) {
+      if (rows[k].className) continue; // the address rows just drawn carry no class
+      var label = rows[k].textContent;
+      if (samePlaceName(label.split(",")[0], name) && labelCarriesNumber(label, bare) &&
+          labelOnStreet(label, bare)) rows[k].className = "link-place";
+    }
+  }
+  // "Devil’s Lake" and "Devil's Lake", "A & B" and "A and B", "Café" and
+  // "Cafe": one name
+  function samePlaceName(a, b) {
+    function key(t) {
+      t = String(t || "");
+      if (t.normalize) t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return t.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
+    }
+    return !!key(a) && key(a) === key(b);
   }
 
   /* Places a link's name found. Marked so that #q= never selects one for the
@@ -9487,7 +9663,13 @@ function initNycExplorer() {
    * officeholder, so the list stays up and the reader picks. A sibling-metro
    * row is never auto-clicked — that button navigates to another instance —
    * and neither is a place found by a shared link's name alone
-   * (listByName), which may be another place of the same name. */
+   * (listByName), which may be another place of the same name. Two
+   * exceptions: among several answers to a link, the one that is the place
+   * the link names (markLinkPlace) is selected when it is the only such
+   * one; and the row a link to a place in another state draws
+   * (showLinkElsewhere) is followed, because the address itself says which
+   * state's app it belongs to, so a place shared into the installed app
+   * opens in its own state. */
   function prefillGeocodeSearch(q) {
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
@@ -9495,7 +9677,11 @@ function initNycExplorer() {
     reengageSearchShell();
     return runGeocodeSearch(q).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
+      var place = geoResultsList.querySelectorAll("li.link-place > button");
+      var away = geoResultsList.querySelectorAll("li.map-link-away > button");
       if (own.length === 1) own[0].click();
+      else if (place.length === 1) place[0].click();
+      else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
       if (err.name === "AbortError") return;
       geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";

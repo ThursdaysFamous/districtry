@@ -1,0 +1,4 @@
+# From the Arkansas Judiciary's circuit courts page,
+# https://arcourts.gov/courts/circuit-courts, read 2026-10-16 with this project's own client, districtry/1.0 (+https://districtry.com/ar/), after reading robots.txt,
+# which permits the path. Page: 87195 bytes, SHA-256 7272672178488e5d7e382146fc08a1254522f8aa1d8dbf4459b55fc94e564957.
+Judicial candidates for circuit judge run in nonpartisan elections and are required to have been licensed attorneys in the state for six years preceding the date of assuming office. Circuit judges serve a six-year term.

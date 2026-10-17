@@ -51,9 +51,9 @@ APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 # read and which therefore live in `data/app` (the move the docstring above
 # promised). Fayette, Cumberland, Jersey and Lawrence joined on 2026-10-16,
 # drawn where each county places whole precincts or townships
-# (build_partial_board_districts.py). A county added here also needs a
+# (build_partial_board_districts.py), and Jasper the same day. A county added here also needs a
 # worksheet roster entry and a dispatch entry, or validate_index.py fails.
-DRAWN = frozenset({"fayette", "cumberland", "jersey", "lawrence"})
+DRAWN = frozenset({"fayette", "cumberland", "jersey", "lawrence", "jasper"})
 
 
 def note(msg):

@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "35.49230,-97.50340"; // the State Capitol, Oklahoma City, Oklahoma County
-const OFFLINE = ["county", "us-house", "ok-senate", "ok-house"];
-const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99" };
+const OFFLINE = ["county", "us-house", "ok-senate", "ok-house", "ok-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99", "ok-judicial-district": "7" };
 const NEGATIVE_POINT = "33.65000,-97.15000"; // near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry Oklahoma";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -566,6 +566,35 @@ try {
       }
     }
     await context.close();
+  }
+
+
+  // 2c. A JUDICIAL DISTRICT WHOSE OFFICES HAVE DIFFERENT ELECTORATES. Most
+  //     districts elect every district judge district-wide, which the ground-
+  //     truth point (District 7, Oklahoma County) exercises; District 14 does
+  //     not: nine offices are elected by Pawnee and Tulsa counties and five by
+  //     Tulsa alone (the State Election Board's 2024 roster). So the card asks
+  //     which county the point is in and says which offices that county votes
+  //     for. Both counties are asserted, because a card that told Pawnee it
+  //     votes for all fourteen would read just as plausibly. Same-origin files
+  //     only, so no network.
+  {
+    const cases = [
+      { name: "Pawnee", point: "36.33780,-96.80340",
+        want: "Offices 1, 3, 5, 7, 9, 10, 12, 13 and 14, 9 of the district's 14 district judges." },
+      { name: "Tulsa", point: "36.15400,-95.99280",
+        want: "Every one of the district's 14 district judges." },
+    ];
+    for (const c of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.point}&layers=ok-judicial-district`);
+      const info = await cardText(page, "ok-judicial-district");
+      const said = new RegExp(c.name + " County votes for", "i").test(info.text) &&
+        info.text.includes(c.want);
+      check(`ok-judicial-district tells ${c.name} County which District 14 offices it elects`,
+        !info.error && /District 14\b/.test(info.text) && said, info.text.slice(0, 160));
+      await context.close();
+    }
   }
 
 

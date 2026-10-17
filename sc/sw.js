@@ -52,6 +52,8 @@ const GEOMETRY_URLS = [
   "./data/app/sc-county-council-districts.json",
   "./data/app/tribal-areas.json",
   "./data/app/sc-precincts.json",
+  "./data/app/sc-school-board-districts.json",
+  "./data/app/sc-judicial-circuits.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

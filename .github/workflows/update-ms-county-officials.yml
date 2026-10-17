@@ -21,9 +21,9 @@ name: Update Mississippi county officials
 # board address and telephone floors.
 # A red run is the signal that a person needs to read the new edition.
 #
-# MISSISSIPPI IS DARK, so this job regenerates no county page:
-# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
-# go-live adds its adapter.
+# It regenerates the per-county pages (ms/county-supervisor/<county>.html)
+# and the files that count them in the same PR, since Mississippi's go-live
+# gave scripts/build_county_pages.py its adapter.
 
 on:
   schedule:
@@ -82,7 +82,20 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ms/data/app/ms-county-officials.json
+          # The per-county pages (ms/county-supervisor/) are GENERATED from the
+          # roster this job just rewrote, so regenerate them here or the smoke
+          # gate's `build_county_pages.py --check` fails on this PR with a page
+          # naming last edition's supervisors.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          # llms.txt COUNTS the per-county pages, so a county dropping out of
+          # the roster would move it.
+          python3 scripts/build_llms_txt.py
+          # docs/EAM_STATUS.md counts the districts this roster names, so a
+          # seat gaining or losing its name moves it.
+          python3 scripts/build_eam_status.py
+          git add ms/data/app/ms-county-officials.json ms/county-supervisor ms/county-supervisor.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Mississippi boards of supervisors and election commissioners"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

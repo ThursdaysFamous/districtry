@@ -51,6 +51,7 @@ const GEOMETRY_URLS = [
   "./data/app/ok-house-districts.json",
   "./data/app/tribal-areas.json",
   "./data/app/ok-commissioner-districts.json",
+  "./data/app/ok-judicial-districts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
