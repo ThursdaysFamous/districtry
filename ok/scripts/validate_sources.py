@@ -182,6 +182,21 @@ PROVENANCE = [
             "offline and proves the land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "ok-judicial-district",
+        "app_file": "ok-judicial-districts.json",
+        "source_url": "https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf",
+        "note": (
+            "Oklahoma's 26 district court judicial districts and their 75 "
+            "district judge offices, dissolved from the county fabric by "
+            "ok/scripts/build_ok_judicial_districts.py from the State Election "
+            "Board's 2024 roster (published 2025-03-18; excerpts in "
+            "ok/data/source/courts/, with no judge's name or home town). The "
+            "statutes are not readable here: both of their publishers refuse "
+            "this project in robots.txt. The re-read when the 2026 roster is "
+            "posted is a row in ok/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [

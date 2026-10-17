@@ -182,6 +182,35 @@ COUNTIES = {
                      "both, and its precincts changed after the 2020 census, so "
                      "this map cannot yet say which side a point is on."),
     },
+    "jasper": {
+        "name": "Jasper", "fips": "079", "pop": 9287, "vtds": 16, "seats": 3,
+        "label": lambda d: "District %s" % d,
+        "order": ["1", "2", "3"],
+        "composition": {
+            "1": ("CROOKED CREEK", "GRANDVILLE", "HUNT CITY", "WILLOW HILL"),
+            "2": ("GROVE", "NORTH MUDDY", "SOUTH MUDDY"),
+            "3": ("FOX", "SMALLWOOD", "STE MARIE 1", "STE MARIE 2"),
+            shared("1", "2", "3"): tuple("WADE %d" % n for n in range(1, 6)),
+        },
+        "areas": {shared("1", "2", "3"): "Wade Township"},
+        "townships": {
+            "1": ("Crooked Creek", "Grandville", "Hunt City", "Willow Hill"),
+            "2": ("Grove", "North Muddy", "South Muddy"),
+            "3": ("Fox", "Smallwood", "Ste. Marie"),
+            shared("1", "2", "3"): ("Wade",),
+        },
+        "source": ("Census 2020 voting districts grouped by township, per Jasper "
+                   "County's \"Redistricting County Board Effective 2022\" and "
+                   "its certified 2024 General and 2026 General Primary returns"),
+        "planUrl": ("https://jaspercountyillinois.gov/wp-content/uploads/2024/07/"
+                    "Redistricting-County-Board-Effective-2022.pdf"),
+        "boardUrl": "https://jaspercountyillinois.gov/county-board/board-members/",
+        "unplaced": ("The county divides Wade Township, which includes Newton, "
+                     "among all three districts. Its precincts changed after "
+                     "the 2020 census, and the county's map does not show "
+                     "clearly enough where the lines run outside the city, so "
+                     "this map cannot yet say which side a point is on."),
+    },
     "lawrence": {
         "name": "Lawrence", "fips": "101", "pop": 15280, "vtds": 22, "seats": 1,
         "label": lambda d: "District %s" % d,

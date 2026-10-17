@@ -295,20 +295,45 @@ question.
 
 **Everything else**
 
-- Courts by district: Illinois, Wisconsin, Iowa and New York answer them.
-  Michigan, Minnesota and Kentucky ship no such layer, and all three have since
-  confirmed in their own notes that they elect judges by district, so the entry
-  is owed in each. Kentucky's reaches furthest: all four court levels elect by
-  district — Supreme Court, Court of Appeals, 57 circuits and 59 district-court
-  districts — and every one of those districts is a set of whole counties
-  written into statute, so the lines are buildable from statute text and county
-  boundaries the app already ships.
+- Courts by district: Illinois, Wisconsin, Iowa, New York, Michigan, Minnesota
+  and Kentucky answer them, and since 2026-10-16 so do Tennessee, South
+  Carolina, Oklahoma, Indiana and Arkansas. Each of those five states' court
+  districts is a set of whole counties, so each is drawn from the county lines
+  the app already ships, following the county lists in the most authoritative
+  record of them this project could read: South Carolina's statute, the
+  Oklahoma State Election Board's roster of officers, the Tennessee district
+  attorneys' own pages checked against a Comptroller map, the Indiana Court of
+  Appeals' own district map, and in Arkansas the Court of Appeals act as the
+  state's mapping office quotes it and the court system's own directory of
+  circuit judges, both held to the state's court layers. The statutes
+  themselves could not be read in the other four, which is recorded as
+  evidence for the publishing ask. South Carolina's circuits are
+  drawn although its General Assembly, not its voters, elects the circuit
+  judges: the circuit is the court's district, its judges must live in it, and
+  its voters elect its solicitor. Indiana draws the Court of Appeals' 1st, 2nd
+  and 3rd Districts, whose judges stand for retention only there; its trial
+  courts sit one circuit to a county, except one shared by Dearborn and Ohio, so
+  a trial-court map would redraw the county map. Arkansas draws both levels
+  that elect by district, its Court of Appeals districts and its 28 circuits;
+  five circuits are divided into election subdistricts by a federal court
+  order, which are not drawn, and their cards say so. North Carolina still
+  owes the entry.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
-  statewide director districts and New York City's community education councils.
-  Kentucky ships none and owes them: its thread has confirmed that every county
-  school board is elected by division, five divisions per county, each built
-  from whole precincts. Kentucky's independent school boards are elected at
-  large, so they are named rather than drawn.
+  statewide director districts, New York City's community education councils,
+  Minnesota's fourteen boards that elect by district, and since 2026-10-16
+  Arkansas's 965 zones on the 176 boards that elect by zone, from the state GIS
+  Office's statewide layer, and South Carolina's 383 districts on the 54 boards
+  elected by district, from the Revenue and Fiscal Affairs Office's statewide
+  map, with who votes for each seat read from the board's own act. Tennessee
+  and Indiana draw part of what they owe:
+  Tennessee the districts of 18 of its 95 county boards of education, the
+  counties the Comptroller of the Treasury maps, and Indiana the five districts
+  of the Indianapolis Public Schools board, the only ones a government office
+  in Indiana publishes as a map. Kentucky ships none and owes them: its thread
+  has confirmed that every county school board is elected by division, five
+  divisions per county, each built from whole precincts. Kentucky's independent
+  school boards are elected at large, so they are named rather than drawn.
+  North Carolina and Oklahoma owe them too.
 - Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
   Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
   Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one

@@ -4215,21 +4215,23 @@ function initArkansasExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ar-senate": "ars", "county": "co", "ar-house": "arh",
-    "school-district-unified": "su", "zip-code": "zp", "quorum-court": "qc",
-    "county-subdivision": "cs", "voting-precinct": "vp", "municipality": "mu",
+  var LAYER_CODES = { "us-house": "us", "ar-court-of-appeals": "ara", "ar-circuit-court": "arc",
+    "ar-senate": "ars", "county": "co", "ar-house": "arh", "school-district-unified": "su",
+    "zip-code": "zp", "quorum-court": "qc", "county-subdivision": "cs",
+    "school-board-district": "bd", "voting-precinct": "vp", "municipality": "mu",
     "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ar-senate"],
-    "state-house": ["ar-house"], "county": ["county"], "county-board": ["quorum-court"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "state-house": ["ar-house"], "appellate-court-district": ["ar-court-of-appeals"],
+    "trial-court-district": ["ar-circuit-court"], "county": ["county"],
+    "county-board": ["quorum-court"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8137,6 +8139,21 @@ function initArkansasExplorer() {
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a house number ----------
+   * Digits with an optional letter or a hyphenated second part ("2668",
+   * "123A", "89-11" in Queens), or a Wisconsin grid number: a direction and
+   * digits, once or twice ("N1234", "W123N4567"), which rural Wisconsin and
+   * the counties around Milwaukee use for every address. Photon holds them
+   * as written: asked on 2026-10-16 for Devil's Lake State Park's address,
+   * S5975 Park Rd in Baraboo, and for a two-part number in Menomonee Falls,
+   * it answered both numbers. Until that day only digits were read here, so
+   * a place shared with a grid address had no address to fall back to, and
+   * an answer at one could not count as carrying its number. A grid
+   * number's digits run to three or more, so a place named "N2 Bar" is
+   * still a name. Read with the "i" flag. */
+  var HOUSE_NUMBER = "(?:\\d+[a-z]?(?:-\\d+)?|[nsew]\\d+[nsew]\\d{3,}[a-z]?|[nsew]\\d{3,}[a-z]?)";
+  var OPENS_WITH_ADDRESS = new RegExp("^\\s*" + HOUSE_NUMBER + "\\s+\\S", "i");
+
   /* ---------- a place's name before its address ----------
    * A Google Maps link shared from the Android app carries no position. It
    * names the place as one string, its name and then its address
@@ -8146,12 +8163,13 @@ function initArkansasExplorer() {
    * Lodge string, though it holds the lodge by name. So when text a map link
    * carried matches nothing whole, the app's search box and the front
    * door's both try the address alone. Returns null unless the text opens
-   * with words and a later part, after a comma, opens with a house number. */
+   * with a name (not itself an address) and a later part, after a comma,
+   * opens with a house number. */
   function addressAfterName(q) {
     var parts = String(q).split(",");
-    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    if (parts.length < 2 || OPENS_WITH_ADDRESS.test(parts[0])) return null;
     for (var i = 1; i < parts.length; i++) {
-      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+      if (OPENS_WITH_ADDRESS.test(parts[i])) return parts.slice(i).join(",").trim();
     }
     return null;
   }
@@ -8166,7 +8184,7 @@ function initArkansasExplorer() {
    * in the town of Oglesby, about 6 km from the lodge. A single such answer
    * would be selected as the place that was shared. */
   function labelCarriesNumber(label, address) {
-    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    var m = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s", "i").exec(String(address || ""));
     if (!m) return false;
     return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
   }
@@ -8237,7 +8255,7 @@ function initArkansasExplorer() {
    * because West and East Madison Street are miles apart. */
   function addressParts(address) {
     var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
-    var m = /^(\d+[a-z]?(?:-\d+)?)\s+(.+)$/i.exec(parts[0] || "");
+    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(parts[0] || "");
     if (!m || parts.length < 2) return null;
     // a unit at the end of the street line is not part of the street's name
     var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
@@ -8277,11 +8295,77 @@ function initArkansasExplorer() {
     String(label || "").split(",").forEach(function (part) {
       var low = part.trim().toLowerCase();
       if (low && (low === town || low === a.zip)) inTown = true;
-      var got = streetNameKey(part.trim().replace(/^\d+[a-z]?(?:-\d+)?\s+/i, ""));
+      var got = streetNameKey(part.trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
       if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
           (!got.post || !want.post || got.post === want.post)) onStreet = true;
     });
     return onStreet && inTown;
+  }
+
+  /* ---------- the state a place's address names ----------
+   * The installed app's launcher opens a shared place in the state the
+   * reader used last, and until 2026-10-16 that app searched for it there:
+   * a place in Wisconsin shared from a phone whose last map was Illinois's
+   * was looked for in Illinois, where a search bounded to the state either
+   * found nothing and offered a row to tap for Wisconsin, or found an
+   * Illinois street of the same name. An address names its own state, so
+   * the text a map link carries is read for it first (ENGINE
+   * geocoder-search, and the front door's address box): a postal code at
+   * the end, after a comma, in capitals or before a ZIP code ("Baraboo, WI
+   * 53913", "Peoria, IL"), or a state's name there ("Baraboo, Wisconsin").
+   * Only the end is read, so "Wisconsin Dells Inn, 1 Main St, Rockford, IL
+   * 61101" is in Illinois. Returns the code in lower case, which is also
+   * the tag of the app for that state, or "" when the text names none. */
+  var US_STATE_NAMES = {
+    al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
+    co: "Colorado", ct: "Connecticut", de: "Delaware", dc: "District of Columbia",
+    fl: "Florida", ga: "Georgia", hi: "Hawaii", id: "Idaho", il: "Illinois",
+    "in": "Indiana", ia: "Iowa", ks: "Kansas", ky: "Kentucky", la: "Louisiana",
+    me: "Maine", md: "Maryland", ma: "Massachusetts", mi: "Michigan", mn: "Minnesota",
+    ms: "Mississippi", mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada",
+    nh: "New Hampshire", nj: "New Jersey", nm: "New Mexico", ny: "New York",
+    nc: "North Carolina", nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon",
+    pa: "Pennsylvania", ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota",
+    tn: "Tennessee", tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia",
+    wa: "Washington", wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming"
+  };
+  function addressStateTag(text) {
+    // a country written after the address ("…, WI 53913, USA") is not a state
+    var t = String(text || "").trim()
+      .replace(/(?:,\s*|\s+)(?:usa|u\.s\.a\.?|u\.s\.?|us|united states(?: of america)?)\s*$/i, "").trim();
+    var m = /,\s*([a-z]{2})(\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase()) && (m[2] || /^[A-Z]{2}$/.test(m[1]))) {
+      return m[1].toLowerCase();
+    }
+    m = /,\s*([a-z][a-z .]*?)(?:\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m) {
+      var name = m[1].replace(/\s+/g, " ").toLowerCase();
+      for (var k in US_STATE_NAMES) {
+        if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
+      }
+    }
+    return "";
+  }
+  // A state's name as it reads in a sentence: "in Ohio", "in the District
+  // of Columbia".
+  function stateInSentence(tag) {
+    return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
+  }
+  /* The link handed to another app for a place it should search: the text
+   * rebuilt as a link of the kind it came in, which that app's parseMapLink
+   * reads back as the same text from the same maker, so its search treats it
+   * as a link's text (the address alone, the street, the name), not as
+   * typing, and the short link is not looked up a second time. Spaces are
+   * written "+" and commas as they are, the way the makers write their own
+   * links, so it reads as words in the search box it lands in; punctuation
+   * at the very end is written in % form, since mapLinkUrl drops it from a
+   * link as the end of a sentence. */
+  function mapLinkForText(link) {
+    var q = encodeURIComponent(link.text).replace(/%20/g, "+").replace(/%2C/gi, ",")
+      .replace(/[.,;:!?)\]]+$/, function (tail) {
+        return tail.replace(/[\s\S]/g, function (ch) { return "%" + ch.charCodeAt(0).toString(16).toUpperCase(); });
+      });
+    return (link.source === "apple" ? "https://maps.apple.com/?q=" : "https://www.google.com/maps?q=") + q;
   }
 
   /* A SHORT LINK holds no position: only Google or Apple knows where it
@@ -8477,7 +8561,7 @@ function initArkansasExplorer() {
    * row that hands off to that fork with the address pre-selected via its
    * #point= permalink. Only runs after a zero-result home search, so the
    * extra request never fires for normal in-city typing. */
-  function buildSiblingResultRow(metro, r) {
+  function siblingRow(metro, label, go) {
     var li = document.createElement("li");
     li.className = "sibling-result";
     var btn = document.createElement("button");
@@ -8485,7 +8569,7 @@ function initArkansasExplorer() {
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + r.display_name;
+    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";
@@ -8494,11 +8578,68 @@ function initArkansasExplorer() {
     btn.addEventListener("click", function () {
       clearTimeout(debounceTimer);
       if (inFlightController) inFlightController.abort();
-      trackEvent("metro-portal-go/" + metro.id, "search");
-      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+      go();
     });
     li.appendChild(btn);
     return li;
+  }
+  function buildSiblingResultRow(metro, r) {
+    return siblingRow(metro, r.display_name, function () {
+      trackEvent("metro-portal-go/" + metro.id, "search");
+      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+    });
+  }
+
+  /* ---------- a link to a place in another state ----------
+   * A link whose text names another state in its address (ENGINE map-link
+   * addressStateTag) is that state's to search: this app's search is bounded
+   * to its own state, so it would find nothing there, or a street of the same
+   * name here. It draws one row, which opens that state's app with the link
+   * as #q=, where the search reads it as a link and tries the address alone,
+   * the street and the name as it would here; #q= follows the row
+   * (prefillGeocodeSearch), so a place shared into the installed app opens in
+   * its own state whichever state the launcher chose. A state with no app is
+   * named, and nothing is searched.
+   *
+   * ONLY A WHOLE STATE'S APP. San Francisco's app carries California's tag
+   * and answers for one city, so an address in California does not say the
+   * place is in it: such a link is searched here as before, and the sibling
+   * lookup decides by the place's position. It returns false then, and true
+   * when it has answered. */
+  function metroForTag(tag) {
+    for (var i = 0; i < METRO_EXPLORERS.length; i++) {
+      var m = METRO_EXPLORERS[i], path = /\/([a-z]{2})\/?$/.exec(m.url || "");
+      if (m.id !== THIS_METRO && path && path[1] === tag) return m;
+    }
+    return null;
+  }
+  function showLinkElsewhere(link, tag) {
+    var metro = metroForTag(tag);
+    if (metro && metro.label !== US_STATE_NAMES[tag]) return false;
+    var maker = link.source === "apple" ? "Apple Maps" : "Google Maps";
+    if (inFlightController) inFlightController.abort();
+    clearResultRows(true);
+    clearResultRows(false);
+    if (!metro) {
+      geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
+        ", which districtry doesn't cover yet.";
+      geoStatus.className = "geo-status err";
+      return true;
+    }
+    var row = siblingRow(metro, link.text, function () {
+      if (metroHandedOff) return;
+      metroHandedOff = true;
+      geoStatus.textContent = "Opening " + siblingDisplayName(metro) + "\u2026";
+      geoStatus.className = "geo-status";
+      trackEvent("metro-portal-go/" + metro.id, "map-link");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(mapLinkForText(link));
+    });
+    row.className += " map-link-away";
+    geoResultsList.appendChild(row);
+    geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
+    geoStatus.className = "geo-status";
+    return true;
   }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
@@ -9103,6 +9244,8 @@ function initArkansasExplorer() {
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
+    var tag = fromLink ? addressStateTag(q) : "";
+    if (tag && tag !== METRO_BRAND.instanceTag && showLinkElsewhere(fromLink, tag)) return Promise.resolve();
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
       renderDistrictSection(found);
@@ -9167,7 +9310,11 @@ function initArkansasExplorer() {
         keepStreet(results);
         results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
       }
-      if (results && results.length) return renderGeocodeResults(results);
+      if (results && results.length) {
+        renderGeocodeResults(results);
+        if (bare) markLinkPlace(name, bare);
+        return;
+      }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
@@ -9196,6 +9343,35 @@ function initArkansasExplorer() {
   function searchEverywhere(text) {
     inFlightController = new AbortController();
     return geocodeUnbounded(text, inFlightController.signal);
+  }
+
+  /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
+   * name and address can answer the place and others beside it: on
+   * 2026-10-16 Photon, asked for a Wisconsin state park's name and address,
+   * answered three places, the park first. An answer whose label opens with
+   * the link's name, carries its house number and is on its street in its
+   * town (labelCarriesNumber, labelOnStreet, ENGINE map-link) is the place
+   * itself, so its row is marked, and #q= selects it when it is the only one
+   * (prefillGeocodeSearch). A name alone is not enough: a chain's stores
+   * share one. */
+  function markLinkPlace(name, bare) {
+    var rows = geoResultsList.querySelectorAll("li");
+    for (var k = 0; k < rows.length; k++) {
+      if (rows[k].className) continue; // the address rows just drawn carry no class
+      var label = rows[k].textContent;
+      if (samePlaceName(label.split(",")[0], name) && labelCarriesNumber(label, bare) &&
+          labelOnStreet(label, bare)) rows[k].className = "link-place";
+    }
+  }
+  // "Devil’s Lake" and "Devil's Lake", "A & B" and "A and B", "Café" and
+  // "Cafe": one name
+  function samePlaceName(a, b) {
+    function key(t) {
+      t = String(t || "");
+      if (t.normalize) t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return t.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
+    }
+    return !!key(a) && key(a) === key(b);
   }
 
   /* Places a link's name found. Marked so that #q= never selects one for the
@@ -9296,7 +9472,13 @@ function initArkansasExplorer() {
    * officeholder, so the list stays up and the reader picks. A sibling-metro
    * row is never auto-clicked — that button navigates to another instance —
    * and neither is a place found by a shared link's name alone
-   * (listByName), which may be another place of the same name. */
+   * (listByName), which may be another place of the same name. Two
+   * exceptions: among several answers to a link, the one that is the place
+   * the link names (markLinkPlace) is selected when it is the only such
+   * one; and the row a link to a place in another state draws
+   * (showLinkElsewhere) is followed, because the address itself says which
+   * state's app it belongs to, so a place shared into the installed app
+   * opens in its own state. */
   function prefillGeocodeSearch(q) {
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
@@ -9304,7 +9486,11 @@ function initArkansasExplorer() {
     reengageSearchShell();
     return runGeocodeSearch(q).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
+      var place = geoResultsList.querySelectorAll("li.link-place > button");
+      var away = geoResultsList.querySelectorAll("li.map-link-away > button");
       if (own.length === 1) own[0].click();
+      else if (place.length === 1) place[0].click();
+      else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
       if (err.name === "AbortError") return;
       geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
@@ -9374,6 +9560,8 @@ function initArkansasExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 4 congressional districts — the largest districts Arkansas carries below the state itself
+    "ar-court-of-appeals", // 7 Court of Appeals districts of whole counties, 19,683 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a congressional district (34,445 km2), larger than a judicial circuit (4,921 km2)
+    "ar-circuit-court",  // 28 judicial circuits of whole counties, 4,921 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a Court of Appeals district, larger than a State Senate district (3,937 km2)
     "ar-senate",         // 35 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 75 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ar-house",          // 100 House districts — smaller on average than a county, larger than a school district
@@ -9381,6 +9569,7 @@ function initArkansasExplorer() {
     "zip-code",          // 942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas
     "quorum-court",      // 775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town
     "county-subdivision", // 820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town
+    "school-board-district", // 965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)
     "voting-precinct",   // 2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)
     "municipality",      // 501 incorporated cities and towns, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13634,6 +13823,219 @@ function initArkansasExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
+  /* ---------- 4b. Court of Appeals District — 7 groups of whole counties ----------
+   * Act 1812 of 2003 divides the state into seven districts "for the
+   * election of judges to the Arkansas Court of Appeals" and names each
+   * one's counties, so no map is traced: ar/scripts/build_ar_court_districts.py
+   * dissolves the county fabric this instance already ships. The act is read
+   * as the state GIS office's metadata quotes it, because the official Code
+   * has no free readable copy, and the state's own district layer must put
+   * every county where the act does (both read 2026-10-16, kept in
+   * data/source/courts/). The court's own district map page lists two
+   * positions in five districts and one in two: twelve judges.
+   *
+   * THE DISTRICT IS WHERE THE JUDGES ARE ELECTED, NOT WHERE THE COURT SITS:
+   * the court hears appeals for the whole state. MEAN AREA 19,683 km2
+   * against a congressional district's 34,445, which puts the layer second
+   * in the area rank.
+   *
+   * NOBODY IS NAMED: the court's pages name every judge, and this app does
+   * not publish them yet (gap ar-appeals-judges). The card links the court's
+   * own district page, which does.
+   * ---------- */
+  var loadArAppealsDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-appeals-districts.json", {}, 2);
+  });
+  var AR_COA_DISTRICTS = "https://arcourts.gov/courts/court-of-appeals/map";
+  var AR_JUDGE_WORDS = ["One", "Two", "Three", "Four", "Five", "Six", "Seven",
+    "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+    "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"];
+
+  // "Pulaski, Perry and Saline Counties" — the county list a card prints
+  // under its own district.
+  function arCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  function arCourtUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  function arJudgePhrase(n) {
+    var k = Number(n);
+    return k >= 1 && k <= AR_JUDGE_WORDS.length
+      ? AR_JUDGE_WORDS[k - 1] + (k === 1 ? " judge" : " judges")
+      : null;
+  }
+
+  registerLayer({
+    id: "ar-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    overlay: {
+      load: loadArAppealsDistricts,
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = arCourtUnit(feature);
+      return unit == null ? null : "Court of Appeals District " + unit;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArAppealsDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: arCourtUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          judges: findPropCI(props, ["judge_count"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? "Court of Appeals District " + result.unit
+          : "Unknown Court of Appeals district",
+        note: arCountyPhrase(result.counties)
+      }));
+      var n = Number(result.judges);
+      var who = n === 1
+        ? "The district's voters elect one of the court's 12 judges."
+        : n >= 2 && n <= AR_JUDGE_WORDS.length
+          ? "The district's voters elect " + AR_JUDGE_WORDS[n - 1].toLowerCase() +
+            " of the court's 12 judges, one for each of its " +
+            AR_JUDGE_WORDS[n - 1].toLowerCase() + " positions."
+          : "The district's voters elect some of the court's 12 judges.";
+      var rows = [
+        {
+          label: "Judges",
+          value: who + " This app does not name them yet; the link below " +
+            "opens the court's own list by district."
+        },
+        {
+          label: "The court",
+          value: "The Court of Appeals hears appeals for the whole state. The " +
+            "districts are where its judges are elected, not where cases come from."
+        }
+      ];
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Court of Appeals districts", url: AR_COA_DISTRICTS };
+    }
+  });
+
+  /* ---------- 4c. Judicial Circuit — 28 groups of whole counties ----------
+   * Arkansas's circuit courts, its general trial courts, sit in 28 judicial
+   * circuits (the Code calls them judicial districts). The circuit's voters
+   * elect its judges in nonpartisan elections for six-year terms (the court
+   * system's circuit courts page). The county lists are read from the
+   * Administrative Office of the Courts' circuit judge directory, which lists
+   * every judge under every county the judge serves:
+   * ar/scripts/build_ar_court_districts.py stops if any judge serves only
+   * some of a circuit's counties, and the state's circuit layer must put
+   * every county in the same circuit (both read 2026-10-16).
+   *
+   * FIVE CIRCUITS HAVE ELECTION SUBDISTRICTS THAT ARE NOT DRAWN. A federal
+   * court order (Hunt v. State of Arkansas) created two subdistricts in each
+   * of the 1st, 2nd, 6th, 10th and 11th West circuits, for elections only;
+   * judges elected from them hear cases across the whole circuit. Which
+   * judgeships each subdistrict elects is set by that court and was not read,
+   * so the circuit is drawn whole and its card says so (`subdistricts`).
+   *
+   * MEAN AREA 4,921 km2 against the Senate's 3,937, which puts the layer
+   * third in the area rank, under the Court of Appeals districts.
+   *
+   * NOBODY IS NAMED (gap ar-circuit-judges). The card gives the circuit's
+   * number of judges, from the directory, and links the directory.
+   * ---------- */
+  var loadArJudicialCircuits = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-judicial-circuits.json", {}, 2);
+  });
+  var AR_CIRCUIT_DIRECTORY = "https://arcourts.gov/directories/circuit-judges";
+
+  registerLayer({
+    id: "ar-circuit-court",
+    group: "political",
+    label: "Judicial Circuit",
+    overlay: {
+      load: loadArJudicialCircuits,
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = arCourtUnit(feature);
+      return unit == null ? null : unit + " Judicial Circuit";
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArJudicialCircuits, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: arCourtUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          judges: findPropCI(props, ["judge_count"]),
+          subdistricts: findPropCI(props, ["subdistricts"]) === true
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? result.unit + " Judicial Circuit"
+          : "Unknown judicial circuit",
+        note: arCountyPhrase(result.counties)
+      }));
+      var count = arJudgePhrase(result.judges);
+      var rows = [
+        {
+          label: "Circuit judges",
+          value: (count ? count + ", elected" : "Elected") + " by the " +
+            "circuit's voters in nonpartisan elections for six-year terms. " +
+            "This app does not name them yet; the link below opens the " +
+            "court system's directory of circuit judges."
+        }
+      ];
+      if (result.subdistricts) {
+        rows.push({
+          label: "Subdistricts",
+          value: "A federal court order (Hunt v. State of Arkansas) created two " +
+            "election subdistricts in this circuit. Judges elected from them " +
+            "hear cases across the whole circuit. This map does not draw the " +
+            "subdistricts or say which judgeships they elect."
+        });
+      }
+      rows.push({
+        label: "The court",
+        value: "Circuit courts are Arkansas's general trial courts, for civil, " +
+          "criminal, probate, domestic relations and juvenile cases."
+      });
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Directory of circuit judges", url: AR_CIRCUIT_DIRECTORY };
+    }
+  });
+
   /* ---------- 5. Quorum Court District ----------
    * Pre-built from the state's own statewide layer of every county's justice
    * of the peace districts (gis.arkansas.gov Boundaries FeatureServer 19,
@@ -14112,6 +14514,122 @@ function initArkansasExplorer() {
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
     ],
     compact: true, compactMetaField: "geoid" // 4b name-only card
+  });
+
+  /* ---------- 6b. School board zone — the Secretary of State's statewide map ----------
+   * A school board that elects by zone elects each member from one part of
+   * its district, and the member must live there. The Secretary of State
+   * compiles every board's zones and the Arkansas GIS Office publishes them
+   * (SCHOOL_BOARD_ZONES, layer 32 of its Boundaries service). Pre-built by
+   * ar/scripts/build_ar_school_board_districts.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m;
+   * data/app/ar-school-board-zones.json, same-origin), so a click is
+   * answered in the browser and no point is sent anywhere.
+   *
+   * 965 zones on 176 of the state's 234 school districts, measured
+   * 2026-10-16. A board not on the map elects its members at large, by the
+   * whole district, which the layer's own description says ("Some School
+   * Districts in Arkansas Elect Members at Large which is the reason not all
+   * school districts are included in the data"); the empty card quotes it.
+   *
+   * EIGHT BOARDS ARE PART WAY TO AT LARGE. Act 424 of 2023 let a board go
+   * back to electing every member at large, and eight boards are doing it a
+   * seat at a time as terms end, so the map keeps only the zones whose terms
+   * had not ended at the GIS Office's update of 9 April 2026. Those zones
+   * carry the date of the board's resolution and the card says what it
+   * resolved; the builder fails when one of those boards' zones moves, so
+   * the sentence is re-read with the map.
+   *
+   * NO MEMBER IS NAMED. No statewide list of Arkansas's school board members
+   * has been read, so the card names no one rather than guessing. Recorded
+   * as gap ar-school-board-members.
+   * ---------- */
+  var loadArSchoolBoardZones = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-school-board-zones.json", {}, 2);
+  });
+
+  // What the board resolved, for a zone on one of the eight boards moving to
+  // at large (the GIS Office's notes of 9 April 2026); null for every other.
+  function arAtLargeNote(props) {
+    var when = arReadDate(props.atLargeSince);
+    if (!when) return null;
+    if (props.atLargeHow === "positions-1-3") {
+      return "On " + when + " the board resolved that its Positions 1, 2 and 3, " +
+        "formerly Zones 1 to 3, are elected at large, by the whole district. " +
+        "This zone was still on the state's map at the Arkansas GIS Office's " +
+        "update of 9 April 2026.";
+    }
+    return "On " + when + " the board resolved to elect all of its members at " +
+      "large, by the whole district, each seat changing when its term ends. " +
+      "This zone was still on the state's map at the Arkansas GIS Office's " +
+      "update of 9 April 2026.";
+  }
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board Zone",
+    emptyNote: "This point is not in a school board zone. The Secretary of " +
+      "State's map of them says: “Some School Districts in Arkansas Elect " +
+      "Members at Large”, and a member elected at large is elected by the " +
+      "whole district. Eight boards are changing from zones to at large a seat " +
+      "at a time, and the map keeps only the zones that had not changed yet.",
+    overlay: {
+      load: loadArSchoolBoardZones,
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.board != null && p.label != null ? String(p.board) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArSchoolBoardZones, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        return {
+          seq: seq,
+          board: p.board != null ? String(p.board) : null,
+          label: p.label != null ? String(p.label) : null,
+          note: arAtLargeNote(p)
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.label || "Unknown zone",
+        note: result.board
+      }));
+      var rows = [
+        {
+          label: "Who it elects",
+          value: "A member of the board of directors is elected from this zone " +
+            "and must live in it."
+        }
+      ];
+      if (result.note) rows.push({ label: "Changing to at large", value: result.note });
+      rows.push({
+        label: "Members",
+        value: "Not named here. No statewide list of Arkansas's school board " +
+          "members has been read yet, so this app names no one rather than guessing."
+      });
+      rows.push({
+        label: "How exact this line is",
+        value: "The Secretary of State compiles these zones and the Arkansas GIS " +
+          "Office publishes them. They are drawn here to within 4 metres; for a " +
+          "definitive answer, ask your county clerk."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Check your voter registration",
+        url: "https://www.voterview.ar-nova.org/voterview"
+      };
+    }
   });
 
   /* ---------- 7. ZIP Code — live TIGERweb ZCTAs ----------
@@ -15851,8 +16369,11 @@ function initArkansasExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house", "quorum-court",
-    "school-district-unified",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house",
+    // The courts follow the chambers, as Kentucky's do: the district's
+    // voters elect the Court of Appeals judges, the circuit's its trial judges.
+    "ar-court-of-appeals", "ar-circuit-court", "quorum-court",
+    "school-district-unified", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -16339,9 +16860,9 @@ function initArkansasExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD",
     "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+    "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
+    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

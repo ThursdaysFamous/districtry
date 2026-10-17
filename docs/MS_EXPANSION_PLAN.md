@@ -25,7 +25,7 @@
 | U.S. House | 4 | pre-built | the representative |
 | Mississippi Senate | 52 | pre-built | the senator, from the legislature's own pages (Senate 34 vacant) |
 | Mississippi House | 122 | pre-built | the representative, from the same pages (House 70 and 77 vacant) |
-| County Supervisor District | 115 in 23 counties | pre-built | the supervisor, and the election commissioner elected from the same district where the directory numbers both lists alike (gap `ms-supervisor-district-lines` for the other 59 counties) |
+| County Supervisor District | 125 in 25 counties (115 in 23 at go-live; Covington and Tippah added after it) | pre-built | the supervisor, and the election commissioner elected from the same district where the directory numbers both lists alike (gap `ms-supervisor-district-lines` for the other 57 counties) |
 | Supreme Court District | 3 | pre-built | the district's three justices |
 | Court of Appeals District | 5 | pre-built | the district's two judges, and both districts' judges in the ten counties the court divides by precinct (gap `ms-coa-precinct-lines`) |
 | Chancery Court District | 20 | pre-built | the district's chancellors, every one of the district where a chancellor is elected from part of it (gap `ms-court-subdistricts`) |
@@ -58,8 +58,9 @@ residents in 2020, about half, and still about half without Coahoma and Sunflowe
 large census block could account for the whole imbalance (measured 2026-10-16). So, on Adam's
 choice ("Confirmed only", 2026-10-15), a county's districts are drawn only where its current lines
 are confirmed: twelve counties whose Census lines changed after the 2020 census and balance on its
-blocks, and eleven whose own published map proves its currency. Every drawn line follows 2020
-census blocks, so no line is traced by hand.
+blocks, and eleven whose published map proves its currency (thirteen since a change after
+go-live added Covington and Tippah). Every drawn line follows 2020 census blocks, so no line is
+traced by hand.
 
 **Every line the app draws is about as close to its source as the county lines are.** Adam
 chose the finest setting for the county lines ("Finest", 2026-10-15), and before the instance
@@ -104,12 +105,25 @@ vacant), and `ms/county-supervisor.html` with a page for each of the 82 counties
 at go-live with the same answer, and the two live neighbours gained a routing case that must open
 `/ms/`: Southaven in Tennessee's smoke test and Clarksdale in Arkansas's.
 
+## After go-live
+
+- **Covington's and Tippah's supervisor districts** (2026-10-16, the first change after go-live).
+  Covington's come from the parcel viewer the county's website links to, whose map draws them as
+  Supervisor Districts 2023 beside its 2023 voting precincts; the layer draws District 2 in two
+  pieces, which the build joins. Tippah's come from a map published online as the Tippah County
+  2022 Redistricting Map, in a mapping company's account; who publishes it is not established, and
+  the county's website could not be read from here. Both are confirmed by a map of the county's
+  voting precincts, measured on the 2020 census's blocks: Covington's precincts put 17 of the
+  county's 18,340 residents in a different district from the drawn lines against 896 for the
+  Census's, and Tippah's none of 21,815 against 669. The supervisor layer now draws 25 counties.
+
 ## What is still owed
 
-- **59 counties' supervisor districts** (gap `ms-supervisor-district-lines`). Three publish lines
-  of their own that nothing found proves current (Coahoma, Covington and Wilkinson). A letter
-  asking the state's GIS clearinghouse to collect and publish every county's current map was
-  drafted on 2026-10-15 (Ask ms-maris-supervisor-districts in `docs/ASK_DRAFTS.md`).
+- **57 counties' supervisor districts** (gap `ms-supervisor-district-lines`). Two publish lines
+  of their own that nothing found proves current (Coahoma and Wilkinson). A letter asking the
+  state's GIS clearinghouse to collect and publish every county's current map went on 2026-10-16,
+  in a version the operator rewrote and sent (Ask ms-maris-supervisor-districts in
+  `docs/ASK_DRAFTS.md`); a follow-up is due about 6 November if there is no answer.
 - **The 2027 judges.** From 1 January 2027 the chancery and circuit cards name nobody until there
   is a list of judges for the 2027 districts. The judges elected on 3 November 2026 take those
   seats, so the plan is to build that list from the certified results before 1 January.

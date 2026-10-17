@@ -1,0 +1,38 @@
+# Comptroller of the Treasury, Office of Research and Education
+# Accountability: the legend of "Difference between Actual Number of
+# Full-Time Equivalent (FTE) Judges and Estimated Need for FTE Judges by
+# District, FY 2019", headed "Judicial Districts (Counties) for Fiscal Year
+# 2019". Read 2026-10-16 from
+# https://www.comptroller.tn.gov/content/dam/cot/orea/advanced-search/2020/JudicialMap2019.pdf
+# One line per district, copied from the legend's text layer.
+District 1 (Carter, Johnson, Unicoi, and Washington)
+District 2 (Sullivan)
+District 3 (Greene, Hamblen, Hancock, and Hawkins)
+District 4 (Cocke, Grainger, Jefferson, and Sevier)
+District 5 (Blount)
+District 6 (Knox)
+District 7 (Anderson)
+District 8 (Campbell, Claiborne, Fentress, Scott, and Union)
+District 9 (Loudon, Meigs, Morgan, and Roane)
+District 10 (Bradley, McMinn, Monroe, and Polk)
+District 11 (Hamilton)
+District 12 (Bledsoe, Franklin, Grundy, Marion, Rhea, and Sequatchie)
+District 13 (Clay, Cumberland, DeKalb, Overton, Pickett, Putnam, and White)
+District 14 (Coffee)
+District 15 (Jackson, Macon, Smith, Trousdale, and Wilson)
+District 16 (Cannon and Rutherford)
+District 17 (Bedford, Lincoln, Marshall, and Moore)
+District 18 (Sumner)
+District 19 (Montgomery and Robertson)
+District 20 (Davidson)
+District 21 (Hickman, Lewis, Perry, and Williamson)
+District 22 (Giles, Lawrence, Maury, and Wayne)
+District 23 (Cheatham, Dickson, Houston, Humphreys, and Stewart)
+District 24 (Benton, Carroll, Decatur, Hardin, and Henry)
+District 25 (Fayette, Hardeman, Lauderdale, McNairy, and Tipton)
+District 26 (Chester, Henderson, and Madison)
+District 27 (Obion and Weakley)
+District 28 (Crockett, Gibson, and Haywood)
+District 29 (Dyer and Lake)
+District 30 (Shelby)
+District 31 (Van Buren and Warren)

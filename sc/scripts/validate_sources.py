@@ -205,6 +205,37 @@ PROVENANCE = [
             "also re-run after each session."
         ),
     },
+    {
+        "layer": "school-board-district",
+        "app_file": "sc-school-board-districts.json",
+        "source_url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/School_Board_Districts/FeatureServer/0",
+        "note": (
+            "383 school board districts on 54 school districts from the "
+            "Revenue and Fiscal Affairs Office's statewide layer (401 records: "
+            "the other 18 school districts are one record each marked At "
+            "Large, and are skipped), pre-built by "
+            "sc/scripts/build_sc_school_board_districts.py through "
+            "scripts/published_district_layers.py, with who votes read from "
+            "each board's own act. Districts move by act of the General "
+            "Assembly, so the quarterly --watch row in sc/WATCH.md is also "
+            "re-run after each session."
+        ),
+    },
+    {
+        "layer": "sc-circuit-court",
+        "app_file": "sc-judicial-circuits.json",
+        "source_url": "https://www.scstatehouse.gov/code/t14c005.php",
+        "note": (
+            "South Carolina's 16 judicial circuits, dissolved from the county "
+            "fabric by sc/scripts/build_sc_judicial_circuits.py following S.C. "
+            "Code Section 14-5-610 (read 2026-10-16; text in "
+            "sc/data/source/courts/), with each circuit's judge count from "
+            "subsection (B). The builder stops if the section, Section 1-7-310 "
+            "or Article V sections 13-14 stop reading the way the card says; "
+            "the re-read after each legislative session is a row in "
+            "sc/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -297,6 +328,15 @@ ENDPOINTS = [
                 "Boundaries_Districts/Voter_Precincts/FeatureServer/0/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 2080,  # 2,315 records measured 2026-10-15
+    },
+    # The school board district layer the builder reads (2026-10-16). A floor,
+    # for the reason the precinct row above gives.
+    {
+        "layer": "school-board-district",
+        "url": ("https://gis.state.sc.us/arcgis/rest/services/"
+                "Boundaries_Districts/School_Board_Districts/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 360,  # 401 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

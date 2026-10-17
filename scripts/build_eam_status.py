@@ -1729,7 +1729,18 @@ ANSWERS = {
         # 2026-09-29), so there is no second tiling to ship.
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The Court of Appeals' 1st, 2nd and 3rd Districts (2026-10-16): three
+        # judges come from each and stand for retention there alone, read from
+        # the court's own districts page; the counties are read off the court's
+        # map, because the Indiana Code is served only through a site this
+        # project cannot read (in/scripts/build_in_appeals_districts.py). The
+        # 4th and 5th Districts are statewide and not drawn. Indiana's trial
+        # courts need no layer of their own: every judicial circuit is one
+        # county except Dearborn and Ohio, which share one (the Prosecuting
+        # Attorneys Council's list, citing IC 33-33, which was not read), so
+        # the County map already draws the ground a circuit court's voters
+        # live on.
+        "courts-by-district": answers("in-court-of-appeals"),
         # Since 2026-10-15 the Township or City card names each civil
         # township's trustee and board from the Election Division's certified
         # 2022 general (in-township-officials.json): 973 trustees and 921
@@ -1738,7 +1749,15 @@ ANSWERS = {
         # 2026-10-15 rule passes a level once its boards are named wherever a
         # list is published, so it is answered.
         "sub-county-government": answers("county-subdivision"),
-        "school-boards-by-district": OPEN,
+        # PART DRAWN 2026-10-16: the five districts the Indianapolis Public
+        # Schools board is elected from, from the City of Indianapolis's map
+        # (in/scripts/build_in_school_board_districts.py). Indiana publishes no
+        # statewide map of these districts, and the vote counts in the 2022 and
+        # 2024 results point to about forty school corporations, IPS among
+        # them, electing some seats by district, so the level stays open on gap
+        # in-school-board-districts. The layer is named here so the
+        # unclaimed-layer print does not list it.
+        "school-boards-by-district": Entry("open", ("school-board-district",)),
         # IndianaMap's 2026 layer, from the General Assembly and the Election
         # Division, carries all 5,121 precincts, and the app draws them
         # (2026-10-15).
@@ -1796,7 +1815,15 @@ ANSWERS = {
         # The Census's 305 county divisions, drawn live from TIGERweb with a
         # card saying no one is elected from them (2026-10-15).
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The 26 district court judicial districts (2026-10-16), each with its
+        # district judge offices and the counties whose voters elect each one,
+        # read from the State Election Board's 2024 roster because both of the
+        # state's publishers of the statutes refuse this project in robots.txt
+        # (ok/scripts/build_ok_judicial_districts.py). The appellate courts
+        # are not drawn: the roster lists their districts but not whether a
+        # retention vote is held in the district or across the state, and the
+        # constitution that says so could not be read.
+        "courts-by-district": answers("ok-judicial-district"),
         # OKLAHOMA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 305 county
         # subdivisions TIGERweb carries for the state are census county
         # divisions (LSADC 22, FUNCSTAT S), statistical areas that govern
@@ -1832,7 +1859,15 @@ ANSWERS = {
         # The Census's 299 county divisions, drawn live from TIGERweb with a
         # card saying no one is elected from them (2026-10-15).
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The 16 judicial circuits of S.C. Code Section 14-5-610 (2026-10-16).
+        # The General Assembly, not the voters, elects each circuit's judges,
+        # for that circuit and from among its residents (S.C. Const. art. V,
+        # sec. 13), and the circuit's voters elect its solicitor (Section
+        # 1-7-310), so the circuit is the court's district even though no
+        # judge faces its voters; the card says so. Adam was asked on
+        # 2026-10-16 whether to draw it on that reading, and the default, to
+        # draw it, stands until he says otherwise.
+        "courts-by-district": answers("sc-circuit-court"),
         # SOUTH CAROLINA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 299
         # county subdivisions TIGERweb carries for the state are census county
         # divisions (LSADC 22, FUNCSTAT S). Recorded in sc/CLAUDE.md.
@@ -1841,7 +1876,13 @@ ANSWERS = {
             "outside a city or town limit the county governs. The 299 "
             "sub-county units the Census publishes for South Carolina are "
             "census county divisions: statistical areas, not governments."),
-        "school-boards-by-district": OPEN,
+        # ANSWERED 2026-10-16: the Revenue and Fiscal Affairs Office's
+        # statewide map draws the 383 districts of the 54 boards elected by
+        # district and marks the other 18 school districts At Large
+        # (sc/scripts/build_sc_school_board_districts.py). Who votes for each
+        # seat is read from each board's own act; for 16 boards the act does
+        # not say, which the card states (gap sc-school-board-who-votes).
+        "school-boards-by-district": answers("school-board-district"),
         # The Revenue and Fiscal Affairs Office keeps the official maps of all
         # 2,315 precincts the General Assembly sets by act, and the app draws
         # them (2026-10-15).
@@ -1874,7 +1915,14 @@ ANSWERS = {
         # District N", with a card saying no one is elected to run one and that
         # the number is not a county commission district's (2026-10-15).
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The 32 judicial districts (2026-10-16), whose voters elect the
+        # circuit judges, chancellors and district attorney general, read from
+        # the District Attorneys General Conference's county list and checked
+        # against 31 district pages and the Comptroller's FY2019 map, because
+        # the code's public copy is published by LexisNexis and the General
+        # Assembly's site admits only named search engines and archives
+        # (tn/scripts/build_tn_judicial_districts.py).
+        "courts-by-district": answers("tn-judicial-district"),
         # TENNESSEE HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 855 county
         # subdivisions TIGERweb carries for the state are civil districts
         # (LSADC 28, FUNCSTAT N): legal areas nobody is elected to run.
@@ -1884,7 +1932,15 @@ ANSWERS = {
             "city or town limit the county governs. The 855 sub-county units "
             "the Census publishes for Tennessee are civil districts, which the "
             "Census records as having no functioning government."),
-        "school-boards-by-district": OPEN,
+        # PART DRAWN 2026-10-16: the 114 districts the boards of education of
+        # eighteen counties are elected from, from the Comptroller of the
+        # Treasury's map (tn/scripts/build_tn_school_board_districts.py). County
+        # boards of education are elected from districts (Tenn. Code Ann.
+        # 49-2-201, as quoted in Bradley County's private act), and the map
+        # holds 18 of the 95 counties, so the level stays open on gap
+        # tn-school-board-districts. The layer is named here so the
+        # unclaimed-layer print does not list it.
+        "school-boards-by-district": Entry("open", ("school-board-district",)),
         # The Comptroller of the Treasury's layer carries all 1,870 precincts the
         # county election commissions set, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
@@ -1916,7 +1972,16 @@ ANSWERS = {
         # county has in 27 counties and, in the two checked, is the out-of-date
         # one (2026-10-15, ar/scripts/build_ar_townships.py).
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The Court of Appeals' 7 districts and the 28 judicial circuits
+        # (2026-10-16), both whole counties dissolved from the county fabric
+        # (ar/scripts/build_ar_court_districts.py): each district's counties
+        # from Act 1812 of 2003 as the state GIS office's metadata quotes it,
+        # because the official Code is published only through LexisNexis, and
+        # each circuit's from the Administrative Office of the Courts' circuit
+        # judge directory. Both are held county by county to the state's own
+        # court layers. The five circuits a federal court order divides into
+        # election subdistricts are drawn whole, and their cards say so.
+        "courts-by-district": answers("ar-court-of-appeals", "ar-circuit-court"),
         # ARKANSAS HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 1,051
         # county subdivisions TIGERweb carries for the state are townships and
         # districts with FUNCSTAT N, measured 2026-10-13. A township elects a
@@ -1926,7 +1991,13 @@ ANSWERS = {
             "city or town limit the county governs. The 1,051 sub-county units "
             "the Census publishes for Arkansas are townships, which the Census "
             "records as having no functioning government."),
-        "school-boards-by-district": OPEN,
+        # ANSWERED 2026-10-16: the GIS Office's statewide layer of school board
+        # zones, compiled by the Secretary of State, draws 965 zones on the 176
+        # boards that elect by zone (ar/scripts/build_ar_school_board_districts
+        # .py). The layer's own description says the districts missing from it
+        # elect their boards at large, and the eight boards moving to at large
+        # seat by seat keep only the zones whose terms have not ended.
+        "school-boards-by-district": answers("school-board-district"),
         # The Arkansas GIS Office's layer carries all 2,920 precincts as the
         # counties report them, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),

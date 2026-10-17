@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">16 layers — 6 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1165,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1173,6 +1173,18 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-in-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>in-court-of-appeals</code></th>
+                <td data-label="What it answers">The Court of Appeals district covering the point, whose three judges stand for retention in that district alone.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.in.gov/courts/appeals/images/coa-district-map.jpg" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by in/scripts/build_in_appeals_districts.py, following the court's own district map (read 2026-10-16), the one place it publishes which counties are in each district; the Indiana Code that sets them is published only through a site that serves this project nothing it can read.</a></li>
+                    <li><a href="https://www.in.gov/courts/appeals/districts/" target="_blank" rel="noopener">Court of Appeals of Indiana — its districts, and which judges stand for retention where</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge is named yet; recorded as gap in-court-of-appeals-judges. The card says three of the court's fifteen judges come from the district and stand for retention only there.</td>
+                <td data-label="Where it applies">Indiana — statewide, all 92 counties.</td>
+              </tr>
               <tr id="layer-us-house">
                 <th scope="row"><span class="layer-name">U.S. House</span><code>us-house</code></th>
                 <td data-label="What it answers">The U.S. House district covering the point, and the representative holding it.</td>
@@ -1270,7 +1282,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">1 layer</span></h2>
+        <h2>Schools <span class="matrix-count">2 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1288,6 +1300,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Indiana school board members are elected — the Election Division certifies a School Board Member office category, whose own description says most members are elected and some are appointed — and the certified returns name 742 of them, but this change ships no roster and no districted geometry exists statewide, so nobody is named. Recorded as gap in-school-board-members.</td>
                 <td data-label="Where it applies">Indiana — statewide. The 291 unified districts are the whole of the state's school-district fabric.</td>
+              </tr>
+              <tr id="layer-school-board-district">
+                <th scope="row"><span class="layer-name">School Board District</span><code>school-board-district</code></th>
+                <td data-label="What it answers">The district the Indianapolis Public Schools board elects a member from. Everywhere else in Indiana the card says this map draws no other board's districts yet.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/9" target="_blank" rel="noopener">City of Indianapolis and Marion County — School Board Districts, layer 9 of its OpenData_Political map service: the five Indianapolis Public Schools districts, measured 2026-10-16, pre-built by in/scripts/build_in_school_board_districts.py and shipped with the app. The same layer draws residence districts for the Lawrence and Washington township boards, which are not drawn because the whole township votes for every seat. The service states no licence.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO NAMES YET. No list of the Indianapolis Public Schools board's members has been read, so the card names no one rather than guessing; recorded as gap in-school-board-members.</td>
+                <td data-label="Where it applies">Indianapolis Public Schools, in Marion County. The 2022 and 2024 results point to about forty other Indiana boards electing some members by district, and no statewide map of their districts is published (gap in-school-board-districts).</td>
               </tr>
             </tbody>
           </table>
@@ -1388,6 +1411,33 @@ table.matrix code {
     "url": "https://overberg.co"
   },
   "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/in/sources.html#dataset-in-court-of-appeals",
+      "identifier": "in-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The Court of Appeals district covering the point, whose three judges stand for retention in that district alone. No judge is named yet; recorded as gap in-court-of-appeals-judges. The card says three of the court's fifteen judges come from the district and stand for retention only there.",
+      "url": "https://districtry.com/in/sources.html#layer-in-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/in/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by in/scripts/build_in_appeals_districts.py, following the court's own district map (read 2026-10-16), the one place it publishes which counties are in each district; the Indiana Code that sets them is published only through a site that serves this project nothing it can read.",
+          "url": "https://www.in.gov/courts/appeals/images/coa-district-map.jpg"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Court of Appeals of Indiana — its districts, and which judges stand for retention where",
+          "url": "https://www.in.gov/courts/appeals/districts/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Indiana — statewide, all 92 counties"
+      }
+    },
     {
       "@type": "Dataset",
       "@id": "https://districtry.com/in/sources.html#dataset-us-house",
@@ -1562,6 +1612,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Indiana — statewide. The card distinguishes a civil township from the eight records that are Census bookkeeping rather than a government"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/in/sources.html#dataset-school-board-district",
+      "identifier": "school-board-district",
+      "name": "School Board District",
+      "description": "The district the Indianapolis Public Schools board elects a member from. Everywhere else in Indiana the card says this map draws no other board's districts yet. NO NAMES YET. No list of the Indianapolis Public Schools board's members has been read, so the card names no one rather than guessing; recorded as gap in-school-board-members.",
+      "url": "https://districtry.com/in/sources.html#layer-school-board-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/in/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Indianapolis and Marion County — School Board Districts, layer 9 of its OpenData_Political map service: the five Indianapolis Public Schools districts, measured 2026-10-16, pre-built by in/scripts/build_in_school_board_districts.py and shipped with the app. The same layer draws residence districts for the Lawrence and Washington township boards, which are not drawn because the whole township votes for every seat. The service states no licence.",
+          "url": "https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/9"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Indianapolis Public Schools, in Marion County. The 2022 and 2024 results point to about forty other Indiana boards electing some members by district, and no statewide map of their districts is published (gap in-school-board-districts)"
       }
     },
     {
