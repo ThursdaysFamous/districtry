@@ -18266,8 +18266,11 @@ function initChiExplorer() {
    * which are the district's; a value the district shares stays in the office
    * row below and rides nobody, and so does one a second publisher prints as
    * the district's own (the library directory's telephone, Lake County's
-   * office telephone and e-mail). A person from the library's own website or
-   * the shared directory is drawn exactly as before, name and title only. */
+   * office telephone and e-mail). A trustee from the library's own website
+   * carries the same fields on the same rule, where
+   * build_il_library_trustees.py finds a value is that trustee's own; the
+   * shared directory's administrator is drawn exactly as before, name and
+   * title only. */
   function afrDistrictPeople(result, opts) {
     var info = result && result.officials;
     if (!info) return null;
@@ -18328,13 +18331,19 @@ function initChiExplorer() {
     // makes no claim about completeness either: unlike the AFR's four slots,
     // a library listing its trustees has no reason to stop short, so a
     // hedge would be inventing a doubt rather than recording one.
+    //
+    // A TRUSTEE CARRIES THE TELEPHONE AND E-MAIL ADDRESS THE PAGE PRINTS IN
+    // THAT TRUSTEE'S OWN ENTRY, since 2026-10-17, on the filing's rule above.
+    // build_il_library_trustees.py ships a value only where it is that
+    // trustee's, so one the page prints for the whole board, or as the
+    // library's own, rides nobody.
     var site = info.siteBoard;
     var siteBoard = site ? (site.board || []).filter(function (m) {
       return m && m.name;
     }) : [];
     if (!board.length && siteBoard.length) {
       frag.appendChild(renderSectionLabel("Board"));
-      frag.appendChild(renderPersonRows(siteBoard.map(person)));
+      frag.appendChild(renderPersonRows(siteBoard.map(filedPerson)));
       // A LINK ROW RATHER THAN A NOTE, so the page the claim rests on is one
       // click away: the card's `primaryLink` is already the library's own site
       // and a reader checking a board wants the board's page, not the home
