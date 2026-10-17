@@ -6951,7 +6951,10 @@ Guide for Election Authorities states it in its "Precinct Maps" section, which a
 Gianasi as the Board's contact for counties whose precinct boundaries change. The law-proposal
 paragraph is there because the Board's 15 September 2026 minutes say staff are reviewing legislative
 requests for the spring session, to be presented for Board approval at a future meeting; it is
-conditional and kept apart from the three numbered asks so that a no to it does not sink them.
+conditional and kept apart from the three numbered asks so that a no to it does not sink them. It
+asks for a requirement, from each election authority's next redraw, because the same section already
+requires the PDF to show every district line, so the file adds a format rather than new content, and
+Wisconsin already requires its counties to file these lines.
 
 > Subject: For Executive Director Matthews: publishing Illinois's precinct maps in one place
 >
@@ -7004,10 +7007,12 @@ conditional and kept apart from the three numbered asks so that a no to it does 
 >    the Census Bureau's 2020 voting district program, and the Bureau will ask states for precinct
 >    maps again starting in early 2028, so a map kept up to date would serve that too.
 >
-> If the Board agrees that a change in the law would help, for example having election authorities
-> send their digital file along with the PDF under Section 11-6 and having the Board publish those
-> files for download, the Board's legislative proposals for the spring session would be a natural
-> place for it.
+> If the Board agrees that a change in the law would help, Section 11-6 could require each election
+> authority, starting with its next redraw, to send its precinct map as a map file a computer can
+> read and not only as a PDF, including the district lines the map must already show, and have the
+> Board publish those files for download. Wisconsin's law already has every county file its ward and
+> county board district lines with the state twice a year, so Illinois would not be the first. The
+> Board's legislative proposals for the spring session would be a natural place for such a change.
 >
 > This is only about precinct boundaries. I'm not asking about voter records or any personal
 > information.
