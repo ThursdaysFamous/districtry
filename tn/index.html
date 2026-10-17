@@ -4219,8 +4219,8 @@ function initTennesseeExplorer() {
     "tn-judicial-district": "tnj", "school-district-unified": "su",
     "school-board-district": "bd", "county-commissioner": "cm", "county-subdivision": "cs",
     "zip-code": "zp", "school-district-elementary": "se", "school-district-secondary": "sh",
-    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4229,8 +4229,8 @@ function initTennesseeExplorer() {
     "state-house": ["tn-house"], "trial-court-district": ["tn-judicial-district"],
     "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "school-board-district": ["school-board-district"], "police-station": ["police-station"],
@@ -9647,6 +9647,7 @@ function initTennesseeExplorer() {
     "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
     "voting-precinct",   // 1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)
     "municipality",      // 345 incorporated places, live from TIGERweb
+    "city-ward",         // 72 council districts and wards in the 11 cities above 25,000 people that elect council members by district or ward and publish a map that can be drawn, ranked just after City or Town, which each one divides, so a district draws on top of its city
     "tribal-government", // Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -14363,12 +14364,96 @@ function initTennesseeExplorer() {
    * of 106,772 km2 by the Census's own AREALAND, measured 2026-10-10), and
    * the county is the general-purpose local government everywhere else.
    *
-   * NO OFFICEHOLDER. No statewide source naming Tennessee's mayors and
-   * council members has been established, so the card names no one rather
-   * than guessing. Recorded as gap tn-municipal-officeholders. ---------- */
+   * THE 28 CITIES AND TOWNS ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND
+   * COUNCIL, written down from each city's own pages and proved against
+   * those pages on every build (tn/scripts/build_tn_city_councils.py through
+   * scripts/city_councils.py; data/app/tn-city-councils.json). Every seat
+   * says whether its district's own voters or the whole city elect it, read
+   * from each city's charter, because nothing the state publishes records
+   * it. The districts of the eleven of these that elect by district or ward
+   * and publish a map that can be drawn are the City Council District layer
+   * (5b below). Nashville's 35 council districts are the County Commission
+   * District layer's, which names their members, so Nashville's entry names
+   * its mayor and vice mayor and says so; Knoxville and Lebanon elect by
+   * district or ward and are not drawn.
+   *
+   * Tennessee's other 317 cities and towns name nobody: no statewide source
+   * naming their mayors and council members gives a seat, a district or a
+   * date, so the card names no one rather than guessing. Recorded as gap
+   * tn-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  // The mayor and council of each city and town above 25,000 people, keyed
+  // by the place's Census id; every seat says who elects it and which page
+  // names it.
+  var loadTnCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-city-councils.json", {}, 2);
+  });
+  // What "the whole" place is for a seat elected by all of it: a
+  // consolidated government's voters are the county's, and otherwise the
+  // Census's own style ("Smyrna town") or, where the card has none, the
+  // body's own name ("Town Council").
+  function tnWholePlace(council, where) {
+    if (where === "county" || where === "city" || where === "town") return where;
+    return /^Town\b/.test(String(council.body)) ? "town" : "city";
+  }
+  // The seat as the body names it: "Alderman, Ward 2", "Council, At large".
+  // The mayor and a separately elected vice mayor are offices of their own.
+  function tnCouncilBadge(seat) {
+    var role = String(seat.role);
+    if (role === "Mayor" || role === "Vice Mayor") return role;
+    return (role === "Council member" ? "Council" : role) + ", " + String(seat.seat);
+  }
+  // Who elects the seat, unless its own label already says so. A seat whose
+  // label names its own unit ("Super District 8, Position 1", Memphis's two
+  // districts of three members each) is elected by that unit as the label
+  // names it, and otherwise by the city's word for a ward.
+  function tnSeatElectedBy(council, seat, where) {
+    if (/at large/i.test(String(seat.seat))) return null;
+    if (seat.byWard && seat.ward != null) {
+      var head = String(seat.seat).split(",")[0].trim();
+      if (new RegExp("\\b" + String(seat.ward) + "$").test(head) && /\b(Ward|District)\b/.test(head)) {
+        return "elected by " + head;
+      }
+      return "elected by " + String(council.wardWord || "Ward") + " " + String(seat.ward);
+    }
+    return "elected by the whole " + tnWholePlace(council, where);
+  }
+  function tnCouncilPeople(council, seats, where) {
+    return seats.map(function (seat) {
+      return {
+        name: String(seat.name),
+        badge: tnCouncilBadge(seat),
+        note: tnSeatElectedBy(council, seat, where)
+      };
+    });
+  }
+  // Where the names come from and when they were read: every city's names
+  // are dated by the oldest read of the pages they come from.
+  function tnCouncilSourceRow(council) {
+    var read = tnReadDate(council.read);
+    return {
+      label: "Where these names come from",
+      value: "As listed on " + String(council.name) + "'s own website." +
+        (council.note ? " " + String(council.note) : "") +
+        (read ? " Read on " + read + "." : "") +
+        " If a seat has changed hands since, " + String(council.name) +
+        "'s own website or clerk says who holds it now."
+    };
+  }
+  function tnCouncilLink(council) {
+    var seats = (council && council.seats) || [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].role !== "Mayor" && seats[i].sourceUrl) {
+        return {
+          label: String(council.name) + "'s " + String(council.body),
+          url: String(seats[i].sourceUrl)
+        };
+      }
+    }
+    return null;
+  }
 
   // A metropolitan government's TIGER name carries the word; Hartsville/
   // Trousdale's carries the county instead. Both are matched on the name the
@@ -14404,15 +14489,26 @@ function initTennesseeExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // same NAME-minus-BASENAME technique as the subdivision card, for
           // the same reason: the style can never contradict the name above it
           kind: subdivisionKind(name, base),
           consolidated: tnConsolidatedPlace(name),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the place's card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadTnCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14437,15 +14533,202 @@ function initTennesseeExplorer() {
             : "Incorporated town — a general-purpose local government over this point, alongside the county."
         });
       }
+      var council = result.council;
+      if (!council) {
+        rows.push({
+          label: "Your city council or town board",
+          value: result.rosterFailed
+            ? "The list of council members did not load, so no name is shown. " +
+              "This municipality's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of " +
+              "Tennessee's 28 cities and towns above 25,000 people, from each " +
+              "one's own website, and this municipality is not one of them " +
+              "yet. Its own website is the current source."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat names who
+      // elects it, its district's own voters or the whole place.
+      var where = result.consolidated ? "county" : result.kind;
+      wrap.appendChild(renderPersonRows(tnCouncilPeople(council, council.seats || [], where)));
+      var after = [
+        { label: "How the seats are elected", value: String(council.how) },
+        tnCouncilSourceRow(council)
+      ];
+      // A city whose wards are not drawn says why in its own words above.
+      if (council.wardsDrawn !== false &&
+          (council.seats || []).some(function (s) { return s.byWard; })) {
+        var word = String(council.wardWord || "Ward").toLowerCase();
+        // Memphis also elects by super district, which the same layer draws
+        var supers = (council.seats || []).some(function (s) { return /^Super\b/.test(String(s.seat)); });
+        after.push({
+          label: "Which " + word + " this point is in",
+          value: "The City Council District layer draws " + String(council.name) +
+            "'s " + word + "s" + (supers
+              ? " and super " + word + "s and names the members this point's " + word +
+                " and super " + word + " elect."
+              : " and names the member this point's " + word + " elects.")
+        });
+      }
+      wrap.appendChild(renderFieldStack(after));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? tnCouncilLink(result.council) : null;
+    }
+  });
+
+  /* ---------- 5b. City council district or ward ----------
+   * The 72 council districts and wards of the eleven Tennessee cities above
+   * 25,000 people whose councils elect members by district or ward and
+   * publish a map that can be drawn: Clarksville 12, Chattanooga 9, Jackson
+   * 9, Memphis's 7 districts and 2 super districts, Hendersonville 6, five
+   * each in Cleveland, Gallatin and Columbia, and four each in Franklin,
+   * Mount Juliet and Morristown, read
+   * from each city's own map of its districts, because no state office
+   * publishes one, or for Chattanooga and Hendersonville, where the map
+   * server the city runs cannot be read, from a published copy of it: the
+   * city's own copy on ArcGIS Online, and Sumner County's. Pre-built by
+   * tn/scripts/build_tn_city_wards.py through scripts/city_ward_maps.py,
+   * which holds each map to the Census outline of its city, so a click is
+   * answered in the browser and no point is sent anywhere. Each district's
+   * card says whose map it is drawn from, and that it is drawn here to
+   * within 4 metres.
+   *
+   * MEMPHIS ELECTS BY TWO KINDS OF DISTRICT, which overlap: seven
+   * districts of one member each and two super districts of three, so a
+   * point in Memphis lies in one of each, and this card reads every
+   * district holding the point (featureSetAt, as the fleet's overlapping
+   * layers do) and names both. The map lights the first, the district,
+   * because the engine lights one feature per layer, and draws the super
+   * districts' lines beside the districts'.
+   *
+   * Not drawn: Nashville, whose 35 Metropolitan Council districts are the
+   * County Commission District layer's; Lebanon, whose wards are only the
+   * county election commission's PDF files; and Knoxville, whose only
+   * published map of its districts, KGIS's, reserves all rights and allows
+   * no copy without written permission. Spring Hill and Bristol tie
+   * seats to wards or districts and elect every one by the whole city, so a
+   * district there would elect no one of its own.
+   * Mount Juliet's districts reach land annexed since the Census drew its
+   * outline, so there a point can answer its district while the City or
+   * Town card does not yet show the city.
+   *
+   * A GENERIC LABEL, as Arkansas's and South Carolina's: Clarksville,
+   * Franklin, Columbia, Morristown and Hendersonville elect by WARD and the
+   * other six by DISTRICT, so the toggle says "City Council District" and each card names
+   * the unit as its city does, off the feature's own `label`.
+   *
+   * The members are the council roster the City or Town card reads
+   * (data/app/tn-city-councils.json): the seats each district's own voters
+   * elect, each proved on the city's own page when the roster was built.
+   * ---------- */
+  var loadTnCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-city-wards.json", {}, 2);
+  });
+  var TN_SMALL_NUMBERS = ["no", "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten"];
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: inTennessee,
+    emptyNote: "This point is not in a council district or ward this map " +
+      "draws. It draws the districts of 11 Tennessee cities above 25,000 " +
+      "people that elect council members by district or ward. Knoxville " +
+      "and Lebanon elect by district or ward too " +
+      "and are not drawn yet, and Nashville's council districts are on the " +
+      "County Commission District layer; the City or Town card names the " +
+      "mayor and council of all 28.",
+    overlay: {
+      load: loadTnCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.label != null ? String(p.city) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      // every district holding the point: one, or in Memphis a district and
+      // a super district
+      return featureSetAt(loadTnCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        var result = { seq: seq, props: hits[0], districts: hits, council: null };
+        return loadTnCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(result.props.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.label),
+        note: council ? String(council.name) + " " + String(council.body) : String(p.city)
+      }));
+      // Card convention: identity -> officeholder. The seats each district's
+      // own voters elect; the mayor and the seats the whole city elects are
+      // named on the City or Town card. A second district holding the point
+      // (Memphis's super district) follows under its own label.
+      var seats = (council && council.seats) || [];
+      function electedBy(d) {
+        return seats.filter(function (s) { return s.byWard && String(s.ward) === String(d.ward); });
+      }
+      var mine = electedBy(p);
+      var citywide = seats.filter(function (s) { return !s.byWard && s.role !== "Mayor"; });
+      if (mine.length) wrap.appendChild(renderPersonRows(tnCouncilPeople(council, mine)));
+      (result.districts || []).slice(1).forEach(function (d) {
+        if (String(d.geoid) !== String(p.geoid)) return;
+        wrap.appendChild(renderSectionLabel(String(d.label)));
+        var theirs = electedBy(d);
+        if (theirs.length) wrap.appendChild(renderPersonRows(tnCouncilPeople(council, theirs), { tinted: true }));
+      });
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Council member",
+          value: "The list of council members did not load, so no name is shown."
+        });
+      }
+      if (council) {
+        var n = citywide.length;
+        rows.push({
+          label: "Elected by the whole " + tnWholePlace(council),
+          value: "The mayor" + (n
+            ? " and " + (TN_SMALL_NUMBERS[n] || String(n)) + " more" +
+              (n === 1 ? " member" : " members")
+            : "") + ". The City or Town card names " + (n ? "them" : "the mayor") + "."
+        });
+        rows.push({ label: "How the seats are elected", value: String(council.how) });
+        rows.push(tnCouncilSourceRow(council));
+      }
       rows.push({
-        label: "Your city council or town board",
-        value: "Not named here. No statewide source naming Tennessee's " +
-          "mayors, council members and aldermen has been established, and " +
-          "this app does not guess — this municipality's own website is the " +
-          "current source."
+        label: "How this line is drawn",
+        value: "Drawn from " + String(p.drawnFrom || "the city's own map") +
+          ". The lines are drawn here to within 4 metres; for a definitive " +
+          "answer, ask the city clerk."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? tnCouncilLink(result.council) : null;
     }
   });
 
@@ -16551,6 +16834,10 @@ function initTennesseeExplorer() {
     // its voters elect its judges and its district attorney general.
     "tn-judicial-district",
     "county-commissioner",
+    // The city council district sits with the county commission: members
+    // elected by this district alone, and it answers only in the nine
+    // cities above 25,000 people whose districts are drawn.
+    "city-ward",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code", "tribal-government",
@@ -17036,14 +17323,14 @@ function initTennesseeExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
-    "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD",
-    "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA",
-    "#D19133": "#FFD6A3"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD",
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92",
+    "#585EDD": "#A7B4FD", "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
+    "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

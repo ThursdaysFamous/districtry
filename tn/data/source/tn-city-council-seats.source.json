@@ -1,0 +1,639 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, and the names found on it.",
+ "pages": {
+  "https://chattanooga.gov/government/city-council": {
+   "bytes": 204383,
+   "client": "token",
+   "final": "https://chattanooga.gov/government/city-council",
+   "names": [
+    "Chip Henderson",
+    "Cody Harvey",
+    "Dennis Clark",
+    "Jeff Davis",
+    "Jenni Berz",
+    "Jenny Hill",
+    "Marvene Noel",
+    "Raquetta Dotley",
+    "Ron Elliott"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ba229243198cab1b7982ac9d13e46d146f34549d0978d17474995eaea59c4d9d"
+  },
+  "https://chattanooga.gov/government/mayors-office": {
+   "bytes": 147356,
+   "client": "token",
+   "final": "https://chattanooga.gov/government/mayors-office",
+   "names": [
+    "Tim Kelly"
+   ],
+   "read": "2026-10-16",
+   "sha256": "61afcea9541e54145673b1c7657d6c80006a98d404f14dff1c2613b159628429"
+  },
+  "https://cookeville-tn.gov/358/City-Council": {
+   "bytes": 99591,
+   "client": "token",
+   "final": "https://cookeville-tn.gov/358/City-Council",
+   "names": [
+    "Ali Bagci",
+    "Chad Gilbert",
+    "Cigi England",
+    "Kelly Parkison",
+    "Luke Eldridge"
+   ],
+   "read": "2026-10-16",
+   "sha256": "a1ddbec537b4859cff38bd9e5c67d7ce8e9eba4da33e594cf9510d5dd153f411"
+  },
+  "https://hvilletn.org/409/Board-of-Mayor-Aldermen": {
+   "bytes": 115198,
+   "client": "token",
+   "final": "https://hvilletn.org/409/Board-of-Mayor-Aldermen",
+   "names": [
+    "Bob Garza",
+    "Don Ward",
+    "Eddie Roberson",
+    "Jamie Clary",
+    "Janna Garton",
+    "Jeffrey Sasse",
+    "Karen Dixon",
+    "Mark Burgdorf",
+    "Mark Evans",
+    "Mark Skidmore",
+    "Michael Martin",
+    "Rachel Collins",
+    "Terri Goodwin"
+   ],
+   "read": "2026-10-16",
+   "sha256": "d5e650b36a8926c2c1732525418a9bb7a56a659005567397a98cdbde2750e0ea"
+  },
+  "https://memphistn.gov/city_council/district-1/": {
+   "bytes": 172286,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-1/",
+   "names": [
+    "Rhonda Logan"
+   ],
+   "read": "2026-10-16",
+   "sha256": "b2479c5846558fe30bd0096db786d720481cc6112f75e9e9840c74ee21238aae"
+  },
+  "https://memphistn.gov/city_council/district-2/": {
+   "bytes": 172647,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-2/",
+   "names": [
+    "Jerri Green"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9e7348b2c051afee3bfba1a4f4b93e5089b3cab3e25dc9d0a7c8f06e6d67a31f"
+  },
+  "https://memphistn.gov/city_council/district-3/": {
+   "bytes": 173146,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-3/",
+   "names": [
+    "Pearl Eva Walker"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e69fb1790f1ea3cfe3d0c2cc3880aa0c63e2e4d47e391eaf0ce83f88d56b16c1"
+  },
+  "https://memphistn.gov/city_council/district-4/": {
+   "bytes": 180835,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-4/",
+   "names": [
+    "Jana Swearengen-Washington"
+   ],
+   "read": "2026-10-16",
+   "sha256": "24295c9b4368acc25062555d5e930765e9c644e4c5fb50df9266d426c8e9b92a"
+  },
+  "https://memphistn.gov/city_council/district-5/": {
+   "bytes": 179267,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-5/",
+   "names": [
+    "Philip Spinosa"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ca372a39a3d52c9a5eb849c8d31b35e8b9681bda611ad234998c0509f044ff11"
+  },
+  "https://memphistn.gov/city_council/district-6/": {
+   "bytes": 171589,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-6/",
+   "names": [
+    "Edmund Ford, Sr."
+   ],
+   "read": "2026-10-16",
+   "sha256": "a986fe2a5ef5efd0562d2ee03a9604daf1eb961da0ec790c0061457e9a783ac7"
+  },
+  "https://memphistn.gov/city_council/district-7/": {
+   "bytes": 170687,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-7/",
+   "names": [
+    "Michalyn Easter-Thomas"
+   ],
+   "read": "2026-10-16",
+   "sha256": "00234c81f2436285d21ccba0ec9b01a7e2251845afd25162c2df29f45fa1a23d"
+  },
+  "https://memphistn.gov/city_council/district-9-1/": {
+   "bytes": 170813,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/district-9-1/",
+   "names": [
+    "Chase Carlisle"
+   ],
+   "read": "2026-10-16",
+   "sha256": "7171031183dff766edac796a9412c55860158ebf523165bbd5155360cf09acc3"
+  },
+  "https://memphistn.gov/city_council/super-district-8-2/": {
+   "bytes": 172948,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/super-district-8-2/",
+   "names": [
+    "Janika White"
+   ],
+   "read": "2026-10-16",
+   "sha256": "1178a441ce92945dd8535097efb4b68f9ed81c57c0b152738ad2d3506221d8fc"
+  },
+  "https://memphistn.gov/city_council/super-district-8-3/": {
+   "bytes": 172300,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/super-district-8-3/",
+   "names": [
+    "Yolanda Cooper-Sutton"
+   ],
+   "read": "2026-10-16",
+   "sha256": "2c0699c5413f37285864c9ac9715835ef7fdba42d2b25ba528f7ea9ea3d15ff2"
+  },
+  "https://memphistn.gov/city_council/super-district-9-2/": {
+   "bytes": 171393,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/super-district-9-2/",
+   "names": [
+    "J. Ford Canale"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ce520f1efd07934863c6bbef50e48aee5eb3d5681f97dd0877454fe262456ed0"
+  },
+  "https://memphistn.gov/city_council/super-district-9-3/": {
+   "bytes": 172200,
+   "client": "token",
+   "final": "https://memphistn.gov/city_council/super-district-9-3/",
+   "names": [
+    "Jeff Warren"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9ab1dfb7affad77f40ddb0c20838f64ec020e11982e84d58636665e9c7aa51ae"
+  },
+  "https://memphistn.gov/government-mayor/": {
+   "bytes": 179182,
+   "client": "token",
+   "final": "https://memphistn.gov/government-mayor/",
+   "names": [
+    "Paul Young"
+   ],
+   "read": "2026-10-16",
+   "sha256": "effb420f598c61a310226e26d47c5fe607b0fde4f6c5077d7538a2f036d8047f"
+  },
+  "https://memphistn.gov/super-district-8-1/": {
+   "bytes": 173011,
+   "client": "token",
+   "final": "https://memphistn.gov/super-district-8-1/",
+   "names": [
+    "JB Smiley, Jr."
+   ],
+   "read": "2026-10-16",
+   "sha256": "b4c141dc4fddd086a376ae076adee9e3c474eec083c8bf0702226711604ac2ad"
+  },
+  "https://mtjuliet-tn.gov/256/City-Commission": {
+   "bytes": 188006,
+   "client": "token",
+   "final": "https://mtjuliet-tn.gov/256/City-Commission",
+   "names": [
+    "Art Giles",
+    "Bill Trivett",
+    "James Maness",
+    "Jennifer Milele",
+    "Scott Hefner"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e4aba0ed82a2d931ba91ee154f3b70a30c519c1253aa3b134babc0909d447c00"
+  },
+  "https://springhilltn.org/122/Board-of-Mayor-Aldermen": {
+   "bytes": 120962,
+   "client": "token",
+   "final": "https://springhilltn.org/122/Board-of-Mayor-Aldermen",
+   "names": [
+    "Alex Jimenez",
+    "Brent Murray",
+    "Erinn Hartwell",
+    "Jaimee Davis",
+    "John Canepari",
+    "Matt Fitterer",
+    "Scott Wernert",
+    "Trent Linville",
+    "Vincent Fuqua"
+   ],
+   "read": "2026-10-16",
+   "sha256": "79c50093b2daef401ac6e3d25d74493c85585a5311f528e29ebc330e2b7e8c58"
+  },
+  "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners": {
+   "bytes": 55794,
+   "client": "token",
+   "final": "https://www.brentwoodtn.gov/Your-Government/Board-of-Commissioners",
+   "names": [
+    "Anne Dunn",
+    "Janet Donahue",
+    "Ken Travis",
+    "Kim Smithson Gawrys",
+    "Nelson Andrews",
+    "Rhea E. Little III",
+    "Stevan Pippin"
+   ],
+   "read": "2026-10-16",
+   "sha256": "b3e9a80f434e28c704d499d7dc985d43a0dcfe85d251deb3d4bb096459d4c5d7"
+  },
+  "https://www.bristoltn.gov/337/City-Council": {
+   "bytes": 112358,
+   "client": "browser",
+   "final": "https://www.bristoltn.gov/337/City-Council",
+   "names": [
+    "Kelly Graham",
+    "Lea Powers",
+    "Margaret Feierabend",
+    "Rae Akard",
+    "Vince Turner"
+   ],
+   "read": "2026-10-16",
+   "sha256": "b5a20deebff8e113278e883379dffbaaee8bffb4d2f4533717a75656ad49c8e1"
+  },
+  "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen": {
+   "bytes": 103606,
+   "client": "token",
+   "final": "https://www.cityofbartlett.org/61/Board-of-Mayor-and-Aldermen",
+   "names": [
+    "Brad King",
+    "David Parsons",
+    "David Reaves",
+    "Jack Young",
+    "Kevin Quinn",
+    "Monique Williams",
+    "Robert Griffin"
+   ],
+   "read": "2026-10-16",
+   "sha256": "a0f07fbfb56df598d6792b4dd74098253a6b813dd62211fde212595383f2ae22"
+  },
+  "https://www.clarksvilletn.gov/283/Mayors-Office": {
+   "bytes": 110311,
+   "client": "token",
+   "final": "https://www.clarksvilletn.gov/283/Mayors-Office",
+   "names": [
+    "Joe Pitts"
+   ],
+   "read": "2026-10-16",
+   "sha256": "dac6ef2f90c44ba604eb26ee12e238eef11c343c97c659c5f6defe9287498ec2"
+  },
+  "https://www.clarksvilletn.gov/522/City-Council": {
+   "bytes": 120654,
+   "client": "token",
+   "final": "https://www.clarksvilletn.gov/522/City-Council",
+   "names": [
+    "Ambar Marquis",
+    "Brian Zacharias",
+    "Carlos \"Pete\" Peters",
+    "Eric Claunch",
+    "Jerry Haywood",
+    "Jimmy Brown",
+    "Joe Shakeenab",
+    "Keri Lovato",
+    "Stacey Streetman",
+    "Tim Chandler",
+    "Travis Holleman",
+    "Wanda Smith"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9c5a23a9b5da5e18184a9ec7ee4fdf29eecc7d38a9deaa9027e1798d1641b7e9"
+  },
+  "https://www.clevelandtn.gov/122/Mayor-City-Council": {
+   "bytes": 101978,
+   "client": "token",
+   "final": "https://www.clevelandtn.gov/122/Mayor-City-Council",
+   "names": [
+    "Bill Estes",
+    "Dan Moore",
+    "David May",
+    "Duane Goff",
+    "Hiawatha Brown",
+    "Ken Webb",
+    "Kevin Brooks",
+    "Tom Cassada"
+   ],
+   "read": "2026-10-16",
+   "sha256": "1fb89327ea076ef3f633ae190409a948a057a1ca78aaa14892c16e6710052821"
+  },
+  "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen": {
+   "bytes": 106219,
+   "client": "browser",
+   "final": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen",
+   "names": [
+    "Charles Hall",
+    "Jewel Jordan",
+    "John E. Stamps",
+    "Maureen Fraser",
+    "Missy Marshall",
+    "Nick Robbins"
+   ],
+   "read": "2026-10-16",
+   "sha256": "4fad978418421eb6fb1a9a307c9be0edfc45c53ca1aa0ded19e006b78d262ff8"
+  },
+  "https://www.columbiatn.gov/773/Meet-the-Council": {
+   "bytes": 83771,
+   "client": "token",
+   "final": "https://www.columbiatn.gov/773/Meet-the-Council",
+   "names": [
+    "Brian McKelvy",
+    "Carl McCullen",
+    "Charlie Huffman",
+    "Chaz Molder",
+    "Cheryl Secrest",
+    "Kenny Marshall",
+    "Randy McBroom"
+   ],
+   "read": "2026-10-16",
+   "sha256": "7d2639ac274164c56eb649380272f5376e3b098d66aa396435fc8f1d5c2129ec"
+  },
+  "https://www.franklintn.gov/government/board-of-mayor-aldermen": {
+   "bytes": 121371,
+   "client": "browser",
+   "final": "https://www.franklintn.gov/government/board-of-mayor-aldermen",
+   "names": [
+    "Ann Petersen",
+    "Beverly Burger",
+    "Brandy Blanton",
+    "Clyde Barnhill",
+    "Greg Caesar",
+    "Jason Potts",
+    "Ken Moore",
+    "Matt Brown",
+    "Patrick Baggett"
+   ],
+   "read": "2026-10-16",
+   "sha256": "1da184044902b6203564293598adaa0052aac10d259ade9cc7b6a93acdc6d43c"
+  },
+  "https://www.gallatintn.gov/497/Mayor-City-Council": {
+   "bytes": 129874,
+   "client": "token",
+   "final": "https://www.gallatintn.gov/497/Mayor-City-Council",
+   "names": [
+    "Craig Hayes",
+    "Paige Brown",
+    "Pascal Jouvence",
+    "Paul Jones",
+    "Shawn Fennell",
+    "Steve Fann",
+    "Steven Carter",
+    "Todd Alexander"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9515253bdf1f54bbdfc268e6c761f7cab073549681dc62e83ea594c09d3d3a15"
+  },
+  "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen": {
+   "bytes": 100424,
+   "client": "browser",
+   "final": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen",
+   "names": [
+    "Brian Ueleke",
+    "Mary Anne Gibson",
+    "Mike Palazzolo",
+    "Scott Sanders",
+    "Sherrie Hicks",
+    "Tony Salvaggio"
+   ],
+   "read": "2026-10-16",
+   "sha256": "41c1321d2b21e35b3f8e85c6afdf00f77ffa8d6f83b763d4510e70ad42bdfcba"
+  },
+  "https://www.jacksontn.gov/government/citycouncil/meetthecouncil": {
+   "bytes": 99626,
+   "client": "token",
+   "final": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+   "names": [
+    "Candice Busby",
+    "Frank McMeen",
+    "J.P. Stovall",
+    "Johnny Lee Dodd",
+    "Julie Faulder Holt",
+    "Larry Lowrance",
+    "Marda Wallace",
+    "Richard Donnell",
+    "Russ McKelvey"
+   ],
+   "read": "2026-10-16",
+   "sha256": "859e555a2a9068e5f78de6e5ff593b483bdb658d8b0fb0f019c94532e99b96d8"
+  },
+  "https://www.jacksontn.gov/government/mayorsoffice/aboutmayorconger": {
+   "bytes": 94039,
+   "client": "token",
+   "final": "https://www.jacksontn.gov/government/mayorsoffice/aboutmayorconger",
+   "names": [
+    "Scott Conger"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e7ca9497ad0f9d977c303ca824388cd15f2336570784882830bbf6c7558c177b"
+  },
+  "https://www.johnsoncitytn.org/topics_of_interest/2025_class_action_settlement/index.php": {
+   "bytes": 127180,
+   "client": "token",
+   "final": "https://www.johnsoncitytn.org/topics_of_interest/2025_class_action_settlement/index.php",
+   "names": [
+    "Greg Cox",
+    "Jenny Brock",
+    "Joe Wise",
+    "Todd Fowler",
+    "Whitney Goetz"
+   ],
+   "read": "2026-10-16",
+   "sha256": "00ee3ec342a1387e495eb1c60d450a1ec03188eb6b5bc36f9aee5192b29ac4e4"
+  },
+  "https://www.kingsporttn.gov/government/bma/": {
+   "bytes": 154415,
+   "client": "token",
+   "final": "https://www.kingsporttn.gov/government/bma/",
+   "names": [
+    "Calvin Clifton",
+    "Darrell Duncan",
+    "James Phillips",
+    "Julie Byers",
+    "Morris Baker",
+    "Paul W. Montgomery",
+    "Richard Isaacs"
+   ],
+   "read": "2026-10-16",
+   "sha256": "2e317bb8d3b2c165b7b68b363a0284b16bbdb5de943bc91cf4f3e4a9c0c413fc"
+  },
+  "https://www.knoxvilletn.gov/1340/City-Council-Members": {
+   "bytes": 109625,
+   "client": "browser",
+   "final": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+   "names": [
+    "Amelia Parker",
+    "Charles Thomas",
+    "Debbie Helsley",
+    "Denzel Grant",
+    "Doug Lloyd",
+    "Karyn Adams",
+    "Lynne Fugate",
+    "Matthew DeBardelaben",
+    "Nathan Honeycutt"
+   ],
+   "read": "2026-10-16",
+   "sha256": "2f50eaee4a7889a11b7d35385d80942e18acad4c7befea2a22681b9d7e84e24d"
+  },
+  "https://www.knoxvilletn.gov/248/Mayor-Indya-Kincannons-Office": {
+   "bytes": 118570,
+   "client": "browser",
+   "final": "https://www.knoxvilletn.gov/248/Mayor-Indya-Kincannons-Office",
+   "names": [
+    "Indya Kincannon"
+   ],
+   "read": "2026-10-16",
+   "sha256": "cb544a669da14d297a3edc04b2ca69514b8dc0ca2a4f82f98cb7ace8ec219a2a"
+  },
+  "https://www.lavergnetn.gov/164/Board-of-Mayor-and-Aldermen": {
+   "bytes": 185044,
+   "client": "token",
+   "final": "https://www.lavergnetn.gov/164/Board-of-Mayor-and-Aldermen",
+   "names": [
+    "Carol Haas",
+    "Graeme Coates",
+    "Jason Cole",
+    "Kara Hobbs",
+    "Steve Noe"
+   ],
+   "read": "2026-10-16",
+   "sha256": "d41ca675039e544fc7c58bdba55ae67203d6f7e3dff1b32c5890c67fd8e0acfe"
+  },
+  "https://www.lebanontn.org/m/directory/department?did=16": {
+   "bytes": 91543,
+   "client": "token",
+   "final": "https://www.lebanontn.org/m/directory/department?did=16",
+   "names": [
+    "Rick Bell"
+   ],
+   "read": "2026-10-16",
+   "sha256": "56bfa8dcf1378cdc56c27a23d2fd294d711d0b342085579bce6e0361f580689e"
+  },
+  "https://www.lebanontn.org/m/directory/department?did=30": {
+   "bytes": 98741,
+   "client": "token",
+   "final": "https://www.lebanontn.org/m/directory/department?did=30",
+   "names": [
+    "Camille Burdine",
+    "Chris Crowell",
+    "Geri Ashley",
+    "Joey W. Carmack",
+    "Phil Morehead",
+    "Tick Bryan"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e7213eb3423ef1610a3fdeb58e10c3eb0d39682dcdc8e6dcd1df07288037af6b"
+  },
+  "https://www.maryvillegov.com/city-council-members.html": {
+   "bytes": 177785,
+   "client": "token",
+   "final": "https://www.maryvillegov.com/city-council-members.html",
+   "names": [
+    "Andy White",
+    "Drew Miles",
+    "Fred Metz",
+    "Sarah Herron",
+    "Tommy Hunt"
+   ],
+   "read": "2026-10-16",
+   "sha256": "d744c205ec13a60a0c7847d57713194263b9215c7118701a58e868c15b532c51"
+  },
+  "https://www.murfreesborotn.gov/424/City-Council": {
+   "bytes": 126283,
+   "client": "browser",
+   "final": "https://www.murfreesborotn.gov/424/City-Council",
+   "names": [
+    "Austin Maxwell",
+    "Bill Shacklett",
+    "Jami Averwater",
+    "Kirt Wade",
+    "Madelyn Scales Harris",
+    "Shane McFarland",
+    "Shawn Wright"
+   ],
+   "read": "2026-10-16",
+   "sha256": "7dc6cf43a1a5ecfda2dc3bd9ef527c0a21b25bbeebee87619703d1a3f3c0073b"
+  },
+  "https://www.mymorristown.com/government/council/index.php": {
+   "bytes": 52950,
+   "client": "token",
+   "final": "https://www.mymorristown.com/government/council/index.php",
+   "names": [
+    "Al A'Hearn",
+    "Bob Garrett",
+    "Chris Bivens",
+    "Gary Chesney",
+    "Joseph Senter",
+    "Kay Senter",
+    "Tommy Pedigo"
+   ],
+   "read": "2026-10-16",
+   "sha256": "c5b9557d914e99bc79d8ee4cc27c5f29aeab416952ac9e9e52aa1ca025cab566"
+  },
+  "https://www.nashville.gov/departments/council/districts/vice-mayor": {
+   "bytes": 90325,
+   "client": "token",
+   "final": "https://www.nashville.gov/departments/council/districts/vice-mayor",
+   "names": [
+    "Angie Emery Henderson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "b14d44ef472ee017c325618c5c1ab0553388b24cdeebdc6868e87ac29108978c"
+  },
+  "https://www.nashville.gov/departments/mayor/people/freddie-oconnell": {
+   "bytes": 80321,
+   "client": "token",
+   "final": "https://www.nashville.gov/departments/mayor/people/freddie-oconnell",
+   "names": [
+    "Freddie O'Connell"
+   ],
+   "read": "2026-10-16",
+   "sha256": "948759870590e508a70a8b145fa8cc512ffe92b62a95b67be9247df2b8c588f0"
+  },
+  "https://www.oakridgetn.gov/208/City-Council": {
+   "bytes": 117872,
+   "client": "token",
+   "final": "https://www.oakridgetn.gov/208/City-Council",
+   "names": [
+    "Charles Hensley",
+    "Chuck Hope",
+    "Derrick Hammond",
+    "Ellen Smith",
+    "Jim Dodson",
+    "Sean Gleason",
+    "Warren L. Gooch"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e454398a40c830e4d497e7c78f39fe2954e6c4ac5d3ec85269252c71128e66c3"
+  },
+  "https://www.townofsmyrna.org/government/town_council.php": {
+   "bytes": 123823,
+   "client": "token",
+   "final": "https://www.townofsmyrna.org/government/town_council.php",
+   "names": [
+    "Gerry Short",
+    "H.G. Cole",
+    "Jerome Dempsey",
+    "Marc Adkins",
+    "Mary Esther Reed",
+    "Racquel Peebles",
+    "Steve Sullivan"
+   ],
+   "read": "2026-10-16",
+   "sha256": "f2b8667d28e4bc9528e3a16bcc8174967cc8d94f4ff0313b2f3ff846086288ef"
+  }
+ }
+}

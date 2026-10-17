@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1165,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1216,6 +1216,33 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">Nobody yet: the Eastern Band's site could not be read from where this project is built, and the card says so. The communities the Census draws on the land are named on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.</td>
                 <td data-label="Where it applies">Western North Carolina — the Qualla Boundary and its trust land. Most points in the state are on no tribal land.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council district or ward containing the point, in the 17 North Carolina cities above 25,000 people that elect council members by district or ward, and the member for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.charlottenc.gov/arcgis/rest/services/PLN/CouncilDistricts/MapServer/0" target="_blank" rel="noopener">City of Charlotte — Council Districts, layer 0 of its CouncilDistricts service, which says it &quot;shows the current city council district boundaries&quot;: 7 districts, read 2026-10-16, the district number alone requested. Its credit line names the city's Planning Department and states no licence.</a></li>
+                    <li><a href="https://services.arcgis.com/v400IkDOw1ad7Yad/ArcGIS/rest/services/Council_Districts_Scenario_2/FeatureServer/1" target="_blank" rel="noopener">City of Raleigh — Council Districts Scenario 2, in the city's ArcGIS Online organization, published in November 2021 and described as &quot;Proposed Council Districts, Scenario 2&quot;: 5 districts, read 2026-10-16. The city's live layer is closed to this project by its robots.txt, and the precincts that carried each district's contest on 5 November 2024 lie 99.9% to 100% inside the same district on this copy. It states no licence.</a></li>
+                    <li><a href="https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/4" target="_blank" rel="noopener">Guilford County — Greensboro Council Districts, layer 4 of its Elected_Representation service: 5 districts, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://arcgis2.cityofws.org/arcgissmwa02/rest/services/OICv2/Boundaries2/MapServer/0" target="_blank" rel="noopener">City of Winston-Salem — Wards, layer 0 of its Boundaries2 service: 8 wards, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://gismaps.fayettevillenc.gov/cofpublicgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0" target="_blank" rel="noopener">City of Fayetteville — City Council Districts, layer 0 of its CityCouncilDistricts service: 9 districts, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://maps-apis.carync.gov/server/rest/services/Elections/Elections/FeatureServer/2" target="_blank" rel="noopener">Town of Cary — Town of Cary Council, layer 2 of its Elections service: 4 districts, read 2026-10-16, the district letter alone requested and the records with no district left out. Its service's credit line names the City of Naperville, Illinois, and Esri, and it states no licence.</a></li>
+                    <li><a href="https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/10" target="_blank" rel="noopener">Guilford County — High Point Council, layer 10 of its Elected_Representation service: 6 wards, read 2026-10-16, the ward number alone requested. Its credit line names Guilford County, and it states no licence.</a></li>
+                    <li><a href="https://gisonline.greenvillenc.gov/arcgis/rest/services/Published/MapServer/1" target="_blank" rel="noopener">City of Greenville — City Council Districts, layer 1 of its Published service: 5 districts, read 2026-10-16, the district number alone requested and a record whose district reads &quot;Non Voting&quot; left out. It states no licence.</a></li>
+                    <li><a href="https://cogserver.gastonianc.gov/serverweb/rest/services/AdminBnds/GastoniaCouncilWards/MapServer/0" target="_blank" rel="noopener">City of Gastonia — Ward Number, layer 0 of its GastoniaCouncilWards service: 6 wards, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://gismaps.onslowcountync.gov/arcgis/rest/services/TemplateSite/OperationalLayers/MapServer/60" target="_blank" rel="noopener">Onslow County — City of Jacksonville Wards, layer 60 of its TemplateSite OperationalLayers service: 4 wards, read 2026-10-16. The county also publishes a different map of the city's wards with its Census 2020 layers, which is not used. It states no licence.</a></li>
+                    <li><a href="https://services.arcgis.com/4MdqIsNzxG7xyTvf/arcgis/rest/services/City_Council_Districts/FeatureServer/6" target="_blank" rel="noopener">City of Rocky Mount — City Council Districts, in the city's ArcGIS Online organization, which says its boundaries &quot;were voted on and finalized in 2022&quot;: 7 wards in 11 records, read 2026-10-16, the ward number alone requested. It states no licence.</a></li>
+                    <li><a href="https://maps.iredellcountync.gov/server/rest/services/Data/Elections/MapServer/3" target="_blank" rel="noopener">Iredell County — Election Wards - Mooresville, layer 3 of its Elections service: 4 wards, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34" target="_blank" rel="noopener">City of Wilson — Voting Districts, layer 34 of its communitymaps service: 7 districts, read 2026-10-16, the district number alone requested. Its credit line names City of Wilson GIS Services, and it states no licence.</a></li>
+                    <li><a href="https://gis.goldsboronc.gov/arcgis/rest/services/Election_Districts/FeatureServer/0" target="_blank" rel="noopener">City of Goldsboro — Elected Council Districts, layer 0 of its Election_Districts service: 6 districts, read 2026-10-16, a record numbered 0 that draws the whole city left out. It states no licence.</a></li>
+                    <li><a href="https://gis.newbernnc.gov/arcgis/rest/services/Boundary/NewBern_Wards/FeatureServer/0" target="_blank" rel="noopener">City of New Bern — New Bern Wards, layer 0 of its NewBern_Wards service: 6 wards in 11 records, read 2026-10-16, the ward number alone requested. Its credit line names the City of New Bern's GIS, and it states no licence.</a></li>
+                    <li><a href="https://lee-arcgis.leecountync.gov/arcgis/rest/services/Political/POLITICAL/MapServer/1" target="_blank" rel="noopener">Lee County — CouncilWards, layer 1 of its POLITICAL service: 5 wards in 58 records, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://services2.arcgis.com/WbGEgSzGTEPg4fr6/arcgis/rest/services/Stvl_Election_Wards/FeatureServer/0" target="_blank" rel="noopener">City of Statesville — Statesville Election Wards, in the city's ArcGIS Online organization, last edited 8 September 2026: 6 wards, read 2026-10-16. It states no licence.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The member for each district, from the same city council roster the City or Town card reads (nc/data/app/nc-city-councils.json), written down from each city's own pages (Raleigh's from the State Board of Elections' results) and proved against them by nc/scripts/build_nc_city_councils.py. Which seats a district elects was read from each city's own pages. Its check holds every drawn district to a seat its voters elect and every such seat to a drawn district. Gastonia's members for Wards 3, 4 and 6 were elected by the whole city, and the card says so.</td>
+                <td data-label="Where it applies">The 17 North Carolina cities above 25,000 people that elect council members by district or ward: Cary, Charlotte, Fayetteville, Gastonia, Goldsboro, Greensboro, Greenville, High Point, Jacksonville, Mooresville, New Bern, Raleigh, Rocky Mount, Sanford, Statesville, Wilson and Winston-Salem. Durham, Concord, Hickory and Morrisville tie seats to wards or districts and elect every one by the whole city, so a district there would elect no one of its own. Ground inside a city's Census outline that its map leaves out lies in no district here.</td>
               </tr>
             </tbody>
           </table>
@@ -1344,7 +1371,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 552 features for North Carolina, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. North Carolina's cities and towns elect councils, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified.</td>
+                <td data-label="Who it names">In the 42 cities and towns above 25,000 people, the mayor and every council member, alderman or commissioner, written down from each city's own pages and proved against those pages by nc/scripts/build_nc_city_councils.py, which fails when a name is no longer on the page it cites (nc/data/app/nc-city-councils.json). Raleigh's and Matthews's names are the candidates with the most votes in the State Board of Elections' results, because both websites answer this app with a managed challenge, and the card says so. Each seat says whether its district's own voters or the whole city elect it, read from each city's own pages, because nothing the state publishes records it. North Carolina's other 510 cities, towns and villages name nobody yet, recorded as gap nc-municipal-officeholders.</td>
                 <td data-label="Where it applies">North Carolina — statewide. A point outside every incorporated place is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1580,7 +1607,7 @@ table.matrix code {
       "@id": "https://districtry.com/nc/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The city or town containing the point, if any. NO OFFICEHOLDER YET. North Carolina's cities and towns elect councils, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified.",
+      "description": "The city or town containing the point, if any. In the 42 cities and towns above 25,000 people, the mayor and every council member, alderman or commissioner, written down from each city's own pages and proved against those pages by nc/scripts/build_nc_city_councils.py, which fails when a name is no longer on the page it cites (nc/data/app/nc-city-councils.json). Raleigh's and Matthews's names are the candidates with the most votes in the State Board of Elections' results, because both websites answer this app with a managed challenge, and the card says so. Each seat says whether its district's own voters or the whole city elect it, read from each city's own pages, because nothing the state publishes records it. North Carolina's other 510 cities, towns and villages name nobody yet, recorded as gap nc-municipal-officeholders.",
       "url": "https://districtry.com/nc/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
@@ -1595,6 +1622,108 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "North Carolina — statewide. A point outside every incorporated place is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/nc/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council district or ward containing the point, in the 17 North Carolina cities above 25,000 people that elect council members by district or ward, and the member for it. The member for each district, from the same city council roster the City or Town card reads (nc/data/app/nc-city-councils.json), written down from each city's own pages (Raleigh's from the State Board of Elections' results) and proved against them by nc/scripts/build_nc_city_councils.py. Which seats a district elects was read from each city's own pages. Its check holds every drawn district to a seat its voters elect and every such seat to a drawn district. Gastonia's members for Wards 3, 4 and 6 were elected by the whole city, and the card says so.",
+      "url": "https://districtry.com/nc/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/nc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Charlotte — Council Districts, layer 0 of its CouncilDistricts service, which says it \"shows the current city council district boundaries\": 7 districts, read 2026-10-16, the district number alone requested. Its credit line names the city's Planning Department and states no licence.",
+          "url": "https://gis.charlottenc.gov/arcgis/rest/services/PLN/CouncilDistricts/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Raleigh — Council Districts Scenario 2, in the city's ArcGIS Online organization, published in November 2021 and described as \"Proposed Council Districts, Scenario 2\": 5 districts, read 2026-10-16. The city's live layer is closed to this project by its robots.txt, and the precincts that carried each district's contest on 5 November 2024 lie 99.9% to 100% inside the same district on this copy. It states no licence.",
+          "url": "https://services.arcgis.com/v400IkDOw1ad7Yad/ArcGIS/rest/services/Council_Districts_Scenario_2/FeatureServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Guilford County — Greensboro Council Districts, layer 4 of its Elected_Representation service: 5 districts, read 2026-10-16. It states no licence.",
+          "url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/4"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Winston-Salem — Wards, layer 0 of its Boundaries2 service: 8 wards, read 2026-10-16. It states no licence.",
+          "url": "https://arcgis2.cityofws.org/arcgissmwa02/rest/services/OICv2/Boundaries2/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Fayetteville — City Council Districts, layer 0 of its CityCouncilDistricts service: 9 districts, read 2026-10-16. It states no licence.",
+          "url": "https://gismaps.fayettevillenc.gov/cofpublicgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Town of Cary — Town of Cary Council, layer 2 of its Elections service: 4 districts, read 2026-10-16, the district letter alone requested and the records with no district left out. Its service's credit line names the City of Naperville, Illinois, and Esri, and it states no licence.",
+          "url": "https://maps-apis.carync.gov/server/rest/services/Elections/Elections/FeatureServer/2"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Guilford County — High Point Council, layer 10 of its Elected_Representation service: 6 wards, read 2026-10-16, the ward number alone requested. Its credit line names Guilford County, and it states no licence.",
+          "url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/10"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Greenville — City Council Districts, layer 1 of its Published service: 5 districts, read 2026-10-16, the district number alone requested and a record whose district reads \"Non Voting\" left out. It states no licence.",
+          "url": "https://gisonline.greenvillenc.gov/arcgis/rest/services/Published/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Gastonia — Ward Number, layer 0 of its GastoniaCouncilWards service: 6 wards, read 2026-10-16. It states no licence.",
+          "url": "https://cogserver.gastonianc.gov/serverweb/rest/services/AdminBnds/GastoniaCouncilWards/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Onslow County — City of Jacksonville Wards, layer 60 of its TemplateSite OperationalLayers service: 4 wards, read 2026-10-16. The county also publishes a different map of the city's wards with its Census 2020 layers, which is not used. It states no licence.",
+          "url": "https://gismaps.onslowcountync.gov/arcgis/rest/services/TemplateSite/OperationalLayers/MapServer/60"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Rocky Mount — City Council Districts, in the city's ArcGIS Online organization, which says its boundaries \"were voted on and finalized in 2022\": 7 wards in 11 records, read 2026-10-16, the ward number alone requested. It states no licence.",
+          "url": "https://services.arcgis.com/4MdqIsNzxG7xyTvf/arcgis/rest/services/City_Council_Districts/FeatureServer/6"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Iredell County — Election Wards - Mooresville, layer 3 of its Elections service: 4 wards, read 2026-10-16. It states no licence.",
+          "url": "https://maps.iredellcountync.gov/server/rest/services/Data/Elections/MapServer/3"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Wilson — Voting Districts, layer 34 of its communitymaps service: 7 districts, read 2026-10-16, the district number alone requested. Its credit line names City of Wilson GIS Services, and it states no licence.",
+          "url": "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Goldsboro — Elected Council Districts, layer 0 of its Election_Districts service: 6 districts, read 2026-10-16, a record numbered 0 that draws the whole city left out. It states no licence.",
+          "url": "https://gis.goldsboronc.gov/arcgis/rest/services/Election_Districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of New Bern — New Bern Wards, layer 0 of its NewBern_Wards service: 6 wards in 11 records, read 2026-10-16, the ward number alone requested. Its credit line names the City of New Bern's GIS, and it states no licence.",
+          "url": "https://gis.newbernnc.gov/arcgis/rest/services/Boundary/NewBern_Wards/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Lee County — CouncilWards, layer 1 of its POLITICAL service: 5 wards in 58 records, read 2026-10-16. It states no licence.",
+          "url": "https://lee-arcgis.leecountync.gov/arcgis/rest/services/Political/POLITICAL/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Statesville — Statesville Election Wards, in the city's ArcGIS Online organization, last edited 8 September 2026: 6 wards, read 2026-10-16. It states no licence.",
+          "url": "https://services2.arcgis.com/WbGEgSzGTEPg4fr6/arcgis/rest/services/Stvl_Election_Wards/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 17 North Carolina cities above 25,000 people that elect council members by district or ward: Cary, Charlotte, Fayetteville, Gastonia, Goldsboro, Greensboro, Greenville, High Point, Jacksonville, Mooresville, New Bern, Raleigh, Rocky Mount, Sanford, Statesville, Wilson and Winston-Salem. Durham, Concord, Hickory and Morrisville tie seats to wards or districts and elect every one by the whole city, so a district there would elect no one of its own. Ground inside a city's Census outline that its map leaves out lies in no district here"
       }
     },
     {

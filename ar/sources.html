@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">17 layers — 6 political and legislative, 3 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">18 layers — 7 political and legislative, 3 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1165,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1240,6 +1240,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ar-county-officials.json, read on 2026-10-13: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. A district's justice is named from the county's own site where it numbers them (20 counties, measured 2026-10-13), and elsewhere from the association's 2024 general election results for justices of the peace, updated 17 December 2024, only while the association's current list for the county still includes that winner; a district whose winner has left, or cannot be matched, says so and names no one. Recorded as gap ar-quorum-court.</td>
                 <td data-label="Where it applies">Arkansas — statewide, all 75 counties, 775 districts.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council ward or district containing the point, in the 12 Arkansas cities above 25,000 people that elect council members by ward, and the members its own voters elect.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/50" target="_blank" rel="noopener">Arkansas GIS Office — MUNICIPAL_WARDS, layer 50 of its Boundaries service: 852 wards of 262 cities and towns, measured 2026-10-16, of which the 56 wards of these twelve cities are pre-built by ar/scripts/build_ar_city_wards.py and shipped with the app. It carries the Arkansas GIS Office's copyright line, states no licence, and describes itself as not representing exact legal boundaries.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The members each ward's own voters elect, from the same city council roster the City or Town card reads (ar/data/app/ar-city-councils.json), written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py. Which seats a ward elects was measured from the ballot, and the builder's check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.</td>
+                <td data-label="Where it applies">The 12 Arkansas cities above 25,000 people that elect council members by ward: Benton, Conway, Fayetteville, Fort Smith, Hot Springs, Little Rock, North Little Rock, Paragould, Pine Bluff, Russellville, Sherwood and Texarkana. The state's map carries wards for 250 more cities and towns. Seven of them are the other cities above 25,000, which elect every seat by the whole city, so a ward there elects no one of its own; the rest are not drawn because this app does not name those councils.</td>
               </tr>
             </tbody>
           </table>
@@ -1391,7 +1402,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. Arkansas's cities and towns elect councils or boards of directors, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ar-municipal-officeholders.</td>
+                <td data-label="Who it names">In the 19 cities above 25,000 people, the mayor and every council member or director, written down from each city's own pages and proved against those pages by ar/scripts/build_ar_city_councils.py, which fails when a name is no longer on the page it cites (ar/data/app/ar-city-councils.json, 174 seats read 2026-10-16). Each seat says whether its ward's own voters or the whole city elect it, measured from the ballot because nothing the state publishes records it. The Arkansas Municipal League's statewide directory is not used: it gives no ward or position and disagreed with five of the twelve cities' own pages where both could be compared. Arkansas's other 482 cities and towns name nobody yet, recorded as gap ar-municipal-officeholders.</td>
                 <td data-label="Where it applies">Arkansas — statewide. A point outside every city and town is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1730,7 +1741,7 @@ table.matrix code {
       "@id": "https://districtry.com/ar/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The city or town containing the point, if any. NO OFFICEHOLDER YET. Arkansas's cities and towns elect councils or boards of directors, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ar-municipal-officeholders.",
+      "description": "The city or town containing the point, if any. In the 19 cities above 25,000 people, the mayor and every council member or director, written down from each city's own pages and proved against those pages by ar/scripts/build_ar_city_councils.py, which fails when a name is no longer on the page it cites (ar/data/app/ar-city-councils.json, 174 seats read 2026-10-16). Each seat says whether its ward's own voters or the whole city elect it, measured from the ballot because nothing the state publishes records it. The Arkansas Municipal League's statewide directory is not used: it gives no ward or position and disagreed with five of the twelve cities' own pages where both could be compared. Arkansas's other 482 cities and towns name nobody yet, recorded as gap ar-municipal-officeholders.",
       "url": "https://districtry.com/ar/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/ar/sources.html#catalog"
@@ -1745,6 +1756,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Arkansas — statewide. A point outside every city and town is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council ward or district containing the point, in the 12 Arkansas cities above 25,000 people that elect council members by ward, and the members its own voters elect. The members each ward's own voters elect, from the same city council roster the City or Town card reads (ar/data/app/ar-city-councils.json), written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py. Which seats a ward elects was measured from the ballot, and the builder's check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.",
+      "url": "https://districtry.com/ar/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — MUNICIPAL_WARDS, layer 50 of its Boundaries service: 852 wards of 262 cities and towns, measured 2026-10-16, of which the 56 wards of these twelve cities are pre-built by ar/scripts/build_ar_city_wards.py and shipped with the app. It carries the Arkansas GIS Office's copyright line, states no licence, and describes itself as not representing exact legal boundaries.",
+          "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/50"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 12 Arkansas cities above 25,000 people that elect council members by ward: Benton, Conway, Fayetteville, Fort Smith, Hot Springs, Little Rock, North Little Rock, Paragould, Pine Bluff, Russellville, Sherwood and Texarkana. The state's map carries wards for 250 more cities and towns. Seven of them are the other cities above 25,000, which elect every seat by the whole city, so a ward there elects no one of its own; the rest are not drawn because this app does not name those councils"
       }
     },
     {

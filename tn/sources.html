@@ -1160,7 +1160,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">18 layers — 6 political and legislative, 2 public safety, 4 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">19 layers — 7 political and legislative, 2 public safety, 4 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1169,7 +1169,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1232,6 +1232,28 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">Each county's own published list of its commission (in Nashville, the Metro Council), read every week, in the counties this app has reached so far; the county commission page lists them. Each county's list was checked against that county's own results of the 6 August 2026 election before its names were added. No state office publishes who sits on a county commission, so in every other county the card says the names are not on it yet; recorded as gap tn-county-commissioners.</td>
                 <td data-label="Where it applies">Tennessee — statewide, all 95 counties, 859 districts.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council district or ward containing the point, in the 11 Tennessee cities above 25,000 people whose districts are drawn, and the member its own voters elect. In Memphis a point lies in one district and one super district, and the card names the members of both.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.memphistn.gov/server/rest/services/Basemaps/Administrative_Boundaries/MapServer/1" target="_blank" rel="noopener">City of Memphis — Council Districts, layer 1 of its Administrative_Boundaries service, described as the districts of Ordinance 5870, signed 30 June 2023: 7 districts, read 2026-10-16, the district number read from its number field, because its name field names another district for six of the seven. Its credit line names the city's Engineering Division and states no licence.</a></li>
+                    <li><a href="https://gis.memphistn.gov/server/rest/services/Basemaps/Administrative_Boundaries/MapServer/2" target="_blank" rel="noopener">City of Memphis — Super Districts, layer 2 of the same service, described the same way: 2 super districts, read 2026-10-16. Its credit line names the city's Engineering Division and states no licence.</a></li>
+                    <li><a href="https://gis.mcgtn.org/arcgis/rest/services/CityWard/MapServer/1" target="_blank" rel="noopener">Clarksville and Montgomery County's shared GIS — City Wards, layer 1 of its CityWard service: 12 wards, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://publicmaps.franklintn.gov/arcgis/rest/services/Maps/GovernmentServices/MapServer/21" target="_blank" rel="noopener">City of Franklin — Ward Aldermen, layer 21 of its GovernmentServices service: 4 wards, read 2026-10-16, the ward number alone requested. It states no licence.</a></li>
+                    <li><a href="https://services3.arcgis.com/k6aQP9AQncZQEtBv/arcgis/rest/services/PSALayers/FeatureServer/86" target="_blank" rel="noopener">City of Jackson — Council Plan A Effective May 2023, layer 86 of its PSALayers service in the city's ArcGIS Online organization: 9 districts, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://gis.clevelandtn.gov/arcgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0" target="_blank" rel="noopener">City of Cleveland — City Council Districts, layer 0 of its CityCouncilDistricts service: 5 districts, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://arcweb.gallatin-tn.gov/arcgis/rest/services/Features/City_Council_Districts/MapServer/2" target="_blank" rel="noopener">City of Gallatin — City Council District Current, layer 2 of its City_Council_Districts service: 5 districts, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://services6.arcgis.com/ubRvNDgGwwJuZMcL/arcgis/rest/services/Wards_VL/FeatureServer/0" target="_blank" rel="noopener">City of Columbia — Wards, in the city's ArcGIS Online organization: 5 wards, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://utility.arcgis.com/usrsvcs/servers/621b088a06a84f16b412e25b8d127804/rest/services/Administration_City/FeatureServer/1" target="_blank" rel="noopener">City of Mt. Juliet GIS Division — Commissioner Districts, layer 1 of its Administration_City service: 4 districts, read 2026-10-16, the district number read from its own field. It states no licence.</a></li>
+                    <li><a href="https://services.arcgis.com/xhDV83hFoiDFnMbw/arcgis/rest/services/Morristown_Ward_Map/FeatureServer/0" target="_blank" rel="noopener">City of Morristown — City Wards, in the city's ArcGIS Online organization, described as updated with the city's redistricting in May 2026: 4 wards, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Council_Districts/FeatureServer/0" target="_blank" rel="noopener">City of Chattanooga — Council_Districts, a copy of its council districts the city publishes in its own ArcGIS Online organization, created 18 November 2025, after the date the city's map of them says they took effect (14 April 2025): 9 districts, read 2026-10-17, the district number alone requested. The copy the city's own map server calls authoritative cannot be read, because that server's robots.txt shuts this project out of its map services, and Hamilton County's copy withholds every shape. It states no licence.</a></li>
+                    <li><a href="https://services5.arcgis.com/I2fcoygeHRmx0WzS/arcgis/rest/services/PSALayers/FeatureServer/29" target="_blank" rel="noopener">Sumner County — City of Hendersonville Wards, layer 29 of the county's PSALayers service, a copy of the city's wards whose own population figures sum to the city's 2020 census count: 6 wards, read 2026-10-17, the ward number alone requested. The city's own map server answers a request for its robots.txt with HTTP 500, which this project reads as a refusal. It states no licence.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The member each district's own voters elect, from the same city council roster the City or Town card reads (tn/data/app/tn-city-councils.json), written down from each city's own pages and proved against them by tn/scripts/build_tn_city_councils.py. Which seats a district elects was read from each city's charter. Its check holds every drawn district to a seat its voters elect and every such seat to a drawn district, bar the two cities whose districts are not drawn.</td>
+                <td data-label="Where it applies">The 11 Tennessee cities above 25,000 people that elect council members by district or ward and publish a map that can be drawn: Chattanooga, Clarksville, Cleveland, Columbia, Franklin, Gallatin, Hendersonville, Jackson, Memphis, Morristown and Mount Juliet, Chattanooga's and Hendersonville's from a published copy because the map server each city runs cannot be read. Nashville's 35 Metropolitan Council districts are the County Commission District layer's. Knoxville and Lebanon elect by district or ward too and are not drawn: the only copy of Knoxville's districts published as data, from Knoxville and Knox County's mapping agency (KGIS), reserves all rights and allows no copy without its written permission; and Lebanon publishes its wards only as PDF files. Spring Hill and Bristol tie seats to districts or wards and elect every one by the whole city, so a district there would elect no one of its own.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1404,7 +1426,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 345 features for Tennessee (182 cities, 160 towns and 3 consolidated governments), measured 2026-10-10.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. Tennessee's cities and towns elect councils and boards, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap tn-municipal-officeholders.</td>
+                <td data-label="Who it names">In the 28 cities and towns above 25,000 people, the mayor and every council member, alderman or commissioner, written down from each city's own pages and proved against those pages by tn/scripts/build_tn_city_councils.py, which fails when a name is no longer on the page it cites (tn/data/app/tn-city-councils.json). Each seat says whether its district's own voters or the whole city elect it, read from each city's charter, because nothing the state publishes records it. Nashville's entry names its mayor and vice mayor, and its 40 council members are on the County Commission District card, which reads Davidson County's own list of them every week. Tennessee's other 317 cities and towns name nobody yet, recorded as gap tn-municipal-officeholders.</td>
                 <td data-label="Where it applies">Tennessee — statewide. A point outside every city and town is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1733,7 +1755,7 @@ table.matrix code {
       "@id": "https://districtry.com/tn/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The city or town containing the point, if any, and whether it is a consolidated city-county government. NO OFFICEHOLDER YET. Tennessee's cities and towns elect councils and boards, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap tn-municipal-officeholders.",
+      "description": "The city or town containing the point, if any, and whether it is a consolidated city-county government. In the 28 cities and towns above 25,000 people, the mayor and every council member, alderman or commissioner, written down from each city's own pages and proved against those pages by tn/scripts/build_tn_city_councils.py, which fails when a name is no longer on the page it cites (tn/data/app/tn-city-councils.json). Each seat says whether its district's own voters or the whole city elect it, read from each city's charter, because nothing the state publishes records it. Nashville's entry names its mayor and vice mayor, and its 40 council members are on the County Commission District card, which reads Davidson County's own list of them every week. Tennessee's other 317 cities and towns name nobody yet, recorded as gap tn-municipal-officeholders.",
       "url": "https://districtry.com/tn/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/tn/sources.html#catalog"
@@ -1748,6 +1770,83 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Tennessee — statewide. A point outside every city and town is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/tn/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council district or ward containing the point, in the 11 Tennessee cities above 25,000 people whose districts are drawn, and the member its own voters elect. In Memphis a point lies in one district and one super district, and the card names the members of both. The member each district's own voters elect, from the same city council roster the City or Town card reads (tn/data/app/tn-city-councils.json), written down from each city's own pages and proved against them by tn/scripts/build_tn_city_councils.py. Which seats a district elects was read from each city's charter. Its check holds every drawn district to a seat its voters elect and every such seat to a drawn district, bar the two cities whose districts are not drawn.",
+      "url": "https://districtry.com/tn/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/tn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Memphis — Council Districts, layer 1 of its Administrative_Boundaries service, described as the districts of Ordinance 5870, signed 30 June 2023: 7 districts, read 2026-10-16, the district number read from its number field, because its name field names another district for six of the seven. Its credit line names the city's Engineering Division and states no licence.",
+          "url": "https://gis.memphistn.gov/server/rest/services/Basemaps/Administrative_Boundaries/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Memphis — Super Districts, layer 2 of the same service, described the same way: 2 super districts, read 2026-10-16. Its credit line names the city's Engineering Division and states no licence.",
+          "url": "https://gis.memphistn.gov/server/rest/services/Basemaps/Administrative_Boundaries/MapServer/2"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Clarksville and Montgomery County's shared GIS — City Wards, layer 1 of its CityWard service: 12 wards, read 2026-10-16. It states no licence.",
+          "url": "https://gis.mcgtn.org/arcgis/rest/services/CityWard/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Franklin — Ward Aldermen, layer 21 of its GovernmentServices service: 4 wards, read 2026-10-16, the ward number alone requested. It states no licence.",
+          "url": "https://publicmaps.franklintn.gov/arcgis/rest/services/Maps/GovernmentServices/MapServer/21"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Jackson — Council Plan A Effective May 2023, layer 86 of its PSALayers service in the city's ArcGIS Online organization: 9 districts, read 2026-10-16. It states no licence.",
+          "url": "https://services3.arcgis.com/k6aQP9AQncZQEtBv/arcgis/rest/services/PSALayers/FeatureServer/86"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Cleveland — City Council Districts, layer 0 of its CityCouncilDistricts service: 5 districts, read 2026-10-16. It states no licence.",
+          "url": "https://gis.clevelandtn.gov/arcgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Gallatin — City Council District Current, layer 2 of its City_Council_Districts service: 5 districts, read 2026-10-16. It states no licence.",
+          "url": "https://arcweb.gallatin-tn.gov/arcgis/rest/services/Features/City_Council_Districts/MapServer/2"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Columbia — Wards, in the city's ArcGIS Online organization: 5 wards, read 2026-10-16. It states no licence.",
+          "url": "https://services6.arcgis.com/ubRvNDgGwwJuZMcL/arcgis/rest/services/Wards_VL/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Mt. Juliet GIS Division — Commissioner Districts, layer 1 of its Administration_City service: 4 districts, read 2026-10-16, the district number read from its own field. It states no licence.",
+          "url": "https://utility.arcgis.com/usrsvcs/servers/621b088a06a84f16b412e25b8d127804/rest/services/Administration_City/FeatureServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Morristown — City Wards, in the city's ArcGIS Online organization, described as updated with the city's redistricting in May 2026: 4 wards, read 2026-10-16. It states no licence.",
+          "url": "https://services.arcgis.com/xhDV83hFoiDFnMbw/arcgis/rest/services/Morristown_Ward_Map/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Chattanooga — Council_Districts, a copy of its council districts the city publishes in its own ArcGIS Online organization, created 18 November 2025, after the date the city's map of them says they took effect (14 April 2025): 9 districts, read 2026-10-17, the district number alone requested. The copy the city's own map server calls authoritative cannot be read, because that server's robots.txt shuts this project out of its map services, and Hamilton County's copy withholds every shape. It states no licence.",
+          "url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Council_Districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Sumner County — City of Hendersonville Wards, layer 29 of the county's PSALayers service, a copy of the city's wards whose own population figures sum to the city's 2020 census count: 6 wards, read 2026-10-17, the ward number alone requested. The city's own map server answers a request for its robots.txt with HTTP 500, which this project reads as a refusal. It states no licence.",
+          "url": "https://services5.arcgis.com/I2fcoygeHRmx0WzS/arcgis/rest/services/PSALayers/FeatureServer/29"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 11 Tennessee cities above 25,000 people that elect council members by district or ward and publish a map that can be drawn: Chattanooga, Clarksville, Cleveland, Columbia, Franklin, Gallatin, Hendersonville, Jackson, Memphis, Morristown and Mount Juliet, Chattanooga's and Hendersonville's from a published copy because the map server each city runs cannot be read. Nashville's 35 Metropolitan Council districts are the County Commission District layer's. Knoxville and Lebanon elect by district or ward too and are not drawn: the only copy of Knoxville's districts published as data, from Knoxville and Knox County's mapping agency (KGIS), reserves all rights and allows no copy without its written permission; and Lebanon publishes its wards only as PDF files. Spring Hill and Bristol tie seats to districts or wards and elect every one by the whole city, so a district there would elect no one of its own"
       }
     },
     {

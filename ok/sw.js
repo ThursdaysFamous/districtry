@@ -53,6 +53,7 @@ const GEOMETRY_URLS = [
   "./data/app/ok-commissioner-districts.json",
   "./data/app/ok-judicial-districts.json",
   "./data/app/ok-conservation-districts.json",
+  "./data/app/ok-city-wards.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -64,6 +65,7 @@ const ROSTER_URLS = [
   "./data/app/ok-house-members.json",
   "./data/app/ok-county-commissioners.json",
   "./data/app/ok-conservation-offices.json",
+  "./data/app/ok-city-councils.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

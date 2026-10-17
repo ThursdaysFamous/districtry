@@ -7960,3 +7960,335 @@ builders say so, and the builders refuse to write until the terms change.
   as long as districtry asks for sponsorship.
 - The letter says "84 conservation districts". Check it against
   `ok/data/app/ok-conservation-districts.json` on the day it goes.
+
+---
+
+## Ask tn-knoxville-council-districts — KGIS (Knoxville, Knox County and KUB's mapping agency): permission to show Knoxville's six council districts
+
+> **ASKED 2026-10-17** — sent by Adam at 13:09 UTC to KGIS at `kgis@kgis.org` (his sent folder,
+> read the same day by the Letters thread). No reply yet; the follow-up falls due about 7 November
+> 2026. Drafted the same day. The operator chose to ask on 2026-10-17, on a decision card in the
+> thread that drafted it, because the letter asks for a licence and commits districtry to
+> publishing a copy if the answer is yes. `kgis@kgis.org` is the "Contact us" address of KGIS's own
+> organisation on ArcGIS Online (read 2026-10-16). KGIS is the mapping agency the City of
+> Knoxville, Knox County and the Knoxville Utilities Board run together, and its Policy Board is
+> the body its terms name. The Letters thread found no earlier mail with kgis.org in the
+> operator's mailbox on 2026-10-17. Recorded as asked in gap `tn-municipal-officeholders` and in
+> the Tennessee row of `tn/WATCH.md` on 2026-10-17.
+>
+> **ADAM REWORDED IT BEFORE SENDING, AND THE LETTER BELOW IS THE DRAFT.** The Letters thread
+> compared the sent message with it the same day. The addressee, the request (the Policy Board's
+> authorization, or word that it is not available), outlines and district numbers only, the credit
+> and link on the card, the check every three months and the pointer to a City or Election
+> Commission copy went as drafted. Three things changed. The sent letter describes the copy as
+> "Download the six district outlines, slightly simplify the geometry, and host the file on
+> districtry.com for map rendering and district lookup", and no longer says that every reader's
+> browser downloads the file so anyone could save it. The sponsorship sentence reads "a
+> non-commercial project: it is free to use, runs no ads, sells no products, and relies solely on
+> optional sponsorships linked in the site footer to cover hosting costs". And "A no is also a
+> useful answer" was dropped. So a yes answers the letter as sent, and whether it covers a file
+> anyone can save is the operator's to decide when the answer comes.
+
+**Why this is asked.** Tennessee's map names the mayor and council of all 28 cities above 25,000
+people and draws the council districts of eleven of the thirteen that elect members by district
+(`tn/scripts/build_tn_city_wards.py`). Knoxville, which elects six of its nine council members
+from districts, is one of the two that are not drawn. The only copy of its districts published as
+data is KGIS's layer, "current as of December 22, 2025", whose terms say the KGIS Policy Board
+"reserves all rights thereto" and that no portion "may be reproduced in any form or by any means
+without the express written authorization of the KGIS Policy Board" (read 2026-10-16). So a
+Knoxville address gets a card saying the districts are not drawn, and the reader is left to find
+their council member some other way. The draft said plainly what drawing them involves: a
+simplified copy of the six outlines would be a file on districtry.com that every reader's browser
+downloads, so anyone could save it. It said so because a permission given without that
+description might not cover what districtry publishes. The letter as sent describes hosting the
+file "for map rendering and district lookup" and leaves that sentence out, so the question is
+open (see above).
+
+> Subject: Permission to show Knoxville's council districts on districtry.com
+>
+> Dear KGIS team,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Tennessee's map is at https://districtry.com/tn/.
+>
+> It names the mayor and council of every Tennessee city above 25,000 people, and it draws the
+> council districts of eleven of the thirteen that elect members by district. Knoxville is one of
+> the two it does not draw. The only copy of the six council districts I have found published as
+> data is KGIS's, and its terms say that no part of it may be reproduced without the written
+> authorization of the KGIS Policy Board. So I am writing to ask for that authorization, or to be
+> told it is not available.
+>
+> Here is exactly what showing the districts would involve. districtry would download the six
+> district outlines once, simplify them to within a few metres, and publish the simplified copy as
+> a file on districtry.com. Every reader's browser downloads that file to draw the map and to work
+> out which district a point is in, so the file would be available to anyone who looked for it. It
+> would carry only the outlines and the district numbers. The districts' card would credit KGIS
+> and link to your site, and districtry would check your layer every three months for a change.
+>
+> districtry is free to use, runs no advertising and sells nothing; it asks for sponsorship toward
+> its running costs, shown only in its footer.
+>
+> Would the KGIS Policy Board allow that? If it would, I will use any wording for the credit you
+> prefer. If the City of Knoxville or the Knox County Election Commission publishes a copy of the
+> districts for reuse, a pointer to it would answer this letter just as well. A no is also a useful
+> answer.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A written yes: recorded in the Board's own words, with its date, in
+`LICENSE-DATA.md` and in `tn/scripts/build_tn_city_wards.py`, which then reads KGIS's layer as a new
+source (after the host's robots.txt, requesting the district number alone) with Knoxville taken out
+of the council builder's `undrawn` table; any credit wording asked for goes on the card. A pointer
+to another published copy: read under that copy's own terms and measured against the 2020 census,
+as the two copies drawn on 2026-10-17 were. A no: recorded in the gap with its date, and the card
+keeps saying the districts are not drawn. No reply after the follow-up cadence: the gap records that
+KGIS was asked and did not answer.
+
+**Before sending:**
+
+- The operator chose to ask on 2026-10-17, knowing that a yes commits districtry to the
+  publication the letter describes.
+- Re-read KGIS's terms, the layer's "current as of" date and the Contact us address on the day it
+  goes.
+- Keep the sponsorship sentence as long as districtry asks for sponsorship.
+
+---
+
+## Ask tn-lebanon-ward-map — Wilson County Election Commission: Lebanon's six wards as a map file
+
+> **NOT YET ASKED — DRAFTED 2026-10-17.** To the Wilson County Election Commission at
+> `info@wilsontnvotes.gov` (telephone (615) 444-0216), the address its own website,
+> wilsontnvotes.gov, gives (read 2026-10-17, after the host's robots.txt). The commission
+> publishes Lebanon's ward maps as PDF files dated 22 October 2025, and Lebanon's own website
+> resets this project's connections, so the commission is the one office found publishing the
+> wards at all. The mailbox has not been searched for earlier correspondence with
+> wilsontnvotes.gov; do that before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17`
+> to `ASKED <date>` in gap `tn-municipal-officeholders` and in the Tennessee row of `tn/WATCH.md`.
+
+**Why this is asked.** Lebanon elects its mayor citywide and one council member from each of six
+wards. Its council is named on Tennessee's map and its wards are not drawn, because the only
+published copy is a set of pictures in PDF files, and this project does not trace pictures: a
+traced line is a guess about where a boundary runs, and a reader near the line would be given an
+answer nobody published. A map file of the six wards would let districtry draw them exactly; so
+would a pointer to the city's own copy if it publishes one.
+
+> Subject: Lebanon's ward boundaries as a map file
+>
+> Dear Wilson County Election Commission,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Tennessee's map is at https://districtry.com/tn/.
+>
+> It names Lebanon's mayor and council, but it cannot yet show Lebanon's six wards. The only copy
+> I have found is the set of ward maps on your website dated 22 October 2025, which are pictures in
+> PDF files. I do not trace pictures, because a traced line would be my guess about where the
+> boundary runs, and someone living near it could be shown the wrong ward.
+>
+> Would the commission be able to share the ward boundaries as a map file, such as a shapefile or
+> GeoJSON, or tell me where the City of Lebanon publishes one? districtry would simplify the
+> outlines to within a few metres, show them on the map credited to the commission (or the city),
+> and use nothing else from the file. I would also be grateful to know whether the 22 October 2025
+> maps show the wards in force today.
+>
+> A short answer is useful, including a no. If this is a question for the city rather than the
+> commission, I would be glad to be pointed there.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A file, or a pointer to a published one: read (after the host's
+robots.txt), held to Lebanon's Census outline and measured against the 2020 census as every drawn
+city's map was, then drawn by `tn/scripts/build_tn_city_wards.py` as a new source, with Lebanon taken
+out of the council builder's `undrawn` table. Any terms a file comes with are recorded with it. An
+answer on which maps are in force: recorded in the builder with its date. A no: recorded in the gap
+with its date, and the card keeps saying the wards are not drawn.
+
+**Before sending:**
+
+- Re-read the commission's website and confirm the address, the telephone number and the date on
+  the ward maps.
+
+---
+
+## Ask ok-lawton-ward-map — City of Lawton, City Clerk: which map shows the eight wards in force
+
+> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives the City
+> Clerk's office a telephone number, 580-581-3305, and a contact form, and no e-mail address (read
+> 2026-10-16). The draft goes in the operator's mailbox with the address field empty, which stops
+> it being sent by accident, and opens with a bracketed note naming the office, its telephone
+> number and the reason; it can go through the form or by post. The mailbox has not been searched
+> for earlier correspondence with the City of Lawton; do that before it goes. On send, change
+> `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `ok-municipal-officeholders`.
+
+**Why this is asked.** Lawton elects its mayor citywide and one council member from each of eight
+wards. Its council is named on Oklahoma's map and its wards are not drawn, because the only ward
+map the city publishes as data may not be the map in force. That layer (CouncilWard, on the city's
+ArcGIS Online organisation, its data last edited 2 July 2026) still carries 2010-census population
+fields, and measured against the 2020 census on 2026-10-16 its wards do not divide the population
+evenly: leaving out Ward 2, which holds Fort Sill and 18,668 people, they hold from 9,180 to 12,570
+against an even share of 11,296, and the layer's own population figures disagree with its lines.
+Every Oklahoma city map that is drawn holds its city's people within 5.3% of an even share. A city
+can keep a map this uneven, and a newer map can go unpublished; only the city can say which is the
+case here. Drawing the wrong map would tell some readers they live in a ward they do not.
+
+> [No e-mail address published. City of Lawton, City Clerk's Office, 580-581-3305. The city's
+> website offers a contact form; send through it or by post.]
+>
+> Subject: Which map shows Lawton's eight council wards?
+>
+> Dear City Clerk,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Oklahoma's map is at https://districtry.com/ok/.
+>
+> It names Lawton's mayor and council members, and I would like it to show the eight wards too, so
+> that someone can find their ward from their address. The city publishes a ward map as data (the
+> CouncilWard layer on its ArcGIS Online site), but I am not sure it is the map in force: it still
+> carries population figures from the 2010 census, and on the 2020 census its wards hold quite
+> different numbers of people. Rather than guess, I am asking.
+>
+> Is the CouncilWard layer the ward map in force today? If it is not, is the current map published
+> anywhere, as data or as a document, and when did it take effect?
+>
+> A short answer is useful, including a pointer to whoever looks after the ward map.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** "That layer is current": it is drawn as published, and the city's word
+is recorded in `ok/scripts/build_ok_city_wards.py` with its date in place of the balance measurement
+Lawton fails; only the ward number and outline are requested, never the layer's member name and
+contact fields. A pointer to a newer map published as data: read after the host's robots.txt,
+measured like the others, and drawn. A newer map published only as a picture: recorded and not
+traced. No reply after the follow-up cadence: the gap records that the city was asked, and the card
+keeps saying the wards are not drawn.
+
+**Before sending:**
+
+- Re-read the city's contact page and confirm the telephone number and the form.
+- Re-read the layer's last-edit date on the day it goes. If it has moved, re-measure first, since
+  the answer may already be published.
+
+---
+
+## Ask ok-csa-ward-layers — OU Center for Spatial Analysis: the same terms question for its Municipal_Wards and School_District_Wards layers
+
+> **NOT YET ASKED — DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
+> follow-up of Ask ok-csa-precinct-terms, which went to Dr Chengbin Deng with Dr Todd Fagin copied
+> and is due its follow-up around 2026-10-22. It rides that follow-up because it is the same
+> question about the same publisher, and a second letter to the same two people a week apart would
+> be one too many. The text was also sent to the Letters thread on 2026-10-17, because this file
+> will not reach `main` before the follow-up is due. On send, record it beside that follow-up in
+> gaps `ok-municipal-officeholders` and `ok-school-board-members`.
+
+**Why this is asked.** Two of Oklahoma's undrawn maps wait on the centre's terms. Muskogee elects
+its mayor citywide and two council members from each of four wards; its council is named on the
+map, from the county election board's results and the Muskogee Phoenix's reports, and its wards are
+not drawn, because the city's website shuts this project out in its robots.txt and the city
+publishes no other copy this project may read. The centre's statewide Municipal_Wards layer, in the
+same ArcGIS Online organisation as the precinct maps, carries Muskogee's wards and those of the ten
+other Oklahoma cities above 25,000 people that elect by ward. Nine of those ten are drawn from their
+own maps and stay that way, and Lawton's question is for the city (Ask ok-lawton-ward-map), so the
+centre's copy would be used for Muskogee alone. The centre's School_District_Wards layer (360 zones
+in 70 school districts, last edited 3 March 2025) is the only map found of the zones Oklahoma's
+school board members are elected from or must live in; in eleven districts, 59 seats, its VOTE_BY
+field reads "Office", which is inferred and not established to mean that only the zone's voters
+elect the seat. Oklahoma's school board district layer waits on this answer.
+
+> P.S. Two more of the centre's layers, if I may, on the same question. The Municipal_Wards layer
+> is the only published copy of Muskogee's four council wards I can use, because the City of
+> Muskogee's website does not allow automated reading, and the School_District_Wards layer is the
+> only map I have found of Oklahoma's school board zones. Whatever the answer on the precinct maps,
+> could you tell me whether districtry may show those two layers on the same terms, simplified and
+> credited to the centre? districtry would use only the outlines and their names and numbers.
+
+**What each answer means.** Yes: Muskogee's wards are read from the Municipal_Wards layer (after
+the host's robots.txt, requesting the ward fields alone), held to the city's Census outline and
+measured against the 2020 census like every other drawn city, then drawn by
+`ok/scripts/build_ok_city_wards.py`, with Muskogee taken out of the council builder's `undrawn`
+table and the centre credited; and Oklahoma gains its school board district layer from the
+School_District_Wards layer, with what VOTE_BY means checked against 70 O.S. § 5-107A before any
+card says who votes for a seat. No, or no answer: recorded in both gaps beside the precinct answer,
+and the cards keep saying the wards and zones are not drawn.
+
+---
+
+## Ask sc-anderson-council-districts — City of Anderson, Planning and Development: the six council districts as a map file
+
+> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives Planning and
+> Development at 601 South Main Street, Anderson, SC 29624, telephone (864) 231-2222, and the City
+> Council's office at 401 South Main Street, telephone (864) 231-1135, and no e-mail address for
+> either (read 2026-10-16). It goes to Planning and Development as the department most likely to
+> keep the city's maps (inferred; the Council's office is the other choice). The draft goes in the operator's mailbox with the address field empty,
+> which stops it being sent by accident, and opens with a bracketed note naming the office, its
+> telephone number and the reason; it can go by post or after a call. The mailbox has not been
+> searched for earlier correspondence with the City of Anderson; do that before it goes. On send,
+> change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `sc-municipal-officeholders`.
+
+**Why this is asked.** Anderson elects its mayor and two council members citywide and six from
+districts. Its council is named on South Carolina's map and its districts are not drawn, because the
+city publishes them only as pictures in PDF files dated 16 September 2024, and this project does not
+trace pictures. The city's own map server has an ElectionInformation service with nothing in it, and
+the state Revenue and Fiscal Affairs Office's statewide map of municipal council districts, which
+draws 238 districts in 40 municipalities, leaves Anderson out. A map file from the city would let
+districtry draw the districts exactly, and if the city also sent it to the Revenue and Fiscal
+Affairs Office (`mapping@rfa.sc.gov`), Anderson would be on the state's map too, for everyone who
+uses it.
+
+> [No e-mail address published. City of Anderson, Planning and Development, 601 South Main Street,
+> Anderson, SC 29624, (864) 231-2222. Send by post, or call first and ask where to send it.]
+>
+> Subject: Anderson's council districts as a map file
+>
+> Dear Planning and Development team,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> South Carolina's map is at https://districtry.com/sc/.
+>
+> It names Anderson's mayor and council, but it cannot yet show the six council districts. The only
+> copies I have found are the district maps on the city's website dated 16 September 2024, which
+> are pictures in PDF files. I do not trace pictures, because a traced line would be my guess about
+> where the boundary runs, and someone living near it could be shown the wrong district. The state's
+> map of municipal council districts, published by the Revenue and Fiscal Affairs Office, does not
+> include Anderson either.
+>
+> Would the city be able to share the six districts as a map file, such as a shapefile or GeoJSON,
+> or publish them on its map server? districtry would simplify the outlines to within a few metres,
+> show them credited to the city, and use nothing else from the file. Sending the same file to the
+> Revenue and Fiscal Affairs Office would put Anderson on the state's map as well.
+>
+> A short answer is useful, including a no, and so is a pointer to whoever looks after the district
+> map.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A file, or districts published on the city's map server: read (after the
+host's robots.txt), held to Anderson's Census outline and measured against the 2020 census as the
+twelve drawn places' maps were, then drawn by `sc/scripts/build_sc_city_wards.py` as a new source,
+with Anderson taken out of the council builder's `undrawn` table. If Anderson appears on the state's
+map instead, it is held to the same tests before it is used. A no: recorded in the gap with its date, and the card keeps saying
+the districts are not drawn.
+
+**Before sending:**
+
+- Re-read the city's Planning and Development page and confirm the address and telephone number.
+- Check the state's municipal council district map for Anderson on the day it goes; if Anderson has
+  been added, measure it before sending.
