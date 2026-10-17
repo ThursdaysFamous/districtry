@@ -77,7 +77,9 @@ const GEOCODER_STUB_FEATURE = {
   // rather than on the strip-and-retry path it exists to prove.
   geometry: { type: "Point", coordinates: [-86.1626, 39.7686] },
   properties: {
-    housenumber: "100",
+    // the typed number: an answer without it shows the street instead of
+    // a row (ENGINE geocoder-search runAddressSearch)
+    housenumber: "200",
     street: "W Washington St",
     city: "Capital City",
     state: "Indiana",

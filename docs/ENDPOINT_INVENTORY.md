@@ -37,8 +37,13 @@ per-app measurement, so the two cannot disagree.
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
 only when a reader pastes one or shares one into the installed app,
-and answers with the full link it leads to. `build_privacy_page.py`
-names it as a recipient.
+and answers with the full link it leads to.
+Every app also sends it, at `?a=`, **the street address a map link carried**
+when the map's own search knows the street and not the house number,
+and it asks the U.S. Census Bureau's geocoder where that number falls.
+No served file names the Census host, because only the lookup asks it.
+`build_privacy_page.py` names the lookup and the Census Bureau as
+recipients.
 
 ### Basemap tiles — 3 host(s)
 
