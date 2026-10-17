@@ -1635,7 +1635,7 @@
     {
      "email": "butlerjailky@gmail.com",
      "first": "Kelli Lynn",
-     "last": "Fugateeeeeeeeeeeee",
+     "last": "Fugate",
      "phone": "(270) 526-3505",
      "title": "County Jailer"
     },
@@ -1645,6 +1645,13 @@
      "last": "Givens",
      "phone": "(270) 999-3015",
      "title": "County Magistrate"
+    },
+    {
+     "email": "bctreasurer@butlercountyky.gov",
+     "first": "Drema",
+     "last": "Hughes",
+     "phone": "(270) 526-3433",
+     "title": "County Treasurer"
     },
     {
      "email": "sherrye.johnson@ky.gov",
@@ -1659,13 +1666,6 @@
      "last": "Jones",
      "phone": "(270) 526-3342",
      "title": "County Coroner"
-    },
-    {
-     "email": "bctreasurer@butlercountyky.gov",
-     "first": "Drema",
-     "last": "Nicewinter",
-     "phone": "(270) 526-3433",
-     "title": "County Treasurer"
     },
     {
      "email": "kphelps@butlercoky.com",
@@ -12303,7 +12303,7 @@
  },
  "source": {
   "publisher": "Kentucky Department for Local Government",
-  "read": "2026-10-11",
+  "read": "2026-10-15",
   "url": "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm"
  }
 }
