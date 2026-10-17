@@ -840,7 +840,12 @@ jobs:
           # added — it was regenerated before the cut and never added, so the
           # dates this job moves went uncommitted.
           python3 scripts/build_sitemap.py
-          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html about.html sitemap.xml
+          # docs/EAM_STATUS.md counts the places this roster names, so a
+          # refresh that moves a count fails the smoke gate's
+          # `build_eam_status.py --check` on this PR unless it is rebuilt here,
+          # after the cut onto main (#1572 went red that way on 2026-10-15).
+          python3 scripts/build_eam_status.py
+          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update municipal and township officials rosters from the county clerk directories"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,
