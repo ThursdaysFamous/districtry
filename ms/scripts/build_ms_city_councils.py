@@ -108,14 +108,17 @@ carried. Addresses are compared without regard to case, and one is carried as
 the page first prints it. A mayor carries an address only where the council
 page prints the mayor's entry (Olive Branch and Horn Lake); a mayor's own page
 is read for the name, and to count what it prints again, never for an address
-to carry. The build stops on a person with two addresses of their own (the
-card shows one); on an address among the members that the page hides behind a
-script (Cloudflare's e-mail protection), which this reader does not undo,
-although builders elsewhere in the fleet do (Illinois's since 2026-08-08): no
-page read here on 2026-10-17 hides one, so the stop leaves the first one to a
-person; and on a link among the members with no text of its own unless the
-same entry prints that address as text, because whose an untexted link is
-cannot be read.
+to carry. An address a page scrambles with Cloudflare's e-mail protection is
+read the way the script Cloudflare adds to the page writes it back for every
+visitor, because the page hands every visitor the key: Adam ruled on
+2026-10-09 that this reads the page as published and is not a lock
+(wi/scripts/wi_alderperson_scraper.py records the ruling), and what it decodes
+to is then read like any other link or text. No page read here on 2026-10-17
+scrambles one. The build stops on a person with two addresses of their own
+(the card shows one); on a scrambled address this reader cannot decode; and
+on a link among the members with no text of its own unless the same entry
+prints that address as text, because whose an untexted link is cannot be
+read.
 Hattiesburg prints each member's address in a card of its own below its list
 of members, so it is read card by card: a card must carry exactly one seat
 line, and the name above that line must be the one the list gives the seat.
@@ -167,6 +170,7 @@ import unicodedata
 import urllib.parse
 import urllib.request
 from datetime import date
+from html import unescape
 from html.parser import HTMLParser
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -329,33 +333,53 @@ class _Text(HTMLParser):
     """The page's visible text, one line per block element. Beside it, `mail`
     holds (line, address, has text, card) for every mailto: link: the line its
     text starts on, or for a link with no text of its own (an icon) the line
-    after it; `hidden` holds the line of every address the page hides behind
-    a script (Cloudflare's e-mail protection), which this reader does not
-    undo; and with
-    `card`, a class name, `cards` holds the (first line, stop) of every div
-    carrying that class, and `card` in a mark is the card it is inside."""
+    after it. An address scrambled with Cloudflare's e-mail protection is read
+    as the script Cloudflare adds to the page writes it back: a link to
+    CF_LINK opens the address its token encodes, and an element of class
+    CF_CLASS is replaced by the address its data-cfemail token encodes, as
+    text. With `card`, a class name, `cards` holds the (first line, stop) of
+    every div carrying that class, and `card` in a mark is the card it is
+    inside. `label` names the page in an error."""
 
-    def __init__(self, card=None):
+    def __init__(self, card=None, label="the page"):
         HTMLParser.__init__(self, convert_charrefs=True)
         self.skip = 0
         self.buf = []
         self.lines = []
         self.mail = []
-        self.hidden = []
         self.link = None
         self.card = card
         self.cards = []
         self.depth = 0
         self.card_first = None
+        self.label = label
+        self.cf = None
+
+    def cf_text(self, a):
+        """True, with its address put in the text, for an element the script
+        replaces with the address it encodes."""
+        if self.skip or a.get("data-cfemail") is None or \
+                CF_CLASS not in (a.get("class") or "").split():
+            return False
+        self.buf.append(cf_decode(a["data-cfemail"], self.label))
+        return True
 
     def handle_starttag(self, tag, attrs):
+        if self.cf:
+            # Inside an element replaced by its address: nothing in it is read.
+            if tag == self.cf[0]:
+                self.cf[1] += 1
+            return
+        a = dict(attrs)
+        if self.cf_text(a):
+            self.cf = [tag, 1]
+            return
         if tag in SKIP_TAGS:
             self.skip += 1
         if tag in BLOCK_TAGS:
             self.flush()
         if self.skip:
             return
-        a = dict(attrs)
         if tag == "div" and self.card:
             if self.depth:
                 self.depth += 1
@@ -364,14 +388,23 @@ class _Text(HTMLParser):
         href = (a.get("href") or "").strip()
         if tag == "a" and href.lower().startswith("mailto:"):
             self.link = (len(self.lines), mailto_address(href))
-        if "/cdn-cgi/l/email-protection" in href or "data-cfemail" in a:
-            self.hidden.append(len(self.lines))
+        elif tag == "a" and CF_LINK in href:
+            self.link = (len(self.lines), mailto_address(
+                "mailto:" + cf_decode(href.split(CF_LINK, 1)[1], self.label)))
 
     def handle_startendtag(self, tag, attrs):
+        if self.cf or self.cf_text(dict(attrs)):
+            return
         if tag in BLOCK_TAGS:
             self.flush()
 
     def handle_endtag(self, tag):
+        if self.cf:
+            if tag == self.cf[0]:
+                self.cf[1] -= 1
+                if not self.cf[1]:
+                    self.cf = None
+            return
         if tag in SKIP_TAGS and self.skip:
             self.skip -= 1
         if tag in BLOCK_TAGS:
@@ -389,7 +422,7 @@ class _Text(HTMLParser):
                 self.cards.append((self.card_first, len(self.lines)))
 
     def handle_data(self, data):
-        if not self.skip:
+        if not self.skip and not self.cf:
             self.buf.append(data)
 
     def flush(self):
@@ -399,9 +432,9 @@ class _Text(HTMLParser):
         self.buf = []
 
 
-def page_lines(html):
+def page_lines(html, label="the page"):
     """The visible text of a page, one line per block element."""
-    t = _Text()
+    t = _Text(label=label)
     t.feed(html)
     t.close()
     t.flush()
@@ -430,13 +463,41 @@ def office_mailbox(address):
     return re.sub(r"[._\-]", "", address.split("@", 1)[0].lower()) in OFFICE_MAILBOXES
 
 
-def page_text(html, card=None):
-    """(lines, marks, cards, hidden) for a page: its lines as page_lines reads
-    them; every place it prints an e-mail address, as (line, address, has
-    text, card), a link and an address printed as text each counting once;
-    the (first line, stop) of every card carrying the class `card`; and the
-    lines where the page hides an address behind a script."""
-    t = _Text(card)
+# Cloudflare's e-mail protection writes an address into the page as a hex
+# token whose first byte is the key every later byte is XOR'd with, inside a
+# link to CF_LINK or in the data-cfemail of an element of class CF_CLASS, and
+# the script it adds to the page writes the address back for every visitor.
+CF_LINK = "/cdn-cgi/l/email-protection#"
+CF_CLASS = "__cf_email__"
+
+
+def cf_decode(token, label):
+    """What a Cloudflare token encodes, as the script writes it back: the bytes
+    after the key read as UTF-8 (one character a byte where they are not), and
+    any character reference in them resolved, as the script's pass through a
+    link attribute resolves it. The reader then reads that as a link's target
+    or as text. Raises on a token that is not hex or holds no key, since what
+    it encodes cannot be read; the message names `label`, never the token."""
+    try:
+        raw = bytes.fromhex(token)
+    except ValueError:
+        raw = b""
+    if not raw:
+        raise SystemExit("%s: the page scrambles an e-mail address with Cloudflare's e-mail "
+                         "protection in a form this reader cannot decode" % label)
+    out = bytes(b ^ raw[0] for b in raw[1:])
+    try:
+        return unescape(out.decode("utf-8"))
+    except UnicodeDecodeError:
+        return unescape(out.decode("latin-1"))
+
+
+def page_text(html, card=None, label="the page"):
+    """(lines, marks, cards) for a page: its lines as page_lines reads them;
+    every place it prints an e-mail address, as (line, address, has text,
+    card), a link and an address printed as text each counting once; and the
+    (first line, stop) of every card carrying the class `card`."""
+    t = _Text(card, label)
     t.feed(html)
     t.close()
     t.flush()
@@ -445,7 +506,7 @@ def page_text(html, card=None):
         k = next((k for k, (first, stop) in enumerate(t.cards) if first <= i < stop), None)
         for m in EMAIL_TEXT.finditer(ln):
             marks.append((i, m.group(0), True, k))
-    return t.lines, marks, t.cards, t.hidden
+    return t.lines, marks, t.cards
 
 
 # ---------------------------------------------------------------------------
@@ -835,13 +896,12 @@ def address_count(marks, mayor_marks):
     return count
 
 
-def read_emails(c, marks, hidden, mayor_marks, windows, say=None):
+def read_emails(c, marks, mayor_marks, windows, say=None):
     """{name key: address} for a city that declares `emails` and an `end`: a
     person's address is in their entry (entry_windows), from the lines that
     print their seat and name, which may be a link themselves, up to the
     next person's. An address printed for two people, or anywhere else on
-    the pages read, is the office's. Raises where the page hides an address
-    among its members behind a script. A link with no text of its own (an
+    the pages read, is the office's. A link with no text of its own (an
     icon, or Gulfport's empty link beside one member's address) is read
     only where the entry it falls in also prints its address with text,
     since which entry an icon belongs to cannot be read from the page's
@@ -849,9 +909,6 @@ def read_emails(c, marks, hidden, mayor_marks, windows, say=None):
     if not windows:
         raise SystemExit("%s: no member's entry is found" % c["name"])
     top, bottom = windows[0][2], windows[-1][4]
-    if any(top <= line <= bottom for line in hidden):
-        raise SystemExit("%s: the page hides an address among its members behind a script, "
-                         "which this reader does not undo" % c["name"])
     for line, address, texted, _ in marks:
         if texted or not top <= line <= bottom:
             continue
@@ -870,7 +927,7 @@ def read_emails(c, marks, hidden, mayor_marks, windows, say=None):
     return emails_floor(c, out, offices, say)
 
 
-def read_card_emails(c, lines, marks, cards, hidden, mayor_marks, by_seat, say=None):
+def read_card_emails(c, lines, marks, cards, mayor_marks, by_seat, say=None):
     """{name key: address} for a city that declares `cards`: each member's
     address is in a card of its own. A card is a member's when it prints one
     seat line, and the name on its lines above that is the name the page
@@ -900,9 +957,6 @@ def read_card_emails(c, lines, marks, cards, hidden, mayor_marks, by_seat, say=N
         if name_key(" ".join(body[:i])) != by_seat[seat]:
             raise SystemExit("%s %s: the card for this seat names someone other than the "
                              "person the page names for it" % (c["name"], seat))
-        if any(first <= line < stop for line in hidden):
-            raise SystemExit("%s %s: the card hides this person's address behind a script, "
-                             "which this reader does not undo" % (c["name"], seat))
         own, office = own_address(c, seat, [mk for mk in marks if mk[3] == k], count)
         offices += office
         if own:
@@ -941,7 +995,7 @@ def read_city(c, council_html, mayor_html, read_date, say=None):
         return rec
     rec["read"] = read_date
     rec["seats"] = []
-    lines, marks, cards, hidden = page_text(council_html, (c.get("cards") or (None,))[0])
+    lines, marks, cards = page_text(council_html, (c.get("cards") or (None,))[0], c["name"])
     by_seat = {}
     for seat, raw in member_readings(lines, c["members"]):
         by_seat.setdefault(seat, []).append(raw)
@@ -951,7 +1005,8 @@ def read_city(c, council_html, mayor_html, read_date, say=None):
         raise SystemExit("%s: the page prints seats the city does not declare: %s"
                          % (c["name"], ", ".join(extra)))
     page, how, pattern = c["mayor"]
-    mlines = page_lines(mayor_html) if page == "mayor" else lines
+    mlines = page_lines(mayor_html, c["name"] + " (the mayor's page)") if page == "mayor" \
+        else lines
     mayor = settle(c["name"], "Mayor", mayor_readings(mlines, how, pattern))
     rec["seats"].append({"seat": "Mayor", "name": mayor} if mayor
                         else {"seat": "Mayor", "vacant": True})
@@ -965,18 +1020,19 @@ def read_city(c, council_html, mayor_html, read_date, say=None):
     if len(keys) != len(set(keys)):
         raise SystemExit("%s: one name is carried for two seats" % c["name"])
     if "phones" in c or "emails" in c:
-        mlines, mmarks = page_text(mayor_html)[:2] if mayor_html else ([], [])
+        mlines, mmarks = page_text(mayor_html, label=c["name"] + " (the mayor's page)")[:2] \
+            if mayor_html else ([], [])
         named = [s for s in rec["seats"] if s.get("name")]
         numbers, addresses = {}, {}
         if "cards" in c:
-            addresses = read_card_emails(c, lines, marks, cards, hidden, mmarks,
+            addresses = read_card_emails(c, lines, marks, cards, mmarks,
                                          {s["seat"]: name_key(s["name"]) for s in named}, say)
         else:
             windows = entry_windows(c, lines, {name_key(s["name"]): s["seat"] for s in named})
             if "phones" in c:
                 numbers = read_phones(c, lines, mlines, windows, say)
             if "emails" in c:
-                addresses = read_emails(c, marks, hidden, mmarks, windows, say)
+                addresses = read_emails(c, marks, mmarks, windows, say)
         for s in named:
             own = numbers.get(name_key(s["name"]))
             if own:
@@ -1328,22 +1384,53 @@ def selftest():
     # office's, and so is an office's mailbox wherever it is printed.
     def mail(addr, text=None):
         return "<a href='mailto:%s'>%s</a>" % (addr, addr if text is None else text)
+
+    def plain(addr):
+        return addr
+    # The same page scrambled the way Cloudflare's e-mail protection scrambles
+    # one: a link's target becomes a token in a link to CF_LINK, and an address
+    # printed as text, inside a link or not, an element of class CF_CLASS
+    # carrying its token. cf_hex is this test's own encoder, so cf_decode is
+    # also held to tokens worked out by hand: key 0x42, then "a@b.co"; and key
+    # 0x00, then the one byte 0xf6, which is not UTF-8 and so reads as "ö".
+    def cf_hex(addr, key=0x5a):
+        return "%02x" % key + "".join("%02x" % (b ^ key) for b in addr.encode("utf-8"))
+
+    def cf_shown(addr):
+        return ("<span class='__cf_email__' data-cfemail='%s'>[email&#160;protected]</span>"
+                % cf_hex(addr))
+
+    def cf_mail(addr, text=None):
+        return "<a href='/cdn-cgi/l/email-protection#%s'>%s</a>" % (
+            cf_hex(addr), cf_shown(addr) if text is None else text)
+
+    def cf_plain(addr):
+        return ("<a href='/cdn-cgi/l/email-protection' class='__cf_email__' "
+                "data-cfemail='%s'>[email&#160;protected]</a>" % cf_hex(addr))
+    ok("cf_decode of a token worked out by hand", cf_decode("422302206c212d", "t"), "a@b.co")
+    ok("cf_decode of a byte that is not UTF-8", cf_decode("00f6", "t"), "\xf6")
+    ok("cf_decode reads UTF-8 and resolves a character reference",
+       cf_decode(cf_hex("jö&#64;b.co"), "t"), "jö@b.co")
     ce = dict(cp_mayor, phones=0, emails=3)
-    mail_page = html(["Staff: " + mail("clerk@example.invalid"),
-                      "Pat Doe", ", Mayor", mail("Pat.Doe@Example.invalid?subject=Hello", "Email"),
-                      "Lee Roe", "Alderman-At-Large", "lee@example.invalid",
-                      mail("board@example.invalid", "The board"),
-                      mail("kim@example.invalid", "Kim Poe"), "Ward I",
-                      mail("kim@example.invalid"), mail("shared@example.invalid", "Email"),
-                      "Jo Moe", "Pro-Tem, Ward II", mail("jo@example.invalid", "Email"),
-                      mail("shared@example.invalid", "Email"),
-                      "City Hall", "jo@example.invalid"])
-    rec = read_city(ce, mail_page.replace(
-        "<p>lee@example.invalid</p>", "<p><a href='mailto:lee@example.invalid'></a></p>"
-        "<p>lee@example.invalid</p>"), "", "2026-10-17")
+
+    def mail_page(m, t):
+        return html(["Staff: " + m("clerk@example.invalid"),
+                     "Pat Doe", ", Mayor", m("Pat.Doe@Example.invalid?subject=Hello", "Email"),
+                     "Lee Roe", "Alderman-At-Large", m("lee@example.invalid", ""),
+                     t("lee@example.invalid"), m("board@example.invalid", "The board"),
+                     m("kim@example.invalid", "Kim Poe"), "Ward I",
+                     m("kim@example.invalid"), m("shared@example.invalid", "Email"),
+                     "Jo Moe", "Pro-Tem, Ward II", m("jo@example.invalid", "Email"),
+                     m("shared@example.invalid", "Email"),
+                     "City Hall", "Write to " + t("jo@example.invalid") + " any time"])
+    rec = read_city(ce, mail_page(mail, plain), "", "2026-10-17")
     ok("addresses on each person", [(s["seat"], s.get("email")) for s in rec["seats"]],
        [("Mayor", "Pat.Doe@Example.invalid"), ("At Large", "lee@example.invalid"),
         ("Ward 1", "kim@example.invalid"), ("Ward 2", None)])
+    ok("a scrambled page's text and addresses", page_text(mail_page(cf_mail, cf_plain)),
+       page_text(mail_page(mail, plain)))
+    ok("a scrambled page's record", read_city(ce, mail_page(cf_mail, cf_plain), "",
+                                              "2026-10-17"), rec)
     rec = read_city(dict(ce, mayor=("mayor", "line", r"^Mayor (?P<name>.+)$"), emails=1),
                     html(["Lee Roe", "Alderman-At-Large", mail("lee@example.invalid"),
                           "Kim Poe", "Ward I", mail("kim@example.invalid", "Email"),
@@ -1365,9 +1452,13 @@ def selftest():
             ("a link with no text beside another address",
              ["<a href='mailto:lee@example.invalid'></a>", mail("lee.roe@example.invalid")], 0,
              "no text of its own"),
-            ("an address hidden behind a script",
-             ["<a href='/cdn-cgi/l/email-protection#0a'>[email protected]</a>"], 0,
-             "behind a script"),
+            ("a scrambled link whose token is not hex",
+             ["<a href='/cdn-cgi/l/email-protection#zz'>Email</a>"], 0, "cannot decode"),
+            ("a scrambled address whose token is not hex",
+             ["<span class='__cf_email__' data-cfemail='5a3x'>[email protected]</span>"], 0,
+             "cannot decode"),
+            ("a scrambled link that opens no address", [cf_mail("Lee Roe", "Email")], 0,
+             "opens an address this reader does not read"),
             ("fewer people with an address than the floor", [mail("lee@example.invalid")], 2,
              "fewer than the 2")]:
         try:
@@ -1381,19 +1472,34 @@ def selftest():
                 fails.append("%s: the message prints an address" % label)
     # Addresses, read by card: a card is matched to its seat's person by the
     # name it prints above its seat line, and an icon's link is the card's.
-    def card(first, last, job, *links):
+    def icon(addr, href="mailto:%s"):
+        return ("<a href='%s' title='Email'><img alt='Email' src='x.png'/></a>"
+                % (href % addr))
+
+    def cf_icon(addr):
+        return icon(cf_hex(addr), "/cdn-cgi/l/email-protection#%s")
+
+    def card(first, last, job, *links, **how):
         return ("<div class='member'><div><span>%s</span> <span>%s</span></div>"
                 "<div>%s</div><div>%s</div></div>" % (first, last, job, "".join(
-                    "<a href='mailto:%s' title='Email'><img alt='Email' src='x.png'/></a>" % a
-                    for a in links)))
+                    how.get("icon", icon)(a) for a in links)))
     cc = dict(c4, cards=("member", r"^Ward (?P<ward>\d{1,2}) Council(?:wo)?man$"), emails=2)
     top = "<p>Mayor Pat Doe</p><p>Ward 1 – Kim Poe</p><p>Ward 2 – Jo Moe</p>"
-    cards = (card("Kim", "Poe", "Ward 1 Councilman", "kim@example.invalid") +
-             card("Jo", "Moe", "Ward 2 Councilwoman", "jo@example.invalid", "clerk@example.invalid") +
-             "<div class='member'><div>Council Clerk</div></div>" + "<p>%s</p>" % mail("clerk@example.invalid"))
-    rec = read_city(cc, "<html><body>" + top + cards + "</body></html>", "", "2026-10-17")
+
+    def card_page(i, m):
+        return ("<html><body>" + top +
+                card("Kim", "Poe", "Ward 1 Councilman", "kim@example.invalid", icon=i) +
+                card("Jo", "Moe", "Ward 2 Councilwoman", "jo@example.invalid",
+                     "clerk@example.invalid", icon=i) +
+                "<div class='member'><div>Council Clerk</div></div>" +
+                "<p>%s</p>" % m("clerk@example.invalid") + "</body></html>")
+    rec = read_city(cc, card_page(icon, mail), "", "2026-10-17")
     ok("addresses on each card", [(s["seat"], s.get("email")) for s in rec["seats"]],
        [("Mayor", None), ("Ward 1", "kim@example.invalid"), ("Ward 2", "jo@example.invalid")])
+    ok("a scrambled card page's text and addresses", page_text(card_page(cf_icon, cf_mail), "member"),
+       page_text(card_page(icon, mail), "member"))
+    ok("a scrambled card page's record", read_city(cc, card_page(cf_icon, cf_mail), "",
+                                                   "2026-10-17"), rec)
     for label, body, why in [
             ("a card naming another person",
              card("Jo", "Moe", "Ward 1 Councilman", "kim@example.invalid") +
@@ -1428,8 +1534,9 @@ def selftest():
         return 1
     print("OK selftest: seat labels, re-casing, the name test, the four page shapes, five "
           "refusals, the seat labels a page prints, each person's numbers and five refusals "
-          "of them, each person's address read by entry and by card and nine refusals of "
-          "them")
+          "of them, each person's address read by entry and by card and eleven refusals of "
+          "them, and two pages read the same scrambled by Cloudflare's e-mail protection as "
+          "not")
     return 0
 
 

@@ -308,11 +308,14 @@ carry one: Olive Branch's and Horn Lake's mayors and aldermen, the seven members
 Tupelo, Madison, Pearl and Brandon, and the five each of Hattiesburg and Meridian. Horn Lake's are
 named for the seat rather than the person, Madison's and one of Gulfport's are at domains other
 than the city's, and Hattiesburg prints them in a card for each member, which is read card by card
-and held to the name its list gives the seat. The build stops on two addresses for one person, on
-an address the page hides behind a script, and on a link with no text of its own that its entry
-does not also print. A hidden address is not undone here, although builders elsewhere in the fleet
-undo it (Illinois's since 2026-08-08); no page read on 2026-10-17 hides one, so the stop leaves the
-first one to a person. Jackson, Southaven, Biloxi, Clinton and Oxford print
+and held to the name its list gives the seat. An address a page scrambles with Cloudflare's e-mail
+protection is read the way the script Cloudflare adds to the page writes it back, because Adam ruled
+on 2026-10-09 that the scrambling is not an access control (the page hands every visitor the key;
+`wi/scripts/wi_alderperson_scraper.py` records the ruling), and it is then judged like any other
+address. No page read on 2026-10-17 scrambles one, and those 25 pages, scrambled the way Cloudflare
+does, build the same file (measured that day). The build stops on two addresses for one person, on
+a scrambled address it cannot decode, and on a link with no text of its own that its entry does not
+also print. Jackson, Southaven, Biloxi, Clinton and Oxford print
 none inside a member's entry. No staff member is named, and no staff member's number or address is
 carried. The Mississippi Municipal League's member pages list members by title with no ward and no
 date, and are not used.
