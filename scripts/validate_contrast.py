@@ -456,6 +456,10 @@ TRAFFIC_PAIRS = [
     ("s1",          "paper",       "ui",   ".barrow .bar in the six panels, which sit on the page ground, and .meter .fill"),
     ("s1",          "s1-track",    "ui",   ".meter .fill against its own track. The track reads against the fill and NOT against the page (1.01:1 on --paper light, 1.60:1 dark), so the bar's EXTENT is stated by a 1px --slate border rather than by the track itself — measured by the slate-on-paper row above"),
     ("s2",          "panel",       "ui",   "the interaction series: the chart's second column, its .legend .swatch and .tooltip .dot"),
+    ("s3",          "panel",       "ui",   "Bing's segment in the per-day sources chart (.dayrow .stack i), inside a --panel .chartcard"),
+    ("s3",          "paper",       "ui",   "Bing's .legend .swatch above the per-day sources chart, on the page ground"),
+    ("s4",          "panel",       "ui",   "Yahoo's segment in the per-day sources chart (.dayrow .stack i), inside a --panel .chartcard"),
+    ("s4",          "paper",       "ui",   "Yahoo's .legend .swatch above the per-day sources chart, on the page ground"),
     # Gridlines are the 1.4.11 exemption the criterion spells out: the marks
     # that carry the data are gated above, and a reader needs no gridline to
     # read a bar's length or a column's height.
