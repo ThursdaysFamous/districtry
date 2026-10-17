@@ -14,14 +14,17 @@ Where the photo carries a name in its alt text, its surname must equal the
 name's ("Roseanne Ward" photo over "Rosanne Ward"); "Image Not Available"
 photos are not compared.
 
-PRIVACY: the cells print street addresses, towns, ZIPs and phones that are the
-members' own; none is read. Every mailto link on the roster is off the
+PRIVACY: the cells print street addresses, towns, ZIPs and phones. The phones
+are recorded as printed, under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is; only
+telephone-shaped numbers are read from a cell, never its address, town or
+ZIP. Every mailto link on the roster is off the
 county's domain (gmail, yahoo, bellsouth, charter), and several plainly belong
 to someone else (the link over Nicholas Horton's name is a bcos.org address
 for another person, Barry Holland's a bctnso.org address for another person,
 Keith Arnold's, Bret Burke's, Terry Kiehn's and Jerry Price's other people's
 personal addresses, and two photo links share one address), so no e-mail is
-recorded. No phone is recorded.
+recorded.
 
 Names are kept as the page prints them. The page prints "Barry Holland" and
 "Sam Shaw"; the results print "Holland, Berry R." and "Shaw, Samuel".
@@ -37,7 +40,7 @@ Miller 231); D3 Furr 409, Burke 373, Shaw 277; D4 Melton 357, Green 304, Kirk
 218, Williams 215, Anderson 146); D6 Kiehn 509, Price 475, Murphy 436. The
 page itself carries no date."""
 import re
-from ._common import txt, district_number, member
+from ._common import txt, district_number, member, read_phones
 
 COUNTY = "Benton"; FIPS = "005"
 DOMAINS = ("bentoncountytn.gov",)
@@ -75,7 +78,7 @@ def read_cell(d, cell):
         raise ValueError("%s District: %r's cell has %d photos" % (d, name, len(alts)))
     if alts[0] != "Image Not Available" and surname(alts[0]) != surname(name):
         raise ValueError("%s District: photo %r does not match name %r" % (d, alts[0], name))
-    return member(name)
+    return member(name, phones=read_phones(cell))
 
 
 def parse(pages):

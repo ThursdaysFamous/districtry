@@ -11,21 +11,27 @@ heading names, and the parser checks that page is the one the commission page
 links under that name; nothing is read from order.
 
 PRIVACY: the address and phone in every block are the member's own (some are
-labelled Home, Cell or a business office) and are never recorded. Only an
-e-mail on madisoncountytn.gov whose local part contains the member's surname is
-recorded, because the blocks also carry personal addresses (aol, bellsouth,
+labelled Home, Cell or a business office). The phones are recorded as printed,
+each label kept in front of its number ("home (731) ...", "office (731) ..."),
+under Adam's ruling of 2026-10-17 that a number a government publishes beside
+an official ships whosever line it is; a number labelled Fax is not kept. Only
+telephone-shaped numbers are read from a block; the address is never read. The
+commission office's line on the commission page and the county's line printed
+at the foot of every page are OFFICE_LINES and never land on a member. Only an
+e-mail on madisoncountytn.gov whose local part contains the member's surname
+is recorded, because the blocks also carry personal addresses (aol, bellsouth,
 yahoo, a business domain), hidden mailto links left over from a former member
 ("Email Luther T. Mercer" inside Tina Mercer's and Mike Bailey's blocks), and
-Julie Wiser's link points to the commission coordinator's address
-(smcclain@), which is read off the commission page and never attached to a
-member. Juanita Jones's link is written "mailto:mailto%20jjones@..." and is
-cleaned to the address it plainly is.
+Julie Wiser's link points to the commission coordinator's address (smcclain@),
+which is read off the commission page and never attached to a member. Juanita
+Jones's link is written "mailto:mailto%20jjones@..." and is cleaned to the
+address it plainly is.
 
 Currency: the Madison County Election Commission's election-night summary of
 6 August 2026 (scanned, read as an image) gives the same 25 winners by
 district."""
 import re
-from ._common import txt, mailtos, district_number, member
+from ._common import txt, mailtos, district_number, member, read_phones
 
 COUNTY = "Madison"; FIPS = "113"
 DOMAINS = ("madisoncountytn.gov",)
@@ -48,6 +54,9 @@ URLS = [
 SEATS = {"1": 2, "2": 3, "3": 2, "4": 3, "5": 3, "6": 2, "7": 2, "8": 2,
          "9": 3, "10": 3}
 AT_LARGE = 0
+# The commission office's line (commission page) and the county's line printed
+# at the foot of every page.
+OFFICE_LINES = ("(731) 988-3110", "731-988-3960")
 
 SUFFIX = {"jr", "sr", "ii", "iii", "iv"}
 
@@ -115,7 +124,7 @@ def parse(pages):
                     email = a
                     break
                 raise ValueError("%s: county address %r does not look like %r's" % (url, a, name))
-            found.append(member(name, email=email))
+            found.append(member(name, email=email, phones=read_phones(blk)))
         if not found:
             raise ValueError("%s: no members found" % url)
         districts[str(d)] = found

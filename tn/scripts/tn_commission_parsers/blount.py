@@ -37,17 +37,22 @@ read. The county says vacant, so it is recorded vacant.
 Roles: "Chairman" and "Vice Chairman" are recorded. "Parliamentarian" (on
 Tanner Jones) is not a commission office and is dropped.
 
-Left out for privacy: every per-member phone (individual numbers, none the
-commission office's (865) 273-5830, with no label calling them office lines).
-E-mails are kept only on blounttn.gov."""
+Phones: the phone line a seat prints between its name and its e-mail is
+recorded as printed (16 of the 20 members print one), under Adam's ruling of
+2026-10-17 that a number a government publishes beside an official ships
+whosever line it is. None is the commission office's (865) 273-5830, which
+OFFICE_LINES keeps off every record. The page prints no address. E-mails are
+kept only on blounttn.gov."""
 import re
-from ._common import lines, member, vacant, county_email, district_number
+from ._common import lines, member, vacant, county_email, district_number, read_phones
 
 COUNTY = "Blount"; FIPS = "009"
 DOMAINS = ("blounttn.gov",)
 URLS = ["https://blounttn.gov/835/Commissioners"]
 SEATS = {"1": 2, "2": 2, "3": 2, "4": 3, "5": 2, "6": 2, "7": 2, "8": 2, "9": 2, "10": 2}
 AT_LARGE = 0
+# The commission office's own line.
+OFFICE_LINES = ("865-273-5830",)
 
 HEADER = re.compile(r'<th scope="col"[^>]*>\s*District\s+(\d{1,2})\s*</th>')
 SECTION_END = re.compile(r'class="newCP"|id="gbsContainerTS"')
@@ -84,13 +89,14 @@ def read_section(n, ls):
         if x == "Vacant":
             seats.append(vacant())
         elif EMAIL.match(x):
-            j = i - 1
+            j, phones = i - 1, []
             if j >= 0 and PHONE.match(ls[j]):
+                phones = read_phones(ls[j], strict=True)
                 j -= 1
             if j < 0:
                 raise ValueError("District %s: an e-mail %r with no name above it" % (n, x))
             name, role = split_name(ls[j])
-            seats.append(member(name, role=role, email=county_email([x], DOMAINS)))
+            seats.append(member(name, role=role, email=county_email([x], DOMAINS), phones=phones))
     committees = sum(1 for x in ls if x == "Committees")
     if committees != len(seats):
         raise ValueError("District %s: %d seat blocks (Committees widgets) but %d seats read"

@@ -25,10 +25,12 @@ names none. The caption is still checked, so the page changing shape raises:
 it must be a commission office and name exactly one member in the text blocks.
 Daniel Reece's caption is empty (and hidden).
 
-PRIVACY: every seat on the page prints a personal phone and/or a personal
-e-mail (gmail, yahoo, live). No member has an address on the county's own
-domain, so no e-mail and no phone is recorded; only the seat line and the
-name are read.
+PRIVACY: every seat on the page prints a phone and/or a personal e-mail
+(gmail, yahoo, live). The phones are recorded as printed, in the page's
+order, under Adam's ruling of 2026-10-17 that a number a government
+publishes beside an official ships whosever line it is. No member has an
+address on the county's own domain, so no e-mail is recorded. The page
+prints no address.
 
 Currency: checked 2026-10-11 against the Cocke County Election Commission's
 results of the 6 August 2026 County General election ("State of Tennessee -
@@ -46,7 +48,7 @@ Jonanthon Templin (sic on the ballot; unopposed), Post 2 Donnie E Raines
 D7 Post 1 Tim Layman (324-266), Post 2 Clayton (Skip) Ellison (387-216). The
 spellings differ only by middle names, initials and nicknames."""
 import re
-from ._common import txt, mailtos, member, ROLE
+from ._common import txt, mailtos, member, ROLE, read_phones, Withheld
 
 COUNTY = "Cocke"; FIPS = "029"
 DOMAINS = ("cockecountytn.gov",)
@@ -91,7 +93,8 @@ def parse(pages):
         if cur:
             seat = "Post " + cur["post"]
             districts.setdefault(cur["d"], []).append(
-                member(cur["name"], seat=seat, email=_own_email(cur["name"], cur["mail"])))
+                member(cur["name"], seat=seat, email=_own_email(cur["name"], cur["mail"]),
+                       phones=cur["phones"]))
 
     for b in BLOCK_RE.finditer(page, s, e):
         for p in PARA_RE.finditer(b.group(1)):
@@ -105,7 +108,8 @@ def parse(pages):
                 if key in seen:
                     raise ValueError("District %s Post %s is printed twice" % key)
                 seen.add(key)
-                cur = {"d": h.group(1), "post": h.group(2), "name": None, "mail": []}
+                cur = {"d": h.group(1), "post": h.group(2), "name": None, "mail": [],
+                       "phones": []}
                 continue
             if re.search(r"\bDistrict\b|\bPost \d", t):
                 raise ValueError("a line names a district but is not 'District N Post M': %r" % t)
@@ -120,7 +124,9 @@ def parse(pages):
                 cur["mail"].append(t)
                 cur["mail"].extend(mailtos(raw))
             elif PHONE_RE.match(t):
-                pass                                # personal phones: never read
+                got = read_phones(raw, strict=True)
+                if not isinstance(cur["phones"], Withheld):     # one withheld number holds them all
+                    cur["phones"] = got if isinstance(got, Withheld) else cur["phones"] + got
             else:
                 raise ValueError("District %s Post %s: unexpected line under %r"
                                  % (cur["d"], cur["post"], cur["name"]))

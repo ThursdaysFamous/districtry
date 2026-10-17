@@ -20,9 +20,13 @@ mailbox copied into the wrong block raises instead of shipping. The mailto
 links are written with HTML character references and are decoded.
 
 PRIVACY: every block also prints a per-member phone (tel: link and "Phone:"
-line). Nothing on the page says they are county lines, and they are not the
-County Mayor's office number the page gives as the commission's point of
-contact (423-586-1931), so no phone is recorded.
+line). Nothing on the page says they are county lines. They are recorded as
+printed, under Adam's ruling of 2026-10-17 that a number a government
+publishes beside an official ships whosever line it is; a block whose tel:
+link dials something other than its "Phone:" line keeps that member's number
+off the record. The County Mayor's office number the page gives as the
+commission's point of contact (423-586-1931) and its fax are OFFICE_LINES and
+never land on a member. The page prints no member address.
 
 Role: "Chair" is recorded where the title prints it (Stan Harville,
 District 10). The county's committee list effective September 2026 also
@@ -71,13 +75,15 @@ election results were compared, so that these fourteen are the August 2026
 winners rests on the GIS edit of 30 September 2026 and the post-September
 seating, not on the count."""
 import re
-from ._common import txt, mailtos, county_email, member
+from ._common import txt, mailtos, county_email, member, read_phones
 
 COUNTY = "Hamblen"; FIPS = "063"
 DOMAINS = ("hamblencountytn.gov", "co.hamblen.tn.us")
 URLS = ["https://hamblencountytn.gov/county-commission/"]
 SEATS = {str(i): 1 for i in range(1, 15)}
 AT_LARGE = 0
+# The County Mayor's office phone and fax, the commission's point of contact.
+OFFICE_LINES = ("423-586-1931", "423-585-4699")
 
 BLOCK = re.compile(r'<div class="fusion-person person\b')
 NAME_RE = re.compile(r'<span class="person-name">(.*?)</span>', re.S)
@@ -115,5 +121,5 @@ def parse(pages):
         if email and email.lower() != "district%s@co.hamblen.tn.us" % d:
             raise ValueError("%r (District %s) carries %r, not that district's mailbox"
                              % (name, d, email))
-        districts[d] = [member(name, role=role, email=email)]
+        districts[d] = [member(name, role=role, email=email, phones=read_phones(b[:co.end()]))]
     return {"districts": districts, "atLarge": []}

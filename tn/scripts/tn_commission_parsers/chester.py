@@ -14,13 +14,18 @@ from order. Empty spacer columns are skipped; a column with text and no
 elects there.
 
 PRIVACY: every column prints a street address, town and ZIP, a phone (most
-labelled "Cell") and an "Email" link. None of it is recorded. The e-mail
-links are all off the county's domain (outlook, gmail, yahoo, bellsouth,
-charter, icloud, fhu.edu, and Tim Crowe's tcrowe@hendersontn.gov, a City of
-Henderson address, not the county's), and Ann Moore's name is itself wrapped
-in a link to another person's bellsouth address. The page's only county
-address (trustee@chestercountytn.org in the footer) is not a member's. No
-e-mail and no phone is recorded.
+labelled "Cell") and an "Email" link. The phone is recorded as printed, a
+"Cell" label kept in front of its number, under Adam's ruling of 2026-10-17
+that a number a government publishes beside an official ships whosever line
+it is; only telephone-shaped numbers are read from a column, never its
+address, town or ZIP. The county's own line, (731) 989-5672, printed in the
+page's header and its Contact Us block, is in OFFICE_LINES and never lands on
+a member. The e-mail links are all off the county's domain (outlook, gmail,
+yahoo, bellsouth, charter, icloud, fhu.edu, and Tim Crowe's
+tcrowe@hendersontn.gov, a City of Henderson address, not the county's), and
+Ann Moore's name is itself wrapped in a link to another person's bellsouth
+address. The page's only county address (trustee@chestercountytn.org in the
+footer) is not a member's. No e-mail is recorded.
 
 Currency: checked 2026-10-11 against the Chester County Election
 Commission's own results page (votechestercountytn.gov/results/, "Unofficial
@@ -36,13 +41,15 @@ Seaton, Sr" and "Dylan R. Clayton"; the page's spellings are kept. District
 1's second seat was decided by 8 votes on the unofficial count. The page
 itself carries no date."""
 import re
-from ._common import txt, district_number, member
+from ._common import txt, district_number, member, read_phones
 
 COUNTY = "Chester"; FIPS = "023"
 DOMAINS = ("chestercountytn.org",)
 URLS = ["https://chestercountytn.org/county_commission.html"]
 SEATS = {str(i): 2 for i in range(1, 7)}
 AT_LARGE = 0
+# The county's own line, in the page header and its Contact Us block.
+OFFICE_LINES = ("(731) 989-5672",)
 
 HEAD = re.compile(r"<h5>\s*(District\s+\d{1,2})\s*</h5>")
 COL = re.compile(r'<div class="col-sm-4">')
@@ -83,7 +90,7 @@ def parse(pages):
                 raise ValueError("District %s section holds %r titled District %s" % (d, name, titles))
             if not NAME.match(name) or re.search(r"\bvacan", name, re.I):
                 raise ValueError("District %s: %r does not look like a name" % (d, name))
-            seats.append(member(name))
+            seats.append(member(name, phones=read_phones(col)))
         if len(seats) != SEATS.get(d):
             raise ValueError("District %s section has %d members, the county elects %s"
                              % (d, len(seats), SEATS.get(d)))

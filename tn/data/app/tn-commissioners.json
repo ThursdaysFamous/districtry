@@ -4,45 +4,51 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://andersoncountytn.gov/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 16,
   "domains": [
    "andersoncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Chad McNabb"
+     "name": "Chad McNabb",
+     "phone": "(865) 306-3781"
     },
     {
      "email": "twandell@andersoncountytn.gov",
-     "name": "Tracy Wandell"
+     "name": "Tracy Wandell",
+     "phone": "(865) 388-0921"
     }
    ],
    "2": [
     {
      "email": "mfoster@andersoncountytn.gov",
-     "name": "Michael Foster"
+     "name": "Michael Foster",
+     "phone": "(865) 803-4813"
     },
     {
      "email": "dpalmer@andersoncountytn.gov",
-     "name": "Denise Palmer"
+     "name": "Denise Palmer",
+     "phone": "(865) 805-3357"
     }
    ],
    "3": [
     {
      "email": "sgray@andersoncountytn.gov",
-     "name": "Shannon Gray"
+     "name": "Shannon Gray",
+     "phone": "(865) 696-9462"
     },
     {
      "email": "svandagriff@andersoncountytn.gov",
-     "name": "Shelly Vandagriff"
+     "name": "Shelly Vandagriff",
+     "phone": "(865) 680-8369"
     }
    ],
    "4": [
     {
-     "name": "Shain Vowell"
+     "name": "Shain Vowell",
+     "phone": "(865) 806-8608"
     },
     {
      "name": "Tim Isbel"
@@ -50,11 +56,13 @@
    ],
    "5": [
     {
-     "name": "Robert McKamey"
+     "name": "Robert McKamey",
+     "phone": "(865) 258-9327"
     },
     {
      "email": "jpack@andersoncountytn.gov",
-     "name": "Jeff Pack"
+     "name": "Jeff Pack",
+     "phone": "(865) 457-4272"
     }
    ],
    "6": [
@@ -64,23 +72,27 @@
     },
     {
      "email": "awells@andersoncountytn.gov",
-     "name": "Aaron Wells"
+     "name": "Aaron Wells",
+     "phone": "(865) 898-7471"
     }
    ],
    "7": [
     {
      "email": "scapshaw@andersoncountytn.gov",
-     "name": "Sharon Bourgeois-Capshaw"
+     "name": "Sharon Bourgeois-Capshaw",
+     "phone": "(865) 660-9250"
     },
     {
      "email": "sverran@andersoncountytn.gov",
-     "name": "Stephen Verran"
+     "name": "Stephen Verran",
+     "phone": "(865) 414-4083"
     }
    ],
    "8": [
     {
      "email": "jcook@andersoncountytn.gov",
-     "name": "Jawrell Cook"
+     "name": "Jawrell Cook",
+     "phone": "(865) 483-6605"
     },
     {
      "vacant": true
@@ -93,12 +105,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.bedfordcountytn.gov/government/board_of_commissioners.php",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 18,
   "domains": [
    "bedfordcountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -106,78 +117,98 @@
     },
     {
      "email": "eric.maddox@bedfordcountytn.gov",
-     "name": "Eric Maddox"
+     "name": "Eric Maddox",
+     "phone": "615-417-0078"
     }
    ],
    "2": [
     {
-     "name": "Michael Gregory"
+     "name": "Michael Gregory",
+     "phone": "615-426-8787"
     },
     {
-     "name": "Roy Turner"
+     "name": "Roy Turner",
+     "phone": "931-703-7173"
     }
    ],
    "3": [
     {
-     "name": "Alex Mitchell"
+     "name": "Alex Mitchell",
+     "phone": "931-619-9845"
     },
     {
-     "name": "Jason P. Sanders"
+     "name": "Jason P. Sanders",
+     "phone": "931-224-6512"
     }
    ],
    "4": [
     {
      "email": "anita.epperson4@bedfordcountytn.gov",
-     "name": "Anita Epperson"
+     "name": "Anita Epperson",
+     "phone": "931-580-8907"
     },
     {
      "email": "diane.neeley@bedfordcountytn.gov",
-     "name": "Diane Neeley"
+     "name": "Diane Neeley",
+     "phone": "931-607-8053"
     }
    ],
    "5": [
     {
-     "name": "Brent E. Smith"
+     "name": "Brent E. Smith",
+     "phone": "615-668-9894"
     },
     {
-     "name": "Brian K. Bruce"
+     "name": "Brian K. Bruce",
+     "phone": "931-212-3676"
     }
    ],
    "6": [
     {
-     "name": "David Deason"
+     "name": "David Deason",
+     "phone": "931-205-0071"
     },
     {
-     "name": "Jennifer Templeton"
+     "name": "Jennifer Templeton",
+     "phone": "615-308-7431"
     }
    ],
    "7": [
     {
      "email": "keith.davis@bedfordcountytn.gov",
-     "name": "Keith Davis"
+     "name": "Keith Davis",
+     "phone": "931-703-4471"
     },
     {
      "email": "sylvia.pinson@bedfordcountytn.gov",
-     "name": "Sylvia Pinson"
+     "name": "Sylvia Pinson",
+     "phone": "931-580-9696"
     }
    ],
    "8": [
     {
      "email": "john.boutwell@bedfordcountytn.gov",
-     "name": "John Boutwell"
+     "name": "John Boutwell",
+     "phone": "931-607-9881"
     },
     {
      "email": "jason.boyette@bedfordcountytn.gov",
-     "name": "Jason Boyette"
+     "name": "Jason Boyette",
+     "phone": "931-580-4413"
     }
    ],
    "9": [
     {
      "email": "mark.thomas@bedfordcountytn.gov",
-     "name": "Mark Thomas"
+     "name": "Mark Thomas",
+     "phone": "931-684-1105"
     },
     {
-     "name": "P.T. \"Biff\" Farrar"
+     "name": "P.T. \"Biff\" Farrar",
+     "phone": "931-684-2987",
+     "phonesExtra": [
+      "931-580-0118"
+     ]
     }
    ]
   }
@@ -187,77 +218,94 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://bentoncountytn.gov/county_commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 18,
   "domains": [
    "bentoncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Keith Arnold"
+     "name": "Keith Arnold",
+     "phone": "(731) 571-9267"
     },
     {
-     "name": "Nicholas Horton"
+     "name": "Nicholas Horton",
+     "phone": "(731) 220-2228"
     },
     {
-     "name": "Phil Davis"
+     "name": "Phil Davis",
+     "phone": "(731) 441-0993"
     }
    ],
    "2": [
     {
-     "name": "Tim Vick"
+     "name": "Tim Vick",
+     "phone": "(731) 441-9833"
     },
     {
-     "name": "Randy Shannon"
+     "name": "Randy Shannon",
+     "phone": "(731) 441-9147"
     },
     {
-     "name": "Rocky Presson"
+     "name": "Rocky Presson",
+     "phone": "(731) 441-8639"
     }
    ],
    "3": [
     {
-     "name": "Bret Burke"
+     "name": "Bret Burke",
+     "phone": "(731) 441-9947"
     },
     {
-     "name": "Sam Shaw"
+     "name": "Sam Shaw",
+     "phone": "(731) 441-7881"
     },
     {
-     "name": "Gary Furr"
+     "name": "Gary Furr",
+     "phone": "(731) 697-0717"
     }
    ],
    "4": [
     {
-     "name": "Dakota Green"
+     "name": "Dakota Green",
+     "phone": "(731) 924-8798"
     },
     {
-     "name": "Larry Kirk"
+     "name": "Larry Kirk",
+     "phone": "(731) 441-1182"
     },
     {
-     "name": "Phil Melton"
+     "name": "Phil Melton",
+     "phone": "(731) 441-5082"
     }
    ],
    "5": [
     {
-     "name": "Barry Holland"
+     "name": "Barry Holland",
+     "phone": "(731) 584-6145"
     },
     {
-     "name": "Mike Nunnery"
+     "name": "Mike Nunnery",
+     "phone": "(731) 694-5831"
     },
     {
-     "name": "Rosanne Ward"
+     "name": "Rosanne Ward",
+     "phone": "(731) 697-5210"
     }
    ],
    "6": [
     {
-     "name": "Terry Kiehn"
+     "name": "Terry Kiehn",
+     "phone": "(731) 441-3419"
     },
     {
-     "name": "Jerry Price"
+     "name": "Jerry Price",
+     "phone": "(731) 676-3559"
     },
     {
-     "name": "Jeff Murphy"
+     "name": "Jeff Murphy",
+     "phone": "(615) 887-3197"
     }
    ]
   }
@@ -267,37 +315,41 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://blounttn.gov/835/Commissioners",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 21,
   "domains": [
    "blounttn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "jhannah@blounttn.gov",
-     "name": "Jessica Hannah"
+     "name": "Jessica Hannah",
+     "phone": "865-978-7049"
     },
     {
      "email": "ksudderth@blounttn.gov",
-     "name": "Keenan Sudderth"
+     "name": "Keenan Sudderth",
+     "phone": "865-229-6545"
     }
    ],
    "2": [
     {
      "email": "makard@blounttn.gov",
-     "name": "Mike Akard"
+     "name": "Mike Akard",
+     "phone": "865-982-6369"
     },
     {
      "email": "joe.cooper@blounttn.gov",
-     "name": "Joe Cooper"
+     "name": "Joe Cooper",
+     "phone": "865-404-5488"
     }
    ],
    "3": [
     {
      "email": "tjones@blounttn.gov",
-     "name": "Tanner Jones"
+     "name": "Tanner Jones",
+     "phone": "865-414-7391"
     },
     {
      "email": "nporter@blounttn.gov",
@@ -307,11 +359,13 @@
    "4": [
     {
      "email": "rbennett@blounttn.gov",
-     "name": "Robbie Bennett"
+     "name": "Robbie Bennett",
+     "phone": "865-806-8869"
     },
     {
      "email": "rsimerly@blounttn.gov",
-     "name": "Robert Simerly"
+     "name": "Robert Simerly",
+     "phone": "865-250-5423"
     },
     {
      "vacant": true
@@ -324,38 +378,45 @@
     },
     {
      "email": "rcarver@blounttn.gov",
-     "name": "Rick Carver"
+     "name": "Rick Carver",
+     "phone": "865-964-9945"
     }
    ],
    "6": [
     {
      "email": "nbright@blounttn.gov",
      "name": "Nick Bright",
+     "phone": "865-254-0637",
      "role": "Chairman"
     },
     {
      "email": "mddavis@blounttn.gov",
-     "name": "Misty Davis"
+     "name": "Misty Davis",
+     "phone": "865-363-1001"
     }
    ],
    "7": [
     {
      "email": "seffler@blounttn.gov",
-     "name": "Shannon Effler"
+     "name": "Shannon Effler",
+     "phone": "865-207-9692"
     },
     {
      "email": "jsatterfield@blounttn.gov",
-     "name": "Jasmine Satterfield"
+     "name": "Jasmine Satterfield",
+     "phone": "865-229-6525"
     }
    ],
    "8": [
     {
      "email": "rshields@blounttn.gov",
-     "name": "Roy Shields"
+     "name": "Roy Shields",
+     "phone": "865-977-7837"
     },
     {
      "email": "jjopling@blounttn.gov",
      "name": "Jeff Jopling",
+     "phone": "865-719-9480",
      "role": "Vice Chairman"
     }
    ],
@@ -372,11 +433,13 @@
    "10": [
     {
      "email": "dmoore@blounttn.gov",
-     "name": "Doug Moore"
+     "name": "Doug Moore",
+     "phone": "865-228-9888"
     },
     {
      "email": "dwells@blounttn.gov",
-     "name": "David Wells"
+     "name": "David Wells",
+     "phone": "865-221-7603"
     }
    ]
   }
@@ -386,21 +449,22 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://bradleycountytn.gov/county-government/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "bradleycountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "dbeaty@bradleycountytn.gov",
-     "name": "Daniel Beaty"
+     "name": "Daniel Beaty",
+     "phone": "(423) 740-8109"
     },
     {
      "email": "mhughes@bradleycountytn.gov",
-     "name": "Mike Hughes"
+     "name": "Mike Hughes",
+     "phone": "(423) 595-1005"
     }
    ],
    "2": [
@@ -410,13 +474,15 @@
     },
     {
      "email": "lalford@bradleycountytn.gov",
-     "name": "Louie Alford"
+     "name": "Louie Alford",
+     "phone": "(423) 284-7738"
     }
    ],
    "3": [
     {
      "email": "mblake@bradleycountytn.gov",
-     "name": "Milan Blake"
+     "name": "Milan Blake",
+     "phone": "(423) 218-2262"
     },
     {
      "email": "dennycollins@bradleycountytn.gov",
@@ -436,21 +502,25 @@
    "5": [
     {
      "email": "bgoins@bradleycountytn.gov",
-     "name": "Bobby Goins"
+     "name": "Bobby Goins",
+     "phone": "(423) 618-5046"
     },
     {
      "email": "cslater@bradleycountytn.gov",
-     "name": "Cindy Slater"
+     "name": "Cindy Slater",
+     "phone": "423-339-7364"
     }
    ],
    "6": [
     {
      "email": "tmason@bradleycountytn.gov",
-     "name": "Tim Mason"
+     "name": "Tim Mason",
+     "phone": "(423) 280-4132"
     },
     {
      "email": "tommyledford@bradleycountytn.gov",
-     "name": "Tommy Ledford"
+     "name": "Tommy Ledford",
+     "phone": "(423) 902-4239"
     }
    ],
    "7": [
@@ -470,12 +540,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://cannoncountytn.gov/county-commissioners/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 10,
   "domains": [
    "cannoncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -493,7 +562,8 @@
     },
     {
      "email": "Marty.Williams@CannonCountyTN.gov",
-     "name": "Marty Williams"
+     "name": "Marty Williams",
+     "phone": "(615) 456-0068"
     }
    ],
    "3": [
@@ -530,71 +600,88 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://cheathamcountytn.gov/commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 12,
   "domains": [
    "cheathamcountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "calton.blacker@cheathamcountytn.gov",
-     "name": "Calton Blacker"
+     "name": "Calton Blacker",
+     "phone": "(615) 948-8360"
     },
     {
      "email": "david.anderson@cheathamcountytn.gov",
-     "name": "David Anderson"
+     "name": "David Anderson",
+     "phone": "(615) 430-4357"
     }
    ],
    "2": [
     {
      "email": "randy.noe@cheathamcountytn.gov",
-     "name": "Randy Noe"
+     "name": "Randy Noe",
+     "phone": "(615) 979-9170"
     },
     {
      "email": "tim.williamson@cheathamcountytn.gov",
-     "name": "Tim Williamson"
+     "name": "Tim Williamson",
+     "phone": "(615) 746-0239",
+     "phonesExtra": [
+      "cell (615) 708-7861"
+     ]
     }
    ],
    "3": [
     {
      "email": "bj.hudspeth@cheathamcountytn.gov",
-     "name": "B.J. Hudspeth"
+     "name": "B.J. Hudspeth",
+     "phone": "(615) 812-3934"
     },
     {
      "email": "chris.gilmore@cheathamcountytn.gov",
-     "name": "Chris Gilmore"
+     "name": "Chris Gilmore",
+     "phone": "(615) 405-5204"
     }
    ],
    "4": [
     {
      "email": "james.gupton@cheathamcountytn.gov",
-     "name": "James Gupton"
+     "name": "James Gupton",
+     "phone": "(615) 812-2179"
     },
     {
      "email": "walter.weakley@cheathamcountytn.gov",
-     "name": "Walter Weakley"
+     "name": "Walter Weakley",
+     "phone": "(931) 801-5614"
     }
    ],
    "5": [
     {
      "email": "jody.vann@cheathamcountytn.gov",
-     "name": "Jody Vann"
+     "name": "Jody Vann",
+     "phone": "(615) 510-1918"
     },
     {
      "email": "Diana.lovell@cheathamcountytn.gov",
-     "name": "Diana Pike Lovell"
+     "name": "Diana Pike Lovell",
+     "phone": "(615) 356-9701",
+     "phonesExtra": [
+      "cell (615) 838-2217"
+     ]
     }
    ],
    "6": [
     {
      "email": "clint.biggers@cheathamcountytn.gov",
-     "name": "Clint Biggers"
+     "name": "Clint Biggers",
+     "phone": "(615) 887-5400"
     },
     {
      "email": "james.hedgepath@cheathamcountytn.gov",
-     "name": "James Hedgepath"
+     "name": "James Hedgepath",
+     "phone": "(615) 533-3045"
     }
    ]
   }
@@ -604,59 +691,70 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://chestercountytn.org/county_commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 12,
   "domains": [
    "chestercountytn.org"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Heather Carter"
+     "name": "Heather Carter",
+     "phone": "cell (731) 608-9919"
     },
     {
-     "name": "Kevin Faulkner"
+     "name": "Kevin Faulkner",
+     "phone": "(731) 989-0040"
     }
    ],
    "2": [
     {
-     "name": "Al McKinnon"
+     "name": "Al McKinnon",
+     "phone": "cell (731) 608-5982"
     },
     {
-     "name": "Dwain Seaton"
+     "name": "Dwain Seaton",
+     "phone": "cell (731) 608-3167"
     }
    ],
    "3": [
     {
-     "name": "Ann Moore"
+     "name": "Ann Moore",
+     "phone": "cell (731) 608-2033"
     },
     {
-     "name": "Luke Weaver"
+     "name": "Luke Weaver",
+     "phone": "cell (731) 394-1503"
     }
    ],
    "4": [
     {
-     "name": "Dylan Clayton"
+     "name": "Dylan Clayton",
+     "phone": "cell (731) 435-9222"
     },
     {
-     "name": "Darryl Thompson"
+     "name": "Darryl Thompson",
+     "phone": "cell (731) 234-4324"
     }
    ],
    "5": [
     {
-     "name": "Tim Crowe"
+     "name": "Tim Crowe",
+     "phone": "cell (731) 608-6415"
     },
     {
-     "name": "Barry Smith"
+     "name": "Barry Smith",
+     "phone": "cell (731) 394-0259"
     }
    ],
    "6": [
     {
-     "name": "Dane Burns"
+     "name": "Dane Burns",
+     "phone": "cell (731) 608-3213"
     },
     {
-     "name": "Dan Crump"
+     "name": "Dan Crump",
+     "phone": "cell (817) 751-5963"
     }
    ]
   }
@@ -666,113 +764,136 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://claibornecountytn.gov/countyoffices/county-commission",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 21,
   "domains": [
    "claibornecountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "tammy.cheek@claibornecountytn.gov",
-     "name": "Tammy Cheek"
+     "name": "Tammy Cheek",
+     "phone": "(423)489-3493"
     },
     {
      "email": "nathan.fultz@claibornecountytn.gov",
-     "name": "Nathan Fultz"
+     "name": "Nathan Fultz",
+     "phone": "(865)585-1403"
     },
     {
      "email": "zach.king@claibornecountytn.gov",
-     "name": "Zach King"
+     "name": "Zach King",
+     "phone": "(423)489-3177"
     }
    ],
    "2": [
     {
      "email": "nathan.epperson@claibornecountytn.gov",
-     "name": "Nathan Epperson"
+     "name": "Nathan Epperson",
+     "phone": "(865)278-0252"
     },
     {
      "email": "gary.poore@claibornecountytn.gov",
-     "name": "Gary Poore"
+     "name": "Gary Poore",
+     "phone": "(865)585-2226"
     },
     {
      "email": "haley.barker@claibornecountytn.gov",
-     "name": "Haley Barker"
+     "name": "Haley Barker",
+     "phone": "(968)934-8601"
     }
    ],
    "3": [
     {
      "email": "blaine.coffey@claibornecountytn.gov",
-     "name": "Blaine Coffey"
+     "name": "Blaine Coffey",
+     "phone": "(865)585-6150"
     },
     {
      "email": "stacey.crawford@claibornecountytn.gov",
-     "name": "Stacey Crawford"
+     "name": "Stacey Crawford",
+     "phone": "(423)526-7814"
     },
     {
      "email": "travis.lester@claibornecountytn.gov",
-     "name": "Travis Lester"
+     "name": "Travis Lester",
+     "phone": "(865)585-2610"
     }
    ],
    "4": [
     {
      "email": "zach.mullins@claibornecountytn.gov",
-     "name": "Zach Mullins"
+     "name": "Zach Mullins",
+     "phone": "(865)352-9214"
     },
     {
      "email": "anthony.rowe@claibornecountytn.gov",
-     "name": "Anthony Rowe"
+     "name": "Anthony Rowe",
+     "phone": "(423)626-4742"
     }
    ],
    "5": [
     {
      "email": "mitchell.cosby@claibornecountytn.gov",
-     "name": "Mitchell Cosby"
+     "name": "Mitchell Cosby",
+     "phone": "(423)869-9300",
+     "phonesExtra": [
+      "cell (423)851-1820"
+     ]
     }
    ],
    "6": [
     {
      "email": "richard.smith@claibornecountytn.gov",
-     "name": "Richard Smith"
+     "name": "Richard Smith",
+     "phone": "(423)259-1049"
     },
     {
      "email": "carolyn.brooks@claibornecountytn.gov",
-     "name": "Carolyn S. Brooks"
+     "name": "Carolyn S. Brooks",
+     "phone": "(865)278-7690"
     },
     {
      "email": "steve.mason@claibornecountytn.gov",
-     "name": "Steve Mason"
+     "name": "Steve Mason",
+     "phone": "(865)851-1368"
     }
    ],
    "7": [
     {
      "email": "steve.brogan@claibornecountytn.gov",
-     "name": "James Steve Brogan"
+     "name": "James Steve Brogan",
+     "phone": "(423)262-6690"
     },
     {
      "email": "sherry.mccreary@claibornecountytn.gov",
-     "name": "Sherry McCreary"
+     "name": "Sherry McCreary",
+     "phone": "(423)851-2747"
     },
     {
      "email": "eric.jones@claibornecountytn.gov",
-     "name": "Kelly “Eric” Jones"
+     "name": "Kelly “Eric” Jones",
+     "phone": "(865)585-2908"
     }
    ],
    "8": [
     {
      "email": "shane.evans@claibornecountytn.gov",
-     "name": "Shane Baine Evans"
+     "name": "Shane Baine Evans",
+     "phone": "(423)526-1751"
     },
     {
      "email": "tad.russell@claibornecountytn.gov",
-     "name": "Tad Russell"
+     "name": "Tad Russell",
+     "phone": "(865)279-3413"
     }
    ],
    "9": [
     {
      "email": "anita.jenkins@claibornecountytn.gov",
-     "name": "Anita Jenkins"
+     "name": "Anita Jenkins",
+     "phone": "(423)494-9531"
     }
    ]
   }
@@ -782,52 +903,61 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.claycountytngov.com/commissioners",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 10,
   "domains": [
    "claycountytngov.com",
    "claycountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "J. Bryan Coons"
+     "name": "J. Bryan Coons",
+     "phone": "(931)-258-4567"
     },
     {
-     "name": "Dale McLerran"
+     "name": "Dale McLerran",
+     "phone": "(931)-704-3880"
     }
    ],
    "2": [
     {
-     "name": "Jeff Gentry"
+     "name": "Jeff Gentry",
+     "phone": "(615)-388-4399"
     },
     {
-     "name": "Parrish Wright"
+     "name": "Parrish Wright",
+     "phone": "(931)-397-4468"
     }
    ],
    "3": [
     {
-     "name": "Clifton Boles"
+     "name": "Clifton Boles",
+     "phone": "(931)-243-3238"
     },
     {
-     "name": "Kristen Mathews"
+     "name": "Kristen Mathews",
+     "phone": "(931)-319-0541"
     }
    ],
    "4": [
     {
-     "name": "Winton Young"
+     "name": "Winton Young",
+     "phone": "(931)-239-2393"
     },
     {
-     "name": "Anthony Boles"
+     "name": "Anthony Boles",
+     "phone": "(931)-397-3372"
     }
    ],
    "5": [
     {
-     "name": "J. Tanner Harvey"
+     "name": "J. Tanner Harvey",
+     "phone": "(931)-397-8266"
     },
     {
-     "name": "J. Elijah Watson"
+     "name": "J. Elijah Watson",
+     "phone": "(931)-397-6646"
     }
    ]
   }
@@ -837,80 +967,93 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.cockecountytn.gov/county-legislative-body",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "cockecountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "Tim Grigsby",
+     "phone": "423-237-3837",
      "seat": "Post 1"
     },
     {
      "name": "William (Bill) Miller",
+     "phone": "423-237-4886",
      "seat": "Post 2"
     }
    ],
    "2": [
     {
      "name": "Judy Hensley",
+     "phone": "423-608-9315",
      "seat": "Post 1"
     },
     {
      "name": "Kenneth Norton",
+     "phone": "423-248-9595",
      "seat": "Post 2"
     }
    ],
    "3": [
     {
      "name": "Norman Smith",
+     "phone": "423-625-9485",
      "seat": "Post 1"
     },
     {
      "name": "Sid Mason",
+     "phone": "202-309-5522",
      "seat": "Post 2"
     }
    ],
    "4": [
     {
      "name": "Jonathan Templin",
+     "phone": "423-721-3103",
      "seat": "Post 1"
     },
     {
      "name": "Donnie Raines",
+     "phone": "423-415-9425",
      "seat": "Post 2"
     }
    ],
    "5": [
     {
      "name": "Dan (Pete) Bright",
+     "phone": "423-721-1105",
      "seat": "Post 1"
     },
     {
      "name": "Daniel Reece",
+     "phone": "865-257-6273",
      "seat": "Post 2"
     }
    ],
    "6": [
     {
      "name": "Casey Reed",
+     "phone": "423-608-2378",
      "seat": "Post 1"
     },
     {
      "name": "Jeff Eslinger",
+     "phone": "423-608-3516",
      "seat": "Post 2"
     }
    ],
    "7": [
     {
      "name": "Tim Layman",
+     "phone": "423-721-1290",
      "seat": "Post 1"
     },
     {
      "name": "Clayton Ellison",
+     "phone": "423-237-1451",
      "seat": "Post 2"
     }
    ]
@@ -921,22 +1064,23 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.coffeecountytn.gov/213/County-Commission",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 18,
   "domains": [
    "coffeecountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "alevieux@coffeecountytn.gov",
      "name": "Amanda LeVieux",
+     "phone": "512-633-6030",
      "profileUrl": "https://www.coffeecountytn.gov/214/Amanda-LeVieux"
     },
     {
      "email": "djones@coffeecountytn.gov",
      "name": "Dowe Jones",
+     "phone": "931-728-0918",
      "profileUrl": "https://www.coffeecountytn.gov/215/Dowe-Jones"
     }
    ],
@@ -944,11 +1088,16 @@
     {
      "email": "jperry@coffeecountytn.gov",
      "name": "Jeff Perry",
+     "phone": "731-780-9242",
      "profileUrl": "https://www.coffeecountytn.gov/216/Jeff-Perry"
     },
     {
      "email": "rchambers@coffeecountytn.gov",
      "name": "Roger Chambers",
+     "phone": "home 931-728-2177",
+     "phonesExtra": [
+      "cell 931-273-8260"
+     ],
      "profileUrl": "https://www.coffeecountytn.gov/217/Roger-Chambers"
     }
    ],
@@ -956,11 +1105,13 @@
     {
      "email": "lnettles@coffeecountytn.gov",
      "name": "Laura Nettles",
+     "phone": "931-581-5989",
      "profileUrl": "https://www.coffeecountytn.gov/218/Laura-Nettles"
     },
     {
      "email": "rsmith@coffeecountytn.gov",
      "name": "Rose Ann Carden Smith",
+     "phone": "931-205-2717",
      "profileUrl": "https://www.coffeecountytn.gov/219/Rose-Ann-Carden-Smith"
     }
    ],
@@ -968,11 +1119,13 @@
     {
      "email": "tbrown@coffeecountytn.gov",
      "name": "Tim Brown",
+     "phone": "931-273-5735",
      "profileUrl": "https://www.coffeecountytn.gov/220/Tim-Brown"
     },
     {
      "email": "mbrothers@coffeecountytn.gov",
      "name": "Mark Brothers",
+     "phone": "931-409-7362",
      "profileUrl": "https://www.coffeecountytn.gov/221/Mark-Brothers"
     }
    ],
@@ -980,11 +1133,13 @@
     {
      "email": "pdeford@coffeecountytn.gov",
      "name": "Missy DeFord",
+     "phone": "931-247-5847",
      "profileUrl": "https://www.coffeecountytn.gov/222/Missy-DeFord"
     },
     {
      "email": "tmorris@coffeecountytn.gov",
      "name": "Tim Morris",
+     "phone": "931-247-4179",
      "profileUrl": "https://www.coffeecountytn.gov/224/Tim-Morris"
     }
    ],
@@ -992,11 +1147,13 @@
     {
      "email": "thershman@coffeecountytn.gov",
      "name": "Terry Hershman",
+     "phone": "931-212-5808",
      "profileUrl": "https://www.coffeecountytn.gov/225/Terry-Hershman"
     },
     {
      "email": "sanderson@coffeecountytn.gov",
      "name": "Sammy Anderson",
+     "phone": "931-808-0033",
      "profileUrl": "https://www.coffeecountytn.gov/226/Sammy-Anderson"
     }
    ],
@@ -1004,11 +1161,16 @@
     {
      "email": "rcrabtree@coffeecountytn.gov",
      "name": "Rosemary Crabtree",
+     "phone": "931-841-5643",
      "profileUrl": "https://www.coffeecountytn.gov/227/Rosemary-Crabtree"
     },
     {
      "email": "jduncan@coffeecountytn.gov",
      "name": "Jackie Duncan",
+     "phone": "home 931-455-2199",
+     "phonesExtra": [
+      "cell 931-841-0860"
+     ],
      "profileUrl": "https://www.coffeecountytn.gov/228/Jackie-Duncan"
     }
    ],
@@ -1016,11 +1178,13 @@
     {
      "email": "dmann@coffeecountytn.gov",
      "name": "Derick Mann",
+     "phone": "931-808-0153",
      "profileUrl": "https://www.coffeecountytn.gov/229/Derick-Mann"
     },
     {
      "email": "tstubblefield@coffeecountytn.gov",
      "name": "Tim Stubblefield",
+     "phone": "931-581-4608",
      "profileUrl": "https://www.coffeecountytn.gov/236/Tim-Stubblefield"
     }
    ],
@@ -1028,11 +1192,13 @@
     {
      "email": "tmalone@coffeecountytn.gov",
      "name": "Todd Malone",
+     "phone": "931-434-1913",
      "profileUrl": "https://www.coffeecountytn.gov/237/Todd-Malone"
     },
     {
      "email": "fwatkins@coffeecountytn.gov",
      "name": "Frank Watkins",
+     "phone": "931-434-4663",
      "profileUrl": "https://www.coffeecountytn.gov/239/Frank-Watkins"
     }
    ]
@@ -1043,100 +1209,117 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.crockettvote.com/county-commission",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 24,
   "domains": [
    "crockettvote.com"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "Jonathan Dodd",
+     "phone": "731-234-6274",
      "seat": "Position 1"
     },
     {
      "name": "Clayton Smith",
+     "phone": "731-676-0506",
      "seat": "Position 2"
     }
    ],
    "2": [
     {
      "name": "William C Hooten",
+     "phone": "731-345-1516",
      "seat": "Position 1"
     },
     {
      "name": "John Kelley",
+     "phone": "731-345-0150",
      "seat": "Position 2"
     }
    ],
    "3": [
     {
      "name": "Justin Mosier",
+     "phone": "731-345-0205",
      "seat": "Position 1"
     },
     {
      "name": "Taylor L Branch",
+     "phone": "731-676-7771",
      "seat": "Position 2"
     }
    ],
    "4": [
     {
      "name": "Lee S Woods",
+     "phone": "731-677-7126",
      "seat": "Position 1"
     },
     {
      "name": "Bill Henderson",
+     "phone": "731-663-5563",
      "seat": "Position 2"
     }
    ],
    "5": [
     {
      "name": "Edwina Michelle Little",
+     "phone": "731-656-4118",
      "seat": "Position 1"
     },
     {
      "name": "Joel Dupree",
+     "phone": "731-656-2974",
      "seat": "Position 2"
     }
    ],
    "6": [
     {
      "name": "Beth Woodson Smith",
+     "phone": "731-501-0082",
      "seat": "Position 1"
     },
     {
      "name": "Ryan Woodward",
+     "phone": "731-694-6120",
      "seat": "Position 2"
     }
    ],
    "7": [
     {
      "name": "Harvey D Bradshaw",
+     "phone": "731-696-5856",
      "seat": "Position 1"
     },
     {
      "name": "Megan Sparks",
+     "phone": "731-225-5176",
      "seat": "Position 2"
     }
    ],
    "8": [
     {
      "name": "Karen Utley",
+     "phone": "731-234-0011",
      "seat": "Position 1"
     },
     {
      "name": "Dustin Bodkins",
+     "phone": "731-217-6068",
      "seat": "Position 2"
     }
    ],
    "9": [
     {
      "name": "Ronde' J Howell",
+     "phone": "731-617-0177",
      "seat": "Position 1"
     },
     {
      "name": "Wayne Jernigan",
+     "phone": "731-617-8704",
      "seat": "Position 2"
     }
    ],
@@ -1147,26 +1330,31 @@
     },
     {
      "name": "Alice F McDearman",
+     "phone": "901-907-7067",
      "seat": "Position 2"
     }
    ],
    "11": [
     {
      "name": "Gene Permenter",
+     "phone": "731-695-3784",
      "seat": "Position 1"
     },
     {
      "name": "Michael Laxton",
+     "phone": "901-827-0470",
      "seat": "Position 2"
     }
    ],
    "12": [
     {
      "name": "Tosh Newman",
+     "phone": "731-217-4181",
      "seat": "Position 1"
     },
     {
      "name": "Jared C Foust",
+     "phone": "731-697-8880",
      "seat": "Position 2"
     }
    ]
@@ -1177,12 +1365,11 @@
   "seatTitle": "Council Member",
   "bodyName": "Metro Council",
   "sourceUrl": "https://www.nashville.gov/departments/council/districts",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 40,
   "domains": [
    "nashville.gov"
   ],
-  "phones": true,
   "districts": {
    "1": [
     {
@@ -1502,67 +1689,80 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.dekalbtennessee.com/county-commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "dekalbtennessee.com"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Randy Slager"
+     "name": "Randy Slager",
+     "phone": "615-330-9967"
     },
     {
-     "name": "Daniel Cripps"
+     "name": "Daniel Cripps",
+     "phone": "615-489-7201"
     }
    ],
    "2": [
     {
-     "name": "Myron Rhody"
+     "name": "Myron Rhody",
+     "phone": "615-684-5495"
     },
     {
-     "name": "Danny Adamson"
+     "name": "Danny Adamson",
+     "phone": "615-684-0532"
     }
    ],
    "3": [
     {
-     "name": "Don Rigsby"
+     "name": "Don Rigsby",
+     "phone": "931-235-4650"
     },
     {
-     "name": "Bradley Hendrix"
+     "name": "Bradley Hendrix",
+     "phone": "931-314-8020"
     }
    ],
    "4": [
     {
-     "name": "Tony 'Cully' Culwell"
+     "name": "Tony 'Cully' Culwell",
+     "phone": "615-417-3056"
     },
     {
-     "name": "Greg Matthews"
+     "name": "Greg Matthews",
+     "phone": "615-839-4923"
     }
    ],
    "5": [
     {
-     "name": "Judith Hale"
+     "name": "Judith Hale",
+     "phone": "615-464-7810"
     },
     {
-     "name": "Steven Cantrell"
+     "name": "Steven Cantrell",
+     "phone": "703-371-3969"
     }
    ],
    "6": [
     {
-     "name": "Bruce Parsley"
+     "name": "Bruce Parsley",
+     "phone": "931-713-1114"
     },
     {
-     "name": "Andy Pack"
+     "name": "Andy Pack",
+     "phone": "615-684-2532"
     }
    ],
    "7": [
     {
-     "name": "Anthony Fuller"
+     "name": "Anthony Fuller",
+     "phone": "423-667-7758"
     },
     {
-     "name": "Mathias Anderson"
+     "name": "Mathias Anderson",
+     "phone": "615-506-2872"
     }
    ]
   }
@@ -1572,71 +1772,82 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.dicksoncountytn.gov/county_commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 12,
   "domains": [
    "dicksoncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Randy Simpkins"
+     "name": "Randy Simpkins",
+     "phone": "(615) 351-3806"
     }
    ],
    "2": [
     {
-     "name": "Kenny McCallister"
+     "name": "Kenny McCallister",
+     "phone": "(615) 910-9484"
     }
    ],
    "3": [
     {
-     "name": "Dennis O'Shea"
+     "name": "Dennis O'Shea",
+     "phone": "(615) 416-1095"
     }
    ],
    "4": [
     {
-     "name": "Joey Wenck"
+     "name": "Joey Wenck",
+     "phone": "(615) 557-6964"
     }
    ],
    "5": [
     {
-     "name": "James \"Cotton\" Dawson"
+     "name": "James \"Cotton\" Dawson",
+     "phone": "(615) 566-1631"
     }
    ],
    "6": [
     {
-     "name": "Becky Spicer"
+     "name": "Becky Spicer",
+     "phone": "(615) 406-4207"
     }
    ],
    "7": [
     {
-     "name": "Richard Riehn"
+     "name": "Richard Riehn",
+     "phone": "(615) 512-1436"
     }
    ],
    "8": [
     {
-     "name": "Jody Britt"
+     "name": "Jody Britt",
+     "phone": "(615) 417-5362"
     }
    ],
    "9": [
     {
-     "name": "Mike Petty"
+     "name": "Mike Petty",
+     "phone": "(615) 260-3742"
     }
    ],
    "10": [
     {
-     "name": "John Stritikus"
+     "name": "John Stritikus",
+     "phone": "(615) 326-7510"
     }
    ],
    "11": [
     {
-     "name": "Rusty Grove"
+     "name": "Rusty Grove",
+     "phone": "(615) 948-2221"
     }
    ],
    "12": [
     {
-     "name": "Johnnie Reed"
+     "name": "Johnnie Reed",
+     "phone": "(615) 330-2397"
     }
    ]
   }
@@ -1646,12 +1857,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.dyercounty.com/elected-officials",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 20,
   "domains": [
    "dyercounty.com"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -1752,105 +1962,123 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://fayettetn.us/county-boards-councils/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 19,
   "domains": [
    "fayettetn.us"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "mrhea@fayettetn.us",
-     "name": "Matt Rhea"
+     "name": "Matt Rhea",
+     "phone": "cell 901-491-5809"
     }
    ],
    "2": [
     {
-     "name": "Marandy Wilkerson"
+     "name": "Marandy Wilkerson",
+     "phone": "cell 901-687-7993"
     }
    ],
    "3": [
     {
      "email": "brice@fayettetn.us",
-     "name": "Elizabeth “Betsy” Rice"
+     "name": "Elizabeth “Betsy” Rice",
+     "phone": "901-594-5388"
     }
    ],
    "4": [
     {
      "email": "dwebb@fayettetn.us",
-     "name": "David Webb"
+     "name": "David Webb",
+     "phone": "home 901-593-9585"
     },
     {
      "email": "kpowers@fayettetn.us",
-     "name": "Kevin Powers"
+     "name": "Kevin Powers",
+     "phone": "cell 901-212-4194"
     }
    ],
    "5": [
     {
-     "name": "Bill Burke"
+     "name": "Bill Burke",
+     "phone": "901-288-9570"
     }
    ],
    "6": [
     {
-     "name": "Steve Reeves"
+     "name": "Steve Reeves",
+     "phone": "cell 901-828-4617"
     },
     {
-     "name": "Mike Reeves"
+     "name": "Mike Reeves",
+     "phone": "cell 901-459-7437"
     }
    ],
    "7": [
     {
      "email": "coglesby@fayettetn.us",
-     "name": "Claude Oglesby"
+     "name": "Claude Oglesby",
+     "phone": "cell 901-603-9924"
     }
    ],
    "8": [
     {
-     "name": "Robert Sills"
+     "name": "Robert Sills",
+     "phone": "cell 901-238-7775"
     },
     {
-     "name": "Jay Cooper"
+     "name": "Jay Cooper",
+     "phone": "cell 901-489-6440"
     }
    ],
    "9": [
     {
      "email": "nneuhauser@fayettetn.us",
-     "name": "Nancy Neuhauser"
+     "name": "Nancy Neuhauser",
+     "phone": "cell 901-482-5617"
     },
     {
      "email": "ckivelle@fayettetn.us",
-     "name": "Chelsey Kivelle"
+     "name": "Chelsey Kivelle",
+     "phone": "cell 901-590-9004"
     }
    ],
    "10": [
     {
      "email": "lwatkins@fayettetn.us",
-     "name": "Larry Watkins"
+     "name": "Larry Watkins",
+     "phone": "cell 901-626-6876"
     },
     {
-     "name": "Thomas Day"
+     "name": "Thomas Day",
+     "phone": "cell 901-268-6166"
     }
    ],
    "11": [
     {
-     "name": "Glen Morman"
+     "name": "Glen Morman",
+     "phone": "cell 901-605-2418"
     }
    ],
    "12": [
     {
      "email": "eallen@fayettetn.us",
-     "name": "Ed Allen"
+     "name": "Ed Allen",
+     "phone": "cell 901-359-0352"
     }
    ],
    "13": [
     {
-     "name": "Betty Salmon"
+     "name": "Betty Salmon",
+     "phone": "cell 901-488-5880"
     }
    ],
    "14": [
     {
-     "name": "Terrye Canady"
+     "name": "Terrye Canady",
+     "phone": "cell 901-266-1200"
     }
    ]
   }
@@ -1860,12 +2088,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://fentresscountytn.gov/county-commissioners/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 10,
   "domains": [
    "fentresscountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -1914,21 +2141,22 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://franklincotn.us/county_commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 16,
   "domains": [
    "franklincotn.us",
    "franklincotn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "David Eldridge",
+     "phone": "(931) 409-1249",
      "seat": "A"
     },
     {
      "name": "Lydia Curtis Johnson",
+     "phone": "(931) 308-4601",
      "seat": "B"
     }
    ],
@@ -1936,40 +2164,52 @@
     {
      "email": "william.anderson@franklincotn.gov",
      "name": "William Anderson",
+     "phone": "(931) 307-8256",
      "seat": "A"
     },
     {
      "name": "Carolyn Wiseman",
+     "phone": "cell (931) 308-3902",
      "seat": "B"
     }
    ],
    "3": [
     {
      "name": "Scottie Riddle",
+     "phone": "(931) 703-9347",
      "seat": "A"
     },
     {
      "name": "Dale Schultz",
+     "phone": "(931) 469-0243",
+     "phonesExtra": [
+      "cell (931) 308-6230",
+      "work (931) 454-3730"
+     ],
      "seat": "B"
     }
    ],
    "4": [
     {
      "name": "Greg King",
+     "phone": "(931) 636-0248",
      "seat": "A"
     },
     {
      "name": "Chuck Stines",
+     "phone": "(931) 703-1777",
      "seat": "B"
     }
    ],
    "5": [
     {
      "name": "Bruce McMillan",
+     "phone": "(662) 544-3591",
      "seat": "A"
     },
     {
      "name": "Susan Holmes",
+     "phone": "(423) 280-1480",
      "seat": "B"
     }
    ],
@@ -1977,30 +2217,36 @@
     {
      "email": "silasearle@franklincotn.gov",
      "name": "Silas Earle",
+     "phone": "(931) 580-0828",
      "seat": "A"
     },
     {
      "name": "Jarad Shetters",
+     "phone": "(931) 703-6539",
      "seat": "B"
     }
    ],
    "7": [
     {
      "name": "Sam Davidson",
+     "phone": "(931) 308-3150",
      "seat": "A"
     },
     {
      "name": "Chris Hawkersmith",
+     "phone": "(931) 273-7290",
      "seat": "B"
     }
    ],
    "8": [
     {
      "name": "Glenn Summers",
+     "phone": "cell (931) 409-0851",
      "seat": "A"
     },
     {
      "name": "Edie Snyder",
+     "phone": "cell (931) 308-5943",
      "seat": "B"
     }
    ]
@@ -2011,12 +2257,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://gilescountytn.gov/commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 21,
   "domains": [
    "gilescountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -2025,92 +2270,112 @@
     },
     {
      "email": "jbeecham@gilescountytn.gov",
-     "name": "Jan Beecham"
+     "name": "Jan Beecham",
+     "phone": "931-309-7945"
     },
     {
      "email": "croberts@gilescountytn.gov",
-     "name": "Cathy Roberts"
+     "name": "Cathy Roberts",
+     "phone": "931-292-2274"
     }
    ],
    "2": [
     {
      "email": "bbeard@gilescountytn.gov",
-     "name": "Brandon Beard"
+     "name": "Brandon Beard",
+     "phone": "931-309-8469"
     },
     {
      "email": "ssuddarth@gilescountytn.gov",
-     "name": "Sarah Suddarth"
+     "name": "Sarah Suddarth",
+     "phone": "931-478-3907"
     },
     {
      "email": "twilburn@gilescountytn.gov",
-     "name": "Tracy Wilburn"
+     "name": "Tracy Wilburn",
+     "phone": "931-565-3295"
     }
    ],
    "3": [
     {
-     "name": "Chris Adcock"
+     "name": "Chris Adcock",
+     "phone": "931-363-5537"
     },
     {
      "email": "r.carpenter@gilescountytn.gov",
-     "name": "Rickie Carpenter"
+     "name": "Rickie Carpenter",
+     "phone": "931-309-6587"
     },
     {
      "email": "tprice@gilescountytn.gov",
-     "name": "Thomas Price"
+     "name": "Thomas Price",
+     "phone": "205-370-3929"
     }
    ],
    "4": [
     {
      "email": "mhopkins@gilescountytn.gov",
-     "name": "Matthew Hopkins"
+     "name": "Matthew Hopkins",
+     "phone": "615-708-0281"
     },
     {
      "email": "csavage@gilescountytn.gov",
-     "name": "Caleb Savage"
+     "name": "Caleb Savage",
+     "phone": "931-638-5425"
     },
     {
      "email": "cwinborn@gilescountytn.gov",
-     "name": "Chris Winborn"
+     "name": "Chris Winborn",
+     "phone": "931-638-4244"
     }
    ],
    "5": [
     {
      "email": "gjones@gilescountytn.gov",
-     "name": "Gayle Jones"
+     "name": "Gayle Jones",
+     "phone": "931-363-4224"
     },
     {
-     "name": "Tommy Pollard"
+     "name": "Tommy Pollard",
+     "phone": "931-638-6483"
     },
     {
      "email": "swoods@gilescountytn.gov",
-     "name": "Steve Woods"
+     "name": "Steve Woods",
+     "phone": "346-280-6298"
     }
    ],
    "6": [
     {
      "email": "ebaddour@gilescountytn.gov",
-     "name": "Evan Baddour"
+     "name": "Evan Baddour",
+     "phone": "931-363-7476"
     },
     {
-     "name": "James Gentry"
+     "name": "James Gentry",
+     "phone": "931-363-4178"
     },
     {
      "email": "rkemp@gilescountytn.gov",
-     "name": "Richard Kemp"
+     "name": "Richard Kemp",
+     "phone": "615-743-4713"
     }
    ],
    "7": [
     {
      "email": "cbrown@gilescountytn.gov",
-     "name": "Carman Brown"
+     "name": "Carman Brown",
+     "phone": "931-982-4454"
     },
     {
      "email": "mcesarini@gilescountytn.gov",
-     "name": "Mike Cesarini"
+     "name": "Mike Cesarini",
+     "phone": "931-371-1036"
     },
     {
      "email": "jpruett@gilescountytn.gov",
-     "name": "Judy Pruett"
+     "name": "Judy Pruett",
+     "phone": "931-703-7328"
     }
    ]
   }
@@ -2120,97 +2385,110 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://hamblencountytn.gov/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "hamblencountytn.gov",
    "co.hamblen.tn.us"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "district1@co.hamblen.tn.us",
-     "name": "Tom Hyde"
+     "name": "Tom Hyde",
+     "phone": "423-736-2589"
     }
    ],
    "2": [
     {
      "email": "district2@co.hamblen.tn.us",
-     "name": "Debbie A'Hearn"
+     "name": "Debbie A'Hearn",
+     "phone": "423-231-8058"
     }
    ],
    "3": [
     {
      "email": "district3@co.hamblen.tn.us",
-     "name": "Joyce Cotner"
+     "name": "Joyce Cotner",
+     "phone": "865-382-0810"
     }
    ],
    "4": [
     {
      "email": "district4@co.hamblen.tn.us",
-     "name": "Wayne NeSmith"
+     "name": "Wayne NeSmith",
+     "phone": "423-312-1120"
     }
    ],
    "5": [
     {
      "email": "district5@co.hamblen.tn.us",
-     "name": "Mike Reed"
+     "name": "Mike Reed",
+     "phone": "423-736-3686"
     }
    ],
    "6": [
     {
      "email": "district6@co.hamblen.tn.us",
-     "name": "Joe Spoone"
+     "name": "Joe Spoone",
+     "phone": "423-839-3616"
     }
    ],
    "7": [
     {
      "email": "district7@co.hamblen.tn.us",
-     "name": "Frank Lane"
+     "name": "Frank Lane",
+     "phone": "423-312-4200"
     }
    ],
    "8": [
     {
      "email": "district8@co.hamblen.tn.us",
-     "name": "Mark Johns"
+     "name": "Mark Johns",
+     "phone": "423-312-8422"
     }
    ],
    "9": [
     {
      "email": "district9@co.hamblen.tn.us",
-     "name": "Jamie Carden"
+     "name": "Jamie Carden",
+     "phone": "423-307-7365"
     }
    ],
    "10": [
     {
      "email": "district10@co.hamblen.tn.us",
      "name": "Stan Harville",
+     "phone": "423-312-3676",
      "role": "Chair"
     }
    ],
    "11": [
     {
      "email": "district11@co.hamblen.tn.us",
-     "name": "Matt Stuart"
+     "name": "Matt Stuart",
+     "phone": "423-736-9951"
     }
    ],
    "12": [
     {
      "email": "district12@co.hamblen.tn.us",
-     "name": "Leo E. Shalhoup, Jr"
+     "name": "Leo E. Shalhoup, Jr",
+     "phone": "423-621-0122"
     }
    ],
    "13": [
     {
      "email": "district13@co.hamblen.tn.us",
-     "name": "Tim Horner"
+     "name": "Tim Horner",
+     "phone": "423-748-3374"
     }
    ],
    "14": [
     {
      "email": "district14@co.hamblen.tn.us",
-     "name": "Scott Depew"
+     "name": "Scott Depew",
+     "phone": "423-736-0580"
     }
    ]
   }
@@ -2220,12 +2498,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.hamiltontn.gov/CountyCommission_Committees.aspx",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 11,
   "domains": [
    "hamiltontn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -2302,91 +2579,113 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.hardincogov.com/directory/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 20,
   "domains": [
    "hardincogov.com"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Gary Combs"
+     "name": "Gary Combs",
+     "phone": "(731) 925-8855",
+     "phonesExtra": [
+      "(731) 926-0931"
+     ]
     },
     {
-     "name": "Fred McFalls, Jr."
+     "name": "Fred McFalls, Jr.",
+     "phone": "(731) 925-7092"
     }
    ],
    "2": [
     {
-     "name": "Adam Coleman"
+     "name": "Adam Coleman",
+     "phone": "(731) 607-8820"
     },
     {
-     "name": "Kyle Murphy"
+     "name": "Kyle Murphy",
+     "phone": "(731) 607-7200"
     }
    ],
    "3": [
     {
-     "name": "Mark Woodruff"
+     "name": "Mark Woodruff",
+     "phone": "(901) 262-8072"
     },
     {
-     "name": "Roger L. Jenkins"
+     "name": "Roger L. Jenkins",
+     "phone": "(731) 926-0924"
     }
    ],
    "4": [
     {
-     "name": "TJ Barker"
+     "name": "TJ Barker",
+     "phone": "(731) 607-0471"
     },
     {
-     "name": "Nanette Spencer"
+     "name": "Nanette Spencer",
+     "phone": "(731) 926-7100"
     }
    ],
    "5": [
     {
-     "name": "Lisa Wyatt"
+     "name": "Lisa Wyatt",
+     "phone": "(731) 926-6927"
     },
     {
-     "name": "Don Robertson"
+     "name": "Don Robertson",
+     "phone": "(731)926-6239"
     }
    ],
    "6": [
     {
-     "name": "Kaden Holt"
+     "name": "Kaden Holt",
+     "phone": "(731) 412-4478"
     },
     {
-     "name": "Michael Pitts"
+     "name": "Michael Pitts",
+     "phone": "(731) 926-0682"
     }
    ],
    "7": [
     {
-     "name": "Shane McGee"
+     "name": "Shane McGee",
+     "phone": "(731) 607-1093"
     },
     {
-     "name": "Kirk Taylor"
+     "name": "Kirk Taylor",
+     "phone": "(731) 925-4336"
     }
    ],
    "8": [
     {
-     "name": "Michael Fielder"
+     "name": "Michael Fielder",
+     "phone": "(731) 412-7909"
     },
     {
-     "name": "Brian Qualls"
+     "name": "Brian Qualls",
+     "phone": "(731) 607-2856"
     }
    ],
    "9": [
     {
-     "name": "Ryan Burlesci"
+     "name": "Ryan Burlesci",
+     "phone": "(731) 727-6727"
     },
     {
-     "name": "Emery White"
+     "name": "Emery White",
+     "phone": "(731) 925-6240"
     }
    ],
    "10": [
     {
-     "name": "Barker Burnham"
+     "name": "Barker Burnham",
+     "phone": "(731) 607-9916"
     },
     {
-     "name": "Alex Seaton"
+     "name": "Alex Seaton",
+     "phone": "(731) 607-5277"
     }
    ]
   }
@@ -2396,24 +2695,26 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.hawkinscountytn.gov/county_commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "hawkinscountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Syble Vaughan Trent"
+     "name": "Syble Vaughan Trent",
+     "phone": "(423)-956-7327"
     },
     {
-     "name": "John Keith Gibson"
+     "name": "John Keith Gibson",
+     "phone": "(423)-571-5411"
     }
    ],
    "2": [
     {
-     "name": "Jeff Barrett"
+     "name": "Jeff Barrett",
+     "phone": "(423)-754-3710"
     },
     {
      "name": "Randy Patterson"
@@ -2421,42 +2722,52 @@
    ],
    "3": [
     {
-     "name": "Stacy Vaughan"
+     "name": "Stacy Vaughan",
+     "phone": "(423)-327-1909"
     },
     {
-     "name": "Matthew Williams"
+     "name": "Matthew Williams",
+     "phone": "(423) -327-8526"
     }
    ],
    "4": [
     {
-     "name": "Warren Bishop"
+     "name": "Warren Bishop",
+     "phone": "(423)-726-8259"
     },
     {
-     "name": "Joshua Gilliam"
+     "name": "Joshua Gilliam",
+     "phone": "(423)-564-0896"
     }
    ],
    "5": [
     {
-     "name": "Glenda Davis"
+     "name": "Glenda Davis",
+     "phone": "(423)-272-4514"
     },
     {
-     "name": "Jamie Miller"
+     "name": "Jamie Miller",
+     "phone": "(423)-754-2715"
     }
    ],
    "6": [
     {
-     "name": "Nancy Barker"
+     "name": "Nancy Barker",
+     "phone": "(423)-754-5446"
     },
     {
-     "name": "Edwin Cope"
+     "name": "Edwin Cope",
+     "phone": "(423)-754-7740"
     }
    ],
    "7": [
     {
-     "name": "Bobby Jinks"
+     "name": "Bobby Jinks",
+     "phone": "(423)-312-5665"
     },
     {
-     "name": "Robert Palmer"
+     "name": "Robert Palmer",
+     "phone": "(423)-921-4666"
     }
    ]
   }
@@ -2466,31 +2777,38 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://henrycountytn.gov/government?tab=commissioners",
-  "readAt": "2026-10-11",
+  "readAt": "2026-10-17",
   "seats": 15,
   "domains": [
    "henrycountytn.gov",
    "henrycountytn.org"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "James Eichel"
+     "name": "James Eichel",
+     "phone": "731-227-9592"
     },
     {
-     "name": "David Flowers"
+     "name": "David Flowers",
+     "phone": "731-676-0156"
     },
     {
-     "name": "Blake Stewart"
+     "name": "Blake Stewart",
+     "phone": "731-336-5460"
     }
    ],
    "2": [
     {
-     "name": "Charles Elizondo"
+     "name": "Charles Elizondo",
+     "phone": "731-642-8807",
+     "phonesExtra": [
+      "731-336-2965"
+     ]
     },
     {
-     "name": "Ralph Wiles"
+     "name": "Ralph Wiles",
+     "phone": "731-336-0004"
     },
     {
      "vacant": true
@@ -2498,35 +2816,50 @@
    ],
    "3": [
     {
-     "name": "Monte Starks"
+     "name": "Monte Starks",
+     "phone": "731-642-6961"
     },
     {
-     "name": "Marty Visser"
+     "name": "Marty Visser",
+     "phone": "731-247-5925",
+     "phonesExtra": [
+      "731-694-7290"
+     ]
     },
     {
-     "name": "Todd Wright"
+     "name": "Todd Wright",
+     "phone": "731-607-6076"
     }
    ],
    "4": [
     {
-     "name": "David Hayes"
+     "name": "David Hayes",
+     "phone": "731-336-8958"
     },
     {
-     "name": "Kenneth Humphreys"
+     "name": "Kenneth Humphreys",
+     "phone": "731-642-3221",
+     "phonesExtra": [
+      "731-363-8132"
+     ]
     },
     {
-     "name": "Rick Parker"
+     "name": "Rick Parker",
+     "phone": "731-336-0382"
     }
    ],
    "5": [
     {
-     "name": "Patrick Burns"
+     "name": "Patrick Burns",
+     "phone": "731-644-2435"
     },
     {
-     "name": "Randall Perry"
+     "name": "Randall Perry",
+     "phone": "731-707-5267"
     },
     {
-     "name": "Joe Rice"
+     "name": "Joe Rice",
+     "phone": "731-363-5200"
     }
    ]
   }
@@ -2536,81 +2869,94 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://hickmancountytn.gov/government/commissioners",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "hickmancountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "shelley.farinato@hickmancountytn.gov",
-     "name": "Shelley Farinato"
+     "name": "Shelley Farinato",
+     "phone": "931-622-7131"
     },
     {
      "email": "jonathan.lacasse@hickmancountytn.gov",
-     "name": "Jonathan LaCasse"
+     "name": "Jonathan LaCasse",
+     "phone": "931-623-3339"
     }
    ],
    "2": [
     {
      "email": "bob.holt@hickmancountytn.gov",
-     "name": "Bob Holt"
+     "name": "Bob Holt",
+     "phone": "615-642-3409"
     },
     {
      "email": "nick.bentley@hickmancountytn.gov",
-     "name": "Nick Bentley"
+     "name": "Nick Bentley",
+     "phone": "931-994-8710"
     }
    ],
    "3": [
     {
      "email": "ethan.hudgins@hickmancountytn.gov",
-     "name": "Ethan Hudgins"
+     "name": "Ethan Hudgins",
+     "phone": "931-996-9650"
     },
     {
      "email": "tony.essary@hickmancountytn.gov",
-     "name": "Tony Essary"
+     "name": "Tony Essary",
+     "phone": "931-994-3958"
     }
    ],
    "4": [
     {
      "email": "garen.graves@hickmancountytn.gov",
-     "name": "Garen Graves"
+     "name": "Garen Graves",
+     "phone": "615-707-1823"
     },
     {
      "email": "steve.gianakos@hickmancountytn.gov",
-     "name": "Steve Gianakos"
+     "name": "Steve Gianakos",
+     "phone": "931-670-0066"
     }
    ],
    "5": [
     {
      "email": "dusty.jordan@hickmancountytn.gov",
-     "name": "Dusty Jordan"
+     "name": "Dusty Jordan",
+     "phone": "931-209-6937"
     },
     {
      "email": "zach.bentley@hickmancountytn.gov",
-     "name": "Zach Bentley"
+     "name": "Zach Bentley",
+     "phone": "931-994-1166"
     }
    ],
    "6": [
     {
      "email": "devin.pickard@hickmancountytn.gov",
-     "name": "Devin Pickard"
+     "name": "Devin Pickard",
+     "phone": "931-209-0510"
     },
     {
      "email": "ryan.rogers@hickmancountytn.gov",
-     "name": "Ryan Rogers"
+     "name": "Ryan Rogers",
+     "phone": "931-623-9153"
     }
    ],
    "7": [
     {
      "email": "jim.tanner@hickmancountytn.gov",
-     "name": "Jim Tanner"
+     "name": "Jim Tanner",
+     "phone": "931-994-1517"
     },
     {
      "email": "steve.anglin@hickmancountytn.gov",
-     "name": "Steve Anglin"
+     "name": "Steve Anglin",
+     "phone": "931-994-9335"
     }
    ]
   }
@@ -2620,12 +2966,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://jeffersoncountytn.gov/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 21,
   "domains": [
    "jeffersoncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -2741,18 +3086,18 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://commission.knoxcountytn.gov/people/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 11,
   "domains": [
    "knoxcounty.org",
    "knoxcountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "damon.rawls@knoxcounty.org",
      "name": "Damon Rawls",
+     "phone": "865-320-5375",
      "profileUrl": "https://commission.knoxcountytn.gov/people/damon-rawls/"
     }
    ],
@@ -2760,6 +3105,7 @@
     {
      "email": "courtney.durrett@knoxcounty.org",
      "name": "Courtney Durrett",
+     "phone": "865-203-6433",
      "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-courtney-durrett/"
     }
    ],
@@ -2767,6 +3113,7 @@
     {
      "email": "Brandon.Huckaby@knoxcounty.org",
      "name": "Brandon Huckaby",
+     "phone": "865-440-2587",
      "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-brandon-huckaby/"
     }
    ],
@@ -2774,6 +3121,7 @@
     {
      "email": "shane.jackson@knoxcounty.org",
      "name": "Shane Jackson",
+     "phone": "865-500-9805",
      "profileUrl": "https://commission.knoxcountytn.gov/people/shane-jackson/"
     }
    ],
@@ -2781,6 +3129,7 @@
     {
      "email": "angela.russell@knoxcounty.org",
      "name": "Angela Russell",
+     "phone": "865-318-9063",
      "profileUrl": "https://commission.knoxcountytn.gov/people/angela-russell/"
     }
    ],
@@ -2788,6 +3137,7 @@
     {
      "email": "terry.hill@knoxcounty.org",
      "name": "Terry Hill",
+     "phone": "865-205-5768",
      "profileUrl": "https://commission.knoxcountytn.gov/people/terry-hill/",
      "role": "Chair"
     }
@@ -2796,6 +3146,7 @@
     {
      "email": "Barry.Beeler@knoxcounty.org",
      "name": "Barry Beeler",
+     "phone": "865-312-4578",
      "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-barry-beeler/"
     }
    ],
@@ -2803,6 +3154,7 @@
     {
      "email": "adam.thompson@knoxcounty.org",
      "name": "Adam Thompson",
+     "phone": "865-318-8951",
      "profileUrl": "https://commission.knoxcountytn.gov/people/adam-thompson/",
      "role": "Vice-Chair"
     }
@@ -2811,6 +3163,7 @@
     {
      "email": "andy.fox@knoxcounty.org",
      "name": "Andy Fox",
+     "phone": "865-525-8836",
      "profileUrl": "https://commission.knoxcountytn.gov/people/andy-fox/"
     }
    ]
@@ -2825,6 +3178,7 @@
    {
     "email": "Garrett.Holt@knoxcounty.org",
     "name": "Garrett Holt",
+    "phone": "865-315-0622",
     "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-garrett-holt/",
     "seat": "Seat 11"
    }
@@ -2835,118 +3189,135 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://lawrencecountytn.gov/government/commissioners/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 18,
   "domains": [
    "lawrencecountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "Wayne Yocom",
+     "phone": "931-201-6404",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-1/"
     }
    ],
    "2": [
     {
      "name": "Barry Luffman",
+     "phone": "931-279-0003",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-2/"
     }
    ],
    "3": [
     {
      "name": "Denny Gillespie",
+     "phone": "931-629-5460",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-3/"
     }
    ],
    "4": [
     {
      "name": "Steve Hagan",
+     "phone": "931-244-0105",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-4/"
     }
    ],
    "5": [
     {
      "name": "Blake Grooms",
+     "phone": "931-629-2981",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-5/"
     }
    ],
    "6": [
     {
      "name": "Chris Sutherland",
+     "phone": "615-294-8103",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-6/"
     }
    ],
    "7": [
     {
      "name": "Travis Cauwels",
+     "phone": "931-629-3033",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-7/"
     }
    ],
    "8": [
     {
      "name": "Rick Skillington",
+     "phone": "931-637-2217",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-8/"
     }
    ],
    "9": [
     {
      "name": "Ronald “Bubba” Benefield",
+     "phone": "931-629-3695",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-9/"
     }
    ],
    "10": [
     {
      "name": "Delano Benefield",
+     "phone": "931-629-0374",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-10/"
     }
    ],
    "11": [
     {
      "name": "Scott Franks",
+     "phone": "931-629-2491",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-11/"
     }
    ],
    "12": [
     {
      "name": "Angie Jacobs",
+     "phone": "931-629-9709",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-12/"
     }
    ],
    "13": [
     {
      "name": "Ray Brazier",
+     "phone": "931-629-9805",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-13/"
     }
    ],
    "14": [
     {
      "name": "Sandy Newton",
+     "phone": "931-242-3871",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-14/"
     }
    ],
    "15": [
     {
      "name": "Tammy Wisdom",
+     "phone": "931-629-9201",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-15/"
     }
    ],
    "16": [
     {
      "name": "J.D. Bosheers",
+     "phone": "931-244-0708",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-16/"
     }
    ],
    "17": [
     {
      "name": "Tim Clifton",
+     "phone": "931-279-1319",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-17/"
     }
    ],
    "18": [
     {
      "name": "Will Burnett",
+     "phone": "931-629-5161",
      "profileUrl": "https://lawrencecountytn.gov/commissioners/district-18/"
     }
    ]
@@ -2957,123 +3328,146 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://lincolncountytn.gov/county_directory/chairman_commission.php",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 24,
   "domains": [
    "lincolncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "jhammons@lincolncountytn.gov",
-     "name": "Jim Hammons"
+     "name": "Jim Hammons",
+     "phone": "(931) 993-3708"
     },
     {
      "email": "djenkins@lincolncountytn.gov",
-     "name": "Don Jenkins"
+     "name": "Don Jenkins",
+     "phone": "(256) 617-0154"
     },
     {
      "email": "dwalker@lincolncountytn.gov",
-     "name": "Danny Walker"
+     "name": "Danny Walker",
+     "phone": "(931) 652-4722"
     }
    ],
    "2": [
     {
      "email": "jcreson@lincolncountytn.gov",
-     "name": "John Creson"
+     "name": "John Creson",
+     "phone": "(931) 993-2103"
     },
     {
      "email": "dadkinson@lincolncountytn.gov",
-     "name": "Dustin Adkinson"
+     "name": "Dustin Adkinson",
+     "phone": "(931) 224-0236"
     },
     {
      "email": "trogers@lincolncountytn.gov",
-     "name": "Terri Rogers"
+     "name": "Terri Rogers",
+     "phone": "(931) 993-1532"
     }
    ],
    "3": [
     {
      "email": "jatchley@lincolncountytn.gov",
-     "name": "Jack Atchley"
+     "name": "Jack Atchley",
+     "phone": "(931) 993-0594"
     },
     {
      "email": "rgrubbs@lincolncountytn.gov",
-     "name": "Rod Grubbs"
+     "name": "Rod Grubbs",
+     "phone": "(931) 655-4828"
     },
     {
      "email": "mmitchell@lincolncountytn.gov",
-     "name": "Mark Mitchell"
+     "name": "Mark Mitchell",
+     "phone": "(931) 993-9912"
     }
    ],
    "4": [
     {
      "email": "chunter@lincolncountytn.gov",
-     "name": "Charles Hunter"
+     "name": "Charles Hunter",
+     "phone": "(931) 625-0433"
     },
     {
      "email": "tcaldwell@lincolncountytn.gov",
-     "name": "Tony Caldwell"
+     "name": "Tony Caldwell",
+     "phone": "(931) 625-6506"
     },
     {
      "email": "sspray@lincolncountytn.gov",
-     "name": "Steve Spray"
+     "name": "Steve Spray",
+     "phone": "(931) 993-7754"
     }
    ],
    "5": [
     {
      "email": "jeakes@lincolncountytn.gov",
-     "name": "Jacky Eakes"
+     "name": "Jacky Eakes",
+     "phone": "(931) 759-2891"
     },
     {
      "email": "jnix@lincolncountytn.gov",
-     "name": "Jason Gary Nix"
+     "name": "Jason Gary Nix",
+     "phone": "(615) 653-3337"
     },
     {
      "email": "jspray@lincolncountytn.gov",
-     "name": "Jeremy Spray"
+     "name": "Jeremy Spray",
+     "phone": "(931) 652-9545"
     }
    ],
    "6": [
     {
      "email": "cynthia.bates@lincolncountytn.gov",
-     "name": "Cynthia Bates"
+     "name": "Cynthia Bates",
+     "phone": "(931) 652-4040"
     },
     {
      "email": "cgraham@lincolncountytn.gov",
-     "name": "Chris Graham"
+     "name": "Chris Graham",
+     "phone": "(931) 993-7800"
     },
     {
      "email": "nwebb@lincolncountytn.gov",
-     "name": "Nathan Webb"
+     "name": "Nathan Webb",
+     "phone": "(256) 425-5898"
     }
    ],
    "7": [
     {
      "email": "rbryant@lincolncountytn.gov",
-     "name": "Ricky Bryant"
+     "name": "Ricky Bryant",
+     "phone": "(931) 993-8825"
     },
     {
      "email": "sguntherberg@lincolncountytn.gov",
-     "name": "Steve Guntherberg"
+     "name": "Steve Guntherberg",
+     "phone": "(931) 993-7273"
     },
     {
      "email": "ebates@lincolncountytn.gov",
-     "name": "Ethan Kyle Bates"
+     "name": "Ethan Kyle Bates",
+     "phone": "(931) 625-1384"
     }
    ],
    "8": [
     {
      "email": "jjennings@lincolncountytn.gov",
-     "name": "Jude Jennings"
+     "name": "Jude Jennings",
+     "phone": "(256) 425-3371"
     },
     {
      "email": "bshelton@lincolncountytn.gov",
-     "name": "Bill Shelton"
+     "name": "Bill Shelton",
+     "phone": "(931) 433-6930"
     },
     {
      "email": "gtrammell@lincolncountytn.gov",
-     "name": "Greg Trammell"
+     "name": "Greg Trammell",
+     "phone": "(931) 993-3284"
     }
    ]
   }
@@ -3083,16 +3477,16 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.mcminncountytn.gov/county_commission_main.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 10,
   "domains": [
    "mcminncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Brent Carter"
+     "name": "Brent Carter",
+     "phone": "(423) 507-9165"
     },
     {
      "name": "Scott Williams"
@@ -3100,23 +3494,28 @@
    ],
    "2": [
     {
-     "name": "Jerry Millsaps"
+     "name": "Jerry Millsaps",
+     "phone": "(423) 435-2383"
     },
     {
-     "name": "J.W. McPhail"
+     "name": "J.W. McPhail",
+     "phone": "(423) 744-4024"
     }
    ],
    "3": [
     {
-     "name": "Roger Masingale"
+     "name": "Roger Masingale",
+     "phone": "(423) 887-7838"
     },
     {
-     "name": "Tim King"
+     "name": "Tim King",
+     "phone": "(423) 507-3681"
     }
    ],
    "4": [
     {
-     "name": "Scott Cass"
+     "name": "Scott Cass",
+     "phone": "(865) 310-2018"
     },
     {
      "name": "Tony Allman"
@@ -3127,7 +3526,8 @@
      "name": "Travis Crisp"
     },
     {
-     "name": "Scott Curtis"
+     "name": "Scott Curtis",
+     "phone": "(423) 506-1050"
     }
    ]
   }
@@ -3137,127 +3537,154 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.madisoncountytn.gov/154/County-Commission",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 25,
   "domains": [
    "madisoncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "William C. Martin"
+     "name": "William C. Martin",
+     "phone": "(731) 427-1851"
     },
     {
      "email": "tmercer@madisoncountytn.gov",
-     "name": "Tina Mercer"
+     "name": "Tina Mercer",
+     "phone": "(731)293-6900"
     }
    ],
    "2": [
     {
      "email": "ahess@madisoncountytn.gov",
-     "name": "Allan Hess"
+     "name": "Allan Hess",
+     "phone": "731-394-4207"
     },
     {
      "email": "kmckenney@madisoncountytn.gov",
-     "name": "Kristen McKenney"
+     "name": "Kristen McKenney",
+     "phone": "(731) 313-0477"
     },
     {
      "email": "tblack@madisoncountytn.gov",
-     "name": "Tony Black"
+     "name": "Tony Black",
+     "phone": "cell (731) 267-3156"
     }
    ],
    "3": [
     {
      "email": "tneihoff@madisoncountytn.gov",
-     "name": "Tony Neihoff"
+     "name": "Tony Neihoff",
+     "phone": "(731) 298-1039"
     },
     {
      "email": "rkirkland@madisoncountytn.gov",
-     "name": "Ronald H. Kirkland"
+     "name": "Ronald H. Kirkland",
+     "phone": "(731) 225-9167"
     }
    ],
    "4": [
     {
-     "name": "Gary D. Deaton"
+     "name": "Gary D. Deaton",
+     "phone": "home (731) 664-0148",
+     "phonesExtra": [
+      "office (731) 664-5200"
+     ]
     },
     {
      "email": "mbryant@madisoncountytn.gov",
-     "name": "Mike Bryant"
+     "name": "Mike Bryant",
+     "phone": "(731) 499-1647"
     },
     {
      "email": "cbryant@madisoncountytn.gov",
-     "name": "Cyndi Bryant"
+     "name": "Cyndi Bryant",
+     "phone": "home (731) 616-1681"
     }
    ],
    "5": [
     {
      "email": "jjones@madisoncountytn.gov",
-     "name": "Juanita Jones"
+     "name": "Juanita Jones",
+     "phone": "(731) 293-3800"
     },
     {
-     "name": "Claudell Brown, Jr."
+     "name": "Claudell Brown, Jr.",
+     "phone": "home (731)616-3651"
     },
     {
      "email": "sgodwin@madisoncountytn.gov",
-     "name": "Shelia Godwin"
+     "name": "Shelia Godwin",
+     "phone": "(731) 467-3224"
     }
    ],
    "6": [
     {
      "email": "bwilson@madisoncountytn.gov",
-     "name": "Brian Wilson"
+     "name": "Brian Wilson",
+     "phone": "(731) 234-8013"
     },
     {
      "email": "mbailey@madisoncountytn.gov",
-     "name": "Mike Bailey"
+     "name": "Mike Bailey",
+     "phone": "(731) 217-2911"
     }
    ],
    "7": [
     {
      "email": "aellison@madisoncountytn.gov",
-     "name": "Aaron \"Billy\" Ellison"
+     "name": "Aaron \"Billy\" Ellison",
+     "phone": "(731) 424-0044"
     },
     {
      "email": "mmerriweather@madisoncountytn.gov",
-     "name": "Mitiz Merriweather"
+     "name": "Mitiz Merriweather",
+     "phone": "(731) 394-2605"
     }
    ],
    "8": [
     {
      "email": "calexander@madisoncountytn.gov",
-     "name": "Carl Alexander"
+     "name": "Carl Alexander",
+     "phone": "(731) 695-4904"
     },
     {
      "email": "maday@madisoncountytn.gov",
-     "name": "Mark Aday"
+     "name": "Mark Aday",
+     "phone": "(731) 695-7359"
     }
    ],
    "9": [
     {
      "email": "ktbond@madisoncountytn.gov",
-     "name": "Karley Bond"
+     "name": "Karley Bond",
+     "phone": "(731) 616-5350"
     },
     {
      "email": "khicks@madisoncountytn.gov",
-     "name": "Kevin Hicks"
+     "name": "Kevin Hicks",
+     "phone": "(731) 394-7003"
     },
     {
      "email": "jwall@madisoncountytn.gov",
-     "name": "Jeff Wall"
+     "name": "Jeff Wall",
+     "phone": "(731) 467-0001"
     }
    ],
    "10": [
     {
      "email": "mtaylor@madisoncountytn.gov",
-     "name": "Mike Taylor"
+     "name": "Mike Taylor",
+     "phone": "(731) 695-6635"
     },
     {
-     "name": "Julie Wiser"
+     "name": "Julie Wiser",
+     "phone": "(731) 394-1313"
     },
     {
      "email": "rwatson@madisoncountytn.gov",
-     "name": "Richard Watson"
+     "name": "Richard Watson",
+     "phone": "(731) 267-5129"
     }
    ]
   }
@@ -3267,27 +3694,29 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://marioncountytn.net/leadership",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 15,
   "domains": [
    "marioncountytn.net"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "jburkhalter@marioncountytn.net",
      "name": "Joyce Burkhalter",
+     "phone": "423-802-6747",
      "seat": "A"
     },
     {
      "email": "tsmith2@marioncountytn.net",
      "name": "Terry Smith",
+     "phone": "423-637-4363",
      "seat": "B"
     },
     {
      "email": "jstory@marioncountytn.net",
      "name": "Jeff Story",
+     "phone": "423-596-7551",
      "seat": "C"
     }
    ],
@@ -3295,15 +3724,18 @@
     {
      "email": "jwinters@marioncountytn.net",
      "name": "Josh Winters",
+     "phone": "423-718-1693",
      "seat": "A"
     },
     {
      "email": "ckeef@marioncountytn.net",
      "name": "Chuck Keef",
+     "phone": "423-403-5757",
      "seat": "B"
     },
     {
      "name": "Jimmy Cantrell",
+     "phone": "423-290-1207",
      "seat": "C"
     }
    ],
@@ -3311,16 +3743,19 @@
     {
      "email": "bburnett@marioncountytn.net",
      "name": "Ronnie “Bo” Burnett",
+     "phone": "423-421-0858",
      "seat": "A"
     },
     {
      "email": "jbaker@marioncountytn.net",
      "name": "Justin Baker",
+     "phone": "423-718-3538",
      "seat": "B"
     },
     {
      "email": "mistanich@marioncountytn.net",
      "name": "Mark Istanich",
+     "phone": "419-496-6539",
      "seat": "C"
     }
    ],
@@ -3336,6 +3771,7 @@
     {
      "email": "tstiefel@marioncountytn.net",
      "name": "Terry Stiefel",
+     "phone": "423-490-5359",
      "seat": "C"
     }
    ],
@@ -3343,14 +3779,17 @@
     {
      "email": "lhigdon@marioncountytn.net",
      "name": "Larry Higdon",
+     "phone": "423-667-7536",
      "seat": "A"
     },
     {
      "name": "Logan Campbell",
+     "phone": "423-637-2010",
      "seat": "B"
     },
     {
      "name": "Chris Morrison",
+     "phone": "423-242-8646",
      "seat": "C"
     }
    ]
@@ -3361,101 +3800,118 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.marshallcountytn.gov/county-commission",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 18,
   "domains": [
    "marshallcountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "mwaggoner@marshallcountytn.gov",
-     "name": "Mike Waggoner"
+     "name": "Mike Waggoner",
+     "phone": "615-476-4171"
     },
     {
      "email": "hlopez@marshallcountytn.gov",
-     "name": "Hugo Lopez"
+     "name": "Hugo Lopez",
+     "phone": "615-330-9071"
     }
    ],
    "2": [
     {
      "email": "dgilbert@marshallcountytn.gov",
-     "name": "Debbie Gilbert"
+     "name": "Debbie Gilbert",
+     "phone": "931-703-7062"
     },
     {
      "email": "rperryman@marshallcountytn.gov",
-     "name": "Randy Perryman"
+     "name": "Randy Perryman",
+     "phone": "931-364-7644"
     }
    ],
    "3": [
     {
      "email": "jpoarch@marshallcountytn.gov",
-     "name": "Jeff Poarch"
+     "name": "Jeff Poarch",
+     "phone": "931-993-6753"
     },
     {
      "email": "lmurdock@marshallcountytn.gov",
-     "name": "Landry Murdock"
+     "name": "Landry Murdock",
+     "phone": "931-993-4276"
     }
    ],
    "4": [
     {
      "email": "mking@marshallcountytn.gov",
-     "name": "Mickey King"
+     "name": "Mickey King",
+     "phone": "931-293-2250"
     },
     {
      "email": "klee@marshallcountytn.gov",
-     "name": "Ken Lee"
+     "name": "Ken Lee",
+     "phone": "931-359-1901"
     }
    ],
    "5": [
     {
      "email": "tdunnivant@marshallcountytn.gov",
-     "name": "Terry Dunnivant"
+     "name": "Terry Dunnivant",
+     "phone": "931-205-2139"
     },
     {
      "email": "msullivan@marshallcountytn.gov",
-     "name": "Michael Sullivan"
+     "name": "Michael Sullivan",
+     "phone": "931-698-2170"
     }
    ],
    "6": [
     {
      "email": "sarndt@marshallcountytn.gov",
-     "name": "Shaun Arndt"
+     "name": "Shaun Arndt",
+     "phone": "931-993-4171"
     },
     {
      "email": "jmoore@marshallcountytn.gov",
-     "name": "Jeff Moore"
+     "name": "Jeff Moore",
+     "phone": "931-698-2684"
     }
    ],
    "7": [
     {
      "email": "shunter@marshallcountytn.gov",
-     "name": "Susan Hunter"
+     "name": "Susan Hunter",
+     "phone": "931-993-4969"
     },
     {
      "email": "gosborne@marshallcountytn.gov",
-     "name": "Geoffrey \"Spanky\" Osborne"
+     "name": "Geoffrey \"Spanky\" Osborne",
+     "phone": "931-224-3272"
     }
    ],
    "8": [
     {
      "email": "pparsons@marshallcountytn.gov",
-     "name": "Patty Parsons"
+     "name": "Patty Parsons",
+     "phone": "931-703-0906"
     },
     {
      "email": "jhopkins@marshallcountytn.gov",
-     "name": "James Hopkins"
+     "name": "James Hopkins",
+     "phone": "931-580-0240"
     }
    ],
    "9": [
     {
      "email": "njohnson@marshallcountytn.gov",
-     "name": "Nathan Johnson"
+     "name": "Nathan Johnson",
+     "phone": "931-619-2252"
     },
     {
      "email": "gwhite@marshallcountytn.gov",
-     "name": "Glen White"
+     "name": "Glen White",
+     "phone": "931-808-9096"
     }
    ]
   }
@@ -3465,120 +3921,141 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.maurycounty-tn.gov/168/Commissioners",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 22,
   "domains": [
    "maurycounty-tn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "Jerry Strahan",
+     "phone": "931-698-6794",
      "profileUrl": "https://www.maurycounty-tn.gov/170/Jerry-Strahan"
     },
     {
      "name": "Tim Holt",
+     "phone": "931-286-2794",
      "profileUrl": "https://www.maurycounty-tn.gov/169/Tim-Holt"
     }
    ],
    "2": [
     {
      "name": "Patricia Hollinsworth",
+     "phone": "931-215-0587",
      "profileUrl": "https://www.maurycounty-tn.gov/171/Patricia-Hollinsworth"
     },
     {
      "name": "Wayne Romesburg",
+     "phone": "931-374-0095",
      "profileUrl": "https://www.maurycounty-tn.gov/172/Wayne-Romesburg"
     }
    ],
    "3": [
     {
      "name": "Winston B. Harlan",
+     "phone": "615-310-7490",
      "profileUrl": "https://www.maurycounty-tn.gov/174/Winston-B.-Harlan"
     },
     {
      "name": "Gary Stovall",
+     "phone": "931-381-8748",
      "profileUrl": "https://www.maurycounty-tn.gov/173/Gary-Stovall"
     }
    ],
    "4": [
     {
      "name": "Connie Green",
+     "phone": "931-982-6397",
      "profileUrl": "https://www.maurycounty-tn.gov/175/Connie-Green"
     },
     {
      "name": "Mike Kuzawinski",
+     "phone": "931-215-0416",
      "profileUrl": "https://www.maurycounty-tn.gov/176/MIKE-KUZAWINSKI"
     }
    ],
    "5": [
     {
      "name": "Scott Sumners",
+     "phone": "615-210-6536",
      "profileUrl": "https://www.maurycounty-tn.gov/177/Scott%20Sumners"
     },
     {
      "name": "Sam Barnes",
+     "phone": "931-451-0196",
      "profileUrl": "https://www.maurycounty-tn.gov/178/Sam-Barnes"
     }
    ],
    "6": [
     {
      "name": "Rebecca Haines",
+     "phone": "731-458-7606",
      "profileUrl": "https://www.maurycounty-tn.gov/179/Rebecca-Haines"
     },
     {
      "name": "Cindy Hestla",
+     "phone": "615-618-1456",
      "profileUrl": "https://www.maurycounty-tn.gov/180/Cindy-Hestla"
     }
    ],
    "7": [
     {
      "name": "Richard Baud",
+     "phone": "931-505-2254",
      "profileUrl": "https://www.maurycounty-tn.gov/183/Richard-Baud"
     },
     {
      "name": "Kenny Morrow",
+     "phone": "931-805-3015",
      "profileUrl": "https://www.maurycounty-tn.gov/182/Kenny-Morrow"
     }
    ],
    "8": [
     {
      "name": "Missy Phillips",
+     "phone": "615-473-5294",
      "profileUrl": "https://www.maurycounty-tn.gov/185/Missy-Phillips"
     },
     {
      "name": "Steven Burford",
+     "phone": "931-486-4447",
      "profileUrl": "https://www.maurycounty-tn.gov/184/Steven-Burford"
     }
    ],
    "9": [
     {
      "name": "Brent Coen",
+     "phone": "614-256-1564",
      "profileUrl": "https://www.maurycounty-tn.gov/186/Brent-Coen"
     },
     {
      "name": "Kevin Markham",
+     "phone": "931-626-5580",
      "profileUrl": "https://www.maurycounty-tn.gov/187/Kevin-Markham"
     }
    ],
    "10": [
     {
      "name": "Danny Grooms",
+     "phone": "931-334-4404",
      "profileUrl": "https://www.maurycounty-tn.gov/189/Danny-Grooms"
     },
     {
      "name": "Greg Combs",
+     "phone": "931-797-1114",
      "profileUrl": "https://www.maurycounty-tn.gov/188/Greg-Combs"
     }
    ],
    "11": [
     {
      "name": "Tim Mullen",
+     "phone": "615-392-0721",
      "profileUrl": "https://www.maurycounty-tn.gov/191/Tim-Mullen"
     },
     {
      "name": "Chad Brothers",
+     "phone": "440-281-6017",
      "profileUrl": "https://www.maurycounty-tn.gov/190/Chad-Brothers"
     }
    ]
@@ -3589,12 +4066,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://monroetn.gov/board-of-county-commissioners/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 10,
   "domains": [
    "monroetn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -3651,59 +4127,66 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://montgomerytn.gov/commission",
-  "readAt": "2026-10-11",
+  "readAt": "2026-10-17",
   "seats": 21,
   "domains": [
    "montgomerytn.gov",
    "mcgtn.org"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "John Gannon",
+     "phone": "(931) 552-4691",
      "profileUrl": "https://montgomerytn.gov/commission/district1"
     }
    ],
    "2": [
     {
      "name": "Ted Denny",
+     "phone": "(931) 216-9042",
      "profileUrl": "https://montgomerytn.gov/commission/district2"
     }
    ],
    "3": [
     {
      "name": "Joe Smith",
+     "phone": "(931) 320-4289",
      "profileUrl": "https://montgomerytn.gov/commission/district3"
     }
    ],
    "4": [
     {
      "name": "Rickey Ray",
+     "phone": "(931) 494-0868",
      "profileUrl": "https://montgomerytn.gov/commission/district4"
     }
    ],
    "5": [
     {
      "name": "Rashidah Leverett",
+     "phone": "(931) 266-1083",
      "profileUrl": "https://montgomerytn.gov/commission/district5"
     }
    ],
    "6": [
     {
      "name": "Clayton Rudder",
+     "phone": "(931) 217 0238",
      "profileUrl": "https://montgomerytn.gov/commission/district6"
     }
    ],
    "7": [
     {
      "name": "Nathan Burkholder",
+     "phone": "(706) 593-0654",
      "profileUrl": "https://montgomerytn.gov/commission/district7"
     }
    ],
    "8": [
     {
      "name": "LaTonia Brown",
+     "phone": "(270) 366-4433",
      "profileUrl": "https://montgomerytn.gov/commission/district8"
     }
    ],
@@ -3716,6 +4199,7 @@
    "10": [
     {
      "name": "Jeremiah Walker",
+     "phone": "(931) 542-7340",
      "profileUrl": "https://montgomerytn.gov/commission/district10"
     }
    ],
@@ -3728,42 +4212,49 @@
    "12": [
     {
      "name": "Carmelle Chandler",
+     "phone": "(615) 669-9223",
      "profileUrl": "https://montgomerytn.gov/commission/district12"
     }
    ],
    "13": [
     {
      "name": "Walker Woodruff",
+     "phone": "(931) 237-3471",
      "profileUrl": "https://montgomerytn.gov/commission/district13"
     }
    ],
    "14": [
     {
      "name": "Joshua Beal",
+     "phone": "(931) 614-5969",
      "profileUrl": "https://montgomerytn.gov/commission/district14"
     }
    ],
    "15": [
     {
      "name": "David Harper",
+     "phone": "(931) 624-1971",
      "profileUrl": "https://montgomerytn.gov/commission/district15"
     }
    ],
    "16": [
     {
      "name": "Lisa Prichard",
+     "phone": "(931) 494-0260",
      "profileUrl": "https://montgomerytn.gov/commission/district16"
     }
    ],
    "17": [
     {
      "name": "Chris Rasnic",
+     "phone": "(931) 624-3786",
      "profileUrl": "https://montgomerytn.gov/commission/district17"
     }
    ],
    "18": [
     {
      "name": "Tiffany Pearl Manning",
+     "phone": "(931) 326-9440",
      "profileUrl": "https://montgomerytn.gov/commission/district18"
     }
    ],
@@ -3792,22 +4283,24 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://morgancountytn.gov/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 18,
   "domains": [
    "morgancountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Steve Walls"
+     "name": "Steve Walls",
+     "phone": "(865) 435-7134"
     },
     {
-     "name": "Randy Roberts"
+     "name": "Randy Roberts",
+     "phone": "(865) 748-7244"
     },
     {
-     "name": "Terry Jackson"
+     "name": "Terry Jackson",
+     "phone": "(865) 591-4021"
     }
    ],
    "2": [
@@ -3818,7 +4311,8 @@
      "name": "Vera Scarbough"
     },
     {
-     "name": "Fred Snow"
+     "name": "Fred Snow",
+     "phone": "(423) 369-2601"
     }
    ],
    "3": [
@@ -3829,7 +4323,8 @@
      "name": "Kenneth Morgan"
     },
     {
-     "name": "Vernon Justes"
+     "name": "Vernon Justes",
+     "phone": "(423) 319-6173"
     }
    ],
    "4": [
@@ -3851,7 +4346,8 @@
      "name": "Seth Stewart"
     },
     {
-     "name": "Gary Kennedy"
+     "name": "Gary Kennedy",
+     "phone": "(865) 599-6497"
     }
    ],
    "6": [
@@ -3859,10 +4355,12 @@
      "name": "Tony Dagley"
     },
     {
-     "name": "Debra Lively"
+     "name": "Debra Lively",
+     "phone": "(865) 789-1772"
     },
     {
-     "name": "Janet Adkission"
+     "name": "Janet Adkission",
+     "phone": "(423) 539-8598"
     }
    ]
   }
@@ -3872,88 +4370,123 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.obioncountytn.gov/county_commission.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 21,
   "domains": [
    "obioncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Kenny Mayo"
+     "name": "Kenny Mayo",
+     "phone": "cell (731) 479-9000"
     },
     {
-     "name": "John McConnell"
+     "name": "John McConnell",
+     "phone": "(731) 479-5565"
     },
     {
-     "name": "Ricky Cranford"
+     "name": "Ricky Cranford",
+     "phone": "(270) 832-7722"
     }
    ],
    "2": [
     {
-     "name": "Kenneth Barnes"
+     "name": "Kenneth Barnes",
+     "phone": "home (731) 885-2521",
+     "phonesExtra": [
+      "cell (731) 446-9132"
+     ]
     },
     {
-     "name": "Joe Lewis"
+     "name": "Joe Lewis",
+     "phone": "(731) 335-5076"
     },
     {
-     "name": "Ryan Ellegood"
+     "name": "Ryan Ellegood",
+     "phone": "cell (731) 796-0725"
     }
    ],
    "3": [
     {
-     "name": "Danny Jowers"
+     "name": "Danny Jowers",
+     "phone": "home (731) 749-5205",
+     "phonesExtra": [
+      "cell (731) 446-4118"
+     ]
     },
     {
-     "name": "Seth Taylor"
+     "name": "Seth Taylor",
+     "phone": "(731) 431-2955"
     },
     {
-     "name": "Rob Holman"
+     "name": "Rob Holman",
+     "phone": "cell (731) 446-5566"
     }
    ],
    "4": [
     {
-     "name": "James Gray"
+     "name": "James Gray",
+     "phone": "cell (270) 243-1120"
     },
     {
-     "name": "Phillip Dunlap"
+     "name": "Phillip Dunlap",
+     "phone": "cell (901) 412-5551"
     },
     {
-     "name": "Larry Sherwood"
+     "name": "Larry Sherwood",
+     "phone": "cell (731) 446-8031"
     }
    ],
    "5": [
     {
-     "name": "Taylor Pierce"
+     "name": "Taylor Pierce",
+     "phone": "(731) 335-0138"
     },
     {
-     "name": "Benny McGuire"
+     "name": "Benny McGuire",
+     "phone": "home (731) 538-2964",
+     "phonesExtra": [
+      "cell (731) 442-2588"
+     ]
     },
     {
-     "name": "Greg Ferguson"
+     "name": "Greg Ferguson",
+     "phone": "(731) 694-6782"
     }
    ],
    "6": [
     {
-     "name": "Eugene Hudgins"
+     "name": "Eugene Hudgins",
+     "phone": "home (731) 536-6230",
+     "phonesExtra": [
+      "cell (731) 592-8716"
+     ]
     },
     {
-     "name": "Terry Roberts"
+     "name": "Terry Roberts",
+     "phone": "cell (731) 446-7718"
     },
     {
-     "name": "Heath Cunningham"
+     "name": "Heath Cunningham",
+     "phone": "cell (731) 796-1528"
     }
    ],
    "7": [
     {
-     "name": "Kyle Baggett"
+     "name": "Kyle Baggett",
+     "phone": "(731) 446-6191"
     },
     {
-     "name": "Clare Saum"
+     "name": "Clare Saum",
+     "phone": "(731) 335-4242"
     },
     {
-     "name": "Sam Sinclair, Jr."
+     "name": "Sam Sinclair, Jr.",
+     "phone": "home (731) 885-4694",
+     "phonesExtra": [
+      "cell (731) 223-1792"
+     ]
     }
    ]
   }
@@ -3963,31 +4496,34 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://polkcountytn.gov/county-commissioners/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 10,
   "domains": [
    "polkcountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "gary.miller@polkcountytn.gov",
-     "name": "Gary Miller"
+     "name": "Gary Miller",
+     "phone": "423-505-2462"
     },
     {
      "email": "debbie.davis@polkcountytn.gov",
-     "name": "Deborah Anne Davis"
+     "name": "Deborah Anne Davis",
+     "phone": "423-715-3698"
     },
     {
      "email": "jared.allen@polkcountytn.gov",
-     "name": "Jared Allen"
+     "name": "Jared Allen",
+     "phone": "423-299-1028"
     }
    ],
    "2": [
     {
      "email": "ryan.cooke@polkcountytn.gov",
-     "name": "Ryan Cooke"
+     "name": "Ryan Cooke",
+     "phone": "423-299-5169"
     },
     {
      "vacant": true
@@ -3996,25 +4532,30 @@
    "3": [
     {
      "email": "samantha.trantham@polkcountytn.gov",
-     "name": "Samantha Trantham"
+     "name": "Samantha Trantham",
+     "phone": "706-851-6623"
     },
     {
      "email": "james.davis@polkcountytn.gov",
-     "name": "James Mush Davis"
+     "name": "James Mush Davis",
+     "phone": "423-241-9433"
     },
     {
      "email": "keith.barker@polkcountytn.gov",
-     "name": "Keith Barker"
+     "name": "Keith Barker",
+     "phone": "706-455-6093"
     }
    ],
    "4": [
     {
      "email": "christy.hardin@polkcountytn.gov",
-     "name": "Christy Hardin"
+     "name": "Christy Hardin",
+     "phone": "423-716-3428"
     },
     {
      "email": "danny.carver@polkcountytn.gov",
-     "name": "Danny Carver"
+     "name": "Danny Carver",
+     "phone": "423-650-8093"
     }
    ]
   }
@@ -4024,107 +4565,130 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://putnamcountytn.gov/county-commission",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 24,
   "domains": [
    "putnamcountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Jonathan Williams"
+     "name": "Jonathan Williams",
+     "phone": "931-239-2698"
     },
     {
-     "name": "Terry Randolph"
+     "name": "Terry Randolph",
+     "phone": "931-260-9999"
     }
    ],
    "2": [
     {
-     "name": "Ron Chaffin"
+     "name": "Ron Chaffin",
+     "phone": "931-510-4242"
     },
     {
-     "name": "Stacye Choate"
+     "name": "Stacye Choate",
+     "phone": "931-261-2566"
     }
    ],
    "3": [
     {
-     "name": "Shayne Bilbrey"
+     "name": "Shayne Bilbrey",
+     "phone": "931-319-5032"
     },
     {
-     "name": "Brendan Laney"
+     "name": "Brendan Laney",
+     "phone": "931-783-1188"
     }
    ],
    "4": [
     {
-     "name": "Theresa Tayes"
+     "name": "Theresa Tayes",
+     "phone": "931-544-8298"
     },
     {
-     "name": "Ken Hall"
+     "name": "Ken Hall",
+     "phone": "931-239-3318"
     }
    ],
    "5": [
     {
-     "name": "Jack Phillips"
+     "name": "Jack Phillips",
+     "phone": "931-319-3996"
     },
     {
-     "name": "Junior C Phipps"
+     "name": "Junior C Phipps",
+     "phone": "931-261-1732"
     }
    ],
    "6": [
     {
-     "name": "Kenneth Matheney"
+     "name": "Kenneth Matheney",
+     "phone": "931-267-2694"
     },
     {
-     "name": "Chris Cassetty"
+     "name": "Chris Cassetty",
+     "phone": "931-528-7749"
     }
    ],
    "7": [
     {
-     "name": "Steve Brown"
+     "name": "Steve Brown",
+     "phone": "931-265-2587"
     },
     {
-     "name": "Tina Flatt"
+     "name": "Tina Flatt",
+     "phone": "931-319-4246"
     }
    ],
    "8": [
     {
-     "name": "Danny Holmes"
+     "name": "Danny Holmes",
+     "phone": "931-260-3273"
     },
     {
-     "name": "Jason Stanton"
+     "name": "Jason Stanton",
+     "phone": "931-280-1560"
     }
    ],
    "9": [
     {
-     "name": "Dale Moss"
+     "name": "Dale Moss",
+     "phone": "931-260-6646"
     },
     {
-     "name": "Robert Riddle"
+     "name": "Robert Riddle",
+     "phone": "931-252-7286"
     }
    ],
    "10": [
     {
-     "name": "Kim Bradford"
+     "name": "Kim Bradford",
+     "phone": "931-528-8332"
     },
     {
-     "name": "Gene Mullins"
+     "name": "Gene Mullins",
+     "phone": "931-526-6927"
     }
    ],
    "11": [
     {
-     "name": "Darren Wilson"
+     "name": "Darren Wilson",
+     "phone": "931-260-5599"
     },
     {
-     "name": "Kathy Dunn"
+     "name": "Kathy Dunn",
+     "phone": "931-265-4575"
     }
    ],
    "12": [
     {
-     "name": "David Andrews"
+     "name": "David Andrews",
+     "phone": "931-261-7518"
     },
     {
-     "name": "Cathy Qualls Reel"
+     "name": "Cathy Qualls Reel",
+     "phone": "931-261-3175"
     }
    ]
   }
@@ -4134,70 +4698,84 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://roanecountytn.gov/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 15,
   "domains": [
    "roanecountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Ron Berry"
+     "name": "Ron Berry",
+     "phone": "home 865.354.3445"
     },
     {
-     "name": "Randy Kirby"
+     "name": "Randy Kirby",
+     "phone": "home 865.394.0806"
     },
     {
-     "name": "Chris Lehman"
+     "name": "Chris Lehman",
+     "phone": "865.776.6191"
     }
    ],
    "2": [
     {
-     "name": "Brad Goss"
+     "name": "Brad Goss",
+     "phone": "865.455.9295"
     },
     {
-     "name": "Chris Ahler"
+     "name": "Chris Ahler",
+     "phone": "615.260.7399"
     },
     {
-     "name": "Mike Kittrell"
+     "name": "Mike Kittrell",
+     "phone": "865.804.0515"
     }
    ],
    "3": [
     {
-     "name": "Ben Gann"
+     "name": "Ben Gann",
+     "phone": "865.250.9534"
     }
    ],
    "4": [
     {
-     "name": "Charlotte Bowers"
+     "name": "Charlotte Bowers",
+     "phone": "865.591.6189"
     },
     {
-     "name": "Lance Duff"
+     "name": "Lance Duff",
+     "phone": "865.621.2647"
     }
    ],
    "5": [
     {
-     "name": "Mike Hooks"
+     "name": "Mike Hooks",
+     "phone": "cell 865.617.3780"
     }
    ],
    "6": [
     {
-     "name": "Nancy Hamilton"
+     "name": "Nancy Hamilton",
+     "phone": "615.406.1325"
     },
     {
-     "name": "David Brackett"
+     "name": "David Brackett",
+     "phone": "865.617.3577"
     },
     {
-     "name": "Ben Wilson"
+     "name": "Ben Wilson",
+     "phone": "865.414.5328"
     }
    ],
    "7": [
     {
-     "name": "Shannon Hester"
+     "name": "Shannon Hester",
+     "phone": "865.748.4797"
     },
     {
-     "name": "Travis Parks"
+     "name": "Travis Parks",
+     "phone": "865.387.8325"
     }
    ]
   }
@@ -4207,12 +4785,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://maps.rutherfordcountytn.gov/server/rest/services/Election/Election_Commission/MapServer/5",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 21,
   "domains": [
    "rutherfordcountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -4326,12 +4903,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://scottcounty.com/government/board-of-county-commissioners/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "scottcounty.com"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -4405,132 +4981,156 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://seviercountytn.gov/government/county_officials/county_commissioners/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 25,
   "domains": [
    "seviercountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "Warren N. Hurst",
+     "phone": "(865) 453-8513",
      "seat": "A"
     },
     {
      "name": "Tommy Watts",
+     "phone": "(865) 654-7160",
      "seat": "B"
     }
    ],
    "2": [
     {
      "name": "Brandon Headrick",
+     "phone": "(865) 680-2345",
      "seat": "A"
     },
     {
      "name": "Don McGill",
+     "phone": "(865) 755-1300",
      "seat": "B"
     }
    ],
    "3": [
     {
      "name": "Dale Hill",
+     "phone": "(865) 680-4224",
      "seat": "A"
     },
     {
      "name": "Mike Chambers",
+     "phone": "(865) 742-6176",
      "seat": "B"
     }
    ],
    "4": [
     {
      "name": "Ronnie Whaley",
+     "phone": "(865) 604-4203",
      "seat": "A"
     },
     {
      "name": "Steve Leo",
+     "phone": "(865) 389-5745",
      "seat": "B"
     },
     {
      "name": "Jack Parton",
+     "phone": "(865) 640-8277",
      "seat": "C"
     }
    ],
    "5": [
     {
      "name": "Michael Maddron",
+     "phone": "(865) 654-4638",
      "seat": "A"
     },
     {
      "name": "Rick Valentine",
+     "phone": "(865) 654-0523",
      "seat": "B"
     },
     {
      "name": "Zac Boling",
+     "phone": "(865) 660-6245",
      "seat": "C"
     }
    ],
    "6": [
     {
      "name": "Andy Jackson",
+     "phone": "(865) 309-4080",
      "seat": "A"
     },
     {
      "name": "Harold Pitner",
+     "phone": "(865) 453-7748",
      "seat": "B"
     }
    ],
    "7": [
     {
      "name": "Marcus Whaley",
+     "phone": "(865) 453-1258",
      "seat": "A"
     },
     {
      "name": "Scott Catlett",
+     "phone": "(865) 924-5930",
      "seat": "B"
     }
    ],
    "8": [
     {
      "name": "Aaron Foster",
+     "phone": "(865) 712-9615",
      "seat": "A"
     },
     {
      "name": "Mike Hillard",
+     "phone": "(865) 388-4030",
      "seat": "B"
     },
     {
      "name": "Kent Woods",
+     "phone": "(865) 932-1101",
      "seat": "C"
     }
    ],
    "9": [
     {
      "name": "Greg Haggard",
+     "phone": "(865) 684-0883",
      "seat": "A"
     },
     {
      "name": "Dustin Weaver",
+     "phone": "(865) 382-4921",
      "seat": "B"
     }
    ],
    "10": [
     {
      "name": "Bryan Delius",
+     "phone": "865) 428-8780",
      "seat": "A"
     },
     {
      "name": "Todd Humble",
+     "phone": "(865) 577-8546",
      "seat": "B"
     }
    ],
    "11": [
     {
      "name": "Gary Cole",
+     "phone": "(865) 436-5074",
      "seat": "A"
     },
     {
      "name": "Ray I. Ogle",
+     "phone": "(865) 436-5227",
      "seat": "B"
     }
    ]
@@ -4541,67 +5141,83 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.stewartcogov.com/commissioners/commissioners.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 14,
   "domains": [
    "stewartcogov.com"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
-     "name": "Lane Page"
+     "name": "Lane Page",
+     "phone": "(931) 627-6756"
     },
     {
-     "name": "Elijah Thomas"
+     "name": "Elijah Thomas",
+     "phone": "(931) 627-9726"
     }
    ],
    "2": [
     {
-     "name": "Justin Booth"
+     "name": "Justin Booth",
+     "phone": "(931) 305-8809"
     },
     {
-     "name": "William Taylor"
+     "name": "William Taylor",
+     "phone": "(931) 627-2176"
     }
    ],
    "3": [
     {
-     "name": "Shane Keatts"
+     "name": "Shane Keatts",
+     "phone": "(931) 627-0360"
     },
     {
-     "name": "Eric Watkins"
+     "name": "Eric Watkins",
+     "phone": "(931) 249-4921"
     }
    ],
    "4": [
     {
-     "name": "Terry Fitzhugh"
+     "name": "Terry Fitzhugh",
+     "phone": "(931) 627-0760"
     },
     {
-     "name": "Edward Williams"
+     "name": "Edward Williams",
+     "phone": "(931) 627-1851"
     }
    ],
    "5": [
     {
-     "name": "Leslie Bickford"
+     "name": "Leslie Bickford",
+     "phone": "(931) 627-3850"
     },
     {
-     "name": "Melissa Fields"
+     "name": "Melissa Fields",
+     "phone": "(931) 249-3501"
     }
    ],
    "6": [
     {
-     "name": "Clint Mathis"
+     "name": "Clint Mathis",
+     "phone": "home (931) 232-9839",
+     "phonesExtra": [
+      "(931) 627-6919"
+     ]
     },
     {
-     "name": "Bradley Jones"
+     "name": "Bradley Jones",
+     "phone": "(931) 305-8739"
     }
    ],
    "7": [
     {
-     "name": "Mark Dortch"
+     "name": "Mark Dortch",
+     "phone": "(931) 827-2357"
     },
     {
-     "name": "Alexis Taylor"
+     "name": "Alexis Taylor",
+     "phone": "(931) 721-6987"
     }
    ]
   }
@@ -4611,13 +5227,12 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.scelect.org/electedofficials.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 24,
   "domains": [
    "sullivancountytn.gov",
    "scelect.org"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -4720,17 +5335,17 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://sumnercountytn.gov/government/county-commission/",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 24,
   "domains": [
    "sumnercountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "jody.garrison@sumnercountytn.gov",
      "name": "Jody Garrison",
+     "phone": "615-644-4272",
      "profileUrl": "https://sumnercountytn.gov/jody-garrison/"
     }
    ],
@@ -4738,6 +5353,7 @@
     {
      "email": "christopher.tarlecky@sumnercountytn.gov",
      "name": "Christopher Tarlecky",
+     "phone": "615-519-2778",
      "profileUrl": "https://sumnercountytn.gov/christopher-tarlecky/"
     }
    ],
@@ -4745,6 +5361,7 @@
     {
      "email": "mark.harrison@sumnercountytn.gov",
      "name": "Mark Harrison",
+     "phone": "270-935-0984",
      "profileUrl": "https://sumnercountytn.gov/mark-harrison/"
     }
    ],
@@ -4759,6 +5376,7 @@
     {
      "email": "darrell.rogers@sumnercountytn.gov",
      "name": "Darrell Rogers",
+     "phone": "615-405-2452",
      "profileUrl": "https://sumnercountytn.gov/darrell-rogers/"
     }
    ],
@@ -4766,6 +5384,7 @@
     {
      "email": "adam.issa@sumnercountytn.gov",
      "name": "Adam Issa",
+     "phone": "615-507-5880",
      "profileUrl": "https://sumnercountytn.gov/adam-issa/"
     }
    ],
@@ -4773,6 +5392,7 @@
     {
      "email": "daniel.bristol@sumnercountytn.gov",
      "name": "Daniel Bristol",
+     "phone": "615-853-4005",
      "profileUrl": "https://sumnercountytn.gov/daniel-bristol/"
     }
    ],
@@ -4780,6 +5400,7 @@
     {
      "email": "rory.edmonds@sumnercountytn.gov",
      "name": "Rory Edmonds",
+     "phone": "615-989-0050",
      "profileUrl": "https://sumnercountytn.gov/rory-edmonds/"
     }
    ],
@@ -4787,6 +5408,7 @@
     {
      "email": "paul.graden@sumnercountytn.gov",
      "name": "Paul Graden",
+     "phone": "615-509-9531",
      "profileUrl": "https://sumnercountytn.gov/paul-graden/"
     }
    ],
@@ -4794,6 +5416,7 @@
     {
      "email": "ben.harris@sumnercountytn.gov",
      "name": "Benjamin Harris",
+     "phone": "615-804-2583",
      "profileUrl": "https://sumnercountytn.gov/benjamin-harris/"
     }
    ],
@@ -4801,6 +5424,7 @@
     {
      "email": "nick.ivey@sumnercountytn.gov",
      "name": "Nick Ivey",
+     "phone": "513-706-4742",
      "profileUrl": "https://sumnercountytn.gov/nick-ivey/"
     }
    ],
@@ -4808,6 +5432,7 @@
     {
      "email": "matt.campbell@sumnercountytn.gov",
      "name": "Matt Campbell",
+     "phone": "615-389-3390",
      "profileUrl": "https://sumnercountytn.gov/matt-campbell/"
     }
    ],
@@ -4815,6 +5440,7 @@
     {
      "email": "james.rohnkohl@sumnercountytn.gov",
      "name": "James Rohnkohl, Jr.",
+     "phone": "615-426-0682",
      "profileUrl": "https://sumnercountytn.gov/james-ronkohl-jr/"
     }
    ],
@@ -4822,6 +5448,7 @@
     {
      "email": "jacob.edgar@sumnercountytn.gov",
      "name": "Jacob Edgar",
+     "phone": "615-642-0960",
      "profileUrl": "https://sumnercountytn.gov/jacob-edgar/"
     }
    ],
@@ -4829,6 +5456,7 @@
     {
      "email": "jwes.wynne@sumnercountytn.gov",
      "name": "J. Wes Wynne",
+     "phone": "615-581-7103",
      "profileUrl": "https://sumnercountytn.gov/j-wes-wynne/"
     }
    ],
@@ -4836,6 +5464,7 @@
     {
      "email": "billy.barnfield@sumnercountytn.gov",
      "name": "Billy Barnfield",
+     "phone": "615-708-0026",
      "profileUrl": "https://sumnercountytn.gov/billy-barnfield/"
     }
    ],
@@ -4843,6 +5472,7 @@
     {
      "email": "suzanne.holt@sumnercountytn.gov",
      "name": "Suzanne Holt",
+     "phone": "615-473-0206",
      "profileUrl": "https://sumnercountytn.gov/suzanne-holt/"
     }
    ],
@@ -4850,6 +5480,7 @@
     {
      "email": "don.schmit@sumnercountytn.gov",
      "name": "Don Schmit",
+     "phone": "615-957-0165",
      "profileUrl": "https://sumnercountytn.gov/don-schmit/"
     }
    ],
@@ -4857,6 +5488,7 @@
     {
      "email": "shannon.burgdorf@sumnercountytn.gov",
      "name": "Shannon Burgdorf",
+     "phone": "615-525-5120",
      "profileUrl": "https://sumnercountytn.gov/shannon-burgdorf/"
     }
    ],
@@ -4864,6 +5496,7 @@
     {
      "email": "Merrol.Hyde@sumnercountytn.gov",
      "name": "Merrol N. Hyde",
+     "phone": "615-519-8129",
      "profileUrl": "https://sumnercountytn.gov/merrol-n-hyde/"
     }
    ],
@@ -4871,6 +5504,7 @@
     {
      "email": "Jerry.Becker@SumnerCountyTN.gov",
      "name": "Jerry F. Becker",
+     "phone": "615-594-3544",
      "profileUrl": "https://sumnercountytn.gov/jerry-f-becker/"
     }
    ],
@@ -4878,6 +5512,7 @@
     {
      "email": "matthew.shoaf@sumnercountytn.gov",
      "name": "Matthew Shoaf",
+     "phone": "615-572-5588",
      "profileUrl": "https://sumnercountytn.gov/matthew-shoaf/"
     }
    ],
@@ -4885,6 +5520,7 @@
     {
      "email": "tim.jones@sumnercountytn.gov",
      "name": "Tim Jones",
+     "phone": "615-828-7434",
      "profileUrl": "https://sumnercountytn.gov/tim-jones/"
     }
    ],
@@ -4892,6 +5528,7 @@
     {
      "email": "matthew.wilkinson@sumnercountytn.gov",
      "name": "Matthew Wilkinson",
+     "phone": "619-847-5254",
      "profileUrl": "https://sumnercountytn.gov/matthew-wilkinson/"
     }
    ]
@@ -4902,12 +5539,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://tiptonco.com/government/legislative_body/index.php",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 18,
   "domains": [
    "tiptonco.com"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -4919,10 +5555,12 @@
    ],
    "2": [
     {
-     "name": "Michael W. Naifeh"
+     "name": "Michael W. Naifeh",
+     "phone": "901-409-2809"
     },
     {
-     "name": "Justin Gangaware"
+     "name": "Justin Gangaware",
+     "phone": "901-233-5574"
     }
    ],
    "3": [
@@ -4930,21 +5568,25 @@
      "name": "Richard Kelley"
     },
     {
-     "name": "John Mashburn"
+     "name": "John Mashburn",
+     "phone": "901-674-5193"
     }
    ],
    "4": [
     {
      "name": "Walker Adams",
+     "phone": "901-355-2454",
      "role": "Chairman Pro Tempore"
     },
     {
-     "name": "Jason Skinner"
+     "name": "Jason Skinner",
+     "phone": "901-268-5957"
     }
    ],
    "5": [
     {
-     "name": "Glenn Turner"
+     "name": "Glenn Turner",
+     "phone": "901-409-0816"
     },
     {
      "name": "Randy Roe"
@@ -4952,7 +5594,8 @@
    ],
    "6": [
     {
-     "name": "Michelle Smith"
+     "name": "Michelle Smith",
+     "phone": "901-570-0141"
     },
     {
      "name": "James (Jimbo) C. Adkins"
@@ -4960,7 +5603,11 @@
    ],
    "7": [
     {
-     "name": "Courtney Fee"
+     "name": "Courtney Fee",
+     "phone": "cell 901-833-5887",
+     "phonesExtra": [
+      "home 901-476-4499"
+     ]
     },
     {
      "name": "Brad Case"
@@ -4976,10 +5623,12 @@
    ],
    "9": [
     {
-     "name": "David Copeland"
+     "name": "David Copeland",
+     "phone": "901-603-6168"
     },
     {
-     "name": "Jonathan G. Murphy"
+     "name": "Jonathan G. Murphy",
+     "phone": "901-299-9711"
     }
    ]
   }
@@ -4989,12 +5638,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://trousdalecountytn.gov/government/local_government/county_commission.php",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 20,
   "domains": [
    "trousdalecountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -5102,12 +5750,11 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.unicoicountytn.gov/boards_commissions.html",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 9,
   "domains": [
    "unicoicountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
@@ -5117,29 +5764,39 @@
      "name": "Tim Lingerfelt"
     },
     {
-     "name": "Loren Thomas"
+     "name": "Loren Thomas",
+     "phone": "(423) 557-7399"
     }
    ],
    "2": [
     {
-     "name": "Patrick Callahan"
+     "name": "Patrick Callahan",
+     "phone": "(423) 220-7025",
+     "phonesExtra": [
+      "(423) 440-7992"
+     ]
     },
     {
-     "name": "Jason Harris"
+     "name": "Jason Harris",
+     "phone": "(423) 388-0672"
     },
     {
-     "name": "Corey Hatcher"
+     "name": "Corey Hatcher",
+     "phone": "(423) 735-9703"
     }
    ],
    "3": [
     {
-     "name": "Gina Clark"
+     "name": "Gina Clark",
+     "phone": "(423) 956-2426"
     },
     {
-     "name": "Debbie Lemmon"
+     "name": "Debbie Lemmon",
+     "phone": "(423) 943-1157"
     },
     {
-     "name": "Todd Wilcox"
+     "name": "Todd Wilcox",
+     "phone": "(423) 735-9237"
     }
    ]
   }
@@ -5149,82 +5806,97 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://unioncountytn.gov/county-commission/",
-  "readAt": "2026-10-15",
+  "readAt": "2026-10-17",
   "seats": 16,
   "domains": [
    "unioncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "mike.boles@unioncountytn.gov",
-     "name": "Mike Boles"
+     "name": "Mike Boles",
+     "phone": "(865) 216-2653"
     },
     {
-     "name": "Carrie Edds"
+     "name": "Carrie Edds",
+     "phone": "(865) 256-6942"
     },
     {
      "email": "gerald.simmons@unioncountytn.gov",
-     "name": "Gerald Simmons"
+     "name": "Gerald Simmons",
+     "phone": "(865) 235-5293"
     }
    ],
    "2": [
     {
-     "name": "Dennis Nicley"
+     "name": "Dennis Nicley",
+     "phone": "(865) 466-9980"
     },
     {
      "email": "cheryl.walker@unioncountytn.gov",
-     "name": "Cheryl Walker"
+     "name": "Cheryl Walker",
+     "phone": "(865) 363-8483"
     }
    ],
    "3": [
     {
      "email": "bill.cox@unioncountytn.gov",
-     "name": "Bill Cox"
+     "name": "Bill Cox",
+     "phone": "(865) 992-3466"
     },
     {
      "email": "kenny.moore@unioncountytn.gov",
-     "name": "Kenny Moore"
+     "name": "Kenny Moore",
+     "phone": "(865) 660-8527"
     }
    ],
    "4": [
     {
      "email": "danny.cooke@unioncountytn.gov",
-     "name": "Danny Cooke"
+     "name": "Danny Cooke",
+     "phone": "(865) 806-2146"
     },
     {
-     "name": "Tim Cox"
+     "name": "Tim Cox",
+     "phone": "(865) 719-7235"
     }
    ],
    "5": [
     {
-     "name": "Dustin Berry"
+     "name": "Dustin Berry",
+     "phone": "(865) 603-3551"
     },
     {
-     "name": "Brett Pursel"
+     "name": "Brett Pursel",
+     "phone": "(865) 278-1008"
     }
    ],
    "6": [
     {
-     "name": "Ann Dyer"
+     "name": "Ann Dyer",
+     "phone": "(865) 705-1223"
     },
     {
      "email": "roy.jones@unioncountytn.gov",
-     "name": "R.L. Jones"
+     "name": "R.L. Jones",
+     "phone": "(865) 258-0763"
     },
     {
-     "name": "Johnny Raley"
+     "name": "Johnny Raley",
+     "phone": "(865) 556-1820"
     }
    ],
    "7": [
     {
      "email": "lynn.beeler@unioncountytn.gov",
-     "name": "Lynn Beeler"
+     "name": "Lynn Beeler",
+     "phone": "(865) 659-2677"
     },
     {
      "email": "angela.conner.murphy@unioncountytn.gov",
-     "name": "Angela Conner-Murphy"
+     "name": "Angela Conner-Murphy",
+     "phone": "(865) 216-4575"
     }
    ]
   }
@@ -5234,27 +5906,29 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.warrencountytn.gov/government/county_commission/commissioners.php",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 24,
   "domains": [
    "warrencountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "rlee@warrencountytn.gov",
-     "name": "Ron Lee"
+     "name": "Ron Lee",
+     "phone": "808-0503"
     },
     {
      "email": "cross@warrencountytn.gov",
-     "name": "Christy Ross"
+     "name": "Christy Ross",
+     "phone": "615-631-0065"
     }
    ],
    "2": [
     {
      "email": "cdotson@warrencountytn.gov",
-     "name": "Charles Dotson"
+     "name": "Charles Dotson",
+     "phone": "235-6156"
     },
     {
      "email": "cmontgomery@warrencountytn.gov",
@@ -5276,17 +5950,20 @@
     },
     {
      "email": "bwilcher@warrencountytn.gov",
-     "name": "Blaine Wilcher"
+     "name": "Blaine Wilcher",
+     "phone": "931-743-2461"
     }
    ],
    "5": [
     {
      "email": "bhillis@warrencountytn.gov",
-     "name": "Brad Hillis"
+     "name": "Brad Hillis",
+     "phone": "931-212-5800"
     },
     {
      "email": "skelly@warrencountytn.gov",
-     "name": "Scott Kelly"
+     "name": "Scott Kelly",
+     "phone": "931-808-1268"
     }
    ],
    "6": [
@@ -5295,7 +5972,8 @@
     },
     {
      "email": "pstout@warrencountytn.gov",
-     "name": "Phillip Stout"
+     "name": "Phillip Stout",
+     "phone": "668-9560"
     }
    ],
    "7": [
@@ -5304,24 +5982,28 @@
     },
     {
      "email": "tsavage@warrencountytn.gov",
-     "name": "Tommy Savage"
+     "name": "Tommy Savage",
+     "phone": "409-0696"
     }
    ],
    "8": [
     {
      "email": "rengland@warrencountytn.gov",
-     "name": "Randy England"
+     "name": "Randy England",
+     "phone": "808-3203"
     },
     {
      "email": "srubley@warrencountytn.gov",
      "name": "Scott Rubley",
+     "phone": "235-4746",
      "role": "Chairman Pro Tem"
     }
    ],
    "9": [
     {
      "email": "cbrown@warrencountytn.gov",
-     "name": "Carlene Brown"
+     "name": "Carlene Brown",
+     "phone": "931-808-2397"
     },
     {
      "name": "Stephen Potter"
@@ -5334,28 +6016,33 @@
     },
     {
      "email": "ctaylor@warrencountytn.gov",
-     "name": "Cole Taylor"
+     "name": "Cole Taylor",
+     "phone": "607-0728"
     }
    ],
    "11": [
     {
      "email": "mbell@warrencountytn.gov",
      "name": "Michael Bell",
+     "phone": "607-2931",
      "role": "Parliamentarian"
     },
     {
      "email": "sglenn@warrencountytn.gov",
-     "name": "Steve M. Glenn"
+     "name": "Steve M. Glenn",
+     "phone": "808-6264"
     }
    ],
    "12": [
     {
      "email": "cdbouldin@warrencountytn.gov",
-     "name": "Carl D. Bouldin"
+     "name": "Carl D. Bouldin",
+     "phone": "668-9339"
     },
     {
      "email": "kmoffitt@warrencountytn.gov",
-     "name": "Kenny Moffitt"
+     "name": "Kenny Moffitt",
+     "phone": "931-409-0101"
     }
    ]
   }
@@ -5365,46 +6052,51 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.washingtoncountytn.org/208/County-Commission",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 15,
   "domains": [
    "washingtoncountytn.org"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "Richard Tucker",
+     "phone": "423-791-0590",
      "profileUrl": "https://www.washingtoncountytn.org/209/Richard-Tucker"
     }
    ],
    "2": [
     {
      "name": "Billy Austin",
+     "phone": "423-620-5202",
      "profileUrl": "https://www.washingtoncountytn.org/210/Billy-Austin"
     }
    ],
    "3": [
     {
      "name": "Jerome Fitzgerald",
+     "phone": "423-440-3501",
      "profileUrl": "https://www.washingtoncountytn.org/211/Jerome-Fitzgerald"
     }
    ],
    "4": [
     {
      "name": "Josh Edens",
+     "phone": "423-361-4605",
      "profileUrl": "https://www.washingtoncountytn.org/212/Josh-Edens"
     }
    ],
    "5": [
     {
      "name": "Roger Verran",
+     "phone": "423-863-2853",
      "profileUrl": "https://www.washingtoncountytn.org/213/Roger-Verran"
     }
    ],
    "6": [
     {
      "name": "Greg Matherly",
+     "phone": "423-791-1905",
      "profileUrl": "https://www.washingtoncountytn.org/214/Greg-Matherly",
      "role": "Chairman"
     }
@@ -5412,54 +6104,63 @@
    "7": [
     {
      "name": "Harrison Wexler, Sr",
+     "phone": "423-741-1603",
      "profileUrl": "https://www.washingtoncountytn.org/215/Harrison-Wexler"
     }
    ],
    "8": [
     {
      "name": "Freddie Malone",
+     "phone": "423-677-1267",
      "profileUrl": "https://www.washingtoncountytn.org/216/Freddie-Malone"
     }
    ],
    "9": [
     {
      "name": "Sarah Laposky",
+     "phone": "423-329-4357",
      "profileUrl": "https://www.washingtoncountytn.org/217/Sarah-Laposky"
     }
    ],
    "10": [
     {
      "name": "Lori Sukel",
+     "phone": "423-202-5377",
      "profileUrl": "https://www.washingtoncountytn.org/218/Lori-Sukel"
     }
    ],
    "11": [
     {
      "name": "Jodi Jones",
+     "phone": "423-946-0444",
      "profileUrl": "https://www.washingtoncountytn.org/219/Jodi-Jones"
     }
    ],
    "12": [
     {
      "name": "Daniel Cutshall",
+     "phone": "423-946-2322",
      "profileUrl": "https://www.washingtoncountytn.org/220/Daniel-Cutshall"
     }
    ],
    "13": [
     {
      "name": "Kenneth Huffine",
+     "phone": "423-341-1682",
      "profileUrl": "https://www.washingtoncountytn.org/221/Kenneth-Huffine"
     }
    ],
    "14": [
     {
      "name": "Jim Wheeler",
+     "phone": "423-430-7935",
      "profileUrl": "https://www.washingtoncountytn.org/222/Jim-Wheeler"
     }
    ],
    "15": [
     {
      "name": "Mike Masters",
+     "phone": "423-202-5794",
      "profileUrl": "https://www.washingtoncountytn.org/223/Mike-Masters"
     }
    ]
@@ -5470,22 +6171,23 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.williamsoncounty-tn.gov/m/directory/department?did=3",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 24,
   "domains": [
    "williamsoncounty-tn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "email": "Andrew.Mitchell@williamsoncounty-tn.gov",
      "name": "Andrew Mitchell",
+     "phone": "615-767-1923",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=2"
     },
     {
      "email": "ricky.jones@williamsoncounty-tn.gov",
      "name": "Ricky D. Jones",
+     "phone": "615-308-8381",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=3"
     }
    ],
@@ -5493,11 +6195,13 @@
     {
      "email": "Allen.Floyd@williamsoncounty-tn.gov",
      "name": "Allen Floyd",
+     "phone": "615-566-0828",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=4"
     },
     {
      "email": "judy.herbert@williamsoncounty-tn.gov",
      "name": "Judy Herbert",
+     "phone": "615-368-7720",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=6"
     }
    ],
@@ -5505,11 +6209,13 @@
     {
      "email": "jennifer.mason@williamsoncounty-tn.gov",
      "name": "Jennifer Mason",
+     "phone": "615-392-0953",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=252"
     },
     {
      "email": "Guy.Carden@williamsoncounty-tn.gov",
      "name": "Guy Carden II",
+     "phone": "615-887-6340",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=253"
     }
    ],
@@ -5517,11 +6223,13 @@
     {
      "email": "Jeff.Goodspeed@williamsoncounty-tn.gov",
      "name": "Jeff Goodspeed",
+     "phone": "615-815-4356",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=8"
     },
     {
      "email": "gregg.lawrence@williamsoncounty-tn.gov",
      "name": "Gregg Lawrence",
+     "phone": "615-202-7990",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=254"
     }
    ],
@@ -5529,11 +6237,13 @@
     {
      "email": "greg.sanford@williamsoncounty-tn.gov",
      "name": "Greg Sanford",
+     "phone": "615-489-2895",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=10"
     },
     {
      "email": "Rob.Verell@williamsoncounty-tn.gov",
      "name": "Rob Verell",
+     "phone": "615-477-6753",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=11"
     }
    ],
@@ -5541,11 +6251,13 @@
     {
      "email": "David.Oneil@williamsoncounty-tn.gov",
      "name": "David O’Neil",
+     "phone": "615-218-9542",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=13"
     },
     {
      "email": "Paul.Webb@williamsoncounty-tn.gov",
      "name": "Paul Webb",
+     "phone": "615-479-2057",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=255"
     }
    ],
@@ -5553,11 +6265,13 @@
     {
      "email": "Nancy.Bailey@williamsoncounty-tn.gov",
      "name": "Nancy Bailey",
+     "phone": "615-948-8687",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=14"
     },
     {
      "email": "Tom.Tunnicliffe@williamsoncounty-tn.gov",
      "name": "Tom Tunnicliffe",
+     "phone": "615-594-1000",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=15"
     }
    ],
@@ -5565,11 +6279,13 @@
     {
      "email": "Drew.Torres@williamsoncounty-tn.gov",
      "name": "Drew Torres",
+     "phone": "615-210-0800",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=17"
     },
     {
      "email": "Barb.Sturgeon@williamsoncounty-tn.gov",
      "name": "Barb Sturgeon",
+     "phone": "615-605-6140",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=256"
     }
    ],
@@ -5577,11 +6293,13 @@
     {
      "email": "Chas.Morton@williamsoncounty-tn.gov",
      "name": "Chas Morton",
+     "phone": "615-790-2444",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=19"
     },
     {
      "email": "Matt.Williams@williamsoncounty-tn.gov",
      "name": "Matt Williams",
+     "phone": "615-218-3548",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=257"
     }
    ],
@@ -5589,11 +6307,13 @@
     {
      "email": "Jody.Todd@williamsoncounty-tn.gov",
      "name": "Jody Todd",
+     "phone": "615-260-0838",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=292"
     },
     {
      "email": "Bill.Petty@williamsoncounty-tn.gov",
      "name": "Bill Petty",
+     "phone": "402-306-1721",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=373"
     }
    ],
@@ -5601,11 +6321,13 @@
     {
      "email": "Eric.McElroy@williamsoncounty-tn.gov",
      "name": "Eric McElroy",
+     "phone": "615-339-7464",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=22"
     },
     {
      "email": "Marie.Fellhauer@williamsoncounty-tn.gov",
      "name": "Marie Fellhauer",
+     "phone": "310-529-5919",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=23"
     }
    ],
@@ -5613,11 +6335,13 @@
     {
      "email": "Drason.Beasley@williamsoncounty-tn.gov",
      "name": "Drason Beasley",
+     "phone": "615-977-9920",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=24"
     },
     {
      "email": "Brian.Clifford@williamsoncounty-tn.gov",
      "name": "Brian Clifford",
+     "phone": "615-212-8929",
      "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=259"
     }
    ]
@@ -5628,40 +6352,47 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.wilsoncountytn.gov/245/County-Commissioners",
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-17",
   "seats": 25,
   "domains": [
    "wilsoncountytn.gov"
   ],
-  "phones": false,
   "districts": {
    "1": [
     {
      "name": "Robert Fields",
+     "phone": "615-519-1819",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=59"
     }
    ],
    "2": [
     {
      "name": "Robert Moxley",
+     "phone": "808/226-9410",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=165"
     }
    ],
    "3": [
     {
      "name": "Bobby Franklin",
+     "phone": "615-290-7701",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=61"
     }
    ],
    "4": [
     {
      "name": "Chad Barnard",
+     "phone": "615-474-6552",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=62"
     }
    ],
    "5": [
     {
      "name": "Jerry McFarland",
+     "phone": "615-547-4041",
+     "phonesExtra": [
+      "615-330-8474"
+     ],
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=63"
     }
    ],
@@ -5674,24 +6405,28 @@
    "7": [
     {
      "name": "Jeff Joines",
+     "phone": "615/337-9643",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=167"
     }
    ],
    "8": [
     {
      "name": "Kevin Costley",
+     "phone": "615-496-7419",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=66"
     }
    ],
    "9": [
     {
      "name": "Blake Hall",
+     "phone": "615-403-3148",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=120"
     }
    ],
    "10": [
     {
      "name": "Nathan Bulmon",
+     "phone": "615/390-3539",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=168"
     }
    ],
@@ -5704,48 +6439,62 @@
    "12": [
     {
      "name": "Haskell Evans",
+     "phone": "629-207-0391",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=121"
     }
    ],
    "13": [
     {
      "name": "Jeremy Hobbs",
+     "phone": "615-708-3435",
+     "phonesExtra": [
+      "615-218-4122"
+     ],
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=122"
     }
    ],
    "14": [
     {
      "name": "Tommy Jones",
+     "phone": "615-308-9629",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=72"
     }
    ],
    "15": [
     {
      "name": "Chris Dowell",
+     "phone": "615-812-2972",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=73"
     }
    ],
    "16": [
     {
      "name": "Jeremy H.G.Hayes",
+     "phone": "615/818-8162",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=170"
     }
    ],
    "17": [
     {
      "name": "Ken Nelson, Jr.",
+     "phone": "615/566-3452",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=171"
     }
    ],
    "18": [
     {
      "name": "Lauren Breeze",
+     "phone": "615-457-9546",
+     "phonesExtra": [
+      "615-541-2119"
+     ],
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=76"
     }
    ],
    "19": [
     {
      "name": "William Glover",
+     "phone": "615-416-3344",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=77"
     }
    ],
@@ -5758,30 +6507,38 @@
    "21": [
     {
      "name": "Mike Kurtz",
+     "phone": "615-218-8014",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=79"
     }
    ],
    "22": [
     {
      "name": "Wendell Marlowe",
+     "phone": "615-758-5277",
+     "phonesExtra": [
+      "629-203-0700"
+     ],
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=80"
     }
    ],
    "23": [
     {
      "name": "Jeremy Reich",
+     "phone": "615-456-5714",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=124"
     }
    ],
    "24": [
     {
      "name": "Danny R. Clark",
+     "phone": "615-450-8087",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=125"
     }
    ],
    "25": [
     {
      "name": "Justin Smith",
+     "phone": "615-517-0794",
      "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=83"
     }
    ]

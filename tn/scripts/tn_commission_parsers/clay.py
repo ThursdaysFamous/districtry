@@ -25,11 +25,29 @@ section whose number of start-date blocks differs from its number of names
 footer's "Location" and "Contact for County Mayor") are not read.
 
 PRIVACY: every member's contact block prints a home street name, town and
-ZIP, a personal phone and (for nine of the ten) a personal e-mail (yahoo,
-gmail, hotmail, icloud). None of it is read: only the <h4> name. The footer
-prints the County Mayor's office address, phone and mayor@claycountytn.gov,
-which belong to no member and are not read either. No e-mail, phone or
-profile is recorded.
+ZIP, a phone ("Phone Number : (931)-...") and (for nine of the ten) a
+personal e-mail (yahoo, gmail, hotmail, icloud). The phone is recorded as
+printed, under Adam's ruling of 2026-10-17 that a number a government
+publishes beside an official ships whosever line it is; only
+telephone-shaped numbers are read from a contact block, never its street,
+town or ZIP. No e-mail or profile is recorded. The footer prints the County
+Mayor's office address, phone and mayor@claycountytn.gov, which belong to no
+member: the address is not read, and the office's phone and fax are
+OFFICE_LINES, which never land on a member.
+
+Pairing a phone with its member: the contact blocks, like everything else on
+the page, are not in reading order in the HTML, so a contact block is paired
+by where the page's own CSS places it on a computer screen (the grid-area
+inside the "@media (min-width: 768px)" rule, a 24-column grid). Each district
+section lays its two members out side by side: a column holds a name, its
+start date and, below them, that member's contact block, so a contact block
+belongs to the one name block that starts in the same grid column above it.
+On a phone's narrow layout every block is full width and the 3rd District
+prints Clifton Boles's contact block above his name, which is why the wide
+layout is the one read. A contact block that does not start in the column
+of exactly one name above it, or a name given two contact blocks, keeps
+every number in that section off the records (a note says so) rather than
+guess whose it is; the names are read either way.
 
 Names are kept as the page prints them ("J. Bryan Coons", "Dale McLerran",
 "J. Tanner Harvey", "J. Elijah Watson").
@@ -54,13 +72,15 @@ Elizabeth Boles 125). The page's start dates agree: the six members new in
 are each dated 9-1-2026, and the four re-elected carry earlier dates. The
 page carries no modification date of its own."""
 import re
-from ._common import txt, member, district_number
+from ._common import txt, member, district_number, read_phones, Withheld, NUMBER
 
 COUNTY = "Clay"; FIPS = "027"
 DOMAINS = ("claycountytngov.com", "claycountytn.gov")
 URLS = ["https://www.claycountytngov.com/commissioners"]
 SEATS = {str(i): 2 for i in range(1, 6)}
 AT_LARGE = 0
+# The County Mayor's office phone and fax, printed in the page footer.
+OFFICE_LINES = ("(931)-243-2161", "(931)-243-2436")
 
 PAGE_TITLE = "Clay County Commissioners"
 SECTION_RE = re.compile(r'<section\s+data-test="page-section"')
@@ -68,6 +88,40 @@ H_RE = re.compile(r"<h([34])\b[^>]*>(.*?)</h\1>", re.S)
 DISTRICT_RE = re.compile(r"^(\d{1,2})(?:st|nd|rd|th) District$")
 DATE_RE = re.compile(r"<p\b[^>]*>\s*<em>\s*(\d{1,2}[-/]\d{1,2}[-/]\d{4})\s*</em>\s*</p>")
 NAME_RE = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
+BLOCK_RE = re.compile(r'<div class="fe-block (fe-block-[A-Za-z0-9_-]+)"')
+WIDE_RE = re.compile(r"@media \(min-width: 768px\)\s*\{\s*\.(fe-block-[A-Za-z0-9_-]+)\s*\{"
+                     r"\s*grid-area:\s*(\d+)/(\d+)/(\d+)/(\d+)\s*;")
+
+
+def section_phones(sec, names):
+    """{name: what read_phones returned for that member's contact block}, the
+    block paired with a name by the wide layout's grid columns (see the
+    module's docstring). A pairing that is not one block to one name answers
+    Withheld for every name in the section."""
+    wide = {m.group(1): tuple(int(x) for x in m.group(2, 3, 4, 5)) for m in WIDE_RE.finditer(sec)}
+    starts = list(BLOCK_RE.finditer(sec))
+    name_at, contacts = {}, []
+    for k, b in enumerate(starts):
+        body = sec[b.end():starts[k + 1].start() if k + 1 < len(starts) else len(sec)]
+        body = re.sub(r"<(script|style)\b.*?</\1>", " ", body, flags=re.S | re.I)
+        h4 = re.findall(r"<h4\b[^>]*>(.*?)</h4>", body, re.S)
+        if h4:
+            name_at[txt(h4[0])] = wide.get(b.group(1))
+        elif re.search(r"<h3\b", body):
+            continue
+        elif re.search(r"\bPhone\b", txt(body), re.I) or NUMBER.search(txt(body)):
+            contacts.append((wide.get(b.group(1)), body))
+    out, problem = {}, None
+    for area, body in contacts:
+        owners = [n for n, at in name_at.items()
+                  if area and at and at[1] == area[1] and at[0] < area[0]]
+        if len(owners) != 1 or owners[0] in out:
+            problem = "the page's layout does not put each contact block under one name"
+            break
+        out[owners[0]] = read_phones(body)
+    if problem or set(name_at) != set(names):
+        return {n: Withheld(problem or "the page's name blocks could not be matched") for n in names}
+    return out
 
 
 def parse(pages):
@@ -116,7 +170,8 @@ def parse(pages):
         dates = DATE_RE.findall(sec)
         if len(dates) != len(names):
             raise ValueError("District %s: %d names but %d start-date blocks" % (n, len(names), len(dates)))
-        districts[n] = [member(x) for x in names]
+        phones = section_phones(sec, names)
+        districts[n] = [member(x, phones=phones.get(x)) for x in names]
     if titles != 1:
         raise ValueError("the page title %r is not in the first section" % PAGE_TITLE)
     return {"districts": districts, "atLarge": []}

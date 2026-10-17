@@ -9,11 +9,17 @@ District". The heading and the member's own line must name the same district,
 or the parse stops. Three seats per district, as the page's own text says
 ("eighteen (18) Commissioners representing six (6) Commission Districts").
 
-The page prints phone numbers and e-mail addresses beside many members; every
-address is a personal or business one (yahoo, gmail, hotmail, a school
-district's, a shop's) and no phone is the courthouse's, so none is read. The
-county's only number on the page (423-346-6288, the County Executive's office)
-belongs to no member.
+The page prints phone numbers and e-mail addresses beside many members. Every
+e-mail address is a personal or business one (yahoo, gmail, hotmail, a school
+district's, a shop's), so none is read. The phones are recorded as printed
+(eight members print one), under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is. Each
+member is a "fusion-person" block holding the name, the "County Commissioner,
+Nth District" line and a contact paragraph; a number is read only from the
+contact paragraph of the block whose name and line are that member's, and a
+member whose name and line match no block, or two, gets no number. The
+county's only number on the page (423-346-6288, the County Executive's
+office) belongs to no member: it is OFFICE_LINES and never lands on one.
 
 The county's site answered HTTP 500 on 2026-10-11 and served this page on
 2026-10-13. The page says the county stopped posting commission minutes online
@@ -42,21 +48,38 @@ Margaret Gibson, Douglas Vespie, Melissa Coleman Bryant, Debbie Woods Lively).
 
 The page names no chair."""
 import re
-from ._common import lines, member, district_number
+from ._common import lines, member, district_number, txt, read_phones, Withheld
 
 COUNTY = "Morgan"; FIPS = "129"
 DOMAINS = ("morgancountytn.gov",)
 URLS = ["https://morgancountytn.gov/county-commission/"]
 SEATS = {str(i): 3 for i in range(1, 7)}
 AT_LARGE = 0
+# The County Executive's office, the county's only number on the page.
+OFFICE_LINES = ("(423) 346-6288",)
 
 HEADING = re.compile(r"^(\d)(?:st|nd|rd|th) District Commissioners Serving\b")
 MEMBER_LINE = re.compile(r"^County Commissioner, (\d)(?:st|nd|rd|th) District$")
 NAME = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
+PERSON = re.compile(r'<div class="fusion-person\b')
+
+
+def contact_paragraphs(page):
+    """{(name, title line): [contact paragraph HTML, ...]}, one entry per
+    "fusion-person" block, each read only inside its own block."""
+    out = {}
+    for chunk in PERSON.split(page)[1:]:
+        nm = re.search(r'<span class="person-name">(.*?)</span>', chunk, re.S)
+        ti = re.search(r'<span class="person-title">(.*?)</span>', chunk, re.S)
+        co = re.search(r'<div class="person-content[^"]*">(.*?)</div>', chunk, re.S)
+        if nm and ti:
+            out.setdefault((txt(nm.group(1)), txt(ti.group(1))), []).append(co.group(1) if co else "")
+    return out
 
 
 def parse(pages):
     ls = lines(pages[URLS[0]])
+    contacts = contact_paragraphs(pages[URLS[0]])
     districts, current = {}, None
     for i, line in enumerate(ls):
         head = HEADING.match(line)
@@ -77,7 +100,10 @@ def parse(pages):
         name = ls[i - 1]
         if re.search(r"\bvacan", name, re.I) or not NAME.match(name):
             raise ValueError("District %s: %r does not look like a name" % (current, name))
-        districts[current].append(member(name))
+        found = contacts.get((name, line), [])
+        phones = (read_phones(found[0]) if len(found) == 1 else
+                  Withheld("%d contact blocks carry this name and district line" % len(found)))
+        districts[current].append(member(name, phones=phones))
     if set(districts) != set(SEATS):
         raise ValueError("the page names districts %s, not 1..6" % sorted(districts, key=int))
     for d, ms in districts.items():

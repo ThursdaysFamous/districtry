@@ -14,14 +14,18 @@ district heading, a heading that is not "District N", or a block whose second
 line is not "Commissioner" raises.
 
 PRIVACY: every phone on the page is labelled Cell or Home (or unlabelled
-beside one that is), and Claude Oglesby's line also gives a home fax, so no
-phone is recorded. Ten members print a personal or business address (aol,
-comcast, gmail, att, bellsouth, a family business's domain) and none of those
-is kept. An e-mail is recorded only on fayettetn.us and only when its local
-part contains the member's surname and starts with the initial of their given
-name or of the nickname the page prints ("Betsy" Rice is brice@); an address
-that two members' names would both fit is kept for neither. Nine such
-addresses are on the page and all nine are kept.
+beside one that is). They are recorded as printed, each with the page's own
+label in front of it ("cell 901-..."), under Adam's ruling of 2026-10-17 that
+a number a government publishes beside an official ships whosever line it is.
+Claude Oglesby's line gives a home number that is also printed as his fax; one
+line cannot be both, so that number is left off and his cell kept. The page
+prints no street address. Ten members print a personal or business e-mail
+address (aol, comcast, gmail, att, bellsouth, a family business's domain) and
+none of those is kept. An e-mail is recorded only on fayettetn.us and only
+when its local part contains the member's surname and starts with the initial
+of their given name or of the nickname the page prints ("Betsy" Rice is
+brice@); an address that two members' names would both fit is kept for
+neither. Nine such addresses are on the page and all nine are kept.
 
 Currency: checked 2026-10-11 against the Fayette County Election
 Commission's Election Summary Report for the 6 August 2026 State Primary and
@@ -37,7 +41,7 @@ Rice, Kevin J. Powers, Steve R Reeves, Claude D. Oglesby, Jr, Chelsea Kivelle
 (the page: "Chelsey"), Thomas Wiley Day, Glen A. Morman, Betty Morrison Salmon
 and Terrye L. Canady; each is the same person as the page's entry."""
 import re
-from ._common import txt, mailtos, member, district_number
+from ._common import txt, mailtos, member, district_number, read_phones
 
 COUNTY = "Fayette"; FIPS = "047"
 DOMAINS = ("fayettetn.us",)
@@ -80,7 +84,7 @@ def _members(body, d):
         if not NAME.match(parts[0]):
             raise ValueError("District %s: %r does not look like a name" % (d, parts[0]))
         addrs = mailtos(p) + [a for x in parts[2:] for a in EMAIL.findall(x)]
-        out.append((parts[0], addrs))
+        out.append((parts[0], addrs, read_phones(p)))
     return out
 
 
@@ -110,10 +114,10 @@ def parse(pages):
         if not ms:
             raise ValueError("District %d has no member under it" % d)
         found.append((str(d), ms))
-    keys = [(_surname(n), i) for _, ms in found for n, _ in ms for i in _initials(n)]
+    keys = [(_surname(n), i) for _, ms in found for n, _, _ in ms for i in _initials(n)]
     districts = {}
     for d, ms in found:
-        for name, addrs in ms:
+        for name, addrs, phones in ms:
             sur, inits = _surname(name), _initials(name)
             email = None
             for a in addrs:
@@ -126,5 +130,5 @@ def parse(pages):
                 if hit and all(keys.count((sur, i)) == 1 for i in hit):
                     email = a
                     break
-            districts.setdefault(d, []).append(member(name, email=email))
+            districts.setdefault(d, []).append(member(name, email=email, phones=phones))
     return {"districts": districts, "atLarge": []}

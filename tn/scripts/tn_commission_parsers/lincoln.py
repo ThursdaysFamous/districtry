@@ -12,8 +12,12 @@ commission seat and that row is not recorded. Any other non-numeral district
 cell, a header that changes, or a row with other than five cells raises.
 
 PRIVACY: every row carries a phone number, and most are personal (some on
-Alabama 256 and Nashville 615 area codes); the mayor's row carries the county
-office line. No phone is recorded. E-mails are kept only on
+Alabama 256 and Nashville 615 area codes). A commissioner's Phone cell is
+recorded as printed, under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is. The mayor's
+row carries the county office line, which is not read, and that line and the
+county's fax, both also printed in the page footer, are OFFICE_LINES and never
+land on a member. The page prints no address. E-mails are kept only on
 lincolncountytn.gov and only when the address is plainly the member's: its
 local part must start with the member's first initial and contain the surname
 (jhammons@, cynthia.bates@, jnix@ for Jason Gary Nix). The mayor's
@@ -46,13 +50,15 @@ district pairing rests on the county's own page plus a news report.
 Not recorded: the Chair Pro Tempore title (it is on the committees roster,
 not this page)."""
 import re
-from ._common import txt, member, mailtos, county_email
+from ._common import txt, member, mailtos, county_email, read_phones
 
 COUNTY = "Lincoln"; FIPS = "103"
 DOMAINS = ("lincolncountytn.gov",)
 URLS = ["https://lincolncountytn.gov/county_directory/chairman_commission.php"]
 SEATS = {str(i): 3 for i in range(1, 9)}
 AT_LARGE = 0
+# The county office's line (the mayor's row and the footer) and its fax.
+OFFICE_LINES = ("(931) 433-3045", "(931) 256-2900")
 
 HEAD = ["District", "First Name", "Last Name", "Email", "Phone"]
 NAME = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
@@ -94,7 +100,8 @@ def parse(pages):
         addr = county_email(mailtos(cells[3]), DOMAINS)
         if addr and not _own(addr, first, last):
             raise ValueError("%r: county address %r does not look like the member's" % (name, addr))
-        districts.setdefault(str(int(dist)), []).append(member(name, email=addr))
+        districts.setdefault(str(int(dist)), []).append(
+            member(name, email=addr, phones=read_phones(cells[4], strict=True)))
     if mayor != 1:
         raise ValueError("expected one County Mayor row, found %d" % mayor)
     return {"districts": districts, "atLarge": []}

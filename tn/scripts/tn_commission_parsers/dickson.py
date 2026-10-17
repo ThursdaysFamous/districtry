@@ -12,10 +12,15 @@ the block it sits in; the name is the link's text and must equal the photo's
 alt text without ", Commissioner", so a heading that drifted away from its
 photo and name raises. Nothing is read from order.
 
-PRIVACY: every block carries the member's home street address, a personal
-phone and a personal e-mail (msn, gmail, yahoo, bellsouth, live, comcast,
-outlook, a business domain and a campaign address). None is on the county's
-domain and none is recorded; the address and phone are never read.
+PRIVACY: every block carries the member's home street address, a phone and a
+personal e-mail (msn, gmail, yahoo, bellsouth, live, comcast, outlook, a
+business domain and a campaign address). The phone is recorded as printed,
+under Adam's ruling of 2026-10-17 that a number a government publishes
+beside an official ships whosever line it is; only telephone-shaped numbers
+are read from a block, and the address is never read. No e-mail is on the
+county's domain and none is recorded. The Administration Building's and the
+Justice Center's lines in the page footer are OFFICE_LINES and never land on
+a member.
 
 Currency: checked 2026-10-11 against the Dickson County Election
 Commission's own site, dicksoncountyelection.com, which lists under "FINAL
@@ -33,13 +38,15 @@ list, Dennis M O'Shea, Richard E. Riehn, Michael S Petty, John C Stritikus,
 Daryl Lee "Rusty" Grove, Johnnie W Reed). Only Districts 2, 3 and 4 were
 contested, the closest District 3, O'Shea 374 to Dwight D McIllwain 332."""
 import re
-from ._common import txt, mailtos, county_email, district_number, member
+from ._common import txt, mailtos, county_email, district_number, member, read_phones
 
 COUNTY = "Dickson"; FIPS = "043"
 DOMAINS = ("dicksoncountytn.gov",)
 URLS = ["https://www.dicksoncountytn.gov/county_commission.html"]
 SEATS = {str(i): 1 for i in range(1, 13)}
 AT_LARGE = 0
+# The Administration Building's and the Justice Center's lines, in the page footer.
+OFFICE_LINES = ("(615) 789-7003", "(615) 789-7002")
 
 H4 = re.compile(r"<h4>(.*?)</h4>", re.S)
 MAILTO = re.compile(r'<a href="mailto:[^"]*"[^>]*>(.*?)</a>', re.S)
@@ -77,5 +84,5 @@ def parse(pages):
         if alts != [name]:
             raise ValueError("District %d: link %r and photo alt %s disagree" % (d, name, alts))
         email = county_email(mailtos(block), DOMAINS)
-        districts[str(d)] = [member(name, email=email)]
+        districts[str(d)] = [member(name, email=email, phones=read_phones(block))]
     return {"districts": districts, "atLarge": []}

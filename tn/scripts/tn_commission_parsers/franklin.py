@@ -14,15 +14,23 @@ current. Photo alt text is not read: it is stale on two blocks (Edie Snyder's
 photo is captioned "David Kelley", her predecessor in District 8 Seat B).
 
 PRIVACY: under each heading the page prints the member's home street address
-or P.O. box, town and ZIP and one to three personal phone numbers (some
-marked Cell or Work); none of those is read. Most e-mail links are personal
+or P.O. box, town and ZIP and one to three phone numbers (some marked Cell or
+Work). The numbers are recorded as printed, in the page's order, each "Cell"
+or "Work" label kept in front of its number, under Adam's ruling of
+2026-10-17 that a number a government publishes beside an official ships
+whosever line it is. Only telephone-shaped numbers are read from a member's
+block (the text between their heading and the next member's column); the
+street, box, town and ZIP are never read. One block prints its area code on
+one source line and the number on the next; on the page that is one number,
+and it is read as one. Most e-mail links are personal
 (gmail, hotmail, yahoo, icloud, comcast, bellsouth, cafes.net) and are never
 kept. An address on the county's own franklincotn.gov is kept only when its
 local part starts with the member's first name or initial and contains the
 surname: that keeps william.anderson@ and silasearle@, and leaves out
 marysnyder@ on Edie Snyder's block, which names a different first name and
 nothing on the page says is hers. The commission's inquiry line (931)
-967-2541 is the county mayor's office and is not a member's.
+967-2541 is the county mayor's office and is not a member's: it is
+OFFICE_LINES and never lands on a member.
 
 Currency: NO COUNTYWIDE RESULTS OF THE 6 AUGUST 2026 ELECTION COULD BE READ ON
 A GOVERNMENT HOST. On 2026-10-11 franklincotn.us/election_results.html and
@@ -43,18 +51,21 @@ changed hands (District 4 Seat A Tyler Bauer and Seat B Johnny Hand to Greg
 King and Chuck Stines; District 6 Seat A Charles Keller, who ran for sheriff,
 to Silas Earle; District 8 Seat B David Kelley to Edie Snyder)."""
 import re
-from ._common import txt, member, mailtos
+from ._common import txt, member, mailtos, read_phones
 
 COUNTY = "Franklin"; FIPS = "051"
 DOMAINS = ("franklincotn.us", "franklincotn.gov")
 URLS = ["https://franklincotn.us/county_commission.html"]
 SEATS = {str(i): 2 for i in range(1, 9)}
 AT_LARGE = 0
+# The commission's inquiry line, the county mayor's office.
+OFFICE_LINES = ("(931) 967-2541",)
 
 TERM = re.compile(r"<h5>\s*Current Terms End August 31,\s*(\d{4})\s*</h5>")
 ENTRY = re.compile(r'^(?P<name>.+?)\s+(?P<d>\d{1,2})(?:st|nd|rd|th)\s+District\s+'
                    r'Seat\s+["“”]?(?P<s>[A-Z])["“”]?$')
 NAME = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
+COL = re.compile(r'<div class="col-sm-6"')
 
 
 def _email(h6, name):
@@ -82,7 +93,8 @@ def parse(pages):
         raise ValueError("cannot find the end of the roster section")
     roster = page[term.end():end]
     districts, seen = {}, set()
-    for h6 in re.findall(r"<h6\b[^>]*>(.*?)</h6>", roster, re.S):
+    for h in re.finditer(r"<h6\b[^>]*>(.*?)</h6>", roster, re.S):
+        h6 = h.group(1)
         line = txt(h6)
         if not line:
             continue
@@ -98,5 +110,8 @@ def parse(pages):
         if (d, s) in seen:
             raise ValueError("District %s Seat %s appears twice" % (d, s))
         seen.add((d, s))
-        districts.setdefault(d, []).append(member(name, seat=s, email=_email(h6, name)))
+        nxt = COL.search(roster, h.end())
+        block = roster[h.end():nxt.start() if nxt else len(roster)]
+        districts.setdefault(d, []).append(
+            member(name, seat=s, email=_email(h6, name), phones=read_phones(block)))
     return {"districts": districts, "atLarge": []}

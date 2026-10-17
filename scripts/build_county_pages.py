@@ -1732,6 +1732,13 @@ def tn_commissioners(inst):
         def person(m):
             p = {k: m[k].strip() for k in ("name", "email", "phone", "profileUrl")
                  if isinstance(m.get(k), str) and m[k].strip()}
+            # The further numbers the county prints for the same member (a home
+            # and a cell line), carried since Adam's ruling of 2026-10-17 that a
+            # member's own numbers ship.
+            extra = [x.strip() for x in m.get("phonesExtra") or []
+                     if isinstance(x, str) and x.strip()]
+            if extra:
+                p["phonesExtra"] = extra
             role = ", ".join(x for x in ((m.get("role") or "").strip(),
                                          _tn_seat(m.get("seat"))) if x)
             if role:

@@ -11,7 +11,8 @@ joins), then usually a phone line and an "Email" mailto link. A member is the
 name on the line directly above their own "District N" line, inside the same
 entry, so nothing is read from the alphabetical order (which this page does
 not keep exactly). Any line that is not the heading, a name, a district, a
-phone or "Email" raises.
+phone or "Email" raises. A member's phone is the phone line inside that
+member's own entry.
 
 The County Commission page (index.php) is read as a check and for the
 commission's officers. Its "Commissioners By District" table gives each
@@ -25,11 +26,18 @@ County Executive (Terry Bell), who is not a commission seat and is not
 recorded; an officer line naming anyone who is neither a member nor the
 County Executive raises.
 
-PRIVACY: no phone is recorded. The number under an entry is either one with
-nothing marking it a county office line (most are seven digits with no area
-code) or, for five members, the county's main number 473-2505. An e-mail is
-kept only on warrencountytn.gov and only when its local part starts with the
-member's first initial and contains their surname. Four members' "Email"
+PRIVACY: under Adam's ruling of 2026-10-17 that a number a government
+publishes beside an official ships whosever line it is, the number under an
+entry is read into `phone` exactly as printed. Most of them are seven digits
+with no area code, and no area code is added: Warren County is in 931, but a
+mobile can be issued anywhere and a guessed prefix reaches a stranger. The
+gap record `warren-commission-phone-area-code` says so. Five members' entries
+print the county's main number (473-2505, once as 931-473-2505) instead; it
+and the two other county lines in the page footer (the courthouse and animal
+control) are OFFICE_LINES and stay off every member. Only telephone-shaped
+numbers are read; the page prints no member address. An e-mail is kept only
+on warrencountytn.gov and only when its local part starts with the member's
+first initial and contains their surname. Four members' "Email"
 links point at someone else's address (Stephen Potter -> shelton@, James Zahn
 -> jhines@, Caleb Graves -> gmartin@, Traye Cope -> dsmith@), and three of
 those entries sit in the alphabetical list where the address's surname would
@@ -46,7 +54,7 @@ ballot carries longer forms of four names: Ronald S. Lee (D1, "Ron Lee"),
 Christopher L. Rippy (D3), James A. Zahn (D4) and Tommy G Savage (D7); the
 ballot's "Steve Glenn" is the page's "Steve M. Glenn"."""
 import re
-from ._common import txt, mailtos, member, district_number
+from ._common import txt, mailtos, member, district_number, read_phones
 
 COUNTY = "Warren"; FIPS = "177"
 DOMAINS = ("warrencountytn.gov",)
@@ -56,6 +64,9 @@ URLS = [
 ]
 SEATS = {str(i): 2 for i in range(1, 13)}
 AT_LARGE = 0
+# The county's main number (the Administrative Building), the courthouse and
+# animal control, as the page footer prints them.
+OFFICE_LINES = ("931-473-2505", "931-473-2373", "931-507-3647")
 
 HEADING = re.compile(r"^\d{4}-\d{4} County Commissioners\b")
 DISTRICT = re.compile(r"^District\s*(\d{1,2})$")
@@ -114,7 +125,9 @@ def _roster(page):
             local, dom = a.lower().rsplit("@", 1)
             if dom in DOMAINS and sur and sur in local and local.startswith(first):
                 email = a
-        entries.append((d, name, email))
+        tel = [s for t, s in segs[i:stop] if PHONE.match(t)]
+        phones = read_phones("<br>".join(tel), strict=True) if tel else None
+        entries.append((d, name, email, phones))
     return entries
 
 
@@ -141,7 +154,7 @@ def _by_district(page):
 def parse(pages):
     entries = _roster(pages[URLS[0]])
     pairs, post = _by_district(pages[URLS[1]])
-    roster = {(d, _key(n)) for d, n, _ in entries}
+    roster = {(d, _key(n)) for d, n, _, _ in entries}
     if len(roster) != len(entries):
         raise ValueError("a member is listed twice on the roster")
     if roster != pairs:
@@ -151,7 +164,7 @@ def parse(pages):
     for title, name in re.findall(r"<strong>\s*([^<]+?)\s*</strong>(?:\s|&nbsp;)*<br\s*/?>\s*([^<]+)", post):
         officers.setdefault(_key(txt(title)), []).append(txt(name))
     executive = {_key(n) for n in officers.pop("county executive", [])}
-    by_name = {_key(n): n for _, n, _ in entries}
+    by_name = {_key(n): n for _, n, _, _ in entries}
     roles = {}
     for title, names in officers.items():
         for n in names:
@@ -169,6 +182,7 @@ def parse(pages):
                 raise ValueError("%r holds two offices" % n)
             roles[_key(n)] = role
     districts = {}
-    for d, name, email in entries:
-        districts.setdefault(d, []).append(member(name, role=roles.get(_key(name)), email=email))
+    for d, name, email, phones in entries:
+        districts.setdefault(d, []).append(
+            member(name, role=roles.get(_key(name)), email=email, phones=phones))
     return {"districts": districts, "atLarge": []}

@@ -22,12 +22,23 @@ GATES, AND A COUNTY FAILING ONE SHIPS NOTHING NEW
   3. Every seat names a person or is a vacancy the county states, and no two
      seats in one county name the same person - two identical names on one
      body is a parse collision, not a body.
-  4. PRIVACY: a record carries only name, seat, role, e-mail, phone and profile
-     page; an e-mail and a profile page only on the county's own domains; a
-     phone only for a county whose row says its phones are office lines; and no
-     value may look like a street address or a ZIP code. These pages print
-     home addresses and personal phones beside the names, so this is checked
-     here whatever a parser returns.
+  4. PRIVACY: a record carries only name, seat, role, e-mail, phone, further
+     phones and profile page; an e-mail and a profile page only on the county's
+     own domains; and no name, seat or role may look like a street address or
+     a ZIP code. These pages print home addresses beside the names, so this is
+     checked here whatever a parser returns.
+  5. TELEPHONE NUMBERS: under Adam's ruling of 2026-10-17 for every state ("if
+     the official government source uses personal phone numbers, we publish
+     those"), a number the county prints beside a member ships whosever line
+     it is, the first in `phone` and any others in `phonesExtra`. Each value
+     must be ONE telephone number and nothing else: an optional label word
+     (cell, home, work, business, office, mobile, personal, residence), the
+     number as printed, and an optional extension. Anything carrying a street
+     word, a ZIP code, an "@" or a second number fails, and the message names
+     the county and seat, never the value. No number may sit on two members'
+     records in one county, because a number printed for several members is
+     the office's. Until 2026-10-17 this gate refused every phone in a county
+     whose scraper row did not say its phones were office lines (PHONES).
 
 A COUNTY THAT WAS NOT READ, OR FAILED A GATE, KEEPS ITS LAST GOOD RECORD for up
 to PRESERVE_MAX_AGE_DAYS, printed loudly every run, and past that the run
@@ -35,8 +46,12 @@ fails. That is the operator's ruling of 2026-09-19 (a refusal stops the fetch
 and never unpublishes what was already read) with the ceiling Michigan's
 builder carries, so preserving cannot turn into a roster frozen for as long as
 nobody looks. Every county in the scraper's table must end up in the file,
-read or carried; there is no floor to slip under, because a global count
-cannot protect a named county.
+read or carried, so no floor counts the counties or the names: a global count
+cannot protect a named county. The one floor is MIN_MEMBERS_WITH_PHONE, on how
+many members carry a telephone number across the file, because a county page
+that changes how it prints its numbers would otherwise empty them quietly
+while every name still ships (scripts/check_roster_retention.py watches each
+county's fields against the last shipped file as well).
 
 Usage:
     python3 tn/scripts/build_tn_commissioner_roster.py          # from the cache
@@ -59,7 +74,27 @@ DISTRICTS = os.path.join(APP, "tn-commission-districts.json")
 OUT = os.path.join(APP, "tn-commissioners.json")
 
 PRESERVE_MAX_AGE_DAYS = 45
-FIELDS = ("name", "seat", "role", "email", "phone", "profileUrl", "vacant")
+FIELDS = ("name", "seat", "role", "email", "phone", "phonesExtra", "profileUrl", "vacant")
+# Members carrying at least one telephone number, across the whole file.
+# MEASURED 2026-10-17 on the first build under Adam's ruling of that day, from a
+# live read of all 57 counties: 780 of the 1,000 named members carry a number
+# and 24 of those a second, in the 48 counties whose pages print a member's
+# number. The floor is about two thirds of 780, so a change in how a few
+# counties print their numbers fails the build instead of shipping names with
+# the numbers gone.
+MIN_MEMBERS_WITH_PHONE = 520
+
+# One telephone number as a county page prints it, after the parsers' own
+# reading: an optional label word, an optional area code ("(931) ", "931-",
+# "931.", "931/"), the exchange and the line, and an optional extension. A
+# number printed without an area code ships that way, never with one guessed.
+PHONE_LABELS = ("cell", "home", "work", "business", "office", "mobile", "personal",
+                "residence")
+PHONE_VALUE = re.compile(
+    r"(?:(?:%s) )?"
+    r"(?:(?:\(\d{3}\) ?[-.]? ?|\d{3}\) ?|\d{3} ?[-./] ?)?\d{3} ?[-.] ?\d{4}"
+    r"|\(\d{3}\) ?\d{3} \d{4})"
+    r"(?: ?(?:ext\.?|x) ?\d{1,6})?" % "|".join(PHONE_LABELS), re.I)
 
 # What a street address or a ZIP code looks like inside a value. A name never
 # contains either, so a match is a parser that read the wrong column.
@@ -95,7 +130,20 @@ def _host_ok(url, domains):
     return any(host == d or host.endswith("." + d) for d in domains)
 
 
-def record_problems(rec, domains, phones_ok, where):
+def phone_values(rec):
+    """Every telephone number on a record, `phone` first."""
+    extra = rec.get("phonesExtra")
+    return [v for v in [rec.get("phone")] + (extra if isinstance(extra, list) else []) if v]
+
+
+def dialled(value):
+    """The digits of a number (an extension and a leading 1 dropped), to
+    compare two numbers; a seven-digit number compares as the end of a ten."""
+    d = re.sub(r"\D", "", re.split(r"(?i)\s*(?:ext\.?|x)\s*\d", value)[0])
+    return d[1:] if len(d) == 11 and d.startswith("1") else d
+
+
+def record_problems(rec, domains, where):
     out = []
     extra = set(rec) - set(FIELDS)
     if extra:
@@ -113,9 +161,18 @@ def record_problems(rec, domains, phones_ok, where):
     if rec.get("profileUrl") and not _host_ok(rec["profileUrl"], domains):
         out.append("%s profile page %r is not on the county's own domains"
                    % (where, rec["profileUrl"]))
-    if rec.get("phone") and not phones_ok:
-        out.append("%s carries a phone, and this county's phones are not recorded "
-                   "as office lines" % where)
+    extra = rec.get("phonesExtra")
+    if extra is not None and not (isinstance(extra, list) and extra and rec.get("phone") and
+                                  all(isinstance(x, str) and x.strip() for x in extra)):
+        out.append("%s phonesExtra is not a list of further numbers after a phone" % where)
+    for i, value in enumerate(phone_values(rec)):
+        # The message never quotes the value: it may be the line a parser
+        # misread, an address or a number that is not the member's.
+        if not isinstance(value, str) or not PHONE_VALUE.fullmatch(value.strip()) or \
+                ADDRESS.search(value) or ZIP.search(value) or "@" in value:
+            out.append("%s %s is not one telephone number (a label word, one number "
+                       "and an extension at most)"
+                       % (where, "phone" if i == 0 else "further phone %d" % i))
     for key in ("name", "seat", "role"):
         val = rec.get(key) or ""
         if ADDRESS.search(val) or ZIP.search(val):
@@ -127,7 +184,6 @@ def county_problems(fips5, entry, n_geom, check_seats=True):
     """Every gate for one county; [] when it may ship."""
     name = entry.get("county") or fips5
     domains = [d.lower() for d in entry.get("domains") or []]
-    phones_ok = bool(entry.get("phones"))
     ds = entry.get("districts") or {}
     out = []
     want = {str(i) for i in range(1, n_geom + 1)}
@@ -161,30 +217,40 @@ def county_problems(fips5, entry, n_geom, check_seats=True):
         for v in vals:
             if ADDRESS.search(v) or ZIP.search(v) or len(v) > 40:
                 out.append("%s district label %r is not a district's name" % (name, v))
-    names = []
+    names, numbers = [], []                 # numbers: (digits, where)
     for d in sorted(ds, key=int):
         if not ds[d]:
             out.append("%s District %s has no seat at all" % (name, d))
         for i, rec in enumerate(ds[d]):
-            out += record_problems(rec, domains, phones_ok,
-                                   "%s District %s seat %d" % (name, d, i + 1))
+            where = "%s District %s seat %d" % (name, d, i + 1)
+            out += record_problems(rec, domains, where)
             if rec.get("name"):
                 names.append(rec["name"])
+            numbers += [(dialled(v), where) for v in phone_values(rec) if isinstance(v, str)]
     for i, rec in enumerate(entry.get("atLarge") or []):
-        out += record_problems(rec, domains, phones_ok, "%s countywide seat %d" % (name, i + 1))
+        where = "%s countywide seat %d" % (name, i + 1)
+        out += record_problems(rec, domains, where)
         if rec.get("name"):
             names.append(rec["name"])
+        numbers += [(dialled(v), where) for v in phone_values(rec) if isinstance(v, str)]
     dup = sorted({n for n in names if names.count(n) > 1})
     if dup:
         out.append("%s names %s more than once" % (name, dup))
+    for k, (a, wa) in enumerate(numbers):
+        for b, wb in numbers[k + 1:]:
+            short, long_ = sorted((a, b), key=len)
+            if wa != wb and short and (a == b or (len(short) == 7 and len(long_) == 10
+                                                  and long_.endswith(short))):
+                out.append("%s and %s carry the same number, which is the office's, not "
+                           "either member's" % (wa, wb))
     if not names:
         out.append("%s names nobody" % name)
     return out
 
 
-def shipped_entry(entry, county_name, domains, phones):
-    """The record as it ships: data only. The domains and the phone rule travel
-    with it so --check can re-run the privacy gate offline."""
+def shipped_entry(entry, county_name, domains):
+    """The record as it ships: data only. The domains travel with it so --check
+    can re-run the privacy gate offline."""
     ds = entry["districts"]
     # `seatTitle`, never `memberTitle`: scripts/build_eam_status.py reads a key
     # whose words name an office and whose value looks like a name ("Council
@@ -196,7 +262,6 @@ def shipped_entry(entry, county_name, domains, phones):
            "readAt": entry["readAt"],
            "seats": sum(len(v) for v in ds.values()) + len(entry.get("atLarge") or []),
            "domains": domains,
-           "phones": phones,
            "districts": {d: ds[d] for d in sorted(ds, key=int)}}
     if entry.get("districtLabels"):
         rec["districtLabels"] = {d: entry["districtLabels"][d]
@@ -204,6 +269,14 @@ def shipped_entry(entry, county_name, domains, phones):
     if entry.get("atLarge"):
         rec["atLarge"] = entry["atLarge"]
     return rec
+
+
+def members_with_phone(roster, extra=False):
+    """How many members carry a telephone number (with extra=True, two or more)."""
+    key = "phonesExtra" if extra else "phone"
+    return sum(1 for e in roster.values()
+               for m in [r for d in (e.get("districts") or {}).values() for r in d]
+               + list(e.get("atLarge") or []) if m.get(key))
 
 
 def build():
@@ -237,7 +310,7 @@ def build():
             if probs:
                 why = "GATE FAILED: " + "; ".join(probs)
         if why is None:
-            out[fips5] = shipped_entry(entry, gnames[fips5], entry["domains"], entry["phones"])
+            out[fips5] = shipped_entry(entry, gnames[fips5], entry["domains"])
             continue
         prior = shipped.get(fips5)
         if prior is None:
@@ -250,12 +323,19 @@ def build():
                                 "old, past the %d-day ceiling" % (spec["county"], why,
                                 prior["readAt"], age, PRESERVE_MAX_AGE_DAYS))
             continue
-        out[fips5] = prior
+        # The record as last read, less the retired `phones` flag (2026-10-17),
+        # which nothing reads any more.
+        out[fips5] = {k: v for k, v in prior.items() if k != "phones"}
         carried.append("%s (%s, last read %s)" % (spec["county"], why, prior["readAt"]))
     if problems_all:
         for p in problems_all:
             print("  " + p, file=sys.stderr)
         return fail("%d county(ies) can neither be built nor carried forward" % len(problems_all))
+    with_phone = members_with_phone(out)
+    if with_phone < MIN_MEMBERS_WITH_PHONE:
+        return fail("only %d members carry a telephone number, under the floor of %d: a "
+                    "county page has probably changed how it prints its numbers"
+                    % (with_phone, MIN_MEMBERS_WITH_PHONE))
     gone = sorted(set(shipped) - set(out))
     with open(OUT, "w") as handle:
         json.dump(out, handle, indent=1, ensure_ascii=False, sort_keys=False)
@@ -270,8 +350,10 @@ def build():
         print("  left the file (no longer in the scraper's table): %s"
               % ", ".join(shipped[g]["county"] for g in gone))
     print("build-tn-commissioner-roster: wrote %s - %d counties, %d seats, %d named, "
-          "%d carried forward" % (os.path.relpath(OUT, os.path.dirname(INSTANCE)),
-                                  len(out), seats, named, len(carried)))
+          "%d with a telephone number (floor %d), %d with two or more, %d carried forward"
+          % (os.path.relpath(OUT, os.path.dirname(INSTANCE)), len(out), seats, named,
+             with_phone, MIN_MEMBERS_WITH_PHONE, members_with_phone(out, extra=True),
+             len(carried)))
     return 0
 
 
@@ -298,12 +380,17 @@ def check():
         for key in ("sourceUrl", "readAt", "seatTitle", "bodyName"):
             if not rec.get(key):
                 problems.append("%s carries no %s" % (rec.get("county"), key))
+    with_phone = members_with_phone(shipped)
+    if with_phone < MIN_MEMBERS_WITH_PHONE:
+        problems.append("only %d members carry a telephone number, under the floor of %d"
+                        % (with_phone, MIN_MEMBERS_WITH_PHONE))
     if problems:
         for p in problems:
             print("  " + p, file=sys.stderr)
         return fail("%d problem(s) in the shipped roster" % len(problems))
     print("build-tn-commissioner-roster: OK - %d counties, every district 1..N against the "
-          "geometry, every record within the privacy gate" % len(shipped))
+          "geometry, every record within the privacy gate, %d members with a telephone "
+          "number (floor %d)" % (len(shipped), with_phone, MIN_MEMBERS_WITH_PHONE))
     return 0
 
 

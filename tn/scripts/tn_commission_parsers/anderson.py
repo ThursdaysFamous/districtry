@@ -23,11 +23,14 @@ Commission as a representative of the 8th District and will not take the
 Oath of Office for this position."
 
 PRIVACY: the member blocks carry a street address, town and ZIP (13 of the
-15), a phone (all 15) and in five cases a personal e-mail (gmail, ymail,
-comcast, msn). None of that is recorded: nothing says any phone is a county
-line, and the commission office's own number is printed separately above the
-list. Ebony Capshaw's block prints the commission office's mailing address,
-which is not hers and is not read either. An e-mail is kept only when it is on andersoncountytn.gov AND its
+15), a "Phone:" line (all 15) and in five cases a personal e-mail (gmail,
+ymail, comcast, msn). The phone line is recorded as the page prints it, under
+Adam's ruling of 2026-10-17 that a number a government publishes beside an
+official ships whosever line it is; only the block's "Phone:" line is read,
+never the address lines, and the commission office's own number, printed
+separately above the list, is not a member's. Ebony Capshaw's block prints
+the commission office's mailing address, which is not hers and is not read
+either. An e-mail is kept only when it is on andersoncountytn.gov AND its
 local part carries the member's surname (Tracy Wandell's block holds both an
 msn.com address and twandell@; only the county one is kept). A county address
 in a member's block that does not carry the surname raises rather than being
@@ -49,11 +52,14 @@ District 8 Jawrell Cook (749) and Elizabeth "Liz" Henry (749) won; Henry's
 seat is the vacancy above. The page names no chair (the same packet addresses
 Robert McKamey as Chairman), so no role is recorded."""
 import re
-from ._common import txt, mailtos, district_number, member, vacant
+from ._common import txt, mailtos, district_number, member, vacant, read_phones
 
 COUNTY = "Anderson"; FIPS = "001"
 DOMAINS = ("andersoncountytn.gov",)
 URLS = ["https://andersoncountytn.gov/county-commission/"]
+# The commission office's own line, printed above the list (a member's record
+# never carries it).
+OFFICE_LINES = ("865-463-6866",)
 SEATS = {str(i): 2 for i in range(1, 9)}
 AT_LARGE = 0
 
@@ -62,6 +68,8 @@ SECTION = re.compile(r"^(\d{1,2})(?:st|nd|rd|th) District Commissioners Serving\
 PERSON = re.compile(r'<div class="fusion-person\b')
 NAME = re.compile(r'<span class="person-name">(.*?)</span>\s*<span class="person-title">(.*?)</span>', re.S)
 TITLE_RE = re.compile(r"^County Commissioner, (\d{1,2})(?:st|nd|rd|th) District$")
+CONTENT = re.compile(r'<div class="person-content\b[^>]*>(.*?)</div>', re.S)
+PHONE_LINE = re.compile(r"^Phone\s*:", re.I)
 SUFFIX = {"jr", "sr", "ii", "iii", "iv"}
 
 
@@ -89,6 +97,16 @@ def _email(name, block):
             return a
         raise ValueError("county address %r in %r's block does not carry the surname" % (a, name))
     return None
+
+
+def _phones(n, name, block):
+    """The block's "Phone:" line, and nothing else in the block."""
+    content = CONTENT.search(block)
+    segs = re.split(r"<br\s*/?>", content.group(1), flags=re.I) if content else []
+    found = [x for x in segs if PHONE_LINE.match(txt(x))]
+    if len(found) > 1:
+        raise ValueError("District %s: %r's block holds %d phone lines" % (n, name, len(found)))
+    return read_phones(found[0], strict=True) if found else []
 
 
 def parse(pages):
@@ -128,7 +146,7 @@ def parse(pages):
                 continue
             if re.search(r"\bvacan", name, re.I) or not re.fullmatch(r"[A-Z][A-Za-z.'’ -]+", name):
                 raise ValueError("District %s: %r does not look like a name" % (n, name))
-            seats.append(member(name, email=_email(name, b)))
+            seats.append(member(name, email=_email(name, b), phones=_phones(n, name, b)))
         if len(seats) != SEATS.get(n):
             raise ValueError("District %s section has %d seat blocks, the county elects %s"
                              % (n, len(seats), SEATS.get(n)))

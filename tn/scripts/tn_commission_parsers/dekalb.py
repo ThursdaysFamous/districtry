@@ -14,12 +14,15 @@ before its names, and as many names as the county elects there; a name
 heading outside a district block, or a district named twice, raises.
 
 PRIVACY: every member's paragraph prints a phone, an e-mail and a home street
-address, town and ZIP. None is recorded. The phones are the members' own
-(nothing calls any a county line). The e-mails are Cloudflare-obfuscated and
+address, town and ZIP. The phone is recorded as printed, under Adam's ruling
+of 2026-10-17 that a number a government publishes beside an official ships
+whosever line it is (nothing calls any a county line); only telephone-shaped
+numbers are read from the paragraph under a member's <h2> name, never its
+street, town or ZIP. The courthouse line in the page header is OFFICE_LINES
+and never lands on a member. The e-mails are Cloudflare-obfuscated and
 decode to gmail, yahoo, comcast, verizon, dtccom.net addresses and one
 dekalbschools.net address (the school system's domain, not the county's);
-none is on the county's own domain, so no e-mail is recorded. Only the <h2>
-name is read.
+none is on the county's own domain, so no e-mail is recorded.
 
 Names are kept as printed, the nickname in single quotes included ("Tony
 'Cully' Culwell").
@@ -37,13 +40,15 @@ D7 Anderson 207, Fuller 187. Ballot spellings differ only by middle names
 and initials (Daniel D. Cripps, Billy Myron Rhody, Steven A. Cantrell).
 The page names no chair, so no role is recorded."""
 import re
-from ._common import txt, district_number, member
+from ._common import txt, district_number, member, read_phones
 
 COUNTY = "DeKalb"; FIPS = "041"
 DOMAINS = ("dekalbtennessee.com",)
 URLS = ["https://www.dekalbtennessee.com/county-commission.html"]
 SEATS = {str(i): 2 for i in range(1, 8)}
 AT_LARGE = 0
+# The courthouse line printed in the page header.
+OFFICE_LINES = ("615-597-5175",)
 
 H2 = re.compile(r"<h2\b[^>]*>(.*?)</h2>", re.S)
 RULE = re.compile(r'<hr class="styled-hr"')
@@ -60,8 +65,9 @@ def parse(pages):
         raise ValueError("the page's content region is not where it was")
     districts = {}
     for seg in RULE.split(page[s:e]):
-        heads = [txt(h) for h in H2.findall(seg)]
-        heads = [h for h in heads if h]
+        found = [(txt(h.group(1)), h) for h in H2.finditer(seg)]
+        found = [(t, h) for t, h in found if t]
+        heads = [t for t, _ in found]
         if not heads or heads == [INTRO]:
             continue
         m = HEAD_RE.match(heads[0])
@@ -81,5 +87,12 @@ def parse(pages):
         if len(names) != SEATS.get(d):
             raise ValueError("District %s block names %d members, the county elects %s"
                              % (d, len(names), SEATS.get(d)))
-        districts[d] = [member(n) for n in names]
+        seats = []
+        for k, (n, h) in enumerate(found[1:], 1):
+            stop = found[k + 1][1].start() if k + 1 < len(found) else len(seg)
+            cell_end = seg.find("</td>", h.end())
+            if 0 <= cell_end < stop:
+                stop = cell_end                 # the paragraph ends with the name's own column
+            seats.append(member(n, phones=read_phones(seg[h.end():stop])))
+        districts[d] = seats
     return {"districts": districts, "atLarge": []}

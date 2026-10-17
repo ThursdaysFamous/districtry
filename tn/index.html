@@ -13920,6 +13920,9 @@ function initTennesseeExplorer() {
       var person = { name: String(m.name), badge: title };
       if (note.length) person.note = note.join(" \u00b7 ");
       if (m.phone) person.phone = String(m.phone);
+      // further numbers the county prints for the same member, each as
+      // printed; the card shows every one beside the first
+      if (m.phonesExtra && m.phonesExtra.length) person.phonesExtra = m.phonesExtra.map(String);
       if (m.email) person.email = String(m.email);
       people.push(person);
     });

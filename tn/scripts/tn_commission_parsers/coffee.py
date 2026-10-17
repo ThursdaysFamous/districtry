@@ -17,12 +17,21 @@ is written as the county's server answers it: the published path has spaces,
 and /222/Missy DeFord redirects to /222/Missy-DeFord (checked 2026-10-11), so
 spaces become hyphens.
 
-PRIVACY: the page publishes no phone or address. Each widget's e-mail is on
-coffeecountytn.gov and is kept only when its local part carries the member's
-surname; Missy DeFord's is pdeford@, which does. The member pages linked as
-profileUrl print a phone number with nothing saying it is a county line; they
-are not read, and no phone is recorded. The county staff directory
-(Directory.aspx?did=36) is not read either.
+PRIVACY: the roster page publishes no phone or address. Each widget's e-mail
+is on coffeecountytn.gov and is kept only when its local part carries the
+member's surname; Missy DeFord's is pdeford@, which does.
+
+PHONES come from the member pages the roster links as profileUrl
+(member_pages), which the scraper reads through the same robots.txt check and
+pacing as the roster page. Under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is, each
+page's "Phone:" line is read as printed, "(H)" and "(C)" written out as
+"home" and "cell". The line is read only from the page's one editor widget
+that carries it, and only when that widget opens with the member's own name
+and a "District N" line equal to the roster's; otherwise that member's
+number is withheld with a note. Nothing else on a member page is read: its
+e-mail line is not, and the e-mail recorded is the roster page's. The county
+staff directory (Directory.aspx?did=36) is not read.
 
 Currency: checked 2026-10-11 against the Coffee County Election Commission's
 "August 6, 2026 Official Results" (coffeecountytn.gov DocumentCenter/View/
@@ -34,7 +43,7 @@ Brothers, Sammy Anderson, III, Terry L. Hershman, Jackie A. Duncan, J. Todd
 Malone, Frank C B Watkins). The page's spellings are kept. The page names no
 chair, so no role is recorded."""
 import re
-from ._common import txt, district_number, member
+from ._common import txt, district_number, member, page_field, add_phones, Withheld
 
 COUNTY = "Coffee"; FIPS = "031"
 DOMAINS = ("coffeecountytn.gov",)
@@ -62,7 +71,8 @@ def _surname(name):
     return re.sub(r"[^a-z]", "", words[-1].lower()) if words else ""
 
 
-def parse(pages):
+def _roster(pages):
+    """The roster page alone: {district: [member records]}, phones not read."""
     page = pages[URLS[0]]
     members_at = page.find(">Members</h2>")
     if members_at < 0:
@@ -97,4 +107,39 @@ def parse(pages):
                 raise ValueError("county address %r does not carry %r's surname" % (found[0], name))
             email = found[0]
         districts.setdefault(n, []).append(member(name, email=email, profileUrl=profiles.get(name)))
+    return districts
+
+
+def member_pages(pages):
+    """The member pages the roster page links, one per member, on the
+    county's own host: the scraper reads them for parse()."""
+    return [r["profileUrl"] for ms in _roster(pages).values() for r in ms
+            if r.get("profileUrl")]
+
+
+def page_phones(page, name, d):
+    """The numbers a member's own page prints on its "Phone:" line, or a
+    Withheld reason when the page does not plainly name this member."""
+    views = [v for v in re.findall(r'<div class="fr-view">(.*?)</div>', page, re.S)
+             if re.search(r"\bPhone\s*:", txt(v))]
+    if not views:
+        return []
+    if len(views) > 1:
+        return Withheld("the member page prints a phone line in %d places" % len(views))
+    heads = re.findall(r"<h[1-6]\b[^>]*>(.*?)</h[1-6]>", views[0], re.S)
+    shown = [txt(h) for h in heads]
+    districts = [x for x in shown if re.fullmatch(r"District \d{1,2}", x)]
+    if not shown or shown[0] != name or [district_number(x) for x in districts] != [int(d)]:
+        return Withheld("the member page's heading does not name this member and district")
+    tel = [h for h, x in zip(heads, shown) if re.match(r"Phone\s*:", x)]
+    if len(tel) != 1:
+        return Withheld("the member page prints %d phone lines" % len(tel))
+    return page_field(tel[0])
+
+
+def parse(pages):
+    districts = _roster(pages)
+    for d, ms in districts.items():
+        districts[d] = [add_phones(r, page_phones(pages[r["profileUrl"]], r["name"], d))
+                        if r.get("profileUrl") else r for r in ms]
     return {"districts": districts, "atLarge": []}

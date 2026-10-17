@@ -18,9 +18,11 @@ read "AS OF SEPT. 1, 2026": it is the only evidence of this table's currency
 (below), so a changed date means the table changed and is refused until its
 names are checked again.
 
-PRIVACY: the member rows print up to two phone numbers each, all different
-and with nothing saying any is a county office line, beside e-mails that are
-mostly personal, so no phone is recorded. Ten of the 18 e-mails are personal
+PRIVACY: the member rows print up to two phone numbers each in their PHONE
+cell, all different, and they are recorded as printed, the first as the
+member's phone and a second beside it, under Adam's ruling of 2026-10-17 that
+a number a government publishes beside an official ships whosever line it
+is. The page prints no address. Ten of the 18 e-mails are personal
 (yahoo, gmail, outlook, icloud, a business domain). An e-mail is kept only
 when it is on bedfordcountytn.gov AND its local part carries the member's
 surname.
@@ -38,7 +40,7 @@ the site serves, the commission's minutes included, was tried. The fallback evid
 page's own heading, "BEDFORD COUNTY BOARD OF COMMISSIONERS (AS OF SEPT. 1,
 2026)", the first day of the term that the 6 August 2026 election filled."""
 import re
-from ._common import txt, mailtos, district_number, member
+from ._common import txt, mailtos, district_number, member, read_phones
 
 COUNTY = "Bedford"; FIPS = "003"
 DOMAINS = ("bedfordcountytn.gov",)
@@ -102,7 +104,7 @@ def parse(pages):
         if re.search(r"\bvacan", name, re.I) or not NAME.match(name):
             raise ValueError("District %s: %r does not look like a name" % (current, name))
         if text[1] or (text[2] and not PHONE.match(text[2])):
-            raise ValueError("District %s: %r's row has unexpected cells %r" % (current, name, text[1:3]))
+            raise ValueError("District %s: %r's row has unexpected cells" % (current, name))
         email = None
         for a in mailtos(cells[3]):
             if not _on_domain(a):
@@ -111,7 +113,7 @@ def parse(pages):
                 raise ValueError("county address %r does not carry %r's surname" % (a, name))
             email = a
             break
-        districts[current].append(member(name, email=email))
+        districts[current].append(member(name, email=email, phones=read_phones(cells[2], strict=True)))
     for n, seats in districts.items():
         if len(seats) != SEATS.get(n):
             raise ValueError("District %s has %d member rows, the county elects %s"

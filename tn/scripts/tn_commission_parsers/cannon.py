@@ -23,8 +23,11 @@ carries the member's surname: six members. The other four get none, since
 what the page would send is not what it prints. The personal addresses behind
 those links are never recorded.
 
-PRIVACY: Marty Williams's paragraph prints a phone, (615) 456-0068, that
-nothing labels a county line; it is not recorded. The page prints no address.
+PHONES: Marty Williams's paragraph prints a phone line under his name; it is
+recorded as printed, under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is. No other
+member's paragraph prints one. The page's "Contact Us" number, (615)
+563-2320, is the county's own (OFFICE_LINES). The page prints no address.
 
 Currency: checked 2026-10-11 against the Cannon County Election
 Commission's results of the 6 August 2026 county general election, linked
@@ -40,13 +43,14 @@ Burnett 289, Alexander 226. Ballot spellings differ only by middle initials
 Michael W. Hollandsworth, Tony R. Burnett). The page names no chair, so no
 role is recorded."""
 import re
-from ._common import txt, district_number, member
+from ._common import txt, district_number, member, read_phones
 
 COUNTY = "Cannon"; FIPS = "015"
 DOMAINS = ("cannoncountytn.gov",)
 URLS = ["https://cannoncountytn.gov/county-commissioners/"]
 SEATS = {str(i): 2 for i in range(1, 6)}
 AT_LARGE = 0
+OFFICE_LINES = ("(615) 563-2320",)
 
 P = re.compile(r"<p\b[^>]*>(.*?)</p>", re.S)
 HEAD_RE = re.compile(r"^<strong>\s*(District\s+[A-Za-z]+)\s*:\s*</strong>$")
@@ -75,9 +79,12 @@ def read_member(d, para):
     if not segs or not NAME.match(segs[0]) or re.search(r"\bvacan", segs[0], re.I):
         raise ValueError("District %s: %r does not open with a name" % (d, segs))
     name = segs[0]
+    phones = []
     for extra in segs[1:]:
-        if not (EMAIL.match(extra) or PHONE.match(extra)):
-            raise ValueError("District %s: unexpected line %r under %r" % (d, extra, name))
+        if PHONE.match(extra):
+            phones += read_phones(extra, strict=True)
+        elif not EMAIL.match(extra):
+            raise ValueError("District %s: unexpected line under %r" % (d, name))
     email = None
     links = LINK.findall(para)
     if len(links) > 1:
@@ -87,7 +94,7 @@ def read_member(d, para):
         if (href.lower() == shown.lower() and _on_domain(shown)
                 and _surname(name) in shown.split("@", 1)[0].lower()):
             email = shown
-    return member(name, email=email)
+    return member(name, email=email, phones=phones)
 
 
 def parse(pages):
