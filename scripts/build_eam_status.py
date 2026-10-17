@@ -2115,7 +2115,12 @@ ANSWERS = {
         # ms/CLAUDE.md.
         "county-government": depth("county-supervisor"),
         "municipal-boundaries": answers("municipality"),
-        "local-government": depth(),
+        # The 15 cities of 25,000 or more. The City card names the council of
+        # 14 of them from each city's own website, and every one of the 14
+        # elects by ward, so a city counts only where the City Ward layer
+        # draws its wards: nine, each from a plan confirmed against the 2020
+        # census. Greenville's site names nobody. Recorded in ms/CLAUDE.md.
+        "local-government": depth("city-ward"),
         # TIGER's unified tiling holds all 137 districts and the other two hold
         # none, measured in ms/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
@@ -2279,6 +2284,9 @@ CITY_ROSTERS = {
     # build (ok/scripts/build_ok_city_councils.py), keyed by the city's Census
     # id, every seat saying whether its ward or the whole city elects it.
     "ok": [("ok/data/app/ok-city-councils.json", "geoid7")],
+    # Each city's own website, read for the 15 cities of 25,000 or more and
+    # keyed by the city's Census id, each seat dated to the day it was read.
+    "ms": [("ms/data/app/ms-city-councils.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -2759,6 +2767,18 @@ WARD_MAPS = {
                        "every seat by the whole city",
             "4056650": "Owasso ties each council seat to a ward and elects "
                        "every one by the whole city"}),
+    # Mississippi's nine are drawn by one layer, ms/scripts/build_ms_city_wards.py,
+    # which draws a city only where its current plan is confirmed; its
+    # NOT_DRAWN table says why each of the others is not. The drawn set is
+    # held to the shipped file below, so it cannot outlive a city the layer
+    # stops drawing.
+    "ms": dict(
+        drawn={"2808300", "2814420", "2829700", "2836000", "2854040",
+               "2854840", "2855760", "2869280", "2874840"},
+        drawn_file=("ms/data/app/ms-city-wards.json", "geoid"),
+        owed={"2806220": "Biloxi", "2831020": "Hattiesburg",
+              "2833700": "Horn Lake", "2844520": "Madison",
+              "2846640": "Meridian"}),
 }
 
 
@@ -2778,6 +2798,22 @@ def ward_maps_owed(tag, units, ward):
     m = WARD_MAPS[tag]
     drawn, owed = m.get("drawn", set()), m.get("owed", {})
     at_large, declared = m.get("at_large", {}), m.get("declared", set())
+    # Where one shipped file draws every ward the table credits, the stated set
+    # is held to that file, in both directions.
+    if m.get("drawn_file"):
+        rel, prop = m["drawn_file"]
+        with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+            shipped = {str(f["properties"][prop])
+                       for f in json.load(fh)["features"]}
+        if drawn != shipped:
+            fail("%s: WARD_MAPS says the wards drawn are those of %s and `%s` "
+                 "draws %s. Correct the table to match the shipped file."
+                 % (tag, ", ".join(sorted(drawn)), rel,
+                    ", ".join(sorted(shipped))))
+    both = sorted(set(owed) & (set() if drawn == "all" else drawn))
+    if both:
+        fail("%s: WARD_MAPS lists %s as both drawn and owed"
+             % (tag, ", ".join(both)))
     listed = set(owed) | set(at_large) | (set() if drawn == "all" else drawn)
     if drawn != "all":
         missing = sorted(ward - listed)
