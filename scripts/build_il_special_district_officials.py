@@ -44,6 +44,8 @@ naming the card and the officer's place in its list and never the value. An
 address the roster's filings give beside two different people is nobody's, and
 so is one that another roster built from these filings gives beside a different
 person; each is taken off before anything is counted (drop_mail_given_for_two).
+So is an address shown to be a former officer's (NOT_THE_OFFICERS), which no
+test on one filing can see.
 
 A DISTRICT WITH NO BOARD OFFICER STILL SHIPS. Some file only a chief or a
 director, which is that district's own answer about who it publishes, not a
@@ -59,8 +61,8 @@ import sys
 
 from comptroller_afr import (  # noqa: E402  (shared -- do not fork)
     count_officer_emails, count_officer_phones, drop_mail_given_for_two,
-    mail_elsewhere, MAIL_GIVEN_FOR_TWO, suspect_emails_in, suspect_names_in,
-    suspect_phones_in)
+    mail_digest, mail_elsewhere, MAIL_GIVEN_FOR_TWO, OFFICER_LISTS,
+    suspect_emails_in, suspect_names_in, suspect_phones_in)
 
 import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
@@ -107,8 +109,48 @@ EXPECT_COUNTIES = {"cook", "kendall", "macon", "rock-island", "stark",
 EXPECT_LAYERS = {"fire", "park"}
 
 
+# AN ADDRESS SHOWN TO BE A FORMER OFFICER'S RIDES NOBODY. comptroller_afr
+# refuses an address named for another person on the SAME filing, and cannot
+# see a name that only an earlier filing carried. Each entry was found by
+# comparing a district's filing with the one before it, and is keyed by the
+# card and the address's mail_digest, never the address itself. An entry that
+# matches nothing withholds nothing; the run says so, and it can be retired.
+NOT_THE_OFFICERS = {
+    ("st-clair", "fire", "Brooklyn Fire Dept.", "ff7b74aab6ba1d68"): (
+        "2026-10-17",
+        "Brooklyn FPD (088/005/06): its FY2025 filing names one officer, a "
+        "Commissioner, and gives this address in two of its slots; the part "
+        "before the @ carries the surname of the Clerk/Treasurer its FY2024 "
+        "filing named, whom the FY2025 filing does not name"),
+}
+
+
 def fail(msg):
     sys.exit("build-il-special-district-officials: FAIL — " + msg)
+
+
+def drop_not_the_officers(counties):
+    """Take each NOT_THE_OFFICERS address off its card's officers.
+
+    Returns (records changed, [cards whose entry matched nothing]). Messages
+    name the card, never the address.
+    """
+    dropped, unmatched = 0, []
+    for (county, layer, name, digest), (since, _why) in sorted(
+            NOT_THE_OFFICERS.items()):
+        entry = ((counties.get(county) or {}).get(layer) or {}).get(name) or {}
+        hit = 0
+        for bucket in OFFICER_LISTS:
+            for person in entry.get(bucket) or []:
+                value = person.get("email") if isinstance(person, dict) else None
+                if (isinstance(value, str) and value
+                        and mail_digest(value.casefold()) == digest):
+                    person.pop("email")
+                    hit += 1
+        dropped += hit
+        if not hit:
+            unmatched.append("%s/%s/%s (recorded %s)" % (county, layer, name, since))
+    return dropped, unmatched
 
 
 def main():
@@ -137,6 +179,13 @@ def main():
     shared_mail = drop_mail_given_for_two(counties, elsewhere, mail_withheld)
     print("  %d officer address(es) taken off as given beside two people, "
           "in this roster's filings or another's" % shared_mail)
+    former, stale = drop_not_the_officers(counties)
+    print("  %d officer address(es) taken off as a former officer's "
+          "(NOT_THE_OFFICERS)" % former)
+    for where in stale:
+        print("  NOTE — NOT_THE_OFFICERS entry for %s matched no officer's "
+              "address; the filing no longer gives it, so the entry can be "
+              "retired" % where)
 
     cards = {}
     for key, names in (payload.get("cards") or {}).items():
