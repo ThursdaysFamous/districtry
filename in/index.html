@@ -4211,8 +4211,9 @@ function initIndianaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "in-senate": "ins", "county": "co", "in-house": "inh",
     "county-council": "cu", "in-court-of-appeals": "ina", "school-district-unified": "su",
-    "zip-code": "zp", "county-subdivision": "cs", "voting-precinct": "vp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "zip-code": "zp", "county-subdivision": "cs", "school-board-district": "bd",
+    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4223,8 +4224,9 @@ function initIndianaExplorer() {
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
+    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -17097,9 +17099,10 @@ function initIndianaExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#753B07": "#D7864B", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE",
+    "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
+    "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
