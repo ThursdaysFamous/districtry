@@ -1,0 +1,302 @@
+{
+ "districts_per_geoid": {
+  "3710740": 4,
+  "3712000": 7,
+  "3722920": 9,
+  "3725580": 6,
+  "3726880": 6,
+  "3728000": 5,
+  "3728080": 5,
+  "3731400": 6,
+  "3734200": 4,
+  "3744220": 4,
+  "3746340": 6,
+  "3755000": 5,
+  "3757500": 7,
+  "3759280": 5,
+  "3764740": 6,
+  "3774540": 7,
+  "3775000": 8
+ },
+ "fetched": "2026-10-16",
+ "fingerprint": {
+  "districts": 100,
+  "sha256": "ba279273e1f567a3540bb7cec33e94d2373ff86ab026df0de8b7471ea8a78a4d"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "82855745547234884bdcf90b8d815f4fbfd0e59610a746775a7650b3f0112b4c",
+ "sources": {
+  "3710740": {
+   "city": "Cary",
+   "covers_place_pct": 99.6,
+   "field": "DISTRICTID",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "df72c42ef9d38255f0b2e96432a0e029be10e957533ea6f6473513c1ad6ef514"
+   },
+   "item": "cd820130e85342bd836f8114c0fc75bd",
+   "layer": "https://maps-apis.carync.gov/server/rest/services/Elections/Elections/FeatureServer/2",
+   "layer_edited": null,
+   "outside_place_pct": 0.6,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "DISTRICTID IS NOT NULL"
+  },
+  "3712000": {
+   "city": "Charlotte",
+   "covers_place_pct": 99.8,
+   "field": "District",
+   "fingerprint": {
+    "districts": 7,
+    "sha256": "82b45291668abec1dc340b60af23c663583a459a5f785d137472ce40fea0d31d"
+   },
+   "item": null,
+   "layer": "https://gis.charlottenc.gov/arcgis/rest/services/PLN/CouncilDistricts/MapServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.3,
+   "part_records_joined": 0,
+   "records": 7,
+   "where": "1=1"
+  },
+  "3722920": {
+   "city": "Fayetteville",
+   "covers_place_pct": 99.9,
+   "field": "District",
+   "fingerprint": {
+    "districts": 9,
+    "sha256": "dc23cebd74f93a34bd81a197a54ebfdd701d245817a9dc4890964e333c2728bf"
+   },
+   "item": null,
+   "layer": "https://gismaps.fayettevillenc.gov/cofpublicgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.1,
+   "part_records_joined": 0,
+   "records": 9,
+   "where": "1=1"
+  },
+  "3725580": {
+   "city": "Gastonia",
+   "covers_place_pct": 99.4,
+   "field": "WARD_NUM",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "9b94a3b8ba632057d37ec6a90ffc14d9bcd9cda4ab8b3b471f31e8d262b240d0"
+   },
+   "item": "4dc9aaac3991491aad2fcea5da5f79b8",
+   "layer": "https://cogserver.gastonianc.gov/serverweb/rest/services/AdminBnds/GastoniaCouncilWards/MapServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.6,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "3726880": {
+   "city": "Goldsboro",
+   "covers_place_pct": 99.8,
+   "field": "DISTRICTID",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "9ec4577529dc6bf540de6841bf5299397ccd773e3eaa9462b89143ffba284d1a"
+   },
+   "item": "d2cc6a5f99ff4971af97d8acd2ac04e8",
+   "layer": "https://gis.goldsboronc.gov/arcgis/rest/services/Election_Districts/FeatureServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.4,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "DISTRICTID <> '0'"
+  },
+  "3728000": {
+   "city": "Greensboro",
+   "covers_place_pct": 99.7,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "b4ccb7db11e644c7fb7a8dd7776710b935d5cdfc15a7e05cd8cdf690ca6366a9"
+   },
+   "item": "a4858abfcc2a45a5b1b921d35f2fd62e",
+   "layer": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/4",
+   "layer_edited": null,
+   "outside_place_pct": 0.8,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  },
+  "3728080": {
+   "city": "Greenville",
+   "covers_place_pct": 98.4,
+   "field": "District",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "eb0d5dfaa137c8b0272f2e2ee023ffd7e660f3866d896368901d4c8ac9c25872"
+   },
+   "item": "3e445e00cf8d4057aa3237dbda5ea51b",
+   "layer": "https://gisonline.greenvillenc.gov/arcgis/rest/services/Published/MapServer/1",
+   "layer_edited": null,
+   "outside_place_pct": 1.3,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "District <> 'Non Voting'"
+  },
+  "3731400": {
+   "city": "High Point",
+   "covers_place_pct": 96.3,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "ecf67ca60a5a9b2ad8da8b5436ebbdf4ebdea245cd7646c637f45cf065208f8c"
+   },
+   "item": "a4858abfcc2a45a5b1b921d35f2fd62e",
+   "layer": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/10",
+   "layer_edited": null,
+   "outside_place_pct": 0.3,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "3734200": {
+   "city": "Jacksonville",
+   "covers_place_pct": 99.7,
+   "field": "WARD_NUM",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "c1f65e3edc7c31f4d82facbfbf092ab98d12cdcb5cc19c04531303dd76061e38"
+   },
+   "item": null,
+   "layer": "https://gismaps.onslowcountync.gov/arcgis/rest/services/TemplateSite/OperationalLayers/MapServer/60",
+   "layer_edited": null,
+   "outside_place_pct": 2.0,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "3744220": {
+   "city": "Mooresville",
+   "covers_place_pct": 98.8,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "f691a5ec2ff7260bb34da72c576079965c95f875ae892dd9efb349813938f91e"
+   },
+   "item": "a8e755fd1bd34ba7a17626a70c28cc38",
+   "layer": "https://maps.iredellcountync.gov/server/rest/services/Data/Elections/MapServer/3",
+   "layer_edited": null,
+   "outside_place_pct": 2.2,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "3746340": {
+   "city": "New Bern",
+   "covers_place_pct": 99.8,
+   "field": "Ward_Num",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "e6082e3851195e8f52bb4fb2c45e73086a713c7d3c40b95e3c797d2a0172b892"
+   },
+   "item": "4fec1f30b1a44990b4e605b0c8bdbe2c",
+   "layer": "https://gis.newbernnc.gov/arcgis/rest/services/Boundary/NewBern_Wards/FeatureServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.3,
+   "part_records_joined": 5,
+   "records": 11,
+   "where": "1=1"
+  },
+  "3755000": {
+   "city": "Raleigh",
+   "covers_place_pct": 96.9,
+   "field": "PROP_2",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "be482328d4de46c70e91e3db1ff331ac1c16d4fc4c85bed9a14eb0ed60426bd6"
+   },
+   "item": "12e533561143488fb4a09861d36ae2d6",
+   "layer": "https://services.arcgis.com/v400IkDOw1ad7Yad/ArcGIS/rest/services/Council_Districts_Scenario_2/FeatureServer/1",
+   "layer_edited": "2021-11-24T22:26:43Z",
+   "outside_place_pct": 3.0,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  },
+  "3757500": {
+   "city": "Rocky Mount",
+   "covers_place_pct": 99.5,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 7,
+    "sha256": "32cca29199f02afe726531405b5b289ddd3738301e01a6d1bbf073fdd90b0795"
+   },
+   "item": "7c147e85243440308da056655f8d9941",
+   "layer": "https://services.arcgis.com/4MdqIsNzxG7xyTvf/arcgis/rest/services/City_Council_Districts/FeatureServer/6",
+   "layer_edited": "2024-07-12T15:25:34Z",
+   "outside_place_pct": 0.8,
+   "part_records_joined": 4,
+   "records": 11,
+   "where": "1=1"
+  },
+  "3759280": {
+   "city": "Sanford",
+   "covers_place_pct": 99.2,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "adffddc35f66a4499bb4e3f1d89a26e510827206c03704e0e3e3b32818abe3a1"
+   },
+   "item": null,
+   "layer": "https://lee-arcgis.leecountync.gov/arcgis/rest/services/Political/POLITICAL/MapServer/1",
+   "layer_edited": null,
+   "outside_place_pct": 1.2,
+   "part_records_joined": 53,
+   "records": 58,
+   "where": "1=1"
+  },
+  "3764740": {
+   "city": "Statesville",
+   "covers_place_pct": 99.4,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "156d565874ff91283550518e865d80d7d5977b39bdb2cbb468387f8a78123381"
+   },
+   "item": "abcf19c92f31463888c51083549eb652",
+   "layer": "https://services2.arcgis.com/WbGEgSzGTEPg4fr6/arcgis/rest/services/Stvl_Election_Wards/FeatureServer/0",
+   "layer_edited": "2026-09-08T20:25:01Z",
+   "outside_place_pct": 2.8,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "3774540": {
+   "city": "Wilson",
+   "covers_place_pct": 99.8,
+   "field": "DIST",
+   "fingerprint": {
+    "districts": 7,
+    "sha256": "14e1f9e5dd4581025f413e2574d7dd5e4b8a17328cc03a83d1259c852deb6447"
+   },
+   "item": null,
+   "layer": "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34",
+   "layer_edited": null,
+   "outside_place_pct": 1.4,
+   "part_records_joined": 0,
+   "records": 7,
+   "where": "1=1"
+  },
+  "3775000": {
+   "city": "Winston-Salem",
+   "covers_place_pct": 99.9,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 8,
+    "sha256": "a7d3f3793f72a96e472616f1cc6e84e698c43f26617bd2febcdfb79c66833aaf"
+   },
+   "item": null,
+   "layer": "https://arcgis2.cityofws.org/arcgissmwa02/rest/services/OICv2/Boundaries2/MapServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.1,
+   "part_records_joined": 0,
+   "records": 8,
+   "where": "1=1"
+  }
+ }
+}

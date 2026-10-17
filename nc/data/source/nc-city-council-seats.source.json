@@ -1,0 +1,758 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, and the names found on it.",
+ "pages": {
+  "https://concordnc.gov/Government/City-Government/Council": {
+   "bytes": 111644,
+   "client": "token",
+   "final": "https://concordnc.gov/Government/City-Government/Council",
+   "names": [
+    "Alvarys Santana",
+    "Andy Langford",
+    "Betty M. Stocks",
+    "Jennifer P. Hubbard",
+    "John Sweat, Jr.",
+    "Lori A. Clay",
+    "Terry Crawford"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e8293be82d33c59013b44a3558376f6784f5d27b4858a5b6b5a2980c30205b26"
+  },
+  "https://concordnc.gov/Government/City-Government/Mayor": {
+   "bytes": 93235,
+   "client": "token",
+   "final": "https://concordnc.gov/Government/City-Government/Mayor",
+   "names": [
+    "Stephen M. Morris"
+   ],
+   "read": "2026-10-16",
+   "sha256": "00ccbb87f370cbd572de18502eff6111acf849ae738451187cd63158bea45183"
+  },
+  "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip": {
+   "bytes": 3741131,
+   "client": "token",
+   "final": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip",
+   "names": [
+    "CITY OF RALEIGH CITY COUNCIL AT-LARGE: Jonathan Lambert-Melton",
+    "CITY OF RALEIGH CITY COUNCIL AT-LARGE: Stormie Denise Forte",
+    "CITY OF RALEIGH CITY COUNCIL DISTRICT A: Mitchell Silver",
+    "CITY OF RALEIGH CITY COUNCIL DISTRICT B: Megan Patton",
+    "CITY OF RALEIGH CITY COUNCIL DISTRICT C: Corey Branch",
+    "CITY OF RALEIGH CITY COUNCIL DISTRICT D: Jane Harrison",
+    "CITY OF RALEIGH CITY COUNCIL DISTRICT E: Christina Jones",
+    "CITY OF RALEIGH MAYOR: Janet Cowell"
+   ],
+   "read": "2026-10-16",
+   "sha256": "2fab44e9b12e03c0d88ef832c2e6dc8c569e2b020d64df06a8b551b62bbdb426"
+  },
+  "https://dl.ncsbe.gov/ENRS/2025_11_04/results_pct_20251104.zip": {
+   "bytes": 296353,
+   "client": "token",
+   "final": "https://dl.ncsbe.gov/ENRS/2025_11_04/results_pct_20251104.zip",
+   "names": [
+    "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Brian Hacker",
+    "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Jennefer Cross Garrity",
+    "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: John Urban",
+    "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Jonathan Clayton",
+    "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Kerry Lamson",
+    "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Susan Chambers",
+    "TOWN OF MATTHEWS MAYOR: John Higdon"
+   ],
+   "read": "2026-10-16",
+   "sha256": "4750ece9c5db7cef29305eeac1631821c817608093a8c7591638efcdb2177672"
+  },
+  "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34/query?where=1%3D1&outFields=MAYOR&returnGeometry=false&f=json": {
+   "bytes": 486,
+   "client": "token",
+   "final": "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34/query?where=1%3D1&outFields=MAYOR&returnGeometry=false&f=json",
+   "names": [
+    "Carlton L. Stevens"
+   ],
+   "read": "2026-10-16",
+   "sha256": "833c86b29ad587a07ca3860e8c65455a8de5c411c19a387302c4f4a5b3b3746f"
+  },
+  "https://hickorync.gov/city-council": {
+   "bytes": 52272,
+   "client": "token",
+   "final": "https://hickorync.gov/city-council",
+   "names": [
+    "Anthony Freeman",
+    "Arnita Dula",
+    "Charlotte Williams",
+    "Danny Seaver",
+    "Hank Guess",
+    "Jill Patton",
+    "Tony Wood"
+   ],
+   "read": "2026-10-16",
+   "sha256": "702bff05d6b5b100ba2b72219bc052f643ad158b8d5cf0beb59dda694d92ff49"
+  },
+  "https://monroenc.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=7783,plainText=true)": {
+   "bytes": 3273913,
+   "client": "token",
+   "final": "https://monroenc.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=7783,plainText=true)",
+   "names": [
+    "resigned from Council on Friday, July 31, 2026"
+   ],
+   "read": "2026-10-16",
+   "sha256": "44950113e9ade492a5951e2e83b64aa5bd80fb226de9320d3a3d6ac4da073eee"
+  },
+  "https://salisburync.gov/Government/City-Council": {
+   "bytes": 120890,
+   "client": "token",
+   "final": "https://salisburync.gov/Government/City-Council",
+   "names": [
+    "Carlton A. Jackson",
+    "Gemale A. Black",
+    "Susan Kluttz",
+    "Tamara Sheffield"
+   ],
+   "read": "2026-10-16",
+   "sha256": "db01e733c8919e7989bdfc6f2cb9173286c83d4ac1eb073bec55e9342b9e39a3"
+  },
+  "https://salisburync.gov/Government/Community-Engagement/Newsroom": {
+   "bytes": 182261,
+   "client": "token",
+   "final": "https://salisburync.gov/Government/Community-Engagement/Newsroom",
+   "names": [
+    "announced his resignation, effective Oct. 15, 2026"
+   ],
+   "read": "2026-10-16",
+   "sha256": "47aaef324176e59bcb4e4a3c4b633692fe22c064b52d6680d3a43a23ae848e95"
+  },
+  "https://thomasville-nc.gov/government/meet_the_officials/index.php": {
+   "bytes": 74972,
+   "client": "token",
+   "final": "https://thomasville-nc.gov/government/meet_the_officials/index.php",
+   "names": [
+    "D. Hunter Thrift",
+    "Dana Lomba",
+    "Doug Hunt",
+    "Ericka Sanders",
+    "JacQuez Johnson",
+    "Lisa Shell",
+    "Payton Williams",
+    "Raleigh York, Jr."
+   ],
+   "read": "2026-10-16",
+   "sha256": "8e9c891feca3d2b6e111c569747e649ef667a96e56d46a690534296a83f1319e"
+  },
+  "https://toknc.com/government/aldermen/": {
+   "bytes": 191764,
+   "client": "token",
+   "final": "https://toknc.com/government/aldermen/",
+   "names": [
+    "Bill Apple",
+    "Chris Thompson",
+    "Dawn H. Morgan",
+    "J.R. Gorham",
+    "Randall Pegram",
+    "Sarah Sabanis"
+   ],
+   "read": "2026-10-16",
+   "sha256": "efe4dda9985c06b1edfaca7e3f4148e5db0ed9f23067f036b3df85bb7dae25c5"
+  },
+  "https://www.apexnc.org/780/Meet-Your-Town-Council": {
+   "bytes": 133065,
+   "client": "token",
+   "final": "https://www.apexnc.org/780/Meet-Your-Town-Council",
+   "names": [
+    "Arno Zegerman",
+    "Edward Gray",
+    "Jacques Gilbert",
+    "Shane Reese",
+    "Sue Mu",
+    "Terry Mahaffey"
+   ],
+   "read": "2026-10-16",
+   "sha256": "53229eb0418e47f308ffcfdcaa4b7e15056d2a44af36ac254c37fb53181a8f02"
+  },
+  "https://www.asheboronc.gov/_includes_/published/catalogue.json": {
+   "bytes": 9415,
+   "client": "token",
+   "final": "https://www.asheboronc.gov/_includes_/published/catalogue.json",
+   "names": [
+    "Cam Mills",
+    "Charlie Swiers",
+    "Eddie Burks",
+    "Joey Trogdon",
+    "Kelly Heath",
+    "Mary Joan Pugh",
+    "Phil Skeen",
+    "Phillip Cheek"
+   ],
+   "read": "2026-10-16",
+   "sha256": "a65a44706a5997d42b421f801d27c2455e53276f781ce74124a728e32a2773d8"
+  },
+  "https://www.ashevillenc.gov/government/meet-city-council/": {
+   "bytes": 187797,
+   "client": "token",
+   "final": "https://www.ashevillenc.gov/government/meet-city-council/",
+   "names": [
+    "Bo Hess",
+    "Esther E. Manheimer",
+    "Kim Roney",
+    "Maggie Ullman",
+    "S. Antanette Mosley",
+    "Sage Turner",
+    "Sheneika Smith"
+   ],
+   "read": "2026-10-16",
+   "sha256": "3a02c345eb2bcecc6de6992b9166c181f621b87830eb9535cd6c84f3b3fedbcb"
+  },
+  "https://www.burlingtonnc.gov/43/City-Council": {
+   "bytes": 90792,
+   "client": "token",
+   "final": "https://www.burlingtonnc.gov/43/City-Council",
+   "names": [
+    "Beth Kennett",
+    "Bob Ward",
+    "Dejuana Bigelow",
+    "Ian Baltutis",
+    "Jeffrey Smythe"
+   ],
+   "read": "2026-10-16",
+   "sha256": "4844595e47a92678c67e151f31aa26ac9f8c01e543fd941a39afec7c38f58019"
+  },
+  "https://www.carync.gov/mayor-council/town-council": {
+   "bytes": 97029,
+   "client": "browser",
+   "final": "https://www.carync.gov/mayor-council/town-council",
+   "names": [
+    "Bella Huang",
+    "Brittany Richards",
+    "Carissa Kohn-Johnson",
+    "Harold Weinbrecht",
+    "Lori Bush",
+    "Michelle Craig",
+    "Sarika Bansal"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e4f1e59aeafb5ab990bc80dfd075323781360e3af7fed33a6e8cf382fd3c9336"
+  },
+  "https://www.chapelhillnc.gov/Town-Government/Mayor-and-Council": {
+   "bytes": 117280,
+   "client": "token",
+   "final": "https://www.chapelhillnc.gov/Town-Government/Mayor-and-Council",
+   "names": [
+    "Amy Ryan",
+    "Camille Berry",
+    "Elizabeth Sharp",
+    "Jessica Anderson",
+    "Louie Rivers III",
+    "Melissa McCullough",
+    "Paris Miller-Foushee",
+    "Theodore Nollert",
+    "Wes McMahon"
+   ],
+   "read": "2026-10-16",
+   "sha256": "1d3c5f5ccfa7635153715c33a24413045c525967a22abf942fe1d5084c58b848"
+  },
+  "https://www.charlottenc.gov/City-Government/Leadership/City-Council": {
+   "bytes": 285230,
+   "client": "token",
+   "final": "https://www.charlottenc.gov/City-Government/Leadership/City-Council",
+   "names": [
+    "Danté Anderson",
+    "Dimple Ajmera",
+    "Edmund H. Driggs",
+    "JD Mazuera Arias",
+    "James Mitchell Jr.",
+    "Joi Mayo",
+    "Kimberly Owens",
+    "LaWana Mayfield",
+    "Malcolm Graham",
+    "Reneé Johnson",
+    "Victoria Watlington"
+   ],
+   "read": "2026-10-16",
+   "sha256": "96b518e85bcc9936451af1b3349aed1e46afc2365d3e13add45af82f9d71a009"
+  },
+  "https://www.charlottenc.gov/City-Government/Leadership/Mayor/Meet-the-Mayor": {
+   "bytes": 285935,
+   "client": "token",
+   "final": "https://www.charlottenc.gov/City-Government/Leadership/Mayor/Meet-the-Mayor",
+   "names": [
+    "Rob Harrington"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ce7e2261c3a7d280cef8c793121c9d619517cad1dc634796d49c7dd9cbbbe854"
+  },
+  "https://www.cityofws.org/3499/City-Council": {
+   "bytes": 194695,
+   "client": "token",
+   "final": "https://www.cityofws.org/3499/City-Council",
+   "names": [
+    "Annette Scippio",
+    "Barbara H. Burke",
+    "Denise D. Adams",
+    "James Taylor",
+    "Regina Ford Hall",
+    "Robert C. Clark",
+    "Scott Andree-Bowen",
+    "Vivián V. Joiner"
+   ],
+   "read": "2026-10-16",
+   "sha256": "aa7d7299db10ac4e6028312c88f69419a3ef1ea694c7dc4a9046184fd431d925"
+  },
+  "https://www.cityofws.org/556/Mayor": {
+   "bytes": 186164,
+   "client": "token",
+   "final": "https://www.cityofws.org/556/Mayor",
+   "names": [
+    "J. Allen Joines"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5d421f47404ad2846c7159334f1a4516c7e9e61e69ce967efe7f96a425b22b9b"
+  },
+  "https://www.claytonnc.gov/480/Mayor-Council": {
+   "bytes": 101267,
+   "client": "token",
+   "final": "https://www.claytonnc.gov/480/Mayor-Council",
+   "names": [
+    "Amanda Underwood",
+    "Andria Archer",
+    "Gretchen Williams",
+    "Jody McLeod",
+    "Porter Casey",
+    "Ruth Anderson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9ea1c4933cf48391e5a65f200810599c3d210246908452c3873f39192e625608"
+  },
+  "https://www.cornelius.org/government/boards___commissions/elected_officials/": {
+   "bytes": 72296,
+   "client": "token",
+   "final": "https://www.cornelius.org/government/boards___commissions/elected_officials/",
+   "names": [
+    "Colin Furcht",
+    "Denis Bilodeau",
+    "Michael Osborne",
+    "Robert Carney",
+    "Susan Johnson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ff2d544ffe917a84d1855b64dbfcffbcb338709df23f6a6306b0d89692603898"
+  },
+  "https://www.durhamnc.gov/1396/City-Council-Members": {
+   "bytes": 113900,
+   "client": "browser",
+   "final": "https://www.durhamnc.gov/1396/City-Council-Members",
+   "names": [
+    "Carl Rist",
+    "Chelsea Cook",
+    "Javiera Caballero",
+    "Leonardo Williams",
+    "Matt Kopac",
+    "Nate Baker",
+    "Shanetta Burris"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5c7f3acda715dc46b27aa3b2e35f1e266231a3cf802a7ea497a822655b9b9866"
+  },
+  "https://www.fayettevillenc.gov/City-Council/City-Council-Members": {
+   "bytes": 152568,
+   "client": "token",
+   "final": "https://www.fayettevillenc.gov/City-Council/City-Council-Members",
+   "names": [
+    "Antonio Jones",
+    "Brenda McNair",
+    "D.J. Haire",
+    "Deno Hondros",
+    "Derrick Thompson",
+    "Lynne Greene",
+    "Malik Davis",
+    "Mitch Colvin",
+    "Shaun McMillan",
+    "Stephon Ferguson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "8a38cea1d376d1ebbd1e7ad51c2b82376bc032125baa56254a7360d8a3fba771"
+  },
+  "https://www.fuquay-varina.org/317/Board-of-Commissioners": {
+   "bytes": 101539,
+   "client": "token",
+   "final": "https://www.fuquay-varina.org/317/Board-of-Commissioners",
+   "names": [
+    "Bill Harris",
+    "Bryan Haynes",
+    "Charlie Adcock",
+    "Kris Vorren",
+    "Larry Smith",
+    "Marilyn Gardner"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5287aa943ff8b83c37d7c5431ae65e261af3b1b1d0911145b1cb6a826e0bc029"
+  },
+  "https://www.garnernc.gov/government/town-council/town-council-members": {
+   "bytes": 119798,
+   "client": "browser",
+   "final": "https://www.garnernc.gov/government/town-council/town-council-members",
+   "names": [
+    "Buddy Gupton",
+    "Demian Dellinger",
+    "Elmo Vance",
+    "Gra Singleton",
+    "Kelvin Stallings",
+    "Phil Matthews"
+   ],
+   "read": "2026-10-16",
+   "sha256": "28e8ba3a37a42aafa8b9c300994a7579daa48466560d4d86316a2893c0b1b577"
+  },
+  "https://www.gastonianc.gov/government/city-council-info.html": {
+   "bytes": 106936,
+   "client": "token",
+   "final": "https://www.gastonianc.gov/government/city-council-info.html",
+   "names": [
+    "Angela Dreher",
+    "Demetrios Koutsoupias",
+    "Donyel Barber",
+    "Glenn Silverman",
+    "James Gallagher",
+    "Jennifer M. Stepp",
+    "Richard Franks"
+   ],
+   "read": "2026-10-16",
+   "sha256": "7f09310724556df34870774ed7de73faa36283f3de6914b1a66f2e9f093cc9c8"
+  },
+  "https://www.goldsboronc.gov/api/COG/CouncilMembers": {
+   "bytes": 419,
+   "client": "token",
+   "final": "https://www.goldsboronc.gov/api/COG/CouncilMembers",
+   "names": [
+    "Beverly Weeks",
+    "Brandi Matthews",
+    "Charles Gaylor",
+    "Chris Boyette",
+    "Hiawatha Jones",
+    "Jamie Taylor",
+    "Roderick White"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5b346eb7189072d4420bd9bc3eca1d476f07a33cda3af6caaaf7c829dd14d8e2"
+  },
+  "https://www.greensboro-nc.gov/government/city-council/connect-with-city-council": {
+   "bytes": 165162,
+   "client": "browser",
+   "final": "https://www.greensboro-nc.gov/government/city-council/connect-with-city-council",
+   "names": [
+    "Adam Marshall",
+    "April Parker",
+    "Cecile \"CC\" Crawford",
+    "Crystal Black",
+    "Denise Roth",
+    "Hugh Holston",
+    "Irving Allen",
+    "Marikay Abuzuaiter",
+    "Tammi Thurm"
+   ],
+   "read": "2026-10-16",
+   "sha256": "65f91a76a80beedf9a83dbe2a0d15f897b0551fcdaf8abce57088ffa0c1277b9"
+  },
+  "https://www.greenvillenc.gov/183/City-Council": {
+   "bytes": 116871,
+   "client": "browser",
+   "final": "https://www.greenvillenc.gov/183/City-Council",
+   "names": [
+    "Arjenae Jones",
+    "Les Robinson",
+    "Matthew Scully",
+    "P.J. Connelly",
+    "Portia Willis",
+    "Seth Hardee",
+    "Tonya Foreman"
+   ],
+   "read": "2026-10-16",
+   "sha256": "8d752094bcdd60564d5616da27a121d41855e8d540855f44b5261eb66e4768c6"
+  },
+  "https://www.highpointnc.gov/153/City-Council": {
+   "bytes": 150329,
+   "client": "token",
+   "final": "https://www.highpointnc.gov/153/City-Council",
+   "names": [
+    "Britt W. Moore",
+    "Chris Williams",
+    "Cyril Jefferson",
+    "Michael A. Holmes",
+    "Monica Peters",
+    "Patrick H. Harman",
+    "Tim Andrew",
+    "Tyrone Johnson",
+    "Vickie M. McKiver"
+   ],
+   "read": "2026-10-16",
+   "sha256": "c173165802d58b451ed5416b74c591c8060cec151845b2772ba3be2d3d4c3741"
+  },
+  "https://www.hollyspringsnc.gov/143/Mayor-Town-Council": {
+   "bytes": 135751,
+   "client": "token",
+   "final": "https://www.hollyspringsnc.gov/143/Mayor-Town-Council",
+   "names": [
+    "Annie Drees",
+    "Chris Deshazor",
+    "Danielle Hewetson",
+    "Kara Foster",
+    "Mike Kondratick",
+    "Sarah Larson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "aa41d883db6c2995c1813b9ea8804a1e1a5004e4d4a522a3ced99cad3efdb80e"
+  },
+  "https://www.huntersville.org/170/Town-Board-of-Commissioners": {
+   "bytes": 115763,
+   "client": "token",
+   "final": "https://www.huntersville.org/170/Town-Board-of-Commissioners",
+   "names": [
+    "Christy Clark",
+    "Edwin Quarles",
+    "Heather Smallwood",
+    "Jennifer Hunt",
+    "LaToya Rivers",
+    "Nick Walsh",
+    "Scott Coronet"
+   ],
+   "read": "2026-10-16",
+   "sha256": "bb977c6bd1ab7715b105e81f0659fc9d6a476dbc0b0d44a5ed9a6bd41517229c"
+  },
+  "https://www.indiantrail.org/312/Town-Council": {
+   "bytes": 133136,
+   "client": "token",
+   "final": "https://www.indiantrail.org/312/Town-Council",
+   "names": [
+    "Clarence Alsobrooks",
+    "Crystal Buchaluk",
+    "David Cohn",
+    "Marcus McIntyre",
+    "Todd Barber",
+    "Tom Amburgey"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9d56c564640448ae6c0f38164121dc70462954c69c6ca690e77335c0c2029352"
+  },
+  "https://www.jacksonvillenc.gov/291/Mayor-Council": {
+   "bytes": 98008,
+   "client": "token",
+   "final": "https://www.jacksonvillenc.gov/291/Mayor-Council",
+   "names": [
+    "Angelia Washington",
+    "Cindy Edwards",
+    "Jerome Willingham",
+    "Logan Sosa",
+    "Michael Yaniero",
+    "Mickey Smith"
+   ],
+   "read": "2026-10-16",
+   "sha256": "74c3821973da21e0107cb66da768595c8b13c6a7aa07e0a38b24a16007465fef"
+  },
+  "https://www.jacksonvillenc.gov/m/directory/department?did=19": {
+   "bytes": 104549,
+   "client": "token",
+   "final": "https://www.jacksonvillenc.gov/m/directory/department?did=19",
+   "names": [
+    "Sammy Phillips"
+   ],
+   "read": "2026-10-16",
+   "sha256": "20d578a285b128eed68752b4405bb8330eab3a9269068a96f1849e2d74a3e842"
+  },
+  "https://www.kannapolisnc.gov/citycouncil": {
+   "bytes": 90437,
+   "client": "token",
+   "final": "https://www.kannapolisnc.gov/citycouncil",
+   "names": [
+    "Darrell Jackson",
+    "Dianne Berry",
+    "Doug Wilson",
+    "Isaiah Payne",
+    "Jeanne Dixon",
+    "Naomi Hatchell",
+    "Ryan G. Dayvault"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9dd3b007342993d6fc6dd817931a669e9d9044af32295671f841f5665a539b36"
+  },
+  "https://www.minthill.com/government/mayor_and_commissioners/index.php": {
+   "bytes": 56374,
+   "client": "token",
+   "final": "https://www.minthill.com/government/mayor_and_commissioners/index.php",
+   "names": [
+    "Dale Dalton",
+    "Patrick Holton",
+    "Tony Long",
+    "Trey Long",
+    "Twanna Henderson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ce762269fc3270f34697f9caef74a376412548ffcbafe70bb9c24ae5d52e70e3"
+  },
+  "https://www.monroenc.org/288/City-Council": {
+   "bytes": 113481,
+   "client": "token",
+   "final": "https://www.monroenc.org/288/City-Council",
+   "names": [
+    "David Dotson",
+    "Franco McGee",
+    "James Kerr",
+    "Julie Thompson",
+    "Robert Burns",
+    "Surluta Anthony"
+   ],
+   "read": "2026-10-16",
+   "sha256": "1cfd043ff9451aa41e5d9626331ca9a54df406246ba1e83852c592ebec02eefe"
+  },
+  "https://www.mooresvillenc.gov/government/town_board/your_town_board.php": {
+   "bytes": 64426,
+   "client": "token",
+   "final": "https://www.mooresvillenc.gov/government/town_board/your_town_board.php",
+   "names": [
+    "Dana L. Tucker",
+    "Eddie Dingler",
+    "Edward Karriker",
+    "Frank Owens",
+    "Gary West",
+    "Will Aven"
+   ],
+   "read": "2026-10-16",
+   "sha256": "8de87716ecafb05b3f3754ccb30ca55c8f1fc56369ebada7190f928111acca0c"
+  },
+  "https://www.mooresvillenc.gov/news_detail_T4_R429.php": {
+   "bytes": 55384,
+   "client": "token",
+   "final": "https://www.mooresvillenc.gov/news_detail_T4_R429.php",
+   "names": [
+    "would retire on September 30, 2026"
+   ],
+   "read": "2026-10-16",
+   "sha256": "3256e95e481a136014a0105f353ad57b31846c3805f3e7377d297ee012978bc4"
+  },
+  "https://www.morrisvillenc.gov/Government/Meet-Your-Town-Council": {
+   "bytes": 75141,
+   "client": "token",
+   "final": "https://www.morrisvillenc.gov/Government/Meet-Your-Town-Council",
+   "names": [
+    "Anne Robotti",
+    "Ashit Patel",
+    "Harrison Kesling",
+    "Liz Johnson",
+    "Satish Garimella",
+    "TJ Cawley",
+    "Vicki Scroggins-Johnson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "533d232a2b5220595b07fae3e2375b1caf528e118e879df7f49b16241b41ce09"
+  },
+  "https://www.newbernnc.gov/departments/administration/board_of_aldermen.php": {
+   "bytes": 97198,
+   "client": "token",
+   "final": "https://www.newbernnc.gov/departments/administration/board_of_aldermen.php",
+   "names": [
+    "Barbara J. Best",
+    "Dana E. Outlaw",
+    "Jeffrey T. Odham",
+    "Lainy White",
+    "Robert \"Bobby\" Aster",
+    "Sharon C. Bryant",
+    "Trey Ferguson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "3981c762ce4f96d2fcd2745cc1c586f8451866b576115a86c66c203115af9f01"
+  },
+  "https://www.rockymountnc.gov/176": {
+   "bytes": 98470,
+   "client": "browser",
+   "final": "https://www.rockymountnc.gov/176/Mayor-City-Council",
+   "names": [
+    "Andre Knight",
+    "C. Saunders Roberson, Jr.",
+    "Charles Roberson",
+    "Jabaris D. Walker",
+    "Lige Daughtridge",
+    "Reuben C. Blackwell, IV",
+    "T.J. Walker",
+    "Tom Harris"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ccd31dba8ffb610814ce088aff3036830e477a459754b11b0d045a2f1fcefe78"
+  },
+  "https://www.sanfordnc.net/313/City-Council": {
+   "bytes": 113906,
+   "client": "token",
+   "final": "https://www.sanfordnc.net/313/City-Council",
+   "names": [
+    "Byron Buckels",
+    "Charles Taylor",
+    "Chris Petty",
+    "Jean Dabbs",
+    "Linda Rhodes",
+    "Mark Akinosho",
+    "Rebecca Wyhof Salmon",
+    "Walter Ferguson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5b224c3dcd0468acfca39c54ceb624d2175998f6c111564294ecef2f5596d69a"
+  },
+  "https://www.statesvillenc.net/statesville-city-council": {
+   "bytes": 53331,
+   "client": "token",
+   "final": "https://www.statesvillenc.net/statesville-city-council",
+   "names": [
+    "Amy Lawton",
+    "David Jones",
+    "Doris Allison",
+    "Doug Hendrix",
+    "James Pressly",
+    "Kristi Pfeufer",
+    "Lisa Pearson",
+    "Tip Nicholson",
+    "Trey Robertson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "60007eb265f11113007500f7beef40fcd5f73f7276b5b9ea90d59a1736514db3"
+  },
+  "https://www.wakeforestnc.gov/board-commissioners/mayor-board-members": {
+   "bytes": 351518,
+   "client": "token",
+   "final": "https://www.wakeforestnc.gov/board-commissioners/mayor-board-members",
+   "names": [
+    "Adam Wright",
+    "Ben Clapsaddle",
+    "Daniel Hupp",
+    "Faith Cross",
+    "Nick Sliwinski",
+    "R. Keith Shackleford"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ea07969b73a22c2e82527ff54ad0d7821a0df63992e5df61f8069adc4acef38f"
+  },
+  "https://www.wilmingtonnc.gov/Connect-With-Us/City-Mayor-Council": {
+   "bytes": 127396,
+   "client": "token",
+   "final": "https://www.wilmingtonnc.gov/Connect-With-Us/City-Mayor-Council",
+   "names": [
+    "Bill Saffo",
+    "Cassidy Santaguida",
+    "Chakema Clinton-Quintana",
+    "David Joyner",
+    "JC Lyle",
+    "Kevin Spears",
+    "Salette Andrews"
+   ],
+   "read": "2026-10-16",
+   "sha256": "3734cb05afcb0d289bf76b42172b1f1377f267fa966ca6f20278b181be3ecd2f"
+  },
+  "https://www.wilsonnc.org/residents/all-departments/administration/mayor-city-council": {
+   "bytes": 102926,
+   "client": "browser",
+   "final": "https://www.wilsonnc.org/residents/all-departments/administration/mayor-city-council",
+   "names": [
+    "Eduardo Herrera-Picasso",
+    "Gillettia Morgan",
+    "James Johnson",
+    "Lenwood Ward",
+    "Michael Bell",
+    "Susan Kellum",
+    "Tom Fyle"
+   ],
+   "read": "2026-10-16",
+   "sha256": "f866356c9ce6ddef6548b7b7d09fd7769065770f83e9e8b948b097895b74f665"
+  }
+ }
+}

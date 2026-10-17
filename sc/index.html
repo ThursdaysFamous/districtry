@@ -4218,8 +4218,8 @@ function initSouthCarolinaExplorer() {
   var LAYER_CODES = { "us-house": "us", "sc-senate": "scs", "county": "co",
     "school-district-unified": "su", "sc-house": "sch", "sc-circuit-court": "scc",
     "county-subdivision": "cs", "county-council": "cu", "school-board-district": "bd",
-    "zip-code": "zp", "voting-precinct": "vp", "municipality": "mu", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "zip-code": "zp", "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4228,8 +4228,8 @@ function initSouthCarolinaExplorer() {
     "state-house": ["sc-house"], "trial-court-district": ["sc-circuit-court"],
     "county": ["county"], "county-board": ["county-council"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-board-district": ["school-board-district"], "police-station": ["police-station"],
     "fire-station": ["fire-station"], "post-office": ["post-office"],
     "tribal-government": ["tribal-government"] };
@@ -8625,6 +8625,7 @@ function initSouthCarolinaExplorer() {
       geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
         ", which districtry doesn't cover yet.";
       geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
       return true;
     }
     var row = siblingRow(metro, link.text, function () {
@@ -8640,6 +8641,7 @@ function initSouthCarolinaExplorer() {
     geoResultsList.appendChild(row);
     geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
     geoStatus.className = "geo-status";
+    countLinkRead("other-state");
     return true;
   }
 
@@ -9170,6 +9172,56 @@ function initSouthCarolinaExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   street       the street the address is on, framed for a tap
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9187,11 +9239,13 @@ function initSouthCarolinaExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9200,6 +9254,7 @@ function initSouthCarolinaExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9212,6 +9267,7 @@ function initSouthCarolinaExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9242,6 +9298,8 @@ function initSouthCarolinaExplorer() {
 
   function runGeocodeSearch(q, fromLink) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
@@ -9257,6 +9315,7 @@ function initSouthCarolinaExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
       return runAddressSearch(q, fromLink);
@@ -9314,20 +9373,27 @@ function initSouthCarolinaExplorer() {
       if (results && results.length) {
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
         return;
       }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
-          if (name.length < 3) return;
+          if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
+            if (seq !== districtSearchSeq) return;
+            if (!named || !named.length) return countLinkRead("none");
+            countLinkRead("name");
             listByName(named);
             geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
               "A search for its name, \u201c" + name + "\u201d, found " +
@@ -9398,6 +9464,7 @@ function initSouthCarolinaExplorer() {
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
+    countLinkRead("street");
     var a = addressParts(bare);
     var bounds = null;
     street.forEach(function (r) {
@@ -9481,6 +9548,7 @@ function initSouthCarolinaExplorer() {
    * state's app it belongs to, so a place shared into the installed app
    * opens in its own state. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
@@ -9507,6 +9575,7 @@ function initSouthCarolinaExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q)
@@ -9530,6 +9599,7 @@ function initSouthCarolinaExplorer() {
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -9572,6 +9642,7 @@ function initSouthCarolinaExplorer() {
     "zip-code",          // 841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina
     "voting-precinct",   // 2,315 precincts tiling the state, pre-built from the Revenue and Fiscal Affairs Office's official maps — 35.84 km2 mean area, land and water (median 12.82), measured 2026-10-15 on the drawn file: smaller on average than a census county division (260.4 km2 of land), larger than a city or town (18.58)
     "municipality",      // 271 incorporated cities and towns, live from TIGERweb
+    "city-ward",         // 75 council districts and wards in the 12 cities and towns above 25,000 people that elect council members by district — 22.7 km2 mean area (median 14.9, from 5.1 in Greer to 249.1 in Columbia), measured 2026-10-16 on the drawn file — ranked just after City or Town, which each one divides, so a district draws on top of its city or town
     "tribal-government", // Tribal land — South Carolina has 2 pieces held by one nation, the Catawba Reservation (4.123 km²) and its off-reservation trust land (0.054 km²), both in York County near Rock Hill, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since the reservation is smaller than the city of Rock Hill beside it, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13763,6 +13834,107 @@ function initSouthCarolinaExplorer() {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
 
+  /* ---------- The conservation district, on the County card.
+   *
+   * The Department of Natural Resources publishes a page for each county's
+   * conservation district naming its five commissioners
+   * (sc/scripts/build_sc_conservation_boards.py;
+   * data/app/sc-conservation-boards.json, keyed by county GEOID): three
+   * elected without party labels and two appointed by the department's board
+   * (S.C. Code sections 48-9-1220 and 48-9-1210). A commissioner whose term
+   * has ended holds office until a successor qualifies (section 48-9-1230),
+   * so a date that has passed is shown as the date the term ended and never
+   * as a vacancy; a seat the page marks "Vacant" is shown as vacant. The
+   * builder's --check requires the sentence on how a board is chosen to stay
+   * as the builder states it.
+   * ---------- */
+  var loadConservationBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-conservation-boards.json", {}, 2);
+  });
+  var SC_CONSERVATION_CHOSEN = "Five commissioners: " +
+    "three elected by the county's voters without party labels at the " +
+    "general election, and " +
+    "two appointed by the board of the state Department of Natural Resources, " +
+    "each for four years. A commissioner whose term has ended " +
+    "serves until a successor takes office, so a date that has passed " +
+    "does not mean the seat is empty.";
+  function scConservationFor(result) {
+    return loadConservationBoards().then(function (r) {
+      result.conservation = r[String(result.geoid)] || null;
+    }, function () {
+      result.conservationFailed = true;
+    });
+  }
+  function conservationRank(role) {
+    var r = String(role || "");
+    if (/^chair/i.test(r)) return 0;
+    if (/^vice/i.test(r)) return 1;
+    if (/secretary|treasurer|financial/i.test(r)) return 2;
+    return 3;
+  }
+  function scTodayIso() {
+    var d = new Date();
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  }
+  // The board's officers first, then the page's own order.
+  function scConservationRows(members) {
+    var today = scTodayIso();
+    return (members || []).map(function (m, i) {
+      return { m: m, i: i };
+    }).sort(function (a, b) {
+      return (conservationRank(a.m.role) - conservationRank(b.m.role)) || (a.i - b.i);
+    }).map(function (x) {
+      var m = x.m;
+      var bits = [];
+      if (m.chosen) {
+        bits.push((m.chosen === "appointed" ? "Appointed" : "Elected") +
+          (m.vacant ? " seat" : ""));
+      }
+      var ends = scDate(m.termEnds);
+      if (ends) bits.push((String(m.termEnds) < today ? "term ended " : "term ends ") + ends);
+      return {
+        name: m.vacant ? "Vacant" : String(m.name),
+        badge: m.role ? String(m.role) : null,
+        note: bits.length ? bits.join(" · ") : null
+      };
+    });
+  }
+  function scConservationSection(wrap, result) {
+    var districts = (result.conservation && result.conservation.districts) || [];
+    if (!districts.length) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Conservation district",
+        value: result.conservationFailed
+          ? "The list of conservation district commissioners did not load, so " +
+            "no names are shown."
+          : "Not shown: the state's list of conservation districts has no page " +
+            "for this county."
+      }]));
+      return;
+    }
+    districts.forEach(function (d) {
+      wrap.appendChild(renderSectionLabel(String(d.name)));
+      wrap.appendChild(renderPersonRows(scConservationRows(d.members)));
+      var read = scDate(d.read);
+      wrap.appendChild(renderFieldStack([
+        { label: "How the board is chosen", value: SC_CONSERVATION_CHOSEN },
+        {
+          label: "Where these names come from",
+          value: "The South Carolina Department of Natural Resources' page for " +
+            "this district" + (read ? ", read on " + read : "") + ". The page " +
+            "carries no date, so the district's office can say whether it is " +
+            "current."
+        }
+      ]));
+      if (d.sourceUrl) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "This district's page at SC DNR ↗", url: String(d.sourceUrl) }]
+        }));
+      }
+    });
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -13786,10 +13958,12 @@ function initSouthCarolinaExplorer() {
           geoid: findPropCI(props, ["geoid"]),
           council: null
         };
-        return loadScCouncilRoster().then(function (roster) {
-          result.council = roster[String(result.geoid)] || null;
-          return result;
-        }, function () {
+        return Promise.all([
+          loadScCouncilRoster().then(function (roster) {
+            result.council = roster[String(result.geoid)] || null;
+          }, function () {}),
+          scConservationFor(result)
+        ]).then(function () {
           return result;
         });
       });
@@ -13824,6 +13998,7 @@ function initSouthCarolinaExplorer() {
           return scSeatPerson(s, true);
         }), { tinted: true }));
       }
+      scConservationSection(wrap, result);
       return wrap;
     },
     primaryLink: function (result) {
@@ -14292,12 +14467,79 @@ function initSouthCarolinaExplorer() {
    * (5,035 of 77,866 km2 by the Census's own AREALAND), and the county is
    * the general-purpose local government everywhere else.
    *
-   * NO OFFICEHOLDER. No statewide source naming South Carolina's mayors and
-   * council members has been read here, so the card names no one rather
-   * than guessing. Recorded as gap sc-municipal-officeholders. ---------- */
+   * THE 17 CITIES AND TOWNS ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND
+   * COUNCIL, written down from each place's own pages and proved against
+   * those pages on every build (sc/scripts/build_sc_city_councils.py through
+   * scripts/city_councils.py; data/app/sc-city-councils.json). Every seat
+   * says whether its district's own voters or the whole place elect it,
+   * which was measured from the ballot because nothing the state publishes
+   * records it. The districts of the twelve of these that elect by district
+   * and publish a map that can be drawn are the City Council District layer
+   * (5b below); Anderson's are pictures in PDF files and are not drawn.
+   *
+   * South Carolina's other 254 cities and towns name nobody: no statewide
+   * source naming their mayors and council members gives a seat, a district
+   * or a date, so the card names no one rather than guessing. Recorded as
+   * gap sc-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  // The mayor and council of each city and town above 25,000 people, keyed
+  // by the place's Census id; every seat says who elects it and which page
+  // names it.
+  var loadScCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-city-councils.json", {}, 2);
+  });
+  // "city" or "town", as the body's own name has it ("Town Council").
+  function scPlaceWord(council) {
+    return /^Town\b/.test(String(council.body)) ? "town" : "city";
+  }
+  // The seat as the body names it: "Council, District 1", "Council, At large".
+  function scCouncilBadge(seat) {
+    return seat.role === "Mayor" ? "Mayor" : "Council, " + String(seat.seat);
+  }
+  // Who elects the seat, unless its own label already says so.
+  function scSeatElectedBy(council, seat) {
+    if (/at large/i.test(String(seat.seat))) return null;
+    if (seat.byWard && seat.ward != null) {
+      return "elected by " + String(council.wardWord || "Ward") + " " + String(seat.ward);
+    }
+    return "elected by the whole " + scPlaceWord(council);
+  }
+  function scCouncilPeople(council, seats) {
+    return seats.map(function (seat) {
+      return {
+        name: String(seat.name),
+        badge: scCouncilBadge(seat),
+        note: scSeatElectedBy(council, seat)
+      };
+    });
+  }
+  // Where the names come from and when they were read: every place's names
+  // are dated by the oldest read of the pages they come from.
+  function scCouncilSourceRow(council) {
+    var read = scDate(council.read);
+    return {
+      label: "Where these names come from",
+      value: "As listed on " + String(council.name) + "'s own website." +
+        (council.note ? " " + String(council.note) : "") +
+        (read ? " Read on " + read + "." : "") +
+        " If a seat has changed hands since, the " + scPlaceWord(council) +
+        "'s own website or clerk says who holds it now."
+    };
+  }
+  function scCouncilLink(council) {
+    var seats = (council && council.seats) || [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].seat !== "Mayor" && seats[i].sourceUrl) {
+        return {
+          label: String(council.name) + "'s " + String(council.body),
+          url: String(seats[i].sourceUrl)
+        };
+      }
+    }
+    return null;
+  }
 
   registerLayer({
     id: "municipality",
@@ -14325,7 +14567,7 @@ function initSouthCarolinaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // NAME minus BASENAME, so the style can never contradict the name
@@ -14335,8 +14577,19 @@ function initSouthCarolinaExplorer() {
           // an inactive municipality rather than implying a working one (none
           // in South Carolina today, measured 2026-10-10)
           funcstat: findPropCI(props, ["funcstat"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the place's card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadScCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14364,15 +14617,165 @@ function initSouthCarolinaExplorer() {
             "legally in existence, but with no government operating."
         });
       }
+      var council = result.council;
+      if (!council) {
+        rows.push({
+          label: "Your mayor and council",
+          value: result.rosterFailed
+            ? "The list of council members did not load, so no name is shown. " +
+              "This municipality's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of South " +
+              "Carolina's 17 cities and towns above 25,000 people, from each " +
+              "one's own website, and this municipality is not one of them " +
+              "yet. Its own website is the current source."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat names who
+      // elects it, its district's own voters or the whole place.
+      wrap.appendChild(renderPersonRows(scCouncilPeople(council, council.seats || [])));
+      var after = [
+        { label: "How the seats are elected", value: String(council.how) },
+        scCouncilSourceRow(council)
+      ];
+      // Anderson's districts are not drawn, and its note says why.
+      if (council.wardsDrawn !== false &&
+          (council.seats || []).some(function (s) { return s.byWard; })) {
+        var word = String(council.wardWord || "Ward").toLowerCase();
+        after.push({
+          label: "Which " + word + " this point is in",
+          value: "The City Council District layer draws " + String(council.name) +
+            "'s " + word + "s and names the member this point's " + word + " elects."
+        });
+      }
+      wrap.appendChild(renderFieldStack(after));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? scCouncilLink(result.council) : null;
+    }
+  });
+
+  /* ---------- 5b. City council district or ward ----------
+   * The 75 council districts and wards of the twelve South Carolina cities
+   * and towns above 25,000 people whose councils elect members by district:
+   * Charleston 12, North Charleston 10, six each in Rock Hill, Summerville,
+   * Sumter, Spartanburg, Hilton Head Island, Greer and Aiken, four each in
+   * Columbia and Greenville and three in Florence. Nine come from
+   * each place's own map of its districts, Sumter's from the election map
+   * published on gis.sumter-sc.com, and Florence's and Aiken's from the
+   * state Revenue and Fiscal Affairs Office's copy, which the office says is
+   * not a legal description: Aiken's own map service has no shapes, and
+   * Florence's own map was last edited before the ordinance that set its
+   * current districts took effect. Pre-built by
+   * sc/scripts/build_sc_city_wards.py through scripts/city_ward_maps.py,
+   * which holds each map to the Census outline of its place, so a click is
+   * answered in the browser and no point is sent anywhere. Each district's
+   * card says whose map it is drawn from, and that it is
+   * drawn here to within 4 metres.
+   *
+   * Not drawn: Anderson, which elects six seats by district and publishes
+   * those districts only as pictures in PDF files, and Mount Pleasant, Goose
+   * Creek, Myrtle Beach and Bluffton, which elect every seat by the whole
+   * place, so a reader there votes for every seat. Sumter's six wards leave
+   * out Shaw Air Force Base, inside the city, so a point on the base answers
+   * no ward, which is what the city's map says.
+   *
+   * A GENERIC LABEL, as Arkansas's: Rock Hill, Sumter and Hilton Head
+   * Island elect by WARD and the other nine by DISTRICT, so the toggle says
+   * "City Council District" and each card names the unit as its place does,
+   * off the feature's own `label`.
+   *
+   * The members are the council roster the City or Town card reads
+   * (data/app/sc-city-councils.json): the seats each district's own voters
+   * elect, each proved on the place's own page when the roster was built.
+   * ---------- */
+  var loadScCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-city-wards.json", {}, 2);
+  });
+  var SC_SMALL_NUMBERS = ["no", "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten"];
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: inSouthCarolina,
+    emptyNote: "This point is not in a council district or ward this map " +
+      "draws. It draws the districts of 12 South Carolina cities and towns " +
+      "above 25,000 people that elect council members by district. Anderson " +
+      "elects by district too and publishes its districts only as pictures, " +
+      "and four more elect every seat by the whole place; the City or Town " +
+      "card names the mayor and council of all 17.",
+    overlay: {
+      load: loadScCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.label != null ? String(p.city) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadScCityWards, point).then(function (feature) {
+        if (!feature) return null;
+        var result = { seq: seq, props: feature.properties || {}, council: null };
+        return loadScCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(result.props.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.label),
+        note: council ? String(council.name) + " " + String(council.body) : String(p.city)
+      }));
+      // Card convention: identity -> officeholder. The seats this district's
+      // own voters elect; the mayor and the seats the whole place elects are
+      // named on the City or Town card.
+      var seats = (council && council.seats) || [];
+      var mine = seats.filter(function (s) { return s.byWard && String(s.ward) === String(p.ward); });
+      var citywide = seats.filter(function (s) { return !s.byWard && s.seat !== "Mayor"; });
+      if (mine.length) wrap.appendChild(renderPersonRows(scCouncilPeople(council, mine)));
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Council member",
+          value: "The list of council members did not load, so no name is shown."
+        });
+      }
+      if (council) {
+        var n = citywide.length;
+        rows.push({
+          label: "Elected by the whole " + scPlaceWord(council),
+          value: "The mayor" + (n
+            ? " and " + (SC_SMALL_NUMBERS[n] || String(n)) + " council member" +
+              (n === 1 ? "" : "s")
+            : "") + ". The City or Town card names " + (n ? "them" : "the mayor") + "."
+        });
+        rows.push({ label: "How the seats are elected", value: String(council.how) });
+        rows.push(scCouncilSourceRow(council));
+      }
       rows.push({
-        label: "Your mayor and council",
-        value: "Not named here. No statewide source naming South Carolina's " +
-          "mayors and council members has been read yet, and this app " +
-          "does not guess — this municipality's own website is the current " +
-          "source."
+        label: "How this line is drawn",
+        value: "Drawn from " + String(p.drawnFrom || "the place's own map") +
+          ". The lines are drawn here to within 4 metres; for a definitive " +
+          "answer, ask the " + (council ? scPlaceWord(council) : "city") + " clerk."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? scCouncilLink(result.council) : null;
     }
   });
 
@@ -16419,6 +16822,10 @@ function initSouthCarolinaExplorer() {
     // The county council sits with the chambers rather than down in
     // geography: like them it is a member elected by this district alone.
     "county-council",
+    // The city council district sits with the county council: members
+    // elected by this district alone, and it answers only in the 12 cities
+    // and towns that elect by district.
+    "city-ward",
     "school-district-unified", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
@@ -16903,13 +17310,13 @@ function initSouthCarolinaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
-    "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE",
-    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#9550B2": "#E09BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD",
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92",
+    "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

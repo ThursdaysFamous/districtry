@@ -156,8 +156,45 @@ python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the superv
 python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
 python3 ia/scripts/ia_city_council_scraper.py --selftest             # the fourteen 25k-plus cities' five parser shapes: `3rd Ward` is not a street address, a caps line can carry role and name together, and a staff title is dropped with its name printed
 python3 ia/scripts/build_ia_city_councils.py --check                 # the shipped city councils: every seat count exact, no home address in any field, and the two cities that name no mayor still naming none
+python3 ar/scripts/build_ar_city_councils.py --check                 # the hand-kept council seats: the done standard's cities and seat counts, every name on its recorded page, the shipped file rebuilt exactly, every drawn ward a seat its voters elect
+python3 nc/scripts/build_nc_city_councils.py --check                 # the same for North Carolina's 42 places
+python3 ok/scripts/build_ok_city_councils.py --check                 # the same for Oklahoma's 16 cities
+python3 sc/scripts/build_sc_city_councils.py --check                 # the same for South Carolina's 17 places
+python3 tn/scripts/build_tn_city_councils.py --check                 # the same for Tennessee's 28 cities
 python3 ky/scripts/build_ky_county_districts.py --selftest           # the precinct-placing rules: ballots first, 2022 only where it agrees, one empty district filled, Army posts left out
 python3 ky/scripts/build_ky_county_districts.py --check              # the shipped magisterial and council districts hash to their record and cover each drawn county
+python3 ar/scripts/build_ar_townships.py --check                     # Arkansas's townships: hash and per-county counts against their record, every name a township, every county covered by its own
+python3 ar/scripts/build_ar_court_districts.py --check               # the newest states' court districts are whole counties: every county in exactly one, every district's area its own counties' area
+python3 in/scripts/build_in_appeals_districts.py --check             # the same for Indiana's Court of Appeals districts
+python3 ok/scripts/build_ok_judicial_districts.py --check            # the same for Oklahoma's judicial districts
+python3 sc/scripts/build_sc_judicial_circuits.py --check             # the same for South Carolina's judicial circuits
+python3 tn/scripts/build_tn_judicial_districts.py --check            # the same for Tennessee's judicial districts
+python3 ar/scripts/build_ar_precincts.py --check                     # a statewide precinct layer: hash and per-county counts against its record, each county covered by its own precincts, the card's stated wording
+python3 in/scripts/build_in_precincts.py --check                     # the same for Indiana
+python3 ky/scripts/build_ky_precincts.py --check                     # the same for Kentucky
+python3 nc/scripts/build_nc_precincts.py --check                     # the same for North Carolina
+python3 sc/scripts/build_sc_precincts.py --check                     # the same for South Carolina
+python3 tn/scripts/build_tn_precincts.py --check                     # the same for Tennessee
+python3 ar/scripts/build_ar_school_board_districts.py --check        # a published school board map: hash and per-board counts against its record, the builder's test points in the districts it names, the card's stated wording
+python3 in/scripts/build_in_school_board_districts.py --check        # the same for Indiana (Indianapolis Public Schools)
+python3 sc/scripts/build_sc_school_board_districts.py --check        # the same for South Carolina
+python3 tn/scripts/build_tn_school_board_districts.py --check        # the same for Tennessee
+python3 nc/scripts/build_nc_school_board_districts.py --check        # North Carolina's districts read from results: every seat drawn once, no point in two seats of one tier; needs shapely
+python3 ky/scripts/build_ky_school_board_divisions.py --selftest     # Kentucky's division parsers on fixed cases; needs shapely
+python3 ky/scripts/build_ky_school_board_divisions.py --check        # Kentucky's divisions: hash against the record, KRS 160.211 as kept in the repository, the precinct agreement, the card's stated wording
+python3 ar/scripts/build_ar_fire_districts.py --check                # Arkansas's fire districts against their record
+python3 in/scripts/build_in_conservancy_districts.py --check         # Indiana's conservancy districts against their record
+python3 in/scripts/build_in_conservancy_directors.py --check         # Indiana's conservancy boards: every district the map draws, each person a name, each district citing the directory
+python3 ok/scripts/build_ok_conservation_districts.py --check        # Oklahoma's conservation districts against their record
+python3 ok/scripts/build_ok_conservation_offices.py --check          # Oklahoma's district offices: every district the map draws, an office, a telephone and a district e-mail address for each
+python3 ar/scripts/build_ar_city_wards.py --check                    # Arkansas's city wards against their record and the card's stated wording
+python3 nc/scripts/build_nc_city_wards.py --check                    # a city ward layer from each city's own map: hash against the record, every map read from where the builder now reads it
+python3 ok/scripts/build_ok_city_wards.py --check                    # the same for Oklahoma
+python3 sc/scripts/build_sc_city_wards.py --check                    # the same for South Carolina
+python3 tn/scripts/build_tn_city_wards.py --check                    # the same for Tennessee
+python3 ky/scripts/build_ky_conservation_boards.py --check           # the County card's conservation board: a board for every county, every district citing a page the record read, no field the card does not show
+python3 nc/scripts/build_nc_conservation_boards.py --check           # the same for North Carolina
+python3 sc/scripts/build_sc_conservation_boards.py --check           # the same for South Carolina
 python3 ia/scripts/ia_county_board_page_scraper.py --selftest       # the four county board pages whose two outside publishers disagree: a role word at the end of a line is not a name, a committee line is not a supervisor, and a no-break space still separates `District 1` from the name
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/validate_geometry_measure.py                      # the engine's area/overlap/point-weight block, held to shapely

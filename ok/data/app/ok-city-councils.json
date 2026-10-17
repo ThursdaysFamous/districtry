@@ -1,0 +1,1007 @@
+{
+ "4004450": {
+  "body": "City Council",
+  "how": "Each of the city's five wards elects its own council member. The council chooses the mayor and vice mayor from among its members.",
+  "name": "Bartlesville",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": true,
+    "name": "Jim Curd, Jr.",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Tim Sherrick",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Larry East",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Aaron Kirkpatrick",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Trevor Dorsey",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
+    "ward": "5"
+   }
+  ]
+ },
+ "4006400": {
+  "body": "City Council",
+  "how": "Each of the city's five wards elects its own councilor. The council chooses the mayor and vice mayor from among its members.",
+  "name": "Bixby",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": true,
+    "name": "Bobby Schultz",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.bixbyok.gov/240/City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Mike David",
+    "role": "Councilor",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.bixbyok.gov/240/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Ryan Payne",
+    "role": "Councilor",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.bixbyok.gov/240/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Ken Hirshey",
+    "role": "Councilor",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.bixbyok.gov/240/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Luke Freeman",
+    "role": "Councilor",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.bixbyok.gov/240/City-Council",
+    "ward": "4"
+   }
+  ]
+ },
+ "4009050": {
+  "body": "City Council",
+  "how": "All five council members are elected by the voters of the whole city: four must live in the ward they represent and one is elected at large. The council chooses the mayor and vice mayor from among its members.",
+  "name": "Broken Arrow",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Debra Wimpee",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.brokenarrowok.gov/government/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": false,
+    "name": "Lisa Ford",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.brokenarrowok.gov/government/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": false,
+    "name": "David Pickel",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.brokenarrowok.gov/government/city-council",
+    "ward": "3"
+   },
+   {
+    "byWard": false,
+    "name": "Justin Green",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.brokenarrowok.gov/government/city-council",
+    "ward": "4"
+   },
+   {
+    "byWard": false,
+    "name": "Johnnie Parks",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.brokenarrowok.gov/government/city-council"
+   }
+  ]
+ },
+ "4023200": {
+  "body": "City Council",
+  "how": "Each of the city's four wards has one council member. Where more than two people run for a ward's seat, that ward's voters narrow them to two in a primary, and the voters of the whole city then elect the member, as they elect the mayor.",
+  "name": "Edmond",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Mark A. Nash",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.edmondok.gov/1861/City-Council-Members"
+   },
+   {
+    "byWard": false,
+    "name": "Maggie Murdock Nichols",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.edmondok.gov/1861/City-Council-Members",
+    "ward": "1"
+   },
+   {
+    "byWard": false,
+    "name": "Barry K. Moore",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.edmondok.gov/1861/City-Council-Members",
+    "ward": "2"
+   },
+   {
+    "byWard": false,
+    "name": "Preston Watterson",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.edmondok.gov/1861/City-Council-Members",
+    "ward": "3"
+   },
+   {
+    "byWard": false,
+    "name": "Phil Fraim",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.edmondok.gov/1861/City-Council-Members",
+    "ward": "4"
+   }
+  ]
+ },
+ "4023950": {
+  "body": "City Commission",
+  "how": "Each of the city's six wards elects its own commissioner, and the mayor is elected by the whole city.",
+  "name": "Enid",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "David Mason",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.enid.org/Government/City-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Cheryl Patterson",
+    "role": "Commissioner",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.enid.org/Government/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Derwin Norwood",
+    "role": "Commissioner",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.enid.org/Government/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Frank Baker",
+    "role": "Commissioner",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.enid.org/Government/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Whitney Roberts",
+    "role": "Commissioner",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.enid.org/Government/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Rob Stallings",
+    "role": "Commissioner",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.enid.org/Government/City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Courtney Dennis",
+    "role": "Commissioner",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.enid.org/Government/City-Council",
+    "ward": "6"
+   }
+  ]
+ },
+ "4037800": {
+  "body": "City Council",
+  "how": "All seven council members are elected by the voters of the whole city: six must live in the ward they represent and one is elected at large. The council chooses the mayor and vice mayor from among its members.",
+  "name": "Jenks",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Cory Box",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.jenks.com/176/City-Council",
+    "ward": "6"
+   },
+   {
+    "byWard": false,
+    "name": "John Brown",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.jenks.com/176/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": false,
+    "name": "Matthew Emmons",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.jenks.com/176/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": false,
+    "name": "Craig Murray",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.jenks.com/176/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": false,
+    "name": "Adam Abel",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.jenks.com/176/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": false,
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.jenks.com/176/City-Council",
+    "vacant": true,
+    "ward": "5"
+   },
+   {
+    "byWard": false,
+    "name": "Kevin Short",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.jenks.com/176/City-Council"
+   }
+  ]
+ },
+ "4041850": {
+  "body": "City Council",
+  "how": "Each of the city's eight wards elects its own council member, and the mayor is elected by the whole city.",
+  "name": "Lawton",
+  "note": "The city's eight wards are not drawn on this map yet: the only ward map the city publishes as data does not divide the 2020 census population evenly between its wards, as a map drawn after that census would, so it may not be the map in force.",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Stan Booker",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Lane Hooton",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Taron Epps",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Kirby Brown",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Tiffiney Dimery",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Allan Hampton",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Robert Weger",
+    "role": "Council member",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Sherene L. Williams",
+    "role": "Council member",
+    "seat": "Ward 7",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "Randy Warren",
+    "role": "Council member",
+    "seat": "Ward 8",
+    "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
+    "ward": "8"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "4048350": {
+  "body": "City Council",
+  "how": "Each of the city's six wards elects its own council member, and the mayor is elected by the whole city.",
+  "name": "Midwest City",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Rick Rice",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.midwestcityok.org/164/City-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Brian Triger",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.midwestcityok.org/164/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Pat Byrne",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.midwestcityok.org/164/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Raymond Melton",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.midwestcityok.org/164/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Marc Thompson",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.midwestcityok.org/164/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Sara Bana",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.midwestcityok.org/164/City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Rick Favors",
+    "role": "Council member",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.midwestcityok.org/164/City-Council",
+    "ward": "6"
+   }
+  ]
+ },
+ "4049200": {
+  "body": "City Council",
+  "how": "Each of the city's three wards elects two council members, and the mayor is elected by the whole city.",
+  "name": "Moore",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Mark Hamm",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityofmooreok.gov/government/city-council"
+   },
+   {
+    "byWard": true,
+    "name": "Adam Webb",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Kathy Griffith",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Rob Clark",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Melissa Hunt",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Sid Porter",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Louie Williams",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
+    "ward": "3"
+   }
+  ]
+ },
+ "4050050": {
+  "body": "City Council",
+  "how": "Each of the city's four wards elects two council members, and the mayor is elected by the whole city.",
+  "name": "Muskogee",
+  "note": "Muskogee's website does not let this app read it, so these names come from the county election board's official results for February 10, 2026, in the copy published by KJRH, a Tulsa television station, and from news reports by the Muskogee Phoenix and KJRH. The city's four wards are not drawn on this map yet: no copy of them that this app may use has been found.",
+  "page": "https://www.muskogeeok.gov/government/city_council/index.php",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Ryan Michael Lowe",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://ewscripps.brightspotcdn.com/26/56/3408f6ec43dba01d05a6b907900c/results.pdf"
+   },
+   {
+    "byWard": true,
+    "name": "Shirley F. Hilton-Flanary",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://ewscripps.brightspotcdn.com/26/56/3408f6ec43dba01d05a6b907900c/results.pdf",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Mike Brawley",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.muskogeephoenix.com/news/brawley-hoos-retain-city-council-seats/article_dbd45746-401a-4b93-9ccc-b6e35c70d8ad.html",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Jeremy Greg Schuler",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://ewscripps.brightspotcdn.com/26/56/3408f6ec43dba01d05a6b907900c/results.pdf",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Dale Boots",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.kjrh.com/news/local-news/dale-boots-appointed-to-fill-ward-2-seat-on-muskogee-city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Melody Yvette Cranford",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://ewscripps.brightspotcdn.com/26/56/3408f6ec43dba01d05a6b907900c/results.pdf",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Derrick Reed",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.yahoo.com/news/one-ward-iii-race-forces-045900724.html",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Tracy Hoos",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.muskogeephoenix.com/news/brawley-hoos-retain-city-council-seats/article_dbd45746-401a-4b93-9ccc-b6e35c70d8ad.html",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Tom Martindale",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.yahoo.com/news/one-ward-iii-race-forces-045900724.html",
+    "ward": "4"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "4052500": {
+  "body": "City Council",
+  "how": "Each of the city's eight wards elects its own council member, and the mayor is elected by the whole city.",
+  "name": "Norman",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Stephen T. Holman",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council"
+   },
+   {
+    "byWard": true,
+    "name": "David Gandesbery",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Jacy Deck",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Robert Bruce",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Helen Grant",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Trey Kirby",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Kyle Steele",
+    "role": "Council member",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Kimberly Blodgett",
+    "role": "Council member",
+    "seat": "Ward 7",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "Scott Dixon",
+    "role": "Council member",
+    "seat": "Ward 8",
+    "sourceUrl": "https://www.normanok.gov/your-government/city-council",
+    "ward": "8"
+   }
+  ]
+ },
+ "4055000": {
+  "body": "City Council",
+  "how": "Each of the city's eight wards elects its own council member, and the mayor is elected by the whole city.",
+  "name": "Oklahoma City",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "David Holt",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Bradley Carter",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "James Cooper",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Katrina Avers",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Todd Stone",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Matt Hinkle",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "JoBeth Hamon",
+    "role": "Council member",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Camal Pennington",
+    "role": "Council member",
+    "seat": "Ward 7",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "Mark Stonecipher",
+    "role": "Council member",
+    "seat": "Ward 8",
+    "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+    "ward": "8"
+   }
+  ]
+ },
+ "4056650": {
+  "body": "City Council",
+  "how": "All five councilors are elected by the voters of the whole city, and each must live in the ward whose seat they hold. The council chooses the mayor from among its members.",
+  "name": "Owasso",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Paul Loving",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityofowasso.com/327/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": false,
+    "name": "Cody Walter",
+    "role": "Councilor",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.cityofowasso.com/327/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": false,
+    "name": "Alvin Fruga",
+    "role": "Councilor",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.cityofowasso.com/327/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": false,
+    "name": "Jamie Dunn",
+    "role": "Councilor",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.cityofowasso.com/327/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": false,
+    "name": "Chad Balthrop",
+    "role": "Councilor",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.cityofowasso.com/327/City-Council",
+    "ward": "5"
+   }
+  ]
+ },
+ "4066800": {
+  "body": "City Commission",
+  "how": "Each of the city's six wards elects its own commissioner, and the mayor is elected by the whole city.",
+  "name": "Shawnee",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Eric Stephens",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.shawneeok.org/government/mayor_and_city_commission/"
+   },
+   {
+    "byWard": true,
+    "name": "Daniel Matthews",
+    "role": "Commissioner",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.shawneeok.org/government/mayor_and_city_commission/",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Greta Schuler",
+    "role": "Commissioner",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.shawneeok.org/government/mayor_and_city_commission/",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Chris Odneal",
+    "role": "Commissioner",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.shawneeok.org/government/mayor_and_city_commission/",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Ashley Fichtner",
+    "role": "Commissioner",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.shawneeok.org/government/mayor_and_city_commission/",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Johnna Ervin",
+    "role": "Commissioner",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.shawneeok.org/government/mayor_and_city_commission/",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Lauren Richter",
+    "role": "Commissioner",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.shawneeok.org/government/mayor_and_city_commission/",
+    "ward": "6"
+   }
+  ]
+ },
+ "4070300": {
+  "body": "City Council",
+  "how": "The mayor and all four councilors are elected by the voters of the whole city.",
+  "name": "Stillwater",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Will Joyce",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://stillwaterok.gov/285/Mayor-City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Amy Dzialowski",
+    "role": "Councilor",
+    "seat": "Seat 1",
+    "sourceUrl": "https://stillwaterok.gov/285/Mayor-City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Tim Hardin",
+    "role": "Councilor",
+    "seat": "Seat 2",
+    "sourceUrl": "https://stillwaterok.gov/285/Mayor-City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Kevin Clark",
+    "role": "Councilor",
+    "seat": "Seat 3",
+    "sourceUrl": "https://stillwaterok.gov/285/Mayor-City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Christie Hawkins",
+    "role": "Councilor",
+    "seat": "Seat 4",
+    "sourceUrl": "https://stillwaterok.gov/285/Mayor-City-Council"
+   }
+  ]
+ },
+ "4075000": {
+  "body": "City Council",
+  "how": "Each of the city's nine districts elects its own councilor, and the mayor is elected by the whole city.",
+  "name": "Tulsa",
+  "read": "2026-10-16",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Monroe Nichols",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityoftulsa.org/mayor/about-mayor-nichols/"
+   },
+   {
+    "byWard": true,
+    "name": "Vanessa Hall-Harper",
+    "role": "Councilor",
+    "seat": "District 1",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Anthony Archie",
+    "role": "Councilor",
+    "seat": "District 2",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Jackie Dutton",
+    "role": "Councilor",
+    "seat": "District 3",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Laura Bellis",
+    "role": "Councilor",
+    "seat": "District 4",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Karen Gilbert",
+    "role": "Councilor",
+    "seat": "District 5",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Christian Bengel",
+    "role": "Councilor",
+    "seat": "District 6",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Lori Decter Wright",
+    "role": "Councilor",
+    "seat": "District 7",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "7"
+   },
+   {
+    "byWard": true,
+    "name": "Phil Lakin, Jr.",
+    "role": "Councilor",
+    "seat": "District 8",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "8"
+   },
+   {
+    "byWard": true,
+    "name": "Carol Bush",
+    "role": "Councilor",
+    "seat": "District 9",
+    "sourceUrl": "https://www.tulsacouncil.org/councilors",
+    "ward": "9"
+   }
+  ],
+  "wardWord": "District"
+ }
+}

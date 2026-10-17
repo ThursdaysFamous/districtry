@@ -1,0 +1,316 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, and the names found on it.",
+ "pages": {
+  "https://citycouncil.columbiasc.gov/": {
+   "bytes": 75956,
+   "client": "token",
+   "final": "https://citycouncil.columbiasc.gov/",
+   "names": [
+    "Daniel J. Rickenmann",
+    "Edward H. McDowell Jr.",
+    "Peter M. Brown",
+    "Sam P. Johnson",
+    "Tina N. Herbert",
+    "Tyler D. Bailey",
+    "Will Brennan"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e8443b22de90def62ee86be4c0ac618a91a7f839e023f1021bf539bb806c4f6f"
+  },
+  "https://hiltonheadislandsc.gov/government/town_council/index.php": {
+   "bytes": 161770,
+   "client": "token",
+   "final": "https://hiltonheadislandsc.gov/government/town_council/index.php",
+   "names": [
+    "Alan Perry",
+    "Alex Brown",
+    "Melinda Tunner",
+    "Patsy Brison",
+    "Steve Alfred",
+    "Steve DeSimone",
+    "Tamara Becker"
+   ],
+   "read": "2026-10-16",
+   "sha256": "0d7066434cf9cea5c2d38d42431e8f960fe718ce57e75dcd265f7148b3604dde"
+  },
+  "https://www.andersonobserver.com/news/roberts-reelected-as-mayor-winbush-wins-council-seat-5": {
+   "bytes": 301446,
+   "client": "token",
+   "final": "https://www.andersonobserver.com/news/roberts-reelected-as-mayor-winbush-wins-council-seat-5",
+   "names": [
+    "Tonya Winbush"
+   ],
+   "read": "2026-10-16",
+   "sha256": "935b3b3d9a61cc05a3d39bfabb14e355c21361b8381db5c2de53a850976c8f22"
+  },
+  "https://www.charleston-sc.gov/180/Members-Districts": {
+   "bytes": 99710,
+   "client": "token",
+   "final": "https://www.charleston-sc.gov/180/Members-Districts",
+   "names": [
+    "Aaron Tobias Polkey",
+    "Ben D'Allesandro",
+    "Boyd Gregg",
+    "Jim McBride",
+    "Karl L. Brady Jr.",
+    "Kevin Shealy",
+    "Leslie Skardon",
+    "Michael S. Seekings",
+    "Perry K. Waring",
+    "Ross A. Appel",
+    "Stephen Bowden",
+    "William P. Tinkler"
+   ],
+   "read": "2026-10-16",
+   "sha256": "0ed96018f766bf2d25d053b1ca9b83dbd5642a8aed61639457be485abeb64b09"
+  },
+  "https://www.charleston-sc.gov/400/Mayor": {
+   "bytes": 94341,
+   "client": "token",
+   "final": "https://www.charleston-sc.gov/400/Mayor",
+   "names": [
+    "William S. Cogswell Jr."
+   ],
+   "read": "2026-10-16",
+   "sha256": "5adceb2f6bfbf80c22de0eedefb10225f699319c68dbbf75d56c215a9b12786e"
+  },
+  "https://www.cityofaikensc.gov/government/city-council/": {
+   "bytes": 218646,
+   "client": "token",
+   "final": "https://www.cityofaikensc.gov/government/city-council/",
+   "names": [
+    "Barbara Morgan",
+    "Braylen D. Waldo",
+    "Gail Diggs",
+    "Kay Brohl",
+    "Lessie Price",
+    "Pete Messina",
+    "Teddy Milner"
+   ],
+   "read": "2026-10-16",
+   "sha256": "7ab9b716d7dfd46b39e219a27c7aae3348e12e485361c5de630b7c584de161c1"
+  },
+  "https://www.cityofandersonsc.com/city-council-members/": {
+   "bytes": 103841,
+   "client": "token",
+   "final": "https://www.cityofandersonsc.com/city-council-members/",
+   "names": [
+    "Greg Steele",
+    "Jeff Roberts",
+    "John Roberts",
+    "Kyle Newton",
+    "Marshall I. Pickens III",
+    "Matt Harbin",
+    "Terence Roberts",
+    "Tony Stewart"
+   ],
+   "read": "2026-10-16",
+   "sha256": "98181a625ced6c1974fb2c72c9d8c281bff3c126d99537f413f18ba7297b8822"
+  },
+  "https://www.cityofflorencesc.gov/city-council": {
+   "bytes": 173884,
+   "client": "token",
+   "final": "https://www.cityofflorencesc.gov/city-council",
+   "names": [
+    "Bryan A. Braddock",
+    "Chaquez T. McCall",
+    "George D. Jebaily",
+    "J. Lawrence Smith II",
+    "LaShonda NeSmith-Jackson",
+    "Lethonia Barnes",
+    "Zach McKay"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9c9b39e3a271acfc2607c6a83b0e1cd52d66a343a5593c574dc0f3ac3f5d7a6f"
+  },
+  "https://www.cityofgreersc.gov/page/city-council": {
+   "bytes": 1720563,
+   "client": "token",
+   "final": "https://www.cityofgreersc.gov/page/city-council",
+   "names": [
+    "Charles Lander",
+    "Jay Arrowood",
+    "Karuiam Booker",
+    "Mark Hopper",
+    "Paul Lamb",
+    "Rick Danner",
+    "Wryley Bettis"
+   ],
+   "read": "2026-10-16",
+   "sha256": "117ea6362c7df1c66bf9fd4100d2953c9ad61564d3f5186644537ce2ca1b7173"
+  },
+  "https://www.cityofmyrtlebeach.com/government/mayor___city_council/index.php": {
+   "bytes": 75326,
+   "client": "token",
+   "final": "https://www.cityofmyrtlebeach.com/government/mayor___city_council/index.php",
+   "names": [
+    "Bill McClure",
+    "Debbie Conner",
+    "Jackie Hatley",
+    "Mark Kruea",
+    "Mike Chestnut",
+    "Mike Lowder",
+    "Philip Render"
+   ],
+   "read": "2026-10-16",
+   "sha256": "c54e80d4f16c1cfec3ea822bc0995b4245aa0adc587da8b990919e9240a81a1e"
+  },
+  "https://www.cityofrockhill.com/government/city-council/members": {
+   "bytes": 168899,
+   "client": "browser",
+   "final": "https://www.cityofrockhill.com/government/city-council/members",
+   "names": [
+    "Anne Harty",
+    "Derrick Lindsay",
+    "John A. Black III",
+    "John Gettys",
+    "Kevin Sutton",
+    "Nikita L. Jackson",
+    "Sarah Vining"
+   ],
+   "read": "2026-10-16",
+   "sha256": "72a00e4b0792e6fa81e3def6ecacc9ac2272f45930d50c3dff3b70bb08e3ebd5"
+  },
+  "https://www.cityofspartanburg.org/316/City-Council": {
+   "bytes": 106181,
+   "client": "token",
+   "final": "https://www.cityofspartanburg.org/316/City-Council",
+   "names": [
+    "Erica Brown",
+    "Jamie Fulmer",
+    "Janie Salley",
+    "Jerome Rice",
+    "Leslie Rodgers",
+    "Meghan Smith",
+    "Ruth Littlejohn"
+   ],
+   "read": "2026-10-16",
+   "sha256": "febd6960db768af12fc824d1703cb6df56b5421d6719cc25ec5ffb440577650f"
+  },
+  "https://www.goosecreeksc.gov/government/mayor-and-city-council": {
+   "bytes": 121399,
+   "client": "token",
+   "final": "https://www.goosecreeksc.gov/government/mayor-and-city-council",
+   "names": [
+    "Christopher Harmon",
+    "Corey McClary",
+    "Debra Green-Fletcher",
+    "Gayla McSwain",
+    "Gregory Habib",
+    "Jerry Tekac",
+    "Melissa Enos-Sims"
+   ],
+   "read": "2026-10-16",
+   "sha256": "35fe719c78131feb9eee1684d72e1ec61942d4816e14664f6c3ebe9394666421"
+  },
+  "https://www.greenvillesc.gov/city-council": {
+   "bytes": 468651,
+   "client": "token",
+   "final": "https://www.greenvillesc.gov/city-council",
+   "names": [
+    "Dorothy Dowe",
+    "John DeWorken",
+    "Ken Gibson",
+    "Knox White",
+    "Lillian Brock Flemming",
+    "Tina Belge",
+    "Wil Brasington"
+   ],
+   "read": "2026-10-16",
+   "sha256": "510fdeeda7c5c54f9b199520cfb3da6e87bd55ae836eadcecfa4b1e125a36239"
+  },
+  "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php": {
+   "bytes": 134071,
+   "client": "token",
+   "final": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
+   "names": [
+    "Brandon Hudson",
+    "Charmaine Palmer-Roberts",
+    "Christopher Emde",
+    "Greg Perry",
+    "Kenny Skipper",
+    "Michael Brown",
+    "Michael Brown Jr.",
+    "Nefertiti Brown",
+    "Rhonda Jerome",
+    "Stephanie Ganaway-Pasley"
+   ],
+   "read": "2026-10-16",
+   "sha256": "c280660f3a7965b59b9be60c12887e11005fcc3e9f0bc998541106abdab8201f"
+  },
+  "https://www.northcharleston.org/government/office_of_the_mayor/index.php": {
+   "bytes": 79075,
+   "client": "token",
+   "final": "https://www.northcharleston.org/government/office_of_the_mayor/index.php",
+   "names": [
+    "Reginald L. \"Reggie\" Burgess"
+   ],
+   "read": "2026-10-16",
+   "sha256": "8ea1ca6a334bafd73f66cf248e6bbbcf9b46dc024b23f95044a61f1d03d055d1"
+  },
+  "https://www.summervillesc.gov/253/Elected-Officials": {
+   "bytes": 129124,
+   "client": "token",
+   "final": "https://www.summervillesc.gov/253/Elected-Officials",
+   "names": [
+    "Bob Jackson",
+    "Dexcter Mack",
+    "Kima Garten",
+    "Matt Halter",
+    "Richard G. Waring IV",
+    "Russ Touchberry",
+    "Tiffany Johnson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "60df3f42c7f0168918c457d3b3df65aa79b8955c0d49f0ad776d086f5bb1bd40"
+  },
+  "https://www.sumtersc.gov/city-council": {
+   "bytes": 126179,
+   "client": "token",
+   "final": "https://www.sumtersc.gov/city-council",
+   "names": [
+    "Anthony Gibson",
+    "Calvin K. Hastie Sr.",
+    "Colin C. Davis",
+    "David P. Merchant",
+    "Gifford M. Shaw",
+    "James B. Blassingame",
+    "Rebecca Lynn Kennedy"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5ab2c862c1e8bd713f9e04f0d3671e47db82c5963709759fd3ce9cc19a52a901"
+  },
+  "https://www.tompsc.com/91/Town-Council": {
+   "bytes": 110789,
+   "client": "token",
+   "final": "https://www.tompsc.com/91/Town-Council",
+   "names": [
+    "Alex Crosby",
+    "Daniel Brownstein",
+    "Howard R. Chapman",
+    "Jake Rambo",
+    "John Iacofano",
+    "Kathryn Whitaker",
+    "Laura Hyatt",
+    "Mike Tinkey",
+    "Will Haynie"
+   ],
+   "read": "2026-10-16",
+   "sha256": "eb1948afa27c1f059331bd47f4df57f69bc75e2e135fe4649f7b26284c6d2bfa"
+  },
+  "https://www.townofbluffton.sc.gov/292/Mayor-Town-Council": {
+   "bytes": 110256,
+   "client": "token",
+   "final": "https://www.townofbluffton.sc.gov/292/Mayor-Town-Council",
+   "names": [
+    "Bridgette Frazier",
+    "Dan Wood",
+    "Emily Burden",
+    "Fred Hamilton",
+    "Larry Toomer"
+   ],
+   "read": "2026-10-16",
+   "sha256": "10584abd320df028d880880ed4340b9e9e62444a8b2d041227f9c614b532afc1"
+  }
+ }
+}
