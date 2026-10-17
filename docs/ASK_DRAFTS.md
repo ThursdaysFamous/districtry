@@ -7873,8 +7873,8 @@ gap with its date.
 > Shellie Willoughby, GIS Manager, whose account publishes the district map; copying her
 > (`shellie.willoughby@conservation.ok.gov`) would put the map question to the person who looks
 > after the map, and is the operator's choice. The Commission's contact page offers only a web
-> form. On 2026-10-16 the operator was asked, on the Shared layers thread's decision card, whether
-> to show the districts before the Commission answers; the letter reads the same either way. The
+> form. On 2026-10-16 the operator chose, on the Shared layers thread's decision card, to show the
+> districts before the Commission answers ("Show now"); the letter asks it to confirm either way. The
 > mailbox has not been searched for earlier correspondence with conservation.ok.gov; do that before
 > it goes.
 

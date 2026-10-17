@@ -74,9 +74,11 @@ of use that allow only personal, non-commercial use of the site's content,
 applications"; whether a map the Commission hosts elsewhere is one of those
 they do not say. An unstated licence is silence, not a grant (the Lansing
 wards reading, mi/scripts/build_mi_lansing_wards.py), so whether to show the
-map before the Commission confirms is the operator's call, put to the operator
-on 2026-10-16 with the directory's terms, which
-ok/scripts/build_ok_conservation_offices.py records in full. The state
+map before the Commission confirms was the operator's call. It was put to the
+operator on 2026-10-16 with the directory's terms, which
+ok/scripts/build_ok_conservation_offices.py records in full, and the operator
+chose to show the map now and have the letter in docs/ASK_DRAFTS.md ask the
+Commission to confirm. The state
 Senate's account republishes the map, credited to the Commission.
 
 PUBLISHING GAPS, recorded as evidence for the state-publishing ask (gap

@@ -65,9 +65,9 @@ data. What this file carries is facts about public offices (an address, a
 telephone number, an e-mail address), which copyright does not cover, and
 districtry is free, non-commercial and credits the Commission on every card;
 but a public website is not "personal" use, so whether to show these before
-the Commission confirms is the operator's call, put to the operator on
-2026-10-16. The letter asking the Commission for each district's directors
-(docs/ASK_DRAFTS.md) asks it to confirm this use as well.
+the Commission confirms was the operator's call, and on 2026-10-16 the
+operator chose to show them now. The letter asking the Commission for each
+district's directors (docs/ASK_DRAFTS.md) asks it to confirm this use as well.
 
 PUBLISHING GAPS, recorded with the map's (gap
 ok-conservation-district-directors): the directory names offices and not
