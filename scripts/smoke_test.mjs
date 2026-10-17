@@ -862,7 +862,9 @@ try {
   //      while the reader types nothing goes to the Census lookup until the
   //      street's row is picked. Every answer here is OpenStreetMap's, so the
   //      street's message links OpenStreetMap's note form at the street or
-  //      the pin (osmNoteLink), and following it counts osm-note.
+  //      the pin (osmNoteLink), and following it counts osm-note. A shared
+  //      link that ends on its street is counted once the Census answer is
+  //      known, as pin or as street (countLinkRead).
   {
     const SHARED = "Starved Rock Lodge 2668 E 875th Rd, Oglesby, IL 61348 https://maps.app.goo.gl/XyZ987";
     const FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x880bd2e1b3a8f5d1:0x9b1c2d3e4f5a6b7c&entry=gps";
@@ -1036,6 +1038,9 @@ try {
     check("the Census Bureau is asked for the address, and an estimate on another street or far along this one draws no pin",
       street.lookedUp.length === 1 && street.lookedUp[0] === S_BARE && !g.pin,
       JSON.stringify({ lookedUp: street.lookedUp, pin: g.pin }));
+    const linkReads = (r) => r.events.filter((e) => /^map-link-read\//.test(e)).join();
+    check("a shared link that ends on its street with no pin is counted once, as street",
+      linkReads(t) === "map-link-read/il/google/short/opened/street", JSON.stringify(t.events));
     const near = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR, CLOSE] : []),
       () => /A search for its name/.test(document.getElementById("geo-status").textContent), S_FULL, null, false,
       () => ({ status: 502 }));
@@ -1069,6 +1074,8 @@ try {
         pg.pin.label === "Where the Census Bureau puts 9 W Oakley Dr NW. Select this point." &&
         pg.pin.role === "button" && pg.pin.tabindex === "0",
       JSON.stringify(pg));
+    check("a shared link whose house the Census Bureau pins is counted once, as pin",
+      linkReads(pa) === "map-link-read/il/google/short/opened/pin", JSON.stringify(pa.events));
     const pn = noteAt(pg.note);
     check("with the pin, the note form opens at the pin",
       !!pn && pn.zoom === 19 && Math.abs(pn.lat - PIN_AT.lat) < 1e-9 && Math.abs(pn.lng - PIN_AT.lng) < 1e-9,
