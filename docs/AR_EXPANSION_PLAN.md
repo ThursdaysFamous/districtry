@@ -99,7 +99,7 @@ go-live with the same answer, and the two live neighbours gained a routing case 
   names cannot be matched with certainty. Each card says which.
 - **A weekly reader the association lets in.** Until then the January 2027 re-read, after the new
   terms start, is a person's run. A letter asking for it, and for each justice's district on the
-  association's county pages, was drafted on 2026-10-15 (Ask ar-aac-county-pages in
+  association's county pages, was drafted on 2026-10-15 and sent on 2026-10-16 (Ask ar-aac-county-pages in
   `docs/ASK_DRAFTS.md`).
 - **Every county seat after 3 November 2026.** All 75 county judges and 775 justices are on that
   ballot and the new terms start on 1 January 2027.
