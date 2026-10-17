@@ -1821,11 +1821,12 @@ Illinois's check 2d already holds.
 repository and on the published site, which went from about 458 MB to about
 559 MB against GitHub Pages' 1 GB limit. A census vintage roll can rebuild
 every one of these archives, and each rebuild adds another copy to the
-repository's history. And `update-tiger-tiles.yml` now fetches forty more
-sets, about 452 MB, from the Census every Sunday, though it rebuilds only a
-layer whose data changed; measured here, fetching, building and gating all
-forty took 14 min 48 s, inside the job's 45-minute step even in a week when
-every set changed.
+repository's history. And `update-tiger-tiles.yml` now fetches forty more sets
+from the Census every Sunday, 595.2 MB as downloaded and 452.5 MB once
+converted (both measured 2026-10-17), though it rebuilds only a layer whose
+data changed; measured here, fetching, building and gating all forty took
+14 min 48 s, inside the job's 45-minute step even in a week when every set
+changed.
 
 Still live after 6d: the layers phase 6c names, `il ward`'s four sources and
 the county servers. No layer in the nine newest apps fetches its shapes from
