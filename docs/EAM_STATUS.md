@@ -45,16 +45,7 @@ different thing from one it failed.
 |---|---|---|---|---|---|---|---|---|---|
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 13 | all | 10 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 14 levels |
-<<<<<<< HEAD
 | ia | **EAM·** | 99 | 99/99 | 94 | 94 | all | 69 | all | 13 of 14 levels |
-| il | **EAM·** | 102 | 102/102 | 644 | 1,119 | all | 415 | all | 12 of 14 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 14 | all | 8 of 14 levels |
-| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 14 | all | 10 of 14 levels |
-| mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 65 | all | 13 of 14 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 19 | all | 13 of 14 levels |
-| nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 11 | all | 9 of 14 levels |
-=======
-| ia | **EAM·** | 99 | 99/99 | 89 | 89 | all | 70 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 644 | 1,119 | all | 419 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 15 | all | 9 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 15 | all | 11 of 14 levels |
@@ -62,7 +53,6 @@ different thing from one it failed.
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 20 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 21 | all | 8 of 14 levels |
 | nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 12 | all | 10 of 14 levels |
->>>>>>> origin/main
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 9 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 14 | all | 10 of 14 levels |
