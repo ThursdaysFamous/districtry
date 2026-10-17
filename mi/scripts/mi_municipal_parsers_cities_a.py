@@ -157,9 +157,16 @@ def parse_dearborn(h, also):
     """Drupal cards: a role line ("Council President", "Council Member") in a
     text-xl div, the name in the following <h2>, then a biography ending
     "Email: X@dearborn.gov". No per-member phone. The mayor is not on this
-    page."""
+    page.
+
+    The e-mail is the member's dearborn.gov address where the biography
+    prints one, as it always was (all seven did, read 2026-10-01). Since
+    Adam's choice of 2026-10-17 ("E-mails too"), a biography printing none
+    gives the one other address it prints, through `own_email`, unless
+    another member's biography or the rest of the page prints it too, which
+    makes it the council's or the city's address rather than the member's."""
     cards = re.split(r'<div\s+class="text-xl font-semibold[^"]*">', h)[1:]
-    members = []
+    entries = []
     for c in cards:
         role = txt(c[:c.find("</div")])
         if not role.startswith("Council"):
@@ -167,9 +174,12 @@ def parse_dearborn(h, also):
         n = re.search(r"<h2[^>]*>(.*?)</h2\s*>", c, re.S)
         if not n:
             raise ValueError("Dearborn: card %r has no name heading" % role)
-        bio = c[n.end():c.find("contact.dearborn.gov")]
-        em = [e for e in emails_in(bio) if e.endswith("@dearborn.gov")]
-        members.append(member(n.group(1), role, None, None, em[0] if em else None))
+        entries.append((role, n.group(1), c[n.end():c.find("contact.dearborn.gov")]))
+    bios = [bio for _, _, bio in entries]
+    members = []
+    for i, (role, name, bio) in enumerate(entries):
+        em = own_email(bio, bios[:i] + bios[i + 1:], h, ("dearborn.gov",))
+        members.append(member(name, role, None, None, em))
     _expect("Dearborn", members, 7)
     return {"members": members}
 
@@ -407,13 +417,27 @@ def parse_novi(h, also):
     return {"members": members}
 
 
+# Taylor's page prints one council member's address on cityoftaqylormi.gov,
+# one letter away from the city's own cityoftaylormi.gov (read 2026-10-01 and
+# again 2026-10-17). Mail to an address as misprinted cannot be expected to
+# reach the member, and a contact detail is never corrected, so no address on
+# this domain is taken and that member carries no e-mail. The exclusion names
+# the domain and not the address, and nothing here prints either.
+TAYLOR_MISPRINTED_DOMAINS = ("cityoftaqylormi.gov",)
+
+
 def parse_taylor(h, also):
     """CivicPlus editor blocks: <h2> name, then the title paragraph ("City
     Council Chairman", "City Council Pro Tem", "Councilman") and "Email: x"
-    as plain text. TRAP: one address is printed on the misspelt domain
-    cityoftaqylormi.gov; only addresses on cityoftaylormi.gov are kept. A
-    quoted nickname is dropped from the name."""
-    members = []
+    as plain text. A quoted nickname is dropped from the name.
+
+    The e-mail is the member's cityoftaylormi.gov address where the block
+    prints one, as it always was. Since Adam's choice of 2026-10-17 ("E-mails
+    too"), a block printing none gives the one other address it prints,
+    through `own_email`, unless another member's block or the rest of the
+    page prints it too. TRAP: one address is printed on the misspelt domain
+    in TAYLOR_MISPRINTED_DOMAINS; it is never taken and never corrected."""
+    rows = []
     for m in re.finditer(r"<h2[^>]*>(.*?)</h2>\s*<p>(.*?)</p>\s*<p>(.*?)</p>", h, re.S):
         title = txt(m.group(2))
         role = {"City Council Chairman": "Council Chairman",
@@ -422,9 +446,13 @@ def parse_taylor(h, also):
                 "Councilwoman": "Council Member"}.get(title)
         if not role:
             continue
-        em = [e for e in emails_in(m.group(3)) if e.endswith("@cityoftaylormi.gov")]
-        members.append(member(_drop_nickname(txt(m.group(1))), role, None, None,
-                              em[0] if em else None))
+        rows.append((m.group(1), role, m.group(3)))
+    blocks = [block for _, _, block in rows]
+    members = []
+    for i, (name, role, block) in enumerate(rows):
+        em = own_email(block, blocks[:i] + blocks[i + 1:], h, ("cityoftaylormi.gov",),
+                       TAYLOR_MISPRINTED_DOMAINS)
+        members.append(member(_drop_nickname(txt(name)), role, None, None, em))
     _expect("Taylor", members, 7)
     return {"members": members}
 
