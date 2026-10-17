@@ -343,7 +343,9 @@ def check_points(spec, feats):
     problems = []
     for lng, lat, key, why in spec.inside:
         hits = index.at((lng, lat))
-        if hits != [key]:
+        # a layer whose districts overlap by design (a city's districts and
+        # super districts) names every district the point must fall in
+        if sorted(hits) != (sorted(key) if isinstance(key, (list, tuple)) else [key]):
             problems.append("%.5f,%.5f should fall in %s (%s) and falls in %r"
                             % (lat, lng, key, why, hits))
     for lng, lat, why in spec.outside:

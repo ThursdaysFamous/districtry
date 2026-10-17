@@ -30,23 +30,30 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 336 hosts, of which 246 are reached by a browser-string
-caller, 107 of them measured or re-measured since — 61 on 2026-09-13 at the page a
+2026-09-12 across 352 hosts, of which 259 are reached by a browser-string
+caller, 123 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
 2026-09-15, www.cpsboe.org on 2026-09-23, when the Chicago school board roster
-began reading it, and www.scottcoil.gov on 2026-10-15 for Scott County's
-commissioners: 253 serve UA_ROSTER_BOT a full page, 28 refuse it and answer the
+began reading it, www.scottcoil.gov on 2026-10-15 for Scott County's
+commissioners, and www.fortsmithar.gov, www.cityofrockhill.com,
+www.murfreesborotn.gov, www.franklintn.gov, www.bristoltn.gov,
+www.knoxvilletn.gov, www.colliervilletn.gov, www.germantown-tn.gov,
+www.durhamnc.gov, www.greensboro-nc.gov, www.carync.gov,
+www.greenvillenc.gov, www.rockymountnc.gov, www.garnernc.gov,
+www.wilsonnc.org and www.brokenarrowok.gov on 2026-10-16 for Arkansas's,
+South Carolina's, Tennessee's, North Carolina's and Oklahoma's city
+councils: 253 serve UA_ROSTER_BOT a full page, 44 refuse it and answer the
 browser string, and 9 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 45 files send a browser string; 2
+and the artifact rather than remembered): 50 files send a browser string; 2
 of them reach only hosts that serve the token a full page, 21 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 22 reach at least one host that refuses it -- and 246 of
-the 336 measured hosts are still reached by such a caller. The pair 101/62 that
+`requests` stack), and 27 reach at least one host that refuses it -- and 262 of
+the 352 measured hosts are still reached by such a caller. The pair 101/62 that
 stood here until 2026-10-01 was the state before SIXTY scrapers were switched
 off a Chrome string onto our own token in one change: every page each of them
 fetches was re-read with the token on that file's own HTTP stack and answered in

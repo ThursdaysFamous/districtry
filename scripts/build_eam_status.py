@@ -1782,7 +1782,14 @@ ANSWERS = {
         "county-boundaries": answers("county"),
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        "local-government": depth(),
+        # ANSWERED 2026-10-16: the mayor and council of all 42 cities and towns
+        # above 25,000 people, written down from each place's own pages and
+        # proved against them (nc/scripts/build_nc_city_councils.py), Raleigh's
+        # and Matthews's from the State Board of Elections' results, and the
+        # districts of the 17 whose districts or wards elect their own members,
+        # drawn from each city's or its county's map
+        # (nc/scripts/build_nc_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
@@ -1814,7 +1821,14 @@ ANSWERS = {
         # from the State Election Board's roster (2 listed vacant).
         "county-government": depth("county-commissioner"),
         "municipal-boundaries": answers("municipality"),
-        "local-government": depth(),
+        # ANSWERED 2026-10-16: the mayor and council of all 16 cities above
+        # 25,000 people, written down from each city's own pages and proved
+        # against them (ok/scripts/build_ok_city_councils.py), Muskogee's from
+        # the county election board's official results and news reports, and
+        # the wards of nine of the eleven that elect members by ward or
+        # district, drawn from each city's own map
+        # (ok/scripts/build_ok_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # Both tilings, because Oklahoma needs both: unified (415) and
         # elementary (91) districts together cover the state's land exactly,
         # and the secondary tiling is empty. Recorded in ok/CLAUDE.md.
@@ -1868,7 +1882,13 @@ ANSWERS = {
         # the 334 seats from the Election Commission's certified results.
         "county-government": depth("county-council"),
         "municipal-boundaries": answers("municipality"),
-        "local-government": depth(),
+        # ANSWERED 2026-10-16: the mayor and council of all 17 cities and towns
+        # above 25,000 people, written down from each place's own pages and
+        # proved against them (sc/scripts/build_sc_city_councils.py), and the
+        # districts of the twelve that elect by district, drawn from each
+        # place's own map where one can be drawn and the state's copy where it
+        # cannot (sc/scripts/build_sc_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER's unified tiling holds all 72 districts and the other two hold
         # none, measured in sc/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
@@ -1920,7 +1940,14 @@ ANSWERS = {
         # members are named county by county from each county's own pages.
         "county-government": depth("county-commissioner"),
         "municipal-boundaries": answers("municipality"),
-        "local-government": depth(),
+        # ANSWERED 2026-10-16: the mayor and council of all 28 cities and towns
+        # above 25,000 people, written down from each city's own pages and
+        # proved against them (tn/scripts/build_tn_city_councils.py), and the
+        # districts of nine of the thirteen that elect by district, drawn from
+        # each city's own map (tn/scripts/build_tn_city_wards.py). Nashville's
+        # council is named and drawn by the county commission layer. WARD_MAPS
+        # says which.
+        "local-government": depth("city-ward"),
         # All three tilings, because Tennessee uses all three: unified (127)
         # districts cover most of the state, and fifteen elementary districts
         # sit inside fifteen secondary ones. Recorded in tn/CLAUDE.md.
@@ -1979,7 +2006,12 @@ ANSWERS = {
         # results. Recorded in ar/CLAUDE.md.
         "county-government": depth("quorum-court"),
         "municipal-boundaries": answers("municipality"),
-        "local-government": depth(),
+        # ANSWERED 2026-10-16: the mayor and council of all 19 cities above
+        # 25,000 people, written down from each city's own pages and proved
+        # against them (ar/scripts/build_ar_city_councils.py), and the wards of
+        # the twelve that elect by ward, drawn from the state's map of municipal
+        # wards (ar/scripts/build_ar_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER's unified tiling holds all 234 districts and the other two hold
         # none, measured in ar/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
@@ -2190,6 +2222,28 @@ CITY_ROSTERS = {
     # Election winners from the Election Division's certified 2023 municipal
     # general, keyed by the city's Census id, each seat dated to its election.
     "in": [("in/data/app/in-city-officials.json", "geoid7")],
+    # Written down from each city's own pages and proved against them on every
+    # build (ar/scripts/build_ar_city_councils.py), keyed by the city's Census
+    # id, every seat saying whether its ward or the whole city elects it.
+    "ar": [("ar/data/app/ar-city-councils.json", "geoid7")],
+    # Written down from each place's own pages and proved against them on
+    # every build (sc/scripts/build_sc_city_councils.py), keyed by the place's
+    # Census id, every seat saying whether its district or the whole place
+    # elects it.
+    "sc": [("sc/data/app/sc-city-councils.json", "geoid7")],
+    # Written down from each city's own pages and proved against them on every
+    # build (tn/scripts/build_tn_city_councils.py), keyed by the city's Census
+    # id, every seat saying whether its district or the whole city elects it.
+    "tn": [("tn/data/app/tn-city-councils.json", "geoid7")],
+    # Written down from each place's own pages and proved against them on
+    # every build (nc/scripts/build_nc_city_councils.py), keyed by the place's
+    # Census id, every seat saying whether its district or the whole place
+    # elects it.
+    "nc": [("nc/data/app/nc-city-councils.json", "geoid7")],
+    # Written down from each city's own pages and proved against them on every
+    # build (ok/scripts/build_ok_city_councils.py), keyed by the city's Census
+    # id, every seat saying whether its ward or the whole city elects it.
+    "ok": [("ok/data/app/ok-city-councils.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -2565,6 +2619,111 @@ WARD_MAPS = {
               "1875428": "Terre Haute", "1878326": "Valparaiso",
               "1882700": "Westfield", "1882862": "West Lafayette",
               "1886372": "Zionsville"}),
+    # Arkansas's twelve that elect by ward are drawn by one layer,
+    # ar/scripts/build_ar_city_wards.py, which reads the cities off the seats
+    # file. The other seven tie every seat to a ward and elect it citywide,
+    # measured from the ballot (2026-10-16, ar/scripts/build_ar_city_councils.py
+    # says how): every seat's contest was on as many precincts as the mayor's.
+    "ar": dict(
+        drawn={"0505290", "0515190", "0523290", "0524550", "0533400",
+               "0541000", "0550450", "0553390", "0555310", "0561670",
+               "0563800", "0568810"},
+        at_large={
+            "0504840": "Bella Vista ties each council seat to a ward and "
+                       "elects every one by the whole city",
+            "0505320": "Bentonville ties each council seat to a ward and "
+                       "elects every one by the whole city",
+            "0510300": "Cabot ties each council seat to a ward and elects "
+                       "every one by the whole city",
+            "0534750": "Jacksonville ties each council seat to a ward and "
+                       "elects every one by the whole city",
+            "0535710": "Jonesboro ties each council seat to a ward and "
+                       "elects every one by the whole city",
+            "0560410": "Rogers ties each council seat to a ward and elects "
+                       "every one by the whole city",
+            "0566080": "Springdale ties each council seat to a ward and "
+                       "elects every one by the whole city"}),
+    # South Carolina's twelve that elect by district or ward are drawn by one
+    # layer, sc/scripts/build_sc_city_wards.py, which reads the places off the
+    # seats file. Anderson elects Seats 1 to 6 by district and publishes those
+    # districts only as pictures in PDF files, so they are owed; its roster
+    # labels its seats "Seat 1" to "Seat 8", so the sweep cannot find it and it
+    # is declared. The other four elect every seat by the whole place and seat
+    # nobody by district, so the sweep does not find them either.
+    "sc": dict(
+        drawn={"4500550", "4513330", "4516000", "4525810", "4530850",
+               "4530985", "4534045", "4550875", "4561405", "4568290",
+               "4570270", "4570405"},
+        owed={"4501360": "Anderson"},
+        declared={"4501360"}),
+    # Tennessee's eleven drawn are drawn by one layer,
+    # tn/scripts/build_tn_city_wards.py, which reads the cities off the seats
+    # file, Memphis's districts and super districts from two maps of its own,
+    # Chattanooga's from a copy the city publishes beside the map its own
+    # server will not let this project read, and Hendersonville's from Sumner
+    # County's copy (2026-10-17); Knoxville and Lebanon elect by district or
+    # ward and their maps cannot be drawn (tn/scripts/build_tn_city_councils.py
+    # says why for each), so they are owed. Nashville's Metropolitan Council
+    # districts are Davidson County's commission districts, drawn and named by
+    # the county commission layer, and its roster names only the mayor and vice
+    # mayor, so the sweep cannot find it and it is declared. Spring Hill and
+    # Bristol tie seats to districts or wards and elect them by the whole city
+    # (2026-10-16, read from each city's charter or results). Knoxville did
+    # too until 2025, and its 2025 district contests were each on its own
+    # district's precincts alone.
+    "tn": dict(
+        drawn={"4714000", "4715160", "4715400", "4716540", "4727740",
+               "4728540", "4733280", "4737640", "4748000", "4750280",
+               "4750780", "4752006"},
+        owed={"4740000": "Knoxville", "4741520": "Lebanon"},
+        at_large={
+            "4708540": "Bristol elects the members from its three council "
+                       "districts by the whole city",
+            "4770580": "Spring Hill ties two aldermen to each ward and elects "
+                       "every one by the whole city"},
+        declared={"4752006"}),
+    # North Carolina's seventeen that elect members by district or ward are
+    # drawn by one layer, nc/scripts/build_nc_city_wards.py, which reads the
+    # places off the seats file, twelve from the city's own map and five from
+    # its county's. Durham, Concord, Hickory and Morrisville tie seats to wards
+    # or districts and elect every seat by the whole place, measured from
+    # the precincts each contest was on in the State Board of Elections'
+    # results (2026-10-16, nc/scripts/build_nc_city_councils.py says how).
+    "nc": dict(
+        drawn={"3710740", "3712000", "3722920", "3725580", "3726880",
+               "3728000", "3728080", "3731400", "3734200", "3744220",
+               "3746340", "3755000", "3757500", "3759280", "3764740",
+               "3774540", "3775000"},
+        at_large={
+            "3714100": "Concord ties each council seat to a district and "
+                       "elects every one by the whole city",
+            "3719000": "Durham ties three council seats to wards and elects "
+                       "every one by the whole city",
+            "3731060": "Hickory ties each council seat to a ward and elects "
+                       "every one by the whole city",
+            "3744520": "Morrisville ties four council seats to districts and "
+                       "elects every one by the whole town"}),
+    # Oklahoma's nine drawn are drawn by one layer,
+    # ok/scripts/build_ok_city_wards.py, which reads the cities off the seats
+    # file, each from the city's own map. Lawton and Muskogee elect by ward and
+    # their maps cannot be drawn (ok/scripts/build_ok_city_councils.py says why
+    # for each), so they are owed. Broken Arrow, Owasso, Jenks and Edmond tie
+    # seats to wards and elect them by the whole city, read from each city's
+    # charter or council page (2026-10-16). Stillwater's council has no wards,
+    # so the sweep does not find it.
+    "ok": dict(
+        drawn={"4004450", "4006400", "4023950", "4048350", "4049200",
+               "4052500", "4055000", "4066800", "4075000"},
+        owed={"4041850": "Lawton", "4050050": "Muskogee"},
+        at_large={
+            "4009050": "Broken Arrow ties four council seats to wards and "
+                       "elects every seat by the whole city",
+            "4023200": "Edmond's wards nominate their council members and "
+                       "the whole city elects every one",
+            "4037800": "Jenks ties six council seats to wards and elects "
+                       "every seat by the whole city",
+            "4056650": "Owasso ties each council seat to a ward and elects "
+                       "every one by the whole city"}),
 }
 
 
@@ -2713,7 +2872,8 @@ def load_expected_units():
 # Wisconsin roster is keyed by the five-digit place code inside the state.
 STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
                  "mn": "27", "ky": "21", "ny": "36", "in": "18",
-                 "nc": "37", "ok": "40", "sc": "45", "tn": "47"}
+                 "nc": "37", "ok": "40", "sc": "45", "tn": "47",
+                 "ar": "05"}
 
 
 def _named_anywhere(record):

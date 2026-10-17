@@ -1284,6 +1284,23 @@ jobs:
       - name: The shipped Iowa city councils still refuse an address and keep their seat counts
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_city_councils.py --check
+      # THE 122 CITY COUNCILS OF THE FIVE NEWEST STATES ARE WRITTEN DOWN BY HAND
+      # from each city's own pages (scripts/city_councils.py), so a seats file
+      # edited to record a new member is the one input a person types. --check
+      # is offline and stdlib: it holds each seats file to the cities the done
+      # standard counts and the seat count its builder states, holds the record
+      # of every page read to the names each seat cites, holds the shipped file
+      # to what those two produce, and holds every drawn ward to a seat its own
+      # voters elect. The weekly re-read of the pages themselves is
+      # watch-city-council-pages.yml (Adam's choice of 2026-10-16).
+      - name: The newest states' city councils match their seats files, their page records and their drawn wards
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_city_councils.py --check
+          python3 nc/scripts/build_nc_city_councils.py --check
+          python3 ok/scripts/build_ok_city_councils.py --check
+          python3 sc/scripts/build_sc_city_councils.py --check
+          python3 tn/scripts/build_tn_city_councils.py --check
       # Kentucky's magisterial and council districts are composed from precincts
       # and recap sheets the build fetches; --check holds the shipped file to the
       # hash its builder recorded and each drawn county to its Census outline,
