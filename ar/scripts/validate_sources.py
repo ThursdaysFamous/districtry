@@ -236,6 +236,19 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "fire-district",
+        "app_file": "ar-fire-districts.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59",
+        "note": (
+            "971 fire districts from the Arkansas GIS Office's FIRE_DISTRICTS "
+            "layer, the map state law has each fire district file with it "
+            "(973 records: Siloam Springs is filed three times and joined), "
+            "pre-built by ar/scripts/build_ar_fire_districts.py through "
+            "scripts/published_district_layers.py; the quarterly --watch row "
+            "in ar/WATCH.md compares the fingerprint recorded at the build."
+        ),
+    },
+    {
         "layer": "ar-court-of-appeals",
         "app_file": "ar-appeals-districts.json",
         "source_url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html",
@@ -358,6 +371,15 @@ ENDPOINTS = [
                 "FEATURESERVICES/Boundaries/FeatureServer/32/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 870,   # 966 records measured 2026-10-16
+    },
+    # The fire district layer the builder reads (2026-10-16). A floor, for
+    # the reason the precinct row above gives.
+    {
+        "layer": "fire-district",
+        "url": ("https://gis.arkansas.gov/arcgis/rest/services/"
+                "FEATURESERVICES/Boundaries/FeatureServer/59/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 875,   # 973 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

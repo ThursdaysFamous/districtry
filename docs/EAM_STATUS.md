@@ -43,18 +43,18 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
-| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 16 | all | 12 of 14 levels |
+| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 17 | all | 13 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 94 | 94 | all | 69 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 644 | 1,119 | all | 420 | all | 12 of 14 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 17 | all | 10 of 14 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 19 | all | 11 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 15 | all | 11 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 66 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 20 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 21 | all | 8 of 14 levels |
 | nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 12 | all | 10 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
-| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 13 | all | 10 of 14 levels |
+| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 15 | all | 11 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 16 | all | 12 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 16 | all | 10 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,576 | all | 266 | all | 13 of 14 levels |
@@ -70,10 +70,9 @@ per county, so each one is named under its state below.
 ### ar — EAM·
 
 - **Watched, not rewritten:** `ar/data/app/ar-quorum-court-districts.json`, by `.github/workflows/update-ar-county-officials.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `ar-appeals-districts.json`, `ar-house-districts.json`, `ar-judicial-circuits.json`, `ar-precincts.json`, `ar-school-board-zones.json`, `ar-senate-districts.json`, `ar-townships.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 2 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `ar-appeals-districts.json`, `ar-fire-districts.json`, `ar-house-districts.json`, `ar-judicial-circuits.json`, `ar-precincts.json`, `ar-school-board-zones.json`, `ar-senate-districts.json`, `ar-townships.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 19 units at 25,000+ name a governing body; unanswered: Bella Vista city, Benton city, Bentonville city, Cabot city, Conway city, Fayetteville city, Fort Smith city, Hot Springs city and 11 more
-  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Arkansas has no sub-county general-purpose government — outside a city or town limit the county governs. The 1,051 sub-county units the Census publishes for Arkansas are townships, which the Census records as having no functioning government.
   - **13. Tribal governments** — Arkansas has no tribal land. The Census publishes no federal or state reservation and no off-reservation trust land in the state, measured 2026-10-15 with a control in Tennessee.
@@ -113,12 +112,11 @@ this instance is in maintenance.
 
 ### in — EAM·
 
-- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-appeals-districts.json`, `in-council-districts.json`, `in-house-districts.json`, `in-precincts.json`, `in-school-board-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-appeals-districts.json`, `in-conservancy-directors.json`, `in-conservancy-districts.json`, `in-council-districts.json`, `in-house-districts.json`, `in-precincts.json`, `in-school-board-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 55 of 92 counties name a governing body and draw it where it is elected by district; 37 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 6 of 39 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 33 more name a body elected by ward or district whose wards are not drawn; unanswered: Anderson city, Bloomington city, Brownsburg town, Carmel city, Columbus city, Elkhart city, Evansville city, Fishers city and 25 more
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 
 ### ky — EAM·
 
@@ -181,12 +179,11 @@ this instance is in maintenance.
 
 ### ok — EAM·
 
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-commissioner-districts.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
-- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-commissioner-districts.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
+- **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 16 units at 25,000+ name a governing body; unanswered: Bartlesville city, Bixby city, Broken Arrow city, Edmond city, Enid city, Jenks city, Lawton city, Midwest City city and 8 more
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
-  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Oklahoma has no sub-county general-purpose government — outside a city or town limit the county governs. The 305 sub-county units the Census publishes for Oklahoma are census county divisions: statistical areas, not governments.
 

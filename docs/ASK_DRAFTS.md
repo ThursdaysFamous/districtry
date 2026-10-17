@@ -7864,3 +7864,99 @@ PDF is read through the Holland reader and the area is assigned as the clerk say
 answer and its date recorded in the builder. Bay City: a current map is measured against the
 state's precincts again; an answer that the state's precincts are out of date is recorded in the
 gap with its date.
+
+## Ask ok-occ-conservation-directors — Oklahoma Conservation Commission, District Services: publish each conservation district's five directors, and confirm districtry may show the districts and their offices
+
+> **NOT YET ASKED — DRAFTED 2026-10-16.** To Clancy Green, Director of District Services at the
+> Oklahoma Conservation Commission, at `clancy.green@conservation.ok.gov` (telephone 405-522-2111).
+> The Commission's About page lists that name, title, address and number in its staff directory
+> (modified 2026-10-05, read 2026-10-16, after the host's robots.txt). District Services is the
+> division whose page sets out the director elections and links the directory of district offices.
+> The same directory lists Brandon Welborn, Administrative Programs Officer in that division, and
+> Shellie Willoughby, GIS Manager, whose account publishes the district map; copying her
+> (`shellie.willoughby@conservation.ok.gov`) would put the map question to the person who looks
+> after the map, and is the operator's choice. The Commission's contact page offers only a web
+> form. On 2026-10-16 the operator chose, on the Shared layers thread's decision card, to show the
+> districts before the Commission answers ("Show now"); the letter asks it to confirm either way. The
+> mailbox has not been searched for earlier correspondence with conservation.ok.gov; do that before
+> it goes.
+
+**Why this is asked.** Oklahoma's map (public) is gaining the state's 84 conservation districts,
+the one family of special districts the state maps statewide with elected boards, which the done
+standard counts (`docs/DONE_STANDARD.md`, entry 12). The districts are drawn from the Commission's
+own map and each card gives the district's office, telephone and e-mail from the Commission's
+directory of district offices; neither names a director. Each district is governed by five
+directors, three elected by its registered voters for staggered three-year terms (elected positions
+1, 2 and 3, one ending each June 30) and two appointed by the Commission (27A O.S. § 3-3-201, as the
+Commission's own copy of the act prints it, and its District Services page, read 2026-10-16), and
+the act has the Commission issue every director's certificate of election or appointment, so the
+Commission is the one office that holds all 84 boards. Its meeting packets name directors a few at
+a time as they are appointed or elected; nothing found names each district's five. The website's
+general terms of use, a stock template, allow only personal, non-commercial use of the site's
+content, so the letter also asks the Commission to confirm districtry's use. One published table of
+directors keyed by the map's district number, under a licence that allows republishing it, would
+close gap `ok-conservation-district-directors`, and is the kind of change in how Oklahoma publishes
+this information that the project exists to encourage. The record of what else it took to publish
+the map and the offices is that gap's `blocker`.
+
+> Subject: Conservation district directors on districtry.com
+>
+> Dear Clancy Green,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Oklahoma's map is at https://districtry.com/ok/.
+>
+> We are adding Oklahoma's 84 conservation districts to it. The districts are drawn from the
+> Commission's own map of them, and each district's card will give its office address, telephone
+> and e-mail from the Commission's directory of district offices, credited to the Commission. What
+> the card cannot do is name the district's board. The Commission's pages explain that each district
+> is governed by five directors, three elected by the district's voters and two appointed by the
+> Commission, and under the Conservation District Act the Commission issues each director's
+> certificate. But I have not found a list of who the five directors are in each district.
+>
+> Would the Commission consider publishing, for each district, its five current directors, the
+> position each holds (elected position 1, 2 or 3, or appointed), and the date each term ends? A
+> page or a spreadsheet on your website would do. Including the district number used on the
+> Commission's map would let anyone match the list to the districts without guessing. If a list
+> like that already exists, a pointer to it would answer this letter.
+>
+> I also have a smaller question. The Commission's website terms of use allow personal,
+> non-commercial use of its content. districtry is free to use, runs no advertising and sells
+> nothing; it asks for sponsorship toward its running costs, shown only in its footer. It shows
+> only public facts from the Commission: the districts' boundaries and each district's office
+> address, telephone and official e-mail. Could you confirm that showing them this way, credited to
+> the Commission, is acceptable? If you would like a different wording for the credit, I will use
+> it.
+>
+> A short answer to either question is useful, including a no. If someone else at the Commission
+> looks after the directors' records or the district map, I would be grateful if you could pass
+> this along.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A published list, or a pointer to one: read after the host's
+robots.txt, joined to the map by district number (or by name, through the corrections
+`ok/scripts/build_ok_conservation_offices.py` already carries), and each card names the five
+directors with their positions; the gap closes or shrinks and says where the list came from and
+its date. Only names, positions and term dates are ever carried, never a director's home address
+or personal contact. A confirmation of the use: recorded in the officer's own words, with the date,
+in `LICENSE-DATA.md` (the posture its Wisconsin Blue Book entry takes) and in both builders, and any
+credit wording asked for goes on the card. A no to the list: recorded in the gap with its date, and
+the cards keep the office and name no one. A no to the use: the layer comes down, the gap and both
+builders say so, and the builders refuse to write until the terms change.
+
+**Before sending:**
+
+- Re-read the Commission's About page in a browser and confirm the District Services Director and
+  the address are unchanged.
+- If the conservation districts are live on the map when this goes, change "We are adding" to "We
+  have added" and "will give" to "gives".
+- The sponsorship sentence is there because the question is whether the use is commercial. Keep it
+  as long as districtry asks for sponsorship.
+- The letter says "84 conservation districts". Check it against
+  `ok/data/app/ok-conservation-districts.json` on the day it goes.

@@ -4217,7 +4217,7 @@ function initArkansasExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ar-court-of-appeals": "ara", "ar-circuit-court": "arc",
     "ar-senate": "ars", "county": "co", "ar-house": "arh", "school-district-unified": "su",
-    "zip-code": "zp", "quorum-court": "qc", "county-subdivision": "cs",
+    "zip-code": "zp", "quorum-court": "qc", "county-subdivision": "cs", "fire-district": "fd",
     "school-board-district": "bd", "voting-precinct": "vp", "municipality": "mu",
     "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
@@ -4230,8 +4230,9 @@ function initArkansasExplorer() {
     "county-board": ["quorum-court"], "county-subdivision": ["county-subdivision"],
     "municipality": ["municipality"], "voting-precinct": ["voting-precinct"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
-    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
-    "fire-station": ["fire-station"], "post-office": ["post-office"] };
+    "school-board-district": ["school-board-district"], "fire-district": ["fire-district"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8624,6 +8625,7 @@ function initArkansasExplorer() {
       geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
         ", which districtry doesn't cover yet.";
       geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
       return true;
     }
     var row = siblingRow(metro, link.text, function () {
@@ -8639,6 +8641,7 @@ function initArkansasExplorer() {
     geoResultsList.appendChild(row);
     geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
     geoStatus.className = "geo-status";
+    countLinkRead("other-state");
     return true;
   }
 
@@ -9169,6 +9172,56 @@ function initArkansasExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   street       the street the address is on, framed for a tap
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9186,11 +9239,13 @@ function initArkansasExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9199,6 +9254,7 @@ function initArkansasExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9211,6 +9267,7 @@ function initArkansasExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9241,6 +9298,8 @@ function initArkansasExplorer() {
 
   function runGeocodeSearch(q, fromLink) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
@@ -9256,6 +9315,7 @@ function initArkansasExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
       return runAddressSearch(q, fromLink);
@@ -9313,20 +9373,27 @@ function initArkansasExplorer() {
       if (results && results.length) {
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
         return;
       }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
-          if (name.length < 3) return;
+          if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
+            if (seq !== districtSearchSeq) return;
+            if (!named || !named.length) return countLinkRead("none");
+            countLinkRead("name");
             listByName(named);
             geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
               "A search for its name, \u201c" + name + "\u201d, found " +
@@ -9397,6 +9464,7 @@ function initArkansasExplorer() {
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
+    countLinkRead("street");
     var a = addressParts(bare);
     var bounds = null;
     street.forEach(function (r) {
@@ -9480,6 +9548,7 @@ function initArkansasExplorer() {
    * state's app it belongs to, so a place shared into the installed app
    * opens in its own state. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
@@ -9506,6 +9575,7 @@ function initArkansasExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q)
@@ -9529,6 +9599,7 @@ function initArkansasExplorer() {
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -9569,6 +9640,7 @@ function initArkansasExplorer() {
     "zip-code",          // 942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas
     "quorum-court",      // 775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town
     "county-subdivision", // 820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town
+    "fire-district",     // 971 fire districts, pre-built from the Arkansas GIS Office's layer — 140.9 km2 mean area (median 123.9), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a school board zone (113.9)
     "school-board-district", // 965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)
     "voting-precinct",   // 2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)
     "municipality",      // 501 incorporated cities and towns, live from TIGERweb
@@ -14887,6 +14959,128 @@ function initArkansasExplorer() {
   });
 
 
+  /* ---------- 9b. Fire District — the Arkansas GIS Office's statewide map ----------
+   * State law has every Arkansas fire district keep a map certified by the
+   * mayor, county judge or county fire coordinator and send it to the
+   * Arkansas GIS Office, which publishes them as one layer (FIRE_DISTRICTS,
+   * layer 59 of its Boundaries service; A.C.A. § 12-10-329, as the layer's
+   * own description puts it, which calls the layer "the fire protection
+   * districts of the State of Arkansas"). It is the "special districts the
+   * state's own law creates" level of the fleet's done standard
+   * (docs/DONE_STANDARD.md, entry 12).
+   * Pre-built by ar/scripts/build_ar_fire_districts.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m;
+   * data/app/ar-fire-districts.json, same-origin), so a click is answered in
+   * the browser and no point is sent anywhere.
+   *
+   * 971 districts from 973 records, measured 2026-10-16: Siloam Springs is
+   * filed three times and joined into one. The districts overlap in places
+   * and leave 0.75% of the state in no district, so the card reads every
+   * district the map puts the point in and says so when there is more than
+   * one. Six names are used twice, in different counties, so the hover gives
+   * the county as well.
+   *
+   * FOUR RECORDS LABEL GROUND RATHER THAN A DISTRICT ("Unserviced", "Missouri
+   * Serviced", "Unallocated Oklahoma" and "Unallocated"). The builder flags
+   * them `unassigned`, and the card quotes the label and says nothing more
+   * about the ground than the map does.
+   *
+   * WHO RUNS A DISTRICT IS NOT NAMED. The map gives each district's name, its
+   * counties, a date and, for 90 districts, a link to the record the GIS
+   * Office holds for its lines, and nothing about who runs it, so the card
+   * names no one rather than guessing. Recorded as gap ar-fire-district-boards.
+   * The map's type codes (RFD, MFD, FPD, VFD) are defined nowhere the GIS
+   * Office publishes, so the builder leaves them out.
+   * ---------- */
+  var loadArFireDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-fire-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "fire-district",
+    group: "safety",
+    label: "Fire District",
+    emptyNote: "No fire district covers this point on the Arkansas GIS Office's " +
+      "map, which leaves less than 1% of the state in no district. A point " +
+      "outside Arkansas is in none.",
+    overlay: {
+      load: loadArFireDistricts,
+      // the fleet's fire-district red and line (layer-concepts.json `colors`
+      // and `lines`)
+      style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (p.label == null) return null;
+      return p.counties != null ? String(p.label) + ", " + String(p.counties) : String(p.label);
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadArFireDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        return hits.length ? { seq: seq, districts: hits } : null;
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var districts = result.districts;
+      if (districts.length > 1) {
+        wrap.appendChild(renderFieldStack([{
+          value: "The GIS Office's map puts this point inside " + districts.length +
+            " fire districts, where their lines overlap. The map does not say which " +
+            "one answers here."
+        }]));
+      }
+      districts.forEach(function (p) {
+        var name = p.label != null ? String(p.label) : "Unnamed district";
+        var counties = p.counties != null ? String(p.counties) : null;
+        var when = arReadDate(p.revised);
+        if (p.unassigned) {
+          wrap.appendChild(renderLinkRow({ title: "“" + name + "”", note: counties }));
+          wrap.appendChild(renderFieldStack([{
+            label: "What the map says",
+            value: "The GIS Office's map labels this ground “" + name + "” rather " +
+              "than naming a fire district for it, and says nothing more about it."
+          }]));
+          return;
+        }
+        wrap.appendChild(renderLinkRow({
+          title: name,
+          note: counties,
+          links: p.url ? [{ label: "Record filed for these lines (PDF)", url: String(p.url) }] : []
+        }));
+        var rows = [];
+        if (when) {
+          rows.push({
+            label: "Date on the map",
+            value: when + ", the date the GIS Office's map gives these lines."
+          });
+        }
+        rows.push({
+          label: "Who runs it",
+          value: "Not named here. The GIS Office's map names each fire district and " +
+            "the counties it serves, but not who runs it, so this app names no one " +
+            "rather than guessing."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+      });
+      wrap.appendChild(renderFieldStack([{
+        label: "Where the lines come from",
+        value: "The Arkansas GIS Office's map of fire districts, drawn here to " +
+          "within 4 metres. State law has each fire district keep its map, " +
+          "certified by the mayor, county judge or county fire coordinator, and " +
+          "send it to the GIS Office. For a definitive answer about a property, " +
+          "ask the county."
+      }]));
+      return wrap;
+    }
+  });
+
   /* ---------- 10. Fire & EMS Stations (nearest 3) — USGS National Map ----------
    * structures layer 51, through the same paged envelope loader post-office
    * introduced. 1,619 points in this instance's envelope, measured
@@ -14899,8 +15093,8 @@ function initArkansasExplorer() {
    * carry.
    *
    * A BUILDING, NOT A JURISDICTION, the same caveat police-station carries
-   * and for the same reason — which department is dispatched to a point is a
-   * service-area question this instance has not been researched for.
+   * and for the same reason. Which fire district a point is in is the Fire
+   * District layer's question (9b), from the GIS Office's map of them.
    * ---------- */
   var USGS_FIRE_LAYER = "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51";
   var loadFireStations = usgsStructuresLoader(USGS_FIRE_LAYER, "USGS fire and EMS stations");
@@ -16413,7 +16607,7 @@ function initArkansasExplorer() {
     "ar-court-of-appeals", "ar-circuit-court", "quorum-court",
     "school-district-unified", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
-    "police-station", "fire-station", "post-office"];
+    "fire-district", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -16896,11 +17090,12 @@ function initArkansasExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD",
-    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
-    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
+    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#B0342A": "#FE8B7C",
+    "#D0564C": "#FEB1A7", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
