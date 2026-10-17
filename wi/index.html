@@ -8709,6 +8709,7 @@ function initWisconsinExplorer() {
       geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
         ", which districtry doesn't cover yet.";
       geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
       return true;
     }
     var row = siblingRow(metro, link.text, function () {
@@ -8724,6 +8725,7 @@ function initWisconsinExplorer() {
     geoResultsList.appendChild(row);
     geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
     geoStatus.className = "geo-status";
+    countLinkRead("other-state");
     return true;
   }
 
@@ -9259,6 +9261,60 @@ function initWisconsinExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   pin          the street the address is on, with the Census Bureau's
+   *                pin for its house number (showStreetOnly)
+   *   street       the street the address is on, framed for a tap, or
+   *                listed to pick (listHeldAnswers)
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched, or only answers on other streets
+   *                without the house number (listHeldAnswers)
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9277,11 +9333,13 @@ function initWisconsinExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9290,6 +9348,7 @@ function initWisconsinExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9302,6 +9361,7 @@ function initWisconsinExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9334,6 +9394,8 @@ function initWisconsinExplorer() {
   // against one the box runs while they type (runAddressSearch)
   function runGeocodeSearch(q, fromLink, submitted) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
@@ -9350,6 +9412,7 @@ function initWisconsinExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
       return runAddressSearch(q, fromLink, submitted);
@@ -9434,6 +9497,7 @@ function initWisconsinExplorer() {
         if (numbered) return listHeldAnswers(all, numbered, street, sent);
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
         return;
       }
       // the answers listed if none carries the number: the first try's, or
@@ -9450,14 +9514,20 @@ function initWisconsinExplorer() {
       if (loose) return listHeldAnswers(loose, numbered, street, sent);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q, numbered, null, numbered)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(streetIn(street, bare), bare, name, searchEverywhere);
-          if (name.length < 3) return;
+          if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
+            if (seq !== districtSearchSeq) return;
+            if (!named || !named.length) return countLinkRead("none");
+            countLinkRead("name");
             listByName(named);
             geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
               "A search for its name, \u201c" + name + "\u201d, found " +
@@ -9505,7 +9575,7 @@ function initWisconsinExplorer() {
         return true;
       }
     });
-    if (!none) return;
+    if (!none) return countLinkRead("found");
     var towns = streetTowns(street.filter(function (s) { return answers.indexOf(s.answer) >= 0; }));
     if (towns.length) {
       var names = towns.map(function (at) { return addressParts(at).town; });
@@ -9519,6 +9589,7 @@ function initWisconsinExplorer() {
         ", so pick one only if it's the place you meant, or tap the place on the map.";
     }
     geoStatus.className = "geo-status";
+    countLinkRead(towns.length ? "street" : "none");
   }
 
   /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
@@ -9643,6 +9714,9 @@ function initWisconsinExplorer() {
         { paddingTopLeft: [24, clearOfSearchPanel(64)], paddingBottomRight: [24, 24], maxZoom: 18 });
     }
     var ranged = lookupAddressRanges(bare, bounds).then(function (m) {
+      // a link's read is counted once the Census answer says what the reader
+      // is shown, the house pinned or the street alone (countLinkRead)
+      if (seq === districtSearchSeq) countLinkRead(m && current() ? "pin" : "street");
       if (!m || !current()) return;
       pin = m;
       placeRangePin(m, a, done); // so is a point selected any other way, which takes the pin
@@ -9853,6 +9927,7 @@ function initWisconsinExplorer() {
    * page's address box selected it, and the cards named the districts of
    * another stretch of the street. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
@@ -9879,6 +9954,7 @@ function initWisconsinExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q, null, true)
@@ -9903,6 +9979,7 @@ function initWisconsinExplorer() {
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -19167,19 +19244,19 @@ function initWisconsinExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#0F766E": "#50C7BC",
-    "#14181C": "#696F76", "#14A38F": "#41EED2", "#1A7789": "#55C6DF", "#1B4F8C": "#5CA0F5",
-    "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
-    "#2F5D8C": "#6EACED", "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBDAA", "#3B8FD4": "#A5D2FD",
-    "#3D6B49": "#7EBC8D", "#3D95A6": "#6CDEF5", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#4E8F80": "#83DAC5", "#585EDD": "#A7B4FE", "#5C8F6B": "#95D9A9",
-    "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
-    "#7A0A1C": "#EB5B61", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
-    "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8E6BB8": "#D3B3FE", "#9550B2": "#E09BFE",
-    "#9C0B24": "#FE6B6E", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
-    "#B02E2E": "#FE8880", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B45309": "#FEA16D",
-    "#C8102E": "#FE928F", "#D0564C": "#FEB1A7", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7",
-    "#D97706": "#FEC9A1", "#E4572E": "#FFBCA9"};
+    "#14181C": "#696F76", "#14A38F": "#40EDD2", "#1A7789": "#55C6DE", "#1B4F8C": "#5CA0F5",
+    "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE",
+    "#2F5D8C": "#6EACED", "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBCAA", "#3B8FD4": "#A2D2FF",
+    "#3D6B49": "#7EBC8D", "#3D95A6": "#6BDEF4", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD",
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4A7BB0": "#8FC3FD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#82DB92", "#4E8F80": "#83D9C5", "#585EDD": "#A7B4FD", "#5C8F6B": "#95D9A8",
+    "#5E3A8C": "#B283F4", "#6A4A93": "#BB91F5", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
+    "#7A0A1C": "#EA5B61", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9",
+    "#8A5A00": "#E3A241", "#8C2E4A": "#F47294", "#8E6BB8": "#D3B2FE", "#9550B2": "#DF9BFE",
+    "#9C0B24": "#FF696D", "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
+    "#B02E2E": "#FE887F", "#B0316E": "#FF87B8", "#B0342A": "#FE8B7C", "#B45309": "#FEA16D",
+    "#C8102E": "#FE928F", "#D0564C": "#FEB1A7", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3",
+    "#D97706": "#FEC8A0", "#E4572E": "#FEBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

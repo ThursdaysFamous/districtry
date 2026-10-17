@@ -4211,9 +4211,9 @@ function initIndianaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "in-senate": "ins", "county": "co", "in-house": "inh",
     "county-council": "cu", "in-court-of-appeals": "ina", "school-district-unified": "su",
-    "zip-code": "zp", "county-subdivision": "cs", "school-board-district": "bd",
-    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "zip-code": "zp", "county-subdivision": "cs", "conservancy-district": "cn",
+    "school-board-district": "bd", "voting-precinct": "vp", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -8695,6 +8695,7 @@ function initIndianaExplorer() {
       geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
         ", which districtry doesn't cover yet.";
       geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
       return true;
     }
     var row = siblingRow(metro, link.text, function () {
@@ -8710,6 +8711,7 @@ function initIndianaExplorer() {
     geoResultsList.appendChild(row);
     geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
     geoStatus.className = "geo-status";
+    countLinkRead("other-state");
     return true;
   }
 
@@ -9245,6 +9247,60 @@ function initIndianaExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   pin          the street the address is on, with the Census Bureau's
+   *                pin for its house number (showStreetOnly)
+   *   street       the street the address is on, framed for a tap, or
+   *                listed to pick (listHeldAnswers)
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched, or only answers on other streets
+   *                without the house number (listHeldAnswers)
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9263,11 +9319,13 @@ function initIndianaExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9276,6 +9334,7 @@ function initIndianaExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9288,6 +9347,7 @@ function initIndianaExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9320,6 +9380,8 @@ function initIndianaExplorer() {
   // against one the box runs while they type (runAddressSearch)
   function runGeocodeSearch(q, fromLink, submitted) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
@@ -9336,6 +9398,7 @@ function initIndianaExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
       return runAddressSearch(q, fromLink, submitted);
@@ -9420,6 +9483,7 @@ function initIndianaExplorer() {
         if (numbered) return listHeldAnswers(all, numbered, street, sent);
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
         return;
       }
       // the answers listed if none carries the number: the first try's, or
@@ -9436,14 +9500,20 @@ function initIndianaExplorer() {
       if (loose) return listHeldAnswers(loose, numbered, street, sent);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q, numbered, null, numbered)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(streetIn(street, bare), bare, name, searchEverywhere);
-          if (name.length < 3) return;
+          if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
+            if (seq !== districtSearchSeq) return;
+            if (!named || !named.length) return countLinkRead("none");
+            countLinkRead("name");
             listByName(named);
             geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
               "A search for its name, \u201c" + name + "\u201d, found " +
@@ -9491,7 +9561,7 @@ function initIndianaExplorer() {
         return true;
       }
     });
-    if (!none) return;
+    if (!none) return countLinkRead("found");
     var towns = streetTowns(street.filter(function (s) { return answers.indexOf(s.answer) >= 0; }));
     if (towns.length) {
       var names = towns.map(function (at) { return addressParts(at).town; });
@@ -9505,6 +9575,7 @@ function initIndianaExplorer() {
         ", so pick one only if it's the place you meant, or tap the place on the map.";
     }
     geoStatus.className = "geo-status";
+    countLinkRead(towns.length ? "street" : "none");
   }
 
   /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
@@ -9629,6 +9700,9 @@ function initIndianaExplorer() {
         { paddingTopLeft: [24, clearOfSearchPanel(64)], paddingBottomRight: [24, 24], maxZoom: 18 });
     }
     var ranged = lookupAddressRanges(bare, bounds).then(function (m) {
+      // a link's read is counted once the Census answer says what the reader
+      // is shown, the house pinned or the street alone (countLinkRead)
+      if (seq === districtSearchSeq) countLinkRead(m && current() ? "pin" : "street");
       if (!m || !current()) return;
       pin = m;
       placeRangePin(m, a, done); // so is a point selected any other way, which takes the pin
@@ -9839,6 +9913,7 @@ function initIndianaExplorer() {
    * page's address box selected it, and the cards named the districts of
    * another stretch of the street. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
@@ -9865,6 +9940,7 @@ function initIndianaExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q, null, true)
@@ -9889,6 +9965,7 @@ function initIndianaExplorer() {
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -9928,6 +10005,7 @@ function initIndianaExplorer() {
     "school-district-unified", // 291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
     "zip-code",          // 882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
     "county-subdivision", // 1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
+    "conservancy-district", // The 100 active conservancy districts on the Department of Natural Resources' map, pre-built with the app — 75.5 km2 mean area (median 4.44, largest 1,342), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, and larger than an Indianapolis Public Schools board district (41.6). Some overlap; together they cover 8.0% of the state, overlaps counted once.
     "school-board-district", // The 5 districts the Indianapolis Public Schools board is elected from, pre-built from the City of Indianapolis's layer — 41.6 km2 mean area (median 40.0), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, larger than a voting precinct (18.40)
     "voting-precinct",   // 5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)
     "municipality",      // 566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
@@ -15167,6 +15245,221 @@ function initIndianaExplorer() {
   });
 
 
+  /* ---------- 8c. Conservancy District — the Department of Natural Resources' map ----------
+   * Indiana's conservancy districts are units of local government set up under
+   * the Indiana Conservancy District Act (IC 14-33, 1947) when property owners
+   * petition a circuit court, to deal with water: flooding, drainage, sewers,
+   * water supply or a lake's upkeep. Their directors are elected by the
+   * property owners in the district. This is the "special districts the
+   * state's own law creates" level of the fleet's done standard
+   * (docs/DONE_STANDARD.md, entry 12).
+   *
+   * The active districts are the Department of Natural Resources' own map
+   * (layer 54 of "Conservancy Districts of Indiana" on gisdata.in.gov),
+   * pre-built by in/scripts/build_in_conservancy_districts.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m;
+   * data/app/in-conservancy-districts.json, same-origin), so a click is
+   * answered in the browser and no point is sent anywhere. DISTRICTS OVERLAP:
+   * three lie wholly inside a larger one and six pairs touch along slivers,
+   * measured 2026-10-16, so this card reads EVERY district the map puts the
+   * point in and says so when there is more than one.
+   *
+   * THE BOARDS COME FROM THE DEPARTMENT'S 2026 DIRECTORY
+   * (in/scripts/build_in_conservancy_directors.py;
+   * data/app/in-conservancy-directors.json), which the law requires each
+   * board's chair to keep current. Names and roles only: the directory also
+   * gives home towns, and for many districts a director's own address,
+   * telephone or e-mail as the district's contact, and none of that is
+   * carried. Staff a district hires (attorneys, managers, operators) are not
+   * shown either. A district that sent the department no list, or that is
+   * newer than the directory, says so rather than naming anyone.
+   *
+   * THE NAME ON THE CARD AND IN THE HOVER IS THE DIRECTORY'S where the district
+   * has an entry there, and the map's otherwise. The two differ for 21 of the
+   * 99 districts, measured 2026-10-16: the map spells some names short or in
+   * its own way ("Battleground-Brookston", "Bruce Lake", "Indian Boundry") and
+   * the directory carries the name the district gives itself ("Battle Ground",
+   * "Lake Bruce", "Indian Boundary"). Drawing the layer starts loading the
+   * directory, so the hover reads the same name as the card once it has
+   * arrived; until then it reads the map's.
+   * ---------- */
+  var loadInConservancyDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-conservancy-districts.json", {}, 2);
+  });
+  var loadInConservancyBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-conservancy-directors.json", {}, 2);
+  });
+  var IN_CONSERVANCY_DIRECTORY =
+    "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory";
+  var IN_CONSERVANCY_MONTHS = ["January", "February", "March", "April", "May",
+    "June", "July", "August", "September", "October", "November", "December"];
+
+  // "1991-06-28" -> "28 June 1991"; anything else -> null
+  function conservancyDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    var month = IN_CONSERVANCY_MONTHS[parseInt(m[2], 10) - 1];
+    return month ? parseInt(m[3], 10) + " " + month + " " + m[1] : null;
+  }
+
+  // the year of the directory the board list was read from ("the latest"
+  // if no record says)
+  function conservancyEdition(boards) {
+    for (var k in boards) {
+      if (Object.prototype.hasOwnProperty.call(boards, k) && boards[k] &&
+          /^\d{4}$/.test(String(boards[k].edition))) {
+        return String(boards[k].edition);
+      }
+    }
+    return "latest";
+  }
+
+  // the directory's name for the district where it has one, else the map's
+  function conservancyName(p, boards) {
+    var key = p.key != null ? String(p.key) : null;
+    var board = boards && key ? boards[key] : null;
+    if (board && board.name) return String(board.name);
+    return p.label != null ? String(p.label) : "Conservancy District";
+  }
+
+  // the court that set the district up, and the day where the map gives one
+  function conservancySetUp(p) {
+    var day = conservancyDate(p.est);
+    if (!p.court) return day ? "On " + day + "." : null;
+    var court = "the " + String(p.court) + " County Circuit Court";
+    return day ? "By " + court + ", on " + day + "." : "By " + court + ".";
+  }
+
+  registerLayer({
+    id: "conservancy-district",
+    group: "geography",
+    label: "Conservancy District",
+    emptyNote: "No conservancy district covers this point. Indiana's conservancy " +
+      "districts are set up one at a time, when property owners ask a circuit " +
+      "court for one to deal with flooding, drainage, sewers, water supply or a " +
+      "lake. More than 100 are active, the Department of Natural Resources says, " +
+      "and most of the state is in none.",
+    overlay: {
+      load: function () {
+        // start on the directory too, so the hover can name each district the
+        // way the card does; a failure here leaves the hover on the map's names
+        loadInConservancyBoards().then(null, function () {});
+        return loadInConservancyDistricts();
+      },
+      // a water blue no other layer here uses (Minnesota's watershed-district
+      // colour), so it reads apart from the political tilings drawn over it
+      style: { color: "#1C6E9C", weight: 1.5, fillColor: "#4BA3D3", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      return conservancyName(feature.properties || {}, loadInConservancyBoards.cached());
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadInConservancyDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        // The board list is a separate file. If it cannot be read, the
+        // districts still show, and each says its board could not be loaded.
+        return loadInConservancyBoards().then(function (boards) {
+          return { seq: seq, districts: hits, boards: boards || {} };
+        }, function () {
+          return { seq: seq, districts: hits, boards: null };
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var districts = result.districts;
+      if (districts.length > 1) {
+        wrap.appendChild(renderFieldStack([{
+          value: "The state's map puts this point inside " + districts.length +
+            " conservancy districts. A property can belong to two districts set up " +
+            "for different purposes; where two districts only meet along an edge, " +
+            "the map alone cannot say which one covers it, and the districts can."
+        }]));
+      }
+      districts.forEach(function (p) {
+        var key = p.key != null ? String(p.key) : null;
+        var board = result.boards && key ? result.boards[key] : null;
+        var people = board && board.people ? board.people : [];
+        // the directory's address is newer than the map's, so it comes first
+        var site = board && board.url ? board.url : p.url;
+        wrap.appendChild(renderLinkRow({
+          title: conservancyName(p, result.boards),
+          links: site ? [{ label: "Website", url: String(site) }] : []
+        }));
+        if (people.length) {
+          wrap.appendChild(renderSectionLabel("Board and officers"));
+          wrap.appendChild(renderPersonRows(people.map(function (person) {
+            return {
+              name: person.vacant ? "Vacant" : String(person.name),
+              badge: person.role != null ? String(person.role) : null
+            };
+          })));
+        }
+        var rows = [];
+        if (!result.boards) {
+          rows.push({
+            label: "Board",
+            value: "The list of this district's board could not be loaded. Try " +
+              "again, or see the Department of Natural Resources' directory."
+          });
+        } else if (!board) {
+          rows.push({
+            label: "Board",
+            value: "Not named here. The Department of Natural Resources' " +
+              conservancyEdition(result.boards) + " directory of conservancy " +
+              "districts does not list this district, so this app names no one " +
+              "rather than guessing."
+          });
+        } else if (!people.length) {
+          rows.push({
+            label: "Board",
+            value: "Not named here. The district did not send the Department of " +
+              "Natural Resources a list of its officers for the " +
+              conservancyEdition(result.boards) + " directory."
+          });
+        } else {
+          rows.push({
+            label: "Whose list",
+            value: "The district's, as it reported it to the Department of Natural " +
+              "Resources for the " + conservancyEdition(result.boards) + " directory. " +
+              "Staff the district hires, such as its attorney, are not shown."
+          });
+        }
+        rows.push({
+          label: "How the board is chosen",
+          value: "Its directors are elected by the property owners in the district. " +
+            "When a district is first set up, the county commissioners appoint its " +
+            "board, and the board may appoint a secretary and a financial clerk."
+        });
+        if (p.purposes) rows.push({ label: "What it is for", value: String(p.purposes) });
+        if (board && board.meeting) {
+          rows.push({ label: "Annual meeting", value: String(board.meeting) });
+        }
+        var setUp = conservancySetUp(p);
+        if (setUp) rows.push({ label: "Set up", value: setUp });
+        wrap.appendChild(renderFieldStack(rows));
+      });
+      wrap.appendChild(renderFieldStack([{
+        label: "Where the lines come from",
+        value: "The Department of Natural Resources' map of conservancy districts, " +
+          "drawn here to within 4 metres. A district's lines are set by its " +
+          "circuit court; for a definitive answer about a property, ask the district."
+      }]));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Conservancy district directory", url: IN_CONSERVANCY_DIRECTORY };
+    }
+  });
+
+
   /* ---------- 11. ZIP Code — live TIGERweb ZCTAs ----------
    * ZCTAs carry no STATE field (they cross state lines), so unlike every
    * other TIGERweb layer here this one cannot use the STATE='26' filter and
@@ -16975,7 +17268,11 @@ function initIndianaExplorer() {
     // card, which is why they have no layer of their own.
     "county-council",
     "school-district-unified", "school-board-district",
-    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
+    // The conservancy district sits after the city, as Minnesota's watershed
+    // district does: a special district on top of the governments a reader
+    // lives in, and most of the state is in none.
+    "county", "county-subdivision", "municipality", "conservancy-district",
+    "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -17462,12 +17759,12 @@ function initIndianaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
-    "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE",
-    "#6B7280": "#B1BBCE", "#753B07": "#D7864B", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+    "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD",
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#AFE0FE",
+    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -157,7 +157,7 @@
     "school-site": { "il": "school-site", "ny": "school-site", "ca": "school-site", "wi": "school-site", "ia": "school-site" },
     "police-district": { "il": "police-district", "ny": "police-precinct", "ca": "police-district", "wi": "mpd-district" },
     "police-beat": { "il": "police-beat", "ny": "police-sector", "wi": "mpd-squad-area" },
-    "fire-district": { "il": "fire-district", "ny": "fire-district", "wi": "fire-service" },
+    "fire-district": { "il": "fire-district", "ny": "fire-district", "wi": "fire-service", "ar": "fire-district" },
     "library-district": { "il": "library-district", "ny": "library-district" },
     "police-station": {
       "il": "police-station", "ny": "police-station", "ca": "police-station", "wi": "police-station",

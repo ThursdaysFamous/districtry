@@ -15,6 +15,16 @@ say; everything else lives here once. Measured on 2026-10-16:
     Treasury's map of new school board districts, for eighteen counties) and
     Indiana (the City of Indianapolis's map, from which only the Indianapolis
     Public Schools districts are taken).
+  * Conservancy districts, through
+    in/scripts/build_in_conservancy_districts.py: Indiana (the Department of
+    Natural Resources' map of conservancy districts, active ones only, grouped
+    by the circuit court that set each one up).
+  * Conservation districts, through
+    ok/scripts/build_ok_conservation_districts.py: Oklahoma (the Conservation
+    Commission's map of conservation districts, each district its own group).
+  * Fire districts, through ar/scripts/build_ar_fire_districts.py: Arkansas
+    (the GIS Office's map of fire districts, grouped by the counties each
+    serves).
 
 A builder names the property its districts are grouped by (`group`): the
 school board, for a school board district. The counts, the record and the
@@ -37,7 +47,8 @@ district), so there is no county test here. Instead:
   2. Two records with the same key are joined into one district only when the
      builder declares how many such further parts it expects (Arkansas
      publishes one zone of the Jasper district in two pieces), and their
-     properties must agree.
+     properties must agree, bar any the builder names in `part_latest` (a
+     date), of which the latest is kept, as the precinct builder does.
   3. The count after reading equals EXPECT exactly, and so does the number of
      groups (for school board districts, the boards) the file draws; the key
      is unique and every property the card prints is populated.
@@ -100,8 +111,8 @@ class Spec(object):
                  group_nouns=("board", "boards"), card_noun="school board card",
                  interval="4", pace=0.0, page=None, where="1=1",
                  measure_field=None, skipped_records=0, multipart_records=0,
-                 required=None, extra_check=None, card_claims=(), inside=(),
-                 outside=()):
+                 part_latest=(), required=None, extra_check=None, card_claims=(),
+                 inside=(), outside=()):
         self.tag = tag
         self.label = label
         self.layer = layer.rstrip("/")
@@ -123,9 +134,13 @@ class Spec(object):
         self.measure_field = measure_field
         self.skipped_records = skipped_records
         self.multipart_records = multipart_records
+        # properties left out of the agreement two parts of one district must
+        # show, keeping the latest value (an ISO date compares as text)
+        self.part_latest = tuple(part_latest)
         self.required = tuple(required or ("key", group, "label"))
         # extra_check(features) raises through fail() on anything wrong; it
-        # runs in all three modes, on what the builder read.
+        # runs in all three modes, on what the builder read. --watch reads no
+        # geometry, so a check that needs the shapes must skip itself there.
         self.extra_check = extra_check
         self.card_claims = tuple(card_claims)
         # (lng, lat, key, why): the point must fall in the district with that key
@@ -167,8 +182,9 @@ def normalise(spec, records, with_geometry=True):
             out["_measure"] = float(props.get(spec.measure_field))
         prior = by_key.get(out["key"])
         if prior is not None:
-            a = {k: v for k, v in prior["properties"].items() if k != "_measure"}
-            b = {k: v for k, v in out.items() if k != "_measure"}
+            skip = ("_measure",) + spec.part_latest
+            a = {k: v for k, v in prior["properties"].items() if k not in skip}
+            b = {k: v for k, v in out.items() if k not in skip}
             if a != b:
                 fail(spec, "two records read with the key %s and differ in what they say: "
                      "%r and %r" % (out["key"], a, b))
@@ -177,6 +193,11 @@ def normalise(spec, records, with_geometry=True):
                      "district published in parts" % out["key"])
             if spec.measure_field:
                 prior["properties"]["_measure"] += out["_measure"]
+            for field in spec.part_latest:
+                values = [v for v in (prior["properties"].get(field), out.get(field))
+                          if v not in (None, "")]
+                if values:
+                    prior["properties"][field] = max(values)
             if with_geometry:
                 prior["geometry"] = {
                     "type": "MultiPolygon",

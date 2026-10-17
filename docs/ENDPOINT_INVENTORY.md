@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **276 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 231 are links.
+makes from a link a reader clicks. Of **277 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 232 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -146,12 +146,12 @@ prose.
 | mi | 0 | 19 |
 | mn | 6 | 20 |
 | ky | 5 | 15 |
-| in | 4 | 16 |
+| in | 4 | 17 |
 | nc | 4 | 13 |
-| ok | 5 | 15 |
+| ok | 5 | 16 |
 | sc | 4 | 16 |
 | tn | 6 | 18 |
-| ar | 3 | 16 |
+| ar | 3 | 17 |
 | ms | 3 | 16 |
 
 ### Where each layer's shapes come from
@@ -306,7 +306,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
 - **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`, `voting-precinct`.
 
-#### in — 4 of 16 layers fetch their shapes
+#### in — 4 of 17 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -317,7 +317,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `in-senate`, `county`, `in-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `county-council`, `in-court-of-appeals`, `school-board-district`, `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `county-council`, `in-court-of-appeals`, `conservancy-district`, `school-board-district`, `voting-precinct`, `tribal-government`.
 
 #### nc — 4 of 13 layers fetch their shapes
 
@@ -332,7 +332,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `voting-precinct`, `tribal-government`.
 
-#### ok — 4 of 15 layers fetch their shapes
+#### ok — 4 of 16 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -343,7 +343,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `ok-senate`, `county`, `ok-house`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `ok-judicial-district`, `county-subdivision`, `county-commissioner`.
+- **Not measured** — declared since the probe ran: `conservation-district`, `ok-judicial-district`, `county-subdivision`, `county-commissioner`.
 
 #### sc — 3 of 16 layers fetch their shapes
 
@@ -387,16 +387,16 @@ measured until the next run describes it.
 | mi | 37 | 66 | 1 |
 | mn | 29 | 20 | 0 |
 | ky | 21 | 15 | 0 |
-| in | 19 | 17 | 0 |
+| in | 22 | 19 | 0 |
 | nc | 19 | 12 | 0 |
-| ok | 19 | 13 | 0 |
+| ok | 22 | 15 | 0 |
 | sc | 23 | 16 | 0 |
 | tn | 24 | 16 | 0 |
-| ar | 24 | 16 | 0 |
+| ar | 26 | 17 | 0 |
 | ms | 41 | 21 | 0 |
-| **total** | **605** | **1004** | **12** |
+| **total** | **613** | **1009** | **12** |
 
-**166 distinct source hosts** across the six manifests. Each instance's
+**167 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

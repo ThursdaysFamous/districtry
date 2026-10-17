@@ -53,6 +53,7 @@ const GEOMETRY_URLS = [
   "./data/app/ar-townships.json",
   "./data/app/ar-precincts.json",
   "./data/app/ar-school-board-zones.json",
+  "./data/app/ar-fire-districts.json",
   "./data/app/ar-appeals-districts.json",
   "./data/app/ar-judicial-circuits.json",
 ];

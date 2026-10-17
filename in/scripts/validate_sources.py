@@ -224,6 +224,33 @@ PROVENANCE = [
             "the map; the re-hash is a row in in/WATCH.md."
         ),
     },
+    {
+        "layer": "conservancy-district",
+        "app_file": "in-conservancy-districts.json",
+        "source_url": "https://gisdata.in.gov/server/rest/services/Hosted/Conservancy_Districts_of_Indiana_20250528/FeatureServer/54",
+        "note": (
+            "Indiana's 100 active conservancy districts from the Department of "
+            "Natural Resources' map (103 records marked active, three districts "
+            "split across two records each), pre-built by "
+            "in/scripts/build_in_conservancy_districts.py through "
+            "scripts/published_district_layers.py; the quarterly --watch row in "
+            "in/WATCH.md compares the fingerprint recorded at the build. A "
+            "district a court sets up or dissolves reaches the app only through "
+            "a rebuild."
+        ),
+    },
+    {
+        "layer": "conservancy-district",
+        "app_file": "in-conservancy-directors.json",
+        "source_url": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
+        "note": (
+            "Each district's board as it reported it to the Department of "
+            "Natural Resources for the 2026 directory (modified 2026-05-01), "
+            "read by in/scripts/build_in_conservancy_directors.py. Published "
+            "once a year, so a new edition is a hand rebuild on the yearly row "
+            "in in/WATCH.md; this row notices the page going away."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -351,6 +378,17 @@ ENDPOINTS = [
                 "OpenData_Political/MapServer/9/query?where=SCHOOLDIST%3D%27IPS%27"
                 "+AND+BOARDDISTR+IS+NOT+NULL&returnCountOnly=true&f=json"),
         "min_count": 5,     # 5 records measured 2026-10-16
+    },
+    # The conservancy district records the builder reads (2026-10-16): 103
+    # marked active, drawing 100 districts. A floor, not the count: the
+    # quarterly --watch notices a changed district; this row notices the query
+    # failing or the layer emptying.
+    {
+        "layer": "conservancy-district",
+        "url": ("https://gisdata.in.gov/server/rest/services/Hosted/"
+                "Conservancy_Districts_of_Indiana_20250528/FeatureServer/54/query"
+                "?where=status%3D%27Active%27&returnCountOnly=true&f=json"),
+        "min_count": 95,    # 103 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

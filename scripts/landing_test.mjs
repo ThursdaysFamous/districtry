@@ -489,6 +489,14 @@ try {
       return r.fulfill({ status: 200, contentType: "application/json",
         body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) });
     });
+    // the counter is stubbed, and each count it is handed is recorded outside
+    // the page, because the page navigates away straight after counting
+    const counted = [];
+    await page.route("**/gc.zgo.at/**", (r) => r.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+    await page.addInitScript(() => {
+      window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+    });
     await stubInstances(page);
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
@@ -498,6 +506,8 @@ try {
       lookupAsked.length === 1 && lookupAsked[0] === "https://maps.app.goo.gl/AbCdEf123", JSON.stringify(lookupAsked));
     check("a short map link to Green Bay opens /wi/", new URL(page.url()).pathname === "/wi/", page.url());
     check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    check("the front page counts the short link it read once, by kind and where it went",
+      counted.join() === "map-link-read/front/google/short/pasted/to-wi", JSON.stringify(counted));
     await ctx.close();
   }
   // ...a lookup that fails once is asked again, and the second answer is used
