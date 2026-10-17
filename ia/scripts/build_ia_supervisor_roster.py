@@ -51,7 +51,11 @@ county's own page prints it, even where it reads as the person's own mobile.
 Humboldt is the case that ruling settled: its board page prints five DISTINCT
 numbers beside its five supervisors. A row's number is refused if it is the
 board's shared number or if two supervisors in one county carry it, because
-either is a switchboard and must not read as one person's line.
+either is a switchboard and must not read as one person's line. A supervisor's
+own E-MAIL rides the same way since the same day (Adam chose "E-mails too"):
+the officer roster carries the address a county's board page prints in that
+supervisor's block, and an address two supervisors in one county share stops
+the build exactly as a shared number does.
 
 A COUNTY MAY ANSWER THE QUESTION IN A LETTER RATHER THAN ON A PAGE. Four
 statewide routes are measured closed and some counties publish no page that
@@ -842,11 +846,16 @@ def main():
             # two supervisors share, so a switchboard can never reach a
             # district card as the direct line of whoever that district elects.
             #
+            # THE SAME HOLDS FOR AN E-MAIL ADDRESS, since Adam chose "E-mails
+            # too" the same day: the officer roster carries the address the
+            # county's own board page prints in this supervisor's block, and
+            # the check after this loop refuses one two supervisors share.
+            #
             # ANY OTHER NEW FIELD STILL STOPS THE BUILD: a field this builder
             # has never seen must be looked at by a person rather than
             # inherited or discarded.
             extra = sorted(k for k in src
-                           if k not in ("name", "party", "phone"))
+                           if k not in ("name", "party", "phone", "email"))
             if extra:
                 raise RuntimeError(
                     "%s names %s on supervisor %s -- a field this builder has "
@@ -854,6 +863,8 @@ def main():
                     "dropped." % (county, ", ".join(extra), name))
             if src.get("phone"):
                 row["phone"] = src["phone"]
+            if src.get("email"):
+                row["email"] = src["email"]
             members[dist] = row
         rec = {
             "county": county,
@@ -1015,20 +1026,31 @@ def main():
                "dropping it by hand"
                % ", ".join(sorted(set(gone) & set(refused_now)))))
 
-    # Structural refusal: only these three fields may ship on a person. No
-    # address, ever. A phone ships only where the county printed it beside
-    # this one supervisor: a row carrying the board office's number, or a
-    # number another supervisor in the same county also carries, is a
-    # switchboard presented as a direct line, and the build stops.
-    own_phones = 0
+    # Structural refusal: only these four fields may ship on a person. No
+    # street address, ever. A phone ships only where the county printed it
+    # beside this one supervisor: a row carrying the board office's number, or
+    # a number another supervisor in the same county also carries, is a
+    # switchboard presented as a direct line, and the build stops. An e-mail
+    # address two supervisors in one county carry stops it the same way.
+    own_phones = own_emails = 0
     for fips, rec in directory.items():
         seen = {}
+        seen_mail = {}
         for dist, row in rec["districts"].items():
-            extra = set(row) - {"name", "party", "phone"}
+            extra = set(row) - {"name", "party", "phone", "email"}
             if extra:
                 raise RuntimeError("%s district %s carries %s -- only "
-                                   "name/party/phone may ship on a supervisor"
-                                   % (fips, dist, sorted(extra)))
+                                   "name/party/phone/email may ship on a "
+                                   "supervisor" % (fips, dist, sorted(extra)))
+            mail = (row.get("email") or "").strip().lower()
+            if mail:
+                if mail in seen_mail:
+                    raise RuntimeError("%s districts %s and %s carry the same "
+                                       "e-mail address -- a shared address is "
+                                       "the board's, not either supervisor's"
+                                       % (fips, seen_mail[mail], dist))
+                seen_mail[mail] = dist
+                own_emails += 1
             phone = row.get("phone")
             if not phone:
                 continue
@@ -1052,9 +1074,9 @@ def main():
     skipped = [(c, why) for c, why in skipped if c not in held_counties]
     print("ia-supervisor-members: %d plan 3 counties, %d districts keyed, "
           "%d preserved, %d skipped | %d supervisor(s) with a number of their "
-          "own | widest name-to-district gap %d chars"
+          "own, %d with an e-mail address | widest name-to-district gap %d chars"
           % (len(directory) - len(preserved), total_districts, len(preserved),
-             len(skipped), own_phones, widest), file=sys.stderr)
+             len(skipped), own_phones, own_emails, widest), file=sys.stderr)
     for county, read_on, n in preserved:
         print("  preserved %-13s %d district(s), last read %s -- robots.txt "
               "refuses this client, so the county is not re-read"

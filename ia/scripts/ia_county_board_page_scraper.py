@@ -128,8 +128,11 @@ COUNTIES = [
     # lines, and Adam's ruling of 2026-10-17 settled it without her: "if the
     # official government source uses personal phone numbers, we publish
     # those." The county's page is that source, so each number ships beside
-    # the supervisor it is printed beside. The e-mail is still not read --
-    # no board-page county ships one -- and the address never is.
+    # the supervisor it is printed beside. Its e-mail addresses ship the
+    # same way since Adam chose "E-mails too" the same afternoon, the
+    # personal one included: build_ia_county_officers.py's
+    # supervisor_address() decides which belong to one supervisor. The
+    # street address never ships.
     {"fips": "171", "name": "Tama", "shape": "board_members",
      "url": "https://www.tamacounty.iowa.gov/supervisors/"},
 ]

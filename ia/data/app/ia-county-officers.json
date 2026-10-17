@@ -2069,22 +2069,27 @@
   "supervisorSource": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php",
   "supervisors": [
    {
+    "email": "mcarpenter@humboldtcounty.iowa.gov",
     "name": "Mike Carpenter",
     "phone": "515 332-0596"
    },
    {
+    "email": "rpedersen@humboldtcounty.iowa.gov",
     "name": "Rick Pedersen",
     "phone": "515 779-4591"
    },
    {
+    "email": "brasmussen@humboldtcounty.iowa.gov",
     "name": "Bob Rasmussen",
     "phone": "515 770-0014"
    },
    {
+    "email": "breimers@humboldtcounty.iowa.gov",
     "name": "Bruce Reimers",
     "phone": "515 770-1067"
    },
    {
+    "email": "dthompson@humboldtcounty.iowa.gov",
     "name": "Dennis Thompson",
     "phone": "515 332-0597"
    }
@@ -3920,22 +3925,27 @@
   "supervisorSource": "https://www.tamacounty.iowa.gov/supervisors/",
   "supervisors": [
    {
+    "email": "mdoland@tamacounty.org",
     "name": "Mark Doland",
     "phone": "641-481-2533"
    },
    {
+    "email": "curthilmer@gmail.com",
     "name": "Curt Hilmer",
     "phone": "319-939-3291"
    },
    {
+    "email": "hknebel@tamacounty.org",
     "name": "Heather Knebel",
     "phone": "641-481-2532"
    },
    {
+    "email": "ckupka@tamacounty.org",
     "name": "Curt Kupka",
     "phone": "641-481-2310"
    },
    {
+    "email": "dturner@tamacounty.org",
     "name": "David Turner",
     "phone": "641-481-2456"
    }

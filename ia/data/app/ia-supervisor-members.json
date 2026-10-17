@@ -201,22 +201,27 @@
   },
   "districts": {
    "1": {
+    "email": "breimers@humboldtcounty.iowa.gov",
     "name": "Bruce Reimers",
     "phone": "515 770-1067"
    },
    "2": {
+    "email": "dthompson@humboldtcounty.iowa.gov",
     "name": "Dennis Thompson",
     "phone": "515 332-0597"
    },
    "3": {
+    "email": "rpedersen@humboldtcounty.iowa.gov",
     "name": "Rick Pedersen",
     "phone": "515 779-4591"
    },
    "4": {
+    "email": "mcarpenter@humboldtcounty.iowa.gov",
     "name": "Mike Carpenter",
     "phone": "515 332-0596"
    },
    "5": {
+    "email": "brasmussen@humboldtcounty.iowa.gov",
     "name": "Bob Rasmussen",
     "phone": "515 770-0014"
    }
@@ -581,22 +586,27 @@
   },
   "districts": {
    "1": {
+    "email": "curthilmer@gmail.com",
     "name": "Curt Hilmer",
     "phone": "319-939-3291"
    },
    "2": {
+    "email": "dturner@tamacounty.org",
     "name": "David Turner",
     "phone": "641-481-2456"
    },
    "3": {
+    "email": "hknebel@tamacounty.org",
     "name": "Heather Knebel",
     "phone": "641-481-2532"
    },
    "4": {
+    "email": "mdoland@tamacounty.org",
     "name": "Mark Doland",
     "phone": "641-481-2533"
    },
    "5": {
+    "email": "ckupka@tamacounty.org",
     "name": "Curt Kupka",
     "phone": "641-481-2310"
    }

@@ -805,6 +805,18 @@ try {
         !info.error && text.includes("Humboldt County") && text.includes("District 4") &&
           text.includes(seat.name) && text.includes(seat.phone), text.slice(0, 240));
     }
+    // ...and the e-mail address the same page prints beside that supervisor
+    // (Adam chose "E-mails too", 2026-10-17). The row shows it as a link
+    // labelled Email, so the link's own address is what is compared.
+    if (!seat.name || !seat.email) {
+      console.log("  SKIP  supervisor's own e-mail — Humboldt District 4 carries no address");
+    } else {
+      const hrefs = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-county-supervisor a[href^='mailto:']"))
+          .map((a) => a.getAttribute("href")));
+      check("supervisor district card links the e-mail address the county prints beside its supervisor",
+        hrefs.includes("mailto:" + seat.email), JSON.stringify(hrefs));
+    }
     await page.close();
     await context.close();
   }
