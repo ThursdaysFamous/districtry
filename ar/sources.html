@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">16 layers — 6 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">17 layers — 6 political and legislative, 3 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1247,7 +1247,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="safety">
-        <h2>Public safety <span class="matrix-count">2 layers</span></h2>
+        <h2>Public safety <span class="matrix-count">3 layers</span></h2>
         <p class="matrix-blurb">Who answers a call at this address, and where they answer it from.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1255,6 +1255,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-fire-district">
+                <th scope="row"><span class="layer-name">Fire District</span><code>fire-district</code></th>
+                <td data-label="What it answers">Every fire district the point is in on the Arkansas GIS Office's map, with the counties each serves, the date the map gives its lines and, for 90 districts, the record the GIS Office holds for them. Where the map labels ground rather than naming a district (&quot;Unserviced&quot; and three others), the card quotes the label.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59" target="_blank" rel="noopener">Arkansas GIS Office — FIRE_DISTRICTS, layer 59 of its Boundaries service: the map state law (A.C.A. § 12-10-329, as the layer's own description puts it) has every fire district keep, certified by the mayor, county judge or county fire coordinator, and send to the GIS Office. 971 districts from 973 records, measured 2026-10-16, pre-built by ar/scripts/build_ar_fire_districts.py and shipped with the app. It credits the Arkansas GIS Office and states no licence.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO NAMES. The GIS Office's map names each fire district and the counties it serves but not who runs it, and no statewide list of who runs Arkansas's fire districts has been read, so the card names no one rather than guessing; recorded as gap ar-fire-district-boards.</td>
+                <td data-label="Where it applies">Arkansas — statewide. The districts overlap in places and leave less than 1% of the state in no district, so the card lists every district the map puts the point in.</td>
+              </tr>
               <tr id="layer-police-station">
                 <th scope="row"><span class="layer-name">Police Station</span><code>police-station</code></th>
                 <td data-label="What it answers">The three nearest police stations to the point, by straight-line distance, with each one's address.</td>
@@ -1275,7 +1286,7 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.</td>
-                <td data-label="Where it applies">Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances.</td>
+                <td data-label="Where it applies">Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question, and the card says where the nearest are and never who serves you; the Fire District layer draws the state's map of fire districts. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances.</td>
               </tr>
             </tbody>
           </table>
@@ -1645,6 +1656,28 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-fire-district",
+      "identifier": "fire-district",
+      "name": "Fire District",
+      "description": "Every fire district the point is in on the Arkansas GIS Office's map, with the counties each serves, the date the map gives its lines and, for 90 districts, the record the GIS Office holds for them. Where the map labels ground rather than naming a district (\"Unserviced\" and three others), the card quotes the label. NO NAMES. The GIS Office's map names each fire district and the counties it serves but not who runs it, and no statewide list of who runs Arkansas's fire districts has been read, so the card names no one rather than guessing; recorded as gap ar-fire-district-boards.",
+      "url": "https://districtry.com/ar/sources.html#layer-fire-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — FIRE_DISTRICTS, layer 59 of its Boundaries service: the map state law (A.C.A. § 12-10-329, as the layer's own description puts it) has every fire district keep, certified by the mayor, county judge or county fire coordinator, and send to the GIS Office. 971 districts from 973 records, measured 2026-10-16, pre-built by ar/scripts/build_ar_fire_districts.py and shipped with the app. It credits the Arkansas GIS Office and states no licence.",
+          "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Arkansas — statewide. The districts overlap in places and leave less than 1% of the state in no district, so the card lists every district the map puts the point in"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/ar/sources.html#dataset-school-board-district",
       "identifier": "school-board-district",
       "name": "School Board Zone",
@@ -1755,7 +1788,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances"
+        "name": "Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question, and the card says where the nearest are and never who serves you; the Fire District layer draws the state's map of fire districts. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances"
       }
     },
     {

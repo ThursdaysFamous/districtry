@@ -8,7 +8,7 @@ districtry Oklahoma: a single-file, dependency-light web app. Click a point in O
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/ok/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships FIFTEEN layers, and it went **LIVE** in its go-live change,
+the Illinois root-scripts shape. It ships SIXTEEN layers, and it went **LIVE** in its go-live change,
 which Adam held until the fleet-wide tribal thread had drawn Oklahoma's tribal areas: it has a
 `metros.json` entry and a landing card, the Pages deploy publishes `ok/` (keeping
 `ok/data/state`, `ok/data/source` and `ok/scripts` out), and `ok/congress.html` and
@@ -91,6 +91,24 @@ the roster. The appellate courts are not drawn: the roster lists their districts
 retention vote is held in the district or across the state, and the constitution that says so
 could not be read. The re-check, after each November general election, is in `ok/WATCH.md`.
 
+**THE 84 CONSERVATION DISTRICTS ARE DRAWN SINCE 2026-10-16, EACH WITH ITS OFFICE AND NOBODY ON
+ITS BOARD.** `conservation-district` draws the Oklahoma Conservation Commission's own map
+(`cons_dis` on its ArcGIS Online account; a copy the state Senate's account publishes is
+identical), built by `ok/scripts/build_ok_conservation_districts.py` through
+`scripts/published_district_layers.py`: 106 records join into 84 districts, five districts being
+published in several records each. They cover the state bar 67 km² of slivers, 43 km² of them
+along the Kansas line in Texas County, and five pairs overlap by 0.36 km² in all, which the card
+says when a point falls in two. Kingfisher County's and East Canadian County's districts interlock
+near the line between the two counties, ten of Kingfisher's pieces inside East Canadian's lines and
+seven of East Canadian's inside Kingfisher's, and are drawn as published. Each card gives the
+district's office, telephone, e-mail and, for three, a website, from the Commission's Conservation
+District Offices Directory (`ok/scripts/build_ok_conservation_offices.py`), joined to the map by
+name because the directory carries no district number. THE DIRECTORY NAMES NO DIRECTOR, though
+three of each board's five are elected by the district's voters and the Commission issues every
+director's certificate, so the card names nobody and says how the board is chosen (gap
+`ok-conservation-district-directors`; the letter asking the Commission for the list is in
+`docs/ASK_DRAFTS.md`). The quarterly re-checks are in `ok/WATCH.md`.
+
 **TRIBAL AREAS ARE DRAWN, AND THIS IS THE ONE INSTANCE THAT DRAWS CENSUS STATISTICAL AREAS.**
 Measured with `scripts/tribal_areas.py` on 2026-10-09, the Census draws one federal reservation
 in Oklahoma (Osage, 5,967 km²) and one off-reservation trust land (the Shawnee Tribe's, 0.43 km²);
@@ -131,7 +149,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Oklahoma (`oklahoma`) — https://districtry.com/ok/
 - Geocoders: address Photon (Oklahoma-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oklahoma-bounded, serial >=1s queue)
 - Ground truth: 35.49230,-97.50340 (the State Capitol, Oklahoma City, Oklahoma County) → county Oklahoma County; us-house 5; ok-senate 48; ok-house 99; ok-judicial-district 7. Negative point 33.65000,-97.15000 (near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.).
-- Layers: 15 registered (political 6, safety 2, schools 2, geography 5); `registerLayer(` floor 10. Debug namespace `window.OklahomaExplorer`.
+- Layers: 16 registered (political 6, safety 2, schools 2, geography 6); `registerLayer(` floor 11. Debug namespace `window.OklahomaExplorer`.
 - Scheduled workflows: `update-ok-congress-roster.yml` (Mon 16:45 UTC); `update-ok-legislature-roster.yml` (Tue 16:45 UTC); `update-ok-commissioner-roster.yml` (Wed 16:45 UTC); `ok-validate-sources.yml` (1st of month 19:00 UTC).
 - Source registry: `ok/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -215,6 +233,10 @@ unitedstates/congress-legislators) and `ok-{senate,house}-members.json`
 all refreshed weekly by CI as reviewed PRs. The legislature builder also refuses to write when
 fewer than 90% of seats carry an e-mail, a district number falls outside the chamber's range, or
 two members claim one district.
+`ok-conservation-districts.json` and `ok-conservation-offices.json` are the Conservation
+Commission's map and its directory of district offices; neither has a weekly job, because the map
+changes only when the Commission moves a district's lines and the directory names no one, so both
+are rebuilt by hand on the quarterly rows in `ok/WATCH.md`.
 
 robots.txt is read before the first fetch through `scraper_common.require_robots_once`.
 `data.openstates.org` answers its robots.txt with HTTP 403, which RFC 9309 files with a 404:
