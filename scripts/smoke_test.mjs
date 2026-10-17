@@ -948,7 +948,11 @@ try {
       }, [EXPORTS_NAME, [[41.8221975, -87.9794965], [41.8217156, -87.9794932]]]);
       const box = await page.locator("#map").boundingBox();
       await page.touchscreen.tap(box.x + (frame.ends[0].x + frame.ends[1].x) / 2, box.y + (frame.ends[0].y + frame.ends[1].y) / 2);
-      await page.waitForTimeout(300);
+      // A tap is selected at once only when the coverage wash has already
+      // painted; before that the app asks fleet-outlines.json who serves
+      // the point and selects when it answers. On a busy runner that took
+      // longer than a fixed 300 ms (2026-10-17), so wait for the selection.
+      await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
       return { frame, ...(await read()) };
     };
     const street = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),
