@@ -7536,7 +7536,10 @@ statewide source appears.
 
 ## Ask ar-aac-county-pages — Association of Arkansas Counties: a way for our weekly program to read the county pages, and each justice's district
 
-> **NOT YET ASKED — DRAFTED 2026-10-15**, to Christy L. Smith, Communications Director, at
+> **ASKED 2026-10-16** (sent 15:06:08 UTC from the operator's own mailbox to `csmith@arcounties.org`,
+> no cc, under the subject below; read in the sent folder on 2026-10-17, which is the day this was
+> recorded, one day late). No reply as of 2026-10-17; by rule 3 the follow-up is due around
+> 2026-11-06. Drafted 2026-10-15, to Christy L. Smith, Communications Director, at
 > `csmith@arcounties.org`, the address beside her name and title on the association's own staff
 > page (`arcounties.org/about-us/staff/`, read 2026-10-15 after its robots.txt, at the 20 seconds
 > between requests it asks for; the page hides every address behind Cloudflare's e-mail protection,
@@ -7547,7 +7550,7 @@ statewide source appears.
 > engineer, and the site credits a web vendor). Adam chose "Draft letter" on 2026-10-15, the day
 > Arkansas went live. The mailbox was searched the same day for any message to, from or copying
 > `arcounties.org`, for the association's name, and for "quorum court" and "justice of the peace":
-> none. On send, record `ASKED <date>` in gap `ar-quorum-court` and in `ar/WATCH.md`.
+> none. The send is recorded in gap `ar-quorum-court` and in `ar/WATCH.md`; record a reply in both.
 
 **Why this is asked.** Arkansas's map names every county judge and the justice of the peace in 737
 of 775 quorum court districts, and the justices' names come from the association's 75 county pages
