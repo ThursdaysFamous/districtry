@@ -1564,6 +1564,10 @@ try {
     const cityAt = async (props, routeExtra) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (pg) => {
+        // The layer is answered from a tile archive, where the Capitol is in
+        // Jackson whatever the stub says, so the archive is refused and the
+        // card falls back to the census loader this stub answers (as in 7).
+        await pg.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
         await pg.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: placeBody(props) }));
         if (routeExtra) await routeExtra(pg);
