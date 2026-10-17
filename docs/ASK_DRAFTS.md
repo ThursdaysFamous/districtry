@@ -7965,15 +7965,29 @@ builders say so, and the builders refuse to write until the terms change.
 
 ## Ask tn-knoxville-council-districts — KGIS (Knoxville, Knox County and KUB's mapping agency): permission to show Knoxville's six council districts
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. THE OPERATOR CHOSE TO ASK ON 2026-10-17**, on a decision
-> card in the thread that drafted it, and the Letters thread made it into a Gmail draft the same
-> day; sending it stays the operator's decision. The choice was his because the letter asks for a
-> licence and commits districtry to publishing a copy if the answer is yes. To KGIS at `kgis@kgis.org`, the "Contact us" address
-> of KGIS's own organisation on ArcGIS Online (read 2026-10-16). KGIS is the mapping agency the
-> City of Knoxville, Knox County and the Knoxville Utilities Board run together, and its Policy
-> Board is the body its terms name. The Letters thread found no earlier mail with kgis.org in the
-> operator's mailbox on 2026-10-17. On send, change `NOT YET ASKED — DRAFTED 2026-10-17` to
-> `ASKED <date>` in gap `tn-municipal-officeholders` and in the Tennessee row of `tn/WATCH.md`.
+> **ASKED 2026-10-17** — sent by Adam at 13:09 UTC to KGIS at `kgis@kgis.org` (his sent folder,
+> read the same day by the Letters thread). No reply yet; the follow-up falls due about 7 November
+> 2026. Drafted the same day. The operator chose to ask on 2026-10-17, on a decision card in the
+> thread that drafted it, because the letter asks for a licence and commits districtry to
+> publishing a copy if the answer is yes. `kgis@kgis.org` is the "Contact us" address of KGIS's own
+> organisation on ArcGIS Online (read 2026-10-16). KGIS is the mapping agency the City of
+> Knoxville, Knox County and the Knoxville Utilities Board run together, and its Policy Board is
+> the body its terms name. The Letters thread found no earlier mail with kgis.org in the
+> operator's mailbox on 2026-10-17. Recorded as asked in gap `tn-municipal-officeholders` and in
+> the Tennessee row of `tn/WATCH.md` on 2026-10-17.
+>
+> **ADAM REWORDED IT BEFORE SENDING, AND THE LETTER BELOW IS THE DRAFT.** The Letters thread
+> compared the sent message with it the same day. The addressee, the request (the Policy Board's
+> authorization, or word that it is not available), outlines and district numbers only, the credit
+> and link on the card, the check every three months and the pointer to a City or Election
+> Commission copy went as drafted. Three things changed. The sent letter describes the copy as
+> "Download the six district outlines, slightly simplify the geometry, and host the file on
+> districtry.com for map rendering and district lookup", and no longer says that every reader's
+> browser downloads the file so anyone could save it. The sponsorship sentence reads "a
+> non-commercial project: it is free to use, runs no ads, sells no products, and relies solely on
+> optional sponsorships linked in the site footer to cover hosting costs". And "A no is also a
+> useful answer" was dropped. So a yes answers the letter as sent, and whether it covers a file
+> anyone can save is the operator's to decide when the answer comes.
 
 **Why this is asked.** Tennessee's map names the mayor and council of all 28 cities above 25,000
 people and draws the council districts of eleven of the thirteen that elect members by district
@@ -7983,10 +7997,12 @@ data is KGIS's layer, "current as of December 22, 2025", whose terms say the KGI
 "reserves all rights thereto" and that no portion "may be reproduced in any form or by any means
 without the express written authorization of the KGIS Policy Board" (read 2026-10-16). So a
 Knoxville address gets a card saying the districts are not drawn, and the reader is left to find
-their council member some other way. The letter says plainly what drawing them involves: a
+their council member some other way. The draft said plainly what drawing them involves: a
 simplified copy of the six outlines would be a file on districtry.com that every reader's browser
-downloads, so anyone could save it. That is the honest description, and a permission given without
-it would not be worth having.
+downloads, so anyone could save it. It said so because a permission given without that
+description might not cover what districtry publishes. The letter as sent describes hosting the
+file "for map rendering and district lookup" and leaves that sentence out, so the question is
+open (see above).
 
 > Subject: Permission to show Knoxville's council districts on districtry.com
 >
