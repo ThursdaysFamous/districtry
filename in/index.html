@@ -10002,13 +10002,13 @@ function initIndianaExplorer() {
     "county",            // 92 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "in-house",          // 100 House districts — the finest political tiling this instance ships today
     "county-council",    // 241 districts in 55 counties: four per county, and Indianapolis's 25 City-County Council districts
-    "school-district-unified", // 291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
-    "zip-code",          // 882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
-    "county-subdivision", // 1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
+    "school-district-unified", // 291 unified (K-12) districts, from TIGERweb, drawn from a mirrored tile archive. Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
+    "zip-code",          // 807 ZIP Code Tabulation Areas overlapping Indiana (882 counting the 75 that only touch its line), in a mirrored tile archive, measured 2026-10-17 — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
+    "county-subdivision", // 1,012 county-subdivision records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
     "conservancy-district", // The 100 active conservancy districts on the Department of Natural Resources' map, pre-built with the app — 75.5 km2 mean area (median 4.44, largest 1,342), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, and larger than an Indianapolis Public Schools board district (41.6). Some overlap; together they cover 8.0% of the state, overlaps counted once.
     "school-board-district", // The 5 districts the Indianapolis Public Schools board is elected from, pre-built from the City of Indianapolis's layer — 41.6 km2 mean area (median 40.0), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, larger than a voting precinct (18.40)
     "voting-precinct",   // 5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)
-    "municipality",      // 566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
+    "municipality",      // 566 incorporated places, from TIGERweb, drawn from a mirrored tile archive — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
     "tribal-government", // Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // 650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer
@@ -13978,8 +13978,17 @@ function initIndianaExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // THIS HELPER IS USED, AND CARRYING IT UNUSED WOULD BE A FALSE STATEMENT
   // ON THE PRIVACY PAGE RATHER THAN DEAD BYTES. Michigan's go-live found a
@@ -13987,10 +13996,13 @@ function initIndianaExplorer() {
   // build_privacy_page.py MEASURES point-query layers by counting
   // loadArcGISPointGeoJSON call sites minus its definition — so an unused
   // wrapper made the published page say a layer sent your exact selected
-  // point to a government server when none did. Four layers below are live
-  // TIGERweb and really do send the point, so the count is true. If those
-  // layers ever leave, this helper leaves with them. Re-run
-  // scripts/build_privacy_page.py with any change to this block.
+  // point to a government server when none did. The four layers below still
+  // use it, for the whole set and for the point query when their archive
+  // cannot be read (above), and the privacy page now counts the hooks a
+  // browser probe sees FIRE (scripts/probe_point_transmission.mjs) rather
+  // than call sites, so a hook held for that case is not reported as a
+  // transmission. If those layers ever leave, this helper leaves with them.
+  // Re-run scripts/build_privacy_page.py with any change to this block.
   function tigerStatewideLoader(servicePath, layerIndex, outFields, label) {
     var load = makeCached(function () {
       return loadTigerLayer(servicePath, layerIndex, outFields, label);
@@ -14771,9 +14783,10 @@ function initIndianaExplorer() {
 
 
   /* ---------- 6. County Subdivision — live TIGERweb ----------
-   * The WI/IA/MI module with Indiana's own civil-division vocabulary. Live
-   * TIGERweb fetch (no builder script, no committed data/app file), so a
-   * TIGER vintage roll reaches this layer on its own.
+   * The WI/IA/MI module with Indiana's own civil-division vocabulary. Drawn
+   * and answered from a tile archive mirrored from TIGERweb
+   * (scripts/mirror_tiger_tiles.py), so a TIGER vintage roll reaches this
+   * layer through update-tiger-tiles.yml's weekly pull request.
    *
    * INDIANA IS THE MIRROR OF MICHIGAN HERE, AND THE CARDS SAY SO RATHER THAN
    * LEAVING A READER TO WORK IT OUT. A Michigan city is INDEPENDENT of any
@@ -14815,6 +14828,7 @@ function initIndianaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Township or City",
     // Every subdivision belongs to exactly one county BY CONSTRUCTION, not by
@@ -15045,6 +15059,7 @@ function initIndianaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Indiana",
@@ -15165,6 +15180,7 @@ function initIndianaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     loader: loadSchoolDistrictsUnified,
@@ -15516,7 +15532,10 @@ function initIndianaExplorer() {
    * line, so an envelope round the state necessarily catches Chicago's,
    * Louisville's and Cincinnati's. This is the same interlocking-states fact
    * metros.json records about the fleet hand-off box, and the same behaviour
-   * ia/, wi/ and mi/ ship.
+   * ia/, wi/ and mi/ ship. Since 2026-10-17 the card and the overlay read a
+   * tile archive that keeps only the ZCTAs overlapping Indiana, so the
+   * neighbours appear only where the whole set is drawn (on the raster basemap,
+   * or after the archive fails to load).
    *
    * THE SENTENCE THAT STOOD HERE SAID "The card is unaffected: it answers
    * from a point query, so a reader always gets the ZCTA they are actually
@@ -15584,6 +15603,7 @@ function initIndianaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     coverage: insideIndiana,
@@ -15591,8 +15611,11 @@ function initIndianaExplorer() {
     // NO emptyNote, AND THE ONE THAT SHIPPED HERE WAS FALSE TWICE OVER. It
     // read "No ZIP code here. This map holds Indiana's ZIP codes only, so a
     // point outside Indiana gets none", citing scripts/mirror_tiger_tiles.py's
-    // STATE_OVERLAP_MIN — an ARCHIVE THIS INSTANCE DOES NOT SHIP, ZIP being
-    // one of its seven live layers with no committed data/app file. It also
+    // STATE_OVERLAP_MIN — an archive this instance did not then ship, ZIP
+    // being one of its seven live layers with no committed data/app file
+    // (it ships one since 2026-10-17, which keeps only the ZCTAs overlapping
+    // Indiana, so the note's reason is now true and it still could not
+    // render outside Indiana, where coverage hides the layer). It also
     // asserted a state filter the code does not apply, and it could never
     // render, because the card always answers. It was copied from a sibling
     // that does mirror the layer. With coverage declared above, outside

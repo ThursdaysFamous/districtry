@@ -10011,11 +10011,11 @@ function initOklahomaExplorer() {
     "ok-house",          // 101 House districts — the smallest of the three chamber tilings
     "county-commissioner", // 231 districts, three in each of the 77 counties; median 715.8 km² (mean 785, from 33.5 to 3,704.5), measured 2026-10-11 — smaller than a House district and larger than the median tribal area
     "tribal-government", // Tribal areas — Oklahoma has 31, MEASURED by scripts/build_tribal_areas.py: the Osage Reservation, the Shawnee Tribe's 0.430 km² of trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas; median 523.7 km², between a House district and a unified school district. The statistical areas are drawn by Adam's exception for Oklahoma (2026-10-10), labelled on every card as areas the Census draws to count people.
-    "county-subdivision", // 305 census county divisions, live from TIGERweb (no data/app file) — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)
-    "school-district-unified", // 415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly
-    "zip-code",          // 1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma
-    "school-district-elementary", // 91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves
-    "municipality",      // 600 incorporated cities and towns, live from TIGERweb
+    "county-subdivision", // 305 census county divisions, from TIGERweb, drawn from a mirrored tile archive — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)
+    "school-district-unified", // 415 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 91 elementary districts they cover the state exactly
+    "zip-code",          // 666 ZIP Code Tabulation Areas overlapping Oklahoma, of the 1,058 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Oklahoma
+    "school-district-elementary", // 91 elementary (dependent) districts, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
+    "municipality",      // 600 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive
     "city-ward",         // 56 council wards and districts in the 9 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13953,8 +13953,10 @@ function initOklahomaExplorer() {
    * Generic — takes a full service path + layer index so one helper can
    * serve any TIGERweb service. The four pre-built layers ship as static
    * data/app/ files and never touch this; the three fabric layers
-   * (municipality and the two school tilings) are live TIGERweb through
-   * tigerStatewideLoader below, the WI/IA/IL pattern. ---------- */
+   * (municipality and the two school tilings) load through
+   * tigerStatewideLoader below, the WI/IA/IL pattern, and since 2026-10-17
+   * are drawn and answered from tile archives mirrored from it
+   * (scripts/mirror_tiger_tiles.py). ---------- */
   var TIGERWEB_SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/";
 
   function loadTigerLayer(servicePath, layerIndex, outFields, label) {
@@ -13987,8 +13989,17 @@ function initOklahomaExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE THREE LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14692,6 +14703,7 @@ function initOklahomaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Census County Division",
     subOf: "county",
@@ -15031,6 +15043,7 @@ function initOklahomaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Oklahoma",
@@ -15327,6 +15340,7 @@ function initOklahomaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     loader: loadSchoolDistrictsUnified,
@@ -15343,6 +15357,7 @@ function initOklahomaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Elementary)",
     loader: loadSchoolDistrictsElementary,
@@ -15372,8 +15387,11 @@ function initOklahomaExplorer() {
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
    * THAT: the envelope returns 1,058 ZCTAs (measured 2026-10-09) and
    * necessarily reaches into Texas, Kansas, Arkansas, Missouri, Colorado and
-   * New Mexico. The card answers from a point query, and the coverage test
-   * below hides the layer outside the state.
+   * New Mexico. Since 2026-10-17 the card and the overlay read a tile archive
+   * that keeps only the ZCTAs overlapping Oklahoma, so the neighbours appear
+   * only where the whole set is drawn (on the raster basemap, or after the
+   * archive fails to load), and the coverage test below hides the layer outside
+   * the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -15432,6 +15450,7 @@ function initOklahomaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

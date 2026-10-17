@@ -1323,7 +1323,7 @@ table.matrix code {
                 <td data-label="What it answers">The public school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 72 features for South Carolina, measured 2026-10-10.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 72 features for South Carolina, measured 2026-10-10.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. South Carolina's school boards are not all chosen the same way, and no statewide roster of their members has been established here — recorded as gap sc-school-board-members.</td>
@@ -1371,7 +1371,7 @@ table.matrix code {
                 <td data-label="What it answers">The census county division containing the point, and its county.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and South Carolina has no township governments, so the county governs everyone outside a city or town. The card names the division and its county and says it governs nobody.</td>
@@ -1382,7 +1382,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='45'. 841 features in South Carolina's box, measured 2026-10-10.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='45'. 841 features in South Carolina's box, measured 2026-10-10.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
@@ -1404,7 +1404,7 @@ table.matrix code {
                 <td data-label="What it answers">The city or town containing the point, if any.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 271 features for South Carolina (69 cities, 202 towns), measured 2026-10-10.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 271 features for South Carolina (69 cities, 202 towns), measured 2026-10-10.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">In the 17 cities and towns above 25,000 people, the mayor and every council member, written down from each place's own pages and proved against those pages by sc/scripts/build_sc_city_councils.py, which fails when a name is no longer on the page it cites (sc/data/app/sc-city-councils.json, 131 seats read 2026-10-16). Each seat says whether its district's own voters or the whole place elect it, which nothing the state publishes records: it was read from each contest's precincts in the Election Commission's certified results and from Anderson's notice of election, and the seats neither covers are taken to follow their place's rule, which the builder lists. The Municipal Association of South Carolina's pages are not used: they give no seat, district or date. South Carolina's other 254 cities and towns name nobody yet, recorded as gap sc-municipal-officeholders.</td>
@@ -1551,7 +1551,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 72 features for South Carolina, measured 2026-10-10.",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 72 features for South Carolina, measured 2026-10-10.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1595,7 +1595,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
       ],
@@ -1666,7 +1666,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='45'. 841 features in South Carolina's box, measured 2026-10-10.",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='45'. 841 features in South Carolina's box, measured 2026-10-10.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1710,7 +1710,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 271 features for South Carolina (69 cities, 202 towns), measured 2026-10-10.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 271 features for South Carolina (69 cities, 202 towns), measured 2026-10-10.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],

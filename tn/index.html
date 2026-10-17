@@ -10010,15 +10010,15 @@ function initTennesseeExplorer() {
     "tn-senate",         // 33 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
-    "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
+    "school-district-unified", // 127 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 15 elementary districts they cover the state exactly
     "school-board-district", // 114 districts on the boards of education of 18 counties, pre-built from the Comptroller of the Treasury's layer — 200.6 km2 mean area (median 143.7), measured 2026-10-16 on the drawn file: smaller on average than a unified school district, larger than a county commission district, of which 859 tile the state
     "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
-    "county-subdivision", // 855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
-    "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
-    "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
-    "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
+    "county-subdivision", // 855 civil districts, from TIGERweb, drawn from a mirrored tile archive — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
+    "zip-code",          // 643 ZIP Code Tabulation Areas overlapping Tennessee, of the 1,070 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Tennessee
+    "school-district-elementary", // 15 city and special school districts running the lower grades, from TIGERweb, drawn from a mirrored tile archive
+    "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, from TIGERweb, drawn from a mirrored tile archive
     "voting-precinct",   // 1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)
-    "municipality",      // 345 incorporated places, live from TIGERweb
+    "municipality",      // 345 incorporated places, from TIGERweb, drawn from a mirrored tile archive
     "city-ward",         // 72 council districts and wards in the 11 cities above 25,000 people that elect council members by district or ward and publish a map that can be drawn, ranked just after City or Town, which each one divides, so a district draws on top of its city
     "tribal-government", // Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13991,8 +13991,17 @@ function initTennesseeExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE FOUR LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14584,6 +14593,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Civil District",
     subOf: "county",
@@ -14877,6 +14887,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Tennessee",
@@ -15352,6 +15363,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     emptyNote: "This point is in one of Tennessee's fifteen city or special " +
@@ -15370,6 +15382,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Elementary)",
     emptyNote: "This point is in a unified school district rather than an " +
@@ -15389,6 +15402,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-secondary",
+    tiles: "data/app/tiles/school-district-secondary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Secondary)",
     emptyNote: "This point is in a unified school district rather than a " +
@@ -15520,8 +15534,11 @@ function initTennesseeExplorer() {
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
    * THAT: the envelope returns 1,070 ZCTAs (measured 2026-10-10), 638 of them
    * with their interior point in Tennessee, and necessarily reaches into all
-   * eight neighbouring states. The card answers from a point query, and the
-   * coverage test below hides the layer outside the state.
+   * eight neighbouring states. Since 2026-10-17 the card and the overlay read a
+   * tile archive that keeps only the ZCTAs overlapping Tennessee, so the
+   * neighbours appear only where the whole set is drawn (on the raster basemap,
+   * or after the archive fails to load), and the coverage test below hides the
+   * layer outside the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -15580,6 +15597,7 @@ function initTennesseeExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

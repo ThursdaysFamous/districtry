@@ -221,12 +221,12 @@
       "label": "School District (Unified)",
       "group": "schools",
       "area_rank": 10,
-      "rank_note": "415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly",
+      "rank_note": "415 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 91 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 415 features for Oklahoma, measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 415 features for Oklahoma, measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -239,12 +239,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 11,
-      "rank_note": "1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma",
+      "rank_note": "666 ZIP Code Tabulation Areas overlapping Oklahoma, of the 1,058 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Oklahoma",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='40'. 1,058 features in Oklahoma's box, measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='40'. 1,058 features in Oklahoma's box, measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -257,12 +257,12 @@
       "label": "School District (Elementary)",
       "group": "schools",
       "area_rank": 12,
-      "rank_note": "91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves",
+      "rank_note": "91 elementary (dependent) districts, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime; 91 features for Oklahoma, measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 91 features for Oklahoma, measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
@@ -275,12 +275,12 @@
       "label": "City or Town",
       "group": "geography",
       "area_rank": 13,
-      "rank_note": "600 incorporated cities and towns, live from TIGERweb",
+      "rank_note": "600 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 600 features for Oklahoma (165 cities, 435 towns), measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 600 features for Oklahoma (165 cities, 435 towns), measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
@@ -415,12 +415,12 @@
       "label": "Census County Division",
       "group": "geography",
       "area_rank": 9,
-      "rank_note": "305 census county divisions, live from TIGERweb (no data/app file) — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)",
+      "rank_note": "305 census county divisions, from TIGERweb, drawn from a mirrored tile archive — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)",
       "source": {
         "answers": "The census county division containing the point, and its county.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],

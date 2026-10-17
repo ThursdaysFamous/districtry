@@ -10004,13 +10004,13 @@ function initNorthCarolinaExplorer() {
     "nc-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 100 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "nc-house",          // 120 House districts — the smallest of the three chamber tilings
-    "school-district-unified", // 118 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
+    "school-district-unified", // 118 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
     "county-subdivision", // 1,041 county subdivisions — North Carolina townships, the census fabric below the county
     "school-board-district", // 423 pieces on the boards of 38 school districts that elect members by district, pre-built from the State Board of Elections' precinct-level results — the 421 under Durham's two consolidated districts a mean 117.0 km2 (median 74.5), measured 2026-10-17 on the drawn file: smaller on average than a county subdivision (1,041 tiling the state's 139,389 km2, a mean 133.9), larger than a voting precinct (median 25.32)
-    "zip-code",          // 1,500 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope and kept where they overlap North Carolina
+    "zip-code",          // 853 ZIP Code Tabulation Areas overlapping North Carolina, of the 1,668 the Census counts in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17)
     "tribal-government", // Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "voting-precinct",   // 2,625 precincts tiling the state, pre-built from the State Board of Elections' file as NC OneMap serves it — 53.10 km2 mean area, land and water (median 25.32), measured 2026-10-15 on the drawn file: smaller than the Qualla Boundary's pieces (median 107.2 km2), larger on average than a city or town (20.26 km2 of land)
-    "municipality",      // 552 incorporated places, live from TIGERweb
+    "municipality",      // 552 incorporated places, from TIGERweb, drawn from a mirrored tile archive
     "city-ward",         // 100 council districts and wards in the 17 cities above 25,000 people that elect council members by district or ward, ranked just after City or Town, which each one divides, so a district draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -14003,8 +14003,17 @@ function initNorthCarolinaExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE FOUR LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14483,8 +14492,9 @@ function initNorthCarolinaExplorer() {
 
   /* ---------- 6. County Subdivision — live TIGERweb ----------
    * The WI/IA/MI module with North Carolina's own civil-division
-   * vocabulary. Live TIGERweb fetch (no builder script, no committed
-   * data/app file), so a TIGER vintage roll reaches this layer on its own.
+   * vocabulary. Drawn and answered from a tile archive mirrored from
+   * TIGERweb (scripts/mirror_tiger_tiles.py), so a TIGER vintage roll
+   * reaches this layer through update-tiger-tiles.yml's weekly pull request.
    *
    * A NORTH CAROLINA TOWNSHIP IS A MAP UNIT AND NOT A GOVERNMENT, AND THAT
    * IS THE WHOLE DIFFERENCE FROM MICHIGAN'S CARD. Measured 2026-09-29
@@ -14537,6 +14547,7 @@ function initNorthCarolinaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Township",
     // Every subdivision belongs to exactly one county BY CONSTRUCTION, not by
@@ -14847,6 +14858,7 @@ function initNorthCarolinaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in North
@@ -15138,6 +15150,7 @@ function initNorthCarolinaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     loader: loadSchoolDistrictsUnified,
@@ -15429,13 +15442,15 @@ function initNorthCarolinaExplorer() {
    *
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
    * THAT. Measured 2026-09-29, this envelope returns 1,529 ZCTAs against a
-   * first read of 1,500 that looked like a server cap and is not: the
-   * service's maxRecordCount is 100,000, and splitting the box at longitude
-   * -84 returns 911 + 618 with 29 straddling the seam. North Carolina's box
-   * necessarily reaches into South Carolina, Georgia, Tennessee and
-   * Virginia. The card is unaffected: it answers from a point query, so a
-   * reader always gets the ZCTA they are actually standing in. This is the
-   * same interlocking-states fact metros.json records about the fleet
+   * first read of 1,500 that looked like a server cap and is not: the service's
+   * maxRecordCount is 100,000, and splitting the box at longitude -84 returns
+   * 911 + 618 with 29 straddling the seam. North Carolina's box necessarily
+   * reaches into South Carolina, Georgia, Tennessee and Virginia. Since
+   * 2026-10-17 the card and the overlay read a tile archive that keeps only the
+   * ZCTAs overlapping North Carolina, so the neighbours appear only where the
+   * whole set is drawn (on the raster basemap, or after the archive fails to
+   * load), and the coverage test below hides the layer outside the state. This
+   * is the same interlocking-states fact metros.json records about the fleet
    * hand-off box, and the same behaviour ia/, wi/ and mi/ ship.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
@@ -15512,6 +15527,7 @@ function initNorthCarolinaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

@@ -10008,17 +10008,17 @@ function initMinnesotaExplorer() {
     "county",            // 87 counties, pre-built from TIGERweb; this instance's offline anchor layer
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
     "watershed-district", // 64 bodies covering about 67,000 km2 of the state's 225,000 at a mean 1,050 km2 (median 316, from 20 in Richfield-Bloomington to 15,700 in Red Lake) — smaller on average than a House district and larger than a unified school district
-    "school-district-unified", // 322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings
+    "school-district-unified", // 322 districts covering almost all of Minnesota, from TIGERweb, drawn from a mirrored tile archive — 693 km2 mean feature area, the largest of the three school tilings
     "school-board-district", // 65 board election districts on 14 school boards, a mean 489 km2 (median 175, from 2 in Lake Superior to 3,958 in St. Louis County), measured 2026-10-15 — smaller on average than a unified school district, which they divide, and larger than a commissioner district
     "county-commissioner", // 447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code
-    "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
-    "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
-    "county-subdivision", // 2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water
+    "zip-code",          // 887 ZIP Code Tabulation Areas overlapping Minnesota, of the 1,385 intersecting its envelope, in a mirrored tile archive (measured 2026-10-17) — 250 km2 mean feature area over the 1,385, between a school district and a township
+    "school-district-elementary", // 8 districts the Census places in its elementary tiling, from TIGERweb, drawn from a mirrored tile archive — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
+    "county-subdivision", // 2,762 records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water
     "voting-precinct",   // 4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census
     "tribal-government", // Tribal land — Minnesota has 22 pieces across 13 nations, from the Leech Lake Reservation's 3,393.820 km² down to a 0.146 km² Grand Portage parcel, MEASURED by scripts/build_tribal_areas.py. Ranked on its 6.892 km² MEDIAN, below the voting-precinct fabric's 14.72 km² median (measured 2026-10-10 on the shipped mn-precincts.json, cylindrical equal-area) — medians rather than means, because this layer's own mean of 514 km² is Leech Lake, Red Lake and White Earth and describes none of the other nineteen pieces. The municipality layer below it is live and publishes no median, so no claim is made about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Minnesota is on no tribal land, so the layer carries its own emptyNote. The card names the nation as the Bureau of Indian Affairs names it, its seat (one, the Ho-Chunk Nation's, is in Wisconsin), the districts the Census draws on five of these pieces of land, the 2020 population, and the council from each nation's own published list: nine of the thirteen publish one this project reads weekly, and for the other four the card says why it names nobody. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
-    "municipality",      // 856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area
+    "municipality",      // 856 incorporated places, from TIGERweb, drawn from a mirrored tile archive — every one a city, with no village among them, at a 14.7 km2 mean feature area
     "city-ward",         // 101 council wards and districts in the 22 cities whose councils this app names and which elect by ward or district, a mean 17.7 km2 (median 14.8, from 2.4 in Winona to 71.8 in Duluth) — ranked just after City, which each one divides, so a ward draws on top of its city
-    "school-district-secondary", // 1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota
+    "school-district-secondary", // 1 district, from TIGERweb, drawn from a mirrored tile archive — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota
     "police-station",    // 694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "post-office"        // 1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area
@@ -14786,22 +14786,33 @@ function initMinnesotaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
-  /* ---------- 5-9. live TIGERweb fabrics, point-first ----------
+  /* ---------- 5-9. TIGERweb fabrics, point-first ----------
    * Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
    * answers "which feature holds this point" in one small spatial query, so
-   * a first click never waits on a multi-MB statewide download. The full set
-   * still downloads for the map overlay, on toggle.
+   * a first click never waits on a multi-MB statewide download.
    *
-   * THIS IS THE CHANGE THAT MAKES THE HOOK REAL HERE, AND THAT MATTERS TO A
-   * GENERATED PAGE. scripts/build_privacy_page.py measures which layers send
-   * a reader's selected point to a third-party server by counting the
-   * loadArcGISPointGeoJSON call sites a browser probe sees FIRE, so this
-   * instance's published privacy row moves from "None." to the five layers
-   * below the day this merges. Re-run scripts/probe_point_transmission.mjs
+   * THE CHANGE THAT MADE THE HOOK REAL HERE MOVED A GENERATED PAGE, AND SO
+   * DOES EVERY CHANGE TO WHETHER IT FIRES. scripts/build_privacy_page.py
+   * measures which layers send a reader's selected point to a third-party
+   * server by counting the loadArcGISPointGeoJSON call sites a browser probe
+   * sees FIRE, so this instance's published privacy row moved from "None."
+   * to the layers below the day the hook arrived, and moved again when the
+   * tile archives below did, because a hook that does not fire is not
+   * counted. Re-run scripts/probe_point_transmission.mjs
    * and scripts/build_privacy_page.py with any change to this block. Michigan
    * shipped the wrapper UNUSED and its privacy page claimed a transmission
    * that never happened; the lesson is that dead code is not free when a
    * generator measures the code.
+   *
+   * SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+   * ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+   * scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A
+   * click reads the tile under the point, so neither this hook nor the whole
+   * set is asked for. The hook still fires in a session whose archive failed
+   * to draw or in a browser that cannot decompress one, and the whole set
+   * still downloads for a comparison or for the overlay on the raster
+   * basemap, which is why the loader keeps both. A TIGER vintage roll reaches
+   * these layers through update-tiger-tiles.yml's weekly pull request.
    * ---------- */
   function tigerStatewideLoader(servicePath, layerIndex, outFields, label) {
     var load = makeCached(function () {
@@ -14987,6 +14998,7 @@ function initMinnesotaExplorer() {
 
   registerLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     overlay: {
@@ -15007,6 +15019,7 @@ function initMinnesotaExplorer() {
 
   registerLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Elementary)",
     // the honest words for the 99% of the state this layer does not cover
@@ -15035,6 +15048,7 @@ function initMinnesotaExplorer() {
 
   registerLayer({
     id: "school-district-secondary",
+    tiles: "data/app/tiles/school-district-secondary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Secondary)",
     emptyNote: "This point is not in a secondary-only school district. " +
@@ -15391,16 +15405,17 @@ function initMinnesotaExplorer() {
    * Bureau's areal approximation of the delivery routes sharing a ZIP code,
    * built from census blocks, and the USPS publishes no polygon of its own.
    * ---------- */
+  // The envelope is written out, as every sibling's is, rather than read off
+  // METRO_BBOX, because scripts/mirror_tiger_tiles.py holds the box its tile
+  // archive was fetched with to this literal (it equals METRO_BBOX today).
+  var MN_BBOX_ENVELOPE = { xmin: -97.30, ymin: 43.44, xmax: -89.43, ymax: 49.44 };
   var loadZctas = makeCached(function () {
     var url = TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query" +
       "?where=" + encodeURIComponent("1=1") +
-      "&geometry=" + encodeURIComponent(JSON.stringify({
-        xmin: METRO_BBOX.minLng, ymin: METRO_BBOX.minLat,
-        xmax: METRO_BBOX.maxLng, ymax: METRO_BBOX.maxLat
-      })) +
+      "&geometry=" + encodeURIComponent(JSON.stringify(MN_BBOX_ENVELOPE)) +
       "&geometryType=esriGeometryEnvelope&inSR=4326" +
       "&spatialRel=esriSpatialRelIntersects" +
-      "&outFields=GEOID,NAME,BASENAME&outSR=4326&f=json&geometryPrecision=5";
+      "&outFields=ZCTA5&outSR=4326&f=json&geometryPrecision=5";
     return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) {
@@ -15414,7 +15429,7 @@ function initMinnesotaExplorer() {
     // none either
     return loadArcGISPointGeoJSON(
       TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11", point,
-      "GEOID,NAME,BASENAME", null);
+      "ZCTA5", null);
   };
 
   /* THIS LAYER ALONE DECLARES A COVERAGE TEST, and the reason is the missing
@@ -15440,6 +15455,7 @@ function initMinnesotaExplorer() {
 
   registerLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     coverage: insideMinnesota,
@@ -15448,7 +15464,7 @@ function initMinnesotaExplorer() {
       style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.04 }
     },
     hoverName: function (feature) {
-      var name = findPropCI(feature.properties || {}, ["basename", "name"]);
+      var name = findPropCI(feature.properties || {}, ["zcta5", "basename", "name"]);
       return name != null ? String(name) : null;
     },
     query: function (point, seq) {
@@ -15457,8 +15473,8 @@ function initMinnesotaExplorer() {
         var props = feature.properties || {};
         return {
           seq: seq,
-          zip: findPropCI(props, ["basename"]),
-          geoid: findPropCI(props, ["geoid"])
+          zip: findPropCI(props, ["zcta5", "basename"]),
+          geoid: findPropCI(props, ["zcta5", "geoid"])
         };
       });
     },
@@ -15551,6 +15567,7 @@ function initMinnesotaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Township or City",
     // Every subdivision belongs to exactly one county BY CONSTRUCTION rather
@@ -15758,6 +15775,7 @@ function initMinnesotaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City",
     emptyNote: "This point is not in a city. Most of Minnesota's land is " +

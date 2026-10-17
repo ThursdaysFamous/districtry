@@ -10009,14 +10009,14 @@ function initArkansasExplorer() {
     "ar-senate",         // 35 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 75 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ar-house",          // 100 House districts — smaller on average than a county, larger than a school district
-    "school-district-unified", // 234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
-    "zip-code",          // 942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas
+    "school-district-unified", // 234 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
+    "zip-code",          // 620 ZIP Code Tabulation Areas overlapping Arkansas, of the 942 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Arkansas
     "quorum-court",      // 775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town
     "county-subdivision", // 820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town
     "fire-district",     // 971 fire districts, pre-built from the Arkansas GIS Office's layer — 140.9 km2 mean area (median 123.9), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a school board zone (113.9)
     "school-board-district", // 965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)
     "voting-precinct",   // 2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)
-    "municipality",      // 501 incorporated cities and towns, live from TIGERweb
+    "municipality",      // 501 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive
     "city-ward",         // 56 council wards and districts in the 12 cities above 25,000 people that elect council members by ward, pre-built from the Arkansas GIS Office's layer — 27.2 km2 mean area (median 23.7, from 4.2 in Texarkana to 74.3 in Fort Smith), measured 2026-10-16 on the drawn file — ranked just after City or Town, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13986,8 +13986,17 @@ function initArkansasExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE TWO LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14955,6 +14964,7 @@ function initArkansasExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Arkansas",
@@ -15207,6 +15217,7 @@ function initArkansasExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
     loader: loadSchoolDistrictsUnified,
@@ -15352,10 +15363,12 @@ function initArkansasExplorer() {
    * the exact trap loadTigerLayer's own guard exists for.
    *
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
-   * THAT: the envelope returns 942 ZCTAs (measured 2026-10-13) and
-   * necessarily reaches into Missouri, Tennessee, Mississippi, Louisiana,
-   * Texas and Oklahoma. The card answers
-   * from a point query, and the coverage test below hides the layer outside
+   * THAT: the envelope returns 942 ZCTAs (measured 2026-10-13) and necessarily
+   * reaches into Missouri, Tennessee, Mississippi, Louisiana, Texas and
+   * Oklahoma. Since 2026-10-17 the card and the overlay read a tile archive
+   * that keeps only the ZCTAs overlapping Arkansas, so the neighbours appear
+   * only where the whole set is drawn (on the raster basemap, or after the
+   * archive fails to load), and the coverage test below hides the layer outside
    * the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
@@ -15414,6 +15427,7 @@ function initArkansasExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

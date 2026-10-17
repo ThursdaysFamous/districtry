@@ -207,12 +207,12 @@
       "label": "School District (Unified)",
       "group": "schools",
       "area_rank": 6,
-      "rank_note": "127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly",
+      "rank_note": "127 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 15 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point, where one district runs every grade.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 127 features for Tennessee, measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 127 features for Tennessee, measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -261,12 +261,12 @@
       "label": "Civil District",
       "group": "geography",
       "area_rank": 9,
-      "rank_note": "855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it",
+      "rank_note": "855 civil districts, from TIGERweb, drawn from a mirrored tile archive — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it",
       "source": {
         "answers": "The civil district containing the point, and its county.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 855 features for Tennessee, every one a civil district (\"District N\", LSADC 28, FUNCSTAT N), measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 855 features for Tennessee, every one a civil district (\"District N\", LSADC 28, FUNCSTAT N), measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
@@ -279,12 +279,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 10,
-      "rank_note": "1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee",
+      "rank_note": "643 ZIP Code Tabulation Areas overlapping Tennessee, of the 1,070 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Tennessee",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='47'. 1,070 features in Tennessee's box, measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='47'. 1,070 features in Tennessee's box, measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -297,12 +297,12 @@
       "label": "School District (Elementary)",
       "group": "schools",
       "area_rank": 11,
-      "rank_note": "15 city and special school districts running the lower grades, live from TIGERweb",
+      "rank_note": "15 city and special school districts running the lower grades, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The district running the lower grades at the point, where that is not a unified district.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime; 15 features for Tennessee, measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 15 features for Tennessee, measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
@@ -315,12 +315,12 @@
       "label": "School District (Secondary)",
       "group": "schools",
       "area_rank": 12,
-      "rank_note": "15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb",
+      "rank_note": "15 county districts running the high school over the same ground as the 15 elementary districts, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The district running the high school at the point, where that is not a unified district.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime; 15 features for Tennessee over the same 980 km2 as the elementary layer, measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 15 features for Tennessee over the same 980 km2 as the elementary layer, measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
           }
         ],
@@ -351,12 +351,12 @@
       "label": "City or Town",
       "group": "geography",
       "area_rank": 14,
-      "rank_note": "345 incorporated places, live from TIGERweb",
+      "rank_note": "345 incorporated places, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any, and whether it is a consolidated city-county government.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 345 features for Tennessee (182 cities, 160 towns and 3 consolidated governments), measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 345 features for Tennessee (182 cities, 160 towns and 3 consolidated governments), measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],

@@ -10006,14 +10006,14 @@ function initSouthCarolinaExplorer() {
     "sc-circuit-court",  // 16 judicial circuits of whole counties, 5,185 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (1,804 km2), smaller than a congressional district
     "sc-senate",         // 46 Senate districts — the same count as the state's counties, and drawn independently of them
     "county",            // 46 counties, pre-built from TIGERweb; the instance's offline anchor layer
-    "school-district-unified", // 72 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
+    "school-district-unified", // 72 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
     "sc-house",          // 124 House districts — the smallest of the three chamber tilings
-    "county-subdivision", // 299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)
+    "county-subdivision", // 299 census county divisions, from TIGERweb, drawn from a mirrored tile archive — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)
     "county-council",    // 315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes
     "school-board-district", // 383 districts on the boards of 54 school districts, pre-built from the Revenue and Fiscal Affairs Office's layer — 195.4 km2 mean area (median 128.5), measured 2026-10-16 on the drawn file: smaller than a county council district (median 172.0 km2), larger than most ZIP codes
-    "zip-code",          // 841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina
+    "zip-code",          // 424 ZIP Code Tabulation Areas overlapping South Carolina, of the 841 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside South Carolina
     "voting-precinct",   // 2,315 precincts tiling the state, pre-built from the Revenue and Fiscal Affairs Office's official maps — 35.84 km2 mean area, land and water (median 12.82), measured 2026-10-15 on the drawn file: smaller on average than a census county division (260.4 km2 of land), larger than a city or town (18.58)
-    "municipality",      // 271 incorporated cities and towns, live from TIGERweb
+    "municipality",      // 271 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive
     "city-ward",         // 75 council districts and wards in the 12 cities and towns above 25,000 people that elect council members by district — 22.7 km2 mean area (median 14.9, from 5.1 in Greer to 249.1 in Columbia), measured 2026-10-16 on the drawn file — ranked just after City or Town, which each one divides, so a district draws on top of its city or town
     "tribal-government", // Tribal land — South Carolina has 2 pieces held by one nation, the Catawba Reservation (4.123 km²) and its off-reservation trust land (0.054 km²), both in York County near Rock Hill, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since the reservation is smaller than the city of Rock Hill beside it, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13981,8 +13981,17 @@ function initSouthCarolinaExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE TWO LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14705,6 +14714,7 @@ function initSouthCarolinaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Census County Division",
     subOf: "county",
@@ -14955,6 +14965,7 @@ function initSouthCarolinaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in South
@@ -15316,6 +15327,7 @@ function initSouthCarolinaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
     loader: loadSchoolDistrictsUnified,
@@ -15505,10 +15517,12 @@ function initSouthCarolinaExplorer() {
    * the exact trap loadTigerLayer's own guard exists for.
    *
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
-   * THAT: the envelope returns 841 ZCTAs (measured 2026-10-10) and
-   * necessarily reaches into Georgia and North Carolina. The card answers
-   * from a point query, and the coverage test below hides the layer outside
-   * the state.
+   * THAT: the envelope returns 841 ZCTAs (measured 2026-10-10) and necessarily
+   * reaches into Georgia and North Carolina. Since 2026-10-17 the card and the
+   * overlay read a tile archive that keeps only the ZCTAs overlapping South
+   * Carolina, so the neighbours appear only where the whole set is drawn (on
+   * the raster basemap, or after the archive fails to load), and the coverage
+   * test below hides the layer outside the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -15566,6 +15580,7 @@ function initSouthCarolinaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

@@ -229,12 +229,12 @@
       "label": "School District",
       "group": "schools",
       "area_rank": 7,
-      "rank_note": "234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
+      "rank_note": "234 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 234 features for Arkansas, measured 2026-10-13.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 234 features for Arkansas, measured 2026-10-13.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -247,12 +247,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 8,
-      "rank_note": "942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas",
+      "rank_note": "620 ZIP Code Tabulation Areas overlapping Arkansas, of the 942 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Arkansas",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -359,12 +359,12 @@
       "label": "City or Town",
       "group": "geography",
       "area_rank": 14,
-      "rank_note": "501 incorporated cities and towns, live from TIGERweb",
+      "rank_note": "501 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],

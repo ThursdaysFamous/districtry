@@ -15141,12 +15141,14 @@ function initMichiganExplorer() {
    * why this change also fixes it there.
    *
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
-   * THAT. Michigan's envelope returns 2,000 ZCTAs of which only 1,010 sit
-   * east of -87.60, because the bbox runs west across Lake Michigan to the
-   * far end of the UP — and even that clipped box still catches Chicago's
-   * 60628, since its south-west corner is in Illinois. The card is
-   * unaffected: it answers from a point query, so a reader always gets the
-   * ZCTA they are actually standing in. This is the same interlocking-states
+   * THAT. Michigan's envelope returns 2,000 ZCTAs of which only 1,010 sit east
+   * of -87.60, because the bbox runs west across Lake Michigan to the far end
+   * of the UP — and even that clipped box still catches Chicago's 60628, since
+   * its south-west corner is in Illinois. Since 2026-09-27 the card and the
+   * overlay read a tile archive that keeps only the ZCTAs overlapping Michigan,
+   * so the neighbours appear only where the whole set is drawn (on the raster
+   * basemap, or after the archive fails to load), and the coverage test below
+   * hides the layer outside the state. This is the same interlocking-states
    * fact metros.json records about the fleet hand-off box, and the same
    * behaviour ia/ and wi/ ship.
    *
