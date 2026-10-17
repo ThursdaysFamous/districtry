@@ -260,6 +260,55 @@ TOWN_COUNTIES = {
             "Riceville":    ("3", (43.3619761, -92.5538710)),
         },
     },
+    # HUMBOLDT'S OWN TWO MAPS, sent by the county on 2026-10-16 in answer to
+    # this project's letter: "2021 BOS DISTRICT MAP" colours every PLSS
+    # section by supervisor district and names each district's supervisor in
+    # its legend, and "Humboldt County Voting Precincts REVISED", drawn to the
+    # 2020 census, draws the six precincts with each one's population. Neither
+    # names the other's numbers. The points below are TIGERweb's own interior
+    # points, each tested against the colour the district map paints there:
+    # a township's point against its centre sections (Weaver and Vernon are
+    # split townships whose centres the map paints District 4; Renwick sits in
+    # Vernon's south-east corner, which it paints District 5).
+    #
+    # THE PRECINCT ROUTE WAS MEASURED TOO AND IS NOT WHAT DECIDES THIS. Laid
+    # side by side the district map's five colours are the precinct map's six
+    # shapes -- District 1 Precinct 3, 2 Precinct 1, 3 Precinct 2, 4 Precincts
+    # 4 and 5, 5 Precinct 6 -- and the populations agree (1,927, 1,915, 1,904,
+    # 784 + 1,142 = 1,926 and 1,925). Against the shipped layers five of the
+    # six precincts lie inside the same-numbered district, but Precinct 1 puts
+    # 2 of its 964 interior samples inside this layer's district 1, 51 and 57 m
+    # from the district line where both layers follow the city of Humboldt's
+    # ragged edge -- past check_precincts' 30 m sliver allowance, which was
+    # measured on Madison and is not widened here. So the pairing rests on the
+    # twenty points, which speak for all five districts on their own.
+    "Humboldt": {
+        "source": "the county's 2021 supervisor district map, sent by the "
+                  "county 2026-10-16",
+        "districts": 5,
+        "towns": {
+            "Rutland township":  ("1", (42.7823461, -94.2761456)),
+            "Rutland":           ("1", (42.7614016, -94.2951703)),
+            "Corinth township":  ("2", (42.6825145, -94.2718154)),
+            "Beaver township":   ("3", (42.6824016, -94.1415191)),
+            "Wacousta township": ("4", (42.8702791, -94.3644591)),
+            "Delana township":   ("4", (42.8638615, -94.2663708)),
+            "Humboldt township": ("4", (42.8693050, -94.1377566)),
+            "Vernon township":   ("4", (42.8638209, -94.0307378)),
+            "Avery township":    ("4", (42.7815563, -94.4037827)),
+            "Weaver township":   ("4", (42.6886855, -94.3842425)),
+            "Bode":              ("4", (42.8679839, -94.2862414)),
+            "Ottosen":           ("4", (42.8977481, -94.3760040)),
+            "Bradgate":          ("4", (42.8031545, -94.4205702)),
+            "Livermore":         ("4", (42.8678233, -94.1838028)),
+            "Grove township":    ("5", (42.7697232, -94.1460052)),
+            "Lake township":     ("5", (42.7756699, -94.0308067)),
+            "Norway township":   ("5", (42.6881628, -94.0307891)),
+            "Hardy":             ("5", (42.8101695, -94.0511996)),
+            "Renwick":           ("5", (42.8269260, -93.9813427)),
+            "Thor":              ("5", (42.6880998, -94.0496011)),
+        },
+    },
     "Monona": {
         "source": "https://mononacountyiowa.gov/files/supervisors/"
                   "supervisor_district_map_38766.pdf",

@@ -185,9 +185,24 @@ def shared_map_link():
     compose_app.py, and the address box here reads pasted links with the same
     code, so the front door and the app it opens cannot read one link two
     ways. Returned verbatim, like the theme boot.
+
+    It also carries the state names a link's address is read against
+    (US_STATE_NAMES, for addressStateTag), which must be POSTAL_CODES here:
+    otherwise the state list under the map and the address box above it
+    would disagree about which states there are, so a difference fails.
     """
     with open(MAP_LINK, encoding="utf-8") as fh:
-        return fh.read().rstrip("\n")
+        text = fh.read().rstrip("\n")
+    block = re.search(r"var US_STATE_NAMES = \{(.*?)\};", text, re.S)
+    if not block:
+        fail("engine/shared/map-link.txt has no US_STATE_NAMES table, which the "
+             "address box reads a map link's state from.")
+    names = {k.strip('"').upper(): v
+             for k, v in re.findall(r'("?[a-z]{2}"?):\s*"([^"]+)"', block.group(1))}
+    if names != POSTAL_CODES:
+        fail("US_STATE_NAMES in engine/shared/map-link.txt and POSTAL_CODES here "
+             "disagree: %s" % sorted(set(names.items()) ^ set(POSTAL_CODES.items())))
+    return text
 OUT = os.path.join(REPO_ROOT, "index.html")
 
 # The canonical host TODAY. R5 moves this to districtry.com along with
@@ -233,7 +248,8 @@ QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
     # SEVEN NAMES FOR ONE READER'S QUESTION. A county's governing body is a
-    # board in Illinois and Wisconsin, a board of supervisors in Iowa, a board
+    # board in Illinois and Wisconsin, a board of supervisors in Iowa and
+    # Mississippi, a board
     # of commissioners in Michigan, a county legislature in New York, a
     # fiscal court (or a merged council) in Kentucky, a county council in
     # South Carolina and a quorum court in Arkansas, and
@@ -830,7 +846,12 @@ def render_metros_js(metros):
     discovered, not listed, so a new statewide instance gets it the day it
     ships and the city instances, which publish no such ring, simply keep the
     bbox behaviour. The map in the iframe below already fetches these same
-    files, so nothing new is published to make this work."""
+    files, so nothing new is published to make this work.
+
+    And `whole`, whether the entry answers for its whole state, by the rule
+    the state list under the map uses (state_rows): a landing_name that is a
+    state. A map link's address names its state, and only a whole state's
+    entry can be sent a place on that alone (namedState in the page)."""
     rows = []
     for m in metros:
         b = m["bbox"]
@@ -838,11 +859,11 @@ def render_metros_js(metros):
         outline = ("\n      outline: %s," % json.dumps(rel.replace(os.sep, "/"))
                    if os.path.isfile(os.path.join(REPO_ROOT, rel)) else "")
         rows.append(
-            '    { id: %s, tag: %s, name: %s, url: %s,%s\n'
+            '    { id: %s, tag: %s, name: %s, url: %s, whole: %s,%s\n'
             '      bbox: { minLat: %s, maxLat: %s, minLng: %s, maxLng: %s } }'
             % (json.dumps(m["id"]), json.dumps(m["tag"]), json.dumps(m["landing_name"], ensure_ascii=False),
-               json.dumps(m["url"]), outline, json.dumps(b["minLat"]),
-               json.dumps(b["maxLat"]), json.dumps(b["minLng"]), json.dumps(b["maxLng"]))
+               json.dumps(m["url"]), json.dumps(m["landing_name"] in US_STATES_AND_DC), outline,
+               json.dumps(b["minLat"]), json.dumps(b["maxLat"]), json.dumps(b["minLng"]), json.dumps(b["maxLng"]))
         )
     return ",\n".join(rows)
 
@@ -1799,7 +1820,43 @@ footer .support b { color: var(--ink); }
   function submitLink(link, q, typed) {
     if (link && link.kind === "point") { routePoint(link.lat, link.lng); return; }
     if (link && link.kind !== "text") { resetButton(); setStatus(mapLinkMessage(link), true); return; }
-    searchAndRoute(q, link ? addressAfterName(q) : null, null, typed);
+    var named = link ? namedState(q) : null;
+    if (named && !named.metro) {
+      resetButton();
+      setStatus("That place is in " + stateInSentence(named.tag) +
+        ", which districtry doesn't cover yet \\u2014 see what's covered below.", true);
+      return;
+    }
+    // a link is handed on rebuilt from its words (ENGINE map-link
+    // mapLinkForText), so a short link read here is not read again there
+    searchAndRoute(q, link ? addressAfterName(q) : null, null, link ? mapLinkForText(link) : typed,
+      named && named.metro.whole ? named.metro : null);
+  }
+
+  /* THE STATE A LINK'S ADDRESS NAMES (ENGINE map-link addressStateTag), with
+   * the entry that answers there, or null when it names none. A place in a
+   * state nothing here covers is said to be, and nothing is searched. A
+   * place in a whole state's app goes to that app and no other: a search's
+   * first covered answer somewhere else is another place of the same name,
+   * and when the search finds nothing there the link is handed to that app,
+   * whose own search tries the address alone, the street and the name
+   * (2026-10-16: a Wisconsin place's short link, read here, said "No
+   * matches"). San Francisco's app carries California's tag and answers for
+   * one city, so an address in California decides nothing and the search
+   * routes by position as before. */
+  function namedState(text) {
+    var tag = addressStateTag(text);
+    if (!tag) return null;
+    for (var i = 0; i < METROS.length; i++) {
+      if (METROS[i].tag === tag) return { tag: tag, metro: METROS[i] };
+    }
+    return { tag: tag, metro: null };
+  }
+
+  // A link handed to the app that covers its state, which searches it there
+  function handTo(metro, typed) {
+    setStatus("Opening " + metro.name + "\\u2026", false);
+    window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
   }
 
   /* `bare` is the address without the place's name in front of it, for
@@ -1810,8 +1867,11 @@ footer .support b { color: var(--ink); }
    * When none does but one is on the address's street in its town
    * (labelOnStreet), the app covering that street is opened with what was
    * typed, and shows the street there for the reader to tap the place
-   * (routeStreet). */
-  function searchAndRoute(q, bare, mustCarry, typed) {
+   * (routeStreet).
+   *
+   * `want` is the app a link's address names (namedState): only an answer
+   * there is routed, and when there is none the link is handed to it. */
+  function searchAndRoute(q, bare, mustCarry, typed, want) {
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -1826,22 +1886,24 @@ footer .support b { color: var(--ink); }
             return labelCarriesNumber(f && f.properties && f.properties.housenumber, mustCarry);
           });
         }
-        if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed); return; }
+        if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed, want); return; }
+        if (want && !feats.length) return handTo(want, typed);
         if (!feats.length && street.length) {
           return routeStreet(street, typed).then(function (went) {
             if (!went) { resetButton(); setStatus("That address is outside every place districtry covers today \\u2014 see what's covered below.", true); }
           });
         }
         return loadFleetOutlines().then(function (outlines) {
-          if (!outlines) return routeByRectangles(feats);
+          if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
           // place name ambiguous across states gets a fair shot.
           for (var i = 0; i < feats.length; i++) {
             var c = feats[i] && feats[i].geometry && feats[i].geometry.coordinates;
             if (!c || c.length < 2) continue;
             var metro = fleetOwner(c[1], c[0], outlines);
-            if (metro) { go(metro, { lat: c[1], lng: c[0] }); return; }
+            if (metro && (!want || metro === want)) { go(metro, { lat: c[1], lng: c[0] }); return; }
           }
+          if (want) return handTo(want, typed);
           resetButton();
           setStatus(
             feats.length

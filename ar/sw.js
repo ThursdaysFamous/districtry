@@ -52,6 +52,8 @@ const GEOMETRY_URLS = [
   "./data/app/ar-quorum-court-districts.json",
   "./data/app/ar-townships.json",
   "./data/app/ar-precincts.json",
+  "./data/app/ar-appeals-districts.json",
+  "./data/app/ar-judicial-circuits.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

@@ -80,8 +80,8 @@
       "id": "us-house",
       "label": "U.S. House",
       "group": "political",
-      "area_rank": 1,
-      "rank_note": "9 congressional districts — the largest districts Indiana carries below the state itself",
+      "area_rank": 2,
+      "rank_note": "9 congressional districts — the largest districts Indiana carries below the state apart from the Court of Appeals' three",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
         "boundary": [
@@ -98,7 +98,7 @@
       "id": "in-senate",
       "label": "Indiana Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "50 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The Indiana Senate district covering the point.",
@@ -116,7 +116,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "92 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point, and who won each seat on its board of commissioners and its county council.",
@@ -134,7 +134,7 @@
       "id": "in-house",
       "label": "Indiana House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "100 House districts — the finest political tiling this instance ships today",
       "source": {
         "answers": "The Indiana House district covering the point.",
@@ -152,7 +152,7 @@
       "id": "county-council",
       "label": "County Council District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "241 districts in 55 counties: four per county, and Indianapolis's 25 City-County Council districts",
       "source": {
         "answers": "Which county council district contains the point, and who won that district's seat and the county's three at-large seats; in Marion County, the Indianapolis City-County Council district and its member.",
@@ -167,10 +167,32 @@
       }
     },
     {
+      "id": "in-court-of-appeals",
+      "label": "Court of Appeals District",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "the Court of Appeals' 3 geographic districts of whole counties, 31,411 km2 mean area, measured 2026-10-16 on the drawn file — the largest districts Indiana carries below the state itself, three times a congressional district (10,470 km2)",
+      "source": {
+        "answers": "The Court of Appeals district covering the point, whose three judges stand for retention in that district alone.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by in/scripts/build_in_appeals_districts.py, following the court's own district map (read 2026-10-16), the one place it publishes which counties are in each district; the Indiana Code that sets them is published only through a site that serves this project nothing it can read.",
+            "url": "https://www.in.gov/courts/appeals/images/coa-district-map.jpg"
+          },
+          {
+            "label": "Court of Appeals of Indiana — its districts, and which judges stand for retention where",
+            "url": "https://www.in.gov/courts/appeals/districts/"
+          }
+        ],
+        "people": "No judge is named yet; recorded as gap in-court-of-appeals-judges. The card says three of the court's fifteen judges come from the district and stand for retention only there.",
+        "applies": "Indiana — statewide, all 92 counties."
+      }
+    },
+    {
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles",
       "source": {
         "answers": "The school district covering the point.",
@@ -188,7 +210,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -206,7 +228,7 @@
       "id": "county-subdivision",
       "label": "Township",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29",
       "source": {
         "answers": "The civil township covering the point — in Indiana a real unit of government, not a Census construct.",
@@ -224,7 +246,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -242,7 +264,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29",
       "source": {
         "answers": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point.",
@@ -260,7 +282,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -278,7 +300,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer",
       "source": {
         "answers": "The three nearest fire or EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -296,7 +318,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "1,012 post-office points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -314,7 +336,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Indiana has one such area, the Pokagon Band of Potawatomi's.",
@@ -329,7 +351,7 @@
       }
     }
   ],
-  "min_register_layer": 10,
+  "min_register_layer": 11,
   "anchor_point": {
     "lat": 39.7686,
     "lng": -86.1626,
@@ -359,6 +381,10 @@
     {
       "layer": "county-council",
       "expected": "12"
+    },
+    {
+      "layer": "in-court-of-appeals",
+      "expected": "2"
     }
   ],
   "negative_point": {
@@ -419,6 +445,12 @@
         "min_features": 241,
         "max_features": 241,
         "note": "County council districts in 55 counties and Indianapolis's 25 City-County Council districts, from the Indiana Geographic Information Office's CountyCouncilPolygon layer, built by in/scripts/build_in_council_districts.py."
+      },
+      {
+        "file": "in-appeals-districts.json",
+        "min_features": 3,
+        "max_features": 3,
+        "note": "The Court of Appeals' 1st, 2nd and 3rd Districts, dissolved from the county fabric by in/scripts/build_in_appeals_districts.py following the court's own district map; the 4th and 5th are statewide and not drawn."
       }
     ],
     "rosters": [
@@ -555,6 +587,8 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ]
 }
