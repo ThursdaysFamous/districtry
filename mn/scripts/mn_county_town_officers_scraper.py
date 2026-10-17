@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """The town officers Minnesota counties publish for their own towns, read from
 each county's own list: the board of supervisors, the clerk and the treasurer,
-by name, office and (where the list prints one) the year the term ends.
+by name, office, the year the term ends where the list prints one, and the
+telephone the list prints beside each officer.
 
 WHY THIS EXISTS. mn/scripts/build_mn_town_boards.py names the boards of the 704
 towns that hold their town election in November, from the Secretary of State's
@@ -12,12 +13,21 @@ of all 87 county websites (mn/data/source/mn-county-township-officer-survey.json
 found 42 counties that publish that list. This reads them.
 
 WHAT IS KEPT AND WHAT IS NOT. These lists print each officer's home address,
-telephone and e-mail beside the name. NONE OF THAT IS READ INTO THE OUTPUT: a
-parser takes the office, the name and a term year and nothing else, and
-`check_record` refuses a name carrying a digit, an "@", or a street word, so a
-column that slips cannot carry an address through. The officers are private
-people who hold a small public office; the office and the name are what a
-reader asks for, and the rest stays on the county's page.
+telephone and e-mail beside the name. A parser takes the office, the name, a
+term year and the telephone; the address and the e-mail are never read into
+the output. The telephone ships as the list prints it, whosever line it is,
+under Adam's ruling of 2026-10-17 ("if the official government source uses
+personal phone numbers, we publish those"), with the label the list prints
+beside it ("cell", "home"); a number printed without an area code ships
+without one, never with a guessed one. A parser hands `numbers()` only the
+column or line where its list prints an officer's telephone, and `numbers()`
+returns only text with a telephone's shape, so an address sharing that line
+never reaches a record; `check_record` refuses a name carrying a digit, an
+"@", or a street word, so a column that slips cannot carry an address
+through. A number marked as a fax is not read, and `settle_numbers` leaves
+out a number printed beside two or more people or printed more often than
+beside the officers who carry it: those are a town's or an office's line,
+not the person's.
 
 A LIST IS A DATED STATEMENT, NOT A LIVE ONE. Each county's list carries the
 date it prints ("Updated as of 10/09/2026") where it prints one, and every town
@@ -44,6 +54,7 @@ Usage:
 """
 
 import argparse
+import collections
 import datetime
 import hashlib
 import io
@@ -83,6 +94,9 @@ class Fetcher(object):
         self.last = {}
         self.cache = cache
         self.read = {}
+        # every document read for the county being parsed, which
+        # `settle_numbers` searches for a number printed more than once
+        self.docs = []
 
     def _pace(self, url):
         host = urllib.parse.urlsplit(url).netloc
@@ -103,7 +117,9 @@ class Fetcher(object):
         path = self._cached(url)
         if path and os.path.exists(path):
             with open(path, "rb") as fh:
-                return fh.read(), url
+                data = fh.read()
+            self.docs.append(data)
+            return data, url
         start = url
         for _ in range(6):
             require_robots_once(url, USER_AGENT)
@@ -129,6 +145,7 @@ class Fetcher(object):
                 with open(path, "wb") as fh:
                     fh.write(resp.content)
             self.read[start] = url
+            self.docs.append(resp.content)
             return resp.content, url
         raise RuntimeError("more than five redirects from %s" % start)
 
@@ -245,6 +262,80 @@ def town_key(raw):
     return name.strip(" :*-–")
 
 
+# ---------------------------------------------------------------- telephones
+#
+# A parser hands `numbers()` only the cell or line where its list prints an
+# officer's telephone, and `numbers()` returns only what has a telephone's
+# shape plus the label word printed beside it. The street address, the town
+# and the ZIP code that share those lines never reach a record, and neither
+# does the e-mail.
+
+# A number as the lists print it: with an area code, bracketed or not, or
+# with none (several lists print seven digits), and an extension. One list
+# prints a ten-digit number with one hyphen, after the area code.
+NUMBER = (r"(?:(?:\(\d{3}\)\s*-?\s*|\d{3}[-. ]?)?\d{3}[-. ]\d{4}|\d{3}-\d{7})"
+          r"(?:\s*(?:ext\.?|x)\s*\d{1,5})?")
+NUMBER_RE = re.compile(r"(?<![\d-])%s(?![\d-])" % NUMBER, re.I)
+
+FAX = "fax"
+# A label word as a list prints it, and the label this file ships. "(c)"
+# typed into a word processor arrives as "©", which Polk's list prints after
+# a number exactly where its other entries print "(c)" or "(h)". "Phone" says
+# no more than that it is a telephone, so it ships no label.
+LABEL_OF = {"c": "cell", "©": "cell", "cell": "cell", "h": "home", "home": "home",
+            "w": "work", "work": "work", "b": "business", "business": "business",
+            "o": "office", "office": "office", "mobile": "mobile",
+            "f": FAX, "fax": FAX, "phone": "", "ph": "", "tel": ""}
+_WORDS = r"(?:cell|home|work)(?:\s*phone)?|business|office|mobile|fax|phone|tel|ph"
+# before the number: "Cell:", "cell#", "home phone", "C:", "F:"; a single
+# letter only with its colon, so an initial is never read as a label
+LABEL_BEFORE = re.compile(r"(?:^|[\s,;/(|])(?:(%s)\s*[:#.]?|([chwbof])\s*:)\s*$" % _WORDS, re.I)
+# after it: "(c)", "( C)", "(Cell)", "- Cell", "cell", "©"; a word followed by
+# a colon is the next number's label, not this one's
+LABEL_AFTER = re.compile(r"^\s*(?:[-–]\s*)?(?:\(\s*(%s|[chwbof])\s*\)|(%s)(?!\s*[:#])(?![\w@.])|(©))"
+                         % (_WORDS, _WORDS), re.I)
+
+
+def _label(match):
+    word = next(g for g in match.groups() if g)
+    return LABEL_OF[re.sub(r"\s*phone$", "", word.lower()) or "phone"]
+
+
+def numbers(text, label=None):
+    """Every telephone number in `text`, as the list prints it with its
+    spacing tidied, led by the label the list prints beside it on the
+    `label` side ("before", "after", or None for a list that labels none).
+    A number the list marks as a fax, on either side, is left out."""
+    text = re.sub(r"\s+", " ", str(text).replace("\xa0", " "))
+    found = list(NUMBER_RE.finditer(text))
+    out = []
+    for i, m in enumerate(found):
+        before = LABEL_BEFORE.search(text[found[i - 1].end() if i else 0:m.start()])
+        after = LABEL_AFTER.match(text[m.end():found[i + 1].start() if i + 1 < len(found) else None])
+        if (before and _label(before) == FAX) or (after and _label(after) == FAX):
+            continue
+        hit = before if label == "before" else after if label == "after" else None
+        kind = _label(hit) if hit else ""
+        out.append((kind + " " if kind else "") + m.group(0).strip())
+    return out
+
+
+def add_numbers(rec, found):
+    """Put numbers on a record, in the order its list prints them, for
+    `settle_numbers` to sort into `phone` and `phonesExtra`."""
+    if rec is not None and found:
+        rec.setdefault("_numbers", []).extend(found)
+
+
+def number_key(number):
+    """A number reduced to its last seven digits, its extension and label
+    dropped: a seven-digit number and the same line with its area code are
+    one line."""
+    m = NUMBER_RE.search(number)
+    digits = re.sub(r"\D", "", re.sub(r"(?i)\s*(?:ext\.?|x)\s*\d+$", "", m.group(0) if m else number))
+    return digits[-7:]
+
+
 # ---------------------------------------------------------------- documents
 
 def pdf_lines(data, gap=12, ytol=3):
@@ -289,6 +380,34 @@ def pdf_columns(data, cuts, ytol=3):
                 k = sum(1 for c in cuts if w[0] >= c)
                 cols[k] = (cols[k] + " " + w[4]).strip()
             out.append(cols)
+    return out
+
+
+def pdf_word_rows(data, ytol=3):
+    """The words of each line `pdf_lines` returns, in the same order, as
+    (x0, word) pairs: for a list whose cells run into each other."""
+    import pymupdf  # noqa: PLC0415
+    doc = pymupdf.open(stream=data, filetype="pdf")
+    out = []
+    for page in doc:
+        rows = {}
+        for w in page.get_text("words"):
+            rows.setdefault(round((w[1] + w[3]) / 2 / ytol), []).append(w)
+        for key in sorted(rows):
+            out.append([(w[0], w[4]) for w in sorted(rows[key], key=lambda w: w[0])])
+    return out
+
+
+def by_column(words, edges, slack=5):
+    """A line's words joined under the column each starts in: the rightmost
+    column edge at or left of the word. Words left of every edge (a row's
+    own label) are left out."""
+    out = {}
+    for x, word in words:
+        left = [e for e in edges if e <= x + slack]
+        if left:
+            e = max(left)
+            out[e] = (out.get(e, "") + " " + word).strip()
     return out
 
 
@@ -380,8 +499,15 @@ STOP_RE = re.compile(r"^\*?\s*(?:CITY OF\b|CITIES\b|City of [A-Z]|COUNTY OFFICIA
                      r"Soil\b|SOIL\b|Watershed|WATERSHED|Hospital|HOSPITAL|Unorganized|UNORGANIZED)")
 
 
+def cells_from(cells, x0, x1=None):
+    """The text of the cells whose left edge is at or right of `x0` (and left
+    of `x1`), kept apart so a label in one cell is never read as another's."""
+    return " | ".join(t for x, t in cells if x >= x0 and (x1 is None or x < x1))
+
+
 def generic(lines, header, name_side="after", term=None, term_ahead=0,
-            office_anywhere=True, stop=STOP_RE):
+            office_anywhere=True, stop=STOP_RE, phone_x=None, phone_label=None,
+            phone_below=False):
     """The shape most lists share: a town header, then one line per officer
     carrying an office word and a name.
 
@@ -389,6 +515,10 @@ def generic(lines, header, name_side="after", term=None, term_ahead=0,
     an officer too by returning (town, True). name_side says whether the name
     follows the office or precedes it. term, a compiled regex with one group,
     is looked for on the officer's own line and on the next term_ahead lines.
+    phone_x is the left edge of the column a list prints each officer's
+    telephone in: the numbers in it on the officer's own line are the
+    officer's, and with phone_below so are the ones under it until the next
+    officer or town. phone_label is the side the list prints a label on.
     """
     towns, cur, last = {}, None, None
     ahead = 0
@@ -428,7 +558,11 @@ def generic(lines, header, name_side="after", term=None, term_ahead=0,
                     rec["termEnds"] = m.group(1)
             cur.append(rec)
             last, ahead = rec, term_ahead
+            if phone_x is not None:
+                add_numbers(rec, numbers(cells_from(cells, phone_x), phone_label))
             continue
+        if phone_below and last is not None:
+            add_numbers(last, numbers(cells_from(cells, phone_x), phone_label))
         if term and last is not None and ahead > 0 and "termEnds" not in last:
             m = term.search(" ".join(texts))
             if m:
@@ -453,7 +587,9 @@ def beltrami(f):
     url = "https://www.beltramicountymn.gov/media/e4vfs1jr/town-officers.pdf"
     data, final = f.get(url)
     lines = pdf_lines(data)
-    return generic(lines, caps_header()), first_date(pdf_text(data)), [final]
+    # the telephone ends each officer's line, after the city, state and ZIP
+    return (generic(lines, caps_header(), phone_x=440), first_date(pdf_text(data)),
+            [final])
 
 
 @county("Benton", 12)
@@ -466,7 +602,9 @@ def benton(f):
     data, final = f.get(url)
     lines = pdf_lines(data)
     left_rx = re.compile(r"^([A-Z][A-Z .']+?)\s*(?:TOWNSHIP|TWP)?\s*(?:\(CONTINUED\))?:?$")
-    towns, cur, last = {}, None, None
+    # The telephone column, read from x 440: one number on the officer's own
+    # line, and a second, where an officer gives one, on the line under it.
+    towns, cur, last, dial = {}, None, None, None
     for k, cells in enumerate(lines):
         left = [t for x, t in cells if x < 150]
         rest = [t for x, t in cells if x >= 150]
@@ -487,6 +625,7 @@ def benton(f):
                     name = mm.group(1)
             if name:
                 cur = towns.setdefault(town_key(name).title(), [])
+                dial = None
         if cur is None:
             continue
         texts = [t.strip() for t in rest if t.strip()]
@@ -497,10 +636,13 @@ def benton(f):
             office, seat, after = h
             last = row(office, seat, name_after(texts, 0, after))
             cur.append(last)
+            dial = last
+            add_numbers(dial, numbers(cells_from(cells, 440)))
             m = re.search(r"TERM EXP\.?\s*(20\d\d)", " ".join(texts))
             if m:
                 last["termEnds"] = m.group(1)
             continue
+        add_numbers(dial, numbers(cells_from(cells, 440)))
         m = re.search(r"TERM EXP\.?\s*(20\d\d)", " ".join(texts))
         if m and last is not None and "termEnds" not in last:
             last["termEnds"] = m.group(1)
@@ -522,8 +664,11 @@ def brown(f):
             return town_key(m.group(1)).title()
         return None
     lines = pdf_lines(data)
-    # the township section ends where the city listing begins
-    return generic(lines, header, office_anywhere=False), None, [final]
+    # the township section ends where the city listing begins. The telephone
+    # ends each officer's line, seven digits with a "(w)", "(c)" or "(h)"
+    # after some, and a second number sits under it on the e-mail line.
+    return (generic(lines, header, office_anywhere=False, phone_x=440, phone_label="after",
+                    phone_below=True), None, [final])
 
 
 @county("Carlton", 15)
@@ -564,6 +709,8 @@ def stevens(f):
                 m = re.search(r"(20[2-3]\d)\s*$", " ".join(texts[2:]))
                 if m:
                     rec["termEnds"] = m.group(1)
+                # the telephone column, between the office and the term
+                add_numbers(rec, numbers(cells_from(cells, 250, 355)))
                 cur.append(rec)
     return towns, None, [final]
 
@@ -579,8 +726,10 @@ def chippewa(f):
                 not re.search(r"COUNTY|OFFICE|TOWNSHIP OFFICERS", t):
             return town_key(t).title()
         return None
+    # two telephone columns, "PHONE" and "PHONE (2)", between the e-mail and
+    # the term
     towns = generic(pdf_lines(data), header, term=re.compile(r"\b(20[2-3]\d)\s*$"),
-                    office_anywhere=False)
+                    office_anywhere=False, phone_x=440)
     return towns, None, [final]
 
 
@@ -593,8 +742,9 @@ def waseca(f):
     def header(texts):
         m = rx.match(texts[0])
         return town_key(m.group(1)) if m else None
+    # the telephone is the last column; a number marked "(FAX)" is not read
     towns = generic(pdf_lines(data), header, name_side="before",
-                    term=re.compile(r"^(20[2-3]\d)\b"))
+                    term=re.compile(r"^(20[2-3]\d)\b"), phone_x=690)
     m = re.search(r"Current as of\s*:?\s*(\d{1,2})-([A-Za-z]{3})-(\d{2})", pdf_text(data))
     as_of = None
     if m:
@@ -613,8 +763,10 @@ def steele(f):
                 re.match(r"^[\d-]+$", texts[1]) and not office_of(texts[0]):
             return town_key(texts[0]).title()
         return None
+    # each officer's telephone opens the cell that goes on to the street
+    # address; only the number is taken from it
     towns = generic(pdf_lines(data), header, term=re.compile(r"\b(20[2-3]\d)\s*$"),
-                    office_anywhere=False)
+                    office_anywhere=False, phone_x=255)
     return towns, None, [final]
 
 
@@ -658,6 +810,10 @@ def lincoln(f):
         m = re.search(r"\b(20[2-3]\d)\s*$", texts[-1])
         if m:
             rec["termEnds"] = m.group(1)
+        # the telephone column, after the name and before the address; a
+        # number the town's own column prints under its name is the town's,
+        # and is not read
+        add_numbers(rec, numbers(cells_from(cells, 200, 420), "after"))
         cur.append(rec)
     m = re.search(r"(20\d\d) Township Listing", pdf_text(data))
     return towns, (m.group(1) if m else None), [final]
@@ -682,6 +838,10 @@ def morrison(f):
         t = re.search(r"\b20[2-3]\d-(20[2-3]\d)\s*$", " ".join(texts[4:]))
         if t:
             rec["termEnds"] = t.group(1)
+        # the last cell carries the telephone and then the term, so only its
+        # first number is read: one term is printed with a digit missing,
+        # which gives it a seven-digit telephone's shape
+        add_numbers(rec, numbers(cells_from(cells, 700))[:1])
         towns.setdefault(town_key(m.group(1)), []).append(rec)
     return towns, None, [final]
 
@@ -692,7 +852,8 @@ def roseau(f):
            "2026Township%20Officers.pdf")
     data, final = f.get(url)
     lines = pdf_lines(data)
-    towns, cur, offices = {}, None, None
+    words = pdf_word_rows(data)
+    towns, cur, offices, phoned = {}, None, None, True
     for k, cells in enumerate(lines):
         texts = [t for _, t in cells]
         # A town's heading is a lone word at the left margin, and the
@@ -712,6 +873,9 @@ def roseau(f):
             continue
         if all(office_of(t) for t in texts) and len(texts) >= 3:
             offices = [(x, office_of(t)) for x, t in cells]
+            # a row of offices after the names is a town whose heading was
+            # not read; its numbers belong to nobody here
+            phoned = bool(cur)
             continue
         if offices and not cur and all(
                 looks_like_name(tidy_name(t.lstrip("* "))) or t.startswith("*") for t in texts):
@@ -724,8 +888,19 @@ def roseau(f):
                     office = "Supervisor (chair)"
                 cur.append(row(office, seat, t.lstrip("* ")))
                 cur[-1]["_x"] = x
+                phoned = False
             continue
         head = texts[0].lower() if texts else ""
+        if cur and head.startswith("phone") and not phoned:
+            phoned = True
+            # "Phone #", then each officer's numbers under the officer's
+            # name, several where an officer gives several, read word by word
+            # because a long cell runs into the next column; a "Fax:" is not
+            # read
+            col = {r["_x"]: r for r in cur}
+            for x, text in by_column(words[k], list(col)).items():
+                add_numbers(col[x], numbers(text))
+            continue
         if cur and (head.startswith("term expires") or head.startswith("current term")):
             # "term expires 2028" names the year a term ends; "Current Term
             # 2025-2028" a range whose second year is the end.  A bare
@@ -752,6 +927,13 @@ def marshall(f):
            "Township%20City%20and%20County%20Officials%20List%20May%202026.pdf")
     data, final = f.get(url)
     lines = pdf_lines(data)
+    words = pdf_word_rows(data)
+    # every block, township, city or county, opens with its name repeated
+    # across the columns (a city, state and ZIP code shared by a whole board
+    # repeats too, and carries digits)
+    starts = [k for k, cells in enumerate(lines)
+              if len(cells) >= 3 and len(set(t for _, t in cells)) == 1
+              and not re.search(r"\d|@", cells[0][1])]
     towns = {}
     for k in range(len(lines) - 2):
         texts = [t for _, t in lines[k]]
@@ -772,6 +954,15 @@ def marshall(f):
             m = re.match(r"SUPERVISOR-SEAT ([A-C])", o)
             office = "Supervisor" if m or o == "SUPERVISOR" else office_of(o)[0]
             recs.append(row(office, m.group(1) if m else None, n))
+        # Under each name, in its own column: the address, the telephone, a
+        # second telephone where the officer gives one, and the e-mail, down
+        # to the next block. A column shifts a line when a cell above it
+        # wraps, so the numbers are read by column, not by line.
+        col = {x: rec for (x, _), rec in zip(lines[k + 2], recs)}
+        end = min([j for j in starts if j > k] + [len(lines)])
+        for j in range(k + 3, end):
+            for x, text in by_column(words[j], list(col)).items():
+                add_numbers(col[x], numbers(text))
         towns[town_key(texts[0]).title()] = recs
     m = re.search(r"\b((?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, 20\d\d)\b",
                   pdf_text(data))
@@ -784,22 +975,37 @@ def pennington(f):
     url = "https://co.pennington.mn.us/images/2025/Township%20Officers%20-%202025.pdf"
     data, final = f.get(url)
     lines = pdf_lines(data)
+    words = pdf_word_rows(data)
     header = None
-    towns = {}
-    for cells in lines:
+    towns, under = {}, {}
+    for k, cells in enumerate(lines):
         texts = [t for _, t in cells]
         if len(texts) >= 4 and all(office_of(t) for t in texts):
             header = [(x, office_of(t)) for x, t in cells]
+            under = {}
             continue
         if header and len(cells) >= 3 and cells[0][0] < 40 and \
                 re.match(r"^[A-Z][A-Za-z .']+\*?$", texts[0]) and \
                 all(looks_like_name(t) for t in texts[1:]):
-            recs = []
+            recs, under = [], {}
             for x, t in cells[1:]:
                 col = nearest(x, header, tol=60)
                 if col:
                     recs.append(row(col[1][0], col[1][1], t))
+                    under[x] = recs[-1]
             towns[town_key(texts[0].rstrip("*"))] = recs
+            continue
+        if cells and cells[0][0] < 40:
+            under = {}  # a town whose row is not read lends its numbers to nobody
+            continue
+        # Under the names, rows headed "home phone" and "cell phone" carry
+        # each officer's numbers in the officer's column; the first column's
+        # number is printed hard against the row's heading, so the words are
+        # placed by where each starts.
+        kind = re.match(r"^(home|cell) phone\b", texts[0]) if texts else None
+        if kind and under:
+            for x, text in by_column(words[k], list(under)).items():
+                add_numbers(under[x], [kind.group(1) + " " + n for n in numbers(text)])
     return towns, "2025", [final]
 
 
@@ -808,7 +1014,7 @@ def le_sueur(f):
     url = "https://www.lesueurcounty.gov/DocumentCenter/View/7197"
     data, final = f.get(url)
     towns, cur, prev = {}, None, None
-    for left, pos, seat, name, *_ in pdf_columns(data, [140, 200, 228, 325]):
+    for left, pos, seat, name, rest in pdf_columns(data, [140, 200, 228, 325]):
         h = office_of(pos) if pos else None
         if not h:
             continue
@@ -822,6 +1028,8 @@ def le_sueur(f):
         if cur is None or not name:
             continue
         cur.append(row(office, seat.strip() or None if office == "Supervisor" else None, name))
+        # the last column is the telephone, on the officer's own line
+        add_numbers(cur[-1], numbers(rest))
     return towns, first_date(pdf_text(data)), [final]
 
 
@@ -829,19 +1037,24 @@ def le_sueur(f):
 def norman(f):
     url = "https://www.normanmn.gov/Documents%20Center/Department/Township%20Officers.pdf"
     data, final = f.get(url)
-    towns, cur, header, last = {}, None, None, []
-    for cells in pdf_lines(data):
+    lines, words = pdf_lines(data), pdf_word_rows(data)
+    # Under each name, in its column: the end of term, the address, the
+    # telephone ("C:", "H:" or "O:" before some; an "F:" fax is not read)
+    # and the e-mail, down to the next row of names.
+    towns, cur, header, last, under = {}, None, None, [], {}
+    for k, cells in enumerate(lines):
         texts = [t for _, t in cells]
         if "Mayor" in texts:
             break  # the cities follow the townships, under a Mayor header
         if len(texts) >= 3 and all(office_of(t) for t in texts):
             header = [(x, office_of(t)) for x, t in cells]
+            under = {}
             continue
         if header is None:
             continue
         if len(cells) == 1 and cells[0][0] < 60 and re.match(r"^[A-Z][A-Za-z .']+$", texts[0]):
             cur = towns.setdefault(town_key(texts[0]), [])
-            last = []
+            last, under = [], {}
             continue
         if cur is None:
             continue
@@ -853,13 +1066,17 @@ def norman(f):
             last = []
             continue
         if all(looks_like_name(t) and len(t.split()) >= 2 for t in texts):
-            last = []
+            last, under = [], {}
             for x, t in cells:
                 col = nearest(x, header, tol=80)
                 if col:
                     rec = row(col[1][0], col[1][1], t)
                     cur.append(rec)
                     last.append(rec)
+                    under[x] = rec
+            continue
+        for x, text in by_column(words[k], list(under)).items():
+            add_numbers(under[x], numbers(text, "before"))
     m = re.search(r"Township Officers\s+(20\d\d)\b", pdf_text(data))
     return towns, (m.group(1) if m else None), [final]
 
@@ -892,8 +1109,8 @@ def clay(f):
 @county("Kanabec", 12)
 def kanabec(f):
     # One table of townships and cities together: town, first name, last
-    # name, position, then a telephone and an e-mail that are not read.  A
-    # place with a Mayor or Council row is a city and is left out whole.
+    # name, position, a telephone, and an e-mail that is not read.  A place
+    # with a Mayor or Council row is a city and is left out whole.
     data, final = f.get("https://www.kanabeccounty.org/community/township_information/index.php")
     page = soup(data)
     rows = []
@@ -904,14 +1121,15 @@ def kanabec(f):
             rows.append(cells)
     cities = {c[0] for c in rows if re.match(r"^(?:Mayor|Council)", c[3])}
     towns = {}
-    for place, first, last, position in (c[:4] for c in rows):
+    for place, first, last, position, phone in ((c + [""])[:5] for c in rows):
         if place in cities:
             continue
         hit = office_of(position)
         if not hit or hit[0].startswith("Deputy"):
             continue
-        towns.setdefault(town_key(place), []).append(
-            row(hit[0], hit[1], first + " " + last))
+        rec = row(hit[0], hit[1], first + " " + last)
+        add_numbers(rec, numbers(phone))
+        towns.setdefault(town_key(place), []).append(rec)
     m = re.search(r"\b(20\d\d) TOWNSHIP & CITY OFFICERS", page.get_text(" "))
     return towns, (m.group(1) if m else None), [final]
 
@@ -936,14 +1154,15 @@ def office_cell(text):
 def red_lake(f):
     # One sheet: township in the first column on a town's first row only,
     # with "B" or "March elections" notes under it; then office, name, a
-    # telephone, the term as "2024-2027", an address and an e-mail.  Only
-    # office, name and the term's last year are read.
+    # telephone (most of them seven digits), the term as "2024-2027", an
+    # address and an e-mail.  Office, name, telephone and the term's last
+    # year are read.
     data, final = f.get("https://www.redlakecounty.gov/Documents/Government/"
                         "Township%20Officers%202025.xlsx")
     rows = xlsx_rows(data)
     towns, cur = {}, None
     for r in rows:
-        place, office, name, _phone, term = (str(c).strip() for c in (r + [""] * 5)[:5])
+        place, office, name, phone, term = (str(c).strip() for c in (r + [""] * 5)[:5])
         hit = office_cell(office)
         if place and hit and hit[0] == "Supervisor (chair)":
             # Some towns carry a letter after the name ("Equality A").
@@ -952,6 +1171,7 @@ def red_lake(f):
             continue
         m = re.search(r"20[2-3]\d\s*-\s*(20[2-3]\d)", term)
         cur.append(row(hit[0], hit[1], name, m.group(1) if m else None))
+        add_numbers(cur[-1], numbers(phone))
     title = " ".join(str(c) for r in rows[:3] for c in r)
     m = re.search(r"TOWNSHIP OFFICERS\s+(20\d\d)", title)
     return towns, (m.group(1) if m else None), [final]
@@ -961,8 +1181,8 @@ def red_lake(f):
 def itasca(f):
     # One sheet: township on a town's first row, the town hall's address and
     # an "Upd. 1/27/26" note down the next column; then position, the date the
-    # term ends ("Appt." for an appointed clerk), first and last name, and a
-    # telephone and e-mail that are not read.
+    # term ends ("Appt." for an appointed clerk), first and last name, a
+    # telephone, and an e-mail that is not read.
     data, final = f.get("https://www.itascacountymn.gov/DocumentCenter/View/12319/Township-Officials")
     rows = xlsx_rows(data)
     towns, cur, updated, key = {}, None, {}, None
@@ -985,6 +1205,7 @@ def itasca(f):
         term = r[3].year if isinstance(r[3], datetime.datetime) else None
         if name:
             cur.append(row(hit[0], hit[1], name, term))
+            add_numbers(cur[-1], numbers(r[6]))
     # Each town carries its own "Upd." date, so each town is dated by its own.
     return towns, updated, [final]
 
@@ -993,10 +1214,14 @@ def itasca(f):
 def polk(f):
     # Columns: township, clerk, the clerk's term, treasurer, the treasurer's
     # term, chair and supervisors ("Name - Chairperson"), the supervisor's
-    # term, then each officer's address, which is not read.  A town's name
-    # stands on its first line; "November" / "Election" notes sit under it.
+    # term, then the supervisors' addresses.  A town's name stands on its
+    # first line; "November" / "Election" notes sit under it.  Under each
+    # clerk's and treasurer's name, in the same column, come the address, the
+    # telephone and the e-mail; a supervisor's telephone sits in the last
+    # column under that supervisor's address.  Only the telephones are read
+    # from those cells, with the "(c)", "©", "(h)" or "- Cell" printed after.
     data, final = f.get("https://www.co.polk.mn.us/DocumentCenter/View/3712/Township-Officers-2026")
-    towns, cur = {}, None
+    towns, cur, dial = {}, None, {}
 
     # The year beside each name is not labelled, and the list carries years
     # that have passed (a treasurer's 2024 on a 2026 list) beside ones six
@@ -1010,29 +1235,40 @@ def polk(f):
             continue
         if town and not re.match(r"^(?:November|March|Election)", town) and looks_like_name(clerk):
             cur = towns.setdefault(town_key(town), [])
-            for office, name, term in (("Clerk", clerk, cterm), ("Treasurer", treas, tterm)):
+            dial = {}
+            for col, office, name, term in ((1, "Clerk", clerk, cterm), (3, "Treasurer", treas, tterm)):
                 name = re.sub(r"^Appointed\s+", "", name)
                 if looks_like_name(name):
                     cur.append(row(office, None, name, term_of(term)))
+                    dial[col] = cur[-1]
         if cur is None:
             continue
         sup = re.sub(r"^Appointed\s+", "", sup.strip())
+        if sup and "@" not in sup:
+            # a supervisor's line: the numbers from here down are this
+            # supervisor's, or nobody's if the name is not read
+            dial.pop(7, None)
         m = re.match(r"^(.+?)\s*-\s*(Chairperson|Chair|Supervisor)\b", sup)
         name = m.group(1) if m else sup
         if name and looks_like_name(name) and not re.search(r"@|\d", sup) \
                 and len(name.split()) >= 2:
             office = "Supervisor (chair)" if m and m.group(2).startswith("Chair") else "Supervisor"
             cur.append(row(office, None, name, term_of(sterm)))
+            dial[7] = cur[-1]
+        for col, rec in dial.items():
+            add_numbers(rec, numbers(cols[col], "after"))
     return towns, "2026", [final]
 
 
 @county("Meeker", 15)
 def meeker(f):
     # Each township is three supervisor lines ("2025-2028 A Name, Ch., then
-    # the supervisor's address"); the first carries the clerk and treasurer
-    # ("2026-2027 Name (phone)") and the second the town's name.  Only the
-    # name before the first comma, the seat letter, "Ch." and each term's
-    # last year are read.  The cities follow under a CITY header.
+    # the supervisor's address", with the supervisor's telephone in the
+    # PHONE column before it); the first carries the clerk and treasurer
+    # ("2026-2027 Name (phone)") and the second the town's name.  The name
+    # before the first comma, the seat letter, "Ch.", each term's last year
+    # and the telephones are read; the addresses are not.  The cities follow
+    # under a CITY header.
     data, final = f.get("https://www.meekercountymn.gov/DocumentCenter/View/8143/"
                         "Township--City-Officers-Listing-Feb-2-2026")
     # A supervisor cell starts with its term, its seat letter or both (one
@@ -1052,11 +1288,13 @@ def meeker(f):
                 texts.append(t)
         if texts and texts[0].startswith("CITY"):
             break
-        offs = [m for m in (off_re.match(t) for t in texts) if m]
+        offs = [(m, t) for m, t in ((off_re.match(t), t) for t in texts) if m]
         if len(offs) == 2:
             block = []
-            for office, m in zip(("Clerk", "Treasurer"), offs):
+            for office, (m, t) in zip(("Clerk", "Treasurer"), offs):
                 block.append(row(office, None, m.group(2), m.group(1)))
+                # the telephone that ends the cell, after the name
+                add_numbers(block[-1], numbers(t[m.end() - 5:]))
         if block is None:
             continue
         for t in texts:
@@ -1069,6 +1307,7 @@ def meeker(f):
                 nm = re.sub(r"\s*\([^)]*\)", "", m.group(4))
                 seat = (m.group(2) or m.group(3) or "").strip() or None
                 block.append(row(office, seat, nm, m.group(1)))
+                add_numbers(block[-1], numbers(cells_from(cells, 100, 180)))
     m = re.search(r"Last Updated\s+\w+\s+(\d{1,2}),\s*(20\d\d)", pdf_text(data))
     return towns, ("%s-02-%02d" % (m.group(2), int(m.group(1))) if m else None), [final]
 
@@ -1076,24 +1315,32 @@ def meeker(f):
 @county("Watonwan", 10)
 def watonwan(f):
     # One table per township, headed by the town's name: "Name-Office", then
-    # an address and a telephone that are not read.
+    # an address, which is not read, and a telephone under a "Phone" header,
+    # which is.
     data, final = f.get("https://www.co.watonwan.mn.us/122/Township-Officials")
     towns = {}
     for table in soup(data).find_all("table"):
         title = table.find_previous(string=re.compile(r"\S")).strip()
         recs = towns.setdefault(town_key(title), [])
-        for tr in table.find_all("tr")[1:]:
-            cell = tr.find(["td", "th"])
+        trs = table.find_all("tr")
+        head = [c.get_text(" ", strip=True).lower() for c in trs[0].find_all(["td", "th"])] if trs else []
+        dial = head.index("phone") if "phone" in head else None
+        for tr in trs[1:]:
+            tds = tr.find_all(["td", "th"])
+            cell = tds[0] if tds else None
             m = re.match(r"^(.+?)\s*-\s*([A-Za-z/ ]+)$", cell.get_text(" ", strip=True)) if cell else None
             hit = office_cell(m.group(2)) if m else None
             if hit:
                 recs.append(row(hit[0], hit[1], m.group(1)))
+                if dial is not None and dial < len(tds):
+                    add_numbers(recs[-1], numbers(tds[dial].get_text(" ", strip=True)))
     return towns, None, [final]
 
 
 @county("Wadena", 12)
 def wadena(f):
-    # One table naming each township's clerk, beside a telephone not read.
+    # One table naming each township's clerk, with the clerk's telephone in
+    # the third column.
     data, final = f.get("https://www.co.wadena.mn.us/273/Wadena-County-Townships")
     towns = {}
     for table in soup(data).find_all("table"):
@@ -1104,6 +1351,7 @@ def wadena(f):
         for r in rows[1:]:
             if len(r) >= 2 and r[0] and r[1]:
                 towns[town_key(r[0])] = [row("Clerk", None, r[1])]
+                add_numbers(towns[town_key(r[0])][0], numbers(r[2] if len(r) > 2 else ""))
     return towns, None, [final]
 
 
@@ -1115,12 +1363,30 @@ def page_lines(data):
             else ln.strip() for ln in page.get_text("\n").splitlines() if ln.strip()]
 
 
+def names_someone(line):
+    """True when a line opens with a person's name ahead of a telephone: a
+    second officer's line under one office's label, whose number is that
+    officer's and not the one above."""
+    m = NUMBER_RE.search(line)
+    if not m:
+        return False
+    lead = re.sub(r"(?i)\b(?:%s)\b|[#:()\-.,]" % _WORDS, " ", line[:m.start()])
+    lead = re.sub(r"\s+", " ", lead).strip()
+    return looks_like_name(lead) and len(lead.split()) >= 2
+
+
 def label_pairs(lines, term=False):
     """Officers from a page that prints each office as a line of its own
     ("Clerk", "Supervisor (A)", "Township Treasurer:") with the officer's
     name on the next line, the name ending where a telephone, a run of
     spaces or an address begins.  With `term`, a "6/2027" line before the
-    next office is read as the month and year the term expires."""
+    next office is read as the month and year the term expires.
+
+    The officer's telephone is read from the rest of the name's line and
+    from the next five lines, stopping at the next office's label or at a
+    line that opens with someone else's name; the label printed before a
+    number ("cell#") is kept, and the addresses on those lines are not
+    read."""
     out = []
     for i, line in enumerate(lines[:-1]):
         label = re.sub(r"^Township\s+", "", line).rstrip(": ")
@@ -1145,6 +1411,11 @@ def label_pairs(lines, term=False):
                     year = t.group(1)
                     break
         out.append(row(hit[0], seat, name, year))
+        add_numbers(out[-1], numbers(lines[i + 1][len(name):], "before"))
+        for nxt in lines[i + 2:i + 7]:
+            if office_cell(re.sub(r"^Township\s+", "", nxt)) or names_someone(nxt):
+                break
+            add_numbers(out[-1], numbers(nxt, "before"))
     return out
 
 
@@ -1214,7 +1485,10 @@ def otter_tail(f):
 def faribault(f):
     # A table set sideways on the page: each row is a column of text lines
     # reading upwards.  Cells, in order: township, title, name, then home
-    # and township mailing addresses and a telephone, which are not read.
+    # and township mailing addresses, which are not read, and a telephone,
+    # which is (it is printed in the last cell, sometimes run into the
+    # township's city and ZIP code, so only its telephone-shaped text is
+    # taken).
     import pymupdf  # noqa: PLC0415
     data, final = f.get("https://www.faribaultcountymn.gov/DocumentCenter/View/250/Township-Officers")
     towns = {}
@@ -1234,16 +1508,100 @@ def faribault(f):
             if hit:
                 name = re.sub(r"\s*\([^)]*\)", "", cells[2])
                 towns.setdefault(town_key(cells[0]), []).append(row(hit[0], hit[1], name))
+                add_numbers(towns[town_key(cells[0])][-1], numbers(" | ".join(cells[3:])))
     # The page carries no date; the file's own title ("Township Officers 2025
     # BD.xlsx", from the spreadsheet it was printed from) names the year.
     m = re.search(r"Township Officers (20\d\d)", pymupdf.open(stream=data, filetype="pdf").metadata.get("title") or "")
     return towns, (m.group(1) if m else None), [final]
 
 
+# ---------------------------------------------------------------- settling
+
+def doc_text(data):
+    """The visible text of a document, for counting where a number is
+    printed: a PDF's text, a workbook's cells, a page's text without its
+    scripts and styles (a tel: link's target is not text, so a linked
+    number is counted once)."""
+    if data[:4] == b"%PDF":
+        return pdf_text(data)
+    if data[:2] == b"PK":
+        return "\n".join(" | ".join(str(c) for c in r) for r in xlsx_rows(data))
+    page = soup(data)
+    for t in page(["script", "style"]):
+        t.decompose()
+    return page.get_text("\n")
+
+
+def tel_disagreements(data):
+    """The keys of every number a page shows in a tel: link that dials a
+    different number."""
+    if data[:4] == b"%PDF" or data[:2] == b"PK":
+        return set()
+    bad = set()
+    for a in soup(data).find_all("a", href=re.compile(r"^\s*tel:", re.I)):
+        dials = re.sub(r"\D", "", re.split(r"[;,]|ext", a["href"], flags=re.I)[0])
+        for m in NUMBER_RE.finditer(a.get_text(" ").replace("\xa0", " ")):
+            shown = re.sub(r"\D", "", re.sub(r"(?i)\s*(?:ext\.?|x)\s*\d+$", "", m.group(0)))
+            if not dials.endswith(shown) or (len(shown) == 10 and dials[-10:] != shown):
+                bad |= {number_key(m.group(0)), dials[-7:]}
+    return bad
+
+
+def settle_numbers(towns, docs):
+    """Sort each record's numbers into `phone` and `phonesExtra`, in the
+    order its list prints them, and return how many were left out and why.
+
+    Left out: a number printed beside two or more different people, or
+    printed in the county's documents more often than beside the officers
+    who carry it (a town hall's, a town's own contact line, or another
+    office's), since either is a line that belongs to an office rather
+    than to the person; and every number of an officer whose telephone
+    link dials a different number from the one it shows."""
+    printed = collections.Counter()
+    bad = set()
+    for data in docs:
+        text = re.sub(r"\s+", " ", doc_text(data).replace("\xa0", " "))
+        for m in NUMBER_RE.finditer(text):
+            printed[number_key(m.group(0))] += 1
+        bad |= tel_disagreements(data)
+    people = collections.defaultdict(set)
+    attached = collections.Counter()
+    for recs in towns.values():
+        for rec in recs:
+            for n in rec.get("_numbers", []):
+                people[number_key(n)].add(re.sub(r"[^a-z]", "", rec["name"].lower()))
+                attached[number_key(n)] += 1
+    shared = {k for k, names in people.items() if len(names) > 1}
+    elsewhere = {k for k in attached if printed[k] > attached[k]}
+    left = collections.Counter()
+    for recs in towns.values():
+        for rec in recs:
+            found = rec.pop("_numbers", [])
+            if any(number_key(n) in bad for n in found):
+                left["a telephone link dials another number"] += len(found)
+                continue
+            keep, seen = [], set()
+            for n in found:
+                k = number_key(n)
+                if k in shared:
+                    left["printed beside two or more people"] += 1
+                elif k in elsewhere:
+                    left["printed again away from the officer"] += 1
+                elif k not in seen:
+                    seen.add(k)
+                    keep.append(n)
+            if keep:
+                rec["phone"] = keep[0]
+                if keep[1:]:
+                    rec["phonesExtra"] = keep[1:]
+    return left
+
+
 # ---------------------------------------------------------------- main
 
 def run_county(name, f):
     fn, floor = PARSERS[name]
+    f.docs = []
     towns, as_of, urls = fn(f)
     # A record whose name fails the check is DROPPED and printed rather than
     # shipped: a column that slipped (an interim officer whose office wraps to
@@ -1265,6 +1623,14 @@ def run_county(name, f):
         raise ValueError("%s: %d of %d records failed the name check" % (name, dropped, total))
     if len(towns) < floor:
         raise ValueError("%s: %d towns read, floor %d" % (name, len(towns), floor))
+    # Counts only: a number, like an address, is never printed in a log.
+    left = settle_numbers(towns, f.docs)
+    recs = [r for t in towns.values() for r in t]
+    print("  %s: %d of %d officers carry a telephone, %d a second one; %s" % (
+        name, sum(1 for r in recs if r.get("phone")), len(recs),
+        sum(1 for r in recs if r.get("phonesExtra")),
+        "; ".join("%d left out, %s" % (n, why) for why, n in sorted(left.items()))
+        or "none left out"), file=sys.stderr)
     out = {"towns": towns, "asOf": as_of, "urls": urls}
     if isinstance(urls, dict):  # a county with a page per town
         out["urls"] = [urls[""]]

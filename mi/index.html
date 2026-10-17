@@ -14025,7 +14025,8 @@ function initMichiganExplorer() {
     frag.appendChild(renderPersonRows((board.members || []).map(function (m) {
       return { name: String(m.name), badge: m.role ? String(m.role) : null,
         note: m.seat ? String(m.seat) : null,
-        phone: m.phone || null, email: m.email || null };
+        phone: m.phone || null, phonesExtra: (m.phonesExtra || []).map(String),
+        email: m.email || null };
     })));
     var vacant = board.vacant || [];
     if (vacant.length) {
@@ -14061,8 +14062,11 @@ function initMichiganExplorer() {
     });
     if (!mine.length) return null;
     function row(m) {
+      // phonesExtra: a member's further numbers, each with the page's own
+      // label ("cell ..."), carried since Adam's ruling of 2026-10-17
       return { name: String(m.name), badge: m.role ? String(m.role) : null,
-        phone: m.phone || null, email: m.email || null };
+        phone: m.phone || null, phonesExtra: (m.phonesExtra || []).map(String),
+        email: m.email || null };
     }
     var frag = document.createDocumentFragment();
     frag.appendChild(renderPersonRows(mine.map(row)));

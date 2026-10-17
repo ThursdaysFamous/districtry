@@ -621,7 +621,7 @@
       {
         "file": "mn-county-town-officers.json",
         "min_keys": 360,
-        "note": "The officers of each Minnesota town the election results do not name that a county's own list of township officers names, keyed by the town's Census county subdivision GEOID: names, offices and terms only, with the county, the list's own date where it gives one, the day it was read and the list's address; read by mn/scripts/mn_county_town_officers_scraper.py and built by mn/scripts/build_mn_county_town_officers.py. No scheduled refresh yet."
+        "note": "The officers of each Minnesota town the election results do not name that a county's own list of township officers names, keyed by the town's Census county subdivision GEOID: names, offices, terms and the telephone each list prints beside an officer, with its own label and with no area code added where the list prints none (Adam's ruling of 2026-10-17), never the address or the e-mail, with the county, the list's own date where it gives one, the day it was read and the list's address; read by mn/scripts/mn_county_town_officers_scraper.py and built by mn/scripts/build_mn_county_town_officers.py. No scheduled refresh yet."
       },
       {
         "file": "mn-school-boards.json",

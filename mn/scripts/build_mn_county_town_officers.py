@@ -7,10 +7,20 @@ that hold their town election in November, from the Secretary of State's own
 results. The towns that vote in March are in no file the state publishes, and
 were gap mn-township-officers. Many county auditors publish a list of every
 township's officers, collected each year from the towns' own certifications;
-`mn_county_town_officers_scraper.py` reads those lists (names, offices and
-terms only) into mn/data/source/mn-county-town-officers.json. This joins each
-listed town to its TIGER township record and writes the towns the election
-results do not already name to mn/data/app/mn-county-town-officers.json.
+`mn_county_town_officers_scraper.py` reads those lists (names, offices, terms
+and the telephone numbers each list prints beside an officer) into
+mn/data/source/mn-county-town-officers.json. This joins each listed town to its
+TIGER township record and writes the towns the election results do not already
+name to mn/data/app/mn-county-town-officers.json.
+
+TELEPHONES. An officer's telephone ships as the county's list prints it,
+whosever line it is, under Adam's ruling of 2026-10-17 ("if the official
+government source uses personal phone numbers, we publish those"): the first
+in `phone`, any further one in `phonesExtra`, each with the label the list
+prints beside it ("cell", "home"). A number printed with no area code ships as
+printed, since a mobile can be issued anywhere. `check` holds every value to a
+telephone's shape, so an address or an e-mail that slipped a column cannot
+ship in its place. The address and the e-mail the lists print are never read.
 
 ONE SOURCE PER TOWN. A town the election results name keeps those names and
 gets nothing from here: two lists on one card would disagree about who sits
@@ -69,9 +79,25 @@ ALIASES = {
 MIN_COUNTIES = 25
 MIN_TOWNS = 360
 MIN_OFFICERS = 1700
+# Measured 2026-10-17: 1,537 of the 2,018 officers in this file carry a
+# telephone and 75 a second one. The floors sit at about two thirds of that,
+# so a list whose layout changes and stops its numbers being read fails the
+# build instead of emptying them quietly.
+MIN_PHONES = 1020
+MIN_PHONES_EXTRA = 50
 
 OFFICES = {"Supervisor", "Supervisor (chair)", "Supervisor (vice chair)", "Clerk",
            "Treasurer", "Clerk-Treasurer", "Deputy Clerk", "Deputy Treasurer"}
+
+FIELDS = ("office", "seat", "name", "termEnds", "phone", "phonesExtra")
+
+# A telephone as the lists print it, led by at most one label word and
+# followed by at most one extension. A full match, so a value carrying a
+# street word, a ZIP code, an "@" or a second number fails.
+PHONE_SHAPE = re.compile(
+    r"^(?:(?:cell|home|work|business|office|mobile|personal|residence) )?"
+    r"(?:(?:\(\d{3}\)\s?-?\s?|\d{3}[-. ]?)?\d{3}[-. ]\d{4}|\d{3}-\d{7})"
+    r"(?:\s?(?:ext\.?|x)\s?\d{1,5})?$", re.I)
 
 
 def fail(msg):
@@ -140,8 +166,7 @@ def build(source, townships):
                 "county": county,
                 "read": entry["read"],
                 "sourceUrl": (entry.get("townUrls") or {}).get(town) or entry["urls"][0],
-                "officers": [{k: o[k] for k in ("office", "seat", "name", "termEnds") if o.get(k)}
-                             for o in officers],
+                "officers": [{k: o[k] for k in FIELDS if o.get(k)} for o in officers],
             }
             as_of = (entry.get("townAsOf") or {}).get(town) or entry.get("asOf")
             if as_of:
@@ -161,7 +186,7 @@ def check(roster, source=None):
     problems = []
     boards = load(BOARDS_FILE)
     fips = county_fips()
-    officers = 0
+    officers = phones = extras = 0
     counties = set()
     for geoid, rec in roster.items():
         where = "%s (%s)" % (rec.get("name"), geoid)
@@ -184,13 +209,29 @@ def check(roster, source=None):
             name = o.get("name", "")
             if o.get("office") not in OFFICES:
                 problems.append("%s: %r is not a town office" % (where, o.get("office")))
-            # names and offices only: no address, telephone or e-mail
+            # a name alone: no address, telephone or e-mail inside it
             if not name or re.search(r"\d|@|https?:", name) or len(name.split()) < 2:
                 problems.append("%s: %s %r is not a name alone" % (where, o.get("office"), name))
-            extra = set(o) - {"office", "seat", "name", "termEnds"}
+            extra = set(o) - set(FIELDS)
             if extra:
                 problems.append("%s carries %s, which this file never publishes"
                                 % (where, ", ".join(sorted(extra))))
+            # A telephone must have a telephone's shape. The message names
+            # the county, the town and the office, never the value.
+            dial = o.get("phonesExtra")
+            if dial is not None and (not isinstance(dial, list) or not dial):
+                problems.append("%s County, %s: the %s's further numbers are not a list"
+                                % (rec.get("county"), rec.get("name"), o.get("office")))
+                dial = []
+            values = ([o["phone"]] if "phone" in o else []) + list(dial or [])
+            if dial and "phone" not in o:
+                problems.append("%s County, %s: the %s carries a second number and no first"
+                                % (rec.get("county"), rec.get("name"), o.get("office")))
+            if any(not isinstance(v, str) or not PHONE_SHAPE.match(v) for v in values):
+                problems.append("%s County, %s: the %s's telephone is not a telephone number "
+                                "alone" % (rec.get("county"), rec.get("name"), o.get("office")))
+            phones += "phone" in o
+            extras += bool(dial)
     if source is not None:
         listed = {(e_county, squash(t)) for e_county, e in source["counties"].items()
                   for t in e["towns"]}
@@ -206,6 +247,10 @@ def check(roster, source=None):
         problems.append("%d towns, floor %d" % (len(roster), MIN_TOWNS))
     if officers < MIN_OFFICERS:
         problems.append("%d officers, floor %d" % (officers, MIN_OFFICERS))
+    if phones < MIN_PHONES:
+        problems.append("%d officers carry a telephone, floor %d" % (phones, MIN_PHONES))
+    if extras < MIN_PHONES_EXTRA:
+        problems.append("%d officers carry a second telephone, floor %d" % (extras, MIN_PHONES_EXTRA))
     return problems, officers, len(counties)
 
 

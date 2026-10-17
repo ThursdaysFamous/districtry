@@ -52,8 +52,13 @@ file the state publishes (the March election days answer 404 on the results host
 THEM ARE NAMED FROM THEIR COUNTY'S LIST SINCE 2026-10-16** (`mn/scripts/mn_county_town_officers_scraper.py`
 → `data/source/mn-county-town-officers.json`, then `build_mn_county_town_officers.py` →
 `mn-county-town-officers.json`): a town clerk certifies its officers to the county after each
-election, 42 counties publish the lists, and 29 are read — 2,019 officers, names, offices and
-terms only, never the home addresses and personal e-mail several lists print beside them. One
+election, 42 counties publish the lists, and 29 are read — 2,018 officers as re-read on
+2026-10-17, with names, offices, terms and, under Adam's ruling of that day ("if the official
+government source uses personal phone numbers, we publish those"), the telephone each list prints
+beside an officer (1,537 carry one, 75 a second), never the home addresses or the e-mail the
+lists also print. A number printed beside two people or again away from the officer is the
+office's and stays out, and 180 numbers printed with no area code ship as printed (gap
+`mn-township-phone-area-code`). One
 source per town: a town the election results name keeps those names, and the county list is
 compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 13 counties and
 their reasons are in gap `mn-township-officers`, which still covers about 680 towns, with a

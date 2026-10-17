@@ -287,10 +287,20 @@ def parse_flint(h, also):
     and Cell rows and an e-mail (entity-encoded text). TRAP: an "In Memoriam"
     notice naming a former First Ward member follows the section; only the
     articles inside the section are read, and the ward comes from each
-    article's own label."""
+    article's own label.
+
+    The Office row (the council office's line with the member's extension)
+    is the member's `phone`. The member's own row is carried too, in
+    `phonesExtra`, under Adam's ruling of 2026-10-17 ("if the official
+    government source uses personal phone numbers, we publish those"): a row
+    labelled "Cell" as "cell <number>", and one labelled "Phone" (one member's,
+    read 2026-10-17) as the bare number, since that label says nothing the
+    number does not. A row whose tel: link and printed number disagree is not
+    carried, nor a number printed for a second member or equal to the office
+    line."""
     sec = _section(h, r'<section class="content-block block-directory[^"]*" id="council-members">',
                    r"</section>", "Flint")
-    members = []
+    members, own_rows, offices = [], [], set()
     for a in re.findall(r'<article class="directory-item.*?</article>', sec, re.S):
         hd = re.search(r"<header>\s*<h3[^>]*>(.*?)</h3>(.*?)<div>", a, re.S)
         if not hd:
@@ -298,13 +308,32 @@ def parse_flint(h, also):
         w = re.match(r"^City Council\s*[–-]\s*(\d(?:st|nd|rd|th)) Ward$", txt(hd.group(2)))
         if not w:
             raise ValueError("Flint: %r has label %r" % (txt(hd.group(1)), txt(hd.group(2))))
-        office = None
-        for lab, val in re.findall(r'directory-item-label">(.*?)</div>\s*<a[^>]*>(.*?)</a>', a, re.S):
-            if txt(lab) == "Office":
-                office = phone(txt(val))
+        office, own = None, []
+        for lab, attrs, val in re.findall(
+                r'directory-item-label">(.*?)</div>\s*<a([^>]*)>(.*?)</a>', a, re.S):
+            label, shown = txt(lab), phone(txt(val))
+            if label == "Office":
+                office = shown
+                if shown:
+                    offices.add(re.sub(r"\D", "", shown.split(" ext")[0]))
+            elif label in ("Cell", "Phone") and shown:
+                tel = re.search(r'href="tel:([^"]*)"', attrs)
+                dial = re.sub(r"\D", "", tel.group(1)) if tel else ""
+                if len(dial) == 11 and dial.startswith("1"):
+                    dial = dial[1:]
+                if dial != re.sub(r"\D", "", shown):
+                    continue
+                own.append(("cell " if label == "Cell" else "") + shown)
         em = [e for e in emails_in(a) if e.endswith("@cityofflint.com")]
         members.append(member(hd.group(1), "Council Member", "Ward %d" % _ORDINAL[w.group(1)],
                               office, em[0] if em else None))
+        own_rows.append(own)
+    digits = [re.sub(r"\D", "", n) for own in own_rows for n in own]
+    for rec, own in zip(members, own_rows):
+        keep = [n for n in own if digits.count(re.sub(r"\D", "", n)) == 1
+                and re.sub(r"\D", "", n) not in offices]
+        if keep:
+            rec["phonesExtra"] = keep
     _expect("Flint", members, 9)
     return {"members": members}
 

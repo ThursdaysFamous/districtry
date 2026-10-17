@@ -45,11 +45,21 @@ LABEL = "mi-municipal-officials"
 MIN_UNITS = 63
 MIN_MEMBERS = 448
 
+# A SECOND NUMBER PER MEMBER. Measured 2026-10-17: 9 members carry one, all
+# of them Flint's council (each member's own "Cell" or "Phone" row beside the
+# council office's extension). The floor sits at about two thirds of that, so
+# a page change that stops those rows being read fails the run instead of
+# emptying them quietly.
+MIN_PHONES_EXTRA = 6
+
 PRESERVE_MAX_AGE_DAYS = 45
 
 # Fields a member row may carry, in card order. Anything else is dropped here
-# rather than shipped unreviewed.
-FIELDS = ("name", "role", "seat", "phone", "email")
+# rather than shipped unreviewed. phonesExtra is the list of further numbers a
+# page prints for the same member, each with the page's own label; it carries
+# a member's own line since Adam's ruling of 2026-10-17 ("if the official
+# government source uses personal phone numbers, we publish those").
+FIELDS = ("name", "role", "seat", "phone", "phonesExtra", "email")
 
 
 def fail(msg):
@@ -150,6 +160,9 @@ def build(cache, shipped, table):
         fail("only %d units resolved, floor is %d" % (len(out), MIN_UNITS))
     if total < MIN_MEMBERS:
         fail("only %d members resolved, floor is %d" % (total, MIN_MEMBERS))
+    extra = sum(1 for r in out.values() for m in r["members"] if m.get("phonesExtra"))
+    if extra < MIN_PHONES_EXTRA:
+        fail("only %d members carry a second number, floor is %d" % (extra, MIN_PHONES_EXTRA))
     return {g: out[g] for g in sorted(out)}, total
 
 

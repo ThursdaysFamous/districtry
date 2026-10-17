@@ -14237,6 +14237,11 @@ function initMinnesotaExplorer() {
         if (m.note) notes.push(String(m.note));
         if (notes.length) person.note = notes.join(" · ");
         if (m.phone) person.phone = String(m.phone);
+        // a member's own line beside the office one, as the nation prints it
+        // ("cell 218-…"), since Adam's ruling of 2026-10-17
+        if (m.phonesExtra && m.phonesExtra.length) {
+          person.phonesExtra = m.phonesExtra.map(String);
+        }
         if (m.email) person.email = String(m.email);
         return person;
       })));
@@ -15065,9 +15070,12 @@ function initMinnesotaExplorer() {
    * TOWNSHIP OFFICERS name 416 more towns' boards, each dated to the list and
    * the day it was read (mn/scripts/mn_county_town_officers_scraper.py,
    * build_mn_county_town_officers.py; data/app/mn-county-town-officers.json,
-   * measured 2026-10-16). One source per town: a town the election results
-   * name never takes names from a county list. The rest name nobody;
-   * recorded as gap mn-township-officers.
+   * measured 2026-10-16), with the telephone each list prints beside an
+   * officer, whosever line it is (Adam's ruling of 2026-10-17: "if the
+   * official government source uses personal phone numbers, we publish
+   * those"). One source per town: a town the election results name never
+   * takes names from a county list. The rest name nobody; recorded as gap
+   * mn-township-officers.
    * ---------- */
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
@@ -15081,9 +15089,10 @@ function initMinnesotaExplorer() {
   // The officers a county's own list of township officers names, for the
   // towns no election results file covers (the towns that vote in March),
   // keyed by GEOID; every town carries the list it came from and the day it
-  // was read (mn/scripts/build_mn_county_town_officers.py). Names, offices
-  // and terms only: the lists also print each officer's home address and
-  // telephone, which are never read.
+  // was read (mn/scripts/build_mn_county_town_officers.py). Names, offices,
+  // terms and each officer's telephone as the list prints it (`phone`, and
+  // `phonesExtra` for a second number, each with the list's own label); the
+  // home address and the e-mail the lists also print are never read.
   var loadMnCountyTownOfficers = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-county-town-officers.json", {}, 2);
   });
@@ -15197,7 +15206,11 @@ function initMinnesotaExplorer() {
           return {
             name: String(o.name),
             badge: badge,
-            note: ends >= thisYear ? "term ends " + ends : null
+            note: ends >= thisYear ? "term ends " + ends : null,
+            // as the county's list prints it, a seven-digit number too:
+            // an area code is never guessed
+            phone: o.phone ? String(o.phone) : null,
+            phonesExtra: (o.phonesExtra || []).map(String)
           };
         })));
         var dated = mnListDate(list.asOf), read = mnListDate(list.read);

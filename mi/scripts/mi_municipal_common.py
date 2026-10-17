@@ -34,7 +34,7 @@ case `vacant` exists for.
 A parser returns a dict:
 
     {
-      "members": [ {"name", "role", "seat"?, "phone"?, "email"?}, ... ],
+      "members": [ {"name", "role", "seat"?, "phone"?, "phonesExtra"?, "email"?}, ... ],
       "vacant":  [ "Ward 2" , ... ]          # optional: seats the page says are empty
       "office":  {"phone"?, "email"?}        # optional: the body's own shared line
     }
@@ -42,7 +42,10 @@ A parser returns a dict:
 `role` is the office the page prints ("Mayor", "Council Member", "Trustee").
 `seat` is where the page says the member was elected from ("Ward 2",
 "District 3", "At Large"), and is left out when the page does not say: never
-infer a ward from position on the page.
+infer a ward from position on the page. `phonesExtra` is a list of further
+numbers the page prints for the same member after the one in `phone`, each
+with the page's own label where it gives one ("cell 810-555-0100"); the
+member's own line ships whosever it is (Adam's ruling of 2026-10-17).
 
 A parser RAISES ValueError when the page no longer has the shape it was written
 for. Returning fewer people is worse than raising, because the count gate would
