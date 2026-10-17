@@ -32,6 +32,11 @@ from datetime import datetime, timezone
 HERE = os.path.dirname(os.path.abspath(__file__))
 INSTANCE = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
+# the fleet's withhold list lives at the repo root; after this folder, so a
+# root script never shadows one of this instance's own
+sys.path.append(os.path.join(os.path.dirname(INSTANCE), "scripts"))
+
+import undeliverable  # noqa: E402
 CACHE = os.path.join(HERE, ".cache", "mi_municipal_officials.json")
 OUT = os.path.join(INSTANCE, "data", "app", "mi-municipal-officials.json")
 LABEL = "mi-municipal-officials"
@@ -45,11 +50,23 @@ LABEL = "mi-municipal-officials"
 MIN_UNITS = 63
 MIN_MEMBERS = 448
 
+# A SECOND NUMBER PER MEMBER. Measured 2026-10-17: 9 members carry one, all
+# of them Flint's council (each member's own "Cell" or "Phone" row beside the
+# council office's extension). The floor sits at about two thirds of that, so
+# a page change that stops those rows being read fails the run instead of
+# emptying them quietly.
+MIN_PHONES_EXTRA = 6
+
 PRESERVE_MAX_AGE_DAYS = 45
 
 # Fields a member row may carry, in card order. Anything else is dropped here
-# rather than shipped unreviewed.
-FIELDS = ("name", "role", "seat", "phone", "email")
+# rather than shipped unreviewed. phonesExtra is the list of further numbers a
+# page prints for the same member, each with the page's own label; it carries
+# a member's own line since Adam's ruling of 2026-10-17 ("if the official
+# government source uses personal phone numbers, we publish those"). email is
+# one address, a personal one included where a parser takes it through
+# mi_municipal_common.own_email (Adam's choice of 2026-10-17, "E-mails too").
+FIELDS = ("name", "role", "seat", "phone", "phonesExtra", "email")
 
 
 def fail(msg):
@@ -74,6 +91,14 @@ def clean(geoid, entry, unit):
     """The shipped row for one unit, re-checked against the unit table."""
     from mi_municipal_common import check_roster
     members = [{k: m[k] for k in FIELDS if m.get(k)} for m in entry.get("members") or []]
+    for m in members:
+        # an address scripts/undeliverable.py lists cannot receive mail and
+        # is withheld; the module prints which record lost it
+        if m.get("email"):
+            address, _why = undeliverable.withhold(
+                m["email"], "%s, %s" % (unit["name"], m.get("seat") or m["role"]))
+            if not address:
+                del m["email"]
     if unit["kind"] == "township":
         # A township board in its statutory order (MCL 41.70): supervisor,
         # clerk, treasurer, then trustees in the order the page lists them.
@@ -150,6 +175,9 @@ def build(cache, shipped, table):
         fail("only %d units resolved, floor is %d" % (len(out), MIN_UNITS))
     if total < MIN_MEMBERS:
         fail("only %d members resolved, floor is %d" % (total, MIN_MEMBERS))
+    extra = sum(1 for r in out.values() for m in r["members"] if m.get("phonesExtra"))
+    if extra < MIN_PHONES_EXTRA:
+        fail("only %d members carry a second number, floor is %d" % (extra, MIN_PHONES_EXTRA))
     return {g: out[g] for g in sorted(out)}, total
 
 

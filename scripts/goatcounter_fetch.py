@@ -246,6 +246,29 @@ def pages(html):
 
 
 LAYER_PREFIX = "layer/"
+MAP_LINK_PREFIX = "map-link-read/"
+
+
+def map_links(s, total, start, end, mx, tags):
+    """Every `map-link-read/` row, past the dashboard's ten-row cap.
+
+    One filtered request first; only when that list is cut short is each app
+    (and the front page, `front`) asked for on its own, the way
+    layer_instances() gets past the same cap. Returns (rows, cut): cut is true
+    when even a per-app list was cut short, so the report can say its counts
+    are a floor rather than present a short list as complete.
+    """
+    rows_ = pages(widget(s, 0, total, start, end, max=mx, filter=MAP_LINK_PREFIX))
+    if not (MORE and MORE[0]):
+        return sorted(rows_, key=lambda r: (-r["count"], r["path"])), False
+    got, cut = {}, False
+    for tag in list(tags) + ["front"]:
+        for r in pages(widget(s, 0, total, start, end, max=mx,
+                              filter=MAP_LINK_PREFIX + tag + "/")):
+            if r["path"].startswith(MAP_LINK_PREFIX + tag + "/"):
+                got[r["path"]] = r
+        cut = cut or bool(MORE and MORE[0])
+    return sorted(got.values(), key=lambda r: (-r["count"], r["path"])), cut
 
 
 def layer_instances(s, total, start, end, mx, tags, fleet_rows):
@@ -408,6 +431,8 @@ def collect(s, total, start, end):
     # app-and-reason pairs, not every one.
     locate_fail_rows = pages(widget(s, 0, total, start, end, max=mx,
                                     filter="locate-fail/"))
+    map_link_rows, map_links_cut = map_links(s, total, start, end, mx,
+                                             fleet_tags())
     fleet_layer_rows = pages(widget(s, 0, total, start, end, max=mx,
                                     filter=LAYER_PREFIX))
     per_instance = layer_instances(s, total, start, end, mx, fleet_tags(),
@@ -422,6 +447,13 @@ def collect(s, total, start, end):
         "pages": top(page_rows, 20),
         "top_events": top(event_rows, 20),
         "locate_fail": top(locate_fail_rows, 10),
+        # Every Google Maps / Apple Maps link the search boxes read
+        # (`map-link-read/<tag>/<source>/<form>/<via>/<outcome>`, sent since
+        # 2026-10-17), one row per combination, and whether any list it was
+        # read from was cut short.
+        "map_links": [{"path": r["path"], "count": r["count"]}
+                      for r in map_link_rows],
+        "map_links_cut": map_links_cut,
         "layers": top(layer_rows, 20),
         # The ATTRIBUTED part: one row per (instance, layer) the new event
         # shape has recorded. Empty on the first runs after the engine change

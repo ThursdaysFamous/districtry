@@ -3,12 +3,18 @@
     "clerk": "Jennifer Arnes",
     "municipality": "Barronett",
     "phone": "715-468-4185",
+    "phonesExtra": [
+      "715-468-7633"
+    ],
     "recordUpdated": "2023-11-28"
   },
   "5512905125": {
     "clerk": "Stefanie Naessen",
     "municipality": "Bashaw",
     "phone": "715-468-4449",
+    "phonesExtra": [
+      "715-520-0262"
+    ],
     "recordUpdated": "2025-04-29",
     "url": "https://townofbashaw.org/"
   },
@@ -28,6 +34,9 @@
     "clerk": "Nicole Minnick",
     "municipality": "Birchwood",
     "phone": "715-354-7047",
+    "phonesExtra": [
+      "715-651-3864"
+    ],
     "recordUpdated": "2023-12-11",
     "url": "https://www.tn.birchwood.wi.gov/"
   },
@@ -41,6 +50,9 @@
     "clerk": "Lisa Stowe",
     "municipality": "Casey",
     "phone": "715-635-2022",
+    "phonesExtra": [
+      "218-760-1677"
+    ],
     "recordUpdated": "2025-04-29",
     "url": "https://townofcaseygov.net/"
   },
@@ -74,6 +86,9 @@
     "clerk": "Lolita Olson",
     "municipality": "Gull Lake",
     "phone": "715-466-4665",
+    "phonesExtra": [
+      "715-558-2787"
+    ],
     "recordUpdated": "2024-01-16",
     "url": "https://townofgulllake.us/"
   },
@@ -122,6 +137,9 @@
     "clerk": "Jill Washkuhn",
     "municipality": "Stinnett",
     "phone": "715-634-5300",
+    "phonesExtra": [
+      "715-214-5051"
+    ],
     "recordUpdated": "2025-04-29",
     "url": "https://www.townofstinnett.com/"
   },

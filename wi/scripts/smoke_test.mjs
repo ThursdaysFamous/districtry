@@ -479,6 +479,38 @@ try {
     await context.close();
   }
 
+  // 2a1. THE ANCHOR TOWN'S CLERK SHOWS BOTH NUMBERS THE DIRECTORY PRINTS.
+  //      The anchor is in the Town of Marathon, county subdivision 5507349075;
+  //      no incorporated place holds it (TIGERweb, 2026-10-17, with
+  //      Caledonia's interior point as the control). That town's clerk record
+  //      carries the Elections Commission's Phone 2, which ships since Adam's
+  //      ruling of 2026-10-17 ("if the official government source uses
+  //      personal phone numbers, we publish those"). The numbers expected are
+  //      read from the shipped file, so a new edition of the directory changes
+  //      what is expected; a record carrying no second number is reported,
+  //      never passed as a check. The card shows numbers with no-break
+  //      hyphens, folded back before comparing.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=county,county-subdivision`);
+    const want = await page.evaluate(async () => {
+      const r = await fetch("data/app/town-clerks-073.json").then((x) => x.json());
+      const rec = r["5507349075"] || {};
+      return [rec.phone].concat(rec.phonesExtra || []).filter(Boolean);
+    });
+    const info = await cardText(page, "county-subdivision");
+    const text = (info.text || "").replace(/‑/g, "-");
+    if (want.length < 2) {
+      console.log("  SKIP  county-subdivision clerk's second number — the anchor town's clerk record carries none");
+    } else {
+      const missing = want.filter((n) => !text.includes(n));
+      check("the anchor town's clerk shows both numbers the Elections Commission prints",
+        !info.error && missing.length === 0,
+        `${missing.length} of ${want.length} missing; card ${text.slice(0, 160)}`);
+    }
+    await context.close();
+  }
+
   // 2a2. THE OTHER HALF OF THE ZIP COVERAGE CHECK IN 2b. A hide test alone
   //      passes for a layer that is hidden everywhere, which would be a ZIP
   //      toggle no reader ever sees — so the anchor must show the same layer
@@ -910,6 +942,60 @@ try {
     check("a town's card names its board from the county's list, dated",
           ok, `labels=${JSON.stringify(labels)} badges=${JSON.stringify(badges)} ` +
               `asOf=${JSON.stringify(asOf)}`);
+
+    // ...and each member's telephone numbers as the county prints them, which
+    // ship since Adam's ruling of 2026-10-17. The numbers expected are read
+    // from the shipped file's record for the Town of Beaver (GEOID
+    // 5501905750, the town the point above is in), so a weekly refresh that
+    // changes them changes what is expected; a board carrying none is
+    // reported, never passed. The card writes hyphens as U+2011, folded back
+    // before comparing, and a failure prints counts, not the numbers.
+    const wantNumbers = await page.evaluate(async () => {
+      const r = await fetch("data/app/wi-town-boards.json").then((x) => x.json());
+      const out = [];
+      ((r["5501905750"] || {}).board || []).forEach((p) => {
+        [p.phone].concat(p.phonesExtra || []).forEach((n) => { if (n) out.push(n); });
+      });
+      return out;
+    });
+    const shown = ((await cardText(page, "county-subdivision")).text || "")
+      .replace(/\u2011/g, "-");
+    if (!wantNumbers.length) {
+      console.log("  SKIP  town board members' own numbers — the Town of Beaver's " +
+                  "board carries none in the shipped file");
+    } else {
+      const missing = wantNumbers.filter((n) => !shown.includes(n));
+      check("a town's card shows each board member's number the county prints",
+            missing.length === 0,
+            `${wantNumbers.length} numbers in the file, ${missing.length} not on the card`);
+    }
+
+    // ...and the one e-mail address the county prints beside a member, which
+    // ships since Adam's choice of 2026-10-17 ("E-mails too") as that
+    // member's "Email" link. Beaver's members carry none, so this is the Town
+    // of Thorp, also in Clark County (GEOID 5501979650), at its Census
+    // interior point (TIGERweb, 2026-10-17; the same query gives Beaver the
+    // point above). The addresses expected are read from the shipped file's
+    // record for that town, so a refresh moves them; a board carrying none is
+    // reported, never passed, and a failure prints counts, not the addresses.
+    const mailPage = await booted(
+      context, `${BASE}#point=44.99591,-90.87056&layers=county,county-subdivision`);
+    await cardText(mailPage, "county-subdivision");
+    const wantEmails = await mailPage.evaluate(async () => {
+      const r = await fetch("data/app/wi-town-boards.json").then((x) => x.json());
+      return ((r["5501979650"] || {}).board || []).map((p) => p.email).filter(Boolean);
+    });
+    const mailtos = await mailPage.$$eval("#card-county-subdivision a[href^='mailto:']",
+      (els) => els.map((e) => e.getAttribute("href").slice("mailto:".length)));
+    if (!wantEmails.length) {
+      console.log("  SKIP  town board members' e-mail addresses — the Town of " +
+                  "Thorp's board carries none in the shipped file");
+    } else {
+      const missingMail = wantEmails.filter((e) => mailtos.indexOf(e) === -1);
+      check("a town's card links each board member's e-mail the county prints",
+            missingMail.length === 0,
+            `${wantEmails.length} addresses in the file, ${missingMail.length} not linked on the card`);
+    }
 
     const none = await booted(
       context, `${BASE}#point=43.24830,-89.42913&layers=county,county-subdivision`);

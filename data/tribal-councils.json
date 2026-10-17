@@ -95,7 +95,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "0140": {
    "source": "nation",
@@ -134,7 +134,7 @@
      "note": "the same page also spells it Connors"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "0170": {
    "source": "nation",
@@ -164,7 +164,7 @@
      "role": "Treasurer"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "0335": {
    "source": "nation",
@@ -177,6 +177,9 @@
      "name": "Carlos Hernandez",
      "role": "Chairperson",
      "phone": "218-757-3261 x 1260",
+     "phonesExtra": [
+      "cell 218-410-6451"
+     ],
      "email": "carloshernandez@boisforte-nsn.gov"
     },
     {
@@ -184,12 +187,18 @@
      "role": "Vice-Chairperson",
      "district": "District II",
      "phone": "218-753-4542",
+     "phonesExtra": [
+      "218-410-4008"
+     ],
      "email": "rmoyer@boisforte-nsn.gov"
     },
     {
      "name": "David Morrison, Sr.",
      "role": "Secretary Treasurer",
      "phone": "218-757-3261 x 1267",
+     "phonesExtra": [
+      "cell 218-404-9091"
+     ],
      "email": "davidmorrisonsr@boisforte-nsn.gov"
     },
     {
@@ -197,6 +206,9 @@
      "role": "District Representative",
      "district": "District I",
      "phone": "218-757-3261 x 1262",
+     "phonesExtra": [
+      "cell 218-410-5151"
+     ],
      "email": "jgoggleye@boisforte-nsn.gov"
     },
     {
@@ -204,10 +216,13 @@
      "role": "District Representative",
      "district": "District I",
      "phone": "218-757-3261 x 1263",
+     "phonesExtra": [
+      "cell 218-410-5229"
+     ],
      "email": "mildredholmes@boisforte-nsn.gov"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "0525": {
    "source": "nation",
@@ -237,7 +252,7 @@
      "role": "Executive Committee Member"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "0540": {
    "source": "nation",
@@ -333,7 +348,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1125": {
    "source": "nation",
@@ -366,7 +381,7 @@
      "district": "District II"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1135": {
    "source": "nation",
@@ -400,7 +415,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1370": {
    "source": "nation",
@@ -438,7 +453,7 @@
      "role": "Councilor"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1450": {
    "source": "nation",
@@ -525,7 +540,7 @@
      "email": "David.Greendeer@ho-chunk.com"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1550": {
    "source": "nation",
@@ -555,7 +570,7 @@
      "role": "Sergeant-at-Arms"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1610": {
    "source": "nation",
@@ -652,7 +667,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1825": {
    "source": "state-list",
@@ -756,7 +771,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1940": {
    "source": "nation",
@@ -789,7 +804,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "1963": {
    "source": "nation",
@@ -871,7 +886,7 @@
      "termEnds": "2027"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2055": {
    "source": "nation",
@@ -910,7 +925,7 @@
      "email": "dawn.pendleton@lowersioux-nsn.gov"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2150": {
    "source": "nation",
@@ -955,7 +970,7 @@
      "district": "Bradley District"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2175": {
    "source": "nation",
@@ -1001,7 +1016,7 @@
      "role": "Legislator"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2285": {
    "source": "nation",
@@ -1071,7 +1086,7 @@
      "note": "White Earth Reservation Secretary/Treasurer"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2300": {
    "source": "nation",
@@ -1170,7 +1185,7 @@
      "district": "Tucker"
     }
    ],
-   "read": "2026-10-15"
+   "read": "2026-10-17"
   },
   "2535": {
    "source": "nation",
@@ -1266,7 +1281,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2560": {
    "source": "nation",
@@ -1330,7 +1345,7 @@
      "email": "khill@oneidanation.org"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2890": {
    "source": "nation",
@@ -1384,7 +1399,7 @@
      "role": "Member At Large"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "2980": {
    "source": "nation",
@@ -1509,7 +1524,7 @@
      "termEnds": "July 2027"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "3305": {
    "source": "nation",
@@ -1539,7 +1554,7 @@
      "role": "Representative"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "3320": {
    "source": "nation",
@@ -1573,7 +1588,7 @@
      "role": "Sub-Chief"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "3635": {
    "source": "nation",
@@ -1660,7 +1675,7 @@
      "phone": "906-440-8294"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "3680": {
    "source": "nation",
@@ -1682,7 +1697,7 @@
      "role": "Secretary/Treasurer"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "3885": {
    "source": "state-list",
@@ -1715,7 +1730,7 @@
      "role": "Council Member II"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "4015": {
    "source": "nation",
@@ -1753,7 +1768,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "4445": {
    "source": "nation",
@@ -1788,8 +1803,7 @@
      "phone": "(320) 564-6329"
     }
    ],
-   "read": "2026-10-10",
-   "carriedFrom": "2026-10-10"
+   "read": "2026-10-17"
   },
   "4595": {
    "source": "nation",
@@ -1826,7 +1840,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   },
   "4625": {
    "source": "nation",
@@ -1890,7 +1904,7 @@
      "email": "ireta.frazier@winnebagotribe.com"
     }
    ],
-   "read": "2026-10-13"
+   "read": "2026-10-17"
   }
  }
 }

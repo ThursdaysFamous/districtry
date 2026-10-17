@@ -8815,6 +8815,7 @@ function initNycExplorer() {
       geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
         ", which districtry doesn't cover yet.";
       geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
       return true;
     }
     var row = siblingRow(metro, link.text, function () {
@@ -8830,6 +8831,7 @@ function initNycExplorer() {
     geoResultsList.appendChild(row);
     geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
     geoStatus.className = "geo-status";
+    countLinkRead("other-state");
     return true;
   }
 
@@ -9360,6 +9362,56 @@ function initNycExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   street       the street the address is on, framed for a tap
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9377,11 +9429,13 @@ function initNycExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9390,6 +9444,7 @@ function initNycExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9402,6 +9457,7 @@ function initNycExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9432,6 +9488,8 @@ function initNycExplorer() {
 
   function runGeocodeSearch(q, fromLink) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
@@ -9447,6 +9505,7 @@ function initNycExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
       return runAddressSearch(q, fromLink);
@@ -9504,20 +9563,27 @@ function initNycExplorer() {
       if (results && results.length) {
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
         return;
       }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
-          if (name.length < 3) return;
+          if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
+            if (seq !== districtSearchSeq) return;
+            if (!named || !named.length) return countLinkRead("none");
+            countLinkRead("name");
             listByName(named);
             geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
               "A search for its name, \u201c" + name + "\u201d, found " +
@@ -9588,6 +9654,7 @@ function initNycExplorer() {
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
+    countLinkRead("street");
     var a = addressParts(bare);
     var bounds = null;
     street.forEach(function (r) {
@@ -9671,6 +9738,7 @@ function initNycExplorer() {
    * state's app it belongs to, so a place shared into the installed app
    * opens in its own state. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
@@ -9697,6 +9765,7 @@ function initNycExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q)
@@ -9720,6 +9789,7 @@ function initNycExplorer() {
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -12115,7 +12185,8 @@ function initNycExplorer() {
    *   - mailto:/tel: hrefs are built HERE from a raw address/number — an
    *     email address is never printed (the "Email" label is the link), and
    *     a phone number displays with non-breaking hyphens while its tel:
-   *     href keeps only dialable characters.
+   *     href keeps only dialable characters, and stops where an extension
+   *     begins.
    * A render() returns one wrapper element with class "card-flush"; the
    * styles-card-v2 rules key row padding/borders off that marker. */
   function cardEl(tag, className, text) {
@@ -12134,21 +12205,37 @@ function initNycExplorer() {
     a.textContent = String(label || safe);
     return a;
   }
+  function cardPhoneDial(phone) {
+    // What a tel: link dials for one printed number: its digits (and a
+    // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
+    // "x 236"). Run onto the end of the number, an extension's digits would
+    // dial a different number; the extension stays in the text, where the
+    // reader sees it.
+    var s = String(phone);
+    var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+    if (m) s = s.slice(0, m.index + m[1].length);
+    return s.replace(/[^\d+]/g, "");
+  }
   function cardPhoneLink(phone) {
-    var dial = String(phone).replace(/[^\d+]/g, "");
+    var dial = cardPhoneDial(phone);
     if (!dial) return null;
     var a = cardEl("a", "card-phone", String(phone).replace(/-/g, "‑"));
     a.href = "tel:" + dial;
     return a;
   }
   function cardContactLine(spec) {
-    // spec: { phone?, email?, links?: [{label, url}] } -> one wrapping line of
-    // phone / Email / external links separated by middots; null when empty.
+    // spec: { phone?, phonesExtra?: [string], email?, links?: [{label, url}] }
+    // -> one wrapping line of phones / Email / external links separated by
+    // middots; null when empty. phonesExtra are further numbers the source
+    // prints for the same person, each as printed: a label the source gives
+    // ("cell 519-3104") stays in the text, and only the digits reach the
+    // tel: href, so a label never changes the number dialled.
     var items = [];
-    if (spec.phone) {
-      var p = cardPhoneLink(spec.phone);
+    [spec.phone].concat(spec.phonesExtra || []).forEach(function (phone) {
+      if (!phone) return;
+      var p = cardPhoneLink(phone);
       if (p) items.push(p);
-    }
+    });
     if (spec.email) {
       var e = document.createElement("a");
       e.href = "mailto:" + String(spec.email);
@@ -12209,8 +12296,8 @@ function initNycExplorer() {
     return el;
   }
   function renderPersonRows(people, opts) {
-    // people: [{ name, badge?, note?, phone?, email?, links?, details?:
-    // {label, items}, detailsOpen? }]. A person with details renders as a
+    // people: [{ name, badge?, note?, phone?, phonesExtra?, email?, links?,
+    // details?: {label, items}, detailsOpen? }]. A person with details renders as a
     // native <details> expander; absent fields render nothing (no
     // placeholders, no guessed officeholders — honesty rules).
     var tinted = opts && opts.tinted;
@@ -16666,8 +16753,9 @@ function initNycExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, districtOffice?, capitolOffice? }; office fields only
-    // render when the roster supplies them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
+    // districtOffice?, capitolOffice? }; office fields only render when the
+    // roster supplies them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -16836,6 +16924,25 @@ function initNycExplorer() {
         }
         var person = { name: String(member.name) };
         if (member.party) person.badge = String(member.party);
+        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+        // the chamber prints for the member apart from the office blocks
+        // below, such as a home or cell line. Published since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is shown even where it may be the official's own; a label
+        // the source prints ("home 803-555-0100") rides inside the string.
+        if (member.phone) person.phone = String(member.phone);
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
+        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+        // 2026-10-17 this card showed no legislator's address at all, though
+        // eight states' rosters carried one for nearly every seat. Measured
+        // that day, every one of them is the chamber's own mailbox except
+        // fifteen Arkansas members' personal addresses, which the
+        // legislature's own member pages print and which Adam chose to show
+        // ("E-mails too"). A roster reads it from the legislature's pages or
+        // from Open States' compilation of them.
+        if (member.email) person.email = String(member.email);
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
@@ -18813,20 +18920,20 @@ function initNycExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#00695C": "#4DBDAA", "#06375E": "#528DC6", "#0B5394": "#4FA4FE",
-    "#0B7285": "#4EC2DC", "#0F6F6F": "#52C1C0", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1B7A3D": "#58CD7A", "#1E7A8C": "#57C9E1", "#1F5C3A": "#63B282", "#1F6F6B": "#5DC0BB",
-    "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD",
-    "#3D6B49": "#7EBC8D", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#4DB6AC": "#70FAED",
-    "#5C8F6B": "#95D9A9", "#5E3A8C": "#B283F5", "#63B57F": "#8EFAB2", "#6A3FA0": "#BA8BFE",
-    "#6B4E8C": "#BC95EB", "#6B7280": "#B1BBCE", "#7048E8": "#B4ACFE", "#7A0A1C": "#EB5B61",
-    "#7A1E5C": "#E266B5", "#7A5901": "#D1A444", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF",
-    "#88637C": "#DAA7C9", "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8C6A2E": "#DFB163",
-    "#9550B2": "#E09BFE", "#9C0B24": "#FE6B6E", "#A15C00": "#FD9F3D", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B3261E": "#FE8878",
-    "#B5179E": "#FF82E5", "#B8860B": "#FEC963", "#C8102E": "#FE928F", "#D0564C": "#FEB1A7",
-    "#D06A9C": "#FFBDDA", "#E4572E": "#FFBCA9", "#F72585": "#FDBACD"};
+  var DST_DARK_MAP_COLORS = { "#00695C": "#4CBDAA", "#06375E": "#528DC6", "#0B5394": "#4FA4FE",
+    "#0B7285": "#4DC2DC", "#0F6F6F": "#51C1C0", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1B7A3D": "#58CD7A", "#1E7A8C": "#57C8E1", "#1F5C3A": "#63B181", "#1F6F6B": "#5DC0BA",
+    "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
+    "#3D6B49": "#7EBC8D", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#4DB6AC": "#70FAED",
+    "#5C8F6B": "#95D9A8", "#5E3A8C": "#B283F4", "#63B57F": "#8DFAB2", "#6A3FA0": "#BA8BFE",
+    "#6B4E8C": "#BC95EB", "#6B7280": "#B1BACE", "#7048E8": "#B4ACFE", "#7A0A1C": "#EA5B61",
+    "#7A1E5C": "#E266B4", "#7A5901": "#D1A443", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE",
+    "#88637C": "#DAA7C9", "#8A5A00": "#E3A241", "#8C2E4A": "#F47294", "#8C6A2E": "#DFB162",
+    "#9550B2": "#DF9BFE", "#9C0B24": "#FF696D", "#A15C00": "#FD9F3D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#B0342A": "#FE8B7C", "#B3261E": "#FE8778",
+    "#B5179E": "#FF82E5", "#B8860B": "#FFC85E", "#C8102E": "#FE928F", "#D0564C": "#FEB1A7",
+    "#D06A9C": "#FEBDDA", "#E4572E": "#FEBCA9", "#F72585": "#FFB9CC"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

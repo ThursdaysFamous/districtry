@@ -184,7 +184,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
-        "people": "ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail and the member's page). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.",
+        "people": "ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail, the telephone the page prints, which may be the member's own, and the member's page; never the mailing address the page also prints). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.",
         "applies": "Arkansas — statewide, all 35 districts."
       }
     },
@@ -297,10 +297,28 @@
       }
     },
     {
+      "id": "fire-district",
+      "label": "Fire District",
+      "group": "safety",
+      "area_rank": 11,
+      "rank_note": "971 fire districts, pre-built from the Arkansas GIS Office's layer — 140.9 km2 mean area (median 123.9), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a school board zone (113.9)",
+      "source": {
+        "answers": "Every fire district the point is in on the Arkansas GIS Office's map, with the counties each serves, the date the map gives its lines and, for 90 districts, the record the GIS Office holds for them. Where the map labels ground rather than naming a district (\"Unserviced\" and three others), the card quotes the label.",
+        "boundary": [
+          {
+            "label": "Arkansas GIS Office — FIRE_DISTRICTS, layer 59 of its Boundaries service: the map state law (A.C.A. § 12-10-329, as the layer's own description puts it) has every fire district keep, certified by the mayor, county judge or county fire coordinator, and send to the GIS Office. 971 districts from 973 records, measured 2026-10-16, pre-built by ar/scripts/build_ar_fire_districts.py and shipped with the app. It credits the Arkansas GIS Office and states no licence.",
+            "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59"
+          }
+        ],
+        "people": "NO NAMES. The GIS Office's map names each fire district and the counties it serves but not who runs it, and no statewide list of who runs Arkansas's fire districts has been read, so the card names no one rather than guessing; recorded as gap ar-fire-district-boards.",
+        "applies": "Arkansas — statewide. The districts overlap in places and leave less than 1% of the state in no district, so the card lists every district the map puts the point in."
+      }
+    },
+    {
       "id": "school-board-district",
       "label": "School Board Zone",
       "group": "schools",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)",
       "source": {
         "answers": "The zone a school board elects a member from, and the school district whose board it is. Where a board has resolved to elect every member at large and is changing a seat at a time, the card says when it resolved.",
@@ -322,7 +340,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -340,7 +358,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "501 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -350,15 +368,33 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Arkansas's cities and towns elect councils or boards of directors, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ar-municipal-officeholders.",
+        "people": "In the 19 cities above 25,000 people, the mayor and every council member or director, written down from each city's own pages and proved against those pages by ar/scripts/build_ar_city_councils.py, which fails when a name is no longer on the page it cites (ar/data/app/ar-city-councils.json, 174 seats read 2026-10-16). Each seat says whether its ward's own voters or the whole city elect it, measured from the ballot because nothing the state publishes records it. The Arkansas Municipal League's statewide directory is not used: it gives no ward or position and disagreed with five of the twelve cities' own pages where both could be compared. Arkansas's other 482 cities and towns name nobody yet, recorded as gap ar-municipal-officeholders.",
         "applies": "Arkansas — statewide. A point outside every city and town is unincorporated, which the card states."
+      }
+    },
+    {
+      "id": "city-ward",
+      "label": "City Council District",
+      "group": "political",
+      "area_rank": 15,
+      "rank_note": "56 council wards and districts in the 12 cities above 25,000 people that elect council members by ward, pre-built from the Arkansas GIS Office's layer — 27.2 km2 mean area (median 23.7, from 4.2 in Texarkana to 74.3 in Fort Smith), measured 2026-10-16 on the drawn file — ranked just after City or Town, which each one divides, so a ward draws on top of its city",
+      "source": {
+        "answers": "The city council ward or district containing the point, in the 12 Arkansas cities above 25,000 people that elect council members by ward, and the members its own voters elect.",
+        "boundary": [
+          {
+            "label": "Arkansas GIS Office — MUNICIPAL_WARDS, layer 50 of its Boundaries service: 852 wards of 262 cities and towns, measured 2026-10-16, of which the 56 wards of these twelve cities are pre-built by ar/scripts/build_ar_city_wards.py and shipped with the app. It carries the Arkansas GIS Office's copyright line, states no licence, and describes itself as not representing exact legal boundaries.",
+            "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/50"
+          }
+        ],
+        "people": "The members each ward's own voters elect, from the same city council roster the City or Town card reads (ar/data/app/ar-city-councils.json), written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py. Which seats a ward elects was measured from the ballot, and the builder's check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.",
+        "applies": "The 12 Arkansas cities above 25,000 people that elect council members by ward: Benton, Conway, Fayetteville, Fort Smith, Hot Springs, Little Rock, North Little Rock, Paragould, Pine Bluff, Russellville, Sherwood and Texarkana. The state's map carries wards for 250 more cities and towns. Seven of them are the other cities above 25,000, which elect every seat by the whole city, so a ward there elects no one of its own; the rest are not drawn because this app does not name those councils."
       }
     },
     {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 16,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -376,7 +412,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 17,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -387,14 +423,14 @@
           }
         ],
         "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
-        "applies": "Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+        "applies": "Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question, and the card says where the nearest are and never who serves you; the Fire District layer draws the state's map of fire districts. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
       }
     },
     {
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 16,
+      "area_rank": 18,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -409,7 +445,7 @@
       }
     }
   ],
-  "min_register_layer": 14,
+  "min_register_layer": 16,
   "anchor_point": {
     "lat": 34.7465,
     "lng": -92.2896,
@@ -451,6 +487,10 @@
     {
       "layer": "ar-circuit-court",
       "expected": "6th Judicial Circuit"
+    },
+    {
+      "layer": "fire-district",
+      "expected": "Little Rock"
     }
   ],
   "negative_point": {
@@ -518,6 +558,18 @@
         "note": "Every Arkansas school board zone, pre-built by ar/scripts/build_ar_school_board_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 965 count, after the Jasper district's zone 3, published in two pieces, is joined into one). 5.1 MB, 1.40 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
+        "file": "ar-fire-districts.json",
+        "min_features": 971,
+        "max_features": 971,
+        "note": "Every Arkansas fire district, pre-built by ar/scripts/build_ar_fire_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on each set of counties' extent, measured 99.98%, with no point in two drawn districts where the source has one or none; an exact 971 count, after Siloam Springs, filed in three records, is joined into one). 6.6 MB, 1.99 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "ar-city-wards.json",
+        "min_features": 56,
+        "max_features": 56,
+        "note": "The 56 wards of the 12 cities above 25,000 people that elect council members by ward, pre-built by ar/scripts/build_ar_city_wards.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 4,800-point agreement gate over the twelve cities' extents, measured 99.98% with zero overlaps). 300 KB, 82 KB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
         "file": "ar-appeals-districts.json",
         "min_features": 7,
         "max_features": 7,
@@ -550,6 +602,11 @@
         "file": "ar-county-officials.json",
         "min_keys": 75,
         "note": "Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, built by update-ar-county-officials.yml. That job is scheduled weekly but has not completed since 2026-10-13, because the association's site answers its requests from GitHub's servers with HTTP 403 (measured 2026-10-14 and 2026-10-15), so the file stays as read on 2026-10-13 and every card states that date."
+      },
+      {
+        "file": "ar-city-councils.json",
+        "min_keys": 19,
+        "note": "The mayor and council of each of the 19 cities above 25,000 people, keyed by Census place id, written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn wards. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name has gone from its page and never edits the file; the seats file is changed by hand (ar/WATCH.md)."
       },
       {
         "file": "coverage-gaps.json",

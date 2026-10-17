@@ -843,6 +843,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1156,7 +1162,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">17 layers — 7 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1171,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1238,6 +1244,25 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">Nobody yet: no Oklahoma nation's council list has been read, and the card says so. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.</td>
                 <td data-label="Where it applies">Most of Oklahoma. The Census draws a tribal area over most of the state; the western Panhandle and parts of the north and west lie outside every one.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council ward or district containing the point, in the 9 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn, and the member or members for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2" target="_blank" rel="noopener">City of Oklahoma City — Council Wards, layer 2 of its Government_Boundaries service, served through ArcGIS Online: 8 wards, read 2026-10-16, the ward number alone requested. It states no licence.</a></li>
+                    <li><a href="https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Council_Districts/FeatureServer/0" target="_blank" rel="noopener">City of Tulsa — Council Districts, in the city's ArcGIS Online organization, carrying the metes-and-bounds description of each election district and last edited 29 January 2026: 9 districts, read 2026-10-16, the district number alone requested. Its credit lines name INCOG and the City of Tulsa GIS Department, it says it &quot;should only be used as a supplement to official records&quot;, and it states no licence.</a></li>
+                    <li><a href="https://services.arcgis.com/rt1leD4Hj3sLGHNL/arcgis/rest/services/Council_Wards/FeatureServer/1" target="_blank" rel="noopener">City of Norman — Council Wards, in the city's ArcGIS Online organization, which says it was &quot;Updated September 13, 2022 by O-2223-8&quot;: 8 wards, read 2026-10-16. Its credit line names the City of Norman GIS Services Division, and it states no licence.</a></li>
+                    <li><a href="https://gis.cityofmoore.com/arcgis/rest/services/OpenData/Government_Services/MapServer/20" target="_blank" rel="noopener">City of Moore — City Wards, layer 20 of its Government_Services service: 3 wards, read 2026-10-16, the ward name alone requested. Its service's credit line names the City of Moore, and it states no licence.</a></li>
+                    <li><a href="https://maps.midwestcityok.org/arcgis/rest/services/OpenData/CouncilWards/MapServer/0" target="_blank" rel="noopener">City of Midwest City — Council Wards, layer 0 of its CouncilWards service: 6 wards, read 2026-10-16, the ward number alone requested. It states no licence.</a></li>
+                    <li><a href="https://services6.arcgis.com/LIvKKeLD11lMmJuJ/arcgis/rest/services/Ward_Publishing_Doc/FeatureServer/8" target="_blank" rel="noopener">City of Enid — City Wards, in the city's ArcGIS Online organization, last edited 4 August 2025: 6 wards in 7 records, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://arcgissrv.cityofbartlesville.org/arcgisserver/rest/services/Citymaps/CityMaps_BvilleGIS/MapServer/32" target="_blank" rel="noopener">City of Bartlesville — Wards area, layer 32 of its CityMaps_BvilleGIS service: 5 wards, read 2026-10-16. It states no licence.</a></li>
+                    <li><a href="https://maps.shawneeok.org/server/rest/services/City_Wards/FeatureServer/0" target="_blank" rel="noopener">City of Shawnee — CityWards, layer 0 of its City_Wards service, last edited 22 September 2026: 6 wards, read 2026-10-16, the ward number alone requested (it is in a field named STATEFP10). It states no licence.</a></li>
+                    <li><a href="https://services6.arcgis.com/TI4WUPORw6hUtDVO/arcgis/rest/services/City_Council_Wards/FeatureServer/0" target="_blank" rel="noopener">City of Bixby — Council Wards by Color, in the city's ArcGIS Online organization, last edited 26 August 2026, whose population for three of its five wards is exactly the 2020 census count of the ground each covers: 5 wards in 11 records, read 2026-10-16, the ward number alone requested. It states no licence.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The member or members for each ward, from the same city council roster the City or Town card reads (ok/data/app/ok-city-councils.json), written down from each city's own pages and proved against them by ok/scripts/build_ok_city_councils.py. Which seats a ward elects was read from each city's charter, its own pages, a county election board's results or news reports. Its check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward. Bartlesville's and Bixby's councils choose the mayor from among their members, and the card names the mayor as the member for the ward that elected them.</td>
+                <td data-label="Where it applies">The 9 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn: Bartlesville, Bixby, Enid, Midwest City, Moore, Norman, Oklahoma City, Shawnee and Tulsa. Lawton's and Muskogee's wards elect their own members and are not drawn yet; Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and elect every seat by the whole city, and Stillwater's council has no wards. Ground inside a city's Census outline that its map leaves out lies in no ward here.</td>
               </tr>
             </tbody>
           </table>
@@ -1317,7 +1342,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1335,6 +1360,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ok-county-commissioners.json, from the Oklahoma State Election Board's Roster of State and County Officers (the 2024 edition, compiled after the November 5, 2024 general election), rebuilt weekly by CI. The card lists the county's three commissioners and the county's information telephone line. The roster is a snapshot the counties do not keep current between elections, and the card says so.</td>
                 <td data-label="Where it applies">Oklahoma — statewide, all 77 counties.</td>
+              </tr>
+              <tr id="layer-conservation-district">
+                <th scope="row"><span class="layer-name">Conservation District</span><code>conservation-district</code></th>
+                <td data-label="What it answers">The conservation district covering the point — the primary local unit of government Oklahoma law makes responsible for conserving the state's renewable natural resources — and the district's office.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/cons_dis/FeatureServer/0" target="_blank" rel="noopener">Oklahoma Conservation Commission — cons_dis, layer 0 on ArcGIS Online: 84 districts in 106 records, measured 2026-10-16, pre-built by ok/scripts/build_ok_conservation_districts.py and shipped with the app. The layer states no licence.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Nobody. The Commission's directory of district offices, read by ok/scripts/build_ok_conservation_offices.py, gives each district's office, telephone and e-mail, and the card shows them, credited to the Commission, whose website terms of use allow personal, non-commercial use of its content. The directory names none of a district's five directors, so the card names no one and says how the board is chosen.</td>
+                <td data-label="Where it applies">Oklahoma — statewide; the 84 districts cover the state bar 67 km2 of slivers, most of them along the Kansas line in Texas County.</td>
               </tr>
               <tr id="layer-county-subdivision">
                 <th scope="row"><span class="layer-name">Census County Division</span><code>county-subdivision</code></th>
@@ -1366,7 +1402,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 600 features for Oklahoma (165 cities, 435 towns), measured 2026-10-09.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. Oklahoma's cities and towns elect councils and town boards, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ok-municipal-officeholders.</td>
+                <td data-label="Who it names">In the 16 cities above 25,000 people, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by ok/scripts/build_ok_city_councils.py, which fails when a name is no longer on the page it cites (ok/data/app/ok-city-councils.json). Muskogee's website does not let this app read it, so its names come from the county election board's official results for February 10, 2026 and from news reports, and the card says so. Each seat says whether its ward's own voters or the whole city elect it, read from each city's charter, its own pages, a county election board's results or news reports, because nothing the state publishes records it. Oklahoma's other cities and towns name nobody yet, recorded as gap ok-municipal-officeholders.</td>
                 <td data-label="Where it applies">Oklahoma — statewide. A point outside every city and town is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1485,6 +1521,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Oklahoma — statewide, all 77 counties"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ok/sources.html#dataset-conservation-district",
+      "identifier": "conservation-district",
+      "name": "Conservation District",
+      "description": "The conservation district covering the point — the primary local unit of government Oklahoma law makes responsible for conserving the state's renewable natural resources — and the district's office. Nobody. The Commission's directory of district offices, read by ok/scripts/build_ok_conservation_offices.py, gives each district's office, telephone and e-mail, and the card shows them, credited to the Commission, whose website terms of use allow personal, non-commercial use of its content. The directory names none of a district's five directors, so the card names no one and says how the board is chosen.",
+      "url": "https://districtry.com/ok/sources.html#layer-conservation-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ok/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Oklahoma Conservation Commission — cons_dis, layer 0 on ArcGIS Online: 84 districts in 106 records, measured 2026-10-16, pre-built by ok/scripts/build_ok_conservation_districts.py and shipped with the app. The layer states no licence.",
+          "url": "https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/cons_dis/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Oklahoma — statewide; the 84 districts cover the state bar 67 km2 of slivers, most of them along the Kansas line in Texas County"
       }
     },
     {
@@ -1646,7 +1704,7 @@ table.matrix code {
       "@id": "https://districtry.com/ok/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The city or town containing the point, if any. NO OFFICEHOLDER YET. Oklahoma's cities and towns elect councils and town boards, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ok-municipal-officeholders.",
+      "description": "The city or town containing the point, if any. In the 16 cities above 25,000 people, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by ok/scripts/build_ok_city_councils.py, which fails when a name is no longer on the page it cites (ok/data/app/ok-city-councils.json). Muskogee's website does not let this app read it, so its names come from the county election board's official results for February 10, 2026 and from news reports, and the card says so. Each seat says whether its ward's own voters or the whole city elect it, read from each city's charter, its own pages, a county election board's results or news reports, because nothing the state publishes records it. Oklahoma's other cities and towns name nobody yet, recorded as gap ok-municipal-officeholders.",
       "url": "https://districtry.com/ok/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
@@ -1661,6 +1719,68 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Oklahoma — statewide. A point outside every city and town is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ok/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council ward or district containing the point, in the 9 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn, and the member or members for it. The member or members for each ward, from the same city council roster the City or Town card reads (ok/data/app/ok-city-councils.json), written down from each city's own pages and proved against them by ok/scripts/build_ok_city_councils.py. Which seats a ward elects was read from each city's charter, its own pages, a county election board's results or news reports. Its check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward. Bartlesville's and Bixby's councils choose the mayor from among their members, and the card names the mayor as the member for the ward that elected them.",
+      "url": "https://districtry.com/ok/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/ok/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Oklahoma City — Council Wards, layer 2 of its Government_Boundaries service, served through ArcGIS Online: 8 wards, read 2026-10-16, the ward number alone requested. It states no licence.",
+          "url": "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Tulsa — Council Districts, in the city's ArcGIS Online organization, carrying the metes-and-bounds description of each election district and last edited 29 January 2026: 9 districts, read 2026-10-16, the district number alone requested. Its credit lines name INCOG and the City of Tulsa GIS Department, it says it \"should only be used as a supplement to official records\", and it states no licence.",
+          "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Council_Districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Norman — Council Wards, in the city's ArcGIS Online organization, which says it was \"Updated September 13, 2022 by O-2223-8\": 8 wards, read 2026-10-16. Its credit line names the City of Norman GIS Services Division, and it states no licence.",
+          "url": "https://services.arcgis.com/rt1leD4Hj3sLGHNL/arcgis/rest/services/Council_Wards/FeatureServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Moore — City Wards, layer 20 of its Government_Services service: 3 wards, read 2026-10-16, the ward name alone requested. Its service's credit line names the City of Moore, and it states no licence.",
+          "url": "https://gis.cityofmoore.com/arcgis/rest/services/OpenData/Government_Services/MapServer/20"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Midwest City — Council Wards, layer 0 of its CouncilWards service: 6 wards, read 2026-10-16, the ward number alone requested. It states no licence.",
+          "url": "https://maps.midwestcityok.org/arcgis/rest/services/OpenData/CouncilWards/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Enid — City Wards, in the city's ArcGIS Online organization, last edited 4 August 2025: 6 wards in 7 records, read 2026-10-16. It states no licence.",
+          "url": "https://services6.arcgis.com/LIvKKeLD11lMmJuJ/arcgis/rest/services/Ward_Publishing_Doc/FeatureServer/8"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Bartlesville — Wards area, layer 32 of its CityMaps_BvilleGIS service: 5 wards, read 2026-10-16. It states no licence.",
+          "url": "https://arcgissrv.cityofbartlesville.org/arcgisserver/rest/services/Citymaps/CityMaps_BvilleGIS/MapServer/32"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Shawnee — CityWards, layer 0 of its City_Wards service, last edited 22 September 2026: 6 wards, read 2026-10-16, the ward number alone requested (it is in a field named STATEFP10). It states no licence.",
+          "url": "https://maps.shawneeok.org/server/rest/services/City_Wards/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Bixby — Council Wards by Color, in the city's ArcGIS Online organization, last edited 26 August 2026, whose population for three of its five wards is exactly the 2020 census count of the ground each covers: 5 wards in 11 records, read 2026-10-16, the ward number alone requested. It states no licence.",
+          "url": "https://services6.arcgis.com/TI4WUPORw6hUtDVO/arcgis/rest/services/City_Council_Wards/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 9 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn: Bartlesville, Bixby, Enid, Midwest City, Moore, Norman, Oklahoma City, Shawnee and Tulsa. Lawton's and Muskogee's wards elect their own members and are not drawn yet; Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and elect every seat by the whole city, and Stillwater's council has no wards. Ground inside a city's Census outline that its map leaves out lies in no ward here"
       }
     },
     {

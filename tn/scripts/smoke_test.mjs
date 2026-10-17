@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissi
 const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19", "voting-precinct": "Precinct 19-4", "tn-judicial-district": "20" };
 const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.
 const APP_NAME = "districtry Tennessee";
-const EXPECT_LAYERS = 18;
+const EXPECT_LAYERS = 19;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -519,6 +519,37 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A COMMISSIONER'S OWN NUMBERS RIDE THE PERSON ROW, as the county's
+    //     page prints them, since Adam's ruling of 2026-10-17 ("if the
+    //     official government source uses personal phone numbers, we publish
+    //     those"). The numbers expected are read from the shipped roster for
+    //     the anchor's own district, so a weekly refresh that changes them
+    //     changes what is expected; a district whose members carry none is
+    //     reported, never passed as a check. The card shows numbers with
+    //     no-break hyphens, folded back before comparing.
+    {
+      const id = "county-commissioner";
+      const want = await page.evaluate(async (d) => {
+        const r = await fetch("data/app/tn-commissioners.json").then((x) => x.json());
+        const county = r["47037"] || {};
+        const out = [];
+        ((county.districts || {})[d] || []).forEach((m) => {
+          if (m.phone) out.push(String(m.phone));
+          (m.phonesExtra || []).forEach((p) => out.push(String(p)));
+        });
+        return out;
+      }, EXPECT_DISTRICT[id]);
+      const info = await cardText(page, id);
+      const text = (info.text || "").replace(/\u2011/g, "-");
+      if (!want.length) {
+        console.log(`  SKIP  ${id} member's own number — the anchor district's members print none`);
+      } else {
+        const missing = want.filter((p) => !text.includes(p));
+        check(`${id} card shows every number the county prints for the anchor district`,
+          !info.error && missing.length === 0,
+          missing.length ? `${missing.length} of ${want.length} missing in: ${text.slice(0, 160)}` : `${want.length} shown`);
+      }
+    }
     await context.close();
   }
 
@@ -750,6 +781,11 @@ try {
   //    (c) All three school tilings answer, and an elementary or secondary
   //        card prints the grades in words, because the grade split is why a
   //        reader there has two districts.
+  //    (d) A place above 25,000 names its mayor and every council seat from
+  //        the roster, joined on the Census id the stub carries, with who
+  //        elects each seat; a place outside the 28 says it names nobody.
+  //        The roster is the shipped data/app file, so this also holds the
+  //        join to it.
   {
     function esriPolygon(props) {
       return {
@@ -769,18 +805,36 @@ try {
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
     const cases = [
       {
-        name: "a city names itself a city",
+        name: "a city names itself a city, and names its mayor and board",
         layer: "municipality", service: PLACES,
         props: { GEOID: "4727740", NAME: "Franklin city", BASENAME: "Franklin", STATE: "47", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Franklin city/, /Incorporated city/, /Not named here/],
-        reject: [/consolidated/, /Incorporated town/]
+        want: [/Franklin city/, /Incorporated city/, /Ken Moore/, /Patrick Baggett/, /Alderman, Ward 4/,
+          /elected by Ward 4/, /Alderman, At large/, /Greg Caesar/, /How the seats are elected/,
+          /Read on/, /Which ward this point is in/],
+        reject: [/consolidated/, /Incorporated town/, /Not named here/]
       },
       {
-        name: "a town names itself a town, not a city",
+        name: "a town that elects every seat by the whole town says so",
         layer: "municipality", service: PLACES,
-        props: { GEOID: "4716420", NAME: "Collierville town", BASENAME: "Collierville", STATE: "47", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Collierville town/, /Incorporated town/],
-        reject: [/consolidated/, /Incorporated city/]
+        props: { GEOID: "4769420", NAME: "Smyrna town", BASENAME: "Smyrna", STATE: "47", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Smyrna town/, /Incorporated town/, /Mary Esther Reed/, /Council, At large/,
+          /elected by the whole town/, /All six council members are elected by the voters of the whole town/],
+        reject: [/elected by (Ward|District)/, /this point is in/, /Not named here/, /Incorporated city/]
+      },
+      {
+        name: "a city that ties seats to wards and elects them all citywide says so",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "4770580", NAME: "Spring Hill city", BASENAME: "Spring Hill", STATE: "47", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Spring Hill city/, /John Canepari/, /Alderman, Ward 1/, /elected by the whole city/,
+          /each holds one of the two seats assigned to each of the city's four wards/],
+        reject: [/elected by Ward/, /this point is in/, /Not named here/]
+      },
+      {
+        name: "a town names itself a town, not a city, and names nobody",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "4753460", NAME: "Nolensville town", BASENAME: "Nolensville", STATE: "47", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Nolensville town/, /Incorporated town/, /Not named here/],
+        reject: [/consolidated/, /Incorporated city/, /Mayor/]
       },
       {
         name: "an affix the card does not carry prints NO type row",
@@ -793,8 +847,10 @@ try {
         name: "Nashville's metropolitan government says it is consolidated",
         layer: "municipality", service: PLACES,
         props: { GEOID: "4752006", NAME: "Nashville-Davidson metropolitan government (balance)", BASENAME: "Nashville-Davidson metropolitan government (balance)", STATE: "47", LSADC: "00", FUNCSTAT: "F" },
-        want: [/Nashville-Davidson metropolitan government/, /consolidated city-county government/],
-        reject: [/Incorporated city/, /Incorporated town/]
+        want: [/Nashville-Davidson metropolitan government/, /consolidated city-county government/,
+          /Freddie O'Connell/, /Angie Emery Henderson/, /Vice Mayor/, /elected by the whole county/,
+          /named on the County Commission District card/],
+        reject: [/Incorporated city/, /Incorporated town/, /Not named here/, /this point is in/]
       },
       {
         name: "Hartsville/Trousdale County says it is consolidated",
@@ -968,7 +1024,10 @@ try {
   // county-commissioner NAMES THE DISTRICT'S SEATS FROM THE ROSTER, and says
   // so when it cannot. The roster is stubbed so this holds the CARD to a
   // fixture rather than to whichever names this week's refresh shipped: one
-  // district with a named seat carrying a seat label and a role, a vacancy the
+  // district with a named seat carrying a seat label, a role and two
+  // telephone numbers (the second with the county's own label, which the
+  // card must print, since Adam's ruling of 2026-10-17 that a number a
+  // government prints beside an official ships), a vacancy the
   // county states, and a countywide member, which must render under its own
   // label, and the county's own name for a district the state numbers
   // (Dyer letters its districts), beside the state's number. The second half
@@ -979,9 +1038,10 @@ try {
       "47037": {
         county: "Davidson County", seatTitle: "Council Member", bodyName: "Metro Council",
         sourceUrl: "https://www.nashville.gov/departments/council/districts",
-        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"], phones: true,
+        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"],
         districts: { "19": [
-          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov" },
+          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov",
+            phone: "615-555-0100", phonesExtra: ["cell 615-555-0199"] },
           { vacant: true, seat: "B" }
         ] },
         districtLabels: { "19": "District S" },
@@ -992,6 +1052,7 @@ try {
       ["names the district's seats, a stated vacancy and the countywide members",
        roster,
        [/Fixture Member/, /Council Member/, /Seat A/, /Chair/, /Seat B/, /Vacant/,
+        /615-555-0100/, /cell 615-555-0199/,
         /elects 2 members: 1 named above and 1 seat empty\./,
         /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/,
         /District S\. The state's map numbers it District 19\./],
@@ -1005,7 +1066,9 @@ try {
           r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) }));
       });
       const info = await cardText(page, "county-commissioner");
-      const text = info.text || "";
+      // the card prints a number's hyphens as U+2011 so it never breaks
+      // across a line; fold them back before comparing
+      const text = (info.text || "").replace(/\u2011/g, "-");
       const missing = want.filter((re) => !re.test(text)).map(String);
       check(`county-commissioner ${label}`,
         !info.error && missing.length === 0 && !wantNot.test(text),
@@ -1046,6 +1109,73 @@ try {
     check("a point off tribal land is told so in the layer's own words",
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("1 tribal area") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- City Council District, drawn for the eleven cities above 25,000
+  // people that elect by district or ward and publish a map that can be
+  // drawn, and answered from the shipped files alone, so nothing here is
+  // stubbed. In Clarksville, Franklin, Jackson, Chattanooga and
+  // Hendersonville it names the members that district or ward elects and no
+  // others, in the city's own word for the unit, and in the last two it says
+  // whose copy of the city's map it is drawn from; in Memphis, where a point lies in a district and a super district,
+  // it names the district's member and the super district's three under
+  // their own labels and nobody else; in Knoxville, whose districts are not
+  // drawn, in Murfreesboro, which elects every seat by the whole city, and
+  // at the State Capitol, whose council districts are the County Commission
+  // District layer's, there is nothing to answer and the card says why.
+  // Each district point is one the ward builder's own anchors hold, and the
+  // other three are inside the Census outline of the city named (TIGERweb,
+  // read 2026-10-16); the Knoxville point is also one of the ward builder's
+  // points that must fall in no district.
+  for (const c of [
+    { name: "Clarksville", point: "36.52980,-87.35950",
+      want: [/Ward 6\b/, /Clarksville City Council/, /Wanda Smith/, /Council, Ward 6/, /elected by Ward 6/,
+        /The mayor\. The City or Town card names the mayor\./, /Clarksville and Montgomery County's shared GIS/,
+        /within 4 metres/],
+      reject: [/Brian Zacharias/, /Keri Lovato/, /Joe Pitts/, /elected by District/] },
+    { name: "Franklin", point: "35.92510,-86.86890",
+      want: [/Ward 4\b/, /Franklin Board of Mayor and Aldermen/, /Patrick Baggett/, /Alderman, Ward 4/,
+        /elected by Ward 4/, /The mayor and four more members/, /the City of Franklin's own map/],
+      reject: [/Beverly Burger/, /Greg Caesar/, /Ken Moore/] },
+    { name: "Jackson", point: "35.61450,-88.81390",
+      want: [/District 2\b/, /Jackson City Council/, /Johnny Lee Dodd/, /elected by District 2/,
+        /Plan A, effective May 2023/],
+      reject: [/elected by Ward/, /J\.P\. Stovall/, /Scott Conger/] },
+    { name: "Memphis", point: "35.14950,-90.04900",
+      want: [/District 7\b/, /Memphis City Council/, /Michalyn Easter-Thomas/, /elected by District 7/,
+        /Super District 8\b/, /JB Smiley, Jr\./, /Janika White/, /Yolanda Cooper-Sutton/,
+        /elected by Super District 8/, /The mayor\. The City or Town card names the mayor\./,
+        /Ordinance 5870/],
+      reject: [/Rhonda Logan/, /Chase Carlisle/, /Jeff Warren/, /Paul Young/, /not in a council district/] },
+    { name: "Chattanooga", point: "35.13527,-85.21281",
+      want: [/District 3\b/, /Chattanooga City Council/, /Jeff Davis/, /elected by District 3/,
+        /a copy the City of Chattanooga publishes of its own map/, /within 4 metres/],
+      reject: [/Chip Henderson/, /Jenny Hill/, /Ron Elliott/, /elected by Ward/] },
+    { name: "Hendersonville", point: "36.31271,-86.59601",
+      want: [/Ward 2\b/, /Hendersonville Board of Mayor and Aldermen/, /Don Ward/, /Michael Martin/,
+        /Alderman, Ward 2/, /elected by Ward 2/, /Sumner County's copy of the City of Hendersonville's map/],
+      reject: [/Mark Burgdorf/, /Terri Goodwin/, /Eddie Roberson/, /elected by District/] },
+    { name: "Knoxville", point: "35.96060,-83.92070",
+      want: [/not in a council district or ward this map draws/, /Knoxville and Lebanon elect by district or ward too/],
+      reject: [/Knoxville City Council/] },
+    { name: "Murfreesboro", point: "35.84590,-86.39200",
+      want: [/not in a council district or ward this map draws/, /names the mayor and council of all 28/],
+      reject: [/Murfreesboro City Council/] },
+    { name: "the State Capitol", point: POINT,
+      want: [/not in a council district or ward this map draws/,
+        /Nashville's council districts are on the County Commission District layer/],
+      reject: [/Metropolitan Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that district elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
     await context.close();
   }
 } finally {

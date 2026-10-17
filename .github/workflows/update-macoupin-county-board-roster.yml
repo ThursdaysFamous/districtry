@@ -9,8 +9,10 @@ name: Update Macoupin County Board roster
 #    from the JSONP service its page fills itself from: eighteen seats, two per
 #    district, each with the year it is next on the ballot and the page's own
 #    mark for a member appointed to fill an unexpired term, plus the board
-#    Chair. No party, phone or e-mail is published per person, so none ships,
-#    and the endpoint carrying residence addresses is never called.
+#    Chair. No party or phone ships. Since 2026-10-17 (Adam's "E-mails too")
+#    each seat's detail record is asked for its second-contact e-mail, which
+#    ships where its local part carries the member's surname; nothing else in
+#    that record, which also carries the holder's residence, is read.
 #
 # 2. THE REDISTRICTING TRIPWIRE. The shipped boundary is the county's own Board
 #    Districts layer (GIS_Layers layer 3) as it stood on 2026-10-15. The same run

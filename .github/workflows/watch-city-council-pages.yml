@@ -1,0 +1,158 @@
+name: Watch city council pages
+
+# The mayors and councils of the 122 cities above 25,000 people in Arkansas,
+# North Carolina, Oklahoma, South Carolina and Tennessee are written down by
+# hand from each city's own pages, because no state office in any of the five
+# publishes who sits on a city council and each city publishes its own council
+# its own way (scripts/city_councils.py says why a person reads the pages
+# rather than a parser per city). This job re-reads every page the five seats
+# files cite, once a week, and checks that every name is still on the page its
+# seat cites. Adam chose weekly over quarterly on 2026-10-16.
+#
+# The files whose pages it re-reads:
+#   ar/data/app/ar-city-councils.json
+#   nc/data/app/nc-city-councils.json
+#   ok/data/app/ok-city-councils.json
+#   sc/data/app/sc-city-councils.json
+#   tn/data/app/tn-city-councils.json
+#
+# It never edits a seats file or the app's files. A name that has gone from
+# its page usually means the seat changed hands, and which seat a new member
+# holds is something only a person reading the page can say, so the output is
+# a request for a person rather than a diff: it opens or updates ONE tracking
+# issue for all five states, and closes it after a run that reads every page
+# and finds every name. A NOT READ line is a page this run could not read; the
+# card keeps what the page said when it was last read (the operator's ruling
+# of 2026-09-19), and a page read with a browser's client is re-measured with
+# scripts/probe_user_agents.py before anything changes. A host that refuses is
+# never asked again with a different client.
+#
+# Each state's offline --check runs on every pull request in smoke-test.yml.
+
+on:
+  schedule:
+    - cron: "30 15 * * 4" # Thursday 15:30 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: watch-city-council-pages
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Two of the cited pages are PDFs (Conway's council agenda and the
+      # Muskogee results), and the readers turn a PDF into text with
+      # pdftotext. Everything else these builders use is the standard library.
+      - name: Install pdftotext
+        run: |
+          # the runner image's Google Chrome apt source once served a Packages
+          # file whose hash did not match its Release file (smoke-test.yml)
+          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
+               \( -name '*.list' -o -name '*.sources' \) \
+               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
+          sudo apt-get update -q
+          sudo apt-get install -y -q poppler-utils
+          pdftotext -v
+
+      - name: Re-read every cited page
+        id: watch
+        # A name gone or a page unread is the expected, non-fatal state that
+        # feeds the tracking issue below, so this step always succeeds and
+        # hands its exit status on.
+        continue-on-error: true
+        run: |
+          set +e
+          code=0
+          {
+            echo "### Arkansas"
+            python3 ar/scripts/build_ar_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### North Carolina"
+            python3 nc/scripts/build_nc_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### Oklahoma"
+            python3 ok/scripts/build_ok_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### South Carolina"
+            python3 sc/scripts/build_sc_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### Tennessee"
+            python3 tn/scripts/build_tn_city_councils.py --watch 2>&1 || code=1
+          } > watch-report.txt
+          cat watch-report.txt
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      # ONE STEP FOR ALL THREE OUTCOMES, AND NOT ONE STEP EACH. The roster-health
+      # report (scripts/workflow_run_evidence.py) reads a step whose condition
+      # asserts that a forgiven step succeeded as the proof that a run did its
+      # work. A separate close step gated on a clean watch would be read that
+      # way, and a week with one unreadable page would then count as a week the
+      # watch never ran. This job's work is the re-read, and the issue is its
+      # only report, as for watch-mason-roster-source.yml.
+      - name: Open, update or close the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WATCH_CODE: ${{ steps.watch.outputs.code }}
+        run: |
+          title="City council pages need a re-read"
+          existing="$(gh issue list --state open --limit 100 --search "in:title $title" --json number,title \
+            | jq -r --arg t "$title" '.[] | select(.title == $t) | .number' | head -n 1)"
+
+          if [ "$WATCH_CODE" = "0" ]; then
+            if [ -n "$existing" ]; then
+              gh issue close "$existing" --comment "The weekly re-read on $(date -u +%Y-%m-%d) read every cited page and found every name on the page its seat cites."
+              echo "Closed issue #$existing."
+            else
+              echo "Every page read and every name found; no open tracking issue."
+            fi
+            exit 0
+          fi
+
+          grep -E '^### |--watch: (NOT READ|NAME GONE|FAIL)|FATAL|Traceback|Error' watch-report.txt \
+            > watch-lines.txt || true
+          {
+            echo "_Automated by \`.github/workflows/watch-city-council-pages.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app._"
+            echo
+            echo "The councils of the 122 cities above 25,000 people in Arkansas, North Carolina, Oklahoma, South Carolina and Tennessee are written down by hand from each city's own pages. This week's re-read found these:"
+            echo
+            echo '```'
+            cat watch-lines.txt
+            echo '```'
+            echo
+            echo "- **NAME GONE**: a name is no longer on the page its seat cites, which usually means the seat changed hands."
+            echo "- **NOT READ**: the page could not be read this week. The card keeps what the page said when it was last read. For a page read with a browser's client, re-measure with \`scripts/probe_user_agents.py\` before changing anything, and never ask a refusing host again with a different client."
+            echo "- **FAIL**, **FATAL** or a traceback: the seats file or the builder itself has a problem; the full report below says which."
+            echo
+            echo "**To clear this issue:** read the city's page, change that state's seats file by hand (\`<tag>/data/source/<tag>-city-council-seats.json\`: a new member, a changed seat, or the page's own spelling as \`as\`), rebuild with \`python3 <tag>/scripts/build_<tag>_city_councils.py\`, which refuses to write unless every name is on the page it cites, and open a pull request. The next weekly run that reads every page and finds every name closes this issue."
+            echo
+            echo "<details><summary>Full report</summary>"
+            echo
+            echo '```'
+            head -c 50000 watch-report.txt
+            echo '```'
+            echo
+            echo "</details>"
+          } > issue-body.md
+
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file issue-body.md
+            gh issue comment "$existing" --body "Refreshed by the weekly city council page watch; see the updated issue body."
+            echo "Updated existing issue #$existing."
+          else
+            gh issue create --title "$title" --body-file issue-body.md
+            echo "Opened a new tracking issue."
+          fi

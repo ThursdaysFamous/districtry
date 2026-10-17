@@ -10,6 +10,9 @@
     "clerk": "Jessica Wolfert",
     "municipality": "Herman",
     "phone": "920-565-2450",
+    "phonesExtra": [
+      "920-377-1884"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "http://www.townherman.com/"
   },
@@ -33,6 +36,9 @@
     "deputyClerk": "Christine Henkel",
     "municipality": "Lyndon",
     "phone": "920-528-7255",
+    "phonesExtra": [
+      "920-528-7306"
+    ],
     "recordUpdated": "2025-01-14",
     "url": "https://lyndonshebcowi.gov/"
   },
@@ -76,6 +82,9 @@
     "clerk": "Luanne Rady",
     "municipality": "Scott",
     "phone": "920-994-4470",
+    "phonesExtra": [
+      "414-573-8040"
+    ],
     "recordUpdated": "2025-11-10"
   },
   "5511773000": {

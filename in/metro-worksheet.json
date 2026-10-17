@@ -243,10 +243,28 @@
       }
     },
     {
+      "id": "conservancy-district",
+      "label": "Conservancy District",
+      "group": "geography",
+      "area_rank": 10,
+      "rank_note": "The 100 active conservancy districts on the Department of Natural Resources' map, pre-built with the app — 75.5 km2 mean area (median 4.44, largest 1,342), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, and larger than an Indianapolis Public Schools board district (41.6). Some overlap; together they cover 8.0% of the state, overlaps counted once.",
+      "source": {
+        "answers": "The conservancy district or districts covering the point — special districts a circuit court sets up, when property owners ask, to deal with flooding, drainage, sewers, water supply or a lake — and who sits on each one's board.",
+        "boundary": [
+          {
+            "label": "Indiana Department of Natural Resources — Conservancy Districts of Indiana, layer 54 on gisdata.in.gov: the 100 districts the map marks active, measured 2026-10-16, pre-built by in/scripts/build_in_conservancy_districts.py and shipped with the app. One district the department's 2026 directory lists, Hidden Hills, carries no status on the map and is not drawn. The layer states no licence.",
+            "url": "https://gisdata.in.gov/server/rest/services/Hosted/Conservancy_Districts_of_Indiana_20250528/FeatureServer/54"
+          }
+        ],
+        "people": "Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, names and roles only. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and personal contacts the directory gives are never carried.",
+        "applies": "Indiana — wherever a district has been set up; most of the state is in none."
+      }
+    },
+    {
       "id": "school-board-district",
       "label": "School Board District",
       "group": "schools",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "The 5 districts the Indianapolis Public Schools board is elected from, pre-built from the City of Indianapolis's layer — 41.6 km2 mean area (median 40.0), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, larger than a voting precinct (18.40)",
       "source": {
         "answers": "The district the Indianapolis Public Schools board elects a member from. Everywhere else in Indiana the card says this map draws no other board's districts yet.",
@@ -264,7 +282,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -282,7 +300,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29",
       "source": {
         "answers": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point.",
@@ -300,7 +318,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -318,7 +336,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer",
       "source": {
         "answers": "The three nearest fire or EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -336,7 +354,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "1,012 post-office points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -354,7 +372,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Indiana has one such area, the Pokagon Band of Potawatomi's.",
@@ -369,7 +387,7 @@
       }
     }
   ],
-  "min_register_layer": 12,
+  "min_register_layer": 13,
   "anchor_point": {
     "lat": 39.7686,
     "lng": -86.1626,
@@ -475,6 +493,12 @@
         "min_features": 3,
         "max_features": 3,
         "note": "The Court of Appeals' 1st, 2nd and 3rd Districts, dissolved from the county fabric by in/scripts/build_in_appeals_districts.py following the court's own district map; the 4th and 5th are statewide and not drawn."
+      },
+      {
+        "file": "in-conservancy-districts.json",
+        "min_features": 100,
+        "max_features": 100,
+        "note": "Indiana's 100 active conservancy districts, pre-built by in/scripts/build_in_conservancy_districts.py through scripts/published_district_layers.py from the Department of Natural Resources' map (Douglas-Peucker at 4 m; an 18,800-point agreement gate over each court's districts, measured 99.99% with zero overlaps; an exact 100 count). 264 KB, fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [
@@ -502,6 +526,11 @@
         "file": "in-township-officials.json",
         "min_keys": 950,
         "note": "The trustee and township board of 987 of Indiana's 1,004 civil townships, keyed by Census county-subdivision id, each the winner of the most recent certified township election (2022), built by in/scripts/build_in_township_officials.py from the Indiana Election Division's results archive."
+      },
+      {
+        "file": "in-conservancy-directors.json",
+        "min_keys": 95,
+        "note": "The board of each conservancy district as it reported it to the Department of Natural Resources for its 2026 directory, keyed by the district's id on the map, built by in/scripts/build_in_conservancy_directors.py: names and roles only, 99 districts. The directory is published once a year, so this is rebuilt by hand when a new edition appears (in/WATCH.md)."
       },
       {
         "file": "coverage-gaps.json",

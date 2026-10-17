@@ -286,7 +286,11 @@ FOUR TRAPS ON OZAUKEE'S PAGE, THREE OF WHICH WOULD SHIP SILENTLY
     office. No rule picks the right one — "prefer the county domain" works for
     District 7 and fails District 6 and 8, which carry only private
     addresses — so NO E-MAIL SHIPS FOR OZAUKEE. The county's own contact
-    surface is the board page, which the card already links.
+    surface is the board page, which the card already links. Adam's choice
+    of 2026-10-17 ("E-mails too"), which ships a private address a county
+    prints beside its supervisor, does not reach these: they are hidden from
+    the page's reader and one is a predecessor's, and the checks that catch
+    those stay.
 
   Phone is not carried either, and for a plainer reason: five of the
   twenty-six rows print 262-284-9411, which is the county's MAIN SWITCHBOARD
@@ -724,11 +728,14 @@ rather than by position, so a column reordered upstream cannot shift a roster
 and a column renamed fails loudly. Two witnesses per row: the District cell
 and the local part of the row's own e-mail address
 (district.07@co.monroe.wi.us), which the county maintains per seat — they must
-agree, or the row is refused. Home addresses and phone numbers sit in that
-table and are NOT carried: the addresses are supervisors' houses (the standing
-fleet rule), and this instance's roster file has no phone field for the numbers
-to ride — they are personal numbers printed beside those homes, and Taylor's
-are dropped by the same builder for the same reason.
+agree, or the row is refused. The Address column is NOT read: those are
+supervisors' houses, and a home address never ships (the standing fleet
+rule). The Phone column IS read, since 2026-10-17: the numbers in it are the
+supervisors' own lines at those houses, and until that day they were left
+unread for that reason, but Adam ruled that day, for every state, "if the
+official government source uses personal phone numbers, we publish those." So
+every number in a seat's Phone cell ships — the first in `phone`, a second in
+`phonesExtra` — located by the column's header name like the others.
 
 A COUNTY THAT DOES NOT FULLY RESOLVE YIELDS NOTHING. Partial output is worse
 than none here: a card showing 18 of 21 districts reads as a complete board
@@ -853,7 +860,7 @@ exactly like a county whose page has reshaped.
 MANITOWOC PUBLISHES A PAGE PER SUPERVISOR, AND IT IS WORTH FETCHING (2026-08-29)
 -------------------------------------------------------------------------------
 Every row of Manitowoc's list links a personnel page for that supervisor, and
-each of those pages carries three things the list does not:
+each of those pages carries four things the list does not:
 
   * "Supervisory District: N" — the county stating the SAME pairing a second
     time, on a page written by a different part of its own site. Nothing here
@@ -865,6 +872,7 @@ each of those pages carries three things the list does not:
   * a county e-mail on the county's own domain — the contact the card exists to
     surface, for a board that publishes nothing else machine-readable.
   * the page itself, which ships as `profileUrl`.
+  * since 2026-10-17, the supervisor's telephone (below).
 
 THE E-MAILS ARE OBFUSCATED TWICE AND BOTH LAYERS ARE THE PAGE'S OWN. Cloudflare
 rewrites the `mailto:` into a `data-cfemail` hex blob whose first byte is an XOR
@@ -885,11 +893,18 @@ Taylor above, where a captcha IS an access control and is not defeated. As
 everywhere in this fleet, markup-present-but-nothing-decoded is a HARD FAILURE
 rather than a quietly empty column.
 
-THE STREET ADDRESS AND TELEPHONE ON THOSE PAGES ARE NOT READ. They are
-supervisors' homes and home lines ("2514 S 8th St", a residential number), and
-this fleet does not publish where an official lives — the same rule Taylor's
-document roster, Warren's parser and Madison's and Peoria's builders follow. No
-Wisconsin board roster carries a phone field at all.
+THE STREET ADDRESS ON THOSE PAGES IS NOT READ, AND SINCE 2026-10-17 THE
+TELEPHONE BESIDE IT IS. Both are the supervisor's own: a house, and the line at
+that house. This fleet does not publish where an official lives — the same rule
+Taylor's document roster, Warren's parser and Madison's and Peoria's builders
+follow — and until 2026-10-17 the number was left unread with the address. Adam
+ruled that day, for every state, "if the official government source uses
+personal phone numbers, we publish those", so the number ships. It is read
+from a paragraph of the supervisor's own block that holds nothing but the
+number and its label, so the paragraphs holding the address are never read for
+one; a tel: link that dials a different number than its text shows ships
+neither; and a number the page's footer also prints is the county's line and
+ships for nobody (attach_profiles).
 
 NO CHAIR IS MARKED FOR MANITOWOC, AND THAT IS MEASURED RATHER THAN MISSED. Three
 county-published surfaces were read on 2026-08-29 and none of them marks a chair
@@ -1156,6 +1171,9 @@ import robots_policy as rp                                       # noqa: E402
 # hidden on 2026-09-25).
 from arcgis_error import (ArcGISServiceError,                    # noqa: E402
                           raise_for_arcgis_error)
+# Whose e-mail address is this: the checks every Wisconsin roster shares
+# (2026-10-17). This script's own folder, and stdlib only.
+import wi_email_rules                                            # noqa: E402
 
 # ROBOTS.TXT IS READ BEFORE THE FIRST FETCH OF EACH HOST (2026-09-13), which
 # until today this file did not do. CLAUDE.md states the rule and names the
@@ -2116,16 +2134,24 @@ def _same_line_or_next(lines):
 # THE HOME ADDRESSES ARE DELIBERATELY NOT CARRIED. Each supervisor's block
 # publishes their house ("N786 County Road H, Dalton"); the fleet's standing
 # rule is that a home address never ships even where the source publishes it
-# (the same call Taylor's document roster records). The county e-mail and the
-# phone printed beside it are official contact details and do.
+# (the same call Taylor's document roster records). The county e-mail and every
+# number printed beside it ship. One block, district 11's, prints two numbers
+# in one item, the second labelled "Cell"; until 2026-10-17 only the first
+# shipped, and since Adam's ruling that day the second ships too, in
+# `phonesExtra`, as "cell ...". The numbers are read from the list items that
+# hold nothing but numbers and their labels (`labelled_numbers`), so the two
+# items above them that hold the house and the town are never read for one.
 INDEXROLL_BLOCK = re.compile(
     r'(?s)<div class="indexRoll[ "].*?(?=<div class="indexRoll[ "]|</article>)')
 INDEXROLL_HEAD = re.compile(r'(?is)<h2[^>]*class="indexRoll__head"[^>]*>(.*?)</h2>')
 INDEXROLL_SUB = re.compile(r'(?is)<p[^>]*class="indexRoll__sub"[^>]*>(.*?)</p>')
 INDEXROLL_DIST = re.compile(r'(?is)<li>\s*<span>\s*District:\s*</span>\s*(\d{1,2})\s*</li>')
 INDEXROLL_ADDR = re.compile(r'(?is)<ul[^>]*class="addrList"[^>]*>(.*?)</ul>')
+INDEXROLL_ITEM = re.compile(r"(?is)<li\b[^>]*>(.*?)</li>")
 # The county's markup gives these anchors a bare value rather than a tel:/mailto:
-# scheme, so they are read as the text they are.
+# scheme, so they are read as the text they are — and the link's value must
+# name the same digits as its text, or neither number ships for that person.
+INDEXROLL_LINK = re.compile(r'(?is)<a\b[^>]*href="([^"]*)"[^>]*>(.*?)</a>')
 PHONE = re.compile(r"\d{3}[.\s-]\d{3}[.\s-]\d{4}")
 EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 # "County Board Chairman" — the role sits in the block's own subtitle, which is
@@ -2140,8 +2166,8 @@ def _strip_tags(fragment):
 
 
 def _indexroll(page_html, seats):
-    """District -> (name, role, email, phone) read from each person's own block."""
-    found, vacant, contacts = {}, set(), {}
+    """District -> (name, role, email, phones) read from each person's own block."""
+    found, vacant, contacts, phone_lists = {}, set(), {}, {}
     for block in INDEXROLL_BLOCK.findall(page_html):
         head = INDEXROLL_HEAD.search(block)
         dist = INDEXROLL_DIST.search(block)
@@ -2167,40 +2193,66 @@ def _indexroll(page_html, seats):
         if addr:
             text = _strip_tags(addr.group(1))
             row = {}
-            phones = PHONE.findall(text)
-            if phones:
-                row["phone"] = phones[0]
-                if len(phones) > 1:
-                    # Harley Reabe's block prints a landline and a cell in one
-                    # anchor. The first ships; the rest are named, not dropped
-                    # silently, so a second number never becomes an invisible loss.
-                    print("  note Green Lake  district %d publishes %d numbers "
-                          "(%s) — the first ships" % (d, len(phones), ", ".join(phones)),
-                          file=sys.stderr)
+            # Every number, from the items that hold nothing but numbers and
+            # their labels. Harley Reabe's item prints a landline and a cell
+            # in one anchor, and both ship (Adam, 2026-10-17); until then the
+            # first shipped and the second was named on the log.
+            numbers, agree = [], True
+            for item in INDEXROLL_ITEM.findall(addr.group(1)):
+                got = labelled_numbers(_strip_tags(item))
+                if not got:
+                    continue
+                numbers.extend(phone_text(label, number) for label, number in got)
+                for value, shown in INDEXROLL_LINK.findall(item):
+                    if re.search(r"\d", value) and not tel_agrees(value, _strip_tags(shown)):
+                        agree = False
+            printed = len(PHONE.findall(text))
+            if printed > len(numbers):
+                # a number in an item that also holds other words is not read,
+                # because that item may be the house; the count says so
+                print("  note Green Lake  district %d prints %d numbers and %d sit "
+                      "in items read as numbers only — the rest are not read"
+                      % (d, printed, len(numbers)), file=sys.stderr)
+            if numbers and not agree:
+                print("  note Green Lake  district %d: a phone link and its text "
+                      "name different numbers — neither ships" % d, file=sys.stderr)
+            elif numbers:
+                phone_lists[d] = numbers
             email = EMAIL.search(text)
             if email:
                 row["email"] = email.group(0)
-            if row:
+            if row or d in phone_lists:
                 contacts[d] = row
-    # AN ADDRESS ON TWO DISTRICTS IS NOT A PERSONAL ADDRESS. Measured
-    # 2026-08-29: bhutchison@greenlakecountywi.gov is printed as the contact
-    # for districts 13, 17 and 18 (Don Lenz, Robert Grim, Sara Allen) — three
-    # different people, and a local part matching none of their names nor any
-    # official the county's own site names anywhere. Shipping it would give a
-    # reader the wrong person's inbox in the name of the one they looked up,
-    # so it ships for none of them and the measurement prints every run.
-    by_addr = {}
-    for d, row in contacts.items():
-        if row.get("email"):
-            by_addr.setdefault(row["email"].lower(), []).append(d)
-    for addr, ds in sorted(by_addr.items()):
-        if len(ds) > 1:
-            for d in ds:
+    # AN ADDRESS ON TWO DISTRICTS SHIPS ON ONE AT MOST. Measured 2026-08-29:
+    # bhutchison@greenlakecountywi.gov is printed as the contact for districts
+    # 13, 17 and 18 (Don Lenz, Robert Grim, Sara Allen) — three different
+    # people, and a local part matching none of their names nor any official
+    # the county's own site names anywhere. Shipping it would give a reader the
+    # wrong person's inbox in the name of the one they looked up. Since
+    # 2026-10-17 such an address ships on the one district whose supervisor's
+    # surname its local part carries, when exactly one does, and on none of
+    # them otherwise (wi_email_rules.settle_shared(), which the roster builder
+    # applies to every county as well), so that one still ships for none of
+    # them. The note names the districts and never the address.
+    held = [(d, found[d][0], row["email"]) for d, row in contacts.items()
+            if row.get("email") and d in found]
+    for keeper, ds in sorted(wi_email_rules.settle_shared(held).values(),
+                             key=lambda kv: sorted(kv[1])):
+        for d in ds:
+            if d != keeper:
                 contacts[d].pop("email", None)
-            print("  note Green Lake  %s is published for %d districts (%s) — "
-                  "not a personal address, dropped from all"
-                  % (addr, len(ds), ", ".join(str(x) for x in sorted(ds))),
-                  file=sys.stderr)
+        listed = ", ".join(str(x) for x in sorted(ds))
+        if keeper:
+            print("  note Green Lake  one address is published for districts %s "
+                  "and names the supervisor of district %d — it ships there only"
+                  % (listed, keeper), file=sys.stderr)
+        else:
+            print("  note Green Lake  one address is published for districts %s "
+                  "and names none of their supervisors, or more than one — it "
+                  "ships for none of them" % listed, file=sys.stderr)
+    # The same rule for a NUMBER printed under two districts (none today,
+    # measured 2026-10-17): it is not one supervisor's, and it ships for none.
+    drop_shared_phones("Green Lake", phone_lists, contacts)
     return found, vacant, contacts
 # --- the fielded reading: a page that LABELS its own fields -------------------
 # SAUK IS THE ONE COUNTY WITH NO READING DIRECTION TO PIN, because its page
@@ -2426,8 +2478,13 @@ def attach_unique_roles(roles, districts, county):
 # are on buffalocountywi.gov and four on co.buffalo.wi.us, which reads like a
 # half-finished migration; both domains resolve, both are the county's own, and
 # rewriting somebody's contact detail to make a column tidy is not this
-# project's call. `EMAIL_DOMAINS` gates them so a THIRD domain — the shape a
-# hijacked or mistyped address would take — fails the county loudly.
+# project's call. Until 2026-10-17 `EMAIL_DOMAINS` also gated them, so an
+# address on any third domain was dropped. Since Adam's choice that day
+# ("E-mails too") an address the county prints for a supervisor ships whatever
+# its domain, and `EMAIL_DOMAINS` only counts, for the run log, how many are
+# the county's own: measured that day, all thirteen are. The decoded value must
+# still have the shape of one address, so a token that decodes to anything
+# else ships nothing, and EMAIL_MIN fails a page where that happens to many.
 #
 # NELSON IS A SURNAME AND A PLACE IN THIS COUNTY, which matters to anyone
 # corroborating this roster against the county's minutes rather than to the
@@ -2438,7 +2495,8 @@ BUF_H4 = re.compile(r"(?is)<h4[^>]*>(.*?)</h4>")
 BUF_H5 = re.compile(r"(?is)<h5[^>]*>(.*?)</h5>")
 BUF_DIST = re.compile(r"(?i)^district\s+(\d{1,2})\b")
 BUF_MAIL = re.compile(r"/cdn-cgi/l/email-protection#([0-9a-fA-F]{6,})")
-# The county's own two domains, pinned: see the note above.
+# The county's own two domains, for the log's own-versus-other count; since
+# 2026-10-17 they no longer decide what ships (see the note above).
 EMAIL_DOMAINS = frozenset(("buffalocountywi.gov", "co.buffalo.wi.us"))
 EMAIL_MIN = 10          # 12 of 14 publish one; districts 8 and 14 do not
 
@@ -2476,10 +2534,9 @@ def _heading_block(page_html, seats):
         token = BUF_MAIL.search(block)
         if token:
             address = cf_decode(token.group(1))
-            # The domain is compared EXACTLY, not with endswith: a suffix test
-            # accepts "…@not-buffalocountywi.gov" as readily as the county's own.
-            domain = address.rsplit("@", 1)[-1].lower()
-            if EMAIL_SHAPE.match(address) and domain in EMAIL_DOMAINS:
+            # Any domain since 2026-10-17 ("E-mails too"); only the shape of
+            # one address is required. See the note above.
+            if EMAIL_SHAPE.match(address):
                 contacts[d] = {"email": address}
     return found, vacant, contacts, roles
 
@@ -2540,27 +2597,61 @@ def _fielded(lines):
 # address it publishes for that seat (district.07@co.monroe.wi.us) — and the two
 # must agree, which is the same two-witnesses stance the pinned reading
 # directions take, expressed in the data the county already maintains.
+#
+# THE PHONE COLUMN IS READ SINCE 2026-10-17, on Adam's ruling that day ("if the
+# official government source uses personal phone numbers, we publish those"),
+# and THE ADDRESS COLUMN BESIDE IT IS NOT. The Phone column is located by its
+# header name like the other three; every number in a seat's cell ships, the
+# first in `phone` and any second in `phonesExtra` (two seats print two). A
+# header that stops reading "Phone" fails the county, and so does a column that
+# empties below MONROE_MIN_PHONES, so a reshaped table is carried at its
+# last-good rows by the roster builder rather than shipped with no numbers.
+#
+# AN ADDRESS PRINTED IN PLACE OF THE DISTRICT MAILBOX SHIPS, since 2026-10-17,
+# on Adam's choice that day ("E-mails too"): an address the county prints
+# beside its supervisor ships whatever its domain. Until then a row printing
+# any other address failed the whole county. A row that prints a district
+# mailbox must still print its own district's, and a row that prints no
+# address at all still fails the county, as both did before; the mailbox is
+# shipped where a row prints it beside another address, because the card shows
+# one "Email" link. MONROE_MIN_MAILBOXES fails the county when too few rows
+# print their mailbox, which is what a reshaped table looks like. Measured
+# 2026-10-17, all 16 rows print their mailbox and nothing else, so nothing
+# changes today.
 TABLE = re.compile(r"(?is)<table\b.*?</table>")
 MONROE_COLUMNS = ("district", "supervisor", "email")
 MONROE_EMAIL = re.compile(r"(?i)^district\.(\d{1,2})@co\.monroe\.wi\.us$")
+MONROE_DOMAIN = "co.monroe.wi.us"
+MONROE_MIN_PHONES = 11   # measured 2026-10-17: all 16 seats print a number,
+                         # two of them a second; about two thirds of 16
+MONROE_MIN_MAILBOXES = 11   # measured 2026-10-17: all 16 rows print their
+                            # district mailbox; about two thirds of 16
 
 
 def _monroe(page_html):
-    """District -> (name, role), plus the county e-mail published per seat."""
+    """District -> (name, role), plus the county e-mail and every number the
+    table publishes per seat."""
     for table in TABLE.findall(page_html):
-        rows = [[to_lines(cell) for _, cell in TABLE_CELL.findall(row)]
-                for row in TABLE_ROW.findall(table)]
-        header, body = None, []
+        raw_rows = [[cell for _, cell in TABLE_CELL.findall(row)]
+                    for row in TABLE_ROW.findall(table)]
+        rows = [[to_lines(cell) for cell in cells] for cells in raw_rows]
+        header, body, raw_body = None, [], []
         for i, cells in enumerate(rows):
             heads = [c[0].lower() if c else "" for c in cells]
             if all(want in heads for want in MONROE_COLUMNS):
                 header = {name: j for j, name in enumerate(heads)}
                 body = rows[i + 1:]
+                raw_body = raw_rows[i + 1:]
                 break
         if header is None:
             continue
-        found, vacant, contact = {}, set(), {}
-        for cells in body:
+        if "phone" not in header:
+            raise RuntimeError("Monroe: the table no longer heads a Phone column "
+                               "(it heads %s) — re-read it before shipping"
+                               % sorted(h for h in header if h))
+        found, vacant, contact, numbers = {}, set(), {}, {}
+        boxed = 0
+        for cells, raw in zip(body, raw_body):
             if len(cells) <= max(header.values()):
                 continue
             key = cells[header["district"]]
@@ -2572,20 +2663,57 @@ def _monroe(page_html):
             if not num:
                 raise RuntimeError("Monroe: district cell %r is not a number" % key[0])
             d = int(num.group(1))
-            said = MONROE_EMAIL.match(mail[0]) if mail else None
-            if not said or int(said.group(1)) != d:
+            # every address the Email cell prints, in a link or as text
+            printed = [a for a in EMAIL.findall(html_lib.unescape(raw[header["email"]]))
+                       if EMAIL_SHAPE.match(a)]
+            boxes = [a for a in printed if MONROE_EMAIL.match(a)]
+            said = {int(MONROE_EMAIL.match(a).group(1)) for a in boxes}
+            if said and said != {d}:
                 raise RuntimeError(
-                    "Monroe: district %d's row publishes %r — the row's two "
-                    "statements of its own district disagree, so the table has "
-                    "reshaped; re-read it before shipping"
-                    % (d, mail[0] if mail else None))
+                    "Monroe: district %d's row publishes the mailbox of district "
+                    "%s — the row's two statements of its own district disagree, "
+                    "so the table has reshaped; re-read it before shipping"
+                    % (d, ", ".join(str(x) for x in sorted(said))))
+            if not printed:
+                raise RuntimeError(
+                    "Monroe: district %d's row publishes no address — every row "
+                    "has printed its district mailbox, so the table has reshaped; "
+                    "re-read it before shipping" % d)
+            boxed += bool(boxes)
             if who and VACANT.search(who[0]):
                 vacant.add(d)
                 continue
             if not who or not is_name(who[0]):
                 continue                    # the count guard names the seat
             found[d] = clean(who[0])
-            contact[d] = {"email": mail[0].lower()}
+            contact[d] = {"email": (boxes[0] if boxes
+                                    else choose_email(printed, {MONROE_DOMAIN})).lower()}
+            if not tel_links_agree(raw[header["phone"]]):
+                print("  note Monroe       district %d: a phone link dials a "
+                      "different number than its text shows — neither ships" % d,
+                      file=sys.stderr)
+                continue
+            got = phone_lines(cells[header["phone"]])
+            if got:
+                numbers[d] = got
+        if boxed < MONROE_MIN_MAILBOXES:
+            raise RuntimeError("Monroe: %d rows print their district mailbox (floor "
+                               "%d) — the table has reshaped; re-read it before "
+                               "shipping" % (boxed, MONROE_MIN_MAILBOXES))
+        instead = sum(1 for d in found
+                      if not MONROE_EMAIL.match(contact[d]["email"]))
+        if instead:
+            print("  mail  Monroe       %d row(s) print another address in place of "
+                  "the district mailbox, and it ships" % instead, file=sys.stderr)
+        # the county's own lines, in the page's footer, are nobody's
+        drop_page_lines("Monroe", numbers, footer_numbers(page_html))
+        drop_shared_phones("Monroe", numbers, contact)
+        phones = sum(1 for d in found if contact[d].get("phone"))
+        if phones < MONROE_MIN_PHONES:
+            raise RuntimeError("Monroe: %d of %d named seats carry a number from the "
+                               "Phone column (floor %d) — the column has moved or "
+                               "emptied; re-read the table before shipping"
+                               % (phones, len(found), MONROE_MIN_PHONES))
         return found, vacant, contact
     raise RuntimeError("Monroe: no table on the page heads columns %s — the page "
                        "has changed shape" % (MONROE_COLUMNS,))
@@ -3342,7 +3470,8 @@ def _district_page_selftest():
             "page": "https://example.gov/gov/sd",
             "source_url": "https://example.gov/gov/sd",
             "title": "County Board Supervisor",
-            "mailbox": r"district\.?(\d{1,2})@co\.adams\.wi\.us"}
+            "mailbox": r"district\.?(\d{1,2})@co\.adams\.wi\.us",
+            "domain": "co.adams.wi.us", "min_mailboxes": 2}
     rows = [(1, "Ann Alpha"), (2, "Ben Beta"), (3, "Cy Gamma")]
 
     def listing(pairs, links=None):
@@ -3355,15 +3484,16 @@ def _district_page_selftest():
         p += "<p>District 1 - Town of Adams Ward 1, Village of Friendship Ward 1</p>"
         return "<html>%s%s</html>" % (a, p)
 
-    def dpage(d, name, mails=None):
+    def dpage(d, name, mails=None, footer=""):
         mails = mails if mails is not None else ["district%d@co.adams.wi.us" % d]
-        return ("<p><span>County Board Supervisor</span></p><p><span>%s</span></p>%s"
-                % (name, "".join('<a href="mailto:%s">Email</a>' % x for x in mails)))
+        return ("<p><span>County Board Supervisor</span></p><p><span>%s</span></p>%s%s"
+                % (name, "".join('<a href="mailto:%s">Email</a>' % x for x in mails),
+                   footer))
 
-    def pages(pairs=rows, links=None, overrides=None):
+    def pages(pairs=rows, links=None, overrides=None, footer=""):
         out = {spec["page"]: listing(pairs, links)}
         for d, n in pairs:
-            out["https://example.gov/gov/sd/district-%d" % d] = dpage(d, n)
+            out["https://example.gov/gov/sd/district-%d" % d] = dpage(d, n, footer=footer)
         out.update(overrides or {})
         return out
 
@@ -3377,7 +3507,7 @@ def _district_page_selftest():
 
     d2 = "https://example.gov/gov/sd/district-2"
     cases = [
-        ("a clean three-seat board", pages(), True, None),
+        ("a clean three-seat board", pages(), True, "district2@co.adams.wi.us"),
         ("a seat's link missing", pages(links=[1, 2]), False,
          "links 2 district page(s)"),
         ("a district linked that the board does not seat", pages(links=[1, 2, 3, 4]),
@@ -3393,19 +3523,38 @@ def _district_page_selftest():
         ("two county mailboxes on one page",
          pages(overrides={d2: dpage(2, "Ben Beta", ["district2@co.adams.wi.us",
                                                    "district9@co.adams.wi.us"])}),
-         False, "carries 2 county mailbox(es)"),
-        ("no county mailbox on a page",
+         False, "carries 2 district mailboxes"),
+        ("no address at all on a page",
          pages(overrides={d2: dpage(2, "Ben Beta", [])}), False,
-         "carries 0 county mailbox(es)"),
+         "no district mailbox and no address of its own"),
         ("a mailbox whose number is not its own district",
          pages(overrides={d2: dpage(2, "Ben Beta", ["district7@co.adams.wi.us"])}),
          False, "never guess which is right"),
+        ("a page printing another address in place of its mailbox",
+         pages(overrides={d2: dpage(2, "Ben Beta", ["ben.beta@example.net"])}),
+         True, "ben.beta@example.net"),
+        ("the same, beside a site footer's address on every page",
+         pages(footer='<a href="mailto:web@example.net">Webmaster</a>',
+               overrides={d2: dpage(2, "Ben Beta", ["ben.beta@example.net"],
+                                    footer='<a href="mailto:web@example.net">W</a>')}),
+         True, "ben.beta@example.net"),
+        ("a site footer's address is not the supervisor's",
+         pages(footer='<a href="mailto:web@example.net">Webmaster</a>',
+               overrides={d2: dpage(2, "Ben Beta", [],
+                                    footer='<a href="mailto:web@example.net">W</a>')}),
+         False, "no district mailbox and no address of its own"),
+        ("too few pages carry their mailbox",
+         pages(overrides={d2: dpage(2, "Ben Beta", ["ben.beta@example.net"]),
+                          "https://example.gov/gov/sd/district-1":
+                          dpage(1, "Ann Alpha", ["ann.alpha@example.net"])}),
+         False, "1 of 3 district pages carry their district mailbox"),
         ("one person under two districts",
          pages(pairs=[(1, "Ann Alpha"), (2, "Ann Alpha"), (3, "Cy Gamma")]), False,
          "filed under two districts"),
         ("a punctuated mailbox, which six of the twenty use",
          pages(overrides={d2: dpage(2, "Ben Beta",
-                                    ["district.2@co.adams.wi.us"])}), True, None),
+                                    ["district.2@co.adams.wi.us"])}), True,
+         "district.2@co.adams.wi.us"),
     ]
 
     failures = []
@@ -3415,7 +3564,7 @@ def _district_page_selftest():
         except RuntimeError as e:
             if want_ok:
                 failures.append("%s: should have parsed, refused with %s" % (label, e))
-            elif needle and needle not in str(e):
+            elif needle not in str(e):
                 failures.append("%s: refused for the wrong reason: %s" % (label, e))
             continue
         except KeyError as e:
@@ -3429,6 +3578,8 @@ def _district_page_selftest():
             failures.append("%s: returned %s" % (label, sorted(got)))
         elif got["2"]["name"] != "Ben Beta":
             failures.append("%s: returned %r for district 2" % (label, got["2"]["name"]))
+        elif got["2"]["email"] != needle:
+            failures.append("%s: district 2 shipped another address" % label)
 
     # the composition lines must never have been read as people in the first
     # place, which the clean case above proves only indirectly
@@ -3445,6 +3596,333 @@ def _district_page_selftest():
         raise SystemExit("district-page selftest FAILED: " + "; ".join(failures))
     print("district-page selftest: %d cases, every guard refuses what it is for"
           % (len(cases) + 4))
+
+
+def _phone_selftest():
+    """The phone readers of 2026-10-17, on fixtures — offline, no network.
+
+    Every number here is a fictional 608-555-01xx line. What is proved: a
+    label is kept and expanded, a fax is left out, a line that also carries an
+    address gives up nothing but a labelled number, a number printed for two
+    districts or in the page's footer is nobody's, a tel: link that disagrees
+    with its text ships nothing, Monroe's table is read by its Phone header and
+    never by its Address column, and every value that comes out passes
+    wi_phone_shape, the check the roster builder runs before it writes.
+    """
+    import contextlib                    # noqa: PLC0415
+    import wi_phone_shape                # noqa: PLC0415 - this script's own folder
+    failures, values = [], []
+
+    def same(what, got, want):
+        if got != want:
+            failures.append("%s: got %r, wanted %r" % (what, got, want))
+        if isinstance(got, list):            # a reader's output, not a seat list
+            values.extend(phone_text(*x) if isinstance(x, tuple) else x
+                          for x in got if isinstance(x, (tuple, str)))
+
+    same("bare", labelled_numbers("608-555-0100"), [(None, "608-555-0100")])
+    same("label before", labelled_numbers("Cell: 608-555-0100"), [("cell", "608-555-0100")])
+    same("label after", labelled_numbers("608-555-0100 (c)"), [("cell", "608-555-0100")])
+    same("two labelled", labelled_numbers("Home 608-555-0100 Cell 608-555-0101"),
+         [("home", "608-555-0100"), ("cell", "608-555-0101")])
+    same("bare then labelled", labelled_numbers("608-555-0100 Cell 608-555-0101"),
+         [(None, "608-555-0100"), ("cell", "608-555-0101")])
+    same("fax left out", labelled_numbers("Phone: 608-555-0100 Fax: 608-555-0102"),
+         [(None, "608-555-0100")])
+    same("extension kept", labelled_numbers("Work (608) 555-0100 ext. 12"),
+         [("work", "(608) 555-0100 ext. 12")])
+    for text in ("123 Main St 608-555-0100", "Dalton WI 53926 608-555-0100",
+                 "Cell:", "Home Cell 608-555-0100", "Jane Doe 608-555-0100"):
+        same("refused %r" % text, labelled_numbers(text), None)
+    same("address line", numbers_after_labels("123 Main St, Dalton WI 53926 Cell: 608-555-0101"),
+         [("cell", "608-555-0101")])
+    same("address line, bare number", numbers_after_labels("123 Main St 608-555-0101"), [])
+    same("address line, fax", numbers_after_labels("Fax: 608-555-0102"), [])
+    same("label before, name line", label_before("Jane Doe ..... Cell: ", 21), "cell")
+    same("no label before", label_before("Jane Doe ......... ", 19), None)
+    same("phone_lines", phone_lines(["Jane Doe", "608-555-0100", "123 Main St",
+                                     "Cell 608-555-0101"]),
+         ["608-555-0100", "cell 608-555-0101"])
+    same("one line, two spellings", phone_key("cell (608) 555-0100"), phone_key("1-608-555-0100"))
+    if phone_key("608-555-0100 ext. 2") == phone_key("608-555-0100"):
+        failures.append("an extension is a different line")
+    same("tel agrees", tel_links_agree('<a href="tel:+16085550100">608-555-0100</a>'), True)
+    same("tel disagrees", tel_links_agree('<a href="tel:6085550199">608-555-0100</a>'), False)
+    same("tel with no number shown", tel_links_agree('<a href="tel:6085550199">Call</a>'), True)
+    same("footer", footer_numbers("<main>608-555-0100</main>"
+                                  "<footer>Main line 608-555-0199</footer>"), {"6085550199"})
+    rows = {"1": {}, "2": {}, "3": {}}
+    with contextlib.redirect_stderr(io.StringIO()):
+        shared = drop_shared_phones("Test", {"1": ["608-555-0100", "cell 608-555-0101"],
+                                             "2": ["608-555-0199"],
+                                             "3": ["(608) 555-0199", "home 608-555-0103"]}, rows)
+    same("shared", shared, {"6085550199"})
+    same("shared rows", rows, {"1": {"phone": "608-555-0100", "phonesExtra": ["cell 608-555-0101"]},
+                               "2": {}, "3": {"phone": "home 608-555-0103"}})
+    for row in rows.values():
+        values.extend([row.get("phone")] + row.get("phonesExtra", []))
+
+    # Monroe's table, read by header name. Fourteen seats so the floor is met;
+    # seat 2 prints a second number, seat 3's link disagrees with its text,
+    # seat 4 prints the county's footer line, and every seat's Address column
+    # holds a street, a town and a ZIP code that must never be read.
+    names = ["Ann Alder", "Ben Birch", "Cy Cedar", "Di Dogwood", "Ed Elm", "Flo Fir",
+             "Gus Gum", "Hal Hazel", "Ida Ivy", "Jo Juniper", "Kit Kale", "Lu Larch",
+             "Mo Maple", "Ned Nutmeg"]
+    trs = []
+    for d, name in enumerate(names, 1):
+        phone = "608-555-01%02d" % d
+        if d == 2:
+            phone += "<br>Cell: 608-555-0150"
+        elif d == 3:
+            phone = '<a href="tel:6085550151">608-555-0103</a>'
+        elif d == 4:
+            phone = "608-555-0199"
+        trs.append("<tr><td>%d</td><td>%s</td><td>district.%02d@co.monroe.wi.us</td>"
+                   "<td>%s</td><td>%d Main St<br>Sparta WI 54656</td></tr>"
+                   % (d, name, d, phone, 100 + d))
+    page = ("<table><tr><th>District</th><th>Supervisor</th><th>Email</th><th>Phone</th>"
+            "<th>Address</th></tr>%s</table><footer>Courthouse 608-555-0199</footer>"
+            % "".join(trs))
+    with contextlib.redirect_stderr(io.StringIO()):
+        found, vacant, contact = _monroe(page)
+    same("monroe seats", sorted(found), list(range(1, 15)))
+    same("monroe two numbers", contact[2], {"email": "district.02@co.monroe.wi.us",
+                                            "phone": "608-555-0102",
+                                            "phonesExtra": ["cell 608-555-0150"]})
+    same("monroe link disagrees", contact[3].get("phone"), None)
+    same("monroe county line", contact[4].get("phone"), None)
+    for c in contact.values():
+        values.extend([c.get("phone")] + c.get("phonesExtra", []))
+        if any(w in json.dumps(c) for w in ("Main St", "Sparta", "54656")):
+            failures.append("Monroe's Address column reached a record")
+    try:
+        with contextlib.redirect_stderr(io.StringIO()):
+            _monroe(page.replace("<th>Phone</th>", "<th>Telephone</th>"))
+        failures.append("a table with no Phone header was read")
+    except RuntimeError as e:
+        if "Phone column" not in str(e):
+            failures.append("no Phone header refused for the wrong reason: %s" % e)
+
+    for value in [v for v in values if v]:
+        why = wi_phone_shape.problem(value)
+        if why:
+            failures.append("a reader produced a value that %s" % why)
+    if failures:
+        raise SystemExit("phone selftest FAILED: " + "; ".join(failures))
+    print("phone selftest: every reader keeps the label, leaves out the fax, the "
+          "address, the shared line and the disagreeing link (%d values shape-checked)"
+          % len([v for v in values if v]))
+
+
+def _email_selftest():
+    """The e-mail readers of 2026-10-17, on fixtures — offline, no network.
+
+    Adam's choice that day ("E-mails too"): an address a county prints beside
+    its supervisor ships whatever its domain. Every address here is on a
+    reserved example domain or a made-up county one. What is proved: the
+    county's own address is kept where a row prints two, else the first one
+    printed; Buffalo's decoded address ships on another domain and a token
+    that decodes to anything but one address ships nothing; a Langlade
+    mailbox that names a district is still read for its number; the readers
+    whose patterns used to name the county's domain now find an address on
+    any domain; Monroe's table and Door's widgets ship an address printed in
+    place of the district mailbox while a mailbox naming another district
+    still fails the county; Green Lake ships an address printed for two
+    districts on the one whose supervisor it names; and the roster builder
+    does the same for the whole file, leaves off an address that names
+    another supervisor of the county, refuses a value that is not one
+    address, and never prints the address it drops.
+    """
+    import contextlib                    # noqa: PLC0415
+    import build_wi_county_board_roster as builder   # noqa: PLC0415 - this folder
+    failures = []
+
+    def same(label, got, want):
+        if got != want:
+            failures.append("%s: got %r, want %r" % (label, got, want))
+
+    own = {"co.example.wi.us"}
+    same("county's own first", choose_email(
+        ["pat@example.net", "pat@co.example.wi.us"], own), "pat@co.example.wi.us")
+    same("else the first printed", choose_email(
+        ["Pat.Doe@Example.net", "pat.doe@example.net", "lee@example.com"], own),
+        "Pat.Doe@Example.net")
+    same("nothing printed", choose_email([], own), None)
+    same("blanks", choose_email(["", None], own), None)
+
+    def cf_encode(address, key=0x5a):
+        return "%02x" % key + "".join("%02x" % (ord(c) ^ key) for c in address)
+    page = ('<h4>Pat Doe</h4><h5>District 1</h5>'
+            '<a href="/cdn-cgi/l/email-protection#%s">[email&#160;protected]</a>'
+            '<h4>Lee Roe</h4><h5>District 2</h5>'
+            '<a href="/cdn-cgi/l/email-protection#%s">[email&#160;protected]</a>'
+            % (cf_encode("pat.doe@example.net"), cf_encode("not an address")))
+    _found, _vacant, contacts, _roles = _heading_block(page, 2)
+    same("buffalo, another domain", contacts.get(1), {"email": "pat.doe@example.net"})
+    same("buffalo, not an address", contacts.get(2), None)
+
+    same("langlade box", DMI_DISTRICT_BOX.match("district7@co.example.wi.us").group(1), "7")
+    same("langlade not a box", DMI_DISTRICT_BOX.match("pat.doe@example.net"), None)
+
+    cell = '<a href="mailto:pat.doe@example.net">pat.doe@example.net</a>'
+    same("barron cell", choose_email(BR_MAIL.findall(cell), {"co.barron.wi.us"}),
+         "pat.doe@example.net")
+    same("waupaca line", choose_email(WP_MAIL.findall("Email: pat.doe@example.net"),
+                                      {WP_DOMAIN}), "pat.doe@example.net")
+    same("jackson block", choose_email(
+        JK_MAIL.findall("Pat Doe\nPhone 608-555-0100\npat.doe@example.net"),
+        {JK_DOMAIN}), "pat.doe@example.net")
+    for label, pattern in (("st croix", SC_MAIL), ("chippewa", CH_MAIL),
+                           ("ashland", AS_MAIL)):
+        same(label + " cell", choose_email(pattern.findall(cell), {"co.example.wi.us"}),
+             "pat.doe@example.net")
+
+    # Monroe's table: a row printing another address in place of its mailbox
+    # ships it, a row printing a mailbox beside another ships the mailbox, a
+    # mailbox naming another district fails, and so does an empty cell.
+    people = ["Ann Alder", "Ben Birch", "Cy Cedar", "Di Dogwood", "Ed Elm", "Flo Fir",
+              "Gus Gum", "Hal Hazel", "Ida Ivy", "Jo Juniper", "Kit Kale", "Lu Larch",
+              "Mo Maple", "Ned Nutmeg"]
+
+    def monroe_page(cells):
+        trs = "".join("<tr><td>%d</td><td>%s</td><td>%s</td><td>608-555-01%02d</td>"
+                      "<td></td></tr>" % (d, n, cells.get(d, "district.%02d@co.monroe"
+                                                           ".wi.us" % d), d)
+                      for d, n in enumerate(people, 1))
+        return ("<table><tr><th>District</th><th>Supervisor</th><th>Email</th>"
+                "<th>Phone</th><th>Address</th></tr>%s</table>" % trs)
+    log = io.StringIO()
+    with contextlib.redirect_stderr(log):
+        _f, _v, contact = _monroe(monroe_page({
+            2: '<a href="mailto:Ben.Birch@Example.net">Ben.Birch@Example.net</a>',
+            3: "cy@example.net<br>district.03@co.monroe.wi.us"}))
+    same("monroe, in place of the mailbox", contact[2]["email"], "ben.birch@example.net")
+    same("monroe, mailbox beside another", contact[3]["email"],
+         "district.03@co.monroe.wi.us")
+    same("monroe, the mailbox", contact[1]["email"], "district.01@co.monroe.wi.us")
+    for cells, needle in (({2: "district.09@co.monroe.wi.us"}, "mailbox of district 9"),
+                          ({2: ""}, "publishes no address"),
+                          ({d: "x%d@example.net" % d for d in range(1, 6)},
+                           "rows print their district mailbox")):
+        try:
+            with contextlib.redirect_stderr(log):
+                _monroe(monroe_page(cells))
+            failures.append("monroe accepted a table it should refuse (%s)" % needle)
+        except RuntimeError as e:
+            if needle not in str(e):
+                failures.append("monroe refused for the wrong reason: %s" % e)
+            if "@" in str(e):
+                failures.append("monroe's error names an address")
+
+    # Door's widgets, with its floors lowered to fit two seats.
+    def door_page(mails):
+        return "".join(
+            '<div class="widgetHeader"><h3><a href="#">District %d</a></h3></div>'
+            '<ol class="semanticList"><li class="widgetItem h-card">'
+            '<h4 class="p-name">%s</h4><div class="field p-job-title">District %d '
+            'Supervisor</div>%s<div class="field p-tel">608-555-01%02d</div></li></ol>'
+            % (d, n, d, "".join('<a href="mailto:%s">E</a>' % m for m in mails[d]), d)
+            for d, n in ((1, "Ann Alder"), (2, "Ben Birch")))
+    floors = {k: globals()[k] for k in ("DOOR_MIN_EMAILS", "DOOR_MIN_PHONES",
+                                        "DOOR_MIN_MAILBOXES")}
+    saved_fetch = globals()["fetch"]
+    try:
+        globals().update({k: 1 for k in floors})
+        for mails, want in (
+                ({1: ["district1@co.door.wi.gov"], 2: ["ben@example.net"]},
+                 {"1": "district1@co.door.wi.gov", "2": "ben@example.net"}),
+                ({1: ["district1@co.door.wi.gov"],
+                  2: ["ben@example.net", "district2@co.door.wi.gov"]},
+                 {"1": "district1@co.door.wi.gov", "2": "district2@co.door.wi.gov"}),
+                ({1: ["district1@co.door.wi.gov"], 2: ["district7@co.door.wi.gov"]},
+                 "mailbox of district 7"),
+                ({1: ["district1@co.door.wi.gov"], 2: []}, "prints no address"),
+                ({1: ["ann@example.net"], 2: ["ben@example.net"]},
+                 "blocks print their district mailbox")):
+            globals()["fetch"] = lambda u, *a, _p=door_page(mails), **k: _p
+            try:
+                with contextlib.redirect_stderr(log):
+                    got = scrape_staff_directory_county("55029", "Door", 2,
+                                                        "https://example.gov/door")
+                if isinstance(want, str):
+                    failures.append("door accepted what it should refuse (%s)" % want)
+                else:
+                    same("door " + want["2"], {k: r.get("email") for k, r in got.items()},
+                         want)
+            except RuntimeError as e:
+                if not isinstance(want, str) or want not in str(e):
+                    failures.append("door refused for the wrong reason: %s" % e)
+                if "@" in str(e):
+                    failures.append("door's error names an address")
+    finally:
+        globals()["fetch"] = saved_fetch
+        globals().update(floors)
+
+    # Green Lake: an address printed for two districts ships on the one whose
+    # supervisor it names, and an office's on neither.
+    def gl_block(d, name, mail):
+        return ('<div class="indexRoll grid-row">'
+                '<h2 class="indexRoll__head">%s</h2>'
+                '<p class="indexRoll__sub">County Board Supervisor</p>'
+                '<ul class="metaList"><li><span>District:</span> %d</li></ul>'
+                '<ul class="addrList"><li><a href="%s">%s</a></li></ul></div>'
+                % (name, d, mail, mail))
+    gl_names = {1: "Ann Alder", 2: "Ben Birch", 3: "Cy Cedar", 4: "Di Dogwood"}
+    gl_mail = {1: "ben.birch@example.net", 2: "Ben.Birch@example.net",
+               3: "clerk@example.net", 4: "clerk@example.net"}
+    gl_page = "".join(gl_block(d, n, gl_mail[d]) for d, n in gl_names.items())
+    with contextlib.redirect_stderr(log):
+        gl_found, _v, gl_contacts = _indexroll(gl_page + "</article>", 4)
+    same("green lake seats", sorted(gl_found), [1, 2, 3, 4])
+    same("green lake by row", {d: r.get("email") for d, r in gl_contacts.items()},
+         {1: None, 2: "Ben.Birch@example.net", 3: None, 4: None})
+
+    roster = {
+        "5599901": {"county": "Example", "district": 1, "name": "Pat Doe",
+                    "email": "office@example.net"},
+        "5599902": {"county": "Example", "district": 2, "name": "Kay Roe",
+                    "email": "Office@Example.net"},
+        "5599903": {"county": "Example", "district": 3, "name": "Lee Ash",
+                    "email": "lee.ash@example.net"},
+        "5599904": {"county": "Example", "district": 4, "name": "Jim Livingston",
+                    "email": "jim.livingston@example.net"},
+        "5599905": {"county": "Example", "district": 5, "name": "Kay Jolma",
+                    "email": "jim.livingston@example.net"},
+        "5599906": {"county": "Example", "district": 6, "name": "Ned Oak",
+                    "email": "lee.ash@example.org"},
+        "5599801": {"county": "Other", "district": 1, "name": "Lu Roe",
+                    "email": "office@example.net"},
+    }
+    with contextlib.redirect_stderr(log):
+        emptied = builder.settle_shared_emails(roster)
+        dropped = builder.drop_misplaced_emails(roster)
+    same("shared, rows emptied", emptied, 3)
+    same("an office's address, on nobody",
+         [roster[k].get("email") for k in ("5599901", "5599902")], [None, None])
+    same("a supervisor's address on two rows, on the one it names",
+         [roster[k].get("email") for k in ("5599904", "5599905")],
+         ["jim.livingston@example.net", None])
+    same("own address kept", roster["5599903"].get("email"), "lee.ash@example.net")
+    same("another county's kept", roster["5599801"].get("email"), "office@example.net")
+    same("an address naming another supervisor, dropped", (dropped,
+         roster["5599906"].get("email")), (1, None))
+    if "@" in log.getvalue():
+        failures.append("a reader's or the builder's log printed an address")
+    for value in ("pat.doe@example.net", "Pat.Doe+board@co.example.wi.us"):
+        if not builder.EMAIL_SHAPE.match(value):
+            failures.append("the builder refuses one address")
+    for value in ("pat doe@example.net", "pat@example", "pat@example.net lee@example.net",
+                  "pat@example.net,lee@example.net", "pat.doe", ""):
+        if builder.EMAIL_SHAPE.match(value):
+            failures.append("the builder takes a value that is not one address")
+
+    if failures:
+        raise SystemExit("e-mail selftest FAILED: " + "; ".join(failures))
+    print("e-mail selftest: the county's own address first, any domain otherwise, "
+          "an address printed in place of a district mailbox, a shared address "
+          "only where it names its supervisor, and nothing but one address per seat")
+
 
 def board_seated_on(today=None):
     """The date the sitting county board took office.
@@ -4269,6 +4747,10 @@ ARCHIVE_COUNTIES = [
             "https://www.fdlco.wi.gov/government/county-board-supervisors/-npage-2",
         ],
         "source_url": "https://www.fdlco.wi.gov/government/county-board-supervisors",
+        # The county's own mail domain. Until 2026-10-17 an address on any
+        # other domain was dropped; since Adam's choice that day ("E-mails
+        # too") the Email field ships as printed and this only splits the
+        # count on the run log. Measured that day, 25 of 25 are on it.
         "email_domain": "@fdlco.wi.gov",
         "min_emails": 23,     # 25 today; a page that stops publishing them fails
         "min_phones": 23,
@@ -4540,10 +5022,12 @@ def read_directory_page(page, seats, spec):
                 # quietly stopped seeing it.
                 addresses += 1
             elif label == "email":
+                # The supervisor's own Email field, whatever the domain, since
+                # 2026-10-17 (the `email_domain` note above).
                 mm = _MAILTO.search(value_frag)
                 if mm:
                     email = html_lib.unescape(mm.group(1)).strip()
-                    if email.lower().endswith(spec["email_domain"]):
+                    if EMAIL_SHAPE.match(email):
                         row["email"] = email
             elif label == "phone":
                 row["phone"] = _flat(value_frag)
@@ -4610,8 +5094,13 @@ def scrape_archive_county(spec):
     emails = sum(1 for m in members.values() if m.get("email"))
     phones = sum(1 for m in members.values() if m.get("phone"))
     if emails < spec["min_emails"]:
-        raise RuntimeError("%d county e-mail addresses resolved, floor is %d"
+        raise RuntimeError("%d e-mail addresses resolved, floor is %d"
                            % (emails, spec["min_emails"]))
+    own = sum(1 for m in members.values()
+              if (m.get("email") or "").lower().endswith(spec["email_domain"]))
+    print("    %d e-mails, %d on %s and %d on another domain (shipped as printed "
+          "since 2026-10-17)" % (emails, own, spec["email_domain"][1:], emails - own),
+          file=sys.stderr)
     if phones < spec["min_phones"]:
         raise RuntimeError("%d phone numbers resolved, floor is %d"
                            % (phones, spec["min_phones"]))
@@ -4658,6 +5147,21 @@ def scrape_archive_county(spec):
 #
 # THE ADDRESSES ARE DERIVABLE AND ARE NOT DERIVED, the rule Dodge's header
 # states for the same reason: a derived address witnesses nothing.
+#
+# A PAGE THAT PRINTS ANOTHER ADDRESS IN PLACE OF ITS MAILBOX SHIPS THAT
+# ADDRESS, since 2026-10-17, on Adam's choice that day ("E-mails too"): an
+# address the county prints beside its supervisor ships whatever its domain.
+# Until then such a page failed the whole county. The mailbox stays the
+# witness wherever a page carries one: two mailboxes on a page, or one whose
+# number is not the page's own district, still fail the county. A page with no
+# mailbox ships the address it prints instead, where the page prints one that
+# no other district's page also prints (an address on several pages is the
+# site's or an office's, unless it carries exactly one of those supervisors'
+# surnames: wi_email_rules.settle_shared()), and a page with neither still
+# fails. `min_mailboxes` fails the county when too few pages carry their
+# mailbox, because that is what a reshaped page template looks like. Measured
+# 2026-10-17, all twenty pages carry their mailbox and no other address, so
+# nothing changes today.
 #
 # WHAT THIS ROUTE DOES NOT CARRY, stated because it is a real loss:
 #
@@ -4716,6 +5220,11 @@ DISTRICT_PAGE_COUNTIES = [
                       "supervisory-districts",
         "title": "County Board Supervisor",
         "mailbox": r"district\.?(\d{1,2})@co\.adams\.wi\.us",
+        # the county's own domain, preferred where a page prints two addresses
+        "domain": "co.adams.wi.us",
+        # measured 2026-10-17: 20 of 20 pages carry their district mailbox;
+        # the floor is about two thirds of that
+        "min_mailboxes": 13,
     },
 ]
 # "District 13 - Rick Pease" on the listing. The SAME page carries composition
@@ -4777,7 +5286,7 @@ def scrape_district_page_county(spec):
                               spec["page"]))
 
     mailbox = re.compile(spec["mailbox"], re.I)
-    out = {}
+    out, printed = {}, {}
     for district in sorted(paths):
         url = origin + paths[district]
         page = fetch(url)
@@ -4798,18 +5307,53 @@ def scrape_district_page_county(spec):
                                % (county, district, name, listed[district]))
         # the raw page, so a mailto: the visible text does not repeat still counts
         found = sorted(set(m.group(0).lower() for m in mailbox.finditer(page)))
-        if len(found) != 1:
-            raise RuntimeError("%s: district %d's page carries %d county mailbox(es) "
-                               "%s — exactly one is the witness for the district "
+        if len(found) > 1:
+            raise RuntimeError("%s: district %d's page carries %d district mailboxes "
+                               "— exactly one is the witness for the district "
                                "number, so re-read %s"
-                               % (county, district, len(found), found, url))
-        stated = int(mailbox.match(found[0]).group(1))
-        if stated != district:
-            raise RuntimeError("%s: the page at %s says district %d and the mailbox "
-                               "on it says %d (%s) — never guess which is right"
-                               % (county, paths[district], district, stated, found[0]))
+                               % (county, district, len(found), url))
+        if found:
+            stated = int(mailbox.match(found[0]).group(1))
+            if stated != district:
+                raise RuntimeError("%s: the page at %s says district %d and the "
+                                   "mailbox on it says %d — never guess which is "
+                                   "right" % (county, paths[district], district, stated))
+        # every other address the page prints, in its order, outside scripts
+        printed[district] = [a for a in EMAIL.findall(html_lib.unescape(
+            _DROP.sub(" ", page))) if EMAIL_SHAPE.match(a)
+            and not mailbox.fullmatch(a)]
         out[str(district)] = {"name": name, "vacant": False, "role": None,
-                              "email": found[0], "url": url}
+                              "email": found[0] if found else None, "url": url}
+
+    witnessed = sum(1 for r in out.values() if r["email"])
+    if witnessed < spec["min_mailboxes"]:
+        raise RuntimeError("%s: %d of %d district pages carry their district mailbox "
+                           "(floor %d) — the page template has changed shape; "
+                           "re-read %s" % (county, witnessed, len(out),
+                                           spec["min_mailboxes"], spec["page"]))
+    # A PAGE WITH NO MAILBOX SHIPS THE ADDRESS IT PRINTS INSTEAD (2026-10-17),
+    # and an address printed on two or more district pages is nobody's unless
+    # it carries exactly one of their surnames.
+    shared = wi_email_rules.settle_shared(
+        [(d, out[str(d)]["name"], a) for d, found in printed.items()
+         for a in {x.lower() for x in found}])
+    instead = 0
+    for district, row in sorted(out.items(), key=lambda kv: int(kv[0])):
+        if row["email"]:
+            continue
+        d = int(district)
+        mine = [a for a in printed[d]
+                if a.lower() not in shared or shared[a.lower()][0] == d]
+        row["email"] = choose_email(mine, {spec["domain"]})
+        if not row["email"]:
+            raise RuntimeError("%s: district %d's page carries no district mailbox "
+                               "and no address of its own — re-read %s"
+                               % (county, d, row["url"]))
+        instead += 1
+    if instead:
+        print("  mail  %-12s %d district page(s) print another address in place of "
+              "the district mailbox, and it ships" % (county, instead),
+              file=sys.stderr)
 
     names = [r["name"] for r in out.values()]
     if len(set(names)) != len(names):
@@ -4850,12 +5394,22 @@ def scrape_district_page_county(spec):
 # LISTING page all the same — it is where a reader confirms the name, and the
 # frame alone is a bare table with no county around it.
 #
-# WHAT IS DELIBERATELY NOT CARRIED. The Address & Phone column is supervisors'
-# HOME addresses ("P.O. Box 81", "W12974 State Road 188") with a home or cell
-# number beside them; a home address never ships in this fleet even where the
-# source publishes it (the Taylor rule), and the phone beside it is not an
-# office line. The "Email" link per row is a CONTACT FORM on the county's
-# site, not an address, so it cannot ship as one either.
+# WHAT IS DELIBERATELY NOT CARRIED. The Address & Phone column holds each
+# supervisor's HOME address (a post-office box or a rural road and a town)
+# with a home or cell number beneath it, and a home address never ships in this
+# fleet even where the source publishes it (the Taylor rule). The "Email" link
+# per row is a CONTACT FORM on the county's site, not an address, so it cannot
+# ship as one either.
+#
+# THE NUMBER IN THAT CELL DOES SHIP, since 2026-10-17. Until then it was left
+# with the address because it is the supervisor's own line rather than an
+# office's; Adam ruled that day, for every state, "if the official government
+# source uses personal phone numbers, we publish those." The cell is split into
+# its lines and only a line holding nothing but a number and its label is read
+# (`phone_lines`), so the address lines above it are never taken into a field
+# or a log; a number the listing page's footer also prints is the county's own
+# line and ships for nobody, and so does one printed for two districts.
+# `min_phones` fails the county below about two thirds of what was measured.
 FRAMED_TABLE_COUNTIES = [
     {
         "fips": "55021", "name": "Columbia", "seats": 28,
@@ -4867,6 +5421,10 @@ FRAMED_TABLE_COUNTIES = [
         # county rather than shifting it.
         "columns": {"district": "supervisory district",
                      "first": "first name", "last": "last name"},
+        # the column the numbers are read from, and the floor on them: measured
+        # 2026-10-17, 27 of the 28 seats print one number and none prints two
+        "phone_column": "address & phone",
+        "min_phones": 18,
         # The chair and both vice chairs are named in a footer block of their
         # own, each linked to their own Supervisor-Profile — so the join is on
         # the COUNTY'S OWN supervisor id, not on a name. That is the strongest
@@ -4961,14 +5519,17 @@ def scrape_framed_table_county(spec):
     if header is None:
         raise RuntimeError("%s: the roster table has no header row to read its "
                            "columns from" % name)
+    columns = dict(spec["columns"])
+    if spec.get("phone_column"):
+        columns["phones"] = spec["phone_column"]
     try:
-        idx = {k: header[v] for k, v in spec["columns"].items()}
+        idx = {k: header[v] for k, v in columns.items()}
     except KeyError as missing:
         raise RuntimeError("%s: the roster table no longer has a %s column (it has "
                            "%s) — re-read it before shipping"
                            % (name, missing, sorted(header)))
 
-    found, by_id = {}, {}
+    found, by_id, numbers = {}, {}, {}
     for row in rows:
         cells = [c for kind, c in _row_cells(row) if kind == "d"]
         if not cells:
@@ -4992,6 +5553,16 @@ def scrape_framed_table_county(spec):
         sid = PROFILE_ID.search(cells[idx["last"]]) or PROFILE_ID.search(cells[idx["first"]])
         if sid:
             by_id[sid.group(1)] = str(d)
+        if "phones" in idx:
+            cell = cells[idx["phones"]]
+            if not tel_links_agree(cell):
+                print("  note %-12s district %d: a phone link dials a different "
+                      "number than its text shows — neither ships" % (name, d),
+                      file=sys.stderr)
+            else:
+                got = phone_lines(to_lines(cell))
+                if got:
+                    numbers[d] = got
 
     if set(found) != set(range(1, seats + 1)):
         missing = sorted(set(range(1, seats + 1)) - set(found))
@@ -5009,6 +5580,19 @@ def scrape_framed_table_county(spec):
         member, role = found[d]
         out[str(d)] = {"name": member, "vacant": False,
                         "role": role or roles.get(str(d))}
+    if "phones" in idx:
+        # the listing page's footer prints the county's own lines; the framed
+        # table is bare and prints none
+        drop_page_lines(name, numbers, footer_numbers(page_html))
+        by_seat = {d: out[str(d)] for d in numbers}
+        drop_shared_phones(name, numbers, by_seat)
+        phones = sum(1 for r in out.values() if r.get("phone"))
+        if phones < spec["min_phones"]:
+            raise RuntimeError("%s: %d of %d seats carry a number from the %r "
+                               "column (floor %d) — the column has reshaped; "
+                               "re-read it before shipping"
+                               % (name, phones, seats, spec["phone_column"],
+                                  spec["min_phones"]))
     return out
 
 
@@ -5972,7 +6556,19 @@ ELIMINATION_VACANCY = {"55075", "55121"}      # Marinette, Trempealeau
 # document roster states: the "Contact Information" block leads with the
 # supervisor's HOME ("W6259 Hammann Road", "N185 County Road DE"), and a
 # supervisor's house is not an office location. The published contact phone and
-# the county e-mail are official contact details and do ship.
+# the e-mail do ship.
+#
+# THE E-MAIL SHIPS WHATEVER ITS DOMAIN, SINCE 2026-10-17. Until then only an
+# address on the county's own domain was taken, because a supervisor's page can
+# carry a personal or employer address too. Adam chose that day ("E-mails
+# too") to publish such an address where a government publisher prints it
+# beside the official, so a page's own address now ships: the county's where
+# the page prints one, else the page's other one (choose_email). An address
+# found on two or more supervisors' pages ships only on the page of the one
+# supervisor whose surname it carries, when exactly one does, so a site
+# footer's or an office's ships for none of them. Measured that day, 24 of the
+# 25 pages print exactly one address, all on sheboygancounty.com, and district
+# 3's prints none.
 #
 # THE PAGE IS A WITNESS BEFORE IT IS A SOURCE. A district page is used only if
 # its own heading names the person the table filed under that district — a
@@ -5992,8 +6588,8 @@ MEMBER_PAGES = {
     "55117": {
         "url": "https://www.sheboygancounty.com/departments/county-board/"
                "county-board-supervisors/district-%d",
-        # only the COUNTY's own domain: a supervisor's page can carry a
-        # personal or employer address too, and that is not an office contact
+        # the county's own mail domain: preferred where a page prints both,
+        # and no longer required since 2026-10-17 (see the note above)
         "email_domain": "@sheboygancounty.com",
         # measured 2026-08-29: 25 witnessed, 24 e-mails, 25 phones
         "floors": {"witness": 23, "email": 20, "phone": 22},
@@ -6009,6 +6605,7 @@ _MEMBER_HEADING = "(?:^|[>\\s])([A-Z][^|<>\\n]{2,42}?)\\s*[-\u2013\u2014]\\s*Dis
 def member_pages(spec, districts, county):
     """Add the contact each supervisor's OWN page publishes, witnessed by it."""
     got = {"witness": 0, "email": 0, "phone": 0}
+    mails = {}                      # district -> every address its page prints
     for key, row in sorted(districts.items(), key=lambda kv: int(kv[0])):
         if row.get("vacant") or not row.get("name"):
             continue
@@ -6029,20 +6626,47 @@ def member_pages(spec, districts, county):
             continue
         got["witness"] += 1
         row["url"] = url
-        domain = spec["email_domain"].lower()
         mail = [a for a in _MAILTO.findall(html_lib.unescape(page))
-                if a.lower().endswith(domain)]
+                if EMAIL_SHAPE.match(a)]
         if mail:
-            row["email"] = mail[0]
-            got["email"] += 1
+            mails[key] = mail
         phone = _PHONE.search(flat)
         if phone:
             row["phone"] = " ".join(phone.group(1).split())
             got["phone"] += 1
         time.sleep(0.3)
-    print("  pages %-12s %d witnessed, %d e-mails, %d phones of %d seats"
-          % (county, got["witness"], got["email"], got["phone"], len(districts)),
-          file=sys.stderr)
+    # AN ADDRESS ON TWO OR MORE SUPERVISORS' PAGES SHIPS ON ONE AT MOST: on the
+    # page of the one supervisor whose surname its local part carries, when
+    # exactly one does, and on none otherwise (wi_email_rules.settle_shared()),
+    # so a site footer's or an office's ships for nobody. The log names the
+    # districts, never the address.
+    held = [(key, districts[key]["name"], address)
+            for key, found in mails.items() for address in {a.lower() for a in found}]
+    shared = wi_email_rules.settle_shared(held)
+    for keeper, keys in sorted(shared.values(),
+                               key=lambda kv: sorted(kv[1], key=int)):
+        listed = ", ".join(sorted(keys, key=int))
+        if keeper:
+            print("  note %-12s one address is printed on the pages of districts %s "
+                  "and names the supervisor of district %s — it ships there only"
+                  % (county, listed, keeper), file=sys.stderr)
+        else:
+            print("  note %-12s one address is printed on the pages of districts %s "
+                  "and names none of their supervisors, or more than one — it "
+                  "ships for none of them" % (county, listed), file=sys.stderr)
+    own = {spec["email_domain"].lower().lstrip("@")}
+    others = 0
+    for key, found in sorted(mails.items(), key=lambda kv: int(kv[0])):
+        pick = choose_email([a for a in found if a.lower() not in shared
+                             or shared[a.lower()][0] == key], own)
+        if pick:
+            districts[key]["email"] = pick
+            got["email"] += 1
+            others += pick.rsplit("@", 1)[-1].lower() not in own
+    print("  pages %-12s %d witnessed, %d e-mails (%d not on the county's domain), "
+          "%d phones of %d seats"
+          % (county, got["witness"], got["email"], others, got["phone"],
+             len(districts)), file=sys.stderr)
     short = {k: (got[k], v) for k, v in spec["floors"].items() if got[k] < v}
     if short:
         raise RuntimeError(
@@ -6200,6 +6824,15 @@ def _email_agrees(name, email):
 # prints the supervisor's house, and the phone and county e-mail beside it are
 # the official contact details that do ship.
 #
+# AN E-MAIL ON ANOTHER DOMAIN SHIPS TOO, SINCE 2026-10-17. Until then JK_MAIL
+# matched only @jacksoncountywi.gov, so any other address a block printed was
+# dropped. Since Adam's choice that day ("E-mails too") the block's own address
+# ships whatever its domain, the county's first where a block prints both
+# (choose_email). This reader has not run since the county's robots.txt
+# stopped it on 2026-08-31 (DOCUMENT_ROSTERS carries the roster as read that
+# day, every address on the county's domain), so the change waits for the day
+# it runs again.
+#
 # THE WITNESS IS THE COUNTY'S OWN WARD COMPOSITION AGAINST LTSB'S FILING, and
 # it is worth more here than the name checks are. The document says District 1
 # is Garfield ward 1 plus Cleveland; LTSB's statewide ward layer independently
@@ -6215,7 +6848,9 @@ def _email_agrees(name, email):
 # (the Town and Village of Melrose, both in district 6), which cannot hide a
 # shift: a shift moves whole districts, not one ward.
 JK_HEAD = re.compile(r"^\s*DISTRICT\s+(\d{1,2})\s*[-–—]\s*(.*)$")
-JK_MAIL = re.compile(r"\b([A-Za-z][A-Za-z.'-]*)@jacksoncountywi\.gov\b", re.I)
+# any address the block prints; the county's own domain is preferred, never
+# required (the note above)
+JK_MAIL = re.compile(r"\b[A-Za-z0-9][A-Za-z0-9._%+'-]*@[A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z]{2,}\b")
 JK_DOMAIN = "jacksoncountywi.gov"
 # an ALL-CAPS ward run, a bare population, or a fragment of either
 JK_WARDLINE = re.compile(r"^[A-Z0-9][A-Z0-9 ,.&'#–-]*$")
@@ -6576,9 +7211,9 @@ def scrape_pdf_roster_county(fips, county, seats, url):
         if phone:
             row["phone"] = "-".join(phone.groups())
             phones += 1
-        mail = JK_MAIL.search(text)
-        if mail and mail.group(0).lower().rsplit("@", 1)[-1] == JK_DOMAIN:
-            row["email"] = mail.group(0)
+        mail = choose_email(JK_MAIL.findall(text), {JK_DOMAIN})
+        if mail:
+            row["email"] = mail
             emails += 1
         out[str(district)] = row
 
@@ -6610,9 +7245,10 @@ def scrape_pdf_roster_county(fips, county, seats, url):
 #
 #     District No. 4 (Town of Green Grove Ward 1, Town of Hoard Ward 2)
 #     Tom Wilcox tom.wilcox@co.clark.wi.us ............................ 715-743-5225
-#     N14016 Oak Grove Ave, Curtiss WI 54422
+#     <the supervisor's house number and road, town, WI and ZIP code>
 #
-# — the district WITH ITS WARD COMPOSITION, then the person, then a HOME ADDRESS.
+# — the district WITH ITS WARD COMPOSITION, then the person, then a HOME ADDRESS
+# (shown here as a placeholder, because this file does not copy one anywhere).
 #
 # FOUR THINGS ABOUT THIS DOCUMENT, EVERY ONE OF THEM MEASURED:
 #
@@ -6635,10 +7271,19 @@ def scrape_pdf_roster_county(fips, county, seats, url):
 #    guard below catches the CLASS rather than that one row: a name carrying an
 #    @, a digit, or fewer than two words fails the county rather than shipping.
 #
-# 4. THE THIRD LINE IS A HOME ADDRESS AND NEVER SHIPS. Every seat prints one,
-#    and District 17's carries a second phone ("Cell: 715-613-8387") — which is
-#    why the phone is read from the NAME line only and never from the block. A
-#    home address is not contact data this project publishes, for any county.
+# 4. THE THIRD LINE IS A HOME ADDRESS AND NEVER SHIPS. Every seat prints one.
+#    An earlier edition printed a second number for District 17 on that line,
+#    after the word "Cell:", and until 2026-10-17 this reader took the NAME
+#    line's number only, so that second number was dropped. Since Adam's ruling
+#    that day ("if the official government source uses personal phone numbers,
+#    we publish those") every number in a seat's block ships: the name line's
+#    first, in `phone`, and any further one in `phonesExtra` with the label the
+#    directory prints before it ("cell 715-..."). From the address line only a
+#    number with a label word directly before it is taken, and nothing else on
+#    that line is read; a line holding nothing but numbers and their labels is
+#    read whole. Measured 2026-10-17, the current edition prints no second
+#    number for any seat, District 17's included. A home address is not
+#    contact data this project publishes, for any county.
 #
 # THE MAILBOXES ARE MOSTLY PERSONAL AND THEY STILL SHIP: three of the 29 are
 # @co.clark.wi.us and the rest are gmail/yahoo/hotmail addresses the County
@@ -6814,8 +7459,11 @@ def scrape_official_directory_county(spec):
         raise RuntimeError("%s: the directory's district headings are %s, not "
                            "1..%d — re-read %s" % (county, seen, seats, link))
 
-    out, wards, munis, emails, phones, own = {}, {}, {}, 0, 0, 0
-    for i, m in heads:
+    # A seat's block runs to the next heading. The last seat's runs into the
+    # next section, so it is held to the longest block any other seat has.
+    longest = max([b[0] - a[0] for a, b in zip(heads, heads[1:])] or [3])
+    out, wards, munis, emails, own, numbers = {}, {}, {}, 0, 0, {}
+    for n, (i, m) in enumerate(heads):
         district = int(m.group(1))
         wards[district], munis[district] = parse_composition(m.group(2))
         if not munis[district]:
@@ -6825,9 +7473,29 @@ def scrape_official_directory_county(spec):
                                % (county, district, m.group(2)[:80]))
         line = lines[i + 1]
         mail = CLARK_EMAIL.search(line)
-        # THE NAME LINE ONLY: District 17's home-address line carries a second
-        # phone, and reading the block would ship it as the listed number.
+        # The name line's first number is where the name ends. Every number in
+        # the block ships (note 4): the name line's, in order, then the lines
+        # below it, where an address line gives up only a labelled number.
         phone = PDF_PHONE.search(line)
+        found = []
+        for p in PDF_PHONE.finditer(line):
+            label = label_before(line, p.start())
+            if label != "fax":
+                found.append(phone_text(label, "-".join(p.groups())))
+        stop = heads[n + 1][0] if n + 1 < len(heads) else min(len(lines), i + longest)
+        for below in lines[i + 2:stop]:
+            got = labelled_numbers(below)
+            if got is None:
+                got = numbers_after_labels(below)
+                bare = len(NUMBER_TOKEN.findall(below)) - len(got)
+                if bare > 0:
+                    print("  note    %-12s district %d: %d number(s) on a line that "
+                          "also carries other text and no label before them — "
+                          "not read; re-read the directory"
+                          % (county, district, bare), file=sys.stderr)
+            found.extend(phone_text(label, number) for label, number in got)
+        if found:
+            numbers[str(district)] = found
         name = line
         for cut in (mail.group(1) if mail else None, phone.group(0) if phone else None):
             if cut:
@@ -6838,9 +7506,6 @@ def scrape_official_directory_county(spec):
                                "that is not a name, and the row has reshaped; "
                                "re-read %s" % (county, district, name, line[:90], link))
         row = {"name": name, "vacant": False, "role": None}
-        if phone:
-            row["phone"] = "-".join(phone.groups())
-            phones += 1
         if mail:
             row["email"] = mail.group(1)
             emails += 1
@@ -6852,6 +7517,9 @@ def scrape_official_directory_county(spec):
         dupes = sorted({n for n in names if names.count(n) > 1})
         raise RuntimeError("%s: the same person is filed under two districts (%s) "
                            "— the heading boundaries have moved" % (county, dupes))
+    drop_shared_phones(county, numbers, out)
+    phones = sum(1 for r in out.values() if r.get("phone"))
+    seconds = sum(1 for r in out.values() if r.get("phonesExtra"))
     if emails < CLARK_MIN_EMAILS or phones < CLARK_MIN_PHONES:
         raise RuntimeError("%s: %d e-mails and %d phones across %d seats (floors "
                            "%d/%d) — the directory has reshaped and contact is "
@@ -6898,9 +7566,10 @@ def scrape_official_directory_county(spec):
         out[hits[0]]["role"] = role
         print("  role    %-12s %s -> District %s" % (county, role, hits[0]), file=sys.stderr)
 
-    print("  %-12s %d seats, %d phones, %d e-mails (%d on %s, %d personal but "
-          "county-published)" % (county, seats, phones, emails, own,
-                                 spec["domain"], emails - own), file=sys.stderr)
+    print("  %-12s %d seats, %d phones (%d with a second), %d e-mails (%d on %s, "
+          "%d personal but county-published)"
+          % (county, seats, phones, seconds, emails, own, spec["domain"],
+             emails - own), file=sys.stderr)
     ward_number_witness(spec["fips"], county, wards, seats,
                         min_pairs=CLARK_MIN_WARD_PAIRS, munis=munis)
     return out, link
@@ -6957,6 +7626,19 @@ def scrape_official_directory_county(spec):
 # by flattening the page: a flattened line reads
 # "City of Prescott 611 Lake St. N." and there is no honest way to tell the
 # composition from the address afterwards.
+#
+# AN ADDRESS PRINTED ON A BLOCK'S EMAIL LINE IN PLACE OF THE COUNTY MAILBOX
+# SHIPS, since 2026-10-17, on Adam's choice that day ("E-mails too"): an
+# address the county prints beside its supervisor ships whatever its domain.
+# Until then such a block failed the whole county. It is read only from a line
+# of the block that carries the word "Email", because the last block runs on
+# into the meeting schedule. A county mailbox is still required to carry the
+# name the heading reconstructs, and the rotated index still checks every
+# block's initial and surname, which is the witness left for a block that
+# prints no mailbox; a block with no address on its Email line still fails.
+# PIERCE_MIN_MAILBOXES fails the county when too few blocks print their
+# mailbox. Measured 2026-10-17, all 17 blocks print their mailbox and no other
+# address, so nothing changes today.
 PIERCE_DIRECTORY = {
     "fips": "55093", "name": "Pierce", "seats": 17,
     "source_url": "https://www.co.pierce.wi.us/",
@@ -6978,6 +7660,9 @@ PIERCE_PHONE = re.compile(r"\(?(\d{3})\)?[-.\s]\s*(\d{3})[-.\s](\d{4})")
 PIERCE_ROLE = re.compile(r"^((?:2nd\s+)?(?:Vice-)?Chairperson)\s*\.{3,}\s*(.+?)\s*$")
 PIERCE_MIN_EMAILS = 15   # 17 of 17 today
 PIERCE_MIN_PHONES = 15   # 17 of 17 today
+PIERCE_MIN_MAILBOXES = 11   # measured 2026-10-17: 17 of 17 blocks print their
+                            # county mailbox; about two thirds of 17
+PIERCE_EMAIL_LINE = re.compile(r"(?i)\bE-?mail\b")
 # 44 typed (type, municipality, ward) pairs today; several districts name a
 # municipality WHOLE and contribute none, so this is not 2x seats.
 PIERCE_MIN_WARD_PAIRS = 34
@@ -7071,11 +7756,11 @@ def scrape_pierce_directory(spec):
                            "reshaped; re-read %s" % (county, sorted(index), seats, link))
 
     mail_re = re.compile(r"([A-Za-z0-9._%+\-]+)@" + re.escape(spec["domain"]) + r"\b", re.I)
-    out, wards, munis, emails, phones = {}, {}, {}, 0, 0
+    out, wards, munis, emails, phones, boxed = {}, {}, {}, 0, 0, 0
     for n, (i, m) in enumerate(heads):
         end = heads[n + 1][0] if n + 1 < len(heads) else len(rows)
         district, raw_name = int(m.group(1)), " ".join(m.group(2).split())
-        comp, phone, email, collecting = [], None, None, True
+        comp, phone, email, collecting, other = [], None, None, True, []
         for full, left, right in rows[i + 1:end]:
             if PIERCE_STOP.search(full):
                 collecting = False
@@ -7083,6 +7768,8 @@ def scrape_pierce_directory(spec):
                 em = mail_re.search(full)
                 if em:
                     email = em.group(0).lower()
+            if PIERCE_EMAIL_LINE.search(full):
+                other.extend(a for a in EMAIL.findall(full) if EMAIL_SHAPE.match(a))
             # THE PHONE COMES FROM THE ADDRESS COLUMN AND MUST BE LABELLED.
             # Unlabelled digits over there are a street number or a ZIP.
             if not phone:
@@ -7091,19 +7778,23 @@ def scrape_pierce_directory(spec):
                     phone = "-".join(ph.groups())
             if collecting and left:
                 comp.append(left)
-        if not email:
-            raise RuntimeError("%s: district %d publishes no %s mailbox — that "
-                               "mailbox is what witnesses the name a two-column "
-                               "layout reconstructs, so this cannot ship "
-                               "unchecked; re-read %s" % (county, district,
-                                                          spec["domain"], link))
-        parts = {p for p in re.split(r"[._]", mail_re.match(email).group(1)) if p}
-        words = {w.lower().strip(".") for w in raw_name.split()}
-        if not parts <= words:
-            raise RuntimeError("%s: district %d reads the name %r beside the "
-                               "mailbox %r — the two halves of the heading line "
-                               "have not been put back together correctly; "
-                               "re-read %s" % (county, district, raw_name, email, link))
+        if email:
+            parts = {p for p in re.split(r"[._]", mail_re.match(email).group(1)) if p}
+            words = {w.lower().strip(".") for w in raw_name.split()}
+            if not parts <= words:
+                raise RuntimeError("%s: district %d reads the name %r beside a "
+                                   "county mailbox built from another name — the "
+                                   "two halves of the heading line have not been "
+                                   "put back together correctly; re-read %s"
+                                   % (county, district, raw_name, link))
+            boxed += 1
+        else:
+            # an address printed on the Email line in place of the mailbox
+            # (2026-10-17); the rotated index below is its witness
+            email = (choose_email(other, {spec["domain"]}) or "").lower()
+            if not email:
+                raise RuntimeError("%s: district %d prints no address on its Email "
+                                   "line — re-read %s" % (county, district, link))
         initial, surname = index[district]
         if raw_name.split()[0][0].upper() + "." != initial \
            or raw_name.split()[-1].lower() != surname.lower():
@@ -7139,6 +7830,10 @@ def scrape_pierce_directory(spec):
                            "being dropped silently"
                            % (county, emails, phones, seats,
                               PIERCE_MIN_EMAILS, PIERCE_MIN_PHONES))
+    if boxed < PIERCE_MIN_MAILBOXES:
+        raise RuntimeError("%s: %d blocks print their county mailbox (floor %d) — "
+                           "the directory has reshaped; re-read %s"
+                           % (county, boxed, PIERCE_MIN_MAILBOXES, link))
 
     # The board's officers are printed above the seats, WITHOUT their districts,
     # and the two surfaces do not agree on given names — the officer line says
@@ -7161,8 +7856,9 @@ def scrape_pierce_directory(spec):
         print("  role    %-12s %-22s -> District %s" % (county, role, hits[0]),
               file=sys.stderr)
 
-    print("  %-12s %d seats, %d phones, %d county mailboxes"
-          % (county, seats, phones, emails), file=sys.stderr)
+    print("  %-12s %d seats, %d phones, %d e-mail addresses (%d county "
+          "mailboxes, %d printed in place of one)"
+          % (county, seats, phones, emails, boxed, emails - boxed), file=sys.stderr)
     ward_number_witness(spec["fips"], county, wards, seats,
                         min_pairs=PIERCE_MIN_WARD_PAIRS, munis=munis)
     return out, link
@@ -7199,7 +7895,11 @@ def scrape_pierce_directory(spec):
 # the same class of act as answering a captcha, which this project does not do.
 # So the card carries the name, the district, the phone the county publishes in
 # plain markup, and a link to the member's own page where a reader can click
-# through to write to them.
+# through to write to them. Adam's choice of 2026-10-17 ("E-mails too") does
+# not change this: it ships an address a county PRINTS whatever its domain, and
+# decodes a hidden one only where this file already decodes that scheme
+# (Cloudflare's, for Buffalo and Iron). This handler is not one of those, and
+# the addresses are not in either document at all.
 #
 # EACH MEMBER'S PAGE IS FETCHED, and it earns the trip twice: it states that
 # member's own "Title: DISTRICT n" — the list-versus-own-page agreement the
@@ -7398,6 +8098,11 @@ def scrape_marathon_directory(spec):
 ST_CROIX_TABLE = {
     "fips": "55109", "name": "St Croix", "seats": 19,
     "source_url": "https://sccwi.gov/483/Districts-Supervisors",
+    # The county's own mail domain: preferred where a cell prints two
+    # addresses, and counted on the log. Until 2026-10-17 a mailbox on any
+    # other domain failed the county; since Adam's choice that day ("E-mails
+    # too") it ships as printed, and the surname check below is what ties
+    # each address to its row. Measured that day, 19 of 19 are on it.
     "domain": "sccwi.gov",
 }
 SC_ROW = re.compile(r"(?is)<tr[^>]*>(.*?)</tr>")
@@ -7469,9 +8174,9 @@ def scrape_st_croix_table(spec):
         entry = {"name": name, "vacant": False, "role": role}
 
         contact = _sc_flat(cells[3])
-        mail = SC_MAIL.search(cells[3])
+        mail = choose_email(SC_MAIL.findall(cells[3]), {spec["domain"]})
         if mail:
-            entry["email"] = mail.group(1).lower()
+            entry["email"] = mail.lower()
         numbers[district] = ["-".join(m.groups()) for m in SC_PHONE.finditer(contact)]
 
         wards[district], munis[district] = parse_composition(
@@ -7508,10 +8213,15 @@ def scrape_st_croix_table(spec):
                            "being dropped silently"
                            % (county, emails, phones, seats,
                               SC_MIN_EMAILS, SC_MIN_PHONES))
-    if own != emails or agree < emails - 1:
-        raise RuntimeError("%s: %d of %d mailboxes are on %s and %d agree with "
-                           "their own supervisor's surname — a row has shifted"
-                           % (county, own, emails, spec["domain"], agree))
+    # The surname check is what ties each mailbox to its row; the domain no
+    # longer decides anything (2026-10-17) and is only counted.
+    if agree < emails - 1:
+        raise RuntimeError("%s: only %d of %d mailboxes agree with their own "
+                           "supervisor's surname — a row has shifted"
+                           % (county, agree, emails))
+    print("  %-12s %d of %d mailboxes are on %s and %d on another domain "
+          "(shipped as printed since 2026-10-17)"
+          % (county, own, emails, spec["domain"], emails - own), file=sys.stderr)
 
     # THE PAGE'S OWN OFFICER BLOCK, INDEPENDENT OF THE TABLE.
     tail = page[page.index("</tbody>"):]
@@ -7595,6 +8305,11 @@ CHIPPEWA_DIRECTORY = {
     "fips": "55017", "name": "Chippewa", "seats": 21,
     "source_url": "https://chippewacountywi.gov/162/County-Board-Supervisors",
     "witness_url": "https://chippewacountywi.gov/Directory.aspx",
+    # The county's own mail domain: preferred where a card prints two
+    # addresses, and counted on the log. Until 2026-10-17 a mailbox on any
+    # other domain failed the county; since Adam's choice that day ("E-mails
+    # too") it ships as printed, and the surname check is what ties each
+    # address to its card. Measured that day, 21 of 21 are on it.
     "domain": "chippewacountywi.gov",
 }
 CH_DIST = re.compile(r"(?i)^District\s*(\d{1,2})\b")
@@ -7646,9 +8361,9 @@ def scrape_chippewa_directory(spec):
                                "as a name — re-read %s"
                                % (county, district, who, spec["source_url"]))
         row = {"name": clean(who)[0], "vacant": False, "role": None}
-        mail = CH_MAIL.search(body)
+        mail = choose_email(CH_MAIL.findall(body), {spec["domain"]})
         if mail:
-            row["email"] = mail.group(1).lower()
+            row["email"] = mail.lower()
         tel = HCARD_TEL.search(body)
         if tel:
             got = CH_PHONE.search(
@@ -7686,10 +8401,13 @@ def scrape_chippewa_directory(spec):
                            "%d/%d) — the widget has reshaped and contact is being "
                            "dropped silently"
                            % (county, emails, phones, seats, want_mail, want_tel))
-    if own != emails or agree < emails - 1:
-        raise RuntimeError("%s: %d of %d mailboxes are on %s and %d agree with "
-                           "their own supervisor's surname — a card boundary has "
-                           "moved" % (county, own, emails, spec["domain"], agree))
+    if agree < emails - 1:
+        raise RuntimeError("%s: only %d of %d mailboxes agree with their own "
+                           "supervisor's surname — a card boundary has moved"
+                           % (county, agree, emails))
+    print("  %-12s %d of %d mailboxes are on %s and %d on another domain "
+          "(shipped as printed since 2026-10-17)"
+          % (county, own, emails, spec["domain"], emails - own), file=sys.stderr)
 
     # THE SECOND COUNTY SURFACE. A fetch failure is not a disagreement.
     try:
@@ -7994,10 +8712,14 @@ def municipality_name_witness(fips, county, texts, seats):
 # a phone, and for most a DISTRICT-KEYED county mailbox.
 #
 # THE MAILBOX IS THE DOOR WITNESS, and 16 of the 21 have one: district7@
-# co.langlade.wi.us on district 7's page, straight through. Every one that
-# exists must match the district whose row it sits under, which is the check
-# that would catch a block boundary moving. The other five publish no address
-# at all and ship without one rather than with somebody else's.
+# co.langlade.wi.us on district 7's page, straight through. Every district-keyed
+# one must name the district whose row it sits under, which is the check that
+# would catch a block boundary moving. The other five publish no address at all
+# and ship without one rather than with somebody else's. Until 2026-10-17 an
+# address of any other form also failed the county; since Adam's choice that
+# day ("E-mails too") a member page's own address ships as the page prints it,
+# whatever its domain, and only a district-keyed one that names another
+# district stops the run. All 16 were district-keyed on the last read.
 #
 # EVERY MEMBER PAGE PRINTS A HOME ADDRESS — all 21, from "1116 Clermont Street"
 # to "N7299 Kennedy Road" — and none is read. That is the standing rule rather
@@ -8041,6 +8763,7 @@ DMI_OWN_NAME = re.compile(r"(?is)\bName:\s*\|?\s*([^|<]{2,60}?)\s*\|")
 DMI_OWN_DIST = re.compile(r"(?is)\bDistrict\s*#:\s*\|?\s*(\d{1,2})\b")
 DMI_PHONE = re.compile(r"(?is)\bPhone Number:\s*\|?\s*(\d{3})[-.\s](\d{3})[-.\s](\d{4})\b")
 DMI_MAIL = re.compile(r"(?is)\bEmail Address:\s*\|?\s*([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+)")
+DMI_DISTRICT_BOX = re.compile(r"(?i)^district\s*(\d{1,2})@")
 LG_MIN_PHONES = 18      # 21 of 21 today
 LG_MIN_EMAILS = 13      # 16 of 21 today; five supervisors publish none
 
@@ -8088,7 +8811,7 @@ def scrape_langlade_board(spec):
 
     # EACH MEMBER'S OWN PAGE: the district again, the contact, and never the
     # address it prints beside them.
-    phones = emails = 0
+    phones = emails = keyed = 0
     for n, district in enumerate(sorted(out)):
         if n:
             time.sleep(0.4)             # 21 pages of somebody else's server
@@ -8116,14 +8839,17 @@ def scrape_langlade_board(spec):
             phones += 1
         mail = DMI_MAIL.search(own)
         if mail:
-            # THE DISTRICT-KEYED MAILBOX MUST NAME ITS OWN DISTRICT.
-            want = "district%d@%s" % (district, spec["domain"])
-            if mail.group(1).lower() != want:
+            # A DISTRICT-KEYED MAILBOX MUST NAME ITS OWN DISTRICT. Any other
+            # address on the member's own page ships as printed, since
+            # 2026-10-17 (the note above LANGLADE_BOARD).
+            box = DMI_DISTRICT_BOX.match(mail.group(1))
+            if box and int(box.group(1)) != district:
                 raise RuntimeError(
-                    "%s: district %d's page carries the mailbox %r rather than "
-                    "%r — the county's own district-keyed address disagrees with "
-                    "the row it sits under"
-                    % (county, district, mail.group(1), want))
+                    "%s: district %d's page carries the mailbox of district %s — "
+                    "the county's own district-keyed address disagrees with the "
+                    "row it sits under" % (county, district, box.group(1)))
+            if mail.group(1).lower() == "district%d@%s" % (district, spec["domain"]):
+                keyed += 1
             out[district]["email"] = mail.group(1).lower()
             emails += 1
 
@@ -8137,8 +8863,9 @@ def scrape_langlade_board(spec):
           "address; no home address is read, and all 21 pages print one)"
           % (county, seats, phones, emails, seats - emails), file=sys.stderr)
     print("  witness %-12s %d/%d supervisors' own pages confirm their name and "
-          "district; %d/%d mailboxes are the county's own district-keyed address"
-          % (county, seats, seats, emails, emails), file=sys.stderr)
+          "district; %d/%d mailboxes are the county's own district-keyed address "
+          "and the other %d are shipped as printed (since 2026-10-17)"
+          % (county, seats, seats, keyed, emails, emails - keyed), file=sys.stderr)
     municipality_name_witness(spec["fips"], county, texts, seats)
     rows = {str(d): r for d, r in out.items()}
     return attach_unique_roles(roles, rows, county), spec["source_url"]
@@ -8185,6 +8912,10 @@ IRON_BOARD = {
     "fips": "55051", "name": "Iron", "seats": 15,
     "source_url": "https://www.co.iron.wi.gov/190/County-Board",
     "member_url": "https://www.co.iron.wi.gov/m/directory/employee?eid=%s",
+    # The county's mail domain, counted on the log. Until 2026-10-17 a mailbox
+    # on any other domain failed the county; since Adam's choice that day
+    # ("E-mails too") the first address on a member's own page ships as
+    # printed. Measured that day, 14 of 14 are on it.
     "domain": "ironcountywi.org",
 }
 IR_LINK = re.compile(r'(?is)<a[^>]+href="[^"]*[Ee][Ii][Dd]=(\d+)"[^>]*>(.*?)</a>')
@@ -8353,13 +9084,12 @@ def scrape_iron_board(spec):
                            "contact is being dropped silently"
                            % (county, emails, phones, len(live),
                               IR_MIN_EMAILS, IR_MIN_PHONES))
-    if own_dom != emails:
-        raise RuntimeError("%s: %d of %d mailboxes are on %s — a page has shifted"
-                           % (county, own_dom, emails, spec["domain"]))
-    print("  %-12s %d seats, %d filled, %d phones, %d e-mails (the district is on "
-          "each member's OWN page; the board page and the county's aggregate "
+    print("  %-12s %d seats, %d filled, %d phones, %d e-mails (%d on %s and %d on "
+          "another domain, shipped as printed since 2026-10-17; the district is "
+          "on each member's OWN page; the board page and the county's aggregate "
           "directory both state none)"
-          % (county, seats, len(live), phones, emails), file=sys.stderr)
+          % (county, seats, len(live), phones, emails, own_dom, spec["domain"],
+             emails - own_dom), file=sys.stderr)
     if missing:
         print("  note %-12s district %s is the county's one VACANT row, identified "
               "by elimination and gated on the two counts agreeing"
@@ -8430,6 +9160,10 @@ def scrape_iron_board(spec):
 ASHLAND_BOARD = {
     "fips": "55003", "name": "Ashland", "seats": 21,
     "source_url": "https://ashlandcountywi.gov/bos",
+    # Preferred where a block prints two addresses, and counted on the log.
+    # Until 2026-10-17 a mailbox on any other domain failed the county; since
+    # Adam's choice that day ("E-mails too") it ships as printed. On the
+    # 2026-09-02 read all 21 were on it.
     "domain": "ashlandcountywi.gov",
 }
 # THE HEADER TAG CARRIES ATTRIBUTES ON ONE BLOCK OF TWENTY-ONE. District 14's
@@ -8488,9 +9222,9 @@ def scrape_ashland_board(spec):
                                    "does not read as a name — re-read %s"
                                    % (county, district, name, spec["source_url"]))
             entry = {"name": name, "vacant": False, "role": None}
-            mail = AS_MAIL.search(body)
+            mail = choose_email(AS_MAIL.findall(body), {spec["domain"]})
             if mail:
-                entry["email"] = mail.group(1).lower()
+                entry["email"] = mail.lower()
             tel = AS_PHONE.search(" ".join(lines))
             if tel:
                 numbers[district] = ["-".join(tel.groups())]
@@ -8523,12 +9257,12 @@ def scrape_ashland_board(spec):
                            "is being dropped silently"
                            % (county, emails, phones, len(live),
                               AS_MIN_EMAILS, AS_MIN_PHONES))
-    if own != emails:
-        raise RuntimeError("%s: %d of %d mailboxes are on %s — a block has shifted"
-                           % (county, own, emails, spec["domain"]))
-    print("  %-12s %d seats, %d phones, %d e-mails (district 1 publishes 'Phone: "
-          "Confidential' and ships with none; no home address is read, and every "
-          "block prints one)" % (county, seats, phones, emails), file=sys.stderr)
+    print("  %-12s %d seats, %d phones, %d e-mails (%d on %s and %d on another "
+          "domain, shipped as printed since 2026-10-17; district 1 publishes "
+          "'Phone: Confidential' and ships with none; no home address is read, "
+          "and every block prints one)"
+          % (county, seats, phones, emails, own, spec["domain"], emails - own),
+          file=sys.stderr)
     ward_number_witness(spec["fips"], county, wards, seats,
                         min_pairs=AS_MIN_WARD_PAIRS, munis=munis)
     rows = {str(d): r for d, r in out.items()}
@@ -9111,11 +9845,17 @@ def scrape_florence_board(spec):
 BARRON_TABLE = {
     "fips": "55005", "name": "Barron", "seats": 29,
     "source_url": "https://www.co.barron.wi.us/board.cfm",
+    # The county's mail domain: preferred where the mailbox cell prints two
+    # addresses, and counted on the log. Until 2026-10-17 only an address on
+    # it was read out of that cell; since Adam's choice that day ("E-mails
+    # too") the cell's address ships whatever its domain, and the surname
+    # check below is what ties each one to its row. Measured that day, 28 of
+    # 28 are on it.
     "domain": "co.barron.wi.us",
 }
 BR_ROW = re.compile(r"(?is)<tr[^>]*>(.*?)</tr>")
 BR_CELL = re.compile(r"(?is)<t[dh][^>]*>(.*?)</t[dh]>")
-BR_MAIL = re.compile(r"(?i)\b([A-Za-z0-9._%+-]+@co\.barron\.wi\.us)\b")
+BR_MAIL = re.compile(r"(?i)\b([A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,})\b")
 BR_PHONE = re.compile(r"(?<!\d)(\d{3})[-.\s](\d{3})[-.\s](\d{4})(?!\d)")
 # "Louie Okey, Chairman" — the list. The caption is "Louie Okey-Chair".
 BR_LIST_ROLE = re.compile(r"(?i)([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]+){1,3})\s*,\s*"
@@ -9189,9 +9929,9 @@ def scrape_barron_table(spec):
             got = BR_PHONE.search(cells[3])
             if got:
                 numbers[district] = ["-".join(got.groups())]
-            mail = BR_MAIL.search(raw[4])
+            mail = choose_email(BR_MAIL.findall(raw[4]), {spec["domain"]})
             if mail:
-                entry["email"] = mail.group(1).lower()
+                entry["email"] = mail.lower()
             wards[district], munis[district] = parse_composition(pending[1])
             if not munis[district]:
                 raise RuntimeError("%s: district %d's composition names no "
@@ -9231,6 +9971,11 @@ def scrape_barron_table(spec):
         raise RuntimeError("%s: only %d of %d mailboxes carry their own "
                            "supervisor's surname — a row has shifted"
                            % (county, agree, emails))
+    own = sum(1 for r in out.values()
+              if (r.get("email") or "").endswith("@" + spec["domain"]))
+    print("  %-12s %d of %d mailboxes are on %s and %d on another domain "
+          "(shipped as printed since 2026-10-17)"
+          % (county, own, emails, spec["domain"], emails - own), file=sys.stderr)
 
     # THE OFFICER BLOCK, STATED TWICE ON THE PAGE IN TWO FORMATS.
     head = page[:page.index("board.cfm") if "board.cfm" in page else len(page)]
@@ -9337,6 +10082,18 @@ def scrape_barron_table(spec):
 # domains are in use (@co.forest.wi.us and @co.forest.wi.gov, four seats on the
 # latter); both are the county's and each ships as published.
 #
+# AN ADDRESS A CARD PRINTS IN PLACE OF ITS MAILBOX SHIPS, since 2026-10-17, on
+# Adam's choice that day ("E-mails too"): an address the county prints beside
+# its supervisor ships whatever its domain. It is read only from the card's own
+# text block, the one holding the card's single statement of its district,
+# never from the card's headings, which carry the neighbours. Until that day
+# such a seat shipped no address. A mailbox must still name the card's own
+# district, and where a card prints the mailbox beside another address the
+# mailbox ships, because the card shows one "Email" link. FR_MIN_MAILBOXES
+# fails the county when too few cards print their mailbox. Measured
+# 2026-10-17, every filled card prints its mailbox and no other address, so
+# nothing changes today.
+#
 # THE COMPOSITION NAMES MUNICIPALITIES WITHOUT SAYING WHAT THEY ARE, which is
 # why ward_number_witness() learned to take a type of None. Forest writes
 # "Argonne", "Hiles", "Popple River" bare and spells out only the one name that
@@ -9374,6 +10131,9 @@ FR_LINE = re.compile(r"(?i)^(?:(town|city|village)\s+of\s+)?(.+?)"
 FR_TYPE = {"town": "t", "city": "c", "village": "v"}
 FR_MIN_EMAILS = 15          # 17 of 17 filled seats today
 FR_MIN_PHONES = 15          # 17 of 17
+FR_MIN_MAILBOXES = 11       # measured 2026-10-17: 17 of 17 filled cards print
+                            # their district mailbox; about two thirds of 17
+FR_DOMAINS = {"co.forest.wi.us", "co.forest.wi.gov"}
 FR_MIN_WARD_PAIRS = 20      # 25 today, MEASURED: five districts are whole
                             # municipalities carrying no ward number at all
                             # (District 3 is Alvin, Caswell, Popple River and
@@ -9447,10 +10207,20 @@ def scrape_forest_cards(spec):
                 # THE MAILBOX IS THE SECOND STATEMENT OF THE DISTRICT NUMBER.
                 if int(mail.group(2)) != district:
                     raise RuntimeError("%s: the card that says District %d carries "
-                                       "%s — the page states this seat's number "
-                                       "two ways and they disagree"
-                                       % (county, district, mail.group(1)))
+                                       "the mailbox of district %s — the page "
+                                       "states this seat's number two ways and "
+                                       "they disagree"
+                                       % (county, district, mail.group(2)))
                 entry["email"] = mail.group(1).lower()
+                entry["_boxed"] = True
+            else:
+                # an address printed in place of the mailbox, from the card's
+                # own text block only (2026-10-17)
+                other = choose_email(
+                    [a for a in _MAILTO.findall(html_lib.unescape(body.group(1)))
+                     if EMAIL_SHAPE.match(a)], FR_DOMAINS)
+                if other:
+                    entry["email"] = other.lower()
             for line in lines[:at[0]]:
                 if FR_PHONE.match(line):
                     numbers[district] = ["-".join(FR_PHONE.match(line).groups())]
@@ -9493,12 +10263,17 @@ def scrape_forest_cards(spec):
 
     emails = sum(1 for r in live.values() if r.get("email"))
     phones = sum(1 for r in live.values() if r.get("phone"))
+    boxed = sum(1 for r in live.values() if r.pop("_boxed", False))
     if emails < FR_MIN_EMAILS or phones < FR_MIN_PHONES:
         raise RuntimeError("%s: %d e-mails and %d phones across %d filled seats "
                            "(floors %d/%d) — the card body has reshaped and "
                            "contact is being dropped silently"
                            % (county, emails, phones, len(live),
                               FR_MIN_EMAILS, FR_MIN_PHONES))
+    if boxed < FR_MIN_MAILBOXES:
+        raise RuntimeError("%s: %d filled cards print their district mailbox (floor "
+                           "%d) — the card body has reshaped" % (county, boxed,
+                                                                FR_MIN_MAILBOXES))
 
     vacant = sorted(d for d, r in out.items() if r["vacant"])
     print("  %-12s %d seats, %d filled, %d phones, %d e-mails (no home address is "
@@ -9511,7 +10286,11 @@ def scrape_forest_cards(spec):
               % (county, ", ".join(str(d) for d in vacant)), file=sys.stderr)
     print("  witness %-12s %d/%d filled seats carry the county's own "
           "district-keyed mailbox, each agreeing with its card's district number"
-          % (county, emails, len(live)), file=sys.stderr)
+          % (county, boxed, len(live)), file=sys.stderr)
+    if emails > boxed:
+        print("  mail  %-12s %d card(s) print another address in place of the "
+              "district mailbox, and it ships" % (county, emails - boxed),
+              file=sys.stderr)
     ward_number_witness(spec["fips"], county, wards, seats,
                         min_pairs=FR_MIN_WARD_PAIRS, munis=munis)
     roles = {d: r["role"] for d, r in out.items() if r.get("role")}
@@ -9551,9 +10330,18 @@ def scrape_forest_cards(spec):
 # Green Lake's shared-mailbox rule applied to phones, and it keeps working if
 # the county changes its switchboard number.
 #
-# THREE SUPERVISORS PUBLISH TWO NUMBERS EACH (districts 4, 7 and 9). The first
-# ships and the rest are named on the log, never dropped silently — again the
-# Green Lake handling.
+# THREE SUPERVISORS PUBLISH TWO NUMBERS EACH (districts 4, 7 and 9), side by
+# side on one line with no label. Until 2026-10-17 the first shipped and the
+# second was only named on the log; since Adam's ruling that day ("if the
+# official government source uses personal phone numbers, we publish those")
+# both ship, the second in `phonesExtra`, and unlabelled, because the directory
+# prints no word saying which line is which.
+#
+# AN ADDRESS ON ANOTHER DOMAIN SHIPS TOO, SINCE 2026-10-17. Until then only a
+# mailbox on co.waupaca.wi.us was read out of a block; since Adam's choice that
+# day ("E-mails too") a block's address ships whatever its domain, the county's
+# own preferred where a block prints two, and the name witness below is what
+# ties it to the block. Measured that day, 27 of 27 are on the county's domain.
 #
 # TWO WITNESSES, BOTH INTERNAL TO THE DIRECTORY, AND BOTH GATED:
 #   * every supervisor's name agrees with their own county mailbox
@@ -9570,7 +10358,8 @@ def scrape_forest_cards(spec):
 WP_SECTION = 'id="county-board-supervisors"'
 WP_SECTION_END = 'id="town-officials"'
 WP_DIST = re.compile(r"^District\s+(\d{1,2})$")
-WP_MAIL = re.compile(r"[\w.+-]+@co\.waupaca\.wi\.us", re.I)
+WP_MAIL = re.compile(r"[\w.+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}", re.I)
+WP_DOMAIN = "co.waupaca.wi.us"   # preferred where a block prints two; see above
 WP_PHONE = re.compile(r"\(?(\d{3})\)?[\s.-]*(\d{3})[-.\s]*(\d{4})")
 WP_OFFICER = re.compile(r"(Vice Chair|Chair)\s*[–—-]\s*([A-Za-z .'\-]+?)\s*"
                         r"\(District\s*(\d{1,2})\)")
@@ -9586,13 +10375,304 @@ def name_fold(text):
 _wp_fold = name_fold          # the name it had while Waupaca was its only caller
 
 
+# --- the one e-mail address that ships for a supervisor -----------------------
+# ADAM'S CHOICE OF 2026-10-17, "E-mails too", for every state: an address a
+# county prints beside a named supervisor ships on that supervisor's record
+# whatever domain it is on (a gmail, internet-provider or business address
+# included), exactly as the county prints it. Until that day several readers in
+# this file kept an address only when it was on the county's own domain
+# (Buffalo's EMAIL_DOMAINS, the `email_domain` of Fond du Lac and Sheboygan,
+# the Barron, Waupaca and Jackson patterns) or failed the whole county when one
+# was not (St. Croix, Chippewa, Iron, Ashland, and Langlade, whose
+# district-mailbox test also fixed the domain). Measured 2026-10-17, every one
+# of those sources that answered prints only addresses on its county's own
+# domain, so the change ships no new address that day; it decides what happens
+# the day a county prints another.
+#
+# What stays is every check that ties an address to its supervisor. A mailbox
+# that names a district must name the supervisor's own (Adams, Door, Forest,
+# Monroe, Oconto, Langlade, Dodge), and a mailbox built from names must agree
+# with the name on the same row (Sauk, St. Croix, Chippewa, Waupaca, Pierce,
+# Barron). Where one of those mailboxes is missing and the supervisor's own
+# row prints another address in its place, that address ships, since
+# 2026-10-17 under Adam's choice that day: Adams's page, Door's widget block,
+# Forest's card text, Monroe's Email cell, Oconto's card and the line of
+# Pierce's block that says "Email". Until then such a row
+# failed Adams, Door, Monroe or Pierce, which were then carried at their last
+# read, and left the seat with no address in Forest and Oconto. Each of those
+# readers keeps a floor on how many rows still print their mailbox, because a
+# table that has stopped printing them is a reshaped table. Measured
+# 2026-10-17, every filled seat in Adams, Door, Forest, Monroe and Pierce
+# prints its county mailbox and two Oconto cards print one, and no row in the
+# six prints another address, so nothing changes today.
+#
+# An address printed for two or more districts ships only on the one whose
+# supervisor's surname its local part carries, when exactly one does, and on
+# none of them otherwise (wi_email_rules.settle_shared(): Green Lake and the
+# per-supervisor pages here, and build_wi_county_board_roster.py for the whole
+# file, which also leaves off an address that names another supervisor of the
+# county). A contact form is not an address (Calumet, Columbia, Door, Oconto),
+# a hidden link a reader of the page cannot see is not read (Ozaukee), and an
+# address that only a script on the page produces is not decoded unless this
+# file already decodes that scheme (Marathon). ONE ADDRESS PER SUPERVISOR:
+# where a row prints one on the county's domain and another beside it, the
+# county's ships and the other is not kept, because the card shows one "Email"
+# link. The messages the readers changed that day name the county and the
+# district and never the address, because it may be a person's own.
+def choose_email(found, own_domains):
+    """The one address that ships for a supervisor, out of the addresses that
+    supervisor's own row, block or page prints, in the page's order: the first
+    one on the county's own domain(s) where there is one, else the first one
+    printed. None when nothing was printed."""
+    seen, printed = set(), []
+    for address in found:
+        address = (address or "").strip()
+        if address and address.lower() not in seen:
+            seen.add(address.lower())
+            printed.append(address)
+    own = [a for a in printed if a.rsplit("@", 1)[-1].lower() in own_domains]
+    return (own or printed or [None])[0]
+
+
+# --- every number a supervisor's county prints, with the county's own label ---
+# ADAM'S RULING OF 2026-10-17, for every state: "if the official government
+# source uses personal phone numbers, we publish those." Until that day this
+# file shipped the first number beside a supervisor and dropped the rest, and
+# three counties' phone columns (Monroe, Columbia and Manitowoc's personnel
+# pages) were not read at all because the numbers in them are supervisors' home
+# and cell lines. Every number a county prints beside a named supervisor now
+# ships on that supervisor's record: the first in `phone`, any further ones in
+# `phonesExtra`, in the page's order, each carrying the label the page prints
+# beside it ("cell 715-...") and never a label it does not.
+#
+# What stays out is unchanged: a number printed for two or more supervisors,
+# or one that is the county's own line (drop_shared_phones, below, and the
+# per-county readers); a number the county marks confidential (Ashland's
+# district 1); a fax number; and a number whose tel: link and visible text
+# disagree, which ships neither for that supervisor. No home address reaches a
+# field or a log line: the readers below take a line only when it holds
+# nothing but numbers and the words labelling them — or, where a number shares
+# a line with an address (Clark's directory), only a number with a label word
+# directly before it, and nothing else from that line — and
+# wi/scripts/wi_phone_shape.py holds every value to one number before the
+# builder writes it.
+PHONE_LABELS = {
+    "c": "cell", "cell": "cell", "cellular": "cell", "h": "home", "home": "home",
+    "w": "work", "work": "work", "b": "business", "business": "business",
+    "o": "office", "office": "office", "mobile": "mobile",
+    "personal": "personal", "residence": "residence",
+}
+# A word that says only "this is a telephone number" is not a label.
+PHONE_WORDS = {"phone", "phones", "tel", "telephone", "number", "no", "ph", "p",
+               "t", "and", "or"}
+FAX_WORDS = {"fax", "f", "facsimile"}
+NUMBER_TOKEN = re.compile(
+    r"(?:\(\s*\d{3}\s*\)\s*|\b\d{3}[\s.-]?)?\b\d{3}[\s.-]\d{4}\b"
+    r"(?:\s*,?\s*(?:ext\.?|extension|x)\s*\d{1,6}\b)?", re.I)
+_GAP_WORD = re.compile(r"[A-Za-z]+")
+# all that may sit between numbers once the words are taken out
+_GAP_REST = re.compile(r"^[\s:;,/|()\[\].#&*\-–—]*$")
+
+
+def labelled_numbers(text):
+    """[(label or None, number as printed), ...] for a text that holds NOTHING
+    but telephone numbers and the words labelling them; None for any other text.
+
+    A label is the word the page prints next to a number: before it ("Cell:
+    715-...", "715-... Cell 715-...") or, where the text starts with a number
+    and ends with a word, after it ("715-... (c)"). One-letter and bracketed
+    abbreviations become the fleet's words (C -> cell, H -> home, W -> work,
+    B -> business, O -> office); "Phone", "Tel" and the like are not labels and
+    are dropped; a number labelled fax is left out. A text holding any other
+    word, a stray digit, two labels for one number or a label with no number
+    is not understood, and the caller ships nothing from it rather than
+    guessing — which is also what keeps an address line out: a street, a town
+    or a ZIP code is "any other word" or "a stray digit".
+    """
+    matches = list(NUMBER_TOKEN.finditer(text or ""))
+    if not matches:
+        return None
+    gaps = [text[:matches[0].start()]]
+    gaps += [text[a.end():b.start()] for a, b in zip(matches, matches[1:])]
+    gaps.append(text[matches[-1].end():])
+    marks = []                               # per gap: None, a label, or "fax"
+    for gap in gaps:
+        if re.search(r"\d", gap) or not _GAP_REST.match(_GAP_WORD.sub("", gap)):
+            return None
+        found = set()
+        for word in _GAP_WORD.findall(gap):
+            w = word.lower()
+            if w in PHONE_LABELS:
+                found.add(PHONE_LABELS[w])
+            elif w in FAX_WORDS:
+                found.add("fax")
+            elif w not in PHONE_WORDS:
+                return None
+        if len(found) > 1:
+            return None
+        marks.append(found.pop() if found else None)
+    # Whose label is in a gap between two numbers is set by the two ends of the
+    # text: a word before the first number means labels lead; a bare first
+    # number and a word after the last means they trail; a bare first number
+    # and a word between ("715-... Cell 715-...") belongs to the number after it.
+    trail = marks[0] is None and marks[-1] is not None
+    if not trail and marks[-1] is not None:
+        return None                          # a label with no number after it
+    out = []
+    for i, m in enumerate(matches):
+        label = marks[i + 1] if trail else marks[i]
+        if label != "fax":
+            out.append((label, " ".join(m.group(0).split())))
+    return out
+
+
+# A label WORD printed directly before a number ("Cell: 715-..."). One-letter
+# labels are not read this way: on a line that also carries an address, a
+# single letter before a number may be a county road's.
+_LABEL_WORD = r"(cellular|cell|home|work|business|office|mobile|personal|residence|fax|facsimile)"
+_LABEL_BEFORE = re.compile(r"(?i)\b%s\s*[:.]?\s*$" % _LABEL_WORD)
+LABEL_THEN_NUMBER = re.compile(r"(?i)\b%s\s*[:.]?\s*(%s)" % (_LABEL_WORD, NUMBER_TOKEN.pattern))
+
+
+def label_before(text, start):
+    """The label for a number starting at `start`, from the word printed
+    directly before it: a fleet label, "fax", or None for no label word."""
+    m = _LABEL_BEFORE.search(text[:start])
+    if not m:
+        return None
+    word = m.group(1).lower()
+    return "fax" if word in FAX_WORDS else PHONE_LABELS[word]
+
+
+def numbers_after_labels(text):
+    """[(label, number as printed)] for each number in `text` that has a label
+    word directly before it, fax numbers left out. Nothing else in the text is
+    read, which is what lets a reader take a labelled number from a line that
+    also carries a home address without taking any of the address."""
+    out = []
+    for m in LABEL_THEN_NUMBER.finditer(text or ""):
+        word = m.group(1).lower()
+        if word in FAX_WORDS:
+            continue
+        out.append((PHONE_LABELS[word], " ".join(m.group(2).split())))
+    return out
+
+
+def phone_text(label, number):
+    """The string a record carries: the label the page printed, then the number."""
+    return "%s %s" % (label, number) if label else number
+
+
+def phone_lines(lines):
+    """Every number on the lines that hold nothing but numbers and their labels,
+    as the strings a record carries, in the page's order. A line holding
+    anything else — a name, a street, a town, a ZIP code — contributes nothing."""
+    out = []
+    for line in lines:
+        got = labelled_numbers(line)
+        if got:
+            out.extend(phone_text(label, number) for label, number in got)
+    return out
+
+
+def phone_key(phone):
+    """The digits that identify a line, label and punctuation removed: two
+    strings for one line compare equal, a different extension does not."""
+    digits = re.sub(r"\D", "", re.sub(r"(?i)^[a-z]+\.?:?\s+", "", phone or ""))
+    return digits[1:] if len(digits) == 11 and digits.startswith("1") else digits
+
+
+def tel_agrees(href, text):
+    """A tel: link and the number printed as its text name the same line. Where
+    they disagree neither ships for that person. The link may carry the country
+    code the text leaves off."""
+    a, b = re.sub(r"\D", "", href or ""), re.sub(r"\D", "", text or "")
+    return bool(b) and (a == b or a == "1" + b)
+
+
+TEL_LINK = re.compile(r'(?is)<a\b[^>]*\bhref\s*=\s*["\']?tel:([^"\'>\s]*)[^>]*>(.*?)</a>')
+
+
+def tel_links_agree(fragment):
+    """False when any tel: link in `fragment` dials a different number than the
+    number its own text shows. A link whose text shows no number is not
+    compared: the readers here take numbers from text, never from a link."""
+    for href, shown in TEL_LINK.findall(fragment or ""):
+        text = " ".join(html_lib.unescape(_TAG.sub(" ", shown)).split())
+        if re.search(r"\d", text) and not tel_agrees(href, text):
+            return False
+    return True
+
+
+def page_numbers(fragment):
+    """The digit keys of every number a fragment of a page prints."""
+    text = " ".join(html_lib.unescape(_TAG.sub(" ", fragment or "")).split())
+    return {phone_key(m.group(0)) for m in NUMBER_TOKEN.finditer(text)}
+
+
+FOOTER = re.compile(r"(?is)<footer\b.*?</footer>")
+
+
+def footer_numbers(page_html):
+    """The digit keys of every number in a page's <footer>: the county's own
+    lines, its main number and its offices'. A supervisor's slot that repeats
+    one is showing the county's line, not the supervisor's.
+
+    THE FOOTER AND NOT THE WHOLE PAGE OUTSIDE THE ROSTER, which was measured
+    before it was written: Monroe's page prints its chair's and vice chair's
+    own numbers a second time in a contact block above the table, beside their
+    names, so "printed anywhere else on the page" dropped two supervisors' own
+    numbers as if they were the county's."""
+    keys = set()
+    for block in FOOTER.findall(page_html or ""):
+        keys |= page_numbers(block)
+    return keys
+
+
+def drop_page_lines(county, numbers, county_lines):
+    """Remove from each district's numbers every one of the county's own lines;
+    the log names the district and a count, never a number."""
+    for d in list(numbers):
+        keep = [p for p in numbers[d] if phone_key(p) not in county_lines]
+        if len(keep) != len(numbers[d]):
+            print("  phone %-12s district %s: %d number(s) the page's footer also "
+                  "prints — the county's line, not the supervisor's; dropped"
+                  % (county, d, len(numbers[d]) - len(keep)), file=sys.stderr)
+        numbers[d] = keep
+
+
+def unique_phones(phones):
+    """The same line printed twice for one person ships once, first form kept."""
+    out, seen = [], set()
+    for p in phones:
+        k = phone_key(p)
+        if k and k not in seen:
+            seen.add(k)
+            out.append(p)
+    return out
+
+
+def set_phones(row, phones):
+    """`phone` is the first number and `phonesExtra` the rest, in page order.
+    Returns how many numbers the row now carries."""
+    phones = unique_phones(phones)
+    if phones:
+        row["phone"] = phones[0]
+        if len(phones) > 1:
+            row["phonesExtra"] = phones[1:]
+    return len(phones)
+
+
 def drop_shared_phones(county, numbers, rows):
     """A NUMBER ON MORE THAN ONE DISTRICT IS NOT A PERSONAL NUMBER.
 
     `numbers` is {district: [phone, ...]} in the order the page prints them;
     `rows` is the roster being built, keyed the same way. Every number that
     appears under two or more districts is dropped from ALL of them and named
-    on the run log, and the first of whatever survives ships.
+    on the run log. Whatever survives ships, the first in `phone` and the rest
+    in `phonesExtra` — since 2026-10-17, on Adam's ruling that day; until then
+    only the first shipped. Numbers are compared by their digits, so a label or
+    a difference in punctuation cannot hide a shared line.
 
     THE RULE IS GENERIC RATHER THAN A PINNED LITERAL, and both counties that
     need it show why. Waupaca's districts 2, 3, 25 and 27 all print the
@@ -9605,22 +10685,25 @@ def drop_shared_phones(county, numbers, rows):
     either number would go stale the day a county changed it, and would say
     nothing about the next county to do the same thing.
     """
-    shared = {p for p in {q for v in numbers.values() for q in v}
-              if sum(1 for v in numbers.values() if p in v) > 1}
-    for phone in sorted(shared):
-        holders = sorted(d for d, v in numbers.items() if phone in v)
+    keys = {d: {phone_key(p) for p in v} for d, v in numbers.items()}
+    every = set().union(*keys.values()) if keys else set()
+    shared = {k for k in every
+              if k and sum(1 for v in keys.values() if k in v) > 1}
+    for key in sorted(shared):
+        holders = sorted(d for d, v in keys.items() if key in v)
+        shown = next(p for p in numbers[holders[0]] if phone_key(p) == key)
         print("  phone %-12s %s is published for districts %s — not one "
               "supervisor's, dropped from all"
-              % (county, phone, ", ".join(str(d) for d in holders)), file=sys.stderr)
+              % (county, shown, ", ".join(str(d) for d in holders)), file=sys.stderr)
     for district, found in numbers.items():
-        mine = [p for p in found if p not in shared]
+        mine = [p for p in found if phone_key(p) not in shared]
         if not mine:
             continue
-        rows[district]["phone"] = mine[0]
-        if len(mine) > 1:
-            print("  note %-12s district %d publishes %d numbers (%s) — the first "
-                  "ships" % (county, district, len(mine), ", ".join(mine)),
-                  file=sys.stderr)
+        got = set_phones(rows[district], mine)
+        if got > 1:
+            print("  note %-12s district %s publishes %d numbers — the first is "
+                  "`phone`, the other %d `phonesExtra`"
+                  % (county, district, got, got - 1), file=sys.stderr)
     return shared
 
 
@@ -9655,7 +10738,7 @@ def scrape_directory_county(fips, county, seats, url):
             for m in WP_PHONE.finditer(line):
                 found.append("(%s) %s-%s" % m.groups())
         numbers[district] = found
-        mail = next((m.group(0) for l in block for m in [WP_MAIL.search(l)] if m), None)
+        mail = choose_email([m for l in block for m in WP_MAIL.findall(l)], {WP_DOMAIN})
         blocks[district] = {"name": clean(name)[0], "vacant": False, "role": None}
         if mail:
             blocks[district]["email"] = mail
@@ -9673,12 +10756,17 @@ def scrape_directory_county(fips, county, seats, url):
     agree = sum(1 for r in blocks.values() if r.get("email")
                 and _wp_fold(r["name"].split()[-1]) in _wp_fold(r["email"].split("@")[0]))
     if emails < WP_MIN_EMAILS or agree < WP_MIN_AGREE:
-        raise RuntimeError("%s: %d of %d seats carry a county mailbox and %d agree "
+        raise RuntimeError("%s: %d of %d seats carry a mailbox and %d agree "
                            "with their own name (floors %d/%d) — the directory has "
                            "reshaped" % (county, emails, seats, agree,
                                          WP_MIN_EMAILS, WP_MIN_AGREE))
-    print("  witness %-12s %d/%d supervisors' names agree with their own county "
-          "mailbox" % (county, agree, seats), file=sys.stderr)
+    own = sum(1 for r in blocks.values()
+              if (r.get("email") or "").lower().endswith("@" + WP_DOMAIN))
+    print("  witness %-12s %d/%d supervisors' names agree with their own "
+          "mailbox; %d of %d mailboxes are on %s and %d on another domain "
+          "(shipped as printed since 2026-10-17)"
+          % (county, agree, seats, own, emails, WP_DOMAIN, emails - own),
+          file=sys.stderr)
 
     # THE OFFICER BLOCK STATES ITS OWN DISTRICTS AND MUST AGREE WITH THE LISTING.
     officers = WP_OFFICER.findall(" \n".join(lines))
@@ -9728,6 +10816,17 @@ def scrape_directory_county(fips, county, seats, url):
 # and passing every count guard, which is the failure this file keeps meeting in
 # other shapes.
 #
+# AN ADDRESS PRINTED IN PLACE OF THE MAILBOX SHIPS, since 2026-10-17, on Adam's
+# choice that day ("E-mails too"): an address the county prints beside its
+# supervisor ships whatever its domain. Until then a block printing any other
+# address failed the whole county. The header and the job title still have to
+# agree on every block, a block that prints a district mailbox must print its
+# own district's, and a block that prints no address at all still fails the
+# county; where a block prints the mailbox beside another address the mailbox
+# ships, because the card shows one "Email" link. DOOR_MIN_MAILBOXES fails the
+# county when too few blocks print their mailbox. Measured 2026-10-17, all 21
+# blocks print their mailbox and no other address, so nothing changes today.
+#
 # THE ROLES SIT INSIDE THE JOB TITLE ("District 1 Supervisor and Chairperson"),
 # not in a block of their own, and go through the same uniqueness gate every
 # other structured county uses. "Supervisor" alone is an OFFICE and matches
@@ -9762,12 +10861,15 @@ DOOR_MAIL = re.compile(r'mailto:(district(\d+)@co\.door\.wi\.gov)', re.I)
 DOOR_PHONE = re.compile(r"\b(\d{3})[-.\s](\d{3})[-.\s](\d{4})\b")
 DOOR_MIN_EMAILS = 19     # 21 of 21 today
 DOOR_MIN_PHONES = 19     # 21 of 21 today
+DOOR_MIN_MAILBOXES = 14  # measured 2026-10-17: 21 of 21 blocks print their
+                         # district mailbox; about two thirds of 21
 
 
 def scrape_staff_directory_county(fips, county, seats, url):
     """All seats or nothing, gated on the district's three statements agreeing."""
     page = fetch(url)
     found, vacant, contacts, roles = {}, set(), {}, {}
+    boxed = instead = 0
     for m in DOOR_WIDGET.finditer(page):
         district, body = int(m.group(1)), m.group(2)
         if not (1 <= district <= seats):
@@ -9794,13 +10896,27 @@ def scrape_staff_directory_county(fips, county, seats, url):
                 "%r — the page's own two statements of the district disagree, "
                 "which is what a reshaped page looks like"
                 % (county, district, office))
-        if not mail or int(mail.group(2)) != district:
+        if mail and int(mail.group(2)) != district:
             raise RuntimeError(
-                "%s: district %d carries the mailbox %r — the county's own "
-                "district-keyed address disagrees with the heading it sits under"
-                % (county, district, mail.group(1) if mail else None))
+                "%s: district %d carries the mailbox of district %s — the county's "
+                "own district-keyed address disagrees with the heading it sits "
+                "under" % (county, district, mail.group(2)))
+        if mail:
+            address = mail.group(1)
+            boxed += 1
+        else:
+            # an address printed in place of the mailbox (2026-10-17)
+            address = choose_email(
+                [a for a in _MAILTO.findall(html_lib.unescape(body))
+                 if EMAIL_SHAPE.match(a)], {"co.door.wi.gov"})
+            if not address:
+                raise RuntimeError(
+                    "%s: district %d's block prints no address — every block has "
+                    "printed its district mailbox, so the widget has reshaped; "
+                    "re-read %s" % (county, district, url))
+            instead += 1
         found[district] = (clean(who)[0], None)
-        row = {"email": mail.group(1).lower()}
+        row = {"email": address.lower()}
         tel = HCARD_TEL.search(body)
         if tel:
             digits = DOOR_PHONE.search(
@@ -9829,10 +10945,17 @@ def scrape_staff_directory_county(fips, county, seats, url):
                            "%d/%d) — the directory widget has reshaped and contact "
                            "is being dropped silently"
                            % (county, emails, phones, seats, want_mail, want_tel))
-    print("  witness %-12s %d/%d districts agree across the widget header, the job "
-          "title and the county mailbox%s"
-          % (county, len(found), seats,
+    want_box = DOOR_MIN_MAILBOXES - len(vacant)
+    if boxed < want_box:
+        raise RuntimeError("%s: %d blocks print their district mailbox (floor %d) — "
+                           "the directory widget has reshaped" % (county, boxed, want_box))
+    print("  witness %-12s %d/%d districts agree across the widget header and the "
+          "job title, %d of them also by the county mailbox%s"
+          % (county, len(found), seats, boxed,
              " (%d vacant)" % len(vacant) if vacant else ""), file=sys.stderr)
+    if instead:
+        print("  mail  %-12s %d block(s) print another address in place of the "
+              "district mailbox, and it ships" % (county, instead), file=sys.stderr)
     return attach_unique_roles(roles, out, county)
 
 
@@ -9876,6 +10999,15 @@ def scrape_staff_directory_county(fips, county, seats, url):
 # ("Staff Directory - Don Bartels Jr.") and ships as the supervisor page, which
 # is the same distinction Door and Calumet already record.
 #
+# ANY OTHER ADDRESS A CARD PRINTS AS A MAILTO SHIPS, since 2026-10-17, on Adam's
+# choice that day ("E-mails too"): an address the county prints beside its
+# supervisor ships whatever its domain. It is read from the member's own card
+# only, and a contact form is still not an address. Where a card prints a
+# district mailbox beside another address the mailbox ships, because the card
+# shows one "Email" link. Measured 2026-10-17, two cards print their mailbox,
+# the rest a contact form or nothing, and no card prints any other mailto, so
+# nothing changes today.
+#
 # THE PHONES COME FROM THE PROFILE PAGES, because the list page carries none at
 # all. That is the Manitowoc arrangement — a page per member, fetched and used
 # as a witness — and the profile's own title must name the member the list page
@@ -9891,6 +11023,7 @@ OC_TITLE = re.compile(r"(?is)<title>(.*?)</title>")
 OC_MIN_PHONES = 25       # 28 of 31 resolve one today; districts 9, 20 and 24
                          # publish no number of their own and ship without one
 OC_MIN_LINKS = 29        # 31 of 31 today
+OC_DOMAINS = {"co.oconto.wi.us", "ocontocountywi.gov"}
 
 
 def _oconto_profiles(cards, county, base):
@@ -9933,6 +11066,7 @@ def scrape_member_cards_county(fips, county, seats, url):
     """All seats or nothing, out of one staff-directory widget of h-cards."""
     page = fetch(url)
     found, contacts, roles, links = {}, {}, {}, {}
+    instead = 0
     for m in HCARD_ITEM.finditer(page):
         body = m.group(1)
         name, title = HCARD_NAME.search(body), HCARD_TITLE.search(body)
@@ -9957,10 +11091,18 @@ def scrape_member_cards_county(fips, county, seats, url):
         if mail:
             if int(mail.group(2)) != district:
                 raise RuntimeError(
-                    "%s: district %d carries the mailbox %r — the county's own "
-                    "district-keyed address disagrees with the card it sits on"
-                    % (county, district, mail.group(1)))
+                    "%s: district %d carries the mailbox of district %s — the "
+                    "county's own district-keyed address disagrees with the card "
+                    "it sits on" % (county, district, mail.group(2)))
             row["email"] = mail.group(1).lower()
+        else:
+            # any other address the member's own card prints (2026-10-17)
+            other = choose_email(
+                [a for a in _MAILTO.findall(html_lib.unescape(body))
+                 if EMAIL_SHAPE.match(a)], OC_DOMAINS)
+            if other:
+                row["email"] = other.lower()
+                instead += 1
         link = HCARD_LINK.search(body)
         if link:
             href = html_lib.unescape(link.group(1))
@@ -9984,6 +11126,9 @@ def scrape_member_cards_county(fips, county, seats, url):
                            "page (floor %d) — the profile pages have reshaped and "
                            "contact is being dropped silently"
                            % (county, got, seats, OC_MIN_PHONES))
+    if instead:
+        print("  mail  %-12s %d card(s) print an address that is not a district "
+              "mailbox, and it ships" % (county, instead), file=sys.stderr)
     out = _resolve(county, seats, "member-cards", found, set(), contacts)
     return attach_unique_roles(roles, out, county)
 
@@ -10081,10 +11226,12 @@ def scrape_fielded_county(fips, county, seats, url):
     for d in sorted(found):
         if not _email_agrees(found[d]["name"], found[d]["email"]):
             raise RuntimeError(
-                "%s: district %s pairs %r with %r — the county builds its "
-                "mailboxes from its supervisors' own names, so a row whose "
-                "e-mail names somebody else is the shift this reading exists to "
-                "rule out" % (county, d, found[d]["name"], found[d]["email"]))
+                "%s: district %s pairs %r with an address that is not built from "
+                "that name — the county builds its mailboxes from its "
+                "supervisors' own names, so a row whose e-mail names somebody "
+                "else is the shift this reading exists to rule out (the address "
+                "is not printed: since 2026-10-17 it may be a person's own)"
+                % (county, d, found[d]["name"]))
     shared = {}
     for d in sorted(found):
         shared.setdefault(digits(found[d]["phone"]), []).append(d)
@@ -10130,9 +11277,12 @@ def scrape_fielded_county(fips, county, seats, url):
 #
 # What the personnel page adds: a second statement of the district (a tripwire,
 # not the source — see the docstring), a county e-mail, the page itself as
-# `profileUrl`, and the person's own job title, which is where a chair would be
-# labelled if the county ever labelled one. What it deliberately does NOT add is
-# the home address and home telephone printed beside them.
+# `profileUrl`, the person's own job title, which is where a chair would be
+# labelled if the county ever labelled one, and — since 2026-10-17, on Adam's
+# ruling that day ("if the official government source uses personal phone
+# numbers, we publish those") — the telephone printed in the supervisor's own
+# block, which is their home line. What it deliberately does NOT add is the
+# home address printed beside it.
 PROFILE_COUNTIES = {"55071"}                    # Manitowoc
 PROFILE_ROW = re.compile(r'<a\s[^>]*href="([^"]+)"[^>]*>\s*(\d{1,2})\s+([^<]+?)\s*</a>')
 # the supervisor's OWN block: a page-wide <h1>/<h2> search would read a banner
@@ -10151,6 +11301,15 @@ PROFILE_TITLE = re.compile(r"(?is)<h2[^>]*>\s*(.*?)\s*</h2>")
 # that would otherwise be silent and wrong: a personnel page naming a different
 # district than the list, and obfuscation markup that decodes to nothing.
 PROFILE_MIN = 20
+# THE PHONE FLOOR IS THE EXCEPTION AND FAILS THE COUNTY. Since 2026-10-09 the
+# roster builder keeps a county this run could not read at its last-good rows,
+# dated to their last real read, so failing Manitowoc no longer deletes anybody
+# from the card — and the rule for every builder that ships these numbers
+# (2026-10-17) is that a page change that stops them being read fails rather
+# than emptying them. Measured 2026-10-17: 24 of 25 personnel pages print one
+# number (district 4's page prints none); the floor is about two thirds of that.
+PROFILE_MIN_PHONES = 16
+PROFILE_PARA = re.compile(r"(?is)<p\b[^>]*>(.*?)</p>")
 CFEMAIL = re.compile(r'data-cfemail="([0-9a-fA-F]{4,})"')
 EMAIL_SHAPE = re.compile(r"^[a-z0-9][a-z0-9._%+-]*@[a-z0-9][a-z0-9.-]*\.[a-z]{2,}$", re.I)
 # The site's own scramble, undone in every visitor's browser by the handler on
@@ -10204,8 +11363,28 @@ def _surname(person):
     return toks[-1].lower() if toks else ""
 
 
+def profile_phones(profile, block, county, d):
+    """Every number in a supervisor's own block, read from the paragraphs that
+    hold nothing but numbers and their labels, as the strings a record carries.
+
+    Nothing when a tel: link dials a different number than its text shows (the
+    supervisor ships no number at all), and never one the page's footer also
+    prints, which is the county's own line."""
+    if not tel_links_agree(block):
+        print("  note %-12s district %s: a phone link dials a different number "
+              "than its text shows — neither ships" % (county, d), file=sys.stderr)
+        return []
+    numbers = {d: []}
+    for para in PROFILE_PARA.findall(block):
+        got = labelled_numbers(cell_text(para))
+        if got:
+            numbers[d].extend(phone_text(label, number) for label, number in got)
+    drop_page_lines(county, numbers, footer_numbers(profile))
+    return numbers[d]
+
+
 def attach_profiles(page, list_url, districts, county):
-    """Add e-mail, profileUrl and the county's own job title from each
+    """Add e-mail, phones, profileUrl and the county's own job title from each
     supervisor's personnel page, and fail loudly if it names another district."""
     links = {}
     for href, num, label in PROFILE_ROW.findall(page):
@@ -10218,6 +11397,7 @@ def attach_profiles(page, list_url, districts, county):
         if _surname(clean(html_lib.unescape(label))[0]) == _surname(row["name"]):
             links[d] = urllib.parse.urljoin(list_url, href)
     seen = {"district": 0, "email": 0, "markup": 0, "title": 0}
+    phone_lists = {}
     for n, d in enumerate(sorted(links, key=int)):
         row = districts[d]
         if n:
@@ -10263,6 +11443,12 @@ def attach_profiles(page, list_url, districts, county):
         if address:
             row["email"] = address
             seen["email"] += 1
+        # The telephone, from this supervisor's own block ONLY, for the same
+        # reason as the address above (Adam's ruling of 2026-10-17 is why it is
+        # read at all; see the docstring).
+        got = profile_phones(profile, block, county, d) if block else []
+        if got:
+            phone_lists[d] = got
         row["url"] = links[d]
     if seen["markup"] and not seen["email"]:
         raise RuntimeError(
@@ -10270,14 +11456,24 @@ def attach_profiles(page, list_url, districts, county):
             "one address decoded — the encoding has changed; a silently empty "
             "contact column is the failure this check exists for"
             % (county, seen["markup"]))
+    # a number on two supervisors' pages is not one supervisor's
+    drop_shared_phones(county, phone_lists, districts)
+    phones = sum(1 for d in links if districts[d].get("phone"))
+    extra = sum(1 for d in links if districts[d].get("phonesExtra"))
+    if phones < PROFILE_MIN_PHONES:
+        raise RuntimeError(
+            "%s: %d of %d personnel pages yielded a telephone (floor %d) — the "
+            "pages have reshaped; the roster builder keeps last week's rows"
+            % (county, phones, len(links), PROFILE_MIN_PHONES))
     for field in ("district", "email"):
         if seen[field] < PROFILE_MIN:
             print("  note %-12s only %d of %d personnel pages state a %s — the "
                   "county still ships on its list page; retention gates the field"
                   % (county, seen[field], len(links), field), file=sys.stderr)
-    print("  prof %-12s %d pages: %d districts witnessed, %d e-mails, %d titled"
-          % (county, len(links), seen["district"], seen["email"], seen["title"]),
-          file=sys.stderr)
+    print("  prof %-12s %d pages: %d districts witnessed, %d e-mails, %d phones "
+          "(%d with a second), %d titled"
+          % (county, len(links), seen["district"], seen["email"], phones, extra,
+             seen["title"]), file=sys.stderr)
     return districts
 
 
@@ -10321,6 +11517,11 @@ def scrape_county(fips, name, seats, strategy, url):
                 "%s: %d of %d seats resolved an e-mail, floor is %d — the page's "
                 "obfuscation has changed and the addresses are being dropped "
                 "silently" % (name, got, seats, EMAIL_MIN))
+        own = sum(1 for r in out.values()
+                  if (r.get("email") or "").rsplit("@", 1)[-1].lower() in EMAIL_DOMAINS)
+        print("  %-12s %d e-mails, %d on the county's own two domains and %d on "
+              "another (shipped as printed since 2026-10-17)"
+              % (name, got, own, got - own), file=sys.stderr)
         return attach_unique_roles(roles, out, name), read_from
     if strategy == "cells":
         # A district per TABLE CELL: the cell boundary is the guard, so this
@@ -10447,6 +11648,15 @@ def main():
         _fetch_retry_selftest()
         _json_selftest()
         _district_page_selftest()
+        _phone_selftest()
+        _email_selftest()
+        # The two checks every Wisconsin roster builder shares run here too,
+        # because this selftest is the one CI runs (smoke-test.yml) and the
+        # builders' own runs happen only in the weekly workflows. Each exits
+        # non-zero on a failure.
+        import wi_phone_shape            # noqa: PLC0415 - this script's own folder
+        wi_phone_shape._selftest()
+        wi_email_rules._selftest()
         return
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT

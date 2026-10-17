@@ -54,6 +54,7 @@ const GEOMETRY_URLS = [
   "./data/app/sc-precincts.json",
   "./data/app/sc-school-board-districts.json",
   "./data/app/sc-judicial-circuits.json",
+  "./data/app/sc-city-wards.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -64,8 +65,10 @@ const ROSTER_URLS = [
   "./data/app/sc-senate-members.json",
   "./data/app/sc-house-members.json",
   "./data/app/sc-county-council-members.json",
+  "./data/app/sc-city-councils.json",
   "./data/app/coverage-gaps.json",
   "./data/app/tribal-councils.json",
+  "./data/app/sc-conservation-boards.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

@@ -15,17 +15,20 @@ commit ever had. Every one of those numbers was in git the whole time.
 
 WHAT IT MEASURES, which is CLAUDE.md's own stated rule:
 
-  * a static gate is one NAMED step in the `smoke` job ahead of the
-    `actions/setup-node` step;
-  * an invocation is a `python3` or `node` command line in that job, excluding
+  * a static gate is one NAMED step in the `static` job (until 2026-10-17
+    the static and browser gates were one `smoke` job, split at its
+    `actions/setup-node` step, and a static gate was a named step ahead of it);
+  * an invocation is a `python3` or `node` command line in the `static` or
+    `browser` job, excluding
     `python3 -m http.server`, which serves the pages to the browser gates
     rather than testing anything, and excluding the `npx playwright install`
     lines, which are setup and are not commands of either kind;
-  * an invocation boots Chromium if it is a `node` command AFTER the
-    setup-node step. `scripts/build_og_image.mjs --check` is the reason that
-    is a position test and not a name test: it is a `node` command that
-    imports playwright through a dynamic `await import()` inside `render()`,
-    which `--check` never reaches, and it runs BEFORE Playwright is installed.
+  * an invocation boots Chromium if it is a `node` command in the `browser`
+    job. `scripts/build_og_image.mjs --check` is the reason that is a position
+    test and not a name test: it is a `node` command that imports playwright
+    through a dynamic `await import()` inside `render()`, which `--check`
+    never reaches, and it runs in the `static` job, where Playwright is not
+    installed.
 
 TWO PARSES, COMPARED. `validate_steward_mirror.py` already reads this
 workflow's invocations, for a different question. Re-deriving them here would
@@ -64,8 +67,7 @@ ENV_PREFIX = re.compile(r"^(?:[A-Z_]+=\S+\s+)+")
 # sentences wraps.
 ANCHORS = [
     ("steps",
-     r"one NAMED step in the `smoke` job ahead of the `actions/setup-node` "
-     r"step, which is \*\*(\d+)\*\*"),
+     r"one NAMED step in the `static` job, which is \*\*(\d+)\*\*"),
     ("invocations",
      r"the whole battery is \*\*(\d+) — (\d+) that need no browser and "
      r"(\d+) that boot Chromium\*\*"),
@@ -79,37 +81,44 @@ def fail(msg):
     sys.exit(1)
 
 
-def measure():
-    """(named steps, invocations, no browser, Chromium) from the smoke job."""
-    lines = open(WORKFLOW, encoding="utf-8").read().split("\n")
-    head = next((i for i, l in enumerate(lines) if re.match(r"^\s*smoke:\s*$", l)),
-                None)
+def job_lines(lines, name):
+    """The lines of one job in the workflow, by its key under `jobs:`."""
+    head = next((i for i, l in enumerate(lines)
+                 if re.match(r"^\s*%s:\s*$" % name, l)), None)
     if head is None:
-        fail("no `smoke:` job in %s — the workflow has changed shape"
-             % os.path.relpath(WORKFLOW, REPO_ROOT))
+        fail("no `%s:` job in %s — the workflow has changed shape"
+             % (name, os.path.relpath(WORKFLOW, REPO_ROOT)))
     indent = len(re.match(r"^(\s*)", lines[head]).group(1))
     end = next((i for i in range(head + 1, len(lines))
                 if lines[i].strip()
                 and not lines[i].startswith(" " * (indent + 1))), len(lines))
-    job = lines[head:end]
+    return lines[head:end]
 
-    setup = next((i for i, l in enumerate(job) if "actions/setup-node" in l), None)
-    if setup is None:
-        fail("the smoke job has no actions/setup-node step, which is the line "
-             "the static and browser tiers are split at")
 
-    steps = sum(1 for i, l in enumerate(job)
-                if i < setup and l.strip().startswith("- name:"))
-
-    invocations = []
-    for i, line in enumerate(job):
+def invocations_in(job):
+    out = []
+    for line in job:
         text = ENV_PREFIX.sub("", re.sub(r"^run:\s*", "", line.strip()))
         if not INVOCATION.match(text) or "http.server" in text:
             continue
-        invocations.append((i, text.split("||")[0].strip()))
-    chromium = sum(1 for i, t in invocations
-                   if i > setup and t.startswith("node "))
-    return steps, len(invocations), len(invocations) - chromium, chromium
+        out.append(text.split("||")[0].strip())
+    return out
+
+
+def measure():
+    """(named steps, invocations, no browser, Chromium) from the two gate jobs."""
+    lines = open(WORKFLOW, encoding="utf-8").read().split("\n")
+    static = job_lines(lines, "static")
+    browser = job_lines(lines, "browser")
+    if not any("actions/setup-node" in l for l in browser):
+        fail("the browser job has no actions/setup-node step, so it cannot be "
+             "the job that boots Chromium — the workflow has changed shape")
+
+    steps = sum(1 for l in static if l.strip().startswith("- name:"))
+    in_static = invocations_in(static)
+    chromium = sum(1 for t in invocations_in(browser) if t.startswith("node "))
+    no_browser = len(in_static) + len(invocations_in(browser)) - chromium
+    return steps, no_browser + chromium, no_browser, chromium
 
 
 def stated():
@@ -136,7 +145,7 @@ def main():
 
     cross = len(mirror.invocations(WORKFLOW, strip_comment=False))
     if cross != total:
-        fail("this gate reads %d invocation(s) in the smoke job and "
+        fail("this gate reads %d invocation(s) in the gate jobs and "
              "validate_steward_mirror.py reads %d in the same file. One of the "
              "two readings is wrong about a command CI runs." % (total, cross))
 
@@ -157,14 +166,14 @@ def main():
         fail("CLAUDE.md's stated battery size no longer matches "
              ".github/workflows/smoke-test.yml:\n    %s\n\n  Re-measure rather "
              "than increment, and state the date. The figures are:\n"
-             "    named steps ahead of actions/setup-node : %d\n"
+             "    named steps in the static job           : %d\n"
              "    invocations                             : %d"
              " (%d no browser, %d Chromium)"
              % ("\n    ".join(problems), steps, total, no_browser, chromium))
 
     print("validate-gate-counts: OK — CLAUDE.md states %d named static step(s) "
           "and %d invocation(s) (%d no browser, %d Chromium), which is what "
-          "the smoke job runs; both invocation readings agree"
+          "the static and browser jobs run; both invocation readings agree"
           % (steps, total, no_browser, chromium))
 
 

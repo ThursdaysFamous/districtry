@@ -5,14 +5,20 @@ which links a "Town Board" page for only two of the county's 23 towns: Bagley
 (/481/Town-Board) and Riverview (/502/Town-Board). Every other town page gives
 the clerk's contact and nothing on the board. Each Town Board page has a
 "Members" list, one member per line as "<name>, <office> (Voting Member)"
-(Bagley) or "<name> - <office>" (Riverview); telephone and e-mail lines are
-not kept. The town is read from the page's breadcrumb. Read with the token on
-2026-10-15 (robots.txt: 816 bytes, no rule matches these paths)."""
+(Bagley) or "<name> - <office>" (Riverview). A member's telephone number and
+e-mail address are read from the rest of the member's line after the office,
+from a "Contact <the same name> <number>" line below it (Bagley), and from
+lines below it that hold nothing but a number or an e-mail address
+(Riverview), up to the next member. The town is read from the page's
+breadcrumb. Read with the token on 2026-10-15 (robots.txt: 816 bytes, no rule
+matches these paths)."""
 
 import re
 import urllib.parse
 
-from . import clean, html_text, looks_like_person, norm_role, person
+from . import (clean, emails_after_name, following_emails, following_phones,
+               html_text, line_emails, line_phones, looks_like_person,
+               name_on, norm_role, person, phones_after_name)
 
 COUNTY_FIPS = "083"
 COUNTY_NAME = "Oconto"
@@ -43,14 +49,28 @@ def scrape(ctx):
         if start < 0:
             continue
         people = []
-        for ln in text[start:].split("\n")[:30]:
-            m = _LINE.match(ln.strip())
+        lines = [ln.strip() for ln in text[start:].split("\n")[:30]]
+        for i, ln in enumerate(lines):
+            m = _LINE.match(ln)
             if not m:
                 continue
             role = norm_role(m.group(2))
             name = clean(m.group(1))
-            if role and looks_like_person(name):
-                people.append(person(name, role))
+            if not (role and looks_like_person(name)):
+                continue
+            rest = re.sub(r"(?i)\(\s*voting\s+member\s*\)", " ", m.group(3))
+            phones = line_phones(rest)
+            emails = line_emails(rest)
+            nxt = lines[i + 1] if i + 1 < len(lines) else ""
+            if re.match(r"(?i)^contact\s", nxt) and name_on(name, nxt):
+                phones += phones_after_name(nxt, name)
+                emails += emails_after_name(nxt, name)
+            else:
+                phones += following_phones(lines, i + 1, limit=3,
+                                           stop_re="(?i)" + _LINE.pattern)
+                emails += following_emails(lines, i + 1, limit=3,
+                                           stop_re="(?i)" + _LINE.pattern)
+            people.append(person(name, role, phones, emails=emails))
         if people:
             towns[town] = people
     return {"towns": towns, "edition": None}

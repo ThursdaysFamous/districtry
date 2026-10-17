@@ -5,24 +5,30 @@
     "email": "cbalensiefen@marshallcountyillinois.gov",
     "name": "Charlotte Balensiefen",
     "phone": "309-364-3563",
+    "phonesExtra": [
+     "cell or work 309-238-3569"
+    ],
     "termExpires": 2028
    },
    {
     "email": "dlueders@marshallcountyillinois.gov",
     "name": "David Lueders",
-    "phone": "309-256-2811",
+    "phone": "cell or work 309-256-2811",
     "termExpires": 2028
    },
    {
     "email": "dminnick@marshallcountyillinois.gov",
     "name": "David Minnick",
-    "phone": "309-696-6536",
+    "phone": "cell or work 309-696-6536",
     "termExpires": 2026
    },
    {
     "email": "astash@marshallcountyillinois.gov",
     "name": "Andy Stash",
     "phone": "309-364-4600",
+    "phonesExtra": [
+     "cell or work 309-370-6677"
+    ],
     "termExpires": 2026
    }
   ],
@@ -34,26 +40,26 @@
    {
     "email": "jdurham@marshallcountyillinois.gov",
     "name": "Jamie Durham",
-    "phone": "815-681-1029",
+    "phone": "cell or work 815-681-1029",
     "termExpires": 2026
    },
    {
     "email": "bfecht@marshallcountyillinois.gov",
     "name": "Bill Fecht",
-    "phone": "815-257-2760",
+    "phone": "cell or work 815-257-2760",
     "termExpires": 2026
    },
    {
     "email": "blindstrom@marshallcountyillinois.gov",
     "name": "Brad J. Lindstrom",
-    "phone": "815-257-1234",
+    "phone": "cell or work 815-257-1234",
     "role": "Vice-Chairperson",
     "termExpires": 2028
    },
    {
     "email": "tperona@marshallcountyillinois.gov",
     "name": "Todd Perona",
-    "phone": "309-208-1959",
+    "phone": "cell or work 309-208-1959",
     "termExpires": 2028
    }
   ],
@@ -65,7 +71,7 @@
    {
     "email": "tmcglasson@marshallcountyillinois.gov",
     "name": "Travis McGlasson",
-    "phone": "309-229-9905",
+    "phone": "cell or work 309-229-9905",
     "role": "Chairperson",
     "termExpires": 2028
    },
@@ -78,12 +84,12 @@
    {
     "email": "jmeierkord@marshallcountyillinois.gov",
     "name": "Justin Meierkord",
-    "phone": "309-361-3459",
+    "phone": "cell or work 309-361-3459",
     "termExpires": 2026
    },
    {
     "name": "Jeff Schmitt",
-    "phone": "309-231-6541",
+    "phone": "cell or work 309-231-6541",
     "termExpires": 2026
    }
   ],

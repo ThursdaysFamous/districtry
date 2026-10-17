@@ -5,8 +5,23 @@ data/app/peoria-county-board-members.json, keyed by board district.
 
 Peoria seats 18 SINGLE-member districts — the fleet's largest single-member
 county board — so every district key holds exactly one member. The county
-publishes a party for all 18 and an e-mail for all 18; phones are per-member
-and about two thirds publish one.
+publishes a party for all 18 and an e-mail for all 18; phones are per-member,
+labelled on each member's page ("Phone:", "Cell:", "Work Phone:", "Business:",
+"Home:"), and most members publish one. Since Adam's ruling of 2026-10-17 ("if
+the official government source uses personal phone numbers, we publish those")
+every labelled number ships, the first in `phone` and any further ones in
+`phonesExtra`, each led by its label, and each is checked for its shape
+(scraper_common.person_phone_problem).
+
+Each e-mail is the one address the member's own page shows a reader, on
+whatever domain the page gives it (Adam's choice of 2026-10-17, "E-mails
+too"); since that day the scraper decodes them from Cloudflare's e-mail
+protection, whose arrival had stopped the weekly runs at the e-mail floor below.
+Each must be exactly one address (scraper_common.person_email_problem; the
+error names the district, never the address), an address
+scripts/undeliverable.py lists is left out, and one address on two members'
+rows fails the build, because the scraper should already have kept an address
+shown on two pages off both.
 
 The Chairperson and Vice-Chairperson are marked on the member who holds each
 role. Both also hold a district seat (Peoria elects them from among the 18),
@@ -30,7 +45,9 @@ import json
 import os
 import re
 import sys
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import undeliverable  # noqa: E402  (the fleet's withhold list)
+from scraper_common import make_fail, person_email_problem, person_phone_problem  # noqa: E402  (shared machinery — do not fork)
 
 SOURCE_URL = "https://www.peoriacounty.gov/755/County-Board-Members"
 
@@ -39,6 +56,13 @@ SOURCE_URL = "https://www.peoriacounty.gov/755/County-Board-Members"
 EXPECT_DISTRICTS = tuple(str(n) for n in range(1, 19))
 MEMBERS_PER_DISTRICT = 1
 MIN_PHONES = 9
+# A second labelled number on a member's page (a cell beside a work line, say):
+# measured on 5 of the 18 members on 2026-10-17. Two thirds of 5, so a page
+# change that stops the second number being read fails the build.
+MIN_SECOND_NUMBERS = 3
+# E-mails: 18 of 18 members on 2026-10-17, one of them on a non-county
+# domain. This floor is what refused the runs of 2026-10-02 to 10-16,
+# when the addresses went behind Cloudflare's protection.
 MIN_EMAILS = 16
 MIN_PARTIES = 16
 ALLOWED_ROLES = ("Chairperson", "Vice-Chairperson")
@@ -111,9 +135,26 @@ def main():
             fail("district %s carries unrecognized role %r — the index page's "
                  "wording changed; check it before shipping" % (d, role))
         member = {"name": rec["name"]}
-        for key in ("party", "role", "phone", "email"):
+        for key in ("party", "role", "phone", "phonesExtra", "email"):
             if rec.get(key):
                 member[key] = rec[key]
+        # The shape of every number, named by district only, never by value.
+        values = [("phone", member["phone"])] if member.get("phone") else []
+        values += [("phonesExtra[%d]" % i, v)
+                   for i, v in enumerate(member.get("phonesExtra") or [])]
+        for field, value in values:
+            problem = person_phone_problem(value)
+            if problem:
+                fail("Peoria County District %s: %s %s" % (d, field, problem))
+        if member.get("email"):
+            problem = person_email_problem(member["email"])
+            if problem:
+                fail("Peoria County District %s: the member page's e-mail %s" % (d, problem))
+            if member["email"].lower() in undeliverable.UNDELIVERABLE:
+                print("peoria-board-roster: note — District %s: "
+                      "scripts/undeliverable.py lists the member's e-mail as an "
+                      "address that cannot receive mail; not shipped" % d)
+                del member["email"]
         if rec.get("url") and re.match(r"^https://", rec["url"]):
             member["url"] = rec["url"]
         roster.setdefault(d, {"members": [], "sourceUrl": SOURCE_URL})
@@ -128,11 +169,25 @@ def main():
                  % (d, len(entry["members"]), MEMBERS_PER_DISTRICT))
 
     members = [m for e in roster.values() for m in e["members"]]
+    holders = {}
+    for d, entry in roster.items():
+        for m in entry["members"]:
+            if m.get("email"):
+                holders.setdefault(m["email"].lower(), []).append(d)
+    for where in holders.values():
+        if len(where) > 1:
+            fail("Districts %s carry the same e-mail, which is an office's rather "
+                 "than either member's; the scraper should have kept it off both"
+                 % ", ".join(sorted(where, key=int)))
     phones = sum(1 for m in members if m.get("phone"))
+    seconds = sum(1 for m in members if m.get("phonesExtra"))
     emails = sum(1 for m in members if m.get("email"))
     parties = sum(1 for m in members if m.get("party"))
     if phones < MIN_PHONES:
         fail("only %d phones resolved (expected >= %d)" % (phones, MIN_PHONES))
+    if seconds < MIN_SECOND_NUMBERS:
+        fail("only %d members carry a second number (expected >= %d) — the "
+             "member pages' labels may have changed" % (seconds, MIN_SECOND_NUMBERS))
     if emails < MIN_EMAILS:
         fail("only %d e-mails resolved (expected >= %d)" % (emails, MIN_EMAILS))
     if parties < MIN_PARTIES:
@@ -151,9 +206,9 @@ def main():
         json.dump(roster, f, ensure_ascii=False, indent=1, sort_keys=True)
         f.write("\n")
     roles = sorted(m["role"] for m in members if m.get("role"))
-    print("peoria-board-roster: %d districts, %d members (%d phones, %d e-mails, "
-          "%d parties, %s, roles: %s) -> %s"
-          % (len(roster), len(members), phones, emails, parties,
+    print("peoria-board-roster: %d districts, %d members (%d phones, %d with a "
+          "second number, %d e-mails, %d parties, %s, roles: %s) -> %s"
+          % (len(roster), len(members), phones, seconds, emails, parties,
              ("%d of %d named on the county's index"
               % (index.get("matched", 0), index.get("rosterCount", 0)))
              if index.get("read") else "the county's index was unreadable",

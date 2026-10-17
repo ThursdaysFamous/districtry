@@ -177,8 +177,38 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # hashlib, os, tempfile, urllib.request; `certifi` is imported inside
 # `ca_bundle()`, the one function that uses it, and ships with `requests`, which
 # every caller already installs.
+#
+# `city_councils` (2026-10-17) is the eighth, added when the weekly council page
+# watch (watch-city-council-pages.yml) became the first workflow to run the five
+# state builders that import it — Arkansas, North Carolina, Oklahoma, South
+# Carolina and Tennessee. Its test is this list's: what "this name is still on
+# the page its seat cites" means — one normalisation of a page's text, one
+# reading of robots.txt at every redirect hop, one rule that a page which cannot
+# be read keeps what it last said — must not be answered differently per state,
+# and the five builders exist so that each states only its own files, seat
+# counts and measured browser pages. Stdlib-only at module scope apart from
+# `scraper_common`, which is on this list; `pdftotext` is a program it runs, not
+# a module, and the workflow installs it.
+#
+# `statewide_precincts`, `published_district_layers`, `whole_county_courts`,
+# `city_ward_maps` and `conservation_boards` (2026-10-17) are the ninth to the
+# thirteenth, added when the smoke job began running the --check of the newest
+# states' builders that import them. Each is the one implementation a family of
+# state builders shares, and each state's builder says only where its source
+# is, how to read one record and what to expect: six states' precinct layers;
+# the school board, special district and Arkansas ward maps a government office
+# publishes; five states' whole-county court districts; the ward maps read city
+# by city in four states; and three states' conservation district boards. What
+# "the shipped file matches the record its builder wrote" and "every county is
+# covered by its own districts" mean must not be answered differently per
+# state, which is this list's test. All five are stdlib-only at module scope
+# apart from one another, `city_councils` and `scraper_common`, which are on
+# this list; `requests`, `shapely` and the `mapshaper` and `pdftotext` programs
+# are reached only when a builder fetches or builds, never by its --check.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
-                "workflow_run_evidence", "validate_officeholder_names", "aia_bundle"}
+                "workflow_run_evidence", "validate_officeholder_names", "aia_bundle",
+                "city_councils", "statewide_precincts", "published_district_layers",
+                "whole_county_courts", "city_ward_maps", "conservation_boards"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

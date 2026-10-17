@@ -22,6 +22,9 @@
     "clerk": "Helen Bohac",
     "municipality": "Dewhurst",
     "phone": "608-558-0771",
+    "phonesExtra": [
+      "715-896-0380"
+    ],
     "recordUpdated": "2026-01-26",
     "url": "https://www.townofdewhurstwi.gov/"
   },
@@ -73,6 +76,9 @@
     "clerk": "Tracy Rau",
     "municipality": "Hixon",
     "phone": "715-316-2296",
+    "phonesExtra": [
+      "715-229-2532"
+    ],
     "recordUpdated": "2024-01-02"
   },
   "5501935125": {
@@ -86,6 +92,9 @@
     "deputyClerk": "Janice Shilts",
     "municipality": "Levis",
     "phone": "715-819-0823",
+    "phonesExtra": [
+      "715-937-1975"
+    ],
     "recordUpdated": "2025-12-05"
   },
   "5501945700": {
@@ -98,6 +107,9 @@
     "clerk": "Lacii Kautzer",
     "municipality": "Loyal",
     "phone": "715-255-3953",
+    "phonesExtra": [
+      "715-255-9232"
+    ],
     "recordUpdated": "2026-03-17",
     "url": "https://www.townofloyal.com/"
   },
@@ -117,6 +129,9 @@
     "clerk": "Nicholas Peppas",
     "municipality": "Mead",
     "phone": "715-267-6258",
+    "phonesExtra": [
+      "715-267-5031"
+    ],
     "recordUpdated": "2023-12-06"
   },
   "5501951125": {
@@ -156,6 +171,9 @@
     "deputyClerk": "Marla Martin",
     "municipality": "Sherwood",
     "phone": "715-884-6292",
+    "phonesExtra": [
+      "715-937-0430"
+    ],
     "recordUpdated": "2024-10-28",
     "url": "https://townofsherwood.com/"
   },
@@ -163,6 +181,9 @@
     "clerk": "Arlene Kodl",
     "municipality": "Thorp",
     "phone": "715-669-3442",
+    "phonesExtra": [
+      "715-512-0010"
+    ],
     "recordUpdated": "2025-11-25"
   },
   "5501981825": {
@@ -181,6 +202,9 @@
     "clerk": "Connie Zimmerman",
     "municipality": "Washburn",
     "phone": "715-743-3028",
+    "phonesExtra": [
+      "608-751-4820"
+    ],
     "recordUpdated": "2023-12-06",
     "url": "https://www.tnwashburn.wi.gov"
   },
@@ -206,6 +230,9 @@
     "clerk": "Heather Mendoza",
     "municipality": "York",
     "phone": "262-224-0659",
+    "phonesExtra": [
+      "715-797-5730"
+    ],
     "recordUpdated": "2025-05-08"
   },
   "_source": {

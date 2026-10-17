@@ -219,6 +219,211 @@ PROVENANCE = [
             "nc/WATCH.md."
         ),
     },
+    {
+        "layer": "school-board-district",
+        "app_file": "nc-school-board-districts.json",
+        "source_url": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip",
+        "note": (
+            "The 214 district seats of the 38 school boards that elect by "
+            "district (measured 2026-10-17). No published map of these lines was "
+            "found, so each is rebuilt from the State Board of Elections' precinct-level "
+            "results (this URL is the 2024 general's; the builder reads every "
+            "results file since 2022): a district is the precincts whose "
+            "ballots carried its seat's latest contest, on the State Board's "
+            "precinct map of that election (dl.ncsbe.gov/ShapeFiles/Precinct/), "
+            "cut to the Census school district. Each board's website link is "
+            "the address NCES's Common Core of Data district directory gives, "
+            "kept where it answered with a page at the build. Rebuilt by hand "
+            "with nc/scripts/build_nc_school_board_districts.py; its --watch, "
+            "on a row in nc/WATCH.md, lists any results file or precinct map "
+            "posted or reposted since the build."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gis.charlottenc.gov/arcgis/rest/services/PLN/CouncilDistricts/MapServer/0",
+        "note": (
+            "Charlotte's 7 council districts, from the city's own map, which "
+            "says it shows the current boundaries, one of the 100 districts of "
+            "the 17 North Carolina cities above 25,000 people that elect "
+            "council members by district or ward, pre-built by "
+            "nc/scripts/build_nc_city_wards.py through "
+            "scripts/city_ward_maps.py, which takes the cities to draw from "
+            "nc/data/source/nc-city-council-seats.json; the quarterly --watch "
+            "row in nc/WATCH.md compares each map's fingerprint recorded at the "
+            "build. The names on the cards come from each city's own pages, and "
+            "nc/scripts/build_nc_city_councils.py --watch is what notices one "
+            "of those changing."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://services.arcgis.com/v400IkDOw1ad7Yad/ArcGIS/rest/services/Council_Districts_Scenario_2/FeatureServer/1",
+        "note": (
+            "Raleigh's 5 council districts, from the copy the city published in "
+            "its ArcGIS Online organization in November 2021 as \"Proposed "
+            "Council Districts, Scenario 2\", because the city's live layer is "
+            "closed to this project by its robots.txt; the precincts that "
+            "carried each district's contest on 5 November 2024 lie 99.9% to "
+            "100% inside the same district on it (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/4",
+        "note": (
+            "Greensboro's 5 council districts, from Guilford County's map (see "
+            "the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://arcgis2.cityofws.org/arcgissmwa02/rest/services/OICv2/Boundaries2/MapServer/0",
+        "note": (
+            "Winston-Salem's 8 named wards, from the city's own map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gismaps.fayettevillenc.gov/cofpublicgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0",
+        "note": (
+            "Fayetteville's 9 council districts, from the city's own map (see "
+            "the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://maps-apis.carync.gov/server/rest/services/Elections/Elections/FeatureServer/2",
+        "note": (
+            "Cary's 4 council districts, from the town's own map, its records "
+            "with no district left out (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/10",
+        "note": (
+            "High Point's 6 council wards, from Guilford County's map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gisonline.greenvillenc.gov/arcgis/rest/services/Published/MapServer/1",
+        "note": (
+            "Greenville's 5 council districts, from the city's own map, its "
+            "record whose district reads \"Non Voting\" left out (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://cogserver.gastonianc.gov/serverweb/rest/services/AdminBnds/GastoniaCouncilWards/MapServer/0",
+        "note": (
+            "Gastonia's 6 council wards, from the city's own map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gismaps.onslowcountync.gov/arcgis/rest/services/TemplateSite/OperationalLayers/MapServer/60",
+        "note": (
+            "Jacksonville's 4 council wards, from Onslow County's \"City of "
+            "Jacksonville Wards\" layer, one of two maps of the city's wards the "
+            "county publishes; nc/WATCH.md asks for it to be read again once "
+            "the council adopts new wards (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://services.arcgis.com/4MdqIsNzxG7xyTvf/arcgis/rest/services/City_Council_Districts/FeatureServer/6",
+        "note": (
+            "Rocky Mount's 7 council wards, from the city's own map, which says "
+            "its boundaries were finalized in 2022 (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://maps.iredellcountync.gov/server/rest/services/Data/Elections/MapServer/3",
+        "note": (
+            "Mooresville's 4 wards, from Iredell County's map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34",
+        "note": (
+            "Wilson's 7 council districts, from the city's own map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gis.goldsboronc.gov/arcgis/rest/services/Election_Districts/FeatureServer/0",
+        "note": (
+            "Goldsboro's 6 council districts, from the city's own map, its "
+            "record numbered 0 that draws the whole city left out (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gis.newbernnc.gov/arcgis/rest/services/Boundary/NewBern_Wards/FeatureServer/0",
+        "note": (
+            "New Bern's 6 wards, from the city's own map, the ward number alone "
+            "requested because the layer also carries its aldermen's home "
+            "addresses (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://lee-arcgis.leecountync.gov/arcgis/rest/services/Political/POLITICAL/MapServer/1",
+        "note": (
+            "Sanford's 5 wards, from Lee County's map (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://services2.arcgis.com/WbGEgSzGTEPg4fr6/arcgis/rest/services/Stvl_Election_Wards/FeatureServer/0",
+        "note": (
+            "Statesville's 6 wards, from the city's own map, last edited on 8 "
+            "September 2026 (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "county",
+        "app_file": "nc-conservation-boards.json",
+        "source_url": "https://www.ncagr.gov/divisions/soil-water/district-directory/open",
+        "note": (
+            "The supervisors of each county's soil and water conservation "
+            "district, read from the Division of Soil and Water Conservation's "
+            "District Directory (a 242-page PDF printed on 29 September 2026 "
+            "when read on 2026-10-16) by "
+            "nc/scripts/build_nc_conservation_boards.py and named on the County "
+            "card. The address serves the current edition (inferred). Re-read "
+            "quarterly and after each November general election; WATCH.md "
+            "carries the row."
+        ),
+    },
 ]
 
 ENDPOINTS = [

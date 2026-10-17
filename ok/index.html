@@ -4215,11 +4215,12 @@ function initOklahomaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ok-senate": "oks", "county": "co", "ok-house": "okh",
-    "ok-judicial-district": "okj", "school-district-unified": "su", "zip-code": "zp",
-    "school-district-elementary": "se", "municipality": "mu", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po", "tribal-government": "tg",
-    "county-subdivision": "cs", "county-commissioner": "cm" };
+  var LAYER_CODES = { "us-house": "us", "ok-senate": "oks", "county": "co",
+    "conservation-district": "cvd", "ok-house": "okh", "ok-judicial-district": "okj",
+    "school-district-unified": "su", "zip-code": "zp", "school-district-elementary": "se",
+    "municipality": "mu", "city-ward": "cw", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg", "county-subdivision": "cs",
+    "county-commissioner": "cm" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4228,7 +4229,8 @@ function initOklahomaExplorer() {
     "state-house": ["ok-house"], "trial-court-district": ["ok-judicial-district"],
     "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
@@ -8624,6 +8626,7 @@ function initOklahomaExplorer() {
       geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
         ", which districtry doesn't cover yet.";
       geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
       return true;
     }
     var row = siblingRow(metro, link.text, function () {
@@ -8639,6 +8642,7 @@ function initOklahomaExplorer() {
     geoResultsList.appendChild(row);
     geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
     geoStatus.className = "geo-status";
+    countLinkRead("other-state");
     return true;
   }
 
@@ -9169,6 +9173,56 @@ function initOklahomaExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   street       the street the address is on, framed for a tap
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9186,11 +9240,13 @@ function initOklahomaExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9199,6 +9255,7 @@ function initOklahomaExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9211,6 +9268,7 @@ function initOklahomaExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9241,6 +9299,8 @@ function initOklahomaExplorer() {
 
   function runGeocodeSearch(q, fromLink) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
@@ -9256,6 +9316,7 @@ function initOklahomaExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
       return runAddressSearch(q, fromLink);
@@ -9313,20 +9374,27 @@ function initOklahomaExplorer() {
       if (results && results.length) {
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
         return;
       }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
-          if (name.length < 3) return;
+          if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
+            if (seq !== districtSearchSeq) return;
+            if (!named || !named.length) return countLinkRead("none");
+            countLinkRead("name");
             listByName(named);
             geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
               "A search for its name, \u201c" + name + "\u201d, found " +
@@ -9397,6 +9465,7 @@ function initOklahomaExplorer() {
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
+    countLinkRead("street");
     var a = addressParts(bare);
     var bounds = null;
     street.forEach(function (r) {
@@ -9480,6 +9549,7 @@ function initOklahomaExplorer() {
    * state's app it belongs to, so a place shared into the installed app
    * opens in its own state. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
@@ -9506,6 +9576,7 @@ function initOklahomaExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q)
@@ -9529,6 +9600,7 @@ function initOklahomaExplorer() {
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -9563,6 +9635,7 @@ function initOklahomaExplorer() {
     "ok-judicial-district", // 26 judicial districts of whole counties, 6,963 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (3,771 km2), smaller than a congressional district
     "ok-senate",         // 48 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 77 counties, pre-built from TIGERweb; the instance's offline anchor layer
+    "conservation-district", // The 84 conservation districts on the Oklahoma Conservation Commission's map, pre-built with the app — 2,155 km2 mean area (median 1,931, smallest 779, largest 5,967), measured 2026-10-16 on the drawn file: smaller on average than a county (2,351) and larger than a House district (1,792). 77 of the 84 lie within one county; they cover the state bar 67 km2 of slivers.
     "ok-house",          // 101 House districts — the smallest of the three chamber tilings
     "county-commissioner", // 231 districts, three in each of the 77 counties; median 715.8 km² (mean 785, from 33.5 to 3,704.5), measured 2026-10-11 — smaller than a House district and larger than the median tribal area
     "tribal-government", // Tribal areas — Oklahoma has 31, MEASURED by scripts/build_tribal_areas.py: the Osage Reservation, the Shawnee Tribe's 0.430 km² of trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas; median 523.7 km², between a House district and a unified school district. The statistical areas are drawn by Adam's exception for Oklahoma (2026-10-10), labelled on every card as areas the Census draws to count people.
@@ -9571,6 +9644,7 @@ function initOklahomaExplorer() {
     "zip-code",          // 1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma
     "school-district-elementary", // 91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves
     "municipality",      // 600 incorporated cities and towns, live from TIGERweb
+    "city-ward",         // 56 council wards and districts in the 9 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -11886,7 +11960,8 @@ function initOklahomaExplorer() {
    *   - mailto:/tel: hrefs are built HERE from a raw address/number — an
    *     email address is never printed (the "Email" label is the link), and
    *     a phone number displays with non-breaking hyphens while its tel:
-   *     href keeps only dialable characters.
+   *     href keeps only dialable characters, and stops where an extension
+   *     begins.
    * A render() returns one wrapper element with class "card-flush"; the
    * styles-card-v2 rules key row padding/borders off that marker. */
   function cardEl(tag, className, text) {
@@ -11905,21 +11980,37 @@ function initOklahomaExplorer() {
     a.textContent = String(label || safe);
     return a;
   }
+  function cardPhoneDial(phone) {
+    // What a tel: link dials for one printed number: its digits (and a
+    // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
+    // "x 236"). Run onto the end of the number, an extension's digits would
+    // dial a different number; the extension stays in the text, where the
+    // reader sees it.
+    var s = String(phone);
+    var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+    if (m) s = s.slice(0, m.index + m[1].length);
+    return s.replace(/[^\d+]/g, "");
+  }
   function cardPhoneLink(phone) {
-    var dial = String(phone).replace(/[^\d+]/g, "");
+    var dial = cardPhoneDial(phone);
     if (!dial) return null;
     var a = cardEl("a", "card-phone", String(phone).replace(/-/g, "‑"));
     a.href = "tel:" + dial;
     return a;
   }
   function cardContactLine(spec) {
-    // spec: { phone?, email?, links?: [{label, url}] } -> one wrapping line of
-    // phone / Email / external links separated by middots; null when empty.
+    // spec: { phone?, phonesExtra?: [string], email?, links?: [{label, url}] }
+    // -> one wrapping line of phones / Email / external links separated by
+    // middots; null when empty. phonesExtra are further numbers the source
+    // prints for the same person, each as printed: a label the source gives
+    // ("cell 519-3104") stays in the text, and only the digits reach the
+    // tel: href, so a label never changes the number dialled.
     var items = [];
-    if (spec.phone) {
-      var p = cardPhoneLink(spec.phone);
+    [spec.phone].concat(spec.phonesExtra || []).forEach(function (phone) {
+      if (!phone) return;
+      var p = cardPhoneLink(phone);
       if (p) items.push(p);
-    }
+    });
     if (spec.email) {
       var e = document.createElement("a");
       e.href = "mailto:" + String(spec.email);
@@ -11980,8 +12071,8 @@ function initOklahomaExplorer() {
     return el;
   }
   function renderPersonRows(people, opts) {
-    // people: [{ name, badge?, note?, phone?, email?, links?, details?:
-    // {label, items}, detailsOpen? }]. A person with details renders as a
+    // people: [{ name, badge?, note?, phone?, phonesExtra?, email?, links?,
+    // details?: {label, items}, detailsOpen? }]. A person with details renders as a
     // native <details> expander; absent fields render nothing (no
     // placeholders, no guessed officeholders — honesty rules).
     var tinted = opts && opts.tinted;
@@ -13203,8 +13294,9 @@ function initOklahomaExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, districtOffice?, capitolOffice? }; office fields only
-    // render when the roster supplies them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
+    // districtOffice?, capitolOffice? }; office fields only render when the
+    // roster supplies them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -13373,6 +13465,25 @@ function initOklahomaExplorer() {
         }
         var person = { name: String(member.name) };
         if (member.party) person.badge = String(member.party);
+        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+        // the chamber prints for the member apart from the office blocks
+        // below, such as a home or cell line. Published since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is shown even where it may be the official's own; a label
+        // the source prints ("home 803-555-0100") rides inside the string.
+        if (member.phone) person.phone = String(member.phone);
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
+        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+        // 2026-10-17 this card showed no legislator's address at all, though
+        // eight states' rosters carried one for nearly every seat. Measured
+        // that day, every one of them is the chamber's own mailbox except
+        // fifteen Arkansas members' personal addresses, which the
+        // legislature's own member pages print and which Adam chose to show
+        // ("E-mails too"). A roster reads it from the legislature's pages or
+        // from Open States' compilation of them.
+        if (member.email) person.email = String(member.email);
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
@@ -14255,6 +14366,167 @@ function initOklahomaExplorer() {
     }
   });
 
+  /* ---------- 6b. Conservation District — the Conservation Commission's map ----------
+   * Oklahoma's conservation districts are units of local government under the
+   * Conservation District Act (Title 27A of the Oklahoma Statutes), set up to
+   * conserve the state's soil, water and other renewable natural resources.
+   * Each is governed by five directors: three elected by the registered voters
+   * in the district for staggered three-year terms and two appointed by the
+   * Oklahoma Conservation Commission, on the board's recommendation, for
+   * two-year terms (27A O.S. § 3-3-201). This is the "special districts the
+   * state's own law creates" level of the fleet's done standard
+   * (docs/DONE_STANDARD.md, entry 12).
+   *
+   * The 84 districts are the Commission's own map ("cons_dis" on its ArcGIS
+   * Online account), pre-built by ok/scripts/build_ok_conservation_districts.py
+   * through scripts/published_district_layers.py (Douglas-Peucker at 4 m;
+   * data/app/ok-conservation-districts.json, same-origin), so a click is
+   * answered in the browser and no point is sent anywhere. The districts cover
+   * the state but for 67 km2 of slivers, and five pairs overlap by 0.36 km2 in
+   * all (measured 2026-10-16), so the card reads every district the map puts
+   * the point in and says so when there is more than one.
+   *
+   * EACH DISTRICT'S OFFICE COMES FROM THE COMMISSION'S DIRECTORY OF DISTRICT
+   * OFFICES (ok/scripts/build_ok_conservation_offices.py;
+   * data/app/ok-conservation-offices.json): the office's address, telephone,
+   * the district's e-mail address at conservation.ok.gov and, for three
+   * districts, a website (the directory links two more, which reach no
+   * district). THE DIRECTORY NAMES NO DIRECTOR, and no list the
+   * Commission publishes does, so the card names no one and says why; the
+   * gap is recorded as ok-conservation-district-directors.
+   *
+   * THE NAME ON THE CARD AND IN THE HOVER IS THE DIRECTORY'S where the
+   * district has an entry there, and the map's otherwise. The map writes most
+   * names "<name> CD" and shortens one ("Central North Canadian" for the
+   * Central North Canadian River Conservation District); the builder spells
+   * the map's names out. Drawing the layer starts loading the directory, so
+   * the hover reads the same name as the card once it has arrived.
+   * ---------- */
+  var loadOkConservationDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-conservation-districts.json", {}, 2);
+  });
+  var loadOkConservationOffices = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-conservation-offices.json", {}, 2);
+  });
+  var OK_CONSERVATION_DIRECTORY = "https://conservation.ok.gov/conservation-district-directory/";
+
+  // the directory's name for the district where it has one, else the map's
+  function conservationName(p, offices) {
+    var key = p.key != null ? String(p.key) : null;
+    var office = offices && key ? offices[key] : null;
+    if (office && office.name) return String(office.name);
+    return p.label != null ? String(p.label) : "Conservation District";
+  }
+
+  registerLayer({
+    id: "conservation-district",
+    group: "geography",
+    label: "Conservation District",
+    emptyNote: "No conservation district covers this point on the Oklahoma " +
+      "Conservation Commission's map. The state's 84 districts cover all of " +
+      "Oklahoma, so this point is outside the state or on one of the thin strips " +
+      "along its edge that the map leaves out.",
+    overlay: {
+      load: function () {
+        // start on the offices too, so the hover can name each district the
+        // way the card does; a failure here leaves the hover on the map's names
+        loadOkConservationOffices().then(null, function () {});
+        return loadOkConservationDistricts();
+      },
+      // an olive green no other layer here uses, so it reads apart from the
+      // county lines most districts follow
+      style: { color: "#5E7A16", weight: 1.5, fillColor: "#9DB54A", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      return conservationName(feature.properties || {}, loadOkConservationOffices.cached());
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadOkConservationDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        // The offices are a separate file. If it cannot be read, the
+        // districts still show, and each says its office could not be loaded.
+        return loadOkConservationOffices().then(function (offices) {
+          return { seq: seq, districts: hits, offices: offices || {} };
+        }, function () {
+          return { seq: seq, districts: hits, offices: null };
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var districts = result.districts;
+      if (districts.length > 1) {
+        wrap.appendChild(renderFieldStack([{
+          value: "The Commission's map puts this point inside " + districts.length +
+            " conservation districts, where their lines overlap by a few metres. " +
+            "The map alone cannot say which one covers it, and the districts can."
+        }]));
+      }
+      districts.forEach(function (p) {
+        var key = p.key != null ? String(p.key) : null;
+        var office = result.offices && key ? result.offices[key] : null;
+        wrap.appendChild(renderLinkRow({
+          title: conservationName(p, result.offices),
+          note: office && office.office ? String(office.office) : null,
+          phone: office && office.phone ? String(office.phone) : null,
+          email: office && office.email ? String(office.email) : null,
+          links: office && office.url ? [{ label: "Website", url: String(office.url) }] : []
+        }));
+        var rows = [];
+        if (office && office.ext) {
+          rows.push({ label: "Phone extension", value: String(office.ext) });
+        }
+        if (office && office.mailing) {
+          rows.push({ label: "Mailing address", value: String(office.mailing) });
+        }
+        if (!result.offices) {
+          rows.push({
+            label: "Office",
+            value: "The district's office could not be loaded. Try again, or see " +
+              "the Oklahoma Conservation Commission's directory."
+          });
+        } else if (!office) {
+          rows.push({
+            label: "Office",
+            value: "Not shown here. The Oklahoma Conservation Commission's directory " +
+              "of district offices does not list this district."
+          });
+        }
+        rows.push({
+          label: "Board",
+          value: "Not named here. The Oklahoma Conservation Commission's directory " +
+            "gives each district's office but names none of its five directors, so " +
+            "this app names no one rather than guessing."
+        });
+        rows.push({
+          label: "How the board is chosen",
+          value: "Five directors: three elected by the registered voters in the " +
+            "district for staggered three-year terms, and two appointed by the " +
+            "Oklahoma Conservation Commission, on the board's recommendation, for " +
+            "two-year terms."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+      });
+      wrap.appendChild(renderFieldStack([{
+        label: "Where the lines come from",
+        value: "The Oklahoma Conservation Commission's map of conservation districts, " +
+          "drawn here to within 4 metres. For a definitive answer about a property, " +
+          "ask the district."
+      }]));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Conservation district offices", url: OK_CONSERVATION_DIRECTORY };
+    }
+  });
+
   /* ---------- 7. City or Town — live TIGERweb, incorporated places ----------
    * Oklahoma incorporates CITIES and TOWNS (Title 11 of the Oklahoma
    * Statutes), and the two are different forms rather than two words for
@@ -14275,12 +14547,115 @@ function initOklahomaExplorer() {
    * 177,664 km2 by the Census's own AREALAND), and the county is the
    * general-purpose local government everywhere else.
    *
-   * NO OFFICEHOLDER. No statewide source naming Oklahoma's mayors and
-   * council members has been established, so the card names no one rather
-   * than guessing. Recorded as gap ok-municipal-officeholders. ---------- */
+   * THE 16 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL, written
+   * down from each city's own pages and proved against those pages on every
+   * build (ok/scripts/build_ok_city_councils.py through
+   * scripts/city_councils.py; data/app/ok-city-councils.json). Every seat
+   * says whether its ward's own voters or the whole city elect it, read from
+   * each city's charter, its own pages, a county election board's results or
+   * news reports, because nothing the state publishes records it. Muskogee's
+   * website does not let this app read it, so its names come from the county
+   * election board's official results and from news reports; its `note`
+   * says so in place of the sentence naming the city's website, and the card
+   * links the council's own page (`page`). The wards of the nine cities whose
+   * wards elect their own members and are drawn are the City Council
+   * District layer (7b below).
+   *
+   * Five of the sixteen councils choose their mayor from among their own
+   * members, so a mayor's seat can carry a ward: the card then says which
+   * ward elected the member who is now mayor, and whether that ward's own
+   * voters or the whole city did.
+   *
+   * Oklahoma's other cities and towns name nobody: no statewide source naming
+   * their mayors, council members and town trustees has been established, so
+   * the card names no one rather than guessing. Recorded as gap
+   * ok-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  // The mayor and council of each city above 25,000 people, keyed by the
+  // place's Census id; every seat says who elects it and which page names it.
+  var loadOkCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-city-councils.json", {}, 2);
+  });
+  // A ward as its city names it: "Ward 3", and in Tulsa "District 3".
+  function okWardName(council, ward) {
+    return String(council.wardWord || "Ward") + " " + String(ward);
+  }
+  // The seat as the body names it: "Council, Ward 3", "Councilor, District
+  // 4", "Commissioner, Ward 2", "Council, At large". The mayor is an office
+  // of its own.
+  function okCouncilBadge(seat) {
+    var role = String(seat.role);
+    if (role === "Mayor" || role === "Vice Mayor") return role;
+    return (role === "Council member" ? "Council" : role) + ", " + String(seat.seat);
+  }
+  // Who elects the seat, unless its own label already says so: its ward's
+  // own voters, or the whole city. A mayor the council chose from its own
+  // members keeps the ward of the seat the voters gave, so the note names
+  // that ward too.
+  function okSeatElectedBy(council, seat) {
+    if (/at large/i.test(String(seat.seat))) return null;
+    if (seat.byWard && seat.ward != null) return "elected by " + okWardName(council, seat.ward);
+    if (seat.ward != null && (seat.role === "Mayor" || seat.role === "Vice Mayor")) {
+      return okWardName(council, seat.ward) + ", elected by the whole city";
+    }
+    return "elected by the whole city";
+  }
+  // A seat the city says is empty reads "Vacant"; one whose holder the
+  // sources disagree about names no one, and okUnnamedRows says why.
+  function okCouncilPeople(council, seats) {
+    return seats.map(function (seat) {
+      return {
+        name: seat.name != null ? String(seat.name)
+          : (seat.vacant ? "Vacant" : "Not named here"),
+        badge: okCouncilBadge(seat),
+        note: okSeatElectedBy(council, seat)
+      };
+    });
+  }
+  function okUnnamedRows(seats) {
+    var rows = [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].unnamed) {
+        rows.push({ label: "Why one seat is not named", value: String(seats[i].unnamed) });
+      }
+    }
+    return rows;
+  }
+  // Where the names come from and when they were read. A city whose names
+  // come from somewhere other than its own website (Muskogee) carries a
+  // `page`, and its `note` says where they come from in place of the
+  // sentence naming the website; any other city's `note` (Lawton's, on its
+  // wards) follows that sentence.
+  function okCouncilSourceRow(council) {
+    var name = String(council.name);
+    var read = okElectionDate(council.read);
+    return {
+      label: "Where these names come from",
+      value: (council.page && council.note
+        ? String(council.note)
+        : "As listed on " + name + "'s own website." +
+          (council.note ? " " + String(council.note) : "")) +
+        (read ? " Read on " + read + "." : "") +
+        " If a seat has changed hands since, " + name +
+        "'s own website or clerk says who holds it now."
+    };
+  }
+  // The council's own page: `page` where the pages its names come from are
+  // not ones a reader would open, and otherwise the page a member's name is
+  // read from.
+  function okCouncilLink(council) {
+    var label = String(council.name) + "'s " + String(council.body);
+    if (council.page) return { label: label, url: String(council.page) };
+    var seats = (council && council.seats) || [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].role !== "Mayor" && seats[i].sourceUrl) {
+        return { label: label, url: String(seats[i].sourceUrl) };
+      }
+    }
+    return null;
+  }
 
   registerLayer({
     id: "municipality",
@@ -14308,7 +14683,7 @@ function initOklahomaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // same NAME-minus-BASENAME technique as the subdivision card, for
@@ -14317,8 +14692,19 @@ function initOklahomaExplorer() {
           // the Census's own functional status, carried so the card can name
           // an inactive municipality rather than implying a working one
           funcstat: findPropCI(props, ["funcstat"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the place's card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadOkCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14347,15 +14733,191 @@ function initOklahomaExplorer() {
             "legally in existence, but with no government operating."
         });
       }
+      var council = result.council;
+      if (!council) {
+        rows.push({
+          label: "Your city council or town board",
+          value: result.rosterFailed
+            ? "The list of council members did not load, so no name is shown. " +
+              "This municipality's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of " +
+              "Oklahoma's 16 cities above 25,000 people, and this municipality " +
+              "is not one of them yet. No statewide source names the others' " +
+              "mayors, council members and town trustees, so its own website " +
+              "is the current source."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat names who
+      // elects it, its ward's own voters or the whole city.
+      var seats = council.seats || [];
+      wrap.appendChild(renderPersonRows(okCouncilPeople(council, seats)));
+      var after = okUnnamedRows(seats).concat([
+        { label: "How the seats are elected", value: String(council.how) },
+        okCouncilSourceRow(council)
+      ]);
+      if (council.wardsDrawn !== false && seats.some(function (s) { return s.byWard; })) {
+        var word = String(council.wardWord || "Ward").toLowerCase();
+        after.push({
+          label: "Which " + word + " this point is in",
+          value: "The City Council District layer draws " + String(council.name) +
+            "'s " + word + "s and names the member for this point's " + word + "."
+        });
+      }
+      wrap.appendChild(renderFieldStack(after));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? okCouncilLink(result.council) : null;
+    }
+  });
+
+  /* ---------- 7b. City council ward or district ----------
+   * The 56 council wards and districts of the nine Oklahoma cities above
+   * 25,000 people whose wards elect their own members and whose maps are
+   * drawn here: Tulsa 9, Oklahoma City and Norman 8 each, Midwest City, Enid
+   * and Shawnee 6 each, Bartlesville and Bixby 5 each, and Moore 3. Each is
+   * read from the map its city publishes, because no state office
+   * publishes one. Pre-built by ok/scripts/build_ok_city_wards.py through
+   * scripts/city_ward_maps.py, which holds each map to the Census outline of
+   * its city, so a click is answered in the browser and no point is sent
+   * anywhere. Each ward's card says whose map it is drawn from, and that it
+   * is drawn here to within 4 metres.
+   *
+   * Not drawn: Lawton and Muskogee, whose wards elect their own members.
+   * Lawton's only published ward map does not divide the 2020 census
+   * population evenly between its wards, so it may not be the map in force,
+   * and Muskogee publishes no copy this app may read; the City or Town card
+   * says so for each. Broken Arrow, Owasso, Jenks and Edmond tie their seats
+   * to wards and elect every seat by the whole city, so a ward there would
+   * elect no one of its own, and Stillwater's council has no wards.
+   *
+   * A GENERIC LABEL, as North Carolina's: eight of the nine elect by WARD and
+   * Tulsa by DISTRICT, so the toggle says "City Council District" and each
+   * card names the unit as its city does, off the feature's own `label`
+   * ("Ward 3", "District 9").
+   *
+   * Bartlesville's and Bixby's councils choose the mayor from among their
+   * members, so the ward whose voters elected that member names the mayor as
+   * its member, and in those two cities nobody is elected by the whole city.
+   * The card's row for the members the whole city elects appears only where
+   * the whole city elects someone.
+   *
+   * The members are the council roster the City or Town card reads
+   * (data/app/ok-city-councils.json): the seats each ward's own voters elect,
+   * each proved on its page when the roster was built.
+   * ---------- */
+  var loadOkCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-city-wards.json", {}, 2);
+  });
+  var OK_SMALL_NUMBERS = ["no", "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten"];
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: inOklahoma,
+    emptyNote: "This point is not in a council ward or district this map " +
+      "draws. It draws the wards of the 9 Oklahoma cities above 25,000 " +
+      "people whose wards elect their own members (Tulsa calls them " +
+      "districts). Lawton's and Muskogee's wards are not drawn yet; Broken " +
+      "Arrow, Owasso, Jenks and Edmond elect every seat by the whole city, " +
+      "and Stillwater's council has no wards. The City or Town card names " +
+      "the mayor and council of all 16. Ground a city has added since its " +
+      "map was drawn can be in no ward here.",
+    overlay: {
+      load: loadOkCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.label != null ? String(p.city) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadOkCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var props = null;
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            props = feats[i].properties || {};
+            break;
+          }
+        }
+        if (!props) return null;
+        var result = { seq: seq, props: props, council: null };
+        return loadOkCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(props.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.label),
+        note: council ? String(council.name) + " " + String(council.body) : String(p.city)
+      }));
+      // Card convention: identity -> officeholder. The member or members
+      // this ward's own voters elect, the mayor among them in Bartlesville's
+      // and Bixby's; a mayor and members the whole city elects are named on
+      // the City or Town card.
+      var seats = (council && council.seats) || [];
+      var mine = seats.filter(function (s) {
+        return s.ward != null && String(s.ward) === String(p.ward);
+      });
+      var mayorCitywide = seats.some(function (s) {
+        return s.role === "Mayor" && !s.byWard;
+      });
+      var citywide = seats.filter(function (s) {
+        return !s.byWard && s.role !== "Mayor" &&
+          !(s.ward != null && String(s.ward) === String(p.ward));
+      });
+      if (mine.length) wrap.appendChild(renderPersonRows(okCouncilPeople(council, mine)));
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Council member",
+          value: "The list of council members did not load, so no name is shown."
+        });
+      }
+      if (council) {
+        var n = citywide.length;
+        if (mayorCitywide || n) {
+          var count = OK_SMALL_NUMBERS[n] || String(n);
+          var noun = n === 1 ? "member" : "members";
+          rows.push({
+            label: "Elected by the whole city",
+            value: (mayorCitywide
+              ? "The mayor" + (n ? " and " + count + " more " + noun : "")
+              : count.charAt(0).toUpperCase() + count.slice(1) + " " + noun) +
+              ". The City or Town card names " +
+              (mayorCitywide && !n ? "the mayor" : "them") + "."
+          });
+        }
+        rows = rows.concat(okUnnamedRows(mine));
+        rows.push({ label: "How the seats are elected", value: String(council.how) });
+        rows.push(okCouncilSourceRow(council));
+      }
       rows.push({
-        label: "Your city council or town board",
-        value: "Not named here. No statewide source naming Oklahoma's " +
-          "mayors, council members and town trustees has been established, and this app " +
-          "does not guess — this municipality's own website is the current " +
-          "source."
+        label: "How this line is drawn",
+        value: "Drawn from " + String(p.drawnFrom || "the map its city publishes") +
+          ". The lines are drawn here to within 4 metres; for a definitive " +
+          "answer, ask the city clerk."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? okCouncilLink(result.council) : null;
     }
   });
 
@@ -16165,8 +16727,17 @@ function initOklahomaExplorer() {
     // The judicial district follows the chambers, as Kentucky's courts do:
     // its voters elect its district judges.
     "ok-judicial-district", "county-commissioner",
+    // The city council district sits with the other districts that elect
+    // someone of their own; it answers only in the nine cities whose wards
+    // are drawn.
+    "city-ward",
     "school-district-unified", "school-district-elementary",
-    "county", "county-subdivision", "municipality", "zip-code",
+    // The conservation district sits after the city, as Indiana's conservancy
+    // district and Minnesota's watershed district do: a special district on
+    // top of the governments a reader lives in. Unlike theirs, Oklahoma's
+    // cover the whole state.
+    "county", "county-subdivision", "municipality", "conservation-district",
+    "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16649,12 +17220,13 @@ function initOklahomaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
-    "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
-    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
+    "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#5E7A16": "#A1C84C", "#6B7280": "#B1BACE",
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#9DB54A": "#D5F568", "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

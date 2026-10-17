@@ -1,0 +1,211 @@
+{
+ "agreement": [
+  8414,
+  8443
+ ],
+ "boards": 38,
+ "built": "2026-10-17",
+ "ccd": "https://nces.ed.gov/ccd/data/zip/ccd_lea_029_2526_w_0a_050626.zip",
+ "double": 0,
+ "enclaves": {
+  "3700450": [
+   [
+    35.610224,
+    -82.559074
+   ]
+  ],
+  "3702310": [
+   [
+    35.593735,
+    -80.862218
+   ]
+  ]
+ },
+ "features": 423,
+ "maps": {
+  "2022-01-18": "2022-01-19T19:01:16.000Z",
+  "2022-07-29": "2022-07-29T19:43:43.000Z",
+  "2022-08-31": "2022-08-31T16:11:54.000Z",
+  "2023-12-20": "2024-03-15T16:02:33.000Z",
+  "2024-07-23": "2024-07-23T18:06:15.000Z",
+  "2025-02-25": "2025-02-25T15:41:00.000Z",
+  "2025-07-28": "2025-08-06T18:27:07.000Z",
+  "2025-12-12": "2026-01-12T16:21:54.000Z",
+  "2026-08-24": "2026-08-28T19:06:14.000Z"
+ },
+ "results": {
+  "2022-05-17": "2022-05-27T19:34:03.000Z",
+  "2022-07-26": "2022-08-05T19:40:43.000Z",
+  "2022-11-08": "2022-12-01T21:10:26.000Z",
+  "2022-12-06": "2022-12-16T16:08:29.000Z",
+  "2023-03-07": "2023-03-14T20:15:30.000Z",
+  "2023-09-12": "2023-09-19T20:31:34.000Z",
+  "2023-10-10": "2023-10-17T16:27:18.000Z",
+  "2023-11-07": "2023-11-17T21:12:29.000Z",
+  "2024-03-05": "2024-04-01T17:38:19.000Z",
+  "2024-11-05": "2024-12-03T18:32:58.000Z",
+  "2025-09-09": "2025-09-16T19:30:28.000Z",
+  "2025-10-07": "2025-10-14T16:05:23.000Z",
+  "2025-11-04": "2025-11-14T22:10:34.000Z",
+  "2026-03-03": "2026-04-16T16:31:56.000Z",
+  "2026-11-03": "2026-10-05T14:57:45.000Z"
+ },
+ "results_missing": [
+  "2024-05-14"
+ ],
+ "seats": 214,
+ "websites": {
+  "3700011": {
+   "published": "http://www.ccs.k12.nc.us",
+   "url": "https://www.ccs.k12.nc.us/"
+  },
+  "3700012": {
+   "published": "http://www.pitt.k12.nc.us",
+   "url": "https://www.pitt.k12.nc.us/"
+  },
+  "3700090": {
+   "published": "http://www.alexander.k12.nc.us",
+   "url": "https://www.alexander.k12.nc.us/"
+  },
+  "3700180": {
+   "published": "http://www.ansonschools.org",
+   "url": "https://www.ansonschools.org/"
+  },
+  "3700330": {
+   "published": "http://www.beaufort.k12.nc.us/",
+   "url": "https://www.beaufort.k12.nc.us/"
+  },
+  "3700390": {
+   "published": "http://www.bladen.k12.nc.us",
+   "url": "https://www.bladen.k12.nc.us/"
+  },
+  "3700450": {
+   "published": "http://www.buncombeschools.org",
+   "url": "https://www.buncombeschools.org/"
+  },
+  "3700660": {
+   "published": "http://www.caswell.k12.nc.us/",
+   "url": "https://www.caswell.k12.nc.us/"
+  },
+  "3700840": {
+   "published": "http://www.ecps.k12.nc.us",
+   "url": "https://www.ecps.k12.nc.us/"
+  },
+  "3701200": {
+   "published": "http://www.duplinschools.net",
+   "url": "https://www.duplinschools.net/"
+  },
+  "3701260": {
+   "published": "http://www.dpsnc.net",
+   "url": "https://www.dpsnc.net/"
+  },
+  "3701320": {
+   "published": "http://www.ecps.us/",
+   "url": "https://www.ecps.us/"
+  },
+  "3701500": {
+   "published": "http://wsfcs.k12.nc.us/",
+   "url": "https://www.wsfcs.k12.nc.us/"
+  },
+  "3701530": {
+   "published": "http://www.fcschools.net",
+   "url": "https://www.fcschools.net/"
+  },
+  "3701800": {
+   "published": "http://www.gcs.k12.nc.us",
+   "url": "https://www.gcs.k12.nc.us/"
+  },
+  "3701920": {
+   "published": "http://www.gcsnc.com",
+   "url": "https://www.gcsnc.com/"
+  },
+  "3702010": {
+   "published": "http://www.harnett.k12.nc.us/",
+   "url": "https://www.harnett.k12.nc.us/"
+  },
+  "3702190": {
+   "published": "http://www.hickoryschools.net",
+   "url": "https://www.hickoryschools.net/"
+  },
+  "3702310": {
+   "published": "http://www.iss.k12.nc.us/",
+   "url": "https://www.issnc.org/"
+  },
+  "3702610": {
+   "published": "http://www.lcpsnc.org/",
+   "url": "https://www.lcpsnc.org/"
+  },
+  "3702640": {
+   "published": "http://www.lexcs.org/",
+   "url": "https://www.lexcs.org/"
+  },
+  "3702820": {
+   "published": "http://www.madisonk12.net/",
+   "url": "https://www.madisonk12.net/"
+  },
+  "3702880": {
+   "published": "http://www.martin.k12.nc.us",
+   "url": "https://www.martin.k12.nc.us/"
+  },
+  "3702970": {
+   "published": "http://www.cmsk12.org",
+   "url": "https://www.cmsk12.org/"
+  },
+  "3703060": {
+   "published": "http://montgomery.k12.nc.us",
+   "url": "https://www.montgomery.k12.nc.us/"
+  },
+  "3703270": {
+   "published": "http://www.ncpschools.net",
+   "url": "https://www.ncpschools.net/"
+  },
+  "3703310": {
+   "published": "http://www.cravenk12.org",
+   "url": "https://www.cravenk12.org/"
+  },
+  "3703360": {
+   "published": "http://www.newton-conover.org",
+   "url": "https://www.newton-conover.org/"
+  },
+  "3703510": {
+   "published": "http://www.pamlicoschools.org",
+   "url": "https://www.pamlicoschools.org/"
+  },
+  "3703930": {
+   "published": "http://www.robeson.k12.nc.us/",
+   "url": "https://www.robeson.k12.nc.us/"
+  },
+  "3703990": {
+   "published": "http://www.rock.k12.nc.us/",
+   "url": "https://www.rock.k12.nc.us/"
+  },
+  "3704620": {
+   "published": "http://www.ucps.k12.nc.us",
+   "url": "https://www.ucpsnc.org/"
+  },
+  "3704650": {
+   "published": "http://www.vcs.k12.nc.us",
+   "url": "https://www.vcs.k12.nc.us/"
+  },
+  "3704720": {
+   "published": "http://www.wcpss.net/",
+   "url": "https://www.wcpss.net/"
+  },
+  "3704830": {
+   "published": "http://www.wataugaschools.org",
+   "url": "https://www.wataugaschools.org/"
+  },
+  "3704880": {
+   "published": "http://www.waynecountyschools.org",
+   "url": "https://www.waynecountyschools.org/"
+  },
+  "3704920": {
+   "published": "http://www.whiteville.k12.nc.us/",
+   "url": "https://www.whiteville.k12.nc.us/"
+  },
+  "3705020": {
+   "published": "http://www.wilsonschoolsnc.net",
+   "url": "https://www.wilsonschoolsnc.net/"
+  }
+ }
+}

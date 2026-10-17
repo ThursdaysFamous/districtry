@@ -19,7 +19,7 @@
   "tls-chain": 1,
   "token-ok": 253,
   "token-refused": 3,
-  "token-refused-and-stack": 25
+  "token-refused-and-stack": 41
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -3937,6 +3937,76 @@
    },
    "measured": "2026-09-13"
   },
+  "www.bristoltn.gov": {
+   "host": "www.bristoltn.gov",
+   "url": "https://www.bristoltn.gov/337/City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 112358 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 112358 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tn/scripts/build_tn_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
+  "www.brokenarrowok.gov": {
+   "host": "www.brokenarrowok.gov",
+   "url": "https://www.brokenarrowok.gov/government/city-council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 137002 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 137002 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "ok/scripts/build_ok_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
   "www.browncoil.org": {
    "host": "www.browncoil.org",
    "url": "https://www.browncoil.org/county-board/",
@@ -4087,6 +4157,41 @@
     "scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
+  },
+  "www.carync.gov": {
+   "host": "www.carync.gov",
+   "url": "https://www.carync.gov/mayor-council/town-council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 97029 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 97029 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "nc/scripts/build_nc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
   },
   "www.cedarfalls.com": {
    "host": "www.cedarfalls.com",
@@ -4428,6 +4533,41 @@
     "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-15"
+  },
+  "www.cityofrockhill.com": {
+   "host": "www.cityofrockhill.com",
+   "url": "https://www.cityofrockhill.com/government/city-council/members",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 168899 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 168899 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "sc/scripts/build_sc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
   },
   "www.cityofwautoma.com": {
    "host": "www.cityofwautoma.com",
@@ -4946,6 +5086,41 @@
    },
    "measured": "2026-09-13"
   },
+  "www.colliervilletn.gov": {
+   "host": "www.colliervilletn.gov",
+   "url": "https://www.colliervilletn.gov/government/mayor-and-board-of-aldermen",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 106217 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 106217 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tn/scripts/build_tn_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
   "www.cookcountyboardofreview.com": {
    "host": "www.cookcountyboardofreview.com",
    "url": "https://www.cookcountyboardofreview.com",
@@ -5151,6 +5326,41 @@
     "scripts/dewitt_municipal_officials_scraper.py": "unknown"
    }
   },
+  "www.durhamnc.gov": {
+   "host": "www.durhamnc.gov",
+   "url": "https://www.durhamnc.gov/1396/City-Council-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 113900 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 113900 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "nc/scripts/build_nc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
   "www.eauclairewi.gov": {
    "host": "www.eauclairewi.gov",
    "url": "https://www.eauclairewi.gov/310/City-Council",
@@ -5289,6 +5499,76 @@
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
+  "www.fortsmithar.gov": {
+   "host": "www.fortsmithar.gov",
+   "url": "https://www.fortsmithar.gov/government/leadership/board-of-directors",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 122553 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 122553 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "ar/scripts/build_ar_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
+  "www.franklintn.gov": {
+   "host": "www.franklintn.gov",
+   "url": "https://www.franklintn.gov/government/board-of-mayor-aldermen",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 121372 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 121372 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tn/scripts/build_tn_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
   "www.franklinwi.gov": {
    "host": "www.franklinwi.gov",
    "url": "https://www.franklinwi.gov/Departments/Elected-Officials/Common-Council.htm",
@@ -5307,6 +5587,76 @@
     "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
+  },
+  "www.garnernc.gov": {
+   "host": "www.garnernc.gov",
+   "url": "https://www.garnernc.gov/government/town-council/town-council-members",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 119798 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 119798 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "nc/scripts/build_nc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
+  "www.germantown-tn.gov": {
+   "host": "www.germantown-tn.gov",
+   "url": "https://www.germantown-tn.gov/government/board-of-mayor-and-aldermen",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 100428 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 100428 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tn/scripts/build_tn_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
   },
   "www.germantownwi.gov": {
    "host": "www.germantownwi.gov",
@@ -5383,6 +5733,76 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.greensboro-nc.gov": {
+   "host": "www.greensboro-nc.gov",
+   "url": "https://www.greensboro-nc.gov/government/city-council/connect-with-city-council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 165162 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 165162 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "nc/scripts/build_nc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
+  "www.greenvillenc.gov": {
+   "host": "www.greenvillenc.gov",
+   "url": "https://www.greenvillenc.gov/183/City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 116871 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 116871 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "nc/scripts/build_nc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
   },
   "www.grundycountyil.gov": {
    "host": "www.grundycountyil.gov",
@@ -5898,6 +6318,41 @@
     "scripts/build_knox_county_board_roster.py": "unknown",
     "scripts/knox_county_board_scraper.py": "browser"
    }
+  },
+  "www.knoxvilletn.gov": {
+   "host": "www.knoxvilletn.gov",
+   "url": "https://www.knoxvilletn.gov/1340/City-Council-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 109625 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 109625 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tn/scripts/build_tn_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
   },
   "www.lafayettecountywi.org": {
    "host": "www.lafayettecountywi.org",
@@ -6458,6 +6913,41 @@
    },
    "measured": "2026-10-15"
   },
+  "www.murfreesborotn.gov": {
+   "host": "www.murfreesborotn.gov",
+   "url": "https://www.murfreesborotn.gov/424/City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 126283 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 126283 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tn/scripts/build_tn_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
+  },
   "www.muskego.wi.gov": {
    "host": "www.muskego.wi.gov",
    "url": "https://www.muskego.wi.gov/government/boards_commissions/common_council.php",
@@ -6744,6 +7234,41 @@
     "scripts/rock_island_county_board_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    }
+  },
+  "www.rockymountnc.gov": {
+   "host": "www.rockymountnc.gov",
+   "url": "https://www.rockymountnc.gov/176",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 98454 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 98454 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "nc/scripts/build_nc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
   },
   "www.sawyercounty.gov": {
    "host": "www.sawyercounty.gov",
@@ -7642,6 +8167,41 @@
     "scripts/validate_sources.py": "self",
     "scripts/will_city_councils_scraper.py": "self"
    }
+  },
+  "www.wilsonnc.org": {
+   "host": "www.wilsonnc.org",
+   "url": "https://www.wilsonnc.org/residents/all-departments/administration/mayor-city-council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 102930 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 102930 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "nc/scripts/build_nc_city_councils.py": "both"
+   },
+   "measured": "2026-10-16"
   },
   "www.winnebagocountywi.gov": {
    "host": "www.winnebagocountywi.gov",

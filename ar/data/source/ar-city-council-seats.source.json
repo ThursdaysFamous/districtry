@@ -1,0 +1,467 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, and the names found on it.",
+ "pages": {
+  "https://littlerock.gov/government/board-of-directors/meet-your-board-members/": {
+   "bytes": 113760,
+   "client": "token",
+   "final": "https://littlerock.gov/government/board-of-directors/meet-your-board-members/",
+   "names": [
+    "Andrea Hogan Lewis",
+    "Antwan Phillips",
+    "B.J. (Brenda) Wyrick",
+    "Capi Peck",
+    "Dean Kumpuris",
+    "Joan Adcock",
+    "Kathy Webb",
+    "Ken Richardson",
+    "Lance Hines",
+    "Virgil Miller Jr."
+   ],
+   "read": "2026-10-16",
+   "sha256": "8889ace7ab0656a32639c7c6b8f15ea65bd45da0551cfe089dd18623185bc3ac"
+  },
+  "https://littlerock.gov/government/mayors-office/": {
+   "bytes": 196496,
+   "client": "token",
+   "final": "https://littlerock.gov/government/mayors-office/",
+   "names": [
+    "Frank Scott Jr."
+   ],
+   "read": "2026-10-16",
+   "sha256": "f85db6c3cb253b3b422278669ddf2bf0faaf18532167fbcbbf1f78ca3efb50e6"
+  },
+  "https://media.conwayarkansas.gov/media/2026/08/August-19-2026-Special-City-Council-Agenda.pdf": {
+   "bytes": 214357,
+   "client": "token",
+   "final": "https://media.conwayarkansas.gov/media/2026/08/August-19-2026-Special-City-Council-Agenda.pdf",
+   "names": [
+    "Andy Hawkins",
+    "Bart Castleberry",
+    "David Grimes",
+    "Drew Spurgers",
+    "Mark Ledbetter",
+    "Shelia Isby",
+    "Shelley Mehl",
+    "Spencer Hawks",
+    "Theodore Jones Jr."
+   ],
+   "read": "2026-10-16",
+   "sha256": "1518eb77cef6f7e7e0e6bef1f4489bfb934cbd8fc569454b99307ed92616eb33"
+  },
+  "https://nlr.ar.gov/elected-officials/city-council/": {
+   "bytes": 183632,
+   "client": "token",
+   "final": "https://nlr.ar.gov/elected-officials/city-council/",
+   "names": [
+    "Debi Ross",
+    "Linda Robinson",
+    "Nathan Hamilton",
+    "Nicole Hart",
+    "Ron Harris",
+    "Scott Fowler",
+    "Steve Baxter",
+    "Vince Insalaco III"
+   ],
+   "read": "2026-10-16",
+   "sha256": "628c87d2817badbc61d2db143dac53ea82a9d03401ac0f30de811f5ce8fe177a"
+  },
+  "https://nlr.ar.gov/elected-officials/mayors-office/": {
+   "bytes": 162245,
+   "client": "token",
+   "final": "https://nlr.ar.gov/elected-officials/mayors-office/",
+   "names": [
+    "Terry Hartwick"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e3d915464bbd0f8a887f05bf89fdfd47cd09ba4e366bc33ed32acd7f6f0e95f3"
+  },
+  "https://texarkanaar.gov/government/board_of_directors/index.php": {
+   "bytes": 54077,
+   "client": "token",
+   "final": "https://texarkanaar.gov/government/board_of_directors/index.php",
+   "names": [
+    "Allen Brown",
+    "Danny Jewel",
+    "Laney Harris",
+    "Steve Smith",
+    "Steven Hollibush",
+    "Terry Roberts",
+    "Ulysses Brewer"
+   ],
+   "read": "2026-10-16",
+   "sha256": "2740cac60e4baecfa9495c97e9ac1c6ad0da255648613e109d98be9daf552866"
+  },
+  "https://www.bellavistaar.gov/government/elected_officials/city_council/index.php": {
+   "bytes": 83183,
+   "client": "token",
+   "final": "https://www.bellavistaar.gov/government/elected_officials/city_council/index.php",
+   "names": [
+    "Anna Isbell",
+    "Craig Honchell",
+    "Larry Wilms",
+    "Shea Newport",
+    "Travis Harp",
+    "Wendy Hughes"
+   ],
+   "read": "2026-10-16",
+   "sha256": "7610969b7d7d00b87830eabd542daaa66b5de9cff31c4f37464380630a00d782"
+  },
+  "https://www.bellavistaar.gov/government/elected_officials/mayors_office.php": {
+   "bytes": 87480,
+   "client": "token",
+   "final": "https://www.bellavistaar.gov/government/elected_officials/mayors_office.php",
+   "names": [
+    "John D. Flynn"
+   ],
+   "read": "2026-10-16",
+   "sha256": "72f7afb8c940cbcefa8978eff7c0ab30ee3d55b36aff4782300140d9b6093a11"
+  },
+  "https://www.bentonar.gov/city-council": {
+   "bytes": 143770,
+   "client": "token",
+   "final": "https://www.bentonar.gov/city-council",
+   "names": [
+    "Ann Spencer-Cole",
+    "Chad Slaughter",
+    "Evelyn Reed",
+    "Frank Baptist",
+    "Jeff Hamm",
+    "Jeff Morrow",
+    "Judd Hart",
+    "Steve Brown",
+    "Steve Lee",
+    "Trevor Villines"
+   ],
+   "read": "2026-10-16",
+   "sha256": "a5097991fc31e5393ca88d47d2a21e537a4e78057359f1afc80cbbff13f7a8fb"
+  },
+  "https://www.bentonar.gov/departments/mayorsoffice/mayor": {
+   "bytes": 141124,
+   "client": "token",
+   "final": "https://www.bentonar.gov/departments/mayorsoffice/mayor",
+   "names": [
+    "Tom Farmer"
+   ],
+   "read": "2026-10-16",
+   "sha256": "d25c8f64861918ed9c88a6b63001e0a32fc5392c7a04803fdf4d4e000fa29cfb"
+  },
+  "https://www.bentonville.ar.gov/427/City-Council": {
+   "bytes": 107834,
+   "client": "token",
+   "final": "https://www.bentonville.ar.gov/427/City-Council",
+   "names": [
+    "Aubrey Patterson",
+    "Beckie Seba",
+    "Bill Burckart",
+    "Chris Sooter",
+    "Cindy Acree",
+    "Daniel Grover",
+    "Holly Hook",
+    "Octavio Sanchez"
+   ],
+   "read": "2026-10-16",
+   "sha256": "1355738d86ee95d0b13184df85b9ac430669b7a0212cba58474c78b6f3d17495"
+  },
+  "https://www.bentonville.ar.gov/594/Mayors-Office": {
+   "bytes": 111669,
+   "client": "token",
+   "final": "https://www.bentonville.ar.gov/594/Mayors-Office",
+   "names": [
+    "Stephanie Orman"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5557b76e470cd9883c17a233e91eeed3f97690f33ec5a0d27c2e36a495b339f0"
+  },
+  "https://www.cabotar.gov/206/Mayor": {
+   "bytes": 143843,
+   "client": "token",
+   "final": "https://www.cabotar.gov/206/Mayor",
+   "names": [
+    "Ken Kincade"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ef2a20e4267b1824031fb8bd66f74ab224acd80ae55b8d70e46e0a0c5c6e6010"
+  },
+  "https://www.cabotar.gov/207/City-Council": {
+   "bytes": 150026,
+   "client": "token",
+   "final": "https://www.cabotar.gov/207/City-Council",
+   "names": [
+    "Brandon Hillenburg",
+    "Corey Spangler",
+    "Eddie Long",
+    "James Reid",
+    "Kyle Pickard",
+    "Maggie Cope",
+    "Matt Webber",
+    "Stephen Redd"
+   ],
+   "read": "2026-10-16",
+   "sha256": "c249ee55a9c9bd1b1f349140acadfda236acb743c92d1bf593277a052020f02d"
+  },
+  "https://www.cityofpinebluff-ar.gov/elected-officials": {
+   "bytes": 22422,
+   "client": "token",
+   "final": "https://www.cityofpinebluff-ar.gov/elected-officials",
+   "names": [
+    "Bruce Lockett",
+    "Glen Brown Jr.",
+    "LaTisha Brunson",
+    "Lanette Frazier",
+    "Lloyd Holcomb Jr.",
+    "Steven Mays Sr.",
+    "William Fells",
+    "Yvonne Denton"
+   ],
+   "read": "2026-10-16",
+   "sha256": "205960fbf843dbb41c392d928587b23240b69af65ada16e4a9818288d6d26b8d"
+  },
+  "https://www.cityofpinebluff-ar.gov/office-of-the-mayor": {
+   "bytes": 28471,
+   "client": "token",
+   "final": "https://www.cityofpinebluff-ar.gov/office-of-the-mayor",
+   "names": [
+    "Vivian Flowers"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5703c585765b9dd3e3ad51e31187f6376db53d0759aedfd881f09f43b0e5e265"
+  },
+  "https://www.fayetteville-ar.gov/247/City-Council": {
+   "bytes": 136383,
+   "client": "token",
+   "final": "https://www.fayetteville-ar.gov/247/City-Council",
+   "names": [
+    "D'Andre Jones",
+    "Mike Wiederkehr",
+    "Monique Jones",
+    "Robert Stafford",
+    "Sarah Bunch",
+    "Sarah Moore",
+    "Scott Berna",
+    "Teresa Turk"
+   ],
+   "read": "2026-10-16",
+   "sha256": "f6bd862db2ca48c4545a32481b21607c4c730e34ce3f53afc7db28cd1fc2488f"
+  },
+  "https://www.fayetteville-ar.gov/526/Mayor": {
+   "bytes": 125150,
+   "client": "token",
+   "final": "https://www.fayetteville-ar.gov/526/Mayor",
+   "names": [
+    "Molly Rawn"
+   ],
+   "read": "2026-10-16",
+   "sha256": "97f4356f28d3b09bf3f6ce591d52439182a7110d7c0c73c2177c4af5c2479e7e"
+  },
+  "https://www.fortsmithar.gov/government/leadership/board-of-directors": {
+   "bytes": 122554,
+   "client": "browser",
+   "final": "https://www.fortsmithar.gov/government/leadership/board-of-directors",
+   "names": [
+    "André Good",
+    "Christina Catsavis",
+    "George B. McGill",
+    "George Catsavis",
+    "Jarred Rego",
+    "Kevin Settle",
+    "Lee Kemp",
+    "Neal Martin"
+   ],
+   "read": "2026-10-16",
+   "sha256": "daac65997b650a25d846640df255ba3ff036f4fe4477ab6976dd7406f98ea750"
+  },
+  "https://www.hotspringsar.gov/223/Board-of-Directors": {
+   "bytes": 121896,
+   "client": "token",
+   "final": "https://www.hotspringsar.gov/223/Board-of-Directors",
+   "names": [
+    "Dudley Webb III",
+    "Erin Holliday",
+    "Karen Garcia",
+    "Marcia Dobbs-Smith",
+    "Pat McCabe",
+    "Phyllis Beard",
+    "Steve Trusty"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ccb5439011acc3cc392b8b293808c9a4af1784677788e2cadbbc6db734fc3542"
+  },
+  "https://www.jacksonvillear.gov/231/Elected-Officials": {
+   "bytes": 144756,
+   "client": "token",
+   "final": "https://www.jacksonvillear.gov/231/Elected-Officials",
+   "names": [
+    "Jeff Elmore"
+   ],
+   "read": "2026-10-16",
+   "sha256": "8b224fa9a4adbd6dda0c0bfe33e0e8881cb4a32e73c65d9de4997b51f1db6654"
+  },
+  "https://www.jacksonvillear.gov/m/directory/department?did=48": {
+   "bytes": 120248,
+   "client": "token",
+   "final": "https://www.jacksonvillear.gov/m/directory/department?did=48",
+   "names": [
+    "Joy Kinman",
+    "Katrina Mimms",
+    "Kevin McCleary",
+    "Mary Twitty",
+    "Michael LaBron",
+    "Mike Dietz",
+    "Reedie Ray",
+    "Richard Moss",
+    "Tanner Ruple",
+    "Trenika McCoy"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e92697aa21a0e0886fcd3f998db14f6541e18c884b4c9715b55d5f4e19d14213"
+  },
+  "https://www.jonesboroar.gov/181/City-Council": {
+   "bytes": 101743,
+   "client": "token",
+   "final": "https://www.jonesboroar.gov/181/City-Council",
+   "names": [
+    "Ann Williams",
+    "Anthony Coleman",
+    "Brian Emison",
+    "Charles Coleman",
+    "Chris Gibson",
+    "Chris Moore",
+    "David McClain",
+    "Harold Copenhaver",
+    "Janice Porter",
+    "Joe Hafner",
+    "John Street",
+    "Kevin Miller",
+    "LJ Bryant"
+   ],
+   "read": "2026-10-16",
+   "sha256": "1801c3f0e663f88472fc25dd5b027f2d9964e23cedd59fe30268d1834f792d28"
+  },
+  "https://www.paragouldcityar.gov/222/City-Council": {
+   "bytes": 99823,
+   "client": "token",
+   "final": "https://www.paragouldcityar.gov/222/City-Council",
+   "names": [
+    "Brad Baine",
+    "Dustin Rumsey",
+    "Jackie Branch",
+    "Jared Pickney",
+    "Neal Adams",
+    "Pat Austin",
+    "Susan Wooldridge",
+    "Tim Roswell"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ec23b0748e58e77cb4248d4b0a62e369d25a70db0fd83d29fd4b161b088d39bf"
+  },
+  "https://www.paragouldcityar.gov/235/Mayor": {
+   "bytes": 81167,
+   "client": "token",
+   "final": "https://www.paragouldcityar.gov/235/Mayor",
+   "names": [
+    "Josh Agee"
+   ],
+   "read": "2026-10-16",
+   "sha256": "ec474dbc0cb797f3b7e89a8b5c666522361e70ed7cd01c09b81d88ce46cbf6fa"
+  },
+  "https://www.rogersar.gov/413/City-Council": {
+   "bytes": 118208,
+   "client": "token",
+   "final": "https://www.rogersar.gov/413/City-Council",
+   "names": [
+    "Barney Hayes",
+    "Betsy Reithemeyer",
+    "Clay Kendall",
+    "Gary Townzen",
+    "Hayes Minor",
+    "Mandy Brashear",
+    "Marge Wolf",
+    "Roger Surly"
+   ],
+   "read": "2026-10-16",
+   "sha256": "bac3236e462908645e0e870dfcf6602a47238f83b12f71a953743abaa018a19e"
+  },
+  "https://www.rogersar.gov/738/Mayors-Office": {
+   "bytes": 110413,
+   "client": "token",
+   "final": "https://www.rogersar.gov/738/Mayors-Office",
+   "names": [
+    "Greg Hines"
+   ],
+   "read": "2026-10-16",
+   "sha256": "665977c3027bddb49bd723c5b9f40dda7dcf4cb3137662b07c92917ee17a6f33"
+  },
+  "https://www.russellvillear.gov/446/City-Council-Members": {
+   "bytes": 139372,
+   "client": "token",
+   "final": "https://www.russellvillear.gov/446/City-Council-Members",
+   "names": [
+    "Chris Olson",
+    "Emily Young",
+    "Fred Teague",
+    "Joe Pearson",
+    "Justin Keller",
+    "Laura Wetzel",
+    "Nathan George",
+    "Paul Gray",
+    "Seth Bradley"
+   ],
+   "read": "2026-10-16",
+   "sha256": "94b7270ec88e55011bffc417d35b96c1c0139a4ae1bfaf3083931ca07e9e20b9"
+  },
+  "https://www.sherwoodar.gov/page/city-council": {
+   "bytes": 1456982,
+   "client": "token",
+   "final": "https://www.sherwoodar.gov/page/city-council",
+   "names": [
+    "April Broderick",
+    "Beverly Williams",
+    "Kallie McCullough",
+    "Kyle Wade",
+    "Marina Brooks",
+    "Meredith Townsend",
+    "Monica Treat",
+    "Shelby Thomas"
+   ],
+   "read": "2026-10-16",
+   "sha256": "61ebf766c3bf240176e9b877ce5876598adcf5837a022cab10e0fa60c08833c8"
+  },
+  "https://www.sherwoodar.gov/page/mayors-office": {
+   "bytes": 1443013,
+   "client": "token",
+   "final": "https://www.sherwoodar.gov/page/mayors-office",
+   "names": [
+    "Mary Jo Heye-Townsell"
+   ],
+   "read": "2026-10-16",
+   "sha256": "f0e00b0bcffd2a1ac2fc326924d57d2360a8450cae9710a2feca95efb94a1d91"
+  },
+  "https://www.springdalear.gov/page/city-council": {
+   "bytes": 1552148,
+   "client": "token",
+   "final": "https://www.springdalear.gov/page/city-council",
+   "names": [
+    "Amelia Taldo",
+    "Brian Powell",
+    "Jeff Watson",
+    "Mark Fougerousse",
+    "Mike Lawson",
+    "Mike Overton",
+    "Randall Harriman",
+    "Rex Bailey"
+   ],
+   "read": "2026-10-16",
+   "sha256": "70866bc60e13691630633ccc0677e26d9f2a59dff4cb38e575c4e184d33a5899"
+  },
+  "https://www.springdalear.gov/page/mayors-office": {
+   "bytes": 1558142,
+   "client": "token",
+   "final": "https://www.springdalear.gov/page/mayors-office",
+   "names": [
+    "Doug Sprouse"
+   ],
+   "read": "2026-10-16",
+   "sha256": "a6f473ddf6349c01b580337d9e255c8dae363ece2af51239edcf4dc263460233"
+  }
+ }
+}

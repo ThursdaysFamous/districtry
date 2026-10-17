@@ -180,7 +180,7 @@
             "url": "https://billstatus.ls.state.ms.us/documents/2025/html/SB/2700-2799/SB2768SG.htm"
           }
         ],
-        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors (names only; the list also prints court staff, some with street addresses, which are never carried). The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.",
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors: each chancellor's name and, since 2026-10-17, the chancellor's own telephone, where the list prints one for no other judge (a number several judges share is the court office's line). The list also prints court staff, some with street addresses, which are never carried. The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.",
         "applies": "Mississippi — statewide, all 20 districts."
       }
     },
@@ -202,7 +202,7 @@
             "url": "https://billstatus.ls.state.ms.us/documents/2025/html/HB/1500-1599/HB1544SG.htm"
           }
         ],
-        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges (names only, as for the chancellors). The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.",
+        "people": "ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges: names and, as for the chancellors, each judge's own telephone. The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.",
         "applies": "Mississippi — statewide, all 23 districts (22 from 1 January 2027)."
       }
     },
@@ -238,7 +238,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and for the election commissioners only their names are, because the directory prints each one's own address, which may be a home.",
+        "people": "ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A telephone the directory prints for one supervisor or one election commissioner is carried on that person's own row, as printed, even where it may be the person's own line: 81 supervisors and 45 election commissioners have one on the 2026 edition. Their own addresses, which may be homes, are never carried.",
         "applies": "Mississippi — statewide, all 82 counties."
       }
     },
@@ -360,15 +360,61 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Mississippi's cities, towns and villages elect a mayor and a board of aldermen or a council, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ms-municipal-officeholders.",
+        "people": "The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.",
         "applies": "Mississippi — statewide. A point outside every city, town and village is unincorporated, which the card states."
+      }
+    },
+    {
+      "id": "city-ward",
+      "label": "City Ward",
+      "group": "political",
+      "area_rank": 13,
+      "rank_note": "57 wards in the 9 cities whose ward maps this app has confirmed, a mean 20.8 km2 (median 15.0, from 3.6 for Pearl's Ward 3 to 61.6 for Jackson's Ward 7), measured 2026-10-17 — ranked just after City, which each one divides, so a ward draws on top of its city",
+      "source": {
+        "answers": "The ward containing the point, in the nine Mississippi cities of 25,000 people or more whose current ward map this app has confirmed, and the member of the city council or board of aldermen elected from it.",
+        "boundary": [
+          {
+            "label": "City of Jackson — its ward layer Jackson Adopted Wards 2024, the one the city's Ward Maps page shows; its own population figures match the 2020 census's people inside its lines, ward by ward",
+            "url": "https://services2.arcgis.com/n0wqzAPJddc1vROD/arcgis/rest/services/Jackson_Adopted_Wards_2024/FeatureServer/0"
+          },
+          {
+            "label": "City of Gulfport — the wards layer of the city's own map server's 2025 service for wards, voting precincts and polling places (no adoption date was found; the seven wards are 8.1% apart on the 2020 census)",
+            "url": "https://maps.gulfport-ms.gov/arcgis/rest/services/CityServices/GPT_WardsVotingPrecinct_2025/MapServer/2"
+          },
+          {
+            "label": "DeSoto County — its map of its cities' wards, which records that Southaven adopted its wards on June 18, 2024 (and that Olive Branch adopted its own on June 7, 2022)",
+            "url": "https://services6.arcgis.com/4Zxj9BGpFPVGgwpo/arcgis/rest/services/Municipal_Wards/FeatureServer/17"
+          },
+          {
+            "label": "City of Olive Branch — its ward layer Municipal_Wards_FINAL_2022, which the city's Find My Ward map links",
+            "url": "https://services9.arcgis.com/VGtdH6iTQlVulSnr/arcgis/rest/services/Olive_Branch_Wards/FeatureServer/0"
+          },
+          {
+            "label": "City of Tupelo — its ward layer, which the city's GIS maps page links as its ward map, described as the current aldermen wards (created July 2023; no adoption date was found)",
+            "url": "https://services1.arcgis.com/K2lG4DOeDaa3nZkf/arcgis/rest/services/WARDS/FeatureServer/0"
+          },
+          {
+            "label": "City of Oxford — its 2023 Wards layer, the Interactive Ward Map the city's Board of Aldermen page links, which matches the ward map the board approved on May 19, 2023",
+            "url": "https://services3.arcgis.com/HJKXwJwr6cXL7ioD/arcgis/rest/services/2023_Wards/FeatureServer/0"
+          },
+          {
+            "label": "Central Mississippi Planning and Development District — the ward layers of Clinton (Wards 12-5-2023, the date of the city's Adopted Ward Plan), Pearl (Adopted Pearl Wards Effective 9-1-24) and Brandon (Wards (Adopted 1/18/2022)); each city's website links or embeds the planning district's map viewer that shows its wards",
+            "url": "https://gis.cmpdd.org/server/rest/services/Hosted"
+          },
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its wards are cut so the City Ward and City cards agree about which city a point is in",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "The member for each ward as the city's own website names them, from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.",
+        "applies": "Jackson, Gulfport, Southaven, Olive Branch, Tupelo, Clinton, Pearl, Oxford and Brandon. The other six cities of 25,000 people or more (Biloxi, Hattiesburg, Meridian, Greenville, Madison and Horn Lake) are not drawn, each for a reason ms/scripts/build_ms_city_wards.py records, and the City card still names their mayor and council where the city's own website does."
       }
     },
     {
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "Tribal land — Mississippi has 2 pieces held by one nation, the Mississippi Choctaw Reservation (123.468 km², in 56 separate parts, 77.1 km² of it in Neshoba County) and its off-reservation trust land (16.396 km² in Mississippi), MEASURED by scripts/build_tribal_areas.py on 2026-10-15. Ranked after municipalities and before the point layers, as South Carolina's and Indiana's are. Its parts are small — the reservation's 56 run from 51.6 km² down to under 0.01 km² and the trust land's 29 from 3.55 km² down — so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Mississippi has 2 such areas, both the Mississippi Band of Choctaw Indians'.",
@@ -386,7 +432,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -404,7 +450,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -422,7 +468,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -509,6 +555,12 @@
         "note": "The county supervisor districts of the 25 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 13 from other published maps, redrawn along whole 2020 census blocks."
       },
       {
+        "file": "ms-city-wards.json",
+        "min_features": 57,
+        "max_features": 57,
+        "note": "The wards of the nine Mississippi cities of 25,000 people or more whose current ward map is confirmed (ms/scripts/build_ms_city_wards.py): each city's own published lines between wards, cut at the city's limits on the Census Bureau's map. Every ward's 2020 census people are pinned in the builder, so the floor and the ceiling are equal: a new city or a new ward plan changes this entry in the same change."
+      },
+      {
         "file": "tribal-areas.json",
         "min_features": 2,
         "max_features": 2,
@@ -578,6 +630,11 @@
         "note": "The 25 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
       },
       {
+        "file": "ms-city-councils.json",
+        "min_keys": 15,
+        "note": "The mayor and the council or board of aldermen of each of Mississippi's 15 cities of 25,000 people or more, keyed by the city's Census id, seat by seat as each city's own website names them, with the date the pages were read (ms/scripts/build_ms_city_councils.py). Greenville's record names nobody and says why. The City card and the City Ward card both read it."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -595,7 +652,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ms-shell-v7",
+    "cache_name": "districtry-ms-shell-v8",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
