@@ -13781,6 +13781,12 @@ function initChiExplorer() {
           if (m.role) person.badge = String(m.role);
           else if (m.seat) person.badge = String(m.seat);
           if (m.phone) person.phone = String(m.phone);
+          // A further number the county prints for the same commissioner (a
+          // cell beside a home line, say), labelled as the county labels it;
+          // the engine's contact line renders each as its own tel: link.
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
           if (m.email) person.email = String(m.email);
           // "Term: 2017 to Present" is a START, not an expiry — the one term
           // fact these sources publish, worded as the source words it.
@@ -14133,9 +14139,8 @@ function initChiExplorer() {
 
   // Lead the row with the seat's district where one exists (the card order
   // convention puts the identifier before the person), keeping the office
-  // title as the muted note. Contact is deliberately absent: this source's
-  // phone/email are municipality-wide, so they render once on the hall row
-  // instead of implying a direct line to each member.
+  // title as the muted note. The municipality-wide phone and e-mail render once
+  // on the hall row, never on a person.
   function municipalPerson(member) {
     var person = { name: String(member.name) };
     var role = null;
@@ -14149,10 +14154,17 @@ function initChiExplorer() {
                              municipalTermNote(member));
     if (note) person.note = note;
     // Per-person contact appears only where the county source publishes it per
-    // member (McHenry prints a direct line or office e-mail for a few
-    // officials). The village-hall contact stays on the hall row — copying it
-    // onto every person would imply direct lines that don't exist.
+    // member — a work line, a cell line or an office e-mail beside the name.
+    // Since Adam's ruling of 2026-10-17 ("if the official government source
+    // uses personal phone numbers, we publish those") a member's own cell or
+    // home number ships when the county prints it, labelled as the county
+    // labels it, with any second number in `phonesExtra`. The village-hall
+    // contact stays on the hall row — copying it onto every person would imply
+    // direct lines that don't exist.
     if (member.phone) person.phone = String(member.phone);
+    if (member.phonesExtra && member.phonesExtra.length) {
+      person.phonesExtra = member.phonesExtra.map(String);
+    }
     if (member.email) person.email = String(member.email);
     return person;
   }
@@ -24628,24 +24640,20 @@ function initChiExplorer() {
       person.badge = party;
     }
     if (m.city) noteBits.push(String(m.city));
-    // A SECOND PUBLISHED NUMBER, where a county prints one. The engine's
-    // contact line renders exactly one phone, and card-helpers is inside an
-    // ENGINE fence — widening it would have to be ported to every sibling fork
-    // and released, which four members in one county do not justify. So the
-    // extras ride the note line rather than being dropped, which is the whole
-    // point: the county published them. Montgomery is currently the only source
-    // that sets this, and it is never labelled home/cell because the county
-    // does not label them either.
-    if (m.phonesExtra && m.phonesExtra.length) {
-      // Labelled "2nd number", not "also": the note renders on the NAME line
-      // while the contact line with the primary number renders below it, so a
-      // bare "also 217-820-3588" sitting above a different number reads as if
-      // the extra were the main one.
-      noteBits.push((m.phonesExtra.length === 1 ? "2nd number " : "other numbers ")
-                    + m.phonesExtra.map(String).join(", "));
-    }
     if (noteBits.length) person.note = noteBits.join(" · ");
     if (m.phone) person.phone = String(m.phone);
+    // FURTHER PUBLISHED NUMBERS, where a county prints more than one for a
+    // member. The engine's contact line renders `phonesExtra` itself, after the
+    // first number and each as its own tel: link, with the source's own label
+    // ("cell", "home", "work") in the visible text. Until 2026-10-17 these rode
+    // the note line as "2nd number ..." because the contact line rendered one
+    // phone. Since Adam's ruling that day ("if the official government source
+    // uses personal phone numbers, we publish those") several counties' rosters
+    // carry a member's own cell or home line here: Franklin, Kane, Macon,
+    // Marshall, McHenry, Montgomery, Peoria and Washington set it.
+    if (m.phonesExtra && m.phonesExtra.length) {
+      person.phonesExtra = m.phonesExtra.map(String);
+    }
     if (m.email) person.email = String(m.email);
     var url = m.url ? safeHttpUrl(m.url) : null;
     if (url) person.links = [{ label: (opts && opts.linkLabel) || "Profile", url: url }];
@@ -27544,8 +27552,9 @@ function initChiExplorer() {
               var extra = [];
               if (m.term) extra.push("Term " + String(m.term));
               // The role alias is a second published e-mail; the contact
-              // line renders one, so the alias rides the note line (the
-              // Montgomery phonesExtra precedent).
+              // line renders one, so the alias rides the note line (as a
+              // second phone number did until 2026-10-17, when the contact
+              // line began rendering `phonesExtra` itself).
               if (m.roleEmail) extra.push("board office e-mail " + String(m.roleEmail));
               if (extra.length) p.note = p.note ? p.note + " · " + extra.join(" · ") : extra.join(" · ");
               return p;

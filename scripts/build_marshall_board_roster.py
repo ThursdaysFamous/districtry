@@ -27,6 +27,13 @@ punctuation-insensitive key the boundary builder dissolves on, because the
 county writes "LaPrairie" where TIGER writes "La Prairie". Re-spacing a
 township name is not a redistricting and must not fail the weekly job.
 
+BOTH OF A MEMBER'S NUMBERS SHIP. The table prints a Phone column and a column
+headed "Cell/Work"; a member with both carries the Phone number in `phone` and
+the other in `phonesExtra`, led by "cell or work" (the county's heading). Until
+Adam's ruling of 2026-10-17 ("if the official government source uses personal
+phone numbers, we publish those") only one of the two shipped. Every number is
+checked for its shape (scraper_common.person_phone_problem).
+
 Usage:
     python3 build_marshall_board_roster.py <raw-scraper-output.json> [output_dir]
 """
@@ -40,7 +47,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_marshall_board_districts import (  # noqa: E402
     DISTRICTS as BOUNDARY_COMPOSITION, SEATS_PER_DISTRICT, norm as township_key,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import make_fail, person_phone_problem  # noqa: E402  (shared machinery — do not fork)
 
 SOURCE_URL = ("https://marshallcountyillinois.gov/wp-content/uploads/2026/01/"
               "2026-New-County-Board-Roster-.pdf")
@@ -49,6 +56,10 @@ ROSTER_PAGE = "https://marshallcountyillinois.gov/directory/county-board/"
 EXPECT_DISTRICTS = ("1", "2", "3")
 MIN_PHONES = 10
 MIN_EMAILS = 10
+# Members carrying a second number (a Phone number and a Cell/Work number):
+# measured 2 of 12 on 2026-10-17. Two thirds of 2 rounds to 1, so the build
+# fails if the second column stops being read for everyone.
+MIN_SECOND_NUMBERS = 1
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -83,7 +94,7 @@ def main():
         member = {"name": rec["name"]}
         if rec.get("role"):
             member["role"] = rec["role"]
-        for key in ("phone", "email"):
+        for key in ("phone", "phonesExtra", "email"):
             if rec.get(key):
                 member[key] = rec[key]
         if rec.get("termExpires"):
@@ -128,19 +139,35 @@ def main():
              "Vice-Chairperson" % (roles or "no officers"))
 
     phones = sum(1 for m in members if m.get("phone"))
+    seconds = sum(1 for m in members if m.get("phonesExtra"))
     emails = sum(1 for m in members if m.get("email"))
     if phones < MIN_PHONES:
         fail("only %d phones resolved (expected >= %d)" % (phones, MIN_PHONES))
+    if seconds < MIN_SECOND_NUMBERS:
+        fail("only %d members carry a second number (expected >= %d) — the "
+             "Cell/Work column may have moved" % (seconds, MIN_SECOND_NUMBERS))
     if emails < MIN_EMAILS:
         fail("only %d e-mails resolved (expected >= %d)" % (emails, MIN_EMAILS))
+    # The shape of every number, named by district and seat, never by value.
+    for d in EXPECT_DISTRICTS:
+        for seat, member in enumerate(roster[d]["members"], 1):
+            values = [("phone", member["phone"])] if member.get("phone") else []
+            values += [("phonesExtra[%d]" % i, v)
+                       for i, v in enumerate(member.get("phonesExtra") or [])]
+            for field, value in values:
+                problem = person_phone_problem(value)
+                if problem:
+                    fail("Marshall County District %s, seat %d of %d: %s %s"
+                         % (d, seat, len(roster[d]["members"]), field, problem))
 
     out_path = os.path.join(out_dir, "marshall-county-board-members.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(roster, f, ensure_ascii=False, indent=1, sort_keys=True)
         f.write("\n")
-    print("marshall-board-roster: %d districts, %d members (%d phones, %d e-mails); "
-          "composition matches the shipped boundary in all 3 districts -> %s"
-          % (len(roster), len(members), phones, emails, out_path))
+    print("marshall-board-roster: %d districts, %d members (%d phones, %d with a "
+          "second number, %d e-mails); composition matches the shipped boundary in "
+          "all 3 districts -> %s"
+          % (len(roster), len(members), phones, seconds, emails, out_path))
 
 
 if __name__ == "__main__":

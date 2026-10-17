@@ -48,10 +48,37 @@ UA = {"User-Agent": UA_ROSTER_COMPACT}
 
 MAILTO_RE = re.compile(
     r"mailto:([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})")
-# the member pages label their numbers ("Phone:", "Work phone:", "Cell
-# phone:") — take the first labelled number, which is the office line.
-PHONE_RE = re.compile(
-    r"(?:Work\s+)?[Pp]hone:\s*(\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4})")
+# THE MEMBER PAGES LABEL THEIR NUMBERS, AND EVERY LABELLED NUMBER SHIPS. Measured
+# on 2026-10-17 across the 18 member pages, the labels are "Phone:", "Work
+# Phone:", "Work phone:", "Cell Phone:", "Cell phone:", "Cell:", "Business:" and
+# "Home:", and five members print two numbers. Until that day only the first
+# number labelled "...Phone:" shipped: on one page that was the member's cell
+# rather than the work line printed after it, and two members whose labels are
+# "Business:"/"Cell:" and "Home:"/"Cell:" shipped no number at all. Since Adam's
+# ruling of 2026-10-17 ("if the official government source uses personal phone
+# numbers, we publish those") every labelled number ships, the first in `phone`
+# and the rest in `phonesExtra`, in the page's order, each led by the page's own
+# label ("cell 309-...", "work 309-...", "business 309-...", "home 309-..."); a
+# plain "Phone:" adds no word. A number with no label is not read: the one
+# measured follows the courthouse's street address, so it is the building's.
+# "Fax:" is not a label this pattern reads.
+LABELLED_PHONE_RE = re.compile(
+    r"\b(Cell\s+Phone|Work\s+Phone|Home\s+Phone|Business\s+Phone|Mobile\s+Phone|"
+    r"Phone|Cell|Mobile|Work|Business|Home)\s*:\s*"
+    r"(\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4})", re.I)
+PHONE_LABELS = {"phone": None, "cell phone": "cell", "cell": "cell",
+                "mobile phone": "mobile", "mobile": "mobile",
+                "work phone": "work", "work": "work",
+                "business phone": "business", "business": "business",
+                "home phone": "home", "home": "home"}
+# Numbers that belong to a county office, not to a member, whatever label a
+# member page puts on them. A member page that lists one is naming the office.
+COUNTY_LINES = {
+    # Peoria County Administration, as the county's own directory lists it
+    # (read 2026-10-17); one member page gives it as the member's "Business:".
+    "309-672-6056",
+}
+TEL_HREF_RE = re.compile(r'href="tel:([^"]*)"', re.I)
 ROLE_RE = re.compile(r"\b(Chairperson|Vice\s+Chairperson)\b")
 
 
@@ -69,6 +96,24 @@ def normalize_phone(raw):
     if len(digits) != 10:
         return None
     return "%s-%s-%s" % (digits[:3], digits[3:6], digits[6:])
+
+
+def labelled_numbers(text):
+    """Every labelled number on a member page, in the page's order, as
+    (label word or None, "309-555-0100"). The same number printed twice on one
+    page is kept once, under its first label."""
+    out, seen = [], set()
+    for label, raw in LABELLED_PHONE_RE.findall(text):
+        number = normalize_phone(raw)
+        if not number or number in seen:
+            continue
+        seen.add(number)
+        out.append((PHONE_LABELS[re.sub(r"\s+", " ", label.lower())], number))
+    return out
+
+
+def with_label(label, number):
+    return "%s %s" % (label, number) if label else number
 
 
 def name_key(name):
@@ -229,17 +274,24 @@ def fetch_index_roles(session):
 
 
 def fetch_member_contact(session, url):
+    """-> (e-mail or None, [(label, number)], tel_ok). tel_ok is False when a
+    tel: link on the page dials a number the page does not show; then none of
+    the page's numbers ship."""
     try:
         require_robots_once(url, UA["User-Agent"], headers=UA,
                             label="il-peoria-county-board-scraper")
         r = session.get(url, headers=UA, timeout=60)
         r.raise_for_status()
     except requests.RequestException:
-        return None, None
+        return None, [], True
     email = MAILTO_RE.search(r.text)
-    phone = PHONE_RE.search(strip_tags(r.text))
-    return (email.group(1).lower() if email else None,
-            normalize_phone(phone.group(1)) if phone else None)
+    text = strip_tags(r.text)
+    numbers = labelled_numbers(text)
+    shown = {re.sub(r"\D", "", n)
+             for n in re.findall(r"\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}", text)}
+    dialled = {re.sub(r"\D", "", h)[-10:] for h in TEL_HREF_RE.findall(r.text)}
+    tel_ok = not (dialled - shown)
+    return (email.group(1).lower() if email else None, numbers, tel_ok)
 
 
 def main():
@@ -258,13 +310,36 @@ def main():
         roles, listed = {}, set()
         index_read = False
 
+    contacts = {}
+    for row in rows:
+        contacts[row["district"]] = (fetch_member_contact(session, row["url"])
+                                     if row["url"] else (None, [], True))
+    # A number printed on two or more member pages, or one of COUNTY_LINES,
+    # belongs to an office rather than to one member, so it ships on nobody.
+    pages_printing = {}
+    for _email, numbers, _ok in contacts.values():
+        for _label, number in numbers:
+            pages_printing[number] = pages_printing.get(number, 0) + 1
+
     records = []
     missing = []
     for row in rows:
         key = name_key(row["name"])
-        email = phone = None
-        if row["url"]:
-            email, phone = fetch_member_contact(session, row["url"])
+        email, numbers, tel_ok = contacts[row["district"]]
+        if not tel_ok:
+            print("peoria-board-scraper: WARN — district %s's page has a tel: "
+                  "link that dials a number the page does not show; none of its "
+                  "numbers ship" % row["district"], file=sys.stderr)
+            numbers = []
+        own = [(label, number) for label, number in numbers
+               if pages_printing.get(number, 0) < 2 and number not in COUNTY_LINES]
+        if len(own) < len(numbers):
+            print("peoria-board-scraper: note — district %s's page lists %d "
+                  "office number(s) (a county line, or one printed on another "
+                  "member's page too); not shipped as the member's own"
+                  % (row["district"], len(numbers) - len(own)), file=sys.stderr)
+        phone = with_label(*own[0]) if own else None
+        extras = [with_label(label, number) for label, number in own[1:]]
         if index_read and not any(same_person(key, k) for k in listed):
             missing.append(row["name"])
             print("peoria-board-scraper: WARN — %s (district %s) is on the GIS "
@@ -276,6 +351,7 @@ def main():
             "party": row["party"],
             "role": next((r for k, r in roles.items() if same_person(key, k)), None),
             "phone": phone,
+            "phonesExtra": extras,
             "email": email,
             "url": row["url"],
         })
@@ -404,6 +480,23 @@ def selftest():
     # The failure this fix is for: the live page with no `subhead` anywhere.
     want("heading shape alone finds nobody in the editor markup",
          [b for _l, b in INDEX_HEADING_RE.findall(EDITOR_SHAPE)], [])
+
+    # The member pages' numbers (Adam's ruling of 2026-10-17): every labelled
+    # number, in the page's order, under the page's own label; "Phone:" adds no
+    # word; a number with no label, and a Fax, are not read; a number printed
+    # twice on the page is kept once, under its first label.
+    member_page = ("Room 101 309-555-0100 Cell Phone: 309-555-0101 "
+                   "Work phone: (309) 555-0102 Fax: 309-555-0103 "
+                   "Business: 309.555.0104 Home: 309-555-0105 "
+                   "Phone: 309-555-0106 Cell: 309-555-0101")
+    want("member page numbers", labelled_numbers(member_page),
+         [("cell", "309-555-0101"), ("work", "309-555-0102"),
+          ("business", "309-555-0104"), ("home", "309-555-0105"),
+          (None, "309-555-0106")])
+    want("a label leads its number", with_label("cell", "309-555-0101"),
+         "cell 309-555-0101")
+    want("a plain Phone: adds no word", with_label(None, "309-555-0106"),
+         "309-555-0106")
 
     print("peoria-board-scraper selftest: %s — %d check(s)%s"
           % ("FAIL" if problems else "OK", checks,

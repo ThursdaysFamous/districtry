@@ -89,6 +89,7 @@ imported inside fetch(), the one function that needs it.
 import io
 import json
 import os
+import re
 import sys
 import time
 
@@ -462,6 +463,64 @@ def make_fail(label):
         print("%s: FAIL — %s" % (label, msg), file=sys.stderr)
         sys.exit(1)
     return fail
+
+
+# --- a telephone number on a person's record: the shape check ----------------
+#
+# Adam's ruling of 2026-10-17, for every state: "if the official government
+# source uses personal phone numbers, we publish those." Until that day several
+# builders refused a number printed beside an officeholder because it might be
+# the person's own home or cell line. Those numbers now ship, labelled the way
+# the source labels them ("cell 815-555-0100", "home (309) 555-0101"), the first
+# in `phone` and any further ones in `phonesExtra`. What a builder still checks
+# is the SHAPE of each value: one telephone number, optionally led by one of the
+# label words below and optionally followed by an extension. A value carrying a
+# street word, a ZIP code, an "@" or a second number is refused, because each of
+# those means a parser read the wrong column, and the wrong column on these
+# rosters is usually the member's home address.
+#
+# "cell or work" is the one two-word label: Marshall County heads that column
+# "Cell/Work", so the source does not say which of the two a number is.
+PERSON_PHONE_LABELS = ("cell", "home", "work", "business", "office", "mobile",
+                       "personal", "residence")
+_LABEL = "(?:%s)" % "|".join(PERSON_PHONE_LABELS)
+_ONE_NUMBER = (r"(?:\+?1[\s.\-]?)?"                 # an optional country code
+               r"(?:\(\d{3}\)\s?|\d{3}[\s.\-/]?)?"  # an optional area code ("618/")
+               r"\d{3}[\s.\-]?\d{4}")               # the number itself
+_PERSON_PHONE_RE = re.compile(
+    r"(?:%s(?:\s+or\s+%s)?\s+)?%s(?:\s*,?\s*(?:ext\.?|extension|x)\s*\d{1,6})?"
+    % (_LABEL, _LABEL, _ONE_NUMBER), re.I)
+_ANY_NUMBER_RE = re.compile(r"\(?\d{3}\)?[\s.\-/]?\d{3}[\s.\-]?\d{4}"
+                            r"|\b\d{3}[\s.\-]\d{4}\b")
+_STREET_WORD_RE = re.compile(
+    r"\b(?:street|st|avenue|ave|road|rd|drive|dr|lane|ln|court|ct|boulevard|"
+    r"blvd|highway|hwy|route|rte|box|suite|ste|apt|circle|cir|parkway|pkwy|"
+    r"place|pl|trail|trl|terrace|ter)\b", re.I)
+_ZIP_RE = re.compile(r"(?<![\d\-.])\d{5}(?:-\d{4})?(?![\d\-.])")
+
+
+def person_phone_problem(value):
+    """None when `value` is one telephone number a person's record may carry,
+    otherwise a short reason. The reason never quotes the value, so a caller
+    can print it beside a county and a seat without printing what might be a
+    home address read from the wrong column."""
+    if not isinstance(value, str):
+        return "is not a string"
+    text = value.strip()
+    if not text:
+        return "is empty"
+    if "@" in text:
+        return "carries an @, so it is an e-mail address and not a number"
+    if _PERSON_PHONE_RE.fullmatch(text):
+        return None
+    if len(_ANY_NUMBER_RE.findall(text)) > 1:
+        return "carries more than one number"
+    if _STREET_WORD_RE.search(text):
+        return "carries a street word"
+    if _ZIP_RE.search(text):
+        return "carries a ZIP code"
+    return ("is not one telephone number led only by a label word (%s)"
+            % ", ".join(PERSON_PHONE_LABELS))
 
 
 def fetch(url, headers, timeout=60, attempts=5, retry_after_cap=30.0, verify=None):
@@ -886,6 +945,41 @@ def _selftest():
     finally:
         sys.argv = real_argv
 
+    # --- person_phone_problem: the shape a person's number may take ----------
+    # Every shape a builder in this fleet writes must pass, and every way a
+    # wrong column shows up must fail, with a reason that does not repeat the
+    # value (the value may be a home address read from the wrong column).
+    for good in ("309-672-6056", "(309) 672-6056", "309.672.6056",
+                 "cell 815-555-0100", "home (843) 555-0101",
+                 "Work 815-555-0102", "business 618-555-0103",
+                 "office 815-555-0104 ext. 12", "mobile 815-555-0105 x12",
+                 "cell or work 309-555-0106", "555-0107",
+                 "+1 309-555-0108", "residence 815-555-0109",
+                 "309/555-0116"):
+        problem = person_phone_problem(good)
+        if problem is not None:
+            fails.append("person_phone_problem refused a good shape %r: %s"
+                         % (good, problem))
+    for bad, why in (("12 Main St 309-555-0110", "street word"),
+                     ("309-555-0111, 309-555-0112", "more than one number"),
+                     ("309/555-0117; 309/555-0118", "more than one number"),
+                     ("cell 309-555-0113 home 309-555-0114", "more than one number"),
+                     ("someone@example.gov", "@"),
+                     ("Peoria IL 61602", "ZIP code"),
+                     ("fax 309-555-0115", "label word"),
+                     ("Confidential", "label word"),
+                     ("", "empty")):
+        problem = person_phone_problem(bad)
+        if problem is None:
+            fails.append("person_phone_problem passed a bad value %r" % bad)
+        elif why not in problem:
+            fails.append("person_phone_problem gave %r for %r; wanted a reason "
+                         "naming %r" % (problem, bad, why))
+        elif bad and bad in problem:
+            fails.append("person_phone_problem quoted the value it refused")
+    if person_phone_problem(None) is None:
+        fails.append("person_phone_problem passed None")
+
     if fails:
         print("scraper-common selftest: FAIL", file=sys.stderr)
         for f in fails:
@@ -896,7 +990,10 @@ def _selftest():
           "too deep refuses, too shallow stays correct but vaguer; "
           "robots is asked once per host per client, a deferral reads as "
           "unread, a refusal stops the process; a flag in the output-path "
-          "position is refused rather than written to, and --help prints")
+          "position is refused rather than written to, and --help prints; "
+          "a person's telephone number passes in every labelled shape the "
+          "builders write and fails on a street word, a ZIP code, an @, a "
+          "second number or an unknown label, without quoting the value")
     return 0
 
 

@@ -5998,6 +5998,15 @@ the seat rather than the person. The office block carries the courthouse address
 and no phone: the number on the letterhead is the CLERK's line, and printing it
 under "Board Office" would imply the board answers it.
 
+*Corrected 2026-10-17: the phone numbers are no longer left out on principle.*
+Adam's ruling that day ("if the official government source uses personal phone
+numbers, we publish those") covers a number a county clerk's own document prints
+beside a commissioner, so the letterhead's numbers would ship, marked "home" and
+"cell" where it writes "(h)" and "(c)". The home addresses still never ship. The
+numbers are not on the roster because the Clerk's document is not in this
+repository — the roster was carried from it without them — so adding them needs
+the Clerk's document again.
+
 **A THIRD SOURCE KIND FOR THE COUNTY CARD: CERTIFIED RETURNS (2026-08-22).**
 Union and Williamson joined as the 81st and 82nd counties without a page being
 read at all. Both sit behind an **sgcaptcha** gate — their sites answer HTTP 202

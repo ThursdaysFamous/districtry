@@ -67,7 +67,19 @@ vacant seat).
 
 `office.phone2` / `email2` / `website2` are the vendor's second-contact slot and
 sit beside address2, the residence; a county board member's pair there is a
-mobile number and a gmail address. They are not read.
+mobile number and a gmail address. They are not read, and since 2026-10-17 the
+reason is attribution, not privacy. Adam's ruling that day ("if the official
+government source uses personal phone numbers, we publish those") would ship a
+member's mobile number, but only if it is the member's: the slot belongs to the
+OFFICE, as the stale primary e-mails above show, and measured that day it could
+not be shown to follow the person. Of 231 held municipal offices 30 carry a
+phone2, and two of those numbers are each printed on two trustees of one
+village; where the slot also carries an e-mail it names the holder on 3 of 5
+municipal offices and 11 of 13 county board seats; and the one independent
+government witness available, Sangamon County's direct numbers for Virden's
+nine officeholders, cannot test it because no Virden office carries a phone2.
+So no `person_phone` ships until a check can tie the slot to the person
+holding the office.
 
 Usage:
     python3 scripts/macoupin_municipal_officials_scraper.py --out macoupin_muni.json
@@ -552,8 +564,10 @@ def main():
     if not args.skip_contact and phones < MIN_OFFICE_PHONES:
         problems.append("%d municipalities with a hall phone < floor %d"
                         % (phones, MIN_OFFICE_PHONES))
-    # The privacy invariant, asserted rather than assumed: nothing that reached a
-    # record may be a residence, and no record may carry a person-level contact.
+    # Asserted rather than assumed: nothing that reached a record may be a
+    # residence, and no record may carry a person-level contact, because this
+    # source cannot be shown to attribute one to the person now holding the
+    # office (measured 2026-10-17; see the module docstring).
     for record in officials:
         shipped = (record.get("office_address") or "").lower()
         if shipped and shipped in residences.get(record["jurisdiction"], set()):
