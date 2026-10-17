@@ -512,6 +512,28 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A LEGISLATOR'S OWN NUMBER RIDES THE PERSON ROW, as the member's
+    //     page prints it, since Adam's ruling of 2026-10-17 ("if the official
+    //     government source uses personal phone numbers, we publish those").
+    //     The number expected is read from the shipped roster for each
+    //     chamber's anchor district, so a weekly refresh that changes it
+    //     changes what is expected; a record carrying none is reported, never
+    //     passed as a check. The card shows numbers with no-break hyphens,
+    //     folded back before comparing.
+    for (const [id, file] of [["ar-senate", "ar-senate-members.json"], ["ar-house", "ar-house-members.json"]]) {
+      const want = await page.evaluate(async ({ f, d }) => {
+        const r = await fetch("data/app/" + f).then((x) => x.json());
+        return (r[d] || {}).phone || null;
+      }, { f: file, d: EXPECT_DISTRICT[id] });
+      const info = await cardText(page, id);
+      const text = (info.text || "").replace(/‑/g, "-");
+      if (!want) {
+        console.log(`  SKIP  ${id} member's own number — the anchor's member prints none`);
+      } else {
+        check(`${id} card shows the number the member's own page prints`,
+          !info.error && text.includes(want), `want ${want}; got ${text.slice(0, 160)}`);
+      }
+    }
     await context.close();
   }
 
