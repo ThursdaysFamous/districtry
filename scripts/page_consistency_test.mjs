@@ -302,9 +302,19 @@ const contrast = (fg, bg) => {
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 };
 
+// SEVERAL PAGES AT ONCE (2026-10-17). One page at a time this check took
+// 685s on a CI runner, more than any other browser gate, and the whole run
+// waited on it. Each page gets its own browser contexts and the checks only
+// append to `failures` and read `probed`, so pages are independent; a url two
+// pages link may be probed twice, which costs a request and changes no
+// answer. PAGE_JOBS overrides the count; 1 is the old one-at-a-time run.
+const PAGE_JOBS = Math.max(1, parseInt(process.env.PAGE_JOBS || "4", 10) || 1);
+
 const browser = await chromium.launch();
 try {
-  for (const path of paths) {
+  const queue = [...paths];
+  const checkPages = async () => {
+  for (let path = queue.shift(); path !== undefined; path = queue.shift()) {
     const seg = path.replace(/^\/|\/$/g, "").split("/");
     const tag = seg.length > 1 ? seg[0] : null;       // null for the root pages
     const file = path.endsWith("/") ? "index.html" : seg[seg.length - 1];
@@ -647,6 +657,8 @@ try {
       await ctx.close();
     }
   }
+  };
+  await Promise.all(Array.from({ length: PAGE_JOBS }, checkPages));
 } finally {
   await browser.close();
 }

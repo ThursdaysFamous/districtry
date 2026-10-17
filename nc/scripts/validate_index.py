@@ -98,7 +98,8 @@ MIN_REGISTER_LAYER = 9
 EXPECT_LAYER_IDS = [
     "us-house", "nc-senate", "county", "nc-house", "school-district-unified",
     "county-subdivision", "zip-code", "tribal-government", "voting-precinct",
-    "municipality", "police-station", "fire-station", "post-office",
+    "municipality", "city-ward", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +111,7 @@ GEOMETRY_FILES = {
     "nc-house-districts.json": (120, 120),  # The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files.
     "tribal-areas.json": (2, 2),  # North Carolina's tribal land (scripts/build_tribal_areas.py) — the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians'. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
     "nc-precincts.json": (2625, 2625),  # Every North Carolina voting precinct, pre-built by nc/scripts/build_nc_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' file as NC OneMap serves it (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 2,625 count on the fetch and the drawn file). 8.2 MB, 2.43 MB gzipped, fetched only when a reader switches the layer on.
+    "nc-city-wards.json": (100, 100),  # The 100 council districts and wards of the 17 cities above 25,000 people that elect council members by district or ward, pre-built by nc/scripts/build_nc_city_wards.py through scripts/city_ward_maps.py from the map each city or its county publishes (Douglas-Peucker at 4 m; a 6,800-point agreement gate over the seventeen cities' extents, measured 99.94%, with no overlap; each map held to its city's Census outline). 1.46 MB, 410 KB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -118,7 +120,9 @@ ROSTER_FILES = {
     "nc-senate-members.json": 45,  # NC Senate roster from Open States, refreshed weekly. The floor is below 50 because a vacant seat is a real event.
     "nc-house-members.json": 110,  # NC House roster from Open States, refreshed weekly. The floor is below 120 for the same reason.
     "nc-county-commissioners.json": 100,  # Every county's board of commissioners, each seat the winner of its most recent general in the State Board of Elections' results, built by nc/scripts/build_nc_county_commissioners.py and refreshed weekly by update-nc-county-commissioners.yml.
+    "nc-city-councils.json": 42,  # The mayor and council of each of the 42 cities and towns above 25,000 people, keyed by Census place id, written down from each city's own pages and proved against them by nc/scripts/build_nc_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn districts. Every page it cites is re-read weekly (watch-city-council-pages.yml), which opens a tracking issue when a name has gone from its page and never edits the file; the seats file is changed by hand (nc/WATCH.md).
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "nc-conservation-boards.json": 100,  # The supervisors of the soil and water conservation district covering each county, keyed by county GEOID, read from the state's District Directory by nc/scripts/build_nc_conservation_boards.py, whose --check holds the file to its record of the directory read and to the County card's wording. Re-read quarterly and after each November election (nc/WATCH.md).
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

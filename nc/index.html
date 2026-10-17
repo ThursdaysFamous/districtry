@@ -4217,8 +4217,8 @@ function initNorthCarolinaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "nc-senate": "ncs", "county": "co", "nc-house": "nch",
     "school-district-unified": "su", "county-subdivision": "cs", "zip-code": "zp",
-    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4226,8 +4226,8 @@ function initNorthCarolinaExplorer() {
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["nc-senate"],
     "state-house": ["nc-house"], "county": ["county"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -10009,6 +10009,7 @@ function initNorthCarolinaExplorer() {
     "tribal-government", // Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "voting-precinct",   // 2,625 precincts tiling the state, pre-built from the State Board of Elections' file as NC OneMap serves it — 53.10 km2 mean area, land and water (median 25.32), measured 2026-10-15 on the drawn file: smaller than the Qualla Boundary's pieces (median 107.2 km2), larger on average than a city or town (20.26 km2 of land)
     "municipality",      // 552 incorporated places, live from TIGERweb
+    "city-ward",         // 100 council districts and wards in the 17 cities above 25,000 people that elect council members by district or ward, ranked just after City or Town, which each one divides, so a district draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -14044,6 +14045,105 @@ function initNorthCarolinaExplorer() {
     });
   }
 
+  /* ---------- The soil and water conservation district, on the County card.
+   *
+   * The state's District Directory names the supervisors of the district
+   * that covers each county (nc/scripts/build_nc_conservation_boards.py;
+   * data/app/nc-conservation-boards.json, keyed by county GEOID). A board has
+   * five seats, three elected without party labels and two appointed by the
+   * state Soil and Water Conservation Commission. 95 districts follow county
+   * lines; the Albemarle district covers five counties and the directory
+   * lists its supervisors county by county, so each of those cards names the
+   * ones listed for its county and says the district covers all five. A
+   * seat the directory lists with no name is shown that way and never called
+   * a vacancy. The builder's --check requires the sentence on how a board is
+   * chosen to stay as the builder states it.
+   * ---------- */
+  var loadConservationBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-conservation-boards.json", {}, 2);
+  });
+  var NC_CONSERVATION_CHOSEN = "Most districts have five supervisors: " +
+    "three elected by the county's voters without party labels at the " +
+    "general election, and " +
+    "two appointed by the state Soil and Water Conservation Commission on " +
+    "the board's recommendation, each for four years.";
+  function ncConservationFor(result) {
+    return loadConservationBoards().then(function (r) {
+      result.conservation = r[String(result.geoid)] || null;
+    }, function () {
+      result.conservationFailed = true;
+    });
+  }
+  function conservationRank(role) {
+    var r = String(role || "");
+    if (/^chair/i.test(r)) return 0;
+    if (/^vice/i.test(r)) return 1;
+    if (/secretary|treasurer|financial/i.test(r)) return 2;
+    return 3;
+  }
+  // The board's officers first, then the directory's own order.
+  function ncConservationRows(members) {
+    return (members || []).map(function (m, i) {
+      return { m: m, i: i };
+    }).sort(function (a, b) {
+      return (conservationRank(a.m.role) - conservationRank(b.m.role)) || (a.i - b.i);
+    }).map(function (x) {
+      var m = x.m;
+      var bits = [];
+      if (m.chosen) bits.push(m.chosen === "appointed" ? "Appointed" : "Elected");
+      var term = /^(\d{4})-(\d{4})$/.exec(String(m.term || ""));
+      if (term) bits.push(term[1] + "–" + term[2] + " term");
+      var row = {
+        name: m.name ? String(m.name) : "No name listed",
+        badge: m.role ? String(m.role) : null,
+        note: bits.length ? bits.join(" · ") : null
+      };
+      if (m.unlisted) {
+        row.details = { label: "Why", items: ["The state's directory lists this " +
+          "seat with no name and does not say whether it is vacant."] };
+      }
+      return row;
+    });
+  }
+  function ncConservationSection(wrap, result) {
+    var districts = (result.conservation && result.conservation.districts) || [];
+    if (!districts.length) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Soil and water conservation district",
+        value: result.conservationFailed
+          ? "The list of conservation district supervisors did not load, so " +
+            "no names are shown."
+          : "Not shown: the state's district directory lists no board for " +
+            "this county."
+      }]));
+      return;
+    }
+    districts.forEach(function (d) {
+      wrap.appendChild(renderSectionLabel(String(d.name)));
+      wrap.appendChild(renderPersonRows(ncConservationRows(d.members)));
+      var rows = [];
+      if (d.note) rows.push({ label: "Covers several counties", value: String(d.note) });
+      rows.push({ label: "How the board is chosen", value: NC_CONSERVATION_CHOSEN });
+      var printed = ncDate(d.dated);
+      var read = ncDate(d.read);
+      rows.push({
+        label: "Where these names come from",
+        value: "The North Carolina Department of Agriculture's district " +
+          "directory" + (printed ? ", printed " + printed : "") +
+          (read ? (printed ? " and" : ",") + " read on " + read : "") + ". " +
+          "A seat that has changed hands since it was printed may still " +
+          "show the earlier supervisor."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      if (d.sourceUrl) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "North Carolina district directory (PDF) ↗",
+            url: String(d.sourceUrl) }]
+        }));
+      }
+    });
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -14067,13 +14167,16 @@ function initNorthCarolinaExplorer() {
           geoid: findPropCI(props, ["geoid"]),
           board: null
         };
-        // A roster that fails to load leaves the county answer standing and
+        // A list that fails to load leaves the county answer standing and
         // says so, rather than taking the boundary answer down with it.
-        return loadCountyCommissioners().then(function (r) {
-          result.board = r[String(result.geoid)] || null;
-          return result;
-        }, function () {
-          result.rosterFailed = true;
+        return Promise.all([
+          loadCountyCommissioners().then(function (r) {
+            result.board = r[String(result.geoid)] || null;
+          }, function () {
+            result.rosterFailed = true;
+          }),
+          ncConservationFor(result)
+        ]).then(function () {
           return result;
         });
       });
@@ -14120,6 +14223,7 @@ function initNorthCarolinaExplorer() {
             url: "https://er.ncsbe.gov/" }]
         }));
       }
+      ncConservationSection(wrap, result);
       return wrap;
     }
   });
@@ -14589,17 +14693,118 @@ function initNorthCarolinaExplorer() {
    * lookup: most of North Carolina's land is in no municipality at all, and
    * the county is the government there.
    *
-   * NO OFFICEHOLDER. No statewide source naming North Carolina's mayors and
-   * council members has been established, so the card names no one rather
-   * than guessing. Recorded as gap nc-municipal-officeholders; per-city
-   * rosters are later phase work, the route every other instance took.
-   * NCGS 160A-1(3) is worth carrying into that work: "'Council' is
-   * interchangeable with the terms 'board of aldermen' and 'board of
-   * commissioners'", so a scrape keyed on the words "city council" will miss
-   * the municipalities whose charters call it something else. ---------- */
+   * THE 42 CITIES AND TOWNS ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND
+   * COUNCIL, written down from each city's own pages and proved against
+   * those pages on every build (nc/scripts/build_nc_city_councils.py through
+   * scripts/city_councils.py; data/app/nc-city-councils.json). Every seat
+   * says whether its district's own voters or the whole city elect it, read
+   * from each city's own pages, because nothing the state publishes records
+   * it. Where the names come from somewhere other than the council's own
+   * list (Raleigh's and Matthews's from the State Board of Elections'
+   * results, because both websites answer this app with a managed
+   * challenge), the city's `note` says so in place of the sentence naming
+   * the city's website, and the card links the council's own page (`page`).
+   * The districts of the seventeen that elect by district or ward are the
+   * City Council District layer (7b below).
+   *
+   * NCGS 160A-1(3): "'Council' is interchangeable with the terms 'board of
+   * aldermen' and 'board of commissioners'", so each body is named as its own
+   * pages name it, and its members as they are called there (commissioner,
+   * alderman).
+   *
+   * North Carolina's other 510 cities, towns and villages name nobody: no
+   * statewide source naming their mayors and council members gives a seat,
+   * a district or a date, so the card names no one rather than guessing.
+   * Recorded as gap nc-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  // The mayor and council of each city and town above 25,000 people, keyed
+  // by the place's Census id; every seat says who elects it and which page
+  // names it.
+  var loadNcCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-city-councils.json", {}, 2);
+  });
+  // What "the whole" place is for a seat elected by all of it: the Census's
+  // own style where the card has one ("Cary town"), and otherwise the word
+  // the council's own sentence uses, since a town's body is often a "Board
+  // of Commissioners" and its name says nothing about the place.
+  function ncWholePlace(council, kind) {
+    if (kind === "city" || kind === "town" || kind === "village") return kind;
+    return /\bwhole town\b/i.test(String(council.how)) ? "town" : "city";
+  }
+  // A district as its city names it: "District 3" and "District A", but
+  // "the East Ward" (scripts/city_councils.py ward_label, with the article a
+  // sentence needs).
+  function ncWardName(council, ward) {
+    var w = String(ward);
+    var word = String(council.wardWord || "Ward");
+    return (/^[0-9]+$/.test(w) || w.length === 1) ? word + " " + w : "the " + w + " " + word;
+  }
+  // The seat as the body names it: "Council, District A", "Commissioner,
+  // At large", "Council, East Ward". The mayor is an office of its own.
+  function ncCouncilBadge(seat) {
+    var role = String(seat.role);
+    if (role === "Mayor" || role === "Vice Mayor") return role;
+    return (role === "Council member" ? "Council" : role) + ", " + String(seat.seat);
+  }
+  // Who elects the seat, unless its own label already says so: its
+  // district's own voters, or the whole place, which in Gastonia elected the
+  // members for three of its wards.
+  function ncSeatElectedBy(council, seat, kind) {
+    if (/at large/i.test(String(seat.seat))) return null;
+    if (seat.byWard && seat.ward != null) return "elected by " + ncWardName(council, seat.ward);
+    return "elected by the whole " + ncWholePlace(council, kind);
+  }
+  // A seat the city says is empty reads "Vacant"; one whose holder the
+  // city's own pages disagree about names no one, and ncUnnamedRows says why.
+  function ncCouncilPeople(council, seats, kind) {
+    return seats.map(function (seat) {
+      return {
+        name: seat.name != null ? String(seat.name)
+          : (seat.vacant ? "Vacant" : "Not named here"),
+        badge: ncCouncilBadge(seat),
+        note: ncSeatElectedBy(council, seat, kind)
+      };
+    });
+  }
+  function ncUnnamedRows(seats) {
+    var rows = [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].unnamed) {
+        rows.push({ label: "Why one seat is not named", value: String(seats[i].unnamed) });
+      }
+    }
+    return rows;
+  }
+  // Where the names come from and when they were read: the city's own
+  // sentence where its names come from somewhere other than its council
+  // page, and every city's names dated by the oldest read of their pages.
+  function ncCouncilSourceRow(council) {
+    var read = ncDate(council.read);
+    return {
+      label: "Where these names come from",
+      value: (council.note ? String(council.note)
+        : "As listed on " + String(council.name) + "'s own website.") +
+        (read ? " Read on " + read + "." : "") +
+        " If a seat has changed hands since, " + String(council.name) +
+        "'s own website or clerk says who holds it now."
+    };
+  }
+  // The council's own page: `page` where the pages its names come from are
+  // not ones a reader would open, and otherwise the page a member's name is
+  // read from.
+  function ncCouncilLink(council) {
+    var label = String(council.name) + "'s " + String(council.body);
+    if (council.page) return { label: label, url: String(council.page) };
+    var seats = (council && council.seats) || [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].role !== "Mayor" && seats[i].sourceUrl) {
+        return { label: label, url: String(seats[i].sourceUrl) };
+      }
+    }
+    return null;
+  }
 
   registerLayer({
     id: "municipality",
@@ -14627,7 +14832,7 @@ function initNorthCarolinaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // same NAME-minus-BASENAME technique as the subdivision card, for
@@ -14636,8 +14841,19 @@ function initNorthCarolinaExplorer() {
           // the Census's own functional status, carried so the card can name
           // an inactive municipality rather than implying a working one
           funcstat: findPropCI(props, ["funcstat"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the place's card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadNcCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14669,15 +14885,185 @@ function initNorthCarolinaExplorer() {
             "North Carolina has three — Dellview, Eureka and Spencer Mountain."
         });
       }
+      var council = result.council;
+      if (!council) {
+        rows.push({
+          label: "Your mayor or council",
+          value: result.rosterFailed
+            ? "The list of council members did not load, so no name is shown. " +
+              "This municipality's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of North " +
+              "Carolina's 42 cities and towns above 25,000 people, from each " +
+              "one's own website, and this municipality is not one of them " +
+              "yet. Its own website is the current source."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat names who
+      // elects it, its district's own voters or the whole place.
+      var seats = council.seats || [];
+      wrap.appendChild(renderPersonRows(ncCouncilPeople(council, seats, result.kind)));
+      var after = ncUnnamedRows(seats).concat([
+        { label: "How the seats are elected", value: String(council.how) },
+        ncCouncilSourceRow(council)
+      ]);
+      if (council.wardsDrawn !== false && seats.some(function (s) { return s.byWard; })) {
+        var word = String(council.wardWord || "Ward").toLowerCase();
+        after.push({
+          label: "Which " + word + " this point is in",
+          value: "The City Council District layer draws " + String(council.name) +
+            "'s " + word + "s and names the member for this point's " + word + "."
+        });
+      }
+      wrap.appendChild(renderFieldStack(after));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? ncCouncilLink(result.council) : null;
+    }
+  });
+
+  /* ---------- 7b. City council district or ward ----------
+   * The 100 council districts and wards of the seventeen North Carolina
+   * cities above 25,000 people whose councils elect members by district or
+   * ward: Fayetteville 9, Winston-Salem 8, Charlotte, Rocky Mount and Wilson
+   * 7 each, Gastonia, Goldsboro, High Point, New Bern and Statesville 6 each,
+   * Greensboro, Greenville, Raleigh and Sanford 5 each, and Cary,
+   * Jacksonville and Mooresville 4 each. Each is read from
+   * the map its city or its county publishes, because no state office
+   * publishes one. Pre-built
+   * by nc/scripts/build_nc_city_wards.py through scripts/city_ward_maps.py,
+   * which holds each map to the Census outline of its city, so a click is
+   * answered in the browser and no point is sent anywhere. Each district's
+   * card says whose map it is drawn from, and that it is drawn here to
+   * within 4 metres.
+   *
+   * Raleigh's map is the copy the city published in November 2021, the only
+   * one this project may read; the precincts that carried each district's
+   * contest on 5 November 2024 lie 99.9% to 100% inside the same district on
+   * it, and its card says so.
+   * Gastonia's six wards are all drawn: Wards 1, 2 and 5 elect their own
+   * members, the members for Wards 3, 4 and 6 were elected by the whole
+   * city, and from 2027 all six elect their own, so the card names a ward's
+   * member with who elected them.
+   *
+   * Not drawn: Durham, Concord, Hickory and Morrisville, which tie their
+   * seats to wards or districts and elect every one by the whole city, so a
+   * district there would elect no one of its own; the other 21 places elect
+   * every seat by the whole place.
+   *
+   * A GENERIC LABEL, as Arkansas's, South Carolina's and Tennessee's: ten of
+   * the seventeen elect by WARD and seven by DISTRICT, so the toggle says
+   * "City Council District" and each card names the unit as its city does,
+   * off the feature's own `label` ("District A", "Ward 3", "East Ward").
+   *
+   * The members are the council roster the City or Town card reads
+   * (data/app/nc-city-councils.json): the seats each district's own voters
+   * elect, each proved on the city's own page when the roster was built.
+   * ---------- */
+  var loadNcCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-city-wards.json", {}, 2);
+  });
+  var NC_SMALL_NUMBERS = ["no", "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten"];
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: inNorthCarolina,
+    emptyNote: "This point is not in a council district or ward this map " +
+      "draws. It draws the districts and wards of the 17 North Carolina " +
+      "cities above 25,000 people whose councils elect members by district " +
+      "or ward. Durham, Concord, Hickory and Morrisville tie their seats to " +
+      "wards or districts and elect every one by the whole city, and the " +
+      "other 21 elect every seat by the whole city or town; the City or " +
+      "Town card names the mayor and council of all 42. Ground a city has " +
+      "added since its map was drawn can be in no district here.",
+    overlay: {
+      load: loadNcCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.label != null ? String(p.city) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadNcCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var props = null;
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            props = feats[i].properties || {};
+            break;
+          }
+        }
+        if (!props) return null;
+        var result = { seq: seq, props: props, council: null };
+        return loadNcCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(props.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.label),
+        note: council ? String(council.name) + " " + String(council.body) : String(p.city)
+      }));
+      // Card convention: identity -> officeholder. The member for this
+      // district, with who elected them (its own voters, or in three of
+      // Gastonia's wards the whole city); the mayor and the members the
+      // whole place elects are named on the City or Town card.
+      var seats = (council && council.seats) || [];
+      var mine = seats.filter(function (s) {
+        return s.ward != null && String(s.ward) === String(p.ward);
+      });
+      var citywide = seats.filter(function (s) {
+        return !s.byWard && s.role !== "Mayor" &&
+          !(s.ward != null && String(s.ward) === String(p.ward));
+      });
+      if (mine.length) wrap.appendChild(renderPersonRows(ncCouncilPeople(council, mine)));
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Council member",
+          value: "The list of council members did not load, so no name is shown."
+        });
+      }
+      if (council) {
+        var n = citywide.length;
+        rows.push({
+          label: "Elected by the whole " + ncWholePlace(council),
+          value: "The mayor" + (n
+            ? " and " + (NC_SMALL_NUMBERS[n] || String(n)) + " more" +
+              (n === 1 ? " member" : " members")
+            : "") + ". The City or Town card names " + (n ? "them" : "the mayor") + "."
+        });
+        rows = rows.concat(ncUnnamedRows(mine));
+        rows.push({ label: "How the seats are elected", value: String(council.how) });
+        rows.push(ncCouncilSourceRow(council));
+      }
       rows.push({
-        label: "Your mayor or council",
-        value: "Not named here. No statewide source naming North Carolina's " +
-          "mayors and council members has been established, and this app " +
-          "does not guess — this municipality's own website is the current " +
-          "source."
+        label: "How this line is drawn",
+        value: "Drawn from " + String(p.drawnFrom || "the city's own map") +
+          ". The lines are drawn here to within 4 metres; for a definitive " +
+          "answer, ask the city clerk."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? ncCouncilLink(result.council) : null;
     }
   });
 
@@ -16518,6 +16904,10 @@ function initNorthCarolinaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "nc-senate", "nc-house",
+    // The city council district sits with the other districts that elect
+    // someone of their own; it answers only in the seventeen cities whose
+    // districts are drawn.
+    "city-ward",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
@@ -17002,12 +17392,12 @@ function initNorthCarolinaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6F6B": "#5DC0BA", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

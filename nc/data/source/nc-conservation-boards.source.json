@@ -1,0 +1,14 @@
+{
+ "_about": "Written by the builder, never by hand: every page and document read for this file, the date it was last read, the address it ended at, its size and hash, and for each document how many boards and names it gave.",
+ "documents": {
+  "https://www.ncagr.gov/divisions/soil-water/district-directory/open": {
+   "boards": 100,
+   "bytes": 1233801,
+   "final": "https://www.ncagr.gov/divisions/soil-water/district-directory/open",
+   "names": 486,
+   "read": "2026-10-16",
+   "sha256": "fe0262095dd6d9884aacc70ecf308aefcd0274968a4995bda54753f26a159d99"
+  }
+ },
+ "index": {}
+}

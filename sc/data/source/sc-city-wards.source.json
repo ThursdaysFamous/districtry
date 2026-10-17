@@ -1,0 +1,217 @@
+{
+ "districts_per_geoid": {
+  "4500550": 6,
+  "4513330": 12,
+  "4516000": 4,
+  "4525810": 3,
+  "4530850": 4,
+  "4530985": 6,
+  "4534045": 6,
+  "4550875": 10,
+  "4561405": 6,
+  "4568290": 6,
+  "4570270": 6,
+  "4570405": 6
+ },
+ "fetched": "2026-10-16",
+ "fingerprint": {
+  "districts": 75,
+  "sha256": "691c66fb39a414993d143c5beb4db53233369c42389940923940a80f12fd48e0"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "3b2d83e03315e39259ea3a2277144771655907a24034a1ff60d2febc9c3520e2",
+ "sources": {
+  "4500550": {
+   "city": "Aiken",
+   "covers_place_pct": 96.5,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "8babba7e25538c8e5196b126670c20b24e5df6dcafa6a7e0c15a22217f487035"
+   },
+   "item": null,
+   "layer": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Municipal_Council_Districts/FeatureServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.6,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "Municipali = 'AIKEN'"
+  },
+  "4513330": {
+   "city": "Charleston",
+   "covers_place_pct": 98.9,
+   "field": "DIST_ID",
+   "fingerprint": {
+    "districts": 12,
+    "sha256": "6e70ccb3f1b465ee5e58eb7e57ab372dcb64ca8c0923747c75ee258c215bbe21"
+   },
+   "item": null,
+   "layer": "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/13",
+   "layer_edited": null,
+   "outside_place_pct": 5.8,
+   "part_records_joined": 0,
+   "records": 12,
+   "where": "1=1"
+  },
+  "4516000": {
+   "city": "Columbia",
+   "covers_place_pct": 99.7,
+   "field": "LABEL",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "9c22f49c9c32666d39475615f010eee3cb0858543969759d0afff74920d3ae09"
+   },
+   "item": null,
+   "layer": "https://gis.columbiasc.gov/cola/rest/services/Public/CoCInfoBoundary/MapServer/1",
+   "layer_edited": null,
+   "outside_place_pct": 1.4,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "4525810": {
+   "city": "Florence",
+   "covers_place_pct": 93.0,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 3,
+    "sha256": "61086ba79234d8182cf66dc0aa7d6f7d0ba98b559148c5e56b6a5c08df5d3165"
+   },
+   "item": null,
+   "layer": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Municipal_Council_Districts/FeatureServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 3.0,
+   "part_records_joined": 0,
+   "records": 3,
+   "where": "Municipali = 'FLORENCE'"
+  },
+  "4530850": {
+   "city": "Greenville",
+   "covers_place_pct": 99.6,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "7006f3d8e1a9dffd448c0d52297ada331757817b711dacb5960e0e11d7b59c04"
+   },
+   "item": null,
+   "layer": "https://citygis.greenvillesc.gov/arcgis/rest/services/FindElectedOfficials/Find_Your_Elected_Officials/MapServer/1",
+   "layer_edited": null,
+   "outside_place_pct": 2.8,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "4530985": {
+   "city": "Greer",
+   "covers_place_pct": 99.4,
+   "field": "District",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "40992334479ca8b9ff75efcaf49e94ba7eef5f324459ad6234751e84cdb4104f"
+   },
+   "item": "8d8580648d04475fa83d9e33ebe205b7",
+   "layer": "https://services1.arcgis.com/bskBH6JV42oEWJvZ/arcgis/rest/services/City_Council_Districts_Current/FeatureServer/0",
+   "layer_edited": "2026-08-27T14:13:14Z",
+   "outside_place_pct": 4.4,
+   "part_records_joined": 5,
+   "records": 11,
+   "where": "1=1"
+  },
+  "4534045": {
+   "city": "Hilton Head Island",
+   "covers_place_pct": 100.0,
+   "field": "WARD_NUM",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "8a0b5d8e3a36688e8fe22943804ba8db17ba003bc535feec21e45867f3d09898"
+   },
+   "item": "6a667ae3f60045348e12256af530fa8f",
+   "layer": "https://services1.arcgis.com/t1pOARESVtLutuqb/arcgis/rest/services/2022_Town_Council_Wards/FeatureServer/0",
+   "layer_edited": "2026-02-27T19:50:07Z",
+   "outside_place_pct": 37.9,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "4550875": {
+   "city": "North Charleston",
+   "covers_place_pct": 95.3,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 10,
+    "sha256": "89eea955f0134b3d9dbca3299e1e8056cfd966f52f00fa877ac1de66bfe5390f"
+   },
+   "item": "534bdcd1166c44d1a32afb07c1037fd8",
+   "layer": "https://services3.arcgis.com/BLrzoqoB28p9t3a7/arcgis/rest/services/Council_Districts/FeatureServer/0",
+   "layer_edited": "2026-10-12T10:03:06Z",
+   "outside_place_pct": 1.4,
+   "part_records_joined": 0,
+   "records": 10,
+   "where": "1=1"
+  },
+  "4561405": {
+   "city": "Rock Hill",
+   "covers_place_pct": 99.2,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "6e51c1f39fb85830e5bc3d88a5e023f1215d81d130e02bd2cb952f5a4378d63e"
+   },
+   "item": null,
+   "layer": "https://crh-vmw-gisvdr1.cityofrockhillsc.gov/arcgis/rest/services/DynamicStaticServices/DynamicService/MapServer/9",
+   "layer_edited": null,
+   "outside_place_pct": 1.8,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "4568290": {
+   "city": "Spartanburg",
+   "covers_place_pct": 99.3,
+   "field": "District",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "9895cd2f553c0d4c7205c0362e80552d03b9d17e9fa11b1fcb20da3c98f22f81"
+   },
+   "item": "a265aa0432ef4f4197f55c69be3dd80c",
+   "layer": "https://services9.arcgis.com/HoRra3ATPLGmyjn6/arcgis/rest/services/CouncilDistricts_2023/FeatureServer/0",
+   "layer_edited": "2026-04-24T13:08:52Z",
+   "outside_place_pct": 1.0,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "4570270": {
+   "city": "Summerville",
+   "covers_place_pct": 99.6,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "28f7d94e40b9c7ba1bbb1d1e3d3cc252c6f126b4ed0ebf61b88bfd6394d0b083"
+   },
+   "item": "e7927261fc714ee9807c078aee967e35",
+   "layer": "https://services8.arcgis.com/0zSnoqwLCR3i1Yfw/arcgis/rest/services/Council_Districts/FeatureServer/0",
+   "layer_edited": "2026-10-14T18:13:04Z",
+   "outside_place_pct": 4.3,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "4570405": {
+   "city": "Sumter",
+   "covers_place_pct": 84.1,
+   "field": "DISTRICTID",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "5fdff7cc32323f6fce9cf50185f85144850cd79dc034cf7d79fd4be595787185"
+   },
+   "item": "9635c2a35e474a4ba8f6f223120ed6f0",
+   "layer": "https://gis.sumter-sc.com/server/rest/services/ElectionAdministration/ElectionAdministration/MapServer/1109",
+   "layer_edited": null,
+   "outside_place_pct": 0.6,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  }
+ }
+}

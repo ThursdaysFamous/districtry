@@ -156,6 +156,11 @@ python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the superv
 python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
 python3 ia/scripts/ia_city_council_scraper.py --selftest             # the fourteen 25k-plus cities' five parser shapes: `3rd Ward` is not a street address, a caps line can carry role and name together, and a staff title is dropped with its name printed
 python3 ia/scripts/build_ia_city_councils.py --check                 # the shipped city councils: every seat count exact, no home address in any field, and the two cities that name no mayor still naming none
+python3 ar/scripts/build_ar_city_councils.py --check                 # the hand-kept council seats: the done standard's cities and seat counts, every name on its recorded page, the shipped file rebuilt exactly, every drawn ward a seat its voters elect
+python3 nc/scripts/build_nc_city_councils.py --check                 # the same for North Carolina's 42 places
+python3 ok/scripts/build_ok_city_councils.py --check                 # the same for Oklahoma's 16 cities
+python3 sc/scripts/build_sc_city_councils.py --check                 # the same for South Carolina's 17 places
+python3 tn/scripts/build_tn_city_councils.py --check                 # the same for Tennessee's 28 cities
 python3 ky/scripts/build_ky_county_districts.py --selftest           # the precinct-placing rules: ballots first, 2022 only where it agrees, one empty district filled, Army posts left out
 python3 ky/scripts/build_ky_county_districts.py --check              # the shipped magisterial and council districts hash to their record and cover each drawn county
 python3 ia/scripts/ia_county_board_page_scraper.py --selftest       # the four county board pages whose two outside publishers disagree: a role word at the end of a line is not a name, a committee line is not a supervisor, and a no-break space still separates `District 1` from the name

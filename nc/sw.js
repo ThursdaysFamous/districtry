@@ -51,6 +51,7 @@ const GEOMETRY_URLS = [
   "./data/app/nc-house-districts.json",
   "./data/app/tribal-areas.json",
   "./data/app/nc-precincts.json",
+  "./data/app/nc-city-wards.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -61,7 +62,9 @@ const ROSTER_URLS = [
   "./data/app/nc-senate-members.json",
   "./data/app/nc-house-members.json",
   "./data/app/nc-county-commissioners.json",
+  "./data/app/nc-city-councils.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/nc-conservation-boards.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

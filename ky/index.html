@@ -14031,6 +14031,93 @@ function initKentuckyExplorer() {
     return row;
   }
 
+  /* ---------- The conservation district, on the County card.
+   *
+   * The Division of Conservation publishes a sheet for each conservation
+   * district naming its seven supervisors and the year each one's term ends
+   * (ky/scripts/build_ky_conservation_boards.py;
+   * data/app/ky-conservation-boards.json, keyed by county GEOID). Every
+   * county has one district except Logan, which has two whose line this app
+   * does not draw, so Logan's card lists both boards. The sheets name no
+   * officers and do not say how each seat was filled; the card says how the
+   * statute fills them (KRS 262.240), and the builder's --check requires that
+   * sentence to stay as the builder states it.
+   * ---------- */
+  var loadConservationBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-conservation-boards.json", {}, 2);
+  });
+  var KY_CONSERVATION_CHOSEN = "The district's voters " +
+    "elect all seven supervisors at the November general election, for " +
+    "four-year terms, three in one election and four in the next. Where no " +
+    "more candidates file than there are seats, the state Soil and Water " +
+    "Conservation Commission " +
+    "declares them elected without an election, and it fills a vacancy for " +
+    "the rest of the term.";
+  var KY_CONSERVATION_MONTHS = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+  function kyConservationDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return KY_CONSERVATION_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  function kyConservationFor(result) {
+    return loadConservationBoards().then(function (r) {
+      result.conservation = result.geoid != null ? r[String(result.geoid)] || null : null;
+    }, function () {
+      result.conservationFailed = true;
+    });
+  }
+  function kyConservationSection(wrap, result) {
+    var districts = (result.conservation && result.conservation.districts) || [];
+    if (!districts.length) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Conservation district",
+        value: result.conservationFailed
+          ? "The list of conservation district supervisors did not load, so no " +
+            "names are shown."
+          : "Not shown: the state's list of conservation districts has no sheet " +
+            "for this county."
+      }]));
+      return;
+    }
+    if (districts.length > 1) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Conservation districts",
+        value: String(result.name) + " has " +
+          (districts.length === 2 ? "two" : String(districts.length)) +
+          " conservation districts, and this app does not draw the line " +
+          "between them, so every board is listed."
+      }]));
+    }
+    districts.forEach(function (d, i) {
+      wrap.appendChild(renderSectionLabel(String(d.name)));
+      wrap.appendChild(renderPersonRows((d.members || []).map(function (m) {
+        return {
+          name: m.vacant ? "Vacant" : String(m.name),
+          note: m.termEnds ? "Term ending " + String(m.termEnds) : null
+        };
+      })));
+      var rows = [];
+      if (i === 0) rows.push({ label: "How the board is chosen", value: KY_CONSERVATION_CHOSEN });
+      var dated = kyConservationDate(d.dated);
+      var read = kyConservationDate(d.read);
+      rows.push({
+        label: "Where these names come from",
+        value: "The Kentucky Division of Conservation's sheet for this district" +
+          (dated ? ", last changed " + dated : "") +
+          (read ? (dated ? " and" : ",") + " read on " + read : "") + ". The " +
+          "sheet names no officers and does not say whether a seat was filled " +
+          "by election or by the Commission."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      if (d.sourceUrl) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "This district's sheet (PDF) ↗", url: String(d.sourceUrl) }]
+        }));
+      }
+    });
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -14053,11 +14140,14 @@ function initKentuckyExplorer() {
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"])
         };
-        return loadKyCountyOfficials().then(function (roster) {
-          base.officials = base.geoid != null ? (roster || {})[String(base.geoid)] || null : null;
-          return base;
-        }, function () {
-          base.rosterFailed = true;
+        return Promise.all([
+          loadKyCountyOfficials().then(function (roster) {
+            base.officials = base.geoid != null ? (roster || {})[String(base.geoid)] || null : null;
+          }, function () {
+            base.rosterFailed = true;
+          }),
+          kyConservationFor(base)
+        ]).then(function () {
           return base;
         });
       });
@@ -14153,6 +14243,7 @@ function initKentuckyExplorer() {
           }]
         }));
       }
+      kyConservationSection(wrap, result);
       return wrap;
     },
     primaryLink: function (result) {

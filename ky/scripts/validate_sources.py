@@ -260,6 +260,20 @@ PROVENANCE = [
             "build."
         ),
     },
+    {
+        "layer": "county",
+        "app_file": "ky-conservation-boards.json",
+        "source_url": "https://eec.ky.gov/Natural-Resources/Conservation/Pages/Conservation-Districts.aspx",
+        "note": (
+            "The supervisors of each county's conservation district (two in "
+            "Logan County), read from the Division of Conservation's sheet for "
+            "each district, 120 PDFs which this page links, by "
+            "ky/scripts/build_ky_conservation_boards.py and named on the County "
+            "card. Each sheet is changed on its own and the card shows its "
+            "date. Re-read quarterly and in January 2027, after three seats in "
+            "each district turn over; WATCH.md carries the row."
+        ),
+    },
 ]
 
 ENDPOINTS = [

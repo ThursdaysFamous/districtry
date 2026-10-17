@@ -1,0 +1,296 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, and the names found on it.",
+ "pages": {
+  "https://ewscripps.brightspotcdn.com/26/56/3408f6ec43dba01d05a6b907900c/results.pdf": {
+   "bytes": 149265,
+   "client": "token",
+   "final": "https://ewscripps.brightspotcdn.com/26/56/3408f6ec43dba01d05a6b907900c/results.pdf",
+   "names": [
+    "FOR CITY COUNCIL WARD 1 CITY OF MUSKOGEE: SHIRLEY F. HILTON-FLANARY",
+    "FOR CITY COUNCIL WARD 2 CITY OF MUSKOGEE: JEREMY GREG SCHULER",
+    "FOR CITY COUNCIL WARD 3 CITY OF MUSKOGEE: MELODY YVETTE CRANFORD",
+    "FOR MAYOR CITY OF MUSKOGEE: RYAN MICHAEL LOWE"
+   ],
+   "read": "2026-10-16",
+   "sha256": "d3bf749ab1c3f1bec1994b27c99ec7d1fd675c00f7675a42a6ca97636c1979be"
+  },
+  "https://stillwaterok.gov/285/Mayor-City-Council": {
+   "bytes": 139880,
+   "client": "token",
+   "final": "https://stillwaterok.gov/285/Mayor-City-Council",
+   "names": [
+    "Amy Dzialowski",
+    "Christie Hawkins",
+    "Kevin Clark",
+    "Tim Hardin",
+    "Will Joyce"
+   ],
+   "read": "2026-10-16",
+   "sha256": "a242985eda96b4a26fce698139900e49f3eeb78aae3384d8b8022210394492e9"
+  },
+  "https://www.bixbyok.gov/240/City-Council": {
+   "bytes": 166762,
+   "client": "token",
+   "final": "https://www.bixbyok.gov/240/City-Council",
+   "names": [
+    "Bobby Schultz",
+    "Ken Hirshey",
+    "Luke Freeman",
+    "Mike David",
+    "Ryan Payne"
+   ],
+   "read": "2026-10-16",
+   "sha256": "2bcd5b450092c6495522e26c21856ac216495e453264fc54e6411adff0bd4d10"
+  },
+  "https://www.brokenarrowok.gov/government/city-council": {
+   "bytes": 137002,
+   "client": "browser",
+   "final": "https://www.brokenarrowok.gov/government/city-council",
+   "names": [
+    "David Pickel",
+    "Debra Wimpee",
+    "Johnnie Parks",
+    "Justin Green",
+    "Lisa Ford"
+   ],
+   "read": "2026-10-16",
+   "sha256": "5b845507792bcefc7c563d80884705a9679f680ed2df7a28d87b705f76d25566"
+  },
+  "https://www.cityofbartlesville.org/city-government/city-council/": {
+   "bytes": 341452,
+   "client": "token",
+   "final": "https://www.cityofbartlesville.org/city-government/city-council/",
+   "names": [
+    "Aaron Kirkpatrick",
+    "Jim Curd, Jr.",
+    "Larry East",
+    "Tim Sherrick",
+    "Trevor Dorsey"
+   ],
+   "read": "2026-10-16",
+   "sha256": "4081f7f2df8ffb0d17e91de3fc3b338a418bc24d0faa84e568c1ec8a3c34f132"
+  },
+  "https://www.cityofmooreok.gov/government/city-council": {
+   "bytes": 69213,
+   "client": "token",
+   "final": "https://www.cityofmooreok.gov/government/city-council",
+   "names": [
+    "Adam Webb",
+    "Kathy Griffith",
+    "Louie Williams",
+    "Mark Hamm",
+    "Melissa Hunt",
+    "Rob Clark",
+    "Sid Porter"
+   ],
+   "read": "2026-10-16",
+   "sha256": "11b81df5c3c20925587fb0b2c12c4c24c20f1c2ffca596b29a4747a84e505fa4"
+  },
+  "https://www.cityofowasso.com/327/City-Council": {
+   "bytes": 95275,
+   "client": "token",
+   "final": "https://www.cityofowasso.com/327/City-Council",
+   "names": [
+    "Alvin Fruga",
+    "Chad Balthrop",
+    "Cody Walter",
+    "Jamie Dunn",
+    "Paul Loving"
+   ],
+   "read": "2026-10-16",
+   "sha256": "e0361d0fb28b8cc3d7ef528a4d12d170ced51ac94096f7482f07a680b65c5c94"
+  },
+  "https://www.cityoftulsa.org/mayor/about-mayor-nichols/": {
+   "bytes": 19697,
+   "client": "token",
+   "final": "https://www.cityoftulsa.org/mayor/about-mayor-nichols/",
+   "names": [
+    "Monroe Nichols"
+   ],
+   "read": "2026-10-16",
+   "sha256": "fc020212e72aedb65319075dbbb6c47641f8ef897594093b5d127cf754f32a5c"
+  },
+  "https://www.edmondok.gov/1861/City-Council-Members": {
+   "bytes": 103080,
+   "client": "token",
+   "final": "https://www.edmondok.gov/1861/City-Council-Members",
+   "names": [
+    "Barry K. Moore",
+    "Maggie Murdock Nichols",
+    "Mark A. Nash",
+    "Phil Fraim",
+    "Preston Watterson"
+   ],
+   "read": "2026-10-16",
+   "sha256": "193e5cc534e99737d5e7790bebb97a40e193799d18ce47f40f180379cadcc8fe"
+  },
+  "https://www.enid.org/Government/City-Council": {
+   "bytes": 97513,
+   "client": "token",
+   "final": "https://www.enid.org/Government/City-Council",
+   "names": [
+    "Cheryl Patterson",
+    "Courtney Dennis",
+    "David Mason",
+    "Derwin Norwood",
+    "Frank Baker",
+    "Rob Stallings",
+    "Whitney Roberts"
+   ],
+   "read": "2026-10-16",
+   "sha256": "cafdd7b77241a97b221bfd89cd80497e818aff22ab3825f6cc87dee5ba0834cd"
+  },
+  "https://www.jenks.com/176/City-Council": {
+   "bytes": 91043,
+   "client": "token",
+   "final": "https://www.jenks.com/176/City-Council",
+   "names": [
+    "Adam Abel",
+    "Cory Box",
+    "Craig Murray",
+    "John Brown",
+    "Kevin Short",
+    "Matthew Emmons",
+    "Vacant, Ward 5"
+   ],
+   "read": "2026-10-16",
+   "sha256": "b1733b1b56b5727cb49e2b162e6c5698fce2ad804f430c416010adbd0b5460ac"
+  },
+  "https://www.kjrh.com/news/local-news/dale-boots-appointed-to-fill-ward-2-seat-on-muskogee-city-council": {
+   "bytes": 101105,
+   "client": "token",
+   "final": "https://www.kjrh.com/news/local-news/dale-boots-appointed-to-fill-ward-2-seat-on-muskogee-city-council",
+   "names": [
+    "Dale Boots appointed to fill Ward 2 seat on Muskogee City Council"
+   ],
+   "read": "2026-10-16",
+   "sha256": "57cde56bf4035bb85296788139941fbff0f15a7307ee732369181728ed675330"
+  },
+  "https://www.lawtonok.gov/178/City-Council": {
+   "bytes": 119123,
+   "client": "token",
+   "final": "https://www.lawtonok.gov/178/City-Council",
+   "names": [
+    "Allan Hampton",
+    "Kirby Brown",
+    "Lane Hooton",
+    "Randy Warren",
+    "Robert Weger",
+    "Sherene L. Williams",
+    "Stan Booker",
+    "Taron Epps",
+    "Tiffiney Dimery"
+   ],
+   "read": "2026-10-16",
+   "sha256": "9995283840930fa1261553308f3756967b4bd6a6b62ffd8effe5348d7c94b6d1"
+  },
+  "https://www.midwestcityok.org/164/City-Council": {
+   "bytes": 158549,
+   "client": "token",
+   "final": "https://www.midwestcityok.org/164/City-Council",
+   "names": [
+    "Brian Triger",
+    "Marc Thompson",
+    "Pat Byrne",
+    "Raymond Melton",
+    "Rick Favors",
+    "Rick Rice",
+    "Sara Bana"
+   ],
+   "read": "2026-10-16",
+   "sha256": "26823f1a97eaa681ccf843fa59cda91aa9374000515ebe09b5572f7ea7d1d6a1"
+  },
+  "https://www.muskogeephoenix.com/news/brawley-hoos-retain-city-council-seats/article_dbd45746-401a-4b93-9ccc-b6e35c70d8ad.html": {
+   "bytes": 266716,
+   "client": "token",
+   "final": "https://www.muskogeephoenix.com/news/brawley-hoos-retain-city-council-seats/article_dbd45746-401a-4b93-9ccc-b6e35c70d8ad.html",
+   "names": [
+    "Brawley defeated Sheila Dause to retain his Ward 1 seat",
+    "Hoos defeated former city councilor Traci McGee in a runoff to retain his seat as Ward 4 representative"
+   ],
+   "read": "2026-10-16",
+   "sha256": "d03f048b1bbf8b4fbe284c4fac98674950237b8014f3b8975bd199d02cd6b1af"
+  },
+  "https://www.normanok.gov/your-government/city-council": {
+   "bytes": 47776,
+   "client": "token",
+   "final": "https://www.normanok.gov/your-government/city-council",
+   "names": [
+    "David Gandesbery",
+    "Helen Grant",
+    "Jacy Deck",
+    "Kimberly Blodgett",
+    "Kyle Steele",
+    "Robert Bruce",
+    "Scott Dixon",
+    "Stephen T. Holman",
+    "Trey Kirby"
+   ],
+   "read": "2026-10-16",
+   "sha256": "631cf5786178c8ef58eead06fdab0aff7e5ab4f091c3840e3155514e18d49d94"
+  },
+  "https://www.okc.gov/Government/Elected-Officials/City-Council": {
+   "bytes": 137112,
+   "client": "token",
+   "final": "https://www.okc.gov/Government/Elected-Officials/City-Council",
+   "names": [
+    "Bradley Carter",
+    "Camal Pennington",
+    "David Holt",
+    "James Cooper",
+    "JoBeth Hamon",
+    "Katrina Avers",
+    "Mark Stonecipher",
+    "Matt Hinkle",
+    "Todd Stone"
+   ],
+   "read": "2026-10-16",
+   "sha256": "fdcdee57b6a31edc0ab52f537035a27520a1ea54ff70abb3fc5c9172ebac6830"
+  },
+  "https://www.shawneeok.org/government/mayor_and_city_commission/": {
+   "bytes": 52668,
+   "client": "token",
+   "final": "https://www.shawneeok.org/government/mayor_and_city_commission/",
+   "names": [
+    "Ashley Fichtner",
+    "Chris Odneal",
+    "Daniel Matthews",
+    "Eric Stephens",
+    "Greta Schuler",
+    "Johnna Ervin",
+    "Lauren Richter"
+   ],
+   "read": "2026-10-16",
+   "sha256": "65a6cf10ed91e04baee46abb8980b6904df33059774b4cbade7e23b7ba46fa97"
+  },
+  "https://www.tulsacouncil.org/councilors": {
+   "bytes": 2018783,
+   "client": "token",
+   "final": "https://www.tulsacouncil.org/councilors",
+   "names": [
+    "Anthony Archie",
+    "Carol Bush",
+    "Christian Bengel",
+    "Jackie Dutton",
+    "Karen Gilbert",
+    "Laura Bellis",
+    "Lori Decter Wright",
+    "Phil Lakin, Jr.",
+    "Vanessa Hall-Harper"
+   ],
+   "read": "2026-10-16",
+   "sha256": "21440c4d4b0934ce35789786f9076794a51b9050129a94a634b026fc303ee8cc"
+  },
+  "https://www.yahoo.com/news/one-ward-iii-race-forces-045900724.html": {
+   "bytes": 775413,
+   "client": "token",
+   "final": "https://www.yahoo.com/news/one-ward-iii-race-forces-045900724.html",
+   "names": [
+    "Incumbent Ward III councilor Derrick Reed defeated home builder Travis Bearden for another full term",
+    "Incumbent Ward IV councilor Traci McGee lost her reelection bid to Tom Martindale"
+   ],
+   "read": "2026-10-16",
+   "sha256": "81e84ef74c9598dbc882e0df1818202c5e03cf17328110df2ff84a3cdd05b26c"
+  }
+ }
+}

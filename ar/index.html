@@ -4219,7 +4219,7 @@ function initArkansasExplorer() {
     "ar-senate": "ars", "county": "co", "ar-house": "arh", "school-district-unified": "su",
     "zip-code": "zp", "quorum-court": "qc", "county-subdivision": "cs", "fire-district": "fd",
     "school-board-district": "bd", "voting-precinct": "vp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "city-ward": "cw", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4228,8 +4228,9 @@ function initArkansasExplorer() {
     "state-house": ["ar-house"], "appellate-court-district": ["ar-court-of-appeals"],
     "trial-court-district": ["ar-circuit-court"], "county": ["county"],
     "county-board": ["quorum-court"], "county-subdivision": ["county-subdivision"],
-    "municipality": ["municipality"], "voting-precinct": ["voting-precinct"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "municipality": ["municipality"], "city-council": ["city-ward"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "school-board-district": ["school-board-district"], "fire-district": ["fire-district"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
@@ -10016,6 +10017,7 @@ function initArkansasExplorer() {
     "school-board-district", // 965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)
     "voting-precinct",   // 2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)
     "municipality",      // 501 incorporated cities and towns, live from TIGERweb
+    "city-ward",         // 56 council wards and districts in the 12 cities above 25,000 people that elect council members by ward, pre-built from the Arkansas GIS Office's layer — 27.2 km2 mean area (median 23.7, from 4.2 in Texarkana to 74.3 in Fort Smith), measured 2026-10-16 on the drawn file — ranked just after City or Town, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -14841,12 +14843,77 @@ function initArkansasExplorer() {
    * 134,659 km2 by the Census's own AREALAND), and the county is the
    * general-purpose local government everywhere else.
    *
-   * NO OFFICEHOLDER. No statewide source naming Arkansas's mayors and council
-   * members has been read here, so the card names no one rather than
-   * guessing. Recorded as gap ar-municipal-officeholders. ---------- */
+   * THE 19 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL, written
+   * down from each city's own pages and proved against those pages on every
+   * build (ar/scripts/build_ar_city_councils.py through
+   * scripts/city_councils.py; data/app/ar-city-councils.json). Every seat
+   * says whether its ward's own voters or the whole city elect it, which was
+   * measured from the ballot because nothing the state publishes records it.
+   * The wards of the twelve of these cities that elect by ward are the City
+   * Council District layer (5b below).
+   *
+   * Arkansas's other 482 cities and towns name nobody: no statewide source
+   * naming their mayors and council members has been read here, so the card
+   * names no one rather than guessing. Recorded as gap
+   * ar-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  // The mayor and council of each city above 25,000 people, keyed by the
+  // city's Census id; every seat says who elects it and which page names it.
+  var loadArCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-city-councils.json", {}, 2);
+  });
+  // The seat as its own body names its members: "Director, Ward 1" on a
+  // board of directors, "Council, Ward 1, Position 1" on a city council.
+  function arSeatBadge(seat) {
+    if (seat.role === "Mayor") return "Mayor";
+    return (seat.role === "Director" ? "Director, " : "Council, ") + String(seat.seat);
+  }
+  // Who elects the seat, unless its own label already says so.
+  function arSeatElectedBy(council, seat) {
+    if (/at large/i.test(String(seat.seat))) return null;
+    if (seat.byWard && seat.ward != null) {
+      return "elected by " + String(council.wardWord || "Ward") + " " + String(seat.ward);
+    }
+    return "elected by the whole city";
+  }
+  function arCouncilPeople(council, seats) {
+    return seats.map(function (seat) {
+      return {
+        name: String(seat.name),
+        badge: arSeatBadge(seat),
+        note: arSeatElectedBy(council, seat)
+      };
+    });
+  }
+  // Where the names come from and when they were read. Every city's names
+  // are dated by the oldest read of the pages they come from.
+  function arCouncilSourceRow(council) {
+    var read = arReadDate(council.read);
+    return {
+      label: "Where these names come from",
+      value: (council.note
+        ? String(council.note)
+        : "As listed on " + String(council.name) + "'s own website.") +
+        (read ? " Read on " + read + "." : "") +
+        " If a seat has changed hands since, the city's own website or clerk " +
+        "says who holds it now."
+    };
+  }
+  function arCouncilLink(council) {
+    var seats = (council && council.seats) || [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].seat !== "Mayor" && seats[i].sourceUrl) {
+        return {
+          label: council.note ? "The page these names come from"
+            : String(council.name) + "'s " + String(council.body),
+          url: String(seats[i].sourceUrl)
+        };
+      }
+    }
+    return null;
+  }
 
   registerLayer({
     id: "municipality",
@@ -14874,7 +14941,7 @@ function initArkansasExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // NAME minus BASENAME, so the style can never contradict the name
@@ -14884,8 +14951,19 @@ function initArkansasExplorer() {
           // an inactive municipality rather than implying a working one (none
           // in Arkansas today, measured 2026-10-13)
           funcstat: findPropCI(props, ["funcstat"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the city card standing and says
+        // so, rather than taking the boundary answer down with it.
+        return loadArCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -14913,15 +14991,162 @@ function initArkansasExplorer() {
             "legally in existence, but with no government operating."
         });
       }
+      var council = result.council;
+      if (!council) {
+        rows.push({
+          label: "Your mayor and council",
+          value: result.rosterFailed
+            ? "The list of council members did not load, so no name is shown. " +
+              "This municipality's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of " +
+              "Arkansas's 19 cities above 25,000 people, from each city's own " +
+              "website, and this municipality is not one of them yet. Its own " +
+              "website is the current source."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat names who
+      // elects it, its ward's own voters or the whole city.
+      wrap.appendChild(renderPersonRows(arCouncilPeople(council, council.seats || [])));
+      var after = [
+        { label: "How the seats are elected", value: String(council.how) },
+        arCouncilSourceRow(council)
+      ];
+      if ((council.seats || []).some(function (s) { return s.byWard; })) {
+        after.push({
+          label: "Which " + String(council.wardWord || "ward").toLowerCase() +
+            " this point is in",
+          value: "The City Council District layer draws " + String(council.name) +
+            "'s " + (council.wardWord ? String(council.wardWord).toLowerCase() + "s" : "wards") +
+            " and names the members this point's " +
+            String(council.wardWord || "ward").toLowerCase() + " elects."
+        });
+      }
+      wrap.appendChild(renderFieldStack(after));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? arCouncilLink(result.council) : null;
+    }
+  });
+
+  /* ---------- 5b. City council ward or district ----------
+   * The wards of the twelve cities above 25,000 people whose councils or
+   * boards elect members by ward: Little Rock, Fayetteville, Fort Smith,
+   * North Little Rock, Conway, Pine Bluff, Hot Springs, Benton, Sherwood,
+   * Paragould, Texarkana and Russellville, 56 wards in all. The lines are
+   * the Arkansas GIS Office's map of municipal wards (MUNICIPAL_WARDS, layer
+   * 50 of its Boundaries service), pre-built by
+   * ar/scripts/build_ar_city_wards.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m), so a
+   * click is answered in the browser and no point is sent anywhere. The map
+   * describes itself as not representing exact legal boundaries, and the
+   * card says so.
+   *
+   * The other seven of the 19 cities give every seat a ward and elect it
+   * citywide (Springdale, Jonesboro, Rogers, Bentonville, Bella Vista,
+   * Jacksonville and Cabot), measured from the ballot, so their wards are not
+   * drawn: a reader in one votes for every seat, and the City or Town card
+   * names them all.
+   *
+   * A GENERIC LABEL, as Minnesota's and Iowa's: Hot Springs elects by
+   * DISTRICT and the other eleven by WARD, so the toggle says "City Council
+   * District" and each card names the unit as its city does, off the
+   * feature's own `label`.
+   *
+   * The members are the city council roster the City or Town card reads
+   * (data/app/ar-city-councils.json): the seats its ward's own voters elect,
+   * each proved on the city's own page when the roster was built.
+   * ---------- */
+  var loadArCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-city-wards.json", {}, 2);
+  });
+  var AR_SMALL_NUMBERS = ["no", "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten"];
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: inArkansas,
+    emptyNote: "This point is not in a city council ward this map draws. It " +
+      "draws the wards of the 12 Arkansas cities above 25,000 people that " +
+      "elect council members by ward. The other seven elect every seat by " +
+      "the whole city, and the City or Town card names the mayor and council " +
+      "of all 19.",
+    overlay: {
+      load: loadArCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.label != null ? String(p.city) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArCityWards, point).then(function (feature) {
+        if (!feature) return null;
+        var result = { seq: seq, props: feature.properties || {}, council: null };
+        return loadArCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(result.props.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.label),
+        note: council ? String(council.name) + " " + String(council.body) : String(p.city)
+      }));
+      // Card convention: identity -> officeholder. The seats this ward's own
+      // voters elect; the mayor and the citywide seats are named on the City
+      // or Town card.
+      var seats = (council && council.seats) || [];
+      var mine = seats.filter(function (s) { return s.byWard && String(s.ward) === String(p.ward); });
+      var citywide = seats.filter(function (s) { return !s.byWard && s.seat !== "Mayor"; });
+      if (mine.length) wrap.appendChild(renderPersonRows(arCouncilPeople(council, mine)));
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Council member",
+          value: "The list of council members did not load, so no name is shown."
+        });
+      }
+      if (council) {
+        // The rest of the city's elected officials, without saying whether
+        // the mayor sits on the board or council, which differs by city.
+        var n = citywide.length;
+        var noun = n ? String(citywide[0].role).toLowerCase() : "";
+        rows.push({
+          label: "Elected by the whole city",
+          value: "The mayor" + (n
+            ? " and " + (AR_SMALL_NUMBERS[n] || String(n)) + " " + noun +
+              (n === 1 ? "" : "s")
+            : "") + ". The City or Town card names " + (n ? "them" : "the mayor") + "."
+        });
+        rows.push({ label: "How the seats are elected", value: String(council.how) });
+        rows.push(arCouncilSourceRow(council));
+      }
       rows.push({
-        label: "Your mayor and council",
-        value: "Not named here. No statewide source naming Arkansas's " +
-          "mayors and council members has been read yet, and this app " +
-          "does not guess — this municipality's own website is the current " +
-          "source."
+        label: "How this line is drawn",
+        value: "From the Arkansas GIS Office's map of municipal wards, the " +
+          "state's copy of each city's wards, which describes itself as not " +
+          "the exact legal boundaries. The lines are drawn here to within 4 " +
+          "metres; for a definitive answer, ask the city clerk."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? arCouncilLink(result.council) : null;
     }
   });
 
@@ -16939,6 +17164,9 @@ function initArkansasExplorer() {
     // The courts follow the chambers, as Kentucky's do: the district's
     // voters elect the Court of Appeals judges, the circuit's its trial judges.
     "ar-court-of-appeals", "ar-circuit-court", "quorum-court",
+    // The city council ward sits with the quorum court: members elected by
+    // this ward alone, and it answers only in the 12 cities that elect by ward.
+    "city-ward",
     "school-district-unified", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "fire-district", "police-station", "fire-station", "post-office"];
@@ -17423,13 +17651,13 @@ function initArkansasExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#B0342A": "#FE8B7C",
-    "#D0564C": "#FEB1A7", "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A2D2FF", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE",
+    "#753B07": "#D7864B", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#B0342A": "#FE8B7C", "#D0564C": "#FEB1A7", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
