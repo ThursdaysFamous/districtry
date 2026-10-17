@@ -287,9 +287,35 @@ halves.
 **THE CITY COUNCILS COME FROM EACH CITY'S OWN WEBSITE, AND A CITY'S WARDS ARE DRAWN ONLY WHERE ITS
 CURRENT PLAN IS CONFIRMED** (2026-10-17). The City card names the mayor and the council or board of
 aldermen of the 15 cities of 25,000 people or more, seat by seat, from each city's own pages
-(`ms/scripts/build_ms_city_councils.py`, the seat and the name and nothing else). Fourteen print
-every member; Greenville's site names none, so its record says so and names nobody. The Mississippi
-Municipal League's member pages list members by title with no ward and no date, and are not used.
+(`ms/scripts/build_ms_city_councils.py`: the seat, the name and, where the city prints them, the
+person's own telephone numbers and e-mail address). Fourteen print every member; Greenville's site
+names none, so its record says so and names nobody. **A TELEPHONE NUMBER IS CARRIED ONLY WHERE ONE
+PERSON'S OWN ENTRY PRINTS IT AND NOTHING ELSE ON THE CITY'S PAGES DOES** (2026-10-17, under Adam's
+ruling that a number a government source prints beside an official is published even where it may
+be personal). Olive Branch, Madison, Horn Lake, Oxford and Brandon print numbers inside members'
+entries, 38 numbers for 35 people, carried in the page's order and with the page's own word for
+which number it is where the page gives one (Oxford's home, work and cell, one Horn Lake mobile);
+where the page prints no word, or only "Phone" or "Tel", the number is carried bare. A number the
+council page or the mayor's page also prints anywhere else, such as Oxford's mayor's office line or
+a city hall's main line, is the office's and is not carried; a fax never is; and Oxford's entries
+print a street address beside each alderman, which is never carried, written or printed, not even
+in an error. Jackson, Gulfport, Southaven, Biloxi, Hattiesburg, Tupelo, Meridian, Clinton and Pearl
+print no member's own number. **AN E-MAIL ADDRESS IS CARRIED ON THE SAME TERMS** (2026-10-17, when
+Adam extended the ruling to a personal e-mail address a government page prints beside an
+official): printed inside one person's entry, nowhere else on the city's pages that are read, and
+not an office's mailbox (info, city hall, clerk, council and the like). 61 people in nine cities
+carry one: Olive Branch's and Horn Lake's mayors and aldermen, the seven members each of Gulfport,
+Tupelo, Madison, Pearl and Brandon, and the five each of Hattiesburg and Meridian. Horn Lake's are
+named for the seat rather than the person, Madison's and one of Gulfport's are at domains other
+than the city's, and Hattiesburg prints them in a card for each member, which is read card by card
+and held to the name its list gives the seat. The build stops on two addresses for one person, on
+an address the page hides behind a script, and on a link with no text of its own that its entry
+does not also print. A hidden address is not undone here, although builders elsewhere in the fleet
+undo it (Illinois's since 2026-08-08); no page read on 2026-10-17 hides one, so the stop leaves the
+first one to a person. Jackson, Southaven, Biloxi, Clinton and Oxford print
+none inside a member's entry. No staff member is named, and no staff member's number or address is
+carried. The Mississippi Municipal League's member pages list members by title with no ward and no
+date, and are not used.
 The City Ward layer (`ms/scripts/build_ms_city_wards.py`) draws the 57 wards of nine of the fifteen,
 each from a published map layer of the city's wards (the city's own for five, DeSoto County's for
 Southaven, which records the city's adoption date, and the Central Mississippi Planning and

@@ -1534,6 +1534,21 @@ try {
   //         Ward 4 sliver in the drawn file, 2.5 m from its edge (2026-10-17).
   //       - In Biloxi, whose wards are not drawn, the card says which nine
   //         cities' wards are.
+  //       - The telephone numbers (Adam's ruling of 2026-10-17): the City card
+  //         in Oxford dials every number the roster carries for its members,
+  //         each as a tel: link of its digits with the page's label ("home",
+  //         "cell") in the text, and no other; Jackson's, whose page prints no
+  //         member's number, dials nothing; the City Ward card where Oxford's
+  //         map draws two wards dials both members' numbers.
+  //       - The e-mail addresses (Adam's ruling of 2026-10-17, the same day):
+  //         the City card in Olive Branch links every address the roster
+  //         carries for its mayor and aldermen, beside their numbers, and no
+  //         other; Jackson's and Oxford's, whose pages print no member's own
+  //         address, link none; the City Ward card in Tupelo, whose page
+  //         prints each member's address and no number, links its member's
+  //         address and dials nothing. The Tupelo point is shapely's
+  //         polylabel of Ward 1 in the drawn file, 2.4 km from its edge
+  //         (2026-10-17).
   {
     const councils = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-city-councils.json"), "utf8"));
     const wards = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-city-wards.json"), "utf8"));
@@ -1554,6 +1569,15 @@ try {
       }).map((f) => f.properties);
     }
     const memberOf = (p) => ((councils[p.geoid] || {}).seats || []).find((s) => s.seat === p.seat) || {};
+    // Every number the roster carries for these seats, as the tel: link it
+    // dials and the label word the card prints in front of it.
+    const numbersOf = (seats) => seats.flatMap((s) => (s.phone ? [s.phone].concat(s.phonesExtra || []) : []))
+      .map((n) => ({ tel: "tel:" + n.replace(/[^\d+]/g, ""), word: (n.match(/^([a-z]+) /) || [])[1] || null }));
+    const tels = (got) => got.body.filter((h) => h.startsWith("tel:"));
+    // Every address the roster carries for these seats, as the mailto: link
+    // the card opens.
+    const addressesOf = (seats) => seats.filter((s) => s.email).map((s) => "mailto:" + s.email);
+    const mails = (got) => got.body.filter((h) => h.startsWith("mailto:"));
     const placeBody = (props) => JSON.stringify({
       geometryType: "esriGeometryPolygon", spatialReference: { wkid: 4326 },
       fields: Object.keys(props).map((n) => ({ name: n, type: "esriFieldTypeString", alias: n })),
@@ -1594,6 +1618,38 @@ try {
           !/Not named here/.test(c.text) &&
           c.links.body.includes(j.mayorUrl) && c.links.footer.includes(j.councilUrl),
         `missing=${missing} links=${JSON.stringify(c.links)} ${c.text.slice(0, 140)}`);
+      check("the City card in Jackson, whose page prints no member's number or address, dials nothing and links no address",
+        !c.error && numbersOf(j.seats).length === 0 && tels(c.links).length === 0 &&
+          addressesOf(j.seats).length === 0 && mails(c.links).length === 0 &&
+          !/Each telephone number/.test(c.text) && !/Each e-mail address/.test(c.text),
+        `tel links=${tels(c.links).length} mailto links=${mails(c.links).length}`);
+    }
+    {
+      const ox = councils["2854840"];
+      const want = numbersOf(ox.seats);
+      const c = await cityAt({ GEOID: "2854840", NAME: "Oxford city", BASENAME: "Oxford", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
+      const got = tels(c.links);
+      const missing = want.filter((n) => !got.includes(n.tel));
+      const words = [...new Set(want.map((n) => n.word).filter(Boolean))];
+      check("the City card in Oxford dials every number the roster carries for its members, with the page's own labels, and no other number, and links no address",
+        !c.error && want.length >= 4 && missing.length === 0 && got.length === want.length &&
+          words.length >= 2 && words.every((w) => new RegExp("\\b" + w + " ").test(c.text)) &&
+          /Each telephone number is one the website printed with that person's name/.test(c.text) &&
+          addressesOf(ox.seats).length === 0 && mails(c.links).length === 0 &&
+          ox.seats.filter((s) => s.name).every((s) => c.text.includes(s.name)),
+        `want=${want.length} got=${got.length} missing=${missing.length} words=${words} mailto links=${mails(c.links).length}`);
+    }
+    {
+      const ob = councils["2854040"];
+      const wantTel = numbersOf(ob.seats), wantMail = addressesOf(ob.seats);
+      const c = await cityAt({ GEOID: "2854040", NAME: "Olive Branch city", BASENAME: "Olive Branch", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
+      const tel = tels(c.links), mail = mails(c.links);
+      check("the City card in Olive Branch links every address the roster carries for its mayor and aldermen, beside their numbers, and no other",
+        !c.error && wantMail.length >= 6 && wantMail.every((m) => mail.includes(m)) &&
+          mail.length === wantMail.length && wantTel.every((n) => tel.includes(n.tel)) &&
+          tel.length === wantTel.length && /\bEmail\b/.test(c.text) &&
+          /Each telephone number and e-mail address is one the website printed with that person's name/.test(c.text),
+        `addresses want=${wantMail.length} got=${mail.length} numbers want=${wantTel.length} got=${tel.length}`);
     }
     {
       const c = await cityAt({ GEOID: "2806220", NAME: "Biloxi city", BASENAME: "Biloxi", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
@@ -1648,11 +1704,27 @@ try {
       const at = wardsAt(OXFORD_TWO);
       const names = at.map((p) => memberOf(p).name).filter(Boolean);
       const c = await wardCard(OXFORD_TWO);
-      check("where Oxford's own map draws two wards over one spot, the City Ward card names both and both members",
+      const want = numbersOf(at.map(memberOf));
+      const got = tels(c.links);
+      check("where Oxford's own map draws two wards over one spot, the City Ward card names both and both members, and dials each member's numbers",
         at.length === 2 && names.length === 2 && !c.error &&
           names.every((n) => c.text.includes(n)) &&
-          /Ward 2 and Ward 4/.test(c.text) && /More than one ward here/.test(c.text),
-        `wards here=${at.map((p) => p.seat)} ${c.text.slice(0, 160)}`);
+          /Ward 2 and Ward 4/.test(c.text) && /More than one ward here/.test(c.text) &&
+          want.length >= 2 && want.every((n) => got.includes(n.tel)) && got.length === want.length &&
+          /Each telephone number is one the website printed with that person's name/.test(c.text),
+        `wards here=${at.map((p) => p.seat)} numbers want=${want.length} got=${got.length} ${c.text.slice(0, 160)}`);
+    }
+    {
+      const TUPELO_1 = "34.301027,-88.785125";
+      const at = wardsAt(TUPELO_1);
+      const m = memberOf(at[0] || {});
+      const c = await wardCard(TUPELO_1);
+      const mail = mails(c.links);
+      check("the City Ward card in Tupelo, whose page prints each member's address and no number, links its member's address and dials nothing",
+        at.length === 1 && !c.error && !!m.name && !!m.email && c.text.includes(m.name) &&
+          mail.length === 1 && mail[0] === "mailto:" + m.email && tels(c.links).length === 0 &&
+          /Each e-mail address is one the website printed with that person's name/.test(c.text),
+        `wards here=${at.map((p) => p.seat)} mailto links=${mail.length} tel links=${tels(c.links).length} ${c.text.slice(0, 160)}`);
     }
     {
       const BILOXI = "30.3958,-88.8853";

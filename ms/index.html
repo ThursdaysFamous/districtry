@@ -14232,8 +14232,11 @@ function initMississippiExplorer() {
    * THE MAYOR AND COUNCIL OF THE 15 CITIES OF 25,000 PEOPLE OR MORE, seat by
    * seat, as each city's own website names them
    * (data/app/ms-city-councils.json, built by
-   * ms/scripts/build_ms_city_councils.py, which reads the seat and the name
-   * and nothing else). Fourteen of the fifteen print every member; Greenville's
+   * ms/scripts/build_ms_city_councils.py, which reads the seat, the name and,
+   * where a city's page prints them inside a person's own entry, that
+   * person's telephone numbers and e-mail address; five cities' pages print
+   * numbers and nine print addresses). Fourteen of the
+   * fifteen print every member; Greenville's
    * site names none, and its record says why instead of naming anyone. No
    * weekly job reads those pages again yet, so the card prints the date they
    * were read rather than claiming to be current. Every other municipality
@@ -14260,6 +14263,28 @@ function initMississippiExplorer() {
   // and with no title a city does not print.
   function msCitySeatBadge(seat) {
     return seat === "At Large" ? "At large" : String(seat);
+  }
+  // A seat's telephone numbers and e-mail address onto its person row: the
+  // first number as `phone`, any further ones the page printed for the same
+  // person as `phonesExtra`, each written as the roster carries it
+  // ("home 662-555-0100"), and the address as `email`.
+  function msCityPersonContacts(person, seat) {
+    if (seat && seat.phone) person.phone = String(seat.phone);
+    if (seat && seat.phonesExtra && seat.phonesExtra.length) {
+      person.phonesExtra = seat.phonesExtra.map(String);
+    }
+    if (seat && seat.email) person.email = String(seat.email);
+    return person;
+  }
+  // The sentence a card adds when it shows a number or an address: each is
+  // one the city's own website printed with that person's name.
+  function msCityContactNote(people) {
+    var phone = people.some(function (p) { return !!p.phone; });
+    var email = people.some(function (p) { return !!p.email; });
+    if (!phone && !email) return "";
+    return " Each " + (phone && email ? "telephone number and e-mail address"
+      : phone ? "telephone number" : "e-mail address") +
+      " is one the website printed with that person's name.";
   }
   // "Ward 2", "Ward 2 and Ward 4", "Jackson, Gulfport and Pearl"
   function msAndList(items) {
@@ -14363,15 +14388,19 @@ function initMississippiExplorer() {
       }
       if (rows.length) wrap.appendChild(renderFieldStack(rows));
       // Card convention: identity -> officeholders. Each seat is the name the
-      // city's own website printed for it; no office or contact is carried,
-      // because whether a number printed beside a member is an office line
-      // or the member's own is not established.
+      // city's own website printed for it, with the telephone numbers and the
+      // e-mail address that page printed inside the person's own entry (in
+      // Hattiesburg, the person's own card), the numbers labelled as it
+      // labels them ("home", "cell"), where it prints any (Adam's rulings of
+      // 2026-10-17: a number or an address an official source prints for a
+      // person is published). No street address is carried.
       var read = msDate(council.read);
       var people = [], after = [];
       (council.seats || []).forEach(function (seat) {
         var badge = msCitySeatBadge(seat.seat);
         if (seat.name) {
           var person = { name: String(seat.name), badge: badge };
+          msCityPersonContacts(person, seat);
           if (seat.seat === "Mayor" && council.mayorUrl) {
             person.links = [{ label: "The mayor's page", url: council.mayorUrl }];
           }
@@ -14397,7 +14426,8 @@ function initMississippiExplorer() {
             ", as " + String(council.name) + "'s own website named them" +
             (read ? " on " + read : "") + ". This app has not read the " +
             "website again since, so a change after that is not shown here; " +
-            "the website says who holds each seat today."
+            "the website says who holds each seat today." +
+            msCityContactNote(people)
         });
         var byWard = (council.seats || []).some(function (s) { return /^Ward /.test(s.seat); });
         if (byWard) {
@@ -14640,7 +14670,9 @@ function initMississippiExplorer() {
           : null
       }));
       // Card convention: identity -> officeholder. The member is the name the
-      // city's own website printed for the seat.
+      // city's own website printed for the seat, with the telephone numbers and
+      // the e-mail address it printed inside the member's own entry where it
+      // prints any.
       var people = [], rows = [];
       hits.forEach(function (h) {
         var council = councilOf(h);
@@ -14652,7 +14684,7 @@ function initMississippiExplorer() {
           ? (council && council.body ? String(council.body) : String(h.seat))
           : (oneCity ? String(h.seat) : String(h.city) + ", " + String(h.seat));
         if (seat && seat.name) {
-          people.push({ name: String(seat.name), badge: badge });
+          people.push(msCityPersonContacts({ name: String(seat.name), badge: badge }, seat));
         } else if (seat && seat.vacant === true) {
           rows.push({
             label: badge + ": vacant",
@@ -14706,7 +14738,8 @@ function initMississippiExplorer() {
             (oneCity ? cities[0] + "'s own website" : "each city's own website") +
             " named them" +
             (read && oneCity ? " on " + read : "") + ". This app has not read " +
-            "the website again since, so a change after that is not shown here."
+            "the website again since, so a change after that is not shown here." +
+            msCityContactNote(people)
         });
       }
       cities.forEach(function (city) {

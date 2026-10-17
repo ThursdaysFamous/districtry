@@ -62,12 +62,72 @@ carried as vacant rather than as a person called Vacant. No city may name one
 person for two seats. A failure stops the build and names the city and the
 seat, never the text around it.
 
-WHAT IS CARRIED, AND WHAT NEVER IS. The seat and the name, and nothing else.
-Most of these pages print more beside each member: an e-mail address on most,
-a telephone on some, a biography on a few. Whether a printed telephone or
-address is an office line or the member's own is not established for any of
-them, so none of it is read into the file. No staff member (a city clerk, a
-council clerk, an assistant to the mayor) is named.
+WHAT IS CARRIED, AND WHAT NEVER IS. The seat, the name and, where the city's
+page prints them inside a person's own entry, that person's telephone numbers
+and e-mail address. Until 2026-10-17 neither was carried, because whether a
+number or an address printed beside a member is the office's or the member's
+own was not established; that day Adam ruled for the whole fleet, "if the
+official government source uses personal phone numbers, we publish those",
+and later the same day extended the ruling to e-mail, so that a personal
+e-mail address a government page prints beside an official is published too.
+So a number or an address the city's own page prints inside one person's
+entry is carried on that person, whichever kind it is.
+
+TELEPHONE NUMBERS. Measured 2026-10-17, the pages that print a number inside a
+member's entry are Olive Branch's (the mayor and every alderman, under "Phone:"),
+Madison's (six of its seven aldermen), Horn Lake's (the mayor and every
+alderman, and one alderman's second number under "Mobile:"), Oxford's (six of
+its seven aldermen, each number labelled "Home", "Work" or "Cell", two of them
+with two) and Brandon's (every alderman, under "Tel:"); each of those five
+declares `phones` in CITIES, and the other ten pages print no number inside a
+member's entry. A label that says which line a number is goes in front of it as the
+card prints it ("home 662-555-0100"); one that says only that it is a
+telephone ("Phone:", "Tel:") is left off. A number is carried only when it is
+printed ONCE on the city's pages that are read, inside one person's entry: a
+number printed for two people, or anywhere else on those pages (City Hall's
+line in a footer, or the mayor's office line Oxford prints on its mayor's page
+as well as beside the mayor), is the office's, and is not carried. A fax
+number is never carried.
+
+E-MAIL ADDRESSES. Measured 2026-10-17, 61 people in nine cities carry one:
+Olive Branch's and Horn Lake's mayors and every one of their aldermen,
+Gulfport's and Tupelo's seven council members each, Madison's, Pearl's and
+Brandon's seven aldermen each, and Hattiesburg's and Meridian's five council
+members each; each of those nine declares `emails` in CITIES. Jackson,
+Southaven, Biloxi, Clinton and Oxford print none inside a member's entry
+(Biloxi prints its addresses above its members and Oxford after them, and
+both of Oxford's are office mailboxes). Most are at the city's own domain.
+Horn Lake's are named for the seat ("ward 1") rather than the person, and are
+carried because each is printed beside one member; Madison's, and one of
+Gulfport's, are at domains other than the city's. An address is carried only
+when it is printed inside one person's entry and nowhere else on the city's
+pages that are read, and is not an office's mailbox (OFFICE_MAILBOXES: info,
+cityhall, clerk, council and the like): an address printed for two people, or
+printed again in a footer or on the mayor's page, is the office's, and is not
+carried. Addresses are compared without regard to case, and one is carried as
+the page first prints it. A mayor carries an address only where the council
+page prints the mayor's entry (Olive Branch and Horn Lake); a mayor's own page
+is read for the name, and to count what it prints again, never for an address
+to carry. The build stops on a person with two addresses of their own (the
+card shows one); on an address among the members that the page hides behind a
+script (Cloudflare's e-mail protection), which this reader does not undo,
+although builders elsewhere in the fleet do (Illinois's since 2026-08-08): no
+page read here on 2026-10-17 hides one, so the stop leaves the first one to a
+person; and on a link among the members with no text of its own unless the
+same entry prints that address as text, because whose an untexted link is
+cannot be read.
+Hattiesburg prints each member's address in a card of its own below its list
+of members, so it is read card by card: a card must carry exactly one seat
+line, and the name above that line must be the one the list gives the seat.
+
+What is never read into the file, written or printed, not even in an error
+message: a street address (Oxford's page prints one inside each alderman's
+entry, which may be a home). An error names only the city and the seat, never
+a number or an e-mail address. No staff member (a city clerk, a council clerk,
+an assistant to the mayor) is named, and no staff member's number or address
+is carried: Gulfport's page prints its clerks' contacts above the members,
+and Hattiesburg's prints them above the members' cards, outside every
+member's entry.
 
 NAMES THE PAGE PRINTS IN CAPITALS ARE RE-CASED (Gulfport, Tupelo, Pearl and
 Tupelo's mayor): each word is capitalised, initials and Roman numerals are
@@ -130,7 +190,14 @@ MIN_DELAY_S = 1.0
 # not (measured 2026-10-16). `members` is the shape its page prints them in;
 # `mayor` is (page, how, pattern): "line" takes the pattern's name group from a
 # line, "before" the line before a line the pattern matches, "after" the line
-# after one.
+# after one. On the ten cities whose council page prints a telephone number
+# or an e-mail address inside a person's own entry (measured 2026-10-17),
+# `phones` and `emails` are the fewest named people the page must give a
+# number, or an address, of their own: about two thirds of the count measured
+# that day, which is given beside each. `end` matches the line where the
+# page's last entry ends. Hattiesburg prints each member's address in a card
+# of its own below its list of members, so it declares `cards` instead of
+# `end`: the class the page gives each card, and the card's seat line.
 CITIES = [
     {"geoid": "2836000", "name": "Jackson", "body": "City Council",
      "wards": 7, "at_large": 0,
@@ -143,7 +210,8 @@ CITIES = [
      "council": "https://www.gulfport-ms.gov/government/city_council.php",
      "mayor_page": "https://www.gulfport-ms.gov/government/office_of_the_mayor/index.php",
      "members": "name / seat",
-     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$")},
+     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$"),
+     "end": r"^Share this page$", "emails": 5},    # addresses: all 7 members
     {"geoid": "2869280", "name": "Southaven", "body": "Board of Aldermen",
      "wards": 6, "at_large": 1,
      "council": "https://southaven.org/462/Board-of-Aldermen",
@@ -161,25 +229,30 @@ CITIES = [
      "council": "https://www.hattiesburgms.com/council/",
      "mayor_page": "https://www.hattiesburgms.com/tobybarker/",
      "members": "seat - name",
-     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$")},
+     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$"),
+     "cards": ("tmm_member", r"^Ward (?P<ward>\d{1,2}) Council(?:wo)?man$"),
+     "emails": 4},                                  # addresses: all 5 members
     {"geoid": "2854040", "name": "Olive Branch", "body": "Board of Aldermen",
      "wards": 6, "at_large": 1,
      "council": "https://www.obms.us/230/Board-of-Aldermen",
      "mayor_page": None,
      "members": "name / seat",
-     "mayor": ("council", "before", r"^Mayor$")},
+     "mayor": ("council", "before", r"^Mayor$"),
+     "end": r"^Board of Aldermen$", "phones": 6, "emails": 6},  # both: the mayor and all 7
     {"geoid": "2874840", "name": "Tupelo", "body": "City Council",
      "wards": 7, "at_large": 0,
      "council": "https://www.tupeloms.gov/my-government/city-council",
      "mayor_page": "https://www.tupeloms.gov/my-government/mayor",
      "members": "name / seat",
-     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$")},
+     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$"),
+     "end": r"^City Council.s Agendas and Minutes$", "emails": 5},  # addresses: all 7
     {"geoid": "2846640", "name": "Meridian", "body": "City Council",
      "wards": 5, "at_large": 0,
      "council": "https://meridianms.org/government/city-council/",
      "mayor_page": "https://meridianms.org/government/mayor/",
      "members": "seat / name",
-     "mayor": ("mayor", "line", r"^A Message from Mayor (?P<name>.+)$")},
+     "mayor": ("mayor", "line", r"^A Message from Mayor (?P<name>.+)$"),
+     "end": r"^Archives$", "emails": 4},            # addresses: all 5 members
     {"geoid": "2829180", "name": "Greenville", "body": "City Council",
      "wards": 6, "at_large": 0,
      "council": "https://greenvillems.org/government/",
@@ -197,31 +270,36 @@ CITIES = [
      "council": "https://madisonthecity.com/government/aldermen/",
      "mayor_page": "https://madisonthecity.com/government/mayor/",
      "members": "name / seat",
-     "mayor": ("mayor", "before", r"^Mayor$")},
+     "mayor": ("mayor", "before", r"^Mayor$"),
+     "end": r"^Ward Line Map$", "phones": 4, "emails": 5},  # numbers: 6 of the 7; addresses: all 7
     {"geoid": "2855760", "name": "Pearl", "body": "Board of Aldermen",
      "wards": 6, "at_large": 1,
      "council": "https://www.cityofpearl.com/government/board-of-aldermen/",
      "mayor_page": "https://www.cityofpearl.com/government/mayors-office/",
      "members": "name / seat",
-     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$")},
+     "mayor": ("mayor", "line", r"^Mayor (?P<name>.+)$"),
+     "end": r"^City Calendar$", "emails": 5},       # addresses: all 7 aldermen
     {"geoid": "2833700", "name": "Horn Lake", "body": "Board of Aldermen",
      "wards": 6, "at_large": 1,
      "council": "https://www.hornlake.org/government",
      "mayor_page": None,
      "members": "seat / name",
-     "mayor": ("council", "after", r"^Mayor$")},
+     "mayor": ("council", "after", r"^Mayor$"),
+     "end": r"^Emergencies\b", "phones": 6, "emails": 6},  # both: the mayor and all 7
     {"geoid": "2854840", "name": "Oxford", "body": "Board of Aldermen",
      "wards": 6, "at_large": 1,
      "council": "https://www.oxfordms.net/board-of-aldermen",
      "mayor_page": "https://www.oxfordms.net/departments/mayor-s-office",
      "members": "name / seat",
-     "mayor": ("mayor", "before", r"^,?\s*Mayor$")},
+     "mayor": ("mayor", "before", r"^,?\s*Mayor$"),
+     "end": r"^The Mayor and the Board are elected\b", "phones": 4},  # numbers: 6 of the 7
     {"geoid": "2808300", "name": "Brandon", "body": "Board of Aldermen",
      "wards": 6, "at_large": 1,
      "council": "https://brandonms.org/government/board-of-aldermen/",
      "mayor_page": "https://brandonms.org/government/office-of-the-mayor/",
      "members": "name / seat",
-     "mayor": ("mayor", "line", r"^(?P<name>.+), Mayor$")},
+     "mayor": ("mayor", "line", r"^(?P<name>.+), Mayor$"),
+     "end": r"^Ward Map$", "phones": 5, "emails": 5},  # both: all 7 aldermen
 ]
 
 # A city whose own website names no mayor or member, with the date that was
@@ -248,17 +326,46 @@ BLOCK_TAGS = {"p", "div", "li", "h1", "h2", "h3", "h4", "h5", "h6", "br", "tr",
 
 
 class _Text(HTMLParser):
-    def __init__(self):
+    """The page's visible text, one line per block element. Beside it, `mail`
+    holds (line, address, has text, card) for every mailto: link: the line its
+    text starts on, or for a link with no text of its own (an icon) the line
+    after it; `hidden` holds the line of every address the page hides behind
+    a script (Cloudflare's e-mail protection), which this reader does not
+    undo; and with
+    `card`, a class name, `cards` holds the (first line, stop) of every div
+    carrying that class, and `card` in a mark is the card it is inside."""
+
+    def __init__(self, card=None):
         HTMLParser.__init__(self, convert_charrefs=True)
         self.skip = 0
         self.buf = []
         self.lines = []
+        self.mail = []
+        self.hidden = []
+        self.link = None
+        self.card = card
+        self.cards = []
+        self.depth = 0
+        self.card_first = None
 
     def handle_starttag(self, tag, attrs):
         if tag in SKIP_TAGS:
             self.skip += 1
         if tag in BLOCK_TAGS:
             self.flush()
+        if self.skip:
+            return
+        a = dict(attrs)
+        if tag == "div" and self.card:
+            if self.depth:
+                self.depth += 1
+            elif self.card in (a.get("class") or "").split():
+                self.depth, self.card_first = 1, len(self.lines)
+        href = (a.get("href") or "").strip()
+        if tag == "a" and href.lower().startswith("mailto:"):
+            self.link = (len(self.lines), mailto_address(href))
+        if "/cdn-cgi/l/email-protection" in href or "data-cfemail" in a:
+            self.hidden.append(len(self.lines))
 
     def handle_startendtag(self, tag, attrs):
         if tag in BLOCK_TAGS:
@@ -269,6 +376,17 @@ class _Text(HTMLParser):
             self.skip -= 1
         if tag in BLOCK_TAGS:
             self.flush()
+        if self.skip:
+            return
+        if tag == "a" and self.link:
+            start, address = self.link
+            self.link = None
+            self.mail.append((start, address, len(self.lines) > start,
+                              len(self.cards) if self.depth else None))
+        if tag == "div" and self.depth:
+            self.depth -= 1
+            if not self.depth:
+                self.cards.append((self.card_first, len(self.lines)))
 
     def handle_data(self, data):
         if not self.skip:
@@ -288,6 +406,46 @@ def page_lines(html):
     t.close()
     t.flush()
     return t.lines
+
+
+# An e-mail address as these pages print and link it.
+EMAIL = r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,}"
+EMAIL_TEXT = re.compile(r"(?<![A-Za-z0-9._%+\-])" + EMAIL + r"(?![A-Za-z0-9\-])")
+OWN_EMAIL = re.compile(r"^" + EMAIL + r"$")
+# The mailbox (the part before the @, without dots, hyphens and underscores)
+# of an address that is the office's wherever it is printed: city hall's, a
+# clerk's, or the whole board's. A seat's own mailbox (Horn Lake's are named
+# for each ward) is not here: it reaches the member who holds the seat.
+OFFICE_MAILBOXES = {"info", "cityhall", "city", "contact", "contactus", "office",
+                    "admin", "webmaster", "clerk", "cityclerk", "council",
+                    "citycouncil", "aldermen", "board", "boardofaldermen"}
+
+
+def mailto_address(href):
+    """The address a mailto: link opens, without its ?subject= or the like."""
+    return urllib.parse.unquote(href.split(":", 1)[1].split("?", 1)[0]).strip()
+
+
+def office_mailbox(address):
+    return re.sub(r"[._\-]", "", address.split("@", 1)[0].lower()) in OFFICE_MAILBOXES
+
+
+def page_text(html, card=None):
+    """(lines, marks, cards, hidden) for a page: its lines as page_lines reads
+    them; every place it prints an e-mail address, as (line, address, has
+    text, card), a link and an address printed as text each counting once;
+    the (first line, stop) of every card carrying the class `card`; and the
+    lines where the page hides an address behind a script."""
+    t = _Text(card)
+    t.feed(html)
+    t.close()
+    t.flush()
+    marks = list(t.mail)
+    for i, ln in enumerate(t.lines):
+        k = next((k for k, (first, stop) in enumerate(t.cards) if first <= i < stop), None)
+        for m in EMAIL_TEXT.finditer(ln):
+            marks.append((i, m.group(0), True, k))
+    return t.lines, marks, t.cards, t.hidden
 
 
 # ---------------------------------------------------------------------------
@@ -407,19 +565,21 @@ def name_key(text):
 # ---------------------------------------------------------------------------
 # Readers
 # ---------------------------------------------------------------------------
-def member_readings(lines, shape):
-    """Every (seat, raw text) pair the page offers in its declared shape."""
+def member_anchors(lines, shape):
+    """Every (seat, first line, last line, raw text) the page offers in its
+    declared shape, in page order: the lines are where the seat and the name
+    are printed, so a person's own entry is what follows them."""
     out = []
     if shape == "name, seat":
-        for ln in lines:
+        for i, ln in enumerate(lines):
             m = NAME_COMMA_SEAT.match(ln)
             if m:
-                out.append((seat_of(m.group("seat")), m.group("name")))
+                out.append((seat_of(m.group("seat")), i, i, m.group("name")))
     elif shape == "seat - name":
-        for ln in lines:
+        for i, ln in enumerate(lines):
             m = SEAT_DASH_NAME.match(ln)
             if m:
-                out.append((seat_of(m.group("seat")), m.group("name")))
+                out.append((seat_of(m.group("seat")), i, i, m.group("name")))
     elif shape in ("name / seat", "seat / name"):
         step = -1 if shape == "name / seat" else 1
         for i, ln in enumerate(lines):
@@ -430,10 +590,15 @@ def member_readings(lines, shape):
             while 0 <= j < len(lines) and SEPARATOR.match(lines[j]):
                 j += step
             if 0 <= j < len(lines):
-                out.append((seat, lines[j]))
+                out.append((seat, min(i, j), max(i, j), lines[j]))
     else:
         raise ValueError("unknown shape %r" % shape)
-    return [(s, t) for s, t in out if s]
+    return [a for a in out if a[0]]
+
+
+def member_readings(lines, shape):
+    """Every (seat, raw text) pair the page offers in its declared shape."""
+    return [(seat, raw) for seat, _, _, raw in member_anchors(lines, shape)]
 
 
 def printed_seats(lines):
@@ -453,7 +618,9 @@ def printed_seats(lines):
     return sorted(found)
 
 
-def mayor_readings(lines, how, pattern):
+def mayor_anchors(lines, how, pattern):
+    """Every (first line, last line, raw text) where the mayor's pattern
+    matches, in page order."""
     rx = re.compile(pattern, re.I)
     out = []
     for i, ln in enumerate(lines):
@@ -461,15 +628,19 @@ def mayor_readings(lines, how, pattern):
         if not m:
             continue
         if how == "line":
-            out.append(m.group("name"))
+            out.append((i, i, m.group("name")))
         else:
             step = -1 if how == "before" else 1
             j = i + step
             while 0 <= j < len(lines) and SEPARATOR.match(lines[j]):
                 j += step
             if 0 <= j < len(lines):
-                out.append(lines[j])
+                out.append((min(i, j), max(i, j), lines[j]))
     return out
+
+
+def mayor_readings(lines, how, pattern):
+    return [raw for _, _, raw in mayor_anchors(lines, how, pattern)]
 
 
 def settle(city, seat, readings):
@@ -495,6 +666,262 @@ def settle(city, seat, readings):
     return display_name(next(iter(names.values())))
 
 
+# ---------------------------------------------------------------------------
+# Telephones
+# ---------------------------------------------------------------------------
+# A North American number as these pages print it: 662-555-0100,
+# (662) 555-0100, 601.555.0100.
+NUMBER = r"\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]\d{4}"
+NUMBER_RE = re.compile(r"(?<!\d)" + NUMBER + r"(?!\d)")
+# A line that is a number and nothing else, after a label or not.
+PHONE_LINE = re.compile(r"^(?:(?P<label>[A-Za-z][A-Za-z ]{0,19}?)\s*:\s*)?(?P<number>"
+                        + NUMBER + r")$")
+# A label on a line of its own, its number on the next line.
+LABEL_LINE = re.compile(r"^(?P<label>[A-Za-z][A-Za-z ]{0,19}?)\s*:$")
+# Something a reader could take for a telephone number: seven digits with a
+# separator, which a line PHONE_LINE does not read must not hold.
+LOOSE_NUMBER = re.compile(r"\d{3}[\s.\-]\d{4}")
+# A page's own label for a number: the word the card prints in front of it, or
+# None for a label that says only that it is a telephone. A label not here
+# stops the build, so a new one is read by a person first.
+PHONE_LABELS = {"phone": None, "telephone": None, "tel": None,
+                "home": "home", "work": "work", "cell": "cell", "mobile": "mobile",
+                "office": "office", "business": "business"}
+# A fax number is read past and never carried.
+FAX_LABELS = {"fax"}
+# How a carried number is written: the label word, if any, and the number.
+OWN_PHONE = re.compile(r"^(?:(?:%s) )?%s$" % (
+    "|".join(sorted(set(w for w in PHONE_LABELS.values() if w))), NUMBER))
+
+
+def digits(text):
+    return re.sub(r"\D", "", text)
+
+
+def entry_numbers(city, seat, block):
+    """The numbers printed in one person's entry, in page order, each written
+    as the card prints it: the page's label in front where it says which line
+    the number is, then the number as printed. Raises on a line holding what
+    looks like a number in a form this reader does not read, or on a label it
+    does not know; the message names the city and the seat, never the line."""
+    out = []
+    i = 0
+    while i < len(block):
+        ln = block[i]
+        label = number = None
+        m = PHONE_LINE.match(ln)
+        lm = LABEL_LINE.match(ln)
+        if m:
+            label, number = m.group("label"), m.group("number")
+            i += 1
+        elif lm and i + 1 < len(block) and PHONE_LINE.match(block[i + 1]) \
+                and not PHONE_LINE.match(block[i + 1]).group("label"):
+            label, number = lm.group("label"), PHONE_LINE.match(block[i + 1]).group("number")
+            i += 2
+        else:
+            if LOOSE_NUMBER.search(ln):
+                raise SystemExit("%s %s: a line in this person's entry holds a number in "
+                                 "a form this reader does not read" % (city, seat))
+            i += 1
+            continue
+        key = label.strip().lower() if label else "phone"
+        if key in FAX_LABELS:
+            continue
+        if key not in PHONE_LABELS:
+            raise SystemExit("%s %s: a number in this person's entry carries a label "
+                             "this reader does not know" % (city, seat))
+        word = PHONE_LABELS[key]
+        number = re.sub(r"\s+", " ", number.strip())
+        out.append(word + " " + number if word else number)
+    return out
+
+
+def entry_windows(c, lines, by_name):
+    """[(seat, key, first, last, stop)], in page order, for every named person
+    the council page prints: `first` and `last` are the lines that print their
+    seat and name, and their entry runs from `first` up to `stop`, the next
+    person's first line or, for the last person, the line the city's `end`
+    matches. The mayor has an entry only where the city reads its mayor from
+    the council page. `by_name` maps each named person's key to their seat.
+    Raises when the page prints one person twice, since whose entry is whose
+    could not then be read, or when the end is not found."""
+    anchors = []
+    for seat, first, last, raw in member_anchors(lines, c["members"]):
+        if not name_problem(raw) and name_key(raw) in by_name:
+            anchors.append((first, last, seat, name_key(raw)))
+    page, how, pattern = c["mayor"]
+    if page == "council":
+        for first, last, raw in mayor_anchors(lines, how, pattern):
+            if not name_problem(raw) and name_key(raw) in by_name:
+                anchors.append((first, last, "Mayor", name_key(raw)))
+    anchors.sort()
+    seen = set()
+    for first, last, seat, key in anchors:
+        if key in seen:
+            raise SystemExit("%s %s: the page prints this person twice, so whose entry is "
+                             "whose cannot be read" % (c["name"], seat))
+        seen.add(key)
+    out = []
+    for k, (first, last, seat, key) in enumerate(anchors):
+        if k + 1 < len(anchors):
+            stop = anchors[k + 1][0]
+        else:
+            stop = next((j for j in range(last + 1, len(lines))
+                         if re.match(c["end"], lines[j], re.I)), None)
+            if stop is None:
+                raise SystemExit("%s: the line that ends its list of members is not found"
+                                 % c["name"])
+        out.append((seat, key, first, last, stop))
+    return out
+
+
+def read_phones(c, lines, mayor_lines, windows, say=None):
+    """{name key: [numbers]} for the people of a city that declares `phones`.
+
+    A person's numbers are the ones printed in their entry after the lines
+    that print their seat and name (entry_windows). A number is carried only
+    when it is printed once on the pages read (the council page and, where it
+    is read, the mayor's): a number printed for two people, or anywhere else
+    on them, is the office's."""
+    printed = {}
+    for ln in lines + (mayor_lines or []):
+        for m in NUMBER_RE.finditer(ln):
+            printed[digits(m.group(0))] = printed.get(digits(m.group(0)), 0) + 1
+    out, offices = {}, 0
+    for seat, key, first, last, stop in windows:
+        numbers = entry_numbers(c["name"], seat, lines[last + 1:stop])
+        own = [n for n in numbers if printed.get(digits(n)) == 1]
+        offices += len(numbers) - len(own)
+        if own:
+            out[key] = own
+    if len(out) < c["phones"]:
+        raise SystemExit("%s: %d of its named people carry a number of their own, fewer "
+                         "than the %d its page gave when measured"
+                         % (c["name"], len(out), c["phones"]))
+    if say:
+        say("%-13s %d people carry %d numbers of their own; %d more numbers printed in an "
+            "entry are printed elsewhere on the pages too, so are the office's"
+            % (c["name"], len(out), sum(len(v) for v in out.values()), offices))
+    return out
+
+
+def own_address(c, seat, inside, count):
+    """The one address of a person's own among the marks `inside` their entry
+    or card, or None. An address is theirs when every place the pages read
+    print it (`count`, by lower-case address) is inside, and its mailbox is not
+    an office's; it is carried as the page first prints it there, a link
+    before text on the same line. Raises on a link that opens no address
+    this reader reads, and on two addresses of the person's own, since the
+    card shows one; the message names the city and the seat, never the
+    address. Returns (address, how many addresses inside were the office's)."""
+    found = {}
+    for line, address, texted, card in sorted(inside, key=lambda m: (m[0], not m[2])):
+        if not OWN_EMAIL.match(address):
+            raise SystemExit("%s %s: a link in this person's entry opens an address this "
+                             "reader does not read" % (c["name"], seat))
+        found.setdefault(address.lower(), []).append(address)
+    own = [forms[0] for low, forms in found.items()
+           if count.get(low) == len(forms) and not office_mailbox(low)]
+    if len(own) > 1:
+        raise SystemExit("%s %s: the page prints two addresses of this person's own, and "
+                         "the card shows one" % (c["name"], seat))
+    return (own[0] if own else None), len(found) - len(own)
+
+
+def address_count(marks, mayor_marks):
+    count = {}
+    for m in list(marks) + list(mayor_marks):
+        count[m[1].lower()] = count.get(m[1].lower(), 0) + 1
+    return count
+
+
+def read_emails(c, marks, hidden, mayor_marks, windows, say=None):
+    """{name key: address} for a city that declares `emails` and an `end`: a
+    person's address is in their entry (entry_windows), from the lines that
+    print their seat and name, which may be a link themselves, up to the
+    next person's. An address printed for two people, or anywhere else on
+    the pages read, is the office's. Raises where the page hides an address
+    among its members behind a script. A link with no text of its own (an
+    icon, or Gulfport's empty link beside one member's address) is read
+    only where the entry it falls in also prints its address with text,
+    since which entry an icon belongs to cannot be read from the page's
+    lines; otherwise it stops the build."""
+    if not windows:
+        raise SystemExit("%s: no member's entry is found" % c["name"])
+    top, bottom = windows[0][2], windows[-1][4]
+    if any(top <= line <= bottom for line in hidden):
+        raise SystemExit("%s: the page hides an address among its members behind a script, "
+                         "which this reader does not undo" % c["name"])
+    for line, address, texted, _ in marks:
+        if texted or not top <= line <= bottom:
+            continue
+        w = next((w for w in windows if w[2] <= line < w[4]), None)
+        if not w or not any(t and w[2] <= ln < w[4] and a.lower() == address.lower()
+                            for ln, a, t, _ in marks):
+            raise SystemExit("%s: the page links an address among its members with no text "
+                             "of its own, so whose it is cannot be read" % c["name"])
+    count = address_count(marks, mayor_marks)
+    out, offices = {}, 0
+    for seat, key, first, last, stop in windows:
+        own, office = own_address(c, seat, [m for m in marks if first <= m[0] < stop], count)
+        offices += office
+        if own:
+            out[key] = own
+    return emails_floor(c, out, offices, say)
+
+
+def read_card_emails(c, lines, marks, cards, hidden, mayor_marks, by_seat, say=None):
+    """{name key: address} for a city that declares `cards`: each member's
+    address is in a card of its own. A card is a member's when it prints one
+    seat line, and the name on its lines above that is the name the page
+    gives that seat; a card printing no seat line is read past, and one
+    printing two, or another person's name, stops the build. An address is
+    the member's own when every place the pages read print it is inside
+    their card. `by_seat` maps each named seat to its person's key."""
+    seat_rx = c["cards"][1]
+    count = address_count(marks, mayor_marks)
+    out, seen, offices = {}, set(), 0
+    for k, (first, stop) in enumerate(cards):
+        body = lines[first:stop]
+        hits = [(i, m) for i, m in ((i, re.match(seat_rx, ln, re.I)) for i, ln in enumerate(body))
+                if m]
+        if not hits:
+            continue
+        if len(hits) > 1:
+            raise SystemExit("%s: a card on the page prints two seats" % c["name"])
+        i, m = hits[0]
+        seat = "Ward %d" % int(m.group("ward"))
+        if seat not in by_seat:
+            raise SystemExit("%s %s: a card prints a seat the page names nobody for"
+                             % (c["name"], seat))
+        if seat in seen:
+            raise SystemExit("%s %s: two cards print this seat" % (c["name"], seat))
+        seen.add(seat)
+        if name_key(" ".join(body[:i])) != by_seat[seat]:
+            raise SystemExit("%s %s: the card for this seat names someone other than the "
+                             "person the page names for it" % (c["name"], seat))
+        if any(first <= line < stop for line in hidden):
+            raise SystemExit("%s %s: the card hides this person's address behind a script, "
+                             "which this reader does not undo" % (c["name"], seat))
+        own, office = own_address(c, seat, [mk for mk in marks if mk[3] == k], count)
+        offices += office
+        if own:
+            out[by_seat[seat]] = own
+    return emails_floor(c, out, offices, say)
+
+
+def emails_floor(c, out, offices, say):
+    if len(out) < c["emails"]:
+        raise SystemExit("%s: %d of its named people carry an address of their own, fewer "
+                         "than the %d its page gave when measured"
+                         % (c["name"], len(out), c["emails"]))
+    if say:
+        say("%-13s %d people carry an address of their own; %d more addresses printed in an "
+            "entry are printed elsewhere on the pages too, or are an office's mailbox, so are "
+            "the office's" % (c["name"], len(out), offices))
+    return out
+
+
 def expected_seats(c):
     seats = ["Ward %d" % n for n in range(1, c["wards"] + 1)]
     if c["at_large"]:
@@ -502,7 +929,7 @@ def expected_seats(c):
     return seats
 
 
-def read_city(c, council_html, mayor_html, read_date):
+def read_city(c, council_html, mayor_html, read_date, say=None):
     """The city's record from its pages; raises on any gate."""
     rec = {"name": c["name"], "body": c["body"], "councilUrl": c["council"]}
     if c.get("mayor_page"):
@@ -514,7 +941,7 @@ def read_city(c, council_html, mayor_html, read_date):
         return rec
     rec["read"] = read_date
     rec["seats"] = []
-    lines = page_lines(council_html)
+    lines, marks, cards, hidden = page_text(council_html, (c.get("cards") or (None,))[0])
     by_seat = {}
     for seat, raw in member_readings(lines, c["members"]):
         by_seat.setdefault(seat, []).append(raw)
@@ -537,6 +964,27 @@ def read_city(c, council_html, mayor_html, read_date):
     keys = [name_key(s["name"]) for s in rec["seats"] if s.get("name")]
     if len(keys) != len(set(keys)):
         raise SystemExit("%s: one name is carried for two seats" % c["name"])
+    if "phones" in c or "emails" in c:
+        mlines, mmarks = page_text(mayor_html)[:2] if mayor_html else ([], [])
+        named = [s for s in rec["seats"] if s.get("name")]
+        numbers, addresses = {}, {}
+        if "cards" in c:
+            addresses = read_card_emails(c, lines, marks, cards, hidden, mmarks,
+                                         {s["seat"]: name_key(s["name"]) for s in named}, say)
+        else:
+            windows = entry_windows(c, lines, {name_key(s["name"]): s["seat"] for s in named})
+            if "phones" in c:
+                numbers = read_phones(c, lines, mlines, windows, say)
+            if "emails" in c:
+                addresses = read_emails(c, marks, hidden, mmarks, windows, say)
+        for s in named:
+            own = numbers.get(name_key(s["name"]))
+            if own:
+                s["phone"] = own[0]
+                if len(own) > 1:
+                    s["phonesExtra"] = own[1:]
+            if addresses.get(name_key(s["name"])):
+                s["email"] = addresses[name_key(s["name"])]
     return rec
 
 
@@ -621,7 +1069,8 @@ def build(pages_dir=None, save_dir=None, read_date=None):
                         with open(path, "w", encoding="utf-8") as fh:
                             fh.write(texts[kind])
             council, mayor = texts["council"], texts.get("mayor", "")
-        rec = read_city(c, council, mayor, read_date or date.today().isoformat())
+        rec = read_city(c, council, mayor, read_date or date.today().isoformat(),
+                        say=lambda line: print(line, file=sys.stderr))
         out[c["geoid"]] = rec
         if "seats" not in rec:
             print("%-13s %-17s names nobody (NOT_PUBLISHED)" % (c["name"], c["body"]),
@@ -639,7 +1088,7 @@ def build(pages_dir=None, save_dir=None, read_date=None):
 def check(path=OUT):
     with open(path, encoding="utf-8") as fh:
         data = json.load(fh)
-    problems = []
+    problems, addresses = [], []
     if sorted(data) != sorted(c["geoid"] for c in CITIES):
         problems.append("the file's cities are not CITIES")
     for c in CITIES:
@@ -663,9 +1112,10 @@ def check(path=OUT):
         if seats != ["Mayor"] + expected_seats(c):
             problems.append("%s: seats %s, not the declared %s"
                             % (c["name"], seats, ["Mayor"] + expected_seats(c)))
-        keys = []
+        keys, carried, with_numbers, with_addresses = [], [], 0, 0
         for s in rec.get("seats", []):
-            allowed = {"seat", "name"} if s.get("name") else {"seat", "vacant"}
+            allowed = {"seat", "name", "phone", "phonesExtra", "email"} if s.get("name") \
+                else {"seat", "vacant"}
             if set(s) - allowed:
                 problems.append("%s %s: carries %s" % (c["name"], s.get("seat"),
                                                        sorted(set(s) - allowed)))
@@ -676,18 +1126,71 @@ def check(path=OUT):
                 keys.append(name_key(s["name"]))
             elif s.get("vacant") is not True:
                 problems.append("%s %s: neither named nor vacant" % (c["name"], s.get("seat")))
+            # A person's address and numbers: the problem names the city and
+            # the seat, never the address or the number.
+            if "email" in s:
+                if "emails" not in c:
+                    problems.append("%s %s: carries an address, and this city's page is not "
+                                    "read for addresses" % (c["name"], s.get("seat")))
+                if not isinstance(s["email"], str) or not OWN_EMAIL.match(s["email"]):
+                    problems.append("%s %s: an address not written as one (not printed)"
+                                    % (c["name"], s.get("seat")))
+                elif office_mailbox(s["email"]):
+                    problems.append("%s %s: an office's mailbox is carried as a person's own"
+                                    % (c["name"], s.get("seat")))
+                else:
+                    addresses.append(s["email"].lower())
+                with_addresses += 1
+            if "phonesExtra" in s and "phone" not in s:
+                problems.append("%s %s: a second number with no first" % (c["name"], s.get("seat")))
+            if "phone" not in s:
+                continue
+            numbers = [s["phone"]] + (s["phonesExtra"] if isinstance(s.get("phonesExtra"), list)
+                                      else [None] if "phonesExtra" in s else [])
+            if "phonesExtra" in s and len(numbers) < 2:
+                problems.append("%s %s: an empty list of second numbers" % (c["name"], s.get("seat")))
+            if "phones" not in c:
+                problems.append("%s %s: carries a number, and this city's page is not read "
+                                "for numbers" % (c["name"], s.get("seat")))
+            for n in numbers:
+                if not isinstance(n, str) or not OWN_PHONE.match(n):
+                    problems.append("%s %s: a number not written as a label word and a "
+                                    "number (not printed)" % (c["name"], s.get("seat")))
+                else:
+                    carried.append(digits(n))
+            with_numbers += 1
         if len(keys) != len(set(keys)):
             problems.append("%s: one name for two seats" % c["name"])
+        if len(carried) != len(set(carried)):
+            problems.append("%s: one number is carried twice, so it is the office's" % c["name"])
+        if "phones" in c and with_numbers < c["phones"]:
+            problems.append("%s: %d named people carry a number of their own, fewer than %d"
+                            % (c["name"], with_numbers, c["phones"]))
+        if "emails" in c and with_addresses < c["emails"]:
+            problems.append("%s: %d named people carry an address of their own, fewer than %d"
+                            % (c["name"], with_addresses, c["emails"]))
         allowed_rec = {"name", "body", "seats", "councilUrl", "mayorUrl", "read"}
         if set(rec) - allowed_rec:
             problems.append("%s: carries %s" % (c["name"], sorted(set(rec) - allowed_rec)))
+    if len(addresses) != len(set(addresses)):
+        problems.append("one address is carried for two people, so it is the office's")
     if problems:
         for p in problems:
             print("FAIL " + p)
         return 1
-    named = sum(1 for r in data.values() for s in r.get("seats", []) if s.get("name"))
-    print("OK ms-city-councils.json: %d cities, %d people named, %d city names nobody"
-          % (len(data), named, sum(1 for r in data.values() if not r.get("seats"))))
+    seats = [s for r in data.values() for s in r.get("seats", [])]
+    named = sum(1 for s in seats if s.get("name"))
+    phoned = [s for s in seats if s.get("phone")]
+
+    def cities_with(field):
+        return sum(1 for r in data.values() if any(s.get(field) for s in r.get("seats", [])))
+    print("OK ms-city-councils.json: %d cities, %d people named, %d of them with a number of "
+          "their own in %d cities (%d numbers), %d with an address of their own in %d cities, "
+          "%d city names nobody"
+          % (len(data), named, len(phoned), cities_with("phone"),
+             sum(1 + len(s.get("phonesExtra", [])) for s in phoned),
+             len(addresses), cities_with("email"),
+             sum(1 for r in data.values() if not r.get("seats"))))
     return 0
 
 
@@ -768,12 +1271,165 @@ def selftest():
             fails.append("%s: was not refused" % label)
         except SystemExit:
             pass
+    # Telephones: a label that says which line goes in front, one that says
+    # only "phone" does not, a fax is read past, and a number printed again
+    # elsewhere on the pages (here City Hall's, in the footer) is the office's.
+    cp = dict(c2, end=r"^City Hall$", phones=3)
+    phone_page = html(["Pat Doe", ", Mayor", "Phone:", "601-555-0100",
+                       "Lee Roe", "Alderman-At-Large", "lee@example.invalid", "Home: 601-555-0101",
+                       "Kim Poe", "Ward I", "1 Main Street", "Testville, Mississippi 39000",
+                       "Work: (601) 555-0102", "Cell: 601.555.0103", "Fax: 601-555-0199",
+                       "Jo Moe", "Pro-Tem, Ward II", "Tel:", "601-555-0104",
+                       "City Hall", "601-555-0104"])
+    cp_mayor = dict(cp, mayor=("council", "before", r"^,?\s*Mayor$"))
+    rec = read_city(cp_mayor, phone_page, "", "2026-10-17")
+    ok("numbers on each person", [(s["seat"], s.get("phone"), s.get("phonesExtra"))
+                                  for s in rec["seats"]],
+       [("Mayor", "601-555-0100", None), ("At Large", "home 601-555-0101", None),
+        ("Ward 1", "work (601) 555-0102", ["cell 601.555.0103"]), ("Ward 2", None, None)])
+    # The mayor read from a separate page has no entry on the council page,
+    # and a number printed there as well is not carried.
+    rec = read_city(dict(cp, mayor=("mayor", "line", r"^Mayor (?P<name>.+)$"), phones=2),
+                    html(["Lee Roe", "Alderman-At-Large", "Home: 601-555-0101",
+                          "Kim Poe", "Ward I", "Cell: 601-555-0103",
+                          "Jo Moe", "Ward II", "Home: 601-555-0105", "City Hall"]),
+                    html(["Mayor Pat Doe", "601-555-0105"]), "2026-10-17")
+    ok("a number the mayor's page prints too", [(s["seat"], s.get("phone")) for s in rec["seats"]],
+       [("Mayor", None), ("At Large", "home 601-555-0101"), ("Ward 1", "cell 601-555-0103"),
+        ("Ward 2", None)])
+    for label, lines, spec in [
+            ("a number in a form not read", ["Pat Doe", ", Mayor", "Lee Roe", "Alderman-At-Large",
+                                             "Call 555-0101 any time", "Kim Poe", "Ward I",
+                                             "Jo Moe", "Ward II", "City Hall"], 0),
+            ("a label not known", ["Pat Doe", ", Mayor", "Lee Roe", "Alderman-At-Large",
+                                   "Pager: 601-555-0101", "Kim Poe", "Ward I",
+                                   "Jo Moe", "Ward II", "City Hall"], 0),
+            ("no line that ends the list", ["Pat Doe", ", Mayor", "Lee Roe", "Alderman-At-Large",
+                                            "Kim Poe", "Ward I", "Jo Moe", "Ward II"], 0),
+            ("fewer people with a number than the floor",
+             ["Pat Doe", ", Mayor", "Lee Roe", "Alderman-At-Large", "Home: 601-555-0101",
+              "Kim Poe", "Ward I", "Jo Moe", "Ward II", "City Hall"], 2),
+            ("one person printed twice", ["Pat Doe", ", Mayor", "Lee Roe", "Alderman-At-Large",
+                                          "Kim Poe", "Ward I", "Jo Moe", "Ward II",
+                                          "Kim Poe", "Ward I", "City Hall"], 0)]:
+        try:
+            read_city(dict(cp_mayor, phones=spec), html(lines), "", "2026-10-17")
+            fails.append("%s: was not refused" % label)
+        except SystemExit as e:
+            if re.search(r"\d{3}[\s.\-]\d{4}|Main Street", str(e)):
+                fails.append("%s: the message prints a number or an address" % label)
+    ok("OWN_PHONE", [bool(OWN_PHONE.match(t)) for t in
+                     ["601-555-0100", "home (601) 555-0100", "cell 601.555.0100",
+                      "pager 601-555-0100", "Home 601-555-0100", "601-555-0100 ext. 4", "555-0100"]],
+       [True, True, True, False, False, False, False])
+    # Addresses, read by entry: a link, a linked name and an address printed as
+    # text are each a person's own when nothing else on the pages prints them;
+    # one printed for two people, after the list or on the mayor's page is the
+    # office's, and so is an office's mailbox wherever it is printed.
+    def mail(addr, text=None):
+        return "<a href='mailto:%s'>%s</a>" % (addr, addr if text is None else text)
+    ce = dict(cp_mayor, phones=0, emails=3)
+    mail_page = html(["Staff: " + mail("clerk@example.invalid"),
+                      "Pat Doe", ", Mayor", mail("Pat.Doe@Example.invalid?subject=Hello", "Email"),
+                      "Lee Roe", "Alderman-At-Large", "lee@example.invalid",
+                      mail("board@example.invalid", "The board"),
+                      mail("kim@example.invalid", "Kim Poe"), "Ward I",
+                      mail("kim@example.invalid"), mail("shared@example.invalid", "Email"),
+                      "Jo Moe", "Pro-Tem, Ward II", mail("jo@example.invalid", "Email"),
+                      mail("shared@example.invalid", "Email"),
+                      "City Hall", "jo@example.invalid"])
+    rec = read_city(ce, mail_page.replace(
+        "<p>lee@example.invalid</p>", "<p><a href='mailto:lee@example.invalid'></a></p>"
+        "<p>lee@example.invalid</p>"), "", "2026-10-17")
+    ok("addresses on each person", [(s["seat"], s.get("email")) for s in rec["seats"]],
+       [("Mayor", "Pat.Doe@Example.invalid"), ("At Large", "lee@example.invalid"),
+        ("Ward 1", "kim@example.invalid"), ("Ward 2", None)])
+    rec = read_city(dict(ce, mayor=("mayor", "line", r"^Mayor (?P<name>.+)$"), emails=1),
+                    html(["Lee Roe", "Alderman-At-Large", mail("lee@example.invalid"),
+                          "Kim Poe", "Ward I", mail("kim@example.invalid", "Email"),
+                          "Jo Moe", "Ward II", "City Hall"]),
+                    html(["Mayor Pat Doe", "Write to " + mail("lee@example.invalid")]), "2026-10-17")
+    ok("an address the mayor's page prints too", [(s["seat"], s.get("email")) for s in rec["seats"]],
+       [("Mayor", None), ("At Large", None), ("Ward 1", "kim@example.invalid"), ("Ward 2", None)])
+    entries = ["Pat Doe", ", Mayor", "Lee Roe", "Alderman-At-Large", "Kim Poe", "Ward I",
+               "Jo Moe", "Ward II", "City Hall"]
+    for label, insert, floor, why in [
+            ("two addresses of one person's own", [mail("lee@example.invalid"),
+                                                   mail("lee.roe@example.invalid")], 0,
+             "two addresses of this person's own"),
+            ("a link that opens no address", [mail("Lee Roe", "Email")], 0,
+             "opens an address this reader does not read"),
+            ("a link with no text of its own", ["<a href='mailto:lee@example.invalid'>"
+                                                "<img alt='Email' src='x.png'/></a>"], 0,
+             "no text of its own"),
+            ("a link with no text beside another address",
+             ["<a href='mailto:lee@example.invalid'></a>", mail("lee.roe@example.invalid")], 0,
+             "no text of its own"),
+            ("an address hidden behind a script",
+             ["<a href='/cdn-cgi/l/email-protection#0a'>[email protected]</a>"], 0,
+             "behind a script"),
+            ("fewer people with an address than the floor", [mail("lee@example.invalid")], 2,
+             "fewer than the 2")]:
+        try:
+            read_city(dict(ce, emails=floor),
+                      html(entries[:4] + insert + entries[4:]), "", "2026-10-17")
+            fails.append("%s: was not refused" % label)
+        except SystemExit as e:
+            if why not in str(e):
+                fails.append("%s: refused for another reason: %s" % (label, e))
+            if "@" in str(e):
+                fails.append("%s: the message prints an address" % label)
+    # Addresses, read by card: a card is matched to its seat's person by the
+    # name it prints above its seat line, and an icon's link is the card's.
+    def card(first, last, job, *links):
+        return ("<div class='member'><div><span>%s</span> <span>%s</span></div>"
+                "<div>%s</div><div>%s</div></div>" % (first, last, job, "".join(
+                    "<a href='mailto:%s' title='Email'><img alt='Email' src='x.png'/></a>" % a
+                    for a in links)))
+    cc = dict(c4, cards=("member", r"^Ward (?P<ward>\d{1,2}) Council(?:wo)?man$"), emails=2)
+    top = "<p>Mayor Pat Doe</p><p>Ward 1 – Kim Poe</p><p>Ward 2 – Jo Moe</p>"
+    cards = (card("Kim", "Poe", "Ward 1 Councilman", "kim@example.invalid") +
+             card("Jo", "Moe", "Ward 2 Councilwoman", "jo@example.invalid", "clerk@example.invalid") +
+             "<div class='member'><div>Council Clerk</div></div>" + "<p>%s</p>" % mail("clerk@example.invalid"))
+    rec = read_city(cc, "<html><body>" + top + cards + "</body></html>", "", "2026-10-17")
+    ok("addresses on each card", [(s["seat"], s.get("email")) for s in rec["seats"]],
+       [("Mayor", None), ("Ward 1", "kim@example.invalid"), ("Ward 2", "jo@example.invalid")])
+    for label, body, why in [
+            ("a card naming another person",
+             card("Jo", "Moe", "Ward 1 Councilman", "kim@example.invalid") +
+             card("Kim", "Poe", "Ward 2 Councilman", "jo@example.invalid"),
+             "names someone other than"),
+            ("two cards for one seat",
+             card("Kim", "Poe", "Ward 1 Councilman", "kim@example.invalid") +
+             card("Kim", "Poe", "Ward 1 Councilman", "kim2@example.invalid"),
+             "two cards print this seat"),
+            ("fewer cards with an address than the floor",
+             card("Kim", "Poe", "Ward 1 Councilman", "kim@example.invalid"), "fewer than the 2")]:
+        try:
+            read_city(cc, "<html><body>" + top + body + "</body></html>", "", "2026-10-17")
+            fails.append("%s: was not refused" % label)
+        except SystemExit as e:
+            if why not in str(e):
+                fails.append("%s: refused for another reason: %s" % (label, e))
+            if "@" in str(e) or re.search(r"Kim|Jo Moe", str(e)):
+                fails.append("%s: the message prints an address or a name" % label)
+    ok("OWN_EMAIL", [bool(OWN_EMAIL.match(t)) for t in
+                     ["kim@example.invalid", "Kim.Poe@Example.Invalid", "a@b.co",
+                      "mailto:kim@example.invalid", "kim@example", "kim @example.invalid",
+                      "kim@example.invalid?subject=x", "kim@example.invalid, jo@example.invalid"]],
+       [True, True, True, False, False, False, False, False])
+    ok("office_mailbox", [office_mailbox(t) for t in
+                          ["info@x.gov", "City.Hall@x.gov", "city-clerk@x.gov", "Award1@x.gov",
+                           "mayor@x.gov", "kim@x.gov"]],
+       [True, True, True, False, False, False])
     if fails:
         for f in fails:
             print("FAIL " + f)
         return 1
     print("OK selftest: seat labels, re-casing, the name test, the four page shapes, five "
-          "refusals, the seat labels a page prints")
+          "refusals, the seat labels a page prints, each person's numbers and five refusals "
+          "of them, each person's address read by entry and by card and nine refusals of "
+          "them")
     return 0
 
 
