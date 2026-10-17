@@ -23,9 +23,10 @@ THE THREE GATES (shared with the other cities, mi_ward_common.py)
 
 TERMS. The PDF states no licence or restriction anywhere on the sheet, and the
 build refuses if the words "copyright", "licence" or "restricted" appear on it,
-so a new edition with terms is read by a person before it is republished. That
-is the line held for Walker, whose map PDF does state a restriction and is not
-read.
+so a new edition with terms is read by a person before it is republished.
+Walker's map PDF does state a restriction; the operator ruled on 2026-10-16
+that it is drawn anyway with its notice quoted, which build_mi_walker_wards.py
+holds to the exact text.
 """
 
 import argparse

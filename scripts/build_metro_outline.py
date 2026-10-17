@@ -841,6 +841,14 @@ METRO_COUNTY_FIPS = ("031", "043", "197", "097", "089", "111", "093",
                      # the notch it was on the Indiana line. READ THE RING
                      # COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
                      "051", "101",
+                     # Jasper (2026-10-16), board-only, partly drawn the same
+                     # way: ten whole townships placed by the county's own
+                     # 2022 redistricting plan, Wade Township (Newton) shared
+                     # among all three districts. Its neighbours Cumberland,
+                     # Effingham, Clay, Richland, Crawford and Clark are all
+                     # served, so the join closes the hole it was. READ THE
+                     # RING COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
+                     "079",
                      # judicial-subcircuit secondary counties (see below)
                      "005", "083", "061", "137", "171")
 STATE_FIPS = "17"
@@ -1032,6 +1040,9 @@ DISPATCH_COUNTY_FIPS = {
     # (scripts/build_partial_board_districts.py).
     "fayette": "051",
     "lawrence": "101",
+    # Jasper (2026-10-16) — board-only, the same partly drawn shape, Wade
+    # Township shared among Districts 1, 2 and 3.
+    "jasper": "079",
 }
 # ==== TEMPLATE:END outline-county-config ====
 
@@ -1443,6 +1454,10 @@ INSIDE = {
     # enclosed alone. Lawrenceville had proven Lawrence's notch unwashed.
     "Vandalia (Fayette)": (38.9606, -89.0937),
     "Lawrenceville (Lawrence)": (38.7263, -87.6873),
+    # Newton (Jasper) — moved up from OUTSIDE on 2026-10-16, when Jasper joined
+    # on its partly drawn board districts (Wade Township, which holds Newton,
+    # is the shared area).
+    "Newton (Jasper)": (38.9903, -88.1631),
     # judicial-subcircuit secondary counties
     "Greenville (Bond, 3rd Circuit)": (38.8923, -89.4131),
     "Jerseyville (Jersey, 7th Circuit)": (39.1200, -90.3284),
@@ -1539,14 +1554,8 @@ OUTSIDE = {
     # from --check, never reasoned about here.
     # (Lawrenceville moved up to INSIDE on 2026-10-16, when Lawrence joined on
     # its partly drawn board districts and the notch closed.)
-    # Newton (Jasper) — the successor anchor Cumberland's join calls for
-    # (2026-08-21). Cumberland left exactly one unserved neighbour behind and
-    # this is it, and Jasper is a MEASURED frontier rather than an unexamined
-    # one: its board districts are drawn through the middle of its townships,
-    # so its five precincts sit only 1-7% inside the city whose wards their
-    # names echo and no whole-precinct dissolve can answer there. Newton is
-    # the county seat.
-    "Newton (Jasper)": (38.9903, -88.1631),
+    # (Newton moved up to INSIDE on 2026-10-16, when Jasper joined on its
+    # partly drawn board districts.)
     "Milwaukee (WI)": (43.0389, -87.9065),
     # DeKalb used to sit here, described as "enclosed on three sides by served
     # counties and the one border-ring county with no locatable GIS". The second

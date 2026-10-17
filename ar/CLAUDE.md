@@ -8,16 +8,17 @@ districtry Arkansas: a single-file, dependency-light web app. Click a point in A
 search an address) and it reports every civic district containing that point and who represents
 you there. It serves at **districtry.com/ar/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships THIRTEEN layers, and **IT IS PUBLISHED** since Adam's word of
+root-scripts shape. It ships SIXTEEN layers, and **IT IS PUBLISHED** since Adam's word of
 2026-10-15 ("turn on arkansas"). It arrived dark on 2026-10-13 (no `metros.json` entry, `ar/**`
 blanket-excluded from the Pages deploy), and the go-live change narrowed that exclude to the build
 inputs the siblings exclude, registered the instance and regenerated every surface that counts the
 fleet. `ar/WATCH.md` keeps the go-live row with its date, and `docs/AR_EXPANSION_PLAN.md` is the
 record of the launch.
 
-**The national tier** — ten of the thirteen layers draw their shapes from a national publisher and
-name people from a national roster or the Arkansas State Legislature; the other three, the quorum
-court, the townships and the voting precincts, below, are drawn from the state's own maps. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
+**The national tier** — ten of the sixteen layers draw their shapes from a national publisher and
+name people from a national roster or the Arkansas State Legislature; four, the quorum court, the
+townships, the precincts and the school board zones, below, are drawn from the state's own maps, and the two court layers,
+below, group the Census's counties as the state's own lists do. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
 county judge and lists the justices of the peace), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **Arkansas Senate** and **Arkansas House** (35 and 100
 districts, TIGERweb geometry joined to the legislature's own member list and member pages), the
@@ -81,6 +82,46 @@ description that still says the data was finalized in 2012, and pieces of one pr
 than three years apart are evidence for the state-publishing ask. The layer answers 200 records a
 request and the office's open-data host asks for 60 seconds between requests, so a build or a
 re-check takes about fifteen minutes. The quarterly re-check is in `ar/WATCH.md`.
+
+**THE COURT OF APPEALS DISTRICTS AND THE 28 JUDICIAL CIRCUITS ARE DRAWN SINCE 2026-10-16, FROM
+WHOLE COUNTIES, AND NAME NOBODY YET.** `ar-court-of-appeals` and `ar-circuit-court` dissolve the
+county fabric this instance ships, by `ar/scripts/build_ar_court_districts.py` through the fleet
+module `scripts/whole_county_courts.py`, from the sources kept in `ar/data/source/courts/`. The
+seven Court of Appeals districts follow Act 1812 of 2003 as the Arkansas GIS Office's metadata for
+its own Appeals Court Districts layer quotes it, because the official Code is published only by
+LexisNexis behind a page that needs a browser's scripts, and the two free copies tried refuse this
+project's client; the court's own 2023 district map, an image, agrees by eye. The 28 circuits
+follow the Administrative Office of the Courts' circuit judge directory, which lists every judge
+under every county the judge serves: the build stops if any judge serves only some of a circuit's
+counties, pins the statewide count at 126 judges, and holds both lists county by county to the
+state's own court layers, which were drawn on Census 2000 blocks and so disagree with the 2020
+counties by slivers (no county is less than 98.57% inside its own unit). **FIVE CIRCUITS ARE
+DIVIDED INTO ELECTION SUBDISTRICTS THAT ARE NOT DRAWN**: a 1991 federal court order (Hunt v. State
+of Arkansas) created two in each of the 1st, 2nd, 6th, 10th and 11th West, which split fifteen
+counties, and which judgeships each subdistrict elects is set by that court and was not read, so
+those circuits are drawn whole and their cards say so. The Court of Appeals card says how many of
+the court's twelve judges the district elects (two, or one in Districts 5 and 7) and that the
+court hears appeals from the whole state; the circuit card gives the circuit's number of judges,
+says they are elected in nonpartisan elections for six-year terms, and links the directory. Neither
+names a judge (gaps `ar-appeals-judges` and `ar-circuit-judges`): both of the court system's pages
+name them, so that is ours to build, as a weekly roster. The 19th West gains an eighth judge on 1
+January 2027 (Act 220 of 2025), a dated row in `ar/WATCH.md` beside the annual re-check. The two
+rank second and third by area, under the U.S. House: a Court of Appeals district averages 19,683
+km2 and a circuit 4,921, just over a Senate district's 3,937. A law setting court districts that
+has no free copy anyone can read is evidence for the state-publishing ask.
+
+**SCHOOL BOARD ZONES ARE DRAWN SINCE 2026-10-16, FROM THE SECRETARY OF STATE'S STATEWIDE LAYER.**
+`school-board-district` (labelled School Board Zone) draws the 965 zones the boards of 176 school
+districts elect members from, from the Arkansas GIS Office's `SCHOOL_BOARD_ZONES` layer, which the
+Secretary of State compiles for election administration. It is pre-built by
+`ar/scripts/build_ar_school_board_districts.py` through the fleet module
+`scripts/published_district_layers.py`. The card names the zone and its school district, and where
+a board has resolved to elect every member at large and is changing a seat at a time, says when it
+resolved, from the GIS Office's notes of 9 April 2026 read through the Internet Archive because the
+page now redirects. A board elected wholly at large has no zones, and the empty card says so. No
+statewide list of board members has been found, so the card names nobody (gap
+`ar-school-board-members`). The layer states no licence, which is evidence for the publishing ask.
+The quarterly re-check is in `ar/WATCH.md`.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 234 districts
 for Arkansas and its elementary and secondary tilings hold none, and the unified districts' land
@@ -169,8 +210,8 @@ other instance via `scripts/compose_app.py`.
 
 - Metro: Arkansas (`arkansas`) — https://districtry.com/ar/
 - Geocoders: address Photon (Arkansas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Arkansas-bounded, serial >=1s queue)
-- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74; quorum-court 6; county-subdivision Big Rock Township; voting-precinct Precinct 098. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
-- Layers: 13 registered (political 4, safety 2, schools 1, geography 6); `registerLayer(` floor 11. Debug namespace `window.ArkansasExplorer`.
+- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74; quorum-court 6; county-subdivision Big Rock Township; voting-precinct Precinct 098; ar-court-of-appeals 6; ar-circuit-court 6th Judicial Circuit. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
+- Layers: 16 registered (political 6, safety 2, schools 2, geography 6); `registerLayer(` floor 14. Debug namespace `window.ArkansasExplorer`.
 - Scheduled workflows: `update-ar-congress-roster.yml` (Mon 17:23 UTC); `update-ar-legislature-roster.yml` (Tue 17:23 UTC); `update-ar-county-officials.yml` (Wed 17:23 UTC); `ar-validate-sources.yml` (1st of month 19:43 UTC).
 - Source registry: `ar/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

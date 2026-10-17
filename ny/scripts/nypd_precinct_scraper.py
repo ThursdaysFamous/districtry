@@ -36,6 +36,21 @@ garage), or a spreadsheet date where an address was ("May-47 50 Avenue" for
 108's 5-47 50 Avenue). Each page's "Contact Information" block states the
 station's address and its desk telephone, so both are read here.
 
+THE STATION'S MAP POINT IS GEOCODED FROM THAT ADDRESS, and only kept when two
+tests agree (2026-10-16). The nearest-station card used the same FacDB rows, so
+it listed firehouses, a juvenile centre and a landfill garage as police
+stations, and put the 40th at 257 Alexander Avenue where NYPD now gives 567 East
+149th Street. Each address is sent to NYC Planning's GeoSearch
+(geosearch.planninglabs.nyc), the city's own geocoder over its address
+database, and the answer is kept only if (1) the house number it returns is the
+one NYPD printed and (2) the point lies inside that precinct's own polygon in
+y76i-bdw7. Measured that day: 75 of 78 pass on the first query. Two pass on a
+narrower retry — 19 1/2 Pitt Street (the 7th) matches as 19 Pitt Street, and
+the Central Park precinct, whose address is "86th and Transverse Rd", is found
+by name as GeoSearch's "Central Park Precinct" venue — and both still have to
+land inside their own precinct. A precinct that passes neither gets no point
+and is printed; it is never placed by guess.
+
 Writes an intermediate JSON with source_url + scraped_at per record. A page
 that WAF-blocks or omits a label yields a null field — never guessed. build_nypd_roster.py resolves this into data/app/nypd-precinct-info.json.
 
@@ -50,13 +65,15 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
-SOCRATA = "https://data.cityofnewyork.us/resource/y76i-bdw7.json?$select=precinct&$limit=1000"
+SOCRATA = "https://data.cityofnewyork.us/resource/y76i-bdw7.geojson?$limit=1000"
+GEOSEARCH = "https://geosearch.planninglabs.nyc/v2/search?"
 PAGE = "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/{slug}-precinct.page"
 # precinct number -> the slug nyc.gov actually serves, for the three that are
 # named rather than numbered (see the module docstring for how each was proven).
@@ -100,10 +117,85 @@ def _get(url, timeout=45):
         return r.read().decode("utf-8", "replace")
 
 
-def precinct_numbers():
-    rows = json.loads(_get(SOCRATA))
-    nums = sorted({int(r["precinct"]) for r in rows if r.get("precinct") not in (None, "")})
-    return nums
+def precinct_shapes():
+    """precinct number -> its boundary geometry, from the same dataset the map draws."""
+    shapes = {}
+    for f in json.loads(_get(SOCRATA)).get("features", []):
+        pct = (f.get("properties") or {}).get("precinct")
+        if pct not in (None, "") and f.get("geometry"):
+            shapes[int(pct)] = f["geometry"]
+    return shapes
+
+
+def _in_ring(x, y, ring):
+    inside = False
+    for i in range(len(ring)):
+        x1, y1 = ring[i][0], ring[i][1]
+        x2, y2 = ring[i - 1][0], ring[i - 1][1]
+        if (y1 > y) != (y2 > y) and x < (x2 - x1) * (y - y1) / (y2 - y1) + x1:
+            inside = not inside
+    return inside
+
+
+def in_geometry(pt, geom):
+    """Even-odd within a Polygon, any part of a MultiPolygon — the app's own rule."""
+    polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
+    return any(sum(_in_ring(pt[0], pt[1], r) for r in poly) % 2 == 1 for poly in polys)
+
+
+def _house(text):
+    """The house number a street line starts with, in one shape: "64-2" and
+    "64-02" are the same Queens number, and "2271-89" (a range) is its first."""
+    m = re.match(r"^\s*(\d+)(?:-(\d+))?", text or "")
+    if not m:
+        return None
+    if m.group(2) is None:
+        return m.group(1)
+    # A Queens number keeps its second part; a Manhattan-style range does not.
+    # GeoSearch answers the first number alone for a range, so both are accepted.
+    return m.group(1) + "-" + str(int(m.group(2)))
+
+
+def _search(text):
+    url = GEOSEARCH + urllib.parse.urlencode({"text": text, "size": 1})
+    feats = json.loads(_get(url)).get("features") or []
+    return feats[0] if feats else None
+
+
+def geocode_station(street, city, name, shape):
+    """[lng, lat] for the station, or None. See the module docstring for the
+    two tests every answer has to pass."""
+    want = _house(street)
+    tries = [(street + ", " + city, "house")]
+    whole = re.match(r"^(\d+)\s+\d+/\d+\s+(.*)$", street)
+    if whole:  # "19 1/2 Pitt Street" -> "19 Pitt Street"
+        tries.append((whole.group(1) + " " + whole.group(2) + ", " + city, "house-whole"))
+    tries.append((name + " Precinct", "venue"))
+    for text, kind in tries:
+        f = _search(text)
+        if not f:
+            continue
+        props = f.get("properties") or {}
+        pt = (f.get("geometry") or {}).get("coordinates")
+        if not pt or not in_geometry(pt, shape):
+            continue
+        if kind == "house":
+            got = _house(props.get("housenumber"))
+            if not (got and want and (got == want or want.startswith(got + "-"))):
+                continue
+        elif kind == "house-whole":
+            if _house(props.get("housenumber")) != whole.group(1):
+                continue
+        elif "PRECINCT" not in (props.get("name") or "").upper():
+            continue
+        return [round(pt[0], 6), round(pt[1], 6)], kind
+    return None, None
+
+
+def station_name(n):
+    """What NYPD calls the precinct: its name where it has one, else its ordinal."""
+    slug = NAMED_PAGES.get(int(n))
+    return slug.replace("-", " ").title() if slug else ordinal(n)
 
 
 def commander_from_html(page_html):
@@ -189,13 +281,15 @@ def main():
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
     limit = int(argv[argv.index("--limit") + 1]) if "--limit" in argv else None
 
-    nums = precinct_numbers()
+    shapes = precinct_shapes()
+    nums = sorted(shapes)
     if limit:
         nums = nums[:limit]
     scraped_at = os.environ.get("SCRAPED_AT") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
     records = {}
-    found = with_address = 0
+    found = with_address = with_point = 0
+    unplaced = []
     for n in nums:
         url = page_url(n)
         commander = address = phone = None
@@ -209,17 +303,31 @@ def main():
             commander = None
         if commander:
             found += 1
+        point = how = None
         if address:
             with_address += 1
-        records[str(n)] = {"commander": commander, "address": address, "phone": phone,
-                           "source_url": url, "scraped_at": scraped_at}
+            try:
+                point, how = geocode_station(address[0], address[1], station_name(n), shapes[n])
+            except Exception:
+                point = None
+            if point:
+                with_point += 1
+            else:
+                unplaced.append(n)
+        records[str(n)] = {"commander": commander, "name": station_name(n),
+                           "address": address, "phone": phone, "point": point,
+                           "point_how": how, "source_url": url, "scraped_at": scraped_at}
         time.sleep(0.3)  # courteous to nyc.gov
 
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w") as f:
         json.dump({"precincts": records}, f, indent=2, ensure_ascii=False)
-    print("wrote %s: %d precincts, %d with a commander, %d with a station address"
-          % (out_path, len(records), found, with_address), file=sys.stderr)
+    print("wrote %s: %d precincts, %d with a commander, %d with a station address, "
+          "%d with a map point" % (out_path, len(records), found, with_address, with_point),
+          file=sys.stderr)
+    for n in unplaced:
+        print("  no map point for precinct %d: %s" % (n, ", ".join(records[str(n)]["address"])),
+              file=sys.stderr)
 
 
 if __name__ == "__main__":

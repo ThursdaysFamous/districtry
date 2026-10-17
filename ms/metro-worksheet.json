@@ -85,7 +85,7 @@
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
       "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
-    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🎷", "explorer_name": "districtry Mississippi",
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
       "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
@@ -136,7 +136,7 @@
         "answers": "The U.S. House district covering the point, and the representative holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 4 features for Mississippi, measured 2026-10-15. Mississippi did not redraw for 2026: the 120th-Congress map and the 119th's (layer 4) carry the same four districts with identical land areas.",
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 4 features for Mississippi, measured 2026-10-15. Mississippi did not redraw for 2026: the 120th-Congress map and the 119th's (layer 4) carry the same four districts with identical land areas. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
           }
         ],
@@ -216,7 +216,7 @@
         "answers": "The Mississippi Senate district covering the point, and the senator holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 52 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved nine Senate districts (1, 2, 11, 19, 34, 41, 42, 44 and 45) for the special elections of 4 November 2025. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.",
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 52 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved nine Senate districts (1, 2, 11, 19, 34, 41, 42, 44 and 45) for the special elections of 4 November 2025. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
@@ -234,7 +234,7 @@
         "answers": "Which county contains the point, the five supervisors on its board, and its five election commissioners.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
@@ -252,7 +252,7 @@
         "answers": "The Mississippi House district covering the point, and the representative holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 122 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved five House districts (16, 22, 36, 39 and 41). Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.",
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 122 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved five House districts (16, 22, 36, 39 and 41). Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
           }
         ],
@@ -288,7 +288,7 @@
         "answers": "The supervisor district covering the point, and the supervisor and the election commissioner elected from it, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five of each.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries the lines drawn after the 2010 census, which are never drawn; 8 of those counties are drawn from their own maps instead (below).",
+            "label": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries older lines, which are never drawn: in 54 of them every resident is in the same district as on the Census's map of January 2010 (measured 2026-10-16). 13 of the 70 are drawn from other published maps instead (below).",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22"
           },
           {
@@ -296,16 +296,36 @@
             "url": "https://gis.cmpdd.org/server/rest/services/Hosted"
           },
           {
-            "label": "Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census still carries the county's earlier plan. Redrawn along whole 2020 census blocks in the same way.",
+            "label": "Covington County — the supervisor district layer of the parcel viewer the county's website links to, where it is called Supervisor Districts 2023, whose 2023 voting precincts each lie inside one of its districts for all but 17 of the county's 18,340 residents in the 2020 census, against 896 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/NEW_DISTRICTS/FeatureServer/0"
+          },
+          {
+            "label": "Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census's lines there put every resident in the same district as its map of January 2010. Redrawn along whole 2020 census blocks in the same way.",
             "url": "https://geo.co.harrison.ms.us/server/rest/services/AGO/HarrisonCounty_SupervisorDistrict/FeatureServer/0"
           },
           {
             "label": "Lamar County — the supervisor district layer of the parcel viewer the county's website links to, which matches the printed map of the districts the county publishes, dated 9 August 2022. Redrawn along whole 2020 census blocks in the same way.",
             "url": "https://services1.arcgis.com/mz3jHVSffoNsLuEB/arcgis/rest/services/Lamar_Service/FeatureServer/15"
+          },
+          {
+            "label": "Lee County — the map published online as Lee Supervisor Districts 2022, which the Lee County Circuit Clerk's 2024 voting precinct map follows: that map names each precinct piece's supervisor district, and agrees with these lines for all but 10 of the county's 83,343 residents in the 2020 census, against 13,351 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services3.arcgis.com/j2GTvlDqmJmX3REZ/arcgis/rest/services/New_Districts/FeatureServer/4"
+          },
+          {
+            "label": "Pearl River County — the supervisor district layer of the Find My Supervisor map on the county's website, which matches the printed map of the districts effective 1 January 2023 that the county publishes beside it, and the 2023 voting precinct map published with it. Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/91"
+          },
+          {
+            "label": "Perry County — the supervisor district layer of the Find My Supervisor map on the county's website, whose 2023 voting precincts each lie inside one of its districts for all but 8 of the county's 11,511 residents in the 2020 census, against 444 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9"
+          },
+          {
+            "label": "Tippah County — the map published online as the Tippah County 2022 Redistricting Map, which calls these lines the 2022 Supervisor Districts; who publishes it is not established. The 2024 voting precinct map published as the Tippah County Circuit Clerk Map names each precinct's supervisor district, and agrees with these lines for all of the county's 21,815 residents in the 2020 census and with the Census's lines for all but 669 (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Administrative_Boundaries/FeatureServer/4"
           }
         ],
         "people": "ms-county-officials.json, the roster the County card reads: the supervisor and the election commissioner elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.",
-        "applies": "20 of Mississippi's 82 counties; hidden in the other 62, which the Data gaps panel lists and explains."
+        "applies": "25 of Mississippi's 82 counties; hidden in the other 57, which the Data gaps panel lists and explains."
       }
     },
     {
@@ -484,9 +504,9 @@
       },
       {
         "file": "ms-supervisor-districts.json",
-        "min_features": 100,
-        "max_features": 100,
-        "note": "The county supervisor districts of the 20 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 8 from the county's own map, redrawn along whole 2020 census blocks."
+        "min_features": 125,
+        "max_features": 125,
+        "note": "The county supervisor districts of the 25 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 13 from other published maps, redrawn along whole 2020 census blocks."
       },
       {
         "file": "tribal-areas.json",
@@ -554,8 +574,8 @@
       },
       {
         "file": "ms-supervisor-counties.json",
-        "min_keys": 20,
-        "note": "The 20 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+        "min_keys": 25,
+        "note": "The 25 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
       },
       {
         "file": "coverage-gaps.json",
@@ -575,7 +595,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ms-shell-v4",
+    "cache_name": "districtry-ms-shell-v7",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

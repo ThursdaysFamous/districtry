@@ -1,0 +1,16 @@
+{
+ "districts_per_board": {
+  "Indianapolis Public Schools": 5
+ },
+ "fetched": "2026-10-16",
+ "fingerprint": {
+  "districts": 5,
+  "sha256": "53589a171b82079912aebacdee4d71d24ad7afcfcef8a3fd0741314988a8278f"
+ },
+ "item": "e6f88342259e4e1ca4edfc08d9874f10",
+ "layer": "https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/9",
+ "layer_edited": null,
+ "part_records_joined": 0,
+ "shipped_sha256": "3a6e39f91a6083a53a869c84d66e0d8fc0e68b3433cb4ad74f9169fa845cb68a",
+ "skipped_records": 0
+}

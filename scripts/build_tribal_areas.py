@@ -853,6 +853,12 @@ def stamp(feature, councils, state=None):
     for k in [k for k in p if k.startswith("roster")]:
         del p[k]
     p.update(_no_roster_props(p["aiannh"], councils, state, bool(p.get("nations"))))
+    # The district sentence depends on the council as well as the land, so a
+    # re-read that starts or stops naming members' districts rewrites it here.
+    if "districts" in p:
+        p["districtsNote"] = _districts_note(
+            p["districts"], p.get("landClass"),
+            council_has_districts(p["aiannh"], councils))
     return feature
 
 

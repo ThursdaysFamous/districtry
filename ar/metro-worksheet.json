@@ -84,7 +84,9 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
     [
@@ -125,10 +127,54 @@
       }
     },
     {
+      "id": "ar-court-of-appeals",
+      "label": "Court of Appeals District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "7 Court of Appeals districts of whole counties, 19,683 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a congressional district (34,445 km2), larger than a judicial circuit (4,921 km2)",
+      "source": {
+        "answers": "The Court of Appeals district covering the point: the counties it is made of, and how many of the court's twelve judges its voters elect.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following Act 1812 of 2003's list of each district's counties as the Arkansas GIS Office's metadata for its Appeals Court Districts layer quotes it (read 2026-10-16), and held county by county to that layer. The act was not read at source: the official Code is published by LexisNexis behind a page that needs a browser's scripts, and the two free copies tried refuse this project's client.",
+            "url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html"
+          },
+          {
+            "label": "Arkansas Judiciary — the Court of Appeals' district map page, which lists each district's judgeships (two in Districts 1, 2, 3, 4 and 6, one in Districts 5 and 7)",
+            "url": "https://arcourts.gov/courts/court-of-appeals/map"
+          }
+        ],
+        "people": "No judge is named yet: the court's own pages name every judge, and this app does not publish them yet; recorded as gap ar-appeals-judges. The card says how many of the court's twelve judges the district elects and links the court's district page, which names them.",
+        "applies": "Arkansas — statewide, all 75 counties."
+      }
+    },
+    {
+      "id": "ar-circuit-court",
+      "label": "Judicial Circuit",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "28 judicial circuits of whole counties, 4,921 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a Court of Appeals district, larger than a State Senate district (3,937 km2)",
+      "source": {
+        "answers": "The judicial circuit covering the point: its circuit court, how many judges the circuit's voters elect, and whether a federal court order divides it into election subdistricts.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following the Administrative Office of the Courts' circuit judge directory, which lists each judge under every county the judge serves (read 2026-10-16), and held county by county to the Arkansas GIS Office's Circuit Court Districts layer. The five circuits a federal court order (Hunt v. State of Arkansas) divides into election subdistricts are drawn whole.",
+            "url": "https://arcourts.gov/directories/circuit-judges"
+          },
+          {
+            "label": "Arkansas GIS Office — the Circuit Court Districts layer's metadata, which summarises the court order",
+            "url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.CIRCUIT_COURT_export.html"
+          }
+        ],
+        "people": "No judge is named yet: the directory names every circuit judge, and this app does not publish them yet; recorded as gap ar-circuit-judges. The card gives the circuit's number of judges, from the directory, and links it.",
+        "applies": "Arkansas — statewide, all 75 counties."
+      }
+    },
+    {
       "id": "ar-senate",
       "label": "Arkansas Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 4,
       "rank_note": "35 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The Arkansas Senate district covering the point, and the senator holding it.",
@@ -146,7 +192,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 5,
       "rank_note": "75 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point, its county judge, and the justices of the peace on its quorum court.",
@@ -164,7 +210,7 @@
       "id": "ar-house",
       "label": "Arkansas House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 6,
       "rank_note": "100 House districts — smaller on average than a county, larger than a school district",
       "source": {
         "answers": "The Arkansas House district covering the point, and the representative holding it.",
@@ -182,7 +228,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 7,
       "rank_note": "234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The public school district covering the point.",
@@ -200,7 +246,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 8,
       "rank_note": "942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -218,7 +264,7 @@
       "id": "quorum-court",
       "label": "Quorum Court District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 9,
       "rank_note": "775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town",
       "source": {
         "answers": "The justice of the peace district covering the point, its county, the county judge who presides over the quorum court, and the district's justice where a source says who it is.",
@@ -236,7 +282,7 @@
       "id": "county-subdivision",
       "label": "Township",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 10,
       "rank_note": "820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town",
       "source": {
         "answers": "The township containing the point, and its county.",
@@ -251,10 +297,32 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board Zone",
+      "group": "schools",
+      "area_rank": 11,
+      "rank_note": "965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)",
+      "source": {
+        "answers": "The zone a school board elects a member from, and the school district whose board it is. Where a board has resolved to elect every member at large and is changing a seat at a time, the card says when it resolved.",
+        "boundary": [
+          {
+            "label": "Arkansas GIS Office — SCHOOL_BOARD_ZONES, layer 32 of its Boundaries service, which the Arkansas Secretary of State compiles “to aid in election administration and future redistricting”: 965 zones on 176 school districts, measured 2026-10-16, pre-built by ar/scripts/build_ar_school_board_districts.py and shipped with the app. It credits the Secretary of State, is provided as is, and states no licence.",
+            "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/32"
+          },
+          {
+            "label": "Arkansas GIS Office — its notes of 9 April 2026 on the school board zone update, naming the twelve boards that resolved to elect every member at large and when; read through the Internet Archive's copy of 13 May 2026, because the page itself now redirects",
+            "url": "https://web.archive.org/web/20260513222106/https://gis.arkansas.gov/2026/04/09/date-update-school-board-zones/"
+          }
+        ],
+        "people": "NO NAMES YET. No statewide list of Arkansas's school board members has been found — the Department of Education's report-card feed carries no board field — so the card names no one rather than guessing; recorded as gap ar-school-board-members.",
+        "applies": "The 176 Arkansas school districts whose boards elect some or all members from zones. A board elected wholly at large has no zones, and the empty card says so."
+      }
+    },
+    {
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 12,
       "rank_note": "2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -272,7 +340,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 13,
       "rank_note": "501 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -290,7 +358,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -308,7 +376,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -326,7 +394,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -341,7 +409,7 @@
       }
     }
   ],
-  "min_register_layer": 11,
+  "min_register_layer": 14,
   "anchor_point": {
     "lat": 34.7465,
     "lng": -92.2896,
@@ -375,6 +443,14 @@
     {
       "layer": "voting-precinct",
       "expected": "Precinct 098"
+    },
+    {
+      "layer": "ar-court-of-appeals",
+      "expected": "6"
+    },
+    {
+      "layer": "ar-circuit-court",
+      "expected": "6th Judicial Circuit"
     }
   ],
   "negative_point": {
@@ -434,6 +510,24 @@
         "min_features": 2920,
         "max_features": 2920,
         "note": "Every Arkansas voting precinct, pre-built by ar/scripts/build_ar_precincts.py through scripts/statewide_precincts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,920 count on the drawn file, after the eight records that are further pieces of seven precincts are joined into them). 9.3 MB, 2.44 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "ar-school-board-zones.json",
+        "min_features": 965,
+        "max_features": 965,
+        "note": "Every Arkansas school board zone, pre-built by ar/scripts/build_ar_school_board_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 965 count, after the Jasper district's zone 3, published in two pieces, is joined into one). 5.1 MB, 1.40 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "ar-appeals-districts.json",
+        "min_features": 7,
+        "max_features": 7,
+        "note": "The 7 Court of Appeals districts, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following Act 1812 of 2003's county lists."
+      },
+      {
+        "file": "ar-judicial-circuits.json",
+        "min_features": 28,
+        "max_features": 28,
+        "note": "The 28 judicial circuits, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following the circuit judge directory's county lists."
       }
     ],
     "rosters": [

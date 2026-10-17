@@ -143,6 +143,21 @@
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a house number ----------
+   * Digits with an optional letter or a hyphenated second part ("2668",
+   * "123A", "89-11" in Queens), or a Wisconsin grid number: a direction and
+   * digits, once or twice ("N1234", "W123N4567"), which rural Wisconsin and
+   * the counties around Milwaukee use for every address. Photon holds them
+   * as written: asked on 2026-10-16 for Devil's Lake State Park's address,
+   * S5975 Park Rd in Baraboo, and for a two-part number in Menomonee Falls,
+   * it answered both numbers. Until that day only digits were read here, so
+   * a place shared with a grid address had no address to fall back to, and
+   * an answer at one could not count as carrying its number. A grid
+   * number's digits run to three or more, so a place named "N2 Bar" is
+   * still a name. Read with the "i" flag. */
+  var HOUSE_NUMBER = "(?:\\d+[a-z]?(?:-\\d+)?|[nsew]\\d+[nsew]\\d{3,}[a-z]?|[nsew]\\d{3,}[a-z]?)";
+  var OPENS_WITH_ADDRESS = new RegExp("^\\s*" + HOUSE_NUMBER + "\\s+\\S", "i");
+
   /* ---------- a place's name before its address ----------
    * A Google Maps link shared from the Android app carries no position. It
    * names the place as one string, its name and then its address
@@ -152,12 +167,13 @@
    * Lodge string, though it holds the lodge by name. So when text a map link
    * carried matches nothing whole, the app's search box and the front
    * door's both try the address alone. Returns null unless the text opens
-   * with words and a later part, after a comma, opens with a house number. */
+   * with a name (not itself an address) and a later part, after a comma,
+   * opens with a house number. */
   function addressAfterName(q) {
     var parts = String(q).split(",");
-    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    if (parts.length < 2 || OPENS_WITH_ADDRESS.test(parts[0])) return null;
     for (var i = 1; i < parts.length; i++) {
-      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+      if (OPENS_WITH_ADDRESS.test(parts[i])) return parts.slice(i).join(",").trim();
     }
     return null;
   }
@@ -172,7 +188,7 @@
    * in the town of Oglesby, about 6 km from the lodge. A single such answer
    * would be selected as the place that was shared. */
   function labelCarriesNumber(label, address) {
-    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    var m = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s", "i").exec(String(address || ""));
     if (!m) return false;
     return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
   }
@@ -243,7 +259,7 @@
    * because West and East Madison Street are miles apart. */
   function addressParts(address) {
     var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
-    var m = /^(\d+[a-z]?(?:-\d+)?)\s+(.+)$/i.exec(parts[0] || "");
+    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(parts[0] || "");
     if (!m || parts.length < 2) return null;
     // a unit at the end of the street line is not part of the street's name
     var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
@@ -283,11 +299,77 @@
     String(label || "").split(",").forEach(function (part) {
       var low = part.trim().toLowerCase();
       if (low && (low === town || low === a.zip)) inTown = true;
-      var got = streetNameKey(part.trim().replace(/^\d+[a-z]?(?:-\d+)?\s+/i, ""));
+      var got = streetNameKey(part.trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
       if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
           (!got.post || !want.post || got.post === want.post)) onStreet = true;
     });
     return onStreet && inTown;
+  }
+
+  /* ---------- the state a place's address names ----------
+   * The installed app's launcher opens a shared place in the state the
+   * reader used last, and until 2026-10-16 that app searched for it there:
+   * a place in Wisconsin shared from a phone whose last map was Illinois's
+   * was looked for in Illinois, where a search bounded to the state either
+   * found nothing and offered a row to tap for Wisconsin, or found an
+   * Illinois street of the same name. An address names its own state, so
+   * the text a map link carries is read for it first (ENGINE
+   * geocoder-search, and the front door's address box): a postal code at
+   * the end, after a comma, in capitals or before a ZIP code ("Baraboo, WI
+   * 53913", "Peoria, IL"), or a state's name there ("Baraboo, Wisconsin").
+   * Only the end is read, so "Wisconsin Dells Inn, 1 Main St, Rockford, IL
+   * 61101" is in Illinois. Returns the code in lower case, which is also
+   * the tag of the app for that state, or "" when the text names none. */
+  var US_STATE_NAMES = {
+    al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
+    co: "Colorado", ct: "Connecticut", de: "Delaware", dc: "District of Columbia",
+    fl: "Florida", ga: "Georgia", hi: "Hawaii", id: "Idaho", il: "Illinois",
+    "in": "Indiana", ia: "Iowa", ks: "Kansas", ky: "Kentucky", la: "Louisiana",
+    me: "Maine", md: "Maryland", ma: "Massachusetts", mi: "Michigan", mn: "Minnesota",
+    ms: "Mississippi", mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada",
+    nh: "New Hampshire", nj: "New Jersey", nm: "New Mexico", ny: "New York",
+    nc: "North Carolina", nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon",
+    pa: "Pennsylvania", ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota",
+    tn: "Tennessee", tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia",
+    wa: "Washington", wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming"
+  };
+  function addressStateTag(text) {
+    // a country written after the address ("…, WI 53913, USA") is not a state
+    var t = String(text || "").trim()
+      .replace(/(?:,\s*|\s+)(?:usa|u\.s\.a\.?|u\.s\.?|us|united states(?: of america)?)\s*$/i, "").trim();
+    var m = /,\s*([a-z]{2})(\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase()) && (m[2] || /^[A-Z]{2}$/.test(m[1]))) {
+      return m[1].toLowerCase();
+    }
+    m = /,\s*([a-z][a-z .]*?)(?:\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m) {
+      var name = m[1].replace(/\s+/g, " ").toLowerCase();
+      for (var k in US_STATE_NAMES) {
+        if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
+      }
+    }
+    return "";
+  }
+  // A state's name as it reads in a sentence: "in Ohio", "in the District
+  // of Columbia".
+  function stateInSentence(tag) {
+    return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
+  }
+  /* The link handed to another app for a place it should search: the text
+   * rebuilt as a link of the kind it came in, which that app's parseMapLink
+   * reads back as the same text from the same maker, so its search treats it
+   * as a link's text (the address alone, the street, the name), not as
+   * typing, and the short link is not looked up a second time. Spaces are
+   * written "+" and commas as they are, the way the makers write their own
+   * links, so it reads as words in the search box it lands in; punctuation
+   * at the very end is written in % form, since mapLinkUrl drops it from a
+   * link as the end of a sentence. */
+  function mapLinkForText(link) {
+    var q = encodeURIComponent(link.text).replace(/%20/g, "+").replace(/%2C/gi, ",")
+      .replace(/[.,;:!?)\]]+$/, function (tail) {
+        return tail.replace(/[\s\S]/g, function (ch) { return "%" + ch.charCodeAt(0).toString(16).toUpperCase(); });
+      });
+    return (link.source === "apple" ? "https://maps.apple.com/?q=" : "https://www.google.com/maps?q=") + q;
   }
 
   /* A SHORT LINK holds no position: only Google or Apple knows where it

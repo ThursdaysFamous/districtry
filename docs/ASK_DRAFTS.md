@@ -406,8 +406,9 @@ nobody, and the county's own page is the evidence.
 ### Still with no letter to draft
 
 A letter cannot be put in the mailbox until somebody writes it. These have a recipient
-and an argument here and no wording: Asks 13, 25, 33, `wi-oshkosh-council` and
-`ia-pottawattamie-tama-wright-boards`. (Ask 11, CCGISC, was listed here as having no
+and an argument here and no wording: Asks 13, 25, 33 and
+`ia-pottawattamie-tama-wright-boards` (`wi-oshkosh-council` was listed here too and is
+withdrawn as of 2026-10-16: the city's new site is read directly). (Ask 11, CCGISC, was listed here as having no
 recipient address; it was sent on 2026-08-05, and its follow-up is drafted.) The thirteen Illinois county letters that exist only in state notes are being
 rewritten as follow-ups, because every one of them bar Scott was asked in early August
 and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) answered.
@@ -5131,6 +5132,14 @@ round.
 
 ## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
 
+> **WITHDRAWN 2026-10-16. DO NOT SEND.** The question this letter asks has answered itself.
+> On 2026-10-15 the city's council page had moved to `www.oshkoshwi.gov`, whose robots.txt
+> (621 bytes) answered our own reader and permits both pages read, and `#1559` reads the Common
+> Council from there: seven members at large, every one with an `@oshkoshwi.gov` address, in
+> `wi/data/app/wi-municipal-boards.json` as of 2026-10-15. The old host's connection failure no
+> longer stands between the city and the map, so there is nothing left to ask. The text below
+> is kept as it was written; any copy of it in the operator's mailbox should be deleted unsent.
+
 > **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE LETTER STANDS AS WRITTEN.**
 > The rule asks whether names we called unreadable sit in a feed we could read. Oshkosh's do
 > not need one: its council page carries the seven names in its own HTML, which is why the
@@ -5211,8 +5220,8 @@ work out how. A yes costs the city nothing it has not already published.
 ## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
 > **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
-> 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
-> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
+> 14:48 and 14:51 UTC. BURTON WAS ASKED 2026-10-12**, at 15:06 UTC, once the operator had
+> supplied its clerk's address (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
 > correction to each, in the same thread, at 15:21-15:23 UTC; see "Three letters went out on a
 > wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
@@ -5267,7 +5276,7 @@ e-mail addresses from automated readers, so its draft has no recipient yet.
 | Shelby Township | Stanley Grot, Township Clerk | `sgrot@shelbytwp.org` | the township clerk's office page |
 | Northville Township | Cynthia L. Jankowski, Township Clerk | `cjankowski@twp.northville.mi.us` | the township clerk's office page (the office's shared address is Clerk@twp.northville.mi.us) |
 | Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office. Township Clerk Debbie Swanson (`dswanson@ypsitownship.org`) answered it herself |
-| Burton | Racheal Boggs, City Clerk | **none recorded** | NOT FOUND: the city's clerk page hides its e-mail addresses from automated readers, so the address must be read in a browser |
+| Burton | Racheal Boggs, City Clerk | `r.boggs@burtonmi.gov` | supplied by the operator, since the city's clerk page hides its e-mail addresses from automated readers; the letter went 2026-10-12 |
 | Lansing | Chris Swope, City Clerk | `city.clerk@lansingmi.gov` | the Clerk's Office address printed on the city's own published notices |
 | Wyoming | Kelli VandenBerg, City Clerk | `clerk_info@wyomingmi.gov` | a search listing of the city's clerk page; this project does not read the city's site |
 
@@ -6501,7 +6510,7 @@ numbering being checked.
 | Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. The operator asked for it on 2026-10-07 and a follow-up was drafted below the table, then **WITHDRAWN UNSENT the same evening**: the county's own GIS map (its supervisor-district layer, supplied by the operator as a screenshot) numbers the five districts exactly as this instance does, so **the numbering is CHECKED and Chickasaw's supervisors SHIPPED keyed 2026-10-07**. |
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | **ANSWERED 2026-10-07, USABLE and SHIPPED the same day.** The auditor replied "Here is a map of the precincts and supervisor districts" with the county's own precinct map (PDF, dated 2026-02-03), which the operator put in Drive. It draws each of the county's seven precincts wholly inside one district, and those precincts sit in the same-numbered districts of this instance's layer, so the numbering is CHECKED (identity) and Grundy's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
-| Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
+| Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. **ANSWERED 2026-10-16, USABLE and SHIPPED the same day.** The county sent two maps, which the operator put in Drive: its "2021 BOS DISTRICT MAP", which colours every section by district and names each district's supervisor (the same five its board page names), and its voting-precinct map drawn to the 2020 census. Twelve township and eight town census points each land in the same-numbered district of our layer, so the numbering is checked and the five supervisors are keyed. The district map also prints a telephone number beside each supervisor, the same five the board page does; those still do not ship, which stays the operator's question. |
 | Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | **SETTLED WITHOUT A REPLY 2026-10-15** from the Secretary of State's certified 2026 primary returns, which list the precincts voting in each supervisor contest; matched to this instance's precinct layer they place every district (one by elimination), so the numbering is CHECKED and the supervisors are keyed. A reply is still welcome and would be a second witness; nothing further is owed. |
 | Mitchell | Rachel Foster | 5 | **ANSWERED 2026-10-12 (13:54 UTC), USABLE and SHIPPED.** The auditor replied from `rfoster@mitchellcountyiowa.gov` (a different address from the `mitchellcoia.us` one the auditors roster carries), listing the precincts in each district: 2, 3 and 11 in District 1; 1, 4 and 12 in 2; 5 and 6 in 3; 7 and 8 in 4; 9 and 10 in 5. Each of this instance's twelve Mitchell precincts lies at least 99.7% inside one district of our layer, and the county's Districts 1 and 2 are our 2 and 1 (3 to 5 match). The county's own supervisor-district map, which she pointed to (robots.txt checked first: none published, so allowed), colours the same five groups and puts District 1 on the west side of Osage, where our district 2 is. So the numbering is CHECKED and Mitchell's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
@@ -6864,8 +6873,9 @@ weekly refresh will keep proposing the change until the county's page is correct
 > before sending, keeping its substance: the same counts, the page link, the State Board plan and
 > the three ways he can be named, with the public-record note and the offer to wait. The two
 > questions went as a numbered pair, the Brace sentence was left out, and "A few sentences is
-> plenty" and the line about staying out of it were dropped. **No answer yet**; the follow-up clock
-> runs to about 2026-11-01.
+> plenty" and the line about staying out of it were dropped. **ANSWERED 2026-10-16** by telephone
+> to the operator. Nothing further is owed and no follow-up is due. What he said is deliberately not
+> recorded in this public file.
 
 **Why this is asked.** The operator spoke with him by phone after Ask 18 was answered; he suggested
 Kimball Brace (Election Data Services, which collected Illinois's precinct maps for the Census's
@@ -6918,42 +6928,67 @@ Board letter goes without them.
 
 ## Ask il-state-board-precinct-maps — Illinois State Board of Elections: publish the precinct maps it receives in one place
 
-> **NOT YET ASKED — DRAFTED 2026-10-10. HELD** until Dave Ostrander answers
-> `il-grundy-gis-state-board-view` (sent 2026-10-11) or two weeks pass with no answer, which is
-> 2026-10-25. `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director (named in a 7 July 2026
-> Justice Department letter reported by Capitol News Illinois). The Board's website refuses
-> automated readers (`User-agent: *` / `Disallow: /`), so its e-mail contact was not read from here:
-> the operator takes it from the Board's contact page in a browser. Postal: 2329 S. MacArthur Blvd.,
-> Springfield, IL 62704.
+> **SENT 2026-10-17, 00:35:12 UTC, to `webmaster@elections.il.gov`**, subject "For Executive
+> Director Matthews: publishing Illinois's precinct maps in one place", from the operator's own
+> mailbox (read off the sent folder). Drafted 2026-10-10 and revised twice on 2026-10-16: the
+> operator approved the revised letter that evening, then allowed one read of the Board's own
+> website to check it (nothing from the site was saved).
+>
+> **The operator reworded the draft below before sending it, and the sent wording is what was
+> asked.** It is shorter and keeps the substance: the county counts and the page link, the three
+> numbered asks (digital files with the PDFs, one place to download both, and in time a statewide
+> map like Wisconsin's and Minnesota's, with the Census Bureau's 2028 program), the law-change
+> paragraph, the line that this is not about voter records, and the offer to wait until the canvass
+> is done. The law-change paragraph went as "Section 11-6 could be amended to require
+> machine-readable submissions during precinct redraws", without the district lines, the Board
+> publishing the files, or Wisconsin as the precedent. No staff member is named, and the paragraph
+> on what the Board already has became one clause.
+>
+> **Follow-up: not before 2026-12-07**, the Monday after the canvass ends on 4 December, because the
+> letter says no answer is expected before then. The Board's 17 November meeting takes public
+> comment while its spring legislative proposals are likely still being chosen.
+>
+> The hold on `il-grundy-gis-state-board-view` ended when it was answered on 2026-10-16.
+>
+> `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director
+> (named on the Board's Executive Staff page). The Board publishes no e-mail address for her: its
+> contact page sends general questions to `webmaster@elections.il.gov`, so the letter goes there
+> with her name in the subject. Postal: 2329 S. MacArthur Blvd., Springfield, IL 62704.
 
 **Why this is asked.** Section 11-6 of the Election Code (10 ILCS 5/11-6, as amended by Public Act
 98-691 in 2014) has every election authority send the Board a PDF map of its current precincts and
 post it on any website it maintains, with new maps at least 90 days before the next election after
-precincts change. So the Board already receives every county's map, but only as a PDF, and nothing
-publishes them in one place. Wisconsin's counties file ward maps with the Legislature's technology
-bureau every 15 January and 15 July (Wis. Stat. 5.15(4)(br)), and Minnesota's Secretary of State
-publishes one statewide precinct layer. The asks run smallest first, so that a no to the statewide
-map does not sink the two the Board may be able to do without a change in law (an inference, not a
-lawyer's reading). The section's wording was read through FindLaw's copy of the code, current to
-1 January 2025, because the legislature's site did not answer from here: check it there before
-sending.
+precincts change. So the Board should already receive every election authority's map, but only as a
+PDF, and nothing publishes them in one place. Wisconsin's counties file ward maps with the
+Legislature's technology bureau every 15 January and 15 July (Wis. Stat. 5.15(4)(br)), and
+Minnesota's Secretary of State publishes one statewide precinct layer. The asks run smallest first,
+so that a no to the statewide map does not sink the two the Board may be able to do without a change
+in law (an inference, not a lawyer's reading). The section's wording is as the Board's own 2026
+Guide for Election Authorities states it in its "Precinct Maps" section, which also names Michael
+Gianasi as the Board's contact for counties whose precinct boundaries change. The law-proposal
+paragraph is there because the Board's 15 September 2026 minutes say staff are reviewing legislative
+requests for the spring session, to be presented for Board approval at a future meeting; it is
+conditional and kept apart from the three numbered asks so that a no to it does not sink them. It
+asks for a requirement, from each election authority's next redraw, because the same section already
+requires the PDF to show every district line, so the file adds a format rather than new content, and
+Wisconsin already requires its counties to file these lines.
 
-> Subject: Publishing Illinois's precinct maps in one place
+> Subject: For Executive Director Matthews: publishing Illinois's precinct maps in one place
 >
 > Dear Ms. Matthews,
 >
 > I live in Chicago and run districtry (https://districtry.com/il/), a free, non-commercial website.
 > Anyone can click a point on the map or type an address and see every district that covers it, from
 > their voting precinct and county board district up to Congress, and who represents them there. It
-> now covers 93 of Illinois's 102 counties.
+> now covers 96 of Illinois's 102 counties.
 >
-> The hardest part of keeping it accurate is the precinct map. Since 2014 the Election Code
-> (10 ILCS 5/11-6) has had each election authority send the Board a PDF map of its current precincts,
-> post it on its website, and send new maps at least 90 days before an election whenever its
-> precincts change. So the Board receives every county's map. But a computer cannot tell from a PDF
-> which side of a line an address falls on, so anyone who needs the actual boundaries, whether a
-> newsroom, a civic group, a researcher, a local government or a site like mine, has to collect them
-> from 102 counties one at a time.
+> The hardest part of keeping it accurate is the precinct map. Since 2014 the Election Code (10 ILCS
+> 5/11-6) has had each election authority send the Board a PDF map of its current precincts, post it
+> on its own website, and send new maps at least 90 days before an election whenever its precincts
+> change. So the Board should already receive every election authority's map. But a computer cannot
+> tell from a PDF which side of a line an address falls on, so anyone who needs the actual
+> boundaries, whether a newsroom, a civic group, a researcher, a local government or a site like
+> mine, has to collect them from more than a hundred election offices one at a time.
 >
 > On 10 October I checked what every county publishes. 44 counties publish their precinct map as
 > data a computer can read. 26 post it only in a form a person can look at but a computer cannot
@@ -6965,29 +7000,44 @@ sending.
 > https://districtry.com/il/precinct-maps.html. So the maps mostly exist; they just aren't published
 > in one place in a form people can use.
 >
-> [ONLY WITH DAVE OSTRANDER'S PERMISSION, IN HIS WORDS, NAMED AS HE CHOOSES. For example: "I asked
-> Dave Ostrander, GIS Director for Grundy County, what this would mean for a county GIS office. He
-> told me: '...'" Delete this paragraph if he declines or does not answer.]
+> [One more paragraph goes here in the version that is sent. It is kept out of this public file to
+> protect a source who is not named.]
+>
+> The Board already has much of what this would take. Its guide for election authorities names a
+> staff contact for counties whose precinct boundaries change, and its "Find My Elected Officials"
+> locator already serves legislative, congressional and other districts as map data. As far as I can
+> find, though, the Board's website does not post the precinct maps it receives. If it does and I
+> missed them, a pointer would answer most of this letter.
 >
 > I'd like to ask whether the Board would consider three things. Any one of them would help.
 >
-> 1. Where a county already keeps its precinct map as a digital file, accept that file alongside the
->    PDF the law already asks for.
-> 2. Publish the maps the Board receives in one place on its website, free, so anyone can find every
->    county's current map.
-> 3. In time, combine the digital files into one statewide precinct map, updated on a fixed
->    schedule. Wisconsin's Legislature does this from county filings every January and July, and
->    Minnesota's Secretary of State publishes one statewide precinct map.
+> 1. When a county's precincts change and it keeps the new map as a digital file, ask for that file
+>    along with the PDF the law already requires. If the Board already collects these files, I'd be
+>    glad to know.
+> 2. Publish the precinct maps the Board receives in one place, free: the PDFs for people to read
+>    and, wherever a county has sent one, the map file itself in a standard format anyone can
+>    download and a computer can read. The Board's locator already serves its districts as map data
+>    this way, so precincts could sit beside them.
+> 3. In time, combine those files into one statewide precinct map, updated on a fixed schedule and
+>    free to download. Wisconsin's Legislature does this from county filings every January and July,
+>    and Minnesota's Secretary of State publishes one statewide precinct map. Illinois took part in
+>    the Census Bureau's 2020 voting district program, and the Bureau will ask states for precinct
+>    maps again starting in early 2028, so a map kept up to date would serve that too.
+>
+> If the Board agrees that a change in the law would help, Section 11-6 could require each election
+> authority, starting with its next redraw, to send its precinct map as a map file a computer can
+> read and not only as a PDF, including the district lines the map must already show, and have the
+> Board publish those files for download. Wisconsin's law already has every county file its ward and
+> county board district lines with the state twice a year, so Illinois would not be the first. The
+> Board's legislative proposals for the spring session would be a natural place for such a change.
 >
 > This is only about precinct boundaries. I'm not asking about voter records or any personal
 > information.
 >
-> Your website asks automated programs not to read it, and I respect that, so I haven't checked what
-> the Board itself already posts. If the Board publishes the maps it receives, a pointer to them
-> would answer most of this letter.
->
-> A short answer either way is useful, including a no, or the name of the right person on staff. I'd
-> be glad to share everything I've gathered, or to meet with staff.
+> I know the Board is in the middle of the general election, so I don't expect an answer before the
+> canvass is done. A short answer either way is useful, including a no. I'd be glad to share
+> everything I've gathered, or to talk with Michael Gianasi or whoever on staff works with precinct
+> maps.
 >
 > Thank you for your time.
 >
@@ -6995,17 +7045,20 @@ sending.
 > <YOUR E-MAIL>
 > https://districtry.com/il/
 
-**Before sending:** the counts and the 93 must still match `il/precinct-maps.html` and
+**Before sending:** the counts and the 96 must still match `il/precinct-maps.html` and
 `docs/COUNTY_STATUS.md` on the day it goes. The Board has four members from each party by law, so
 nothing is added that reads as favouring either. The line about voter records is there because in
 April 2024 the Board asked a media company to take down voters' birth dates and addresses it had
 published (Northern Public Radio, 23 April 2024); it heads off that worry. Asking the Board to let
 automated readers back onto its own site is deliberately left out: it would dilute this ask and can
-be its own letter.
+be its own letter. The Board's meetings take up to 5 minutes of comment from anyone who signs in
+(its Public Comment Guidelines, adopted 17 October 2023), and the 17 November 2026 meeting comes
+before its spring proposals are likely approved, so the operator may want to speak there as well.
 
 **Any answer is useful.** A yes to the first two would let every county's current map be found in
 one place; a pointer to maps the Board already posts would answer most of the letter; a clean no
-closes the policy route and leaves a narrow change in law as the fallback.
+closes the policy route and leaves a narrow change in law as the fallback, which the law-proposal
+paragraph has already put in front of the Board.
 
 ## Ask sc-results-site-runner — South Carolina State Election Commission: a way for our weekly program to read the county council results
 
@@ -7574,7 +7627,11 @@ the counties' own sites and the next election's results stay the route.
 
 ## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
 
-> **NOT YET ASKED — DRAFTED 2026-10-15.** To Jim Steil, Director of MARIS (the Mississippi
+> **ASKED 2026-10-16 — DRAFTED 2026-10-15.** The operator rewrote this draft and sent it on
+> 2026-10-16 at 15:05 UTC to `jsteil@mississippi.edu`, and the Letters thread logged it as sent, so
+> the text below is the draft and not the letter that went. If there is no answer by about 6
+> November, the follow-up can point to the live map at https://districtry.com/ms/. To Jim Steil,
+> Director of MARIS (the Mississippi
 > Automated Resource Information System, created by Miss. Code § 57-13-23 as "the mechanism
 > within state government for the storing, processing, extracting and disseminating of useful
 > data and information relating to the state's resources"), at `jsteil@mississippi.edu`. MARIS's
@@ -7584,40 +7641,49 @@ the counties' own sites and the next election's results stay the route.
 > On 2026-10-15 the operator chose to have it made into a Gmail draft ("Make the draft" on the
 > Mississippi thread's decision card), ahead of letters to the counties, because one office could
 > cover all 82 counties, which is the choice made for Tennessee on 2026-10-11
-> (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
-> been searched for earlier correspondence with MARIS; do that before it goes.
+> (`tn-ctas-commissioner-districts`).
 
-**Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
+**Why this is asked.** Mississippi's map names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
-County's District 3 is vacant), and can draw the districts they represent in only 20 counties:
-12 from the Census Bureau's current edition and 8 from the county's own published map, the 8
-added after this letter was drafted. The letter's text does not count what the map draws, so it
-is unchanged. The only statewide map of supervisor districts found is the Census
-Bureau's, where Mississippi's county subdivisions are the supervisor districts. Measured
-2026-10-15 by `ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own
-blocks: the Bureau's current edition differs from its 2020 edition in 12 counties, which the map
-draws; in 64
+County's District 3 is vacant), and can draw the districts they represent in only 25 counties: 12
+from the Census Bureau's current edition and 13 from other published maps, all 13 added after this
+letter was drafted (8 on 2026-10-15, and Lee, Pearl River, Perry, Covington and Tippah on
+2026-10-16). The letter's text does not count what the map draws, so that left it unchanged; its
+body gained two sentences on 2026-10-16, about the Bureau's 2010 edition (below), and the Letters
+thread added them to the Gmail draft the same day, while it was still unsent and the operator had not edited it. The
+only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's county
+subdivisions are the supervisor districts. Measured 2026-10-15 by
+`ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
+Bureau's current edition differs from its 2020 edition in 12 counties, which the map draws; in 64
 counties the lines it shows are unchanged since 2020 and have a total population deviation above
 10% on the 2020 census (the largest district less the smallest, as a share of an equal district: a
 median of 37%, and as much as 304%), which suggests those counties have redrawn them since (an
-inference: nothing published says which counties redrew); in the last 6 they are
-unchanged and balanced, which proves nothing either way. MARIS publishes the Bureau's 2020 file
-as its supervisor district layer (`MS_SupervDists_2020`, publication date 2021-02-01, source
-"Census MAF/TIGER database" of 2021-01-29, read from its metadata 2026-10-15), and its
-`Political/MS_SupervisorDistricts_2020` map service listed no layers when read the same day,
-while it publishes the 2025 legislative maps and county parcels and point addresses county by
-county. A survey the same day of every county's website and planning and development district
-(the record is `/mnt/project-files/ms/supervisor-map-survey/`) found 25 counties publishing a
-usable map: 14 whose own lines differ from the Bureau's current ones, where across those 14
-counties the Bureau's lines place 146,842 of 1,065,116 residents in a different district; 10 whose
-own map confirms the Bureau's; and Tippah, whose current plan was found with its publisher not
-established. 21 counties had nothing online, 20 publish only a copy of the Bureau's lines, 15 only
-older or unresolved layers, and Yazoo a planning-district plan whose date is not established. Two
-planning and development districts publish supervisor maps for many of their counties: the
-Central Mississippi PDD from its own server, and the Golden Triangle PDD from an ArcGIS Online
-organisation whose portal record names it. One state office collecting the counties' current maps
-is the change in how Mississippi publishes this information that the project exists to
-encourage, and a no from MARIS is the evidence that it takes more than asking.
+inference: nothing published says which counties redrew); in the last 6 they are unchanged and
+balanced, which proves nothing either way. Measured 2026-10-16 by the same survey against the
+Bureau's 2010 edition (`tigerWMS_Census2010` layer 28, the January 1, 2010 vintage, whose POP100 is
+the 2010 census's own count of each district): in 52 of the 64, the 2020 edition puts every 2020
+resident in the same district as the 2010 edition, and 49 of those 52 measured more than 10% on the
+2010 census's own counts; those 49 held 1,504,204 of the state's 2,961,279 residents in 2020. Seven
+of the 49 hold a 2020 block of more than 1,000 people, which may be a prison or a campus that a
+plan can leave out of its count; estimated from that block against an equal share, it could account
+for the whole figure only in Coahoma and Sunflower, and the other 47 held 1,456,843 residents, so
+"about half" in the letter holds either way. MARIS publishes the Bureau's 2020 file as its
+supervisor district layer (`MS_SupervDists_2020`, publication date 2021-02-01, source "Census
+MAF/TIGER database" of 2021-01-29, read from its metadata 2026-10-15), and its
+`Political/MS_SupervisorDistricts_2020` map service listed no layers when read the same day, while
+it publishes the 2025 legislative maps and county parcels and point addresses county by county. A
+survey the same day of every county's website and planning and development district (the record is
+`/mnt/project-files/ms/supervisor-map-survey/`) found 25 counties publishing a usable map: 14 whose
+own lines differ from the Bureau's current ones, where across those 14 counties the Bureau's lines
+place 146,842 of 1,065,116 residents in a different district; 10 whose own map confirms the
+Bureau's; and Tippah, whose current plan was found with its publisher not established. 21 counties
+had nothing online, 20 publish only a copy of the Bureau's lines, 15 only older or unresolved
+layers, and Yazoo a planning-district plan whose date is not established. Two planning and
+development districts publish supervisor maps for many of their counties: the Central Mississippi
+PDD from its own server, and the Golden Triangle PDD from an ArcGIS Online organisation whose
+portal record names it. One state office collecting the counties' current maps is the change in how
+Mississippi publishes this information that the project exists to encourage, and a no from MARIS is
+the evidence that it takes more than asking.
 
 > Subject: Mississippi's county supervisor district maps
 >
@@ -7625,7 +7691,7 @@ encourage, and a no from MARIS is the evidence that it takes more than asking.
 >
 > I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
 > a point on a map, or type an address, and see every district that covers it and who represents
-> them there. We are building Mississippi's map now; it is not public yet.
+> them there. Mississippi's map is at https://districtry.com/ms/.
 >
 > For the county boards, we can name every sitting supervisor in all 82 counties from the
 > Secretary of State's directory. What we cannot find is a current map of the districts they
@@ -7633,7 +7699,9 @@ encourage, and a no from MARIS is the evidence that it takes more than asking.
 > district layer is the Bureau's 2020 file. The Bureau's current edition has new lines for only 12
 > counties. In 64 others the lines it still shows are the ones it showed in 2020, and they are out
 > of balance on the 2020 census, most of them badly, which suggests those counties have redrawn
-> them since.
+> them since. In 52 of those 64 they put every resident in the same district as the Bureau's 2010
+> edition did, and in 49 of them they were already out of balance on the 2010 census. Those 49
+> counties are home to about half of Mississippi's residents.
 >
 > On 15 October I looked for each county's own map on its website and its planning and development
 > district's. 25 counties publish one that can be used. In 14 of them the county's map differs from
@@ -7683,8 +7751,12 @@ that needs a change in law, is then the next question; nothing here establishes 
   since, say so.
 - The sentence about the empty map service is a courtesy and can be cut. Check it first: if the
   service shows its layer again, cut it.
-- Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
-  Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
+- The 52, the 49 and "about half" must still match the last line of
+  `ms/scripts/build_ms_supervisor_districts.py --survey`, which re-measures them.
+- Mississippi's map went public on 2026-10-16, and the change that published it made the letter
+  link https://districtry.com/ms/ in place of "We are building Mississippi's map now; it is not
+  public yet". The Gmail draft was made before that, so the Letters thread makes the same edit
+  there, unless the operator has edited the draft, in which case the operator is asked.
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 
