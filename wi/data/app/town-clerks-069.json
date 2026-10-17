@@ -61,6 +61,9 @@
     "clerk": "Diane Chambers",
     "municipality": "Rock Falls",
     "phone": "715-536-5039",
+    "phonesExtra": [
+      "715-966-4056"
+    ],
     "recordUpdated": "2024-01-16",
     "url": "https://townofrockfalls.com/"
   },
@@ -112,6 +115,9 @@
     "deputyClerk": "Barbara Burns",
     "municipality": "Wilson",
     "phone": "715-906-6090",
+    "phonesExtra": [
+      "715-453-6090"
+    ],
     "recordUpdated": "2025-05-27",
     "url": "https://wilson-lincoln-wi.gov/"
   },

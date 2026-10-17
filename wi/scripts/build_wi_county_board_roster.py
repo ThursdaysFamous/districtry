@@ -71,6 +71,19 @@ rather than a placeholder. `phone` was collected by the scraper and silently
 dropped here for a while: ADDING A FIELD TO THE SCRAPER IS NOT ADDING IT TO THE
 APP — the two halves have to agree.
 
+EVERY NUMBER A COUNTY PRINTS BESIDE A SUPERVISOR SHIPS, since 2026-10-17. Adam
+ruled that day, for every state: "if the official government source uses
+personal phone numbers, we publish those." Until then the scraper kept only the
+first number beside a supervisor and did not read three counties' phone columns
+at all (Monroe, Columbia and Manitowoc's personnel pages), because the numbers
+in them are supervisors' home and cell lines. Now the first number is `phone`
+and any further ones are `phonesExtra`, a list in the page's order, each with
+the label the county prints beside it ("cell 715-..."). Before anything is
+written every row's numbers are held to ONE telephone number each by
+wi/scripts/wi_phone_shape.py — no street word, no ZIP code, no "@", no second
+number run in — and a failure names the county and district, never the value.
+MIN_PHONES_EXTRA fails the build when the second numbers stop being read.
+
 Usage:
     python3 wi/scripts/build_wi_county_board_roster.py
     python3 wi/scripts/build_wi_county_board_roster.py --check
@@ -89,6 +102,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # with one measurement behind it beats three drifting copies.
 sys.path.insert(0, os.path.join(os.path.dirname(REPO_ROOT), "scripts"))
 import undeliverable  # noqa: E402
+import wi_phone_shape  # noqa: E402 - this script's own folder
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 GEOMETRY = os.path.join(APP_DATA_DIR, "county-supervisory-districts.json")
 RAW = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache", "wi_county_boards_raw.json")
@@ -110,6 +124,10 @@ MIN_SEATS = 1517       # 1590 today — every supervisory seat Wisconsin files;
                        # the tolerance is the two largest boards
                        # (Dane 37 + Outagamie 36) going dark in one run, which is
                        # what a floor is for — it is never lowered to fit a result
+MIN_PHONES_EXTRA = 4   # seats carrying a second number (`phonesExtra`), counted
+                       # on the file as written, carried counties included;
+                       # measured 2026-10-17: 6 (Green Lake 1, Monroe 2,
+                       # Waupaca 3), and the floor is about two thirds of that
 
 
 def read_on_for(entry):
@@ -343,6 +361,10 @@ def main():
                     row["email"] = addr
                 if member.get("phone"):
                     row["phone"] = member["phone"]
+                # Every further number the county prints beside the supervisor,
+                # in the page's order, since 2026-10-17 (the docstring).
+                if member.get("phonesExtra"):
+                    row["phonesExtra"] = [str(p) for p in member["phonesExtra"]]
                 if member.get("url"):
                     row["profileUrl"] = member["url"]
             # THE PAGE THE NAMES WERE ACTUALLY READ FROM, where that is not
@@ -409,6 +431,24 @@ def main():
     if total < MIN_SEATS:
         raise RuntimeError("%d seats resolved, floor is %d" % (total, MIN_SEATS))
 
+    # ONE TELEPHONE NUMBER PER VALUE, on every row the file will hold — the
+    # carried ones too, since they ship beside the rest. The error names the
+    # county and district only: quoting the value would print into the run log
+    # whatever this check exists to keep out of the data.
+    bad = []
+    for key, row in sorted(roster.items()):
+        if "district" in row:
+            bad += wi_phone_shape.problems(
+                row, "%s district %s" % (row.get("county"), row["district"]))
+    if bad:
+        raise RuntimeError("%d phone value(s) are not one telephone number: %s"
+                           % (len(bad), "; ".join(bad)))
+    seconds = sum(1 for row in roster.values() if row.get("phonesExtra"))
+    if seconds < MIN_PHONES_EXTRA:
+        raise RuntimeError("%d seats carry a second number, floor is %d — a county's "
+                           "page has changed and its further numbers are no longer "
+                           "being read" % (seconds, MIN_PHONES_EXTRA))
+
     for fips, entry in sorted(counties.items()):
         # A county read from anywhere but its own live page says so on the log,
         # so the weekly PR's reviewer can see which rung of the ladder answered.
@@ -431,9 +471,11 @@ def main():
         "%s%s (%d)" % (day, " via %s" % via if via else "", len(cs))
         for (day, via), cs in sorted(per_day.items())), file=sys.stderr)
     dated = sorted({r["county"] for r in roster.values() if r.get("asOf")})
-    print("county-board-members: %d counties, %d seats (%d named, %d vacant%s)%s%s"
+    print("county-board-members: %d counties, %d seats (%d named, %d vacant%s, "
+          "%d with a phone, %d with a second number)%s%s"
           % (len(counties) + len(carry), total, total - vacant - withheld, vacant,
              ", %d withheld" % withheld if withheld else "",
+             sum(1 for row in roster.values() if row.get("phone")), seconds,
              "; carried from a document: %s" % ", ".join(dated) if dated else "",
              "; NOT READ THIS RUN, last read kept: %s" % ", ".join(sorted(carry))
              if carry else ""),

@@ -239,6 +239,30 @@ def clean(text):
     return re.sub(r"\s+", " ", H.unescape(text or "")).strip()
 
 
+# Janesville's Cell Phone cell must hold exactly one telephone number, and any
+# number the contact page prints is found with the second pattern.
+JANESVILLE_ONE_NUMBER = re.compile(r"^\(?\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}$")
+JANESVILLE_NUMBER = re.compile(r"\(?\b\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}\b")
+
+
+def _digits(text):
+    """The digits that identify a telephone line, a leading 1 dropped."""
+    d = re.sub(r"\D", "", text or "")
+    return d[1:] if len(d) == 11 and d.startswith("1") else d
+
+
+def _tel_links_agree(cell_html):
+    """False when a tel: link in the cell dials a different number than the
+    number its own text shows. A link showing no number is not compared."""
+    for href, shown in re.findall(
+            r'(?is)<a\b[^>]*\bhref\s*=\s*["\']?tel:([^"\'>\s]*)[^>]*>(.*?)</a>',
+            cell_html or ""):
+        text = clean(re.sub(r"(?is)<[^>]+>", " ", shown))
+        if re.search(r"\d", text) and _digits(href) != _digits(text):
+            return False
+    return True
+
+
 def scrape_caledonia():
     page = fetch(CALEDONIA_BOARD)
 
@@ -548,12 +572,18 @@ def scrape_janesville():
     `colspan="2"`, so a column index drifts; the HEADER ROW names the columns and
     is what this maps on, failing if the five headings ever change.
 
-    THE CELL-PHONE COLUMN IS READ AND NOT SHIPPED. The city publishes a City
-    Phone and a Cell Phone for each member, and only the first is emitted: a
-    direct city line is the number a resident is meant to use, while the other is
-    a personal handset, published on five of seven records so a column built from
-    it would be partly blank anyway. Nothing filters it later because nothing
-    emits it.
+    THE CELL-PHONE COLUMN SHIPS SINCE 2026-10-17. The city publishes a City
+    Phone and a Cell Phone for each member. Until 2026-10-17 only the City Phone
+    was emitted, on the reasoning that the cell number is a personal handset.
+    Adam ruled that day, for every state, "if the official government source
+    uses personal phone numbers, we publish those", so the cell number is now
+    emitted too, labelled "cell" as the column heading says: in `phonesExtra`
+    after the city line, or as `phone` for a member the table gives no city
+    line. Measured 2026-10-17, five of the seven print one. A cell number that
+    is the member's own city line, that the table prints for two or more
+    members, or that the page prints outside the table (the city's own lines)
+    is not the member's and does not ship; a cell holding anything but one
+    telephone number fails the city rather than shipping part of it.
 
     NO ADDRESS SHIPS. The page gives one mailing address for the whole council
     (City Hall, PO Box 5005) and no member's own, so there is none to exclude.
@@ -574,10 +604,10 @@ def scrape_janesville():
                            "Phone column; the roster cannot be read by heading")
 
     rows = re.findall(r"(?is)<tr[^>]*>(.*?)</tr>", table)
-    cells = [[clean(re.sub(r"(?is)<[^>]+>", " ", c))
-              for c in re.findall(r"(?is)<t[dh][^>]*>(.*?)</t[dh]>", r)]
-             for r in rows]
-    cells = [row for row in cells if row]
+    raw_cells = [re.findall(r"(?is)<t[dh][^>]*>(.*?)</t[dh]>", r) for r in rows]
+    raw_cells = [row for row in raw_cells if row]
+    cells = [[clean(re.sub(r"(?is)<[^>]+>", " ", c)) for c in row]
+             for row in raw_cells]
     if not cells:
         raise RuntimeError("Janesville's contact table has no rows")
 
@@ -592,8 +622,21 @@ def scrape_janesville():
                            "guessed" % (cells[0], want))
     ix = {k: i for i, k in enumerate(head)}
 
-    members = []
+    # How often each number is printed in the table's two phone columns, and
+    # the numbers the page prints outside the table (the city's own lines): a
+    # cell number found in either is not one member's (see the docstring).
+    printed = {}
     for row in cells[1:]:
+        if len(row) == len(head):
+            for col in ("city phone", "cell phone"):
+                key = _digits(row[ix[col]])
+                if key:
+                    printed[key] = printed.get(key, 0) + 1
+    outside = {_digits(n) for n in JANESVILLE_NUMBER.findall(
+        clean(re.sub(r"(?is)<[^>]+>", " ", contact.replace(table, " "))))}
+
+    members = []
+    for row, raw in zip(cells[1:], raw_cells[1:]):
         if len(row) != len(head):
             raise RuntimeError("Janesville: a council row has %d cells against "
                                "%d headings; %r" % (len(row), len(head), row))
@@ -609,8 +652,33 @@ def scrape_janesville():
         if email:
             member["email"] = email
         phone = row[ix["city phone"]]
+        if phone and not _tel_links_agree(raw[ix["city phone"]]):
+            print("  note Janesville: %s's City Phone link dials a different "
+                  "number than its text shows — neither ships" % name,
+                  file=sys.stderr)
+            phone = ""
         if phone:
             member["phone"] = phone
+        cell = row[ix["cell phone"]]
+        if cell and not JANESVILLE_ONE_NUMBER.match(cell):
+            raise RuntimeError("Janesville: %s's Cell Phone cell holds something "
+                               "other than one telephone number — re-read the "
+                               "table before shipping it" % name)
+        key = _digits(cell)
+        if cell and not _tel_links_agree(raw[ix["cell phone"]]):
+            print("  note Janesville: %s's Cell Phone link dials a different "
+                  "number than its text shows — neither ships" % name,
+                  file=sys.stderr)
+        elif cell and key == _digits(phone):
+            pass                       # the city line printed in both columns
+        elif cell and (printed.get(key, 0) > 1 or key in outside):
+            print("  note Janesville: %s's cell number is printed for another "
+                  "member or elsewhere on the page — the city's line, not the "
+                  "member's; not shipped" % name, file=sys.stderr)
+        elif cell and phone:
+            member["phonesExtra"] = ["cell " + cell]
+        elif cell:
+            member["phone"] = "cell " + cell
         term = row[ix["term(s)"]]
         if term:
             member["term"] = term

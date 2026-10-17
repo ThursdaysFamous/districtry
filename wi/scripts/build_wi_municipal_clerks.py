@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Build the clerk, deputy clerk, phone, website and per-record currency date for
-EVERY ONE of Wisconsin's 1,847 municipalities, from the Elections Commission's
-own statewide directory. TWO OUTPUTS, because the app has two cards:
+Build the clerk, deputy clerk, phone (and, since 2026-10-17, second phone),
+website and per-record currency date for EVERY ONE of Wisconsin's 1,847
+municipalities, from the Elections Commission's own statewide directory. TWO
+OUTPUTS, because the app has two cards:
 
   data/app/wi-municipal-clerks.json   608 cities and villages, keyed by
                                       7-digit Census PLACE GEOID, read by the
@@ -115,6 +116,24 @@ WHAT DELIBERATELY DOES NOT SHIP, both measured rather than assumed:
     village, which is this card. Extracting the field and dropping it later
     would leave a leak one edit away; `field_of` refuses the label instead.
 
+PHONE 2 SHIPS SINCE 2026-10-17. Every record has a `Phone 1` and 547 also have
+a `Phone 2`; until that day only Phone 1 was read, because a second number
+beside a clerk is often the clerk's own cell or home line. Adam ruled that day,
+for every state: "if the official government source uses personal phone
+numbers, we publish those." So Phone 2 ships, unlabelled because the directory
+gives it no label, in `phonesExtra` after Phone 1 (in `phone` for a record with
+no Phone 1, which none has today). What does NOT ship, measured 2026-10-17
+across all 547: a Phone 2 that is Phone 1 again (4); one that is the record's
+own Fax number (7), because a fax is not a telephone a reader can call; one
+printed under another municipality for a DIFFERENT clerk (2, the Towns of
+Caledonia and Merrimac), because a line two officials share is an office's and
+not either person's; and one the directory prints with digits missing (1, the
+City of Mayville), named in MALFORMED_PHONE_2 so a second such record fails
+the build instead of being dropped unseen. Every value that ships is held to
+one telephone number by wi/scripts/wi_phone_shape.py, and a failure names the
+municipality, never the number. Phone 1 is read exactly as before: 49 records
+give a Phone 1 equal to their own Fax and those still ship as they did.
+
 THE TOWN JOIN NEEDS THE COUNTY AND THE CITY JOIN DOES NOT, which is measured
 rather than a matter of taste: Wisconsin has a Town of Unity in Clark AND a
 Town of Unity in Trempealeau, and they are different towns with different
@@ -149,6 +168,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
+import wi_phone_shape  # noqa: E402 - this script's own folder
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INSTANCE_ROOT = os.path.dirname(SCRIPT_DIR)
@@ -186,6 +206,20 @@ EXPECT_WEC_TOWNS = 1239      # the directory's towns
 MIN_TOWN_PHONES = 1150       # measured 1,238 of 1,239 (the Town of Marion,
                              # Waushara, is the one with none)
 MIN_TOWN_WEBSITES = 750      # measured 830
+
+# PHONE 2, since 2026-10-17 (the module docstring). Measured that day: 194 of
+# the 608 cities and villages and 339 of the 1,239 towns carry a Phone 2 that
+# ships; each floor is about two thirds of its count, so a reshaped column
+# fails the build instead of emptying quietly.
+MIN_PHONES_2 = 130
+MIN_TOWN_PHONES_2 = 226
+# The Phone 2 values printed as something other than one telephone number,
+# by WEC municipality code. Not shipped; a new one fails the build so a person
+# looks at it, and one that is fixed upstream fails until its entry goes.
+MALFORMED_PHONE_2 = {
+    "14251": "City of Mayville: the number is printed with its last four "
+             "digits missing (measured 2026-10-17)",
+}
 
 # SEVENTY-ONE COUNTY FILES, NOT SEVENTY-TWO. Milwaukee County contains no
 # towns at all — every one of its 19 municipalities is a city or a village,
@@ -371,6 +405,89 @@ def split_muni(lines):
     return kind, bare, county.strip()
 
 
+def _digits(value):
+    """Every digit of a printed number, the extension's included, so two
+    extensions on one line are two lines."""
+    return re.sub(r"\D", "", value or "")
+
+
+def _clerk_key(lines):
+    """A clerk's first and last name, enough to tell one person from another
+    across the municipalities one clerk serves."""
+    words = (field_of(lines, "CLERK") or "").upper().split()
+    return (words[0], words[-1]) if words else None
+
+
+def second_phones(parsed):
+    """{WEC code: Phone 2 as printed} for every record whose Phone 2 ships.
+
+    Read across the whole directory at once, because whether a number belongs
+    to one clerk is a question about every other record that prints it. The
+    rules are the module docstring's PHONE 2 paragraph.
+    """
+    owners = collections.defaultdict(set)    # digits -> {(code, clerk)}
+    rows = []
+    for code, _kind, _name, _county, cols in parsed:
+        lines = cols["cell"]
+        row = {"code": code, "who": _clerk_key(lines),
+               "p1": field_of(lines, "Phone 1"), "p2": field_of(lines, "Phone 2"),
+               "fax": field_of(lines, "Fax")}
+        rows.append(row)
+        for f in ("p1", "p2", "fax"):
+            if row[f]:
+                owners[_digits(row[f])].add((code, row["who"]))
+    out, malformed, not_one, skipped = {}, set(), [], collections.Counter()
+    names = {code: "%s of %s" % (kind.title(), name.title())
+             for code, kind, name, _county, _cols in parsed}
+    for row in rows:
+        p2 = row["p2"]
+        if not p2:
+            continue
+        why = wi_phone_shape.problem(p2)
+        if why == "is not one telephone number":
+            malformed.add(row["code"])
+            continue
+        if why:
+            not_one.append("%s (WEC %s): Phone 2 %s" % (names[row["code"]], row["code"], why))
+            continue
+        key = _digits(p2)
+        if row["p1"] and key == _digits(row["p1"]):
+            skipped["the same number as Phone 1"] += 1
+            continue
+        if row["fax"] and key == _digits(row["fax"]):
+            skipped["the record's own Fax number"] += 1
+            continue
+        others = {o for o in owners[key] if o[0] != row["code"] and
+                  (o[1] is None or row["who"] is None or o[1] != row["who"])}
+        if others:
+            skipped["printed for another municipality's clerk"] += 1
+            continue
+        out[row["code"]] = p2
+    if not_one:
+        fail("a Phone 2 is not one telephone number — %s" % "; ".join(not_one))
+    if malformed != set(MALFORMED_PHONE_2):
+        new = sorted(malformed - set(MALFORMED_PHONE_2))
+        gone = sorted(set(MALFORMED_PHONE_2) - malformed)
+        fail("the Phone 2 values printed as something other than a number are no "
+             "longer the recorded ones.%s%s Read MALFORMED_PHONE_2."
+             % ("" if not new else " NEW: %s." % ", ".join(
+                    "%s (WEC %s)" % (names[c], c) for c in new),
+                "" if not gone else " Now a number (retire its entry): %s."
+                % ", ".join(gone)))
+    return out, skipped
+
+
+def put_second_phone(entry, p2):
+    """Phone 2 rides after Phone 1, or is the first number where there is no
+    Phone 1."""
+    if not p2:
+        return
+    if entry.get("phone"):
+        entry["phonesExtra"] = [p2]
+    else:
+        entry["phone"] = p2
+
+
 def iso_date(us):
     """"12/18/2023" -> "2023-12-18". The Commission's per-record currency."""
     try:
@@ -505,7 +622,7 @@ def cousub_towns():
     return towns
 
 
-def build_towns(parsed, counties):
+def build_towns(parsed, counties, phones2):
     """{county FIPS: {cousub GEOID: entry}} for the County Subdivision card.
 
     PER COUNTY because the whole set is ~582 KB and this is a network-first
@@ -516,7 +633,7 @@ def build_towns(parsed, counties):
     """
     towns = cousub_towns()
     by_county, matched, multi = {}, set(), 0
-    stats = {"phones": 0, "sites": 0, "deputies": 0, "clerks": 0}
+    stats = {"phones": 0, "phones2": 0, "sites": 0, "deputies": 0, "clerks": 0}
     for code, kind, name, county, cols in parsed:
         if kind != "TOWN":
             continue
@@ -542,6 +659,7 @@ def build_towns(parsed, counties):
             value = field_of(lines, label)
             if value:
                 entry[field] = person_case(value) if field != "phone" else value
+        put_second_phone(entry, phones2.get(code))
         web = "".join(cols["web"]).strip() or None
         if web:
             entry["url"] = web            # published, not authored — see above
@@ -551,6 +669,7 @@ def build_towns(parsed, counties):
         stats["clerks"] += 1 if entry.get("clerk") else 0
         stats["deputies"] += 1 if entry.get("deputyClerk") else 0
         stats["phones"] += 1 if entry.get("phone") else 0
+        stats["phones2"] += 1 if code in phones2 else 0
         stats["sites"] += 1 if entry.get("url") else 0
         by_county.setdefault(fips, {})[town["GEOID"]] = entry
 
@@ -583,6 +702,9 @@ def build_towns(parsed, counties):
     if stats["sites"] < MIN_TOWN_WEBSITES:
         fail("only %d of %d towns carry a website (floor %d)"
              % (stats["sites"], shipped, MIN_TOWN_WEBSITES))
+    if stats["phones2"] < MIN_TOWN_PHONES_2:
+        fail("only %d of %d towns carry a Phone 2 (floor %d)"
+             % (stats["phones2"], shipped, MIN_TOWN_PHONES_2))
     return by_county, stats
 
 
@@ -610,6 +732,7 @@ def build(pdf_path):
         fail("%d municipalities are filed under MULTIPLE COUNTIES, expected %d"
              % (multi, EXPECT_MULTI_COUNTY))
 
+    phones2, phones2_skipped = second_phones(parsed)
     counties = county_fips_map()
     places = tiger_places()
     if len(places) != EXPECT_PLACES:
@@ -649,6 +772,7 @@ def build(pdf_path):
             entry["deputyClerk"] = person_case(deputy)
         if phone:
             entry["phone"] = phone
+        put_second_phone(entry, phones2.get(code))
         if web:
             # `url` and not `website`: validate_card_links.py's PUBLISHED_KEYS
             # is {"url", "profileUrl"}, and a municipality's own site is exactly
@@ -679,16 +803,21 @@ def build(pdf_path):
 
     phones = sum(1 for e in roster.values() if e.get("phone"))
     sites = sum(1 for e in roster.values() if e.get("url"))
+    second = sum(1 for e in roster.values() if e.get("wecCode") in phones2)
     if phones < MIN_PHONES:
         fail("only %d of %d records carry a phone (floor %d)"
              % (phones, len(roster), MIN_PHONES))
     if sites < MIN_WEBSITES:
         fail("only %d of %d records carry a website (floor %d)"
              % (sites, len(roster), MIN_WEBSITES))
-    towns, town_stats = build_towns(parsed, counties)
+    if second < MIN_PHONES_2:
+        fail("only %d of %d records carry a Phone 2 (floor %d)"
+             % (second, len(roster), MIN_PHONES_2))
+    towns, town_stats = build_towns(parsed, counties, phones2)
     return roster, towns, {
         "records": len(records), "unmatched": unmatched,
-        "phones": phones, "sites": sites,
+        "phones": phones, "phones2": second, "phones2_skipped": phones2_skipped,
+        "sites": sites,
         "deputies": sum(1 for e in roster.values() if e.get("deputyClerk")),
         "towns": town_stats,
     }
@@ -747,9 +876,13 @@ def main():
           "%d cities and villages joined to the card's place fabric (%d of %d), "
           "%s" % (stats["records"], len(roster), len(roster), EXPECT_PLACES,
                   "verified" if args.check else "written"))
-    print("  clerk %d/%d · deputy %d · phone %d · website %d"
+    print("  clerk %d/%d · deputy %d · phone %d · second phone %d · website %d"
           % (sum(1 for e in roster.values() if e.get("clerk")), len(roster),
-             stats["deputies"], stats["phones"], stats["sites"]))
+             stats["deputies"], stats["phones"], stats["phones2"], stats["sites"]))
+    print("  Phone 2 not shipped: %s, and %d printed as no number (MALFORMED_PHONE_2)"
+          % (", ".join("%d %s" % (n, why) for why, n in
+                       sorted(stats["phones2_skipped"].items())) or "none",
+             len(MALFORMED_PHONE_2)))
     if dates:
         print("  the Commission's own per-record currency runs %s to %s — the "
               "card dates each row rather than the file" % (dates[0], dates[-1]))
@@ -763,8 +896,9 @@ def main():
               "`french-island-census-lag` gap can be retired.")
     t = stats["towns"]
     print("  towns: %d shipped across %d county file(s) — clerk %d, deputy %d, "
-          "phone %d, website %d" % (sum(len(v) for v in towns.values()), len(towns),
-                                    t["clerks"], t["deputies"], t["phones"], t["sites"]))
+          "phone %d, second phone %d, website %d"
+          % (sum(len(v) for v in towns.values()), len(towns), t["clerks"],
+             t["deputies"], t["phones"], t["phones2"], t["sites"]))
     print("  3 of TIGER's %d town records have no clerk, all recorded: %s"
           % (EXPECT_TOWN_RECORDS,
              "; ".join("%s (%s)" % (k[1].title(), v.split(";")[0])

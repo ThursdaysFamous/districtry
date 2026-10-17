@@ -14152,6 +14152,14 @@ function initWisconsinExplorer() {
         var person = { name: String(member.name), badge: "Supervisor" };
         if (member.role) person.note = String(member.role);
         if (member.phone) person.phone = String(member.phone);
+        // FURTHER NUMBERS the county prints for the supervisor, such as a cell
+        // line beside the work number, with the county's own label inside the
+        // string ("cell 715-555-0100"). Shown since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is published even where it may be the official's own.
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
         if (member.email) person.email = String(member.email);
         var profile = safeHttpUrl(member.profileUrl);
         var links = [];
@@ -14609,6 +14617,10 @@ function initWisconsinExplorer() {
         if (clerk.clerk) {
           var lead = { name: String(clerk.clerk), badge: "Clerk" };
           if (clerk.phone) lead.phone = String(clerk.phone);
+          // the directory's Phone 2, as on the City or Village card
+          if (clerk.phonesExtra && clerk.phonesExtra.length) {
+            lead.phonesExtra = clerk.phonesExtra.map(String);
+          }
           staff.push(lead);
         }
         if (clerk.deputyClerk) {
@@ -14869,6 +14881,11 @@ function initWisconsinExplorer() {
           var person = { name: String(m.name) };
           if (m.role) person.badge = String(m.role);
           if (m.phone) person.phone = String(m.phone);
+          // a second number the municipality prints, with its own label
+          // ("cell" at Janesville), shown since Adam's ruling of 2026-10-17
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
           if (m.email) person.email = String(m.email);
           return person;
         })));
@@ -14919,9 +14936,16 @@ function initWisconsinExplorer() {
         var staff = [];
         if (clerk.clerk) {
           var lead = { name: String(clerk.clerk), badge: "Clerk" };
-          // Phone rides the clerk because it is the office's published line;
-          // there is no e-mail to ride it (see the loader's comment).
+          // The directory's Phone 1 rides the clerk, and its Phone 2 follows
+          // in phonesExtra, unlabelled because the directory gives it no
+          // label. Phone 2 is shown since Adam's ruling of 2026-10-17 that a
+          // number a government source prints beside an official is
+          // published even where it may be the official's own line. There is
+          // no e-mail to ride it (see the loader's comment).
           if (clerk.phone) lead.phone = String(clerk.phone);
+          if (clerk.phonesExtra && clerk.phonesExtra.length) {
+            lead.phonesExtra = clerk.phonesExtra.map(String);
+          }
           staff.push(lead);
         }
         if (clerk.deputyClerk) {

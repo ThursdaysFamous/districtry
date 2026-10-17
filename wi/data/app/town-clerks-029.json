@@ -18,6 +18,9 @@
     "clerk": "Jessica Bongle",
     "municipality": "Clay Banks",
     "phone": "920-493-7383",
+    "phonesExtra": [
+      "920-746-9617"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://tn.claybanks.wi.gov/"
   },
@@ -74,6 +77,9 @@
     "clerk": "Amy Flok",
     "municipality": "Sevastopol",
     "phone": "920-746-1230",
+    "phonesExtra": [
+      "920-818-0799"
+    ],
     "recordUpdated": "2023-01-20",
     "url": "https://townofsevastopolwi.gov/"
   },

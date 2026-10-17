@@ -23,6 +23,9 @@
     "clerk": "Kelly Bartholomew",
     "municipality": "Elk Mound",
     "phone": "715-704-0312",
+    "phonesExtra": [
+      "715-379-8243"
+    ],
     "recordUpdated": "2025-01-09",
     "url": "http://www.townofelkmound.com/"
   },
@@ -31,6 +34,9 @@
     "deputyClerk": "Peggy Johnson",
     "municipality": "Grant",
     "phone": "715-962-0010",
+    "phonesExtra": [
+      "715-205-3511"
+    ],
     "recordUpdated": "2025-09-30",
     "url": "https://townofgrant-dunn.com/"
   },
@@ -60,6 +66,9 @@
     "deputyClerk": "Becky Segebrecht",
     "municipality": "New Haven",
     "phone": "715-643-3703",
+    "phonesExtra": [
+      "952-215-1066"
+    ],
     "recordUpdated": "2024-10-16",
     "url": "https://townofnewhavenwi.com/"
   },

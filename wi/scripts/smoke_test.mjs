@@ -479,6 +479,38 @@ try {
     await context.close();
   }
 
+  // 2a1. THE ANCHOR TOWN'S CLERK SHOWS BOTH NUMBERS THE DIRECTORY PRINTS.
+  //      The anchor is in the Town of Marathon, county subdivision 5507349075;
+  //      no incorporated place holds it (TIGERweb, 2026-10-17, with
+  //      Caledonia's interior point as the control). That town's clerk record
+  //      carries the Elections Commission's Phone 2, which ships since Adam's
+  //      ruling of 2026-10-17 ("if the official government source uses
+  //      personal phone numbers, we publish those"). The numbers expected are
+  //      read from the shipped file, so a new edition of the directory changes
+  //      what is expected; a record carrying no second number is reported,
+  //      never passed as a check. The card shows numbers with no-break
+  //      hyphens, folded back before comparing.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=county,county-subdivision`);
+    const want = await page.evaluate(async () => {
+      const r = await fetch("data/app/town-clerks-073.json").then((x) => x.json());
+      const rec = r["5507349075"] || {};
+      return [rec.phone].concat(rec.phonesExtra || []).filter(Boolean);
+    });
+    const info = await cardText(page, "county-subdivision");
+    const text = (info.text || "").replace(/‑/g, "-");
+    if (want.length < 2) {
+      console.log("  SKIP  county-subdivision clerk's second number — the anchor town's clerk record carries none");
+    } else {
+      const missing = want.filter((n) => !text.includes(n));
+      check("the anchor town's clerk shows both numbers the Elections Commission prints",
+        !info.error && missing.length === 0,
+        `${missing.length} of ${want.length} missing; card ${text.slice(0, 160)}`);
+    }
+    await context.close();
+  }
+
   // 2a2. THE OTHER HALF OF THE ZIP COVERAGE CHECK IN 2b. A hide test alone
   //      passes for a layer that is hidden everywhere, which would be a ZIP
   //      toggle no reader ever sees — so the anchor must show the same layer
