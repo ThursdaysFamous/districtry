@@ -288,12 +288,16 @@
         "answers": "The supervisor district covering the point, and the supervisor and the election commissioner elected from it, in the counties where this app has confirmed the current district lines. The layer is hidden in the other counties, where the County card still names all five of each.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries older lines, which are never drawn: in 54 of them every resident is in the same district as on the Census's map of January 2010 (measured 2026-10-16). 11 of the 70 are drawn from their own maps instead (below).",
+            "label": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each supervisor district as a nonfunctioning county subdivision; pre-built and shipped with the app for the 12 counties whose lines the Census changed after the 2020 census and whose five districts hold nearly equal numbers of people on that census's own blocks (3.2% to 9.0% apart, measured 2026-10-15): Choctaw, Clay, DeSoto, Grenada, Lawrence, Lowndes, Neshoba, Noxubee, Oktibbeha, Tate, Webster and Winston. In the other 70 counties the Census still carries older lines, which are never drawn: in 54 of them every resident is in the same district as on the Census's map of January 2010 (measured 2026-10-16). 13 of the 70 are drawn from other published maps instead (below).",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22"
           },
           {
             "label": "Central Mississippi Planning and Development District — the supervisor district layers of its county map viewers for Copiah, Hinds, Madison, Rankin, Simpson and Warren counties. Five are named for the plan adopted after the 2020 census (2021 in Rankin, 2022 in Copiah, Madison, Simpson and Warren), and all six give each district's population, which matches the 2020 census's own blocks to the person (in Rankin, after setting aside two blocks the plan leaves out). Redrawn here along whole 2020 census blocks: each block goes to the district that covers most of it, so every line drawn is the Census Bureau's.",
             "url": "https://gis.cmpdd.org/server/rest/services/Hosted"
+          },
+          {
+            "label": "Covington County — the supervisor district layer of the parcel viewer the county's website links to, where it is called Supervisor Districts 2023, whose 2023 voting precincts each lie inside one of its districts for all but 17 of the county's 18,340 residents in the 2020 census, against 896 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/NEW_DISTRICTS/FeatureServer/0"
           },
           {
             "label": "Harrison County's own map server — its supervisor district layer, whose service says the lines were approved in 2023 as a result of the 2020 census. The Census's lines there put every resident in the same district as its map of January 2010. Redrawn along whole 2020 census blocks in the same way.",
@@ -314,10 +318,14 @@
           {
             "label": "Perry County — the supervisor district layer of the Find My Supervisor map on the county's website, whose 2023 voting precincts each lie inside one of its districts for all but 8 of the county's 11,511 residents in the 2020 census, against 444 for the Census's lines (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
             "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9"
+          },
+          {
+            "label": "Tippah County — the map published online as the Tippah County 2022 Redistricting Map, which calls these lines the 2022 Supervisor Districts; who publishes it is not established. The 2024 voting precinct map published as the Tippah County Circuit Clerk Map names each precinct's supervisor district, and agrees with these lines for all of the county's 21,815 residents in the 2020 census and with the Census's lines for all but 669 (measured 2026-10-16). Redrawn along whole 2020 census blocks in the same way.",
+            "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Administrative_Boundaries/FeatureServer/4"
           }
         ],
         "people": "ms-county-officials.json, the roster the County card reads: the supervisor and the election commissioner elected from each district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026), joined by district number.",
-        "applies": "23 of Mississippi's 82 counties; hidden in the other 59, which the Data gaps panel lists and explains."
+        "applies": "25 of Mississippi's 82 counties; hidden in the other 57, which the Data gaps panel lists and explains."
       }
     },
     {
@@ -496,9 +504,9 @@
       },
       {
         "file": "ms-supervisor-districts.json",
-        "min_features": 115,
-        "max_features": 115,
-        "note": "The county supervisor districts of the 23 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 11 from the county's own map, redrawn along whole 2020 census blocks."
+        "min_features": 125,
+        "max_features": 125,
+        "note": "The county supervisor districts of the 25 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 13 from other published maps, redrawn along whole 2020 census blocks."
       },
       {
         "file": "tribal-areas.json",
@@ -566,8 +574,8 @@
       },
       {
         "file": "ms-supervisor-counties.json",
-        "min_keys": 23,
-        "note": "The 23 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+        "min_keys": 25,
+        "note": "The 25 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
       },
       {
         "file": "coverage-gaps.json",
@@ -587,7 +595,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ms-shell-v6",
+    "cache_name": "districtry-ms-shell-v7",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
