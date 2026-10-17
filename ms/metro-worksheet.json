@@ -85,7 +85,7 @@
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
       "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
-    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🎷", "explorer_name": "districtry Mississippi",
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
       "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
@@ -136,7 +136,7 @@
         "answers": "The U.S. House district covering the point, and the representative holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 4 features for Mississippi, measured 2026-10-15. Mississippi did not redraw for 2026: the 120th-Congress map and the 119th's (layer 4) carry the same four districts with identical land areas.",
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 4 features for Mississippi, measured 2026-10-15. Mississippi did not redraw for 2026: the 120th-Congress map and the 119th's (layer 4) carry the same four districts with identical land areas. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
           }
         ],
@@ -216,7 +216,7 @@
         "answers": "The Mississippi Senate district covering the point, and the senator holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 52 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved nine Senate districts (1, 2, 11, 19, 34, 41, 42, 44 and 45) for the special elections of 4 November 2025. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.",
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 52 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved nine Senate districts (1, 2, 11, 19, 34, 41, 42, 44 and 45) for the special elections of 4 November 2025. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
@@ -252,7 +252,7 @@
         "answers": "The Mississippi House district covering the point, and the representative holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 122 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved five House districts (16, 22, 36, 39 and 41). Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.",
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 122 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved five House districts (16, 22, 36, 39 and 41). Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
           }
         ],
@@ -587,7 +587,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ms-shell-v5",
+    "cache_name": "districtry-ms-shell-v6",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "36.16590,-86.78440"; // the State Capitol, Nashville, Davidson County
-const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissioner", "voting-precinct"];
-const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19", "voting-precinct": "Precinct 19-4" };
+const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissioner", "voting-precinct", "tn-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19", "voting-precinct": "Precinct 19-4", "tn-judicial-district": "20" };
 const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.
 const APP_NAME = "districtry Tennessee";
-const EXPECT_LAYERS = 16;
+const EXPECT_LAYERS = 18;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -371,12 +371,15 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     TENNESSEE BORDERS THREE LIVE INSTANCES, so it has both halves to
-  //     prove. Kentucky, North Carolina and, since its go-live (2026-10-15),
-  //     Arkansas are covered, so a point just over any of those lines must
-  //     open that app; the other five neighbours (Virginia, Georgia, Alabama,
-  //     Mississippi, Missouri) are not, so a point over their lines must be
-  //     selected HERE, where the app says nothing answers there (1a2-ii). This
+  //     TENNESSEE BORDERS FOUR LIVE INSTANCES, so it has both halves to
+  //     prove. Kentucky, North Carolina, Arkansas (live since 2026-10-15) and
+  //     Mississippi (live since 2026-10-16) are covered, so a point just over
+  //     any of those lines must open that app; the other four neighbours
+  //     (Virginia, Georgia, Alabama, Missouri) are not, so a point over their
+  //     lines must be selected HERE, where the app says nothing answers there
+  //     (1a2-ii). Southaven joined as a case in the change that published
+  //     Mississippi: it sits about 2.6 km south of this app's own outline,
+  //     inside Mississippi's outline in fleet-outlines.json and no other. This
   //     instance answers its own side from the coverage rings the wash
   //     retained — no fetch. Chicago proves the file is still read for ground
   //     nowhere near this state.
@@ -386,6 +389,7 @@ try {
       { name: "Bowling Green, Kentucky", lat: 36.9685, lng: -86.4808, want: "https://districtry.com/ky/" },
       { name: "Murphy, North Carolina", lat: 35.0876, lng: -84.0213, want: "https://districtry.com/nc/" },
       { name: "West Memphis, Arkansas", lat: 35.1465, lng: -90.1845, want: "https://districtry.com/ar/" },
+      { name: "Southaven, Mississippi", lat: 34.9690, lng: -90.0130, want: "https://districtry.com/ms/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -419,8 +423,12 @@ try {
     }, { n: EXPORTS_NAME });
     await page.waitForTimeout(3000);
     const url = page.url();
+    // Still under BASE means still this app. This asked for the URL NOT to
+    // name one of a list of sibling tags, and that list had fallen behind the
+    // fleet (it lacked South Carolina, Arkansas and Mississippi): the tag a
+    // list lacks reads as staying here.
     check("a click on Huntsville, Alabama stays in this app",
-      !/districtry\.com\/(il|wi|ia|mi|ny|ca|mn|ky|in|nc|ok)\//.test(url), url);
+      url.startsWith(BASE), url);
     await context.close();
   }
 

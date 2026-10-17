@@ -1,0 +1,33 @@
+{
+ "districts_per_board": {
+  "Blount County": 7,
+  "Chester County": 6,
+  "Claiborne County": 7,
+  "Crockett County": 12,
+  "Davidson County": 9,
+  "Fayette County": 3,
+  "Hardeman County": 3,
+  "Henry County": 5,
+  "Jefferson County": 4,
+  "Johnson County": 3,
+  "Lawrence County": 9,
+  "Macon County": 5,
+  "Madison County": 6,
+  "Sevier County": 5,
+  "Shelby County": 9,
+  "Sumner County": 11,
+  "Washington County": 3,
+  "Wilson County": 7
+ },
+ "fetched": "2026-10-16",
+ "fingerprint": {
+  "districts": 114,
+  "sha256": "820110eebb6c6292cb7871c35454158b8a32579279457dcc7012cefeed5c5b7e"
+ },
+ "item": "8ad9190272dc44eaa2c81e146b8d20c8",
+ "layer": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/5",
+ "layer_edited": "2026-09-10T20:33:11Z",
+ "part_records_joined": 0,
+ "shipped_sha256": "7493f6e53a0cc9b5a0270911572aaeaab4ee2c28b966718ca399f3e33ac8db3f",
+ "skipped_records": 1
+}

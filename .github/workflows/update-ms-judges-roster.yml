@@ -28,8 +28,8 @@ name: Update Mississippi judges
 # and nothing of theirs is read or kept: the builder reads only each judge's
 # name, and this job never saves what it fetched.
 #
-# MISSISSIPPI IS DARK, so nothing here is served yet; the job runs anyway so
-# the file is current on the day the instance goes live.
+# The job was scheduled while Mississippi was dark, so that the file would be
+# current on the day the instance went live.
 
 on:
   schedule:

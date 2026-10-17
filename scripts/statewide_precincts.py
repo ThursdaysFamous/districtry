@@ -613,24 +613,25 @@ def card_claims(spec):
     return ("drawn here to within %s metres" % spec.interval,) + spec.card_claims
 
 
-def check_card(spec):
+def check_card(spec, what="precinct card"):
     """The sentences the precinct card must carry, looked for in the module
     that loads this builder's file: from the module comment above its loader
-    to the next module's. Returns the problems found."""
+    to the next module's. Returns the problems found. `what` names the card
+    in the messages, for the school board builders that share this."""
     path = os.path.join(spec.instance, "index.html")
     with open(path, encoding="utf-8") as fh:
         html = fh.read()
     ref = '"data/app/%s"' % spec.out_file
     if html.count(ref) != 1:
-        return ["%s/index.html names %s %d times; the precinct card's loader names it once"
-                % (spec.tag, ref, html.count(ref))]
+        return ["%s/index.html names %s %d times; the %s's loader names it once"
+                % (spec.tag, ref, html.count(ref), what)]
     at = html.index(ref)
     start = html.rfind("/* ----------", 0, at)
     end = html.find("/* ----------", at)
     if start < 0 or end < 0:
         return ["%s/index.html: no module comment around the loader of %s" % (spec.tag, ref)]
     module = re.sub(r'"\s*\+\s*"', "", html[start:end])
-    return ["the precinct card in %s/index.html does not say %r" % (spec.tag, claim)
+    return ["the %s in %s/index.html does not say %r" % (what, spec.tag, claim)
             for claim in card_claims(spec) if claim not in module]
 
 

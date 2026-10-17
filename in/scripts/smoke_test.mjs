@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "39.76860,-86.16260"; // the Indiana Statehouse, downtown Indianapolis (Marion County)
-const OFFLINE = ["county", "us-house", "in-senate", "in-house", "voting-precinct", "county-council"];
-const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97", "voting-precinct": "CN055", "county-council": "12" };
+const OFFLINE = ["county", "us-house", "in-senate", "in-house", "voting-precinct", "county-council", "in-court-of-appeals"];
+const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97", "voting-precinct": "CN055", "county-council": "12", "in-court-of-appeals": "2" };
 const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.
 const APP_NAME = "districtry Indiana";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 16;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the

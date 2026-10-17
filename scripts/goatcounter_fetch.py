@@ -119,11 +119,24 @@ def session(tok, start, end):
     if r.status_code != 200:
         sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
     DASH.append(r.text)
-    m = re.search(r'js-total-utc"?>([\d,]+)<', r.text)
+    return s, read_total(r.text)
+
+
+def read_total(text):
+    m = re.search(r'js-total-utc"?>([\d,]+)<', text)
     if not m:
         sys.exit("dashboard: no js-total-utc in %d bytes. The dashboard's "
-                 "markup has changed; run --explore." % len(r.text))
-    return s, int(m.group(1).replace(",", ""))
+                 "markup has changed; run --explore." % len(text))
+    return int(m.group(1).replace(",", ""))
+
+
+def period_total(s, start, end):
+    """The dashboard's own total for a period, on an authenticated session."""
+    r = s.get(SITE + "/", timeout=TIMEOUT,
+              params={"period-start": start, "period-end": end})
+    if r.status_code != 200:
+        sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
+    return read_total(r.text)
 
 
 def widget(s, n, total, start, end, **extra):
@@ -475,6 +488,70 @@ def collect(s, total, start, end):
                     (5, "systems"), (6, "locations"), (7, "languages"),
                     (8, "sizes")]:
         out[name] = rows(widget(s, n, total, start, end))
+    # Last, because it changes the session's period: everything above is read
+    # against the window, and this asks the dashboard about one day at a time.
+    out["daily_referrers"] = daily_referrers(s, end)
+    return out
+
+
+# How many of the window's last days get a referrer list of their own.
+REF_DAYS = 14
+# Pages of a referrer list asked for before giving up on reaching its end.
+REF_PAGES = 6
+
+
+def all_rows(s, n, total, start, end):
+    """Every row of a bar widget, following its "show more" by offset.
+
+    THE OFFSET IS AN ASSUMPTION ABOUT A DASHBOARD THAT PUBLISHES NO API, so it
+    is checked rather than trusted: a page that repeats a key already read, or
+    adds nothing, means the offset did nothing, and the list is returned with
+    `more` still true. A list cut short must say so, because a breakdown that
+    looks complete while missing its smaller rows is how a total silently
+    stops adding up.
+    """
+    out, seen = [], set()
+    for _ in range(REF_PAGES):
+        page = rows(widget(s, n, total, start, end, offset=len(out)))
+        more = bool(MORE and MORE[0])
+        fresh = [r for r in page if r["key"] not in seen]
+        if len(fresh) < len(page) or not fresh:
+            return out, True if out else more
+        out += fresh
+        seen.update(r["key"] for r in fresh)
+        if not more:
+            return out, False
+    return out, True
+
+
+def daily_referrers(s, end):
+    """Where each of the last REF_DAYS days' visits came from, one day at a time.
+
+    WHY ONE REQUEST PER DAY. The referrer widget answers for the period it is
+    asked about and has no daily series, so the two-month list says nothing
+    about which day a source sent its visits. The first look at the question
+    (2026-10-16) worked it out by subtracting one day's saved two-month list
+    from the next, which breaks whenever a source enters or leaves the top six
+    and read 9 October as Yahoo +77 and Bluesky -76. Asking each day for
+    itself is exact.
+
+    Each day is asked with ITS OWN total, for the reason session() gives: a
+    widget handed another period's total reports the wrong share of the wrong
+    whole.
+    """
+    last = datetime.date.fromisoformat(end)
+    out = []
+    for back in range(REF_DAYS - 1, -1, -1):
+        day = (last - datetime.timedelta(days=back)).isoformat()
+        total = period_total(s, day, day)
+        if total:
+            got, more = all_rows(s, 2, total, day, day)
+        else:
+            got, more = [], False
+        out.append({"date": day, "total": total, "rows": got, "more": more})
+        print("referrers %s: %d rows, sum %d of total %d%s"
+              % (day, len(got), sum(r["count"] for r in got), total,
+                 ", list cut short" if more else ""))
     return out
 
 

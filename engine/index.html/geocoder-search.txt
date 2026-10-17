@@ -44,7 +44,7 @@
    * row that hands off to that fork with the address pre-selected via its
    * #point= permalink. Only runs after a zero-result home search, so the
    * extra request never fires for normal in-city typing. */
-  function buildSiblingResultRow(metro, r) {
+  function siblingRow(metro, label, go) {
     var li = document.createElement("li");
     li.className = "sibling-result";
     var btn = document.createElement("button");
@@ -52,7 +52,7 @@
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + r.display_name;
+    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";
@@ -61,11 +61,68 @@
     btn.addEventListener("click", function () {
       clearTimeout(debounceTimer);
       if (inFlightController) inFlightController.abort();
-      trackEvent("metro-portal-go/" + metro.id, "search");
-      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+      go();
     });
     li.appendChild(btn);
     return li;
+  }
+  function buildSiblingResultRow(metro, r) {
+    return siblingRow(metro, r.display_name, function () {
+      trackEvent("metro-portal-go/" + metro.id, "search");
+      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+    });
+  }
+
+  /* ---------- a link to a place in another state ----------
+   * A link whose text names another state in its address (ENGINE map-link
+   * addressStateTag) is that state's to search: this app's search is bounded
+   * to its own state, so it would find nothing there, or a street of the same
+   * name here. It draws one row, which opens that state's app with the link
+   * as #q=, where the search reads it as a link and tries the address alone,
+   * the street and the name as it would here; #q= follows the row
+   * (prefillGeocodeSearch), so a place shared into the installed app opens in
+   * its own state whichever state the launcher chose. A state with no app is
+   * named, and nothing is searched.
+   *
+   * ONLY A WHOLE STATE'S APP. San Francisco's app carries California's tag
+   * and answers for one city, so an address in California does not say the
+   * place is in it: such a link is searched here as before, and the sibling
+   * lookup decides by the place's position. It returns false then, and true
+   * when it has answered. */
+  function metroForTag(tag) {
+    for (var i = 0; i < METRO_EXPLORERS.length; i++) {
+      var m = METRO_EXPLORERS[i], path = /\/([a-z]{2})\/?$/.exec(m.url || "");
+      if (m.id !== THIS_METRO && path && path[1] === tag) return m;
+    }
+    return null;
+  }
+  function showLinkElsewhere(link, tag) {
+    var metro = metroForTag(tag);
+    if (metro && metro.label !== US_STATE_NAMES[tag]) return false;
+    var maker = link.source === "apple" ? "Apple Maps" : "Google Maps";
+    if (inFlightController) inFlightController.abort();
+    clearResultRows(true);
+    clearResultRows(false);
+    if (!metro) {
+      geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
+        ", which districtry doesn't cover yet.";
+      geoStatus.className = "geo-status err";
+      return true;
+    }
+    var row = siblingRow(metro, link.text, function () {
+      if (metroHandedOff) return;
+      metroHandedOff = true;
+      geoStatus.textContent = "Opening " + siblingDisplayName(metro) + "\u2026";
+      geoStatus.className = "geo-status";
+      trackEvent("metro-portal-go/" + metro.id, "map-link");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(mapLinkForText(link));
+    });
+    row.className += " map-link-away";
+    geoResultsList.appendChild(row);
+    geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
+    geoStatus.className = "geo-status";
+    return true;
   }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
@@ -670,6 +727,8 @@
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
+    var tag = fromLink ? addressStateTag(q) : "";
+    if (tag && tag !== METRO_BRAND.instanceTag && showLinkElsewhere(fromLink, tag)) return Promise.resolve();
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
       renderDistrictSection(found);
@@ -734,7 +793,11 @@
         keepStreet(results);
         results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
       }
-      if (results && results.length) return renderGeocodeResults(results);
+      if (results && results.length) {
+        renderGeocodeResults(results);
+        if (bare) markLinkPlace(name, bare);
+        return;
+      }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
@@ -763,6 +826,35 @@
   function searchEverywhere(text) {
     inFlightController = new AbortController();
     return geocodeUnbounded(text, inFlightController.signal);
+  }
+
+  /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
+   * name and address can answer the place and others beside it: on
+   * 2026-10-16 Photon, asked for a Wisconsin state park's name and address,
+   * answered three places, the park first. An answer whose label opens with
+   * the link's name, carries its house number and is on its street in its
+   * town (labelCarriesNumber, labelOnStreet, ENGINE map-link) is the place
+   * itself, so its row is marked, and #q= selects it when it is the only one
+   * (prefillGeocodeSearch). A name alone is not enough: a chain's stores
+   * share one. */
+  function markLinkPlace(name, bare) {
+    var rows = geoResultsList.querySelectorAll("li");
+    for (var k = 0; k < rows.length; k++) {
+      if (rows[k].className) continue; // the address rows just drawn carry no class
+      var label = rows[k].textContent;
+      if (samePlaceName(label.split(",")[0], name) && labelCarriesNumber(label, bare) &&
+          labelOnStreet(label, bare)) rows[k].className = "link-place";
+    }
+  }
+  // "Devil’s Lake" and "Devil's Lake", "A & B" and "A and B", "Café" and
+  // "Cafe": one name
+  function samePlaceName(a, b) {
+    function key(t) {
+      t = String(t || "");
+      if (t.normalize) t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return t.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
+    }
+    return !!key(a) && key(a) === key(b);
   }
 
   /* Places a link's name found. Marked so that #q= never selects one for the
@@ -863,7 +955,13 @@
    * officeholder, so the list stays up and the reader picks. A sibling-metro
    * row is never auto-clicked — that button navigates to another instance —
    * and neither is a place found by a shared link's name alone
-   * (listByName), which may be another place of the same name. */
+   * (listByName), which may be another place of the same name. Two
+   * exceptions: among several answers to a link, the one that is the place
+   * the link names (markLinkPlace) is selected when it is the only such
+   * one; and the row a link to a place in another state draws
+   * (showLinkElsewhere) is followed, because the address itself says which
+   * state's app it belongs to, so a place shared into the installed app
+   * opens in its own state. */
   function prefillGeocodeSearch(q) {
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
@@ -871,7 +969,11 @@
     reengageSearchShell();
     return runGeocodeSearch(q).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
+      var place = geoResultsList.querySelectorAll("li.link-place > button");
+      var away = geoResultsList.querySelectorAll("li.map-link-away > button");
       if (own.length === 1) own[0].click();
+      else if (place.length === 1) place[0].click();
+      else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
       if (err.name === "AbortError") return;
       geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
