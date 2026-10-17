@@ -13,7 +13,7 @@ government publishes beside an official ships whosever line it is, it is read
 from the post content into `phone`, as printed (several carry an area code
 from another state, which is kept). Only telephone-shaped numbers are read.
 The e-mail is kept as the county prints it (one is capitalised,
-Jerry.Becker@SumnerCountyTN.gov), whatever its domain, under Adam's ruling of
+in the shape First.Last@SumnerCountyTN.gov), whatever its domain, under Adam's ruling of
 2026-10-17 that an e-mail address a government page prints beside an official
 ships too; on that day every one was on sumnercountytn.gov.
 

@@ -773,8 +773,8 @@ def firm_address(value):
     """Does an address carry a word naming an accountant or a bank?
 
     Its words are what lies between the characters that are not a letter or a
-    digit, on both sides of the @: `admin@mackcpas.com` gives `admin`,
-    `mackcpas` and `com`, and `mackcpas` ends in `cpas`.
+    digit, on both sides of the @: `office@doecpas.com` gives `office`,
+    `doecpas` and `com`, and `doecpas` ends in `cpas`.
     """
     words = re.split(r"[^a-z0-9]+", (value or "").lower())
     return any(any(firm in word for firm in FIRM_WORDS) or FIRM_CPA.search(word)
