@@ -1305,7 +1305,7 @@ table.matrix code {
                 <td data-label="What it answers">The public school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 118 features for North Carolina, measured 2026-09-29.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 118 features for North Carolina, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. North Carolina's boards of education are elected, and no statewide roster of their members was found in this pass — recorded as a gap rather than left unstated.</td>
@@ -1354,7 +1354,7 @@ table.matrix code {
                 <td data-label="What it answers">The township containing the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime; 1,041 features for North Carolina, measured 2026-09-29.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 1,041 features for North Carolina, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER. A North Carolina township is a census and historical unit with no governing board of its own, unlike Illinois's, so the card is identity-only and says so. MEASURED CAVEAT: at least two counties (Gaston, Hyde) name their COMMISSIONER districts after townships in their certified returns, so a township can carry an electoral function even where it has no government — recorded in nc/WATCH.md rather than generalised from two counties.</td>
@@ -1365,7 +1365,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='37', and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape. 1,500 features in North Carolina's box, measured 2026-09-29 — and that round number was checked rather than trusted: the layer's maxRecordCount is 100,000 and splitting the box at longitude -80 returns 911 + 618, which is 1,500 plus the 29 ZCTAs the seam counts twice.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='37', and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape. 1,500 features in North Carolina's box, measured 2026-09-29 — and that round number was checked rather than trusted: the layer's maxRecordCount is 100,000 and splitting the box at longitude -80 returns 911 + 618, which is 1,500 plus the 29 ZCTAs the seam counts twice.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
@@ -1387,7 +1387,7 @@ table.matrix code {
                 <td data-label="What it answers">The city or town containing the point, if any.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 552 features for North Carolina, measured 2026-09-29.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 552 features for North Carolina, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">In the 42 cities and towns above 25,000 people, the mayor and every council member, alderman or commissioner, written down from each city's own pages and proved against those pages by nc/scripts/build_nc_city_councils.py, which fails when a name is no longer on the page it cites (nc/data/app/nc-city-councils.json). Raleigh's and Matthews's names are the candidates with the most votes in the State Board of Elections' results, because both websites answer this app with a managed challenge, and the card says so. Each seat says whether its district's own voters or the whole city elect it, read from each city's own pages, because nothing the state publishes records it. North Carolina's other 510 cities, towns and villages name nobody yet, recorded as gap nc-municipal-officeholders.</td>
@@ -1524,7 +1524,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 118 features for North Carolina, measured 2026-09-29.",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 118 features for North Carolina, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1546,7 +1546,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime; 1,041 features for North Carolina, measured 2026-09-29.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 1,041 features for North Carolina, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
       ],
@@ -1600,7 +1600,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='37', and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape. 1,500 features in North Carolina's box, measured 2026-09-29 — and that round number was checked rather than trusted: the layer's maxRecordCount is 100,000 and splitting the box at longitude -80 returns 911 + 618, which is 1,500 plus the 29 ZCTAs the seam counts twice.",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='37', and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape. 1,500 features in North Carolina's box, measured 2026-09-29 — and that round number was checked rather than trusted: the layer's maxRecordCount is 100,000 and splitting the box at longitude -80 returns 911 + 618, which is 1,500 plus the 29 ZCTAs the seam counts twice.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1666,7 +1666,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 552 features for North Carolina, measured 2026-09-29.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 552 features for North Carolina, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],

@@ -649,6 +649,55 @@ try {
     }
   }
 
+  // ...AN ADDRESS TYPED WITH NO NAME IN FRONT is held to its house number
+  // from the first try (searchAndRoute `whole`, as in the apps): an answer
+  // without the number is a street, and its point a spot somewhere along it,
+  // so the app covering the address's street (addressInTownOf), or else the
+  // first covered answer, is opened with what was typed and never with a
+  // point. An answer carrying the number still opens its point. The number
+  // and the street's spot are made up.
+  {
+    const TYPED = "9 W Oakley Dr NW, Westmont, IL";
+    const NO_TOWN = "9 W Oakley Dr NW";
+    const at = (props) => ({ ...photonFeature(41.82196, -87.97949), properties: props });
+    const ON = at({ name: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois", postcode: "60559" });
+    const OTHER = at({ name: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
+    const HOUSE = at({ housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois" });
+    const TEXAS = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "Dallas", state: "Texas" } };
+    for (const c of [
+      { name: "its street without the number opens /il/ with the address, not a point", text: TYPED, answer: [ON],
+        want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "typed with no town, its street opens /il/ with what was typed", text: NO_TOWN, answer: [ON],
+        want: "/il/", hash: "#q=" + encodeURIComponent(NO_TOWN) },
+      { name: "an answer on another street, without the number, opens /il/ with the address, not that street's point",
+        text: TYPED, answer: [OTHER], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "an answer carrying the number opens its point, as before", text: TYPED, answer: [ON, HOUSE],
+        want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "answers no app covers are said to be outside", text: TYPED, answer: [TEXAS],
+        want: "/", msg: /outside every place districtry covers/ },
+    ]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [];
+      await page.route("**/photon.komoot.io/**", (r) => {
+        asked.push(new URL(r.request().url()).searchParams.get("q"));
+        return photonStub(c.answer)(r);
+      });
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", c.text);
+      await page.click("#search-button");
+      await addressSettled(page);
+      const hash = new URL(page.url()).hash;
+      const msg = c.msg ? await textOrNull(page, "#search-status") : null;
+      check(`a typed address held to its house number: ${c.name}`,
+        JSON.stringify(asked) === JSON.stringify([c.text]) && new URL(page.url()).pathname === c.want &&
+          (!c.hash || (c.hash instanceof RegExp ? c.hash.test(hash) : hash === c.hash)) && (!c.msg || c.msg.test(msg || "")),
+        JSON.stringify({ asked, url: page.url(), msg }));
+      await ctx.close();
+    }
+  }
+
   // --- 1d. an address nobody covers SAYS SO, and never guesses -------------
   //
   // The honesty rule this whole project runs on, applied to the front door: a

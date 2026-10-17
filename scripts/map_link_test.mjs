@@ -17,7 +17,7 @@ import path from "node:path";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const src = readFileSync(path.join(root, "engine/shared/map-link.txt"), "utf8");
-const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, addressParts, labelOnStreet, addressStateTag, stateInSentence, mapLinkForText };")();
+const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, addressStreet, addressParts, labelOnStreet, addressInTownOf, addressStateTag, stateTagOfName, stateInSentence, mapLinkForText };")();
 
 const near = (a, b) => Math.abs(a - b) < 1e-6;
 const cases = [
@@ -260,6 +260,24 @@ for (const [address, want] of parts) {
   }
 }
 
+// The house number and the street an address opens with, a unit at the
+// street's end left off; null unless it opens with a house number.
+const streets = [
+  ["1600 W North Ave", { number: "1600", street: "W North Ave" }],
+  ["1600 W North Ave Apt 2, Chicago", { number: "1600", street: "W North Ave" }],
+  ["1600 W North Ave Chicago IL", { number: "1600", street: "W North Ave Chicago IL" }],
+  ["S5975 Park Rd", { number: "S5975", street: "Park Rd" }],
+  ["2nd St, Chicago", null],
+  ["Starved Rock Lodge", null],
+];
+for (const [address, want] of streets) {
+  const got = api.addressStreet(address);
+  if (JSON.stringify(got) !== JSON.stringify(want)) {
+    failed++;
+    console.error("map-link: FAIL addressStreet(" + JSON.stringify(address) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  }
+}
+
 // An answer is on the address's street when one part names the same street,
 // abbreviated, and another is its town or ZIP code. The Westmont labels are
 // the six streets Photon answered on 2026-10-14 for the address of a place
@@ -294,6 +312,55 @@ for (const [label, address, want] of street) {
   if (got !== want) {
     failed++;
     console.error("map-link: FAIL labelOnStreet(" + JSON.stringify(label) + ", " + JSON.stringify(address) + ")\n  want " + want + "\n  got  " + got);
+  }
+}
+
+// An address typed with no town, or with a town and no comma before it, is
+// put in the town of an answer on its street, read from the answer's label,
+// the part before a state's name; an address that names a town keeps it.
+// The labels are in the shape the apps build from Photon (photonLabel).
+const WICKER = "West North Avenue, Wicker Park, Chicago, Illinois, 60622";
+const MELROSE = "West North Avenue, Melrose Park, Illinois, 60160";
+const inTown = [
+  ["1600 W North Ave", WICKER, "1600 W North Ave, Chicago, IL"],
+  ["1600 W North Ave", MELROSE, "1600 W North Ave, Melrose Park, IL"],
+  ["1600 West North Avenue", WICKER, "1600 West North Avenue, Chicago, IL"],
+  ["1600 W North Ave Chicago", WICKER, "1600 W North Ave, Chicago, IL"],
+  ["1600 W North Ave chicago il", WICKER, "1600 W North Ave, Chicago, IL"],
+  ["1600 W North Ave Chicago", MELROSE, null],                 // the town typed is another
+  ["1600 W North Ave Melrose Park", WICKER, null],
+  ["1600 W North Ave, Chicago, IL 60622", WICKER, "1600 W North Ave, Chicago, IL"],
+  ["1600 W North Ave, Wicker Park", WICKER, "1600 W North Ave, Chicago, IL"],   // a neighbourhood the label names
+  ["1600 W North Ave, Chicago", MELROSE, null],
+  ["1600 W North Ave Apt 2", WICKER, "1600 W North Ave, Chicago, IL"],
+  ["1600 E North Ave", WICKER, null],                          // two different directions
+  ["1600 W North Ave", "North Avenue, Chicago, Illinois", "1600 W North Ave, Chicago, IL"],  // a direction left off
+  ["1600 W North Ave", "West Division Street, Chicago, Illinois", null],                     // another street
+  ["1600 W North Ave", "West North Avenue, Wicker Park, Chicago", null],                     // no state named
+  ["1600 W North Ave", "1600 West North Avenue, Chicago, Illinois", "1600 W North Ave, Chicago, IL"],
+  ["S5975 Park Rd", "Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI"],
+  ["Starved Rock Lodge", WICKER, null],
+];
+for (const [address, label, want] of inTown) {
+  const got = api.addressInTownOf(address, label);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL addressInTownOf(" + JSON.stringify(address) + ", " + JSON.stringify(label) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  }
+}
+// What addressInTownOf gives is an address addressParts and labelOnStreet read
+for (const [address, label, want] of inTown) {
+  if (!want) continue;
+  if (!api.addressParts(want) || !api.labelOnStreet(label, want)) {
+    failed++;
+    console.error("map-link: FAIL addressInTownOf(" + JSON.stringify(address) + ") gave " + JSON.stringify(want) + ", which labelOnStreet does not put on " + JSON.stringify(label));
+  }
+}
+for (const [name, want] of [["Wisconsin", "wi"], ["  new   york ", "ny"], ["District of Columbia", "dc"], ["IL", ""], ["Chicago", ""]]) {
+  const got = api.stateTagOfName(name);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL stateTagOfName(" + JSON.stringify(name) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
   }
 }
 
@@ -361,6 +428,7 @@ console.log("map-link: OK — " + cases.length + " pasted texts read as expected
   lookups.length + " lookup answers tried again or not as expected, a cancelled lookup stops, and " + said.length +
   " short-link messages say which side failed; " +
   bare.length + " place names split from their addresses as expected; " + carry.length +
-  " answers held to the address's house number as expected; " + parts.length + " addresses split into their parts and " +
-  street.length + " answers held to the address's street as expected; " + states.length +
+  " answers held to the address's house number as expected; " + parts.length + " addresses split into their parts, " +
+  streets.length + " into a number and a street, and " + street.length + " answers held to the address's street as expected; " +
+  inTown.length + " addresses put in an answer's town as expected; " + states.length +
   " addresses read for their state and " + rebuilt.length + " links rebuilt from their words as expected");

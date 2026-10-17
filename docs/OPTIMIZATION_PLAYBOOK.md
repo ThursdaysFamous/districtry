@@ -1733,3 +1733,104 @@ remap — so a diff there is more often real than in the TIGER job.
 
 Still live after 6c: `il ssa`, `ny neighborhood`, `ny school-district`,
 `ny cec`, `il ward`'s four sources and the county servers.
+
+### Phase 6d: the census layers of the nine newest apps (2026-10-17)
+
+Nine apps arrived after phase 6 was written — Minnesota, Kentucky, Indiana,
+North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi
+— and each drew its municipality and school district layers live from
+TIGERweb, as did seven of them a county subdivision layer and all but Kentucky
+a ZIP layer: a whole state downloaded on first toggle, and the reader's point
+sent to the Census on every first click. The operator chose to mirror them
+once the five shared-layer changes of that week had merged. Forty layers
+became thirty-two `MIRRORS` rows and eight `ZIP_MIRRORS` rows in
+`scripts/mirror_tiger_tiles.py`, built and gated exactly as in 6a and 6b;
+nothing in the method is new.
+
+| App | Layers | Features | Sets fetched | Archives |
+|---|---|---|---|---|
+| Minnesota | 6 | 4,836 | 59.2 MB | 16.9 MB |
+| Kentucky | 5 | 1,086 | 31.1 MB | 7.7 MB |
+| Indiana | 4 | 2,676 | 34.3 MB | 8.6 MB |
+| North Carolina | 4 | 2,564 | 86.0 MB | 17.3 MB |
+| Oklahoma | 5 | 2,077 | 46.6 MB | 11.3 MB |
+| South Carolina | 4 | 1,066 | 43.0 MB | 9.1 MB |
+| Tennessee | 6 | 2,000 | 78.7 MB | 15.0 MB |
+| Arkansas | 3 | 1,355 | 40.4 MB | 8.2 MB |
+| Mississippi | 3 | 865 | 33.2 MB | 6.3 MB |
+| **All nine** | **40** | **18,525** | **452.5 MB** | **100.5 MB** |
+
+The sets column is what the mirror fetched; 197.5 MB of it is the eight ZIP
+sets at full detail, which is more than an app ever downloaded, because seven
+of the eight apps' own ZIP loaders ask for the ~55 m simplification
+(Minnesota's asks for none). Every archive passed the builder's gate: of
+80,000 points placed near edges, the 59,982 two metres or more from every edge
+all answered from the tile as from the fetched set, and only points within two
+metres of an edge ever differed (2,575 of 20,018). The card probe
+(`scripts/probe_tile_cards.mjs`) then ran each of the forty layers' own query
+from the tile and from the fetched set at 1,984 points placed either side of
+edges, 1,650 of them inside a district: every card matched, none errored, and
+every one was answered from the tile.
+
+| ZIP layer | Kept | Dropped | Dropped ZCTAs touching the state | Archive |
+|---|---|---|---|---|
+| Minnesota | 887 | 498 | 87 | 5.47 MB |
+| Indiana | 807 | 399 | 75 | 3.51 MB |
+| North Carolina | 853 | 815 | 103 | 6.18 MB |
+| Oklahoma | 666 | 392 | 116 | 4.14 MB |
+| South Carolina | 424 | 417 | 64 | 3.35 MB |
+| Tennessee | 643 | 427 | 110 | 5.54 MB |
+| Arkansas | 620 | 322 | 96 | 4.91 MB |
+| Mississippi | 428 | 399 | 68 | 4.32 MB |
+
+**THE IN-STATE FILTER CHANGES NO ANSWER INSIDE THESE EIGHT STATES EITHER.**
+Re-fetched the same day — each kept set hashing to the one archived — and
+intersected with the Census's own state polygon, none of the 719 dropped ZCTAs
+that touch a state holds more than 0.0000 m² of it. As in 6b, what FULL DETAIL
+moves is the ground near an edge in the seven apps whose loader simplified: a
+first click there answers as it did, because the Census computed its point
+answer on its full drawing (bar the two metres at an edge where any tile can
+differ), while a click made after the whole set had downloaded used to read
+the simplified copy and now reads the full one. None of these ZIP layers
+answers outside its state, archive or not, because all eight declare a
+coverage test against the app's own state outline.
+
+**THOSE NINE APPS NOW SEND A READER'S POINT TO NO SERVER.** Measured by
+`scripts/probe_point_transmission.mjs` the same day, the layers sending a
+point on a first click went from 40 to 0 — Minnesota 6, Kentucky 5, Indiana 4,
+North Carolina 4, Oklahoma 5, South Carolina 4, Tennessee 6, Arkansas 3 and
+Mississippi 3, each now 0 — so thirteen of the fifteen apps send none, and
+what is left fleet-wide is Illinois's five layers and Wisconsin's ward layer.
+The hooks stay, as everywhere else, for a session whose archive cannot be
+read, and the privacy page's tile sentence now says "in every app", because
+every app now draws at least one layer from tiles.
+
+**SEVERAL SMOKE CHECKS STUBBED THE CENSUS SERVICE, AND A STUB NOBODY ASKS
+PASSES NOTHING.** North Carolina's, Oklahoma's, South Carolina's, Tennessee's,
+Arkansas's and Mississippi's checks 7 (the census layers' own cards) and 8
+(the ZIP coverage test), Kentucky's municipality and county-subdivision checks
+and Indiana's 2g, 2g2 and 2h answered the census query with a fixture. With
+the card reading the tile, that route would no longer be asked, and several
+fixtures exist in no archive — an affix no label table carries, an inactive
+municipality — so rewriting them as real points would have dropped the very
+cases they exist for. Each now refuses that layer's archive first, which sends
+the card down the census path the stub answers: the archive-failure path
+Illinois's check 2d already holds.
+
+**WHAT IT COSTS, STATED RATHER THAN IMPLIED.** About 100.5 MB more in the
+repository and on the published site, which went from about 458 MB to about
+559 MB against GitHub Pages' 1 GB limit. A census vintage roll can rebuild
+every one of these archives, and each rebuild adds another copy to the
+repository's history. And `update-tiger-tiles.yml` now fetches forty more sets
+from the Census every Sunday, 595.2 MB as downloaded and 452.5 MB once
+converted (both measured 2026-10-17), though it rebuilds only a layer whose
+data changed; measured here, fetching, building and gating all forty took
+14 min 48 s, inside the job's 45-minute step even in a week when every set
+changed.
+
+Still live after 6d: the layers phase 6c names, `il ward`'s four sources and
+the county servers. No layer in the nine newest apps fetches its shapes from
+any host but TIGERweb, so their census hooks and whole-set loaders are now
+only the fallback; their station and post-office layers download a whole
+state's points from the USGS by the app's bounding box and send no reader's
+point.

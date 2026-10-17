@@ -582,6 +582,10 @@ try {
     ]) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
         await p.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
           r.fulfill({ status: 200, contentType: "application/json",
             body: placesBody({ GEOID: c.geoid, NAME: c.name, BASENAME: c.name.replace(/ city$/, ""), STATE: "21", LSADC: "25" }) }));
@@ -728,6 +732,10 @@ try {
     ]) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=county-subdivision`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/county-subdivision.pmtiles", (r) => r.abort());
         await p.route("**/Places_CouSub_ConCity_SubMCD/MapServer/1/query**", (r) =>
           r.fulfill({ status: 200, contentType: "application/json",
             body: cousubBody(Object.assign({}, record, { FUNCSTAT: c.funcstat })) }));

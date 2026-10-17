@@ -265,12 +265,12 @@
       "label": "School District",
       "group": "schools",
       "area_rank": 9,
-      "rank_note": "137 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
+      "rank_note": "137 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 137 features for Mississippi, measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 137 features for Mississippi, measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -333,12 +333,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 11,
-      "rank_note": "827 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Mississippi",
+      "rank_note": "428 ZIP Code Tabulation Areas overlapping Mississippi, of the 827 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Mississippi",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='28'. 827 features in Mississippi's box, measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='28'. 827 features in Mississippi's box, measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -351,12 +351,12 @@
       "label": "City, Town or Village",
       "group": "geography",
       "area_rank": 12,
-      "rank_note": "300 incorporated places, live from TIGERweb",
+      "rank_note": "300 incorporated places, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 300 features for Mississippi (113 cities, 167 towns and 20 villages, one of the towns recorded by the Census as inactive), measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 300 features for Mississippi (113 cities, 167 towns and 20 villages, one of the towns recorded by the Census as inactive), measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
