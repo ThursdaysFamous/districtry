@@ -123,6 +123,7 @@ node scripts/map_link_test.mjs                            # pasted Google/Apple 
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists
+python3 scripts/validate_telephones.py                    # every tel: link a page serves dials one number; every shipped telephone holds at most one
 python3 scripts/build_metro_outline.py --check           # IL ring + anchor registry
 python3 wi/scripts/build_metro_outline.py --check
 python3 ia/scripts/build_metro_outline.py --check
@@ -147,6 +148,7 @@ python3 wi/scripts/validate_sources.py --selftest        # the LTSB filing watch
 python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county board scrape's robots decision: a site-wide disallow refuses, an API host's 403 does not, 5xx and 202 refuse, and the Archive rung never routes round a disallow
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 scripts/il_library_trustees_scraper.py --selftest   # the library board-page reader's six shapes and five refusals
+python3 scripts/build_il_library_trustees.py --selftest   # whose a library page's printed telephone or e-mail is: one trustee's entry ships, a shared one ships on nobody
 python3 scripts/peoria_county_board_scraper.py --selftest   # both index shapes at once: the CivicPlus editor paragraphs, the retired subhead headings, and the prose the anchor keeps out
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
