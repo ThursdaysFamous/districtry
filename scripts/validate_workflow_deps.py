@@ -177,8 +177,21 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # hashlib, os, tempfile, urllib.request; `certifi` is imported inside
 # `ca_bundle()`, the one function that uses it, and ships with `requests`, which
 # every caller already installs.
+#
+# `city_councils` (2026-10-17) is the eighth, added when the weekly council page
+# watch (watch-city-council-pages.yml) became the first workflow to run the five
+# state builders that import it — Arkansas, North Carolina, Oklahoma, South
+# Carolina and Tennessee. Its test is this list's: what "this name is still on
+# the page its seat cites" means — one normalisation of a page's text, one
+# reading of robots.txt at every redirect hop, one rule that a page which cannot
+# be read keeps what it last said — must not be answered differently per state,
+# and the five builders exist so that each states only its own files, seat
+# counts and measured browser pages. Stdlib-only at module scope apart from
+# `scraper_common`, which is on this list; `pdftotext` is a program it runs, not
+# a module, and the workflow installs it.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
-                "workflow_run_evidence", "validate_officeholder_names", "aia_bundle"}
+                "workflow_run_evidence", "validate_officeholder_names", "aia_bundle",
+                "city_councils"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

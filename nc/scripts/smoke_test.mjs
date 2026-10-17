@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "nc-senate", "nc-house", "voting-precinct
 const EXPECT_DISTRICT = { "county": "Wake County", "us-house": "2", "nc-senate": "14", "nc-house": "38", "voting-precinct": "Precinct 01-14" };
 const NEGATIVE_POINT = "35.60000,-75.30000"; // the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.
 const APP_NAME = "districtry North Carolina";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -756,6 +756,12 @@ try {
   //        three FUNCSTAT I municipalities. A per-style note would invent a
   //        distinction the statute denies; a missing status row would imply a
   //        working government where the Census records none.
+  //    (d) A place above 25,000 names its mayor and every council seat from
+  //        the roster, joined on the Census id the stub carries, with who
+  //        elects each seat; a place outside the 42 says it names nobody.
+  //        The roster is the shipped data/app file, so this also holds the
+  //        join to it. Each id and NAME is the Census's own (TIGERweb,
+  //        read 2026-10-16).
   {
     function esriPolygon(props) {
       return {
@@ -798,12 +804,50 @@ try {
         reject: [/^[\s\S]*Type[\s\S]*$/]
       },
       {
-        name: "a town gets the ONE municipality note and no status row",
+        name: "a town below 25,000 gets the ONE municipality note, no status row and no names",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
-        props: { GEOID: "3714100", NAME: "Cary town", BASENAME: "Cary", STATE: "37", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Cary town/, /same kind of government/, /Not named here/],
-        reject: [/INACTIVE/]
+        props: { GEOID: "3736080", NAME: "Knightdale town", BASENAME: "Knightdale", STATE: "37", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Knightdale town/, /same kind of government/, /Not named here/, /42 cities and towns above 25,000/],
+        reject: [/INACTIVE/, /Mayor/]
+      },
+      {
+        name: "a city names its mayor and council, and who elected each seat",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3725580", NAME: "Gastonia city", BASENAME: "Gastonia", STATE: "37", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Gastonia city/, /same kind of government/, /Richard Franks/, /Demetrios Koutsoupias/,
+          /Council, Ward 1/, /elected by Ward 1/, /James Gallagher/, /Council, Ward 3/,
+          /elected by the whole city/, /How the seats are elected/, /Read on/, /Which ward this point is in/],
+        reject: [/INACTIVE/, /Not named here/]
+      },
+      {
+        name: "a town that elects every seat by the whole town says so",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3701520", NAME: "Apex town", BASENAME: "Apex", STATE: "37", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Apex town/, /Jacques Gilbert/, /Council, At large/, /elected by the whole town/,
+          /all five council members are elected by the voters of the whole town/],
+        reject: [/elected by (Ward|District)/, /this point is in/, /Not named here/]
+      },
+      {
+        name: "a city that ties seats to wards and elects them all citywide says so",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3719000", NAME: "Durham city", BASENAME: "Durham", STATE: "37", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Durham city/, /Matt Kopac/, /Council, Ward 1/, /elected by the whole city/,
+          /three of the members each represent one of the city's three wards/],
+        reject: [/elected by Ward/, /this point is in/, /Not named here/]
+      },
+      {
+        name: "a city whose website this app cannot read says where its names come from",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3755000", NAME: "Raleigh city", BASENAME: "Raleigh", STATE: "37", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Raleigh city/, /Janet Cowell/, /Corey Branch/, /elected by District C/,
+          /Raleigh's website does not let this app read it/, /State Board of Elections' results/,
+          /Which district this point is in/],
+        reject: [/Not named here/, /As listed on Raleigh's own website/]
       },
       {
         name: "a village gets the SAME note, not one of its own",
@@ -959,6 +1003,66 @@ try {
     check("a point off tribal land is told so in the layer's own words",
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- City Council District, drawn for the seventeen cities above 25,000
+  // people that elect members by district or ward, and answered from the
+  // shipped files alone, so nothing here is stubbed. In Charlotte, Raleigh,
+  // Greensboro and Winston-Salem it names the member that district or ward
+  // elects and no other, in the city's own word for the unit, and says whose
+  // map the line comes from; in Gastonia's Ward 3 it names the ward's member
+  // and says the whole city elected them; in Durham and Concord, which tie
+  // seats to wards and districts and elect them all citywide, and in
+  // Asheville, which elects every seat citywide, there is nothing to answer
+  // and the card says why. Raleigh's point is the State Capitol, which lies
+  // in District C; the Charlotte, Greensboro and Winston-Salem points and
+  // the three outside points are the ward builder's own anchors; the
+  // Gastonia point is shapely's representative point of Ward 3. Each lies
+  // inside the Census outline of the city named (TIGERweb, read 2026-10-16).
+  for (const c of [
+    { name: "Charlotte", point: "35.24796,-80.80292",
+      want: [/District 1\b/, /Charlotte City Council/, /Danté Anderson/, /Council, District 1/,
+        /elected by District 1/, /The mayor and four more members\. The City or Town card names them\./,
+        /the City of Charlotte's own map/, /within 4 metres/],
+      reject: [/Malcolm Graham/, /Dimple Ajmera/, /Rob Harrington/, /elected by Ward/] },
+    { name: "Raleigh", point: POINT,
+      want: [/District C\b/, /Raleigh City Council/, /Corey Branch/, /elected by District C/,
+        /The mayor and two more members/, /Raleigh's website does not let this app read it/,
+        /published by the city in November 2021/, /2024 election/],
+      reject: [/Mitchell Silver/, /Janet Cowell/, /Stormie Denise Forte/] },
+    { name: "Greensboro", point: "36.07530,-79.86492",
+      want: [/District 4\b/, /Greensboro City Council/, /Adam Marshall/, /elected by District 4/,
+        /The mayor and three more members/, /Guilford County's map of Greensboro's districts/],
+      reject: [/Tammi Thurm/, /Hugh Holston/, /Marikay Abuzuaiter/] },
+    { name: "Winston-Salem", point: "36.09319,-80.16777",
+      want: [/East Ward/, /Winston-Salem City Council/, /Annette Scippio/, /Council, East Ward/,
+        /elected by the East Ward/, /The mayor\. The City or Town card names the mayor\./],
+      reject: [/Denise D\. Adams/, /J\. Allen Joines/, /elected by Ward/] },
+    { name: "Gastonia's Ward 3", point: "35.22074,-81.14536",
+      want: [/Ward 3\b/, /Gastonia City Council/, /James Gallagher/, /Council, Ward 3/,
+        /elected by the whole city/, /The mayor and two more members/,
+        /from 2027 those wards elect their own members too/],
+      reject: [/Demetrios Koutsoupias/, /Angela Dreher/, /elected by Ward 3/] },
+    { name: "Durham", point: "35.99400,-78.89860",
+      want: [/not in a council district or ward this map draws/, /Durham, Concord, Hickory and Morrisville/],
+      reject: [/Durham City Council/] },
+    { name: "Concord", point: "35.40880,-80.57950",
+      want: [/not in a council district or ward this map draws/, /Durham, Concord, Hickory and Morrisville/],
+      reject: [/Concord City Council/] },
+    { name: "Asheville", point: "35.59510,-82.55150",
+      want: [/not in a council district or ward this map draws/, /names the mayor and council of all 42/],
+      reject: [/Asheville City Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that district elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
     await context.close();
   }
 } finally {

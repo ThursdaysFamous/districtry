@@ -54,6 +54,7 @@ const GEOMETRY_URLS = [
   "./data/app/tn-precincts.json",
   "./data/app/tn-school-board-districts.json",
   "./data/app/tn-judicial-districts.json",
+  "./data/app/tn-city-wards.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -64,6 +65,7 @@ const ROSTER_URLS = [
   "./data/app/tn-senate-members.json",
   "./data/app/tn-house-members.json",
   "./data/app/tn-commissioners.json",
+  "./data/app/tn-city-councils.json",
   "./data/app/coverage-gaps.json",
   "./data/app/tribal-councils.json",
 ];

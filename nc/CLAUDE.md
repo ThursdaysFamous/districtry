@@ -8,15 +8,16 @@ districtry North Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/nc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships THIRTEEN layers and has been **LIVE since 2026-10-09**,
+the Illinois root-scripts shape. It ships FOURTEEN layers and has been **LIVE since 2026-10-09**,
 after arriving dark on 2026-09-29. Its go-live generated `congress.html` and
 `state-legislature.html` — both chambers are named, so unlike Minnesota, Kentucky and Indiana
 this instance needed no recorded-absent legislature page — and `nc/WATCH.md` records what that
 change did and the re-check plan for every data file the app reads.
 
 **The national tier** — everything these eleven layers answer comes from a national publisher.
-The other two are Tribal Government (the Eastern Band of Cherokee Indians' land, from the Census,
-its government from the Bureau of Indian Affairs) and the voting precincts below.
+The other three are Tribal Government (the Eastern Band of Cherokee Indians' land, from the Census,
+its government from the Bureau of Indian Affairs), the voting precincts and the city council
+districts below.
 **County** (100, Census TIGERweb, identity-only and the coverage ring), **U.S. House** (14
 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators
 roster), **N.C. Senate** and **N.C. House** (50 and 120 districts, TIGERweb geometry joined to
@@ -64,6 +65,52 @@ is joined by name, which a first draft found by failing on Macon. An undated cop
 no metadata are evidence for the state-publishing ask. The quarterly re-check, which also lists
 the Board's folder for a newer zip, is in `nc/WATCH.md`.
 
+**THE 42 CITIES AND TOWNS ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL SINCE 2026-10-16, AND
+THE 17 WHOSE DISTRICTS ELECT THEIR OWN MEMBERS DRAW THEM.** No state office publishes who holds
+North Carolina's city offices: the League of Municipalities' public directory lists no
+officials, and the State Board of Elections' results name candidates and their votes but no
+winner, no appointee and no empty seat. So `nc/data/source/nc-city-council-seats.json` writes
+each place's mayor and council down by hand from its own pages (304 seats, the names and nothing
+else: many of the pages also print members' e-mail addresses, telephone numbers or street
+addresses, and none of it is copied), and `nc/scripts/build_nc_city_councils.py`, through the
+fleet module `scripts/city_councils.py`, re-reads every page it cites on each build and refuses
+to write unless every name is on its page. Some names come from somewhere other than the
+council's own list, and the builder lists each and the card says so: **RALEIGH'S AND MATTHEWS'S
+FROM THE STATE BOARD'S PRECINCT RESULTS** for November 2024 and November 2025, because both
+places' websites answer this project with Cloudflare's managed challenge (each seat's `as` is
+the contest line and the name together, so the build proves both; `nc/scripts/ncsbe_results.py`
+turns each results zip into its winners and holds the two files' addresses, because the builder
+sends a browser's client to seven pages and `scripts/probe_user_agents.py` judges every host a
+file names by the strongest client that file sends); Goldsboro's and Asheboro's from the data
+each council page loads after it opens; and Wilson's mayor's full name from the city's own map
+server. Three seats are empty in the place's own words, and one of Cornelius's is named nobody
+because the town's own pages disagree. Which seats a district elects is set by each city's
+charter, a local act, and recorded nowhere statewide, so it was read from which precincts voted
+in each contest from 2022 to 2025: 17 places elect some or all seats by district or ward,
+Durham, Concord, Hickory and Morrisville tie seats to districts and elect them by the whole
+place (so nothing is drawn for them), and 21 elect every seat by the whole place. `city-ward`
+(labelled City Council District) draws the 100 districts and wards of the 17, twelve from the
+city's own map and five from its county's, pre-built by `nc/scripts/build_nc_city_wards.py`
+through `scripts/city_ward_maps.py`, and each map is held two ways: for 95 of the 97 districts
+whose own voters elect a member, the precincts that voted in its last contest hold all but at
+most 162 of the 2020 residents the map puts in it, and each city's districts balance its 2020
+people within 9.2%. **RALEIGH'S ONLY READABLE MAP IS LABELLED A PROPOSAL**: its live layer is
+closed by robots.txt, so the copy the city published in November 2021 as "Proposed Council
+Districts, Scenario 2" is drawn, and the precincts that voted in 2024 lie 99.9% to 100% inside
+the same districts on it. **ONSLOW COUNTY PUBLISHES TWO DIFFERENT MAPS OF JACKSONVILLE'S
+WARDS**, which name a different ward on 6.0% of the ground both draw; the one that balances the
+city's people is drawn, which is an inference and recorded as one. Gastonia's Wards 3, 4 and 6
+are drawn although their members were elected by the whole city, because the other three wards
+elect their own and from 2027 all six do. The ward layers are asked for the district field
+alone: New Bern's carries each alderman's home address, and several carry members' names, e-mail
+addresses or telephone numbers. Durham's, Greensboro's, Cary's, Greenville's, Rocky Mount's,
+Garner's and Wilson's sites refuse this project's own token (Cloudflare's block page at Durham,
+Greenville and Rocky Mount, Akamai's at Greensboro, Cary and Garner, and Wilson's own 403), so
+those seven pages are read with Chrome and its client hints on the stdlib client, and the
+measurement that allows it is in the builder. The 510 smaller places name nobody (gap
+`nc-municipal-officeholders`), and no state office publishes a council district, all evidence
+for the publishing ask. The quarterly re-checks are in `nc/WATCH.md`.
+
 **THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS `county-commissioner`, AND ITS TWO HALVES
 SEPARATE CLEANLY.** All 100 counties elect a board, 587 commissioners in all, and the
 **form** of every board is answerable today from one document: NCACC's *County Commissioner
@@ -74,9 +121,10 @@ and `ia/index.html` already handles both hard cases, so it needs no card-wording
 **geometry** is what no publisher answers: NCGS 153A-22(f) leaves each board's district
 delineation as a **written description in the county clerk's office**, and the resolution filed
 with the Secretary of State is text rather than a map. Recorded as gap
-`nc-commissioner-districts`, with two more beside it (`nc-municipal-officeholders`,
-`nc-school-board-members`) — the Census fabric carries geography and no officeholder field at
-all, so unlike Michigan's commissioner layer there is not even a stale name to reject.
+`nc-commissioner-districts`, with `nc-school-board-members` beside it — the Census fabric
+carries geography and no officeholder field at all, so unlike Michigan's commissioner layer
+there is not even a stale name to reject — and `nc-municipal-officeholders`, which since
+2026-10-16 covers only the 510 cities, towns and villages below 25,000 people.
 
 **THREE MEASUREMENTS FROM THE ARRIVAL BUILD ARE WORTH CARRYING FORWARD.** First, **this state's
 chambers forced the simplification algorithm rather than a dial**: at the inherited Visvalingam
@@ -111,8 +159,8 @@ every other instance via `scripts/compose_app.py`.
 - Metro: North Carolina (`northcarolina`) — https://districtry.com/nc/
 - Geocoders: address Photon (North Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, North Carolina-bounded, serial >=1s queue)
 - Ground truth: 35.78040,-78.63910 (the State Capitol block, downtown Raleigh, Wake County) → county Wake County; us-house 2; nc-senate 14; nc-house 38; voting-precinct Precinct 01-14. Negative point 35.60000,-75.30000 (the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.).
-- Layers: 13 registered (political 4, safety 2, schools 1, geography 6); `registerLayer(` floor 9. Debug namespace `window.NCExplorer`.
-- Scheduled workflows: `update-nc-congress-roster.yml` (Mon 15:30 UTC); `update-nc-legislature-roster.yml` (Tue 15:30 UTC); `update-nc-county-commissioners.yml` (Wed 15:30 UTC); `nc-validate-sources.yml` (1st of month 16:00 UTC).
+- Layers: 14 registered (political 5, safety 2, schools 1, geography 6); `registerLayer(` floor 9. Debug namespace `window.NCExplorer`.
+- Scheduled workflows: `update-nc-congress-roster.yml` (Mon 15:30 UTC); `update-nc-legislature-roster.yml` (Tue 15:30 UTC); `update-nc-county-commissioners.yml` (Wed 15:30 UTC); `nc-validate-sources.yml` (1st of month 16:00 UTC); `watch-city-council-pages.yml` (Thu 15:30 UTC).
 - Source registry: `nc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 ## Running & testing
@@ -174,9 +222,11 @@ others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
-cards degrade to the district number + the chamber's own directory on a roster miss; the county,
-school-district, municipality and township cards carry no roster at all and **say so on the
-card**. External strings always render through `sanitize()`/`textContent`. Roster refreshes
+cards degrade to the district number + the chamber's own directory on a roster miss; the
+school-district and township cards carry no roster at all and **say so on the card**, the county
+card names the commissioners the State Board's results elected, and the municipality card names
+the mayor and council of the 42 cities and towns above 25,000 people and says so on the card for
+every other place. External strings always render through `sanitize()`/`textContent`. Roster refreshes
 always land as PRs for human review — never as direct commits to main.
 
 ## Data pipeline
@@ -194,7 +244,10 @@ ceiling). Rosters: `congress-roster.json` (`nc/scripts/build_congress_roster.py`
 unitedstates/congress-legislators) and `nc-{senate,house}-members.json`
 (`nc/scripts/build_nc_legislature_roster.py`, from Open States `nc.csv`, enriched by
 `nc/scripts/ncga_member_scraper.py`) — all count-guarded, all refreshed weekly by CI as
-reviewed PRs.
+reviewed PRs. The city councils (`nc-city-councils.json`) and their districts
+(`nc-city-wards.json`) are not refreshed by a weekly job: they are re-read each quarter through
+each builder's `--watch`, which says whether every name is still on its page and whether any
+city's map has changed (`nc/WATCH.md`).
 
 **THE ENRICHMENT IS GATED ON SURNAME AGREEMENT, AND THE COMPARISON NEEDED A MEASUREMENT OF ITS
 OWN.** A district's Open States record and its NCGA record must name the same person or the

@@ -8,7 +8,7 @@ districtry Oklahoma: a single-file, dependency-light web app. Click a point in O
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/ok/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships SIXTEEN layers, and it went **LIVE** in its go-live change,
+the Illinois root-scripts shape. It ships SEVENTEEN layers, and it went **LIVE** in its go-live change,
 which Adam held until the fleet-wide tribal thread had drawn Oklahoma's tribal areas: it has a
 `metros.json` entry and a landing card, the Pages deploy publishes `ok/` (keeping
 `ok/data/state`, `ok/data/source` and `ok/scripts` out), and `ok/congress.html` and
@@ -51,6 +51,40 @@ so both ship and each empty note points at the other.
 and a city a council, so the municipality card names the two separately, unlike North Carolina's
 one note. 600 places: 165 cities, 435 towns, 8 of the towns FUNCSTAT I (inactive), which the
 card states.
+
+**THE 16 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL SINCE 2026-10-16, AND NINE OF
+THE ELEVEN WHOSE WARDS ELECT THEIR OWN MEMBERS DRAW THEM.** No state office publishes who holds
+Oklahoma's city offices or where their wards run. So `ok/data/source/ok-city-council-seats.json`
+writes each city's mayor and council down by hand from its own pages (111 seats, the names and
+nothing else), and `ok/scripts/build_ok_city_councils.py`, through the fleet module
+`scripts/city_councils.py`, re-reads every page it cites on each build and refuses to write
+unless every name is on its page. **MUSKOGEE'S ARE NOT FROM THE CITY**: its website's robots.txt
+shuts out every crawler but five named ones (a content-management vendor's default,
+byte-identical to Rochester Hills, Michigan's), so its mayor and three members come from the
+Muskogee County Election Board's official results for 10 February 2026, in the copy a Tulsa
+television station published, and the other five from news reports; the card says so.
+`ok/scripts/muskogee_results.py` names a winner only with more than half the votes, and holds
+the results file's address because the builder sends a browser's client to Broken Arrow and
+`scripts/probe_user_agents.py` judges every host a file names by the strongest client that file
+sends. Which seats a ward elects is set by each city's charter and recorded nowhere statewide,
+so it was read from each charter, the city's own pages, a county election board's results or
+news reports: eleven cities elect by ward or district, Broken Arrow, Owasso, Jenks and Edmond
+tie seats to wards and elect every seat by the whole city (so nothing is drawn for them), and
+Stillwater's council has no wards. Five councils choose the mayor from among their members, and
+the card says which ward elected that member. `city-ward` (labelled City Council District)
+draws the 56 wards and districts of nine of the eleven, each from the city's own map, pre-built
+by `ok/scripts/build_ok_city_wards.py` through `scripts/city_ward_maps.py`. Each city's wards
+hold its 2020 people within 5.3% of an equal share, which is what a map drawn on that census
+shows and does not prove it is the map in force (an inference, recorded as one); the precinct
+test North Carolina runs is not available, because the State Election Board's results site
+refuses this project. **LAWTON'S AND MUSKOGEE'S WARDS ARE NOT DRAWN**: Lawton's only published
+ward map does not balance on the 2020 census, so it may not be the map in force, and Muskogee
+publishes none this project may read. The ward layers are asked for the ward field alone: six
+of them carry members' names, Shawnee's beside fields called Contact and Photo. Broken Arrow's
+site refuses this project's own token at its Akamai edge, so that one page is read with Chrome
+and its client hints on the stdlib client, and the measurement that allows it is in the
+builder. The 584 smaller places name nobody (gap `ok-municipal-officeholders`), all evidence for
+the publishing ask. The quarterly re-checks are in `ok/WATCH.md`.
 
 **THE ZIP LAYER HIDES OUTSIDE OKLAHOMA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (Wichita Falls TX gives 76301, Fort Smith
@@ -149,7 +183,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Oklahoma (`oklahoma`) — https://districtry.com/ok/
 - Geocoders: address Photon (Oklahoma-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oklahoma-bounded, serial >=1s queue)
 - Ground truth: 35.49230,-97.50340 (the State Capitol, Oklahoma City, Oklahoma County) → county Oklahoma County; us-house 5; ok-senate 48; ok-house 99; ok-judicial-district 7. Negative point 33.65000,-97.15000 (near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.).
-- Layers: 16 registered (political 6, safety 2, schools 2, geography 6); `registerLayer(` floor 11. Debug namespace `window.OklahomaExplorer`.
+- Layers: 17 registered (political 7, safety 2, schools 2, geography 6); `registerLayer(` floor 12. Debug namespace `window.OklahomaExplorer`.
 - Scheduled workflows: `update-ok-congress-roster.yml` (Mon 16:45 UTC); `update-ok-legislature-roster.yml` (Tue 16:45 UTC); `update-ok-commissioner-roster.yml` (Wed 16:45 UTC); `ok-validate-sources.yml` (1st of month 19:00 UTC).
 - Source registry: `ok/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -212,9 +246,10 @@ others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
-cards degrade to the district number + the chamber's own directory on a roster miss; the county,
-school-district and municipality cards carry no roster at all and **say so on the
-card**. External strings always render through `sanitize()`/`textContent`. Roster refreshes
+cards degrade to the district number + the chamber's own directory on a roster miss; the county
+and school-district cards carry no roster at all and **say so on the card**, and the
+municipality card names the mayor and council of the 16 cities above 25,000 people and says so
+on the card for every other place. External strings always render through `sanitize()`/`textContent`. Roster refreshes
 always land as PRs for human review — never as direct commits to main.
 
 ## Data pipeline
@@ -237,6 +272,10 @@ two members claim one district.
 Commission's map and its directory of district offices; neither has a weekly job, because the map
 changes only when the Commission moves a district's lines and the directory names no one, so both
 are rebuilt by hand on the quarterly rows in `ok/WATCH.md`.
+The city councils (`ok-city-councils.json`) and their wards (`ok-city-wards.json`) are not
+refreshed by a weekly job either: they are re-read each quarter through each builder's
+`--watch`, which says whether every name is still on its page and whether any city's map has
+changed (`ok/WATCH.md`).
 
 robots.txt is read before the first fetch through `scraper_common.require_robots_once`.
 `data.openstates.org` answers its robots.txt with HTTP 403, which RFC 9309 files with a 404:

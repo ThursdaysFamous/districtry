@@ -289,6 +289,79 @@ Brookfield, Caledonia, De Pere, Fitchburg, Fond du Lac, Franklin, Greenfield,
 Janesville, La Crosse, Menomonee Falls, Mequon, Mount Pleasant, Muskego, Oak
 Creek, Oshkosh, Sun Prairie, Wausau, Wauwatosa, West Allis and West Bend.
 
+Since 2026-10-16 Arkansas answers all 19 of its units at 25,000+. No state
+office publishes who sits on an Arkansas city council, so each city's mayor and
+council are written down from the city's own pages and proved against those
+pages on every build, and the wards of the twelve cities that elect members by
+ward are drawn from the state GIS Office's map of municipal wards. The other
+seven tie every seat to a ward and elect it citywide, which was measured from
+the ballot because nothing the state publishes says which cities do; their
+wards are not drawn, since a reader in one votes for every seat.
+
+Since 2026-10-16 South Carolina names the mayor and council of all 17 of its
+units at 25,000+ and answers 16 of them. No state office publishes who sits on
+a South Carolina city or town council either, so each one is written down from
+the place's own pages and proved against them on every build. The districts of
+the twelve that elect members by district are drawn from each place's own map,
+and from the state Revenue and Fiscal Affairs Office's copy for Florence and
+Aiken, whose own maps cannot be drawn; the state's copy leaves more people
+outside every district than the places' own maps do in eight of the ten places
+compared, which is why it is not used for the rest. Four elect every seat by
+the whole place. Anderson, the seventeenth, elects six seats by district and
+publishes those districts only as pictures in PDF files, so it is not answered
+until they can be drawn.
+
+Since 2026-10-16 Tennessee names the mayor and council of all 28 of its units
+at 25,000+, and since 2026-10-17 it answers 26 of them. No state office publishes who sits on a
+Tennessee city council or where its wards run, so each city's mayor and council
+are written down from the city's own pages and proved against them on every
+build, and the districts of eleven of the thirteen that elect members by
+district are drawn, nine from each city's own map, Memphis's seven districts
+and two super districts among them, and two from a published copy: Hamilton
+County publishes Chattanooga's districts with their shapes withheld and the
+city's own map server may not be read, so they are drawn from a copy the city
+publishes on ArcGIS Online, and Hendersonville's map server cannot be asked
+whether it may be read, so its wards are drawn from Sumner County's copy (both
+since 2026-10-17). Nashville's Metropolitan Council districts are Davidson
+County's commission districts, which the county commission layer already draws
+and names. Spring Hill and Bristol tie seats to districts or wards and elect
+them by the whole city, and twelve more elect every seat that way. Knoxville
+and Lebanon elect by district or ward and their districts cannot be drawn yet:
+the only copy of Knoxville's published as data reserves all rights and allows
+no copy without its publisher's written permission, and Lebanon publishes its
+current wards only as PDF files.
+
+Since 2026-10-16 North Carolina answers all 42 of its units at 25,000+. No
+state office publishes who sits on a North Carolina city or town council or
+where its districts run, so each place's mayor and council are written down
+from the place's own pages and proved against them on every build, except
+Raleigh's and Matthews's, whose websites answer this project with a managed
+challenge and whose names come from the State Board of Elections' results; the
+cards say so. The districts of the 17 that elect members by district or ward
+are drawn, twelve from the city's own map and five from its county's. Durham,
+Concord, Hickory and Morrisville tie some or all of their seats to districts or
+wards and elect every seat by the whole place, and the other 21 have no
+districts at all, which was measured from the precincts each contest was on
+because nothing the state publishes says which places do; nothing is drawn for
+those 25, since a reader in one votes for every seat.
+
+Since 2026-10-16 Oklahoma names the mayor and council of all 16 of its units at
+25,000+ and answers 14 of them. No state office publishes who sits on an
+Oklahoma city council or where its wards run, so each city's mayor and council
+are written down from the city's own pages and proved against them on every
+build, except Muskogee's: the city's website shuts out every crawler but five
+named ones, so its names come from the county election board's official
+results and news reports, and the card says so. The wards of nine of the
+eleven cities that elect members by ward or district are drawn from each
+city's own map. Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and
+elect every seat by the whole city, and Stillwater has no wards, which was read
+from each city's charter, its own pages and its county's election results
+because no state office records it; nothing is drawn for those five, since a
+reader in one votes for every seat. Lawton and Muskogee elect by ward and their
+wards cannot be drawn yet: the only ward map Lawton publishes as data does not
+divide the 2020 census population evenly, so it may not be the map in force,
+and Muskogee publishes no copy this project may read.
+
 Illinois already passes Examined, so every county it does not dispatch is either
 served another way or carries a record; the fourth test does not re-ask that
 question.
