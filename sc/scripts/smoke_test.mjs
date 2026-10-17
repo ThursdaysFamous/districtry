@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "sc-senate", "sc-house", "county-council"
 const EXPECT_DISTRICT = { "county": "Richland County", "us-house": "6", "sc-senate": "26", "sc-house": "72", "county-council": "4", "voting-precinct": "Ward 1", "sc-circuit-court": "5th Judicial Circuit" };
 const NEGATIVE_POINT = "33.75000,-82.55000"; // Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry South Carolina";
-const EXPECT_LAYERS = 16;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -736,6 +736,11 @@ try {
   //        working government where the Census records none.
   //    (c) The one school tiling answers, under the label with no qualifier,
   //        because the unified districts cover the state alone.
+  //    (d) A place above 25,000 names its mayor and every council seat from
+  //        the roster, joined on the Census id the stub carries, with who
+  //        elects each seat; a place outside the 17 says it names nobody.
+  //        The roster is the shipped data/app file, so this also holds the
+  //        join to it.
   {
     function esriPolygon(props) {
       return {
@@ -754,20 +759,40 @@ try {
 
     const cases = [
       {
-        name: "a city names itself a city",
+        name: "a city names itself a city, and names its mayor and council",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "4516000", NAME: "Columbia city", BASENAME: "Columbia", STATE: "45", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Columbia city/, /Incorporated city/, /Not named here/],
-        reject: [/INACTIVE/, /Incorporated town/]
+        want: [/Columbia city/, /Incorporated city/, /Daniel J\. Rickenmann/, /Tina N\. Herbert/,
+          /Council, District 1/, /elected by District 1/, /Council, At large/, /Sam P\. Johnson/,
+          /How the seats are elected/, /Read on/, /Which district this point is in/],
+        reject: [/INACTIVE/, /Incorporated town/, /Not named here/]
       },
       {
-        name: "a town names itself a town, not a city",
+        name: "a town that elects every seat by the whole town says so",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4548535", NAME: "Mount Pleasant town", BASENAME: "Mount Pleasant", STATE: "45", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Mount Pleasant town/, /Incorporated town/, /Will Haynie/, /Council, At large/,
+          /elected by the whole town/, /All eight council members are elected by the voters of the whole town/],
+        reject: [/elected by (Ward|District)/, /this point is in/, /Not named here/, /Incorporated city/]
+      },
+      {
+        name: "a city whose districts are not drawn names its members and says why",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4501360", NAME: "Anderson city", BASENAME: "Anderson", STATE: "45", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Anderson city/, /Tonya Winbush/, /Council, Seat 5/, /elected by District 5/,
+          /Anderson Observer/, /only as pictures in PDF files/],
+        reject: [/this point is in/, /Not named here/]
+      },
+      {
+        name: "a town names itself a town, not a city, and names nobody",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "4513150", NAME: "Chapin town", BASENAME: "Chapin", STATE: "45", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Chapin town/, /Incorporated town/],
-        reject: [/INACTIVE/, /Incorporated city/]
+        want: [/Chapin town/, /Incorporated town/, /Not named here/],
+        reject: [/INACTIVE/, /Incorporated city/, /Mayor/]
       },
       {
         name: "an affix the card does not carry prints NO type row",
@@ -950,6 +975,50 @@ try {
     check("a point off tribal land is told so in the layer's own words",
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // 9. THE CITY COUNCIL DISTRICT CARD, drawn for the twelve places above
+  //    25,000 people that elect by district and answered from the shipped
+  //    files alone, so nothing here is stubbed. At the State House, in
+  //    Columbia's District 2, it names the member that district elects and no
+  //    other; in Rock Hill it calls the unit a ward, as the city does; in
+  //    Florence it says the lines are the state's copy and not a legal
+  //    description; on Shaw Air Force Base, inside Sumter and in none of its
+  //    wards, and in Mount Pleasant, which elects every seat by the whole
+  //    town, there is nothing to answer and the card says why. Each district
+  //    point is the drawn district's pole of inaccessibility or one the
+  //    builder's own anchors hold, at least 580 m from any edge.
+  for (const c of [
+    { name: "the State House", point: POINT,
+      want: [/District 2\b/, /Columbia City Council/, /Edward H\. McDowell Jr\./, /Council, District 2/,
+        /elected by District 2/, /Elected by the whole city/, /The mayor and two council members/,
+        /the City of Columbia's own map/, /within 4 metres/],
+      reject: [/Tina N\. Herbert/, /Will Brennan/, /Peter M\. Brown/, /Daniel J\. Rickenmann/, /Tyler D\. Bailey/] },
+    { name: "Rock Hill", point: "34.92777,-81.00407",
+      want: [/Ward 3\b/, /Rock Hill City Council/, /Kevin Sutton/, /elected by Ward 3/,
+        /The mayor\. The City or Town card names the mayor\./, /the City of Rock Hill's own map/],
+      reject: [/elected by District/, /Derrick Lindsay/, /John Gettys/] },
+    { name: "Florence", point: "34.16741,-79.75558",
+      want: [/District 2\b/, /Florence City Council/, /J\. Lawrence Smith II/, /The mayor and three council members/,
+        /Revenue and Fiscal Affairs Office's copy/, /not a legal description/],
+      reject: [/LaShonda NeSmith-Jackson/, /Bryan A\. Braddock/] },
+    { name: "Shaw Air Force Base", point: "33.97443,-80.47040",
+      want: [/not in a council district or ward this map draws/],
+      reject: [/Ward \d/, /Sumter City Council/] },
+    { name: "Mount Pleasant", point: "32.79410,-79.86260",
+      want: [/not in a council district or ward this map draws/, /elect every seat by the whole place/],
+      reject: [/Mount Pleasant Town Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that district elects, in the place's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
     await context.close();
   }
 } finally {

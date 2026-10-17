@@ -27,6 +27,7 @@
         "ar-court-of-appeals",
         "ar-house",
         "ar-senate",
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-district",
@@ -395,6 +396,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",
@@ -490,6 +492,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "conservation-district",
         "county",
         "county-commissioner",
@@ -525,6 +528,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-council",
         "county-subdivision",
@@ -562,6 +566,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-commissioner",
         "county-subdivision",
