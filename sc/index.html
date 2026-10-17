@@ -4217,9 +4217,9 @@ function initSouthCarolinaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "sc-senate": "scs", "county": "co",
     "school-district-unified": "su", "sc-house": "sch", "sc-circuit-court": "scc",
-    "county-subdivision": "cs", "county-council": "cu", "zip-code": "zp",
-    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "county-subdivision": "cs", "county-council": "cu", "school-board-district": "bd",
+    "zip-code": "zp", "voting-precinct": "vp", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4230,8 +4230,9 @@ function initSouthCarolinaExplorer() {
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
+    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -9567,6 +9568,7 @@ function initSouthCarolinaExplorer() {
     "sc-house",          // 124 House districts — the smallest of the three chamber tilings
     "county-subdivision", // 299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)
     "county-council",    // 315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes
+    "school-board-district", // 383 districts on the boards of 54 school districts, pre-built from the Revenue and Fiscal Affairs Office's layer — 195.4 km2 mean area (median 128.5), measured 2026-10-16 on the drawn file: smaller than a county council district (median 172.0 km2), larger than most ZIP codes
     "zip-code",          // 841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina
     "voting-precinct",   // 2,315 precincts tiling the state, pre-built from the Revenue and Fiscal Affairs Office's official maps — 35.84 km2 mean area, land and water (median 12.82), measured 2026-10-15 on the drawn file: smaller on average than a census county division (260.4 km2 of land), larger than a city or town (18.58)
     "municipality",      // 271 incorporated cities and towns, live from TIGERweb
@@ -14515,6 +14517,166 @@ function initSouthCarolinaExplorer() {
     compact: true, compactMetaField: "geoid" // 4b name-only card
   });
 
+  /* ---------- 6b. School Board District — the state's map of every board's districts ----------
+   * In South Carolina a school board's districts, and how its members are
+   * chosen, are set by an act of the General Assembly for that one school
+   * district. The Revenue and Fiscal Affairs Office keeps the maps those acts
+   * name and publishes them statewide ("School Board Districts", layer 0 of
+   * the Boundaries_Districts service on gis.state.sc.us). Pre-built by
+   * sc/scripts/build_sc_school_board_districts.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m;
+   * data/app/sc-school-board-districts.json, same-origin), so a click is
+   * answered in the browser and no point is sent anywhere.
+   *
+   * 383 districts on the boards of 54 of the state's 72 school districts,
+   * measured 2026-10-16. The map gives each of the other 18 one record marked
+   * "At Large", which has nothing to draw; the empty card says so.
+   *
+   * WHO VOTES COMES FROM EACH BOARD'S OWN ACT, read on scstatehouse.gov on
+   * 2026-10-16, never from the map, whose act fields are wrong for several
+   * boards (the builder's docstring lists them). Each district carries
+   * `vote`: "area" (the district's voters elect its member), "residence"
+   * (every voter in the school district votes, and the member lives in the
+   * district) or "unclear" (the act does not say), and the card says which in
+   * those words. `seats` is how many members the district elects, `size` the
+   * board's size where its act gives one, `atLarge` its seats elected at
+   * large, `act` the act that sets the board, and `note` anything the act or
+   * the map says that those cannot.
+   *
+   * NO MEMBER IS NAMED. No statewide list of South Carolina's school board
+   * members has been read, so the card names no one and links the school
+   * district's own website, which the map gives for every board. Recorded as
+   * gap sc-school-board-members.
+   * ---------- */
+  var loadScSchoolBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-school-board-districts.json", {}, 2);
+  });
+
+  // A count in words, as the card's sentences read; 13 and over as digits.
+  function scWords(n) {
+    var words = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight",
+      "nine", "ten", "eleven", "twelve"];
+    return n >= 0 && n < words.length ? words[n] : String(n);
+  }
+  function scCapital(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  // The card's rows for one district, from what the builder read out of its
+  // board's act.
+  function scSchoolBoardRows(r) {
+    var unit = /^District /.test(r.label || "") ? "district" : "area";
+    var seats = r.seats > 0 ? r.seats : 1;
+    var rows = [];
+    var seat;
+    if (r.size) {
+      seat = scCapital(scWords(seats)) + " of the board's " + scWords(r.size) + " members " +
+        (seats === 1 ? "is" : "are") + " elected from this " + unit + ".";
+    } else {
+      seat = scCapital(scWords(seats)) + " member" + (seats === 1 ? " of the board is" :
+        "s of the board are") + " elected from this " + unit + ".";
+    }
+    rows.push({ label: "Seats", value: seat });
+    var member = seats === 1 ? "its member" : "its members";
+    var vote;
+    if (r.vote === "area") {
+      vote = "Only the voters who live in this " + unit + ", not the whole school " +
+        "district, elect " + member + ".";
+    } else if (r.vote === "residence") {
+      vote = "Every voter in the school district votes for this seat. The member " +
+        "must live in this " + unit + ".";
+    } else {
+      vote = "The act that sets the board does not say whether only this " + unit +
+        "'s voters or every voter in the school district elect " + member + ".";
+    }
+    rows.push({ label: "Who votes", value: vote });
+    if (r.atLarge > 0) {
+      rows.push({
+        label: "Seats at large",
+        value: r.vote === "residence"
+          ? "The board also has " + scWords(r.atLarge) + " member" + (r.atLarge === 1 ? "" : "s") +
+            " who may live anywhere in the school district."
+          : "The board also has " + scWords(r.atLarge) + " member" + (r.atLarge === 1 ? "" : "s") +
+            " elected at large, by every voter in the school district."
+      });
+    }
+    if (r.act) rows.push({ label: "Set by", value: r.act });
+    if (r.note) rows.push({ label: "Note", value: r.note });
+    rows.push({
+      label: "Members",
+      value: "Not named here. No statewide list of South Carolina's school board " +
+        "members has been read yet, so this app names no one rather than guessing. " +
+        "The school district's own website is linked below."
+    });
+    rows.push({
+      label: "How exact this line is",
+      value: "The Revenue and Fiscal Affairs Office keeps the maps these districts " +
+        "are drawn from. They are drawn here to within 4 metres; for a definitive " +
+        "answer, ask your county's voter registration and elections office."
+    });
+    return rows;
+  }
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board District",
+    emptyNote: "This point is not in a school board district. The Revenue and " +
+      "Fiscal Affairs Office's map draws districts only for the school boards " +
+      "elected by district, and marks every other school district “At Large”, " +
+      "which for an elected board means every member is elected by the whole " +
+      "school district.",
+    overlay: {
+      load: loadScSchoolBoardDistricts,
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.board != null && p.label != null ? String(p.board) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadScSchoolBoardDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        var web = p.web != null ? String(p.web) : "";
+        return {
+          seq: seq,
+          board: p.board != null ? String(p.board) : null,
+          label: p.label != null ? String(p.label) : null,
+          vote: p.vote != null ? String(p.vote) : null,
+          seats: typeof p.seats === "number" ? p.seats : 1,
+          size: typeof p.size === "number" ? p.size : null,
+          atLarge: typeof p.atLarge === "number" ? p.atLarge : 0,
+          act: p.act != null ? String(p.act) : null,
+          note: p.note != null ? String(p.note) : null,
+          // the website is the card's one link; only http(s) is followed
+          web: /^https?:\/\//.test(web) ? web : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.label || "Unknown district",
+        note: result.board
+      }));
+      wrap.appendChild(renderFieldStack(scSchoolBoardRows(result)));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      if (result && result.web) {
+        return { label: (result.board ? result.board : "The school district") + " website",
+                 url: result.web };
+      }
+      return {
+        label: "Find your polling place",
+        url: "https://vrems.scvotes.sc.gov/Voter/Login?PageMode=PollingPlace"
+      };
+    }
+  });
+
   /* ---------- 7. ZIP Code — live TIGERweb ZCTAs ----------
    * ZCTAs carry no STATE field (they cross state lines), so unlike every
    * other TIGERweb layer here this one cannot use the STATE='45' filter and
@@ -16257,7 +16419,7 @@ function initSouthCarolinaExplorer() {
     // The county council sits with the chambers rather than down in
     // geography: like them it is a member elected by this district alone.
     "county-council",
-    "school-district-unified",
+    "school-district-unified", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -16744,9 +16906,10 @@ function initSouthCarolinaExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#E09BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
+    "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

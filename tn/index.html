@@ -4216,10 +4216,11 @@ function initTennesseeExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "tn-senate": "tns", "county": "co", "tn-house": "tnh",
-    "tn-judicial-district": "tnj", "school-district-unified": "su", "county-commissioner": "cm",
-    "county-subdivision": "cs", "zip-code": "zp", "school-district-elementary": "se",
-    "school-district-secondary": "sh", "voting-precinct": "vp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "tn-judicial-district": "tnj", "school-district-unified": "su",
+    "school-board-district": "bd", "county-commissioner": "cm", "county-subdivision": "cs",
+    "zip-code": "zp", "school-district-elementary": "se", "school-district-secondary": "sh",
+    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4232,8 +4233,9 @@ function initTennesseeExplorer() {
     "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
+    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -9567,6 +9569,7 @@ function initTennesseeExplorer() {
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
+    "school-board-district", // 114 districts on the boards of education of 18 counties, pre-built from the Comptroller of the Treasury's layer — 200.6 km2 mean area (median 143.7), measured 2026-10-16 on the drawn file: smaller on average than a unified school district, larger than a county commission district, of which 859 tile the state
     "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
     "county-subdivision", // 855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
     "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
@@ -14638,6 +14641,105 @@ function initTennesseeExplorer() {
       "the lower grades.")
   });
 
+  /* ---------- 8b. School Board District — the Comptroller of the Treasury's map ----------
+   * A Tennessee county board of education is elected from districts of
+   * substantially equal population (Tenn. Code Ann. 49-2-201). The
+   * Comptroller of the Treasury publishes the districts drawn after the 2020
+   * Census for eighteen counties ("School Board Districts New", layer 5 of
+   * its Redistricting_Address_Lookup service), and no other office publishes
+   * any as a map. Pre-built by tn/scripts/build_tn_school_board_districts.py
+   * through scripts/published_district_layers.py (Douglas-Peucker at
+   * 4 m; data/app/tn-school-board-districts.json, same-origin), so a click is
+   * answered in the browser and no point is sent anywhere.
+   *
+   * 114 districts in eighteen counties, measured 2026-10-16. The map gives
+   * each district its county and number and nothing else: no school system's
+   * name and no count of members, so the card names the county's board and
+   * says a district may elect more than one member (five counties draw only
+   * three or four districts). In Shelby County the districts leave out the
+   * six towns that run their own school districts, which the builder checks
+   * point by point and the empty card says.
+   *
+   * NO MEMBER IS NAMED. No statewide list of Tennessee's school board members
+   * has been read, so the card names no one rather than guessing. Recorded as
+   * gap tn-school-board-members; the 77 counties not on the map are gap
+   * tn-school-board-districts.
+   * ---------- */
+  var loadTnSchoolBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-school-board-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board District",
+    emptyNote: "This point is not in one of the school board districts this map " +
+      "draws. The Comptroller of the Treasury's map of them covers eighteen " +
+      "counties: Blount, Chester, Claiborne, Crockett, Davidson, Fayette, " +
+      "Hardeman, Henry, Jefferson, Johnson, Lawrence, Macon, Madison, Sevier, " +
+      "Shelby, Sumner, Washington and Wilson. In Shelby County it leaves out " +
+      "Arlington, Bartlett, Collierville, Germantown, Lakeland and Millington, " +
+      "which run their own school districts. Tennessee's county boards of " +
+      "education are elected from districts under state law; the other " +
+      "counties' districts are not drawn here yet.",
+    overlay: {
+      load: loadTnSchoolBoardDistricts,
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.board != null && p.label != null
+        ? String(p.board) + " school board, " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadTnSchoolBoardDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        return {
+          seq: seq,
+          county: p.board != null ? String(p.board) : null,
+          label: p.label != null ? String(p.label) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.label || "Unknown district",
+        note: result.county ? result.county + " board of education" : null
+      }));
+      wrap.appendChild(renderFieldStack([
+        {
+          label: "Who it elects",
+          value: (result.county ? result.county + "'s" : "The county's") +
+            " board of education is elected from districts, and this is its " +
+            (result.label || "district") + ". A district may elect more than one member."
+        },
+        {
+          label: "Members",
+          value: "Not named here. No statewide list of Tennessee's school board " +
+            "members has been read yet, so this app names no one rather than guessing."
+        },
+        {
+          label: "Where the lines come from",
+          value: "The Comptroller of the Treasury's map of the districts drawn " +
+            "after the 2020 Census, which covers eighteen counties. They are drawn " +
+            "here to within 4 metres; for a definitive answer, ask your county " +
+            "election commission."
+        }
+      ]));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Check your voter registration",
+        url: "https://tnmap.tn.gov/voterlookup/"
+      };
+    }
+  });
+
   /* ---------- 9. ZIP Code — live TIGERweb ZCTAs ----------
    * ZCTAs carry no STATE field (they cross state lines), so unlike every
    * other TIGERweb layer here this one cannot use the STATE='47' filter and
@@ -16380,7 +16482,7 @@ function initTennesseeExplorer() {
     "tn-judicial-district",
     "county-commissioner",
     "school-district-unified", "school-district-elementary",
-    "school-district-secondary",
+    "school-district-secondary", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -16867,10 +16969,11 @@ function initTennesseeExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5",
-    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE",
+    "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA",
+    "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

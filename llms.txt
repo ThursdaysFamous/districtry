@@ -128,7 +128,7 @@ All 120 counties: each county's fiscal court and elected officers, cities with t
 
 All 92 counties: each county's commissioners and county council, townships, cities and towns, voting precincts, school districts, ZIP codes, the Pokagon Band's trust land, and the nearest police station, fire station and post office — plus the Court of Appeals districts whose voters decide whether its judges stay, and the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. County officials, township trustees and boards, and the mayors and councils of most places over 25,000 people are named for the winner of each seat's most recent election in the Election Division's certified results; three towns' councils and the Pokagon Band's council are named from their own pages, and the county council districts are drawn in 55 counties. Nobody is named yet on the two state chambers, the Court of Appeals, the school boards or the smaller towns' councils, and the Data gaps panel says why.
 
-- [Indiana district lookup](https://districtry.com/in/): 15 layers, all 92 counties.
+- [Indiana district lookup](https://districtry.com/in/): 16 layers, all 92 counties.
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
 - [Who are my county commissioners?](https://districtry.com/in/county-commissioner.html): links a page per county, 92 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/in/sources.html)
@@ -160,7 +160,7 @@ All 77 counties and their commissioner districts: cities and towns, census count
 
 All 46 counties and their county council districts: cities and towns, voting precincts and census county divisions, school districts, ZIP codes, the Catawba Nation's land, and the nearest police station, fire station and post office — plus the South Carolina Senate, House and U.S. House districts, with the member named for every seat, and the judicial circuits. Each council seat names the winner of its most recent election in the State Election Commission's certified results. Nobody is named yet on the city councils, school boards or circuit courts, and the Data gaps panel says why.
 
-- [South Carolina district lookup](https://districtry.com/sc/): 15 layers, all 46 counties.
+- [South Carolina district lookup](https://districtry.com/sc/): 16 layers, all 46 counties.
 - [Who is my U.S. representative?](https://districtry.com/sc/congress.html)
 - [Who is on my county council?](https://districtry.com/sc/county-council.html): links a page per county, 46 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/sc/sources.html)
@@ -171,7 +171,7 @@ All 46 counties and their county council districts: cities and towns, voting pre
 
 All 95 counties and their county commission districts: civil districts, cities and towns, voting precincts, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Tennessee Senate, House and U.S. House districts, with who holds each seat, and the judicial districts. County commissioners are named from each county's own pages where the county publishes a current list, nobody is named yet on the judicial districts, and the Data gaps panel lists what is missing and why.
 
-- [Tennessee district lookup](https://districtry.com/tn/): 17 layers, all 95 counties.
+- [Tennessee district lookup](https://districtry.com/tn/): 18 layers, all 95 counties.
 - [Who is my U.S. representative?](https://districtry.com/tn/congress.html)
 - [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 57 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/tn/sources.html)
@@ -182,7 +182,7 @@ All 95 counties and their county commission districts: civil districts, cities a
 
 All 75 counties and their quorum court districts: townships, cities and towns, voting precincts, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Arkansas Senate, House and U.S. House districts, with who holds each seat, and the Court of Appeals districts and judicial circuits. Every county judge is named, and so is the justice of the peace for nearly every district, from the county's own site where it numbers its justices and otherwise from the 2024 election results while the winner is still on the Association of Arkansas Counties' list. Nobody is named yet on the city councils, school boards or courts, and the Data gaps panel says why.
 
-- [Arkansas district lookup](https://districtry.com/ar/): 15 layers, all 75 counties.
+- [Arkansas district lookup](https://districtry.com/ar/): 16 layers, all 75 counties.
 - [Who is my U.S. representative?](https://districtry.com/ar/congress.html)
 - [Who is on my quorum court?](https://districtry.com/ar/quorum-court.html): links a page per county, 75 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ar/sources.html)

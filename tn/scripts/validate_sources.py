@@ -202,6 +202,20 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "school-board-district",
+        "app_file": "tn-school-board-districts.json",
+        "source_url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/5",
+        "note": (
+            "114 school board districts in eighteen counties from the "
+            "Comptroller of the Treasury's School Board Districts New layer "
+            "(115 records: one has no county and no shape and is skipped), "
+            "pre-built by tn/scripts/build_tn_school_board_districts.py "
+            "through scripts/published_district_layers.py; the "
+            "quarterly --watch row in tn/WATCH.md compares the fingerprint "
+            "recorded at the build."
+        ),
+    },
+    {
         "layer": "tn-judicial-district",
         "app_file": "tn-judicial-districts.json",
         "source_url": "https://tennesseeda.gov/",
@@ -319,6 +333,15 @@ ENDPOINTS = [
                 "Redistricting_Address_Lookup/FeatureServer/12/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 1690,  # 1,879 records measured 2026-10-15
+    },
+    # The school board district layer the builder reads (2026-10-16). A floor,
+    # for the reason the precinct row above gives.
+    {
+        "layer": "school-board-district",
+        "url": ("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/"
+                "Redistricting_Address_Lookup/FeatureServer/5/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 103,   # 115 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

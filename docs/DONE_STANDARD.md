@@ -319,11 +319,21 @@ question.
   order, which are not drawn, and their cards say so. North Carolina still
   owes the entry.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
-  statewide director districts and New York City's community education councils.
-  Kentucky ships none and owes them: its thread has confirmed that every county
-  school board is elected by division, five divisions per county, each built
-  from whole precincts. Kentucky's independent school boards are elected at
-  large, so they are named rather than drawn.
+  statewide director districts, New York City's community education councils,
+  Minnesota's fourteen boards that elect by district, and since 2026-10-16
+  Arkansas's 965 zones on the 176 boards that elect by zone, from the state GIS
+  Office's statewide layer, and South Carolina's 383 districts on the 54 boards
+  elected by district, from the Revenue and Fiscal Affairs Office's statewide
+  map, with who votes for each seat read from the board's own act. Tennessee
+  and Indiana draw part of what they owe:
+  Tennessee the districts of 18 of its 95 county boards of education, the
+  counties the Comptroller of the Treasury maps, and Indiana the five districts
+  of the Indianapolis Public Schools board, the only ones a government office
+  in Indiana publishes as a map. Kentucky ships none and owes them: its thread
+  has confirmed that every county school board is elected by division, five
+  divisions per county, each built from whole precincts. Kentucky's independent
+  school boards are elected at large, so they are named rather than drawn.
+  North Carolina and Oklahoma owe them too.
 - Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
   Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
   Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one
