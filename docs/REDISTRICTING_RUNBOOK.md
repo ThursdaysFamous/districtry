@@ -81,7 +81,9 @@ added, because those facts were measured in that change; every other layer in th
 unwritten. A second change the same day added each state's election precincts to Kentucky,
 Indiana, North Carolina, South Carolina, Tennessee and Arkansas, so four of those stubs gained a
 precinct row and Indiana and North Carolina gained a stub each, holding that one row. In Indiana
-and North Carolina, as in those five, every other layer is still unwritten here.
+and North Carolina, as in those five, every other layer is still unwritten here. A third change,
+on 2026-10-16, drew court districts in Indiana, Oklahoma, South Carolina, Tennessee and Arkansas,
+and each of those stubs gained a row for them (Arkansas two).
 
 ### CHI (37 layers)
 
@@ -221,12 +223,13 @@ here, and `mn/WATCH.md` carries their dates. Owned by the Minnesota thread.
 
 ### IN — NOT YET WRITTEN
 
-No blast-radius entries for Indiana except the precinct layer, added 2026-10-15. Owned by the
-Indiana thread.
+No blast-radius entries for Indiana except the precinct layer, added 2026-10-15, and the Court of
+Appeals layer, added 2026-10-16. Owned by the Indiana thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | Election precincts (IN, 5,121) | **At no fixed time**: the county changes its precincts | each county, gathered every year by the General Assembly and the Election Division into one statewide layer that IndianaMap publishes as a new service each year | geometry (`in/scripts/build_in_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `in/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. A new yearly edition sits at a new address with new field names, so it needs the builder's address, edition and field names changed and the card's "Indiana's 2026 precinct map" with them; the builder's `--check` holds the card to the edition it reads. The quarterly `--watch` row in `in/WATCH.md` is the tripwire |
+| Court of Appeals districts (IN, 1st to 3rd) | **At no fixed time**: an act of the General Assembly moving a county between districts | the General Assembly, in the Indiana Code; read from the court's own district map, because the Code is served only on a site this project cannot read | geometry (`in/scripts/build_in_appeals_districts.py` rebuild over the shipped county fabric: the pinned 53, 19 and 20 county counts and the one-piece check re-run), the smoke anchor (the 2nd District at the ground-truth point), and the service-worker cache name, since the file is cache-first. The map image's SHA-256 is recorded, and the annual row in `in/WATCH.md` re-hashes it. The 4th and 5th Districts are statewide and not drawn |
 
 ### NC — NOT YET WRITTEN
 
@@ -239,42 +242,47 @@ the North Carolina thread.
 
 ### OK — NOT YET WRITTEN
 
-No blast-radius entries for Oklahoma except the township layer, added 2026-10-15. Owned by the
-Oklahoma thread.
+No blast-radius entries for Oklahoma except the township layer, added 2026-10-15, and the court
+layer, added 2026-10-16. Owned by the Oklahoma thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | County subdivisions (OK census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
+| District court judicial districts (OK, 26) | **At no fixed time**: an act of the Legislature moving a county between districts or changing which counties elect an office | the Legislature, in the Oklahoma Statutes; read from the State Election Board's roster of officers, because both of the state's publishers of the statutes refuse this project in robots.txt | geometry (`ok/scripts/build_ok_judicial_districts.py` rebuild over the shipped county fabric: the 75-office count, the offices-against-key agreement on every county and the partition check re-run), each office's electorate on the card (Districts 4, 12 and 14 elect some offices from part of the district), the smoke anchor (District 7 at the ground-truth point), and the service-worker cache name, since the file is cache-first. The roster is re-read after each November general election, the row in `ok/WATCH.md` |
 
 ### SC — NOT YET WRITTEN
 
 No blast-radius entries for South Carolina except the township and precinct layers, both added
-2026-10-15. Owned by the South Carolina thread.
+2026-10-15, and the court layer, added 2026-10-16. Owned by the South Carolina thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | County subdivisions (SC census county divisions) | TIGER-rolling | Census Bureau vintage (statistical areas; no state or county government enacts them) | nothing to rebuild: the layer is LIVE against TIGERweb, so a new vintage reaches the app the day the Census republishes it |
 | Election precincts (SC, 2,315) | **At no fixed time**: an act of the General Assembly, one county at a time | the General Assembly, by act (Title 7, Chapter 7 of the Code), county by county; the Revenue and Fiscal Affairs Office keeps the official maps | geometry (`sc/scripts/build_sc_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `sc/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. A new act changes the card's act and effective-date rows with the lines, which the rebuild carries. The quarterly `--watch` row in `sc/WATCH.md` is the tripwire |
+| Judicial circuits (SC, 16) | **At no fixed time**: an act of the General Assembly amending Section 14-5-610 | the General Assembly, in Section 14-5-610 of the Code | geometry (`sc/scripts/build_sc_judicial_circuits.py` rebuild over the shipped county fabric: the 16-circuit, judge-count and at-large checks and the partition check re-run), each circuit's judge count on the card, the smoke anchor (the 5th Circuit at the ground-truth point), and the service-worker cache name, since the file is cache-first. The builder also stops if a sentence of the constitution or of Section 1-7-310 that the card repeats changes. The annual row in `sc/WATCH.md` re-reads them after each session |
 
 ### TN — NOT YET WRITTEN
 
 No blast-radius entries for Tennessee except the civil-district and precinct layers, both added
-2026-10-15. Owned by the Tennessee thread.
+2026-10-15, and the court layer, added 2026-10-16. Owned by the Tennessee thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | Civil districts (TN) | TIGER-rolling | Census Bureau vintage, recording each civil district as a legal area with no functioning government (FUNCSTAT N); which body may change a civil district's lines is not measured here | nothing to rebuild: the layer is LIVE against TIGERweb, so a change reaches the app only once the Census carries it into a new vintage. The card's note that a civil district's number is not a commission district's number holds whatever the lines do |
 | Election precincts (TN, 1,870) | **At no fixed time**: the county changes its precincts | each county election commission; the Comptroller of the Treasury, who does the counties' redistricting map work, publishes the statewide layer | geometry (`tn/scripts/build_tn_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `tn/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. The builder also expects exactly nine repeated records in Overton County and eight unnamed pieces in Davidson County, so a change to either stops the rebuild until someone reads the layer. The quarterly `--watch` row in `tn/WATCH.md` is the tripwire |
+| Judicial districts (TN, 32) | **At no fixed time**: an act of the General Assembly moving a county between districts or creating one (the 21st has been split into the 21st and 32nd since the Comptroller's FY2019 map) | the General Assembly, in the Tennessee Code; read from the District Attorneys General Conference's pages, because the Code's public copy is published by LexisNexis | geometry (`tn/scripts/build_tn_judicial_districts.py` rebuild over the shipped county fabric: the county selector, the district pages and the Comptroller's FY2019 map must agree apart from the recorded split, and the partition check re-runs), the smoke anchor (the 20th District at the ground-truth point), and the service-worker cache name, since the file is cache-first. The annual row in `tn/WATCH.md` re-reads the pages after each session |
 
 ### AR — NOT YET WRITTEN
 
 No blast-radius entries for Arkansas except the township and precinct layers, both added
-2026-10-15. Owned by the Arkansas thread.
+2026-10-15, and the two court layers, added 2026-10-16. Owned by the Arkansas thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | Townships (AR) | **At no fixed time**: a county court changes its townships by order (Arkansas Code 14-14-401) | each county court; drawn by the Arkansas GIS Office's statewide township layer, which this app ships instead of the Census's out-of-date one | geometry (`ar/scripts/build_ar_townships.py` rebuild: the 820-township and 75-county guard, the agreement gate, the 25 m ceiling and the per-county cover check all re-run), the Capitol smoke anchor (Big Rock Township), and the service-worker cache name, since the file is cache-first. The state's layer carries no edit date, so `--watch` (the annual row in `ar/WATCH.md`) is the only tripwire |
 | Election precincts (AR, 2,920) | **At no fixed time**: the county changes its precincts | each county, as its voter registration system holds them; the Arkansas GIS Office publishes the statewide layer with the Secretary of State's Elections Division | geometry (`ar/scripts/build_ar_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `ar/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. The builder also expects exactly eight records that are further pieces of seven precincts, so a precinct newly published in pieces stops the rebuild until someone reads the layer. The quarterly `--watch` row in `ar/WATCH.md` is the tripwire |
+| Court of Appeals districts (AR, 7) | **At no fixed time**: an act of the General Assembly moving a county between districts (Act 1812 of 2003 sets them now) | the General Assembly, in the Arkansas Code; read from the Arkansas GIS Office's quotation of the act, because the Code's only copy is LexisNexis's | geometry (`ar/scripts/build_ar_court_districts.py` rebuild over the shipped county fabric: the seven districts and twelve positions, the act-against-layer agreement on every county and the partition check re-run), the smoke anchor (District 6 at the Capitol), and the service-worker cache name, since the file is cache-first. The annual row in `ar/WATCH.md` re-reads the sources after each session |
+| Judicial circuits (AR, 28) | **At no fixed time**: an act of the General Assembly moving a county between circuits or adding a judgeship (Act 220 of 2025 adds the 19th West's eighth on 1 January 2027, a dated row in `ar/WATCH.md`); the five court-ordered election subdistricts change only by order of the federal court | the General Assembly, in the Arkansas Code, and for the subdistricts the U.S. District Court (Hunt v. State of Arkansas); read from the Administrative Office of the Courts' circuit judge directory | geometry (the same builder: every judge serving every county of the circuit, the pinned 126 judges, the directory-against-layer agreement on every county and the partition check re-run), each circuit's judge count on the card, the smoke anchor (the 6th Circuit at the Capitol), and the service-worker cache name, since the file is cache-first. The subdistricts are not drawn, so a change to them moves no geometry here; the card's subdistrict row rests on the court order's own sentences |
 
 ---
 

@@ -78,10 +78,15 @@
       "ok": "ok-house", "sc": "sc-house", "tn": "tn-house", "ar": "ar-house", "ms": "ms-house"
     },
     "supreme-court-district": { "il": "il-supreme-court", "ky": "ky-supreme-court", "ms": "ms-supreme-court" },
-    "appellate-court-district": { "wi": "wi-court-of-appeals", "mi": "mi-court-of-appeals", "ky": "ky-court-of-appeals", "ms": "ms-court-of-appeals" },
+    "appellate-court-district": {
+      "wi": "wi-court-of-appeals", "mi": "mi-court-of-appeals", "ky": "ky-court-of-appeals",
+      "in": "in-court-of-appeals", "ar": "ar-court-of-appeals", "ms": "ms-court-of-appeals"
+    },
     "trial-court-district": {
       "ny": "judicial-district", "wi": "wi-circuit-court", "ia": "ia-judicial-district",
-      "mi": "mi-circuit-court", "mn": "mn-judicial-district", "ky": "ky-circuit-court", "ms": "ms-circuit-court"
+      "mi": "mi-circuit-court", "mn": "mn-judicial-district", "ky": "ky-circuit-court",
+      "ok": "ok-judicial-district", "sc": "sc-circuit-court", "tn": "tn-judicial-district",
+      "ar": "ar-circuit-court", "ms": "ms-circuit-court"
     },
     "county": {
       "il": "county", "ny": "county", "wi": "county", "ia": "county", "mi": "county", "mn": "county",

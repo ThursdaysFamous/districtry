@@ -1,0 +1,25 @@
+# South Carolina Code of Laws, Section 14-5-610, as published by the South
+# Carolina Legislature at https://www.scstatehouse.gov/code/t14c005.php
+# (Title 14, Chapter 5), read 2026-10-16. The section's text and its
+# HISTORY line, copied from the page; the editor's notes after it are not.
+SECTION 14-5-610. Division of state into sixteen judicial circuits; number of judges to be elected from each circuit; election of additional judges without regard to county or circuit of residence.
+(A) The State is divided into sixteen judicial circuits as follows:
+(1) The first circuit is composed of the counties of Calhoun, Dorchester, and Orangeburg.
+(2) The second circuit is composed of the counties of Aiken, Bamberg, and Barnwell.
+(3) The third circuit is composed of the counties of Clarendon, Lee, Sumter, and Williamsburg.
+(4) The fourth circuit is composed of the counties of Chesterfield, Darlington, Marlboro, and Dillon.
+(5) The fifth circuit is composed of the counties of Kershaw and Richland.
+(6) The sixth circuit is composed of the counties of Chester, Lancaster, and Fairfield.
+(7) The seventh circuit is composed of the counties of Cherokee and Spartanburg.
+(8) The eighth circuit is composed of the counties of Abbeville, Greenwood, Laurens, and Newberry.
+(9) The ninth circuit is composed of the counties of Charleston and Berkeley.
+(10) The tenth circuit is composed of the counties of Anderson and Oconee.
+(11) The eleventh circuit is composed of the counties of Lexington, McCormick, Saluda, and Edgefield.
+(12) The twelfth circuit is composed of the counties of Florence and Marion.
+(13) The thirteenth circuit is composed of the counties of Greenville and Pickens.
+(14) The fourteenth circuit is composed of the counties of Allendale, Hampton, Colleton, Jasper, and Beaufort.
+(15) The fifteenth circuit is composed of the counties of Georgetown and Horry.
+(16) The sixteenth circuit is composed of the counties of York and Union.
+(B) One judge must be elected from the sixth circuit. Two judges must be elected from the first, second, fourth, eighth, tenth, and sixteenth circuits. Three judges must be elected from the third, seventh, eleventh, twelfth, fourteenth, and fifteenth circuits. Five judges must be elected from the fifth, ninth, and thirteenth circuits.
+(C) In addition to the above judges authorized by this section, there must be seven additional circuit judges elected by the General Assembly from the State at large for terms of office of six years. These additional judges must be elected without regard to county or circuit of residence. Each office of the at-large judges is a separate office and is assigned numerical designations of Seat No. 1 through Seat No. 7, respectively.
+HISTORY: 1962 Code SECTION 15-261; 1952 Code SECTION 15-261; 1942 Code SECTION 50; 1932 Code SECTION 50; Civ. P. '22 SECTION 48; Civ. P. '12 SECTION 17; Civ. P. '02 SECTION 17; 1868 (14) 5, 72; 1869 (14) 198; 1870 (14) 17; 1871 (14) 659, 696; 1872 (15) 146; 1878 (16) 376; 1882 (17) 682; 1889 (20) 518; 1896 (22) 250; 1897 (22) 583, 592, 597, 609; 1898 (22) 879; 1899 (23) 31, 179; 1908 (25) 1002, 1283; 1910 (26) 867; 1912 (27) 827; 1914 (28) 579, 636; 1916 (29) 688, 717; 1919 (31) 5; 1926 (34) 1041; 1927 (35) 68; 1931 (37) 51; 1962 (52) 1884; 1966 (54) 2164; Const. 1895 Art. 5 SECTION 13; 1976 Act No. 690 Art. VI SECTION 1; 1979 Act No. 164 Part IV SECTION 1, eff July 1, 1979; 1982 Act No. 316, SECTION 1, eff April 9, 1982; 1990 Act No. 610, Part I, SECTION 1, eff July 1, 1991; 1995 Act No. 145, Part II, SECTION 85A, eff June 29, 1995; 1997 Act No. 155, Part II, SECTION 27A, eff June 14, 1997; 2012 Act No. 241, SECTION 1, eff June 18, 2012; 2022 Act No. 232 (H.3696), SECTION 1, eff June 17, 2022; 2025 Act No. 50 (H.4160), SECTION 1, eff May 12, 2025.

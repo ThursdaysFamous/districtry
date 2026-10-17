@@ -1,0 +1,84 @@
+# Oklahoma State Election Board, "Roster of Oklahoma State and County
+# Officers, Elected at the General Election November 5, 2024, Including
+# Holdover State Officials", section DISTRICT JUDGES, read 2026-10-16 from
+# https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf
+# Each office's heading line only: the district, the office, and the
+# counties whose voters elect it, copied from the PDF's text layer. The
+# line under each heading, the judge's name and home town, is NOT copied:
+# this project never writes an officeholder's home town, and these maps
+# name no judge.
+District 1, Office 1 - Beaver, Cimarron, Harper, Texas
+District 2, Office 1 - Beckham, Custer, Ellis, Roger Mills, Washita
+District 3, Office 1 - Greer, Harmon, Jackson, Kiowa, Tillman
+District 4, Office 1 - Alfalfa, Dewey, Major, Woods, Woodward
+District 4, Office 2 - Blaine, Garfield, Grant, Kingfisher
+District 4, Office 3 - Blaine, Garfield, Grant, Kingfisher
+District 5, Office 1 - Comanche, Cotton, Jefferson, Stephens
+District 5, Office 2 - Comanche, Cotton, Jefferson, Stephens
+District 5, Office 3 - Comanche, Cotton, Jefferson, Stephens
+District 5, Office 4 - Comanche, Cotton, Jefferson, Stephens
+District 5, Office 5 - Comanche, Cotton, Jefferson, Stephens
+District 6, Office 1 - Caddo, Grady
+District 7, Office 1 - Oklahoma
+District 7, Office 2 - Oklahoma
+District 7, Office 3 - Oklahoma
+District 7, Office 4 - Oklahoma
+District 7, Office 5 - Oklahoma
+District 7, Office 6 - Oklahoma
+District 7, Office 7 - Oklahoma
+District 7, Office 8 - Oklahoma
+District 7, Office 9 - Oklahoma
+District 7, Office 10 - Oklahoma
+District 7, Office 11 - Oklahoma
+District 7, Office 12 - Oklahoma
+District 7, Office 13 - Oklahoma
+District 7, Office 14 - Oklahoma
+District 7, Office 15 - Oklahoma
+District 8, Office 1 - Kay, Noble
+District 9, Office 1 - Logan, Payne
+District 10, Office 1 - Osage
+District 11, Office 1 - Nowata, Washington
+District 12, Office 1 - Craig, Mayes
+District 12, Office 2 - Craig, Mayes, Rogers
+District 12, Office 3 - Rogers
+District 13, Office 1 - Delaware, Ottawa
+District 14, Office 1 - Pawnee, Tulsa
+District 14, Office 2 - Tulsa
+District 14, Office 3 - Pawnee, Tulsa
+District 14, Office 4 - Tulsa
+District 14, Office 5 - Pawnee, Tulsa
+District 14, Office 6 - Tulsa
+District 14, Office 7 - Pawnee, Tulsa
+District 14, Office 8 - Tulsa
+District 14, Office 9 - Pawnee, Tulsa
+District 14, Office 10 - Pawnee, Tulsa
+District 14, Office 11 - Tulsa
+District 14, Office 12 - Pawnee, Tulsa
+District 14, Office 13 - Pawnee, Tulsa
+District 14, Office 14 - Pawnee, Tulsa
+District 15, Office 1 - Adair, Cherokee, Muskogee, Sequoyah, Wagoner
+District 15, Office 2 - Adair, Cherokee, Muskogee, Sequoyah, Wagoner
+District 15, Office 3 - Adair, Cherokee, Muskogee, Sequoyah, Wagoner
+District 15, Office 4 - Adair, Cherokee, Muskogee, Sequoyah, Wagoner
+District 16, Office 1 - Haskell, Latimer, LeFlore
+District 17, Office 1 - Choctaw, McCurtain, Pushmataha
+District 18, Office 1 - McIntosh, Pittsburg
+District 19, Office 1 - Bryan
+District 20, Office 1 - Carter, Johnston, Love, Marshall, Murray
+District 20, Office 2 - Carter, Johnston, Love, Marshall, Murray
+District 21, Office 1 - Cleveland, Garvin, McClain
+District 21, Office 2 - Cleveland, Garvin, McClain
+District 21, Office 3 - Cleveland, Garvin, McClain
+District 21, Office 4 - Cleveland, Garvin, McClain
+District 21, Office 5 - Cleveland, Garvin, McClain
+District 22, Office 1 - Hughes, Pontotoc, Seminole
+District 22, Office 2 - Hughes, Pontotoc, Seminole
+District 23, Office 1 - Lincoln, Pottawatomie
+District 23, Office 2 - Lincoln, Pottawatomie
+District 24, Office 1 - Creek, Okfuskee, Okmulgee
+District 24, Office 2 - Creek, Okfuskee, Okmulgee
+District 24, Office 3 - Creek, Okfuskee, Okmulgee
+District 24, Office 4 - Creek, Okfuskee, Okmulgee
+District 25, Office 1 - Atoka, Coal
+District 26, Office 1 - Canadian
+District 26, Office 2 - Canadian

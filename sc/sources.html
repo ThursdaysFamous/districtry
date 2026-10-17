@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1165,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1183,6 +1183,19 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">South Carolina — statewide, all 7 districts.</td>
+              </tr>
+              <tr id="layer-sc-circuit-court">
+                <th scope="row"><span class="layer-name">Judicial Circuit</span><code>sc-circuit-court</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point: the circuit court there, how many judges the General Assembly elects for it, and the solicitor its voters elect.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.scstatehouse.gov/code/t14c005.php" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by sc/scripts/build_sc_judicial_circuits.py, following the county lists in S.C. Code Section 14-5-610 as the Legislature publishes it (read 2026-10-16).</a></li>
+                    <li><a href="https://www.scstatehouse.gov/code/t01c007.php" target="_blank" rel="noopener">S.C. Code Section 1-7-310 — one solicitor for each circuit, elected by its voters for four years</a></li>
+                    <li><a href="https://www.scstatehouse.gov/scconstitution/A05.pdf" target="_blank" rel="noopener">Constitution of South Carolina, Article V — circuit judges elected by the General Assembly for six years (section 13) and rotated around the state (section 14)</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge or solicitor is named yet, because no list of them by circuit has been read; recorded as gap sc-judicial-circuit-officers. The card gives the number of judges the statute sets for the circuit and says the General Assembly, not the voters, elects them.</td>
+                <td data-label="Where it applies">South Carolina — statewide, all 46 counties.</td>
               </tr>
               <tr id="layer-sc-senate">
                 <th scope="row"><span class="layer-name">South Carolina Senate District</span><code>sc-senate</code></th>
@@ -1408,6 +1421,38 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "South Carolina — statewide, all 7 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/sc/sources.html#dataset-sc-circuit-court",
+      "identifier": "sc-circuit-court",
+      "name": "Judicial Circuit",
+      "description": "The judicial circuit covering the point: the circuit court there, how many judges the General Assembly elects for it, and the solicitor its voters elect. No judge or solicitor is named yet, because no list of them by circuit has been read; recorded as gap sc-judicial-circuit-officers. The card gives the number of judges the statute sets for the circuit and says the General Assembly, not the voters, elects them.",
+      "url": "https://districtry.com/sc/sources.html#layer-sc-circuit-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/sc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by sc/scripts/build_sc_judicial_circuits.py, following the county lists in S.C. Code Section 14-5-610 as the Legislature publishes it (read 2026-10-16).",
+          "url": "https://www.scstatehouse.gov/code/t14c005.php"
+        },
+        {
+          "@type": "Dataset",
+          "name": "S.C. Code Section 1-7-310 — one solicitor for each circuit, elected by its voters for four years",
+          "url": "https://www.scstatehouse.gov/code/t01c007.php"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Constitution of South Carolina, Article V — circuit judges elected by the General Assembly for six years (section 13) and rotated around the state (section 14)",
+          "url": "https://www.scstatehouse.gov/scconstitution/A05.pdf"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "South Carolina — statewide, all 46 counties"
       }
     },
     {

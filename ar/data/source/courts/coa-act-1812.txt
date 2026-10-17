@@ -1,0 +1,14 @@
+# Act 1812 of 2003, as quoted in the summary of the Arkansas GIS Office's
+# metadata for its Appeals Court Districts layer,
+# https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html,
+# read 2026-10-16 with this project's own client, districtry/1.0 (+https://districtry.com/ar/); that host serves no robots.txt (the path answers with an HTML page), so it disallows nothing.
+# Page: 62482 bytes, SHA-256 0e4fe9fa66f4f87fd2b67dedf1425ca2ab49f8e096782d43159a3643bbcc000d. The quotation is copied as published,
+# one district to a line.
+Pursuant to Act 1812 of 2003, the State of Arkansas is divided into seven (7) districts for the election of judges to the Arkansas Court of Appeals, and the dates of electing the judges within each of these districts is established. The State of Arkansas is divided into the following seven (7) districts for the election of judges to the Arkansas Court of Appeals:
+(1) District 1 shall be composed of Clay, Craighead, Crittenden, Cross, Greene, Lonoke, Mississippi, Monroe, Poinsett, Prairie, White and Woodruff counties;
+(2) District 2 shall be composed of Baxter, Boone, Cleburne, Conway, Faulkner, Fulton, Independence, Izard, Jackson, Lawrence, Marion, Newton, Pope, Randolph, Searcy, Sharp, Stone, and Van Buren counties;
+(3) District 3 shall be composed of Benton, Carroll, Crawford, Franklin, Johnson, Madison, and Washington counties;
+(4) District 4 shall be composed of Clark, Garland, Hempstead, Hot Spring, Howard, Little River, Logan, Miller, Montgomery, Pike, Polk, Scott, Sebastian, Sevier, and Yell counties;
+(5) District 5 shall be composed of Ashley, Bradley, Calhoun, Cleveland, Columbia, Dallas, Drew, Grant, Lafayette, Lincoln, Nevada, Ouachita, and Union counties;
+(6) District 6 shall be composed of Pulaski, Perry and Saline counties; and
+(7) District 7 shall be composed of Arkansas, Chicot, Desha, Jefferson, Lee, Phillips, and St. Francis counties.

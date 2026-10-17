@@ -1,0 +1,39 @@
+# Tennessee District Attorneys General Conference: each district's own page,
+# read 2026-10-16, and the one sentence on it that names the district's
+# counties. Columns, tab-separated: district, the page requested, where it
+# was served (four districts' pages are the district attorney's own site),
+# and the sentence exactly as printed.
+# District 2 has no line: its page leads to the district attorney's own site,
+# sullivancountyda.com, whose robots.txt answered HTTP 521 on 2026-10-16,
+# which RFC 9309 reads as disallow-all, so nothing was read from it.
+1	https://www.tndagc.org/district-1/	https://tennesseeda.gov/district-1/	Serving Carter, Johnson, Unicoi and Washington Counties | Tennessee
+3	https://www.tndagc.org/district-3/	https://tennesseeda.gov/district-3/	Serving Greene, Hamblen, Hancock and Hawkins Counties | Tennessee
+4	https://www.tndagc.org/district-4/	https://tennesseeda.gov/district-4/	Serving Cocke, Grainger, Jefferson and Sevier County | Tennessee
+5	https://www.tndagc.org/district-5/	https://tennesseeda.gov/district-5/	Serving Blount County | Tennessee
+6	https://www.tndagc.org/district-6/	https://dag.knoxcountytn.gov	criminal cases that occur within Knox County.
+7	https://www.tndagc.org/district-7/	https://tennesseeda.gov/district-7/	Serving Anderson County | Tennessee
+8	https://www.tndagc.org/district-8/	https://tennesseeda.gov/district-8/	Serving Campbell, Claiborne, Fentress, Scott and Union Counties | Tennessee
+9	https://www.tndagc.org/district-9/	https://tennesseeda.gov/district-9/	Serving Loudon, Meigs, Morgan and Roane County | Tennessee
+10	https://www.tndagc.org/district-10/	https://tennesseeda.gov/district-10/	Serving Bradley, McMinn, Monroe and Polk County | Tennessee
+11	https://www.tndagc.org/district-11/	https://tennesseeda.gov/district-11/	Serving Hamilton County | Tennessee
+12	https://www.tndagc.org/district-12/	https://tennesseeda.gov/district-12/	Serving Bledsoe, Franklin, Grundy, Marion, Rhea and Sequatchie County | Tennessee
+13	https://www.tndagc.org/district-13/	https://tennesseeda.gov/district-13/	The 13th Judicial District includes Clay, Cumberland, DeKalb, Pickett, Putnam, Overton and White Counties.
+14	https://www.tndagc.org/district-14/	https://tennesseeda.gov/district-14/	Serving Coffee County | Tennessee
+15	https://www.tndagc.org/district-15/	https://tennesseeda.gov/district-15/	Serving Jackson, Macon, Smith, Trousdale and Wilson County | Tennessee
+16	https://www.tndagc.org/district-16/	https://tennesseeda.gov/district-16/	Serving Cannon and Rutherford Counties | Tennessee
+17	https://www.tndagc.org/district-17/	https://tennesseeda.gov/district-17/	Serving Bedford, Lincoln, Marshall and Moore Counties | Tennessee
+18	https://www.tndagc.org/district-18/	https://tennesseeda.gov/district-18/	Serving Sumner County | Tennessee
+19	https://www.tndagc.org/district-19/	https://montgomery-robertsontnda.org	criminal cases that occur within Montgomery and Robertson County.
+20	https://www.tndagc.org/district-20/	https://da.nashville.gov	within Metropolitan Nashville and Davidson County
+21	https://www.tndagc.org/district-21/	https://tennesseeda.gov/district-21/	Serving Williamson County | Tennessee
+22	https://www.tndagc.org/district-22/	https://tennesseeda.gov/district-22/	Serving Giles, Lawrence, Maury and Wayne County | Tennessee
+23	https://www.tndagc.org/district-23/	https://tennesseeda.gov/district-23/	Serving Cheatham, Dickson, Houston, Humphreys and Stewart Counties | Tennessee
+24	https://www.tndagc.org/district-24/	https://tennesseeda.gov/district-24/	Serving Benton, Carroll, Decatur, Hardin and Henry County | Tennessee
+25	https://www.tndagc.org/district-25/	https://tennesseeda.gov/district-25/	Serving Fayette, Hardeman, Lauderdale, McNairy and Tipton County | Tennessee
+26	https://www.tndagc.org/district-26/	https://tennesseeda.gov/district-26/	Serving Chester, Henderson and Madison County | Tennessee
+27	https://www.tndagc.org/district-27/	https://tennesseeda.gov/district-27/	Serving Obion and Weakley County | Tennessee
+28	https://www.tndagc.org/district-28/	https://tennesseeda.gov/district-28/	Serving Crockett, Gibson and Haywood Counties | Tennessee
+29	https://www.tndagc.org/district-29/	https://tennesseeda.gov/district-29/	Serving Dyer, Lake County | Tennessee
+30	https://www.tndagc.org/district-30/	https://www.scdag.com	serves more than 900,000 residents across Shelby County.
+31	https://www.tndagc.org/district-31/	https://tennesseeda.gov/district-31/	Serving Van Buren, Warren County | Tennessee
+32	https://www.tndagc.org/district-32/	https://tennesseeda.gov/district-32/	Serving Hickman, Lewis, Perry County | Tennessee
