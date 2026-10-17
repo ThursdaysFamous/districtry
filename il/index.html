@@ -23375,9 +23375,9 @@ function initChiExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, phone?, phonesExtra?, districtOffice?,
-    // capitolOffice? }; office fields only render when the roster supplies
-    // them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
+    // districtOffice?, capitolOffice? }; office fields only render when the
+    // roster supplies them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -23556,6 +23556,15 @@ function initChiExplorer() {
         if (member.phonesExtra && member.phonesExtra.length) {
           person.phonesExtra = member.phonesExtra.map(String);
         }
+        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+        // 2026-10-17 this card showed no legislator's address at all, though
+        // eight states' rosters carried one for nearly every seat. Measured
+        // that day, every one of them is the chamber's own mailbox except
+        // fifteen Arkansas members' personal addresses, which the
+        // legislature's own member pages print and which Adam chose to show
+        // ("E-mails too"). A roster reads it from the legislature's pages or
+        // from Open States' compilation of them.
+        if (member.email) person.email = String(member.email);
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
