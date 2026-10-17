@@ -1305,6 +1305,106 @@ jobs:
         run: |
           python3 ky/scripts/build_ky_county_districts.py --selftest
           python3 ky/scripts/build_ky_county_districts.py --check
+      # THE BUILDERS BELOW MADE THE NEWEST STATES' TOWNSHIP, COURT, PRECINCT,
+      # SCHOOL BOARD, SPECIAL DISTRICT, CITY WARD AND CONSERVATION BOARD LAYERS,
+      # and each --check re-derives what it can from the shipped file and the
+      # record its builder wrote, with no network. Until these steps, CI never
+      # compared these shipped files with the records their builders wrote.
+      #
+      # Arkansas's townships come from the Arkansas GIS Office's statewide
+      # layer. --check holds the shipped file to the hash and the townships per
+      # county its builder recorded, checks every name says it is a township,
+      # and checks each county is covered by its own townships.
+      - name: The shipped Arkansas townships match their record and cover their counties
+        if: ${{ !cancelled() }}
+        run: python3 ar/scripts/build_ar_townships.py --check
+      # The court districts of Arkansas, Indiana, Oklahoma, South Carolina and
+      # Tennessee are whole counties (scripts/whole_county_courts.py). --check
+      # holds each shipped file to the county lists its builder reads: every
+      # county in exactly one district, and every district's area equal to its
+      # own counties' area.
+      - name: The newest states' court districts are made of the counties their sources list
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_court_districts.py --check
+          python3 in/scripts/build_in_appeals_districts.py --check
+          python3 ok/scripts/build_ok_judicial_districts.py --check
+          python3 sc/scripts/build_sc_judicial_circuits.py --check
+          python3 tn/scripts/build_tn_judicial_districts.py --check
+      # Six states' precinct layers are built by scripts/statewide_precincts.py.
+      # --check holds each shipped file to the hash and the precincts per county
+      # its builder recorded, checks every precinct names its county as the
+      # county file does and every county is covered by its own precincts, and
+      # checks the card still says what the builder says it must.
+      - name: The newest states' precincts match their record and cover their counties
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_precincts.py --check
+          python3 in/scripts/build_in_precincts.py --check
+          python3 ky/scripts/build_ky_precincts.py --check
+          python3 nc/scripts/build_nc_precincts.py --check
+          python3 sc/scripts/build_sc_precincts.py --check
+          python3 tn/scripts/build_tn_precincts.py --check
+      # School board districts. Arkansas, Indiana, South Carolina and Tennessee
+      # publish theirs as maps, read by scripts/published_district_layers.py,
+      # whose --check holds each file to its record and the card to its stated
+      # wording. North Carolina's are read from the State Board's results and
+      # its --check holds the file to its own rules (every seat drawn once, no
+      # point in two seats of one tier); Kentucky's come from KRS 160.211 and
+      # the results, its --check holds the file to its record and to the act as
+      # kept in the repository, and its --selftest runs its parsers on fixed
+      # cases. Those two use shapely, so this step installs it rather than
+      # relying on an earlier step having done so.
+      - name: The newest states' school board districts match their records and their own rules
+        if: ${{ !cancelled() }}
+        run: |
+          pip install -c scripts/requirements.txt shapely
+          python3 ar/scripts/build_ar_school_board_districts.py --check
+          python3 in/scripts/build_in_school_board_districts.py --check
+          python3 sc/scripts/build_sc_school_board_districts.py --check
+          python3 tn/scripts/build_tn_school_board_districts.py --check
+          python3 nc/scripts/build_nc_school_board_districts.py --check
+          python3 ky/scripts/build_ky_school_board_divisions.py --selftest
+          python3 ky/scripts/build_ky_school_board_divisions.py --check
+      # Special districts. Arkansas's fire districts, Indiana's conservancy
+      # districts and Oklahoma's conservation districts are read from published
+      # maps (scripts/published_district_layers.py) and --check holds each to
+      # its record. Indiana's directors and Oklahoma's district offices come
+      # from each state's directory, and --check holds those files to the
+      # districts the map draws and to their own rules.
+      - name: The newest states' special districts match their records and their directories
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_fire_districts.py --check
+          python3 in/scripts/build_in_conservancy_districts.py --check
+          python3 in/scripts/build_in_conservancy_directors.py --check
+          python3 ok/scripts/build_ok_conservation_districts.py --check
+          python3 ok/scripts/build_ok_conservation_offices.py --check
+      # City council wards. Arkansas's come from the GIS Office's statewide map
+      # of municipal wards (scripts/published_district_layers.py), and the other
+      # four states' from each city's own map (scripts/city_ward_maps.py).
+      # --check holds each shipped file to the hash and the maps its builder
+      # recorded and the card to its stated wording; which wards are drawn at
+      # all is the city councils step's question, above.
+      - name: The newest states' city ward maps match their records
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_city_wards.py --check
+          python3 nc/scripts/build_nc_city_wards.py --check
+          python3 ok/scripts/build_ok_city_wards.py --check
+          python3 sc/scripts/build_sc_city_wards.py --check
+          python3 tn/scripts/build_tn_city_wards.py --check
+      # The conservation district boards on the County card
+      # (scripts/conservation_boards.py). --check holds each file to its record
+      # of the pages read, requires a board for every county and no field the
+      # card does not show, and checks the County card's wording. Tennessee's
+      # joins this step when its file is built (tn/WATCH.md).
+      - name: The conservation district boards match their records and cover every county
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ky/scripts/build_ky_conservation_boards.py --check
+          python3 nc/scripts/build_nc_conservation_boards.py --check
+          python3 sc/scripts/build_sc_conservation_boards.py --check
       # FOUR COUNTIES WHOSE TWO OUTSIDE PUBLISHERS DISAGREE about their board's
       # size are read from the county's OWN board page instead, and the four
       # pages take four shapes. Three defects are declared here because each
