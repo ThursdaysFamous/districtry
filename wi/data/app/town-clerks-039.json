@@ -3,6 +3,9 @@
     "clerk": "Tonya Bruins",
     "municipality": "Alto",
     "phone": "920-948-8268",
+    "phonesExtra": [
+      "920-346-8233"
+    ],
     "recordUpdated": "2024-06-10",
     "url": "https://townofalto.com/"
   },
@@ -18,6 +21,9 @@
     "deputyClerk": "Jonathan Koch",
     "municipality": "Auburn",
     "phone": "920-533-8841",
+    "phonesExtra": [
+      "920-517-0672"
+    ],
     "recordUpdated": "2023-09-25"
   },
   "5503911600": {
@@ -38,6 +44,9 @@
     "clerk": "Julie Schodrow",
     "municipality": "Eden",
     "phone": "920-322-5556",
+    "phonesExtra": [
+      "920-948-8399"
+    ],
     "recordUpdated": "2025-07-16"
   },
   "5503923150": {
@@ -73,6 +82,9 @@
     "deputyClerk": "Sandra Kollmann",
     "municipality": "Friendship",
     "phone": "920-251-7025",
+    "phonesExtra": [
+      "920-517-2526"
+    ],
     "recordUpdated": "2025-07-14",
     "url": "http://townfriendship.com/"
   },
@@ -80,6 +92,9 @@
     "clerk": "Cindy Pluim",
     "municipality": "Lamartine",
     "phone": "920-906-3683",
+    "phonesExtra": [
+      "920-933-0089"
+    ],
     "recordUpdated": "2024-02-26",
     "url": "https://townoflamartine.com/"
   },
@@ -87,6 +102,9 @@
     "clerk": "Marlene J Sippel",
     "municipality": "Marshfield",
     "phone": "920-753-4691",
+    "phonesExtra": [
+      "920-627-1146"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://townmarshfield.com/"
   },

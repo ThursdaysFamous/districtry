@@ -3,14 +3,17 @@
 "Municipalities of Green County" (/356/Municipalities-of-Green-County) links a
 page for each of the sixteen towns. Each town page lists its officers as a
 label line ("Chair:", "1st Supervisor:", "2nd Supervisor:") followed by the
-officer's name on the next line, then address, telephone and e-mail lines,
-which are not kept. Read with the token on 2026-10-15 (robots.txt: 816 bytes,
-no rule matches these paths)."""
+officer's name on the next line, then address, telephone and e-mail lines. The
+"Phone:", "Cell:" and "Email:" lines ship on the officer; the address is not
+read. Read
+with the token on 2026-10-15 (robots.txt: 816 bytes, no rule matches these
+paths)."""
 
 import re
 import urllib.parse
 
-from . import clean, html_text, looks_like_person, norm_role, person
+from . import (clean, following_emails, following_phones, html_text,
+               looks_like_person, norm_role, person)
 
 COUNTY_FIPS = "045"
 COUNTY_NAME = "Green"
@@ -56,7 +59,10 @@ def _board(text):
             continue
         name = clean(rest) or (clean(lines[i + 1]) if i + 1 < len(lines) else "")
         if looks_like_person(name):
-            people.append(person(name, role))
+            after = i + 1 if clean(rest) else i + 2
+            people.append(person(name, role,
+                                 following_phones(lines, after, limit=6),
+                                 emails=following_emails(lines, after, limit=6)))
     return people
 
 

@@ -4,6 +4,9 @@
     "deputyClerk": "Barbara Terry",
     "municipality": "Baraboo",
     "phone": "608-356-5170",
+    "phonesExtra": [
+      "608-963-8082"
+    ],
     "recordUpdated": "2026-06-03",
     "url": "https://tn.baraboo.wi.gov/"
   },
@@ -11,6 +14,9 @@
     "clerk": "Sheila A Carver",
     "municipality": "Bear Creek",
     "phone": "608-588-5554",
+    "phonesExtra": [
+      "608-246-2201"
+    ],
     "recordUpdated": "2023-12-18",
     "url": "https://bearcreektown.wixsite.com/sauk"
   },
@@ -19,6 +25,9 @@
     "deputyClerk": "Stephanie Darnell",
     "municipality": "Dellona",
     "phone": "608-524-0800",
+    "phonesExtra": [
+      "608-219-0388"
+    ],
     "recordUpdated": "2023-11-28",
     "url": "https://townofdellona.com/"
   },
@@ -33,6 +42,9 @@
     "clerk": "Sandra Meyer Swanson",
     "municipality": "Excelsior",
     "phone": "608-522-5115",
+    "phonesExtra": [
+      "608-393-6445"
+    ],
     "recordUpdated": "2024-01-19",
     "url": "https://townofexcelsiorwi.gov/"
   },
@@ -47,6 +59,9 @@
     "clerk": "Christine Elliott",
     "municipality": "Franklin",
     "phone": "608-415-8516",
+    "phonesExtra": [
+      "608-727-2281"
+    ],
     "recordUpdated": "2023-11-19"
   },
   "5511127675": {
@@ -101,6 +116,9 @@
     "clerk": "Rebecca Lynn Meyer",
     "municipality": "Reedsburg",
     "phone": "608-524-3999",
+    "phonesExtra": [
+      "608-524-3753"
+    ],
     "recordUpdated": "2025-11-13"
   },
   "5511176050": {
@@ -108,6 +126,9 @@
     "deputyClerk": "Scott James",
     "municipality": "Spring Green",
     "phone": "608-588-3235",
+    "phonesExtra": [
+      "608-459-5311"
+    ],
     "recordUpdated": "2026-07-20",
     "url": "https://tn.springgreen.wi.gov/"
   },
@@ -150,6 +171,9 @@
     "clerk": "Nancy J Dieck",
     "municipality": "Woodland",
     "phone": "608-464-3290",
+    "phonesExtra": [
+      "608-464-7260"
+    ],
     "recordUpdated": "2023-12-22",
     "url": "https://www.townofwoodland.com/"
   },

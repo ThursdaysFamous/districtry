@@ -17,13 +17,21 @@ block before the first district heading raises, and the section ends at the
 first heading that is neither.
 
 PRIVACY: thirteen blocks print a phone; nothing calls any a county line (they
-are the members' own numbers), so none is recorded. E-mails are recorded only
-on marioncountytn.net and only where the address's local part carries the
-member's surname (ten members); the gmail and business addresses printed for
-Jimmy Cantrell, Linda Mason, Dennis Rollins, Logan Campbell and Chris
-Morrison are not recorded, and a county address that does not carry the
-surname raises rather than being attached to the wrong person. The Mayor's
-office address and telephone above the section are not read.
+are the members' own numbers). Each is recorded as printed, under Adam's
+ruling of 2026-10-17 that a number a government publishes beside an official
+ships whosever line it is; it is read only from the phone line of the
+member's own paragraph, and a tel: link that dials a different number keeps
+it off. The page prints no member address. Each member's block prints one
+e-mail address. Ten are on marioncountytn.net, and a county address is
+recorded only where its local part carries the member's surname; one that
+does not raises rather than being attached to the wrong person. The gmail and
+business addresses printed for Jimmy Cantrell, Linda Mason, Dennis Rollins,
+Logan Campbell and Chris Morrison are recorded as printed in their own
+blocks, under Adam's choice of 2026-10-17 that a personal address a
+government page prints beside an official is shown ("E-mails too"). The Mayor's
+office address above the section is not read, and its telephone and fax
+there (repeated in the page footer) are OFFICE_LINES, which never land on a
+member.
 
 Names are kept as printed, the nickname in curly quotes included ("Ronnie
 “Bo” Burnett"). The page names no chair, so no role is recorded.
@@ -42,13 +50,15 @@ Morrison unopposed, 4C Stiefel 703, 5A Higdon 663 (Nunley 453). Ballot
 spellings differ only by nicknames and middle names (Joyce (Tuttie) Acuff
 Burkhalter, Dennis Denny Rollins, Terry (Turbo) Stiefel, Larry H. Higdon)."""
 import re
-from ._common import txt, mailtos, district_number, member
+from ._common import txt, read_emails, member_email, district_number, member, read_phones, Withheld
 
 COUNTY = "Marion"; FIPS = "115"
 DOMAINS = ("marioncountytn.net",)
 URLS = ["https://marioncountytn.net/leadership"]
 SEATS = {str(i): 3 for i in range(1, 6)}
 AT_LARGE = 0
+# The Mayor's office telephone and fax, above the section and in the footer.
+OFFICE_LINES = ("423-942-2552", "423-942-1327")
 
 BLOCK = re.compile(r'<div class="sqs-html-content"[^>]*>(.*?)</div>', re.S)
 H3 = re.compile(r"<h3\b[^>]*>(.*?)</h3>", re.S)
@@ -76,29 +86,32 @@ def read_member(d, body):
     paras = [p for p in P.findall(body) if txt(p)]
     if not paras:
         raise ValueError("District %s: a COMMISSIONER block with no text" % d)
-    segs = [txt(s) for s in re.split(r"<br\s*/?>", paras[0], flags=re.I)]
-    segs = [s for s in segs if s]
+    raw = [s for s in re.split(r"<br\s*/?>", paras[0], flags=re.I) if txt(s)]
+    segs = [txt(s) for s in raw]
     if len(segs) < 2 or not SEAT.match(segs[1]):
         raise ValueError("District %s: block does not open 'name, Seat X': %r" % (d, segs))
     name, seat = segs[0], SEAT.match(segs[1]).group(1)
     if not NAME.match(name) or re.search(r"\bvacan", name, re.I):
         raise ValueError("District %s: %r does not look like a name" % (d, name))
-    for extra in segs[2:]:
+    phones = []
+    for extra, html_ in zip(segs[2:], raw[2:]):
         if not (PHONE.match(extra) or "@" in extra):
             raise ValueError("District %s: unexpected line %r under %r" % (d, extra, name))
+        if PHONE.match(extra) and not isinstance(phones, Withheld):
+            got = read_phones(html_, strict=True)
+            phones = got if isinstance(got, Withheld) else phones + got
     for p in paras[1:]:
         if "@" not in txt(p):
             raise ValueError("District %s: unexpected paragraph %r under %r" % (d, txt(p), name))
-    email = None
-    for a in mailtos(body):
+    addrs = read_emails(body)
+    for a in ([] if isinstance(addrs, Withheld) else addrs):
         if not _on_domain(a):
             continue
         local = re.sub(r"\d+$", "", a.split("@", 1)[0].lower())
-        if _surname(name) and local.endswith(_surname(name)):
-            email = a
-            break
-        raise ValueError("District %s: county address %r does not look like %r's" % (d, a, name))
-    return seat, member(name, seat=seat, email=email)
+        if not (_surname(name) and local.endswith(_surname(name))):
+            raise ValueError("District %s: the county address under %r does not look like theirs"
+                             % (d, name))
+    return seat, member(name, seat=seat, email=member_email(addrs, DOMAINS), phones=phones)
 
 
 def parse(pages):

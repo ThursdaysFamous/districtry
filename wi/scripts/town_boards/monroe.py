@@ -4,7 +4,9 @@ The Municipalities page (/government/municipalities) links a page for each of
 the 24 towns as /government/municipalities/<name>-township. Each page is
 headed "Township of <Name>" (Scott: "Town of Scott") and lists one officer per line as "<office> –
 <name>" ("Chair –Glen Bailey", "Supervisor – Robert Amundson"), each followed
-by a home-address line and a telephone line, which are not kept.
+by a home-address line and a telephone line. The telephone line ships on the
+officer (Adam, 2026-10-17; `role_then_name`); the home-address line is not
+read.
 
 CLIENT. Measured 2026-10-15: the token got HTTP 403 Forbidden on the
 Municipalities page (urllib, UA_ROSTER_BOT); the Chrome client with its client

@@ -4,9 +4,15 @@ Each town is a page under a "TOWN OF <NAME>" heading. The chair is one dot-
 leader line, "Chairperson ........ Michael Limberg". The supervisors follow a
 bare "Supervisors" line, one per line as "Daniel Klahn ....... (920) 526-3368"
 (the Town of Sheboygan writes "Supervisor #1-Tim Winkel ....."), each usually
-followed by a home-address line, which is skipped; the list ends at the next
-line that is neither a leader line nor an address (Constable, a page number) or at a leader line ending in something other than
-a telephone number ("Ordinance Enforcement Officer ..... <name>").
+followed by a home-address line; the list ends at the next line that is
+neither a leader line nor an address (Constable, a page number) or at a leader
+line ending in something other than a telephone number ("Ordinance Enforcement
+Officer ..... <name>").
+
+The number after a supervisor's leader ships. The chair's number is printed at
+the end of the home-address line below the chair's line ("... 53085 (920)
+555-0100"); that number is read on its own and ships, and so is one ending a
+supervisor's address line. The address before it is not read.
 
 CLIENT: on 2026-10-15 this project's token got HTTP 403 from
 sheboygancounty.com on both robots.txt and the document; read as Chrome the
@@ -15,7 +21,7 @@ in full."""
 
 import re
 
-from . import clean, looks_like_person, norm_role, person
+from . import clean, end_phones, line_phones, looks_like_person, norm_role, person
 
 COUNTY_FIPS = "117"
 COUNTY_NAME = "Sheboygan"
@@ -42,14 +48,19 @@ def after_leader(line):
 def read_block(block):
     people = []
     in_supv = False
-    for ln in (x.strip() for x in block.split("\n")):
-        if not ln:
-            continue
+    lines = [x.strip() for x in block.split("\n") if x.strip()]
+
+    def address_number(i):
+        # the number ending the officer's home-address line, the line below
+        nxt = lines[i + 1] if i + 1 < len(lines) else ""
+        return end_phones(nxt) if _ADDR.match(nxt) else []
+
+    for i, ln in enumerate(lines):
         if re.match(r"^Chair(person|man|woman)?\s*(\.{3,}|…)", ln):
             in_supv = False
             name = after_leader(ln)
             if name and looks_like_person(name):
-                people.append(person(name, "Chairperson"))
+                people.append(person(name, "Chairperson", address_number(i)))
             continue
         if re.match(r"^Supervisors?\s*$", ln):
             in_supv = True
@@ -70,7 +81,8 @@ def read_block(block):
         if m:
             role, name = norm_role(m.group(1)), clean(m.group(2))
         if looks_like_person(name):
-            people.append(person(name, role))
+            people.append(person(name, role, line_phones(after_leader(ln))
+                                 + address_number(i)))
     return people
 
 

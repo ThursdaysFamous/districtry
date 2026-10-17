@@ -42,7 +42,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from build_county_pages import party_name                      # noqa: E402
+from build_county_pages import dial_digits, member_phones, party_name, schema_telephones  # noqa: E402
 from build_legislator_pages import INSTANCES as LEGISLATOR_INSTANCES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -396,11 +396,22 @@ def afr_people(rec):
     name would separate a district's president from its treasurer, and sorting
     the two groups together would mix elected trustees with appointed staff in
     a column where the reader is told which is which by the role beside them.
+
+    AN OFFICER'S OWN TELEPHONE IS CARRIED, since Adam's ruling of 2026-10-17
+    ("if the official government source uses personal phone numbers, we publish
+    those"): comptroller_afr.py puts the number a filing prints beside one
+    officer alone on that officer's record, and `phone` and `phonesExtra` are
+    copied here so the table's Telephone column prints them.
     """
     out = []
     for person in list(rec.get("board") or []) + list(rec.get("heads") or []):
         if person.get("name"):
-            out.append({"name": person["name"], "role": person.get("role")})
+            row = {"name": person["name"], "role": person.get("role")}
+            if person.get("phone"):
+                row["phone"] = person["phone"]
+            if person.get("phonesExtra"):
+                row["phonesExtra"] = list(person["phonesExtra"])
+            out.append(row)
     return out
 
 
@@ -1025,7 +1036,7 @@ def render_section(tag, section, verified):
         fail("%s/%s carries a role and the section names no role_label — a "
              "column heading cannot be derived from one"
              % (tag, section["roster"]))
-    has_phone = any(rec.get("phone") for rec in named)
+    has_phone = any(member_phones(rec) for rec in named)
     has_term = any(rec.get("termExpires") for rec in named)
     # A CITATION COLUMN WHERE THE ROSTER CITES PER RECORD. Measured 2026-09-15
     # across every roster these tables read, `source_url` appears on exactly one
@@ -1079,7 +1090,15 @@ def render_section(tag, section, verified):
             cells.append('<td itemprop="address">%s</td>'
                          % html.escape(rec.get(office_key) or ""))
         if has_phone:
-            cells.append("<td>%s</td>" % tel_link(rec.get("phone")))
+            # Every number the roster carries for the person, `phone` first and
+            # then `phonesExtra`, one to a line: South Carolina prints a home and
+            # a business number for some members, and the card shows both. A
+            # cell with more than one is class "tels", which spaces the lines
+            # 28px apart so each number is its own tap target (WCAG 2.5.8).
+            phones = member_phones(rec)
+            cells.append("<td%s>%s</td>" % (
+                ' class="tels"' if len(phones) > 1 else "",
+                "<br>".join(tel_link(p) for p in phones)))
         if has_term:
             cells.append("<td>%s</td>" % html.escape(rec.get("termExpires") or ""))
         if link_key:
@@ -1158,7 +1177,7 @@ def render_section(tag, section, verified):
 def tel_link(value):
     if not value:
         return ""
-    return '<a href="tel:%s">%s</a>' % (re.sub(r"[^0-9+]", "", value),
+    return '<a href="tel:%s">%s</a>' % (html.escape(dial_digits(value)),
                                         html.escape(value))
 
 
@@ -1174,8 +1193,9 @@ def person_node(rec, name_field, section):
     person = {"@type": "Person", "name": who}
     if rec.get("party"):
         person["affiliation"] = party_name(rec["party"]) or rec["party"]
-    if rec.get("phone"):
-        person["telephone"] = rec["phone"]
+    telephone = schema_telephones(rec)
+    if telephone:
+        person["telephone"] = telephone
     office = next((rec[f] for f in ("office", "districtOffice")
                    if isinstance(rec.get(f), str) and rec[f]), None)
     if office:

@@ -53,6 +53,9 @@
     "deputyClerk": "Lynn Wildes",
     "municipality": "Minocqua",
     "phone": "715-356-5296",
+    "phonesExtra": [
+      "715-356-7261"
+    ],
     "recordUpdated": "2024-01-12",
     "url": "https://www.townofminocqua.org/"
   },
@@ -66,6 +69,9 @@
     "clerk": "Kim Gauthier",
     "municipality": "Newbold",
     "phone": "715-369-0855",
+    "phonesExtra": [
+      "715-362-1092"
+    ],
     "recordUpdated": "2025-03-03",
     "url": "https://www.newboldwi.gov/"
   },
@@ -73,6 +79,9 @@
     "clerk": "Wendy Smith",
     "municipality": "Nokomis",
     "phone": "715-453-4801",
+    "phonesExtra": [
+      "715-612-4103"
+    ],
     "recordUpdated": "2024-03-06",
     "url": "https://www.nokomiswi.gov/"
   },
@@ -88,6 +97,9 @@
     "clerk": "Kristianna Wright",
     "municipality": "Piehl",
     "phone": "715-420-0113",
+    "phonesExtra": [
+      "920-794-4540"
+    ],
     "recordUpdated": "2026-05-05"
   },
   "5508562925": {
@@ -108,6 +120,9 @@
     "clerk": "Stacy Schickert",
     "municipality": "Stella",
     "phone": "715-369-2292",
+    "phonesExtra": [
+      "715-493-6364"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://www.townofstella.com/"
   },
@@ -124,6 +139,9 @@
     "deputyClerk": "Lanae Kowalski",
     "municipality": "Three Lakes",
     "phone": "715-546-3316",
+    "phonesExtra": [
+      "715-546-3317"
+    ],
     "recordUpdated": "2023-11-19",
     "url": "https://www.townofthreelakes.com/"
   },

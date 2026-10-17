@@ -4,10 +4,12 @@
       "board": [
         {
           "name": "Jayne Corsini",
+          "phone": "(815) 822-3000",
           "role": "President"
         },
         {
           "name": "Forrest Smith",
+          "phone": "(815) 674-5164",
           "role": "Treasurer"
         }
       ],
@@ -24,11 +26,15 @@
     "BRACEVILLE FIRE": {
       "board": [
         {
+          "email": "bartelsbville@yahoo.com",
           "name": "Patty Bartels",
+          "phone": "(815) 514-3027",
           "role": "Acting President"
         },
         {
+          "email": "JTCBIOLOGIST@juno.com",
           "name": "Randy Berry",
+          "phone": "(815) 274-3653",
           "role": "Sec./Treas."
         }
       ],
@@ -75,6 +81,7 @@
       "filesIn": "Will",
       "heads": [
         {
+          "email": "mleonard@channahonpark.org",
           "name": "Michael Leonard",
           "role": "Direc./Sec."
         }
@@ -90,10 +97,12 @@
     "COAL CITY FIRE": {
       "board": [
         {
+          "email": "ralderson@ccfire.net",
           "name": "Randy Alderson",
           "role": "President"
         },
         {
+          "email": "dmarketti@ccfire.net",
           "name": "Dean Marketti",
           "role": "Treasurer"
         }
@@ -112,6 +121,7 @@
       "filedFor": "2026",
       "heads": [
         {
+          "email": "leah@ccpld.org",
           "name": "Leah Bill",
           "role": "Director"
         }
@@ -126,11 +136,15 @@
     "DWIGHT FIRE": {
       "board": [
         {
+          "email": "perschnick@hotmail.com",
           "name": "Brian Perschnick",
+          "phone": "(815) 848-5061",
           "role": "President"
         },
         {
+          "email": "estewart@pnb-kewanee.com",
           "name": "Eric Stewart",
+          "phone": "(815) 584-1212",
           "role": "Treasurer"
         }
       ],
@@ -143,7 +157,9 @@
     "FOSSIL RIDGE LIBRARY": {
       "board": [
         {
+          "email": "sbautertrustee@fossilridge.org",
           "name": "Sandra Bauter",
+          "phone": "(815) 458-2545",
           "role": "President"
         }
       ],
@@ -152,7 +168,9 @@
       "filesIn": "Will",
       "heads": [
         {
+          "email": "tmsmith@fossilridge.org",
           "name": "Tammy Smith",
+          "phone": "(815) 458-2187 Ext: 111",
           "role": "Fin. Officer"
         }
       ],
@@ -165,6 +183,7 @@
     "GARDNER FIRE": {
       "board": [
         {
+          "email": "kugfpd@gmail.com",
           "name": "Ken Unland",
           "role": "President"
         },
@@ -189,6 +208,10 @@
       "heads": [
         {
           "name": "Ken Sorensen",
+          "phone": "(815) 458-6129",
+          "phonesExtra": [
+            "(815) 458-6108"
+          ],
           "role": "Director"
         }
       ],
@@ -200,6 +223,7 @@
     "MINOOKA FIRE": {
       "board": [
         {
+          "email": "robertsd@minookafire.com",
           "name": "Daniel Roberts",
           "role": "President"
         },
@@ -223,6 +247,7 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "kbarowsky@morrislibrary.com",
           "name": "Karen Barowsky",
           "role": "Acting Director"
         },
@@ -250,6 +275,7 @@
       "filedFor": "2026",
       "heads": [
         {
+          "email": "tsteffes@morrisfd.org",
           "name": "Tracy Steffes",
           "role": "Chief"
         }
@@ -290,6 +316,7 @@
       "heads": [
         {
           "name": "Sue Bergan",
+          "phone": "(815) 365-4911",
           "role": "C.E.O."
         }
       ],
@@ -320,14 +347,17 @@
       "board": [
         {
           "name": "Gerald Johnson",
+          "phone": "(815) 257-6414",
           "role": "President"
         },
         {
           "name": "Gerald Johnson",
+          "phone": "(815) 257-6414",
           "role": "Treasurer"
         },
         {
           "name": "Jacob Chapman",
+          "phone": "(815) 587-4061",
           "role": "Secretary"
         }
       ],
@@ -342,10 +372,12 @@
     "SENECA LIBRARY": {
       "board": [
         {
+          "email": "margiw@senecalibrary.net",
           "name": "Margi Weber",
           "role": "President"
         },
         {
+          "email": "rapplebee@senecalibrary.net",
           "name": "Richard Applebee",
           "role": "Treasurer"
         }
@@ -370,6 +402,7 @@
     "THREE RIVERS LIBRARY": {
       "board": [
         {
+          "email": "trusteehoppe@trpld.org",
           "name": "Dan Hoppe",
           "role": "President"
         }
@@ -379,6 +412,7 @@
       "filesIn": "Will",
       "heads": [
         {
+          "email": "laureno@trpld.org",
           "name": "Lauren Offerman",
           "role": "Mgr./Director"
         }
@@ -393,11 +427,14 @@
     "VERONA-KINSMAN FIRE": {
       "board": [
         {
+          "email": "b2bkrfarm@gmail.com",
           "name": "Brent Baker",
+          "phone": "(815) 343-6497",
           "role": "President"
         },
         {
           "name": "Bryna Coop",
+          "phone": "(815) 791-5682",
           "role": "Treasurer"
         }
       ],
@@ -410,7 +447,7 @@
       }
     }
   },
-  "generated": "2026-10-17T00:16:02Z",
+  "generated": "2026-10-17T18:08:17Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

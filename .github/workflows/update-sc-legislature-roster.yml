@@ -8,8 +8,8 @@ name: Update South Carolina legislature roster
 #
 # The builder reads 2 chamber lists and 170 member pages, one request a second,
 # so the rebuild takes about three minutes. It reads each member's State House
-# office and business telephone and never the home address or home telephone
-# the same pages print.
+# office and business telephone, and the home and business telephones the same
+# pages print under the member's home address, and never that address.
 #
 # THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE.
 # `sc/state-legislature.html` carries a GENERATED table of both rosters, and

@@ -122,8 +122,12 @@ Verdicts: OK, FINDINGS, BLOCKED, ESCALATED.
   the Coles treatment: fetch the issuer by AIA and pin its SHA-256.
 - Never guess officeholder data, and never pick a name when two publishers
   disagree.
-- Home addresses and personal contact details never ship. The AFR rule lives
-  in `scripts/comptroller_afr.py`.
+- Home and street addresses never ship. An official's own telephone number
+  or e-mail address ships where a government source prints it beside that
+  one person, even when it is plainly personal (Adam, 2026-10-17, every
+  state); one printed for two or more people, or equal to the office's own,
+  is the office's. What an official asked in writing to leave off stays off.
+  The AFR rule lives in `scripts/comptroller_afr.py`.
 - Never lower a floor, count guard, retention threshold or deviation ceiling
   to make a check pass. Never skip, disable or quarantine a test. Never push
   an empty commit or close and reopen a PR to restart CI.

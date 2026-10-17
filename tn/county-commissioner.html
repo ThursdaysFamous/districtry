@@ -704,6 +704,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -939,9 +945,14 @@ footer.site-footer a { color: var(--accent-deep); }
       6 August, and some county pages were still showing the members from before then, so each
       county's list was checked against that county's own election results before its names were
       added.</p>
-    <p>Many county pages print commissioners' home addresses and personal telephone numbers. This
-      project never copies them: it keeps an e-mail address only when it is on the county's own
-      website, and a telephone number only when it is a government office line.</p>
+    <p>Many county pages print commissioners' home addresses, personal telephone numbers and
+      personal e-mail addresses. This project never copies a home or street address. Since
+      17 October 2026 it does copy the telephone numbers and e-mail addresses: every number a
+      county prints beside a member, a home or cell number included, is shown as the county prints
+      it, with the county's own label, and so is every e-mail address the county prints in a
+      member's own entry. A number or e-mail address the county gives for the commission's office,
+      or prints for two or more members, stays with the office and is not shown as any one
+      member's.</p>
   </section>
 
   <section>

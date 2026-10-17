@@ -7,10 +7,15 @@ on sumnercountytn.gov, the post excerpt is the district ("1st District" ..
 county e-mail. Name and district come from the same article, never from order.
 
 PRIVACY: the address in each post is the member's own (a home street or a P.O.
-box in their town) and the phone beside it is a personal line, so neither is
-recorded. Only the e-mail is kept, and only when it is on sumnercountytn.gov;
-it is kept as the county prints it (one is capitalised, Jerry.Becker@
-SumnerCountyTN.gov).
+box in their town) and is never read. The phone beside it is often the
+member's own line; under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is, it is read
+from the post content into `phone`, as printed (several carry an area code
+from another state, which is kept). Only telephone-shaped numbers are read.
+The e-mail is kept as the county prints it (one is capitalised,
+in the shape First.Last@SumnerCountyTN.gov), whatever its domain, under Adam's ruling of
+2026-10-17 that an e-mail address a government page prints beside an official
+ships too; on that day every one was on sumnercountytn.gov.
 
 CURRENCY was checked on 2026-10-11 against the Sumner County Election
 Commission's own Final Results for 6 August 2026 (votesumnertn.org, a scanned
@@ -20,7 +25,7 @@ the ballot used short ones (Daniel/Dan Bristol, James Rohnkohl, Jr./Jim
 Rohnkohl, Jacob/Jake Edgar, J. Wes/Wes Wynne). The photos are uploads of
 2026/09."""
 import re
-from ._common import txt, mailtos, county_email, district_number, member
+from ._common import txt, read_emails, member_email, district_number, member, read_phones
 
 COUNTY = "Sumner"; FIPS = "165"
 DOMAINS = ("sumnercountytn.gov",)
@@ -49,7 +54,9 @@ def parse(pages):
         if num is None or not re.fullmatch(r"\d{1,2}(st|nd|rd|th) District", label):
             raise ValueError("post for %r has district label %r" % (name, label))
         content = b.split("elementor-widget-theme-post-content", 1)
-        email = county_email(mailtos(content[1]) if len(content) == 2 else [], DOMAINS)
+        email = member_email(read_emails(content[1]) if len(content) == 2 else [], DOMAINS)
+        phones = read_phones(content[1]) if len(content) == 2 else None
         prof = url if re.match(r"https://sumnercountytn\.gov/", url) else None
-        districts.setdefault(str(num), []).append(member(name, email=email, profileUrl=prof))
+        districts.setdefault(str(num), []).append(
+            member(name, email=email, profileUrl=prof, phones=phones))
     return {"districts": districts, "atLarge": []}

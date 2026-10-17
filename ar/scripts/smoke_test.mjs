@@ -512,6 +512,41 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A LEGISLATOR'S OWN NUMBER RIDES THE PERSON ROW, as the member's
+    //     page prints it, since Adam's ruling of 2026-10-17 ("if the official
+    //     government source uses personal phone numbers, we publish those").
+    //     The number expected is read from the shipped roster for each
+    //     chamber's anchor district, so a weekly refresh that changes it
+    //     changes what is expected; a record carrying none is reported, never
+    //     passed as a check. The card shows numbers with no-break hyphens,
+    //     folded back before comparing.
+    //     The member's e-mail address rides the same row since Adam chose
+    //     "E-mails too" the same day; it shows as a link labelled Email, so
+    //     the link's own address is what is compared.
+    for (const [id, file] of [["ar-senate", "ar-senate-members.json"], ["ar-house", "ar-house-members.json"]]) {
+      const rec = await page.evaluate(async ({ f, d }) => {
+        const r = await fetch("data/app/" + f).then((x) => x.json());
+        return r[d] || {};
+      }, { f: file, d: EXPECT_DISTRICT[id] });
+      const want = rec.phone || null;
+      const info = await cardText(page, id);
+      const text = (info.text || "").replace(/‑/g, "-");
+      if (!want) {
+        console.log(`  SKIP  ${id} member's own number — the anchor's member prints none`);
+      } else {
+        check(`${id} card shows the number the member's own page prints`,
+          !info.error && text.includes(want), `want ${want}; got ${text.slice(0, 160)}`);
+      }
+      if (!rec.email) {
+        console.log(`  SKIP  ${id} member's e-mail — the anchor's member prints none`);
+      } else {
+        const hrefs = await page.evaluate((cid) =>
+          Array.from(document.querySelectorAll("#card-" + cid + " a[href^='mailto:']"))
+            .map((a) => a.getAttribute("href")), id);
+        check(`${id} card links the e-mail address the member's own page prints`,
+          hrefs.includes("mailto:" + rec.email), JSON.stringify(hrefs));
+      }
+    }
     await context.close();
   }
 

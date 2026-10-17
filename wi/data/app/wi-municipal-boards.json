@@ -110,24 +110,36 @@
         "email": "squirel@janesvillewi.gov",
         "name": "Larry Squire",
         "phone": "(608) 373-6012",
+        "phonesExtra": [
+          "cell (608) 921-5550"
+        ],
         "role": "Council President"
       },
       {
         "email": "cassm@janesvillewi.gov",
         "name": "Michael Cass",
         "phone": "(608) 373-6015",
+        "phonesExtra": [
+          "cell (608) 305-4909"
+        ],
         "role": "Council Vice President"
       },
       {
         "email": "erdmanj@janesvillewi.gov",
         "name": "Joshua Erdman",
         "phone": "(608) 373-6017",
+        "phonesExtra": [
+          "cell (608) 352-3168"
+        ],
         "role": "Councilmember"
       },
       {
         "email": "millerh@ci.janesville.wi.us",
         "name": "Heather Miller",
         "phone": "(608) 373-6013",
+        "phonesExtra": [
+          "cell (608) 289-6555"
+        ],
         "role": "Councilmember"
       },
       {
@@ -140,6 +152,9 @@
         "email": "popec@janesvillewi.gov",
         "name": "Cassandra Pope",
         "phone": "(608) 373-6011",
+        "phonesExtra": [
+          "cell (608) 728-8232"
+        ],
         "role": "Councilmember"
       },
       {

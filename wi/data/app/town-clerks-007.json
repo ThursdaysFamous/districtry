@@ -60,6 +60,9 @@
     "clerk": "Andrew Tuttle",
     "municipality": "Drummond",
     "phone": "715-739-6774",
+    "phonesExtra": [
+      "715-499-5536"
+    ],
     "recordUpdated": "2024-02-05",
     "url": "http://www.drummondwi.com"
   },
@@ -75,6 +78,9 @@
     "clerk": "Alexys Kontny",
     "municipality": "Grand View",
     "phone": "715-413-0017",
+    "phonesExtra": [
+      "715-763-3151"
+    ],
     "recordUpdated": "2024-10-24",
     "url": "https://townofgrandview.org/"
   },
@@ -103,6 +109,9 @@
     "clerk": "Carol Moravchik",
     "municipality": "Keystone",
     "phone": "715-746-2328",
+    "phonesExtra": [
+      "715-730-0532"
+    ],
     "recordUpdated": "2026-06-22",
     "url": "https://townofkeystonewi.gov/"
   },
@@ -116,12 +125,18 @@
     "clerk": "Susan Hiatt",
     "municipality": "Mason",
     "phone": "715-492-7000",
+    "phonesExtra": [
+      "715-746-2217"
+    ],
     "recordUpdated": "2025-10-14"
   },
   "5500755375": {
     "clerk": "Laura Bjork",
     "municipality": "Namakagon",
     "phone": "715-794-2651",
+    "phonesExtra": [
+      "715-413-0406"
+    ],
     "recordUpdated": "2025-05-07",
     "url": "https://namakagon-wi.org/"
   },
@@ -135,6 +150,9 @@
     "clerk": "Diana Reijo",
     "municipality": "Oulu",
     "phone": "715-372-4507",
+    "phonesExtra": [
+      "715-774-3500"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://ouluwisconsin.com/"
   },
@@ -142,6 +160,9 @@
     "clerk": "Suzi Misun",
     "municipality": "Pilsen",
     "phone": "715-746-2438",
+    "phonesExtra": [
+      "715-209-0352"
+    ],
     "recordUpdated": "2024-01-02"
   },
   "5500764512": {
@@ -149,6 +170,9 @@
     "deputyClerk": "Marjorie Ogren",
     "municipality": "Port Wing",
     "phone": "715-774-3662",
+    "phonesExtra": [
+      "715-774-3624"
+    ],
     "recordUpdated": "2024-01-22",
     "url": "https://portwing.gov/"
   },

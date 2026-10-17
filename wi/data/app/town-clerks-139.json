@@ -26,6 +26,9 @@
     "deputyClerk": "Cynthia Pleshek",
     "municipality": "Neenah",
     "phone": "920-725-0916",
+    "phonesExtra": [
+      "920-886-7545"
+    ],
     "recordUpdated": "2026-02-25",
     "url": "https://townofneenah.com/"
   },
@@ -63,6 +66,9 @@
     "deputyClerk": "Susan Schwartz",
     "municipality": "Poygan",
     "phone": "920-685-0552",
+    "phonesExtra": [
+      "920-252-5225"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://www.townofpoygan.com/"
   },
@@ -70,6 +76,9 @@
     "clerk": "Peggy Hendricks",
     "municipality": "Rushford",
     "phone": "920-744-8092",
+    "phonesExtra": [
+      "920-379-4515"
+    ],
     "recordUpdated": "2026-01-27",
     "url": "https://www.townofrushford.org"
   },
@@ -85,6 +94,9 @@
     "deputyClerk": "Maggie Starr",
     "municipality": "Vinland",
     "phone": "920-235-6953",
+    "phonesExtra": [
+      "920-810-1746"
+    ],
     "recordUpdated": "2023-12-28",
     "url": "https://townofvinlandwi.gov/"
   },
@@ -100,6 +112,9 @@
     "deputyClerk": "Elizabeth Knaack",
     "municipality": "Winneconne",
     "phone": "920-582-3260",
+    "phonesExtra": [
+      "920-582-7711"
+    ],
     "recordUpdated": "2025-09-16",
     "url": "http://www.tn.winneconne.wi.gov/"
   },

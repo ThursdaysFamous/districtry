@@ -15,16 +15,22 @@ without exactly one district heading and one bold name raises, and every
 district 1..6 must appear.
 
 E-mail: every member's "Email" link is a per-member county address,
-first.last@cheathamcountytn.gov (bj.hudspeth@ for B.J. Hudspeth,
-Diana.lovell@ for Diana Pike Lovell). It is kept only on
-cheathamcountytn.gov and only when its local part carries the member's surname; a
-county address that does not carry it raises rather than being attached to
-the wrong person.
+first.last@cheathamcountytn.gov (bj.hudspeth@ for B.J. Hudspeth, Diana.lovell@
+for Diana Pike Lovell). It is kept only on cheathamcountytn.gov and only when
+its local part carries the member's surname; a county address that does not
+carry it raises rather than being attached to the wrong person. An address on
+another domain in a member's own block is kept as printed when it prints no
+county one, under Adam's ruling of 2026-10-17 that an e-mail address a
+government page prints beside an official ships too.
 
 PRIVACY: every block prints the member's home street address, town and ZIP
-and one or two personal phones (two labelled "- Cell"). None is read. Some
-photo links point at image files named for former members
-(gary_binkley.jpg, betty_ramsey.jpg); they are not read.
+and one or two phones (two labelled "- Cell"). The phones are recorded as
+printed, a "- Cell" label kept as "cell" in front of its number, under Adam's
+ruling of 2026-10-17 that a number a government publishes beside an official
+ships whosever line it is; only telephone-shaped numbers are read from a
+block, never its address, town or ZIP. Some photo links point at image files
+named for former members (gary_binkley.jpg, betty_ramsey.jpg); they are not
+read.
 
 Names are kept as printed ("B.J. Hudspeth", "Diana Pike Lovell"). The photo
 alt texts are not read.
@@ -44,7 +50,7 @@ Pike Lovell 701, Jody Vann 647 (Eugene Evans Sr. 516); D6 James "Jimmy"
 Hedgepath 720, Clint Biggers 601 (Jan Morrison 526). The page prints
 "James Gupton" without the "Jr." the certificate carries."""
 import re
-from ._common import txt, mailtos, member, district_number
+from ._common import txt, mailtos, member, district_number, read_phones, other_email
 
 COUNTY = "Cheatham"; FIPS = "021"
 DOMAINS = ("cheathamcountytn.gov",)
@@ -81,7 +87,7 @@ def _email(name, block):
         if out and out.lower() != a.lower():
             raise ValueError("%r's block carries two county addresses" % name)
         out = a
-    return out
+    return out or other_email(block, DOMAINS)
 
 
 def parse(pages):
@@ -107,7 +113,7 @@ def parse(pages):
         name = txt(names[0])
         if re.search(r"\bvacan", name, re.I) or not NAME.match(name):
             raise ValueError("District %s: %r does not look like a name" % (d, name))
-        districts.setdefault(d, []).append(member(name, email=_email(name, b)))
+        districts.setdefault(d, []).append(member(name, email=_email(name, b), phones=read_phones(b)))
     if set(districts) != set(SEATS):
         raise ValueError("the page names districts %s, not 1..6" % sorted(districts, key=int))
     return {"districts": districts, "atLarge": []}

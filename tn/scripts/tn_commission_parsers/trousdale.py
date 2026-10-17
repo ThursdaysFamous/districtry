@@ -21,9 +21,12 @@ Each card's e-mail, in its contact block, is Cloudflare-obfuscated; it is
 decoded and kept only on trousdalecountytn.gov and only when it carries the
 member's surname. A card is bounded by the next card's opening tag, never by
 the page's HTML comments, which the scraper removes before parsing; only the
-first position line, name and contact block after the opening are read, so
-the page footer's general address that follows the last card is not. Steve
-Whittaker's card has no e-mail. No phone is printed on any card.
+first position line, name and contact block after the opening are read, so the
+page footer's general address that follows the last card is not. Steve
+Whittaker's card has no e-mail. No phone is printed on any card. An address on
+another domain in a member's own card is kept as printed when it prints no
+county one, under Adam's ruling of 2026-10-17 that an e-mail address a
+government page prints beside an official ships too.
 
 Currency, checked 2026-10-13. On 2026-10-11 this page still listed the
 2022-2026 commission (Mark Presley, David Nollner, Landon Gulley, Jerry Ford,
@@ -58,7 +61,7 @@ The page names a Commission Chair (Lonnie Taylor) and a Chair Pro Tempore
 Officers" as business. Nothing read shows how that election went, so neither
 role is recorded."""
 import re
-from ._common import mailtos, member, txt, district_number
+from ._common import mailtos, member, txt, district_number, other_email
 
 COUNTY = "Trousdale"; FIPS = "169"
 DOMAINS = ("trousdalecountytn.gov",)
@@ -91,7 +94,7 @@ def _email(name, card):
         if _surname(name) in a.split("@", 1)[0].lower():
             return a
         raise ValueError("county address %r in %r's card does not carry the surname" % (a, name))
-    return None
+    return other_email(card, DOMAINS)
 
 
 def parse(pages):

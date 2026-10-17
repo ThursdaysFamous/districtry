@@ -6,12 +6,18 @@ continuation, for example), so the parts of one town are joined before reading.
 Offices are capitalised labels: "CHAIRMAN: Dan Lex", "SUPERVISOR 1: Robert
 Sippl", or "SUPERVISORS:" followed by one name per line ("1 - Terry Moede
 .... 2026" in Wescott, with a dot leader to the term year), each name followed
-by its home address and a telephone/e-mail line, which are skipped. Read with the
-token on 2026-10-15 (robots.txt served empty: allow all)."""
+by its home address and a telephone/e-mail line ("Phone: 715-555-0100 E-mail:
+..."), sometimes with a second number on a line of its own ("920-555-0101
+(Cell)"). The telephone lines below a name ship, up to the next office or name,
+each with its label; a number marked as a place's ("(Town Hall)") does not.
+The e-mail address on those lines ships too (Adam, 2026-10-17: "E-mails
+too"); the home address is not read. Read with the token on 2026-10-15
+(robots.txt served empty: allow all)."""
 
 import re
 
-from . import clean, looks_like_person, norm_role, person, strip_contact
+from . import (clean, following_emails, following_phones, looks_like_person,
+               norm_role, person, strip_contact)
 
 COUNTY_FIPS = "115"
 COUNTY_NAME = "Shawano"
@@ -33,9 +39,18 @@ def role_of(label):
 def read_block(block):
     people = []
     plural = None          # role a "SUPERVISORS:" list is collecting under
-    for ln in (x.strip() for x in block.split("\n")):
-        if not ln:
-            continue
+    lines = [x.strip() for x in block.split("\n") if x.strip()]
+
+    def phones(i):
+        # the telephone lines below the name on line i, up to the next office
+        # or name
+        return following_phones(lines, i + 1, limit=3, stop_re=_LABEL.pattern)
+
+    def emails(i):
+        # the e-mail addresses on those same lines
+        return following_emails(lines, i + 1, limit=3, stop_re=_LABEL.pattern)
+
+    for i, ln in enumerate(lines):
         m = _LABEL.match(ln)
         if m:
             plural = None
@@ -45,7 +60,8 @@ def read_block(block):
                 continue
             if rest:
                 if looks_like_person(rest):
-                    people.append(person(rest, role))
+                    people.append(person(rest, role, phones(i),
+                                         emails=emails(i)))
             else:
                 plural = role
             continue
@@ -54,12 +70,14 @@ def read_block(block):
             # Wescott numbers its list: "1 - Terry Moede ........ 2026"
             name = strip_contact(seat.group(2))
             if looks_like_person(name):
-                people.append(person(name, plural + " " + seat.group(1)))
+                people.append(person(name, plural + " " + seat.group(1),
+                                     phones(i), emails=emails(i)))
             continue
         if plural and not _SKIP.match(ln):
             name = strip_contact(ln)
             if looks_like_person(name):
-                people.append(person(name, plural))
+                people.append(person(name, plural, phones(i),
+                                     emails=emails(i)))
             else:
                 plural = None
     return people

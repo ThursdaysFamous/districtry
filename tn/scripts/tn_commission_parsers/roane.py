@@ -16,8 +16,15 @@ footer.
 
 PRIVACY: each member's widget prints a home street address, a town and ZIP,
 and a phone (several labelled "(home)" or "(cell)"); Charlotte Bowers's also
-prints an e-mail at an organisation's domain (hfhac.org). None of it is
-read: only the <h5> name is recorded. The page publishes no county e-mail
+prints an e-mail address at an organisation's domain. The phone is recorded
+as printed, its label kept in front of it ("home 865.354..."), under Adam's
+ruling of 2026-10-17 that a number a government publishes beside an official
+ships whosever line it is, and the e-mail address under his ruling of the
+same day that an address does too. Both are read only from the description
+paragraph directly under the member's own <h5> name, and only telephone-shaped
+numbers and e-mail-shaped addresses are read from it: the street, box, town
+and ZIP are never read. The county's own lines printed on the page are
+OFFICE_LINES and never land on a member. The page publishes no county e-mail
 for any member.
 
 Names are kept as the page prints them, which are short forms of the ballot
@@ -40,16 +47,21 @@ page as "County Commissioners", wp-content/uploads/2026/09, created
 2026-09-22) names the same 15 by district, Goss in the 2nd District among
 them, so the one-vote seat was filled as the report reads."""
 import re
-from ._common import txt, district_number, member
+from ._common import txt, district_number, member, read_phones, read_emails, member_email
 
 COUNTY = "Roane"; FIPS = "145"
 DOMAINS = ("roanecountytn.gov",)
 URLS = ["https://roanecountytn.gov/county-commission/"]
 SEATS = {"1": 3, "2": 3, "3": 1, "4": 2, "5": 1, "6": 3, "7": 2}
 AT_LARGE = 0
+# The county's own lines, printed above the roster and in the footer.
+OFFICE_LINES = ("865-376-5578", "865-376-5671")
 
 H2 = re.compile(r"<h2\b[^>]*>(.*?)</h2>", re.S)
 NAME = re.compile(r'<h5 class="elementor-image-box-title">(.*?)</h5>', re.S)
+# A name and the description paragraph directly under it, in the same widget.
+NAME_DESC = re.compile(r'<h5 class="elementor-image-box-title">(.*?)</h5>\s*'
+                       r'(?:<p class="elementor-image-box-description">(.*?)</p>)?', re.S)
 HEAD = re.compile(r"^(\d{1,2})(?:st|nd|rd|th) District (Commissioners?) Serving\b")
 NAME_FORM = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
 
@@ -68,7 +80,8 @@ def parse(pages):
         label = txt(h.group(1))
         m = HEAD.match(label)
         stop = heads[k + 1].start() if k + 1 < len(heads) else footer
-        names = [txt(x) for x in NAME.findall(page, h.end(), stop)]
+        items = [(txt(x.group(1)), x.group(2) or "") for x in NAME_DESC.finditer(page, h.end(), stop)]
+        names = [n for n, _ in items]
         if not m:
             if names:
                 raise ValueError("names %s sit under the heading %r, which names no district"
@@ -87,7 +100,9 @@ def parse(pages):
         for n in names:
             if not NAME_FORM.match(n):
                 raise ValueError("District %s: %r does not look like a name" % (d, n))
-        districts[d] = [member(n) for n in names]
+        districts[d] = [member(n, phones=read_phones(desc),
+                               email=member_email(read_emails(desc), DOMAINS))
+                        for n, desc in items]
     if first is None:
         raise ValueError("no district headings on the page")
     if NAME.search(page, 0, first):

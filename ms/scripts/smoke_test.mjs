@@ -992,6 +992,16 @@ try {
           /certifying election results/.test(county.text) &&
           /supervisor and the election commissioner elected from the/.test(county.text),
         unnamed.length ? `unnamed=${unnamed.slice(0, 3)}` : after.slice(0, 120));
+      // A telephone the directory prints for one person is on that person's
+      // row, published since 2026-10-17 even where it may be the person's own
+      // line; the board's shared number is in the board's office block. The
+      // card writes a number with non-breaking hyphens, so they are put back.
+      const shown = county.text.replace(/‑/g, "-");
+      const unshown = seated.concat(commissioners).filter((p) => p.phone &&
+        !shown.includes(p.phone)).map((p) => p.name);
+      check(`county card at ${c.name} shows the telephone the directory prints for each supervisor and election commissioner who has one of their own`,
+        !county.error && unshown.length === 0,
+        unshown.length ? `unshown=${unshown.slice(0, 3)}` : "");
       await context.close();
     }
   }
@@ -1375,6 +1385,18 @@ try {
           rNames.every((n) => rInfo.text.includes(n)) && rInfo.text.includes(change) &&
           rInfo.text.includes("filled at the election of 3 November 2026"),
         `features here=${ci.length}/${ci27.length} want "${change}" ${rInfo.text.slice(0, 160)}`);
+
+      // Each judge the court's list prints a number of their own for shows it
+      // on the card (read since 2026-10-17). The card writes hyphens as U+2011.
+      const plain = (s) => s.replace(/\u2011/g, "-");
+      const phoned = [["chancery", c.unit, cInfo.text], ["circuit", r.unit, rInfo.text]]
+        .flatMap(([court, unit, text]) =>
+          ((judges[court].districts[String(unit)] || {}).members || [])
+            .filter((m) => m.phone).map((m) => ({ court, phone: m.phone, text: plain(text) })));
+      const missing = phoned.filter((p) => !p.text.includes(p.phone));
+      check("the chancery and circuit cards at the Capitol show each judge's own telephone from the court's list",
+        phoned.length > 0 && missing.length === 0,
+        `numbers in the list here=${phoned.length} not on the card=${missing.map((p) => p.court).join(",")}`);
       await context.close();
     }
 
