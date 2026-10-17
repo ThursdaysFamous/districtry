@@ -1812,7 +1812,16 @@ ANSWERS = {
             "North Carolina's townships are boundaries without governments — "
             "the Census marks every one non-functioning — so outside a city or "
             "town limit the county governs."),
-        "school-boards-by-district": OPEN,
+        # ANSWERED 2026-10-17: no published map of these districts was found,
+        # so school-board-district draws them from the State Board of Elections'
+        # precinct-level results (nc/scripts/build_nc_school_board_districts.py).
+        # The results show which boards elect by district, 38 of the 115 with a
+        # contest since 2022, and each of their 214 district seats is drawn from
+        # the precincts whose ballots carried its latest contest. Ground the
+        # results cannot place (a precinct a line runs through, a seat not on
+        # the ballot lately) is drawn as what it is and the card says so, gap
+        # nc-school-board-districts.
+        "school-boards-by-district": answers("school-board-district"),
         # The State Board of Elections' statewide file carries all 2,625
         # precincts, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),

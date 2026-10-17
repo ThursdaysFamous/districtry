@@ -8,16 +8,16 @@ districtry North Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/nc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships FOURTEEN layers and has been **LIVE since 2026-10-09**,
+the Illinois root-scripts shape. It ships FIFTEEN layers and has been **LIVE since 2026-10-09**,
 after arriving dark on 2026-09-29. Its go-live generated `congress.html` and
 `state-legislature.html` — both chambers are named, so unlike Minnesota, Kentucky and Indiana
 this instance needed no recorded-absent legislature page — and `nc/WATCH.md` records what that
 change did and the re-check plan for every data file the app reads.
 
 **The national tier** — everything these eleven layers answer comes from a national publisher.
-The other three are Tribal Government (the Eastern Band of Cherokee Indians' land, from the Census,
-its government from the Bureau of Indian Affairs), the voting precincts and the city council
-districts below.
+The other four are Tribal Government (the Eastern Band of Cherokee Indians' land, from the Census,
+its government from the Bureau of Indian Affairs), the voting precincts, the city council
+districts and the school board districts below.
 **County** (100, Census TIGERweb, identity-only and the coverage ring), **U.S. House** (14
 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators
 roster), **N.C. Senate** and **N.C. House** (50 and 120 districts, TIGERweb geometry joined to
@@ -111,6 +111,29 @@ measurement that allows it is in the builder. The 510 smaller places name nobody
 `nc-municipal-officeholders`), and no state office publishes a council district, all evidence
 for the publishing ask. The quarterly re-checks are in `nc/WATCH.md`.
 
+**THE 38 SCHOOL BOARDS THAT ELECT MEMBERS BY DISTRICT ARE DRAWN SINCE 2026-10-17, FROM THE STATE
+BOARD OF ELECTIONS' RESULTS, AND NO MEMBER IS NAMED.** No map of any board's election districts
+was found published anywhere: the State Board's ShapeFiles folder carries its precinct maps and
+nothing else. So `school-board-district` (labelled School Board District) is read off the State
+Board's precinct-level results by `nc/scripts/build_nc_school_board_districts.py`: a seat's
+contest is on the ballots of the precincts of its district, so each of the 214 district seats is
+the precincts whose ballots carried its latest contest in its board's two most recent election
+years, read in the State Board precinct map of that election and cut to the Census school
+district. **WHICH BOARDS ELECT BY DISTRICT IS MEASURED, NOT LISTED**: of the 115 boards with a
+contest in the results since 2022, 45 elect at large, 38 by district, and 32 label seats by
+district while every precinct votes on each of them, which is a rule about where a member lives,
+so those 32 are printed by the builder and not drawn. What the results cannot place ships as what
+it is, and the card names every seat or election rather than choosing: 100 split precincts whose
+ballots carried two seats of one election, 161 overlap pieces where two elections put different
+seats on the ballot, and 11 unplaced pieces of 628 km2, 536 of them Watauga's, whose board has no
+district contest in the files before the 3 November 2026 ballot. That ballot's file, which the
+State Board posted on 2026-10-05 with no votes, is read as the latest contest for the seats on
+it; it is not linked from the State Board's results page and was found by listing the bucket the
+files are served from. No member is named, because a board fills a vacancy by appointment, which
+no results file shows (gap `nc-school-board-members`); the card links each school district's own
+website from NCES's Common Core of Data instead. The layer's own limits are gap
+`nc-school-board-districts`, and the re-check after the November general is in `nc/WATCH.md`.
+
 **THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS `county-commissioner`, AND ITS TWO HALVES
 SEPARATE CLEANLY.** All 100 counties elect a board, 587 commissioners in all, and the
 **form** of every board is answerable today from one document: NCACC's *County Commissioner
@@ -159,7 +182,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: North Carolina (`northcarolina`) — https://districtry.com/nc/
 - Geocoders: address Photon (North Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, North Carolina-bounded, serial >=1s queue)
 - Ground truth: 35.78040,-78.63910 (the State Capitol block, downtown Raleigh, Wake County) → county Wake County; us-house 2; nc-senate 14; nc-house 38; voting-precinct Precinct 01-14. Negative point 35.60000,-75.30000 (the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.).
-- Layers: 14 registered (political 5, safety 2, schools 1, geography 6); `registerLayer(` floor 9. Debug namespace `window.NCExplorer`.
+- Layers: 15 registered (political 5, safety 2, schools 2, geography 6); `registerLayer(` floor 12. Debug namespace `window.NCExplorer`.
 - Scheduled workflows: `update-nc-congress-roster.yml` (Mon 15:30 UTC); `update-nc-legislature-roster.yml` (Tue 15:30 UTC); `update-nc-county-commissioners.yml` (Wed 15:30 UTC); `nc-validate-sources.yml` (1st of month 16:00 UTC); `watch-city-council-pages.yml` (Thu 15:30 UTC).
 - Source registry: `nc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

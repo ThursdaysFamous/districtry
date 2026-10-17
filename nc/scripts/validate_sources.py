@@ -220,6 +220,26 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "school-board-district",
+        "app_file": "nc-school-board-districts.json",
+        "source_url": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip",
+        "note": (
+            "The 214 district seats of the 38 school boards that elect by "
+            "district (measured 2026-10-17). No published map of these lines was "
+            "found, so each is rebuilt from the State Board of Elections' precinct-level "
+            "results (this URL is the 2024 general's; the builder reads every "
+            "results file since 2022): a district is the precincts whose "
+            "ballots carried its seat's latest contest, on the State Board's "
+            "precinct map of that election (dl.ncsbe.gov/ShapeFiles/Precinct/), "
+            "cut to the Census school district. Each board's website link is "
+            "the address NCES's Common Core of Data district directory gives, "
+            "kept where it answered with a page at the build. Rebuilt by hand "
+            "with nc/scripts/build_nc_school_board_districts.py; its --watch, "
+            "on a row in nc/WATCH.md, lists any results file or precinct map "
+            "posted or reposted since the build."
+        ),
+    },
+    {
         "layer": "city-ward",
         "app_file": "nc-city-wards.json",
         "source_url": "https://gis.charlottenc.gov/arcgis/rest/services/PLN/CouncilDistricts/MapServer/0",

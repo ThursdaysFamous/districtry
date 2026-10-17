@@ -147,8 +147,8 @@
     },
     "school-board-district": {
       "il": "school-board", "wi": "mps-school-board", "ia": "school-director-district", "mn": "school-board-district",
-      "in": "school-board-district", "sc": "school-board-district", "tn": "school-board-district",
-      "ar": "school-board-district"
+      "in": "school-board-district", "nc": "school-board-district", "sc": "school-board-district",
+      "tn": "school-board-district", "ar": "school-board-district"
     },
     "elementary-school-zone": { "il": "cps-elementary", "ny": "es-zone", "ca": "elementary-attendance-area" },
     "middle-school-zone": { "il": "cps-middle", "ny": "ms-zone" },

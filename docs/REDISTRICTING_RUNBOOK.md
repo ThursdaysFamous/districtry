@@ -99,6 +99,9 @@ above 25,000 people that elect by district or ward, and the stub for that state 
 them.
 A twelfth drew the council wards and districts of nine of Oklahoma's eleven cities above 25,000
 people that elect by ward or district, and the stub for that state gained a row for them.
+A thirteenth, on 2026-10-17, drew the election districts of the 38 North Carolina school boards
+that elect members by district, from the State Board of Elections' precinct-level results, and the
+stub for that state gained a row for them.
 
 ### CHI (37 layers)
 
@@ -251,13 +254,15 @@ thread.
 
 ### NC — NOT YET WRITTEN
 
-No blast-radius entries for North Carolina except the precinct layer, added 2026-10-15, and the
-city council district layer, added 2026-10-16. Owned by the North Carolina thread.
+No blast-radius entries for North Carolina except the precinct layer, added 2026-10-15, the
+city council district layer, added 2026-10-16, and the school board district layer, added
+2026-10-17. Owned by the North Carolina thread.
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
 | Election precincts (NC, 2,625) | **At no fixed time**: the county changes its precincts | each county board of elections; the State Board of Elections posts the statewide file, which NC OneMap serves | geometry (`nc/scripts/build_nc_precincts.py` rebuild: the exact-count and every-county guards, the 6,000-point agreement gate and the per-county cover check all re-run), the smoke anchor (the precinct at the ground-truth point), the exact count in `nc/scripts/validate_index.py`, and the service-worker cache name, since the file is cache-first. The card names the date of the Board's file the copy matches (August 24, 2026), and the builder's `--check` holds the card to it. The quarterly `--watch` row in `nc/WATCH.md` is the tripwire |
 | City council districts and wards (NC, 100 in 17 cities) | **At no fixed time**: a city changes its districts by its own ordinance or by a local act of the General Assembly, most often after each decennial census, and an annexation moves a district's edge; Gastonia moved to election by ward under Session Law 2023-118, and Jacksonville's council voted in June 2026 to redraw its wards, so a city's lines can move in any year | each city council, under the city's charter, which is a local act of the General Assembly. Twelve cities publish their own maps and five are published by their county (Guilford for Greensboro and High Point, Onslow for Jacksonville, Iredell for Mooresville and Lee for Sanford); only Charlotte's says it is current and only Rocky Mount's says when it was adopted, so each map is held to the precincts that voted in each district's last contest and to the 2020 count. Raleigh's is drawn from the copy the city published in November 2021 labelled a proposal, because its live layer's robots.txt shuts this project out. Which seats a place elects by district and which by the whole place was read from the precincts each contest was on in the State Board of Elections' results for 2022 to 2025 | geometry (`nc/scripts/build_nc_city_wards.py` rebuild: the exact record and district counts of each map, which cities are drawn as read from `nc/data/source/nc-city-council-seats.json`, each map's share of its city's Census outline, the agreement gate, the card's sentences and the four inside points and three outside points re-run), the service-worker cache name, since the file is cache-first, and `nc/scripts/build_nc_city_councils.py --check`, which holds every drawn district to a seat its voters elect and every such seat to a drawn district. A place that moves its seats from district to whole-place, or the reverse, changes which cities are drawn, so the seats file is edited first; Jacksonville would move that way if House Bill 1038 passes. The quarterly `--watch` rows in `nc/WATCH.md` are the tripwire |
+| School board election districts (NC, 214 district seats on 38 boards) | **At no fixed time** as far as this project has read: a board's seats come up in different years, and the results show a seat on different ground from one election to the next on eleven boards (measured 2026-10-17), so a line can move at any election and after any census. Who redraws each board's districts, and when, has not been read here | each board's method of election is set by law, and which law for which board has not been read here. No published map of these districts was found, so each is read off the State Board of Elections' precinct-level results: the precincts whose ballots carried a seat's latest contest, on the State Board's precinct map of that election, cut to the Census school district | geometry (`nc/scripts/build_nc_school_board_districts.py` rebuild: which boards elect by district is re-measured by the disjointness test, every seat is redrawn from its latest contest, and the interior-point, crossing, hole and agreement gates re-run), the service-worker cache name, since the file is cache-first, and the counts in the builder's docstring. A board that moves its seats between district and at-large election changes which boards are drawn with no edit, because the builder measures that from the results. The `--watch` row in `nc/WATCH.md` is the tripwire |
 
 ### OK — NOT YET WRITTEN
 

@@ -406,7 +406,11 @@ question.
   has confirmed that every county school board is elected by division, five
   divisions per county, each built from whole precincts. Kentucky's independent
   school boards are elected at large, so they are named rather than drawn.
-  North Carolina and Oklahoma owe them too.
+  Since 2026-10-17 North Carolina draws the 214 district seats of the 38
+  boards whose election results show them elected by district, each from the
+  precincts whose ballots carried the seat's latest contest, because this
+  project found no map of these districts published anywhere; where the
+  results cannot place a line, the card says so. Oklahoma owes them too.
 - Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
   Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
   Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one
