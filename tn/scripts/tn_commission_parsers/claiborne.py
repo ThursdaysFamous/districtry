@@ -25,7 +25,10 @@ whose name and link disagree raises.
 
 E-mail: each member's link is a per-member county address
 (first.last@claibornecountytn.gov) and is recorded only when it is on that
-domain and its local part carries the member's surname.
+domain and its local part carries the member's surname. An address on another
+domain in a member's own block is kept as printed when it prints no county one,
+under Adam's ruling of 2026-10-17 that an e-mail address a government page
+prints beside an official ships too.
 
 PRIVACY: every block prints the member's home street address or post office
 box, town and ZIP and a phone (Mitchell Cosby's adds a second one marked
@@ -70,7 +73,7 @@ establish: the districts of the eight other members new this term (D1 Cheek,
 Fultz, King; D3 Coffey; D6 Richard Smith; D8 Evans, Russell; D9 Jenkins) rest
 on this page alone."""
 import re
-from ._common import txt, mailtos, member, district_number, read_phones
+from ._common import txt, mailtos, member, district_number, read_phones, other_email
 
 COUNTY = "Claiborne"; FIPS = "025"
 DOMAINS = ("claibornecountytn.gov",)
@@ -154,6 +157,8 @@ def read_block(d, blk):
         if surname(name) not in re.sub(r"[^a-z]", "", local):
             raise ValueError("District %s: county address %r is not %r's" % (d, addr, name))
         email = addr
+    else:
+        email = other_email(blk, DOMAINS)
     return member(name, email=email, phones=read_phones(blk)), terms[0]
 
 

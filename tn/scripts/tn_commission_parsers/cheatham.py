@@ -15,11 +15,13 @@ without exactly one district heading and one bold name raises, and every
 district 1..6 must appear.
 
 E-mail: every member's "Email" link is a per-member county address,
-first.last@cheathamcountytn.gov (bj.hudspeth@ for B.J. Hudspeth,
-Diana.lovell@ for Diana Pike Lovell). It is kept only on
-cheathamcountytn.gov and only when its local part carries the member's surname; a
-county address that does not carry it raises rather than being attached to
-the wrong person.
+first.last@cheathamcountytn.gov (bj.hudspeth@ for B.J. Hudspeth, Diana.lovell@
+for Diana Pike Lovell). It is kept only on cheathamcountytn.gov and only when
+its local part carries the member's surname; a county address that does not
+carry it raises rather than being attached to the wrong person. An address on
+another domain in a member's own block is kept as printed when it prints no
+county one, under Adam's ruling of 2026-10-17 that an e-mail address a
+government page prints beside an official ships too.
 
 PRIVACY: every block prints the member's home street address, town and ZIP
 and one or two phones (two labelled "- Cell"). The phones are recorded as
@@ -48,7 +50,7 @@ Pike Lovell 701, Jody Vann 647 (Eugene Evans Sr. 516); D6 James "Jimmy"
 Hedgepath 720, Clint Biggers 601 (Jan Morrison 526). The page prints
 "James Gupton" without the "Jr." the certificate carries."""
 import re
-from ._common import txt, mailtos, member, district_number, read_phones
+from ._common import txt, mailtos, member, district_number, read_phones, other_email
 
 COUNTY = "Cheatham"; FIPS = "021"
 DOMAINS = ("cheathamcountytn.gov",)
@@ -85,7 +87,7 @@ def _email(name, block):
         if out and out.lower() != a.lower():
             raise ValueError("%r's block carries two county addresses" % name)
         out = a
-    return out
+    return out or other_email(block, DOMAINS)
 
 
 def parse(pages):

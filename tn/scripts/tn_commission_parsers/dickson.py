@@ -18,7 +18,10 @@ business domain and a campaign address). The phone is recorded as printed,
 under Adam's ruling of 2026-10-17 that a number a government publishes
 beside an official ships whosever line it is; only telephone-shaped numbers
 are read from a block, and the address is never read. No e-mail is on the
-county's domain and none is recorded. The Administration Building's and the
+county's domain; the address the name's own mailto link opens is recorded,
+under Adam's choice of 2026-10-17 that a personal address a government page
+prints beside an official is shown ("E-mails too"). The Administration
+Building's and the
 Justice Center's lines in the page footer are OFFICE_LINES and never land on
 a member.
 
@@ -38,7 +41,7 @@ list, Dennis M O'Shea, Richard E. Riehn, Michael S Petty, John C Stritikus,
 Daryl Lee "Rusty" Grove, Johnnie W Reed). Only Districts 2, 3 and 4 were
 contested, the closest District 3, O'Shea 374 to Dwight D McIllwain 332."""
 import re
-from ._common import txt, mailtos, county_email, district_number, member, read_phones
+from ._common import txt, read_emails, member_email, district_number, member, read_phones
 
 COUNTY = "Dickson"; FIPS = "043"
 DOMAINS = ("dicksoncountytn.gov",)
@@ -83,6 +86,6 @@ def parse(pages):
         alts = [re.sub(r",\s*Commissioner\s*$", "", txt(a)) for a in ALT.findall(block)]
         if alts != [name]:
             raise ValueError("District %d: link %r and photo alt %s disagree" % (d, name, alts))
-        email = county_email(mailtos(block), DOMAINS)
+        email = member_email(read_emails(block), DOMAINS)
         districts[str(d)] = [member(name, email=email, phones=read_phones(block))]
     return {"districts": districts, "atLarge": []}

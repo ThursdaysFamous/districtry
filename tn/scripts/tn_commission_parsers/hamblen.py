@@ -17,7 +17,10 @@ the same domain). It is
 recorded only when the mailto link and the printed "Email:" line agree and
 the mailbox number is the district the block's own title names, so a
 mailbox copied into the wrong block raises instead of shipping. The mailto
-links are written with HTML character references and are decoded.
+links are written with HTML character references and are decoded. An address
+on another domain printed the same way would be recorded as printed,
+under Adam's ruling of 2026-10-17 that an e-mail address a government page
+prints beside an official ships too.
 
 PRIVACY: every block also prints a per-member phone (tel: link and "Phone:"
 line). Nothing on the page says they are county lines. They are recorded as
@@ -75,7 +78,7 @@ election results were compared, so that these fourteen are the August 2026
 winners rests on the GIS edit of 30 September 2026 and the post-September
 seating, not on the count."""
 import re
-from ._common import txt, mailtos, county_email, member, read_phones
+from ._common import txt, mailtos, member_email, on_domains, member, read_phones
 
 COUNTY = "Hamblen"; FIPS = "063"
 DOMAINS = ("hamblencountytn.gov", "co.hamblen.tn.us")
@@ -117,8 +120,9 @@ def parse(pages):
         printed = PRINTED.findall(txt(co.group(1)))
         if len(linked) != 1 or printed != linked:
             raise ValueError("%r: mailto %s and printed e-mail %s disagree" % (name, linked, printed))
-        email = county_email(linked, DOMAINS)
-        if email and email.lower() != "district%s@co.hamblen.tn.us" % d:
+        email = member_email(linked, DOMAINS)
+        if email and on_domains(email, DOMAINS) and \
+                email.lower() != "district%s@co.hamblen.tn.us" % d:
             raise ValueError("%r (District %s) carries %r, not that district's mailbox"
                              % (name, d, email))
         districts[d] = [member(name, role=role, email=email, phones=read_phones(b[:co.end()]))]

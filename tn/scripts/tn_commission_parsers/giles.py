@@ -20,12 +20,15 @@ The county's own phone and fax, in the page footer, are OFFICE_LINES and never
 land on a member. The cards print no address. E-mails are kept only on
 gilescountytn.gov and only when the local part contains the member's surname;
 they are read from the card's visible text as well as its mailto link, because
-Lynn Albury's link is written href="Calbury@gilescountytn.gov" with no
-mailto:. "calbury" is hers: the ballot names her Cheryl Lynn Albury. Where a
-card's mailto target and its printed address differ, no e-mail is recorded:
-James Gentry's link prints jgentry@ but goes to jsutton@ (someone else's
-address), and Chris Adcock's prints cadcock@ but goes to cadock@. Tommy
-Pollard's card has no e-mail. That leaves 18 of 21 with an e-mail.
+Lynn Albury's link is written href="Calbury@gilescountytn.gov" with no mailto:.
+"calbury" is hers: the ballot names her Cheryl Lynn Albury. Where a card's
+mailto target and its printed address differ, no e-mail is recorded: James
+Gentry's link prints jgentry@ but goes to jsutton@ (someone else's address),
+and Chris Adcock's prints cadcock@ but goes to cadock@. Tommy Pollard's card
+has no e-mail. That leaves 18 of 21 with an e-mail. An address on another
+domain in a member's own card is kept as printed when it prints no county one,
+under Adam's ruling of 2026-10-17 that an e-mail address a government page
+prints beside an official ships too.
 
 Currency: NO RESULTS OF THE 6 AUGUST 2026 ELECTION COULD BE READ ON A
 GOVERNMENT HOST. gilescountytn.gov/elections/ links the November 2026 ballot
@@ -45,7 +48,7 @@ app), and the state's results site elections.tn.gov refused our client (HTTP
 Neither gives vote totals, so the district pairing is held by candidacy plus
 seating rather than by results."""
 import re
-from ._common import txt, member, mailtos, district_number, read_phones
+from ._common import txt, member, mailtos, district_number, read_phones, other_email
 
 COUNTY = "Giles"; FIPS = "055"
 DOMAINS = ("gilescountytn.gov",)
@@ -77,8 +80,10 @@ def _email(card, name):
     ours = sorted(a for a in found
                   if any(a.rsplit("@", 1)[-1] == d or a.rsplit("@", 1)[-1].endswith("." + d)
                          for d in DOMAINS))
-    if len(ours) != 1:
+    if len(ours) > 1:
         return None
+    if not ours:
+        return other_email(card, DOMAINS)
     sur = _surname(name)
     if sur not in re.sub(r"[^a-z]", "", ours[0].split("@", 1)[0]):
         raise ValueError("%r: county address %r does not look like the member's" % (name, ours[0]))

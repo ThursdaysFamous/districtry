@@ -16,15 +16,16 @@ footer.
 
 PRIVACY: each member's widget prints a home street address, a town and ZIP,
 and a phone (several labelled "(home)" or "(cell)"); Charlotte Bowers's also
-prints an e-mail at an organisation's domain (hfhac.org), which is not read.
-The phone is recorded as printed, its label kept in front of it ("home
-865.354..."), under Adam's ruling of 2026-10-17 that a number a government
-publishes beside an official ships whosever line it is. It is read only from
-the description paragraph directly under the member's own <h5> name, and
-only telephone-shaped numbers are read from it: the street, box, town and ZIP
-are never read. The county's own lines printed on the page are OFFICE_LINES
-and never land on a member. The page publishes no county e-mail for any
-member.
+prints an e-mail address at an organisation's domain. The phone is recorded
+as printed, its label kept in front of it ("home 865.354..."), under Adam's
+ruling of 2026-10-17 that a number a government publishes beside an official
+ships whosever line it is, and the e-mail address under his ruling of the
+same day that an address does too. Both are read only from the description
+paragraph directly under the member's own <h5> name, and only telephone-shaped
+numbers and e-mail-shaped addresses are read from it: the street, box, town
+and ZIP are never read. The county's own lines printed on the page are
+OFFICE_LINES and never land on a member. The page publishes no county e-mail
+for any member.
 
 Names are kept as the page prints them, which are short forms of the ballot
 names: "Ron Berry" (Ronald Berry), "Randy Kirby" (Randy L. Kirby),
@@ -46,7 +47,7 @@ page as "County Commissioners", wp-content/uploads/2026/09, created
 2026-09-22) names the same 15 by district, Goss in the 2nd District among
 them, so the one-vote seat was filled as the report reads."""
 import re
-from ._common import txt, district_number, member, read_phones
+from ._common import txt, district_number, member, read_phones, read_emails, member_email
 
 COUNTY = "Roane"; FIPS = "145"
 DOMAINS = ("roanecountytn.gov",)
@@ -99,7 +100,9 @@ def parse(pages):
         for n in names:
             if not NAME_FORM.match(n):
                 raise ValueError("District %s: %r does not look like a name" % (d, n))
-        districts[d] = [member(n, phones=read_phones(desc)) for n, desc in items]
+        districts[d] = [member(n, phones=read_phones(desc),
+                               email=member_email(read_emails(desc), DOMAINS))
+                        for n, desc in items]
     if first is None:
         raise ValueError("no district headings on the page")
     if NAME.search(page, 0, first):

@@ -20,7 +20,9 @@ lines. Each row's "phone" field is recorded as printed, under Adam's ruling
 of 2026-10-17 that a number a government publishes beside an official ships
 whosever line it is. That PDF is not read by this parser. The page prints no
 address. The e-mail fields on the page are empty on 2026-10-11; if one fills
-in, only an address on putnamcountytn.gov is kept.
+in, its address is kept whatever its domain, under Adam's ruling of
+2026-10-17 that an e-mail address a government page prints beside an official
+ships too.
 
 Currency: checked 2026-10-11 against the Putnam County Election Commission's
 "Election Summary Report" for 6 August 2026 on the county's own host
@@ -34,7 +36,7 @@ David K. Andrews). The closest seat is District 1, where Jonathan A. D.
 Williams (676) finished nine votes ahead of Morgan Franklin (667). The page
 names no chair, so no role is recorded."""
 import re
-from ._common import txt, mailtos, county_email, district_number, member, read_phones
+from ._common import txt, read_emails, member_email, district_number, member, read_phones
 
 COUNTY = "Putnam"; FIPS = "141"
 DOMAINS = ("putnamcountytn.gov",)
@@ -83,11 +85,11 @@ def parse(pages):
             if re.search(r"\bvacan", name, re.I) or not re.fullmatch(r"[A-Z][A-Za-z.'’ -]+", name):
                 raise ValueError("District %s: %r does not look like a name" % (n, name))
             em = re.search(r'<div class="email">(.*?)</div>', r, re.S)
-            addrs = mailtos(em.group(1)) + re.findall(r"[\w.+-]+@[\w.-]+\.\w+", txt(em.group(1))) if em else []
+            addrs = read_emails(em.group(1)) if em else []
             ph = re.findall(r'<div class="phone">(.*?)</div>', r, re.S)
             if len(ph) > 1:
                 raise ValueError("District %s: %r's row has %d phone fields" % (n, name, len(ph)))
-            seats.append(member(name, email=county_email(addrs, DOMAINS),
+            seats.append(member(name, email=member_email(addrs, DOMAINS),
                                 phones=read_phones(ph[0], strict=True) if ph else None))
         if len(seats) != SEATS.get(n):
             raise ValueError("District %s panel has %d rows, the county elects %s"

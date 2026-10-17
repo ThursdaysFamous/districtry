@@ -35,9 +35,12 @@ gap record `warren-commission-phone-area-code` says so. Five members' entries
 print the county's main number (473-2505, once as 931-473-2505) instead; it
 and the two other county lines in the page footer (the courthouse and animal
 control) are OFFICE_LINES and stay off every member. Only telephone-shaped
-numbers are read; the page prints no member address. An e-mail is kept only
-on warrencountytn.gov and only when its local part starts with the member's
-first initial and contains their surname. Four members' "Email"
+numbers are read; the page prints no member address. An e-mail address on
+warrencountytn.gov is kept only when its local part starts with the member's
+first initial and contains their surname; an address on any other domain that
+an entry links is kept as printed, under Adam's ruling of 2026-10-17 that an
+e-mail address a government page prints beside an official ships too (on
+17 October 2026 every link was on the county's domain). Four members' "Email"
 links point at someone else's address (Stephen Potter -> shelton@, James Zahn
 -> jhines@, Caleb Graves -> gmartin@, Traye Cope -> dsmith@), and three of
 those entries sit in the alphabetical list where the address's surname would
@@ -54,7 +57,8 @@ ballot carries longer forms of four names: Ronald S. Lee (D1, "Ron Lee"),
 Christopher L. Rippy (D3), James A. Zahn (D4) and Tommy G Savage (D7); the
 ballot's "Steve Glenn" is the page's "Steve M. Glenn"."""
 import re
-from ._common import txt, mailtos, member, district_number, read_phones
+from ._common import (txt, member, district_number, read_phones, read_emails,
+                      member_email, on_domains, Withheld)
 
 COUNTY = "Warren"; FIPS = "177"
 DOMAINS = ("warrencountytn.gov",)
@@ -120,11 +124,16 @@ def _roster(page):
         stop = names[k + 1][0] if k + 1 < len(names) else len(segs)
         name = segs[i][0]
         sur, first = _surname(name), name[:1].lower()
-        email = None
-        for a in mailtos("".join(s for _, s in segs[i:stop])):
-            local, dom = a.lower().rsplit("@", 1)
-            if dom in DOMAINS and sur and sur in local and local.startswith(first):
-                email = a
+        mails = read_emails("".join(s for _, s in segs[i:stop]))
+        county = [] if isinstance(mails, Withheld) else [a for a in mails if on_domains(a, DOMAINS)]
+        if county:
+            # A county mailbox not named for this member is the entry's
+            # predecessor's (see above), and no address of the entry is kept.
+            own = [a for a in county if sur and sur in a.lower().split("@")[0]
+                   and a.lower().startswith(first)]
+            email = own[0] if own else None
+        else:
+            email = member_email(mails, DOMAINS)
         tel = [s for t, s in segs[i:stop] if PHONE.match(t)]
         phones = read_phones("<br>".join(tel), strict=True) if tel else None
         entries.append((d, name, email, phones))

@@ -24,10 +24,11 @@ personal address (aol.com, outlook.com, gmail.com, hotmail.com, comcast.net).
 The phones are recorded as printed, under Adam's ruling of 2026-10-17 that a
 number a government publishes beside an official ships whosever line it is;
 only telephone-shaped numbers are read from a cell, and the street, town and
-ZIP are never read. No member has an address on the county's own domain, so
-no e-mail is kept; the
-footer's mayoroffice@ address is the County Mayor's office and is outside the
-table.
+ZIP are never read. No member has an address on the county's own domain; the
+address the name's own mailto link opens is recorded, under Adam's choice the
+same day that a personal address a government page prints beside an official
+is shown ("E-mails too"). The footer's mayoroffice@ address is the County
+Mayor's office and is outside the table.
 
 Currency: checked 2026-10-11 against the McMinn County Election Commission's
 "Election Results August 6, 2026" (pages dated August 18, 2026), linked from
@@ -42,7 +43,7 @@ Curtis 1,064, Travis Crisp 1,042. The results list candidates in ballot order,
 not vote order. The page writes "Scott Williams" and "Jerry Millsaps" where
 the ballot carries a middle initial."""
 import re
-from ._common import txt, member, read_phones
+from ._common import txt, member, read_phones, read_emails, member_email
 
 COUNTY = "McMinn"; FIPS = "107"
 DOMAINS = ("mcminncountytn.gov",)
@@ -95,20 +96,24 @@ def parse(pages):
             continue
         link = re.search(r"<a\b[^>]*>(.*?)</a>", cell, re.S)
         if not link or txt(link.group(1)) != parts[0]:
-            raise ValueError("a member cell does not open with its name link: %r" % parts[:2])
+            # Never quotes the cell: its lines after the name are an address.
+            raise ValueError("a member cell does not open with its name link")
         name = parts[0]
         if not NAME.match(name):
             raise ValueError("%r does not look like a name" % name)
         m = LABEL.match(parts[1]) if len(parts) > 1 else None
         if not m:
-            raise ValueError("%r: the line after the name is not 'District N, Commissioner': %r"
-                             % (name, parts[1:2]))
+            # Never quotes the line: without the label it is the address.
+            raise ValueError("%r: the line after the name is not 'District N, Commissioner'"
+                             % name)
         d = m.group(1)
         if (d, _key(name)) in from_cells:
             raise ValueError("%r listed twice in District %s" % (name, d))
         from_cells.add((d, _key(name)))
-        # The address and the personal mailto are not read; the phone is.
-        districts.setdefault(d, []).append(member(name, phones=read_phones(cell)))
+        # The address is not read; the phone and the name link's e-mail are.
+        districts.setdefault(d, []).append(
+            member(name, email=member_email(read_emails(link.group(0)), DOMAINS),
+                   phones=read_phones(cell)))
     if from_cells != from_alts:
         raise ValueError("text cells %s and photo alts %s disagree"
                          % (sorted(from_cells - from_alts), sorted(from_alts - from_cells)))

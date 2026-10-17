@@ -23,9 +23,12 @@ headshot "Jonathan-LaCasse-District-1-....jpeg", which is also how the
 ballot spells him. All-capital file names ("DUSTY_2.jpg") are ignored.
 
 E-mail: every card's details block ends with a per-member county address,
-first.last@hickmancountytn.gov. It is kept only on hickmancountytn.gov and
-only when its local part carries the member's surname; a county address that
-does not raises rather than being attached to the wrong person.
+first.last@hickmancountytn.gov. It is kept only on hickmancountytn.gov and only
+when its local part carries the member's surname; a county address that does
+not raises rather than being attached to the wrong person. An address on
+another domain in a member's own card is kept as printed when it prints no
+county one, under Adam's ruling of 2026-10-17 that an e-mail address a
+government page prints beside an official ships too.
 
 PRIVACY: each details block also prints the member's home street address,
 town, ZIP and phone. The phone is recorded as printed, under Adam's ruling of
@@ -52,7 +55,7 @@ Dusty Jordan 303 (Ron Mayberry 212); D6 Devin Pickard 427, Ryan K. Rogers
 (Clay Chessor 249). The page's "Zach Bentley" is the ballot's "Zachary
 Bentley"."""
 import re
-from ._common import txt, mailtos, member, district_number, read_phones
+from ._common import txt, mailtos, member, district_number, read_phones, other_email
 
 COUNTY = "Hickman"; FIPS = "081"
 DOMAINS = ("hickmancountytn.gov",)
@@ -118,7 +121,7 @@ def _email(name, card):
         if out and out.lower() != a.lower():
             raise ValueError("%r's card carries two county addresses" % name)
         out = a
-    return out
+    return out or other_email(card, DOMAINS)
 
 
 def parse(pages):

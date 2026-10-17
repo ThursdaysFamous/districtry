@@ -6,8 +6,13 @@ paragraph "County Commissioner, District N" and a "More Information" link to the
 member's staff-directory entry. Name and district are read from the same
 widget, never from page order.
 
-No e-mail is published (the directory offers a contact form only). The
-directory entries print the member's own street address, which is never read.
+The directory entries print the member's own street address, which is never
+read. On 17 October 2026 two of them also print an e-mail address in the same
+text block, one personal and one on the county schools' domain; under Adam's
+ruling of that day that an e-mail address a government page prints beside an
+official ships too, it is recorded on the member the entry names, with the same
+checks as the phones below. The other entries offer a contact form only, which
+is not an address.
 
 PHONES come from those directory entries (member_pages), which the scraper
 reads through the same robots.txt check and pacing as the roster page. Under
@@ -37,7 +42,7 @@ page's "Jeremy H.G.Hayes", Jeremy Hale Reich is Jeremy Reich, William Glover III
 is William Glover)."""
 import re
 from ._common import (txt, district_number, member, page_field, add_phones, same_person,
-                      same_number, Withheld)
+                      same_number, Withheld, read_emails, member_email)
 
 COUNTY = "Wilson"; FIPS = "189"
 DOMAINS = ("wilsoncountytn.gov",)
@@ -46,6 +51,7 @@ SEATS = {str(i): 1 for i in range(1, 26)}
 AT_LARGE = 0
 PROFILE = "https://www.wilsoncountytn.gov/Directory.aspx?EID=%s"
 STAFF_PHONE = re.compile(r'<div id="staff-(phone|add-phone)"[^>]*>(.*?)</div>', re.S)
+TEXT_BLOCK = re.compile(r'<div class="redesign-text[^"]*">(.*?)</div>', re.S)
 
 
 def _roster(pages):
@@ -61,8 +67,9 @@ def _roster(pages):
         heads = re.findall(r"<h2\b[^>]*>(.*?)</h2>", w, re.S)
         labels = re.findall(r"County Commissioner,\s*District\s*\d+", txt(w))
         if len(heads) != 1 or len(labels) != 1:
-            raise ValueError("a commissioner widget without exactly one name and one district: %r"
-                             % txt(w)[:100])
+            # Says what it found and never quotes the widget's text.
+            raise ValueError("a commissioner widget with %d name headings and %d district "
+                             "labels, not one of each" % (len(heads), len(labels)))
         name = txt(heads[0])
         num = district_number(labels[0])
         eid = re.search(r'href="[^"]*directory[^"]*\b(?:EID|eid)=(\d+)"', w, re.I)
@@ -78,9 +85,9 @@ def member_pages(pages):
             if r.get("profileUrl")]
 
 
-def page_phones(page, name, d):
-    """The numbers a directory entry prints on its phone lines, or a Withheld
-    reason when the entry does not plainly name this member and district."""
+def entry_problem(page, name, d):
+    """None when a directory entry plainly names this member and district,
+    else the Withheld reason it does not."""
     title = [txt(t) for t in re.findall(r'<h2 class="directory-page-title[^"]*">(.*?)</h2>',
                                         page, re.S)]
     subs = [txt(t) for t in re.findall(r'<h3 class="directory-subhead[^"]*">(.*?)</h3>',
@@ -92,6 +99,30 @@ def page_phones(page, name, d):
             district_number(subs[0]) != int(d):
         return Withheld("the directory entry does not name this member's district on the "
                         "County Commission")
+    return None
+
+
+def page_email(page, name, d):
+    """The e-mail address a directory entry's own text block prints, None when
+    it prints none, or a Withheld reason."""
+    bad = entry_problem(page, name, d)
+    if bad:
+        return bad
+    found = []
+    for block in TEXT_BLOCK.findall(page):
+        got = read_emails(block)
+        if isinstance(got, Withheld):
+            return got
+        found += got
+    return member_email(found, DOMAINS)
+
+
+def page_phones(page, name, d):
+    """The numbers a directory entry prints on its phone lines, or a Withheld
+    reason when the entry does not plainly name this member and district."""
+    bad = entry_problem(page, name, d)
+    if bad:
+        return bad
     numbers = []
     for _kind, field in STAFF_PHONE.findall(page):
         got = page_field(re.sub(r"<svg\b.*?</svg>", " ", field, flags=re.S))
@@ -104,6 +135,15 @@ def page_phones(page, name, d):
 def parse(pages):
     districts = _roster(pages)
     for d, ms in districts.items():
-        districts[d] = [add_phones(r, page_phones(pages[r["profileUrl"]], r["name"], d))
-                        if r.get("profileUrl") else r for r in ms]
+        out = []
+        for r in ms:
+            if not r.get("profileUrl"):
+                out.append(r)
+                continue
+            page = pages[r["profileUrl"]]
+            mail = page_email(page, r["name"], d)
+            r = dict(r, **({"_email_withheld": str(mail)} if isinstance(mail, Withheld)
+                           else {"email": mail} if mail else {}))
+            out.append(add_phones(r, page_phones(page, r["name"], d)))
+        districts[d] = out
     return {"districts": districts, "atLarge": []}

@@ -23,10 +23,10 @@ GATES, AND A COUNTY FAILING ONE SHIPS NOTHING NEW
      seats in one county name the same person - two identical names on one
      body is a parse collision, not a body.
   4. PRIVACY: a record carries only name, seat, role, e-mail, phone, further
-     phones and profile page; an e-mail and a profile page only on the county's
-     own domains; and no name, seat or role may look like a street address or
-     a ZIP code. These pages print home addresses beside the names, so this is
-     checked here whatever a parser returns.
+     phones and profile page; a profile page only on the county's own domains;
+     and no name, seat or role may look like a street address or a ZIP code.
+     These pages print home addresses beside the names, so this is checked
+     here whatever a parser returns.
   5. TELEPHONE NUMBERS: under Adam's ruling of 2026-10-17 for every state ("if
      the official government source uses personal phone numbers, we publish
      those"), a number the county prints beside a member ships whosever line
@@ -39,6 +39,15 @@ GATES, AND A COUNTY FAILING ONE SHIPS NOTHING NEW
      records in one county, because a number printed for several members is
      the office's. Until 2026-10-17 this gate refused every phone in a county
      whose scraper row did not say its phones were office lines (PHONES).
+  6. E-MAIL ADDRESSES: Adam chose on 2026-10-17, for every state, to show a
+     personal address a government page prints beside an official ("E-mails
+     too"), so an address the county prints beside a member ships whatever its
+     domain; until that day only an address on the county's own domains did.
+     Each value must be ONE address, and the message names the county and
+     seat, never the value. No address may sit on two members' records in one
+     county, because an address printed for several members is the office's.
+     An address on the fleet's undeliverable list (scripts/undeliverable.py)
+     is dropped before these gates, with a line naming the seat.
 
 A COUNTY THAT WAS NOT READ, OR FAILED A GATE, KEEPS ITS LAST GOOD RECORD for up
 to PRESERVE_MAX_AGE_DAYS, printed loudly every run, and past that the run
@@ -47,11 +56,12 @@ and never unpublishes what was already read) with the ceiling Michigan's
 builder carries, so preserving cannot turn into a roster frozen for as long as
 nobody looks. Every county in the scraper's table must end up in the file,
 read or carried, so no floor counts the counties or the names: a global count
-cannot protect a named county. The one floor is MIN_MEMBERS_WITH_PHONE, on how
-many members carry a telephone number across the file, because a county page
-that changes how it prints its numbers would otherwise empty them quietly
-while every name still ships (scripts/check_roster_retention.py watches each
-county's fields against the last shipped file as well).
+cannot protect a named county. The two floors are MIN_MEMBERS_WITH_PHONE and
+MIN_MEMBERS_WITH_EMAIL, on how many members carry a telephone number and an
+e-mail address across the file, because a county page that changes how it
+prints them would otherwise empty them quietly while every name still ships
+(scripts/check_roster_retention.py watches each county's fields against the
+last shipped file as well).
 
 Usage:
     python3 tn/scripts/build_tn_commissioner_roster.py          # from the cache
@@ -68,6 +78,8 @@ from urllib.parse import urlsplit
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 INSTANCE = os.path.dirname(HERE)
+sys.path.append(os.path.join(os.path.dirname(INSTANCE), "scripts"))
+import undeliverable  # noqa: E402  (FLEET_SHARED: the fleet's withhold list)
 APP = os.path.join(INSTANCE, "data", "app")
 CACHE = os.path.join(HERE, ".cache", "tn_commissioner_roster.json")
 DISTRICTS = os.path.join(APP, "tn-commission-districts.json")
@@ -83,6 +95,12 @@ FIELDS = ("name", "seat", "role", "email", "phone", "phonesExtra", "profileUrl",
 # counties print their numbers fails the build instead of shipping names with
 # the numbers gone.
 MIN_MEMBERS_WITH_PHONE = 520
+# Members carrying an e-mail address, across the whole file. MEASURED
+# 2026-10-17 on the first build under Adam's choice of that day to show a
+# personal address a government page prints beside an official ("E-mails
+# too"): 653 of the 1,000 named members, 188 of them on a domain other than
+# their county government's. The floor is about two thirds of that.
+MIN_MEMBERS_WITH_EMAIL = 435
 
 # One telephone number as a county page prints it, after the parsers' own
 # reading: an optional label word, an optional area code ("(931) ", "931-",
@@ -95,6 +113,9 @@ PHONE_VALUE = re.compile(
     r"(?:(?:\(\d{3}\) ?[-.]? ?|\d{3}\) ?|\d{3} ?[-./] ?)?\d{3} ?[-.] ?\d{4}"
     r"|\(\d{3}\) ?\d{3} \d{4})"
     r"(?: ?(?:ext\.?|x) ?\d{1,6})?" % "|".join(PHONE_LABELS), re.I)
+
+# One e-mail address and nothing else.
+EMAIL_VALUE = re.compile(r"[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
 
 # What a street address or a ZIP code looks like inside a value. A name never
 # contains either, so a match is a parser that read the wrong column.
@@ -154,10 +175,12 @@ def record_problems(rec, domains, where):
         return out
     if not (rec.get("name") or "").strip():
         out.append("%s names nobody and is not a stated vacancy" % where)
+    # An e-mail ships whatever its domain (rule 6); the message never quotes
+    # it, since a value that fails here may be text a parser misread.
     email = rec.get("email")
-    if email and not _host_ok("mailto://" + email.rsplit("@", 1)[-1], domains):
-        out.append("%s e-mail %r is not on the county's own domains %s"
-                   % (where, email, domains))
+    if email is not None and not (isinstance(email, str) and
+                                  EMAIL_VALUE.fullmatch(email.strip())):
+        out.append("%s e-mail is not one address" % where)
     if rec.get("profileUrl") and not _host_ok(rec["profileUrl"], domains):
         out.append("%s profile page %r is not on the county's own domains"
                    % (where, rec["profileUrl"]))
@@ -178,6 +201,37 @@ def record_problems(rec, domains, where):
         if ADDRESS.search(val) or ZIP.search(val):
             out.append("%s %s %r looks like an address or a ZIP code" % (where, key, val))
     return out
+
+
+def shared_mail(rec, where, mails):
+    """[] or the problem of an e-mail address another seat in the county
+    already carries; `mails` records each address against its seat."""
+    mail = rec.get("email")
+    if not isinstance(mail, str) or not mail.strip():
+        return []
+    key = mail.strip().lower()
+    if key in mails:
+        return ["%s and %s carry the same e-mail address, which is the office's, not "
+                "either member's" % (mails[key], where)]
+    mails[key] = where
+    return []
+
+
+def withhold_undeliverable(entry):
+    """Drop, before the gates, every e-mail address the fleet's undeliverable
+    list withholds (an address mail cannot reach); the module prints a line
+    naming the seat for each one."""
+    name = entry.get("county") or "?"
+    seats = [("%s District %s seat %d" % (name, d, i + 1), rec)
+             for d, recs in (entry.get("districts") or {}).items()
+             for i, rec in enumerate(recs)]
+    seats += [("%s countywide seat %d" % (name, i + 1), rec)
+              for i, rec in enumerate(entry.get("atLarge") or [])]
+    for where, rec in seats:
+        if rec.get("email"):
+            value, _why = undeliverable.withhold(rec["email"], where)
+            if not value:
+                rec.pop("email")
 
 
 def county_problems(fips5, entry, n_geom, check_seats=True):
@@ -217,7 +271,7 @@ def county_problems(fips5, entry, n_geom, check_seats=True):
         for v in vals:
             if ADDRESS.search(v) or ZIP.search(v) or len(v) > 40:
                 out.append("%s district label %r is not a district's name" % (name, v))
-    names, numbers = [], []                 # numbers: (digits, where)
+    names, numbers, mails = [], [], {}      # numbers: (digits, where); mails: address -> where
     for d in sorted(ds, key=int):
         if not ds[d]:
             out.append("%s District %s has no seat at all" % (name, d))
@@ -227,12 +281,14 @@ def county_problems(fips5, entry, n_geom, check_seats=True):
             if rec.get("name"):
                 names.append(rec["name"])
             numbers += [(dialled(v), where) for v in phone_values(rec) if isinstance(v, str)]
+            out += shared_mail(rec, where, mails)
     for i, rec in enumerate(entry.get("atLarge") or []):
         where = "%s countywide seat %d" % (name, i + 1)
         out += record_problems(rec, domains, where)
         if rec.get("name"):
             names.append(rec["name"])
         numbers += [(dialled(v), where) for v in phone_values(rec) if isinstance(v, str)]
+        out += shared_mail(rec, where, mails)
     dup = sorted({n for n in names if names.count(n) > 1})
     if dup:
         out.append("%s names %s more than once" % (name, dup))
@@ -273,7 +329,11 @@ def shipped_entry(entry, county_name, domains):
 
 def members_with_phone(roster, extra=False):
     """How many members carry a telephone number (with extra=True, two or more)."""
-    key = "phonesExtra" if extra else "phone"
+    return members_with(roster, "phonesExtra" if extra else "phone")
+
+
+def members_with(roster, key):
+    """How many members carry a value under `key`."""
     return sum(1 for e in roster.values()
                for m in [r for d in (e.get("districts") or {}).values() for r in d]
                + list(e.get("atLarge") or []) if m.get(key))
@@ -306,6 +366,7 @@ def build():
         if entry is None:
             why = (unread.get(fips3) or {}).get("why") or "absent from the scrape cache"
         else:
+            withhold_undeliverable(entry)
             probs = county_problems(fips5, entry, counts[fips5])
             if probs:
                 why = "GATE FAILED: " + "; ".join(probs)
@@ -336,6 +397,11 @@ def build():
         return fail("only %d members carry a telephone number, under the floor of %d: a "
                     "county page has probably changed how it prints its numbers"
                     % (with_phone, MIN_MEMBERS_WITH_PHONE))
+    with_email = members_with(out, "email")
+    if with_email < MIN_MEMBERS_WITH_EMAIL:
+        return fail("only %d members carry an e-mail address, under the floor of %d: a "
+                    "county page has probably changed how it prints them"
+                    % (with_email, MIN_MEMBERS_WITH_EMAIL))
     gone = sorted(set(shipped) - set(out))
     with open(OUT, "w") as handle:
         json.dump(out, handle, indent=1, ensure_ascii=False, sort_keys=False)
@@ -350,10 +416,11 @@ def build():
         print("  left the file (no longer in the scraper's table): %s"
               % ", ".join(shipped[g]["county"] for g in gone))
     print("build-tn-commissioner-roster: wrote %s - %d counties, %d seats, %d named, "
-          "%d with a telephone number (floor %d), %d with two or more, %d carried forward"
+          "%d with a telephone number (floor %d), %d with two or more, %d with an e-mail "
+          "address (floor %d), %d carried forward"
           % (os.path.relpath(OUT, os.path.dirname(INSTANCE)), len(out), seats, named,
              with_phone, MIN_MEMBERS_WITH_PHONE, members_with_phone(out, extra=True),
-             len(carried)))
+             with_email, MIN_MEMBERS_WITH_EMAIL, len(carried)))
     return 0
 
 
@@ -384,13 +451,19 @@ def check():
     if with_phone < MIN_MEMBERS_WITH_PHONE:
         problems.append("only %d members carry a telephone number, under the floor of %d"
                         % (with_phone, MIN_MEMBERS_WITH_PHONE))
+    with_email = members_with(shipped, "email")
+    if with_email < MIN_MEMBERS_WITH_EMAIL:
+        problems.append("only %d members carry an e-mail address, under the floor of %d"
+                        % (with_email, MIN_MEMBERS_WITH_EMAIL))
     if problems:
         for p in problems:
             print("  " + p, file=sys.stderr)
         return fail("%d problem(s) in the shipped roster" % len(problems))
     print("build-tn-commissioner-roster: OK - %d counties, every district 1..N against the "
           "geometry, every record within the privacy gate, %d members with a telephone "
-          "number (floor %d)" % (len(shipped), with_phone, MIN_MEMBERS_WITH_PHONE))
+          "number (floor %d), %d with an e-mail address (floor %d)"
+          % (len(shipped), with_phone, MIN_MEMBERS_WITH_PHONE, with_email,
+             MIN_MEMBERS_WITH_EMAIL))
     return 0
 
 

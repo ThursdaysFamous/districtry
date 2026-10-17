@@ -63,14 +63,137 @@ def mailtos(fragment):
     return res
 
 
+# ——— e-mail addresses ———
+#
+# Adam chose on 2026-10-17, for every state, that a personal e-mail address a
+# government page prints beside an official is shown ("E-mails too"). So an
+# address a county's own page prints in a member's own block ships on that
+# member, whatever its domain: a county mailbox, a gmail or a business address
+# alike. Until that day an address shipped only on the county's own domains.
+# What stays out is a question of whose address it is, never of privacy:
+#
+#   - an address printed for two or more members, which is the office's, and
+#     one that carries another member's surname and not this member's, a block
+#     welded to its neighbour's (settle_emails);
+#   - an address whose link and printed text disagree, or a county mailbox
+#     that names somebody else, where a parser can see either (each module
+#     says which checks it makes);
+#   - a county mailbox named for an office rather than a person (info@,
+#     mayor@, commission@ and the rest of OFFICE_MAILBOXES; a business's
+#     info@ printed as a member's own is that member's), and an address whose
+#     domain runs the county's own into more letters
+#     ("...@maurycounty-tn.govgmail.com"), a typing slip no mail reaches
+#     (member_email);
+#   - anything that is not one address (EMAIL_SHAPE), and an address the
+#     fleet's undeliverable list withholds (the builder).
+
+EMAIL_SHAPE = re.compile(r"[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
+OFFICE_MAILBOXES = {"info", "webmaster", "contact", "admin", "office", "mayor",
+                    "countymayor", "commission", "commissioners", "countycommission",
+                    "countycommissioners", "clerk", "countyclerk", "publicrecords",
+                    "help", "support", "noreply"}
+
+
+def on_domains(address, domains):
+    """True when an address is on one of the county's own domains."""
+    dom = address.rsplit("@", 1)[-1].lower() if "@" in address else ""
+    return any(dom == d or dom.endswith("." + d) for d in domains)
+
+
+def misprinted(address, domains):
+    """True when an address's domain runs one of the county's domains into more
+    letters ("maurycounty-tn.govgmail.com"): a typing slip, never a mailbox."""
+    dom = address.rsplit("@", 1)[-1].lower() if "@" in address else ""
+    return not on_domains(address, domains) and any(dom.startswith(d) for d in domains)
+
+
+def office_mailbox(address):
+    """True when an address is named for an office (info@, mayor@), not a person."""
+    return re.sub(r"[^a-z]", "", address.split("@", 1)[0].lower()) in OFFICE_MAILBOXES
+
+
 def county_email(addresses, domains):
-    """The first address on one of the county's own domains, else None.
-    A personal gmail/bellsouth/business address is never returned."""
+    """The first address on one of the county's own domains, else None."""
     for a in addresses:
-        dom = a.rsplit("@", 1)[-1].lower() if "@" in a else ""
-        if any(dom == d or dom.endswith("." + d) for d in domains):
+        if on_domains(a, domains):
             return a
     return None
+
+
+def member_email(addresses, domains):
+    """The address to record from those one member's own block prints, in the
+    page's order: the county's, where the block prints one, because a record
+    carries one address and the county's mailbox is the office's own channel;
+    otherwise the first address the block prints, whatever its domain. A
+    county office's mailbox is never a member's and is passed over. None when the
+    block prints none; a Withheld reason (read_emails) passes through for
+    member() to turn into a note, and one is given when the only address
+    printed is a misprinted county address."""
+    if isinstance(addresses, Withheld):
+        return addresses
+    good = [a.strip() for a in addresses if a and EMAIL_SHAPE.fullmatch(a.strip())]
+    good = [a for a in good if not (office_mailbox(a) and on_domains(a, domains))]
+    slips = [a for a in good if misprinted(a, domains)]
+    good = [a for a in good if not misprinted(a, domains)]
+    pick = county_email(good, domains) or (good[0] if good else None)
+    if pick is None and slips:
+        return Withheld("the only address printed runs the county's domain into another")
+    return pick
+
+
+def other_email(fragment, domains):
+    """For a county that keeps a county address only when it names the
+    member: the address on another domain that the member's own block prints,
+    for when the block prints no county one (member_email chooses), None when
+    it prints none, or a Withheld reason (read_emails)."""
+    got = read_emails(fragment)
+    if isinstance(got, Withheld):
+        return got
+    return member_email([a for a in got if not on_domains(a, domains)], domains)
+
+
+MAILTO_A = re.compile(r'<a\b([^>]*)>(.*?)</a>', re.S | re.I)
+MAILTO_HREF = re.compile(r'\bhref\s*=\s*["\']\s*mailto:([^"\'?]*)', re.I)
+CF_HIDDEN = re.compile(r'(?:data-cfemail="|/cdn-cgi/l/email-protection#)([0-9a-fA-F]{6,})')
+
+
+def address_of(raw):
+    """One address as a link or a text gives it: percent and entity escapes
+    undone, a doubled "mailto:" prefix ("mailto:mailto%20x@...") dropped, and
+    spaces and zero-width characters gone."""
+    s = unquote(_html.unescape(raw or ""))
+    s = re.sub(r"^\s*(?:mailto(?::|\s)+)+", "", s, flags=re.I)
+    return re.sub(r"[\s\u200b\u200c\u200d\u2060\ufeff]+", "", s).strip(".,;:")
+
+
+def read_emails(fragment):
+    """The e-mail addresses one member's block prints, in the page's order:
+    each mailto link's, each Cloudflare-hidden one decoded, and each written in
+    its text, the same address twice (case-blind) once. A link whose own text
+    is an address other than the one it opens answers Withheld, because the
+    page does not say which of the two is the member's."""
+    body = re.sub(r"<(script|style)\b.*?</\1>", " ", fragment, flags=re.S | re.I)
+    found = []
+    for m in MAILTO_A.finditer(body):
+        href = MAILTO_HREF.search(m.group(1))
+        if not href:
+            continue
+        opens = address_of(href.group(1))
+        shown = [address_of(a) for a in EMAIL_SHAPE.findall(txt(m.group(2)))]
+        if opens and any(a.lower() != opens.lower() for a in shown):
+            return Withheld("a link prints one e-mail address and opens another")
+        found.append((m.start(), opens))
+    for m in CF_HIDDEN.finditer(body):
+        found.append((m.start(), cf_decode(m.group(1))))
+    for m in re.finditer(r"(?:^|>)([^<]+)", body):
+        for a in EMAIL_SHAPE.finditer(_html.unescape(m.group(1))):
+            found.append((m.start(1) + a.start(), address_of(a.group(0))))
+    seen, out = set(), []
+    for _, a in sorted(found, key=lambda x: x[0]):
+        if a and EMAIL_SHAPE.fullmatch(a) and a.lower() not in seen:
+            seen.add(a.lower())
+            out.append(a)
+    return out
 
 
 def district_number(label):
@@ -353,12 +476,66 @@ def settle_phones(parsed, office_lines=()):
     return notes
 
 
+NAME_SUFFIXES = ("jr", "sr", "ii", "iii", "iv")
+
+
+def surname_parts(name):
+    """The letters of a member's surname, and of each half of a hyphenated
+    one, three letters or more: "Mary Smith-Jones" -> {"smithjones", "smith",
+    "jones"}. A suffix (Jr, Sr, III) is not the surname."""
+    words = re.findall(r"[A-Za-z][A-Za-z'.-]*", name or "")
+    while len(words) > 1 and words[-1].lower().strip(".") in NAME_SUFFIXES:
+        words.pop()
+    last = words[-1].lower() if words else ""
+    parts = {re.sub(r"[^a-z]", "", p) for p in [last] + last.split("-")}
+    return {p for p in parts if len(p) > 2}
+
+
+def settle_emails(parsed):
+    """After a parse: leave out every e-mail address printed for two or more
+    members, which is the office's, and one whose local part carries another
+    member's surname (four letters or more) and not this member's, which is a
+    block welded to its neighbour's; and turn a parser's reason for reading no
+    address (member() keeps it as _email_withheld) into a note. -> notes naming
+    the member and district, never an address."""
+    rows = [("District %s" % d, r) for d in sorted(parsed.get("districts") or {}, key=int)
+            for r in parsed["districts"][d]]
+    rows += [("countywide", r) for r in parsed.get("atLarge") or []]
+    notes = []
+    for where, r in rows:
+        why = r.pop("_email_withheld", None)
+        if why:
+            notes.append("%s, %s: no e-mail address is kept: %s" % (where, r.get("name"), why))
+    rows = [(w, r) for w, r in rows if r.get("name")]
+    held = {id(r): (r.get("email") or "").strip().lower() for _, r in rows}
+    for where, r in rows:
+        mail = held[id(r)]
+        if not mail:
+            continue
+        local = re.sub(r"[^a-z]", "", mail.split("@", 1)[0])
+        others = sum(1 for _, o in rows if o is not r and held[id(o)] == mail)
+        if others:
+            notes.append("%s, %s: an e-mail address the page also prints for %d other "
+                         "member(s) is left out" % (where, r.get("name"), others))
+            r.pop("email", None)
+            continue
+        if any(p in local for p in surname_parts(r.get("name"))):
+            continue
+        if any(len(p) > 3 and p in local for _, o in rows if o is not r
+               for p in surname_parts(o.get("name"))):
+            notes.append("%s, %s: an e-mail address carrying another member's name is "
+                         "left out" % (where, r.get("name")))
+            r.pop("email", None)
+    return notes
+
+
 def member(name, seat=None, role=None, email=None, phone=None, profileUrl=None,
            phones=None):
     """One seat's record. `phones` is what read_phones returned: a list of
     numbers (the first becomes `phone`, the rest `phonesExtra`) or a Withheld
     reason, which settle_phones turns into a note; neither a reason nor the
-    numbers behind it ever ships."""
+    numbers behind it ever ships. `email` is one address or a Withheld reason
+    (member_email), which settle_emails turns into a note the same way."""
     name = re.sub(r"\s+", " ", (name or "")).strip(" ,-–—")
     if not name:
         raise ValueError("empty name")
@@ -366,6 +543,9 @@ def member(name, seat=None, role=None, email=None, phone=None, profileUrl=None,
     if isinstance(phones, Withheld):
         out["_withheld"] = str(phones)
         phones = None
+    if isinstance(email, Withheld):
+        out["_email_withheld"] = str(email)
+        email = None
     numbers = ([phone] if phone else []) + list(phones or [])
     for k, v in (("seat", seat), ("role", role), ("email", email),
                  ("phone", numbers[0] if numbers else None), ("profileUrl", profileUrl)):
@@ -381,16 +561,17 @@ def add_phones(record, phones):
     it (numbers, or a Withheld reason); every other field passes through as
     it was. Used by the counties whose numbers sit on each member's own page
     (member_pages), which is read after the roster page has named them."""
+    email = record.get("email")
+    if record.get("_email_withheld"):
+        email = Withheld(record["_email_withheld"])
     if record.get("_withheld") or isinstance(phones, Withheld):
         held = Withheld(record.get("_withheld") or phones)
         return member(record["name"], seat=record.get("seat"), role=record.get("role"),
-                      email=record.get("email"), profileUrl=record.get("profileUrl"),
-                      phones=held)
+                      email=email, profileUrl=record.get("profileUrl"), phones=held)
     numbers = ([record["phone"]] if record.get("phone") else []) + \
         list(record.get("phonesExtra") or []) + list(phones or [])
     return member(record["name"], seat=record.get("seat"), role=record.get("role"),
-                  email=record.get("email"), profileUrl=record.get("profileUrl"),
-                  phones=numbers)
+                  email=email, profileUrl=record.get("profileUrl"), phones=numbers)
 
 
 def vacant(seat=None):

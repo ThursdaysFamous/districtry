@@ -22,13 +22,16 @@ whosever line it is. Only telephone-shaped numbers are read from a member's
 block (the text between their heading and the next member's column); the
 street, box, town and ZIP are never read. One block prints its area code on
 one source line and the number on the next; on the page that is one number,
-and it is read as one. Most e-mail links are personal
-(gmail, hotmail, yahoo, icloud, comcast, bellsouth, cafes.net) and are never
-kept. An address on the county's own franklincotn.gov is kept only when its
-local part starts with the member's first name or initial and contains the
-surname: that keeps william.anderson@ and silasearle@, and leaves out
-marysnyder@ on Edie Snyder's block, which names a different first name and
-nothing on the page says is hers. The commission's inquiry line (931)
+and it is read as one. Each heading's name is a link to one e-mail
+address. Most are personal (gmail, hotmail, yahoo, icloud, comcast,
+bellsouth, cafes.net) and are recorded as linked, under Adam's choice of
+2026-10-17 that a personal address a government page prints beside an
+official is shown ("E-mails too"). An address on the county's own
+franklincotn.gov is kept only when its local part starts with the member's
+first name or initial and contains the surname: that keeps william.anderson@
+and silasearle@, and leaves out marysnyder@ on Edie Snyder's heading, which
+names a different first name and nothing on the page says is hers; a heading
+whose county address is not the member's records no address at all. The commission's inquiry line (931)
 967-2541 is the county mayor's office and is not a member's: it is
 OFFICE_LINES and never lands on a member.
 
@@ -51,7 +54,7 @@ changed hands (District 4 Seat A Tyler Bauer and Seat B Johnny Hand to Greg
 King and Chuck Stines; District 6 Seat A Charles Keller, who ran for sheriff,
 to Silas Earle; District 8 Seat B David Kelley to Edie Snyder)."""
 import re
-from ._common import txt, member, mailtos, read_phones
+from ._common import txt, member, read_emails, member_email, on_domains, read_phones, Withheld
 
 COUNTY = "Franklin"; FIPS = "051"
 DOMAINS = ("franklincotn.us", "franklincotn.gov")
@@ -69,16 +72,21 @@ COL = re.compile(r'<div class="col-sm-6"')
 
 
 def _email(h6, name):
+    """The address the heading's name links to: a county one only when it
+    names this member (else none at all), any other as linked."""
     first = name.split()[0].lower()
     sur = re.sub(r"[^a-z]", "", name.split()[-1].lower())
-    for a in mailtos(h6):
-        dom = a.rsplit("@", 1)[-1].lower()
-        if not any(dom == d or dom.endswith("." + d) for d in DOMAINS):
+    addrs = read_emails(h6)
+    if isinstance(addrs, Withheld):
+        return addrs
+    for a in addrs:
+        if not on_domains(a, DOMAINS):
             continue
         local = re.sub(r"[^a-z]", "", a.split("@", 1)[0].lower())
         if sur in local and (local.startswith(first) or local.startswith(first[:1] + sur)):
             return a
-    return None
+        return None
+    return member_email(addrs, DOMAINS)
 
 
 def parse(pages):

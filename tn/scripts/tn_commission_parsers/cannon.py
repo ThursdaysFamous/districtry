@@ -21,7 +21,10 @@ person's name). An address is therefore recorded only where the link and the
 printed text are the same county address (case aside) AND its local part
 carries the member's surname: six members. The other four get none, since
 what the page would send is not what it prints. The personal addresses behind
-those links are never recorded.
+those links are never recorded, and Adam's choice of 2026-10-17 to show a
+personal address a government page prints beside an official ("E-mails too")
+does not change that: the page says two different things about which address
+is the member's, and nothing here can tell which one it means.
 
 PHONES: Marty Williams's paragraph prints a phone line under his name; it is
 recorded as printed, under Adam's ruling of 2026-10-17 that a number a

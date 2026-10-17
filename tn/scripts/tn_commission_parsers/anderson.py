@@ -30,11 +30,14 @@ official ships whosever line it is; only the block's "Phone:" line is read,
 never the address lines, and the commission office's own number, printed
 separately above the list, is not a member's. Ebony Capshaw's block prints
 the commission office's mailing address, which is not hers and is not read
-either. An e-mail is kept only when it is on andersoncountytn.gov AND its
-local part carries the member's surname (Tracy Wandell's block holds both an
-msn.com address and twandell@; only the county one is kept). A county address
-in a member's block that does not carry the surname raises rather than being
-attached to the wrong person. The commission office's own address (Amy
+either. A member's e-mail is the address the block prints, whatever its
+domain, since Adam chose on 2026-10-17 to show a personal address a government
+page prints beside an official ("E-mails too"); until that day only a county
+address was kept. Where a block prints a county address it is the one kept,
+and its local part must carry the member's surname (Tracy Wandell's block
+holds both an msn.com address and twandell@; the county one is kept). A county
+address in a member's block that does not carry the surname raises rather than
+being attached to the wrong person. The commission office's own address (Amy
 Emert, aemert@) sits outside every block and is never read.
 
 Currency: checked 2026-10-11 against the Anderson County Election
@@ -52,7 +55,7 @@ District 8 Jawrell Cook (749) and Elizabeth "Liz" Henry (749) won; Henry's
 seat is the vacancy above. The page names no chair (the same packet addresses
 Robert McKamey as Chairman), so no role is recorded."""
 import re
-from ._common import txt, mailtos, district_number, member, vacant, read_phones
+from ._common import txt, mailtos, member_email, district_number, member, vacant, read_phones
 
 COUNTY = "Anderson"; FIPS = "001"
 DOMAINS = ("andersoncountytn.gov",)
@@ -89,14 +92,15 @@ def _surnames(name):
 
 
 def _email(name, block):
-    for a in mailtos(block):
+    addrs = mailtos(block)
+    for a in addrs:
         if not _on_domain(a):
             continue
         local = a.split("@", 1)[0].lower()
         if any(s in local for s in _surnames(name)):
             return a
         raise ValueError("county address %r in %r's block does not carry the surname" % (a, name))
-    return None
+    return member_email(addrs, DOMAINS)
 
 
 def _phones(n, name, block):

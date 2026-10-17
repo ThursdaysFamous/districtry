@@ -29,11 +29,19 @@ paragraph held "Phone: <number>" on 21 pages and the bare number on Danny
 Grooms's. The county's main number, 931-381-3690, which every page prints in
 its "Contact Us" box, is in OFFICE_LINES.
 
-The profile pages also carry a maurycounty-tn.gov e-mail per member. It is not
-read (e-mail handling did not change with the 2026-10-17 ruling, which is about
-telephone numbers), so no e-mail is recorded. Beside the phone line, 21 of the
-22 pages also carry an empty mailto link, the same address on every one, which
-a reader of those e-mails would have to tell apart from the member's own.
+Each profile page also prints, under the same heading and before the next
+one, a visible link "Email <member's name>" (or the bare name, or "Email:
+<name>"), which opens a maurycounty-tn.gov address for 18 members and a
+personal one for two (charter.net, outlook.com). The address that link opens
+is recorded, under Adam's choice of 2026-10-17 that a personal address a
+government page prints beside an official is shown ("E-mails too"), and only
+a link whose text carries the member's surname is read. Beside the phone
+line, 21 of the 22 pages also carry an empty mailto link, the same address on
+every one, and Jerry Strahan's a second empty one: a reader never sees them,
+and they are never read. Greg Combs's link opens an address whose domain runs
+the county's into "gmail.com" (".govgmail.com"), a slip no mail reaches, so no
+address is recorded for him; Sam Barnes's and Steven Burford's "Email" lines
+link nowhere, so none is recorded for them either.
 
 Currency: checked 2026-10-11 against the Maury County Election Commission's
 "Summary Results Report 2026 AUG_MAURY_ST_FED_PRIM_GEN Aug 6, 2026"
@@ -49,7 +57,8 @@ Kuzawinski Jr, Missy Smith Phillips and T. Kevin Markham. The two profile
 pages read while writing this (Tim Holt, District 1; Winston B. Harlan,
 District 3, both new in 2026) say "Term: 2026 to Present"."""
 import re
-from ._common import txt, member, district_number, page_field, add_phones, same_person, Withheld
+from ._common import (txt, member, district_number, page_field, add_phones, same_person, Withheld,
+                      member_email, address_of, MAILTO_A, MAILTO_HREF)
 
 COUNTY = "Maury"; FIPS = "119"
 DOMAINS = ("maurycounty-tn.gov",)
@@ -68,6 +77,8 @@ NAME = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
 SEAT_HEAD = re.compile(r'<h2 class="subhead1[^"]*">\s*(District \d{1,2} Commissioner)\s*</h2>'
                        r'\s*(<p\b.*?</p>)', re.S)
 MAILTO = re.compile(r'<a\b[^>]*href="mailto:[^"]*"[^>]*>.*?</a>', re.S | re.I)
+SEAT_REGION = re.compile(r'<h2 class="subhead1[^"]*">\s*District \d{1,2} Commissioner\s*</h2>'
+                         r'(.*?)(?=<h[1-6]\b|</div>)', re.S)
 
 
 def _roster(pages):
@@ -119,17 +130,50 @@ def member_pages(pages):
     return [r["profileUrl"] for ms in _roster(pages).values() for r in ms]
 
 
-def page_phones(page, name, d):
-    """The number in the paragraph under a profile page's "District N
-    Commissioner" heading, or a Withheld reason when the page does not plainly
-    name this member and district. The e-mail links in that paragraph and its
-    "Email" line are left out; nothing else on the page is read."""
+def _not_theirs(page, name, d):
+    """A Withheld reason when a profile page does not plainly name this member
+    in its <h1> and this district in its one "District N Commissioner"
+    heading, else None."""
     heads = [txt(h) for h in re.findall(r"<h1\b[^>]*>(.*?)</h1>", page, re.S)]
     if len(heads) != 1 or not (same_person(heads[0], name) and same_person(name, heads[0])):
         return Withheld("the profile page's heading does not name this member")
     blocks = SEAT_HEAD.findall(page)
     if len(blocks) != 1 or district_number(blocks[0][0]) != int(d):
         return Withheld("the profile page does not name this member's district once")
+    return None
+
+
+def page_email(page, name, d):
+    """The address the visible e-mail link under the profile page's "District
+    N Commissioner" heading opens (up to the next heading), read only from a
+    link whose text carries the member's surname; an empty link is never seen
+    and never read. A Withheld reason when the page does not plainly name this
+    member and district."""
+    why = _not_theirs(page, name, d)
+    if why:
+        return why
+    regions = SEAT_REGION.findall(page)
+    if len(regions) != 1:
+        return Withheld("the profile page's district heading is not followed by one region")
+    sur = re.sub(r"[^a-z]", "", name.split()[-1].lower())
+    addrs = []
+    for a in MAILTO_A.finditer(regions[0]):
+        href = MAILTO_HREF.search(a.group(1))
+        shown = re.sub(r"[^a-z]", "", txt(a.group(2)).lower())
+        if href and sur and sur in shown:
+            addrs.append(address_of(href.group(1)))
+    return member_email(addrs, DOMAINS)
+
+
+def page_phones(page, name, d):
+    """The number in the paragraph under a profile page's "District N
+    Commissioner" heading, or a Withheld reason when the page does not plainly
+    name this member and district. The e-mail links in that paragraph and its
+    "Email" line are left out; nothing else on the page is read."""
+    why = _not_theirs(page, name, d)
+    if why:
+        return why
+    blocks = SEAT_HEAD.findall(page)
     para = MAILTO.sub(" ", blocks[0][1])
     fields = [f for f in re.split(r"<br\b[^>]*>", para, flags=re.I) if txt(f)]
     fields = [f for f in fields if not re.match(r"E-?mail\b", txt(f), re.I)]
@@ -144,6 +188,12 @@ def page_phones(page, name, d):
 def parse(pages):
     districts = _roster(pages)
     for d, ms in districts.items():
-        districts[d] = [add_phones(r, page_phones(pages[r["profileUrl"]], r["name"], d))
-                        for r in ms]
+        out = []
+        for r in ms:
+            page = pages[r["profileUrl"]]
+            mail = page_email(page, r["name"], d)
+            r = dict(r, **({"_email_withheld": str(mail)} if isinstance(mail, Withheld)
+                           else {"email": mail} if mail else {}))
+            out.append(add_phones(r, page_phones(page, r["name"], d)))
+        districts[d] = out
     return {"districts": districts, "atLarge": []}

@@ -10,10 +10,11 @@ for every member. Each is read from the visible text of the member's
 "district-phone" block, and a block whose tel: link dials a different number
 keeps that member's number off the record. The council office's main line in
 the page footer is OFFICE_LINES and never lands on a member. E-mails are
-Cloudflare-obfuscated and decoded; only nashville.gov addresses are kept. The council was elected in
+Cloudflare-obfuscated and decoded; a member block's address is kept whatever
+its domain (every one was on nashville.gov on 2026-10-17). The council was elected in
 August 2023 for a term to 2027, so this list is the sitting council."""
 import re
-from ._common import txt, mailtos, county_email, member, read_phones
+from ._common import txt, read_emails, member_email, member, read_phones
 
 COUNTY = "Davidson"; FIPS = "037"
 DOMAINS = ("nashville.gov",)
@@ -41,7 +42,7 @@ def parse(pages):
         name = txt(nm.group(1))
         href = re.search(r'href="(/departments/council/districts/(?:district|at-large)-\d+)"', b)
         tel = re.search(r'<div class="district-phone">(.*?)</div>', b, re.S)
-        email = county_email(mailtos(b), DOMAINS)
+        email = member_email(read_emails(b), DOMAINS)
         rec = member(name, email=email, phones=read_phones(tel.group(1), strict=True) if tel else None,
                      profileUrl=BASE + href.group(1) if href else None)
         num = re.search(r'field--name-field-select-district-numeric[^>]*>\s*District\s+(\d+)\s*<', b)

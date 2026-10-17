@@ -34,14 +34,15 @@ a business domain). Under Adam's ruling of 2026-10-17 that a number a
 government publishes beside an official ships whosever line it is, the numbers
 are read, the first into `phone` and a second into `phonesExtra`, with the
 page's label kept ("cell 901-...", "home 901-..."). Only telephone-shaped
-numbers are read; the street address, town and ZIP are never read, and neither
-is any e-mail. Two entries also print an address at tipton-county.com
-(gturner@, cfee@): that domain is the Tipton County SCHOOLS website (read
-2026-10-11: an Edlio school-district site, "Tipton County serves students ...
-in Covington, TN", with "Superintendent's Message", "District Staff" and
-"Tipton County Schools at a Glance"), not the county government's
-(tiptonco.com), so those addresses are not the members' commission addresses
-and are not recorded. No e-mail is recorded.
+numbers are read; the street address, town and ZIP are never read. The e-mail
+address an entry prints is recorded on that entry's member, under Adam's
+ruling of the same day that an e-mail address a government page prints beside
+an official ships too; where an entry prints two, the first is kept. Two
+entries print an address at tipton-county.com, which is the Tipton County
+SCHOOLS website (read 2026-10-11: an Edlio school-district site, "Tipton County
+serves students ... in Covington, TN"), not the county government's
+(tiptonco.com); one of them prints it as the member's only address and it is
+kept as printed, the other prints a personal address first.
 
 Names: the page prints "Shelia Barlow"; the Election Commission's officials
 list prints "SHEILA BARLOW". The page's spelling is kept.
@@ -65,7 +66,7 @@ commissioners by district, each "4 YEAR TERM, RUNS AGAIN 2030" - the same
 18 people in the same districts as this page (checked 2026-10-11; spellings
 differ only by middle names and initials, plus Shelia/Sheila above)."""
 import re
-from ._common import txt, member, district_number, read_phones
+from ._common import txt, member, district_number, read_phones, read_emails, member_email
 
 COUNTY = "Tipton"; FIPS = "167"
 DOMAINS = ("tiptonco.com",)
@@ -109,7 +110,7 @@ def read_committee(title, para):
             raise ValueError("%s District %s: %r does not look like a name" % (title, d, segs[0]))
         if surname(alt[0]) != surname(name):
             raise ValueError("%s District %s: photo %r does not match name %r" % (title, d, alt[0], name))
-        out[d] = (name, read_phones(body))
+        out[d] = (name, read_phones(body), member_email(read_emails(body), DOMAINS))
     if set(out) != {str(i) for i in range(1, 10)}:
         raise ValueError("%s names districts %s, not 1..9" % (title, sorted(out, key=int)))
     return out
@@ -129,8 +130,8 @@ def parse(pages):
         para = re.match(r"\s*<p>(.*?)</p>", body[h.end():], re.S)
         if not para:
             raise ValueError("no paragraph under %r" % txt(h.group(1)))
-        for d, (name, phones) in read_committee(txt(h.group(1)), para.group(1)).items():
-            districts.setdefault(d, []).append(member(name, phones=phones))
+        for d, (name, phones, email) in read_committee(txt(h.group(1)), para.group(1)).items():
+            districts.setdefault(d, []).append(member(name, phones=phones, email=email))
 
     # Commission offices printed in the header, as "Name, District N - Office".
     intro = body[:heads[0].start()]

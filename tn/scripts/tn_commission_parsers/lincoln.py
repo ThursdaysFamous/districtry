@@ -17,11 +17,13 @@ recorded as printed, under Adam's ruling of 2026-10-17 that a number a
 government publishes beside an official ships whosever line it is. The mayor's
 row carries the county office line, which is not read, and that line and the
 county's fax, both also printed in the page footer, are OFFICE_LINES and never
-land on a member. The page prints no address. E-mails are kept only on
-lincolncountytn.gov and only when the address is plainly the member's: its
-local part must start with the member's first initial and contain the surname
-(jhammons@, cynthia.bates@, jnix@ for Jason Gary Nix). The mayor's
-mayor@lincolncountytn.gov is never read.
+land on a member. The page prints no address. An address on
+lincolncountytn.gov must be plainly the member's: its local part must start
+with the member's first initial and contain the surname (jhammons@,
+cynthia.bates@, jnix@ for Jason Gary Nix). An address on another domain in the
+member's own row is kept as printed, under Adam's ruling of 2026-10-17 that an
+e-mail address a government page prints beside an official ships too. The
+mayor's mayor@lincolncountytn.gov is never read.
 
 Currency: NO RESULTS OF THE 6 AUGUST 2026 ELECTION COULD BE READ ON A
 GOVERNMENT HOST. The county's Election Commission page
@@ -50,7 +52,7 @@ district pairing rests on the county's own page plus a news report.
 Not recorded: the Chair Pro Tempore title (it is on the committees roster,
 not this page)."""
 import re
-from ._common import txt, member, mailtos, county_email, read_phones
+from ._common import txt, member, read_emails, member_email, on_domains, read_phones
 
 COUNTY = "Lincoln"; FIPS = "103"
 DOMAINS = ("lincolncountytn.gov",)
@@ -97,8 +99,8 @@ def parse(pages):
         name = "%s %s" % (first, last)
         if not first or not last or not NAME.match(name):
             raise ValueError("District %s: %r is not a name" % (dist, name))
-        addr = county_email(mailtos(cells[3]), DOMAINS)
-        if addr and not _own(addr, first, last):
+        addr = member_email(read_emails(cells[3]), DOMAINS)
+        if addr and on_domains(addr, DOMAINS) and not _own(addr, first, last):
             raise ValueError("%r: county address %r does not look like the member's" % (name, addr))
         districts.setdefault(str(int(dist)), []).append(
             member(name, email=addr, phones=read_phones(cells[4], strict=True)))

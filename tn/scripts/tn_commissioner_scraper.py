@@ -56,8 +56,14 @@ record forward.
 
 PRIVACY. Many of these pages print each commissioner's home address and home
 or cell telephone beside the name. No parser reads an address, a town or a ZIP
-code, and an e-mail is kept only on the county's own domain (`DOMAINS`). A
-TELEPHONE NUMBER the county prints beside a member is kept, whosever line it
+code. AN E-MAIL ADDRESS the county prints in a member's own block is kept,
+whatever its domain, since Adam chose on 2026-10-17 to show a personal address
+a government page prints beside an official ("E-mails too"); until that day
+one was kept only on the county's own domains (`DOMAINS`). Where a block
+prints a county address and another, the county's is kept. An address printed
+for two or more members is the office's and is left out, and so is one that
+carries another member's name (tn_commission_parsers._common.settle_emails).
+A TELEPHONE NUMBER the county prints beside a member is kept, whosever line it
 is, under Adam's ruling of 2026-10-17 for every state: "if the official
 government source uses personal phone numbers, we publish those." It is kept as
 printed, with the page's own label ("cell", "home") in front of it, the first
@@ -108,7 +114,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.dirname(HERE)), "scripts"))
 from robots_policy import RobotsGate, HostPacer  # noqa: E402  (FLEET_SHARED)
 from scraper_common import UA_ROSTER_BOT, UA_HEADERS_ROSTER_BOT  # noqa: E402  (FLEET_SHARED)
 from tn_commission_parsers._common import (  # noqa: E402  (same tree)
-    strip_comments, settle_phones, NUMBER)
+    strip_comments, settle_phones, settle_emails, NUMBER)
 
 CACHE = os.path.join(HERE, ".cache", "tn_commissioner_roster.json")
 TIMEOUT = 60
@@ -328,9 +334,12 @@ def main():
             parsed = spec["parse"](pages)
             # A number printed for two or more members, or equal to one of
             # the county's own lines, is the office's and is left out; a
-            # member whose numbers a parser withheld gets a note. Notes name
-            # the member and never a number.
+            # member whose numbers a parser withheld gets a note. An e-mail
+            # address printed for two or more members is the office's too,
+            # and one carrying another member's name is that member's. Notes
+            # name the member and never a number or an address.
             notes = settle_phones(parsed, spec["office_lines"])
+            notes += settle_emails(parsed)
         except (ValueError, KeyError, IndexError) as exc:
             unread.append({"fips": spec["fips"], "county": county,
                            "why": "PARSE REFUSED - %s" % exc, "kind": "parse"})

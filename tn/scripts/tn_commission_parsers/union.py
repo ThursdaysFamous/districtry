@@ -18,7 +18,10 @@ order. Each section must hold exactly the seats the county elects there.
 E-mail: an address is recorded only when it is on unioncountytn.gov and its
 local part carries the member's surname (R.L. Jones's is roy.jones@, Angela
 Conner-Murphy's angela.conner.murphy@). A county address in a block that does
-not carry the surname raises rather than being attached to the wrong person.
+not carry the surname raises rather than being attached to the wrong person. An
+address on another domain in a member's own block is kept as printed when it
+prints no county one, under Adam's ruling of 2026-10-17 that an e-mail address
+a government page prints beside an official ships too.
 
 PRIVACY: every block prints one phone number with no label (the numbers differ
 member to member). Under Adam's ruling of 2026-10-17 that a number a
@@ -53,7 +56,7 @@ Held until then: on 2026-10-11 and 2026-10-13 the election commission's
 site answered HTTP 500 (its robots.txt on the second day, which RFC 9309
 reads as a refusal of the whole host), so nothing could check the page."""
 import re
-from ._common import txt, mailtos, district_number, member, read_phones
+from ._common import txt, mailtos, district_number, member, read_phones, other_email
 
 COUNTY = "Union"; FIPS = "173"
 DOMAINS = ("unioncountytn.gov",)
@@ -104,7 +107,7 @@ def _email(n, name, block):
         if keep and keep.lower() != a.lower():
             raise ValueError("District %s: %r's block holds two county addresses" % (n, name))
         keep = a
-    return keep
+    return keep or other_email(block, DOMAINS)
 
 
 def parse(pages):

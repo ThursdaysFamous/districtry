@@ -21,7 +21,10 @@ section's district; any other text mentioning a vacancy raises.
 E-mail: each card's address is Cloudflare-obfuscated and decodes to a
 first.last@polkcountytn.gov address; it is recorded where it is on
 polkcountytn.gov and its local part carries the member's surname (all nine;
-Deborah Anne Davis's reads debbie.davis@, James Mush Davis's james.davis@).
+Deborah Anne Davis's reads debbie.davis@, James Mush Davis's james.davis@). An
+address on another domain in a member's own card is kept as printed when it
+prints no county one, under Adam's ruling of 2026-10-17 that an e-mail address
+a government page prints beside an official ships too.
 
 PRIVACY: every card prints a phone, several of them Georgia (706) mobile
 numbers, and nothing calls any a county line. Each card's "Phone:" number is
@@ -56,7 +59,8 @@ results were compared; and neither document says how many seats District 2
 elects, which rests on this page's own vacancy notice. The page names no
 chair, so no role is recorded."""
 import re
-from ._common import txt, lines, mailtos, district_number, member, vacant, read_phones
+from ._common import (txt, lines, mailtos, district_number, member, vacant, read_phones,
+                      other_email)
 
 COUNTY = "Polk"; FIPS = "139"
 DOMAINS = ("polkcountytn.gov",)
@@ -89,7 +93,7 @@ def _email(name, fragment):
         if _surname(name) in a.split("@", 1)[0].lower():
             return a
         raise ValueError("county address %r in %r's card does not carry the surname" % (a, name))
-    return None
+    return other_email(fragment, DOMAINS)
 
 
 def read_section(d, sec):

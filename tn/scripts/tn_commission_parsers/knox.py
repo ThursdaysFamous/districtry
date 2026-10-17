@@ -23,10 +23,13 @@ They are individual numbers (865-320-..., 865-203-...), with no label saying
 they are office lines, and some are printed beside what is a residential
 street address or a personal P.O. box. Only the "Phone" item is read; the
 "Address" item is never read. The commission office's phone and fax are
-OFFICE_LINES and never land on a member. E-mails are kept only on
-knoxcounty.org."""
+OFFICE_LINES and never land on a member. A member's e-mail is kept whatever
+its domain, under Adam's ruling of 2026-10-17 that an e-mail address a
+government page prints beside an official ships too (on that day every one
+was on knoxcounty.org)."""
 import re
-from ._common import txt, mailtos, county_email, member, district_number, read_phones, Withheld
+from ._common import (txt, read_emails, member_email, member, district_number, read_phones,
+                      Withheld)
 
 COUNTY = "Knox"; FIPS = "093"
 DOMAINS = ("knoxcounty.org", "knoxcountytn.gov")
@@ -98,7 +101,7 @@ def parse(pages):
         if (dist is not None and not cat_district) or (seat is not None and not cat_at_large):
             raise ValueError("%r: subtitle %r disagrees with the article's category" % (name, parts))
         prof = PROFILE.search(b)
-        email = county_email(mailtos(b), DOMAINS)
+        email = member_email(read_emails(b), DOMAINS)
         rec = member(name, seat=("Seat " + seat) if seat else None, role=role, email=email,
                      profileUrl=prof.group(1) if prof else None, phones=_phones(b))
         if dist is not None:

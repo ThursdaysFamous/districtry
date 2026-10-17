@@ -41,10 +41,12 @@ Phones: the phone line a seat prints between its name and its e-mail is
 recorded as printed (16 of the 20 members print one), under Adam's ruling of
 2026-10-17 that a number a government publishes beside an official ships
 whosever line it is. None is the commission office's (865) 273-5830, which
-OFFICE_LINES keeps off every record. The page prints no address. E-mails are
-kept only on blounttn.gov."""
+OFFICE_LINES keeps off every record. The page prints no address. The e-mail
+line under each seat is recorded whatever its domain, under Adam's ruling of
+2026-10-17 that an e-mail address a government page prints beside an official
+ships too (on that day every one was on blounttn.gov)."""
 import re
-from ._common import lines, member, vacant, county_email, district_number, read_phones
+from ._common import lines, member, vacant, member_email, district_number, read_phones
 
 COUNTY = "Blount"; FIPS = "009"
 DOMAINS = ("blounttn.gov",)
@@ -96,7 +98,7 @@ def read_section(n, ls):
             if j < 0:
                 raise ValueError("District %s: an e-mail %r with no name above it" % (n, x))
             name, role = split_name(ls[j])
-            seats.append(member(name, role=role, email=county_email([x], DOMAINS), phones=phones))
+            seats.append(member(name, role=role, email=member_email([x], DOMAINS), phones=phones))
     committees = sum(1 for x in ls if x == "Committees")
     if committees != len(seats):
         raise ValueError("District %s: %d seat blocks (Committees widgets) but %d seats read"

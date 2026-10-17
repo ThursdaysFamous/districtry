@@ -22,10 +22,15 @@ address, town or ZIP. The county's own line, (731) 989-5672, printed in the
 page's header and its Contact Us block, is in OFFICE_LINES and never lands on
 a member. The e-mail links are all off the county's domain (outlook, gmail,
 yahoo, bellsouth, charter, icloud, fhu.edu, and Tim Crowe's
-tcrowe@hendersontn.gov, a City of Henderson address, not the county's), and
-Ann Moore's name is itself wrapped in a link to another person's bellsouth
-address. The page's only county address (trustee@chestercountytn.org in the
-footer) is not a member's. No e-mail is recorded.
+tcrowe@hendersontn.gov, a City of Henderson address, not the county's). Each
+member's is recorded, since Adam chose on 2026-10-17 to show a personal
+address a government page prints beside an official ("E-mails too"); until
+that day none was. The address recorded is the one behind the column's own
+"Email" link, and only that: Ann Moore's name is itself wrapped in a link to
+another person's bellsouth address, which is never read, while her "Email"
+link is her own. A column with more than one "Email" link raises. The page's
+only county address (trustee@chestercountytn.org in the footer) is not a
+member's.
 
 Currency: checked 2026-10-11 against the Chester County Election
 Commission's own results page (votechestercountytn.gov/results/, "Unofficial
@@ -41,7 +46,7 @@ Seaton, Sr" and "Dylan R. Clayton"; the page's spellings are kept. District
 1's second seat was decided by 8 votes on the unofficial count. The page
 itself carries no date."""
 import re
-from ._common import txt, district_number, member, read_phones
+from ._common import txt, district_number, member, member_email, read_phones
 
 COUNTY = "Chester"; FIPS = "023"
 DOMAINS = ("chestercountytn.org",)
@@ -55,6 +60,8 @@ HEAD = re.compile(r"<h5>\s*(District\s+\d{1,2})\s*</h5>")
 COL = re.compile(r'<div class="col-sm-4">')
 TITLE_RE = re.compile(r"\bCommissioner, District (\d{1,2})\b")
 NAME = re.compile(r"^[A-Z][A-Za-z.'’\" -]+$")
+# A mailto link, its address before any "?subject=" and its text.
+MAILTO = re.compile(r'<a\b[^>]*href="mailto:([^"?]*)[^"]*"[^>]*>(.*?)</a>', re.S | re.I)
 
 
 def parse(pages):
@@ -82,15 +89,23 @@ def parse(pages):
             strongs = [txt(s) for s in re.findall(r"<strong\b[^>]*>(.*?)</strong>", col, re.S)]
             strongs = [s for s in strongs if s]
             if len(strongs) != 1:
-                raise ValueError("District %s: a column holds %d <strong> names: %r"
-                                 % (d, len(strongs), txt(col)[:80]))
+                # Never quotes the column: it prints a street address.
+                raise ValueError("District %s: a column holds %d <strong> names"
+                                 % (d, len(strongs)))
             name = strongs[0]
             titles = TITLE_RE.findall(txt(col))
             if titles != [d]:
                 raise ValueError("District %s section holds %r titled District %s" % (d, name, titles))
             if not NAME.match(name) or re.search(r"\bvacan", name, re.I):
                 raise ValueError("District %s: %r does not look like a name" % (d, name))
-            seats.append(member(name, phones=read_phones(col)))
+            # The column's own "Email" link, never the link a name is wrapped in.
+            own = [href.strip() for href, text in MAILTO.findall(col)
+                   if txt(text).endswith("Email")]
+            if len(own) > 1:
+                raise ValueError("District %s: %r's column has %d Email links"
+                                 % (d, name, len(own)))
+            seats.append(member(name, email=member_email(own, DOMAINS),
+                                phones=read_phones(col)))
         if len(seats) != SEATS.get(d):
             raise ValueError("District %s section has %d members, the county elects %s"
                              % (d, len(seats), SEATS.get(d)))

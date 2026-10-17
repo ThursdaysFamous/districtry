@@ -20,6 +20,15 @@ profileUrl, carries a Cloudflare-obfuscated seat address (district1@
 montgomerytn.gov on the District 1 page, read 2026-10-11) and, on 16 of the 21
 pages on 17 October 2026, a telephone number.
 
+E-MAIL: the seat address is read from the same member card the phone is, and
+decoded, since Adam chose on 2026-10-17 that the e-mail a government page
+prints beside an official is shown ("E-mails too"); it is the county's own
+mailbox for the seat, so it is the address a resident writes to. Every card on
+the page must print the same address, or none is recorded (with a note). A
+card's other addresses would be read the same way; on 17 October 2026 every
+card printed only its district's (district1@ .. district21@). The page's
+other mailto, a staff address outside the cards, is not read.
+
 PHONES come from those seat pages (member_pages), which the scraper reads
 through the same robots.txt check and pacing as the commission page. Under
 Adam's ruling of 2026-10-17 that a number a government publishes beside an
@@ -29,11 +38,10 @@ roster's "District N" and every card on it (the page prints the card twice,
 for narrow and wide screens) names the roster's member and district and
 prints the same number; otherwise that member's number is withheld with a
 note. District 6's number is printed with a space where a hyphen usually is
-(in the shape "(931) 555 0100") and is read and shipped that way. The seat
-address is not read: e-mail handling did not change with that ruling, which is
-about telephone numbers."""
+(in the shape "(931) 555 0100") and is read and shipped that way."""
 import re
-from ._common import txt, district_number, member, page_field, add_phones, same_person, Withheld
+from ._common import (txt, district_number, member, page_field, add_phones, same_person, Withheld,
+                      read_emails, member_email)
 
 COUNTY = "Montgomery"; FIPS = "125"
 DOMAINS = ("montgomerytn.gov", "mcgtn.org")
@@ -84,13 +92,13 @@ def member_pages(pages):
     return [r["profileUrl"] for ms in _roster(pages).values() for r in ms]
 
 
-def page_phones(page, name, d):
-    """The number a seat page's member card prints, or a Withheld reason when
-    the page does not plainly name this member and district."""
+def _card_paras(page, name, d):
+    """The paragraph of each member card on a seat page, or a Withheld reason
+    when the page does not plainly name this member and district."""
     heads = [txt(h) for h in re.findall(r"<h1\b[^>]*>(.*?)</h1>", page, re.S)]
     if heads != ["District %s" % d]:
         return Withheld("the seat page's heading is not this district")
-    fields = []
+    out = []
     for body in CARD.findall(page):
         title = [txt(t) for t in re.findall(r'<h4 class="card-title[^"]*">(.*?)</h4>', body, re.S)]
         label = [txt(t) for t in re.findall(r'<h[56] class="card-category[^"]*">(.*?)</h[56]>',
@@ -99,9 +107,34 @@ def page_phones(page, name, d):
         if len(title) != 1 or label != ["District %s" % d] or len(paras) != 1 or \
                 not (same_person(title[0], name) and same_person(name, title[0])):
             return Withheld("a card on the seat page does not name this member and district")
-        fields.append(CF_MAIL.sub(" ", paras[0]))
-    if not fields:
+        out.append(paras[0])
+    if not out:
         return Withheld("the seat page carries no member card")
+    return out
+
+
+def page_email(page, name, d):
+    """The address a seat page's member cards print (the seat's mailbox), or
+    a Withheld reason when the page does not plainly name this member and
+    district or its cards print different addresses."""
+    paras = _card_paras(page, name, d)
+    if isinstance(paras, Withheld):
+        return paras
+    found = [member_email(read_emails(p), DOMAINS) for p in paras]
+    if any(isinstance(f, Withheld) for f in found):
+        return next(f for f in found if isinstance(f, Withheld))
+    if any((f or "").lower() != (found[0] or "").lower() for f in found):
+        return Withheld("the seat page's cards print different e-mail addresses")
+    return found[0]
+
+
+def page_phones(page, name, d):
+    """The number a seat page's member card prints, or a Withheld reason when
+    the page does not plainly name this member and district."""
+    paras = _card_paras(page, name, d)
+    if isinstance(paras, Withheld):
+        return paras
+    fields = [CF_MAIL.sub(" ", p) for p in paras]
     found = [page_field(f) for f in fields]
     if any(isinstance(f, Withheld) for f in found):
         return next(f for f in found if isinstance(f, Withheld))
@@ -113,6 +146,12 @@ def page_phones(page, name, d):
 def parse(pages):
     districts = _roster(pages)
     for d, ms in districts.items():
-        districts[d] = [add_phones(r, page_phones(pages[r["profileUrl"]], r["name"], d))
-                        for r in ms]
+        out = []
+        for r in ms:
+            page = pages[r["profileUrl"]]
+            mail = page_email(page, r["name"], d)
+            r = dict(r, **({"_email_withheld": str(mail)} if isinstance(mail, Withheld)
+                           else {"email": mail} if mail else {}))
+            out.append(add_phones(r, page_phones(page, r["name"], d)))
+        districts[d] = out
     return {"districts": districts, "atLarge": []}

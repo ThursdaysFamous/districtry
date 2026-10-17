@@ -19,13 +19,16 @@ label in front of it ("cell 901-..."), under Adam's ruling of 2026-10-17 that
 a number a government publishes beside an official ships whosever line it is.
 Claude Oglesby's line gives a home number that is also printed as his fax; one
 line cannot be both, so that number is left off and his cell kept. The page
-prints no street address. Ten members print a personal or business e-mail
-address (aol, comcast, gmail, att, bellsouth, a family business's domain) and
-none of those is kept. An e-mail is recorded only on fayettetn.us and only
+prints no street address. A county address (fayettetn.us) is recorded only
 when its local part contains the member's surname and starts with the initial
 of their given name or of the nickname the page prints ("Betsy" Rice is
 brice@); an address that two members' names would both fit is kept for
-neither. Nine such addresses are on the page and all nine are kept.
+neither. Nine such addresses are on the page and all nine are kept. Ten
+members print a personal or business address instead (aol, comcast, gmail,
+att, bellsouth, a family business's domain), which is recorded as printed in
+the member's own block, under Adam's choice of 2026-10-17 that a personal
+address a government page prints beside an official is shown ("E-mails
+too"); a block printing both keeps the county's.
 
 Currency: checked 2026-10-11 against the Fayette County Election
 Commission's Election Summary Report for the 6 August 2026 State Primary and
@@ -41,7 +44,8 @@ Rice, Kevin J. Powers, Steve R Reeves, Claude D. Oglesby, Jr, Chelsea Kivelle
 (the page: "Chelsey"), Thomas Wiley Day, Glen A. Morman, Betty Morrison Salmon
 and Terrye L. Canady; each is the same person as the page's entry."""
 import re
-from ._common import txt, mailtos, member, district_number, read_phones
+from ._common import txt, member, district_number, read_phones, read_emails, member_email, \
+    on_domains, Withheld
 
 COUNTY = "Fayette"; FIPS = "047"
 DOMAINS = ("fayettetn.us",)
@@ -51,7 +55,6 @@ SEATS = {"1": 1, "2": 1, "3": 1, "4": 2, "5": 1, "6": 2, "7": 1, "8": 2, "9": 2,
 AT_LARGE = 0
 
 HEADING = re.compile(r"<h2\b[^>]*>(.*?)</h2>", re.S)
-EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 NAME = re.compile(r"^[A-Z][A-Za-z.'’“”\" -]+$")
 SUFFIX = {"jr", "sr", "ii", "iii", "iv"}
 
@@ -80,11 +83,12 @@ def _members(body, d):
         if not parts:
             continue
         if len(parts) < 2 or parts[1] != "Commissioner":
-            raise ValueError("District %s: a block that is not 'Name / Commissioner': %r" % (d, parts[:3]))
+            # Never quotes the block's lines: they may be an address.
+            raise ValueError("District %s: a block of %d lines that is not 'Name / "
+                             "Commissioner'" % (d, len(parts)))
         if not NAME.match(parts[0]):
             raise ValueError("District %s: %r does not look like a name" % (d, parts[0]))
-        addrs = mailtos(p) + [a for x in parts[2:] for a in EMAIL.findall(x)]
-        out.append((parts[0], addrs, read_phones(p)))
+        out.append((parts[0], read_emails(p), read_phones(p)))
     return out
 
 
@@ -119,8 +123,8 @@ def parse(pages):
     for d, ms in found:
         for name, addrs, phones in ms:
             sur, inits = _surname(name), _initials(name)
-            email = None
-            for a in addrs:
+            email = addrs if isinstance(addrs, Withheld) else None
+            for a in ([] if email else addrs):
                 local, dom = a.lower().rsplit("@", 1)
                 if dom not in DOMAINS or not sur or sur not in local:
                     continue
@@ -130,5 +134,7 @@ def parse(pages):
                 if hit and all(keys.count((sur, i)) == 1 for i in hit):
                     email = a
                     break
+            if email is None and not isinstance(addrs, Withheld):
+                email = member_email([a for a in addrs if not on_domains(a, DOMAINS)], DOMAINS)
             districts.setdefault(d, []).append(member(name, email=email, phones=phones))
     return {"districts": districts, "atLarge": []}

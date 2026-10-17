@@ -24,7 +24,10 @@ to someone else (the link over Nicholas Horton's name is a bcos.org address
 for another person, Barry Holland's a bctnso.org address for another person,
 Keith Arnold's, Bret Burke's, Terry Kiehn's and Jerry Price's other people's
 personal addresses, and two photo links share one address), so no e-mail is
-recorded.
+recorded. Adam's choice of 2026-10-17 to show a personal address a government
+page prints beside an official ("E-mails too") does not change that: the
+question here is whose address each link is, and on this page the link over
+a name is too often somebody else's to be read as the member's.
 
 Names are kept as the page prints them. The page prints "Barry Holland" and
 "Sam Shaw"; the results print "Holland, Berry R." and "Shaw, Samuel".

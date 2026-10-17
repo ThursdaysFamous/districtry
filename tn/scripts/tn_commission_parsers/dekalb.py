@@ -22,7 +22,10 @@ street, town or ZIP. The courthouse line in the page header is OFFICE_LINES
 and never lands on a member. The e-mails are Cloudflare-obfuscated and
 decode to gmail, yahoo, comcast, verizon, dtccom.net addresses and one
 dekalbschools.net address (the school system's domain, not the county's);
-none is on the county's own domain, so no e-mail is recorded.
+none is on the county's own domain. The address in a member's paragraph is
+recorded, decoded, under Adam's choice of 2026-10-17 that a personal address
+a government page prints beside an official is shown ("E-mails too"); like
+the phone, it is read only from the paragraph under that member's name.
 
 Names are kept as printed, the nickname in single quotes included ("Tony
 'Cully' Culwell").
@@ -40,7 +43,7 @@ D7 Anderson 207, Fuller 187. Ballot spellings differ only by middle names
 and initials (Daniel D. Cripps, Billy Myron Rhody, Steven A. Cantrell).
 The page names no chair, so no role is recorded."""
 import re
-from ._common import txt, district_number, member, read_phones
+from ._common import txt, district_number, member, read_phones, read_emails, member_email
 
 COUNTY = "DeKalb"; FIPS = "041"
 DOMAINS = ("dekalbtennessee.com",)
@@ -93,6 +96,8 @@ def parse(pages):
             cell_end = seg.find("</td>", h.end())
             if 0 <= cell_end < stop:
                 stop = cell_end                 # the paragraph ends with the name's own column
-            seats.append(member(n, phones=read_phones(seg[h.end():stop])))
+            own = seg[h.end():stop]
+            seats.append(member(n, phones=read_phones(own),
+                                email=member_email(read_emails(own), DOMAINS)))
         districts[d] = seats
     return {"districts": districts, "atLarge": []}
