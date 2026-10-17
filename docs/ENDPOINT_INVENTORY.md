@@ -140,9 +140,9 @@ prose.
 | ia | 0 | 21 |
 | mi | 0 | 19 |
 | mn | 6 | 20 |
-| ky | 5 | 15 |
+| ky | 5 | 16 |
 | in | 4 | 17 |
-| nc | 4 | 14 |
+| nc | 4 | 15 |
 | ok | 5 | 17 |
 | sc | 4 | 17 |
 | tn | 6 | 19 |
@@ -289,7 +289,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `city-ward`.
 
-#### ky — 4 of 15 layers fetch their shapes
+#### ky — 4 of 16 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -299,7 +299,7 @@ measured until the next run describes it.
 | School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
-- **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`, `voting-precinct`.
+- **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`, `school-board-district`, `voting-precinct`.
 
 #### in — 4 of 17 layers fetch their shapes
 
@@ -314,7 +314,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `county-council`, `in-court-of-appeals`, `conservancy-district`, `school-board-district`, `voting-precinct`, `tribal-government`.
 
-#### nc — 4 of 14 layers fetch their shapes
+#### nc — 4 of 15 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -325,7 +325,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `nc-senate`, `county`, `nc-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `voting-precinct`, `city-ward`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `school-board-district`, `voting-precinct`, `city-ward`, `tribal-government`.
 
 #### ok — 4 of 17 layers fetch their shapes
 
@@ -381,17 +381,17 @@ measured until the next run describes it.
 | ia | 71 | 69 | 0 |
 | mi | 37 | 66 | 1 |
 | mn | 29 | 20 | 0 |
-| ky | 22 | 16 | 0 |
+| ky | 31 | 17 | 0 |
 | in | 22 | 19 | 0 |
-| nc | 37 | 15 | 0 |
+| nc | 38 | 16 | 0 |
 | ok | 31 | 17 | 0 |
 | sc | 36 | 19 | 0 |
 | tn | 34 | 18 | 0 |
 | ar | 28 | 19 | 0 |
-| ms | 41 | 21 | 0 |
-| **total** | **666** | **1022** | **12** |
+| ms | 37 | 21 | 0 |
+| **total** | **672** | **1024** | **12** |
 
-**197 distinct source hosts** across the six manifests. Each instance's
+**199 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check
