@@ -6928,11 +6928,28 @@ Board letter goes without them.
 
 ## Ask il-state-board-precinct-maps — Illinois State Board of Elections: publish the precinct maps it receives in one place
 
-> **NOT YET ASKED — DRAFTED 2026-10-10, REVISED TWICE 2026-10-16.** The operator approved the
-> revised letter that evening, then allowed one read of the Board's own website to check it (nothing
-> from the site was saved), and approved the result with the law-proposal paragraph below. Handed to
-> the Letters thread for a Gmail draft; the operator sends it.
+> **SENT 2026-10-17, 00:35:12 UTC, to `webmaster@elections.il.gov`**, subject "For Executive
+> Director Matthews: publishing Illinois's precinct maps in one place", from the operator's own
+> mailbox (read off the sent folder). Drafted 2026-10-10 and revised twice on 2026-10-16: the
+> operator approved the revised letter that evening, then allowed one read of the Board's own
+> website to check it (nothing from the site was saved).
+>
+> **The operator reworded the draft below before sending it, and the sent wording is what was
+> asked.** It is shorter and keeps the substance: the county counts and the page link, the three
+> numbered asks (digital files with the PDFs, one place to download both, and in time a statewide
+> map like Wisconsin's and Minnesota's, with the Census Bureau's 2028 program), the law-change
+> paragraph, the line that this is not about voter records, and the offer to wait until the canvass
+> is done. The law-change paragraph went as "Section 11-6 could be amended to require
+> machine-readable submissions during precinct redraws", without the district lines, the Board
+> publishing the files, or Wisconsin as the precedent. No staff member is named, and the paragraph
+> on what the Board already has became one clause.
+>
+> **Follow-up: not before 2026-12-07**, the Monday after the canvass ends on 4 December, because the
+> letter says no answer is expected before then. The Board's 17 November meeting takes public
+> comment while its spring legislative proposals are likely still being chosen.
+>
 > The hold on `il-grundy-gis-state-board-view` ended when it was answered on 2026-10-16.
+>
 > `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director
 > (named on the Board's Executive Staff page). The Board publishes no e-mail address for her: its
 > contact page sends general questions to `webmaster@elections.il.gov`, so the letter goes there
