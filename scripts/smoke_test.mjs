@@ -1065,7 +1065,9 @@ try {
     const pinShown = () => /The pin is where the Census Bureau/.test(document.getElementById("geo-status").textContent);
     const tapPin = async (page, read) => {
       await page.locator(PIN).tap();
-      await page.waitForTimeout(300);
+      // the pin selects through the map's own click, which waits for the
+      // coverage wash or fleet-outlines.json as a tap on the map does
+      await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
       return read();
     };
     const pinned = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),
@@ -1091,7 +1093,7 @@ try {
     const pressPin = async (page, read) => {
       await page.focus(PIN);
       await page.keyboard.press("Enter");
-      await page.waitForTimeout(300);
+      await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
       return read();
     };
     const keyed = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR, CLOSE] : []),
