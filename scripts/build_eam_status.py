@@ -3840,6 +3840,23 @@ def render(rows):
     return "\n".join(out).rstrip() + "\n"
 
 
+def city_surface():
+    """Every city roster the report counts, read off the tables that count them.
+
+    A path named in one of those tables and missing from the tree is reported
+    by the measurement itself, so it is skipped here rather than failed twice.
+    """
+    rels = set()
+    for rows in CITY_ROSTERS.values():
+        rels.update(rel for rel, _key in rows)
+    for files in CITY_FILES.values():
+        rels.update(files.values())
+    for _names, rel in CITY_GOVERNED_COUNTIES.values():
+        rels.add(rel)
+    return sorted(r for r in rels
+                  if os.path.exists(os.path.join(REPO_ROOT, r)))
+
+
 def check_workflows(paths, staged):
     """A scheduled workflow that rewrites a roster this report COUNTS must
     regenerate it and commit it.
@@ -3866,9 +3883,20 @@ def check_workflows(paths, staged):
     because `people` counts the districts these adapters name and not every
     officeholder an instance ships. Requiring the step on the other five would
     ask 59 workflows across the fleet to regenerate a file they cannot change.
+
+    THE CITY TIER IS COUNTED TOO, AND THE FIRST VERSION OF THIS GATE NEVER ASKED
+    ABOUT IT (2026-10-16). The adapter surface is the county boards; the report
+    also counts the city rosters `CITY_ROSTERS`, `CITY_FILES` and
+    `CITY_GOVERNED_COUNTIES` name, and the jobs that rewrite those had no step
+    and no gate. Wisconsin's #1572 went red on its own pull request that way on
+    2026-10-15. So the surface is both sets, each read from the table the
+    measurement itself uses. The files `ROLE_NAME_KEYS` and `SHAPE_CASES` name
+    are NOT on it: they are fixtures for the self-tests, and nothing the report
+    prints is counted from them.
     """
     surface = sorted({os.path.relpath(p, REPO_ROOT)
-                      for tag in paths for p in paths[tag]})
+                      for tag in paths for p in paths[tag]}
+                     | set(city_surface()))
     named = {}
     for rel in surface:
         for workflow in refreshed_by(rel, staged):

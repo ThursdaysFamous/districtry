@@ -121,6 +121,13 @@
    "source": "isbe",
    "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
   },
+  "jasper": {
+   "address": "204 West Washington Street, Suite 2, Newton, IL 62448",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
   "jersey": {
    "address": "200 North Lafayette Street, Suite 3, Jerseyville, IL 62052",
    "asOf": "2025-12-15",

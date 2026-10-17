@@ -9,7 +9,7 @@
      CI drift gate (smoke-test.yml):
          python3 scripts/build_county_status.py --check -->
 
-**96 of 102 Illinois counties are served** — 96 through their own dispatch entries, 0 through a shipped judicial circuit, and 0 through the County card alone. 6 more are researched-but-unserved (every one carries a recorded gap saying why), leaving 0 unresearched.
+**97 of 102 Illinois counties are served** — 97 through their own dispatch entries, 0 through a shipped judicial circuit, and 0 through the County card alone. 5 more are researched-but-unserved (every one carries a recorded gap saying why), leaving 0 unresearched.
 
 ## How to read this
 
@@ -19,7 +19,7 @@
 - **Open gaps** — records from the guidebook's gaps block (`data/app/coverage-gaps.json`, the app's Data gaps panel). A record naming several counties appears in each of their rows.
 - **"Complete"** here means: served, and `none` in the gaps column. A served county with open gaps is honest-but-unfinished; what each gap needs is the record's `wanted` line in the guidebook. One exception worth naming: a row reading **`no gap record`** in the Board column is NOT complete even though its gaps column says `none` — nobody has measured what it is missing, which is a weaker claim than having nothing missing.
 
-## Served counties (96)
+## Served counties (97)
 
 | County | FIPS | Served through | Board | County-keyed dispatch entries | Open gaps |
 |---|---|---|---|---|---|
@@ -60,6 +60,7 @@
 | Henry | 17073 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
 | Iroquois | 17075 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 2 — `fire-park-district-officers` (no-source); `statewide-library-officials` (no-source) |
 | Jackson | 17077 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
+| Jasper | 17079 | dispatch | districted | `county-board` | 1 — `jasper-county-board` (no-source) |
 | Jefferson | 17081 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
 | Jersey | 17083 | dispatch | districted | `county-board`, `library-district` | 3 — `jersey-county-board-districts` (no-source); `jodaviess-jersey-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Jo Daviess | 17085 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
@@ -120,7 +121,7 @@
 | Winnebago | 17201 | dispatch | districted | `county-board`, `county-precinct`, `judicial-subcircuit`, `library-district` | 3 — `rockford-city-precincts` (no-source); `statewide-library-officials` (no-source); `winnebago-special-districts` (no-source) |
 | Woodford | 17203 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `woodford-special-district-boards` (data-quality) |
 
-## Researched frontier (6) — gap-recorded, not yet served
+## Researched frontier (5) — gap-recorded, not yet served
 
 Counties outside the coverage ring that a research pass has already measured; each row's records say what blocks it and what a submission would need to contain.
 
@@ -128,7 +129,6 @@ Counties outside the coverage ring that a research pass has already measured; ea
 |---|---|---|
 | Bureau | 17011 | 1 — `bureau-county-board-districts` (no-source) |
 | Champaign | 17019 | 2 — `champaign-piatt-ccgisc-license` (blocked); `urbana-city-council-names` (no-source) |
-| Jasper | 17079 | 1 — `jasper-county-board` (no-source) |
 | Marion | 17121 | 1 — `marion-county-board-districts` (no-source) |
 | Piatt | 17147 | 1 — `champaign-piatt-ccgisc-license` (blocked) |
 | Pope | 17151 | 1 — `pope-county-board` (no-source) |

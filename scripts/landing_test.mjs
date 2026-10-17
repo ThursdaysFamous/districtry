@@ -556,19 +556,41 @@ try {
   // town, without the number (labelOnStreet), opens the app that covers it
   // with what was typed, so that app shows the street (showStreetOnly).
   // Typed text gets no such retry.
+  //
+  // AND A LINK GOES ONLY TO THE APP OF THE STATE ITS ADDRESS NAMES (namedState,
+  // ENGINE map-link addressStateTag): an answer elsewhere is another place of
+  // that name, and when nothing there answers, the link is handed to that app,
+  // rebuilt from its words (mapLinkForText), so its own search tries the
+  // address, the street and the name. On 2026-10-16 a Wisconsin place's short
+  // link said "No matches" here. A state no app covers is said to be, with
+  // nothing searched, and California, where San Francisco's app covers one
+  // city, is routed by position as before.
   {
     const NAMED = "Lambeau Field, 1265 Lombardi Ave, Green Bay, WI 54304";
     const BARE = "1265 Lombardi Ave, Green Bay, WI 54304";
     const FULL = "https://maps.google.com/?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304&ftid=0x0:0x1&entry=gps";
+    const REBUILT = "#q=" + encodeURIComponent("https://www.google.com/maps?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304");
+    const OHIO = "https://maps.google.com/?q=Union+Terminal,+1301+Western+Ave,+Cincinnati,+OH+45203&ftid=0x0:0x2&entry=gps";
+    const LA_NAMED = "Grand Central Market, 317 S Broadway, Los Angeles, CA 90013";
+    const LA = "https://maps.google.com/?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013&ftid=0x0:0x3&entry=gps";
     const at = (props) => ({ ...photonFeature(44.5013, -88.0622), properties: props });
     for (const c of [
       { name: "an answer carrying its house number opens /wi/", text: FULL, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
-        asks: [NAMED, BARE], want: "/wi/" },
-      { name: "a street without its house number opens nothing", text: FULL, answer: at({ street: "Lombardi Avenue" }),
-        asks: [NAMED, BARE], want: "/" },
+        asks: [NAMED, BARE], want: "/wi/", hash: /^#point=44\.50130,-88\.06220$/ },
+      { name: "a street without its house number selects no point, and the link goes to /wi/, the state its address names",
+        text: FULL, answer: at({ street: "Lombardi Avenue" }), asks: [NAMED, BARE], want: "/wi/", hash: REBUILT },
       { name: "its street in its town, without the number, opens /wi/ with the link to show the street",
         text: FULL, answer: at({ name: "Lombardi Avenue", city: "Green Bay", state: "Wisconsin", postcode: "54304" }),
-        asks: [NAMED, BARE], want: "/wi/", hash: "#q=" + encodeURIComponent(FULL) },
+        asks: [NAMED, BARE], want: "/wi/", hash: REBUILT },
+      { name: "an answer in Illinois is another place of its name, and the link goes to /wi/",
+        text: FULL, answerFor: (q) => (q === NAMED ? [photonFeature(41.8825, -87.6285)] : []),
+        asks: [NAMED], want: "/wi/", hash: REBUILT },
+      { name: "a place in Ohio, which no app covers, is said to be, and nothing is searched",
+        text: OHIO, answerFor: () => [], asks: [], want: "/",
+        msg: /^That place is in Ohio, which districtry doesn't cover yet/ },
+      { name: "a place in Los Angeles is routed by its position, since San Francisco's app covers one city",
+        text: LA, answerFor: (q) => (q === LA_NAMED ? [photonFeature(34.0508, -118.2489)] : []),
+        asks: [LA_NAMED], want: "/", msg: /outside every place districtry covers/ },
       { name: "the same words typed are not retried", text: NAMED, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
         asks: [NAMED], want: "/" },
     ]) {
@@ -578,17 +600,41 @@ try {
       await page.route("**/photon.komoot.io/**", (r) => {
         const q = new URL(r.request().url()).searchParams.get("q");
         asked.push(q);
-        return photonStub(q === BARE ? [c.answer] : [])(r);
+        return photonStub(c.answerFor ? c.answerFor(q) : q === BARE ? [c.answer] : [])(r);
       });
       await stubInstances(page);
       await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
       await page.fill("#search-input", c.text);
       await page.click("#search-button");
       await addressSettled(page);
+      const hash = new URL(page.url()).hash;
+      const msg = c.msg ? await textOrNull(page, "#search-status") : null;
       check(`a place's name and address that match nothing whole: ${c.name}`,
         JSON.stringify(asked) === JSON.stringify(c.asks) && new URL(page.url()).pathname === c.want &&
-          (!c.hash || new URL(page.url()).hash === c.hash),
-        JSON.stringify({ asked, url: page.url() }));
+          (!c.hash || (c.hash instanceof RegExp ? c.hash.test(hash) : hash === c.hash)) && (!c.msg || c.msg.test(msg || "")),
+        JSON.stringify({ asked, url: page.url(), msg }));
+      await ctx.close();
+    }
+    // The case Adam met: a short link to a Wisconsin place, read by the
+    // lookup, whose words and address match nothing, is handed to /wi/.
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [], looked = [];
+      await page.route("**/photon.komoot.io/**", (r) => { asked.push(new URL(r.request().url()).searchParams.get("q")); return photonStub([])(r); });
+      await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+        looked.push(new URL(r.request().url()).searchParams.get("u"));
+        return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: FULL }) });
+      });
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+      await page.click("#search-button");
+      await addressSettled(page);
+      check("a short link to a Wisconsin place that matches nothing here opens /wi/ with the link, not \"No matches\"",
+        looked.length === 1 && JSON.stringify(asked) === JSON.stringify([NAMED, BARE]) &&
+          new URL(page.url()).pathname === "/wi/" && new URL(page.url()).hash === REBUILT,
+        JSON.stringify({ looked, asked, url: page.url() }));
       await ctx.close();
     }
   }
