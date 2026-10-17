@@ -1081,9 +1081,13 @@ def render_section(tag, section, verified):
         if has_phone:
             # Every number the roster carries for the person, `phone` first and
             # then `phonesExtra`, one to a line: South Carolina prints a home and
-            # a business number for some members, and the card shows both.
-            cells.append("<td>%s</td>" % "<br>".join(
-                tel_link(p) for p in member_phones(rec)))
+            # a business number for some members, and the card shows both. A
+            # cell with more than one is class "tels", which spaces the lines
+            # 28px apart so each number is its own tap target (WCAG 2.5.8).
+            phones = member_phones(rec)
+            cells.append("<td%s>%s</td>" % (
+                ' class="tels"' if len(phones) > 1 else "",
+                "<br>".join(tel_link(p) for p in phones)))
         if has_term:
             cells.append("<td>%s</td>" % html.escape(rec.get("termExpires") or ""))
         if link_key:
