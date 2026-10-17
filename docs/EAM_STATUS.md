@@ -51,7 +51,7 @@ different thing from one it failed.
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 17 | all | 12 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 66 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 20 | all | 13 of 14 levels |
-| ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 21 | all | 8 of 14 levels |
+| ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 23 | all | 8 of 14 levels |
 | nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 16 | all | 13 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 17 | all | 11 of 14 levels |
@@ -149,10 +149,10 @@ this instance is in maintenance.
 
 ### ms — EAM·
 
-- **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ms-chancery-court-districts-2027.json`, `ms-chancery-court-districts.json`, `ms-circuit-court-districts-2027.json`, `ms-circuit-court-districts.json`, `ms-court-of-appeals-districts.json`, `ms-house-districts.json`, `ms-senate-districts.json`, `ms-supervisor-counties.json`, `ms-supervisor-districts.json`, `ms-supreme-court-districts.json`, `state-counties.json`
+- **Under a WATCH.md plan (16):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ms-chancery-court-districts-2027.json`, `ms-chancery-court-districts.json`, `ms-circuit-court-districts-2027.json`, `ms-circuit-court-districts.json`, `ms-city-councils.json`, `ms-city-wards.json`, `ms-court-of-appeals-districts.json`, `ms-house-districts.json`, `ms-senate-districts.json`, `ms-supervisor-counties.json`, `ms-supervisor-districts.json`, `ms-supreme-court-districts.json`, `state-counties.json`
 - **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 25 of 82 counties name a governing body and draw it where it is elected by district; 57 more name a body elected by district whose districts are not drawn, or not matched to their members
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 15 units at 25,000+ name a governing body; unanswered: Biloxi city, Brandon city, Clinton city, Greenville city, Gulfport city, Hattiesburg city, Horn Lake city, Jackson city and 7 more
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 9 of 15 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 5 more name a body elected by ward or district whose wards are not drawn; unanswered: Biloxi city, Greenville city, Hattiesburg city, Horn Lake city, Madison city, Meridian city
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
