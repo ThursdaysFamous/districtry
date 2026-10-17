@@ -83,6 +83,16 @@ the CITY CLERK's own polling-locations page turned out to state the
 composition, and build_wi_aldermanic_districts.py now composes the fifteen
 districts from it under three independent witnesses and a second edition of
 one of them. A roster and the boundary it rides ship together or not at all.
+
+AN ADDRESS A CITY PRINTS IN A MEMBER'S OWN ROW SHIPS WHATEVER ITS DOMAIN, since
+2026-10-17, on Adam's choice that day ("E-mails too"). Until then Algoma,
+Marion, Black River Falls and Neenah read only an address on the city's own
+domain, and Green Bay's decoded Cloudflare address had to be on its domain too.
+Each of those readers now takes the address from the member's own block and
+stops where the next member's begins, because the domain test had also been
+keeping a neighbour's address off the row. An address printed for
+two members, or one that names another member, is the builder's to settle
+(wi_email_rules.py), and no log line or error here prints an address.
 """
 
 import html as H
@@ -710,36 +720,38 @@ def cf_decode(token):
     return "".join(chr(c ^ raw[0]) for c in raw[1:])
 
 
-def cf_email(fragment, label, domain=None):
+# One address, as a member's own block prints it: in a mailto link or as text.
+ADDRESS = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def cf_email(fragment, label):
     """{"email": ...} from the one scrambled address in FRAGMENT, or {}.
 
     THE SCRAMBLING IS NOT AN ACCESS CONTROL (Adam, 2026-10-09): the page hands
     the key to every visitor inside the same bytes, so decoding it reads the
-    page as published. Two tokens decoding to different addresses, or a token
-    that does not decode to an address (on DOMAIN, where a caller passes one),
-    fails — a wrong address on a card is worse than none. No caller passes a
-    DOMAIN since 2026-10-17: Green Bay's did, which would have stopped the
-    build on a member's personal address, and Adam chose that day that a
-    personal address a government page prints beside an official is shown
-    ("E-mails too"). The shape test still refuses a token that does
-    not decode to an address.
+    page as published. FRAGMENT is one member's own entry, and the address it
+    decodes to ships whatever its domain (Adam's choice of 2026-10-17, "E-mails
+    too"); until that day Green Bay's had to be on the city's domain. Two
+    tokens decoding to different addresses, or a token that does not decode to
+    one address, fails — a wrong address on a card is worse than none. An
+    address shared by two members or naming another is the builder's to
+    settle. No message here prints the decoded value.
     """
     got = set()
     for t in CF_TOKEN.findall(fragment):
         try:
             got.add(cf_decode(t).strip())
         except ValueError:
-            raise SystemExit("%s: a Cloudflare email token is not hex pairs: %r" % (label, t))
+            raise SystemExit("%s: a Cloudflare email token is not hex pairs" % label)
     if not got:
         return {}
     if len(got) > 1:
-        raise SystemExit("%s: one entry carries %d different scrambled addresses %s"
-                         % (label, len(got), sorted(got)))
+        raise SystemExit("%s: one entry carries %d different scrambled addresses"
+                         % (label, len(got)))
     addr = got.pop()
-    if not re.fullmatch(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", addr) or (
-            domain and not addr.lower().endswith("@" + domain)):
-        raise SystemExit("%s: a Cloudflare token decoded to %r, not an address%s"
-                         % (label, addr, " on " + domain if domain else ""))
+    if not ADDRESS.fullmatch(addr):
+        raise SystemExit("%s: a Cloudflare token decoded to something that is not "
+                         "one address" % label)
     return {"email": addr}
 
 
@@ -2105,6 +2117,13 @@ def scrape_algoma():
     THE MAILBOX IS NUMBERED BY SEAT, NOT BY DISTRICT — alder1@ and alder2@ are
     both District 1 — so it is carried as that member's own address and never
     used to derive which district anybody sits in.
+
+    THE ADDRESS SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on algomacity.org was read. It is
+    the first address in the seat's block that sits before the block's phone,
+    and within its first 200 characters, because the last block runs on to
+    the page's footer. Measured that day, every seat prints its mailbox about
+    45 characters into its block and its phone about 30 after that.
     """
     page = fetch(ALGOMA_INDEX)
     flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
@@ -2115,10 +2134,10 @@ def scrape_algoma():
         if not nm:
             continue
         entry = {"name": " ".join(nm.group(1).split())}
-        em = re.search(r"([A-Za-z0-9._%+-]+@algomacity\.org)", block)
-        if em:
-            entry["email"] = em.group(1).lower()
         ph = re.search(r"\b(\d{3})-(\d{3})-(\d{4})\b", block)
+        em = ADDRESS.search(block[:min(ph.start() if ph else 200, 200)])
+        if em:
+            entry["email"] = em.group(0).lower()
         if ph:
             entry["phone"] = "(%s) %s-%s" % ph.groups()
         _put("algoma", members, "%02d" % int(hit.group(1)), entry)
@@ -2215,6 +2234,12 @@ def scrape_marion():
     supervisor rule (wi_county_board_scraper.drop_shared_phones), so it is
     dropped from both and the first number left ships. Home addresses are
     stepped over and never stored.
+
+    THE CARD'S MAILTO SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's
+    choice that day, "E-mails too"); until then only one on cityofmarionwi.gov
+    was read. It is read from the seat's own card, and where a card prints two
+    the city's ships. Measured that day, each named seat's card prints one
+    mailto, on the city's domain.
     """
     page = fetch(MARION_INDEX, headers=sc.UA_HEADERS_ROSTER_BOT)
     start = page.find('<h3 class="block-heading-1">CITY OF MARION</h3>')
@@ -2234,9 +2259,10 @@ def scrape_marion():
         phones = ["(%s) %s-%s" % ph.groups() for ph in
                   re.finditer(r'href="tel:\+?1?(\d{3})(\d{3})(\d{4})"',
                               H.unescape(art))]
-        em = re.search(r'href="mailto:([^"?]+@cityofmarionwi\.gov)"', art)
-        cards.append((int(m.group(1)), name, phones,
-                      em.group(1).strip().lower() if em else None))
+        mails = [a.strip().lower() for a in re.findall(r'href="mailto:([^"?]+)"', art)
+                 if ADDRESS.fullmatch(a.strip())]
+        mails = ([a for a in mails if a.endswith("@cityofmarionwi.gov")] or mails)
+        cards.append((int(m.group(1)), name, phones, mails[0] if mails else None))
     counts = {}
     for _, _, phones, _ in cards:
         for ph in set(phones):
@@ -2284,6 +2310,19 @@ def scrape_black_river_falls():
     The per-member anchor is `Serving Since YYYY`, not a separator count: the
     tag strip leaves seventeen `|` runs between Ward 4's first name and its
     anchor and eight between Ward 1's, on one page.
+
+    THE ADDRESS SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on blackriverfallswi.gov was read.
+    It is read from the text after the member's own anchor and before the next
+    member's, or the next ward heading, because the 400 characters the phone is
+    read from can run into the next member's entry. The last member of the last
+    ward has no next anchor, so their text is still the 400 characters after
+    their own: if they printed no address and the page printed one within that
+    distance after the list, it would be read as theirs. That was as true of an
+    address on the city's domain before this change. The page could not be
+    read from the sandbox this was written in (its robots.txt did not answer),
+    so how far the list's end sits from the next address on the page is not
+    measured.
     """
     require_ward_is_district("Black River Falls", "C", 4)
     page = fetch(BLACK_RIVER_FALLS_INDEX)
@@ -2293,9 +2332,13 @@ def scrape_black_river_falls():
     for i, hit in enumerate(wards):
         end = wards[i + 1].start() if i + 1 < len(wards) else min(len(flat), hit.end() + 2600)
         block, prev = flat[hit.end():end], 0
-        for seat in re.finditer(r"Serving Since\s+(\d{4})", block):
+        anchors = list(re.finditer(r"Serving Since\s+(\d{4})", block))
+        for k, seat in enumerate(anchors):
             seg = block[prev:seat.start()]
             prev = seat.end()
+            # this member's own text: up to the next member's anchor
+            own = block[seat.end():anchors[k + 1].start() if k + 1 < len(anchors)
+                        else min(len(block), seat.end() + 400)]
             names = re.findall(NAME_RE, ROLE_RE.sub(" ", seg))
             if not names:
                 continue
@@ -2307,9 +2350,9 @@ def scrape_black_river_falls():
             ph = re.search(r"Phone:\s*\((\d{3})\)\s*(\d{3})-(\d{4})", tail)
             if ph:
                 entry["phone"] = "(%s) %s-%s" % ph.groups()
-            em = re.search(r"([A-Za-z0-9._%+-]+@blackriverfallswi\.gov)", tail)
+            em = ADDRESS.search(own)
             if em:
-                entry["email"] = em.group(1).lower()
+                entry["email"] = em.group(0).lower()
             _put("black river falls", members, "%02d" % int(hit.group(1)), entry)
     _seats_or_die("black river falls", members, 4, page,
                   ("WARD N", r"WARD\s+\d{1,2}\b"))
@@ -2330,11 +2373,19 @@ def scrape_neenah():
     2026-2027`), and it is name-shaped: the first draft of this parser read
     `Council President` as the member's name for exactly the seat that has
     one. It is stripped for the name test and kept as the note.
+
+    THE ADDRESS SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on neenahwi.gov was read. It is
+    read from the text after the member's own label and before the next label,
+    and within 200 characters of it. The 400 characters the phone is read from
+    are not bounded that way, and measured that day six of the nine reach the
+    next member's address; each member's own sits about 60 characters in.
     """
     page = fetch(NEENAH_INDEX)
     flat = H.unescape(re.sub(r"<[^>]+>", "|", page))
     members, prev = {}, 0
-    for hit in re.finditer(r"(\d)(?:st|nd|rd|th)\s+Aldermanic\s+District", flat):
+    labels = list(re.finditer(r"(\d)(?:st|nd|rd|th)\s+Aldermanic\s+District", flat))
+    for k, hit in enumerate(labels):
         seg = flat[prev:hit.start()]
         prev = hit.end()
         names = re.findall(NAME_RE, ROLE_RE.sub(" ", seg))
@@ -2348,9 +2399,10 @@ def scrape_neenah():
         ph = re.search(r"\b(\d{3})[-.](\d{3})[-.](\d{4})\b", tail)
         if ph:
             entry["phone"] = "(%s) %s-%s" % ph.groups()
-        em = re.search(r"([A-Za-z0-9._%+-]+@neenahwi\.gov)", tail)
+        stop = labels[k + 1].start() if k + 1 < len(labels) else len(flat)
+        em = ADDRESS.search(flat[hit.end():min(stop, hit.end() + 200)])
         if em:
-            entry["email"] = em.group(1).lower()
+            entry["email"] = em.group(0).lower()
         _put("neenah", members, "%02d" % int(hit.group(1)), entry)
     _seats_or_die("neenah", members, 3, page,
                   ("Nth Aldermanic District", r"\d(?:st|nd|rd|th)\s+Aldermanic\s+District"))

@@ -121,6 +121,16 @@ THE TWO CITIES, each with its route and its measured trap:
                     lowered-security read returned and never as the verdict.
                     THE RUNNER DID NOT CONFIRM IT; see above.
 
+AN ADDRESS A CITY PRINTS IN A MEMBER'S OWN ENTRY SHIPS WHATEVER ITS DOMAIN,
+since 2026-10-17, on Adam's choice that day ("E-mails too"). Until then
+Oshkosh, Mount Pleasant and Fond du Lac read only an address on the city's or
+village's own domain. Each now reads the mailto in the member's own entry and
+stops where that entry ends, because the domain test had also been keeping an
+address printed elsewhere on the page off the member's row; where an entry
+prints two, the government's own is kept. An address printed for two
+members, or one that names another member, is the builder's to settle
+(wi_email_rules.py), and no message here prints an address.
+
 BOTH HOSTS SERVE THE DISTRICTRY TOKEN and that is why this file sends one. The
 sibling alderperson scraper sends a pinned Chrome string because 17 of the 35
 hosts it reaches refuse the token and the User-Agent is set once for all of
@@ -239,6 +249,32 @@ def clean(text):
     return re.sub(r"\s+", " ", H.unescape(text or "")).strip()
 
 
+# One address, as a member's own entry prints it in a mailto link.
+ADDRESS = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def own_mailto(fragment, own_domain):
+    """The address a member's own entry links with mailto, whatever its
+    domain, or None. FRAGMENT must be that entry and nothing after it. Where
+    it links two, the one on OWN_DOMAIN (the government's) is kept, because
+    the card shows one "Email" link."""
+    found = [a.strip() for a in re.findall(r'mailto:([^"\'?<>\s]+)', fragment)
+             if ADDRESS.fullmatch(a.strip())]
+    ours = [a for a in found if a.lower().endswith("@" + own_domain)]
+    return (ours or found or [None])[0]
+
+
+def own_div(block):
+    """BLOCK up to the close of the div it opens with, or None when the markup
+    never closes it. BLOCK starts just inside that div's opening tag."""
+    depth = 1
+    for tag in re.finditer(r"<(/?)div\b", block):
+        depth += -1 if tag.group(1) else 1
+        if depth == 0:
+            return block[:tag.start()]
+    return None
+
+
 # Janesville's Cell Phone cell must hold exactly one telephone number, and any
 # number the contact page prints is found with the second pattern.
 JANESVILLE_ONE_NUMBER = re.compile(r"^\(?\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}$")
@@ -337,6 +373,13 @@ def scrape_oshkosh():
     phone line is blank (Jacob Amos, measured 2026-10-15) was handed the city's
     main number from further down the page. Reading inside each block leaves a
     blank line blank.
+
+    THE E-MAIL SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on oshkoshwi.gov was read. It is
+    read from the member's own div, which ends where that div closes: the last
+    block runs on to the end of the page, and an address printed further down
+    would otherwise be read as the last member's. Measured that day, each
+    member's div links one address, and nothing after the last one links any.
     """
     form = clean(re.sub(r"<[^>]+>", " ", fetch(OSHKOSH_FORM)))
     if not re.search(r"(?i)elects six council members and a mayor\b[^.]*"
@@ -357,9 +400,14 @@ def scrape_oshkosh():
                                "names no role this reader knows"
                                % clean(h3.group(1)))
         row = {"name": m.group(2), "role": m.group(1)}
-        mail = re.search(r'mailto:([A-Za-z0-9._%+-]+@oshkoshwi\.gov)', block)
+        own = own_div(block)
+        if own is None:
+            raise RuntimeError("Oshkosh: the block for %s never closes its div, "
+                               "so where the member's own entry ends is not "
+                               "known" % m.group(2))
+        mail = own_mailto(own, "oshkoshwi.gov")
         if mail:
-            row["email"] = mail.group(1)
+            row["email"] = mail
         body = clean(re.sub(r"<[^>]+>", " ", block[h3.end():]))
         phone = re.search(r"\((\d{3})\)\s*(\d{3})-(\d{4})", body)
         if phone:
@@ -384,6 +432,11 @@ def scrape_mount_pleasant():
     THE AT-LARGE GATE IS THE VILLAGE'S OWN SENTENCE: "These elected officials
     serve at large." The seat numbers are seats, not districts, and the card
     says so.
+
+    THE E-MAIL SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on mtpleasantwi.gov was read. It
+    is read from the member's own paragraph, which is the one that follows the
+    member's heading. Measured that day, each paragraph links one address.
     """
     page = fetch(MOUNT_PLEASANT_BOARD)
     if "These elected officials serve at large" not in clean(page):
@@ -403,9 +456,9 @@ def scrape_mount_pleasant():
                 r"Village President|Trustee Seat No\. \d", lines[1]):
             continue
         row = {"name": lines[0], "role": lines[1]}
-        mail = re.search(r'mailto:([^"?]+@mtpleasantwi\.gov)', m.group(2))
+        mail = own_mailto(m.group(2), "mtpleasantwi.gov")
         if mail:
-            row["email"] = mail.group(1)
+            row["email"] = mail
         text = clean(re.sub(r"<[^>]+>", " ", m.group(2)))
         phone = re.search(r"\(\d{3}\)\s*\d{3}-\d{4}", text)
         if phone:
@@ -499,6 +552,14 @@ def scrape_fond_du_lac():
     address it shows, so decoding it reads the page as a reader sees it. The
     page says members "may be reached ... by contacting their personal
     numbers", and the number on each card is that published contact.
+
+    THE E-MAIL SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on fdl.wi.gov was read. It is read
+    from the card's own lines before "Elected:" (or "Current Term Ends:" where
+    that comes first), or from its first 200 characters when the card prints
+    neither, because the last card runs on to the end of the page. Measured
+    that day, each card links its address about 65 characters in and prints
+    "Elected:" about 140 in.
     """
     about = clean(re.sub(r"<[^>]+>", " ", fetch(FOND_DU_LAC_ABOUT)))
     if not re.search(r"(?i)seven-member City Council elected for two-year "
@@ -513,9 +574,10 @@ def scrape_fond_du_lac():
         row = {"name": clean(re.sub(r"<[^>]+>", " ", m.group(1))),
                "role": clean(re.sub(r"<[^>]+>", " ", m.group(2)))}
         rest = H.unescape(m.group(3))
-        mail = re.search(r'mailto:([A-Za-z0-9._%+-]+@fdl\.wi\.gov)', rest)
+        stop = re.search(r"Elected:|Current Terms? Ends:", rest)
+        mail = own_mailto(rest[:stop.start() if stop else 200], "fdl.wi.gov")
         if mail:
-            row["email"] = mail.group(1)
+            row["email"] = mail
         text = clean(re.sub(r"<[^>]+>", " ", rest))
         phone = re.search(r"\b\d{3}-\d{3}-\d{4}\b", text)
         if phone:

@@ -32,6 +32,16 @@ Every value is held to ONE telephone number by wi/scripts/wi_phone_shape.py
 before anything is written, and a failure names the city and the member's
 position in its list, never the value.
 
+EVERY ADDRESS A CITY PRINTS IN A MEMBER'S OWN ENTRY SHIPS, WHATEVER ITS
+DOMAIN, since 2026-10-17, on Adam's choice that day ("E-mails too"). Before
+the floors count anything, wi_email_rules.settle_place() applies the checks
+every Wisconsin roster shares: an `email` that is not one address stops the
+build, naming the city and the member's position; an address printed for two
+or more members ships only for the one member whose surname it carries, when
+exactly one does, and for none of them otherwise; and an address that names
+another member of the same board and not this one is left off. No message
+prints an address.
+
 A CITY THAT COULD NOT BE READ KEEPS ITS LAST-GOOD ROWS. "Preserve data we have
 already fetched" (Adam, 2026-09-19): a refusal or an unreachable host stops the
 FETCH and never unpublishes what was fetched legitimately. So a missing city is
@@ -53,6 +63,7 @@ import os
 import re
 import sys
 
+import wi_email_rules                    # this script's own folder
 import wi_phone_shape                    # this script's own folder
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -171,6 +182,15 @@ def main(argv):
                     print("%s — refusing to write" % line, file=sys.stderr)
                 return 1
             members.append(row)
+
+        refusals, settled = wi_email_rules.settle_place(
+            [("member %d" % n, row) for n, row in enumerate(members, 1)])
+        if refusals:
+            for line in refusals:
+                print("%s %s — refusing to write" % (label, line), file=sys.stderr)
+            return 1
+        for line in settled:
+            print("  e-mail %s %s" % (label, line))
 
         if len(members) < seats:
             print("%s: %d member(s) resolved against a floor of %d; refusing to "

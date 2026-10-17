@@ -90,15 +90,21 @@ state. Until then several of the scraper's readers kept an address only when it
 was on the county's own domain; now a Gmail, internet-provider or business
 address ships exactly as the county prints it, and where a county prints two
 for one supervisor the county's own is kept, because the card shows one "Email"
-link. Three things still keep an address off a row. undeliverable.py's list, as
-before. An address printed for two or more of one county's districts, which is
-an office's and not one supervisor's: drop_shared_emails() ships it for none of
-them and names its domain and districts on the log, never the address (Green
-Lake's rule in the scraper, applied to the whole file). And a value that is not
-one address: every row's `email` must be one "@" with no space anywhere and a
-dot and two letters after it (EMAIL_SHAPE), and a failure names the county and
-district, never the value. MIN_EMAILS fails the build when the addresses stop
-being read.
+link. Four things still keep an address off a row, and wi_email_rules.py,
+which the alderperson and at-large board builders call too, decides the middle
+two. undeliverable.py's list, as before. An address printed for two or more of
+one county's districts: settle_shared_emails() ships it on the one district
+whose supervisor's surname its local part carries, when exactly one does, and
+on none of them otherwise: an address that names none of them is an
+office's, and one that names two cannot be given to either (Ashland printed
+one supervisor's address for his own District 13 and for District 15 on
+2026-10-17; it ships on 13 only). An address that names
+another supervisor of the same county and not this one, which is the address
+a page has put on the wrong row: drop_misplaced_emails() leaves it off. And a
+value that is not one address: every row's `email` must be one "@" with no
+space anywhere and a dot and two letters after it (EMAIL_SHAPE). Every message
+these write names the county and district, never the address. MIN_EMAILS fails
+the build when the addresses stop being read.
 
 Usage:
     python3 wi/scripts/build_wi_county_board_roster.py
@@ -118,6 +124,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # with one measurement behind it beats three drifting copies.
 sys.path.insert(0, os.path.join(os.path.dirname(REPO_ROOT), "scripts"))
 import undeliverable  # noqa: E402
+import wi_email_rules  # noqa: E402 - this script's own folder
 import wi_phone_shape  # noqa: E402 - this script's own folder
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 GEOMETRY = os.path.join(APP_DATA_DIR, "county-supervisory-districts.json")
@@ -146,39 +153,83 @@ MIN_PHONES_EXTRA = 4   # seats carrying a second number (`phonesExtra`), counted
                        # Waupaca 3), and the floor is about two thirds of that
 MIN_EMAILS = 385       # seats carrying an e-mail, counted on the file as
                        # written, carried counties included; measured
-                       # 2026-10-17: 577, 22 of them on a domain that is not a
+                       # 2026-10-17: 578, 22 of them on a domain that is not a
                        # government's (Clark 17, Florence 5), and the floor is
                        # about two thirds of that
-EMAIL_SHAPE = re.compile(r"^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$")
+EMAIL_SHAPE = wi_email_rules.EMAIL_SHAPE
 
 
-def drop_shared_emails(roster):
-    """AN ADDRESS ON TWO OR MORE OF ONE COUNTY'S DISTRICTS IS NOT A PERSONAL ONE.
+def settle_shared_emails(roster):
+    """AN ADDRESS ON TWO OR MORE OF ONE COUNTY'S DISTRICTS SHIPS ON ONE AT MOST.
 
-    It is an office's — a clerk's, the board's — printed where a supervisor
-    publishes none, and shipping it would give a reader somebody else's inbox in
-    their supervisor's name. So it is removed from every district row that
-    carries it, and the log names the county, the address's domain and the
-    districts, never the address. Addresses are compared without case. Returns
-    the number of rows it emptied.
+    It ships on the one district whose supervisor's surname its local part
+    carries, when exactly one does, and on none of them otherwise — the rule
+    is wi_email_rules.settle_shared(), which the other Wisconsin rosters use
+    too. An address that names none of the supervisors it is printed for is an
+    office's, a clerk's or the board's, printed where a supervisor publishes
+    none, and shipping it would give a reader somebody else's inbox in their
+    supervisor's name. One that names exactly one of them is that supervisor's,
+    printed on a second row by mistake: on 2026-10-17 Ashland printed District
+    13's supervisor's address for District 15 as well, and it ships on 13 only.
+    The log names the county, the districts and the district that keeps it,
+    never the address. Returns the number of rows it emptied.
     """
-    seats = {}
+    places = {}
     for key, row in roster.items():
         if "district" in row and row.get("email"):
-            seats.setdefault((row["county"], row["email"].lower()), []).append(key)
+            places.setdefault(row["county"], []).append(
+                (key, row.get("name") or "", row["email"]))
     emptied = 0
-    for (county, address), keys in sorted(seats.items()):
-        if len(keys) < 2:
-            continue
-        for key in keys:
-            roster[key].pop("email", None)
-            emptied += 1
-        print("  e-mail %-12s an address on %s is printed for districts %s — not "
-              "one supervisor's, dropped from all"
-              % (county, address.rsplit("@", 1)[-1],
-                 ", ".join(str(roster[k]["district"]) for k in sorted(keys))),
-              file=sys.stderr)
+    for county, rows in sorted(places.items()):
+        shared = wi_email_rules.settle_shared(rows)
+        for keeper, keys in sorted(shared.values(), key=lambda kv: sorted(kv[1])):
+            for key in keys:
+                if key != keeper:
+                    roster[key].pop("email", None)
+                    emptied += 1
+            districts = ", ".join(str(roster[k]["district"]) for k in sorted(keys))
+            if keeper:
+                print("  e-mail %-12s one address is printed for districts %s and "
+                      "names the supervisor of district %s — it ships there only"
+                      % (county, districts, roster[keeper]["district"]),
+                      file=sys.stderr)
+            else:
+                print("  e-mail %-12s one address is printed for districts %s and "
+                      "names none of their supervisors, or more than one — it "
+                      "ships for none of them" % (county, districts),
+                      file=sys.stderr)
     return emptied
+
+
+def drop_misplaced_emails(roster):
+    """AN ADDRESS THAT NAMES ANOTHER SUPERVISOR OF THE COUNTY IS NOT THIS ONE'S.
+
+    wi_email_rules.names_another(): the local part names another supervisor of
+    the same county — their surname joined to their initial or first name, or
+    standing alone — and does not carry this supervisor's own surname. That is
+    the address a page has put on the wrong row. It runs after
+    settle_shared_emails(), and on 2026-10-17 it drops nothing: the one row it
+    would have caught, Ashland's District 15, has already lost that address to
+    the shared rule. The log names the county and district only. Returns the
+    number of rows emptied.
+    """
+    places = {}
+    for key, row in roster.items():
+        if "district" in row and row.get("name"):
+            places.setdefault(row["county"], []).append(key)
+    dropped = 0
+    for county, keys in sorted(places.items()):
+        for key in sorted(keys):
+            row = roster[key]
+            others = [roster[k]["name"] for k in keys if k != key]
+            if row.get("email") and wi_email_rules.names_another(
+                    row["email"], row["name"], others):
+                row.pop("email")
+                dropped += 1
+                print("  e-mail %-12s district %s: the address names another "
+                      "supervisor of this county and not this one — not shipped"
+                      % (county, row["district"]), file=sys.stderr)
+    return dropped
 
 
 def read_on_for(entry):
@@ -501,10 +552,13 @@ def main():
                            "being read" % (seconds, MIN_PHONES_EXTRA))
 
     # ONE ADDRESS PER SUPERVISOR, AND ONLY THEIR OWN: an address on two or
-    # more of a county's districts is an office's (drop_shared_emails), and
-    # every value left must be one address. The error names the county and
-    # district only, for the reason the phone check above gives.
-    drop_shared_emails(roster)
+    # more of a county's districts ships only where it names the supervisor
+    # (settle_shared_emails), one naming another supervisor of the county is
+    # left off (drop_misplaced_emails), and every value left must be one
+    # address. The error names the county and district only, for the reason
+    # the phone check above gives.
+    settle_shared_emails(roster)
+    drop_misplaced_emails(roster)
     bad = ["%s district %s" % (row.get("county"), row["district"])
            for key, row in sorted(roster.items())
            if "district" in row and row.get("email") is not None

@@ -19,6 +19,16 @@ Floors are per municipality and per field, tuned to that municipality's
 measured first run — one losing its e-mail column (the Brown County lesson)
 fails here before the retention gate ever sees it.
 
+AN ADDRESS A CITY PRINTS IN A MEMBER'S OWN ENTRY SHIPS WHATEVER ITS DOMAIN,
+since 2026-10-17, on Adam's choice that day ("E-mails too"). Before the floors
+count anything, settle_emails() applies the checks wi_email_rules.py holds for
+every Wisconsin roster, one municipality at a time: an `email` that is not one
+address fails the build, naming the municipality and district; an address
+printed for two or more members ships only for the one member whose surname
+it carries, when exactly one does, and for none of them otherwise; and an
+address that names another member of the same council and not this one is
+left off. No message prints an address.
+
 THE SHAPE: `members[district]` IS ALWAYS A LIST, never a bare member object.
 Wisconsin councils do not all seat one alderperson per district — of the 22
 municipalities the 2026-09-06 sweep matched, FIFTEEN seat more than one, and
@@ -55,11 +65,15 @@ claims that must not be collapsed:
                      nothing in Wisconsin needs it yet, so it is not built.
 """
 
+import contextlib
 import datetime
+import io
 import json
 import os
 import re
 import sys
+
+import wi_email_rules  # this script's own folder
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
@@ -402,6 +416,26 @@ def check_city(name, districts, floors, c, geo_districts):
     return len(people)
 
 
+def settle_emails(name, c):
+    """The e-mail checks every Wisconsin roster shares, for one municipality.
+
+    Runs before check_city, so the e-mail floor counts what will ship. Changes
+    c["members"] in place through wi_email_rules.settle_place() and returns
+    how many addresses it left off. Every message names the municipality and
+    district, never the address.
+    """
+    seats = [("district %s" % district, m)
+             for district, lst in sorted(c["members"].items())
+             if isinstance(lst, list) for m in lst]
+    before = sum(1 for _label, m in seats if m.get("email"))
+    refusals, notes = wi_email_rules.settle_place(seats)
+    if refusals:
+        raise SystemExit("%s %s" % (name, refusals[0]))
+    for note in notes:
+        print("  e-mail %-14s %s" % (name, note))
+    return before - sum(1 for _label, m in seats if m.get("email"))
+
+
 def _city(members, districts=None, municipality="Testville", vacant=None,
           vacant_seats=None):
     c = {"municipality": municipality, "members": members,
@@ -604,6 +638,51 @@ def selftest():
     want_fail("vacantSeats given zero", one, 2, (2, 0, 0, 0),
               {"01", "02"}, "whole number", vacant_seats={"01": 0})
 
+    # 13. THE E-MAIL CHECKS, on made-up names and reserved example domains. A
+    #     personal address on its own row ships; an address printed for two
+    #     members ships only for the one it names; an office's address shared
+    #     by two ships for neither; an address naming another member is left
+    #     off; a value that is not one address fails. None may print an address.
+    def want_emails(label, members, expect, dropped):
+        ran.append(label)
+        c = _city(members)
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            got_dropped = settle_emails("Testville", c)
+        if "@" in out.getvalue():
+            bad.append("%s: a message printed an address" % label)
+        got = {d: [m.get("email") for m in lst] for d, lst in c["members"].items()}
+        if got != expect or got_dropped != dropped:
+            bad.append("%s: got %r and %d left off, expected %r and %d"
+                       % (label, got, got_dropped, expect, dropped))
+
+    want_emails("a personal address on its own row ships",
+                {"01": [{"name": "Pat Doe", "email": "patdoe1960@example.com"}],
+                 "02": [{"name": "Kay Roe", "email": "kroe@city.example.gov"}]},
+                {"01": ["patdoe1960@example.com"], "02": ["kroe@city.example.gov"]}, 0)
+    want_emails("an address printed for two members ships for the one it names",
+                {"01": [{"name": "Jim Livingston", "email": "jim.livingston@example.net"}],
+                 "02": [{"name": "Kay Jolma", "email": "Jim.Livingston@example.net"}]},
+                {"01": ["jim.livingston@example.net"], "02": [None]}, 1)
+    want_emails("an office's address printed for two members ships for neither",
+                {"01": [{"name": "Pat Doe", "email": "council@example.net"}],
+                 "02": [{"name": "Kay Roe", "email": "council@example.net"}]},
+                {"01": [None], "02": [None]}, 2)
+    want_emails("an address naming another member is left off",
+                {"01": [{"name": "John Ward", "email": "jsmith@example.net"}],
+                 "02": [{"name": "John Smith", "email": "john.smith@example.net"}]},
+                {"01": [None], "02": ["john.smith@example.net"]}, 1)
+    ran.append("a value that is not one address fails, naming the seat only")
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            settle_emails("Testville", _city(
+                {"01": [{"name": "Pat Doe", "email": "pat doe@example.net"}]}))
+        bad.append("a value that is not one address: expected a refusal, got none")
+    except SystemExit as e:
+        if "Testville district 01" not in str(e) or "@" in str(e):
+            bad.append("a value that is not one address: refused with the wrong "
+                       "message, or one that prints the value")
+
     # THE QUEUE IS PART OF THE SELFTEST rather than a separate step, for the
     # reason main() gives about running selftest() on every build: a check with
     # no caller is one that stops running the week somebody forgets it.
@@ -651,6 +730,7 @@ def main():
         raise SystemExit("scraper covered %s, floors expect %s"
                          % (sorted(cities), sorted(FLOORS)))
     for k, (name, districts, mn, me, mp, mu) in FLOORS.items():
+        settle_emails(name, cities[k])
         check_city(name, districts, (mn, me, mp, mu), cities[k],
                    geo_keys.get(k, set()))
 
