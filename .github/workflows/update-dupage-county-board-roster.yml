@@ -3,9 +3,9 @@ name: Update DuPage County Board roster
 # Weekly refresh of the DuPage County Board District card's member roster
 # (il/data/app/dupage-county-board-members.json, fetched by index.html). Re-scrapes
 # dupagecounty.gov's member directory + per-member detail pages (names, published
-# @dupagecounty.gov emails, profile links; the countywide Board Chair) and, if
-# anything changed, opens a PR rather than committing directly to main —
-# officeholder data should get a human look before it ships.
+# e-mail addresses on any domain since 2026-10-17, profile links; the countywide
+# Board Chair) and, if anything changed, opens a PR rather than committing
+# directly to main — officeholder data should get a human look before it ships.
 
 on:
   schedule:

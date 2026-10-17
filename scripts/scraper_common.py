@@ -523,6 +523,42 @@ def person_phone_problem(value):
             % ", ".join(PERSON_PHONE_LABELS))
 
 
+# --- an e-mail address on a person's record: the shape check ------------------
+#
+# Adam's choice of 2026-10-17, for every state ("E-mails too"): a personal
+# e-mail address (Gmail, Yahoo, an internet provider's or a business's domain)
+# that a government publisher prints beside one named official ships on that
+# official's record, as printed. Until that day several builders kept only an
+# address on the government's own domain. What a builder still checks is the
+# SHAPE: one address, no spaces, a local part, one @ and a domain ending in a
+# dot and at least two letters. A space, a second @, a leftover mailto: or a
+# missing domain means a parser read the wrong text. Whether the address is
+# the person's (and not an office's or a former member's) is the builder's own
+# check; this function cannot see that.
+_PERSON_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$")
+
+
+def person_email_problem(value):
+    """None when `value` is one e-mail address a person's record may carry,
+    otherwise a short reason. Like person_phone_problem, the reason never
+    quotes the value, so a caller can print it beside a county and a seat."""
+    if not isinstance(value, str):
+        return "is not a string"
+    if not value:
+        return "is empty"
+    if any(ch.isspace() for ch in value):
+        return "carries a space, so it is not one address as printed"
+    if value.lower().startswith("mailto:"):
+        return "still carries its mailto: prefix"
+    if "@" not in value:
+        return "carries no @"
+    if value.count("@") > 1:
+        return "carries more than one @, so it is more than one address"
+    if _PERSON_EMAIL_RE.match(value):
+        return None
+    return "is not one address of the form name@domain.tld"
+
+
 def fetch(url, headers, timeout=60, attempts=5, retry_after_cap=30.0, verify=None):
     """GET with the fleet's pacing rules, modeled on henry_county_board_scraper
     (the 2026-08-02 back-to-back-429 story): 429 and 5xx are retried, honouring
@@ -980,6 +1016,38 @@ def _selftest():
     if person_phone_problem(None) is None:
         fails.append("person_phone_problem passed None")
 
+    # --- person_email_problem: the shape a person's address may take ---------
+    # Any domain passes (Adam's choice of 2026-10-17, "E-mails too"); what
+    # fails is anything that is not exactly one address, with a reason that
+    # does not repeat the value.
+    for good in ("member@douglascountyil.gov", "a.member+board@example.com",
+                 "boarddist1-1@starkco.illinois.gov", "Someone@Mail.Example.NET",
+                 "someone@sub.example.co.uk"):
+        problem = person_email_problem(good)
+        if problem is not None:
+            fails.append("person_email_problem refused a good shape %r: %s"
+                         % (good, problem))
+    for bad, why in (("someone @example.gov", "space"),
+                     ("someone@example.gov ", "space"),
+                     ("a@example.gov; b@example.gov", "space"),
+                     ("a@example.gov;b@example.gov", "more than one @"),
+                     ("mailto:someone@example.gov", "mailto:"),
+                     ("someone.example.gov", "no @"),
+                     ("309-555-0110", "no @"),
+                     ("someone@localhost", "name@domain.tld"),
+                     ("someone@example.gov,", "name@domain.tld"),
+                     ("", "empty")):
+        problem = person_email_problem(bad)
+        if problem is None:
+            fails.append("person_email_problem passed a bad value %r" % bad)
+        elif why not in problem:
+            fails.append("person_email_problem gave %r for %r; wanted a reason "
+                         "naming %r" % (problem, bad, why))
+        elif bad and bad in problem:
+            fails.append("person_email_problem quoted the value it refused")
+    if person_email_problem(None) is None:
+        fails.append("person_email_problem passed None")
+
     if fails:
         print("scraper-common selftest: FAIL", file=sys.stderr)
         for f in fails:
@@ -993,7 +1061,10 @@ def _selftest():
           "position is refused rather than written to, and --help prints; "
           "a person's telephone number passes in every labelled shape the "
           "builders write and fails on a street word, a ZIP code, an @, a "
-          "second number or an unknown label, without quoting the value")
+          "second number or an unknown label, without quoting the value; "
+          "a person's e-mail address passes on any domain and fails on a "
+          "space, a second @, a mailto: prefix or a missing domain, without "
+          "quoting the value")
     return 0
 
 

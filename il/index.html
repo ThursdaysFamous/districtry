@@ -29477,8 +29477,10 @@ function initChiExplorer() {
       //
       // Stark gives each SEAT its own mailbox — boarddist1-1 through
       // boarddist2-4 — rather than publishing members' personal addresses, so
-      // the contact on this card survives turnover. The builder asserts that
-      // pattern still holds and fails if a personal address appears in its place.
+      // the contact on this card survives turnover. The builder fails if a
+      // member holds the other district's mailbox. Since Adam's choice of
+      // 2026-10-17 to publish personal e-mail addresses ("E-mails too"), a
+      // personal address printed beside one member in a seat's place ships.
       {
         key: "stark",
         coverage: starkCountyCoverage,

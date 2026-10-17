@@ -24,14 +24,30 @@ this builder was written; what the builder itself enforces is the shape the page
 must keep — 27 members, nine districts, three apiece.
 
 WHAT SHIPS: name, party, the year the member was elected or appointed, and the
-county e-mail. The board office's address and phone ride the roster block, so a
-card for a member with no direct phone still tells a reader where to reach the
-board.
+e-mail address the page prints beside the member. The board office's address and
+phone ride the roster block, so a card for a member with no direct phone still
+tells a reader where to reach the board.
 
 WHAT DOES NOT SHIP: nothing is dropped from this page — it publishes no home
-addresses and no personal detail beyond a work e-mail. Only one member publishes
-a direct phone, and that is the county's choice rather than a parse failure,
-which is why the phone floor below is 1 and not 27.
+addresses, and measured 2026-10-17 every e-mail it prints is a work address on
+the county's domain. Only one member publishes a direct phone, and that is the
+county's choice rather than a parse failure, which is why the phone floor below
+is 1 and not 27.
+
+E-MAIL ON ANY DOMAIN, SINCE 2026-10-17. Until that day this builder failed the
+run on any address not on the county's domain, vercounty.org, on the reading
+that the county might have moved its mail. Under Adam's choice that day to
+publish personal e-mail addresses ("E-mails too"), an address the page prints
+beside one member ships on that member whatever its domain, checked only for
+its shape (scraper_common.person_email_problem). An address printed beside two
+or more members is an office's or a shared inbox and ships on neither, and an
+address scripts/undeliverable.py lists ships nowhere. What stays of the old
+check is a tripwire for a MOVE: the run fails when more than half of the
+addresses the page prints are off vercounty.org, because a county that moves
+its mail moves every member's address at once, while a member's own address is
+one row. It would also catch the members page being filled from a stale source
+such as the county's district layer, whose addresses are on a domain the county
+has retired. Measured 2026-10-17, all 27 addresses are on vercounty.org.
 
 Usage:
     python3 build_vermilion_county_board.py <raw-scraper-output.json> [output_dir]
@@ -41,19 +57,23 @@ import json
 import os
 import re
 import sys
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+import undeliverable  # noqa: E402  (the fleet's withhold list)
+from scraper_common import make_fail, person_email_problem  # noqa: E402  (shared machinery — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 
 SOURCE_LABEL = "Vermilion County Board members page"
+# Not an allow-list since 2026-10-17: a member's own address on another domain
+# ships. The run fails only when more than half the printed addresses are off
+# this domain, which is what a move of the county's mail would look like.
 COUNTY_EMAIL_DOMAIN = "vercounty.org"
 
 EXPECTED_DISTRICTS = 9
 SEATS_PER_DISTRICT = 3
 EXPECT_MEMBERS = EXPECTED_DISTRICTS * SEATS_PER_DISTRICT   # 27
 
-MIN_EMAILS = 25          # 27 published; a floor, not a target
+MIN_EMAILS = 25          # 27 published, none personal (measured 2026-10-17); a floor, not a target
 MIN_PHONES = 1           # exactly one member publishes a direct line
 MIN_PARTIES = 25         # 27 published
 
@@ -94,13 +114,7 @@ def main():
             member["since"] = person["elected"]
         email = (person.get("email") or "").strip()
         if email:
-            domain = email.rsplit("@", 1)[-1].lower()
-            if domain != COUNTY_EMAIL_DOMAIN:
-                fail("%s publishes the e-mail %r, which is not on %s — the county "
-                     "may have moved domains, and a human should confirm before "
-                     "shipping addresses on a new one"
-                     % (member["name"], email, COUNTY_EMAIL_DOMAIN))
-            member["email"] = email
+            member["email"] = email  # checked below, seat by seat
         if person.get("phone"):
             member["phone"] = person["phone"]
         entry = roster.setdefault(dnum, {
@@ -125,12 +139,49 @@ def main():
             fail("district %s lists %d members for %d seats"
                  % (dnum, len(entry["members"]), SEATS_PER_DISTRICT))
 
+    # E-mail, seat by seat in the shipped order. Errors and notes name the seat
+    # and never the address.
+    printed = {}
+    for entry in roster.values():
+        for m in entry["members"]:
+            if m.get("email"):
+                printed[m["email"].lower()] = printed.get(m["email"].lower(), 0) + 1
+    withheld, printed_total, off_domain = [], 0, 0
+    for dnum in sorted(roster, key=int):
+        named = roster[dnum]["members"]
+        for i, m in enumerate(named, 1):
+            email = m.get("email")
+            if not email:
+                continue
+            seat = ("Vermilion County District %s, member %d of %d in surname order"
+                    % (dnum, i, len(named)))
+            problem = person_email_problem(email)
+            if problem:
+                fail("%s: the page's e-mail %s" % (seat, problem))
+            printed_total += 1
+            if email.rsplit("@", 1)[1].lower() != COUNTY_EMAIL_DOMAIN:
+                off_domain += 1
+            if email.lower() in undeliverable.UNDELIVERABLE:
+                del m["email"]
+                withheld.append((seat, "scripts/undeliverable.py lists it as an "
+                                       "address that cannot receive mail"))
+            elif printed[email.lower()] > 1:
+                del m["email"]
+                withheld.append((seat, "the page prints it beside %d members, so "
+                                       "it is not this member's own"
+                                       % printed[email.lower()]))
+    if off_domain * 2 > printed_total:
+        fail("%d of the %d e-mail addresses the page prints are not on %s — the "
+             "county may have moved its mail, and a human should confirm before "
+             "addresses on a new domain ship"
+             % (off_domain, printed_total, COUNTY_EMAIL_DOMAIN))
+
     flat = [m for v in roster.values() for m in v["members"]]
     emails = sum(1 for m in flat if m.get("email"))
     phones = sum(1 for m in flat if m.get("phone"))
     parties = sum(1 for m in flat if m.get("party"))
     if emails < MIN_EMAILS:
-        fail("only %d/%d members carry a county e-mail (floor %d) — the county's "
+        fail("only %d/%d members carry an e-mail (floor %d) — the county's "
              "table changed shape" % (emails, EXPECT_MEMBERS, MIN_EMAILS))
     if phones < MIN_PHONES:
         fail("no member carries a phone (floor %d) — the county's table changed "
@@ -145,9 +196,12 @@ def main():
         json.dump(roster, handle, indent=2, ensure_ascii=False, sort_keys=True)
         handle.write("\n")
     print("vermilion-board-roster: wrote %s — %d districts, %d of %d seats named "
-          "(%d e-mails, %d phone, %d parties)"
+          "(%d e-mails, %d of the %d printed not on %s; %d phone, %d parties)"
           % (os.path.relpath(out_path, REPO_ROOT), EXPECTED_DISTRICTS, seated,
-             EXPECT_MEMBERS, emails, phones, parties))
+             EXPECT_MEMBERS, emails, off_domain, printed_total,
+             COUNTY_EMAIL_DOMAIN, phones, parties))
+    for seat, why in withheld:
+        print("  WITHHELD the e-mail the page prints for %s: %s" % (seat, why))
     for dnum in sorted(roster, key=int):
         entry = roster[dnum]
         if len(entry["members"]) < SEATS_PER_DISTRICT:
