@@ -31,8 +31,11 @@ addresses), lower-cased and otherwise as printed. The scraper's
 printed again elsewhere in the county's documents, named for the town itself
 (the town's general address) or for another office than the officer's, and
 every address of an officer whose mail link sends somewhere else; one address
-per officer. `check` holds each to an e-mail address's shape, and an address
-`scripts/undeliverable.py` lists for this file is withheld.
+per officer. Aitkin's town pages hide each address behind Cloudflare's e-mail
+protection, which the scraper decodes as a reader's browser shows it, so
+Aitkin's addresses are settled by the same rules. `check` holds each to an
+e-mail address's shape, and an address `scripts/undeliverable.py` lists for
+this file is withheld.
 
 ONE SOURCE PER TOWN. A town the election results name keeps those names and
 gets nothing from here: two lists on one card would disagree about who sits
@@ -99,10 +102,12 @@ MIN_OFFICERS = 1700
 # build instead of emptying them quietly.
 MIN_PHONES = 1020
 MIN_PHONES_EXTRA = 50
-# Measured 2026-10-17: 624 of the 2,018 officers carry an e-mail, 620 of them
-# on a personal or business domain and 4 on a government's. The floor sits at
-# about two thirds of that, for the same reason.
-MIN_EMAILS = 416
+# Measured 2026-10-17: 668 of the 2,018 officers carry an e-mail, 664 of them
+# on a personal or business domain and 4 on a government's. 44 of the 668 are
+# Aitkin's, read once the scraper decoded the Cloudflare protection on that
+# county's pages (the floor was 416, on 624, before). The floor sits at about
+# two thirds of that, for the same reason.
+MIN_EMAILS = 445
 
 OFFICES = {"Supervisor", "Supervisor (chair)", "Supervisor (vice chair)", "Clerk",
            "Treasurer", "Clerk-Treasurer", "Deputy Clerk", "Deputy Treasurer"}

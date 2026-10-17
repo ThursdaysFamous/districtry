@@ -56,11 +56,12 @@ election, 42 counties publish the lists, and 29 are read — 2,018 officers as r
 2026-10-17, with names, offices, terms and, under Adam's ruling of that day ("if the official
 government source uses personal phone numbers, we publish those"), the telephone each list prints
 beside an officer (1,537 carry one, 75 a second), and, under Adam's choice of the same day
-("E-mails too"), the e-mail address a list prints beside one officer (624 carry one, 620 of them
-a personal or business mailbox), never the home addresses the lists also print. A number or an
-address printed beside two people or again away from the officer is the office's and stays
-out, as does a mailbox named for the town itself or for another office, and 180 numbers printed
-with no area code ship as printed (gap `mn-township-phone-area-code`). One
+("E-mails too"), the e-mail address a list prints beside one officer (668 carry one, 664 of them
+a personal or business mailbox; Aitkin's pages hide theirs behind Cloudflare's e-mail protection,
+which the scraper decodes as a browser does), never the home addresses the lists also print. A
+number or an address printed beside two people or again away from the officer is the office's
+and stays out, as does a mailbox named for the town itself or for another office, and 180
+numbers printed with no area code ship as printed (gap `mn-township-phone-area-code`). One
 source per town: a town the election results name keeps those names, and the county list is
 compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 13 counties and
 their reasons are in gap `mn-township-officers`, which still covers about 680 towns, with a

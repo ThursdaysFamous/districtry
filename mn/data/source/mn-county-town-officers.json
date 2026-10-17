@@ -48,26 +48,31 @@
    "towns": {
     "Aitkin": [
      {
+      "email": "aitkinclerk@gmail.com",
       "name": "Cathy Buhlmann",
       "office": "Clerk",
       "phone": "218-330-2669"
      },
      {
+      "email": "sdotzler1977@gmail.com",
       "name": "Sharon Dotzler",
       "office": "Treasurer",
       "phone": "218-927-3944"
      },
      {
+      "email": "terry.betley@gmail.com",
       "name": "Terry Betley",
       "office": "Supervisor (chair)",
       "phone": "218-927-6359"
      },
      {
+      "email": "kleever13@yahoo.com",
       "name": "Anthony Klee",
       "office": "Supervisor",
       "phone": "218-838-6094"
      },
      {
+      "email": "gakullhem@gmail.com",
       "name": "Greg Kullhem",
       "office": "Supervisor",
       "phone": "218-839-7654"
@@ -75,11 +80,13 @@
     ],
     "Ball Bluff": [
      {
+      "email": "tjswing1@msn.com",
       "name": "Tamra Swing",
       "office": "Clerk",
       "phone": "218-966-5852"
      },
      {
+      "email": "jswing@frontiernet.net",
       "name": "Jacqueline Swing",
       "office": "Treasurer",
       "phone": "218-244-8597"
@@ -95,6 +102,7 @@
       "phone": "218-244-2238"
      },
      {
+      "email": "lowboy505@aol.com",
       "name": "Brad Johnson",
       "office": "Supervisor",
       "phone": "612-328-7759"
@@ -111,15 +119,18 @@
       "phone": "218-426-4131"
      },
      {
+      "email": "lmd9750@frontier.com",
       "name": "Michael Domino",
       "office": "Supervisor (chair)",
       "phone": "218-426-4557"
      },
      {
+      "email": "kimwrisen@gmail.com",
       "name": "Kim Risen",
       "office": "Supervisor"
      },
      {
+      "email": "grantode26@gmail.com",
       "name": "Grant Odegaard",
       "office": "Supervisor",
       "phone": "218-428-7259"
@@ -127,30 +138,36 @@
     ],
     "Beaver": [
      {
+      "email": "lmosiecki@gmail.com",
       "name": "Linda Osiecki",
       "office": "Clerk"
      },
      {
+      "email": "lmosiecki@gmail.com",
       "name": "Linda Osiecki",
       "office": "Treasurer"
      },
      {
+      "email": "gilberteigsberg319@gmail.com",
       "name": "Gilbert Eigsberg",
       "office": "Supervisor (chair)",
       "phone": "218-768-2633"
      },
      {
+      "email": "yvonneanders@gmail.com",
       "name": "Yvonne Anderson",
       "office": "Supervisor",
       "phone": "218-380-8739"
      },
      {
+      "email": "jimosiecki@gmail.com",
       "name": "Jim Osiecki",
       "office": "Supervisor"
      }
     ],
     "Clark": [
      {
+      "email": "gkabbott@frontiernet.net",
       "name": "Kari Abbott",
       "office": "Clerk",
       "phone": "218-768-3011",
@@ -164,16 +181,19 @@
       "phone": "218-768-4285"
      },
      {
+      "email": "frankdemenge@gmail.com",
       "name": "Frank DeMenge",
       "office": "Supervisor (chair)",
       "phone": "218-380-6198"
      },
      {
+      "email": "mike.gauthier123@gmail.com",
       "name": "Mike Gauthier",
       "office": "Supervisor",
       "phone": "651-373-3492"
      },
      {
+      "email": "benelli016@gmail.com",
       "name": "Chris Johnson",
       "office": "Supervisor",
       "phone": "218-343-4642"
@@ -181,6 +201,7 @@
     ],
     "Cornish": [
      {
+      "email": "cornishclk@hotmail.com",
       "name": "Brad Norgren",
       "office": "Clerk",
       "phone": "612-703-1595"
@@ -191,6 +212,7 @@
       "phone": "(218) 259-8658"
      },
      {
+      "email": "randpsout@yahoo.com",
       "name": "Randy Souter",
       "office": "Supervisor (chair)",
       "phone": "218-409-2223"
@@ -208,26 +230,31 @@
     ],
     "Farm Island": [
      {
+      "email": "farmislandtwpclerk@gmail.com",
       "name": "Liz Harmon",
       "office": "Clerk",
       "phone": "218-851-1957"
      },
      {
+      "email": "8ptacreshome@gmail.com",
       "name": "Erin Melz",
       "office": "Treasurer",
       "phone": "218-851-3055"
      },
      {
+      "email": "t_woodrow99@yahoo.com",
       "name": "Tim Woodrow",
       "office": "Supervisor (chair)",
       "phone": "218-831-6799"
      },
      {
+      "email": "51976kst@gmail.com",
       "name": "Kelly Torkelson",
       "office": "Supervisor",
       "phone": "218-839-7071"
      },
      {
+      "email": "paulette25@embarqmail.com",
       "name": "James Anderson",
       "office": "Supervisor",
       "phone": "218-851-2844"
@@ -235,16 +262,19 @@
     ],
     "Fleming": [
      {
+      "email": "sue@duroses.com",
       "name": "Sue DuRose",
       "office": "Clerk",
       "phone": "612-840-5302"
      },
      {
+      "email": "treasurerfleming@gmail.com",
       "name": "Jo Schuety",
       "office": "Treasurer",
       "phone": "218-838-7047"
      },
      {
+      "email": "michaeljhagel@gmail.com",
       "name": "Mike Hagel",
       "office": "Supervisor (chair)",
       "phone": "218-242-1013"
@@ -262,6 +292,7 @@
     ],
     "Glen": [
      {
+      "email": "relvecrog@frontiernet.net",
       "name": "Roberta Elvecrog",
       "office": "Clerk",
       "phone": "218-549-3614"
@@ -275,11 +306,13 @@
       "office": "Supervisor (chair)"
      },
      {
+      "email": "sugarlake24@gmail.com",
       "name": "Charlie Christensen",
       "office": "Supervisor",
       "phone": "320-684-2013"
      },
      {
+      "email": "murphy1227@frontiernet.net",
       "name": "Pat Murphy",
       "office": "Supervisor",
       "phone": "612-910-5822"
@@ -292,16 +325,19 @@
       "phone": "612-597-6926"
      },
      {
+      "email": "islandtwg@hotmail.com",
       "name": "Susan Glander",
       "office": "Treasurer",
       "phone": "218-310-3918"
      },
      {
+      "email": "martyjlogging@yahoo.com",
       "name": "Martin Johnson",
       "office": "Supervisor (chair)",
       "phone": "218-839-7731"
      },
      {
+      "email": "paparob52@yahoo.com",
       "name": "Robert Nelson",
       "office": "Supervisor",
       "phone": "218-392-0052"
@@ -314,26 +350,31 @@
     ],
     "Hazelton": [
      {
+      "email": "hazeltonclerk@gmail.com",
       "name": "Kay Olson",
       "office": "Clerk",
       "phone": "218-678-3389"
      },
      {
+      "email": "hazeltontreasurer@gmail.com",
       "name": "Sara Math",
       "office": "Treasurer",
       "phone": "218-831-1197"
      },
      {
+      "email": "tsuperhazel@gmail.com",
       "name": "Todd Schmaltz",
       "office": "Supervisor (chair)",
       "phone": "218-838-6916"
      },
      {
+      "email": "hazeltonsupervisor3@gmail.com",
       "name": "Craig Adams",
       "office": "Supervisor",
       "phone": "218-820-9801"
      },
      {
+      "email": "jksuperhazel@gmail.com",
       "name": "Jason Kallevig",
       "office": "Supervisor",
       "phone": "218-892-7820"
@@ -351,16 +392,19 @@
       "phone": "218-256-9120"
      },
      {
+      "email": "dtniesen@yahoo.com",
       "name": "Duane Niesen",
       "office": "Supervisor (chair)",
       "phone": "218-697-8104"
      },
      {
+      "email": "jimjud.barry@yahoo.com",
       "name": "James Barry",
       "office": "Supervisor",
       "phone": "218-697-2767"
      },
      {
+      "email": "mcneilexcavatingservices@gmail.com",
       "name": "Craig McNeil",
       "office": "Supervisor",
       "phone": "218-259-6364"
@@ -368,26 +412,31 @@
     ],
     "Idun": [
      {
+      "email": "idunclerk@gmail.com",
       "name": "Mary Vukelich",
       "office": "Clerk",
       "phone": "651-230-4512"
      },
      {
+      "email": "iduntreasurer@gmail.com",
       "name": "Joanne DeFeyter",
       "office": "Treasurer",
       "phone": "763-218-8340"
      },
      {
+      "email": "ljd56342@icloud.com",
       "name": "Laura Dunphy",
       "office": "Supervisor (chair)",
       "phone": "320-592-3707"
      },
      {
+      "email": "ganglappraisalsken@msn.com",
       "name": "Ken Gangl",
       "office": "Supervisor",
       "phone": "651-247-1544"
      },
      {
+      "email": "rgh2@frontiernet.net",
       "name": "Gail Harrison",
       "office": "Supervisor",
       "phone": "320-676-3621"
@@ -395,11 +444,13 @@
     ],
     "Jevne": [
      {
+      "email": "jevneclerk1@gmail.com",
       "name": "Vickie Thorson",
       "office": "Clerk",
       "phone": "763-245-3093"
      },
      {
+      "email": "jevnetreas2@gmail.com",
       "name": "Elizabeth Tillotson-Short",
       "office": "Treasurer",
       "phone": "612-991-3116"
@@ -422,26 +473,31 @@
     ],
     "Kimberly": [
      {
+      "email": "kimberlyclerk06@gmail.com",
       "name": "Mia Rapoport",
       "office": "Clerk",
       "phone": "612-619-6742"
      },
      {
+      "email": "kimberlytreasurer@centurylink.net",
       "name": "Anita Anderson",
       "office": "Treasurer",
       "phone": "218-927-6700"
      },
      {
+      "email": "kimberlysupervisor20@gmail.com",
       "name": "Sara Temte",
       "office": "Supervisor (chair)",
       "phone": "763-234-2763"
      },
      {
+      "email": "kimberlysupervisor21@gmail.com",
       "name": "Dan Howard",
       "office": "Supervisor",
       "phone": "651-764-0378"
      },
      {
+      "email": "kimberlysupervisor22@gmail.com",
       "name": "Jane Hill",
       "office": "Supervisor",
       "phone": "612-998-6990"
@@ -454,46 +510,55 @@
       "phone": "507-273-1621"
      },
      {
+      "email": "lakesidetreasurerls@gmail.com",
       "name": "Laura Segraves",
       "office": "Treasurer",
       "phone": "763-360-1409"
      },
      {
+      "email": "lakesidetwp.rons@gmail.com",
       "name": "Ron Segraves",
       "office": "Supervisor (chair)",
       "phone": "763-221-4471"
      },
      {
+      "email": "tomlakesidetownship@gmail.com",
       "name": "Tom Oldenburg",
       "office": "Supervisor"
      },
      {
+      "email": "smiller32365@gmail.com",
       "name": "Stan Miller",
       "office": "Supervisor"
      }
     ],
     "Lee": [
      {
+      "email": "leetwp.aitkinmn.clerk@gmail.com",
       "name": "Joseph Boyington",
       "office": "Clerk",
       "phone": "763-498-2900"
      },
      {
+      "email": "drmorris@mlecwb.net",
       "name": "Douglas Morris",
       "office": "Treasurer",
       "phone": "218-549-3405"
      },
      {
+      "email": "mikkibees.mb@gmail.com",
       "name": "Mikki Brodhead",
       "office": "Supervisor (chair)",
       "phone": "218-549-3123"
      },
      {
+      "email": "joelleleemn@yahoo.com",
       "name": "Joelle Heldt",
       "office": "Supervisor",
       "phone": "218-392-0473"
      },
      {
+      "email": "paigeinthor@gmail.com",
       "name": "Paige Brodhead",
       "office": "Supervisor",
       "phone": "218-429-1347"
@@ -501,26 +566,31 @@
     ],
     "Libby": [
      {
+      "email": "willowsedge.janesfarm@gmail.com",
       "name": "Jane Jewett",
       "office": "Clerk",
       "phone": "218-670-0066"
      },
      {
+      "email": "atchisonandshore@gmail.com",
       "name": "Donald Elfvin",
       "office": "Treasurer",
       "phone": "612-710-5478"
      },
      {
+      "email": "lakeimagination@gmail.com",
       "name": "Michael Hall",
       "office": "Supervisor (chair)",
       "phone": "218-259-2670"
      },
      {
+      "email": "tbanderson@frontier.com",
       "name": "Thomas Anderson",
       "office": "Supervisor",
       "phone": "218-390-0502"
      },
      {
+      "email": "lee.laursen@yahoo.com",
       "name": "Lee Laursen",
       "office": "Supervisor",
       "phone": "612-817-6595"
@@ -533,20 +603,24 @@
       "phone": "218-838-4455"
      },
      {
+      "email": "mpietersemn@proton.me",
       "name": "Michelle Pieterse",
       "office": "Treasurer"
      },
      {
+      "email": "sims.lts@protonmail.com",
       "name": "David Sims",
       "office": "Supervisor (chair)",
       "phone": "218-8205703"
      },
      {
+      "email": "elissa_bryan@yahoo.com",
       "name": "Elissa Bryan",
       "office": "Supervisor",
       "phone": "218-845-2117"
      },
      {
+      "email": "lynnsuem@gmail.com",
       "name": "Lynn Mizner",
       "office": "Supervisor",
       "phone": "218-232-4189"
@@ -554,16 +628,19 @@
     ],
     "Macville": [
      {
+      "email": "william.flynn.55748@gmail.com",
       "name": "William Flynn",
       "office": "Clerk",
       "phone": "218-340-0599"
      },
      {
+      "email": "dm.molaison@gmail.com",
       "name": "Dawn Molaison",
       "office": "Treasurer",
       "phone": "218-301-4613"
      },
      {
+      "email": "ken55748@yahoo.com",
       "name": "Kenneth Janssen",
       "office": "Supervisor (chair)",
       "phone": "218-820-7615"
@@ -574,6 +651,7 @@
       "phone": "218-259-3639"
      },
      {
+      "email": "j-hatfieldhaypoint@hotmail.com",
       "name": "Janet Hatfield",
       "office": "Supervisor",
       "phone": "218-697-8443"
@@ -581,11 +659,13 @@
     ],
     "Malmo": [
      {
+      "email": "malmotownclerk@outlook.com",
       "name": "Leaza Morris",
       "office": "Clerk",
       "phone": "218-429-1274"
      },
      {
+      "email": "malmotownshiptreasurer@hotmail.com",
       "name": "Tamara Freed",
       "office": "Treasurer",
       "phone": "763-354-4354"
@@ -608,26 +688,31 @@
     ],
     "McGregor": [
      {
+      "email": "scarlettdorothyann@gmail.com",
       "name": "Scarlett Korpela",
       "office": "Clerk",
       "phone": "218-590-3240"
      },
      {
+      "email": "onekidlog@aol.com",
       "name": "Danelle Fredrickson",
       "office": "Treasurer",
       "phone": "218-670-0044"
      },
      {
+      "email": "bmamund@frontiernet.net",
       "name": "Brent Amundson",
       "office": "Supervisor (chair)",
       "phone": "612-240-0620"
      },
      {
+      "email": "rh55760@frontiernet.net",
       "name": "Ramona Hooper",
       "office": "Supervisor",
       "phone": "218-343-5890"
      },
      {
+      "email": "mjbarta@frontiernet.net",
       "name": "Michael Barta",
       "office": "Supervisor",
       "phone": "218-232-0746"
@@ -635,21 +720,25 @@
     ],
     "Millward": [
      {
+      "email": "rlund1985@gmail.com",
       "name": "Rita Lundquist",
       "office": "Clerk",
       "phone": "651-257-6433"
      },
      {
+      "email": "rlund1985@gmail.com",
       "name": "Rita Lundquist",
       "office": "Treasurer",
       "phone": "651-257-6433"
      },
      {
+      "email": "huskyhouse85@gmail.com",
       "name": "Michael Lundquist",
       "office": "Supervisor (chair)",
       "phone": "612-247-3506"
      },
      {
+      "email": "elee123@frontiernet.net",
       "name": "Randy Anderson",
       "office": "Supervisor",
       "phone": "218-658-4570"
@@ -662,24 +751,29 @@
     ],
     "Morrison": [
      {
+      "email": "morrisonclerk1@gmail.com",
       "name": "Adrienne Hurd",
       "office": "Clerk"
      },
      {
+      "email": "palmertaneal@gmail.com",
       "name": "Taneal Palmer",
       "office": "Treasurer",
       "phone": "830-734-5310"
      },
      {
+      "email": "hurdfamilyfarm@gmail.com",
       "name": "Matt Hurd",
       "office": "Supervisor (chair)"
      },
      {
+      "email": "harry.hendy@gmail.com",
       "name": "Harry Henderson",
       "office": "Supervisor",
       "phone": "218-851-5378"
      },
      {
+      "email": "milbradtkris@gmail.com",
       "name": "Kris Milbradt",
       "office": "Supervisor",
       "phone": "218-839-3800"
@@ -687,6 +781,7 @@
     ],
     "Nordland": [
      {
+      "email": "nordlandtownclerk@gmail.com",
       "name": "Mathew Nix",
       "office": "Clerk",
       "phone": "763-370-2308"
@@ -697,6 +792,7 @@
       "phone": "218-429-1210"
      },
      {
+      "email": "djpalm81@gmail.com",
       "name": "Darryl Palm",
       "office": "Supervisor (chair)",
       "phone": "763-234-9522"
@@ -707,6 +803,7 @@
       "phone": "218-821-8873"
      },
      {
+      "email": "chrisnnordlandtwp@gmail.com",
       "name": "Chris Nelson",
       "office": "Supervisor",
       "phone": "218-330-9530"
@@ -714,10 +811,12 @@
     ],
     "Pliny": [
      {
+      "email": "deadstock@citlink.net",
       "name": "Mata Zimpel",
       "office": "Clerk"
      },
      {
+      "email": "deadstock@citlink.net",
       "name": "Mata Zimpel",
       "office": "Treasurer"
      },
@@ -738,6 +837,7 @@
       "phone": "218-380-3370"
      },
      {
+      "email": "timelesstreasures@frontiernet.net",
       "name": "Diane Pelto",
       "office": "Treasurer",
       "phone": "218-768-2753"
@@ -760,21 +860,25 @@
     ],
     "Salo": [
      {
+      "email": "turnocks@frontiernet.net",
       "name": "Darlene Turnock",
       "office": "Clerk",
       "phone": "218-768-2713"
      },
      {
+      "email": "gogreenproducts@outlook.com",
       "name": "Mike Hoffman",
       "office": "Treasurer",
       "phone": "218-768-4167"
      },
      {
+      "email": "canddvincent@aol.com",
       "name": "Charlene Vincent",
       "office": "Supervisor (chair)",
       "phone": "218-768-7022"
      },
      {
+      "email": "jmiller45@frontiernet.net",
       "name": "James Miller",
       "office": "Supervisor",
       "phone": "218-590-7283"
@@ -797,16 +901,19 @@
       "phone": "320-279-5502"
      },
      {
+      "email": "doubleh10q@gmail.com",
       "name": "Harold Harms",
       "office": "Supervisor (chair)",
       "phone": "218-232-2935"
      },
      {
+      "email": "scottea48@yahoo.com",
       "name": "Scott Anderson",
       "office": "Supervisor",
       "phone": "320-362-1494"
      },
      {
+      "email": "cdub.cd@gmail.com",
       "name": "Clint DuBois",
       "office": "Supervisor",
       "phone": "320-279-5495"
@@ -819,31 +926,37 @@
       "phone": "218-426-3736"
      },
      {
+      "email": "jackbrula@shamrocktwp.org",
       "name": "John Brula",
       "office": "Treasurer",
       "phone": "218-426-3132"
      },
      {
+      "email": "tommeyer@shamrocktwp.org",
       "name": "Tom Meyer",
       "office": "Supervisor (chair)",
       "phone": "218-670-0868"
      },
      {
+      "email": "ronflatten@shamrocktwp.org",
       "name": "Ron Flatten",
       "office": "Supervisor",
       "phone": "612-961-2570"
      },
      {
+      "email": "erniedarlow@shamrocktwp.org",
       "name": "Ernie Darlow",
       "office": "Supervisor",
       "phone": "218-820-3072"
      },
      {
+      "email": "brucejohnson@shamrocktwp.org",
       "name": "Bruce Johnson",
       "office": "Supervisor",
       "phone": "952-807-1367"
      },
      {
+      "email": "brock.hayes@shamrocktwp.org",
       "name": "Brock Hayes",
       "office": "Supervisor",
       "phone": "218-429-2762"
@@ -851,21 +964,25 @@
     ],
     "Spalding": [
      {
+      "email": "spaldingclerk@outlook.com",
       "name": "John Berge",
       "office": "Clerk",
       "phone": "218-820-8392"
      },
      {
+      "email": "diane@mlecwb.net",
       "name": "Diane Brennan",
       "office": "Treasurer",
       "phone": "218-768-3610"
      },
      {
+      "email": "ddswedberg78@gmail.com",
       "name": "Duane Swedberg",
       "office": "Supervisor (chair)",
       "phone": "218-768-3216"
      },
      {
+      "email": "rogeryotter@yahoo.com",
       "name": "Roger Yotter",
       "office": "Supervisor",
       "phone": "612-310-7888"
@@ -873,26 +990,31 @@
     ],
     "Spencer": [
      {
+      "email": "spencertwpclerk@outlook.com",
       "name": "Bonnie Ganz",
       "office": "Clerk",
       "phone": "218-310-9649"
      },
      {
+      "email": "momcrowther8@gmail.com",
       "name": "Marilyn Crowther",
       "office": "Treasurer",
       "phone": "218-927-2755"
      },
      {
+      "email": "supervisor_one@outlook.com",
       "name": "Kevin Stromberg",
       "office": "Supervisor (chair)",
       "phone": "218-839-9717"
      },
      {
+      "email": "spencertownshiproads@yahoo.com",
       "name": "Lon Nicko",
       "office": "Supervisor",
       "phone": "218-839-0147"
      },
      {
+      "email": "spencercemetery@gmail.com",
       "name": "Teri Nelson",
       "office": "Supervisor",
       "phone": "218-839-0796"
@@ -900,11 +1022,13 @@
     ],
     "Turner": [
      {
+      "email": "zannachristen67@gmail.com",
       "name": "Rosanna Christen",
       "office": "Clerk",
       "phone": "218-513-6311"
      },
      {
+      "email": "craigjoriman@gmail.com",
       "name": "Craig Joriman",
       "office": "Treasurer",
       "phone": "218-839-4955"
@@ -915,11 +1039,13 @@
       "phone": "218-426-4219"
      },
      {
+      "email": "ghelstrombigsandy@gmail.com",
       "name": "Gary Helstrom",
       "office": "Supervisor",
       "phone": "218-670-0396"
      },
      {
+      "email": "scool90110@gmail.com",
       "name": "Stephen Cook",
       "office": "Supervisor",
       "phone": "218-392-0196"
@@ -927,26 +1053,31 @@
     ],
     "Verdon": [
      {
+      "email": "grimsbo1@live.com",
       "name": "Tanya Grimsbo",
       "office": "Clerk",
       "phone": "218-670-0376"
      },
      {
+      "email": "patriciahorsman24@gmail.com",
       "name": "Patricia Horsman",
       "office": "Treasurer",
       "phone": "218-244-9306"
      },
      {
+      "email": "kent@niftygaloot.com",
       "name": "Kent Lorentzen",
       "office": "Supervisor (chair)",
       "phone": "218-513-0399"
      },
      {
+      "email": "jgrimsbo@live.com",
       "name": "John Grimsbo",
       "office": "Supervisor",
       "phone": "218-839-1204"
      },
      {
+      "email": "trekmadone1262@gmail.com",
       "name": "Bill Klennert",
       "office": "Supervisor",
       "phone": "218-398-1455"
@@ -959,21 +1090,25 @@
       "phone": "515-554-9275"
      },
      {
+      "email": "hanson.howard54@gmail.com",
       "name": "Howard Hanson",
       "office": "Treasurer",
       "phone": "779-207-6211"
      },
      {
+      "email": "circlingwolf@gmail.com",
       "name": "Paul Peterson",
       "office": "Supervisor (chair)",
       "phone": "320-293-1291"
      },
      {
+      "email": "drgrouse@yahoo.com",
       "name": "Donald Roepke",
       "office": "Supervisor",
       "phone": "763-458-9011"
      },
      {
+      "email": "maverick0496@yahoo.com",
       "name": "Jason Karsky",
       "office": "Supervisor",
       "phone": "651-271-5296"
@@ -981,26 +1116,31 @@
     ],
     "Waukenabo": [
      {
+      "email": "waukenaboclerk@outlook.com",
       "name": "Heidi Olesen",
       "office": "Clerk",
       "phone": "218-244-3413"
      },
      {
+      "email": "waukenabotreasurer@outlook.com",
       "name": "Shannon Parenteau",
       "office": "Treasurer",
       "phone": "763-370-5170"
      },
      {
+      "email": "gsherman2668@gmail.com",
       "name": "Grant Sherman",
       "office": "Supervisor (chair)",
       "phone": "218-820-4364"
      },
      {
+      "email": "dgoble33@hotmail.com",
       "name": "Debra Goble",
       "office": "Supervisor",
       "phone": "218-845-2997"
      },
      {
+      "email": "jshjeg26@yahoo.com",
       "name": "Josh Joerger",
       "office": "Supervisor",
       "phone": "218-310-3372"
@@ -1008,26 +1148,31 @@
     ],
     "Wealthwood": [
      {
+      "email": "lw56431@gmail.com",
       "name": "Linda Wendlandt",
       "office": "Clerk",
       "phone": "218-678-2880"
      },
      {
+      "email": "lw56431@gmail.com",
       "name": "Linda Wendlandt",
       "office": "Treasurer",
       "phone": "218-678-2880"
      },
      {
+      "email": "tv4fish@centurylink.net",
       "name": "Tom Veenker",
       "office": "Supervisor (chair)",
       "phone": "218-678-3792"
      },
      {
+      "email": "waybarn123@gmail.com",
       "name": "Wayne Barneveld",
       "office": "Supervisor",
       "phone": "218-839-5102"
      },
      {
+      "email": "olelakemn@gmail.com",
       "name": "Kevin Flowers",
       "office": "Supervisor",
       "phone": "218-398-3029"
@@ -1067,16 +1212,19 @@
       "phone": "612-390-6420"
      },
      {
+      "email": "thork43@gmail.com",
       "name": "Tim Eklund",
       "office": "Treasurer",
       "phone": "612-236-5203"
      },
      {
+      "email": "rbmensing@citlink.net",
       "name": "Richard Mensing",
       "office": "Supervisor (chair)",
       "phone": "612-390-9104"
      },
      {
+      "email": "oldmcdonaldsranch@frontiernet.net",
       "name": "Steve McDonald",
       "office": "Supervisor",
       "phone": "320-592-3915"
@@ -1089,11 +1237,13 @@
     ],
     "Workman": [
      {
+      "email": "clerk@workmantownshipmn.org",
       "name": "Wanda Essen",
       "office": "Clerk",
       "phone": "218-821-0178"
      },
      {
+      "email": "treasurer@workmantownshipmn.org",
       "name": "Betty Berg",
       "office": "Treasurer",
       "phone": "218-340-3498"
@@ -1109,6 +1259,7 @@
       "phone": "320-420-1362"
      },
      {
+      "email": "supervisor3@workmantownshipmn.org",
       "name": "Michael Jaworski",
       "office": "Supervisor",
       "phone": "218-851-9756"

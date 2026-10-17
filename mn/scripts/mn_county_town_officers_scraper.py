@@ -21,18 +21,20 @@ personal phone numbers, we publish those"), with the label the list prints
 beside it ("cell", "home"); a number printed without an area code ships
 without one, never with a guessed one. The e-mail ships the same way, under
 his choice of the same day ("E-mails too"), lower-cased and otherwise as the
-list prints it, one per officer. A parser hands `numbers()` and `emails()`
-only the column or line where its list prints an officer's telephone or
-e-mail, and each returns only text with a telephone's or an address's shape,
-so a street address sharing that line never reaches a record;
-`check_record` refuses a name carrying a digit, an "@", or a street word, so
-a column that slips cannot carry an address through. A number marked as a
-fax is not read, and `settle_numbers` and `settle_emails` leave out a number
-or an e-mail printed beside two or more people or printed more often than
-beside the officers who carry it: those are a town's or an office's, not the
-person's. `settle_emails` also leaves out a mailbox named for the town itself
-or for another office, and the addresses of an officer whose mail link sends
-somewhere other than the address it shows.
+list prints it, one per officer. An address a page hides behind Cloudflare's
+e-mail protection (Aitkin's town pages) is shown as a reader's browser shows
+it, by `uncloak`, before anything reads the page. A parser hands
+`numbers()` and `emails()` only the column or line where its list prints an
+officer's telephone or e-mail, and each returns only text with a telephone's
+or an address's shape, so a street address sharing that line never reaches a
+record; `check_record` refuses a name carrying a digit, an "@", or a street
+word, so a column that slips cannot carry an address through. A number
+marked as a fax is not read, and `settle_numbers` and `settle_emails` leave
+out a number or an e-mail printed beside two or more people or printed more
+often than beside the officers who carry it: those are a town's or an
+office's, not the person's. `settle_emails` also leaves out a mailbox named
+for the town itself or for another office, and the addresses of an officer
+whose mail link sends somewhere other than the address it shows.
 
 A LIST IS A DATED STATEMENT, NOT A LIVE ONE. Each county's list carries the
 date it prints ("Updated as of 10/09/2026") where it prints one, and every town
@@ -443,6 +445,43 @@ def mailto_address(href):
     return target.lower() if EMAIL_SHAPE.match(target) else None
 
 
+# Cloudflare's e-mail protection prints "[email protected]" in place of an
+# address and carries the address in hex: in a `data-cfemail` attribute on
+# the element shown, and after "/cdn-cgi/l/email-protection#" in the link
+# around it. A reader's browser shows the address; `uncloak` does the same.
+# Measured 2026-10-17: Aitkin's 40 town pages are the only documents of the
+# 29 counties' that use it.
+CF_HREF_RE = re.compile(r"/cdn-cgi/l/email-protection#([0-9a-fA-F]+)$")
+
+
+def cf_decode(hexstr):
+    """The address in one of Cloudflare's hex strings, or None when it does
+    not decode to one address. The first byte is the key every later byte
+    is XORed with (the fleet's reading, as in
+    scripts/will_county_board_scraper.py), and the bytes are UTF-8."""
+    try:
+        raw = bytes.fromhex(hexstr)
+        text = bytes(b ^ raw[0] for b in raw[1:]).decode("utf-8").strip()
+    except (ValueError, IndexError):
+        return None
+    return text if EMAIL_SHAPE.match(text) else None
+
+
+def uncloak(page):
+    """A parsed page with Cloudflare's protected addresses shown as a
+    reader's browser shows them: each element carrying `data-cfemail`
+    becomes the address it hides, and a protected link becomes a mailto link
+    to the address its own target hides, so everything below reads it like
+    any other mail link, `mail_disagreements` included. A link whose target
+    does not decode becomes a mailto link to nothing, which that check
+    counts as a disagreement, so the address it shows is not carried."""
+    for el in page.find_all(attrs={"data-cfemail": True}):
+        el.replace_with(cf_decode(el["data-cfemail"]) or "")
+    for a in page.find_all("a", href=CF_HREF_RE):
+        a["href"] = "mailto:" + (cf_decode(CF_HREF_RE.search(a["href"]).group(1)) or "")
+    return page
+
+
 # ---------------------------------------------------------------- documents
 
 def pdf_lines(data, gap=12, ytol=3):
@@ -531,8 +570,9 @@ def pdf_text(data):
 
 
 def soup(data):
+    """A parsed page, with any address Cloudflare protects shown (`uncloak`)."""
     from bs4 import BeautifulSoup  # noqa: PLC0415
-    return BeautifulSoup(data, "html.parser")
+    return uncloak(BeautifulSoup(data, "html.parser"))
 
 
 def first_date(text):
@@ -1637,9 +1677,11 @@ def per_page(f, index_url, link_re, term=False):
 
 @county("Aitkin", 30)
 def aitkin(f):
-    # The town pages hide each e-mail address behind Cloudflare's e-mail
-    # protection, which this file does not decode, so no Aitkin officer
-    # carries one.
+    # Each town's page prints every officer as one block: the office, the
+    # name, the officer's address (not read), a telephone and an e-mail
+    # address hidden by Cloudflare's e-mail protection. `soup` shows that
+    # address as a reader's browser does (`uncloak`), so it is read and
+    # settled under the same rules as every other county's.
     towns, urls = per_page(f, "https://www.aitkincountymn.gov/towns/", r"/towns/towns-[\w-]+-twp\.php$")
     return towns, None, urls
 

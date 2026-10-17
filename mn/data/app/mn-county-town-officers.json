@@ -4,26 +4,31 @@
   "name": "Farm Island township",
   "officers": [
    {
+    "email": "farmislandtwpclerk@gmail.com",
     "name": "Liz Harmon",
     "office": "Clerk",
     "phone": "218-851-1957"
    },
    {
+    "email": "8ptacreshome@gmail.com",
     "name": "Erin Melz",
     "office": "Treasurer",
     "phone": "218-851-3055"
    },
    {
+    "email": "t_woodrow99@yahoo.com",
     "name": "Tim Woodrow",
     "office": "Supervisor (chair)",
     "phone": "218-831-6799"
    },
    {
+    "email": "51976kst@gmail.com",
     "name": "Kelly Torkelson",
     "office": "Supervisor",
     "phone": "218-839-7071"
    },
    {
+    "email": "paulette25@embarqmail.com",
     "name": "James Anderson",
     "office": "Supervisor",
     "phone": "218-851-2844"
@@ -37,16 +42,19 @@
   "name": "Fleming township",
   "officers": [
    {
+    "email": "sue@duroses.com",
     "name": "Sue DuRose",
     "office": "Clerk",
     "phone": "612-840-5302"
    },
    {
+    "email": "treasurerfleming@gmail.com",
     "name": "Jo Schuety",
     "office": "Treasurer",
     "phone": "218-838-7047"
    },
    {
+    "email": "michaeljhagel@gmail.com",
     "name": "Mike Hagel",
     "office": "Supervisor (chair)",
     "phone": "218-242-1013"
@@ -70,26 +78,31 @@
   "name": "Hazelton township",
   "officers": [
    {
+    "email": "hazeltonclerk@gmail.com",
     "name": "Kay Olson",
     "office": "Clerk",
     "phone": "218-678-3389"
    },
    {
+    "email": "hazeltontreasurer@gmail.com",
     "name": "Sara Math",
     "office": "Treasurer",
     "phone": "218-831-1197"
    },
    {
+    "email": "tsuperhazel@gmail.com",
     "name": "Todd Schmaltz",
     "office": "Supervisor (chair)",
     "phone": "218-838-6916"
    },
    {
+    "email": "hazeltonsupervisor3@gmail.com",
     "name": "Craig Adams",
     "office": "Supervisor",
     "phone": "218-820-9801"
    },
    {
+    "email": "jksuperhazel@gmail.com",
     "name": "Jason Kallevig",
     "office": "Supervisor",
     "phone": "218-892-7820"
@@ -103,11 +116,13 @@
   "name": "Jevne township",
   "officers": [
    {
+    "email": "jevneclerk1@gmail.com",
     "name": "Vickie Thorson",
     "office": "Clerk",
     "phone": "763-245-3093"
    },
    {
+    "email": "jevnetreas2@gmail.com",
     "name": "Elizabeth Tillotson-Short",
     "office": "Treasurer",
     "phone": "612-991-3116"
@@ -141,20 +156,24 @@
     "phone": "507-273-1621"
    },
    {
+    "email": "lakesidetreasurerls@gmail.com",
     "name": "Laura Segraves",
     "office": "Treasurer",
     "phone": "763-360-1409"
    },
    {
+    "email": "lakesidetwp.rons@gmail.com",
     "name": "Ron Segraves",
     "office": "Supervisor (chair)",
     "phone": "763-221-4471"
    },
    {
+    "email": "tomlakesidetownship@gmail.com",
     "name": "Tom Oldenburg",
     "office": "Supervisor"
    },
    {
+    "email": "smiller32365@gmail.com",
     "name": "Stan Miller",
     "office": "Supervisor"
    }
@@ -167,26 +186,31 @@
   "name": "McGregor township",
   "officers": [
    {
+    "email": "scarlettdorothyann@gmail.com",
     "name": "Scarlett Korpela",
     "office": "Clerk",
     "phone": "218-590-3240"
    },
    {
+    "email": "onekidlog@aol.com",
     "name": "Danelle Fredrickson",
     "office": "Treasurer",
     "phone": "218-670-0044"
    },
    {
+    "email": "bmamund@frontiernet.net",
     "name": "Brent Amundson",
     "office": "Supervisor (chair)",
     "phone": "612-240-0620"
    },
    {
+    "email": "rh55760@frontiernet.net",
     "name": "Ramona Hooper",
     "office": "Supervisor",
     "phone": "218-343-5890"
    },
    {
+    "email": "mjbarta@frontiernet.net",
     "name": "Michael Barta",
     "office": "Supervisor",
     "phone": "218-232-0746"
@@ -200,11 +224,13 @@
   "name": "Malmo township",
   "officers": [
    {
+    "email": "malmotownclerk@outlook.com",
     "name": "Leaza Morris",
     "office": "Clerk",
     "phone": "218-429-1274"
    },
    {
+    "email": "malmotownshiptreasurer@hotmail.com",
     "name": "Tamara Freed",
     "office": "Treasurer",
     "phone": "763-354-4354"
@@ -238,6 +264,7 @@
     "phone": "218-380-3370"
    },
    {
+    "email": "timelesstreasures@frontiernet.net",
     "name": "Diane Pelto",
     "office": "Treasurer",
     "phone": "218-768-2753"
@@ -266,21 +293,25 @@
   "name": "Salo township",
   "officers": [
    {
+    "email": "turnocks@frontiernet.net",
     "name": "Darlene Turnock",
     "office": "Clerk",
     "phone": "218-768-2713"
    },
    {
+    "email": "gogreenproducts@outlook.com",
     "name": "Mike Hoffman",
     "office": "Treasurer",
     "phone": "218-768-4167"
    },
    {
+    "email": "canddvincent@aol.com",
     "name": "Charlene Vincent",
     "office": "Supervisor (chair)",
     "phone": "218-768-7022"
    },
    {
+    "email": "jmiller45@frontiernet.net",
     "name": "James Miller",
     "office": "Supervisor",
     "phone": "218-590-7283"
@@ -299,21 +330,25 @@
   "name": "Spalding township",
   "officers": [
    {
+    "email": "spaldingclerk@outlook.com",
     "name": "John Berge",
     "office": "Clerk",
     "phone": "218-820-8392"
    },
    {
+    "email": "diane@mlecwb.net",
     "name": "Diane Brennan",
     "office": "Treasurer",
     "phone": "218-768-3610"
    },
    {
+    "email": "ddswedberg78@gmail.com",
     "name": "Duane Swedberg",
     "office": "Supervisor (chair)",
     "phone": "218-768-3216"
    },
    {
+    "email": "rogeryotter@yahoo.com",
     "name": "Roger Yotter",
     "office": "Supervisor",
     "phone": "612-310-7888"
@@ -327,11 +362,13 @@
   "name": "Turner township",
   "officers": [
    {
+    "email": "zannachristen67@gmail.com",
     "name": "Rosanna Christen",
     "office": "Clerk",
     "phone": "218-513-6311"
    },
    {
+    "email": "craigjoriman@gmail.com",
     "name": "Craig Joriman",
     "office": "Treasurer",
     "phone": "218-839-4955"
@@ -342,11 +379,13 @@
     "phone": "218-426-4219"
    },
    {
+    "email": "ghelstrombigsandy@gmail.com",
     "name": "Gary Helstrom",
     "office": "Supervisor",
     "phone": "218-670-0396"
    },
    {
+    "email": "scool90110@gmail.com",
     "name": "Stephen Cook",
     "office": "Supervisor",
     "phone": "218-392-0196"
@@ -360,26 +399,31 @@
   "name": "Wealthwood township",
   "officers": [
    {
+    "email": "lw56431@gmail.com",
     "name": "Linda Wendlandt",
     "office": "Clerk",
     "phone": "218-678-2880"
    },
    {
+    "email": "lw56431@gmail.com",
     "name": "Linda Wendlandt",
     "office": "Treasurer",
     "phone": "218-678-2880"
    },
    {
+    "email": "tv4fish@centurylink.net",
     "name": "Tom Veenker",
     "office": "Supervisor (chair)",
     "phone": "218-678-3792"
    },
    {
+    "email": "waybarn123@gmail.com",
     "name": "Wayne Barneveld",
     "office": "Supervisor",
     "phone": "218-839-5102"
    },
    {
+    "email": "olelakemn@gmail.com",
     "name": "Kevin Flowers",
     "office": "Supervisor",
     "phone": "218-398-3029"
