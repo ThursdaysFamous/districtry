@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1165,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1183,6 +1183,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Oklahoma — statewide, all 5 districts.</td>
+              </tr>
+              <tr id="layer-ok-judicial-district">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>ok-judicial-district</code></th>
+                <td data-label="What it answers">The judicial district covering the point, its district judge offices and the counties whose voters elect each one.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ok/scripts/build_ok_judicial_districts.py, following the Oklahoma State Election Board's 2024 Roster of State and County Officers (published March 2025): its district judge offices with the counties that elect each, checked against the same roster's key to districts by county. The statutes were not read: both of the state's publishers of them refuse this project in robots.txt.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge is named yet; recorded as gap ok-judicial-district-judges. The roster names each judge beside their home town, which this project never copies. The card links the roster.</td>
+                <td data-label="Where it applies">Oklahoma — statewide, all 77 counties.</td>
               </tr>
               <tr id="layer-ok-senate">
                 <th scope="row"><span class="layer-name">Oklahoma Senate District</span><code>ok-senate</code></th>
@@ -1408,6 +1419,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Oklahoma — statewide, all 5 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ok/sources.html#dataset-ok-judicial-district",
+      "identifier": "ok-judicial-district",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point, its district judge offices and the counties whose voters elect each one. No judge is named yet; recorded as gap ok-judicial-district-judges. The roster names each judge beside their home town, which this project never copies. The card links the roster.",
+      "url": "https://districtry.com/ok/sources.html#layer-ok-judicial-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ok/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ok/scripts/build_ok_judicial_districts.py, following the Oklahoma State Election Board's 2024 Roster of State and County Officers (published March 2025): its district judge offices with the counties that elect each, checked against the same roster's key to districts by county. The statutes were not read: both of the state's publishers of them refuse this project in robots.txt.",
+          "url": "https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Oklahoma — statewide, all 77 counties"
       }
     },
     {

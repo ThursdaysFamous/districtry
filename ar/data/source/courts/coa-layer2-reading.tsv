@@ -1,0 +1,87 @@
+# The Arkansas GIS Office's Appeals Court Districts layer (Secretary of State data),
+# https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/2,
+# queried 2026-10-16 with this project's own client, districtry/1.0 (+https://districtry.com/ar/); that host serves no robots.txt (the path answers with an HTML page), so it disallows nothing. Query: where=1=1,
+# outFields=courtofappeals, outSR=4326, maxAllowableOffset=0.0002,
+# geometryPrecision=5, f=geojson. Body: 172864 bytes, SHA-256 7baabc1a27e4979067e57d0c34dbcc051a7d2338346b5eb6acdf561cd2bc2c6c.
+#
+# Each county of ar/data/app/state-counties.json is overlaid on the layer and
+# the share of its area in each unit measured on a local projection scaled
+# by the county's latitude.
+#
+# county <TAB> the layer's unit holding most of the county <TAB> that share (%)
+# <TAB> any other unit holding 0.2% or more (unit share; ...)
+Arkansas	007	99.97	
+Ashley	005	99.99	
+Baxter	002	99.99	
+Benton	003	99.98	
+Boone	002	99.97	
+Bradley	005	100.00	
+Calhoun	005	100.00	
+Carroll	003	99.98	
+Chicot	007	99.72	
+Clark	004	99.98	
+Clay	001	99.97	
+Cleburne	002	99.99	
+Cleveland	005	100.00	
+Columbia	005	99.99	
+Conway	002	99.96	
+Craighead	001	100.00	
+Crawford	003	99.69	004 0.31
+Crittenden	001	99.00	
+Cross	001	99.99	
+Dallas	005	99.99	
+Desha	007	99.46	
+Drew	005	99.99	
+Faulkner	002	99.85	
+Franklin	003	99.94	
+Fulton	002	99.99	
+Garland	004	99.99	
+Grant	005	99.98	
+Greene	001	99.98	
+Hempstead	004	99.99	
+Hot Spring	004	99.99	
+Howard	004	100.00	
+Independence	002	100.00	
+Izard	002	100.00	
+Jackson	002	99.98	
+Jefferson	007	99.93	
+Johnson	003	99.67	004 0.32
+Lafayette	005	99.97	
+Lawrence	002	99.98	
+Lee	007	99.69	
+Lincoln	005	99.86	
+Little River	004	99.97	
+Logan	004	99.84	
+Lonoke	001	99.99	
+Madison	003	100.00	
+Marion	002	100.00	
+Miller	004	99.96	
+Mississippi	001	99.27	
+Monroe	001	99.96	
+Montgomery	004	100.00	
+Nevada	005	99.98	
+Newton	002	99.99	
+Ouachita	005	99.99	
+Perry	006	99.80	
+Phillips	007	99.44	
+Pike	004	99.99	
+Poinsett	001	100.00	
+Polk	004	100.00	
+Pope	002	99.82	
+Prairie	001	99.98	
+Pulaski	006	99.94	
+Randolph	002	99.98	
+Saline	006	99.98	
+Scott	004	99.99	
+Searcy	002	100.00	
+Sebastian	004	99.80	
+Sevier	004	99.99	
+Sharp	002	100.00	
+St. Francis	007	99.98	
+Stone	002	100.00	
+Union	005	99.98	
+Van Buren	002	100.00	
+Washington	003	99.99	
+White	001	99.98	
+Woodruff	001	99.99	
+Yell	004	99.91	

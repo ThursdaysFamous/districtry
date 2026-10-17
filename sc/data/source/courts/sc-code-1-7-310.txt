@@ -1,0 +1,7 @@
+# South Carolina Code of Laws, Section 1-7-310, as published by the South
+# Carolina Legislature at https://www.scstatehouse.gov/code/t01c007.php
+# (Title 1, Chapter 7), read 2026-10-16. The section's text and its HISTORY
+# line, copied from the page.
+SECTION 1-7-310. Number, election and terms of solicitors.
+There is one solicitor for each judicial circuit, to be elected by the qualified electors of the circuit, who holds his office for the term of four years. The term of office of a solicitor begins at noon on the first Wednesday following the second Tuesday in January following his election and ends at noon on the first Wednesday following the second Tuesday in January four years later. A solicitor must be licensed to practice law by the South Carolina Bar at the time of his election and throughout his term.
+HISTORY: 1962 Code SECTION 1-250; 1973 (58) 47; 1998 Act No. 359, SECTION 6; 2005 Act No. 20, SECTION 1, eff March 22, 2005.

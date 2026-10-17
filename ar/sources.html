@@ -1156,7 +1156,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1165,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1183,6 +1183,30 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Arkansas — statewide, all 4 districts.</td>
+              </tr>
+              <tr id="layer-ar-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>ar-court-of-appeals</code></th>
+                <td data-label="What it answers">The Court of Appeals district covering the point: the counties it is made of, and how many of the court's twelve judges its voters elect.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following Act 1812 of 2003's list of each district's counties as the Arkansas GIS Office's metadata for its Appeals Court Districts layer quotes it (read 2026-10-16), and held county by county to that layer. The act was not read at source: the official Code is published by LexisNexis behind a page that needs a browser's scripts, and the two free copies tried refuse this project's client.</a></li>
+                    <li><a href="https://arcourts.gov/courts/court-of-appeals/map" target="_blank" rel="noopener">Arkansas Judiciary — the Court of Appeals' district map page, which lists each district's judgeships (two in Districts 1, 2, 3, 4 and 6, one in Districts 5 and 7)</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge is named yet: the court's own pages name every judge, and this app does not publish them yet; recorded as gap ar-appeals-judges. The card says how many of the court's twelve judges the district elects and links the court's district page, which names them.</td>
+                <td data-label="Where it applies">Arkansas — statewide, all 75 counties.</td>
+              </tr>
+              <tr id="layer-ar-circuit-court">
+                <th scope="row"><span class="layer-name">Judicial Circuit</span><code>ar-circuit-court</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point: its circuit court, how many judges the circuit's voters elect, and whether a federal court order divides it into election subdistricts.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://arcourts.gov/directories/circuit-judges" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following the Administrative Office of the Courts' circuit judge directory, which lists each judge under every county the judge serves (read 2026-10-16), and held county by county to the Arkansas GIS Office's Circuit Court Districts layer. The five circuits a federal court order (Hunt v. State of Arkansas) divides into election subdistricts are drawn whole.</a></li>
+                    <li><a href="https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.CIRCUIT_COURT_export.html" target="_blank" rel="noopener">Arkansas GIS Office — the Circuit Court Districts layer's metadata, which summarises the court order</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge is named yet: the directory names every circuit judge, and this app does not publish them yet; recorded as gap ar-circuit-judges. The card gives the circuit's number of judges, from the directory, and links it.</td>
+                <td data-label="Where it applies">Arkansas — statewide, all 75 counties.</td>
               </tr>
               <tr id="layer-ar-senate">
                 <th scope="row"><span class="layer-name">Arkansas Senate District</span><code>ar-senate</code></th>
@@ -1397,6 +1421,60 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Arkansas — statewide, all 4 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-ar-court-of-appeals",
+      "identifier": "ar-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The Court of Appeals district covering the point: the counties it is made of, and how many of the court's twelve judges its voters elect. No judge is named yet: the court's own pages name every judge, and this app does not publish them yet; recorded as gap ar-appeals-judges. The card says how many of the court's twelve judges the district elects and links the court's district page, which names them.",
+      "url": "https://districtry.com/ar/sources.html#layer-ar-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following Act 1812 of 2003's list of each district's counties as the Arkansas GIS Office's metadata for its Appeals Court Districts layer quotes it (read 2026-10-16), and held county by county to that layer. The act was not read at source: the official Code is published by LexisNexis behind a page that needs a browser's scripts, and the two free copies tried refuse this project's client.",
+          "url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Arkansas Judiciary — the Court of Appeals' district map page, which lists each district's judgeships (two in Districts 1, 2, 3, 4 and 6, one in Districts 5 and 7)",
+          "url": "https://arcourts.gov/courts/court-of-appeals/map"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Arkansas — statewide, all 75 counties"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-ar-circuit-court",
+      "identifier": "ar-circuit-court",
+      "name": "Judicial Circuit",
+      "description": "The judicial circuit covering the point: its circuit court, how many judges the circuit's voters elect, and whether a federal court order divides it into election subdistricts. No judge is named yet: the directory names every circuit judge, and this app does not publish them yet; recorded as gap ar-circuit-judges. The card gives the circuit's number of judges, from the directory, and links it.",
+      "url": "https://districtry.com/ar/sources.html#layer-ar-circuit-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following the Administrative Office of the Courts' circuit judge directory, which lists each judge under every county the judge serves (read 2026-10-16), and held county by county to the Arkansas GIS Office's Circuit Court Districts layer. The five circuits a federal court order (Hunt v. State of Arkansas) divides into election subdistricts are drawn whole.",
+          "url": "https://arcourts.gov/directories/circuit-judges"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — the Circuit Court Districts layer's metadata, which summarises the court order",
+          "url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.CIRCUIT_COURT_export.html"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Arkansas — statewide, all 75 counties"
       }
     },
     {

@@ -295,14 +295,29 @@ question.
 
 **Everything else**
 
-- Courts by district: Illinois, Wisconsin, Iowa and New York answer them.
-  Michigan, Minnesota and Kentucky ship no such layer, and all three have since
-  confirmed in their own notes that they elect judges by district, so the entry
-  is owed in each. Kentucky's reaches furthest: all four court levels elect by
-  district — Supreme Court, Court of Appeals, 57 circuits and 59 district-court
-  districts — and every one of those districts is a set of whole counties
-  written into statute, so the lines are buildable from statute text and county
-  boundaries the app already ships.
+- Courts by district: Illinois, Wisconsin, Iowa, New York, Michigan, Minnesota
+  and Kentucky answer them, and since 2026-10-16 so do Tennessee, South
+  Carolina, Oklahoma, Indiana and Arkansas. Each of those five states' court
+  districts is a set of whole counties, so each is drawn from the county lines
+  the app already ships, following the county lists in the most authoritative
+  record of them this project could read: South Carolina's statute, the
+  Oklahoma State Election Board's roster of officers, the Tennessee district
+  attorneys' own pages checked against a Comptroller map, the Indiana Court of
+  Appeals' own district map, and in Arkansas the Court of Appeals act as the
+  state's mapping office quotes it and the court system's own directory of
+  circuit judges, both held to the state's court layers. The statutes
+  themselves could not be read in the other four, which is recorded as
+  evidence for the publishing ask. South Carolina's circuits are
+  drawn although its General Assembly, not its voters, elects the circuit
+  judges: the circuit is the court's district, its judges must live in it, and
+  its voters elect its solicitor. Indiana draws the Court of Appeals' 1st, 2nd
+  and 3rd Districts, whose judges stand for retention only there; its trial
+  courts sit one circuit to a county, except one shared by Dearborn and Ohio, so
+  a trial-court map would redraw the county map. Arkansas draws both levels
+  that elect by district, its Court of Appeals districts and its 28 circuits;
+  five circuits are divided into election subdistricts by a federal court
+  order, which are not drawn, and their cards say so. North Carolina still
+  owes the entry.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
   statewide director districts and New York City's community education councils.
   Kentucky ships none and owes them: its thread has confirmed that every county
