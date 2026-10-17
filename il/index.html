@@ -16242,6 +16242,20 @@ function initChiExplorer() {
       return !!findFeatureContaining(geojson, point);
     });
   }
+  var loadJasperCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/jasper-county-outline.json", {}, 2);
+  });
+  function jasperCountyCoverage(point) {
+    return loadJasperCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadJasperBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/jasper-county-board-districts.json", {}, 2);
+  });
+  var loadJasperBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/jasper-county-board-members.json", {}, 2);
+  });
   var loadFayetteBoardDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/fayette-county-board-districts.json", {}, 2);
   });
@@ -16282,9 +16296,20 @@ function initChiExplorer() {
     function districtName(d) {
       return spec.named ? String(d) + " District" : "District " + String(d);
     }
+    // A roster keyed by district ("3"), or by lettered seat ("3A", "3B",
+    // "3C"), which is how Jasper's board page lists its members.
     function membersOf(roster, d) {
-      var e = roster && d != null ? roster[String(d)] : null;
-      return (e && e.members) || [];
+      if (!roster || d == null) return [];
+      var e = roster[String(d)];
+      if (e) return e.members || [];
+      var seat = new RegExp("^" + String(d) + "[A-Z]$");
+      var out = [];
+      Object.keys(roster).sort().forEach(function (k) {
+        if (seat.test(k) && roster[k] && roster[k].members) {
+          out = out.concat(roster[k].members);
+        }
+      });
+      return out;
     }
     return {
       key: spec.key,
@@ -16326,8 +16351,11 @@ function initChiExplorer() {
           wrap.appendChild(renderBodyIntro({
             title: spec.title,
             note: "This point is in " + String(result.area || "an area")
-              + ", which the county divides between "
-              + sharedDistrictLabel(result.between, spec.named).replace(/^District /, "Districts ")
+              + ", which the county divides "
+              + (result.between.length > 2 ? "among " : "between ")
+              + sharedDistrictLabel(result.between, spec.named)
+                  .replace(/^District /, "Districts ").replace(/ or ([^ ]+)( District)?$/, " and $1$2")
+                  .replace(/ District$/, " Districts")
               + "."
           }));
           if (result.note) {
@@ -30036,9 +30064,9 @@ function initChiExplorer() {
           }
         }
       },
-      // Fayette, Cumberland, Jersey and Lawrence — districts drawn where the
-      // county places whole precincts or townships, and the one shared area in
-      // each drawn as itself (build_partial_board_districts.py; the helper's
+      // Fayette, Cumberland, Jersey, Lawrence and Jasper — districts drawn where
+      // the county places whole precincts or townships, and the one shared area
+      // in each drawn as itself (build_partial_board_districts.py; the helper's
       // comment above says why). Members from each county's own board page.
       partialBoardEntry({
         key: "fayette", title: "Fayette County Board", coverage: fayetteCountyCoverage,
@@ -30063,6 +30091,12 @@ function initChiExplorer() {
         loadGeometry: loadLawrenceBoardDistricts, loadMembers: loadLawrenceBoardMembers,
         url: "https://lawrencecounty.illinois.gov/boards/county-board",
         seatsNote: "One member represents this district."
+      }),
+      partialBoardEntry({
+        key: "jasper", title: "Jasper County Board", coverage: jasperCountyCoverage,
+        loadGeometry: loadJasperBoardDistricts, loadMembers: loadJasperBoardMembers,
+        url: "https://jaspercountyillinois.gov/county-board/board-members/",
+        seatsNote: "Three members represent this district."
       })
     ]
   });
