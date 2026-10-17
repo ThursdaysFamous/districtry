@@ -14932,12 +14932,16 @@ function initIndianaExplorer() {
    * THE BOARDS COME FROM THE DEPARTMENT'S 2026 DIRECTORY
    * (in/scripts/build_in_conservancy_directors.py;
    * data/app/in-conservancy-directors.json), which the law requires each
-   * board's chair to keep current. Names and roles only: the directory also
-   * gives home towns, and for many districts a director's own address,
-   * telephone or e-mail as the district's contact, and none of that is
-   * carried. Staff a district hires (attorneys, managers, operators) are not
-   * shown either. A district that sent the department no list, or that is
-   * newer than the directory, says so rather than naming anyone.
+   * board's chair to keep current. Each person shows the telephone and e-mail
+   * the directory prints beside them, and the district shows its own; for
+   * many districts that contact is a director's own line or mailbox, which
+   * Adam's rulings of 2026-10-17 publish wherever a government source prints
+   * it. A value printed for two or more people, or equal to the district's
+   * own, is the district's and is not shown on a person. Home towns and
+   * addresses are never carried. Staff a district hires (attorneys,
+   * managers, operators) are not shown. A district that sent the department
+   * no list, or that is newer than the directory, says so rather than naming
+   * anyone.
    *
    * THE NAME ON THE CARD AND IN THE HOVER IS THE DIRECTORY'S where the district
    * has an entry there, and the map's otherwise. The two differ for 21 of the
@@ -15054,17 +15058,28 @@ function initIndianaExplorer() {
         var people = board && board.people ? board.people : [];
         // the directory's address is newer than the map's, so it comes first
         var site = board && board.url ? board.url : p.url;
+        // the district's own telephone and e-mail, as the directory gives them
         wrap.appendChild(renderLinkRow({
           title: conservancyName(p, result.boards),
+          phone: board && board.phone ? String(board.phone) : null,
+          email: board && board.email ? String(board.email) : null,
           links: site ? [{ label: "Website", url: String(site) }] : []
         }));
         if (people.length) {
           wrap.appendChild(renderSectionLabel("Board and officers"));
           wrap.appendChild(renderPersonRows(people.map(function (person) {
-            return {
+            var row = {
               name: person.vacant ? "Vacant" : String(person.name),
               badge: person.role != null ? String(person.role) : null
             };
+            if (!person.vacant) {
+              if (person.phone) row.phone = String(person.phone);
+              if (person.phonesExtra && person.phonesExtra.length) {
+                row.phonesExtra = person.phonesExtra.map(String);
+              }
+              if (person.email) row.email = String(person.email);
+            }
+            return row;
           })));
         }
         var rows = [];
