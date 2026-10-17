@@ -4,14 +4,17 @@ Final Website").
 Each town has its own page under a "TOWN OF <NAME>" heading. Every office has
 an upper-case heading of its own ("CASSIAN CHAIR", "CASSIAN SUPERVISORS",
 "CASSIAN CLERK"), and each officer under it takes a name line ending in a dot
-leader and a telephone number, then two lines of mailing address and e-mail,
-which are never read. Only the lines with a dot leader under the CHAIR and
-SUPERVISORS headings are used, and only the text before the leader. Read with
-the token on 2026-10-15 (robots.txt: 123 bytes, no rule matches the file)."""
+leader and a telephone number, then two lines of mailing address, the first
+ending in the officer's e-mail address. Only the officers under the CHAIR and
+SUPERVISORS headings are read: the text before the leader is the name, the
+number after it ships on the officer (Adam, 2026-10-17), and so does the
+e-mail address that ends the line below (Adam, 2026-10-17, "E-mails too");
+the mailing address is never read. Read with the token
+on 2026-10-15 (robots.txt: 123 bytes, no rule matches the file)."""
 
 import re
 
-from . import clean, split_blocks
+from . import clean, following_emails, person, phones_after_name, split_blocks
 
 COUNTY_FIPS = "085"
 COUNTY_NAME = "Oneida"
@@ -27,10 +30,8 @@ _LEADER = re.compile(r"\s*(\.{3,}|…+).*$")
 def _people(block):
     out = []
     role = None
-    for line in block.split("\n"):
-        line = line.strip()
-        if not line:
-            continue
+    lines = [ln.strip() for ln in block.split("\n") if ln.strip()]
+    for i, line in enumerate(lines):
         if _HEADING.match(line) and line.upper() == line:
             if re.search(r" CHAIR\w*$", line) and "VICE" not in line:
                 role = "Chairperson"
@@ -42,7 +43,8 @@ def _people(block):
         if role and _LEADER.search(line):
             name = clean(_LEADER.sub("", line))
             if name:
-                out.append({"name": name, "role": role})
+                out.append(person(name, role, phones_after_name(line, name),
+                                  emails=following_emails(lines, i + 1, limit=2)))
     return out
 
 

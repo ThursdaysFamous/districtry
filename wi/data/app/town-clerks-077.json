@@ -10,6 +10,9 @@
     "clerk": "Lisa Fenner",
     "municipality": "Crystal Lake",
     "phone": "920-229-7512",
+    "phonesExtra": [
+      "920-293-4331"
+    ],
     "recordUpdated": "2023-12-18",
     "url": "https://town.crystallake.wi.gov/"
   },
@@ -29,6 +32,9 @@
     "clerk": "Caroline Gemoll",
     "municipality": "Mecan",
     "phone": "920-295-6724",
+    "phonesExtra": [
+      "414-231-0801"
+    ],
     "recordUpdated": "2024-09-20",
     "url": "https://townofmecanwi.gov/"
   },
@@ -61,6 +67,9 @@
     "clerk": "Mary P Walters",
     "municipality": "Oxford",
     "phone": "608-586-4366",
+    "phonesExtra": [
+      "608-586-4551"
+    ],
     "recordUpdated": "2023-03-15",
     "url": "https://townofoxfordwi.com/"
   },
@@ -75,6 +84,9 @@
     "clerk": "Lois M Zellmer",
     "municipality": "Shields",
     "phone": "920-379-2660",
+    "phonesExtra": [
+      "608-297-9373"
+    ],
     "recordUpdated": "2023-12-11",
     "url": "http://www.townofshields-wi.gov/"
   },

@@ -771,6 +771,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }

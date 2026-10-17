@@ -7,7 +7,8 @@
       "436C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3068"
-    ]
+    ],
+    "phone": "home (864) 638-2970"
   },
   "2": {
     "name": "Adam L. Duncan",
@@ -37,7 +38,8 @@
       "518C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3138"
-    ]
+    ],
+    "phone": "business (864) 878-9832"
   },
   "5": {
     "name": "Neal A. Collins",
@@ -47,7 +49,8 @@
       "418C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6913"
-    ]
+    ],
+    "phone": "business (864) 350-4175"
   },
   "6": {
     "name": "April Cromer",
@@ -57,7 +60,8 @@
       "434B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6887"
-    ]
+    ],
+    "phone": "home (864) 844-1097"
   },
   "7": {
     "name": "Thomas Lee Gilreath",
@@ -107,6 +111,10 @@
       "436B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6934"
+    ],
+    "phone": "home (864) 446-3312",
+    "phonesExtra": [
+      "business (864) 366-2024"
     ]
   },
   "12": {
@@ -117,7 +125,8 @@
       "314D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6814"
-    ]
+    ],
+    "phone": "home (864) 396-0245"
   },
   "13": {
     "name": "John R. McCravy III",
@@ -127,7 +136,8 @@
       "420B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6939"
-    ]
+    ],
+    "phone": "business (864) 942-8501"
   },
   "14": {
     "name": "Luke S. Rankin",
@@ -147,7 +157,8 @@
       "432A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6890"
-    ]
+    ],
+    "phone": "business (843) 640-0130"
   },
   "16": {
     "name": "Mark N. Willis",
@@ -157,6 +168,10 @@
       "326C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6882"
+    ],
+    "phone": "home (864) 862-6179",
+    "phonesExtra": [
+      "business (864) 230-0135"
     ]
   },
   "17": {
@@ -187,7 +202,8 @@
       "534 Blatt Bldg.",
       "Columbia, 29201",
       "Phone: (803) 734-3141"
-    ]
+    ],
+    "phone": "business (864) 320-1946"
   },
   "20": {
     "name": "Stephen D. Frank",
@@ -227,6 +243,10 @@
       "414B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6791"
+    ],
+    "phone": "home (864) 233-6549",
+    "phonesExtra": [
+      "business (864) 294-2503"
     ]
   },
   "24": {
@@ -237,7 +257,8 @@
       "525 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3144"
-    ]
+    ],
+    "phone": "business (864) 298-0084"
   },
   "25": {
     "name": "Wendell K. Jones",
@@ -247,7 +268,8 @@
       "414C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6941"
-    ]
+    ],
+    "phone": "home (864) 704-3306"
   },
   "26": {
     "name": "David Martin",
@@ -287,6 +309,10 @@
       "503A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3073"
+    ],
+    "phone": "home (864) 487-2121",
+    "phonesExtra": [
+      "business (864) 761-6353"
     ]
   },
   "30": {
@@ -297,7 +323,8 @@
       "402D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6885"
-    ]
+    ],
+    "phone": "business (864) 809-3501"
   },
   "31": {
     "name": "Rosalyn D. Henderson-Myers, Ph.D.",
@@ -307,6 +334,10 @@
       "530C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6965"
+    ],
+    "phone": "home (864) 707-5384",
+    "phonesExtra": [
+      "business (864) 345-2221"
     ]
   },
   "32": {
@@ -327,7 +358,8 @@
       "402C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6893"
-    ]
+    ],
+    "phone": "home (864) 680-0441"
   },
   "34": {
     "name": "Sarita L. Edgerton",
@@ -347,7 +379,8 @@
       "326A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6894"
-    ]
+    ],
+    "phone": "business (864) 303-2726"
   },
   "36": {
     "name": "Robert J. \"Rob\" Harris",
@@ -357,7 +390,8 @@
       "434D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6788"
-    ]
+    ],
+    "phone": "home (610) 392-7358"
   },
   "37": {
     "name": "Steven Wayne Long",
@@ -387,7 +421,8 @@
       "323C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6938"
-    ]
+    ],
+    "phone": "home (803) 685-5576"
   },
   "40": {
     "name": "Joseph S. \"Joe\" White",
@@ -397,7 +432,8 @@
       "320D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6951"
-    ]
+    ],
+    "phone": "home (803) 429-9423"
   },
   "41": {
     "name": "Annie E. McDaniel",
@@ -407,6 +443,10 @@
       "330C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6789"
+    ],
+    "phone": "home (803) 635-6894",
+    "phonesExtra": [
+      "business (803) 960-5782"
     ]
   },
   "42": {
@@ -427,6 +467,10 @@
       "306C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6972"
+    ],
+    "phone": "home (803) 377-1284",
+    "phonesExtra": [
+      "business (803) 366-3535"
     ]
   },
   "44": {
@@ -437,7 +481,8 @@
       "404A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6937"
-    ]
+    ],
+    "phone": "home (704) 497-7944"
   },
   "45": {
     "name": "Brandon Newton",
@@ -467,7 +512,8 @@
       "505 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-2701"
-    ]
+    ],
+    "phone": "business (803) 324-7574"
   },
   "48": {
     "name": "Brandon Guffey",
@@ -477,7 +523,8 @@
       "306A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6888"
-    ]
+    ],
+    "phone": "home (803) 810-7009"
   },
   "49": {
     "name": "John Richard C. King",
@@ -487,7 +534,8 @@
       "309B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6873"
-    ]
+    ],
+    "phone": "home (803) 980-5454"
   },
   "50": {
     "name": "Keishan M. Scott",
@@ -507,6 +555,10 @@
       "308C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3102"
+    ],
+    "phone": "home (803) 775-4228",
+    "phonesExtra": [
+      "business (803) 775-5856"
     ]
   },
   "52": {
@@ -517,7 +569,8 @@
       "330B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6818"
-    ]
+    ],
+    "phone": "home (803) 317-2192"
   },
   "53": {
     "name": "Richard L. \"Richie\" Yow",
@@ -527,7 +580,8 @@
       "327C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6949"
-    ]
+    ],
+    "phone": "business (843) 623-5001"
   },
   "54": {
     "name": "Jason Luck",
@@ -547,6 +601,10 @@
       "333C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3099"
+    ],
+    "phone": "home (843) 774-6125",
+    "phonesExtra": [
+      "business (843) 841-3679"
     ]
   },
   "56": {
@@ -577,7 +635,8 @@
       "228 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6810"
-    ]
+    ],
+    "phone": "business (843) 488-5333"
   },
   "59": {
     "name": "Terry Alexander",
@@ -587,7 +646,8 @@
       "314C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3004"
-    ]
+    ],
+    "phone": "home (843) 665-7321"
   },
   "60": {
     "name": "Phillip D. Lowe",
@@ -607,7 +667,8 @@
       "422A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6926"
-    ]
+    ],
+    "phone": "business (843) 222-1358"
   },
   "62": {
     "name": "Robert Q. Williams",
@@ -617,6 +678,10 @@
       "328C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3142"
+    ],
+    "phone": "home (843) 395-9408",
+    "phonesExtra": [
+      "business (843) 413-2791"
     ]
   },
   "63": {
@@ -627,7 +692,8 @@
       "519B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3114"
-    ]
+    ],
+    "phone": "business (843) 662-4474"
   },
   "64": {
     "name": "Fawn M. Pedalino",
@@ -637,7 +703,8 @@
       "418D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6929"
-    ]
+    ],
+    "phone": "home (803) 566-0120"
   },
   "65": {
     "name": "Cody T. Mitchell",
@@ -647,7 +714,8 @@
       "422B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6964"
-    ]
+    ],
+    "phone": "home (803) 427-6487"
   },
   "66": {
     "name": "Jackie R. Terribile",
@@ -677,7 +745,8 @@
       "522B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6933"
-    ]
+    ],
+    "phone": "business (843) 915-5130"
   },
   "69": {
     "name": "Chris Wooten",
@@ -687,7 +756,8 @@
       "323B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6897"
-    ]
+    ],
+    "phone": "home (803) 609-1084"
   },
   "70": {
     "name": "Robert T. Reese",
@@ -707,7 +777,8 @@
       "320B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-2969"
-    ]
+    ],
+    "phone": "home (803) 834-4613"
   },
   "72": {
     "name": "Seth Rose",
@@ -717,6 +788,10 @@
       "532D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6971"
+    ],
+    "phone": "home (803) 361-2360",
+    "phonesExtra": [
+      "business (803) 851-4884"
     ]
   },
   "73": {
@@ -727,7 +802,8 @@
       "432B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3061"
-    ]
+    ],
+    "phone": "home (803) 771-7701"
   },
   "74": {
     "name": "J. Todd Rutherford",
@@ -737,7 +813,8 @@
       "335B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-9441"
-    ]
+    ],
+    "phone": "business (803) 256-3003"
   },
   "75": {
     "name": "Heather Bauer",
@@ -767,6 +844,10 @@
       "335D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6875"
+    ],
+    "phone": "home (803) 470-3961",
+    "phonesExtra": [
+      "business (803) 900-4878"
     ]
   },
   "78": {
@@ -777,7 +858,8 @@
       "532C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6940"
-    ]
+    ],
+    "phone": "business (803) 799-7900"
   },
   "79": {
     "name": "Hamilton R. Grant",
@@ -817,7 +899,8 @@
       "416C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3033"
-    ]
+    ],
+    "phone": "home (803) 649-6167"
   },
   "83": {
     "name": "William M. \"Bill\" Hixon",
@@ -827,7 +910,8 @@
       "411 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3022"
-    ]
+    ],
+    "phone": "business (803) 279-8855"
   },
   "84": {
     "name": "Melissa Lackey Oremus",
@@ -847,7 +931,8 @@
       "320A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6963"
-    ]
+    ],
+    "phone": "home (803) 873-8967"
   },
   "86": {
     "name": "Bill Taylor",
@@ -857,7 +942,8 @@
       "416B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6923"
-    ]
+    ],
+    "phone": "business (803) 270-2012"
   },
   "87": {
     "name": "Paula Rawl Calhoon",
@@ -907,7 +993,8 @@
       "404B Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-2829"
-    ]
+    ],
+    "phone": "home (803) 259-1178"
   },
   "92": {
     "name": "Brandon L. Cox",
@@ -927,6 +1014,10 @@
       "304D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6945"
+    ],
+    "phone": "home (803) 531-1158",
+    "phonesExtra": [
+      "business (803) 533-7976"
     ]
   },
   "94": {
@@ -947,6 +1038,10 @@
       "309C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-2809"
+    ],
+    "phone": "home (803) 531-1257",
+    "phonesExtra": [
+      "business (803) 534-2448"
     ]
   },
   "96": {
@@ -957,6 +1052,10 @@
       "320C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6728"
+    ],
+    "phone": "home (803) 530-3084",
+    "phonesExtra": [
+      "business (803) 724-5005"
     ]
   },
   "97": {
@@ -997,7 +1096,8 @@
       "425 Blatt Building",
       "Columbia 29201",
       "Phone: (803) 734-3046"
-    ]
+    ],
+    "phone": "home (843) 729-9243"
   },
   "101": {
     "name": "Roger K. Kirby",
@@ -1027,7 +1127,8 @@
       "304C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-2933"
-    ]
+    ],
+    "phone": "home (843) 546-5332"
   },
   "104": {
     "name": "William H. Bailey",
@@ -1037,7 +1138,8 @@
       "530D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6918"
-    ]
+    ],
+    "phone": "home (843) 458-0844"
   },
   "105": {
     "name": "Kevin Hardee",
@@ -1047,7 +1149,8 @@
       "404C Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6796"
-    ]
+    ],
+    "phone": "home (843) 455-3567"
   },
   "106": {
     "name": "Thomas Duval \"Val\" Guest, Jr.",
@@ -1057,7 +1160,8 @@
       "522A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6781"
-    ]
+    ],
+    "phone": "home (843) 222-4131"
   },
   "107": {
     "name": "T. Case Brittain, Jr.",
@@ -1067,7 +1171,8 @@
       "522D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6727"
-    ]
+    ],
+    "phone": "home (843) 907-3191"
   },
   "108": {
     "name": "Lee Hewitt",
@@ -1077,7 +1182,8 @@
       "327D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6927"
-    ]
+    ],
+    "phone": "business (843) 652-4236"
   },
   "109": {
     "name": "Tiffany R. Spann-Wilder",
@@ -1087,7 +1193,8 @@
       "328B Blatt Bldg.",
       "Columbia, 29201",
       "Phone: (803) 212-6721"
-    ]
+    ],
+    "phone": "business (843) 266-7792"
   },
   "110": {
     "name": "Thomas F. \"Tom\" Hartnett, Jr.",
@@ -1107,6 +1214,10 @@
       "328D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6793"
+    ],
+    "phone": "home (843) 402-9710",
+    "phonesExtra": [
+      "business (843) 209-3123"
     ]
   },
   "112": {
@@ -1117,7 +1228,8 @@
       "308D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6880"
-    ]
+    ],
+    "phone": "home (843) 822-6363"
   },
   "113": {
     "name": "Courtney S. Waters",
@@ -1137,7 +1249,8 @@
       "310D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6948"
-    ]
+    ],
+    "phone": "home (843) 214-5174"
   },
   "115": {
     "name": "Elizabeth \"Spencer\" Wetmore",
@@ -1167,7 +1280,8 @@
       "434A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6879"
-    ]
+    ],
+    "phone": "home (843) 300-7193"
   },
   "118": {
     "name": "William G. \"Bill\" Herbkersman",
@@ -1177,7 +1291,8 @@
       "407 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3015"
-    ]
+    ],
+    "phone": "business (843) 255-2264"
   },
   "119": {
     "name": "Leonidas E. \"Leon\" Stavrinakis",
@@ -1187,7 +1302,8 @@
       "532A Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3039"
-    ]
+    ],
+    "phone": "business (843) 724-1060"
   },
   "120": {
     "name": "Wm. Weston J. Newton",
@@ -1197,7 +1313,8 @@
       "512 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3120"
-    ]
+    ],
+    "phone": "business (843) 706-6111"
   },
   "121": {
     "name": "Michael F. Rivers, Sr.",
@@ -1217,7 +1334,8 @@
       "432D Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6974"
-    ]
+    ],
+    "phone": "home (803) 346-9576"
   },
   "123": {
     "name": "Jeff Bradley",
@@ -1227,7 +1345,8 @@
       "202 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 212-6815"
-    ]
+    ],
+    "phone": "business (843) 342-6918"
   },
   "124": {
     "name": "Shannon S. Erickson",
@@ -1237,6 +1356,7 @@
       "429 Blatt Bldg.",
       "Columbia 29201",
       "Phone: (803) 734-3053"
-    ]
+    ],
+    "phone": "business (843) 255-2260"
   }
 }

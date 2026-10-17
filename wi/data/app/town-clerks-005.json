@@ -3,6 +3,9 @@
     "clerk": "Kristen Moen",
     "municipality": "Almena",
     "phone": "715-308-3244",
+    "phonesExtra": [
+      "715-357-6016"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "http://townofalmena.com/"
   },
@@ -53,6 +56,9 @@
     "clerk": "Arlene Mae Frisinger",
     "municipality": "Crystal Lake",
     "phone": "715-822-4612",
+    "phonesExtra": [
+      "715-822-8039"
+    ],
     "recordUpdated": "2025-03-04"
   },
   "5500518050": {
@@ -78,6 +84,9 @@
     "clerk": "Victor Drost",
     "municipality": "Doyle",
     "phone": "715-651-8157",
+    "phonesExtra": [
+      "715-234-4482"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "http://www.townofdoyle.com"
   },
@@ -85,6 +94,9 @@
     "clerk": "Danielle Maxwell-Parker",
     "municipality": "Lakeland",
     "phone": "715-822-2775",
+    "phonesExtra": [
+      "715-529-2741"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://www.townoflakeland.wi.gov/"
   },
@@ -98,6 +110,9 @@
     "clerk": "Danielle E Maxwell-Parker",
     "municipality": "Maple Plain",
     "phone": "715-822-8913",
+    "phonesExtra": [
+      "715-529-2741"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://www.townofmapleplain.wi.gov/"
   },
@@ -111,6 +126,9 @@
     "clerk": "Vicki Buck",
     "municipality": "Prairie Farm",
     "phone": "715-495-2798",
+    "phonesExtra": [
+      "715-455-1474"
+    ],
     "recordUpdated": "2026-06-26"
   },
   "5500565200": {
@@ -160,6 +178,9 @@
     "clerk": "Kathryn Steffen",
     "municipality": "Turtle Lake",
     "phone": "715-357-0045",
+    "phonesExtra": [
+      "715-781-4993"
+    ],
     "recordUpdated": "2023-12-28"
   },
   "5500582375": {

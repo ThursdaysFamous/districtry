@@ -25,13 +25,22 @@ whose name and link disagree raises.
 
 E-mail: each member's link is a per-member county address
 (first.last@claibornecountytn.gov) and is recorded only when it is on that
-domain and its local part carries the member's surname.
+domain and its local part carries the member's surname. An address on another
+domain in a member's own block is kept as printed when it prints no county one,
+under Adam's ruling of 2026-10-17 that an e-mail address a government page
+prints beside an official ships too.
 
 PRIVACY: every block prints the member's home street address or post office
-box, town and ZIP and a personal phone (Mitchell Cosby's adds a second one
-marked "(c)"). None of it is read: only the name line and the e-mail link.
-The commission office's address and phone at the top of the page belong to
-no member and are not read either.
+box, town and ZIP and a phone (Mitchell Cosby's adds a second one marked
+"(c)"). The phones are recorded as printed, the "(c)" written out as "cell" in
+front of its number, under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is; only
+telephone-shaped numbers are read from a block, never its address, town or
+ZIP. One block prints the area code (968), which is not in use; it is kept as
+printed, since nothing here can say which digits are wrong. The commission
+office's address, phone and fax at the top of the page belong to no member:
+the address is not read and the two numbers are OFFICE_LINES, which never
+land on a member.
 
 Roles: the page's header still reads "Claiborne County Commission Chairman:
 Mike Campbell", but Mike Campbell is not on this roster (he was a District 3
@@ -64,13 +73,15 @@ establish: the districts of the eight other members new this term (D1 Cheek,
 Fultz, King; D3 Coffey; D6 Richard Smith; D8 Evans, Russell; D9 Jenkins) rest
 on this page alone."""
 import re
-from ._common import txt, mailtos, member, district_number
+from ._common import txt, mailtos, member, district_number, read_phones, other_email
 
 COUNTY = "Claiborne"; FIPS = "025"
 DOMAINS = ("claibornecountytn.gov",)
 URLS = ["https://claibornecountytn.gov/countyoffices/county-commission"]
 SEATS = {"1": 3, "2": 3, "3": 3, "4": 2, "5": 1, "6": 3, "7": 3, "8": 2, "9": 1}
 AT_LARGE = 0
+# The commission office's phone and fax, printed at the top of the page.
+OFFICE_LINES = ("423-626-5236", "423-626-1661")
 
 START = "COUNTY COMMISSIONERS AND DISTRICTS"
 HEAD_RE = re.compile(r"<p\b[^>]*>\s*<strong>\s*DISTRICT\s+(\d{1,2})\s*</strong>\s*</p>", re.I)
@@ -146,7 +157,9 @@ def read_block(d, blk):
         if surname(name) not in re.sub(r"[^a-z]", "", local):
             raise ValueError("District %s: county address %r is not %r's" % (d, addr, name))
         email = addr
-    return member(name, email=email), terms[0]
+    else:
+        email = other_email(blk, DOMAINS)
+    return member(name, email=email, phones=read_phones(blk)), terms[0]
 
 
 def parse(pages):

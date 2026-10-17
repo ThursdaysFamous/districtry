@@ -11959,7 +11959,8 @@ function initMississippiExplorer() {
    *   - mailto:/tel: hrefs are built HERE from a raw address/number — an
    *     email address is never printed (the "Email" label is the link), and
    *     a phone number displays with non-breaking hyphens while its tel:
-   *     href keeps only dialable characters.
+   *     href keeps only dialable characters, and stops where an extension
+   *     begins.
    * A render() returns one wrapper element with class "card-flush"; the
    * styles-card-v2 rules key row padding/borders off that marker. */
   function cardEl(tag, className, text) {
@@ -11978,21 +11979,37 @@ function initMississippiExplorer() {
     a.textContent = String(label || safe);
     return a;
   }
+  function cardPhoneDial(phone) {
+    // What a tel: link dials for one printed number: its digits (and a
+    // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
+    // "x 236"). Run onto the end of the number, an extension's digits would
+    // dial a different number; the extension stays in the text, where the
+    // reader sees it.
+    var s = String(phone);
+    var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+    if (m) s = s.slice(0, m.index + m[1].length);
+    return s.replace(/[^\d+]/g, "");
+  }
   function cardPhoneLink(phone) {
-    var dial = String(phone).replace(/[^\d+]/g, "");
+    var dial = cardPhoneDial(phone);
     if (!dial) return null;
     var a = cardEl("a", "card-phone", String(phone).replace(/-/g, "‑"));
     a.href = "tel:" + dial;
     return a;
   }
   function cardContactLine(spec) {
-    // spec: { phone?, email?, links?: [{label, url}] } -> one wrapping line of
-    // phone / Email / external links separated by middots; null when empty.
+    // spec: { phone?, phonesExtra?: [string], email?, links?: [{label, url}] }
+    // -> one wrapping line of phones / Email / external links separated by
+    // middots; null when empty. phonesExtra are further numbers the source
+    // prints for the same person, each as printed: a label the source gives
+    // ("cell 519-3104") stays in the text, and only the digits reach the
+    // tel: href, so a label never changes the number dialled.
     var items = [];
-    if (spec.phone) {
-      var p = cardPhoneLink(spec.phone);
+    [spec.phone].concat(spec.phonesExtra || []).forEach(function (phone) {
+      if (!phone) return;
+      var p = cardPhoneLink(phone);
       if (p) items.push(p);
-    }
+    });
     if (spec.email) {
       var e = document.createElement("a");
       e.href = "mailto:" + String(spec.email);
@@ -12053,8 +12070,8 @@ function initMississippiExplorer() {
     return el;
   }
   function renderPersonRows(people, opts) {
-    // people: [{ name, badge?, note?, phone?, email?, links?, details?:
-    // {label, items}, detailsOpen? }]. A person with details renders as a
+    // people: [{ name, badge?, note?, phone?, phonesExtra?, email?, links?,
+    // details?: {label, items}, detailsOpen? }]. A person with details renders as a
     // native <details> expander; absent fields render nothing (no
     // placeholders, no guessed officeholders — honesty rules).
     var tinted = opts && opts.tinted;
@@ -13276,8 +13293,9 @@ function initMississippiExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, districtOffice?, capitolOffice? }; office fields only
-    // render when the roster supplies them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
+    // districtOffice?, capitolOffice? }; office fields only render when the
+    // roster supplies them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -13446,6 +13464,25 @@ function initMississippiExplorer() {
         }
         var person = { name: String(member.name) };
         if (member.party) person.badge = String(member.party);
+        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+        // the chamber prints for the member apart from the office blocks
+        // below, such as a home or cell line. Published since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is shown even where it may be the official's own; a label
+        // the source prints ("home 803-555-0100") rides inside the string.
+        if (member.phone) person.phone = String(member.phone);
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
+        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+        // 2026-10-17 this card showed no legislator's address at all, though
+        // eight states' rosters carried one for nearly every seat. Measured
+        // that day, every one of them is the chamber's own mailbox except
+        // fifteen Arkansas members' personal addresses, which the
+        // legislature's own member pages print and which Adam chose to show
+        // ("E-mails too"). A roster reads it from the legislature's pages or
+        // from Open States' compilation of them.
+        if (member.email) person.email = String(member.email);
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
@@ -13614,17 +13651,21 @@ function initMississippiExplorer() {
    * ms/scripts/build_ms_county_officials.py and checked weekly; the
    * directory itself is published once a year).
    *
-   * THE BOARD'S ADDRESS AND TELEPHONE, NEVER A SUPERVISOR'S OWN. The
-   * directory prints an address and a telephone beside each supervisor, and
-   * in some counties those are the supervisor's own, which may be a home.
-   * The builder keeps one only where at least three of the five supervisors
-   * print the same one, so this card can only ever show a shared office.
+   * THE BOARD'S ADDRESS, NEVER A SUPERVISOR'S OWN; EACH SUPERVISOR'S OWN
+   * TELEPHONE. The directory prints an address and a telephone beside each
+   * supervisor, and in some counties those are the supervisor's own, which
+   * may be a home. The builder keeps an address only where at least three of
+   * the five supervisors print the same one, so this card can only ever show
+   * a shared office. A telephone the directory prints for one supervisor is
+   * shown on that supervisor's row, since Adam's ruling of 2026-10-17 that a
+   * number a government source prints beside an official is published even
+   * where it may be the official's own; the shared one is the board's.
    *
-   * THE ELECTION COMMISSIONERS, BY NAME ONLY. The same directory names the
-   * county's five election commissioners, one elected from each supervisor
-   * district, and prints each one's own address, which may be a home. The
-   * builder keeps nothing from those lines but the name, so this card names
-   * them and can show no contact for them.
+   * THE ELECTION COMMISSIONERS, BY NAME AND TELEPHONE. The same directory
+   * names the county's five election commissioners, one elected from each
+   * supervisor district, and prints each one's own address, which may be a
+   * home, and on some lines a telephone after it. The builder keeps the name
+   * and that telephone and never the address.
    *
    * WHICH OF THE FIVE REPRESENTS THE POINT is the County Supervisor District
    * layer's answer, and it answers only where a county's current lines are
@@ -13675,7 +13716,9 @@ function initMississippiExplorer() {
       "every week.";
   }
   // A list of five seats, as person rows and the seats the directory prints
-  // as vacant, each named in `label`'s word ("District 3", "Beat 3").
+  // as vacant, each named in `label`'s word ("District 3", "Beat 3"). A
+  // person's own telephone is the one the directory prints beside that person
+  // and not the board's, which the board's office block shows instead.
   function msSeats(seats, label, badge) {
     var people = [];
     var vacant = [];
@@ -13686,7 +13729,8 @@ function initMississippiExplorer() {
         return;
       }
       if (!s.name) return;
-      people.push({ name: String(s.name), badge: badge, note: msDistrictName(label, s.district) });
+      people.push({ name: String(s.name), badge: badge, note: msDistrictName(label, s.district),
+                    phone: s.phone ? String(s.phone) : null });
     });
     return { people: people, vacant: vacant };
   }
@@ -13786,8 +13830,8 @@ function initMississippiExplorer() {
       if (board.vacant.length) wrap.appendChild(renderFieldStack([msVacancyField(board.vacant)]));
       var office = msBoardOffice(o);
       if (office) wrap.appendChild(office);
-      // Names only: the directory prints each commissioner's own address,
-      // and the builder keeps nothing else from the line.
+      // Names and, where the directory prints one, the commissioner's own
+      // telephone; never the address it prints between them.
       var commission = msSeats(o.electionCommissioners, o.commissionerLabel,
         "Election commissioner");
       var hasCommission = commission.people.length > 0 || commission.vacant.length > 0;
@@ -13963,7 +14007,8 @@ function initMississippiExplorer() {
           value: "This seat is listed as vacant in the Secretary of State's directory."
         });
       } else if (seat && seat.name) {
-        people.push({ name: String(seat.name), badge: "Supervisor" });
+        people.push({ name: String(seat.name), badge: "Supervisor",
+                      phone: seat.phone ? String(seat.phone) : null });
       } else {
         notes.push({
           label: "Supervisor",
@@ -13979,7 +14024,8 @@ function initMississippiExplorer() {
           value: "This seat is listed as vacant in the Secretary of State's directory."
         });
       } else if (commissioner && commissioner.name) {
-        people.push({ name: String(commissioner.name), badge: "Election commissioner" });
+        people.push({ name: String(commissioner.name), badge: "Election commissioner",
+                      phone: commissioner.phone ? String(commissioner.phone) : null });
       }
       if (people.length) wrap.appendChild(renderPersonRows(people));
       if (notes.length) wrap.appendChild(renderFieldStack(notes));
@@ -15100,6 +15146,10 @@ function initMississippiExplorer() {
   function msJudgeRow(member) {
     var row = { name: String(member.name) };
     if (member.role) row.badge = String(member.role);
+    // A chancellor's or circuit judge's own number from the court's list, read
+    // since 2026-10-17; a number the list prints for two judges is carried on
+    // neither (ms/scripts/build_ms_judges.py).
+    if (member.phone) row.phone = String(member.phone);
     var notes = [];
     if (member.seat) notes.push(String(member.seat));
     if (member.note) notes.push(String(member.note));

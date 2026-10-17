@@ -3,6 +3,9 @@
     "clerk": "Amy Veenendaal",
     "municipality": "Bergen",
     "phone": "715-370-2884",
+    "phonesExtra": [
+      "715-693-5666"
+    ],
     "recordUpdated": "2025-12-09",
     "url": "https://townofbergenwi.gov/"
   },
@@ -10,6 +13,9 @@
     "clerk": "Connie Nowak",
     "municipality": "Berlin",
     "phone": "715-432-3837",
+    "phonesExtra": [
+      "715-675-1577"
+    ],
     "recordUpdated": "2023-12-29"
   },
   "5507307000": {
@@ -17,6 +23,9 @@
     "deputyClerk": "Betty Auner",
     "municipality": "Bern",
     "phone": "715-560-0864",
+    "phonesExtra": [
+      "715-257-9310"
+    ],
     "recordUpdated": "2023-12-28"
   },
   "5507307125": {
@@ -78,6 +87,9 @@
     "clerk": "Gerald W Fitzgerald",
     "municipality": "Emmet",
     "phone": "715-693-2847",
+    "phonesExtra": [
+      "715-573-8726"
+    ],
     "recordUpdated": "2023-11-19",
     "url": "http://www.townofemmet.com"
   },
@@ -93,6 +105,9 @@
     "deputyClerk": "Ralph Kizewski",
     "municipality": "Franzen",
     "phone": "715-470-7426",
+    "phonesExtra": [
+      "715-454-6677"
+    ],
     "recordUpdated": "2026-07-28",
     "url": "https://townoffranzenwi.gov/"
   },
@@ -166,6 +181,9 @@
     "clerk": "Norma Pentico",
     "municipality": "McMillan",
     "phone": "715-389-1338",
+    "phonesExtra": [
+      "253-439-7286"
+    ],
     "recordUpdated": "2026-05-28",
     "url": "https://www.townofmcmillan.gov/"
   },
@@ -173,6 +191,9 @@
     "clerk": "Kelley Blume",
     "municipality": "Marathon",
     "phone": "715-443-3082",
+    "phonesExtra": [
+      "715-551-1825"
+    ],
     "recordUpdated": "2023-11-02"
   },
   "5507354525": {
@@ -213,6 +234,9 @@
     "clerk": "Jody N Davis",
     "municipality": "Rietbrock",
     "phone": "715-257-7014",
+    "phonesExtra": [
+      "715-321-4333"
+    ],
     "recordUpdated": "2023-12-01"
   },
   "5507368075": {
@@ -247,6 +271,9 @@
     "deputyClerk": "Amy Meyer",
     "municipality": "Wausau",
     "phone": "715-212-1672",
+    "phonesExtra": [
+      "715-571-4586"
+    ],
     "recordUpdated": "2026-02-09",
     "url": "https://www.townofwausau.com/"
   },
@@ -254,6 +281,9 @@
     "clerk": "Robin Huempfner",
     "municipality": "Weston",
     "phone": "715-241-8209",
+    "phonesExtra": [
+      "715-842-1634"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://townofwestonwi.com/"
   },
@@ -261,6 +291,9 @@
     "clerk": "Diane Drinsinger",
     "municipality": "Wien",
     "phone": "715-212-9269",
+    "phonesExtra": [
+      "715-352-2252"
+    ],
     "recordUpdated": "2023-11-02"
   },
   "_source": {

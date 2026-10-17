@@ -57,7 +57,7 @@ different thing from one it failed.
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 17 | all | 11 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 19 | all | 13 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 18 | all | 10 of 14 levels |
-| wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 266 | all | 13 of 14 levels |
+| wi | **EAM·** | 72 | 72/72 | 1590 | 1,576 | all | 266 | all | 13 of 14 levels |
 
 § Examined in part by a record covering the whole state rather
 than county by county. That is a weaker statement than a record

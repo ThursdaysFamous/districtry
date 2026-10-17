@@ -4,7 +4,9 @@ This is the edition the survey of 2026-10-15 found on the county's site; a
 2026-2027 edition, when it is posted, will need its own url here. Each town is headed "TOWN OF <NAME>", followed by the town
 hall's details and then one office per line, "Chairperson <name> ....
 (telephone)" or "Supervisor <name> .... (telephone)", with the officer's home
-address on the next line. Read with the token on 2026-10-15 (robots.txt: 192
+address on the next line. The number after the leader ships on the officer
+(Adam, 2026-10-17; `role_then_name`); the home address is not read. Read
+with the token on 2026-10-15 (robots.txt: 192
 bytes, no rule matches the file)."""
 
 import re

@@ -4,7 +4,7 @@
       {
         "name": "Myrna Molina",
         "party": "(D)",
-        "phone": "630-444-1201",
+        "phone": "office 630-444-1201",
         "email": "mmolina@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=10"
       }
@@ -16,7 +16,7 @@
       {
         "name": "Kimberley Young",
         "party": "(D)",
-        "phone": "630-444-1202",
+        "phone": "office 630-444-1202",
         "email": "kyoung@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=8"
       }
@@ -28,7 +28,7 @@
       {
         "name": "Anita Lewis",
         "party": "(D)",
-        "phone": "630-444-1203",
+        "phone": "office 630-444-1203",
         "email": "alewis@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=11"
       }
@@ -40,7 +40,10 @@
       {
         "name": "Mavis Bates",
         "party": "(D)",
-        "phone": "630-444-1204",
+        "phone": "office 630-444-1204",
+        "phonesExtra": [
+          "cell 630-605-9244"
+        ],
         "email": "mbates@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=12"
       }
@@ -52,7 +55,10 @@
       {
         "name": "Bill Lenert",
         "party": "(R)",
-        "phone": "630-444-1205",
+        "phone": "office 630-444-1205",
+        "phonesExtra": [
+          "cell 630-319-4947"
+        ],
         "email": "blenert@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=13"
       }
@@ -64,7 +70,7 @@
       {
         "name": "Sonia Garcia",
         "party": "(D)",
-        "phone": "630-444-1206",
+        "phone": "office 630-444-1206",
         "email": "sgarcia@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=7"
       }
@@ -76,7 +82,7 @@
       {
         "name": "Alex Arroyo",
         "party": "(D)",
-        "phone": "630-444-1207",
+        "phone": "office 630-444-1207",
         "email": "AArroyo@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=14"
       }
@@ -88,7 +94,10 @@
       {
         "name": "Michelle Gumz",
         "party": "(D)",
-        "phone": "630-444-1208",
+        "phone": "office 630-444-1208",
+        "phonesExtra": [
+          "cell 630-803-2863"
+        ],
         "email": "mgumz@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=15"
       }
@@ -100,7 +109,7 @@
       {
         "name": "Jennifer Abbatacola",
         "party": "(R)",
-        "phone": "630-444-1209",
+        "phone": "office 630-444-1209",
         "email": "jabbatacola@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=16"
       }
@@ -112,7 +121,7 @@
       {
         "name": "Bill Tarver",
         "party": "(D)",
-        "phone": "630-444-1210",
+        "phone": "office 630-444-1210",
         "email": "BTarver@KaneCoBoard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=17"
       }
@@ -124,7 +133,7 @@
       {
         "name": "Leslie Juby",
         "party": "(D)",
-        "phone": "630-444-1211",
+        "phone": "office 630-444-1211",
         "email": "LJuby@KaneCoBoard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=18"
       }
@@ -136,7 +145,7 @@
       {
         "name": "Bill Roth",
         "party": "(R)",
-        "phone": "630-444-1212",
+        "phone": "office 630-444-1212",
         "email": "BRoth@KaneCoBoard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=9"
       }
@@ -148,7 +157,7 @@
       {
         "name": "Michael Linder",
         "party": "(D)",
-        "phone": "630-444-1213",
+        "phone": "office 630-444-1213",
         "email": "MLinder@KaneCoBoard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=19"
       }
@@ -160,7 +169,7 @@
       {
         "name": "Jon Gripe",
         "party": "(R)",
-        "phone": "630-444-1214",
+        "phone": "office 630-444-1214",
         "email": "jgripe@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=4"
       }
@@ -172,7 +181,7 @@
       {
         "name": "David Young",
         "party": "(R)",
-        "phone": "630-444-1215",
+        "phone": "office 630-444-1215",
         "email": "DYoung@KaneCoBoard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=20"
       }
@@ -184,7 +193,7 @@
       {
         "name": "Ted Penesis",
         "party": "(D)",
-        "phone": "630-444-1216",
+        "phone": "office 630-444-1216",
         "email": "tpenesis@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=21"
       }
@@ -196,7 +205,11 @@
       {
         "name": "Deborah Allan",
         "party": "(D)",
-        "phone": "630-444-1217",
+        "phone": "office 630-444-1217",
+        "phonesExtra": [
+          "home 847-917-5229",
+          "work 847-605-0108"
+        ],
         "email": "dallan@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=2"
       }
@@ -208,7 +221,7 @@
       {
         "name": "Rick Williams",
         "party": "(R)",
-        "phone": "630-444-1218",
+        "phone": "office 630-444-1218",
         "email": "RWilliams@KaneCoBoard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=22"
       }
@@ -220,7 +233,7 @@
       {
         "name": "Mohammad \"Mo\" Iqbal",
         "party": "(D)",
-        "phone": "630-444-1219",
+        "phone": "office 630-444-1219",
         "email": "mIqbal@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=23"
       }
@@ -232,7 +245,7 @@
       {
         "name": "Cherryl Fritz Strathmann",
         "party": "(D)",
-        "phone": "630-444-1220",
+        "phone": "office 630-444-1220",
         "email": "cstrathmann@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=5"
       }
@@ -244,7 +257,7 @@
       {
         "name": "Clifford Surges",
         "party": "(R)",
-        "phone": "630-444-1221",
+        "phone": "office 630-444-1221",
         "email": "csurges@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=6"
       }
@@ -256,7 +269,7 @@
       {
         "name": "Verner (Vern) Tepe",
         "party": "(D)",
-        "phone": "630-444-1222",
+        "phone": "office 630-444-1222",
         "email": "vtepe@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=24"
       }
@@ -268,7 +281,10 @@
       {
         "name": "Chris Kious",
         "party": "(D)",
-        "phone": "630-444-1223",
+        "phone": "office 630-444-1223",
+        "phonesExtra": [
+          "cell 630-248-1369"
+        ],
         "email": "ckious@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=25"
       }
@@ -280,7 +296,7 @@
       {
         "name": "Jarett Sanchez",
         "party": "(D)",
-        "phone": "630-444-1224",
+        "phone": "office 630-444-1224",
         "email": "jsanchez@kanecoboard.org",
         "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=26"
       }
@@ -291,7 +307,7 @@
     "name": "Corinne Pierog",
     "role": "Chair",
     "party": "(D)",
-    "phone": "630-232-5930",
+    "phone": "office 630-232-5930",
     "email": "cpierog@kanecoboard.org",
     "url": "https://www2.kanecountyil.gov/Pages/CountyBoard/BoardMember.aspx?bmID=1"
   }

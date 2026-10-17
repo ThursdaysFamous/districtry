@@ -3,6 +3,9 @@
     "clerk": "Jennifer Wiersma",
     "municipality": "Armenia",
     "phone": "608-565-7491",
+    "phonesExtra": [
+      "608-565-2807"
+    ],
     "recordUpdated": "2023-01-17"
   },
   "5505715225": {
@@ -16,6 +19,9 @@
     "clerk": "Bobbie K Georgeson",
     "municipality": "Cutler",
     "phone": "608-427-6539",
+    "phonesExtra": [
+      "608-548-7597"
+    ],
     "recordUpdated": "2025-02-03",
     "url": "https://www.townshipofcutler.com/"
   },
@@ -23,6 +29,9 @@
     "clerk": "Dale Steadman",
     "municipality": "Finley",
     "phone": "608-897-2929",
+    "phonesExtra": [
+      "608-565-7274"
+    ],
     "recordUpdated": "2025-11-21",
     "url": "https://www.finleytownship.wi.gov"
   },
@@ -45,6 +54,9 @@
     "clerk": "Jennifer Masch",
     "municipality": "Kildare",
     "phone": "608-666-2227",
+    "phonesExtra": [
+      "608-350-0698"
+    ],
     "recordUpdated": "2026-01-13",
     "url": "https://kildaretownship.com/"
   },
@@ -117,6 +129,9 @@
     "clerk": "Tammy Miller",
     "municipality": "Summit",
     "phone": "608-985-7106",
+    "phonesExtra": [
+      "608-547-6980"
+    ],
     "recordUpdated": "2023-12-29",
     "url": "http://townofsummit.com"
   },

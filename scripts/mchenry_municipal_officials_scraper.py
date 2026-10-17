@@ -57,6 +57,15 @@ Notes on data honesty (per project conventions):
 - Hall contact is MUNICIPALITY-level. Where the yearbook additionally prints a
   PER-PERSON phone or e-mail (a handful of officials do), it is carried on that
   person and never spread to the others.
+- EVERY PER-PERSON NUMBER SHIPS, with the yearbook's own letter spelled out:
+  "W: 815-... C: 815-..." becomes `person_phone` "work 815-..." and
+  `person_phones_extra` ["cell 815-..."], and two unlabelled numbers ship as the
+  first and a further number. Until 2026-10-17 the cell beside a work line was
+  dropped and two unlabelled numbers shipped neither; since Adam's ruling that
+  day ("if the official government source uses personal phone numbers, we
+  publish those") they ship. A number equal to the hall's line, or printed for
+  two or more officials on the page, belongs to an office and is not added to a
+  person as a further number; a number marked as a fax never ships.
 """
 
 import argparse
@@ -113,7 +122,13 @@ MIN_HEADS = 24
 
 PHONE_RE = re.compile(r"\(?\d{3}\)?[\s.\-]\d{3}[\s.\-]\d{4}")
 EMAIL_RE = re.compile(r"[\w.\-+]+@[\w.\-]+\.\w+")
-LABELLED_WORK_PHONE_RE = re.compile(r"\bW:\s*(\(?\d{3}\)?[\s.\-]\d{3}[\s.\-]\d{4})")
+# The letter the yearbook prints before a per-person number ("W: 815-...") and
+# the word it ships as, the fleet's convention (scraper_common's
+# PERSON_PHONE_LABELS). A letter outside this table ships no word; "F:" is a fax
+# and never ships.
+PHONE_LETTER_RE = re.compile(r"\b([A-Za-z])\s*:\s*$")
+PHONE_LETTERS = {"W": "work", "C": "cell", "H": "home", "B": "business", "O": "office"}
+FAX_RE = re.compile(r"\bfax\b[^0-9]*$|\bF\s*:\s*$", re.I)
 
 
 def looks_blocked(html):
@@ -243,21 +258,48 @@ def parse_address(text):
 
 
 def person_contact(cells):
-    """Per-person phone/e-mail from the row's trailing cell, when present."""
+    """Per-person numbers and e-mail from the row's trailing cells, when present.
+
+    Returns ([(label or None, number as printed)], email): every number in the
+    order the row prints it, labelled with the word for the letter before it
+    ("W: 815-555-0100 C: 815-555-0101" -> work, cell), a fax left out."""
     extra = " ".join(cells[2:]).strip()
     if not extra:
-        return (None, None)
+        return ([], None)
     email = EMAIL_RE.search(extra)
-    phone = None
-    labelled = LABELLED_WORK_PHONE_RE.search(extra)
-    found = PHONE_RE.findall(extra)
-    if labelled:
-        # "W: 815-385-6023 C: 815-482-8605" — the work line is the office
-        # contact; the cell number is not published as a public office line.
-        phone = labelled.group(1)
-    elif len(found) == 1:
-        phone = found[0]
-    return (clean(phone), clean(email.group(0) if email else None))
+    numbers, last = [], 0
+    for m in PHONE_RE.finditer(extra):
+        before, last = extra[last:m.start()], m.end()
+        if FAX_RE.search(before):
+            continue
+        letter = PHONE_LETTER_RE.search(before)
+        label = PHONE_LETTERS.get(letter.group(1).upper()) if letter else None
+        numbers.append((label, m.group(0)))
+    return (numbers, clean(email.group(0) if email else None))
+
+
+def labelled(label, number):
+    """"work" + "815-555-0100" -> "work 815-555-0100"; no label, the number."""
+    return "%s %s" % (label, number) if label else number
+
+
+def assign_person_phones(records):
+    """Set `person_phone` and `person_phones_extra` on every record from the
+    numbers its row printed. The hall's own line is never carried on a person
+    (it was not before either). The first remaining number goes in
+    `person_phone` as it always has; a further number printed for two or more
+    officials on the page belongs to an office and is not added."""
+    printed = {}
+    for rec in records:
+        for _label, number in rec["_numbers"]:
+            printed[number] = printed.get(number, 0) + 1
+    for rec in records:
+        own = [(label, number) for label, number in rec.pop("_numbers")
+               if number != rec["office_phone"]]
+        first = own[:1]
+        rest = [(label, number) for label, number in own[1:] if printed[number] < 2]
+        rec["person_phone"] = labelled(*first[0]) if first else None
+        rec["person_phones_extra"] = [labelled(label, number) for label, number in rest]
 
 
 def normalize_phone(value):
@@ -329,12 +371,11 @@ def parse(html, scraped_at):
             if key not in HEAD_OFFICES and key not in ELECTED_OFFICER_OFFICES:
                 skipped_appointed += 1
                 continue
-            person_phone, person_email = person_contact(cells)
-            person_phone = normalize_phone(person_phone)
-            # A "personal" number that is just the village hall's main line is
-            # not a direct line; carrying it on the person would imply one.
-            if person_phone and person_phone == current["phone"]:
-                person_phone = None
+            numbers, person_email = person_contact(cells)
+            # Numbers are compared in one shape; a number that is just the
+            # village hall's main line is not a direct line, and carrying it on
+            # the person would imply one (assign_person_phones drops it).
+            numbers = [(label, normalize_phone(number)) for label, number in numbers]
             if person_email and person_email == current["email"]:
                 person_email = None
             records.append({
@@ -342,7 +383,7 @@ def parse(html, scraped_at):
                 "office": office,
                 "district": None,
                 "name": name,
-                "person_phone": person_phone,
+                "_numbers": numbers,
                 "person_email": person_email,
                 "office_address": current["address"],
                 "office_city": current["city"],
@@ -354,6 +395,7 @@ def parse(html, scraped_at):
                 "source_url": PAGE_URL,
                 "scraped_at": scraped_at,
             })
+    assign_person_phones(records)
     return records, skipped_appointed
 
 
@@ -397,8 +439,11 @@ def main():
         json.dump(payload, f, indent=2, ensure_ascii=False)
 
     print("scraped %d municipalities, %d elected officials (%d heads of government; "
-          "%d appointed staff rows skipped) -> %s"
-          % (len(municipalities), len(records), len(heads), skipped, args.out),
+          "%d appointed staff rows skipped; %d with a number of their own, %d with "
+          "a further number) -> %s"
+          % (len(municipalities), len(records), len(heads), skipped,
+             sum(1 for r in records if r["person_phone"]),
+             sum(1 for r in records if r["person_phones_extra"]), args.out),
           file=sys.stderr)
 
 

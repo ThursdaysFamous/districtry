@@ -256,12 +256,6 @@ ACCEPTED_DROPS = {
         "the county-level contactChecked and contactCheckedWeekly, which the "
         "card and the history tiles do read, are unchanged.",
 
-    "ia/data/app/ia-supervisor-members.json:phone":
-        "2026-08-28 -- the board switchboard, hoisted to county-level "
-        "`boardPhone` and rendered as \"Board office\". It was never a "
-        "per-supervisor number; build_ia_supervisor_roster.py now refuses any "
-        "phone on a member row.",
-
     # Palo, Iowa (place GEOID 1961230), removed on purpose 2026-09-05, and NOT
     # because the city stopped publishing -- its council page parses perfectly
     # today. `cityofpalo.com/robots.txt` names six crawlers, allows each of them

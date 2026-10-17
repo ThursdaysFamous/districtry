@@ -23,13 +23,20 @@ headshot "Jonathan-LaCasse-District-1-....jpeg", which is also how the
 ballot spells him. All-capital file names ("DUSTY_2.jpg") are ignored.
 
 E-mail: every card's details block ends with a per-member county address,
-first.last@hickmancountytn.gov. It is kept only on hickmancountytn.gov and
-only when its local part carries the member's surname; a county address that
-does not raises rather than being attached to the wrong person.
+first.last@hickmancountytn.gov. It is kept only on hickmancountytn.gov and only
+when its local part carries the member's surname; a county address that does
+not raises rather than being attached to the wrong person. An address on
+another domain in a member's own card is kept as printed when it prints no
+county one, under Adam's ruling of 2026-10-17 that an e-mail address a
+government page prints beside an official ships too.
 
 PRIVACY: each details block also prints the member's home street address,
-town, ZIP and personal phone; none is read. The county's own office address,
-phone and info@ address in the footer are not read.
+town, ZIP and phone. The phone is recorded as printed, under Adam's ruling of
+2026-10-17 that a number a government publishes beside an official ships
+whosever line it is; only telephone-shaped numbers are read from the details
+block, never its street, town or ZIP. The county's own office address and
+info@ address in the footer are not read, and its office phone there is
+OFFICE_LINES, which never lands on a member.
 
 Currency: checked 2026-10-11 against the Hickman County Election
 Commission's "Precinct Results Report" for the 6 August 2026 State Primary
@@ -48,13 +55,15 @@ Dusty Jordan 303 (Ron Mayberry 212); D6 Devin Pickard 427, Ryan K. Rogers
 (Clay Chessor 249). The page's "Zach Bentley" is the ballot's "Zachary
 Bentley"."""
 import re
-from ._common import txt, mailtos, member, district_number
+from ._common import txt, mailtos, member, district_number, read_phones, other_email
 
 COUNTY = "Hickman"; FIPS = "081"
 DOMAINS = ("hickmancountytn.gov",)
 URLS = ["https://hickmancountytn.gov/government/commissioners"]
 SEATS = {str(i): 2 for i in range(1, 8)}
 AT_LARGE = 0
+# The county's office phone, in the page footer.
+OFFICE_LINES = ("(931)729-2492",)
 
 H2 = re.compile(r"<h2\b[^>]*>(.*?)</h2>", re.S | re.I)
 SECTION = re.compile(r"^District\s+(One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten)$", re.I)
@@ -112,7 +121,7 @@ def _email(name, card):
         if out and out.lower() != a.lower():
             raise ValueError("%r's card carries two county addresses" % name)
         out = a
-    return out
+    return out or other_email(card, DOMAINS)
 
 
 def parse(pages):
@@ -145,11 +154,13 @@ def parse(pages):
             photo = PHOTO.search(card)
             name = title_name(caps, photo.group(1) if photo else None)
             # The card's details block (address, phone, mailbox) is the only
-            # place an e-mail is read; the split runs on into the page footer.
+            # place an e-mail or a phone is read; the split runs on into the
+            # page footer.
             details = DETAILS.findall(card)
             if len(details) != 1:
                 raise ValueError("District %s: %r's card has %d details blocks" % (d, name, len(details)))
-            seats.append(member(name, email=_email(name, details[0])))
+            seats.append(member(name, email=_email(name, details[0]),
+                                phones=read_phones(details[0])))
         if not seats:
             raise ValueError("District %s heading has no member cards under it" % d)
         districts[d] = seats

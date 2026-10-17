@@ -12,7 +12,18 @@ THE HOME ADDRESS IS DELIBERATELY NOT READ. Every one of the fifteen members
 has a street address printed under their name, and this scraper skips all of
 them: a residence is not an office a resident can visit, and the fleet removed
 Madison County's member residences for exactly this reason. Only the name,
-phone and e-mail are taken.
+phones and e-mail are taken.
+
+EVERY NUMBER A MEMBER'S ROW PRINTS IS READ. Until 2026-10-17 only the first
+was kept, so the member who prints a second number ("... OR (Cell) ...") lost
+it and the "(Cell)" label never reached a reader. Since Adam's ruling that day
+("if the official government source uses personal phone numbers, we publish
+those") the first number goes in `phone` and any others in `phonesExtra`, in
+the page's order, each led by the word in the parenthesis before it ("cell
+618-..."). A number printed anywhere else on the page as well is an office line
+and is not added to a member as their own; a number marked as a fax never
+ships. Measured 2026-10-17: all fifteen members print a number, four of those
+numbers are labelled "(Cell)", and one member prints two.
 
 The township composition IS read, because the shipped district boundary is
 those townships dissolved (scripts/build_washington_board_districts.py). The
@@ -26,6 +37,7 @@ Usage:
     python3 washington_county_board_scraper.py [output.json]   # default: stdout
 """
 
+import collections
 import html as html_mod
 import json
 import re
@@ -44,6 +56,15 @@ HEADING_RE = re.compile(r"County Board District No\.\s*(\d+)", re.I)
 COMPOSITION_RE = re.compile(r"^\(?\s*Composed of (.+?)\s*Townships?\.?\)?$", re.I)
 NAME_RE = re.compile(r"^[A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*){1,3}$")
 PHONE_RE = re.compile(r"\(?(\d{3})\)?\D{0,2}(\d{3})\D?(\d{4})")
+# The label the page prints in parentheses before a number, "(Cell)", and the
+# word it ships as (the fleet's convention: scraper_common.PERSON_PHONE_LABELS).
+# A label outside this table ships no word.
+LABEL_RE = re.compile(r"\(\s*([A-Za-z]+)\s*\)\s*$")
+PHONE_LABELS = {"cell": "cell", "c": "cell", "home": "home", "h": "home",
+                "work": "work", "w": "work", "business": "business",
+                "b": "business", "office": "office", "o": "office",
+                "mobile": "mobile"}
+FAX_RE = re.compile(r"\bfax\b", re.I)
 # A residence line: a street address, or the "City, ST zip" that follows one.
 ADDRESS_RE = re.compile(
     r"^\d+\s+\S|^[A-Za-z .'\-]+,\s*IL\.?\s*\d{5}|^\d+\s*[NSEW]\.?\s", re.I)
@@ -59,6 +80,34 @@ def text_lines(page):
 def normalize_phone(raw):
     m = PHONE_RE.search(raw or "")
     return "-".join(m.groups()) if m else None
+
+
+def line_phones(line):
+    """Every number on a line, in order, as "618-555-0100" or, where the page
+    prints a label in parentheses before it, "cell 618-555-0100". A number the
+    text before it marks as a fax is left out."""
+    out, last = [], 0
+    for m in PHONE_RE.finditer(line or ""):
+        before, last = line[last:m.start()], m.end()
+        if FAX_RE.search(before):
+            continue
+        label = LABEL_RE.search(before)
+        word = PHONE_LABELS.get(label.group(1).lower()) if label else None
+        number = "-".join(m.groups())
+        out.append("%s %s" % (word, number) if word else number)
+    return out
+
+
+def digits(number):
+    return re.sub(r"\D", "", number)[-10:]
+
+
+def page_numbers(page):
+    """How many times each number is printed anywhere on the page, header and
+    footer included, so a county or office line is recognised wherever it sits."""
+    body = re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", page)
+    text = html_mod.unescape(re.sub(r"(?s)<[^>]+>", " ", body))
+    return collections.Counter(digits("".join(m.groups())) for m in PHONE_RE.finditer(text))
 
 
 def main():
@@ -99,15 +148,23 @@ def main():
             continue
         p = normalize_phone(line)
         if p and current:
-            if current["phone"] is None:
-                current["phone"] = p
+            current["phones"].extend(line_phones(line))
             continue
         if NAME_RE.match(line):
             if current:
                 records.append(current)
-            current = {"name": line, "district": district, "phone": None, "email": None}
+            current = {"name": line, "district": district, "phones": [], "email": None}
     if current:
         records.append(current)
+
+    # The first number stays where it always went; a further number printed
+    # more than once on the page belongs to an office and is not added.
+    printed = page_numbers(page)
+    for rec in records:
+        numbers = rec.pop("phones")
+        extras = [n for n in numbers[1:] if printed[digits(n)] < 2]
+        rec["phone"] = numbers[0] if numbers else None
+        rec["phonesExtra"] = extras
 
     for rec in records:
         rec["composition"] = compositions.get(rec["district"])
