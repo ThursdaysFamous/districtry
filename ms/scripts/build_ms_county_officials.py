@@ -41,7 +41,8 @@ HOW THE PDF IS READ, measured on the 2026 edition:
     Two lines join the name and the address with one or two dots instead of a
     run (Claiborne District 4, Simpson District 5), and the split falls before
     the address there. Copiah prints the board's number and then each
-    supervisor's own cell number marked "(c)"; only the first number is read.
+    supervisor's own cell number marked "(c)": the first is read for the
+    board test below, and the second is the supervisor's own number.
   - A run of dots swallows the period of "Jr." and "Sr.", which is put back.
   - Every county must have exactly one supervisors block of five lines,
     districts 1 to 5, each with a name or the word "Vacant". The 2026 edition
@@ -63,20 +64,33 @@ telephone beside every supervisor. In most counties all five print the same
 one, which is the courthouse, the board's office or its post-office box; in
 others each prints a different street address, which may be a home. So the
 board's address is carried only where at least three of the five print the
-same one, and its telephone on the same test, because five people do not share
-a home; nothing printed for one supervisor alone is carried, and no
-supervisor's own line is. On 2026-10-15 that test gave a board address in 76
-counties and a board telephone in 68.
+same one, because five people do not share a home, and an address printed for
+one supervisor alone is never carried. The board's telephone is found by the
+same test. A supervisor's OWN number is carried on the supervisor: the number
+the directory prints for that supervisor where it is not the board's, and
+Copiah's "(c)" cell numbers. Some of those are office extensions and some may
+be a supervisor's own cell or home line; the directory does not say which, and
+it prints them beside the name. Until 2026-10-17 no supervisor's own number
+was carried, on the reasoning that it might be personal; that day Adam ruled
+for the whole fleet, "if the official government source uses personal phone
+numbers, we publish those." The ruling covers telephone numbers, so the
+addresses are still left out. On 2026-10-15 the board test gave a board
+address in 76 counties and a board telephone in 68, and on 2026-10-17 81
+named supervisors had a number of their own.
 
-For the election commissioners ONLY THE NAME IS KEPT. Each commissioner's line
-runs on from the name to the commissioner's own address, which may be a home,
-and sometimes a telephone; the line is cut at its first run of dots and nothing
-after the name is kept, written or printed, not even in an error message, so
-an error names only the county and the district. A name that carries a digit,
-an @ or a post-office box is a line cut in the wrong place, and the build
-stops rather than carry it. The telephone 16 counties print after the heading
-is not carried either: the card names people, and nothing on the page says
-whose line it is.
+For the election commissioners THE NAME AND THE COMMISSIONER'S OWN TELEPHONE
+ARE KEPT, AND NEVER THE ADDRESS. Each commissioner's line runs on from the
+name to the commissioner's own address, which may be a home, and on 45 lines
+in nine counties of the 2026 edition to a telephone after it. The name is
+everything before the line's first run of dots; the telephone is the line's
+last field, kept only when that field is a telephone and nothing else; the
+address between them is never kept, written or printed, not even in an error
+message, so an error names only the county and the district. A name that
+carries a digit, an @ or a post-office box is a line cut in the wrong place,
+and the build stops rather than carry it. The telephone was left out as well
+until Adam's ruling of 2026-10-17 above. The telephone 16 counties print after
+the heading is still not carried: it is printed beside no one, and nothing on
+the page says whose line it is.
 
 NOTHING IN THE FILE CHANGES UNLESS THE PDF DOES. Each county carries the
 edition, the PDF's own creation date and the page the county is on, and no
@@ -143,6 +157,12 @@ MAX_VACANT = 8
 # Election commissioners named: all 410 in the 2026 edition, measured
 # 2026-10-16. A parse that names far fewer has lost a county's block.
 MIN_COMMISSIONERS = 400
+# Floors on the people's own numbers, measured 2026-10-17 on the 2026 edition:
+# 81 named supervisors carry a number that is not the board's (76, plus
+# Copiah's five cell numbers), and 45 election commissioners print one. A parse that stops
+# finding them has broken; a directory does not lose a third of them in a year.
+MIN_SUPERVISOR_PHONES = 60
+MIN_COMMISSIONER_PHONES = 30
 
 FETCH_TIMEOUT = 120
 
@@ -155,6 +175,14 @@ ENTRY_RE = re.compile(r"^(District|Beat)\s*(\d+)\s*\.{2,}\s*(.*)$")
 # A name run straight into its address by one or two dots (no leader run).
 GLUED_RE = re.compile(r"^(.*?[A-Za-z])\.{1,2}((?:P\.\s?O\.|\d).*)$")
 PHONE_RE = re.compile(r"^(\d{3})[-. ](\d{3})-(\d{4})")
+# A supervisor's own cell number after the board's, as Copiah prints it:
+# "601-894-1858/(c) 601-953-9901" (and once "(c) 601 953-9903").
+CELL_RE = re.compile(r"\(c\)\s*(\d{3})[-. ]?(\d{3})-(\d{4})", re.I)
+# A field that is a telephone and nothing else: the last field of an election
+# commissioner's line, where the directory prints one after the address.
+PHONE_ONLY_RE = re.compile(r"^(\d{3})[-. ](\d{3})-(\d{4})$")
+# How every telephone in the file is written.
+PHONE_SHAPE_RE = re.compile(r"^\d{3}-\d{3}-\d{4}$")
 # A line inside a supervisors block that belongs to the entry above it: a fax
 # line, a stray period, or another number ("County Barn 662-...").
 CONT_RE = re.compile(r"^(?:\(f\)|\.$|.*\b\d{3}-\d{4}\b)")
@@ -258,14 +286,42 @@ def parse_entry(label, number, rest, where):
     name, address, phone = (clean(p) for p in parts)
     name = SUFFIX_RE.sub(lambda m: ", %s." % m.group(1), name)
     phone_m = PHONE_RE.match(phone.strip(" ."))
+    cell_m = CELL_RE.search(phone)
     return {
         "district": str(int(number)),
         "name": name,
         "vacant": bool(VACANT_RE.match(name)),
         # Read for the shared-office test only; never written per supervisor.
         "_address": address.strip(" ."),
+        # The board test reads this, and own_phone() keeps it on the
+        # supervisor when it is not the board's.
         "_phone": "%s-%s-%s" % phone_m.groups() if phone_m else None,
+        "_cell": "%s-%s-%s" % cell_m.groups() if cell_m else None,
     }
+
+
+def own_phone(entry, board_phone):
+    """The number the directory prints for this supervisor alone, or None.
+
+    A cell number marked "(c)" is the supervisor's own wherever it appears.
+    Otherwise the supervisor's number is their own only when it is not the
+    board's, which the County card already shows in the board's office block,
+    so one number is never printed six times."""
+    if entry["_cell"]:
+        return entry["_cell"]
+    if entry["_phone"] and entry["_phone"] != board_phone:
+        return entry["_phone"]
+    return None
+
+
+def supervisor_record(entry, board_phone):
+    if entry["vacant"]:
+        return {"district": entry["district"], "vacant": True}
+    record = {"district": entry["district"], "name": entry["name"]}
+    phone = own_phone(entry, board_phone)
+    if phone:
+        record["phone"] = phone
+    return record
 
 
 def supervisors_block(lines, where):
@@ -322,8 +378,23 @@ def commissioner_name(rest, where, number):
     return name
 
 
+def commissioner_phone(rest):
+    """The telephone at the end of an election commissioner's line, or None.
+
+    Only a last field that is a telephone and nothing else is read. The
+    commissioner's address sits between the name and the telephone, so it is
+    never kept, and a line whose last field is the address carries no
+    telephone."""
+    parts = [p for p in COMMISSIONER_LEADER.split(rest) if p.strip()]
+    if len(parts) < 2:
+        return None
+    m = PHONE_ONLY_RE.match(clean(parts[-1]).strip(" ."))
+    return "%s-%s-%s" % m.groups() if m else None
+
+
 def commissioners_block(lines, where):
-    """The county's five election commissioners: district and name only."""
+    """The county's five election commissioners: district, name and, where the
+    directory prints one after the address, the commissioner's telephone."""
     heads = [k for k, l in enumerate(lines) if COMMISSIONERS_HEAD_RE.match(l.strip())]
     if len(heads) != 1:
         raise SystemExit("%s: %d 'Election Commissioners' headings, expected exactly one"
@@ -340,9 +411,14 @@ def commissioners_block(lines, where):
         labels.add(m.group(1))
         name = commissioner_name(m.group(3), where, m.group(2))
         district = str(int(m.group(2)))
-        entries.append({"district": district, "vacant": True}
-                       if VACANT_RE.match(name) else
-                       {"district": district, "name": name})
+        if VACANT_RE.match(name):
+            entries.append({"district": district, "vacant": True})
+            continue
+        entry = {"district": district, "name": name}
+        phone = commissioner_phone(m.group(3))
+        if phone:
+            entry["phone"] = phone
+        entries.append(entry)
     if len(labels) != 1:
         raise SystemExit("%s: election commissioner lines labelled %s"
                          % (where, sorted(labels)))
@@ -425,10 +501,7 @@ def parse(pdf_bytes, pdf_url, edition):
         record = {
             "county": name,
             "label": label,
-            "supervisors": [{"district": e["district"], "vacant": True}
-                            if e["vacant"] else
-                            {"district": e["district"], "name": e["name"]}
-                            for e in entries],
+            "supervisors": [supervisor_record(e, phone) for e in entries],
             "commissionerLabel": commissioner_label,
             "electionCommissioners": commissioners,
         }
@@ -469,6 +542,7 @@ def check_shape(data):
                "commissionerLabel", "electionCommissioners",
                "source", "published", "sourceUrl", "sourcePage", "printedPage"}
     addresses = phones = vacant = commissioners = commissioners_vacant = 0
+    own_phones = commissioner_phones = 0
     for geoid, rec in sorted(data.items()):
         extra = set(rec) - allowed
         if extra:
@@ -482,12 +556,21 @@ def check_shape(data):
             if set(s) == {"district", "vacant"} and s.get("vacant") is True:
                 vacant += 1
                 continue
-            # Field NAMES only: a record carrying more than a name may be
-            # carrying an address, which does not belong in a log either.
-            if set(s) != {"district", "name"} or not s.get("name") \
+            # Field NAMES only: a record carrying more than a name and a
+            # telephone may be carrying an address, which does not belong in a
+            # log either.
+            if set(s) - {"phone"} != {"district", "name"} or not s.get("name") \
                     or VACANT_RE.match(str(s.get("name"))):
                 problems.append("%s supervisor district %s carries fields %s"
                                 % (geoid, s.get("district"), sorted(s)))
+            elif "phone" in s and not PHONE_SHAPE_RE.match(str(s["phone"])):
+                problems.append("%s supervisor district %s: the telephone is not "
+                                "written NNN-NNN-NNNN (not printed)"
+                                % (geoid, s.get("district")))
+            elif "phone" in s and s["phone"] == rec.get("boardPhone"):
+                problems.append("%s supervisor district %s carries the board's own "
+                                "telephone, which the board's office block shows"
+                                % (geoid, s.get("district")))
             elif LEADER_REMNANT_RE.search(str(s["name"])):
                 problems.append("%s supervisor district %s: the name carries a run "
                                 "of dots, so its line was cut in the wrong place "
@@ -495,6 +578,8 @@ def check_shape(data):
             elif ROLE_WORD_RE.search(str(s["name"])):
                 problems.append("%s supervisor district %s: the name ends in a role "
                                 "word (not printed)" % (geoid, s.get("district")))
+            else:
+                own_phones += "phone" in s
         if rec.get("commissionerLabel") not in ("District", "Beat"):
             problems.append("%s: election commissioner label %r"
                             % (geoid, rec.get("commissionerLabel")))
@@ -506,10 +591,15 @@ def check_shape(data):
             if set(c) == {"district", "vacant"} and c.get("vacant") is True:
                 commissioners_vacant += 1
                 continue
-            if set(c) != {"district", "name"} or not c.get("name") \
+            if set(c) - {"phone"} != {"district", "name"} or not c.get("name") \
                     or VACANT_RE.match(str(c.get("name"))):
                 problems.append("%s election commissioner district %s carries "
                                 "fields %s" % (geoid, c.get("district"), sorted(c)))
+                continue
+            if "phone" in c and not PHONE_SHAPE_RE.match(str(c["phone"])):
+                problems.append("%s election commissioner district %s: the "
+                                "telephone is not written NNN-NNN-NNNN (not printed)"
+                                % (geoid, c.get("district")))
                 continue
             if NOT_A_NAME_RE.search(str(c["name"])) or LEADER_REMNANT_RE.search(str(c["name"])):
                 problems.append("%s election commissioner district %s: the name "
@@ -523,6 +613,7 @@ def check_shape(data):
                                 % (geoid, c.get("district")))
                 continue
             commissioners += 1
+            commissioner_phones += "phone" in c
         if rec.get("boardPhone") and not re.fullmatch(r"\d{3}-\d{3}-\d{4}", rec["boardPhone"]):
             problems.append("%s: board telephone %r" % (geoid, rec["boardPhone"]))
         if not str(rec.get("sourceUrl", "")).startswith("https://www.sos.ms.gov/"):
@@ -544,7 +635,14 @@ def check_shape(data):
     if commissioners_vacant > MAX_VACANT:
         problems.append("%d election commissioner seats read as vacant (at most %d)"
                         % (commissioners_vacant, MAX_VACANT))
-    return problems, addresses, phones, vacant, commissioners, commissioners_vacant
+    if own_phones < MIN_SUPERVISOR_PHONES:
+        problems.append("only %d supervisors carry a telephone of their own (floor %d)"
+                        % (own_phones, MIN_SUPERVISOR_PHONES))
+    if commissioner_phones < MIN_COMMISSIONER_PHONES:
+        problems.append("only %d election commissioners carry a telephone (floor %d)"
+                        % (commissioner_phones, MIN_COMMISSIONER_PHONES))
+    return (problems, addresses, phones, vacant, commissioners, commissioners_vacant,
+            own_phones, commissioner_phones)
 
 
 def main():
@@ -559,17 +657,19 @@ def main():
     if args.check:
         with open(OUT) as f:
             data = json.load(f)
-        problems, addresses, phones, vacant, coms, coms_vacant = check_shape(data)
+        (problems, addresses, phones, vacant, coms, coms_vacant, own_phones,
+         com_phones) = check_shape(data)
         if problems:
             for p in problems:
                 print("build_ms_county_officials --check: FAIL — " + p, file=sys.stderr)
             return 1
         print("build_ms_county_officials --check: OK — %d counties, %d supervisor "
-              "seats (%d named, %d vacant), a board address in %d and a board "
-              "telephone in %d; %d election commissioners named and %d vacant, "
-              "names only"
+              "seats (%d named, %d vacant, %d with a telephone of their own), a "
+              "board address in %d and a board telephone in %d; %d election "
+              "commissioners named (%d with a telephone) and %d vacant, no "
+              "address but the board's"
               % (len(data), SEATS * len(data), SEATS * len(data) - vacant, vacant,
-                 addresses, phones, coms, coms_vacant))
+                 own_phones, addresses, phones, coms, com_phones, coms_vacant))
         return 0
 
     if args.pdf:
@@ -590,7 +690,8 @@ def main():
 
     sha = hashlib.sha256(pdf_bytes).hexdigest()
     data, published, named = parse(pdf_bytes, pdf_url, edition)
-    problems, addresses, phones, vacant, coms, coms_vacant = check_shape(data)
+    (problems, addresses, phones, vacant, coms, coms_vacant, own_phones,
+     com_phones) = check_shape(data)
     if problems:
         for p in problems:
             print("build_ms_county_officials: FAIL — " + p, file=sys.stderr)
@@ -609,14 +710,15 @@ def main():
                  for r in data.values() for s in r["supervisors"] if s.get("vacant")]
     print("build_ms_county_officials: %d counties, %d supervisor seats (%s) from "
           "the %d edition published %s, %s, SHA-256 %s; %d named and %d vacant "
-          "(%s); a board address in %d counties and a board telephone in %d; %d "
-          "election commissioners named and %d vacant; %d of %d 'Named for' "
+          "(%s), %d with a telephone of their own; a board address in %d "
+          "counties and a board telephone in %d; %d election commissioners "
+          "named (%d with a telephone) and %d vacant; %d of %d 'Named for' "
           "lines name their county"
           % (len(data), SEATS * len(data),
              ", ".join("%d %s" % (n, l) for l, n in sorted(labels.items())),
              edition, published, pdf_url, sha, SEATS * len(data) - vacant, vacant,
-             ", ".join(sorted(vacancies)) or "none", addresses, phones, coms,
-             coms_vacant, named, EXPECTED_COUNTIES))
+             ", ".join(sorted(vacancies)) or "none", own_phones, addresses, phones,
+             coms, com_phones, coms_vacant, named, EXPECTED_COUNTIES))
     return 0
 
 

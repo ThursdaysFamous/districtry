@@ -37,15 +37,23 @@ THE PARTY IS ON THE MEMBER PAGE, not the list: the page's heading reads
 "Senator Brad Simon (R)". Measured 2026-10-13: House 82 R / 20 D, Senate 30 R /
 6 D across all 138 rows, former members included.
 
-THE MEMBER PAGE ALSO PRINTS A MAILING ADDRESS AND A TELEPHONE, AND THIS SCRIPT
-NEVER READS THEM. On a senator's page the bold line under the name is that
-address — a post office box for most, a street address for some ("3 Great Oak
-Court, North Little Rock"), which may be a home — and the "Phone:" row beside it
-is unlabelled as to whose line it is. A legislator's home is no part of
-answering who represents you, so the parse takes the heading, the bold status
-word and the "District:" row, and nothing else. A bold line that is neither a
-known status word nor an address (it carries no digit) stops the build rather
-than being guessed at.
+THE MEMBER PAGE ALSO PRINTS A MAILING ADDRESS AND A TELEPHONE. THE TELEPHONE
+IS READ AND THE ADDRESS IS NOT. On a senator's page the bold line under the
+name is that address — a post office box for most, a street address for some
+("3 Great Oak Court, North Little Rock"), which may be a home — and a legislator's
+home is no part of answering who represents you, so it is never read. The
+"Phone:" row is unlabelled as to whose line it is, and for many members it is
+plainly the member's own; it was not read either until Adam ruled on
+2026-10-17, for the whole fleet, that "if the official government source uses
+personal phone numbers, we publish those." The legislature's page is that
+source, so the number ships on the member's row exactly as the page prints it.
+A number two or more members share is not any one member's line and ships on
+none of their rows, a link that dials a different number from the one it shows
+ships neither, and a value that is not a telephone number stops the build.
+Measured 2026-10-17: 101 of the 138 pages print a Phone row, and 97 of the 132
+sitting members ship a number. A bold line that is
+neither a known status word nor an address (it carries no digit) stops the
+build rather than being guessed at.
 
 THE E-MAIL IS THE LIST'S, which the legislature prints as each member's contact
 on every row. Most are on the chambers' own domains; a few are personal
@@ -106,6 +114,10 @@ CHAMBERS = {
 # Every row carried an e-mail on 2026-10-13. A field every row carries going
 # missing is the Brown County shape: the row count holds and the contact goes.
 MIN_EMAIL_SHARE = 0.9
+# A floor on the members' Phone rows: 29 of 33 senators and 68 of 99
+# representatives shipped one on 2026-10-17. A parse that stops finding them
+# has broken; a chamber does not lose half its numbers in a year.
+MIN_PHONE_SHARE = 0.5
 
 # The member page's own words for a member who has left. Anything else in that
 # bold line without a digit stops the build.
@@ -129,6 +141,17 @@ PAGE_HEADING_RE = re.compile(
     r'<h1>\s*(Senator|Representative)\s+(.+?)\s*\(([^)]*)\)\s*</h1>')
 PAGE_BOLD_RE = re.compile(r'</h1>\s*<p>\s*<b>([^<]*)</b>\s*</p>')
 PAGE_DISTRICT_RE = re.compile(r'<b>District:</b>\s*(\d+)')
+# The "Phone:" row. The page prints each row twice, once for a phone-sized
+# screen with the number after the label, as a tel: link, and once for a wide
+# one with the label alone in its own cell; the first copy that carries text is
+# read. Only the link's own text is read, so nothing beside the number can ride
+# along, and the link's dialled digits must be the same number.
+PAGE_PHONE_RE = re.compile(r'<b>Phone:</b>\s*(?:<a\b([^>]*)>)?([^<]*)')
+TEL_HREF_RE = re.compile(r'href="tel:([^"]*)"')
+# Ten digits in the shapes the pages use, "(870) 818-7067" and "501-804-7844",
+# with an optional extension. Anything else in that row stops the build.
+PHONE_SHAPE_RE = re.compile(
+    r'^\(?\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}(?:\s*(?:x|ext\.?)\s*\d{1,6})?$', re.I)
 
 
 def fetch(url):
@@ -181,10 +204,11 @@ def parse_list(page):
 
 
 def parse_member_page(page, who):
-    """(title, name, party_letter, status_or_None, district) from a member page.
+    """(title, name, party_letter, status_or_None, district, phone_or_None)
+    from a member page.
 
-    Reads the heading, the bold line under it and the District row only; see
-    the module docstring."""
+    Reads the heading, the bold line under it, the District row and the Phone
+    row only; see the module docstring."""
     heading = PAGE_HEADING_RE.search(page)
     district = PAGE_DISTRICT_RE.search(page)
     if not heading or not district:
@@ -200,8 +224,27 @@ def parse_member_page(page, who):
             raise SystemExit("FAIL: %s's member page prints %r under the name, which "
                              "is neither a known status nor an address — add it to "
                              "STATUS_WORDS once its meaning is read" % (who, text))
+    phone = None
+    for attrs, text in PAGE_PHONE_RE.findall(page):
+        text = clean(text)
+        if not text:
+            continue
+        if not PHONE_SHAPE_RE.match(text):
+            raise SystemExit("FAIL: %s's member page prints %r in its Phone row, "
+                             "which is not a telephone number" % (who, text))
+        href = TEL_HREF_RE.search(attrs or "")
+        if href and (re.sub(r"\D", "", href.group(1)).lstrip("1")
+                     != re.sub(r"\D", "", text).lstrip("1")):
+            # A link that dials a different number from the one it shows is
+            # not carried at all: neither number can be said to be the one the
+            # page publishes.
+            print("NOTE: %s's Phone row shows %r and dials %r, so neither ships"
+                  % (who, text, href.group(1)), file=sys.stderr)
+        else:
+            phone = text
+        break
     return (heading.group(1), clean(heading.group(2)), clean(heading.group(3)),
-            status, district.group(1))
+            status, district.group(1), phone)
 
 
 def surname(name):
@@ -239,7 +282,8 @@ def build(offline, out_dir, today):
         else:
             time.sleep(PACE_SECONDS)
             mpage = fetch(url)
-        title, page_name, party, status, page_district = parse_member_page(mpage, name)
+        title, page_name, party, status, page_district, phone = parse_member_page(
+            mpage, name)
         # The member's own page must agree with the list about who this is and
         # which seat they hold, or the two pages describe different people and
         # nothing from either ships.
@@ -252,9 +296,28 @@ def build(offline, out_dir, today):
                              "page %r" % (cfg["label"], district, name, page_name))
         seats[chamber].setdefault(str(int(district)), []).append(
             {"name": name, "party": party, "email": email, "url": url,
-             "status": status})
+             "status": status, "phone": phone})
         if party and party not in PARTY_NAMES:
             odd_parties.append("%s %s (%s)" % (cfg["label"], district, party))
+
+    # A NUMBER TWO SITTING MEMBERS SHARE IS NOT EITHER MEMBER'S LINE. Counted
+    # across both chambers, on every digit including an extension, so two
+    # extensions of one office stay two numbers while one number printed for
+    # two or more members ships on none of their rows, rather than reading as
+    # each one's own. On 2026-10-17 one was: 501-682-6107, a state government
+    # exchange, printed for four members.
+    def digits(phone):
+        return re.sub(r"\D", "", phone)
+    holders = {}
+    for listed_by_district in seats.values():
+        for listed in listed_by_district.values():
+            for m in listed:
+                if m["phone"] and not m["status"]:
+                    holders.setdefault(digits(m["phone"]), []).append(m["name"])
+    shared = {d: names for d, names in holders.items() if len(names) > 1}
+    for d, names in sorted(shared.items()):
+        print("NOTE: one telephone number is printed for %s, so it ships on "
+              "none of their rows" % ", ".join(names), file=sys.stderr)
 
     built = {}
     for chamber, cfg in CHAMBERS.items():
@@ -276,6 +339,8 @@ def build(offline, out_dir, today):
                     member["party"] = PARTY_NAMES.get(m["party"], m["party"])
                 if m["email"]:
                     member["email"] = m["email"]
+                if m["phone"] and digits(m["phone"]) not in shared:
+                    member["phone"] = m["phone"]
                 member["url"] = m["url"]
                 roster[key] = member
                 for gone in listed:
@@ -320,7 +385,12 @@ def build(offline, out_dir, today):
             raise SystemExit("FAIL: only %d of %d %s members carry an e-mail — the list "
                              "stopped publishing a field it has carried on every row"
                              % (emails, len(named), cfg["label"]))
-        built[chamber] = (roster, len(named), emails, notes)
+        phones = sum(1 for m in named if m.get("phone"))
+        if phones < MIN_PHONE_SHARE * len(named):
+            raise SystemExit("FAIL: only %d of %d %s members carry a telephone — the "
+                             "member pages' Phone row stopped parsing"
+                             % (phones, len(named), cfg["label"]))
+        built[chamber] = (roster, len(named), emails, phones, notes)
     if odd_parties:
         print("NOTE: party shipped as printed, not in PARTY_NAMES: %s"
               % "; ".join(odd_parties), file=sys.stderr)
@@ -349,14 +419,15 @@ def main():
     # Write only once BOTH chambers have passed every guard, so a failure in
     # the House cannot leave a fresh Senate file beside a stale House one.
     os.makedirs(out_dir, exist_ok=True)
-    for chamber, (roster, named, emails, notes) in built.items():
+    for chamber, (roster, named, emails, phones, notes) in built.items():
         cfg = CHAMBERS[chamber]
         out_path = os.path.join(out_dir, cfg["out"])
         with open(out_path, "w", encoding="utf-8") as fh:
             json.dump(roster, fh, ensure_ascii=False, indent=2)
             fh.write("\n")
-        print("Wrote %s (%d of %d seats named, %d with an e-mail)"
-              % (out_path, named, cfg["seats"], emails), file=sys.stderr)
+        print("Wrote %s (%d of %d seats named, %d with an e-mail, %d with a "
+              "telephone)" % (out_path, named, cfg["seats"], emails, phones),
+              file=sys.stderr)
         for note in notes:
             print("  " + note, file=sys.stderr)
 

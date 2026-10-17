@@ -121,13 +121,16 @@ COUNTIES = [
     # excluded only because the shipped map drew three. robots.txt: HTTP 404
     # (allow all), read 2026-10-07 with this file's own client.
     #
-    # NO TELEPHONE FROM THIS PAGE. The page prints one number per supervisor
-    # and nothing says which are county lines; one is a 319 number for a
-    # supervisor whose listed e-mail is a personal address. The Auditor was
-    # asked on 2026-10-01 which numbers are county lines and has not said, so
-    # the county's own board office number (on the County card) is what a
-    # reader gets.
-    {"fips": "171", "name": "Tama", "shape": "board_members", "phones": False,
+    # ITS TELEPHONES ARE READ. The page prints one number per supervisor and
+    # nothing says which are county lines; one is a 319 number for a
+    # supervisor whose listed e-mail is a personal address. They were held
+    # from 2026-10-07 while the Auditor was asked which numbers are county
+    # lines, and Adam's ruling of 2026-10-17 settled it without her: "if the
+    # official government source uses personal phone numbers, we publish
+    # those." The county's page is that source, so each number ships beside
+    # the supervisor it is printed beside. The e-mail is still not read --
+    # no board-page county ships one -- and the address never is.
+    {"fips": "171", "name": "Tama", "shape": "board_members",
      "url": "https://www.tamacounty.iowa.gov/supervisors/"},
 ]
 
@@ -406,9 +409,6 @@ def scrape(session, gate):
             continue
         members = dedupe(SHAPES[c["shape"]](text_lines(r.text)))
         refuse_addresses(members, c["name"])
-        if c.get("phones") is False:
-            for m in members:
-                m.pop("phone", None)
         out[c["fips"]] = {"county": c["name"], "url": c["url"],
                           "shape": c["shape"], "verdict": "ok",
                           "members": members}

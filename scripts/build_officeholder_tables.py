@@ -42,7 +42,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from build_county_pages import party_name                      # noqa: E402
+from build_county_pages import party_name, schema_telephone    # noqa: E402
 from build_legislator_pages import INSTANCES as LEGISLATOR_INSTANCES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -1175,7 +1175,7 @@ def person_node(rec, name_field, section):
     if rec.get("party"):
         person["affiliation"] = party_name(rec["party"]) or rec["party"]
     if rec.get("phone"):
-        person["telephone"] = rec["phone"]
+        person["telephone"] = schema_telephone(rec["phone"])
     office = next((rec[f] for f in ("office", "districtOffice")
                    if isinstance(rec.get(f), str) and rec[f]), None)
     if office:

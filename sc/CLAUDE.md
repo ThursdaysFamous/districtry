@@ -34,10 +34,16 @@ Carolina's arrivals took names from the Open States export; this one reads the G
 two chamber lists and all 170 member pages on `www.scstatehouse.gov`
 (`sc/scripts/build_sc_legislature_roster.py`). Every seat is filled (46 of 46, 124 of 124 on
 2026-10-10), and every card carries a party, the member's State House office and business
-telephone, and a link to the member's own page. **THE SAME PAGES PRINT A HOME ADDRESS AND HOME
-TELEPHONE, AND THE BUILDER NEVER READS THEM** — its parse is confined to the block headed
-"Columbia Address". The General Assembly publishes no e-mail address for any member (each page
-offers a message form), so the cards carry none.
+telephone, and a link to the member's own page. **THE SAME PAGES PRINT A HOME ADDRESS AND, UNDER
+IT, A HOME AND A BUSINESS TELEPHONE; THE TELEPHONES SHIP AND THE ADDRESS IS NEVER READ.** Until
+2026-10-17 neither was read; that day Adam ruled for the whole fleet, "if the official government
+source uses personal phone numbers, we publish those", and each number now rides the member's row
+with the page's own label ("home (843) 665-7321", "business (864) 638-4237") — 91 of 170 members on
+2026-10-17. A number equal to the member's own Columbia business phone, or printed for two or more
+members (two numbers that day, each shared by a senator and a representative from one county, which
+is what a county legislative delegation office looks like), is an office's and rides no member's
+row. The General Assembly publishes no e-mail address for any member (each page offers a message
+form), so the cards carry none.
 
 **THE COUNTY DIVISIONS ARE DRAWN, AND THE CARD SAYS THEY GOVERN NOBODY.** All 299 county
 subdivisions TIGERweb carries for STATE='45' are census county divisions (LSADC 22, FUNCSTAT S,
@@ -261,7 +267,10 @@ Election Commission's certified results) — all
 count-guarded, all refreshed weekly by CI as reviewed PRs. The legislature builder writes neither
 file unless BOTH chambers pass: no fewer than 42 senators and 114 representatives, every
 district inside the chamber's range and claimed once, the member page's own district and surname
-agreeing with the list, and at least 90% of seats carrying an office and a telephone.
+agreeing with the list, at least 90% of seats carrying an office and a telephone, and at least
+60 members across both chambers carrying a home or business number of their own (91 on
+2026-10-17), so a change to the page that stops those numbers being read fails the build rather
+than emptying them quietly.
 
 robots.txt is read before the first fetch through `scraper_common.require_robots_once`, with the
 same client the fetches send. `www.scstatehouse.gov`'s robots.txt (176 bytes, read 2026-10-10)

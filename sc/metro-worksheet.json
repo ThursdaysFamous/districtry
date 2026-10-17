@@ -140,7 +140,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
-        "people": "sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone and the member's own page). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.",
+        "people": "sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone, the home and business telephones the page prints under the member's home address, which may be the member's own, and the member's own page; never the home address). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.",
         "applies": "South Carolina — statewide, all 46 districts."
       }
     },
@@ -194,7 +194,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
           }
         ],
-        "people": "sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages.",
+        "people": "sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages, with the same fields as the Senate's.",
         "applies": "South Carolina — statewide, all 124 districts."
       }
     },

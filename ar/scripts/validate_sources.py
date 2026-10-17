@@ -122,7 +122,8 @@ PROVENANCE = [
             "member's own page, which is the only place a departed member is "
             "marked Resigned or Deceased; rebuilt weekly by "
             "ar/scripts/build_ar_legislature_roster.py. The member pages also "
-            "print a mailing address and a telephone, which the builder never "
+            "print a telephone, which ships as printed (Adam, 2026-10-17), and "
+            "a mailing address that may be a home, which the builder never "
             "reads."
         ),
     },

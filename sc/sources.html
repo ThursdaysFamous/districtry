@@ -1205,7 +1205,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 46 features, measured 2026-10-10. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone and the member's own page). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.</td>
+                <td data-label="Who it names">sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone, the home and business telephones the page prints under the member's home address, which may be the member's own, and the member's own page; never the home address). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.</td>
                 <td data-label="Where it applies">South Carolina — statewide, all 46 districts.</td>
               </tr>
               <tr id="layer-sc-house">
@@ -1216,7 +1216,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 124 features, measured 2026-10-10.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages.</td>
+                <td data-label="Who it names">sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages, with the same fields as the Senate's.</td>
                 <td data-label="Where it applies">South Carolina — statewide, all 124 districts.</td>
               </tr>
               <tr id="layer-county-council">
@@ -1472,7 +1472,7 @@ table.matrix code {
       "@id": "https://districtry.com/sc/sources.html#dataset-sc-senate",
       "identifier": "sc-senate",
       "name": "South Carolina Senate District",
-      "description": "The South Carolina Senate district covering the point, and the senator holding it. sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone and the member's own page). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.",
+      "description": "The South Carolina Senate district covering the point, and the senator holding it. sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone, the home and business telephones the page prints under the member's home address, which may be the member's own, and the member's own page; never the home address). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.",
       "url": "https://districtry.com/sc/sources.html#layer-sc-senate",
       "isPartOf": {
         "@id": "https://districtry.com/sc/sources.html#catalog"
@@ -1538,7 +1538,7 @@ table.matrix code {
       "@id": "https://districtry.com/sc/sources.html#dataset-sc-house",
       "identifier": "sc-house",
       "name": "South Carolina House District",
-      "description": "The South Carolina House district covering the point, and the representative holding it. sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages.",
+      "description": "The South Carolina House district covering the point, and the representative holding it. sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages, with the same fields as the Senate's.",
       "url": "https://districtry.com/sc/sources.html#layer-sc-house",
       "isPartOf": {
         "@id": "https://districtry.com/sc/sources.html#catalog"

@@ -2350,8 +2350,13 @@ def ms_supervisors(inst):
             if s.get("vacant") is True:
                 districts.append(district(label, vacancies=1))
             elif held:
-                districts.append(district(label, [{"name": held,
-                                                   "role": inst["member_word"]}]))
+                member = {"name": held, "role": inst["member_word"]}
+                # The supervisor's own number where the directory prints one
+                # that is not the board's (the board's is in the page's office
+                # block), published since Adam's ruling of 2026-10-17.
+                if (s.get("phone") or "").strip():
+                    member["phone"] = s["phone"].strip()
+                districts.append(district(label, [member]))
             else:
                 problems.append("ms %s County %s names nobody and is not marked "
                                 "vacant" % (name, label))
@@ -2719,6 +2724,17 @@ def party_name(value):
     return PARTY_NAMES.get(v.lower(), v)
 
 
+# A label the source prints before a number ("home (843) 665-7321", "cell
+# 519-3104") rides in the visible text, where a reader needs it to tell two
+# numbers apart, and is left out of the structured data, whose telephone
+# property is the number. A value with no label is unchanged.
+PHONE_LABEL_RE = re.compile(r"^[A-Za-z][A-Za-z .]*?\s+(?=[(+0-9])")
+
+
+def schema_telephone(value):
+    return PHONE_LABEL_RE.sub("", (value or "").strip())
+
+
 def member_node(m):
     """One officeholder as a schema.org Person, from the same fields
     member_html renders. Every field is optional: a roster that does not publish
@@ -2730,7 +2746,7 @@ def member_node(m):
     email = (m.get("email") or "").strip()
     if email:
         person["email"] = email
-    phone = (m.get("phone") or "").strip()
+    phone = schema_telephone(m.get("phone"))
     if phone:
         person["telephone"] = phone
     # `url` and `profileUrl` are the same field under two names — Illinois's
@@ -4077,8 +4093,10 @@ def ms_board_contact(inst):
     a line printed for one supervisor may be that person's own, so the builder
     keeps a line only where the directory prints it for at least three of the
     county's five, which makes it the board's office (build_ms_county_officials.py).
-    Nothing per supervisor is carried, and a county where no line passes that
-    test carries no contact rather than one supervisor's."""
+    A county where no line passes that test carries no board contact rather
+    than one supervisor's. A supervisor's own telephone is on that supervisor's
+    row instead (ms_supervisors), and no supervisor's own address is carried
+    anywhere."""
     path = os.path.join(app_data("ms"), "ms-county-officials.json")
     if not os.path.exists(path):
         return {}, [path]

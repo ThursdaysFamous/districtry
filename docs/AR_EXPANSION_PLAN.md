@@ -44,8 +44,10 @@ identifiers and the same land areas, so the default layer is right here.
 **The legislature's member list cannot tell a sitting member from a former one.** It holds 138
 rows for 135 seats; a member who has left keeps their row and only their own page says why. So
 every member page is read, a seat whose only member has left ships as a vacancy naming the page
-that says so, and the mailing address and telephone on those pages are never read, because some
-are home addresses.
+that says so, and the mailing address on those pages is never read, because some are home
+addresses. The telephone beside it was left out for the same reason until Adam's ruling of
+2026-10-17 ("if the official government source uses personal phone numbers, we publish those"),
+and now ships as printed.
 
 **The quorum court's districts and its people come from different places.** The state's mapping
 office draws every county's justice of the peace districts. The counties association lists each

@@ -201,19 +201,24 @@
   },
   "districts": {
    "1": {
-    "name": "Bruce Reimers"
+    "name": "Bruce Reimers",
+    "phone": "515 770-1067"
    },
    "2": {
-    "name": "Dennis Thompson"
+    "name": "Dennis Thompson",
+    "phone": "515 332-0597"
    },
    "3": {
-    "name": "Rick Pedersen"
+    "name": "Rick Pedersen",
+    "phone": "515 779-4591"
    },
    "4": {
-    "name": "Mike Carpenter"
+    "name": "Mike Carpenter",
+    "phone": "515 332-0596"
    },
    "5": {
-    "name": "Bob Rasmussen"
+    "name": "Bob Rasmussen",
+    "phone": "515 770-0014"
    }
   },
   "readOn": "2026-10-15",
@@ -576,19 +581,24 @@
   },
   "districts": {
    "1": {
-    "name": "Curt Hilmer"
+    "name": "Curt Hilmer",
+    "phone": "319-939-3291"
    },
    "2": {
-    "name": "David Turner"
+    "name": "David Turner",
+    "phone": "641-481-2456"
    },
    "3": {
-    "name": "Heather Knebel"
+    "name": "Heather Knebel",
+    "phone": "641-481-2532"
    },
    "4": {
-    "name": "Mark Doland"
+    "name": "Mark Doland",
+    "phone": "641-481-2533"
    },
    "5": {
-    "name": "Curt Kupka"
+    "name": "Curt Kupka",
+    "phone": "641-481-2310"
    }
   },
   "readOn": "2026-10-15",

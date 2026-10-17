@@ -3896,19 +3896,24 @@
   "supervisorSource": "https://www.tamacounty.iowa.gov/supervisors/",
   "supervisors": [
    {
-    "name": "Mark Doland"
+    "name": "Mark Doland",
+    "phone": "641-481-2533"
    },
    {
-    "name": "Curt Hilmer"
+    "name": "Curt Hilmer",
+    "phone": "319-939-3291"
    },
    {
-    "name": "Heather Knebel"
+    "name": "Heather Knebel",
+    "phone": "641-481-2532"
    },
    {
-    "name": "Curt Kupka"
+    "name": "Curt Kupka",
+    "phone": "641-481-2310"
    },
    {
-    "name": "David Turner"
+    "name": "David Turner",
+    "phone": "641-481-2456"
    }
   ],
   "treasurer": {

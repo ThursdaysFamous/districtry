@@ -11919,13 +11919,18 @@ function initIowaExplorer() {
     return a;
   }
   function cardContactLine(spec) {
-    // spec: { phone?, email?, links?: [{label, url}] } -> one wrapping line of
-    // phone / Email / external links separated by middots; null when empty.
+    // spec: { phone?, phonesExtra?: [string], email?, links?: [{label, url}] }
+    // -> one wrapping line of phones / Email / external links separated by
+    // middots; null when empty. phonesExtra are further numbers the source
+    // prints for the same person, each as printed: a label the source gives
+    // ("cell 519-3104") stays in the text, and only the digits reach the
+    // tel: href, so a label never changes the number dialled.
     var items = [];
-    if (spec.phone) {
-      var p = cardPhoneLink(spec.phone);
+    [spec.phone].concat(spec.phonesExtra || []).forEach(function (phone) {
+      if (!phone) return;
+      var p = cardPhoneLink(phone);
       if (p) items.push(p);
-    }
+    });
     if (spec.email) {
       var e = document.createElement("a");
       e.href = "mailto:" + String(spec.email);
@@ -11986,8 +11991,8 @@ function initIowaExplorer() {
     return el;
   }
   function renderPersonRows(people, opts) {
-    // people: [{ name, badge?, note?, phone?, email?, links?, details?:
-    // {label, items}, detailsOpen? }]. A person with details renders as a
+    // people: [{ name, badge?, note?, phone?, phonesExtra?, email?, links?,
+    // details?: {label, items}, detailsOpen? }]. A person with details renders as a
     // native <details> expander; absent fields render nothing (no
     // placeholders, no guessed officeholders — honesty rules).
     var tinted = opts && opts.tinted;
@@ -13209,8 +13214,9 @@ function initIowaExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, districtOffice?, capitolOffice? }; office fields only
-    // render when the roster supplies them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, districtOffice?,
+    // capitolOffice? }; office fields only render when the roster supplies
+    // them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -13379,6 +13385,16 @@ function initIowaExplorer() {
         }
         var person = { name: String(member.name) };
         if (member.party) person.badge = String(member.party);
+        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+        // the chamber prints for the member apart from the office blocks
+        // below, such as a home or cell line. Published since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is shown even where it may be the official's own; a label
+        // the source prints ("home 803-555-0100") rides inside the string.
+        if (member.phone) person.phone = String(member.phone);
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
@@ -13761,8 +13777,9 @@ function initIowaExplorer() {
             if (m.party) marks.push(String(m.party));
             if (chairName && String(m.name) === chairName) marks.push("Board chair");
             if (marks.length) row.note = marks.join(" · ");
-            // no phone here on purpose: where every member shares one number it
-            // is the board office's, hoisted to the office block below
+            // A number every member shares is the board office's and was
+            // hoisted off these rows into the office line below; a number the
+            // county prints beside one supervisor alone stays on that row
             if (m.phone) row.phone = String(m.phone);
             return row;
           })));
@@ -14180,10 +14197,12 @@ function initIowaExplorer() {
       if (result.member && result.member.name) {
         var person = { name: String(result.member.name), badge: "Supervisor" };
         if (result.member.party) person.note = String(result.member.party);
-        // NO PHONE ON THIS ROW. Every county keyed here publishes ONE number
-        // for the whole board, which is the courthouse board office and not
-        // this supervisor's line — it rides the labelled row below instead of
-        // being presented as a direct line the reader does not have.
+        // A number the county prints beside this supervisor alone ships on
+        // this row, as printed, even where it is the supervisor's own phone
+        // (Adam, 2026-10-17). A number the whole board shares is the
+        // courthouse board office and never rides here: the builder refuses
+        // one, and it renders as the labelled row below instead.
+        if (result.member.phone) person.phone = String(result.member.phone);
         wrap.appendChild(renderPersonRows([person]));
         if (result.boardPhone) {
           wrap.appendChild(renderLinkRow({
