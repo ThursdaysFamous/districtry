@@ -44,7 +44,8 @@
 // app's MAP_LINK_LOOKUP points at a route that reaches it.
 //
 // DEPLOY: the Deno Deploy app `link-lookup` in the `districtry` organization,
-// with this file as its entry point. It needs no settings and no secrets.
+// with this file as its entry point. It needs no environment variables and no
+// secrets.
 // The app is NOT linked to this repository, and must not be linked again.
 // A linked app rebuilds on every push to every branch, and each build takes
 // a full copy of the repository: 200 MiB compressed, measured with
@@ -57,6 +58,12 @@
 // To change this file, deploy it by hand from this folder, so that the folder
 // is all that is uploaded:
 //   cd services/link-lookup && deno deploy --org districtry --app link-lookup --prod
+// Since only this folder is uploaded, the app's settings in Deno's console
+// must read an empty App directory and the Entrypoint main.ts. The app was
+// set up while it read the whole repository, so check both before the first
+// hand deploy. Deno puts a revision live only once its build succeeds
+// (docs.deno.com/deploy/reference/builds, read 2026-10-17), so a wrong
+// setting leaves the current version answering.
 // Then check it answers: ?u=https://example.com/ must return a 400 that names
 // short links, a real maps.app.goo.gl link must return {"url": ...}, and
 // ?a=1600 Pennsylvania Ave NW, Washington, DC 20500 must return a match.
