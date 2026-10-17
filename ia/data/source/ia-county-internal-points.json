@@ -72,13 +72,6 @@
    "name": "Hamilton County",
    "slug": "hamilton"
   },
-  "humboldt": {
-   "fips": "091",
-   "lat": 42.7822212,
-   "lng": -94.2027754,
-   "name": "Humboldt County",
-   "slug": "humboldt"
-  },
   "johnson": {
    "fips": "103",
    "lat": 41.670668,
