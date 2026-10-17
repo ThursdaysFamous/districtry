@@ -29,6 +29,7 @@
         "ar-senate",
         "county",
         "county-subdivision",
+        "fire-district",
         "fire-station",
         "municipality",
         "police-station",
@@ -210,6 +211,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "conservancy-district",
         "county",
         "county-council",
         "county-subdivision",
@@ -488,6 +490,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "conservation-district",
         "county",
         "county-commissioner",
         "county-subdivision",

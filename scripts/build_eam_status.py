@@ -1762,7 +1762,15 @@ ANSWERS = {
         # Division, carries all 5,121 precincts, and the app draws them
         # (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # The Department of Natural Resources' map of the 100 active
+        # conservancy districts, whose directors the property owners elect,
+        # with each board named from the department's 2026 directory
+        # (2026-10-16; in/scripts/build_in_conservancy_districts.py and
+        # build_in_conservancy_directors.py). Seven districts' boards are not
+        # in that directory, gap in-conservancy-district-records. Indiana's
+        # other statewide special-district map, the State Library's library
+        # districts, has appointed boards and is not drawn yet.
+        "special-districts": answers("conservancy-district"),
         # SHIPPED 2026-10-10 (#1496): the Pokagon Band's trust land, the one
         # piece of tribal land in Indiana, with the band's council named.
         "tribal-government": answers("tribal-government"),
@@ -1835,7 +1843,15 @@ ANSWERS = {
             "statistical areas, not governments."),
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
-        "special-districts": OPEN,
+        # The Conservation Commission's map of the 84 conservation districts,
+        # which cover the state, with each district's office from the
+        # Commission's directory (2026-10-16;
+        # ok/scripts/build_ok_conservation_districts.py and
+        # build_ok_conservation_offices.py). Three of each board's five
+        # directors are elected by the district's voters, and the card names
+        # none of them, because the Commission publishes no list of directors
+        # (gap ok-conservation-district-directors).
+        "special-districts": answers("conservation-district"),
         # The fleet-wide tribal layer thread drew Oklahoma's nations, as census
         # statistical areas labeled as such (Adam, 2026-10-10), and the app went
         # live with them: 31 areas across 33 nations (ok/CLAUDE.md).
@@ -2001,7 +2017,12 @@ ANSWERS = {
         # The Arkansas GIS Office's layer carries all 2,920 precincts as the
         # counties report them, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # ANSWERED 2026-10-16: the GIS Office's FIRE_DISTRICTS layer, the map
+        # state law has every fire district file with it, draws 971 districts
+        # (ar/scripts/build_ar_fire_districts.py). Level 12 asks for the
+        # districts drawn; who runs each one is not on the map and is recorded
+        # as gap ar-fire-district-boards.
+        "special-districts": answers("fire-district"),
         # NO TRIBAL LAND IN ARKANSAS, measured 2026-10-15 with
         # validate_tribal_join's own queries: the reservation, trust-land and
         # state-reservation layers keep nothing inside the state, while the same
