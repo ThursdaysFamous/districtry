@@ -29,6 +29,13 @@ it carries, when exactly one does, and for none of them otherwise; and an
 address that names another member of the same council and not this one is
 left off. No message prints an address.
 
+EVERY PHONE IS ONE TELEPHONE NUMBER, checked by wi_phone_shape.py before the
+floors count anything: a member's `phone` and each of their `phonesExtra` may
+hold one number with the label the page prints and nothing else, and a value
+that is anything more fails the build naming the municipality and district,
+never the value. Madison's and West Bend's members' own numbers are read from
+2026-10-17 (wi_alderperson_scraper.madison_phones and west_bend_phones).
+
 THE SHAPE: `members[district]` IS ALWAYS A LIST, never a bare member object.
 Wisconsin councils do not all seat one alderperson per district — of the 22
 municipalities the 2026-09-06 sweep matched, FIFTEEN seat more than one, and
@@ -74,6 +81,7 @@ import re
 import sys
 
 import wi_email_rules  # this script's own folder
+import wi_phone_shape  # this script's own folder
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
@@ -87,7 +95,11 @@ OUT = os.path.join(REPO_ROOT, "data", "app", "wi-alderpersons.json")
 # one of its three members is a real loss a district count cannot see.
 FLOORS = {
     "53000": ("Milwaukee", 15, 15, 0, 0, 0),
-    "48000": ("Madison", 20, 18, 17, 0, 17),
+    # Madison's phone floor is 13: measured 2026-10-17, each of the twenty
+    # district pages prints its alder's own number (twenty distinct numbers,
+    # one per page) and about two thirds of that is the floor, so a page change
+    # that stops the reading fails the build.
+    "48000": ("Madison", 20, 18, 17, 13, 17),
     "31000": ("Green Bay", 12, 12, 10, 9, 10),
     "39225": ("Kenosha", 17, 17, 0, 0, 0),
     "66000": ("Racine", 15, 15, 0, 0, 13),
@@ -195,10 +207,13 @@ FLOORS = {
     #              Sturgeon Bay precedent: an address built from the district
     #              number cannot go blank for one member the way a typed one can,
     #              so a drop to seven means the page changed and is worth failing.
+    #              Its phone floor is 5: measured 2026-10-17, each of the eight
+    #              cards prints its member's own number (eight distinct
+    #              numbers), and the floor is about two thirds of that.
     "27300": ("Franklin", 6, 6, 0, 0, 0),
     "31175": ("Greenfield", 5, 5, 0, 0, 5),
     "55275": ("Muskego", 7, 7, 0, 0, 0),
-    "85350": ("West Bend", 8, 8, 8, 0, 0),
+    "85350": ("West Bend", 8, 8, 8, 5, 0),
     # THE TWO AKAMAI-FRONTED COUNCILS OF 2026-10-01, and the reason they arrive
     # late is a measurement this project got wrong rather than anything either
     # city does. Both were recorded as sites that block automated readers; both
@@ -396,6 +411,16 @@ def check_city(name, districts, floors, c, geo_districts):
             raise SystemExit("%s district %s: vacantSeats must be a whole "
                              "number of seats, at least one (got %r)"
                              % (name, district, n))
+    # ONE TELEPHONE NUMBER PER VALUE before anything is counted, so a value
+    # that carries more than a number fails rather than counting towards the
+    # phone floor. The message names the municipality and district; quoting
+    # the value would print into the run log what this check keeps out of the
+    # data.
+    shape = [p for district, lst in sorted(ms.items()) for m in lst
+             for p in wi_phone_shape.problems(m, "%s district %s" % (name, district))]
+    if shape:
+        raise SystemExit("%d phone value(s) are not one telephone number: %s"
+                         % (len(shape), "; ".join(shape)))
     # PEOPLE, flattened out of the per-district lists. len(ms) counts DISTRICTS
     # and is the wrong denominator for every one of these four.
     people = [m for lst in ms.values() for m in lst]
@@ -638,7 +663,35 @@ def selftest():
     want_fail("vacantSeats given zero", one, 2, (2, 0, 0, 0),
               {"01", "02"}, "whole number", vacant_seats={"01": 0})
 
-    # 13. THE E-MAIL CHECKS, on made-up names and reserved example domains. A
+    # 13. THE PHONE SHAPE, on made-up numbers. A labelled number and a second
+    #     one in phonesExtra pass and count once towards the phone floor; a
+    #     value carrying a street fails naming the seat and never the value; and
+    #     the phone floor fails when a page stops giving numbers.
+    phones = {"01": [{"name": "A", "phone": "cell 608-555-0101",
+                      "phonesExtra": ["608-555-0102"]}],
+              "02": [{"name": "B", "phone": "608-555-0103"}]}
+    want_ok("a labelled number and a further one", phones, 2, (2, 0, 2, 0),
+            {"01", "02"}, 2)
+    want_fail("phone column emptying", phones, 2, (2, 0, 3, 0), {"01", "02"},
+              "only 2 phones")
+    street = {"01": [{"name": "A", "phone": "123 Main St 608-555-0101"}],
+              "02": [{"name": "B", "phone": "608-555-0103"}]}
+    want_fail("a phone carrying a street", street, 2, (2, 0, 0, 0), {"01", "02"},
+              "Testville district 01: phone carries a street word")
+    want_fail("a further number carrying an address", {
+        "01": [{"name": "A", "phone": "608-555-0101",
+                "phonesExtra": ["pat@example.com"]}],
+        "02": [{"name": "B"}]}, 2, (2, 0, 0, 0), {"01", "02"},
+        "Testville district 01: phonesExtra entry 1 carries an @")
+    ran.append("a refused phone's message does not print the value")
+    try:
+        check_city("Testville", 2, (2, 0, 0, 0), _city(street, 2), {"01", "02"})
+        bad.append("a refused phone: expected a refusal, got none")
+    except SystemExit as e:
+        if "555" in str(e) or "Main" in str(e):
+            bad.append("a refused phone's message prints the value")
+
+    # 14. THE E-MAIL CHECKS, on made-up names and reserved example domains. A
     #     personal address on its own row ships; an address printed for two
     #     members ships only for the one it names; an office's address shared
     #     by two ships for neither; an address naming another member is left
