@@ -93,8 +93,8 @@ districtry Illinois: a single-file, dependency-light web app. Click a point in I
 
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
-them used. MEASURED 2026-10-16 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **109**;
+them used. MEASURED 2026-10-17 on this branch, AFTER its last edit: a static gate is
+one NAMED step in the `static` job, which is **110**;
 counted instead as script invocations the whole battery is **174 — 155 that need no browser and
 19 that boot Chromium** (a Playwright smoke test per instance
 `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`/`ok`/`sc`/`tn`/`ar`/`ms`, 2 root-page tests, and the two fleet-wide probes
