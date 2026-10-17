@@ -4224,7 +4224,14 @@ function initMississippiExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ms-senate"],
+    "state-house": ["ms-house"], "supreme-court-district": ["ms-supreme-court"],
+    "appellate-court-district": ["ms-court-of-appeals"],
+    "trial-court-district": ["ms-circuit-court"], "county": ["county"],
+    "county-board": ["county-supervisor"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4288,7 +4295,7 @@ function initMississippiExplorer() {
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
       bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
-    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🎷", explorerName: "districtry Mississippi",
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
       bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
@@ -13571,11 +13578,12 @@ function initMississippiExplorer() {
    * in the counties whose current lines this app has confirmed
    * (data/app/ms-supervisor-districts.json, built by
    * ms/scripts/build_ms_supervisor_districts.py). The Census carries every
-   * county's districts, but in most counties it still carries the lines
-   * drawn after the 2010 census, which would name the wrong supervisor for
-   * many readers. A county is drawn from the Census's lines when they
-   * changed after the 2020 census AND hold nearly equal numbers of people on
-   * the 2020 census's own blocks (lines "census"), or from a map the county
+   * county's districts, but in most counties it still carries older lines,
+   * in most of them placing every resident as its January 1, 2010 edition
+   * does, which would name the wrong supervisor for many readers. A county
+   * is drawn from the Census's lines when they changed after the 2020
+   * census AND hold nearly equal numbers of people on the 2020 census's
+   * own blocks (lines "census"), or from a map the county
    * or its planning and development district publishes, where that map
    * shows its own currency and passes the same population test (lines
    * "county", redrawn along whole 2020 blocks so every vertex is the
@@ -13590,8 +13598,8 @@ function initMississippiExplorer() {
    * same build writes (under 1 KB). The engine runs a coverage test on a
    * reader's first selection even with the layer off, and reading the
    * districts file for it cost 150 KB gzipped for twenty counties, measured
-   * 2026-10-15. Within a few tens of metres of a county line the two files,
-   * each simplified on its own, can put a point in different counties; there
+   * 2026-10-15. Within a few metres of a county line the two files, each
+   * simplified on its own, can put a point in different counties; there
    * this layer follows the County card, so the two cards do not name
    * different counties (the builder's county witness bounds that strip). A
    * failed fetch fails OPEN per the engine's coverage contract, and the
@@ -13628,7 +13636,7 @@ function initMississippiExplorer() {
     coverage: inConfirmedSupervisorCounty,
     // Inside the drawn counties the districts cover every point, so this is
     // reached only where the County layer's line and this layer's disagree,
-    // within a few tens of metres of a county line.
+    // within a few metres of a county line.
     emptyNote: "No supervisor district is drawn at this point. The County " +
       "card names all five of the county's supervisors.",
     overlay: {
@@ -13818,7 +13826,7 @@ function initMississippiExplorer() {
   /* ---------- 3-4. Mississippi Senate + Mississippi House ----------
    * The two chambers through the shared ENGINE chamber factory: pre-built
    * TIGERweb Legislative geometry (ms/scripts/build_legislative_boundaries.py
-   * — fetch, simplify, 2,000-point agreement gate and a 25 m fidelity
+   * — fetch, simplify, 2,000-point agreement gate and an 8 m fidelity
    * ceiling) joined by district number to same-origin rosters
    * (ms/scripts/build_ms_legislature_roster.py, refreshed weekly by
    * update-ms-legislature-roster.yml as a reviewed PR). A roster miss

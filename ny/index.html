@@ -4387,7 +4387,9 @@ function initNycExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -14624,7 +14626,26 @@ function initNycExplorer() {
    * citywide), labeled as such. */
   var loadPolicePrecincts = makeCachedLoader("y76i-bdw7");
   var loadPrecinctInfo = makeCached(function () { return fetchJSONWithRetry("data/app/nypd-precinct-info.json", {}, 2); });
-  var loadPoliceStationPoints = makeSocrataPointLoader("ji82-xba5", "factype='POLICE STATION'", "latitude", "longitude");
+  // The nearest-station card's points come from the same roster: one per
+  // precinct, at the station house NYPD names, geocoded from its address and
+  // checked against the precinct's own polygon (nypd_precinct_scraper.py). The
+  // city facilities list it used to read put firehouses, a juvenile centre and
+  // a landfill garage on this card as police stations (measured 2026-10-16).
+  var loadPoliceStationPoints = makeCached(function () {
+    return loadPrecinctInfo().then(function (info) {
+      var feats = [];
+      Object.keys(info || {}).forEach(function (pct) {
+        var row = info[pct] || {};
+        var pt = row.station_point;
+        if (!Array.isArray(pt) || pt.length !== 2 || !isFinite(pt[0]) || !isFinite(pt[1])) return;
+        feats.push({ type: "Feature", geometry: { type: "Point", coordinates: [Number(pt[0]), Number(pt[1])] },
+          properties: { precinct: pct, name: row.station_name || null,
+            address: Array.isArray(row.station_address) ? row.station_address.join(", ") : null,
+            phone: row.station_phone || null } });
+      });
+      return { type: "FeatureCollection", features: feats };
+    });
+  });
   registerLayer({
     id: "police-precinct",
     tiles: "data/app/tiles/police-precinct.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
@@ -14786,7 +14807,11 @@ function initNycExplorer() {
     }
   });
 
-  /* ---------- Police Station (nearest 3) — FacDB `factype='POLICE STATION'` ---------- */
+  /* ---------- Police Station (nearest 3) — NYPD's own 78 station houses ---------- */
+  function policeStationName(p) {
+    var name = p.name ? String(p.name) : "";
+    return name ? name + " Precinct station house" : "Police station";
+  }
   registerNearestPointLayer({
     id: "police-station",
     group: "safety",
@@ -14796,18 +14821,12 @@ function initNycExplorer() {
     loader: loadPoliceStationPoints,
     intro: "Nearest NYPD station houses, straight-line distance:",
     line: function (p) {
-      var name = findPropCI(p, ["facname"]);
-      var addr = findPropCI(p, ["address"]);
-      var pct = findPropCI(p, ["policeprct"]);
-      return (name ? toTitleCase(name) : "Police station") + (pct ? " (Precinct " + pct + ")" : "") + (addr ? " — " + toTitleCase(addr) : "");
+      return policeStationName(p) + (p.address ? " — " + p.address : "");
     },
     item: function (p) { // 4d two-line row: name over address
-      var name = findPropCI(p, ["facname"]);
-      var addr = findPropCI(p, ["address"]);
-      var pct = findPropCI(p, ["policeprct"]);
       return {
-        name: (name ? toTitleCase(name) : "Police station") + (pct ? " (Precinct " + pct + ")" : ""),
-        note: addr ? toTitleCase(addr) : undefined
+        name: policeStationName(p),
+        note: [p.address, p.phone].filter(Boolean).join(" · ") || undefined
       };
     }
   });

@@ -172,7 +172,12 @@ jobs:
           # workflow and refuses for a token without `workflow` scope.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ia/data/app/ia-county-city-officials.json
+          # docs/EAM_STATUS.md counts the places this roster names, so a
+          # refresh that moves a count fails the smoke gate's
+          # `build_eam_status.py --check` on this PR unless it is rebuilt here,
+          # after the cut onto main (#1572 went red that way on 2026-10-15).
+          python3 scripts/build_eam_status.py
+          git add ia/data/app/ia-county-city-officials.json docs/EAM_STATUS.md
           git commit -m "Update the county-published Iowa city officials roster"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

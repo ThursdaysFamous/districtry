@@ -8,9 +8,11 @@ districtry Mississippi: a single-file, dependency-light web app. Click a point i
 search an address) and it reports every civic district containing that point and who represents
 you there. It serves at **districtry.com/ms/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. **The instance is DARK**: no `metros.json` entry, `ms/**` excluded from the
-Pages deploy, nothing served and no landing card naming it. `ms/WATCH.md` lists what go-live has to
-do in one change.
+root-scripts shape. **IT IS PUBLISHED** since Adam's word of 2026-10-16. It arrived dark on
+2026-10-15 (no `metros.json` entry, `ms/**` blanket-excluded from the Pages deploy), and the
+go-live change narrowed that exclude to the build inputs the siblings exclude, registered the
+instance and regenerated every surface that counts the fleet. `ms/WATCH.md` keeps the go-live row
+with its date, and `docs/MS_EXPANSION_PLAN.md` is the record of the launch.
 
 **The national tier** draws its shapes from a national publisher and names people from a national
 roster or the Mississippi Legislature: **County** (82, Census TIGERweb, the coverage ring, and the
@@ -20,9 +22,9 @@ joined to the public-domain unitedstates/congress-legislators roster), **Mississ
 member gallery and member profiles), the LIVE TIGERweb fabric — **City, Town or Village**
 (`municipality`, 300), **School District** (137) and **ZIP Code** — and three nearest-N layers from
 the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**). Beside it,
-**County Supervisor District** (`county-supervisor`) draws the five districts of each of the 20
-counties whose current lines are confirmed (12 from the Census's lines, 8 from the county's own
-map), and is hidden in the other 62. **Tribal Government** (`tribal-government`) draws the
+**County Supervisor District** (`county-supervisor`) draws the five districts of each of the 23
+counties whose current lines are confirmed (12 from the Census's lines, 11 from the county's own
+map), and is hidden in the other 59. **Tribal Government** (`tribal-government`) draws the
 Mississippi Band of Choctaw Indians' reservation and its off-reservation trust land, the only
 tribal land the Census draws in the state, and names the Tribal Chief and the seventeen council
 members from the band's own page. Four court layers draw the districts of the four courts whose
@@ -59,23 +61,39 @@ PLACES.** Every county elects five supervisors, each from a district (some count
 "beats"). The Secretary of State's County Offices and Directory (2026 edition) names all 410 by
 district, so every County card lists its board. The Census carries the district lines as county
 subdivisions — all 410 are nonfunctioning (FUNCSTAT N) and they ARE the supervisor districts — but
-in 70 counties the Census's 2026 layer still carries its own 2020 edition, the lines drawn on the
-2010 census — the planning measurement found those put 34% of Madison County's residents in the
-wrong district, 16% of Lee's and 9.5% of Harrison's. So a supervisor district is drawn only where
-its current lines are confirmed (Adam's choice, "Confirmed only", on the decision card of
-2026-10-15), and the rest is gap `ms-supervisor-district-lines`. **THE
-DIRECTORY ALSO PRINTS SUPERVISORS' OWN ADDRESSES AND TELEPHONES IN SOME COUNTIES**, which may be
-homes: a board address or telephone is carried only where at least three of the five supervisors
-print the same one, because five people do not share a home — 76 counties have an address and 68 a
-telephone on the 2026 edition, and Amite, Coahoma, Humphreys, Lincoln, Sunflower and Yalobusha,
-which print a different address for each supervisor, have none. No supervisor's own line is ever
-carried. **THE SAME DIRECTORY NAMES THE FIVE ELECTION COMMISSIONERS, AND ONLY THEIR NAMES ARE
-CARRIED**: each commissioner's line runs on from the name to the commissioner's own address, which
-may be a home, so the builder cuts the line at its first run of dots and keeps nothing after the
-name, and its errors name only the county and the district. All 410 were named on the 2026
-edition, numbered District 1 to 5 in every county, even the five whose supervisor districts are
-beats. The County card lists them; the supervisor-district card names the one with the same
-number only where the directory uses the same word for both lists.
+in 70 counties the Census's 2026 layer still carries its own 2020 edition, and the planning
+measurement found those lines put 34% of Madison County's residents in the wrong district, 16% of
+Lee's and 9.5% of Harrison's. So a supervisor district is drawn only where its current lines are
+confirmed (Adam's choice, "Confirmed only", on the decision card of 2026-10-15), and the rest is
+gap `ms-supervisor-district-lines`. **IN MOST OF THOSE COUNTIES THE CENSUS'S LINES ARE OLDER THAN
+THE 2010 CENSUS, AND THIS FILE SAID OTHERWISE UNTIL 2026-10-16**: it called them "the lines drawn
+on the 2010 census", which nothing had measured. Measured that day by `--survey` against the
+Census's 2010 edition (`tigerWMS_Census2010` layer 28, the January 1, 2010 vintage, whose POP100 is
+the 2010 census's own count of each district): in 52 of the 64 counties whose 2020 edition no
+longer balances, it puts every 2020 resident in the same district as the 2010 edition, so the
+Census's lines there have moved nobody since January 1, 2010, and in 49 of those 52 the districts
+were already more than 10% apart on the 2010 census's own counts. Those 49 held 1,504,204 of the
+state's 2,961,279 residents in 2020, so for half the state the only statewide map of the supervisor
+districts that was found still places every resident where it did in January 2010 —
+publishing-reform evidence. Harrison is one of the 49: its own map server's descriptions name a
+plan adopted in 2013 on the 2010 census, and the Census's lines there place every resident as the
+2010 edition does, 35.8% apart on that census. Seven of the 49 (Coahoma, Greene, Harrison, Hinds,
+Lauderdale, Sunflower and Yazoo) hold a 2020 block of more than 1,000 people, which may be a prison
+or a campus that a plan can leave out of its count, so their figures may overstate the imbalance on
+a plan's own count; estimated from that block's 2020 count against an equal share, leaving it out
+could account for the whole figure only in Coahoma and Sunflower, and the other 47 held 1,456,843
+residents, still about half the state. **THE DIRECTORY ALSO PRINTS SUPERVISORS' OWN ADDRESSES AND
+TELEPHONES IN SOME COUNTIES**, which may be homes: a board address or telephone is carried only
+where at least three of the five supervisors print the same one, because five people do not share a
+home — 76 counties have an address and 68 a telephone on the 2026 edition, and Amite, Coahoma,
+Humphreys, Lincoln, Sunflower and Yalobusha, which print a different address for each supervisor,
+have none. No supervisor's own line is ever carried. **THE SAME DIRECTORY NAMES THE FIVE ELECTION
+COMMISSIONERS, AND ONLY THEIR NAMES ARE CARRIED**: each commissioner's line runs on from the name
+to the commissioner's own address, which may be a home, so the builder cuts the line at its first
+run of dots and keeps nothing after the name, and its errors name only the county and the district.
+All 410 were named on the 2026 edition, numbered District 1 to 5 in every county, even the five
+whose supervisor districts are beats. The County card lists them; the supervisor-district card
+names the one with the same number only where the directory uses the same word for both lists.
 
 **A COUNTY'S SUPERVISOR DISTRICTS ARE DRAWN ONLY WHEN TWO MEASUREMENTS AGREE, AND TWELVE PASS**
 (`ms/scripts/build_ms_supervisor_districts.py`, its `--check` in CI). Its Census lines changed
@@ -91,31 +109,57 @@ here can tell which; the county's own map or its answer to a letter settles one.
 re-takes both measurements for every county and marks one that newly passes, which a person adds
 to `CENSUS_COUNTIES` after looking.
 
-**EIGHT MORE ARE DRAWN FROM THE COUNTY'S OWN MAP** (`COUNTY_SOURCES` in the same builder,
-2026-10-15). A survey of every county's website and its planning and development district's
-(`/mnt/project-files/ms/supervisor-map-survey/`) found 14 of the 70 old-edition counties publishing
-lines of their own. Eight are drawn because each publication names or proves its own currency,
-and the build re-reads that evidence every time: a layer named for its adoption ("Supervisor
-Districts Adopted 2022", Rankin's 2021), population figures per district that equal the 2020
-census's own block counts (six of the eight publish them, and for Hinds, whose layer name gives no
-year, they are the witness), a
-service description saying the lines were "approved 2023 as a result of the 2020 US Census"
-(Harrison), or a printed map dated 8/09/2022 on the county's own website, pinned by its SHA-256
-and compared with the layer by eye (Lamar). Copiah, Hinds, Madison, Rankin, Simpson and Warren come
-from the Central Mississippi Planning and Development District's map viewers, Harrison from the
-county's own map server and Lamar from the parcel viewer its website links to. Each must also
-balance on the 2020 blocks (4.39% to 8.48%), keep the 2020 edition's district numbers, and the
-Census's current lines there must STILL be its 2020 edition's, so the day the Census receives a
-county's new lines the build stops and a person moves it to `CENSUS_COUNTIES`. **NOTHING TRACED
-SHIPS**: each 2020 block goes to the district covering most of it and a district is drawn as the
-union of its blocks, so every vertex is the Census Bureau's (the Iowa method), and where a plan
-publishes a population per district the blocks reproduce it to the person. Rankin's plan leaves
-out two blocks (3,633 people in a block with 3 housing units and 157 in one with none), which the
-build re-reads from the Census and the card mentions without saying what they are, because that
-is not measured. On the same blocks the Census's old lines give 123,495 of these eight counties'
-865,800 residents a different district number. The other six (Coahoma, Covington, Lee, Pearl
-River, Perry and Wilkinson) publish lines that differ from the Census's, but nothing found shows
-they are the plan adopted after the 2020 census, so they wait (`ms/WATCH.md`).
+**ELEVEN MORE ARE DRAWN FROM THE COUNTY'S OWN MAP** (`COUNTY_SOURCES` in the same builder, eight
+on 2026-10-15 and three on 2026-10-16). A survey of every county's website and its planning and
+development district's (`/mnt/project-files/ms/supervisor-map-survey/`) found 14 of the 70
+old-edition counties publishing lines of their own. Eleven are drawn because each publication
+names or proves its own currency, and the build re-reads that evidence every time: a layer named
+for its adoption ("Supervisor Districts Adopted 2022", Rankin's 2021), population figures per
+district that equal the 2020 census's own block counts (six of the first eight publish them, and
+for Hinds, whose layer name gives no year, they are the witness), a service description saying
+the lines were "approved 2023 as a result of the 2020 US Census" (Harrison), a printed map on the
+county's own website, pinned by its SHA-256 and compared with the layer by eye (Lamar's, dated
+8/09/2022, and Pearl River's, "Effective January 1, 2023"), or a map of the county's voting
+precincts that follows the county's lines and not the Census's (Lee, Pearl River and Perry, below).
+Copiah, Hinds, Madison, Rankin, Simpson and Warren come from the Central Mississippi Planning and
+Development District's map viewers, Harrison from the county's own map server, Lamar from the
+parcel viewer its website links to, Pearl River and Perry from the Find My Supervisor maps their
+websites link to, and Lee from a map published online as Lee Supervisor Districts 2022, which only
+the name of the account it sits in ties to the county. Each must also balance on the 2020 blocks
+(4.39% to 8.82%), keep the 2020 edition's district numbers, and the Census's current lines there
+must STILL be its 2020 edition's, so the day the Census receives a county's new lines the build
+stops and a person moves it to `CENSUS_COUNTIES`. **NOTHING TRACED SHIPS**: each 2020 block goes to
+the district covering most of it and a district is drawn as the union of its blocks, so every
+vertex is the Census Bureau's (the Iowa method), and where a plan publishes a population per
+district the blocks reproduce it to the person. Rankin's plan leaves out two blocks (3,633 people
+in a block with 3 housing units and 157 in one with none), which the build re-reads from the
+Census and the card mentions without saying what they are, because that is not measured. On the
+same blocks the Census's old lines give 142,738 of these eleven counties' 1,016,799 residents a
+different district number. The other three (Coahoma, Covington and Wilkinson) publish lines that
+differ from the Census's, but nothing found shows they are the plan adopted after the 2020
+census, so they wait (`ms/WATCH.md`).
+
+**A PRECINCT MAP IS EVIDENCE ONLY AS A MEASUREMENT, AND THE BUILD TAKES IT ON EVERY RUN**
+(`precinct_witness()` in the same builder). Each 2020 block's residents are placed in a precinct at
+the block's internal point, and each precinct belongs to the district it names (Lee's and Pearl
+River's name one) or else to the district holding most of its residents under the lines being
+tested (Perry's names none). Measured 2026-10-16, the precinct maps put 10 of Lee's 83,343
+residents, none of Pearl River's 56,145 and 8 of Perry's 11,511 in a different district from the
+drawn lines, against 13,351, 4,919 and 444 for the Census's, and every resident in exactly one
+precinct. The build stops if a precinct map puts more than 0.5% of a county's residents in a
+different district, fewer than 50 in a different district from the Census's (it would no longer
+tell the two apart), or more than 1% in no precinct or two. Only each precinct's name and district
+are read: Coahoma's 2022 precinct and supervisor layers also carry population by race, and none of
+that is asked for. **HOW INDEPENDENT EACH PRECINCT MAP IS DIFFERS, AND IS STATED RATHER THAN
+ASSUMED.** Lee's describes itself as the Circuit Clerk's master precinct split map of 2024, in a
+different account from the district map. Perry's is a separate 2023 precinct service in the same
+account as its districts. Pearl River's sits in the same map service as its districts, so there
+the printed map and the supervisors' names, which match the Secretary of State's directory, carry
+more of the weight. **WHY COAHOMA IS NOT DRAWN ON ITS PRECINCT MAP**: the layer its emergency
+management agency publishes as Voting Precincts 2022 carries exactly the fields of the Supervisor
+Districts 2022 layer beside it (population by race, a target population and the difference from
+it), which are a redistricting plan's fields and not a precinct's, so it witnesses nothing the
+district layer does not; and the county's own website still points at the old lines.
 
 **THE MAP SERVER'S OWN GEOJSON WAS MEASURED WRONG, SO EVERY POLYGON IS READ AS ARCGIS JSON.**
 Asked for GeoJSON, Lamar's layer sometimes sent District 3, whose two parts ArcGIS's own JSON gives
@@ -130,17 +174,21 @@ runs on every selection whether or not the layer is on, and reading the district
 reader's first selection download it: 150 KB gzipped for twenty counties, measured 2026-10-15. It
 now finds the point's county in `state-counties.json`, which the County card loads anyway, and
 looks it up in `ms-supervisor-counties.json` (under 1 KB), which the builder writes beside the
-districts and its `--check` holds to them. Within a few tens of metres of a county line the two
-files can disagree, and there the layer follows the County card. The smoke test fails if the
-districts file is requested with the layer off. **The shapes are the county
+districts and its `--check` holds to them. Within a few metres of a county line (5.0 m at most,
+measured 2026-10-16) the two files can disagree, and there the layer follows the County card. The
+smoke test fails if the districts file is requested with the layer off. **The shapes are the county
 outline's too**: `state-counties.json` was rebuilt with Douglas-Peucker on 2026-10-15 because
 the Visvalingam simplification it shipped with put a county line up to 184.5 m from the
 Census's, with 54 counties over 25 m, and the supervisor builder's county witness holds the two
 files to each other at 4,000 points. **That rebuild fixed the stray and made the other measure
 worse**: the ground answered with the wrong county, or none inside the state, went from 23.1 to
 40.7 km² (equal-area, against the full-precision lines), which the first measurement never looked
-at. An interval of 10 m or finer beats both on both measures with a larger file, so the interval is
-provisional until Adam's choice for the newer states' county files, and `ms/WATCH.md` carries it.
+at. The file is now drawn at a 5 m interval under an 8 m ceiling, Adam's choice for the newer
+states' county files ("Finest", 2026-10-15): 5.6 m and 8.1 km², in a file of 295 KB gzipped
+against 139 KB, and the six court maps, which are dissolves of it, were rebuilt with it. The
+supervisor districts and the legislature's three maps were redrawn at the same setting on
+2026-10-16, Adam's choice before the instance opened ("Finer first"); each builder's docstring
+carries what that changed, and `ms/WATCH.md` the row.
 **THE DIRECTORY PRINTS MOST COUNTY NAMES AS ARTWORK, NOT TEXT.** 80 of its 82 county pages carry
 the county's name as an image, so the builder finds the 82 start pages (each opens with "Named
 for"), pairs them with the 82 counties in alphabetical order, and refuses to write unless there are
@@ -216,8 +264,19 @@ and layer modules — lives inline in `index.html`. `sw.js` is the service worke
 `data/app/*.json` are runtime-fetched data files; `data/state/` carries the bootstrap state
 config (`build_congress_roster.py` reads its FIPS/USPS/seat count — it ships in the repo and is
 excluded from the Pages deploy). `sources.html` carries the generated per-layer provenance
-matrix and `faq.html` the common questions; both compose from the same shared engine blocks as
-every other instance via `scripts/compose_app.py`.
+matrix and `faq.html` the common questions; `congress.html` and `state-legislature.html` are
+generated by `scripts/build_legislator_pages.py` with their tables from
+`scripts/build_officeholder_tables.py`, and `county-supervisor.html` with its per-county pages by
+`scripts/build_county_pages.py`. All of them compose from the same shared engine blocks as every
+other instance via `scripts/compose_app.py`.
+
+**EACH COUNTY HAS A BOARD OF SUPERVISORS PAGE**, `ms/county-supervisor/<county>.html`, indexed
+from `ms/county-supervisor.html` and generated by `scripts/build_county_pages.py` from the same
+file the County card reads: the five supervisors as the Secretary of State's directory lists them,
+the board's office only where the directory prints one address or telephone for at least three of
+the five, and the directory's page as the source. The election commissioners are not on these
+pages, because they are not members of the board, and each page says whether the map draws that
+county's districts.
 
 <!-- ==== GENERATED:BEGIN metro-facts ==== -->
 **Metro facts** (generated from `metro-worksheet.json` — edit the worksheet and run
@@ -313,15 +372,15 @@ Pre-built layers ship as same-origin `data/app/` files, all rebuilt from a live 
 operator script: `metro-outline.json` (the whole-state outline for the coverage wash,
 `ms/scripts/build_metro_outline.py` — one INSIDE anchor per county plus OUTSIDE anchors in
 Alabama, Tennessee, Arkansas and Louisiana), `state-counties.json`
-(`ms/scripts/build_state_counties.py`, Douglas-Peucker, refused unless the 25 m fidelity ceiling
-passes), `ms-supervisor-districts.json` (`ms/scripts/build_ms_supervisor_districts.py`, the 20
-confirmed counties, 12 from the Census and 8 from the county's own map resolved to whole 2020
+(`ms/scripts/build_state_counties.py`, Douglas-Peucker at 5 m, refused unless the 8 m fidelity
+ceiling passes), `ms-supervisor-districts.json` (`ms/scripts/build_ms_supervisor_districts.py`, the 23
+confirmed counties, 12 from the Census and 11 from the county's own map resolved to whole 2020
 blocks, in one mapshaper run so a shared line is simplified once) with `ms-supervisor-counties.json`
 (the drawn counties' list, written by the same build, which the layer's coverage test reads), and
 `congress-districts.json`, `ms-senate-districts.json`,
 `ms-house-districts.json` (`ms/scripts/build_legislative_boundaries.py` — statewide TIGERweb,
-mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement gate
-and the 25 m fidelity ceiling pass), and the six court maps,
+mapshaper-simplified with Douglas-Peucker at 5 m, refused unless BOTH the 2,000-random-point
+agreement gate and the 8 m fidelity ceiling pass), and the six court maps,
 `ms-{supreme-court,court-of-appeals,chancery-court,circuit-court}-districts.json` and the
 `ms-{chancery,circuit}-court-districts-2027.json` pair (`ms/scripts/build_ms_court_districts.py`,
 dissolved from `state-counties.json`). Rosters: `congress-roster.json`
@@ -329,7 +388,7 @@ dissolved from `state-counties.json`). Rosters: `congress-roster.json`
 `ms-{senate,house}-members.json` (`ms/scripts/build_ms_legislature_roster.py`, from the
 legislature's own pages) and `ms-county-officials.json` (`ms/scripts/build_ms_county_officials.py`,
 from the Secretary of State's directory) and `ms-judge-roster.json` (`ms/scripts/build_ms_judges.py`,
-from the Judiciary's own lists) — all count-guarded, all refreshed weekly by CI as reviewed PRs. The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both
+from the Judiciary's own lists) — all count-guarded, all scheduled weekly in CI as reviewed PRs. The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both
 written by the fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government
 join every instance uses (`data/tribal-government-join.json`); the council is re-read weekly from
 the band's own page by `scripts/tribal_council_scraper.py` in the fleet's

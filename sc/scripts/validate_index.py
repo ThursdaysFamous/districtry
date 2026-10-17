@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -95,8 +95,9 @@ MIN_REGISTER_LAYER = 9
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "sc-senate", "county", "school-district-unified", "sc-house",
-    "county-subdivision", "county-council", "zip-code", "municipality",
-    "tribal-government", "police-station", "fire-station", "post-office",
+    "county-subdivision", "county-council", "zip-code", "voting-precinct",
+    "municipality", "tribal-government", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +109,7 @@ GEOMETRY_FILES = {
     "sc-house-districts.json": (124, 124),  # The 124 South Carolina House districts.
     "sc-county-council-districts.json": (315, 315),  # The 315 county council districts in all 46 counties, from the state Revenue and Fiscal Affairs Office (sc/scripts/build_sc_county_council_districts.py).
     "tribal-areas.json": (2, 2),  # South Carolina's tribal land (scripts/build_tribal_areas.py) — the Catawba Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "sc-precincts.json": (2315, 2315),  # Every South Carolina voting precinct, pre-built by sc/scripts/build_sc_precincts.py through scripts/statewide_precincts.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,315 count on the fetch and the drawn file). 7.8 MB, 2.24 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).
