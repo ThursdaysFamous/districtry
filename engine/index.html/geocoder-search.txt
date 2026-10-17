@@ -1,4 +1,7 @@
-  function renderGeocodeResults(results, fromLink) {
+  // `rows`, when given, can name a class for a row (rows.mark) and take a
+  // row's click instead of selecting its point, by returning true
+  // (rows.pick): listHeldAnswers uses both
+  function renderGeocodeResults(results, fromLink, rows) {
     // the district section (district-result / district-hint rows) is owned by
     // renderDistrictSection and stays on top; only address rows are replaced
     clearResultRows(false);
@@ -13,6 +16,7 @@
     }
     results.forEach(function (r) {
       var li = document.createElement("li");
+      if (rows && rows.mark) li.className = rows.mark(r);
       var btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = r.display_name; // textContent — never innerHTML — for untrusted geocoder output
@@ -21,6 +25,7 @@
         // response can't re-open the list over the "Selected:" status
         clearTimeout(debounceTimer);
         if (inFlightController) inFlightController.abort();
+        if (rows && rows.pick && rows.pick(r)) return;
         trackEvent("address-search");
         setSelectedPoint(parseFloat(r.lat), parseFloat(r.lon));
         geoResultsList.innerHTML = "";
@@ -71,6 +76,19 @@
       trackEvent("metro-portal-go/" + metro.id, "search");
       window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
     });
+  }
+  // An answer without the house number an address opens with: that app is
+  // opened with the address, as #q=, and searches it there, where such an
+  // answer is never selected (listHeldAnswers); the answer's own point is a
+  // spot somewhere along a street, not the address
+  function handOnSiblingRow(metro, r, address) {
+    var li = siblingRow(metro, r.display_name, function () {
+      trackEvent("metro-portal-go/" + metro.id, "search");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(address);
+    });
+    li.className += " no-number";
+    return li;
   }
 
   /* ---------- a link to a place in another state ----------
@@ -126,7 +144,10 @@
   }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
-  function maybeRenderSiblingMatches(query, mustCarry, seen) {
+  // `handOn` is an address held to its house number (runAddressSearch): when
+  // no answer carries the number, the answers are listed as rows that open
+  // their app with the address (handOnSiblingRow) instead of being dropped
+  function maybeRenderSiblingMatches(query, mustCarry, seen, handOn) {
     var anySibling = METRO_EXPLORERS.some(function (m) { return m.id !== THIS_METRO && m.bbox; });
     if (!anySibling) return;
     // share the geocoder's abort slot so a new keystroke/search cancels this
@@ -157,6 +178,8 @@
         var results = !mustCarry ? got.results : got.results.filter(function (r) {
           return labelCarriesNumber(r.display_name, mustCarry);
         });
+        var away = !!handOn && !results.length;
+        if (away) results = got.results;
         var perMetro = {}; // id -> rows rendered
         var labels = [];
         results.forEach(function (r) {
@@ -166,7 +189,7 @@
           perMetro[metro.id] = (perMetro[metro.id] || 0) + 1;
           if (perMetro[metro.id] > SIBLING_ROWS_PER_METRO) return;
           if (labels.indexOf(metro.label) === -1) labels.push(metro.label);
-          geoResultsList.appendChild(buildSiblingResultRow(metro, r));
+          geoResultsList.appendChild(away ? handOnSiblingRow(metro, r, handOn) : buildSiblingResultRow(metro, r));
         });
         if (!labels.length) return 0; // leave the standard "no matches" status as-is
         geoStatus.textContent = "Nothing in " + appPlaceName() + " matched — but it looks like you're searching " +
@@ -723,7 +746,9 @@
     return li;
   }
 
-  function runGeocodeSearch(q, fromLink) {
+  // `submitted` is a search the reader sent (Search or Enter, or #q=), as
+  // against one the box runs while they type (runAddressSearch)
+  function runGeocodeSearch(q, fromLink, submitted) {
     var link = parseMapLink(q);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
@@ -743,7 +768,7 @@
         syncResultCount();
         return;
       }
-      return runAddressSearch(q, fromLink);
+      return runAddressSearch(q, fromLink, submitted);
     });
   }
 
@@ -774,41 +799,78 @@
    * the address's street in its town (labelOnStreet) is kept aside, and when
    * no answer carries the number the map shows that street and asks the
    * reader to tap the place (showStreetOnly), here when this app's own
-   * search found it and after the sibling apps' lookup otherwise. */
-  function runAddressSearch(q, fromLink) {
+   * search found it and after the sibling apps' lookup otherwise.
+   *
+   * AN ADDRESS WITH NO NAME IN FRONT, typed or carried by a link, is held
+   * to its house number as well, from 2026-10-17, because an answer without
+   * the number is a street and a street's point is a spot somewhere along
+   * it. Typed into the front door, such an answer opened its app with that
+   * spot selected, and a question page's address box selected it whenever
+   * it was the only answer, so a reader asking about one address was shown
+   * the cards for another, a ward or more away, with nothing to say so:
+   * Photon holds a Chicago storefront's street and not its number. Every
+   * answer is still listed, and one without the number is marked
+   * (listHeldAnswers) so that nothing selects it for the reader. When no
+   * answer carries the number but one is on the address's street
+   * (addressInTownOf, which also reads a town typed with no comma, or not
+   * typed at all, from the answer's own label), a search the reader sent
+   * shows that street and the Census Bureau's pin as for a shared link, if
+   * the answers put the street in one town; while the reader is typing, the
+   * street's row does that when it is picked. The geocoder is asked as often
+   * as before, bar one retry without a unit ("Apt 2") when the first answers
+   * lack the number. */
+  function runAddressSearch(q, fromLink, submitted) {
     var seq = districtSearchSeq;
     var bare = fromLink ? addressAfterName(q) : null;
     var name = bare ? q.split(",")[0].trim() : "";
-    var tries = [], held = [], street = [];
+    var numbered = !bare && OPENS_WITH_ADDRESS.test(q) ? q : null;
+    var sent = submitted || !!fromLink; // a link is sent when it is pasted or shared
+    var tries = [], held = [], street = [], loose = null, looseOnStreet = false;
     function add(t, mustCarry) {
       if (t && tries.indexOf(t) < 0) { tries.push(t); held.push(mustCarry || null); }
     }
+    // each answer on the address's street, with the address it is in there
     function keepStreet(results) {
-      (results || []).forEach(function (r) { if (labelOnStreet(r.display_name, bare)) street.push(r); });
+      (results || []).forEach(function (r) {
+        var at = numbered ? addressInTownOf(numbered, r.display_name) : labelOnStreet(r.display_name, bare) ? bare : null;
+        if (at) street.push({ answer: r, at: at });
+      });
     }
-    add(q); add(cleanPoiAddress(q));
+    add(q, numbered); add(cleanPoiAddress(q), numbered);
     if (bare) { add(bare, bare); add(cleanPoiAddress(bare), bare); }
     var i = 0;
     function next(results) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      var all = results, before = street.length;
       if (results && held[i]) {
         keepStreet(results);
         results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
       }
       if (results && results.length) {
+        if (numbered) return listHeldAnswers(all, numbered, street, sent);
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
         return;
       }
+      // the answers listed if none carries the number: the first try's, or
+      // a later try's that found the street when the first did not
+      if (numbered && all && all.length && (!loose || (!looseOnStreet && street.length > before))) {
+        loose = all;
+        looseOnStreet = street.length > before;
+      }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
-      if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
+      var towns = streetTowns(street);
+      if (towns.length === 1 && (bare || sent)) {
+        return showStreetOnly(streetIn(street, towns[0]), towns[0], name, geocodeAddress);
+      }
+      if (loose) return listHeldAnswers(loose, numbered, street, sent);
       renderGeocodeResults(results, fromLink);
-      return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+      return Promise.resolve(maybeRenderSiblingMatches(q, numbered, null, numbered)).then(function (found) {
         // 0, never undefined: an aborted or sibling-less lookup tries no more
         if (found !== 0 || !bare || seq !== districtSearchSeq) return;
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
           if (again !== 0 || seq !== districtSearchSeq) return;
-          if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
+          if (street.length) return showStreetOnly(streetIn(street, bare), bare, name, searchEverywhere);
           if (name.length < 3) return;
           return geocodeAddress(name).then(function (named) {
             if (seq !== districtSearchSeq || !named || !named.length) return;
@@ -828,6 +890,51 @@
   function searchEverywhere(text) {
     inFlightController = new AbortController();
     return geocodeUnbounded(text, inFlightController.signal);
+  }
+
+  // The addresses the answers on a street are in (keepStreet), one per town,
+  // and the answers in one of them
+  function streetTowns(street) {
+    var towns = [];
+    street.forEach(function (s) { if (towns.indexOf(s.at) < 0) towns.push(s.at); });
+    return towns;
+  }
+  function streetIn(street, at) {
+    return street.filter(function (s) { return s.at === at; }).map(function (s) { return s.answer; });
+  }
+
+  /* Answers to an address held to its house number (runAddressSearch).
+   * Every answer is listed, as before, and one whose label lacks the number
+   * is marked no-number, which #q= never selects (prefillGeocodeSearch).
+   * When none carries the number, a row on the address's street shows that
+   * street when it is picked (showStreetOnly), with the Census Bureau's pin,
+   * instead of selecting a spot along it, and the status says what the
+   * map's search knows. */
+  function listHeldAnswers(answers, address, street, sent) {
+    var none = !answers.some(function (r) { return labelCarriesNumber(r.display_name, address); });
+    renderGeocodeResults(answers, null, {
+      mark: function (r) { return labelCarriesNumber(r.display_name, address) ? "" : "no-number"; },
+      pick: function (r) {
+        var at = none ? addressInTownOf(address, r.display_name) : null;
+        if (!at) return false;
+        showStreetOnly(streetIn(street, at), at, "", geocodeAddress);
+        return true;
+      }
+    });
+    if (!none) return;
+    var towns = streetTowns(street.filter(function (s) { return answers.indexOf(s.answer) >= 0; }));
+    if (towns.length) {
+      var names = towns.map(function (at) { return addressParts(at).town; });
+      var a = addressParts(towns[0]);
+      geoStatus.textContent = "The map's search knows " + a.street + " in " +
+        (names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0]) +
+        " but not number " + a.number + " on it. Pick " +
+        (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map, then tap the place.";
+    } else if (sent) {
+      geoStatus.textContent = "None of these has the house number " + addressStreet(address).number +
+        ", so pick one only if it's the place you meant, or tap the place on the map.";
+    }
+    geoStatus.className = "geo-status";
   }
 
   /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
@@ -869,8 +976,9 @@
     }
   }
 
-  /* The street a shared address is on, when no answer carries its house
-   * number (labelOnStreet, ENGINE map-link). The map frames the street, from
+  /* The street a shared or typed address is on, when no answer carries its
+   * house number (labelOnStreet, addressInTownOf, ENGINE map-link); `bare`
+   * is the address in the street's town. The map frames the street, from
    * the extent the geocoder gives it, and the reader taps the place: nothing
    * is selected, because a point on a street is not the place and a
    * district's edge can run down the middle of the street. The place's name
@@ -898,6 +1006,18 @@
     });
     clearResultRows(false);
     var pin = null, near = [];
+    // every answer came from OpenStreetMap's data (normalizePhoton), so the
+    // message can offer its note form; New York's city search reads the
+    // city's own address file, which OpenStreetMap's volunteers do not keep
+    var osm = street.length > 0 && street.every(function (r) { return r.source === "openstreetmap"; });
+    function noteAt() {
+      if (pin) return { lat: pin.lat, lng: pin.lng, zoom: 19 };
+      // the middle of the part of the map below the search panel, which is
+      // where the street was framed
+      var size = map.getSize();
+      var c = map.containerPointToLatLng([size.x / 2, (clearOfSearchPanel() + size.y) / 2]);
+      return { lat: c.lat, lng: c.lng, zoom: Math.min(19, Math.max(17, Math.round(map.getZoom()))) };
+    }
     function current() { return !answered && seq === districtSearchSeq && picked === state.sequence; }
     function compose() {
       var text = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number + " on it";
@@ -912,6 +1032,11 @@
       }
       geoStatus.textContent = text;
       geoStatus.className = "geo-status";
+      if (!osm) return;
+      geoStatus.appendChild(document.createTextNode(" The search reads OpenStreetMap's data. If you know where number " +
+        a.number + " is yourself, not from another map, you can "));
+      geoStatus.appendChild(osmNoteLink(noteAt));
+      geoStatus.appendChild(document.createTextNode(" so its volunteers can add it."));
     }
     compose();
     refreshSearchShellExpanded();
@@ -957,6 +1082,47 @@
     return Promise.all([ranged, named]);
   }
 
+  /* OPENSTREETMAP'S NOTE FORM, for a reader who knows where a house number
+   * the map's search lacks is. Photon is built from OpenStreetMap's data, so
+   * a number missing there is missing from OpenStreetMap or from Photon's copy
+   * of it, and OpenStreetMap's volunteers add one when a note says where it
+   * is. Added on Adam's choice of 2026-10-17. Its wiki (wiki.openstreetmap.org
+   * /wiki/Notes, read that day) says a note needs no account, that it is a
+   * message from one person to another ("Don't create automated notes"), and
+   * that it must not be copied from another map, "even if they do not cost
+   * money or are from the government"; a reader who arrived with a Google
+   * Maps link is the likeliest to copy one, which is why the message says
+   * "not from another map", and a note is public, which is why the link says
+   * so. So the link only opens the form, with nothing filled in, and
+   * districtry sends OpenStreetMap nothing. The place is in the part of the
+   * address after "#", which a browser never sends to a server: the form's
+   * page reads it to open its map there and puts the new note's marker in
+   * the middle of that map, where the reader drags it, or taps the map, to
+   * move it to the place (read 2026-10-17 in the new-note script
+   * openstreetmap.org serves, which takes ?lat=&lon= instead when given
+   * them; a query string is sent, so it is not used). The link opens at the
+   * pin, or, when there is no pin, at the part of the street the map is
+   * showing, read again each time the map stops moving while the link is on
+   * the page, because the reader may have moved the map to the place.
+   * Following it is counted as osm-note, never by place. */
+  var OSM_NOTE_URL = "https://www.openstreetmap.org/note/new#map=";
+  function osmNoteLink(where) {
+    var link = document.createElement("a");
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "leave OpenStreetMap a public note";
+    function aim() {
+      // a message rewritten or cleared has dropped the link
+      if (link.href && !document.body.contains(link)) { map.off("moveend", aim); return; }
+      var at = where();
+      link.href = OSM_NOTE_URL + at.zoom + "/" + at.lat.toFixed(5) + "/" + at.lng.toFixed(5);
+    }
+    aim();
+    map.on("moveend", aim);
+    link.addEventListener("click", function () { trackEvent("osm-note"); });
+    return link;
+  }
+
   /* ---------- where the Census Bureau puts a house number ----------
    * A place shared from the Google Maps app is its name and its address
    * with no position, and Photon often holds the street and not the number
@@ -969,9 +1135,11 @@
    * ENGINE map-link; services/link-lookup/main.ts), which passes on each
    * match's address and position: the Census Bureau sees the lookup and
    * not the reader, and the privacy page names both, measured from the
-   * `?a=` call below (build_privacy_page.py). Only an address a shared map
-   * link carried is sent, never typed text, since showStreetOnly runs only
-   * for a link's address.
+   * `?a=` call below (build_privacy_page.py). Only an address the reader
+   * searched for is sent: one a shared map link carried, or one typed and
+   * then sent with Search or Enter, handed over as #q=, or picked from the
+   * list by its street (runAddressSearch, listHeldAnswers), never text while
+   * it is being typed.
    *
    * An answer is used only if it is the ONE match on the address's own
    * street in its town with its house number (labelOnStreet,
@@ -1093,17 +1261,23 @@
    * one; and the row a link to a place in another state draws
    * (showLinkElsewhere) is followed, because the address itself says which
    * state's app it belongs to, so a place shared into the installed app
-   * opens in its own state. */
+   * opens in its own state.
+   *
+   * NOR IS AN ANSWER WITHOUT THE HOUSE NUMBER the address opens with
+   * (listHeldAnswers), though it be the only one: that answer is a street,
+   * and its point a spot somewhere along it. Until 2026-10-17 a question
+   * page's address box selected it, and the cards named the districts of
+   * another stretch of the street. */
   function prefillGeocodeSearch(q) {
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
-    return runGeocodeSearch(q).then(function () {
+    return runGeocodeSearch(q, null, true).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
       var place = geoResultsList.querySelectorAll("li.link-place > button");
       var away = geoResultsList.querySelectorAll("li.map-link-away > button");
-      if (own.length === 1) own[0].click();
+      if (own.length === 1) { if (!/\bno-number\b/.test(own[0].parentNode.className)) own[0].click(); }
       else if (place.length === 1) place[0].click();
       else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
@@ -1123,7 +1297,7 @@
     clearTimeout(debounceTimer);
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
-    runGeocodeSearch(q)
+    runGeocodeSearch(q, null, true)
       .catch(function (err) {
         if (err.name === "AbortError") return;
         geoStatus.textContent = "Search failed — the geocoder may be busy. Try again in a moment.";

@@ -227,22 +227,26 @@ LINK_LOOKUP_ROW = (
 # map's own search often holds the street and not the house number on it. An
 # app then asks the same lookup, at `?a=`, for the Census Bureau's estimate of
 # where the number falls on the street (engine geocoder-search
-# lookupAddressRanges), and shows it as a pin to tap. That sends the address to
-# Deno and from Deno to the Census Bureau, which sees Deno's address and not the
-# reader's. MEASURED from the call itself, so the row names exactly the
-# surfaces that make it: the front door reads the same map-link block and
-# carries the lookup's host, and never makes this call.
+# lookupAddressRanges), and shows it as a pin to tap. The same day it was
+# extended, on Adam's choice, to an address a reader types and sends, because
+# that search has the same gap; an address being typed is never sent. That
+# sends the address to Deno and from Deno to the Census Bureau, which sees
+# Deno's address and not the reader's. MEASURED from the call itself, so the
+# row names exactly the surfaces that make it: the front door reads the same
+# map-link block and carries the lookup's host, and never makes this call; an
+# address typed there is handed to the app that covers it, which does.
 HOUSE_LOOKUP_CALL = re.compile(r'MAP_LINK_LOOKUP\s*\+\s*"\?a="')
 HOUSE_LOOKUP_ROW = (
     "U.S. Census Bureau", "house-number lookup",
     "https://www.census.gov/about/policies/privacy.html",
-    "Only when a map link you paste or share names a place by its street address, and the "
-    "map&#39;s own address search knows that street but not the house number on it: the "
-    "address, sent through districtry&#39;s lookup on Deno Deploy, which asks the Census "
-    "Bureau&#39;s geocoder where that number falls on the street and sends its estimate "
-    "back. The Census Bureau receives the address and the lookup&#39;s IP address, not "
-    "yours. An address you type yourself is never sent this way.",
-    "Only when a shared map link's house number is not in the map's search.",
+    "Only when the map&#39;s own address search knows the street of an address you search "
+    "for but not the house number on it, whether you typed the address and sent the search "
+    "(with Search or Enter, or by picking that street from the list) or a map link you paste "
+    "or share carries it: the address, sent through districtry&#39;s lookup on Deno Deploy, "
+    "which asks the Census Bureau&#39;s geocoder where that number falls on the street and "
+    "sends its estimate back. The Census Bureau receives the address and the lookup&#39;s IP "
+    "address, not yours. Nothing is sent this way while you are still typing.",
+    "Only when you search for an address whose house number is not in the map's search.",
     "house_lookup")
 
 
@@ -410,13 +414,17 @@ def measure_address_list(src, name):
 # place shared into the app opened that app, and nothing about the place,
 # which travels in the address hash and reaches analytics only as the
 # rounded `select` any selection sends.
+# `osm-note` joined on 2026-10-17 (engine `geocoder-search` osmNoteLink): when
+# the map's search knows a street and not the house number on it, its message
+# links to OpenStreetMap's note form, and following that link records
+# `osm-note` and nothing about the street or the place.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 
@@ -1068,12 +1076,12 @@ def render_recipient_rows(apps):
         if key == "link_lookup" and housed:
             where = ("every app" if set(housed) == set(mapped) else
                      ", ".join(housed[:-1]) + " and " + housed[-1] if len(housed) > 1 else housed[0])
-            what += (" In %s, when a map link names a place by its street address and the "
-                     "map&#39;s own search knows that street but not the house number on it, "
-                     "the lookup also receives <strong>that address</strong> and asks the U.S. "
-                     "Census Bureau where the number falls (the next row)." % esc(where))
-            when = ("Only when you paste or share a short map link, or, in %s, a map link "
-                    "whose house number the map's search does not know." % where)
+            what += (" In %s, when the map&#39;s own search knows the street of an address "
+                     "you search for, or of one a map link names, but not the house number on "
+                     "it, the lookup also receives <strong>that address</strong> and asks the "
+                     "U.S. Census Bureau where the number falls (the next row)." % esc(where))
+            when = ("Only when you paste or share a short map link, or, in %s, search for an "
+                    "address whose house number the map's search does not know." % where)
         if label == "GitHub Pages" and tiled:
             where = ("every app" if set(tiled) == set(mapped) else
                      ", ".join(tiled[:-1]) + " and " + tiled[-1] if len(tiled) > 1 else tiled[0])

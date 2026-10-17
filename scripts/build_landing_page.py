@@ -1828,9 +1828,12 @@ footer .support b { color: var(--ink); }
       return;
     }
     // a link is handed on rebuilt from its words (ENGINE map-link
-    // mapLinkForText), so a short link read here is not read again there
-    searchAndRoute(q, link ? addressAfterName(q) : null, null, link ? mapLinkForText(link) : typed,
-      named && named.metro.whole ? named.metro : null);
+    // mapLinkForText), so a short link read here is not read again there;
+    // an address with no name in front, typed or carried by a link, is held
+    // to its house number (searchAndRoute)
+    var bare = link ? addressAfterName(q) : null;
+    searchAndRoute(q, bare, !bare && OPENS_WITH_ADDRESS.test(q) ? q : null, link ? mapLinkForText(link) : typed,
+      named && named.metro.whole ? named.metro : null, true);
   }
 
   /* THE STATE A LINK'S ADDRESS NAMES (ENGINE map-link addressStateTag), with
@@ -1867,11 +1870,24 @@ footer .support b { color: var(--ink); }
    * When none does but one is on the address's street in its town
    * (labelOnStreet), the app covering that street is opened with what was
    * typed, and shows the street there for the reader to tap the place
-   * (routeStreet).
+   * (routeText).
+   *
+   * AN ADDRESS WITH NO NAME IN FRONT, typed or carried by a link, is held
+   * to its house number from the first try (`mustCarry` with `whole`), as
+   * in the apps (ENGINE geocoder-search runAddressSearch), because an
+   * answer without the number is a street and its point a spot somewhere
+   * along it: until 2026-10-17 a typed Chicago storefront's address, whose
+   * street Photon holds and whose number it does not, opened the Illinois
+   * app with a point on that street selected, a ward or more from the
+   * storefront, and nothing said so. When no answer carries the number, the
+   * app covering an answer on the address's street (addressInTownOf, which
+   * reads a town typed with no comma, or not typed at all, from the
+   * answer), or else the first answer any app covers, is opened with what
+   * was typed, never with a point, and says there what its search knows.
    *
    * `want` is the app a link's address names (namedState): only an answer
    * there is routed, and when there is none the link is handed to it. */
-  function searchAndRoute(q, bare, mustCarry, typed, want) {
+  function searchAndRoute(q, bare, mustCarry, typed, want, whole) {
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -1879,17 +1895,19 @@ footer .support b { color: var(--ink); }
         return res.json();
       })
       .then(function (data) {
-        var feats = (data && data.features) || [], street = [];
+        var feats = (data && data.features) || [], street = [], loose = whole ? feats : [];
         if (mustCarry) {
-          street = feats.filter(function (f) { return labelOnStreet(photonParts(f), mustCarry); });
+          street = feats.filter(function (f) {
+            return whole ? !!addressInTownOf(mustCarry, photonParts(f)) : labelOnStreet(photonParts(f), mustCarry);
+          });
           feats = feats.filter(function (f) {
             return labelCarriesNumber(f && f.properties && f.properties.housenumber, mustCarry);
           });
         }
         if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed, want); return; }
         if (want && !feats.length) return handTo(want, typed);
-        if (!feats.length && street.length) {
-          return routeStreet(street, typed).then(function (went) {
+        if (!feats.length && mustCarry && (street.length || loose.length)) {
+          return routeText(street.length ? street : loose, typed).then(function (went) {
             if (!went) { resetButton(); setStatus("That address is outside every place districtry covers today \\u2014 see what's covered below.", true); }
           });
         }
@@ -1928,16 +1946,22 @@ footer .support b { color: var(--ink); }
             p.district, p.city, p.state, p.postcode].filter(Boolean).join(", ");
   }
 
-  /* The street a shared place's address is on, when no answer carries its
-   * house number: the app that covers the street is opened with what was
-   * typed, so it reads the link again and shows the street there (ENGINE
-   * geocoder-search showStreetOnly). It hands over the text and not the
-   * street's position, because a point on a street is not the place. */
-  function routeStreet(street, typed) {
+  /* The street an address is on, or the answers to it, when none carries
+   * its house number: the app that covers the first of them any app covers
+   * is opened with what was typed, so it reads the link or the address
+   * again and shows the street there (ENGINE geocoder-search
+   * showStreetOnly), or lists the answers for the reader to pick from. It
+   * hands over the text and not a position, because a point on a street is
+   * not the place. */
+  function routeText(answers, typed) {
     return loadFleetOutlines().then(function (outlines) {
-      var c = street[0].geometry && street[0].geometry.coordinates;
-      if (!c || c.length < 2) return null;
-      return outlines ? fleetOwner(c[1], c[0], outlines) : resolveMetro(c[1], c[0]);
+      for (var i = 0; i < answers.length; i++) {
+        var c = answers[i] && answers[i].geometry && answers[i].geometry.coordinates;
+        if (!c || c.length < 2) continue;
+        if (outlines) { var m = fleetOwner(c[1], c[0], outlines); if (m) return m; }
+        else if (metrosClaiming(c[1], c[0]).length) return resolveMetro(c[1], c[0]);
+      }
+      return null;
     }).then(function (metro) {
       if (!metro) return false;
       setStatus("Opening " + metro.name + "\\u2026", false);

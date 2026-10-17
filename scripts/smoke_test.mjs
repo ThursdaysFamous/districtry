@@ -841,6 +841,14 @@ try {
   //      street in its town and no answer carries the number, the map frames
   //      that street, selects nothing, lists a name answer only near it, and
   //      a tap on the map then selects the tapped point (showStreetOnly).
+  //      AN ADDRESS TYPED WITH NO NAME IN FRONT is held to its house number
+  //      too (runAddressSearch, listHeldAnswers): an answer without it is
+  //      marked and never selected for the reader, a sent search frames the
+  //      street with the Census pin when the answers put it in one town, and
+  //      while the reader types nothing goes to the Census lookup until the
+  //      street's row is picked. Every answer here is OpenStreetMap's, so the
+  //      street's message links OpenStreetMap's note form at the street or
+  //      the pin (osmNoteLink), and following it counts osm-note.
   {
     const SHARED = "Starved Rock Lodge 2668 E 875th Rd, Oglesby, IL 61348 https://maps.app.goo.gl/XyZ987";
     const FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x880bd2e1b3a8f5d1:0x9b1c2d3e4f5a6b7c&entry=gps";
@@ -858,6 +866,11 @@ try {
       const context = await browser.newContext(phone ? { serviceWorkers: "block", ...PHONE } : { serviceWorkers: "block" });
       const asked = [], lookedUp = [];
       const page = await booted(context, `${BASE}#q=${encodeURIComponent(hash)}`, async (p) => {
+        await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+        await p.addInitScript(() => {
+          window.__gcEvents = [];
+          window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+        });
         await p.route("**/photon.komoot.io/**", (route) => {
           const u = new URL(route.request().url());
           const bounded = !!u.searchParams.get("bbox");
@@ -884,9 +897,12 @@ try {
         const m = window[ns].map.getContainer().getBoundingClientRect();
         const el = document.querySelector('.leaflet-marker-icon[aria-label^="Where the Census Bureau puts"]');
         const r = el && el.getBoundingClientRect();
+        const note = document.querySelector("#geo-status a");
         return {
           point: window[ns].state.selectedPoint,
           status: document.getElementById("geo-status").textContent,
+          note: note ? { href: note.href, text: note.textContent, target: note.target, rel: note.rel } : null,
+          events: (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path),
           rows: [...document.querySelectorAll("#geocode-results li")].map((li) => ({ cls: li.className, text: li.textContent })),
           centre: window[ns].map.getCenter(),
           zoom: window[ns].map.getZoom(),
@@ -989,6 +1005,17 @@ try {
       g.rows.length === 0 && street.asked.indexOf("bounded:" + S_NAME) > street.asked.indexOf("bounded:" + S_BARE) &&
         street.asked.every((a) => a.indexOf("unbounded:") !== 0),
       JSON.stringify({ rows: g.rows, asked: street.asked }));
+    // OPENSTREETMAP'S NOTE FORM (osmNoteLink): the message links it, at the
+    // street the map framed, in the part of the map below the search panel
+    const NOTE = /^https:\/\/www\.openstreetmap\.org\/note\/new#map=(\d+)\/(-?\d+\.\d{5})\/(-?\d+\.\d{5})$/;
+    const noteAt = (n) => { const m = n && NOTE.exec(n.href); return m ? { zoom: +m[1], lat: +m[2], lng: +m[3] } : null; };
+    const gn = noteAt(g.note);
+    check("the street's message links OpenStreetMap's note form, opening at the street the map framed",
+      !!gn && gn.zoom >= 17 && gn.zoom <= 19 && Math.abs(gn.lat - 41.8219565) < 0.0005 && Math.abs(gn.lng + 87.9794949) < 0.0005 &&
+        g.note.text === "leave OpenStreetMap a public note" && g.note.target === "_blank" && /\bnoreferrer\b/.test(g.note.rel) &&
+        g.status.indexOf("Tap the place you meant. The search reads OpenStreetMap's data. If you know where number 9 is yourself, " +
+          "not from another map, you can leave OpenStreetMap a public note so its volunteers can add it.") >= 0,
+      JSON.stringify({ note: g.note, centre: g.centre, status: g.status }));
     check("a tap on the street then selects the point tapped and the message goes",
       !!t.point && Math.abs(t.point.lat - 41.8219565) < 0.0003 && Math.abs(t.point.lng + 87.9794949) < 0.0003 && t.status === "",
       JSON.stringify(t));
@@ -1028,6 +1055,10 @@ try {
         pg.pin.label === "Where the Census Bureau puts 9 W Oakley Dr NW. Select this point." &&
         pg.pin.role === "button" && pg.pin.tabindex === "0",
       JSON.stringify(pg));
+    const pn = noteAt(pg.note);
+    check("with the pin, the note form opens at the pin",
+      !!pn && pn.zoom === 19 && Math.abs(pn.lat - PIN_AT.lat) < 1e-9 && Math.abs(pn.lng - PIN_AT.lng) < 1e-9,
+      JSON.stringify(pg.note));
     check("a tap on the pin selects the pin's point, and the pin and the message go",
       !!pa.point && Math.abs(pa.point.lat - PIN_AT.lat) < 1e-7 && Math.abs(pa.point.lng - PIN_AT.lng) < 1e-7 &&
         !pa.pin && pa.status === "",
@@ -1048,6 +1079,26 @@ try {
       !!keyed.after.point && Math.abs(keyed.after.point.lat - PIN_AT.lat) < 1e-7 &&
         Math.abs(keyed.after.point.lng - PIN_AT.lng) < 1e-7 && !keyed.after.pin,
       JSON.stringify(keyed.after));
+    // Following the link opens the form in a new tab (stood in for here, so
+    // nothing reaches OpenStreetMap), counts osm-note and leaves the map as it was
+    const followNote = async (page, read) => {
+      const context = page.context();
+      await context.route("https://www.openstreetmap.org/**", (route) =>
+        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>note</title>" }));
+      const opened = context.waitForEvent("page", { timeout: QUERY_TIMEOUT });
+      await page.locator("#geo-status a").click();
+      const tab = await opened.catch(() => null);
+      if (tab) await tab.waitForLoadState("domcontentloaded").catch(() => {});
+      await page.waitForTimeout(200);
+      return { opened: tab ? tab.url() : null, ...(await read()) };
+    };
+    const noted = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : []),
+      pinShown, S_FULL, followNote, false, ranged);
+    check("following the note link opens OpenStreetMap's form at the pin, counts osm-note once and selects nothing",
+      noted.after.opened === "https://www.openstreetmap.org/note/new#map=19/41.82195/-87.97955" &&
+        noted.after.events.filter((e) => e === "osm-note").length === 1 && !noted.got.events.some((e) => e === "osm-note") &&
+        !noted.after.point && !!noted.after.pin,
+      JSON.stringify({ opened: noted.after.opened, events: noted.after.events, point: noted.after.point }));
     const otherwise = async (page, read) => {
       await page.evaluate((ns) => window[ns].setSelectedPoint(41.8240, -87.9760, { skipPan: true }), EXPORTS_NAME);
       await page.waitForTimeout(200);
@@ -1059,6 +1110,101 @@ try {
       !!moved.got.pin && !!moved.after.point && Math.abs(moved.after.point.lat - 41.8240) < 1e-9 && !moved.after.pin &&
         moved.after.status === "",
       JSON.stringify({ before: moved.got.pin, after: moved.after }));
+
+    // TYPED ADDRESSES, sent with #q= as a question page's box or the front
+    // door sends them, or typed into the box. The number and the streets'
+    // other town are made up; ELSEWHERE is the street's name in another town.
+    const T_ADDRESS = "9 W Oakley Dr NW, Westmont";
+    const T_NO_TOWN = "9 W Oakley Dr NW";
+    const T_AT = "9 W Oakley Dr NW, Westmont, IL";
+    const ELSEWHERE = feature(-88.0110, 41.7960, { name: "West Oakley Drive Northwest", city: "Downers Grove", state: "Illinois",
+      postcode: "60515", type: "street", extent: [-88.0120, 41.7965, -88.0100, 41.7955] });
+    const NUMBERED = feature(PIN_AT.lng, PIN_AT.lat, { housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont",
+      state: "Illinois", postcode: "60559" });
+    const typedSent = await run(T_ADDRESS, (q, bounded) => (bounded && q === T_ADDRESS ? [BESIDE, ON] : []),
+      pinShown, S_FULL, null, true, ranged);
+    const ts = typedSent.got;
+    check("a typed address sent without the house number the search has frames its street with the Census pin and selects nothing",
+      !ts.point && !!ts.pin && ts.pin.top >= ts.panelBelow && ts.rows.length === 0 &&
+        ts.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The pin is where the Census Bureau's") >= 0 &&
+        typedSent.lookedUp.length === 1 && typedSent.lookedUp[0] === T_AT &&
+        typedSent.asked.length === 1 && typedSent.asked[0] === "bounded:" + T_ADDRESS,
+      JSON.stringify(typedSent));
+    const pickRow = (text, until = pinShown) => async (page, read) => {
+      await page.locator("#geocode-results li button", { hasText: text }).click();
+      await page.waitForFunction(until, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForTimeout(200);
+      return read();
+    };
+    const twoTowns = await run(T_NO_TOWN, (q, bounded) => (bounded && q === T_NO_TOWN ? [ELSEWHERE, BESIDE, ON] : []),
+      () => /Pick the street in the town you meant/.test(document.getElementById("geo-status").textContent),
+      S_FULL, pickRow("West Oakley Drive Northwest, Westmont"), false, ranged);
+    const tw = twoTowns.got, twa = twoTowns.after;
+    check("a typed address on a street the search has in two towns lists both, marked, and selects neither",
+      !tw.point && !tw.pin && tw.rows.length === 3 && tw.rows.every((r) => r.cls === "no-number") &&
+        tw.status.indexOf("The map's search knows W Oakley Dr NW in Downers Grove and Westmont but not number 9 on it. " +
+          "Pick the street in the town you meant to see it on the map, then tap the place.") >= 0,
+      JSON.stringify(tw));
+    check("picking the street in one town frames it there with the Census pin, asked once for that town",
+      !twa.point && !!twa.pin && twoTowns.lookedUp.length === 1 && twoTowns.lookedUp[0] === T_AT &&
+        twa.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The pin is where") >= 0,
+      JSON.stringify({ after: twa, lookedUp: twoTowns.lookedUp }));
+    const typing = async (page, read) => {
+      await page.fill("#geocode-input", T_ADDRESS);
+      await page.waitForFunction(() => /Pick the street to see it on the map/.test(document.getElementById("geo-status").textContent),
+        null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForTimeout(300);
+      const before = await read();
+      return { before, after: await pickRow("West Oakley Drive Northwest, Westmont")(page, read) };
+    };
+    const typeAhead = await run("", (q, bounded) => (bounded && q === T_ADDRESS ? [BESIDE, ON] : []), () => true,
+      S_FULL, typing, false, ranged);
+    const tb = typeAhead.after.before, tp = typeAhead.after.after;
+    check("an address being typed lists the answers without its number, marked, and asks the Census lookup nothing",
+      !tb.point && !tb.pin && tb.rows.length === 2 && tb.rows.every((r) => r.cls === "no-number") &&
+        tb.status.indexOf("The map's search knows W Oakley Dr NW in Westmont but not number 9 on it. " +
+          "Pick the street to see it on the map, then tap the place.") >= 0,
+      JSON.stringify(tb));
+    check("picking the street's row then frames it and asks the Census lookup once",
+      !tp.point && !!tp.pin && typeAhead.lookedUp.length === 1 && typeAhead.lookedUp[0] === T_AT,
+      JSON.stringify({ after: tp, lookedUp: typeAhead.lookedUp }));
+    const loneStreet = await run(T_ADDRESS, (q, bounded) => (bounded ? [BESIDE] : []),
+      () => /None of these has the house number 9/.test(document.getElementById("geo-status").textContent));
+    check("the one answer to a sent address, on another street and without its number, is listed and not selected",
+      !loneStreet.got.point && loneStreet.got.rows.length === 1 && loneStreet.got.rows[0].cls === "no-number" &&
+        loneStreet.got.status.indexOf("None of these has the house number 9, so pick one only if it's the place you meant, " +
+          "or tap the place on the map.") >= 0 &&
+        loneStreet.lookedUp.length === 0 && loneStreet.asked.every((a) => a.indexOf("unbounded:") !== 0),
+      JSON.stringify(loneStreet));
+    const carried = await run(T_ADDRESS, (q, bounded) => (bounded ? [NUMBERED, ON] : []),
+      () => document.querySelectorAll("#geocode-results li").length === 2, S_FULL, pickRow("9 West Oakley Drive Northwest", selected));
+    check("beside an answer carrying a sent address's house number, one without it is marked, and neither is selected for the reader",
+      !carried.got.point && carried.got.rows.length === 2 && carried.got.rows[0].cls === "" &&
+        carried.got.rows[1].cls === "no-number" && carried.lookedUp.length === 0,
+      JSON.stringify(carried.got));
+    check("picking the answer carrying the number selects it, as before",
+      !!carried.after.point && Math.abs(carried.after.point.lat - PIN_AT.lat) < 1e-7 &&
+        Math.abs(carried.after.point.lng - PIN_AT.lng) < 1e-7 && carried.lookedUp.length === 0,
+      JSON.stringify(carried.after));
+    // Found only in a sibling app's state and without its number: the row
+    // opens that app with the address, never with the answer's point
+    const PARK_ROAD = feature(-89.7320, 43.4170, { name: "Park Road", city: "Baraboo", state: "Wisconsin", postcode: "53913",
+      type: "street" });
+    const W_ADDRESS = "S5975 Park Rd, Baraboo";
+    const follow = async (page) => {
+      await page.route("https://districtry.com/**", (route) =>
+        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+      const to = page.waitForURL((u) => !u.href.startsWith(BASE), { timeout: QUERY_TIMEOUT }).then(() => page.url(), () => null);
+      await page.locator("#geocode-results li.sibling-result button").first().click();
+      return to;
+    };
+    const away = await run(W_ADDRESS, (q, bounded) => (!bounded && q === W_ADDRESS ? [PARK_ROAD] : []),
+      () => /looks like you're searching/.test(document.getElementById("geo-status").textContent), S_FULL, follow);
+    const awayHash = away.after && /^https:\/\/districtry\.com\/wi\/#(.*)$/.exec(away.after);
+    check("an address found only in a sibling app without its number is a row that opens that app with the address",
+      !away.got.point && away.got.rows.length === 1 && away.got.rows[0].cls === "sibling-result no-number" &&
+        !!awayHash && new URLSearchParams(awayHash[1]).get("q") === W_ADDRESS,
+      JSON.stringify(away));
   }
 
   // 1d5. A LINK TO A PLACE IN ANOTHER STATE OPENS THAT STATE'S APP (ENGINE
