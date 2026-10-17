@@ -9,6 +9,7 @@
               "role": "President"
             },
             {
+              "email": "hartpls@adams.net",
               "name": "Jeff Hart",
               "role": "Treasurer"
             }
@@ -48,6 +49,7 @@
         "Bowen Fire": {
           "board": [
             {
+              "email": "lpaben@bankofadvance.com",
               "name": "Lyle Paben",
               "role": "Trustee"
             },
@@ -57,6 +59,7 @@
             },
             {
               "name": "Lyle Waner",
+              "phone": "(217) 242-0777",
               "role": "Trustee"
             }
           ],
@@ -72,7 +75,9 @@
         "Camp Point Fire": {
           "board": [
             {
+              "email": "NJANSSEN@MIDWESTACCOUNTINGINC.COM",
               "name": "Nathan Janssen",
+              "phone": "(217) 509-0204",
               "role": "Treasurer"
             }
           ],
@@ -80,7 +85,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "NJANSSEN@MIDWESTACCOUNTINGINC.COM",
               "name": "Nathan Janssen",
+              "phone": "(217) 509-0204",
               "role": "Treas./Admin."
             }
           ],
@@ -90,6 +97,7 @@
           "board": [
             {
               "name": "Warren Husemann",
+              "phone": "(217) 455-3601",
               "role": "President"
             }
           ],
@@ -97,7 +105,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "melmoe6@outlook.com",
               "name": "Melvin Moellring",
+              "phone": "(217) 430-4511",
               "role": "Treas./Admin."
             }
           ],
@@ -106,11 +116,15 @@
         "Clayton Fire": {
           "board": [
             {
+              "email": "janall@adams.net",
               "name": "Jerry Nall",
+              "phone": "(217) 257-2753",
               "role": "President"
             },
             {
+              "email": "jgieker@adams.net",
               "name": "James Gieker",
+              "phone": "(217) 653-4816",
               "role": "Treasurer"
             }
           ],
@@ -121,11 +135,15 @@
         "Golden Fire": {
           "board": [
             {
+              "email": "ecflesner@adams.net",
               "name": "Erik Flesner",
+              "phone": "(217) 242-0877",
               "role": "President"
             },
             {
+              "email": "rflsnr@adams.net",
               "name": "Richard Flesner",
+              "phone": "(217) 696-2649",
               "role": "Sec./Treas."
             }
           ],
@@ -136,11 +154,15 @@
         "Liberty Fire": {
           "board": [
             {
+              "email": "prachtja1@msn.com",
               "name": "James Pracht",
+              "phone": "(217) 653-7047",
               "role": "President"
             },
             {
+              "email": "donloos1988@hotmail.com",
               "name": "Donald Loos",
+              "phone": "(217) 430-9136",
               "role": "Treasurer"
             }
           ],
@@ -155,11 +177,14 @@
         "Lima Fire": {
           "board": [
             {
+              "email": "jrdonley@adams.net",
               "name": "Jeff Donley",
+              "phone": "(217) 430-5721",
               "role": "President"
             },
             {
               "name": "Steven Adair",
+              "phone": "(217) 653-0435",
               "role": "Treasurer"
             }
           ],
@@ -173,15 +198,18 @@
           "board": [
             {
               "name": "John Begeman",
+              "phone": "(217) 964-2416",
               "role": "President"
             },
             {
+              "email": "mfdtrust@gmail.com",
               "name": "Kelsey Simmons",
+              "phone": "(217) 617-8996",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "001/080/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "PO Box 292",
             "city": "Mendon IL 62351"
@@ -191,10 +219,12 @@
           "board": [
             {
               "name": "Robert Mitchell",
+              "phone": "(217) 257-1265",
               "role": "President"
             },
             {
               "name": "William Mowen",
+              "phone": "(217) 257-5206",
               "role": "Treasurer"
             }
           ],
@@ -211,6 +241,7 @@
               "role": "President"
             },
             {
+              "email": "rstewart@tritownshipfire.org",
               "name": "Richard Stewart",
               "role": "Treasurer"
             }
@@ -227,10 +258,13 @@
           "board": [
             {
               "name": "Paul Woodworth",
+              "phone": "(217) 964-2165",
               "role": "Trustee"
             },
             {
+              "email": "norton@adams.net",
               "name": "Kim Rosevold",
+              "phone": "(217) 919-7969",
               "role": "Sec./Treas."
             }
           ],
@@ -247,7 +281,9 @@
         "1": {
           "board": [
             {
+              "email": "jdclel@inwave1.com",
               "name": "John Cleland",
+              "phone": "(815) 742-7501",
               "role": "Treasurer"
             }
           ],
@@ -268,27 +304,31 @@
         "2": {
           "board": [
             {
+              "email": "jdooley@bcfd2.com",
               "name": "James Dooley",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "004/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
-              "name": "John Diebold",
+              "email": "jadams@bcfd2.com",
+              "name": "Jeremy Adams",
+              "phone": "(815) 544-3336",
               "role": "Chief"
             }
           ],
           "office": {
             "address": "1777 Henry Luckow Lane",
-            "city": "Belvidere IL 61108",
-            "phone": "(815) 547-9332"
+            "city": "Belvidere IL 61008",
+            "phone": "(815) 547-9336"
           }
         },
         "3": {
           "board": [
             {
+              "email": "president@northboonefire.com",
               "name": "Glen Guthrie",
               "role": "President"
             },
@@ -310,14 +350,18 @@
           "board": [
             {
               "name": "Kerry Kenney",
+              "phone": "(815) 914-4851",
               "role": "President"
             },
             {
+              "email": "dutchbunch@hotmail.com",
               "name": "Julie Van Laar",
+              "phone": "(815) 520-8532",
               "role": "Treasurer"
             },
             {
               "name": "Karen Kenney",
+              "phone": "(815) 560-2625",
               "role": "Secretary"
             }
           ],
@@ -330,11 +374,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mudpup1956@gmail.com",
               "name": "Brian Jaenecke",
+              "phone": "(815) 509-8910",
               "role": "C.E.O."
             },
             {
+              "email": "manchesterruralfpd5@gmail.com",
               "name": "Michael Clarke",
+              "phone": "(815) 276-6701",
               "role": "C.F.O."
             }
           ],
@@ -346,10 +394,12 @@
         "Cherry Valley Fire Protection District": {
           "board": [
             {
+              "email": "kerickse@cvfpd.com",
               "name": "Karl Ericksen",
               "role": "President"
             },
             {
+              "email": "khill@cvfpd.com",
               "name": "Kyle Hill",
               "role": "Secretary"
             }
@@ -359,6 +409,7 @@
           "filesIn": "Winnebago",
           "heads": [
             {
+              "email": "dedwards@cvfpd.com",
               "name": "Doug Edwards",
               "role": "Treas./Admin."
             }
@@ -376,14 +427,17 @@
         "BARRINGTON COUNTRYSIDE FIRE PROT DIST": {
           "board": [
             {
+              "email": "keithhanson@hansonlawgrp.com",
               "name": "Keith Hanson",
               "role": "President"
             },
             {
+              "email": "tlong@bcfpd.us",
               "name": "Tom Long",
               "role": "V-President"
             },
             {
+              "email": "mhower@bcfpd.us",
               "name": "Matthew Hower",
               "role": "Treasurer"
             }
@@ -399,6 +453,7 @@
         "BARTLETT FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "apassaro@bartlettilfd.gov",
               "name": "Antonio Passaro",
               "role": "Treasurer"
             }
@@ -426,6 +481,7 @@
           "heads": [
             {
               "name": "Douglas Halverson",
+              "phone": "(630) 350-3441",
               "role": "Chief"
             }
           ],
@@ -458,6 +514,7 @@
         "EAST DUNDEE & COUNTRYSIDE FIRE PROT DIST": {
           "board": [
             {
+              "email": "webmail@edfire.com",
               "name": "Doug Hoyt",
               "role": "President"
             }
@@ -467,6 +524,7 @@
           "filesIn": "Kane",
           "heads": [
             {
+              "email": "guthm@edfire.com",
               "name": "Mark Guth",
               "role": "Accountant"
             }
@@ -481,10 +539,13 @@
           "board": [
             {
               "name": "John Truncale",
+              "phone": "(847) 827-4034",
               "role": "President"
             },
             {
+              "email": "missmadisha@yahoo.com",
               "name": "Meredith Wisniewski",
+              "phone": "(949) 933-0107",
               "role": "Treasurer"
             }
           ],
@@ -497,15 +558,21 @@
         "FOREST VIEW FIRE PROTECTION DIST": {
           "board": [
             {
+              "email": "lynncirrincione@gmail.com",
               "name": "Lynn Cirrincione",
+              "phone": "(847) 347-2316",
               "role": "President"
             },
             {
+              "email": "lah27@sbcglobal.net",
               "name": "Lynn Heffley",
+              "phone": "(224) 875-1124",
               "role": "Treasurer"
             },
             {
+              "email": "dcaapullen@gmail.com",
               "name": "Cynthia Pullen",
+              "phone": "(847) 571-1932",
               "role": "Secretary"
             }
           ],
@@ -516,10 +583,12 @@
         "GARDEN HOME FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "doesecklec@ghfpd.org",
               "name": "Christopher Doeseckle",
               "role": "President"
             },
             {
+              "email": "holtzh@ghfpd.org",
               "name": "Heidi Holtz",
               "role": "Treasurer"
             }
@@ -543,6 +612,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "MCSCHAUL.ASSOC@GMAIL.COM",
               "name": "Tim Rueckert",
               "role": "Treas./Admin."
             }
@@ -555,7 +625,9 @@
         "HOFFMAN ESTATES FIRE PROTECTION DIST 1": {
           "board": [
             {
+              "email": "susanatchison@gmail.com",
               "name": "Susan Atchison",
+              "phone": "(847) 842-9100",
               "role": "President"
             }
           ],
@@ -563,7 +635,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "rachel.musiala@vohe.org",
               "name": "Rachel Musiala",
+              "phone": "(847) 843-4802",
               "role": "Director"
             }
           ],
@@ -575,6 +649,7 @@
         "HOMETOWN FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "gflavin@htfpd.org",
               "name": "Garrett Flavin",
               "role": "Trustee"
             }
@@ -583,6 +658,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dduffy@htfpd.org",
               "name": "Daniel Duffy",
               "role": "Fire Chief"
             }
@@ -596,7 +672,9 @@
         "LEMONT FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "rnegrete@lemontfire.com",
               "name": "Raymond Negrete",
+              "phone": "(630) 257-2376",
               "role": "President"
             }
           ],
@@ -605,6 +683,7 @@
           "heads": [
             {
               "name": "Daniel Tasso",
+              "phone": "(630) 257-1204",
               "role": "Fire Chief"
             }
           ],
@@ -617,10 +696,12 @@
         "LEYDEN FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "rolinski@leydenfire.com",
               "name": "Randall Olinski",
               "role": "President"
             },
             {
+              "email": "jklinger@leydenfire.com",
               "name": "Joseph Klinger",
               "role": "Treasurer"
             }
@@ -640,6 +721,7 @@
           "filesIn": "Lake",
           "heads": [
             {
+              "email": "psegalla@lgfpd.org",
               "name": "Paul Segalla",
               "role": "Fire Chief"
             },
@@ -657,7 +739,9 @@
         "MILLER WOODS FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "jpbaine122@comcast.net",
               "name": "james baine",
+              "phone": "(708) 768-6786",
               "role": "President"
             }
           ],
@@ -665,7 +749,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "james.sipple@gmail.com",
               "name": "james sipple",
+              "phone": "(312) 771-9511",
               "role": "C.F.O."
             }
           ],
@@ -678,6 +764,7 @@
           "board": [
             {
               "name": "Kenneth Blank",
+              "phone": "(708) 749-5371",
               "role": "Treasurer"
             }
           ],
@@ -686,6 +773,7 @@
           "filesIn": "Will",
           "heads": [
             {
+              "email": "jcirelli@mokenafire.org",
               "name": "Joseph Cirelli",
               "role": "Chief"
             }
@@ -708,6 +796,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "ddodd@ntlkfire.com",
               "name": "Paul Feldmann",
               "role": "Fire Chief"
             }
@@ -722,10 +811,12 @@
         "NORTH MAINE FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "drutzen@nmfpd.org",
               "name": "Dagmar Rutzen",
               "role": "Treasurer"
             },
             {
+              "email": "juister@comcast.net",
               "name": "Barry Juister",
               "role": "Trustee"
             }
@@ -734,6 +825,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "rgreiner@nmfpd.org",
               "name": "Bob Greiner",
               "role": "Fire Chief"
             }
@@ -767,10 +859,12 @@
         "NORTHBROOK RURAL FIRE PROTECTION DIST": {
           "board": [
             {
+              "email": "bjreynen@gmail.com",
               "name": "Brian Reynen",
               "role": "President"
             },
             {
+              "email": "jmsmailing@aol.com",
               "name": "Ric Warhol",
               "role": "Treasurer"
             }
@@ -789,6 +883,7 @@
           "filesIn": "Will",
           "heads": [
             {
+              "email": "fonfara@nwhomer.org",
               "name": "Todd Fonfara",
               "role": "Fire Chief"
             },
@@ -806,10 +901,12 @@
         "NORWOOD PARK FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "j.rybak@norwoodparkfire.org",
               "name": "Joanne Rybak",
               "role": "Trustee"
             },
             {
+              "email": "g.santoro-cotton@norwoodparkfire.org",
               "name": "Gina Santoro-Cotton",
               "role": "Treasurer"
             }
@@ -826,11 +923,15 @@
         "OLYMPIA GARDENS FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "BTUCKER19@COMCAST.NET",
               "name": "William Tucker",
+              "phone": "(312) 969-6804",
               "role": "President"
             },
             {
+              "email": "lealmartinez03@gmail.com",
               "name": "Elena Leal",
+              "phone": "(708) 408-0237",
               "role": "Sec./Treas."
             }
           ],
@@ -841,10 +942,12 @@
         "ORLAND FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "bethdamaskaspar@gmail.com",
               "name": "Beth Damas Kaspar",
               "role": "President"
             },
             {
+              "email": "bridgettolan@gmail.com",
               "name": "Bridget Tolan",
               "role": "Treasurer"
             },
@@ -885,10 +988,12 @@
         "PALOS HEIGHTS FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "samc57@comcast.net",
               "name": "Sheila Corrigan",
               "role": "President"
             },
             {
+              "email": "timmoriarty494@msn.com",
               "name": "Timothy Moriatry",
               "role": "Treasurer"
             }
@@ -906,10 +1011,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "tdonatucci@plvw.org",
               "name": "Tim Donatucci",
               "role": "Fire Chief"
             },
             {
+              "email": "kkirk@plvw.org",
               "name": "Kathy Kirk",
               "role": "Fin. Officer"
             }
@@ -925,10 +1032,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dsmith@phfire.com",
               "name": "Drew Smith",
               "role": "Fire Chief"
             },
             {
+              "email": "kcossman@phfire.com",
               "name": "Kelly Cossman",
               "role": "Asst. Chief"
             }
@@ -942,14 +1051,16 @@
         "ROBERTS PARK FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "babernardoni@gmail.com",
               "name": "Brian Bernardoni",
               "role": "President"
             }
           ],
           "comptrollerCode": "016/310/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
+              "email": "cspoo@robertsparkfire.gov",
               "name": "Christopher Spoo",
               "role": "Chief"
             }
@@ -964,11 +1075,15 @@
         "ROSELLE FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "almgroup@att.net",
               "name": "Andy Lauk",
+              "phone": "(630) 671-2841",
               "role": "President"
             },
             {
+              "email": "jeffgoolish@gmail.com",
               "name": "Jeff Goolish",
+              "phone": "(630) 253-0094",
               "role": "Trustee"
             }
           ],
@@ -983,11 +1098,15 @@
         "SUNNYCREST FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "teri.post@gmail.com",
               "name": "William Vitale",
+              "phone": "(779) 260-8260",
               "role": "President"
             },
             {
+              "email": "chuckburke6@gmail.com",
               "name": "Charles Burke",
+              "phone": "(773) 667-6747",
               "role": "Treasurer"
             }
           ],
@@ -1008,6 +1127,7 @@
               "role": "Fire Chief"
             },
             {
+              "email": "cjansen@tristatefd.com",
               "name": "Craig Jansen",
               "role": "Asst. Fire Chief"
             }
@@ -1022,11 +1142,15 @@
         "YORKFIELD FIRE PROTECTION DISTRICT": {
           "board": [
             {
+              "email": "JFlynn@hillside-il.org",
               "name": "James Flynn",
+              "phone": "(630) 205-9176",
               "role": "President"
             },
             {
+              "email": "Elmh3@comcast.net",
               "name": "John Fennell",
+              "phone": "(630) 890-8487",
               "role": "Treasurer"
             }
           ],
@@ -1042,6 +1166,7 @@
         "ALSIP PARK DISTRICT": {
           "board": [
             {
+              "email": "jbecker@alsipparks.org",
               "name": "Jacquelynn Becker",
               "role": "President"
             }
@@ -1054,6 +1179,7 @@
               "role": "Director"
             },
             {
+              "email": "sbruesch@alsipparks.org",
               "name": "Sue Bruesch",
               "role": "Accountant"
             }
@@ -1070,10 +1196,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "cfullerton@ahpd.org",
               "name": "Carrie Fullerton",
               "role": "Director"
             },
             {
+              "email": "jmyers@ahpd.org",
               "name": "Jason Myers",
               "role": "Fin. Officer"
             }
@@ -1087,7 +1215,9 @@
         "BARRINGTON HILLS PARK DISTRICT": {
           "board": [
             {
+              "email": "Jessica@bhillsparkd.org",
               "name": "Jessica Underwood",
+              "phone": "(224) 627-3730",
               "role": "President"
             }
           ],
@@ -1095,6 +1225,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "steve@bhillsparkd.org",
               "name": "Steve Allen",
               "role": "Treas./Admin."
             }
@@ -1116,6 +1247,7 @@
               "role": "Director"
             },
             {
+              "email": "ljsh1@hotmail.com",
               "name": "Lee Howard",
               "role": "Accountant"
             }
@@ -1133,10 +1265,13 @@
           "heads": [
             {
               "name": "Kevin Romejko",
+              "phone": "(630) 540-4800",
               "role": "C.E.O."
             },
             {
+              "email": "ELeninger@bartlettparks.org",
               "name": "Eric Leninger",
+              "phone": "(630) 540-4812",
               "role": "C.F.O."
             }
           ],
@@ -1149,10 +1284,12 @@
         "BEDFORD PARK PARK DISTRICT": {
           "board": [
             {
+              "email": "smaloy@bedfordparkdistrict.org",
               "name": "Sean Maloy",
               "role": "President"
             },
             {
+              "email": "Mrudnicki@bedfordparkdistrict.org",
               "name": "Mark Rudnicki",
               "role": "Treasurer"
             }
@@ -1176,6 +1313,7 @@
               "role": "Director"
             },
             {
+              "email": "evelyn@bvilleparks.org",
               "name": "Evelyn Struck",
               "role": "Fin. Officer/Treas."
             }
@@ -1189,6 +1327,7 @@
         "BERKELEY PARK DISTRICT": {
           "board": [
             {
+              "email": "teresalarem@berkeleyparkdistrict.com",
               "name": "Teresa Larem",
               "role": "President"
             }
@@ -1217,6 +1356,7 @@
               "role": "Director"
             },
             {
+              "email": "chayes@berwynparks.org",
               "name": "Cindy Hayes",
               "role": "Superintendent"
             }
@@ -1231,10 +1371,12 @@
         "BRIDGEVIEW PARK DISTRICT": {
           "board": [
             {
+              "email": "akruse@bridgeviewparkdistrict.org",
               "name": "Alan Kruse",
               "role": "President"
             },
             {
+              "email": "mahmad@bridgeviewparkdistrict.org",
               "name": "Mariam Ahmad",
               "role": "Treasurer"
             }
@@ -1273,6 +1415,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "estrojinc@bgparks.org",
               "name": "Erika Strojinc",
               "role": "Director"
             },
@@ -1296,6 +1439,7 @@
               "role": "Director"
             },
             {
+              "email": "jstash@burbankparkdistrict.org",
               "name": "James Stefanek",
               "role": "Director"
             }
@@ -1310,15 +1454,17 @@
         "BURR RIDGE PARK DISTRICT": {
           "board": [
             {
+              "email": "parkboard@brparks.org",
               "name": "Robert Quigley",
               "role": "President"
             }
           ],
           "comptrollerCode": "022/035/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "DuPage",
           "heads": [
             {
+              "email": "rosepark3@comcast.net",
               "name": "Jamie Janusz",
               "role": "Accountant"
             }
@@ -1332,7 +1478,9 @@
         "CALUMET MEMORIAL PARK DIST": {
           "board": [
             {
+              "email": "jkasperek@kasperekcpa.com",
               "name": "John Kasperek",
+              "phone": "(708) 868-2530",
               "role": "Treasurer"
             }
           ],
@@ -1340,7 +1488,9 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "hollice@mycmpd.com",
               "name": "Hollice Clark",
+              "phone": "(708) 868-7151",
               "role": "Director"
             }
           ],
@@ -1355,6 +1505,7 @@
           "heads": [
             {
               "name": "Patrick Hansen",
+              "phone": "(708) 496-8292",
               "role": "Director"
             }
           ],
@@ -1365,10 +1516,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "sdemitrowicz@chparkdistrict.net",
               "name": "Shari Demitrowicz",
               "role": "Superintendent"
             },
             {
+              "email": "david.gonzalez@cpagwa.com",
               "name": "David Gonzalez",
               "role": "Fin. Officer"
             }
@@ -1384,11 +1537,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "superintendent@chicagoparkdistrict.com",
               "name": "Carlos Ramirez-Rosa",
+              "phone": "(312) 742-4200",
               "role": "C.E.O."
             },
             {
+              "email": "jeffrey.shellhorn@chicagoparkdistrict.com",
               "name": "Jeff Shellhorn",
+              "phone": "(312) 742-4761",
               "role": "C.F.O."
             }
           ],
@@ -1427,7 +1584,9 @@
               "role": "Clerk"
             },
             {
+              "email": "mneal@clydeparkdist.org",
               "name": "Merrie Neal",
+              "phone": "(705) 652-3545",
               "role": "Clerk"
             }
           ],
@@ -1441,6 +1600,7 @@
         "COMMUNITY PARK DIST OF LAGRANGE PARK": {
           "board": [
             {
+              "email": "rcorte@communityparkdistrict.org",
               "name": "Bob Corte",
               "role": "President"
             }
@@ -1449,6 +1609,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jcannaday@communityparkdistrict.org",
               "name": "Jessica Cannaday",
               "role": "Director"
             }
@@ -1486,6 +1647,7 @@
           "filesIn": "Lake",
           "heads": [
             {
+              "email": "laura@deerfieldparks.org",
               "name": "Laura McCarty",
               "role": "Director"
             },
@@ -1506,10 +1668,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "dm@dpparks.org",
               "name": "Don Miletic",
               "role": "Executive"
             },
             {
+              "email": "Nahid.Khumawala@dpparks.org",
               "name": "Nahid Khumawala",
               "role": "Director"
             }
@@ -1527,6 +1691,7 @@
               "role": "President"
             },
             {
+              "email": "markhk5409@aol.com",
               "name": "Mark Kiel",
               "role": "Treasurer"
             }
@@ -1546,10 +1711,12 @@
           "filesIn": "Kane",
           "heads": [
             {
+              "email": "davepeterson@dtpd.org",
               "name": "Dave Peterson",
               "role": "Director"
             },
             {
+              "email": "ggannon@dtpd.org",
               "name": "Greg Gannon",
               "role": "Fin. Officer"
             }
@@ -1565,11 +1732,13 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bcurcio@elkgroveparks.org",
               "name": "Ben Curcio",
               "role": "Director"
             },
             {
               "name": "Bradley Sholes",
+              "phone": "(847) 228-3508",
               "role": "Accountant"
             }
           ],
@@ -1586,11 +1755,15 @@
           "filesIn": "DuPage",
           "heads": [
             {
+              "email": "jrogers@epd.org",
               "name": "James Rogers",
+              "phone": "(630) 993-8930",
               "role": "Executive"
             },
             {
+              "email": "bstembridge@epd.org",
               "name": "Barbara Stembridge",
+              "phone": "(630) 993-8931",
               "role": "Mgr./Director"
             }
           ],
@@ -1604,10 +1777,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jiovinelli@pdofpstaff.org",
               "name": "Jackie Iovinelli",
               "role": "Director"
             },
             {
+              "email": "jmurphy@pdofpstaff.org",
               "name": "Jeff Murphy",
               "role": "Manager"
             }
@@ -1621,6 +1796,7 @@
         "FOREST VIEW PARK DISTRICT": {
           "board": [
             {
+              "email": "jim.devito@forestviewparkdistrict.org",
               "name": "Jim Devito",
               "role": "President"
             },
@@ -1641,10 +1817,12 @@
         "FRANKFORT PARK DISTRICT": {
           "board": [
             {
+              "email": "mmccarey@frankfortparks.org",
               "name": "Michael McCarey",
               "role": "President"
             },
             {
+              "email": "mponton@frankfortparks.org",
               "name": "Mark Ponton",
               "role": "Treasurer"
             }
@@ -1662,10 +1840,12 @@
         "FRANKFORT SQUARE PARK DISTRICT": {
           "board": [
             {
+              "email": "admin@fspd.org",
               "name": "Craig Maksymiak",
               "role": "President"
             },
             {
+              "email": "fflorentine@fspd.org",
               "name": "Frank Florentine",
               "role": "Treasurer"
             }
@@ -1684,6 +1864,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "lsheppard@glencoeparkdistrict.com",
               "name": "Lisa Sheppard",
               "role": "Director"
             },
@@ -1704,11 +1885,14 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "michael.mccarty@glenviewparks.org",
               "name": "Michael McCarty",
+              "phone": "(224) 521-2250",
               "role": "Director"
             },
             {
               "name": "Donna Driskell",
+              "phone": "(224) 521-2296",
               "role": "Direc./Treas."
             }
           ],
@@ -1723,10 +1907,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "kevin@gmpd.org",
               "name": "Kevin Hubka",
               "role": "Director"
             },
             {
+              "email": "dina@gmpd.org",
               "name": "Dina Weymouth",
               "role": "Accountant"
             }
@@ -1742,10 +1928,12 @@
           "filedFor": "2024",
           "heads": [
             {
+              "email": "s.bessette@hpparks.org",
               "name": "Steve Bessette",
               "role": "Director"
             },
             {
+              "email": "r.emig@hpparks.org",
               "name": "Roger Emig",
               "role": "Superintendent"
             }
@@ -1762,6 +1950,7 @@
           "heads": [
             {
               "name": "Christopher Cole",
+              "phone": "(708) 335-1505",
               "role": "Director"
             }
           ],
@@ -1774,10 +1963,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "rchavez@hhparkdistrict.org",
               "name": "Renee Chavez",
               "role": "Director"
             },
             {
+              "email": "tmuth@hhparkdistrict.org",
               "name": "Tammy Muth",
               "role": "Director"
             }
@@ -1794,10 +1985,12 @@
           "heads": [
             {
               "name": "Kelly Young",
+              "phone": "(708) 354-6563",
               "role": "C.E.O."
             },
             {
               "name": "Kelly Young",
+              "phone": "(708) 354-6563",
               "role": "C.F.O."
             }
           ],
@@ -1810,10 +2003,13 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "ctalsma@heparks.org",
               "name": "Craig Talsma",
+              "phone": "(847) 885-7500",
               "role": "Director"
             },
             {
+              "email": "jvogt@heparks.org",
               "name": "Julie Vogt",
               "role": "Director"
             }
@@ -1826,6 +2022,7 @@
         "HOMEWOOD FLOSSMOOR PARK DISTRICT": {
           "board": [
             {
+              "email": "steve.ojode@gmail.com",
               "name": "Steve Ojode",
               "role": "Trustee"
             }
@@ -1834,6 +2031,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dboehm@hfparks.com",
               "name": "Doug Boehm",
               "role": "Director"
             }
@@ -1867,11 +2065,15 @@
         "JUSTICE PARK DISTRICT": {
           "board": [
             {
+              "email": "cbernardoni@justiceparkdistrict.com",
               "name": "Carrie Bernardoni",
+              "phone": "(312) 804-2931",
               "role": "President"
             },
             {
+              "email": "tsutera@justiceparkdistrict.com",
               "name": "Tabatha Sutera",
+              "phone": "(708) 738-9499",
               "role": "Treasurer"
             }
           ],
@@ -1888,10 +2090,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mhixenbaugh@kpdistrict.org",
               "name": "Michael Hixenbaugh",
               "role": "Director"
             },
             {
+              "email": "slitko@lauterbachamen.com",
               "name": "Steve Litko",
               "role": "Fin. Officer"
             }
@@ -1907,10 +2111,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "jennybechtold@pdlg.org",
               "name": "Jennifer Bechtold",
               "role": "Director"
             },
             {
+              "email": "jamiehollock@pdlg.org",
               "name": "Jamie Hollock",
               "role": "Director"
             }
@@ -1926,11 +2132,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "sdesjardins@lanoakparkdistrict.org",
               "name": "Sharon Desjardins",
+              "phone": "(708) 474-8552",
               "role": "Superintendent"
             },
             {
+              "email": "BMeekins@themeekinsgroup.com",
               "name": "Beverly Meekins",
+              "phone": "(708) 710-7505",
               "role": "Accountant"
             }
           ],
@@ -1941,10 +2151,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bmcadam@lemontparks.org",
               "name": "Bill McAdam",
               "role": "Director"
             },
             {
+              "email": "legofske@lemontparks.org",
               "name": "Louise Egofske",
               "role": "Director"
             }
@@ -1959,6 +2171,7 @@
         "LIGHTHOUSE PARK DISTRICT OF EVANSTON": {
           "board": [
             {
+              "email": "joebehles@gmail.com",
               "name": "Joseph J. Behles",
               "role": "Chairperson"
             }
@@ -1980,6 +2193,7 @@
         "MARKHAM PARK DISTRICT": {
           "board": [
             {
+              "email": "ljsh1@hotmail.com",
               "name": "Lee Howard",
               "role": "Treasurer"
             }
@@ -2002,6 +2216,7 @@
         "MAYWOOD PARK DISTRICT": {
           "board": [
             {
+              "email": "marcelluswells8@gmail.com",
               "name": "Marcellus Wells",
               "role": "Treasurer"
             }
@@ -2010,6 +2225,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "taeveonjohnson@gmail.com",
               "name": "Taeveon Johnson",
               "role": "C.E.O."
             }
@@ -2049,6 +2265,7 @@
           "heads": [
             {
               "name": "Edward Jung",
+              "phone": "(708) 371-6191 Ext: 101",
               "role": "Director"
             }
           ],
@@ -2062,11 +2279,13 @@
           "filesIn": "Will",
           "heads": [
             {
+              "email": "gvitale@mokenapark.com",
               "name": "Greg Vitale",
               "role": "Executive"
             },
             {
               "name": "Karen LaPointe",
+              "phone": "(708) 390-2415",
               "role": "Superintendent"
             }
           ],
@@ -2081,6 +2300,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jwait@mortongroveparks.com",
               "name": "Jeff Wait",
               "role": "Director"
             },
@@ -2101,10 +2321,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jjarog@mppd.org",
               "name": "Jim Jarog",
               "role": "Director"
             },
             {
+              "email": "ljsh1@hotmail.com",
               "name": "Lee Howard",
               "role": "Fin. Officer"
             }
@@ -2120,6 +2342,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "tome@niles-parks.org",
               "name": "Tom Elenz",
               "role": "Director"
             },
@@ -2140,10 +2363,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "nbrown@norridgepk.com",
               "name": "Nate Brown",
               "role": "Director"
             },
             {
+              "email": "sstraughn@norridgepk.com",
               "name": "Shannon Straughn",
               "role": "Accountant"
             }
@@ -2159,10 +2384,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jvallez@nbpd4fun.org",
               "name": "Joseph Vallez",
               "role": "Director"
             },
             {
+              "email": "fdsouza@nbpd4fun.org",
               "name": "Jerald Dsouza",
               "role": "Manager"
             }
@@ -2178,10 +2405,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "cleiner@nbparks.org",
               "name": "Chris Leiner",
               "role": "Mgr./Director"
             },
             {
+              "email": "mtokar@nbparks.org",
               "name": "Michael Tokar",
               "role": "Director"
             }
@@ -2195,6 +2424,7 @@
         "NORTHFIELD PARK DISTRICT": {
           "board": [
             {
+              "email": "jnorbot@nfparks.org",
               "name": "John Norbot",
               "role": "Treasurer"
             }
@@ -2203,6 +2433,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bbyron@nfparks.org",
               "name": "William Byron",
               "role": "Director"
             }
@@ -2216,10 +2447,12 @@
         "OAK BROOK PARK DISTRICT": {
           "board": [
             {
+              "email": "sknitter@obparks.org",
               "name": "Sharon Knitter",
               "role": "President"
             },
             {
+              "email": "iivkovic@obparks.org",
               "name": "Ivana Ivkovic Kelley",
               "role": "Treasurer"
             }
@@ -2240,6 +2473,7 @@
               "role": "President"
             },
             {
+              "email": "jmcdonn788@aol.com",
               "name": "Joseph McDonnell",
               "role": "Treasurer"
             }
@@ -2258,10 +2492,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "thartwig@olparks.com",
               "name": "Tom Hartwig",
               "role": "Director"
             },
             {
+              "email": "rbadali@olparks.com",
               "name": "Ron Badali",
               "role": "Superintendent"
             }
@@ -2277,11 +2513,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jan.arnold@pdop.org",
               "name": "Jan Arnold",
+              "phone": "(708) 725-2020",
               "role": "Director"
             },
             {
+              "email": "Mitch.bowlin@pdop.org",
               "name": "Mitch Bowlin",
+              "phone": "(708) 725-2015",
               "role": "Fin. Officer"
             }
           ],
@@ -2293,6 +2533,7 @@
         "OLYMPIA FIELDS PARK DISTRICT": {
           "board": [
             {
+              "email": "bmeekins@themeekinsgroup.com",
               "name": "Beverly Meekins",
               "role": "Treasurer"
             }
@@ -2301,6 +2542,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jesus@ofparks.org",
               "name": "Jesus Vargas",
               "role": "Director"
             }
@@ -2316,11 +2558,14 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "BRea@palatineparks.org",
               "name": "Ben Rea",
+              "phone": "(847) 496-6236",
               "role": "Director"
             },
             {
               "name": "Andrea Fisher",
+              "phone": "(847) 496-6234",
               "role": "Fin. Officer"
             }
           ],
@@ -2335,10 +2580,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dlocascio@fpparks.org",
               "name": "Dan Locascio",
               "role": "Director"
             },
             {
+              "email": "sbersani@fpparks.org",
               "name": "Stephanie Bersani",
               "role": "Fin. Officer"
             }
@@ -2354,11 +2601,14 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jshea@prparks.org",
               "name": "John Shea, Jr.",
               "role": "Executive"
             },
             {
+              "email": "klarson@prparks.org",
               "name": "Karen Larson",
+              "phone": "(847) 692-3406",
               "role": "Fin. Officer/Treas."
             }
           ],
@@ -2371,10 +2621,12 @@
           "board": [
             {
               "name": "Mildred Garcia",
+              "phone": "(708) 359-0653",
               "role": "Commissioner"
             },
             {
               "name": "Mildred Garcia",
+              "phone": "(708) 359-0653",
               "role": "Treasurer"
             }
           ],
@@ -2385,10 +2637,12 @@
         "PLEASANTDALE PARK DISTRICT": {
           "board": [
             {
+              "email": "todd_a_davis@hotmail.com",
               "name": "Todd Davis",
               "role": "President"
             },
             {
+              "email": "jenn.hennessy@comcast.net",
               "name": "Jenn Hennessy",
               "role": "Treasurer"
             }
@@ -2404,6 +2658,7 @@
         "POSEN PARK DISTRICT": {
           "board": [
             {
+              "email": "jody@posenparkdistrict.org",
               "name": "Jody Chmielak",
               "role": "President"
             }
@@ -2413,6 +2668,7 @@
           "heads": [
             {
               "name": "Terrence Whitcomb",
+              "phone": "(708) 671-1484",
               "role": "Director"
             }
           ],
@@ -2428,10 +2684,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "cferraro@phparks.org",
               "name": "Christina Ferraro",
               "role": "Director"
             },
             {
+              "email": "shughes@phparks.org",
               "name": "Shawn Hughes",
               "role": "Superintendent"
             }
@@ -2453,6 +2711,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mrodas@ridgeville.org",
               "name": "Marlon Rodas",
               "role": "Director"
             }
@@ -2468,10 +2727,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "msletten@rfparks.com",
               "name": "Michael Sletten",
               "role": "Direc./Treas."
             },
             {
+              "email": "akennedy@rfparks.com",
               "name": "Amanda Kennedy",
               "role": "Fin. Officer"
             }
@@ -2487,10 +2748,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bfahnstrom@rtpd.org",
               "name": "Bret Fahnstrom",
               "role": "Director"
             },
             {
+              "email": "doswald@rtpd.org",
               "name": "David Oswald",
               "role": "Treas./Admin."
             }
@@ -2507,10 +2770,13 @@
           "heads": [
             {
               "name": "Lina Sheppard",
+              "phone": "(312) 709-1612",
               "role": "Direc./Sec."
             },
             {
+              "email": "rbuckley@robbinsparkdistrict.org",
               "name": "Ryan Buckley",
+              "phone": "(773) 343-5042",
               "role": "Direc./Sec."
             }
           ],
@@ -2525,11 +2791,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "billing@rmparks.org",
               "name": "Nick Troy",
+              "phone": "(847) 818-3200",
               "role": "C.E.O."
             },
             {
+              "email": "dhaywood@rmparks.org",
               "name": "Doug Haywood",
+              "phone": "(847) 818-3223",
               "role": "C.F.O."
             }
           ],
@@ -2563,10 +2833,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "DHILGERS@SALTCREEKPD.COM",
               "name": "Diane Hilgers",
               "role": "Director"
             },
             {
+              "email": "DHILGERS@SALTCREEKPD.COM",
               "name": "Diane Hilgers",
               "role": "C.F.O."
             }
@@ -2582,10 +2854,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "tlafrenere@parkfun.com",
               "name": "Tony LaFrenere",
               "role": "Director"
             },
             {
+              "email": "kodonnell@parkfun.com",
               "name": "Keith O'Donnell",
               "role": "Director"
             }
@@ -2601,11 +2875,14 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "MTUFT@SKOKIEPARKS.ORG",
               "name": "Michelle Tuft",
+              "phone": "(773) 859-3003",
               "role": "Director"
             },
             {
               "name": "William Schmidt",
+              "phone": "(847) 933-4356",
               "role": "Fin. Officer/Treas."
             }
           ],
@@ -2620,11 +2897,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jmorgan@sbpd.net",
               "name": "Jay Morgan",
+              "phone": "(847) 898-9979",
               "role": "Executive"
             },
             {
+              "email": "tmccabe@sbpd.net",
               "name": "Tim McCabe",
+              "phone": "(847) 898-9959",
               "role": "Fin. Officer"
             }
           ],
@@ -2638,10 +2919,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "JJANDA@SPDCARES.COM",
               "name": "Jeffrey JANDA",
               "role": "Supervisor"
             },
             {
+              "email": "SHARRY@SPDCARES.COM",
               "name": "Sherri Harry",
               "role": "Accountant"
             }
@@ -2653,6 +2936,7 @@
         "SUMMIT PARK DISTRICT": {
           "board": [
             {
+              "email": "forms@summitparks.org",
               "name": "Juan Miguel",
               "role": "Treasurer"
             }
@@ -2677,11 +2961,14 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "shawn.roby@tinleyparkdistrict.org",
               "name": "Shawn Roby",
+              "phone": "(708) 342-4215",
               "role": "Director"
             },
             {
               "name": "Patricia Peecia",
+              "phone": "(708) 342-4218",
               "role": "Manager"
             }
           ],
@@ -2700,6 +2987,7 @@
               "role": "Executive"
             },
             {
+              "email": "mstabile@veteransparkdistrict.org",
               "name": "Margaret Stabile",
               "role": "Director"
             }
@@ -2714,6 +3002,7 @@
         "WESTCHESTER PARK DISTRICT": {
           "board": [
             {
+              "email": "s.busa@wpdparks.org",
               "name": "Steve Busa",
               "role": "President"
             }
@@ -2722,6 +3011,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "lrobinette@wpdparks.org",
               "name": "Lianne Robinette",
               "role": "Director"
             }
@@ -2735,10 +3025,12 @@
         "WESTERN SPRINGS PARK DISTRICT": {
           "board": [
             {
+              "email": "bperkovich@wsprings.com",
               "name": "Brian Perkovich",
               "role": "President"
             },
             {
+              "email": "lkilarski@wsprings.com",
               "name": "LeAnn Kilarski",
               "role": "Treasurer"
             }
@@ -2756,10 +3048,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jbuchs@wheelingparkdistrict.com",
               "name": "Jan Buchs",
               "role": "Director"
             },
             {
+              "email": "mwehby@wheelingparkdistrict.com",
               "name": "Matt Wehby",
               "role": "Dep. Director"
             }
@@ -2776,11 +3070,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "clindgren@wilpark.org",
               "name": "Chris Lindgren",
+              "phone": "(847) 256-9617",
               "role": "Director"
             },
             {
+              "email": "sfoy@wilpark.org",
               "name": "Sheila Foy",
+              "phone": "(847) 256-9612",
               "role": "Superintendent"
             }
           ],
@@ -2794,10 +3092,12 @@
           "filedFor": "2024",
           "heads": [
             {
+              "email": "snazzal@winpark.org",
               "name": "Shannon Nazzal",
               "role": "Director"
             },
             {
+              "email": "jcrocker@winpark.org",
               "name": "James Crocker",
               "role": "Superintendent"
             }
@@ -2811,6 +3111,7 @@
         "WORTH PARK DISTRICT": {
           "board": [
             {
+              "email": "kpezdek@worthparkdistrict.org",
               "name": "Kelly Pezdek",
               "role": "Sec./Treas."
             }
@@ -2824,6 +3125,7 @@
             },
             {
               "name": "James Howard",
+              "phone": "(708) 448-4079",
               "role": "Accountant"
             }
           ],
@@ -2841,6 +3143,7 @@
         "Burlington Fire": {
           "board": [
             {
+              "email": "pdimenza@burlington-fire.com",
               "name": "Philip Dimenza",
               "role": "President"
             },
@@ -2862,7 +3165,9 @@
         "Cortland Fire": {
           "board": [
             {
+              "email": "yaegersinc@gmail.com",
               "name": "Mark Yaeger",
+              "phone": "(815) 748-3167",
               "role": "President"
             }
           ],
@@ -2870,7 +3175,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "tkeith0302@gmail.com",
               "name": "Tara Keith",
+              "phone": "(815) 718-0302",
               "role": "Accountant"
             }
           ],
@@ -2879,7 +3186,9 @@
         "DeKalb Fire": {
           "board": [
             {
+              "email": "danfaivre@gmail.com",
               "name": "Daniel L Faivre",
+              "phone": "(815) 756-8097",
               "role": "Treasurer"
             }
           ],
@@ -2911,10 +3220,12 @@
         "Genoa / Kingston Fire": {
           "board": [
             {
+              "email": "twoodson@genoa-kingstonfpd.org",
               "name": "Tony Woodson",
               "role": "President"
             },
             {
+              "email": "tmerritt@genoa-kingstonfpd.org",
               "name": "Todd Merritt",
               "role": "Treasurer"
             }
@@ -2931,11 +3242,14 @@
         "Hampshire Fire": {
           "board": [
             {
+              "email": "bpechtold@hampshirefire.org",
               "name": "Brian Pechtold",
               "role": "President"
             },
             {
+              "email": "Sgustafson@HampshireTownship.org",
               "name": "Steve Gustafson",
+              "phone": "(847) 683-3307",
               "role": "Treasurer"
             }
           ],
@@ -2954,6 +3268,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "gpoz8@msn.com",
               "name": "Gary Pozzi",
               "role": "C.E.O."
             },
@@ -2972,11 +3287,15 @@
         "Kirkland Fire": {
           "board": [
             {
+              "email": "mstott56@yahoo.com",
               "name": "Mike Stott",
+              "phone": "(815) 276-4235",
               "role": "President"
             },
             {
+              "email": "avesfarm4049@gmail.com",
               "name": "Kevin Aves",
+              "phone": "(815) 522-4414",
               "role": "Treasurer"
             }
           ],
@@ -2990,7 +3309,9 @@
         "Lee Fire": {
           "board": [
             {
+              "email": "OLSONFARMS@YMAIL.COM",
               "name": "Jerry Olson",
+              "phone": "(815) 901-6632",
               "role": "President"
             }
           ],
@@ -2999,7 +3320,9 @@
           "filesIn": "Lee",
           "heads": [
             {
+              "email": "PRESTCC@AOL.COM",
               "name": "Dan Prestegaard",
+              "phone": "(815) 739-0966",
               "role": "Treas./Admin."
             }
           ],
@@ -3008,11 +3331,15 @@
         "Leland Fire": {
           "board": [
             {
+              "email": "GWESSON70@GMAIL.COM",
               "name": "Jacques Wesson",
+              "phone": "(815) 685-4242",
               "role": "President"
             },
             {
+              "email": "IMADEERE@AOL.COM",
               "name": "Brian Bywater",
+              "phone": "(630) 742-2801",
               "role": "Treasurer"
             }
           ],
@@ -3024,11 +3351,15 @@
         "Malta Fire": {
           "board": [
             {
+              "email": "TPLOTE55@GMAIL.COM",
               "name": "Tom Plote",
+              "phone": "(815) 901-3478",
               "role": "President"
             },
             {
+              "email": "MOHNSSTEPHANIE7@GMAIL.COM",
               "name": "Stephanie Mohns",
+              "phone": "(815) 751-1735",
               "role": "Treasurer"
             }
           ],
@@ -3042,10 +3373,12 @@
         "Maple Park / Countryside Fire": {
           "board": [
             {
+              "email": "rkubis@mapleparkfpd.org",
               "name": "Russel Kubis",
               "role": "President"
             },
             {
+              "email": "rustykubis@gmail.com",
               "name": "Russell Kubis",
               "role": "Treasurer"
             }
@@ -3069,7 +3402,12 @@
         "Paw Paw Fire": {
           "board": [
             {
+              "email": "jp@ppil.us",
               "name": "Jeff Politsch",
+              "phone": "(815) 627-3511",
+              "phonesExtra": [
+                "(815) 793-3588"
+              ],
               "role": "Treasurer"
             }
           ],
@@ -3078,7 +3416,9 @@
           "filesIn": "Lee",
           "heads": [
             {
+              "email": "nealrogers@frontier.com",
               "name": "Neal Rogers",
+              "phone": "(815) 751-6809",
               "role": "C.E.O."
             }
           ],
@@ -3091,6 +3431,7 @@
               "role": "Trustee"
             },
             {
+              "email": "mattw64@yahoo.com",
               "name": "Matt Weismiller",
               "role": "Trustee"
             }
@@ -3107,11 +3448,15 @@
         "Shabbona Fire": {
           "board": [
             {
+              "email": "rhf306@aol.com",
               "name": "Hank Frazier",
+              "phone": "(815) 739-8330",
               "role": "Trustee"
             },
             {
+              "email": "scfpd2500@gmail.com",
               "name": "Stephen Probst",
+              "phone": "(815) 824-2115",
               "role": "Treasurer"
             }
           ],
@@ -3129,6 +3474,7 @@
               "role": "President"
             },
             {
+              "email": "nfi.1994@yahoo.com",
               "name": "Alex Marshall",
               "role": "Treasurer"
             }
@@ -3145,11 +3491,15 @@
         "Sycamore Fire": {
           "board": [
             {
+              "email": "daytonfarms@gmail.com",
               "name": "Stephen Ward",
+              "phone": "(815) 787-7657",
               "role": "President"
             },
             {
+              "email": "vjweb84@gmail.com",
               "name": "John Weberpal",
+              "phone": "(815) 670-5334",
               "role": "Treasurer"
             }
           ],
@@ -3160,11 +3510,15 @@
         "Waterman Fire": {
           "board": [
             {
+              "email": "bdminick@wcfpdist.org",
               "name": "Brian Minick",
+              "phone": "(815) 501-7834",
               "role": "President"
             },
             {
+              "email": "dastryker@wcfpdist.org",
               "name": "David Stryker",
+              "phone": "(815) 264-3284",
               "role": "Treasurer"
             }
           ],
@@ -3179,11 +3533,14 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "pzepezauer@dekalbparkdistrict.com",
               "name": "Paul Zepezauer",
+              "phone": "(815) 758-6663",
               "role": "Director"
             },
             {
               "name": "Jennifer Schneider",
+              "phone": "(779) 777-7280",
               "role": "Superintendent"
             }
           ],
@@ -3196,7 +3553,9 @@
         "Franklin Township Park": {
           "board": [
             {
+              "email": "tonda111@gmail.com",
               "name": "Tonda Bruch",
+              "phone": "(815) 761-3196",
               "role": "President"
             }
           ],
@@ -3204,7 +3563,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "lkwillit@gmail.com",
               "name": "Linda Willit",
+              "phone": "(815) 762-1446",
               "role": "Treas./Admin."
             }
           ],
@@ -3213,6 +3574,7 @@
         "Genoa Township Park": {
           "board": [
             {
+              "email": "info@genoaparkdistrict.com",
               "name": "Judy Thompson",
               "role": "Treasurer"
             }
@@ -3235,14 +3597,17 @@
         "Kingston Township Park": {
           "board": [
             {
+              "email": "kpark8668@gmail.com",
               "name": "Dan Nellans",
               "role": "Commissioner"
             },
             {
+              "email": "4williesworkshop@gmail.com",
               "name": "Kent Sester",
               "role": "Commissioner"
             },
             {
+              "email": "bvhkpark@gmail.com",
               "name": "Britni Van Herrden",
               "role": "Commissioner"
             }
@@ -3258,6 +3623,7 @@
         "Sandwich Park": {
           "board": [
             {
+              "email": "dhoytspd@gmail.com",
               "name": "Dan Hoyt",
               "role": "President"
             }
@@ -3266,10 +3632,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "bill.novicki.spd@gmail.com",
               "name": "Bill Novicki",
               "role": "Director"
             },
             {
+              "email": "tes.isham.spd@gmail.com",
               "name": "Tes Isham",
               "role": "Accountant"
             }
@@ -3285,10 +3653,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jonelleb@sycparks.org",
               "name": "Jonelle Bailey",
               "role": "Director"
             },
             {
+              "email": "jackieh@sycparks.org",
               "name": "Jacqueline Hienbuecher",
               "role": "Fin. Officer"
             }
@@ -3308,10 +3678,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bherion@addisonfire.org",
               "name": "Brock Herion",
               "role": "Chief"
             },
             {
+              "email": "cmansfield@addisonfire.org",
               "name": "Chris Mansfield",
               "role": "Asst. Chief"
             }
@@ -3326,6 +3698,7 @@
         "Bartlett": {
           "board": [
             {
+              "email": "apassaro@bartlettilfd.gov",
               "name": "Antonio Passaro",
               "role": "Treasurer"
             }
@@ -3348,7 +3721,9 @@
         "Bensenville 1": {
           "board": [
             {
+              "email": "mn72@comcast.net",
               "name": "Mark Nowak",
+              "phone": "(630) 460-2312",
               "role": "President"
             }
           ],
@@ -3356,7 +3731,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "nytemoves@att.net",
               "name": "Jeff Agonath",
+              "phone": "(630) 745-1029",
               "role": "Treas./Admin."
             }
           ],
@@ -3371,6 +3748,7 @@
           "heads": [
             {
               "name": "Douglas Halverson",
+              "phone": "(630) 350-3441",
               "role": "Chief"
             }
           ],
@@ -3387,7 +3765,9 @@
               "role": "Fire Chief"
             },
             {
+              "email": "slitko@lauterbachamen.com",
               "name": "Steve Litko",
+              "phone": "(630) 393-1483",
               "role": "Accountant"
             }
           ],
@@ -3423,10 +3803,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jlahanis@dwfd.org",
               "name": "Jimmy Lahanis",
               "role": "Fire Chief"
             },
             {
+              "email": "jtunk@dwfd.org",
               "name": "Jamie Tunk",
               "role": "Asst. Fire Chief"
             }
@@ -3440,6 +3822,7 @@
         "Fox River": {
           "board": [
             {
+              "email": "jgaffney@frcfr.org",
               "name": "Jim Gaffney",
               "role": "Treasurer"
             }
@@ -3449,6 +3832,7 @@
           "filesIn": "Kane",
           "heads": [
             {
+              "email": "admin@frcfr.org",
               "name": "Michael Hill",
               "role": "Fire Chief"
             }
@@ -3462,11 +3846,15 @@
         "Glenbard": {
           "board": [
             {
+              "email": "dawnmajcen@gmail.com",
               "name": "Dawn Majcen",
+              "phone": "(630) 989-7324",
               "role": "Acting President"
             },
             {
+              "email": "dawnmajcen@gmail.com",
               "name": "Dawn Majcen",
+              "phone": "(630) 989-7324",
               "role": "Treasurer"
             }
           ],
@@ -3483,6 +3871,7 @@
               "role": "Chief"
             },
             {
+              "email": "LHaiden@glensidefire.org",
               "name": "Laura Haiden",
               "role": "Executive"
             }
@@ -3497,11 +3886,15 @@
         "Golfview Hills": {
           "board": [
             {
+              "email": "jim.mccarthy@guntymccarthy.com",
               "name": "Jim McCarthy",
+              "phone": "(312) 541-0022",
               "role": "President"
             },
             {
+              "email": "koloneljoe@icloud.com",
               "name": "Erik Hoveke",
+              "phone": "(815) 735-6900",
               "role": "Treasurer"
             }
           ],
@@ -3512,6 +3905,7 @@
         "Itasca": {
           "board": [
             {
+              "email": "ckunze@itascafd.org",
               "name": "Chris Kunze",
               "role": "Treasurer"
             }
@@ -3534,7 +3928,9 @@
         "Lemont": {
           "board": [
             {
+              "email": "rnegrete@lemontfire.com",
               "name": "Raymond Negrete",
+              "phone": "(630) 257-2376",
               "role": "President"
             }
           ],
@@ -3544,6 +3940,7 @@
           "heads": [
             {
               "name": "Daniel Tasso",
+              "phone": "(630) 257-1204",
               "role": "Fire Chief"
             }
           ],
@@ -3575,11 +3972,15 @@
         "Marywood": {
           "board": [
             {
+              "email": "conradkral3@gmail.com",
               "name": "Conrad Kral",
+              "phone": "(331) 588-0235",
               "role": "President"
             },
             {
+              "email": "muters@comcast.net",
               "name": "Michael Mutersbaugh",
+              "phone": "(630) 606-6904",
               "role": "Sec./Treas."
             }
           ],
@@ -3594,10 +3995,12 @@
         "Naperville": {
           "board": [
             {
+              "email": "nfpdken@gmail.com",
               "name": "Ken Hagenbaumer",
               "role": "President"
             },
             {
+              "email": "nfpdamy@gmail.com",
               "name": "Amy Calhoun",
               "role": "Treasurer"
             }
@@ -3619,6 +4022,7 @@
               "role": "Fin. Officer"
             },
             {
+              "email": "charing@oakbrookterracefire.org",
               "name": "Courtney Haring",
               "role": "Administrator"
             }
@@ -3636,10 +4040,12 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "tdonatucci@plvw.org",
               "name": "Tim Donatucci",
               "role": "Fire Chief"
             },
             {
+              "email": "kkirk@plvw.org",
               "name": "Kathy Kirk",
               "role": "Fin. Officer"
             }
@@ -3653,11 +4059,15 @@
         "Roselle": {
           "board": [
             {
+              "email": "almgroup@att.net",
               "name": "Andy Lauk",
+              "phone": "(630) 671-2841",
               "role": "President"
             },
             {
+              "email": "jeffgoolish@gmail.com",
               "name": "Jeff Goolish",
+              "phone": "(630) 253-0094",
               "role": "Trustee"
             }
           ],
@@ -3678,6 +4088,7 @@
               "role": "Fire Chief"
             },
             {
+              "email": "beggebrecht@southelginfire.com",
               "name": "Britta Eggebrecht",
               "role": "Accountant"
             }
@@ -3692,11 +4103,15 @@
         "South Westmont": {
           "board": [
             {
+              "email": "reyervet@yahoo.com",
               "name": "Charles Reyer",
+              "phone": "(630) 808-3235",
               "role": "Treasurer"
             },
             {
+              "email": "kjkunesh@gmail.com",
               "name": "Kenneth Kunesh",
+              "phone": "(312) 218-2139",
               "role": "Secretary"
             }
           ],
@@ -3704,7 +4119,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "rich.gardner@outlook.com",
               "name": "Richard Gardner",
+              "phone": "(630) 661-9111",
               "role": "C.E.O."
             }
           ],
@@ -3719,6 +4136,7 @@
               "role": "Fire Chief"
             },
             {
+              "email": "cjansen@tristatefd.com",
               "name": "Craig Jansen",
               "role": "Asst. Fire Chief"
             }
@@ -3736,6 +4154,7 @@
           "heads": [
             {
               "name": "Kevin O'Hare",
+              "phone": "(630) 393-1381",
               "role": "Fire Chief"
             }
           ],
@@ -3748,6 +4167,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "JEFFK@wegofpd.org",
               "name": "Jeff Keefe",
               "role": "Fire Chief"
             },
@@ -3763,6 +4183,7 @@
         "Winfield": {
           "board": [
             {
+              "email": "Lallen@winfieldfpd.org",
               "name": "Lucas Allen",
               "role": "Treasurer"
             }
@@ -3771,6 +4192,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "sevans@winfieldfpd.org",
               "name": "Steven Evans",
               "role": "Fire Chief"
             }
@@ -3787,10 +4209,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "pjohl@wdfd.org",
               "name": "Patrick Johl",
               "role": "Chief"
             },
             {
+              "email": "csteines@wdfd.org",
               "name": "Christopher Steines",
               "role": "Chief"
             }
@@ -3804,10 +4228,12 @@
         "York Center": {
           "board": [
             {
+              "email": "vosicky@yorkcenterfire.org",
               "name": "Frank Vosicky",
               "role": "President"
             },
             {
+              "email": "otake@yorkcenterfire.org",
               "name": "Tom Otake",
               "role": "Treasurer"
             }
@@ -3824,11 +4250,15 @@
         "Yorkfield": {
           "board": [
             {
+              "email": "JFlynn@hillside-il.org",
               "name": "James Flynn",
+              "phone": "(630) 205-9176",
               "role": "President"
             },
             {
+              "email": "Elmh3@comcast.net",
               "name": "John Fennell",
+              "phone": "(630) 890-8487",
               "role": "Treasurer"
             }
           ],
@@ -3851,6 +4281,7 @@
               "role": "Director"
             },
             {
+              "email": "slatting@addisonparks.org",
               "name": "Sheila Latting",
               "role": "Fin. Officer"
             }
@@ -3869,10 +4300,13 @@
           "heads": [
             {
               "name": "Kevin Romejko",
+              "phone": "(630) 540-4800",
               "role": "C.E.O."
             },
             {
+              "email": "ELeninger@bartlettparks.org",
               "name": "Eric Leninger",
+              "phone": "(630) 540-4812",
               "role": "C.F.O."
             }
           ],
@@ -3891,6 +4325,7 @@
               "role": "Director"
             },
             {
+              "email": "evelyn@bvilleparks.org",
               "name": "Evelyn Struck",
               "role": "Fin. Officer/Treas."
             }
@@ -3906,10 +4341,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "Joe@bloomingdaleparks.org",
               "name": "Joe Potts",
               "role": "Director"
             },
             {
+              "email": "jennifer@bloomingdaleparks.org",
               "name": "Jennifer Vale",
               "role": "Fin. Officer"
             }
@@ -3924,11 +4361,15 @@
         "Brookeridge": {
           "board": [
             {
+              "email": "organizeus@comcast.net",
               "name": "Jeffrey Moeller",
+              "phone": "(630) 427-1342",
               "role": "President"
             },
             {
+              "email": "danarkin@hotmail.com",
               "name": "Daniel Arkin",
+              "phone": "(630) 985-8351",
               "role": "V-President"
             }
           ],
@@ -3939,14 +4380,16 @@
         "Burr Ridge": {
           "board": [
             {
+              "email": "parkboard@brparks.org",
               "name": "Robert Quigley",
               "role": "President"
             }
           ],
           "comptrollerCode": "022/035/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
+              "email": "rosepark3@comcast.net",
               "name": "Jamie Janusz",
               "role": "Accountant"
             }
@@ -3960,6 +4403,7 @@
         "Butterfield": {
           "board": [
             {
+              "email": "scosenza@butterfieldpd.com",
               "name": "Sandra Cosenza",
               "role": "Treasurer"
             }
@@ -3968,6 +4412,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "executiveoffice@butterfieldpd.com",
               "name": "Jack Savage",
               "role": "Director"
             }
@@ -3983,10 +4428,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "suer@csparks.org",
               "name": "Susan Rini",
               "role": "Executive"
             },
             {
+              "email": "lisas@csparks.org",
               "name": "Lisa Scumaci",
               "role": "Director"
             }
@@ -4003,11 +4450,15 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "superintendent@chicagoparkdistrict.com",
               "name": "Carlos Ramirez-Rosa",
+              "phone": "(312) 742-4200",
               "role": "C.E.O."
             },
             {
+              "email": "jeffrey.shellhorn@chicagoparkdistrict.com",
               "name": "Jeff Shellhorn",
+              "phone": "(312) 742-4761",
               "role": "C.F.O."
             }
           ],
@@ -4043,6 +4494,7 @@
           "heads": [
             {
               "name": "Stephanie Gurgone",
+              "phone": "(630) 968-7819",
               "role": "Director"
             }
           ],
@@ -4055,10 +4507,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bmcadam@dgparks.org",
               "name": "William McAdam",
               "role": "C.E.O."
             },
             {
+              "email": "tfarkas@dgparks.org",
               "name": "Tricia Farkas",
               "role": "C.F.O."
             }
@@ -4074,11 +4528,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jrogers@epd.org",
               "name": "James Rogers",
+              "phone": "(630) 993-8930",
               "role": "Executive"
             },
             {
+              "email": "bstembridge@epd.org",
               "name": "Barbara Stembridge",
+              "phone": "(630) 993-8931",
               "role": "Mgr./Director"
             }
           ],
@@ -4093,10 +4551,12 @@
           "filesIn": "Kane",
           "heads": [
             {
+              "email": "jpaprocki@fvpd.net",
               "name": "Jennifer Paprocki",
               "role": "Director"
             },
             {
+              "email": "jgoll@fvpd.net",
               "name": "John Goll",
               "role": "Fin. Officer"
             }
@@ -4112,10 +4572,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dthommes@gepark.org",
               "name": "Dave Thommes",
               "role": "Director"
             },
             {
+              "email": "ncinquegrani@gepark.org",
               "name": "Nicholas Cinquegrani",
               "role": "Dep. Director"
             }
@@ -4131,10 +4593,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "tonym8925@gmail.com",
               "name": "Anthony Maggiore",
               "role": "C.E.O."
             },
             {
+              "email": "mp3andrews@gmail.com",
               "name": "Pete Andrews",
               "role": "Treas./Admin."
             }
@@ -4149,10 +4613,12 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "s.bessette@hpparks.org",
               "name": "Steve Bessette",
               "role": "Director"
             },
             {
+              "email": "r.emig@hpparks.org",
               "name": "Roger Emig",
               "role": "Superintendent"
             }
@@ -4165,13 +4631,14 @@
         },
         "Itasca": {
           "comptrollerCode": "022/120/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Maryfran Leno",
               "role": "Director"
             },
             {
+              "email": "nkinsinger@itascaparkdistrict.com",
               "name": "Nathan Kinsinger",
               "role": "Superintendent"
             }
@@ -4189,10 +4656,12 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "bmcadam@lemontparks.org",
               "name": "Bill McAdam",
               "role": "Director"
             },
             {
+              "email": "legofske@lemontparks.org",
               "name": "Louise Egofske",
               "role": "Director"
             }
@@ -4209,11 +4678,14 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dgarvy@lisleparkdistrict.org",
               "name": "Dan Garvy",
+              "phone": "(630) 353-4310",
               "role": "Director"
             },
             {
               "name": "Scott Silver",
+              "phone": "(630) 353-4313",
               "role": "Superintendent"
             }
           ],
@@ -4228,6 +4700,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jmccann@lombardparks.com",
               "name": "Joseph McCann",
               "role": "Director"
             },
@@ -4246,6 +4719,7 @@
         "Medinah": {
           "board": [
             {
+              "email": "jaclyns@medinahparkdistrict.org",
               "name": "Jaclyn Scafidi",
               "role": "Treasurer"
             },
@@ -4258,6 +4732,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "maria@medinahparkdistrict.org",
               "name": "Maria Piworski",
               "role": "Director"
             }
@@ -4274,10 +4749,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bwilson@napervilleparks.org",
               "name": "Brad Wilson",
               "role": "Executive"
             },
             {
+              "email": "tdubiel@napervilleparks.org",
               "name": "Tricia Dubiel",
               "role": "C.F.O."
             }
@@ -4292,10 +4769,12 @@
         "Oak Brook": {
           "board": [
             {
+              "email": "sknitter@obparks.org",
               "name": "Sharon Knitter",
               "role": "President"
             },
             {
+              "email": "iivkovic@obparks.org",
               "name": "Ivana Ivkovic Kelley",
               "role": "Treasurer"
             }
@@ -4313,10 +4792,13 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "SHANNON@OBTPD.ORG",
               "name": "Shannon Elsey",
+              "phone": "(630) 627-3100",
               "role": "C.E.O."
             },
             {
+              "email": "vickimansueto@gmail.com",
               "name": "Victoria Rispens",
               "role": "C.F.O."
             }
@@ -4332,10 +4814,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "lmcateer@rparks.org",
               "name": "Lynn McAteer",
               "role": "Director"
             },
             {
+              "email": "norlandino@rparks.org",
               "name": "Nicolette Orlandino",
               "role": "Fin. Officer"
             }
@@ -4349,10 +4833,12 @@
         "St Charles": {
           "board": [
             {
+              "email": "bob.thomson@sbcglobal.net",
               "name": "Bob Thomson",
               "role": "President"
             },
             {
+              "email": "bcarne@cisco.com",
               "name": "Bob Carne",
               "role": "Treasurer"
             }
@@ -4369,6 +4855,7 @@
         "Tri-State": {
           "board": [
             {
+              "email": "INICIS@COMCAST.NET",
               "name": "Steve Incis",
               "role": "President"
             }
@@ -4377,6 +4864,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "HRAJA1@HOTMAIL.COM",
               "name": "Huzefa Raja",
               "role": "Treas./Admin."
             }
@@ -4390,7 +4878,9 @@
         "Wards Creek": {
           "board": [
             {
+              "email": "Powerdyne@Earthlink.net",
               "name": "Jack Novak",
+              "phone": "(630) 728-8020",
               "role": "President"
             }
           ],
@@ -4398,7 +4888,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "AMazumder@sbcglobal.net",
               "name": "Atanu Mazumder",
+              "phone": "(630) 212-9947",
               "role": "Treas./Admin."
             }
           ],
@@ -4409,6 +4901,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "timr@warrenvilleparks.org",
               "name": "Tim Reinbold",
               "role": "Director"
             },
@@ -4426,13 +4919,15 @@
         },
         "West Chicago": {
           "comptrollerCode": "022/210/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
+              "email": "gradun@we-goparks.org",
               "name": "Gina Radun",
               "role": "Director"
             },
             {
+              "email": "gminchev@we-goparks.org",
               "name": "Gergana Minchev",
               "role": "Fin. Officer"
             }
@@ -4452,6 +4947,7 @@
               "role": "Director"
             },
             {
+              "email": "rfejzic@westmontparks.org",
               "name": "Rosy Fejzic",
               "role": "Accountant"
             }
@@ -4468,11 +4964,14 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mbenard@wheatonparks.org",
               "name": "Michael Benard",
+              "phone": "(630) 510-4945",
               "role": "Executive"
             },
             {
               "name": "Sandra Simpson",
+              "phone": "(630) 510-4947",
               "role": "Fin. Officer"
             }
           ],
@@ -4489,6 +4988,7 @@
               "role": "Director"
             },
             {
+              "email": "christyl@winfieldparkdistrict.com",
               "name": "Christy Liszka",
               "role": "Accountant"
             }
@@ -4505,11 +5005,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jmarquardt@wdparks.org",
               "name": "Jon Marquardt",
+              "phone": "(630) 948-0522",
               "role": "Director"
             },
             {
+              "email": "VMONTEJO@WDPARKS.ORG",
               "name": "Victoria Montejo",
+              "phone": "(630) 948-0504",
               "role": "Fin. Officer"
             }
           ],
@@ -4521,6 +5025,7 @@
         "Woodridge": {
           "board": [
             {
+              "email": "cohenboys@comcast.net",
               "name": "Bill Cohen",
               "role": "President"
             }
@@ -4543,10 +5048,12 @@
         "York Center": {
           "board": [
             {
+              "email": "bob@ycpd.fun",
               "name": "Robert Fritz",
               "role": "President"
             },
             {
+              "email": "ann@ycpd.fun",
               "name": "Ann DeGroot",
               "role": "Treasurer"
             }
@@ -4566,11 +5073,15 @@
         "Altamont": {
           "board": [
             {
+              "email": "CWW@ALTAMONT.NET",
               "name": "Dan Roedl",
+              "phone": "(618) 483-5071",
               "role": "President"
             },
             {
+              "email": "LUSTIG_BRIAN@YAHOO.COM",
               "name": "Brian Lustig",
+              "phone": "(217) 821-2798",
               "role": "Treasurer"
             }
           ],
@@ -4581,15 +5092,21 @@
         "Dieterich": {
           "board": [
             {
+              "email": "ljniemerg53@hotmail.com",
               "name": "Paul Niemerg",
+              "phone": "(217) 739-2421",
               "role": "President"
             },
             {
+              "email": "kcampton@akrabuilders.com",
               "name": "Ken Campton",
+              "phone": "(217) 821-1504",
               "role": "Treasurer"
             },
             {
+              "email": "GHORN1949@GMAIL.COM",
               "name": "Gary Horn",
+              "phone": "(217) 821-3414",
               "role": "Secretary"
             }
           ],
@@ -4619,15 +5136,21 @@
         "Farina": {
           "board": [
             {
+              "email": "frankblomberg@yahoo.com",
               "name": "Frank Blomberg",
+              "phone": "(618) 322-8739",
               "role": "President"
             },
             {
+              "email": "darrell.schaal@adm.com",
               "name": "Darrell Schaal",
+              "phone": "(618) 322-9391",
               "role": "Treasurer"
             },
             {
+              "email": "storck12000@yahoo.com",
               "name": "Clint Storck",
+              "phone": "(618) 322-9785",
               "role": "Secretary"
             }
           ],
@@ -4639,11 +5162,15 @@
         "North Clay": {
           "board": [
             {
+              "email": "leonard@taylorlaw.net",
               "name": "Laren Erwin",
+              "phone": "(618) 662-6022",
               "role": "President"
             },
             {
+              "email": "kimmell@taylorlaw.net",
               "name": "Randy McNeely",
+              "phone": "(618) 302-5263",
               "role": "Treasurer"
             }
           ],
@@ -4658,11 +5185,15 @@
         "Shumway": {
           "board": [
             {
+              "email": "tracysutter2173432795@gmail.com",
               "name": "Tracy Sutter",
+              "phone": "(217) 343-2795",
               "role": "Trustee"
             },
             {
+              "email": "schabbingmike@gmail.com",
               "name": "Mike Schabbing",
+              "phone": "(217) 821-3000",
               "role": "Trustee"
             }
           ],
@@ -4671,6 +5202,7 @@
           "heads": [
             {
               "name": "Gene Arnold",
+              "phone": "(217) 868-5202",
               "role": "Treas./Admin."
             }
           ],
@@ -4683,11 +5215,15 @@
         "Sigel": {
           "board": [
             {
+              "email": "info@effinghamasphalt.com",
               "name": "Robert Hoene",
+              "phone": "(217) 844-2059",
               "role": "President"
             },
             {
+              "email": "rflach@consolidated.net",
               "name": "Robert Flach",
+              "phone": "(217) 663-4037",
               "role": "Treasurer"
             }
           ],
@@ -4699,11 +5235,15 @@
         "St Elmo": {
           "board": [
             {
+              "email": "sandkconcrete05@yahoo.com",
               "name": "Darrin Strauch",
+              "phone": "(618) 322-6422",
               "role": "President"
             },
             {
+              "email": "cjennings@dustandson.com",
               "name": "Clayton Jennings",
+              "phone": "(217) 240-0256",
               "role": "Treasurer"
             }
           ],
@@ -4719,10 +5259,12 @@
           "heads": [
             {
               "name": "Kevin Jenne",
+              "phone": "(618) 554-7054",
               "role": "Chief"
             },
             {
               "name": "Andy Drewes",
+              "phone": "(618) 349-8313",
               "role": "Treas./Admin."
             }
           ],
@@ -4734,10 +5276,12 @@
         "Stewardson": {
           "board": [
             {
+              "email": "stewfiredistrict@gmail.com",
               "name": "Dan Lankow",
               "role": "President"
             },
             {
+              "email": "jtabbert15@gmail.com",
               "name": "Judy Tabbert",
               "role": "Secretary"
             }
@@ -4754,11 +5298,15 @@
         "Teutopolis": {
           "board": [
             {
+              "email": "kremerpharmacy@hotmail.com",
               "name": "Duane Kremer",
+              "phone": "(217) 343-4633",
               "role": "President"
             },
             {
+              "email": "horn_jon@hotmail.com",
               "name": "Jon Horn",
+              "phone": "(217) 821-6706",
               "role": "Treasurer"
             }
           ],
@@ -4769,11 +5317,15 @@
         "Tri-County": {
           "board": [
             {
+              "email": "triciaschlanser@yahoo.com",
               "name": "Anthony Schlanser",
+              "phone": "(618) 487-5704",
               "role": "President"
             },
             {
+              "email": "jdpetty@frontiernet.net",
               "name": "David Petty",
+              "phone": "(618) 487-5675",
               "role": "Treasurer"
             }
           ],
@@ -4784,11 +5336,15 @@
         "Watson": {
           "board": [
             {
+              "email": "ERIC.WEBB0865@GMAIL.COM",
               "name": "Eric Webb",
+              "phone": "(217) 343-9151",
               "role": "President"
             },
             {
+              "email": "ASJK76@FRONTIERNET.NET",
               "name": "D. Alan Davis",
+              "phone": "(217) 536-6032",
               "role": "Treasurer"
             }
           ],
@@ -4801,11 +5357,18 @@
         "Dieterich": {
           "board": [
             {
+              "email": "vsanguinetti@jccu1.org",
               "name": "Valerie Sanguinetti",
+              "phone": "(217) 259-4406",
               "role": "President"
             },
             {
+              "email": "nick.gipson@yahoo.com",
               "name": "Nick Gipson",
+              "phone": "(217) 855-4645",
+              "phonesExtra": [
+                "(217) 925-5722"
+              ],
               "role": "Treasurer"
             }
           ],
@@ -4816,10 +5379,12 @@
         "Effingham": {
           "board": [
             {
+              "email": "mdasenbrock@effinghampd.org",
               "name": "Matt Dasenbrock",
               "role": "President"
             },
             {
+              "email": "treasurer@effinghampd.org",
               "name": "Serena Buzzard",
               "role": "Treasurer"
             }
@@ -4835,7 +5400,9 @@
         "Mason": {
           "board": [
             {
+              "email": "bgillmore48@gmail.com",
               "name": "Bette Gillmore",
+              "phone": "(217) 536-2054",
               "role": "Secretary"
             }
           ],
@@ -4843,7 +5410,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "trjansen731@gmail.com",
               "name": "Tom Jansen",
+              "phone": "(217) 821-5339",
               "role": "Accountant"
             }
           ],
@@ -4852,11 +5421,14 @@
         "Teutopolis": {
           "board": [
             {
+              "email": "pgrunloh@akrabuilders.com",
               "name": "Paul Grunloh",
+              "phone": "(217) 857-6358",
               "role": "President"
             },
             {
               "name": "Jean Beard",
+              "phone": "(217) 821-5555",
               "role": "Sec./Treas."
             }
           ],
@@ -4874,11 +5446,15 @@
         "DAHLGREN FIRE DISTRICT": {
           "board": [
             {
+              "email": "fldrad74@gmail.com",
               "name": "Fern Daily",
+              "phone": "(618) 525-4588",
               "role": "President"
             },
             {
+              "email": "zack589@hamiltoncom.net",
               "name": "Laura Zachman",
+              "phone": "(618) 599-3388",
               "role": "Sec./Treas."
             }
           ],
@@ -4896,11 +5472,15 @@
         "Ashkum": {
           "board": [
             {
+              "email": "jandsfinegan@yahoo.com",
               "name": "Jerome Finegan",
+              "phone": "(815) 383-9737",
               "role": "President"
             },
             {
+              "email": "tmeier@ameritech.net",
               "name": "Troy Meier",
+              "phone": "(815) 383-0607",
               "role": "Treasurer"
             }
           ],
@@ -4914,11 +5494,14 @@
         "Beaver": {
           "board": [
             {
+              "email": "fryetom@gmail.com",
               "name": "Tom Frye",
+              "phone": "(815) 674-7242",
               "role": "President"
             },
             {
               "name": "Craig Anderson",
+              "phone": "(815) 383-7343",
               "role": "Trustee"
             }
           ],
@@ -4929,11 +5512,15 @@
         "Buckley": {
           "board": [
             {
+              "email": "buckfiretreas@yahoo.com",
               "name": "Alan weber",
+              "phone": "(217) 781-0464",
               "role": "President"
             },
             {
+              "email": "idetect2@yahoo.com",
               "name": "Leon Kuester",
+              "phone": "(815) 644-4754",
               "role": "Treasurer"
             }
           ],
@@ -4948,7 +5535,9 @@
               "role": "Trustee"
             },
             {
+              "email": "ajray217@yahoo.com",
               "name": "Patrick Koerner",
+              "phone": "(815) 949-1688",
               "role": "Sec./Treas."
             }
           ],
@@ -4964,30 +5553,37 @@
         "Chebanse": {
           "board": [
             {
+              "email": "nkrts4@daca.net",
               "name": "Kim Nakaerts",
+              "phone": "(815) 671-0368",
+              "phonesExtra": [
+                "(815) 694-2441"
+              ],
               "role": "President"
             },
             {
               "name": "Dan Brough",
+              "phone": "(815) 693-2846",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "038/050/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
-            "address": "PO Box 666 325 W. Third Ave",
+            "address": "PO BOX 666",
             "city": "CLIFTON IL 60927",
-            "email": "Trustee@Chebansetwpfd.com",
-            "phone": "(815) 694-2441"
+            "email": "Trustee@Chebansetwpfd.com"
           }
         },
         "Cissna Park": {
           "board": [
             {
+              "email": "cpfirepresident@yahoo.com",
               "name": "Richard Verkler",
               "role": "President"
             },
             {
+              "email": "cpamb@frontier.com",
               "name": "Callie Kaeb",
               "role": "Treasurer"
             }
@@ -5003,15 +5599,20 @@
         "Concord": {
           "board": [
             {
+              "email": "rdlareau@hotmail.com",
               "name": "Ridney Lareau",
+              "phone": "(815) 471-5507",
               "role": "President"
             },
             {
               "name": "Amanda Bard",
+              "phone": "(815) 486-7065",
               "role": "Treasurer"
             },
             {
+              "email": "Todfletcher61@gmail.com",
               "name": "Tod Fletcher",
+              "phone": "(815) 383-2275",
               "role": "Secretary"
             }
           ],
@@ -5026,6 +5627,7 @@
           "board": [
             {
               "name": "Darren Christensen",
+              "phone": "(815) 922-8855",
               "role": "President"
             }
           ],
@@ -5033,7 +5635,9 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "djkosik@mchsi.com",
               "name": "David Kosik",
+              "phone": "(815) 450-1840",
               "role": "C.F.O."
             }
           ],
@@ -5044,10 +5648,12 @@
         "Cullom": {
           "board": [
             {
+              "email": "meisterd52@gmail.com",
               "name": "Duane Meister",
               "role": "President"
             },
             {
+              "email": "ckrause@piggusheng.com",
               "name": "Carl Krause III",
               "role": "Sec./Treas."
             }
@@ -5064,11 +5670,15 @@
         "Danforth": {
           "board": [
             {
+              "email": "Sandy.Decker9@gmail.com",
               "name": "Larry Decker",
+              "phone": "(815) 373-2636",
               "role": "President"
             },
             {
+              "email": "classen26@gmail.com",
               "name": "Mark Claussen",
+              "phone": "(815) 383-2636",
               "role": "Treasurer"
             }
           ],
@@ -5082,11 +5692,15 @@
         "Gilman": {
           "board": [
             {
+              "email": "JEHUBERT@SBCGLOBAL.NET",
               "name": "James Hubert",
+              "phone": "(815) 265-4837",
               "role": "President"
             },
             {
+              "email": "CINDYGUTTENDORF@GMAIL.COM",
               "name": "Cindy Guttendorf",
+              "phone": "(815) 263-2381",
               "role": "Sec./Treas."
             }
           ],
@@ -5097,11 +5711,18 @@
         "Iroquois-Ford": {
           "board": [
             {
+              "email": "Tpork53@yahoo.com",
               "name": "Bob Lange",
+              "phone": "(815) 383-6584",
               "role": "Trustee"
             },
             {
+              "email": "HAROLDC83@GMAIL.COM",
               "name": "Harold Crawford",
+              "phone": "(217) 383-1493",
+              "phonesExtra": [
+                "(217) 387-2303"
+              ],
               "role": "Trustee"
             }
           ],
@@ -5112,11 +5733,15 @@
         "Kempton": {
           "board": [
             {
+              "email": "JMDONLEYINC@GMAIL.COM",
               "name": "Marlin Donley",
+              "phone": "(815) 685-8368",
               "role": "President"
             },
             {
+              "email": "RAGFARMS.RG@GMAIL.COM",
               "name": "Roger Gualandi",
+              "phone": "(815) 383-7864",
               "role": "Treasurer"
             }
           ],
@@ -5128,7 +5753,9 @@
         "Loda": {
           "board": [
             {
+              "email": "ccamp77.rc@gmail.com",
               "name": "Ronald Camp",
+              "phone": "(217) 649-7919",
               "role": "Chairperson"
             }
           ],
@@ -5136,7 +5763,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "ccamp77.rc@gmail.com",
               "name": "Ronald Camp",
+              "phone": "(217) 649-7919",
               "role": "C.F.O."
             }
           ],
@@ -5168,6 +5797,7 @@
               "role": "President"
             },
             {
+              "email": "MFPDTREASURER@YAHOO.COM",
               "name": "Pam Schippert",
               "role": "Treasurer"
             }
@@ -5192,6 +5822,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mtilstra@sbcglobal.net",
               "name": "Martin Tilstra",
               "role": "C.F.O."
             }
@@ -5207,7 +5838,9 @@
               "role": "President"
             },
             {
+              "email": "CROSSCORNER8@MSN.COM",
               "name": "Joe Abrassart",
+              "phone": "(815) 697-2422",
               "role": "Trustee"
             }
           ],
@@ -5223,7 +5856,9 @@
         "Papineu": {
           "board": [
             {
+              "email": "Chrisj.trustee@gmail.com",
               "name": "Chris Johnson",
+              "phone": "(815) 644-0945",
               "role": "Treasurer"
             }
           ],
@@ -5231,7 +5866,9 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "mmunyon.trustee@gmail.com",
               "name": "Myron Munyon",
+              "phone": "(815) 432-5401",
               "role": "C.E.O."
             }
           ],
@@ -5252,10 +5889,12 @@
         "Rankin": {
           "board": [
             {
+              "email": "brycemleigh@gmail.com",
               "name": "Bryce Leigh",
               "role": "President"
             },
             {
+              "email": "danaalderson1949@hotmail.com",
               "name": "Dana Alderson",
               "role": "Treasurer"
             }
@@ -5272,11 +5911,15 @@
         "Sheldon": {
           "board": [
             {
+              "email": "HRODRUNNER8@GMAIL.COM",
               "name": "Ken Hrodey",
+              "phone": "(815) 471-3580",
               "role": "President"
             },
             {
+              "email": "DMMOLTER@YAHOO.COM",
               "name": "Diane Molter",
+              "phone": "(815) 471-3505",
               "role": "Treasurer"
             }
           ],
@@ -5287,6 +5930,7 @@
         "Stockland": {
           "board": [
             {
+              "email": "ccheever53@gmail.com",
               "name": "Craig Cheever",
               "role": "Treasurer"
             }
@@ -5308,11 +5952,15 @@
         "Wellington-Greer": {
           "board": [
             {
+              "email": "nick.adsit@outlook.com",
               "name": "Nicholas Adsit",
+              "phone": "(815) 984-5154",
               "role": "President"
             },
             {
+              "email": "rkboyden@cooketech.net",
               "name": "Rick Boyden",
+              "phone": "(815) 984-4931",
               "role": "V-President"
             }
           ],
@@ -5323,11 +5971,15 @@
         "Woodland": {
           "board": [
             {
+              "email": "MCLIFTON4020@GMAIL.COM",
               "name": "Mark Clifton",
+              "phone": "(815) 644-4546",
               "role": "President"
             },
             {
+              "email": "TGIROUX@LIVE.COM",
               "name": "Tracy Giroux",
+              "phone": "(815) 278-0899",
               "role": "Treasurer"
             }
           ],
@@ -5357,6 +6009,7 @@
         "LITTLE ROCK-FOX FPD": {
           "board": [
             {
+              "email": "brumlfarm@sbcglobal.net",
               "name": "Donald Brummel",
               "role": "President"
             },
@@ -5366,7 +6019,7 @@
             }
           ],
           "comptrollerCode": "047/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "5 East North St",
             "city": "Plano IL 60545",
@@ -5376,6 +6029,7 @@
         "MINOOKA FPD": {
           "board": [
             {
+              "email": "robertsd@minookafire.com",
               "name": "Daniel Roberts",
               "role": "President"
             },
@@ -5400,6 +6054,7 @@
           "filesIn": "Kane",
           "heads": [
             {
+              "email": "chiefmeyers@montgomeryfire.org",
               "name": "Tom Meyers",
               "role": "Fire Chief"
             },
@@ -5418,6 +6073,7 @@
         "NEWARK FPD": {
           "board": [
             {
+              "email": "earl48@sbcglobal.net",
               "name": "David Thompson",
               "role": "President"
             },
@@ -5441,6 +6097,7 @@
               "role": "President"
             },
             {
+              "email": "kholmstrom@oswegofire.com",
               "name": "Kenneth Holmstrom",
               "role": "Treasurer"
             }
@@ -5482,6 +6139,7 @@
               "role": "Trustee"
             },
             {
+              "email": "mattw64@yahoo.com",
               "name": "Matt Weismiller",
               "role": "Trustee"
             }
@@ -5521,10 +6179,12 @@
           "filesIn": "Kane",
           "heads": [
             {
+              "email": "jpaprocki@fvpd.net",
               "name": "Jennifer Paprocki",
               "role": "Director"
             },
             {
+              "email": "jgoll@fvpd.net",
               "name": "John Goll",
               "role": "Fin. Officer"
             }
@@ -5545,6 +6205,7 @@
               "role": "Director"
             },
             {
+              "email": "gkelley@jolietpark.org",
               "name": "Glenn Kelley",
               "role": "Fin. Officer/Treas."
             }
@@ -5561,11 +6222,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "cfeldotto@oswegolandpd.org",
               "name": "Chad Feldotto",
+              "phone": "(630) 554-1010",
               "role": "Director"
             },
             {
+              "email": "tward@oswegolandpd.org",
               "name": "Tina Ward",
+              "phone": "(630) 554-4422",
               "role": "Fin. Officer"
             }
           ],
@@ -5577,6 +6242,7 @@
         "PLAINFIELD PARK DIST": {
           "board": [
             {
+              "email": "nugent@plfdparks.org",
               "name": "Maureen Nugent",
               "role": "Treasurer"
             }
@@ -5586,6 +6252,7 @@
           "filesIn": "Will",
           "heads": [
             {
+              "email": "capalbo@plfdparks.org",
               "name": "Carlo Capalbo",
               "role": "Director"
             }
@@ -5599,6 +6266,7 @@
         "SANDWICH PARK DIST": {
           "board": [
             {
+              "email": "dhoytspd@gmail.com",
               "name": "Dan Hoyt",
               "role": "President"
             }
@@ -5608,10 +6276,12 @@
           "filesIn": "DeKalb",
           "heads": [
             {
+              "email": "bill.novicki.spd@gmail.com",
               "name": "Bill Novicki",
               "role": "Director"
             },
             {
+              "email": "tes.isham.spd@gmail.com",
               "name": "Tes Isham",
               "role": "Accountant"
             }
@@ -5629,11 +6299,15 @@
         "Arden Shore North Fire Protection District": {
           "board": [
             {
+              "email": "wmnordeen@hotmail.com",
               "name": "Bill Nordeen",
+              "phone": "(847) 295-7599",
               "role": "President"
             },
             {
+              "email": "mmarek56@outlook.com",
               "name": "Margaret Marek",
+              "phone": "(630) 569-0763",
               "role": "Treasurer"
             }
           ],
@@ -5644,11 +6318,15 @@
         "Arden Shore South Fire Protection District": {
           "board": [
             {
+              "email": "jontomek@gmail.com",
               "name": "Jon Tomek",
+              "phone": "(847) 702-6184",
               "role": "President"
             },
             {
+              "email": "wwsloan@yahoo.com",
               "name": "Walter Sloan",
+              "phone": "(847) 609-4631",
               "role": "Treasurer"
             }
           ],
@@ -5659,14 +6337,17 @@
         "Barrington Countryside Fire Protection District": {
           "board": [
             {
+              "email": "keithhanson@hansonlawgrp.com",
               "name": "Keith Hanson",
               "role": "President"
             },
             {
+              "email": "tlong@bcfpd.us",
               "name": "Tom Long",
               "role": "V-President"
             },
             {
+              "email": "mhower@bcfpd.us",
               "name": "Matthew Hower",
               "role": "Treasurer"
             }
@@ -5687,6 +6368,7 @@
               "role": "President"
             },
             {
+              "email": "klynch@beachparkfd.org",
               "name": "Ken Lynch",
               "role": "Treasurer"
             }
@@ -5703,6 +6385,7 @@
         "Cary Fire Protection District": {
           "board": [
             {
+              "email": "lneuses@caryfire.com",
               "name": "Lance Neuses",
               "role": "Treasurer"
             },
@@ -5730,6 +6413,7 @@
               "role": "Fire Chief"
             },
             {
+              "email": "lclausen@countrysidefire.com",
               "name": "Lisa Clausen",
               "role": "Accountant"
             }
@@ -5752,6 +6436,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "rlarson@dbfd.org",
               "name": "Ray Larson",
               "role": "Fire Chief"
             }
@@ -5765,10 +6450,12 @@
         "First Fire Protection District of Antioch": {
           "board": [
             {
+              "email": "tdvorak@antiochfire.org",
               "name": "Tom Dvorak",
               "role": "President"
             },
             {
+              "email": "cebert@antiochfire.org",
               "name": "Chris Ebert",
               "role": "Treasurer"
             }
@@ -5785,10 +6472,12 @@
         "Fox Lake Fire Protection District": {
           "board": [
             {
+              "email": "lsoderlund@flfpd.org",
               "name": "Lynn Soderlund",
               "role": "President"
             },
             {
+              "email": "lwalleck@flfpd.org",
               "name": "Linda Walleck",
               "role": "Treasurer"
             }
@@ -5804,14 +6493,17 @@
         "Fox River Grove Fire Protection District": {
           "board": [
             {
+              "email": "frgfirerep@gmail.com",
               "name": "Michael Kunz",
               "role": "President"
             },
             {
+              "email": "yosh36@sbcglobal.net",
               "name": "William Yocius",
               "role": "Treasurer"
             },
             {
+              "email": "phughes@frgfire.org",
               "name": "Patrick Hughes",
               "role": "Secretary"
             }
@@ -5836,6 +6528,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "firechief@grayslakefire.com",
               "name": "Dan Pierre",
               "role": "Chief"
             }
@@ -5850,10 +6543,12 @@
         "Greater Round Lake Fire Protection District": {
           "board": [
             {
+              "email": "chief@rlfire.org",
               "name": "George Steinberg",
               "role": "President"
             },
             {
+              "email": "mlucassen@rlfire.org",
               "name": "Nitai Pandya",
               "role": "Treasurer"
             }
@@ -5869,10 +6564,12 @@
         "Lake Villa Township Fire Protection District": {
           "board": [
             {
+              "email": "jstout@lakevillafpd.com",
               "name": "James Stout",
               "role": "President"
             },
             {
+              "email": "hschnitzer@lakevillafpd.com",
               "name": "Howard Schnitzer",
               "role": "Treasurer"
             }
@@ -5889,7 +6586,9 @@
         "Lake Zurich Rural Fire Protection District": {
           "board": [
             {
+              "email": "julie.novak@lzrfpd.com",
               "name": "Julie Novak",
+              "phone": "(773) 844-1822",
               "role": "President"
             }
           ],
@@ -5897,6 +6596,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mindy.dupee@lzrfpd.com",
               "name": "Mindy Dupee",
               "role": "Treas./Admin."
             }
@@ -5910,11 +6610,15 @@
         "Libertyville Fire Protection District": {
           "board": [
             {
+              "email": "leehaak57@gmail.com",
               "name": "Lee Haak",
+              "phone": "(847) 680-3876",
               "role": "President"
             },
             {
+              "email": "cdlfpd@gmail.com",
               "name": "Craig Dowden",
+              "phone": "(847) 362-1254",
               "role": "Treasurer"
             }
           ],
@@ -5927,6 +6631,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "tkrueger@lrfpd.org",
               "name": "Tom Krueger",
               "role": "Fire Chief"
             },
@@ -5946,6 +6651,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "psegalla@lgfpd.org",
               "name": "Paul Segalla",
               "role": "Fire Chief"
             },
@@ -5963,6 +6669,7 @@
         "Newport Township Fire Protection District": {
           "board": [
             {
+              "email": "kevin@campanellaandsons.com",
               "name": "Kevin Zupec",
               "role": "Treasurer"
             }
@@ -5985,25 +6692,31 @@
         "Rockland Fire Protection District": {
           "board": [
             {
+              "email": "president@knollwoodfire.com",
               "name": "Marcin Malinowski",
+              "phone": "(847) 951-2058",
               "role": "President"
             },
             {
+              "email": "ksnoblin@knollwoodfire.com",
               "name": "Karl Snoblin",
+              "phone": "(847) 494-8838",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "049/110/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Warren-Waukegan Fire Protection District": {
           "board": [
             {
+              "email": "mklauber@popular.com",
               "name": "Martin Klauber",
               "role": "President"
             },
             {
+              "email": "bwattleworth@wwfpd.org",
               "name": "Brian Wattleworth",
               "role": "Treasurer"
             }
@@ -6021,6 +6734,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "chanselman@waucondafire.org",
               "name": "Curt Hanselman",
               "role": "Fire Chief"
             },
@@ -6039,6 +6753,7 @@
         "Winthrop Harbor Fire Protection District": {
           "board": [
             {
+              "email": "lorna.leben1@gmail.com",
               "name": "Lorna Leben",
               "role": "Treasurer"
             }
@@ -6047,6 +6762,7 @@
           "filedFor": "2024",
           "heads": [
             {
+              "email": "dietzlawoffice@comcast.net",
               "name": "Gerald Dietz",
               "role": "Attorney"
             }
@@ -6063,10 +6779,12 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "cfullerton@ahpd.org",
               "name": "Carrie Fullerton",
               "role": "Director"
             },
             {
+              "email": "jmyers@ahpd.org",
               "name": "Jason Myers",
               "role": "Fin. Officer"
             }
@@ -6080,7 +6798,9 @@
         "Barrington Hills Park District": {
           "board": [
             {
+              "email": "Jessica@bhillsparkd.org",
               "name": "Jessica Underwood",
+              "phone": "(224) 627-3730",
               "role": "President"
             }
           ],
@@ -6089,6 +6809,7 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "steve@bhillsparkd.org",
               "name": "Steve Allen",
               "role": "Treas./Admin."
             }
@@ -6109,6 +6830,7 @@
               "role": "Director"
             },
             {
+              "email": "ljsh1@hotmail.com",
               "name": "Lee Howard",
               "role": "Accountant"
             }
@@ -6126,6 +6848,7 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "estrojinc@bgparks.org",
               "name": "Erika Strojinc",
               "role": "Director"
             },
@@ -6145,6 +6868,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "laura@deerfieldparks.org",
               "name": "Laura McCarty",
               "role": "Director"
             },
@@ -6165,6 +6889,7 @@
           "filedFor": "2024",
           "heads": [
             {
+              "email": "kcowart@fosspark-district.org",
               "name": "Kari Cowart",
               "role": "Director"
             },
@@ -6183,6 +6908,7 @@
         "Grandwood Park Park District": {
           "board": [
             {
+              "email": "dnichols@grandwoodpark.net",
               "name": "David Nichols",
               "role": "President"
             }
@@ -6207,10 +6933,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "ksplitt@glpd.com",
               "name": "Kristin Splitt",
               "role": "Director"
             },
             {
+              "email": "jvanzant@glpd.com",
               "name": "Janet VanZant",
               "role": "Fin. Officer"
             }
@@ -6226,6 +6954,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "MSzpylman@gurneeparkdistrict.com",
               "name": "Mike Szpylman",
               "role": "Director"
             },
@@ -6247,6 +6976,7 @@
               "role": "President"
             },
             {
+              "email": "kirapanno@gmail.com",
               "name": "Kira Panno",
               "role": "Treasurer"
             },
@@ -6269,10 +6999,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "JBealer@LBPD.org",
               "name": "John Bealer",
               "role": "Director"
             },
             {
+              "email": "lauterbach@lbpd.org",
               "name": "Wes Levy",
               "role": "Accountant"
             }
@@ -6290,6 +7022,7 @@
               "role": "Director"
             },
             {
+              "email": "jkohler@lindenhurstparks.org",
               "name": "Jake Kohler",
               "role": "Fin. Officer"
             }
@@ -6304,15 +7037,21 @@
         "Long Grove Park District": {
           "board": [
             {
+              "email": "jsouthwell@lgparks.org",
               "name": "James Southwell",
+              "phone": "(847) 612-2078",
               "role": "President"
             },
             {
+              "email": "aunderwood@lgparks.org",
               "name": "Angie Underwood",
+              "phone": "(847) 387-9369",
               "role": "Treasurer"
             },
             {
+              "email": "jhealy@lgparks.org",
               "name": "Janet Healy",
+              "phone": "(847) 641-5590",
               "role": "V-President"
             }
           ],
@@ -6329,6 +7068,7 @@
               "role": "Director"
             },
             {
+              "email": "dmcinerney@mundeleinparks.org",
               "name": "Debra McInerney",
               "role": "Director"
             }
@@ -6346,10 +7086,12 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "cleiner@nbparks.org",
               "name": "Chris Leiner",
               "role": "Mgr./Director"
             },
             {
+              "email": "mtokar@nbparks.org",
               "name": "Michael Tokar",
               "role": "Director"
             }
@@ -6363,7 +7105,9 @@
         "Park District of Highland Park": {
           "board": [
             {
+              "email": "mlpeters@pdhp.org",
               "name": "Mari-Lynn Peters",
+              "phone": "(847) 579-3138",
               "role": "Treasurer"
             }
           ],
@@ -6371,7 +7115,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "bromes@pdhp.org",
               "name": "Brian Romes",
+              "phone": "(847) 579-3119",
               "role": "Director"
             }
           ],
@@ -6385,10 +7131,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "katie_gamroth@rlapd.org",
               "name": "Katie Gamroth",
               "role": "C.E.O."
             },
             {
+              "email": "jennifer_baker@rlapd.org",
               "name": "Jennifer Baker",
               "role": "Manager"
             }
@@ -6404,11 +7152,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mattl@vhparkdistrict.org",
               "name": "Matthew LaPorte",
+              "phone": "(847) 996-6930",
               "role": "Executive"
             },
             {
+              "email": "jessicam@vhparkdistrict.org",
               "name": "Jessica Mitchell",
+              "phone": "(847) 996-6934",
               "role": "Superintendent"
             }
           ],
@@ -6426,6 +7178,7 @@
               "role": "Director"
             },
             {
+              "email": "kbrainerd@lauterbachamen.com",
               "name": "Kelly Brainerd",
               "role": "Accountant"
             }
@@ -6442,11 +7195,14 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jlerner@waukeganparks.org",
               "name": "Jay Lerner",
+              "phone": "(847) 360-4721",
               "role": "Director"
             },
             {
               "name": "Jon Beckmann",
+              "phone": "(847) 360-4715",
               "role": "Fin. Officer"
             }
           ],
@@ -6462,10 +7218,12 @@
           "filesIn": "Cook",
           "heads": [
             {
+              "email": "jbuchs@wheelingparkdistrict.com",
               "name": "Jan Buchs",
               "role": "Director"
             },
             {
+              "email": "mwehby@wheelingparkdistrict.com",
               "name": "Matt Wehby",
               "role": "Dep. Director"
             }
@@ -6480,10 +7238,12 @@
         "Wildwood Park District": {
           "board": [
             {
+              "email": "bjante@wildwoodparkdistrict.com",
               "name": "Becky Jante",
               "role": "President"
             },
             {
+              "email": "dcorrigan@wildwoodparkdistrict.com",
               "name": "Dan Corrigan",
               "role": "Treasurer"
             }
@@ -6499,13 +7259,14 @@
         },
         "Zion Park District": {
           "comptrollerCode": "049/120/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Eric Bradley",
               "role": "Director"
             },
             {
+              "email": "etaylor@zionparkdistrict.org",
               "name": "Esme Taylor",
               "role": "Manager"
             }
@@ -6524,11 +7285,15 @@
         "ASHTON FIRE": {
           "board": [
             {
+              "email": "lorihillison@gmail.com",
               "name": "Cliff Jones",
+              "phone": "(815) 453-7764",
               "role": "President"
             },
             {
+              "email": "slarson@crestfoods.com",
               "name": "Susan Larson",
+              "phone": "(815) 453-7721",
               "role": "Treasurer"
             }
           ],
@@ -6539,10 +7304,12 @@
         "BUREAU CO/OHIO FIRE": {
           "board": [
             {
+              "email": "albrecht.robert@yahoo.com",
               "name": "Greg Albrecht",
               "role": "President"
             },
             {
+              "email": "tomfarraher@yahoo.com",
               "name": "Thomas Farraher",
               "role": "Treasurer"
             }
@@ -6584,11 +7351,15 @@
         "COMPTON FIRE": {
           "board": [
             {
+              "email": "tmenzel@menzelmachining.com",
               "name": "Tom Menzel",
+              "phone": "(815) 761-3948",
               "role": "President"
             },
             {
+              "email": "henryorzech@sbcglobal.net",
               "name": "Henry Orzech",
+              "phone": "(847) 828-4085",
               "role": "Treasurer"
             }
           ],
@@ -6605,6 +7376,7 @@
               "role": "Chief"
             },
             {
+              "email": "office@dixonruralfire.com",
               "name": "Becky Conner",
               "role": "Accountant"
             }
@@ -6640,7 +7412,9 @@
         "FRANKLIN GROVE FIRE": {
           "board": [
             {
+              "email": "fgfd800@essex1.com",
               "name": "Randy Gittleson",
+              "phone": "(815) 456-2404",
               "role": "President"
             }
           ],
@@ -6651,7 +7425,12 @@
         "PAW PAW FIRE": {
           "board": [
             {
+              "email": "jp@ppil.us",
               "name": "Jeff Politsch",
+              "phone": "(815) 627-3511",
+              "phonesExtra": [
+                "(815) 793-3588"
+              ],
               "role": "Treasurer"
             }
           ],
@@ -6659,7 +7438,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "nealrogers@frontier.com",
               "name": "Neal Rogers",
+              "phone": "(815) 751-6809",
               "role": "C.E.O."
             }
           ],
@@ -6668,6 +7449,7 @@
         "POLO FIRE": {
           "board": [
             {
+              "email": "jhopfarm92@gmail.com",
               "name": "John Hopkins",
               "role": "President"
             },
@@ -6690,10 +7472,13 @@
           "board": [
             {
               "name": "Merle Gaulrapp",
+              "phone": "(815) 716-0247",
               "role": "President"
             },
             {
+              "email": "office@mahaffeylawoffice.com",
               "name": "Mark Vandersnick",
+              "phone": "(815) 441-8664",
               "role": "Treasurer"
             }
           ],
@@ -6705,10 +7490,12 @@
         "STERLING FIRE": {
           "board": [
             {
+              "email": "drkoster@protonmail.com",
               "name": "Daniel Koster",
               "role": "President"
             },
             {
+              "email": "tfass@wmccinc.com",
               "name": "Timothy Fassler",
               "role": "Treasurer"
             }
@@ -6723,6 +7510,7 @@
         "SUBLETTE FIRE": {
           "board": [
             {
+              "email": "sfpdsecretary@gmail.com",
               "name": "Kevin Schultz",
               "role": "President"
             },
@@ -6743,10 +7531,12 @@
           "board": [
             {
               "name": "Richard Studebaker",
+              "phone": "(815) 628-3942",
               "role": "President"
             },
             {
               "name": "Donna Jungels",
+              "phone": "(815) 973-2836",
               "role": "Trustee"
             }
           ],
@@ -6761,6 +7551,7 @@
         "Bethany": {
           "board": [
             {
+              "email": "JMCLAIN228@GMAIL.COM",
               "name": "Jackie McLain",
               "role": "President"
             }
@@ -6770,6 +7561,7 @@
           "filesIn": "Moultrie",
           "heads": [
             {
+              "email": "TNTELLIS05@YAHOO.COM",
               "name": "Tracy Ellis",
               "role": "Treas./Admin."
             }
@@ -6783,11 +7575,14 @@
         "Blue Mound": {
           "board": [
             {
+              "email": "BMFDTrustee@gmail.com",
               "name": "Joseph Gorden",
+              "phone": "(217) 855-7336",
               "role": "President"
             },
             {
               "name": "Jeffrey Brown",
+              "phone": "(217) 836-6619",
               "role": "President"
             }
           ],
@@ -6798,10 +7593,12 @@
         "Cerro Gordo": {
           "board": [
             {
+              "email": "tyguy2124@gmail.com",
               "name": "Tyler Morganthaler",
               "role": "President"
             },
             {
+              "email": "glsheritage@yahoo.com",
               "name": "Gary Shaffer",
               "role": "Treasurer"
             }
@@ -6818,11 +7615,15 @@
         "Ciso": {
           "board": [
             {
+              "email": "briggsenterprises1@yahoo.com",
               "name": "Greg Briggs",
+              "phone": "(217) 795-2141",
               "role": "President"
             },
             {
+              "email": "trcary60@yahoo.com",
               "name": "Troy Cary",
+              "phone": "(217) 621-8982",
               "role": "Treasurer"
             }
           ],
@@ -6834,11 +7635,14 @@
         "Dora": {
           "board": [
             {
+              "email": "holthausfarms@hotmail.com",
               "name": "Mike Holthaus",
+              "phone": "(217) 972-3996",
               "role": "President"
             },
             {
               "name": "Bill Richardson",
+              "phone": "(217) 519-2030",
               "role": "Trustee"
             }
           ],
@@ -6847,7 +7651,9 @@
           "filesIn": "Moultrie",
           "heads": [
             {
+              "email": "weltent@yahoo.com",
               "name": "Bob Weltig",
+              "phone": "(217) 413-9292",
               "role": "Fin. Officer"
             }
           ],
@@ -6882,6 +7688,7 @@
               "role": "President"
             },
             {
+              "email": "station@hpfpd.org",
               "name": "Tim McQuality",
               "role": "Trustee"
             }
@@ -6898,10 +7705,13 @@
           "board": [
             {
               "name": "Spencer Thomas",
+              "phone": "(309) 369-4162",
               "role": "President"
             },
             {
+              "email": "treasurer@kenneyfire.org",
               "name": "Rebecca Perry",
+              "phone": "(217) 412-4685",
               "role": "Treasurer"
             }
           ],
@@ -6918,6 +7728,7 @@
           "board": [
             {
               "name": "Dan Hawk",
+              "phone": "(217) 415-2798",
               "role": "President"
             }
           ],
@@ -6926,7 +7737,9 @@
           "filesIn": "Logan",
           "heads": [
             {
+              "email": "dcwickli24@Yahoo.com",
               "name": "Dan Wickline",
+              "phone": "(217) 412-3689",
               "role": "Treas./Admin."
             }
           ],
@@ -6937,11 +7750,15 @@
         "Maroa": {
           "board": [
             {
+              "email": "jbrels4@gmail.com",
               "name": "Jason Brelsfoard",
+              "phone": "(217) 972-5243",
               "role": "Treasurer"
             },
             {
+              "email": "jbwade@yahoo.com",
               "name": "James Wade",
+              "phone": "(217) 413-9124",
               "role": "President"
             }
           ],
@@ -6972,10 +7789,12 @@
         "Mt. Zion": {
           "board": [
             {
+              "email": "mtzfd@comcast.net",
               "name": "Ron Johnson",
               "role": "President"
             },
             {
+              "email": "Paulhigar@gmail.com",
               "name": "Paul Higar",
               "role": "Sec./Treas."
             }
@@ -6991,11 +7810,15 @@
         "Niantic": {
           "board": [
             {
+              "email": "JMMATICH@GMAIL.COM",
               "name": "James Matich",
+              "phone": "(217) 855-4980",
               "role": "President"
             },
             {
+              "email": "WESHENNE@HOTMAIL.COM",
               "name": "Wesley Henne",
+              "phone": "(630) 561-7210",
               "role": "Treasurer"
             }
           ],
@@ -7007,6 +7830,7 @@
           "board": [
             {
               "name": "Scott Wise",
+              "phone": "(815) 878-3772",
               "role": "President"
             }
           ],
@@ -7014,6 +7838,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "egillock@pfanow.com",
               "name": "Todd Collins",
               "role": "Accountant"
             }
@@ -7028,10 +7853,12 @@
           "heads": [
             {
               "name": "Sid Duffer",
+              "phone": "(217) 855-7344",
               "role": "Accountant"
             },
             {
               "name": "Sid Duffer",
+              "phone": "(217) 855-7344",
               "role": "Treas./Admin."
             }
           ],
@@ -7044,10 +7871,12 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "cgerhard@decparks.com",
               "name": "Clay Gerhard",
               "role": "Director"
             },
             {
+              "email": "lcooper@decparks.com",
               "name": "Laura Cooper",
               "role": "C.F.O."
             }
@@ -7062,6 +7891,7 @@
           "board": [
             {
               "name": "Greg Briggs",
+              "phone": "(217) 519-1436",
               "role": "President"
             }
           ],
@@ -7070,6 +7900,7 @@
           "heads": [
             {
               "name": "Greg Briggs",
+              "phone": "(217) 519-1436",
               "role": "Treas./Admin."
             }
           ],
@@ -7080,11 +7911,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "Nancybro88@yahoo.com",
               "name": "Nancy Brohar",
+              "phone": "(217) 412-8461",
               "role": "Accountant"
             },
             {
+              "email": "FrommKamisha@gmail.com",
               "name": "kamisha fromm",
+              "phone": "(217) 855-0582",
               "role": "C.F.O."
             }
           ],
@@ -7094,6 +7929,7 @@
           "board": [
             {
               "name": "Alysia Matich",
+              "phone": "(217) 620-3166",
               "role": "President"
             }
           ],
@@ -7101,7 +7937,9 @@
           "filedFor": "2024",
           "heads": [
             {
+              "email": "awebb0615@gmail.com",
               "name": "Amy Webb",
+              "phone": "(217) 454-3913",
               "role": "Treas./Admin."
             }
           ],
@@ -7112,7 +7950,9 @@
         "Whitmore": {
           "board": [
             {
+              "email": "kwhowell49@gmail.com",
               "name": "Kent Howell",
+              "phone": "(217) 972-9219",
               "role": "Treasurer"
             }
           ],
@@ -7120,7 +7960,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dougconway5@aol.com",
               "name": "Doug Conway",
+              "phone": "(217) 521-4320",
               "role": "C.E.O."
             }
           ],
@@ -7139,6 +7981,7 @@
               "role": "Director"
             },
             {
+              "email": "dbailey@graniteparkdistrict.com",
               "name": "Dawn Bailey",
               "role": "Bookkeeper"
             }
@@ -7155,10 +7998,12 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "roxparkrec.debbie@gmail.com",
               "name": "Debbie Ferry",
               "role": "Director"
             },
             {
+              "email": "roxparkrec.michelle@gmail.com",
               "name": "Michelle Crawford",
               "role": "Bookkeeper"
             }
@@ -7172,6 +8017,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mnungesser@hometel.com",
               "name": "Mike Nungesser",
               "role": "C.E.O."
             },
@@ -7189,10 +8035,12 @@
         "Tri-Township Park District": {
           "board": [
             {
+              "email": "j.newcombe@tritownshippark.org",
               "name": "James Newcombe",
               "role": "President"
             },
             {
+              "email": "badlhrdt@att.net",
               "name": "Terry Adelhardt",
               "role": "Sec./Treas."
             }
@@ -7212,6 +8060,7 @@
               "role": "President"
             },
             {
+              "email": "oervin50@yahoo.com",
               "name": "Olivia Ervin",
               "role": "Commissioner"
             }
@@ -7220,7 +8069,9 @@
           "filedFor": "2024",
           "heads": [
             {
+              "email": "versie43@gmail.com",
               "name": "Paula Walker",
+              "phone": "(618) 540-2014",
               "role": "Exec. Secretary"
             }
           ],
@@ -7240,6 +8091,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "jknebl@alfpd.org",
               "name": "John Knebl",
               "role": "Fire Chief"
             },
@@ -7257,14 +8109,17 @@
         "BARRINGTON CTRY FIRE": {
           "board": [
             {
+              "email": "keithhanson@hansonlawgrp.com",
               "name": "Keith Hanson",
               "role": "President"
             },
             {
+              "email": "tlong@bcfpd.us",
               "name": "Tom Long",
               "role": "V-President"
             },
             {
+              "email": "mhower@bcfpd.us",
               "name": "Matthew Hower",
               "role": "Treasurer"
             }
@@ -7281,6 +8136,7 @@
         "CARY FIRE DIST": {
           "board": [
             {
+              "email": "lneuses@caryfire.com",
               "name": "Lance Neuses",
               "role": "Treasurer"
             },
@@ -7301,7 +8157,9 @@
         "CRYSTAL LAKE RURAL FIRE": {
           "board": [
             {
+              "email": "kevin.firedist@att.net",
               "name": "Kevin Sarnwick",
+              "phone": "(815) 455-3811",
               "role": "President"
             }
           ],
@@ -7309,7 +8167,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "kelly@vitoaccounting.com",
               "name": "Kelly Vito",
+              "phone": "(815) 236-1419",
               "role": "Accountant"
             }
           ],
@@ -7321,10 +8181,12 @@
         "FOX LAKE FIRE DIST": {
           "board": [
             {
+              "email": "lsoderlund@flfpd.org",
               "name": "Lynn Soderlund",
               "role": "President"
             },
             {
+              "email": "lwalleck@flfpd.org",
               "name": "Linda Walleck",
               "role": "Treasurer"
             }
@@ -7341,14 +8203,17 @@
         "FOX RIVER GRV FIRE": {
           "board": [
             {
+              "email": "frgfirerep@gmail.com",
               "name": "Michael Kunz",
               "role": "President"
             },
             {
+              "email": "yosh36@sbcglobal.net",
               "name": "William Yocius",
               "role": "Treasurer"
             },
             {
+              "email": "phughes@frgfire.org",
               "name": "Patrick Hughes",
               "role": "Secretary"
             }
@@ -7364,10 +8229,12 @@
         "HARVARD FIRE DIST": {
           "board": [
             {
+              "email": "slogan@hfpd.org",
               "name": "Scott Logan",
               "role": "President"
             },
             {
+              "email": "laurabevers57@gmail.com",
               "name": "Laura Evers",
               "role": "Treasurer"
             }
@@ -7383,10 +8250,12 @@
         "HEB ALD GRW FIRE": {
           "board": [
             {
+              "email": "dte@ameritech.net",
               "name": "Brent Deppmeier",
               "role": "Trustee"
             },
             {
+              "email": "cwirfs3604@gmail.com",
               "name": "Chris Wirfs",
               "role": "President"
             }
@@ -7402,10 +8271,12 @@
         "HUNTLEY FIRE DIST": {
           "board": [
             {
+              "email": "mbrown@huntleyfpd.org",
               "name": "Milford Brown",
               "role": "President"
             },
             {
+              "email": "jsaletta@huntleyfpd.org",
               "name": "Jim Saletta",
               "role": "Treasurer"
             }
@@ -7422,10 +8293,12 @@
         "MARENGO FIRE DIST": {
           "board": [
             {
+              "email": "kathygene@sbcglobal.net",
               "name": "Gene Paprocki",
               "role": "President"
             },
             {
+              "email": "jmiceli@joesplacemarengo.com",
               "name": "Joseph Miceli",
               "role": "Treasurer"
             },
@@ -7434,14 +8307,15 @@
               "role": "Treasurer"
             },
             {
+              "email": "scottsmall18825@gmail.com",
               "name": "Scott Small",
               "role": "Secretary"
             }
           ],
           "comptrollerCode": "063/080/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
-            "address": "120 East Prarie St.",
+            "address": "120 East Prairie St",
             "city": "Marengo IL 60152",
             "email": "jwightman@marengofirerescue.org",
             "phone": "(815) 568-8912"
@@ -7450,6 +8324,7 @@
         "MCHENRY FIRE DIST": {
           "board": [
             {
+              "email": "bennettc@althoffind.com",
               "name": "Christopher Bennett",
               "role": "Treasurer"
             }
@@ -7458,6 +8333,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "horistrudy@fire.mtfpd.org",
               "name": "Rudy Horist",
               "role": "Fire Chief"
             }
@@ -7471,6 +8347,7 @@
         "NUNDA RURAL FIRE": {
           "board": [
             {
+              "email": "krmcafee@aol.com",
               "name": "Kathy McAfee",
               "role": "President"
             },
@@ -7483,6 +8360,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mkeenan@nundafire.com",
               "name": "Michael Keenan",
               "role": "Fire Chief"
             }
@@ -7497,6 +8375,7 @@
         "RICHMOND FIRE DIST": {
           "board": [
             {
+              "email": "treasurer@richmondfire.org",
               "name": "Jay Marshall",
               "role": "Treasurer"
             }
@@ -7519,10 +8398,12 @@
         "SPRING GROVE FIRE": {
           "board": [
             {
+              "email": "hpetska@springgrovefire.com",
               "name": "Harvey Petska",
               "role": "President"
             },
             {
+              "email": "rstevens@springgrovefire.com",
               "name": "Bob Stevens",
               "role": "Treasurer"
             }
@@ -7539,6 +8420,7 @@
         "UNION FIRE DIST": {
           "board": [
             {
+              "email": "cgarcia@ufpd.org",
               "name": "Carlos Garcia",
               "role": "Treasurer"
             }
@@ -7547,6 +8429,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "dalec@ufpd.org",
               "name": "Dale Carr",
               "role": "Administrator"
             }
@@ -7563,6 +8446,7 @@
           "filesIn": "Lake",
           "heads": [
             {
+              "email": "chanselman@waucondafire.org",
               "name": "Curt Hanselman",
               "role": "Fire Chief"
             },
@@ -7581,10 +8465,12 @@
         "WONDER LAKE FIRE": {
           "board": [
             {
+              "email": "trishling@wlfpd.org",
               "name": "Todd Rishling",
               "role": "President"
             },
             {
+              "email": "dbruchsaler@wlfpd.org",
               "name": "Dave Bruchsaler",
               "role": "Treasurer"
             }
@@ -7600,6 +8486,7 @@
         "WOODSTOCK FIRE RESCUE": {
           "board": [
             {
+              "email": "PBURKE@WFRD.ORG",
               "name": "Patrick Burke",
               "role": "Treasurer"
             }
@@ -7608,6 +8495,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "MHEDGES@WFRD.ORG",
               "name": "Matt Hedges",
               "role": "Asst. Chief"
             }
@@ -7625,6 +8513,7 @@
         "Columbia Volunteer Fire Department": {
           "board": [
             {
+              "email": "gfsfarms@gmail.com",
               "name": "Glenn Stumpf",
               "role": "President"
             }
@@ -7633,7 +8522,9 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "cfpdtreasurer@gmail.com",
               "name": "Scott Harres",
+              "phone": "(618) 340-3504",
               "role": "Treas./Admin."
             }
           ],
@@ -7646,15 +8537,21 @@
         "Hecker Volunteer Fire Department": {
           "board": [
             {
+              "email": "gregson1@htc.net",
               "name": "Joe Gregson",
+              "phone": "(618) 719-5759",
               "role": "Trustee"
             },
             {
+              "email": "jv2kaiser@yahoo.com",
               "name": "John Kaiser",
+              "phone": "(618) 971-7591",
               "role": "Trustee"
             },
             {
+              "email": "brad@propertypeddler.com",
               "name": "Brad Chandler",
+              "phone": "(618) 791-3289",
               "role": "Trustee"
             }
           ],
@@ -7665,14 +8562,17 @@
         "Maeystown Volunteer Fire Department": {
           "board": [
             {
+              "email": "GRUSTEBERG@HOTMAIL.COM",
               "name": "Randy Rusteberg",
               "role": "President"
             },
             {
+              "email": "BRIANRCOATS@GMAIL.COM",
               "name": "Brian Coats",
               "role": "Treasurer"
             },
             {
+              "email": "PMINTON@HTC.NET",
               "name": "Paul Minton",
               "role": "V-President"
             }
@@ -7697,6 +8597,7 @@
           "filesIn": "St. Clair",
           "heads": [
             {
+              "email": "sharriss@gershenson.com",
               "name": "Scott Harriss",
               "role": "Treas./Admin."
             }
@@ -7710,6 +8611,7 @@
         "Valmeyer Volunteer Fire Department": {
           "board": [
             {
+              "email": "THECROSSINFAMILY@HOTMAIL.COM",
               "name": "Tammy Crossin",
               "role": "Treasurer"
             }
@@ -7732,11 +8634,14 @@
         "Waterloo Community Fire Protection District": {
           "board": [
             {
+              "email": "MLINDHORST@YAHOO.COM",
               "name": "Matthew Lindhorst",
+              "phone": "(618) 520-2765",
               "role": "President"
             },
             {
               "name": "Gabe Hopkins",
+              "phone": "(618) 719-6034",
               "role": "Treasurer"
             }
           ],
@@ -7753,7 +8658,9 @@
         "ANDALUSIA FPD": {
           "board": [
             {
+              "email": "bohnsackjj@gmail.com",
               "name": "Jim Bohnsack",
+              "phone": "(309) 737-0535",
               "role": "President"
             }
           ],
@@ -7761,7 +8668,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "rvroman68@outlook.com",
               "name": "Ron Vroman",
+              "phone": "(309) 269-4820",
               "role": "Treas./Admin."
             }
           ],
@@ -7772,11 +8681,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "rjheinzman@sternbeverage.com",
               "name": "Ron Heinzman",
+              "phone": "(309) 781-0872",
               "role": "Executive"
             },
             {
+              "email": "dannidewaele@gmail.com",
               "name": "Danielle DeWaele",
+              "phone": "(309) 373-0149",
               "role": "Fin. Officer"
             }
           ],
@@ -7789,14 +8702,19 @@
           "board": [
             {
               "name": "Carol Near",
+              "phone": "(309) 912-0449",
               "role": "Sec./Treas."
             },
             {
+              "email": "QCHarts@sbcglobal.net",
               "name": "Gregory Hart",
+              "phone": "(309) 781-2470",
               "role": "Trustee"
             },
             {
+              "email": "lstohl@crawford-company.com",
               "name": "Laura Stohl",
+              "phone": "(309) 558-5391",
               "role": "President"
             }
           ],
@@ -7811,6 +8729,7 @@
               "role": "President"
             },
             {
+              "email": "sboruff@hamletmutual.com",
               "name": "Stanley Boruff",
               "role": "Treasurer"
             }
@@ -7828,11 +8747,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "randydavid1967@gmail.com",
               "name": "Randy David",
+              "phone": "(309) 948-1074",
               "role": "C.E.O."
             },
             {
+              "email": "traceyhannan777@gmail.com",
               "name": "Tracey Hannan",
+              "phone": "(309) 281-9080",
               "role": "C.F.O."
             }
           ],
@@ -7841,10 +8764,12 @@
         "COAL VALLEY FPD": {
           "board": [
             {
+              "email": "g.stahr@cvfpd.org",
               "name": "Gerry Stahr",
               "role": "President"
             },
             {
+              "email": "mgastatkreisers@aol.com",
               "name": "Mark Gast",
               "role": "Sec./Treas."
             }
@@ -7860,6 +8785,7 @@
         "CORDOVA FPD": {
           "board": [
             {
+              "email": "ceckerma@hotmail.com",
               "name": "Connie Stratton",
               "role": "President"
             },
@@ -7880,15 +8806,17 @@
         "COYNE CTR FPD/EMS": {
           "board": [
             {
-              "name": "Thomas Smith",
+              "email": "mahamerlinck@gmail.com",
+              "name": "Melanie Hamerlinck",
               "role": "President"
             }
           ],
           "comptrollerCode": "081/090/06",
-          "filedFor": "2024",
+          "filedFor": "2025",
           "heads": [
             {
-              "name": "Brent Bowlyou",
+              "email": "econnolly@qcora.com",
+              "name": "Edward Connolly",
               "role": "Treas./Admin."
             }
           ],
@@ -7901,11 +8829,15 @@
         "EAST MOLINE RURAL FPD": {
           "board": [
             {
+              "email": "annetteroby@yahoo.com",
               "name": "Annette Roby",
+              "phone": "(309) 781-9052",
               "role": "President"
             },
             {
+              "email": "wolfet1@aol.com",
               "name": "Tim Wolfe",
+              "phone": "(309) 269-7888",
               "role": "Sec./Treas."
             }
           ],
@@ -7918,11 +8850,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "roy39669@gmail.com",
               "name": "Roy McDonnell",
+              "phone": "(309) 738-5078",
               "role": "C.E.O."
             },
             {
+              "email": "roy39669@gmail.com",
               "name": "Roy McDonnell",
+              "phone": "(309) 738-5078",
               "role": "C.F.O."
             }
           ],
@@ -7931,11 +8867,15 @@
         "HILLSDALE FPD": {
           "board": [
             {
+              "email": "chiefmitton51@yahoo.com",
               "name": "Richard Mitton",
+              "phone": "(309) 314-4027",
               "role": "President"
             },
             {
+              "email": "sarah.a.carls@gmail.com",
               "name": "Sarah Carls",
+              "phone": "(309) 236-9504",
               "role": "Treasurer"
             }
           ],
@@ -7949,7 +8889,9 @@
         "ORION FPD": {
           "board": [
             {
+              "email": "dahl13@yahoo.com",
               "name": "Debra Dahl",
+              "phone": "(309) 526-3365",
               "role": "Treasurer"
             }
           ],
@@ -7958,7 +8900,9 @@
           "filesIn": "Henry",
           "heads": [
             {
+              "email": "debaillie90@gmail.com",
               "name": "Randy DeBaillie",
+              "phone": "(309) 781-5218",
               "role": "Supervisor"
             }
           ],
@@ -7967,11 +8911,15 @@
         "RAPIDS CITY FPD": {
           "board": [
             {
+              "email": "randy.g@qtil.com",
               "name": "Randy Garrison",
+              "phone": "(309) 314-2021",
               "role": "President"
             },
             {
+              "email": "trustees@rcfpd.com",
               "name": "Denise Caldwell",
+              "phone": "(309) 721-6908",
               "role": "Treasurer"
             }
           ],
@@ -7982,11 +8930,15 @@
         "REYNOLDS FPD": {
           "board": [
             {
+              "email": "rfpdamb201@outlook.com",
               "name": "Joe DeMarlie",
+              "phone": "(309) 314-4701",
               "role": "President"
             },
             {
+              "email": "sjahn14@gmail.com",
               "name": "Ann Jahn",
+              "phone": "(309) 781-1613",
               "role": "Sec./Treas."
             }
           ],
@@ -8000,11 +8952,15 @@
         "SHERRARD FPD": {
           "board": [
             {
+              "email": "larry@rhodenbaughx.com",
               "name": "Larry Rhodenbaugh",
+              "phone": "(309) 314-4203",
               "role": "Chairperson"
             },
             {
+              "email": "lisawhan@yahoo.com",
               "name": "Chris Whan",
+              "phone": "(309) 236-6591",
               "role": "Treasurer"
             }
           ],
@@ -8016,11 +8972,15 @@
         "SOUTH MOLINE FPD": {
           "board": [
             {
+              "email": "scottjorgensen@midwestbath.com",
               "name": "Gerald Scott Jorgensen",
+              "phone": "(563) 650-7501",
               "role": "President"
             },
             {
+              "email": "keelagustman@gmail.com",
               "name": "Keela Gustman",
+              "phone": "(563) 639-1624",
               "role": "Treasurer"
             }
           ],
@@ -8033,11 +8993,15 @@
         "CORDOVA PARK": {
           "board": [
             {
+              "email": "ecase67@gmail.com",
               "name": "Eric Case",
+              "phone": "(815) 718-0675",
               "role": "V-President"
             },
             {
+              "email": "theresavesely@yahoo.com",
               "name": "Theresa Vesely",
+              "phone": "(563) 599-2076",
               "role": "Treasurer"
             }
           ],
@@ -8052,11 +9016,15 @@
         "ATHENS FPD": {
           "board": [
             {
+              "email": "mburg28@msn.com",
               "name": "Michael Burg",
+              "phone": "(217) 306-4472",
               "role": "President"
             },
             {
+              "email": "kent@phbroughton.com",
               "name": "Kent Weatherby",
+              "phone": "(217) 306-0797",
               "role": "Treasurer"
             }
           ],
@@ -8069,10 +9037,13 @@
           "board": [
             {
               "name": "Benjamin Ladage",
+              "phone": "(217) 697-7511",
               "role": "President"
             },
             {
+              "email": "HARRYSRX@MAIL.COM",
               "name": "Scott Borntreger",
+              "phone": "(217) 438-3669",
               "role": "Treasurer"
             }
           ],
@@ -8083,10 +9054,12 @@
         "CHATHAM FPD": {
           "board": [
             {
+              "email": "georgeaperkins@icloud.com",
               "name": "George Perkins",
               "role": "President"
             },
             {
+              "email": "gary.mueller@cfd-il.com",
               "name": "Gary Mueller",
               "role": "Treasurer"
             }
@@ -8102,11 +9075,15 @@
         "CURRAN FPD": {
           "board": [
             {
+              "email": "yopops1947@gmail.com",
               "name": "Dale Emerson",
+              "phone": "(217) 638-1896",
               "role": "President"
             },
             {
+              "email": "paul@myersrice.com",
               "name": "Paul Rice",
+              "phone": "(217) 899-3713",
               "role": "Treasurer"
             }
           ],
@@ -8117,11 +9094,15 @@
         "DAWSON FPD": {
           "board": [
             {
+              "email": "resq25@aol.com",
               "name": "Jamie Petitt",
+              "phone": "(217) 971-9982",
               "role": "President"
             },
             {
+              "email": "jim_standish@yahoo.com",
               "name": "James Standish",
+              "phone": "(217) 891-5975",
               "role": "Treasurer"
             }
           ],
@@ -8139,7 +9120,9 @@
               "role": "President"
             },
             {
+              "email": "BNBEATY@COMCAST.NET",
               "name": "William Beaty",
+              "phone": "(217) 628-3383",
               "role": "Trustee"
             }
           ],
@@ -8155,11 +9138,15 @@
         "EAST SIDE FPD": {
           "board": [
             {
+              "email": "lrhodes768@comcast.net",
               "name": "Leland Rhodes",
+              "phone": "(217) 280-3429",
               "role": "President"
             },
             {
+              "email": "ebab2016@yahoo.com",
               "name": "David Ball",
+              "phone": "(217) 502-0934",
               "role": "Treasurer"
             }
           ],
@@ -8170,6 +9157,7 @@
         "ELKHART FPD": {
           "board": [
             {
+              "email": "rwbwolfcreekfarm@yahoo.com",
               "name": "Roger Bock",
               "role": "President"
             }
@@ -8179,7 +9167,9 @@
           "filesIn": "Logan",
           "heads": [
             {
+              "email": "tmoore@logancountyil.gov",
               "name": "Theresa Moore",
+              "phone": "(217) 732-4148",
               "role": "C.F.O."
             }
           ],
@@ -8188,7 +9178,9 @@
         "ILLIOPOLIS FPD": {
           "board": [
             {
+              "email": "Randal.craig81@gmail.com",
               "name": "Randal Craig",
+              "phone": "(217) 620-6297",
               "role": "President"
             }
           ],
@@ -8196,7 +9188,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "ifpdtres@gmail.com",
               "name": "Rodney Mitchell",
+              "phone": "(217) 433-5827",
               "role": "Clerk/Treas."
             }
           ],
@@ -8205,11 +9199,15 @@
         "ISLAND GROVE FPD": {
           "board": [
             {
+              "email": "byby8787@gmail.com",
               "name": "William Yates",
+              "phone": "(217) 652-6869",
               "role": "President"
             },
             {
+              "email": "kdegroot60@outlook.com",
               "name": "Kevin DeGroot",
+              "phone": "(217) 836-8381",
               "role": "Treasurer"
             }
           ],
@@ -8223,11 +9221,14 @@
         "LAKE SPFLD FPD": {
           "board": [
             {
+              "email": "jim.orr78@comcast.net",
               "name": "James Orr",
+              "phone": "(217) 529-8840",
               "role": "President"
             },
             {
               "name": "Cathy Crammond",
+              "phone": "(217) 502-4711",
               "role": "Treasurer"
             }
           ],
@@ -8238,11 +9239,15 @@
         "LOAMI  FPD": {
           "board": [
             {
+              "email": "katieboehme314@gmail.com",
               "name": "Katie Boehme (Humphreys)",
+              "phone": "(217) 331-8030",
               "role": "Secretary"
             },
             {
+              "email": "lewisag1@gmail.com",
               "name": "Doug Lewis",
+              "phone": "(217) 836-1239",
               "role": "Treasurer"
             }
           ],
@@ -8253,7 +9258,9 @@
         "MECHANICSBURG FPD": {
           "board": [
             {
+              "email": "flowermom839@gmail.com",
               "name": "Matt Buckles",
+              "phone": "(217) 306-3871",
               "role": "Trustee"
             }
           ],
@@ -8267,11 +9274,15 @@
         "NEW BERLIN FPD": {
           "board": [
             {
+              "email": "nbigfire6001@gmail.com",
               "name": "Glenn Braker",
+              "phone": "(217) 306-6192",
               "role": "President"
             },
             {
+              "email": "Tberry14@hotmail.com",
               "name": "Timothy Berry",
+              "phone": "(217) 899-5849",
               "role": "Treasurer"
             }
           ],
@@ -8282,11 +9293,15 @@
         "NORTH SIDE FPD": {
           "board": [
             {
+              "email": "cssausaman@aol.com",
               "name": "Cinda Sausaman",
+              "phone": "(217) 546-2492",
               "role": "President"
             },
             {
+              "email": "steve@tailstoremember.com",
               "name": "Steven Dunker",
+              "phone": "(217) 725-9511",
               "role": "Treasurer"
             }
           ],
@@ -8298,6 +9313,7 @@
           "board": [
             {
               "name": "Tim Boblitt",
+              "phone": "(217) 625-3131",
               "role": "President"
             }
           ],
@@ -8306,6 +9322,7 @@
           "heads": [
             {
               "name": "MaryBeth Jenkins",
+              "phone": "(719) 235-2981",
               "role": "Clerk"
             }
           ],
@@ -8316,11 +9333,15 @@
         "PLEASANT PLAINS FPD": {
           "board": [
             {
+              "email": "PRESIDENT.PPFD@GMAIL.COM",
               "name": "Wayne Heideman",
+              "phone": "(217) 503-8941",
               "role": "President"
             },
             {
+              "email": "treasurer.ppfd@gmail.com",
               "name": "Lori Niemeier",
+              "phone": "(217) 341-7584",
               "role": "Treasurer"
             }
           ],
@@ -8334,11 +9355,13 @@
         "RIVERTON FPD": {
           "board": [
             {
+              "email": "arlin@comcast.net",
               "name": "ARLIN Williams",
               "role": "President"
             },
             {
               "name": "Jay Watts",
+              "phone": "(217) 725-9211",
               "role": "Treasurer"
             }
           ],
@@ -8357,6 +9380,7 @@
               "role": "President"
             },
             {
+              "email": "gary.mcbriderfd@gmail.com",
               "name": "Gary McBride",
               "role": "Treasurer"
             }
@@ -8373,6 +9397,7 @@
         "SHERMAN FPD": {
           "board": [
             {
+              "email": "krigdon@shermanfire.org",
               "name": "Keith Rigdon",
               "role": "President"
             },
@@ -8394,10 +9419,15 @@
           "board": [
             {
               "name": "Vicki Jones",
+              "phone": "(217) 529-7301",
               "role": "President"
             },
             {
               "name": "Mary Sneed",
+              "phone": "(217) 529-8332",
+              "phonesExtra": [
+                "(217) 717-0078"
+              ],
               "role": "Treasurer"
             }
           ],
@@ -8409,10 +9439,13 @@
           "board": [
             {
               "name": "Kent Gray",
+              "phone": "(217) 836-2262",
               "role": "President"
             },
             {
+              "email": "rfbang3@gmail.com",
               "name": "Rex Bangert",
+              "phone": "(217) 725-8600",
               "role": "Treasurer"
             }
           ],
@@ -8428,6 +9461,7 @@
             },
             {
               "name": "Jim Sullivan",
+              "phone": "(217) 891-4657",
               "role": "Treasurer"
             }
           ],
@@ -8440,10 +9474,12 @@
         "VIRDEN FPD": {
           "board": [
             {
+              "email": "jenkinstrail@yahoo.com",
               "name": "Thomas Jenkins",
               "role": "President"
             },
             {
+              "email": "vfire09@yahoo.com",
               "name": "Kim Ball",
               "role": "Treasurer"
             }
@@ -8460,11 +9496,15 @@
         "WESTERN FPD": {
           "board": [
             {
+              "email": "jhampt53@gmail.com",
               "name": "Jack Hampton",
+              "phone": "(217) 503-0060",
               "role": "Trustee"
             },
             {
+              "email": "secollins938@gmail.com",
               "name": "Sam Collins",
+              "phone": "(217) 341-8224",
               "role": "Trustee"
             }
           ],
@@ -8472,7 +9512,9 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "gsfraase@gmail.com",
               "name": "Gary Fraase",
+              "phone": "(217) 691-7748",
               "role": "Treas./Admin."
             }
           ],
@@ -8484,11 +9526,14 @@
         "WILLIAMSVILLE FPD": {
           "board": [
             {
+              "email": "edwards19651@casscomm.com",
               "name": "James Edwards",
               "role": "President"
             },
             {
+              "email": "j.hofferkamp@wvillefire.org",
               "name": "Jim Hofferkamp",
+              "phone": "(217) 566-3810",
               "role": "Treasurer"
             }
           ],
@@ -8504,10 +9549,13 @@
           "board": [
             {
               "name": "Steve VonLanken",
+              "phone": "(217) 652-7866",
               "role": "President"
             },
             {
+              "email": "tlewis3511@gmail.com",
               "name": "Tom Lewis",
+              "phone": "(217) 341-5613",
               "role": "Treasurer"
             }
           ],
@@ -8522,32 +9570,27 @@
         "Brooklyn Fire Dept.": {
           "board": [
             {
+              "email": "moeyork88@gmail.com",
               "name": "Myron Chapman",
+              "phone": "(618) 514-1468",
               "role": "Commissioner"
             }
           ],
           "comptrollerCode": "088/005/06",
-          "filedFor": "2024",
-          "heads": [
-            {
-              "name": "Monique York",
-              "role": "Clerk/Treas."
-            }
-          ],
-          "office": {
-            "address": "312 S. 5th St.",
-            "city": "Lovejoy IL 62059"
-          }
+          "filedFor": "2025",
+          "office": {}
         },
         "Cahokia Fire Dept.": {
           "comptrollerCode": "088/010/06",
           "filedFor": "2025",
           "heads": [
             {
+              "email": "mrcvfd@sbcglobal.net",
               "name": "Kevin Robbins",
               "role": "C.E.O."
             },
             {
+              "email": "djn1400@sbcglobal.net",
               "name": "David Nulsen",
               "role": "Treas./Admin."
             }
@@ -8561,11 +9604,18 @@
         "Camp Jackson Fire Dept.": {
           "board": [
             {
+              "email": "mstringfellow@cahokiaillinois.org",
               "name": "Marilyn Stringfellow",
+              "phone": "(618) 337-9510",
               "role": "Acting President"
             },
             {
+              "email": "sdavis@cahokiaillinois.org",
               "name": "Sharon Davis",
+              "phone": "(618) 332-4280",
+              "phonesExtra": [
+                "(618) 781-9529"
+              ],
               "role": "Treasurer"
             }
           ],
@@ -8579,10 +9629,12 @@
         "Church Road Fire Dept.": {
           "board": [
             {
+              "email": "mjackson@cahokiaillinois.org",
               "name": "Marius Jackson",
               "role": "President"
             },
             {
+              "email": "allisonjb5@gmail.com",
               "name": "Allison Brown",
               "role": "Treasurer"
             }
@@ -8598,11 +9650,15 @@
         "Collinsville Fire Dept.": {
           "board": [
             {
+              "email": "ericwortham@me.com",
               "name": "Eric Wortham",
+              "phone": "(618) 567-8664",
               "role": "President"
             },
             {
+              "email": "lkunz@fcbbanks.com",
               "name": "Linda Kunz",
+              "phone": "(618) 974-8174",
               "role": "Treasurer"
             }
           ],
@@ -8614,6 +9670,7 @@
         "Columbia Fire Dept.": {
           "board": [
             {
+              "email": "gfsfarms@gmail.com",
               "name": "Glenn Stumpf",
               "role": "President"
             }
@@ -8623,7 +9680,9 @@
           "filesIn": "Monroe",
           "heads": [
             {
+              "email": "cfpdtreasurer@gmail.com",
               "name": "Scott Harres",
+              "phone": "(618) 340-3504",
               "role": "Treas./Admin."
             }
           ],
@@ -8638,11 +9697,15 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "maddy.weinland@scheffelboyle.com",
               "name": "Kelly Schaffer",
+              "phone": "(618) 286-3113",
               "role": "Fire Chief"
             },
             {
+              "email": "weasel809@yahoo.com",
               "name": "Bob Smitt",
+              "phone": "(314) 565-0474",
               "role": "Accountant"
             }
           ],
@@ -8654,16 +9717,20 @@
         "East Side Fire Dept.": {
           "board": [
             {
+              "email": "wesanl113@gmail.com",
               "name": "Wes Krummrich",
+              "phone": "(618) 277-1963",
               "role": "President"
             },
             {
+              "email": "101calypso@charter.net",
               "name": "Keith Becker",
+              "phone": "(618) 581-7908",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "088/050/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Freeburg Fire Dept.": {
@@ -8689,15 +9756,21 @@
         "Hecker Fire Dept.": {
           "board": [
             {
+              "email": "gregson1@htc.net",
               "name": "Joe Gregson",
+              "phone": "(618) 719-5759",
               "role": "Trustee"
             },
             {
+              "email": "jv2kaiser@yahoo.com",
               "name": "John Kaiser",
+              "phone": "(618) 971-7591",
               "role": "Trustee"
             },
             {
+              "email": "brad@propertypeddler.com",
               "name": "Brad Chandler",
+              "phone": "(618) 791-3289",
               "role": "Trustee"
             }
           ],
@@ -8709,11 +9782,14 @@
         "Hollywood Heights Fire Dept.": {
           "board": [
             {
+              "email": "robertelee809@gmail.com",
               "name": "Robert Lee",
+              "phone": "(618) 210-0252",
               "role": "Treasurer"
             },
             {
               "name": "Randy Loucks",
+              "phone": "(618) 420-0840",
               "role": "Secretary"
             }
           ],
@@ -8727,11 +9803,14 @@
         "Marissa Fire Dept.": {
           "board": [
             {
+              "email": "MFPDPRES@GMAIL.COM",
               "name": "Tommy Thompson",
+              "phone": "(618) 521-7095",
               "role": "President"
             },
             {
               "name": "Craig Rahlfs",
+              "phone": "(618) 606-5170",
               "role": "Treasurer"
             }
           ],
@@ -8744,11 +9823,15 @@
         "Mascoutah Fire Dept.": {
           "board": [
             {
+              "email": "jgrabfarm@gmail.com",
               "name": "John Grab",
+              "phone": "(618) 444-6846",
               "role": "President"
             },
             {
+              "email": "lreinneckbookkeeper@gmail.com",
               "name": "Lisa Reinneck",
+              "phone": "(618) 558-5133",
               "role": "Treasurer"
             }
           ],
@@ -8760,14 +9843,19 @@
           "board": [
             {
               "name": "Robert Whitehead",
+              "phone": "(618) 397-5498",
               "role": "President"
             },
             {
+              "email": "shereefranklin216@gmail.com",
               "name": "Sheree Franklin",
+              "phone": "(618) 698-3559",
               "role": "Trustee"
             },
             {
+              "email": "michellepatterson351@gmail.com",
               "name": "Michelle Patterson",
+              "phone": "(618) 315-9417",
               "role": "Trustee"
             }
           ],
@@ -8780,11 +9868,15 @@
         "Millstadt Fire Dept.": {
           "board": [
             {
+              "email": "toddgroesch@aol.com",
               "name": "Todd Groesch",
+              "phone": "(314) 440-4141",
               "role": "President"
             },
             {
+              "email": "mcolbert82@gmail.com",
               "name": "Matthew Colbert",
+              "phone": "(618) 520-8076",
               "role": "Treasurer"
             }
           ],
@@ -8803,6 +9895,7 @@
           "filedFor": "2026",
           "heads": [
             {
+              "email": "sharriss@gershenson.com",
               "name": "Scott Harriss",
               "role": "Treas./Admin."
             }
@@ -8816,14 +9909,17 @@
         "New Baden Fire Dept.": {
           "board": [
             {
+              "email": "paulherzing1@charter.net",
               "name": "Paul Herzing",
               "role": "President"
             },
             {
+              "email": "rlacaze@me.com",
               "name": "Rodney LaCaze",
               "role": "Secretary"
             },
             {
+              "email": "christopher.pederson@hotmail.com",
               "name": "Chris Pederson",
               "role": "Treasurer"
             }
@@ -8839,6 +9935,7 @@
         "Northwest Fire Dept.": {
           "board": [
             {
+              "email": "ggill@nwfpdil.org",
               "name": "Gregory Gill",
               "role": "Treasurer"
             }
@@ -8855,11 +9952,15 @@
         "Prairie DuPont Fire Dept.": {
           "board": [
             {
+              "email": "fire4490@yahoo.com",
               "name": "John Parke",
+              "phone": "(314) 412-1814",
               "role": "President"
             },
             {
+              "email": "wrenchmonkey.br@gmail.com",
               "name": "Bryan Reddick",
+              "phone": "(618) 225-2875",
               "role": "Treasurer"
             }
           ],
@@ -8870,11 +9971,14 @@
         "Signal Hill Fire Dept.": {
           "board": [
             {
+              "email": "KAS2112@sbcglobal.net",
               "name": "Greg Simmons",
               "role": "Trustee"
             },
             {
+              "email": "Wyatt@rlacpas.com",
               "name": "Wyatt Rawlings",
+              "phone": "(618) 236-1122",
               "role": "Treasurer"
             }
           ],
@@ -8889,11 +9993,15 @@
         "Smithton Fire Dept.": {
           "board": [
             {
+              "email": "dan911a@gmail.com",
               "name": "Dan Arras",
+              "phone": "(618) 972-4254",
               "role": "President"
             },
             {
+              "email": "grommetfarms@gmail.com",
               "name": "Terry Grommet",
+              "phone": "(618) 791-6159",
               "role": "Treasurer"
             }
           ],
@@ -8911,6 +10019,7 @@
               "role": "President"
             },
             {
+              "email": "stlfpd@egyptian.net",
               "name": "Ron Bergkoetter",
               "role": "Treasurer"
             }
@@ -8926,6 +10035,7 @@
         "Sugar Creek Fire Dept.": {
           "board": [
             {
+              "email": "chiefschwend@yahoo.com",
               "name": "Gary Schwend",
               "role": "President"
             }
@@ -8935,6 +10045,7 @@
           "filesIn": "Clinton",
           "heads": [
             {
+              "email": "emtjim72@gmail.com",
               "name": "Jim Kniepman",
               "role": "Accountant"
             }
@@ -8948,11 +10059,14 @@
         "Tilden Fire Dept.": {
           "board": [
             {
+              "email": "EDORF67@GMAIL.COM",
               "name": "Earl Dorf",
+              "phone": "(618) 317-0521",
               "role": "President"
             },
             {
               "name": "Larry Hermanns",
+              "phone": "(618) 587-2521",
               "role": "Treasurer"
             }
           ],
@@ -8964,6 +10078,7 @@
         "Villa Hills Fire Dept.": {
           "board": [
             {
+              "email": "vhfd5700@icloud.com",
               "name": "Steven Allen",
               "role": "Trustee"
             }
@@ -8972,6 +10087,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "wyatt@rlacpas.com",
               "name": "Wyatt Rawlings",
               "role": "Treas./Admin."
             }
@@ -8985,11 +10101,14 @@
         "Waterloo Fire Dept.": {
           "board": [
             {
+              "email": "MLINDHORST@YAHOO.COM",
               "name": "Matthew Lindhorst",
+              "phone": "(618) 520-2765",
               "role": "President"
             },
             {
               "name": "Gabe Hopkins",
+              "phone": "(618) 719-6034",
               "role": "Treasurer"
             }
           ],
@@ -9011,6 +10130,7 @@
               "role": "President"
             },
             {
+              "email": "leselifehr@gmail.com",
               "name": "Les Fehr",
               "role": "Treasurer"
             }
@@ -9030,6 +10150,7 @@
           "filesIn": "Henry",
           "heads": [
             {
+              "email": "chiefkcfd@gmail.com",
               "name": "Ellis Ericson",
               "role": "Fire Chief"
             },
@@ -9048,10 +10169,13 @@
           "board": [
             {
               "name": "Ross Walker",
+              "phone": "(309) 853-6622",
               "role": "President"
             },
             {
+              "email": "rjwinans@hotmail.com",
               "name": "Robert Winans",
+              "phone": "(309) 883-9818",
               "role": "Sec./Treas."
             }
           ],
@@ -9062,11 +10186,18 @@
         "Neponset Fire Department": {
           "board": [
             {
+              "email": "tcblake19@yahoo.com",
               "name": "Thomas Blake",
+              "phone": "(309) 594-2017",
               "role": "President"
             },
             {
+              "email": "davem@martin-eng.com",
               "name": "Dave Mueller",
+              "phone": "(309) 945-2368",
+              "phonesExtra": [
+                "(309) 594-2368"
+              ],
               "role": "Treasurer"
             }
           ],
@@ -9082,10 +10213,12 @@
           "board": [
             {
               "name": "William Foglesong",
+              "phone": "(309) 369-1067",
               "role": "Trustee"
             },
             {
               "name": "Chris Henderson",
+              "phone": "(309) 238-7257",
               "role": "Trustee"
             }
           ],
@@ -9098,11 +10231,15 @@
         "Wyoming/Speer Fire Department": {
           "board": [
             {
+              "email": "relsasser@ymail.com",
               "name": "Ross Elsasser",
+              "phone": "(309) 696-4378",
               "role": "President"
             },
             {
+              "email": "kscholl64@gmail.com",
               "name": "Kevin Scholl",
+              "phone": "(309) 360-5332",
               "role": "Treasurer"
             }
           ],
@@ -9118,11 +10255,15 @@
         "Bradford Park District": {
           "board": [
             {
+              "email": "dhoffert@mchsi.com",
               "name": "Dale Hoffert",
+              "phone": "(309) 238-8165",
               "role": "President"
             },
             {
+              "email": "sherlock1@mchsi.com",
               "name": "Thomas Ryan",
+              "phone": "(309) 238-3767",
               "role": "Treasurer"
             }
           ],
@@ -9133,11 +10274,15 @@
         "LaFayette Park District": {
           "board": [
             {
+              "email": "selwonk1980@gmail.com",
               "name": "Justin Knowles",
+              "phone": "(309) 995-3101",
               "role": "President"
             },
             {
+              "email": "kknols@yahoo.com",
               "name": "Keith Knowles",
+              "phone": "(309) 995-3588",
               "role": "Treasurer"
             }
           ],
@@ -9155,10 +10300,13 @@
           "heads": [
             {
               "name": "darrell heck",
+              "phone": "(815) 238-2969",
               "role": "C.E.O."
             },
             {
+              "email": "goleys@comcast.net",
               "name": "jeremy bonnett",
+              "phone": "(815) 541-1270",
               "role": "Director"
             }
           ],
@@ -9168,6 +10316,7 @@
           "board": [
             {
               "name": "David Parish",
+              "phone": "(815) 275-8360",
               "role": "Chairperson"
             },
             {
@@ -9185,11 +10334,15 @@
         "Davis Fire-Ambulance": {
           "board": [
             {
+              "email": "halfnwrist@hotmail.com",
               "name": "Doug Heilemeir",
+              "phone": "(815) 865-5008",
               "role": "President"
             },
             {
+              "email": "rdlawson@mchsi.com",
               "name": "Randall Lawson",
+              "phone": "(815) 275-2863",
               "role": "Sec./Treas."
             }
           ],
@@ -9200,11 +10353,14 @@
         "Forreston Fire-Ambulance": {
           "board": [
             {
+              "email": "rrunte57@gmail.com",
               "name": "Richard Runte",
+              "phone": "(815) 275-1001",
               "role": "President"
             },
             {
               "name": "Lee Black",
+              "phone": "(815) 718-1800",
               "role": "Treasurer"
             }
           ],
@@ -9219,10 +10375,12 @@
         "Freeport Rural Fire-Ambulance": {
           "board": [
             {
+              "email": "libbman57@gmail.com",
               "name": "David Libby",
               "role": "President"
             },
             {
+              "email": "rick@hauserlaw.us",
               "name": "Richard Hauser",
               "role": "Treasurer"
             },
@@ -9247,6 +10405,7 @@
               "role": "President"
             },
             {
+              "email": "amgrennan@hotmail.com",
               "name": "Alison Zettle",
               "role": "Treasurer"
             }
@@ -9262,11 +10421,15 @@
         "Lena Fire": {
           "board": [
             {
+              "email": "jasonkempel@cbcommunitybank.com",
               "name": "Jason Kempel",
+              "phone": "(815) 238-3407",
               "role": "President"
             },
             {
+              "email": "jandm.noller@gmail.com",
               "name": "James Noller",
+              "phone": "(815) 238-7071",
               "role": "Treasurer"
             }
           ],
@@ -9277,11 +10440,15 @@
         "Orangeville Fire": {
           "board": [
             {
+              "email": "mikeshelliebarth@yahoo.com",
               "name": "Mike Barth",
+              "phone": "(815) 541-2555",
               "role": "President"
             },
             {
+              "email": "cheyannedoyle9@gmail.com",
               "name": "Cheyanne Doyle",
+              "phone": "(815) 789-4410",
               "role": "Treasurer"
             }
           ],
@@ -9292,6 +10459,7 @@
         "Pearl City Fire": {
           "board": [
             {
+              "email": "jacekeeling1974@gmail.com",
               "name": "Larry Johnson",
               "role": "Treasurer"
             },
@@ -9332,6 +10500,7 @@
         "Rock City Fire-Ambulance": {
           "board": [
             {
+              "email": "ToddWeber4020@gmail.com",
               "name": "Todd Webber",
               "role": "Chairperson"
             },
@@ -9349,10 +10518,12 @@
         "Shannon Fire-Ambulance": {
           "board": [
             {
+              "email": "tomkempel@gmail.com",
               "name": "Tom Kempel",
               "role": "President"
             },
             {
+              "email": "amfarms09@gmail.com",
               "name": "Adam Miller",
               "role": "Treasurer"
             }
@@ -9370,7 +10541,9 @@
         "Warren Fire-Ambulance": {
           "board": [
             {
+              "email": "williston79@hotmail.com",
               "name": "John Williston",
+              "phone": "(815) 275-0256",
               "role": "President"
             }
           ],
@@ -9379,7 +10552,9 @@
           "filesIn": "Jo Daviess",
           "heads": [
             {
+              "email": "markwulfekuhle@gmail.com",
               "name": "Mark Wulfekuhle",
+              "phone": "(815) 871-3784",
               "role": "Treas./Admin."
             }
           ],
@@ -9388,6 +10563,7 @@
         "Winslow Fire": {
           "board": [
             {
+              "email": "tonyriedel11@hotmail.com",
               "name": "Tony Reidel",
               "role": "President"
             },
@@ -9405,7 +10581,36 @@
       }
     }
   },
-  "generated": "2026-10-12T21:32:47Z",
+  "generated": "2026-10-17T18:44:55Z",
+  "mailGivenForTwo": {
+    "18532bdb20a6f776": [
+      "4f2cbfb3f059084a",
+      "db51a382d5f2c4c8"
+    ],
+    "3110ed715344f5e2": [
+      "dfbad7a9dd8a215c"
+    ],
+    "65074884ad103fdf": [
+      "41fe630f2905c789",
+      "4f7efe3d055bb512"
+    ],
+    "763eee59498ff00c": [
+      "3f9795973f12734d",
+      "d69047780c7c501d"
+    ],
+    "ae13604b2821a983": [
+      "06d1ba83a33ce9d7",
+      "b5649f95e080f1fb",
+      "bd5e1bcbcd26d61d"
+    ],
+    "c16ca40c8025a206": [
+      "f9038ef66894e4d2"
+    ],
+    "e927bf6ab55fdbe3": [
+      "39707477fdb3d80b",
+      "c7f739a220945a05"
+    ]
+  },
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

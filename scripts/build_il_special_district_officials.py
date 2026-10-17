@@ -32,6 +32,19 @@ one year, and the Comptroller's own page says a different year may name a
 different person, so a record without one cannot be rendered honestly and the
 build refuses rather than shipping a name with no date attached.
 
+AN OFFICER'S OWN TELEPHONE AND E-MAIL ADDRESS SHIP ON THAT OFFICER, since
+Adam's ruling of 2026-10-17 ("if the official government source uses personal
+phone numbers, we publish those") and his choice of "E-mails too" the same day.
+comptroller_afr.py decides which value a filing gives one officer alone and
+which is the district's, and the scraper keeps Lake's own office telephone and
+e-mail, which the card prints from the county's GIS, off every officer.
+MIN_OFFICER_PHONES and MIN_OFFICER_EMAILS refuse a run that stops reading them;
+suspect_phones_in and suspect_emails_in refuse a value not shaped like one,
+naming the card and the officer's place in its list and never the value. An
+address the roster's filings give beside two different people is nobody's, and
+so is one that another roster built from these filings gives beside a different
+person; each is taken off before anything is counted (drop_mail_given_for_two).
+
 A DISTRICT WITH NO BOARD OFFICER STILL SHIPS. Some file only a chief or a
 director, which is that district's own answer about who it publishes, not a
 parse failure. The card names them under Administration and says nothing about
@@ -44,7 +57,10 @@ import json
 import os
 import sys
 
-from comptroller_afr import suspect_names_in  # noqa: E402  (shared -- do not fork)
+from comptroller_afr import (  # noqa: E402  (shared -- do not fork)
+    count_officer_emails, count_officer_phones, drop_mail_given_for_two,
+    mail_elsewhere, MAIL_GIVEN_FOR_TWO, suspect_emails_in, suspect_names_in,
+    suspect_phones_in)
 
 import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
@@ -66,6 +82,22 @@ MIN_BOARD = 490
 MIN_HEADS = 340
 MIN_WITH_OFFICE = 325
 MIN_WITH_PHONE = 240
+# Officers carrying their own telephone, since Adam's ruling of 2026-10-17
+# ("if the official government source uses personal phone numbers, we publish
+# those"). Measured 2026-10-17: 413 of 1002 officer records (one per card a
+# district draws), 8 with a second number, after the one number Lake County's
+# GIS prints as a district's own is taken off. About two thirds of 413, so a
+# change that stops the numbers being read fails the build instead of
+# emptying them quietly.
+MIN_OFFICER_PHONES = 275
+# Officers carrying their own e-mail address, since Adam chose "E-mails too"
+# on 2026-10-17. Measured 2026-10-17: 749 of 1002 officer records, 612 of
+# them on a domain that neither carries the district's name nor is a
+# government's, after 27 were taken off as given beside two different people
+# in this roster's filings or another's. About two thirds of 749, so a change
+# that stops the addresses being read fails the build instead of emptying
+# them quietly.
+MIN_OFFICER_EMAILS = 499
 # Every county the scraper's table covers, and both layers. A county or a layer
 # disappearing entirely is a source change rather than turnover.
 EXPECT_COUNTIES = {"cook", "kendall", "macon", "rock-island", "stark",
@@ -92,6 +124,20 @@ def main():
     if not isinstance(counties, dict):
         fail("the scraper's output has no counties object")
 
+    # AN ADDRESS GIVEN BESIDE TWO PEOPLE IN TWO FILINGS IS NOBODY'S, as one
+    # given beside two people in one filing already is (comptroller_afr.
+    # drop_mail_given_for_two): an accounting firm's mailbox typed beside a
+    # different officer in each of several reports is no officer's own.
+    # The same holds across the seven rosters these filings feed, so the other
+    # six are read as shipped, and what this one takes off is recorded under
+    # MAIL_GIVEN_FOR_TWO for them to read in turn.
+    mail_withheld = {}
+    elsewhere = mail_elsewhere(os.path.dirname(OUT_PATH),
+                               os.path.basename(OUT_PATH))
+    shared_mail = drop_mail_given_for_two(counties, elsewhere, mail_withheld)
+    print("  %d officer address(es) taken off as given beside two people, "
+          "in this roster's filings or another's" % shared_mail)
+
     cards = {}
     for key, names in (payload.get("cards") or {}).items():
         county, _, layer = key.partition("/")
@@ -116,6 +162,8 @@ def main():
     with_office = sum(1 for _c, _l, _n, e in records if (e.get("office") or {}))
     with_phone = sum(1 for _c, _l, _n, e in records
                      if (e.get("office") or {}).get("phone"))
+    officer_phones = count_officer_phones(counties)
+    officer_emails = count_officer_emails(counties)
     nobody = ["%s/%s/%s" % (c, l, n) for c, l, n, e in records
               if not (e.get("board") or e.get("heads"))]
     seen_counties = set(counties)
@@ -134,6 +182,12 @@ def main():
     if with_phone < MIN_WITH_PHONE:
         problems.append("%d card(s) with a telephone < floor %d"
                         % (with_phone, MIN_WITH_PHONE))
+    if officer_phones["withPhone"] < MIN_OFFICER_PHONES:
+        problems.append("%d officer(s) with their own telephone < floor %d"
+                        % (officer_phones["withPhone"], MIN_OFFICER_PHONES))
+    if officer_emails["withEmail"] < MIN_OFFICER_EMAILS:
+        problems.append("%d officer(s) with their own e-mail address < floor %d"
+                        % (officer_emails["withEmail"], MIN_OFFICER_EMAILS))
     missing = EXPECT_COUNTIES - seen_counties
     if missing:
         problems.append("no district in: %s" % ", ".join(sorted(missing)))
@@ -163,6 +217,11 @@ def main():
     # in this very file is the one that measures.
     for where, name, why in suspect_names_in(counties):
         problems.append("%s: %r has %s" % (where, name, why))
+    # AN OFFICER'S TELEPHONE AND E-MAIL ADDRESS MUST EACH BE SHAPED LIKE ONE
+    # (comptroller_afr.OFFICER_PHONE_SHAPE, OFFICER_EMAIL_SHAPE). The refusal
+    # names the card and the officer's place in its list, never the value.
+    for where, why in suspect_phones_in(counties) + suspect_emails_in(counties):
+        problems.append("%s: %s" % (where, why))
 
     if problems:
         for p in problems:
@@ -176,6 +235,8 @@ def main():
         "generated": payload.get("generated"),
         "counties": counties,
     }
+    if mail_withheld:
+        out[MAIL_GIVEN_FOR_TWO] = mail_withheld
     text = json.dumps(out, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
 
     if args.check:
@@ -189,7 +250,10 @@ def main():
         if a != b:
             fail("%s does not match a fresh read of the filings" % OUT_PATH)
         print("build-il-special-district-officials: OK — shipped file matches "
-              "(%d card(s), %d board officer(s))" % (len(records), board))
+              "(%d card(s), %d board officer(s), %d officer record(s) with "
+              "their own telephone, %d with their own e-mail address)"
+              % (len(records), board, officer_phones["withPhone"],
+                 officer_emails["withEmail"]))
         return
 
     # WHAT MOVED BESIDES THE STAMP. `generated` is rewritten every run, so
@@ -213,8 +277,11 @@ def main():
     total = sum(len(names) for names in cards.values())
     print("build-il-special-district-officials: wrote %s — %d of %d card(s), "
           "%d board officer(s), %d appointed, %d with an office, %d with a "
-          "telephone" % (OUT_PATH, len(records), total, board, heads,
-                         with_office, with_phone))
+          "telephone, %d officer record(s) with their own telephone (%d with a "
+          "second), %d with their own e-mail address"
+          % (OUT_PATH, len(records), total, board, heads, with_office,
+             with_phone, officer_phones["withPhone"],
+             officer_phones["withSecond"], officer_emails["withEmail"]))
 
 
 if __name__ == "__main__":

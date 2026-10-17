@@ -12,7 +12,12 @@ itself rather than a third party's assertion about it.
 WHAT IT DOES NOT CARRY IS A UNIT ADDRESS, and this file said otherwise until
 2026-09-10 and shipped 24 people's private details as public bodies' contacts
 because of it. See CONTACT WITNESSES below for the measurement and for the
-witnesses a contact value now has to pass.
+witnesses a contact value now has to pass. Each officer it ships carries the
+telephone that officer's own slot gives, since Adam's ruling of 2026-10-17
+("if the official government source uses personal phone numbers, we publish
+those"), and the e-mail address it gives, since he chose "E-mails too" the
+same day; the end of CONTACT WITNESSES says which numbers and addresses still
+ride nobody.
 
 That is a route to any county's special districts, not one county's trick.
 Peoria was first (peoria_district_officials_scraper.py) and Logan second
@@ -52,12 +57,16 @@ contact person." So `filedFor` rides every district and a card can say what
 was filed and when rather than claiming a currency the filing cannot support.
 """
 
+import hashlib
 import html
+import json
+import os
 import re
 import time
 
 import requests  # noqa: F401  (callers pass a session; imported for the dep pin)
 from scraper_common import require_robots_once, UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
+from undeliverable import withhold  # noqa: E402  (the fleet's one list of dead addresses)
 
 WAREHOUSE = ("https://illinoiscomptroller.gov/constituent-services/"
              "local-government/local-government-warehouse/")
@@ -216,8 +225,11 @@ BOARD_ONLY_SLOTS = (0, 3)
 # THE TWO-FILER TEST IS NOT USED FOR E-MAIL, because it is wrong in both
 # directions there: it withholds `director@dunlaplibrary.org` (filed once) and
 # admits `april.wagner3953@hotmail.com` (a filer copied one personal account
-# into two people's slots). Withholding a real contact is a cost; publishing a
-# private one is a rule this project does not break.
+# into two people's slots). Withholding a real contact is a cost; shipping one
+# person's mailbox as the district's is a false statement about whose it is.
+# That reasoning is about the DISTRICT's contact and still governs it. An
+# officer's own address is a different question, answered under OFFICER E-MAIL
+# below.
 #
 # ITS KNOWN HOLE IS STATED RATHER THAN PATCHED. Two witnesses means two distinct
 # SURNAMES, so a unit filing one person under two spellings of a surname would
@@ -226,6 +238,169 @@ BOARD_ONLY_SLOTS = (0, 3)
 # address or telephone is admitted on such a pair alone; both those units carry
 # two further, plainly distinct witnesses. Nothing here decides that two similar
 # names are one person.
+#
+# AN OFFICER'S OWN TELEPHONE RIDES THAT OFFICER, SINCE 2026-10-17. Each slot
+# prints a telephone beside the person it names. Until that day this file
+# shipped one only where two differently-surnamed filers gave it, as the
+# district's, and withheld the rest because a slot's number may be the
+# officer's own home or mobile line. Adam ruled that day, for the whole fleet:
+# "if the official government source uses personal phone numbers, we publish
+# those." An AFR is filed with a state agency and published by it, so the
+# number a slot prints now ships on the officer that slot names, as `phone`,
+# whosever line it is, and a different number the same person filed in another
+# slot goes in `phonesExtra`, in slot order (officer_phones in contact_block).
+# Three things do not change:
+#
+#   * A NUMBER SOMEBODY ELSE ALSO FILED RIDES NO PERSON. Where a different
+#     person -- told apart by full name, not only by surname -- gave the same
+#     number (its extension set aside, as the witness test sets it aside), the
+#     number is the office's. Two differently-surnamed filers make it the
+#     district's telephone exactly as before; two people sharing a surname make
+#     it a number printed for two officials, which the fleet's rule also gives
+#     to the office. Dunlap FPD files one telephone beside Ann Joyce, Jim
+#     Winters and Jim Withers, so it ships as the district's and on none of
+#     the three.
+#   * ONLY AN OFFICER THIS FILE ALREADY EMITS CARRIES ONE. A slot naming a
+#     preparer, an accountant or an employer contact who is not shipped as an
+#     officer ships nothing, as before. A slot naming somebody who IS shipped
+#     from another slot (Atlanta Memorial files its President in A, B and D)
+#     gives its number to the same person.
+#   * NO ADDRESS AND NO FAX. An officer's e-mail address follows rules of its
+#     own, under OFFICER E-MAIL below.
+#
+# THE EXTENSION SHIPS WITH AN OFFICER'S NUMBER, because it is part of what the
+# filer wrote beside that person: Illinois Prairie District Public Library
+# (102/010/10) files its Director's telephone with "Ext: 101" in each of the
+# three slots that name the Director (read 2026-10-17). The district's own
+# number still ships without an extension, as labelled() has always read it,
+# so the witness rule is untouched.
+#
+# A VALUE THAT IS NOT A TELEPHONE NUMBER SHIPS ON NOBODY. The Phone cell is free
+# text, so an officer's number must have the shape of one (OFFICER_PHONE_SHAPE):
+# at most one label word the filer typed ("cell", "home", "work" and the like,
+# kept as typed), an optional area code, seven digits, an optional extension
+# and nothing else -- no street word, no ZIP code, no "@", no second number. A
+# value that fails is dropped with a warning naming the unit and the slot and
+# never the value, and the builders refuse a payload carrying one
+# (suspect_phones_in), so a parse that starts reading the wrong cell stops the
+# write rather than publishing it. A number filed with no area code ships as
+# filed: none is ever supplied here, because a mobile can be issued anywhere and
+# a wrong guess reaches a stranger.
+OFFICER_PHONE_SHAPE = re.compile(
+    r"^(?:(?:cell|home|work|business|office|mobile|personal|residence)"
+    r"\s*:?\s*)?"                                # one label word, as typed
+    r"(?:\+?1[\s.-]?)?"                          # a country code, rarely filed
+    r"(?:\(\d{3}\)\s*|\d{3}[\s.-]?)?"            # an area code, which may be left off
+    r"\d{3}[\s.-]?\d{4}"                         # the number itself
+    r"(?:\s*(?:ext\.?|x)\s*:?\s*\d{1,6})?$",     # and an extension
+    re.I)
+# A number with no area code: seven digits and an optional extension. Counted
+# by count_officer_phones so a builder can report one rather than ship it
+# unremarked.
+NO_AREA_CODE = re.compile(r"^(?:[a-z]+\s*:?\s*)?\d{3}[\s.-]?\d{4}"
+                          r"(?:\s*(?:ext\.?|x)\s*:?\s*\d{1,6})?$", re.I)
+# The form's extension caption with nothing after it, which a filer who leaves
+# the extension box empty can leave behind.
+EMPTY_EXTENSION = re.compile(r"\s*Ext\s*:?\s*$", re.I)
+# A warning names a slot by its letter, never by the value it carried.
+SLOT_LETTERS = "ABCD"
+
+# OFFICER E-MAIL
+#
+# AN OFFICER'S OWN E-MAIL ADDRESS RIDES THAT OFFICER, SINCE 2026-10-17. Until
+# that day no officer's address shipped, because the address a slot prints is
+# often the officer's own mailbox at a provider or at an employer. Adam chose
+# "E-mails too" that day, extending his telephone ruling to e-mail: an address
+# a government publisher prints beside a named official ships on that
+# official, whosever mailbox it is. So the address a slot prints beside an
+# officer this file emits ships on that officer as `email`, as filed and in
+# the case it was filed in (officer_email in contact_block).
+#
+# THE RULING REMOVED THE OBJECTION THAT AN ADDRESS MIGHT BE PERSONAL. IT DID NOT
+# REMOVE THE QUESTION OF WHOSE ADDRESS IT IS, AND THIS FORM ANSWERS THAT WRONGLY
+# OFTEN ENOUGH TO MEASURE. A slot is meant to carry its own person's details,
+# but whoever types the report fills the slots with what is to hand, and that is
+# often the office of whoever prepares the filing. Read on 2026-10-17: Reddick
+# Community FPD (053/085/06) names Sue Bergan in all four slots and gives two
+# different mailboxes at an outside accountant's domain beside that name,
+# neither carrying it; four fire districts on the Grundy County map give one
+# accounting firm's `admin@` mailbox beside four different treasurers; Spring
+# Bay FPD (102/080/06) gives an address at a bank, named for somebody who is not
+# on the filing, beside its Accountant; and Mt. Pulaski Park District
+# (054/030/12) gives an address made of its bookkeeper's initial and the first
+# letters of the bookkeeper's surname beside its President. So every test here
+# is about whose the address is, and none about what kind of mailbox it is:
+#
+#   * AN ADDRESS IS READ ONLY FROM A SLOT THAT NAMES THE OFFICER. The address
+#     in the next slot belongs to the person that slot names -- a preparer, an
+#     accountant, another officer -- and never to this one.
+#   * AN ADDRESS PRINTED BESIDE TWO DIFFERENT PEOPLE RIDES NEITHER. A filer who
+#     copies one account into several people's slots -- april.wagner3953@,
+#     above, sits in two -- has not said whose it is. Names are told apart in
+#     full, as for a telephone, case and punctuation aside. The builders apply
+#     the same test across a roster's filings (drop_mail_given_for_two), which
+#     is what catches the accounting firm's mailbox given beside four
+#     treasurers in four reports, and across the seven rosters these filings
+#     feed (AFR_ROSTERS), which is what catches one personal mailbox given
+#     beside a library's President in one county and a fire district's
+#     Treasurer in another.
+#   * AN ADDRESS NAMED FOR ANOTHER FILER IS NOT THIS OFFICER'S. Where the part
+#     before the @ carries a piece of another filer's name (person_tokens: a
+#     name word of three letters or more, or an initial with the first three
+#     letters of a surname) and no piece that is this officer's alone, the
+#     address was filed in the wrong slot: it rides nobody, with a warning
+#     naming the unit and the slot.
+#   * AN ADDRESS NAMED FOR THE UNIT IS THE UNIT'S. Where the part before the @
+#     carries a word of the unit's own name (unit_tokens) and no piece of the
+#     officer's name, it is a mailbox the district keeps -- a library's
+#     `catlin13@` beside its President -- and a mailbox the district keeps is
+#     the office's, so it rides nobody.
+#   * THE DISTRICT'S OWN ADDRESS STAYS THE DISTRICT'S. The address unit_email
+#     picks ships in the office row, as it always has, and on no person. Where
+#     an officer's own address on the unit's domain or a government domain IS
+#     that address, the officer carries no second one beside it: the fleet's
+#     rule is one address per person, the official one kept.
+#   * AN ACCOUNTANT'S OR A BANK'S ADDRESS IS THE FIRM'S. An address with a
+#     word naming an accountant or a bank in it (firm_address) rides an officer
+#     only where it also carries a piece of that officer's name.
+#   * ONE PERSON GIVEN TWO ADDRESSES GETS ONE THAT NAMES THEM, OR NONE. Where
+#     the filing gives one officer more than one address, it has not said which
+#     is theirs: an address on the unit's own domain or on a government domain
+#     is kept, the fleet's rule, and otherwise only one carrying a piece of the
+#     officer's own name can ship, the first in slot order. Reddick's two
+#     mailboxes ship on nobody this way. Two addresses for one person one
+#     character apart ship as neither, warned by slot, because the filing
+#     disagrees with itself and one is a typing error.
+#   * ONE ADDRESS, SHAPED AS ONE, AND DELIVERABLE. OFFICER_EMAIL_SHAPE admits
+#     one address and no space; a cell that fails ships on nobody, warned by
+#     unit and slot and never by value, and the builders refuse a payload
+#     carrying one (suspect_emails_in). An address undeliverable.py lists stays
+#     withheld, as everywhere else. A typing error is never corrected.
+#
+# WHAT THESE TESTS CANNOT SEE IS STATED RATHER THAN GUESSED AT. An address
+# naming nobody -- a handle at a mail provider, which is the commonest shape a
+# personal mailbox takes -- ships on the officer whose slot gives it, because
+# the form says it is theirs and nothing in the filing says otherwise; a
+# preparer's or a relative's handle given in one officer's slot alone looks
+# exactly like it, and no test here tells them apart.
+#
+# WHAT THE TESTS COST IS STATED TOO. Each test that withholds can withhold an
+# address that is the officer's own: a treasurer who keeps the district's books
+# at their own firm and files that firm's mailbox, a trustee given a mailbox the
+# library keeps for their seat (`trustee4@` at a mail provider), and an officer
+# given two mailboxes neither of which carries their name. Withholding one costs
+# a reader an e-mail link; shipping the wrong one sends a reader's message to
+# somebody the filing never said holds the office.
+OFFICER_EMAIL_SHAPE = re.compile(r"^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$")
+# A government's own domain, which the one-address rule keeps over another.
+GOVERNMENT_DOMAIN = re.compile(r"\.(?:gov|mil|us)$", re.I)
+# A word naming the kind of firm that prepares a report rather than holds an
+# office: an accountant or a bank. `cpa` counts only at the END of one of the
+# address's words, alone or before an `s` or digits (`mackcpas`, `redbirdcpa1992`),
+# because it also sits inside words that name nothing of the kind -- `sycparks`
+# is Sycamore Park District's own domain. See firm_address.
+FIRM_WORDS = ("accounting", "bank")
+FIRM_CPA = re.compile(r"cpas?\d*$")
 
 # A token of the unit's own name has to be long enough not to match by accident
 # and specific enough to mean the unit: "El Paso" contributes `paso`, and a type
@@ -423,6 +598,396 @@ def suspect_names_in(payload):
     return found
 
 
+def one_digit_apart(a, b):
+    """Are two digit strings one typing error apart?
+
+    The same length, and either one digit different or two neighbouring
+    digits swapped. Equal strings are not: those are one number.
+    """
+    if len(a) != len(b) or a == b:
+        return False
+    differ = [i for i in range(len(a)) if a[i] != b[i]]
+    if len(differ) == 1:
+        return True
+    return (len(differ) == 2 and differ[1] == differ[0] + 1
+            and a[differ[0]] == b[differ[1]] and a[differ[1]] == b[differ[0]])
+
+
+def one_typo_apart(a, b):
+    """Are two strings one typing error apart?
+
+    One character different, added or dropped, or two neighbouring characters
+    swapped. Equal strings are not: those are one value.
+    """
+    if a == b:
+        return False
+    if len(a) == len(b):
+        return one_digit_apart(a, b)
+    short, long_ = sorted((a, b), key=len)
+    if len(long_) - len(short) != 1:
+        return False
+    return any(long_[:i] + long_[i + 1:] == short for i in range(len(long_)))
+
+
+OFFICER_LISTS = ("board", "heads")
+
+
+def _officer_records(payload):
+    """(path, record) for every officer record in a payload, whatever its nesting.
+
+    An officer record is an item of a `board` or `heads` list, which is where
+    contact_block's two lists land in all eight rosters this parser feeds; the
+    district's own `office` is not an officer and is not visited.
+    """
+    found = []
+
+    def walk(node, path):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                here = "%s.%s" % (path, key) if path else str(key)
+                if key in OFFICER_LISTS and isinstance(value, list):
+                    for i, item in enumerate(value):
+                        if isinstance(item, dict):
+                            found.append(("%s[%d]" % (here, i), item))
+                else:
+                    walk(value, here)
+        elif isinstance(node, list):
+            for i, item in enumerate(node):
+                walk(item, "%s[%d]" % (path, i))
+
+    walk(payload, "")
+    return found
+
+
+def suspect_phones_in(payload):
+    """[(where, why)] for every officer telephone in a payload that must not ship.
+
+    The builders' backstop for officer_phones, refusing a write the way
+    suspect_names_in does. Each `phone` and each `phonesExtra` entry must match
+    OFFICER_PHONE_SHAPE, and `phonesExtra` must be a list of strings. `where`
+    names the district and the officer's place in its list; the value itself is
+    never named, so a refusal cannot print a number or an address into a log.
+    """
+    found = []
+    for where, record in _officer_records(payload):
+        values = []
+        if "phone" in record:
+            values.append(("phone", record["phone"]))
+        if "phonesExtra" in record:
+            extra = record["phonesExtra"]
+            if not isinstance(extra, list) or not extra:
+                found.append((where, "phonesExtra is not a non-empty list"))
+                extra = []
+            values.extend(("phonesExtra[%d]" % i, v) for i, v in enumerate(extra))
+        for field, value in values:
+            if not isinstance(value, str) or not OFFICER_PHONE_SHAPE.match(value):
+                found.append((where, "%s is not shaped like one telephone number"
+                              % field))
+    return found
+
+
+def count_officer_phones(payload):
+    """Officer records in a payload, and how many carry a telephone.
+
+    Returns {"officers", "withPhone", "withSecond", "noAreaCode"}: every record
+    in a board or heads list, those carrying `phone`, those also carrying
+    `phonesExtra`, and the numbers (first or further) filed without an area
+    code. A district filed under two counties is counted once per copy, as the
+    file holds it.
+    """
+    out = {"officers": 0, "withPhone": 0, "withSecond": 0, "noAreaCode": 0}
+    for _where, record in _officer_records(payload):
+        out["officers"] += 1
+        if record.get("phone"):
+            out["withPhone"] += 1
+        if record.get("phonesExtra"):
+            out["withSecond"] += 1
+        for value in [record.get("phone")] + list(record.get("phonesExtra") or []):
+            if isinstance(value, str) and NO_AREA_CODE.match(value):
+                out["noAreaCode"] += 1
+    return out
+
+
+def suspect_emails_in(payload):
+    """[(where, why)] for every officer e-mail in a payload that must not ship.
+
+    The builders' backstop for officer_email, as suspect_phones_in is for
+    officer_phones: each officer's `email` must be one string shaped like one
+    address (OFFICER_EMAIL_SHAPE). `where` names the district and the
+    officer's place in its list, and the value is never named.
+    """
+    found = []
+    for where, record in _officer_records(payload):
+        if "email" not in record:
+            continue
+        value = record["email"]
+        if not isinstance(value, str) or not OFFICER_EMAIL_SHAPE.match(value):
+            found.append((where, "email is not shaped like one address"))
+    return found
+
+
+def count_officer_emails(payload):
+    """Officer records in a payload, and how many carry an e-mail address.
+
+    Returns {"officers", "withEmail"}, counted as count_officer_phones counts:
+    a district filed under two counties is counted once per copy.
+    """
+    out = {"officers": 0, "withEmail": 0}
+    for _where, record in _officer_records(payload):
+        out["officers"] += 1
+        if record.get("email"):
+            out["withEmail"] += 1
+    return out
+
+
+def person_tokens(name):
+    """The pieces of a filed name an e-mail address can carry.
+
+    Each name word of three letters or more, the first initial with the first
+    three letters of the surname, and the first three letters of the given name
+    with the surname's initial: Kathy Letterle gives `kathy`, `letterle`,
+    `klet` and `katl`. Apostrophes and periods are dropped first (O'Brien is
+    `obrien`), and a suffix the source files (NAME_SUFFIXES) is not taken for
+    a surname.
+    """
+    words = re.sub(r"[^a-z]+", " ",
+                   re.sub(r"['\u2019.]", "", (name or "").lower())).split()
+    while len(words) > 1 and words[-1] in NAME_SUFFIXES:
+        words.pop()
+    out = {w for w in words if len(w) >= 3}
+    if len(words) >= 2:
+        given, surname = words[0], words[-1]
+        if len(surname) >= 3:
+            out.add(given[0] + surname[:3])
+        if len(given) >= 3:
+            out.add(given[:3] + surname[0])
+    return out
+
+
+def local_letters(value):
+    """The letters of the part of an address before the @, lowercased."""
+    return re.sub(r"[^a-z]", "", (value or "").rsplit("@", 1)[0].lower())
+
+
+def firm_address(value):
+    """Does an address carry a word naming an accountant or a bank?
+
+    Its words are what lies between the characters that are not a letter or a
+    digit, on both sides of the @: `admin@mackcpas.com` gives `admin`,
+    `mackcpas` and `com`, and `mackcpas` ends in `cpas`.
+    """
+    words = re.split(r"[^a-z0-9]+", (value or "").lower())
+    return any(any(firm in word for firm in FIRM_WORDS) or FIRM_CPA.search(word)
+               for word in words if word)
+
+
+# THE SEVEN ROSTERS BUILT FROM THESE FILINGS. An address one of them gives
+# beside one person and another gives beside a different person is nobody's in
+# either (drop_mail_given_for_two), so each builder reads the other six as
+# shipped (mail_elsewhere).
+AFR_ROSTERS = ("il-library-district-officials.json",
+               "il-special-district-officials.json",
+               "logan-district-officials.json", "peoria-district-officials.json",
+               "woodford-district-officials.json", "grundy-district-officials.json",
+               "kankakee-district-officials.json")
+# WHERE A ROSTER RECORDS WHAT IT TOOK OFF, so the others can still see it once
+# it is gone. Without it the rosters disagree by build order: the first to see
+# a conflict takes the address off its own officer, and the other, built later,
+# finds it nowhere and keeps it on its own. Each entry is a digest of the
+# address (mail_digest) and digests of the names the roster's own filings gave
+# it beside; nothing is written out, and nothing reads the entry but the
+# builders.
+MAIL_GIVEN_FOR_TWO = "mailGivenForTwo"
+
+
+def mail_digest(text):
+    """The first 16 hex digits of the SHA-256 of `text`, so two rosters can
+    compare an address, or a name as _flat reduces it, without writing it out."""
+    return hashlib.sha256((text or "").encode("utf-8")).hexdigest()[:16]
+
+
+def mail_elsewhere(app_dir, own):
+    """{address digest: {name digests}} from every AFR roster but `own`, as
+    shipped in `app_dir`: each address an officer there carries, beside that
+    officer's name, and each address that roster took off as given for two
+    (MAIL_GIVEN_FOR_TWO), beside the names its own filings gave it. A roster not
+    yet shipped contributes nothing."""
+    seen = {}
+    for fname in AFR_ROSTERS:
+        path = os.path.join(app_dir, fname)
+        if fname == own or not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as fh:
+            payload = json.load(fh)
+        for _where, record in _officer_records(payload):
+            value = record.get("email")
+            flat = _flat(record.get("name"))
+            if isinstance(value, str) and value and flat:
+                seen.setdefault(mail_digest(value.casefold()), set()).add(
+                    mail_digest(flat))
+        for key, names in (payload.get(MAIL_GIVEN_FOR_TWO) or {}).items():
+            seen.setdefault(key, set()).update(names)
+    return seen
+
+
+def drop_mail_given_for_two(payload, elsewhere=None, withheld=None):
+    """Take every officer address that rides two differently-named officers off
+    all of them, across a whole roster and, given `elsewhere`, across the other
+    AFR rosters too. Returns the number of records changed.
+
+    contact_block already keeps an address printed beside two people in ONE
+    report off both; this is the same rule across reports, because one
+    accounting firm's mailbox typed beside a different treasurer in each of
+    four districts' filings is no treasurer's. Names are compared as
+    already_named compares them, case and punctuation aside, so one person
+    filed by two districts, or the same district copied into two counties,
+    keeps an address the same name gives both times. `elsewhere` is
+    mail_elsewhere's answer for the other rosters; `withheld`, a dict, receives
+    an entry for every address taken off, which the builder writes under
+    MAIL_GIVEN_FOR_TWO.
+    """
+    records = _officer_records(payload)
+    names = {}
+    for _where, record in records:
+        value = record.get("email")
+        if isinstance(value, str) and value:
+            mine = names.setdefault(value.casefold(), set())
+            flat = _flat(record.get("name"))
+            if flat:
+                mine.add(mail_digest(flat))
+    shared = set()
+    for key, mine in names.items():
+        digest = mail_digest(key)
+        if len(mine | (elsewhere or {}).get(digest, set())) > 1:
+            shared.add(key)
+            if withheld is not None:
+                withheld[digest] = sorted(mine)
+    dropped = 0
+    for _where, record in records:
+        value = record.get("email")
+        if isinstance(value, str) and value.casefold() in shared:
+            record.pop("email")
+            dropped += 1
+    return dropped
+
+
+def line_digits(value):
+    """A telephone's digits with any extension and a leading 1 removed.
+
+    What two printings of one line have in common: "(309) 555-0114 Ext: 101"
+    and "309.555.0114" both give "3095550114". A number filed without an area
+    code gives seven digits.
+    """
+    head = re.split(r"(?i)\s*(?:ext\.?|x)\s*:?\s*\d", value or "", maxsplit=1)[0]
+    digits = re.sub(r"\D", "", head)
+    if len(digits) == 11 and digits.startswith("1"):
+        digits = digits[1:]
+    return digits
+
+
+def same_line(a, b):
+    """Are two digit strings from line_digits the same line?
+
+    Equal, or one has no area code and its seven digits end the other.
+    """
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    short, long_ = sorted((a, b), key=len)
+    return len(short) == 7 and len(long_) == 10 and long_.endswith(short)
+
+
+def drop_lines_from_officers(entry, lines):
+    """Take a body's own telephone lines off its officers. Returns the count.
+
+    An officer's number that is the same line as one the body publishes as its
+    own -- the office telephone a second publisher prints for it, such as the
+    library systems' directory -- belongs to the office and not the person
+    (the rule set with Adam's ruling of 2026-10-17), so it rides nobody, as no
+    officer's number did before that ruling. officer_phones() already keeps
+    the filing's own district number off every officer; this is for a line
+    the filing does not show to be the body's and another publisher does.
+    """
+    lines = [line_digits(v) for v in lines if v]
+    lines = [d for d in lines if d]
+    dropped = 0
+    for bucket in OFFICER_LISTS:
+        for person in entry.get(bucket) or []:
+            if not isinstance(person, dict):
+                continue
+            numbers = [n for n in [person.get("phone")]
+                       + list(person.get("phonesExtra") or []) if n]
+            kept = [n for n in numbers
+                    if not any(same_line(line_digits(n), d) for d in lines)]
+            if len(kept) == len(numbers):
+                continue
+            dropped += len(numbers) - len(kept)
+            person.pop("phone", None)
+            person.pop("phonesExtra", None)
+            if kept:
+                person["phone"] = kept[0]
+            if len(kept) > 1:
+                person["phonesExtra"] = kept[1:]
+    return dropped
+
+
+def drop_mail_from_officers(entry, addresses):
+    """Take a body's own e-mail addresses off its officers. Returns the count.
+
+    The e-mail counterpart of drop_lines_from_officers: an officer's address
+    that is one a second publisher prints as the body's own office address
+    -- Lake County's GIS carries one on each fire and park district, and the
+    card prints it in the district's own contact row -- belongs to the office
+    and rides nobody. Compared without regard to case.
+    """
+    wanted = {a.strip().casefold() for a in addresses if a and a.strip()}
+    dropped = 0
+    for bucket in OFFICER_LISTS:
+        for person in entry.get(bucket) or []:
+            if isinstance(person, dict) and person.get("email") \
+                    and person["email"].casefold() in wanted:
+                person.pop("email")
+                dropped += 1
+    return dropped
+
+
+# The two shipped files a library card reads its office telephone from.
+LIBRARY_DIRECTORY = "il-library-contacts.json"
+LIBRARY_FILINGS = "il-library-district-officials.json"
+
+
+def library_directory_lines(app_dir):
+    """Each library's telephone in the library systems' shared directory.
+
+    Returns ({library name: telephone}, {comptroller code: telephone}). The app
+    prints the directory's telephone as the library's own office line, on the
+    statewide library card (withLibraryOfficials) and on a county library card
+    whose filing gives no district telephone (withCountyLibraryPhone), so an
+    officer's number that is the same line belongs to the library and rides
+    nobody (drop_lines_from_officers). Names join the statewide file; a county
+    file's library joins by comptroller code through LIBRARY_FILINGS, the join
+    withCountyLibraryPhone makes. A missing or unreadable file raises: a
+    builder that cannot see the library's line cannot tell an officer's number
+    apart from it.
+    """
+    with open(os.path.join(app_dir, LIBRARY_DIRECTORY), encoding="utf-8") as fh:
+        directory = json.load(fh).get("libraries") or {}
+    with open(os.path.join(app_dir, LIBRARY_FILINGS), encoding="utf-8") as fh:
+        filings = json.load(fh).get("libraries") or {}
+    if not directory or not filings:
+        raise ValueError("%s or %s holds no libraries"
+                         % (LIBRARY_DIRECTORY, LIBRARY_FILINGS))
+    by_name = {name: rec["phone"] for name, rec in directory.items()
+               if isinstance(rec, dict) and rec.get("phone")}
+    by_code = {}
+    for name, rec in filings.items():
+        code = (rec or {}).get("comptrollerCode")
+        if code and name in by_name:
+            by_code[code] = by_name[name]
+    return by_name, by_code
+
+
 def unit_tokens(unit_label):
     """The unit's own name words, for testing whether a domain is the unit's.
 
@@ -575,6 +1140,20 @@ def contact_block(session, code, unit_label, warnings):
                 return x[slot][len(prefix):].split("Ext")[0].strip()
         return ""
 
+    def filed_phone(slot):
+        """Slot `slot`'s telephone as filed, extension and all.
+
+        The officer's number, and only the officer's: the witness test and the
+        district's number go on reading labelled(), which drops the extension,
+        so nothing about the district rule moves. An empty extension caption
+        is cut and runs of spaces closed up; nothing else is touched.
+        """
+        for x in quad:
+            if x[slot].startswith("Phone:"):
+                value = " ".join(x[slot][len("Phone:"):].split())
+                return EMPTY_EXTENSION.sub("", value).strip()
+        return ""
+
     def cell(rows, index, slot):
         return rows[index][slot].strip() if len(rows) > index else ""
 
@@ -590,12 +1169,24 @@ def contact_block(session, code, unit_label, warnings):
         joined = " ".join(x for x in (names[2 * i], names[2 * i + 1]) if x).strip()
         return normalise_filed_name(joined, unit_label, warnings)
 
+    def filed_email(slot):
+        """Slot `slot`'s e-mail cell as filed, runs of spaces closed up.
+
+        labelled() cuts a value at "Ext", which is right for a telephone and
+        wrong for an address that happens to carry those three letters, so an
+        address is read whole here, for the district and the officer alike.
+        """
+        for x in quad:
+            if x[slot].startswith("E-mail:"):
+                return " ".join(x[slot][len("E-mail:"):].split())
+        return ""
+
     filers = [{"name": filed_name(i),
                "street": cell(unlabelled, 0, i),
                "city": cell(unlabelled, 1, i),
                "region": cell(unlabelled, 2, i),
                "phone": labelled("Phone:", i),
-               "email": labelled("E-mail:", i)}
+               "email": filed_email(i)}
               for i in range(SLOTS)]
 
     def witnessed(field):
@@ -656,8 +1247,11 @@ def contact_block(session, code, unit_label, warnings):
         rather than a missing one. Adam's 2026-09-19 ruling that a refusal never
         unpublishes does not reach this case either: the host served fine and
         the publisher gave new information rather than declining to be read.
-        Weddle's own number moving to what sits beside his personal gmail is a
-        further reason to withhold it.
+        Weddle's own number moving to what sits beside his personal gmail was a
+        further reason to withhold it AS THE DISTRICT'S, and still is. Since
+        Adam's ruling of 2026-10-17 it ships on Weddle's own record instead,
+        as the number the filing prints beside him (officer_phones), and the
+        Director's number with its extension ships on the Director's.
 
         THE EXTENSION IS STRIPPED BEFORE WITNESSING (labelled() splits at
         "Ext"), which was measured rather than assumed on 2026-09-22 and the
@@ -730,6 +1324,19 @@ def contact_block(session, code, unit_label, warnings):
                 return filer
         return None
 
+    tokens = unit_tokens(unit_label)
+
+    def names_the_unit(part):
+        """Does this piece of an address name this unit AND its kind?"""
+        found = [t for t in tokens if t in part]
+        if not found:
+            return False
+        # A kind word that sits INSIDE the matched name is the name talking,
+        # not the mailbox: a district called Liberty would otherwise satisfy
+        # `lib` out of its own name.
+        return any(kind in part and not any(kind in t for t in found)
+                   for kind in UNIT_KIND_WORDS)
+
     def unit_email():
         """The first e-mail the unit's own name appears in, domain first.
 
@@ -749,21 +1356,8 @@ def contact_block(session, code, unit_label, warnings):
         the unit to initials, and this file matches the unit's words, never
         guesses at its initials.
         """
-        tokens = unit_tokens(unit_label)
         if not tokens:
             return ""
-
-        def names_the_unit(part):
-            """Does this piece of an address name this unit AND its kind?"""
-            found = [t for t in tokens if t in part]
-            if not found:
-                return False
-            # A kind word that sits INSIDE the matched name is the name talking,
-            # not the mailbox: a district called Liberty would otherwise satisfy
-            # `lib` out of its own name.
-            return any(kind in part and not any(kind in t for t in found)
-                       for kind in UNIT_KIND_WORDS)
-
         addressed = [f for f in filers if "@" in f["email"]]
         for filer in addressed:
             domain = re.sub(r"[^a-z0-9]", "", filer["email"].rsplit("@", 1)[1].lower())
@@ -779,6 +1373,177 @@ def contact_block(session, code, unit_label, warnings):
 
     address = witnessed("street")
     telephone = witnessed("phone")
+    district_email = unit_email()
+
+    def officer_phones(name):
+        """Every telephone the filing prints beside `name` alone, in slot order.
+
+        A slot is this officer's when its filed name is the same once case and
+        punctuation are set aside -- the comparison already_named() makes, so
+        "Trace Evans" in B and "trace evans" in D are one person here as there.
+        A number another name also filed (its extension set aside, as the
+        witness test sets it aside) is the office's and is skipped: that covers
+        the district's own telephone, which two different surnames gave by
+        definition, and a number two people of one surname share. A value
+        that is not shaped like a telephone number is skipped with a warning
+        naming the unit and the slot, never the value.
+
+        TWO NUMBERS FOR ONE PERSON THAT DIFFER BY A SINGLE DIGIT, or by two
+        neighbouring digits swapped, ship as neither. That is the filing
+        disagreeing with itself about one number, and one of the two is a
+        typing error that would ring a stranger. Which one cannot be told from
+        the filing, and counting slots is no answer -- Benson Fire (102/010/06)
+        files its Treas./Admin.'s telephone one way in slots C and D and with
+        its fourth digit different in slot A, and a copied slot carries a typo
+        as easily as the right number, which is why filed names are never
+        voted on either (MIDDLE_INITIAL_COMMA). The warning names the unit and
+        the slots, never the values.
+        """
+        me = _flat(name)
+        out, seen = [], set()
+        for slot, filer in enumerate(filers):
+            if _flat(filer["name"]) != me:
+                continue
+            base = _flat(filer["phone"])
+            if not base or base in seen:
+                continue
+            others = {_flat(other["name"]) for other in filers
+                      if _flat(other["phone"]) == base}
+            others.discard(me)
+            others.discard("")
+            if others:
+                continue
+            value = filed_phone(slot)
+            if not OFFICER_PHONE_SHAPE.match(value):
+                said = ("%s: slot %s files a telephone that is not shaped like "
+                        "a telephone number; it ships on nobody"
+                        % (unit_label, SLOT_LETTERS[slot]))
+                if said not in warnings:
+                    warnings.append(said)
+                continue
+            seen.add(base)
+            out.append((slot, value, re.sub(r"\D", "", base)))
+        clash = {i for i, a in enumerate(out) for j, b in enumerate(out)
+                 if i != j and one_digit_apart(a[2], b[2])}
+        if clash:
+            said = ("%s: slots %s file telephones for one person that differ by "
+                    "one digit; neither ships"
+                    % (unit_label, ", ".join(SLOT_LETTERS[out[i][0]]
+                                             for i in sorted(clash))))
+            if said not in warnings:
+                warnings.append(said)
+        return [value for i, (_slot, value, _d) in enumerate(out) if i not in clash]
+
+    def names_another_filer(value, name):
+        """Is `value` named for another filer of this report rather than `name`?
+
+        True where the part before the @ carries a piece of another filer's
+        name (person_tokens) that `name` does not share, and no piece that is
+        `name`'s alone. Two filers sharing a surname share its pieces, so they
+        decide nothing between them and a given name has to.
+        """
+        local = local_letters(value)
+        me = _flat(name)
+        mine = person_tokens(name)
+        theirs = set()
+        for other in filers:
+            flat = _flat(other["name"])
+            if flat and flat != me:
+                theirs |= person_tokens(other["name"])
+        return (any(t in local for t in theirs - mine)
+                and not any(t in local for t in mine - theirs))
+
+    def official(value):
+        """Is `value` on the unit's own domain or on a government domain?"""
+        domain = re.sub(r"[^a-z0-9]", "", value.rsplit("@", 1)[1].lower())
+        return bool(names_the_unit(domain) or GOVERNMENT_DOMAIN.search(value))
+
+    def officer_email(name):
+        """The one e-mail address the filing gives `name` alone, or "".
+
+        See OFFICER E-MAIL for each test and why it is there. A slot is this
+        officer's when its filed name is the same once case and punctuation
+        are set aside, as for a telephone; addresses are compared without
+        regard to case, and the one that ships is the case it was filed in.
+        """
+        me = _flat(name)
+        mine = person_tokens(name)
+
+        def names_officer(value):
+            return any(t in local_letters(value) for t in mine)
+
+        def names_unit_only(value):
+            local = local_letters(value)
+            return any(t in local for t in tokens) and not names_officer(value)
+
+        found, seen = [], set()
+        for slot, filer in enumerate(filers):
+            if _flat(filer["name"]) != me:
+                continue
+            value = filer["email"]
+            key = value.casefold()
+            if not value or key in seen:
+                continue
+            seen.add(key)
+            others = {_flat(other["name"]) for other in filers
+                      if other["email"].casefold() == key}
+            others.discard(me)
+            others.discard("")
+            if others:
+                continue
+            if not OFFICER_EMAIL_SHAPE.match(value):
+                said = ("%s: slot %s files an e-mail that is not shaped like "
+                        "one address; it ships on nobody"
+                        % (unit_label, SLOT_LETTERS[slot]))
+                if said not in warnings:
+                    warnings.append(said)
+                continue
+            if names_another_filer(value, name):
+                said = ("%s: slot %s files an e-mail named for another filer "
+                        "of the same report; it ships on nobody"
+                        % (unit_label, SLOT_LETTERS[slot]))
+                if said not in warnings:
+                    warnings.append(said)
+                continue
+            found.append((slot, value))
+        district = district_email.casefold()
+        if any(value.casefold() == district and official(value)
+               for _slot, value in found):
+            return ""
+        several = len(found) > 1
+        found = [(slot, value) for slot, value in found
+                 if value.casefold() != district and not names_unit_only(value)]
+        clash = {i for i, a in enumerate(found) for j, b in enumerate(found)
+                 if i != j and one_typo_apart(a[1].casefold(), b[1].casefold())}
+        if clash:
+            said = ("%s: slots %s file e-mail addresses for one person that "
+                    "differ by one character; neither ships"
+                    % (unit_label, ", ".join(SLOT_LETTERS[found[i][0]]
+                                             for i in sorted(clash))))
+            if said not in warnings:
+                warnings.append(said)
+        kept = [value for i, (_slot, value) in enumerate(found) if i not in clash]
+        kept = [value for value in kept if withhold(value, unit_label)[0]]
+        chosen = [value for value in kept if official(value)]
+        if not chosen:
+            chosen = [value for value in kept if names_officer(value)
+                      or not (several or firm_address(value))]
+        return chosen[0] if chosen else ""
+
+    def officer(name, title):
+        """An officer's record: the name and filed title, and the officer's
+        own telephone and e-mail address where the filing gives them (see
+        officer_phones and officer_email)."""
+        record = {"name": name, "role": title}
+        numbers = officer_phones(name)
+        if numbers:
+            record["phone"] = numbers[0]
+        if len(numbers) > 1:
+            record["phonesExtra"] = numbers[1:]
+        email = officer_email(name)
+        if email:
+            record["email"] = email
+        return record
 
     def slot_person(slot):
         name = filed_name(slot)
@@ -817,14 +1582,14 @@ def contact_block(session, code, unit_label, warnings):
         if any(q["name"] == name and q["role"] == title for _b, q in officers):
             continue
         if key in BOARD_TITLES:
-            officers.append(("board", {"name": name, "role": title}))
+            officers.append(("board", officer(name, title)))
         else:
             if key not in HEAD_TITLES:
                 warnings.append("%s: filed title %r for %s is neither a board "
                                 "office nor a recognised appointed post — "
                                 "shipped as appointed, never as a board seat"
                                 % (unit_label, title, name))
-            officers.append(("heads", {"name": name, "role": title}))
+            officers.append(("heads", officer(name, title)))
 
     # The second pass, over the filing's administrative slots. A board-titled
     # person the unit has not already named is a trustee it would otherwise have
@@ -834,7 +1599,7 @@ def contact_block(session, code, unit_label, warnings):
         name, title, key = slot_person(slot)
         if not name or key not in BOARD_TITLES or already_named(name):
             continue
-        officers.append(("board", {"name": name, "role": title}))
+        officers.append(("board", officer(name, title)))
 
     def locality():
         """The filed locality and its state/ZIP, with a misfiling corrected.
@@ -861,7 +1626,7 @@ def contact_block(session, code, unit_label, warnings):
             "street": address["street"] if address else "",
             "city": locality(),
             "phone": telephone["phone"] if telephone else "",
-            "email": unit_email(),
+            "email": district_email,
             "officers": officers}
 
 
@@ -880,7 +1645,7 @@ def _selftest():
     PACE = 0
     latest_fiscal_year = lambda session, code: 2026
 
-    def markup(city, name_row=None):
+    def markup(city, name_row=None, phones=None, emails=None):
         def tr(cells):
             return "<tr>" + "".join("<td>%s</td>" % c for c in cells) + "</tr>"
         return "<table>" + "".join([
@@ -892,17 +1657,20 @@ def _selftest():
             tr(["4631 N Overhill"] * SLOTS),
             tr([city] * SLOTS),
             tr(["IL 60706"] * SLOTS),
-            tr(["Phone: (708) 457-1244"] * SLOTS),
-            tr(["E-mail: x@example.org"] * SLOTS),
+            tr(["Phone: " + p for p in (phones or ["(708) 457-1244"] * SLOTS)]),
+            tr(["Fax: (708) 457-9999"] * SLOTS),
+            tr(["E-mail: " + e for e in (emails or ["x@example.org"] * SLOTS)]),
         ]) + "</table>"
 
     class _Session(object):
-        def __init__(self, city, name_row=None):
+        def __init__(self, city, name_row=None, phones=None, emails=None):
             self.city = city
             self.name_row = name_row
+            self.phones = phones
+            self.emails = emails
 
         def post(self, *a, **k):
-            body = markup(self.city, self.name_row)
+            body = markup(self.city, self.name_row, self.phones, self.emails)
 
             class _R(object):
                 text = body
@@ -995,6 +1763,379 @@ def _selftest():
     check("calls a surname-first value suspect",
           suspect_name("Auter, Tara") is not None, True)
 
+    # AN OFFICER'S OWN TELEPHONE (Adam's ruling of 2026-10-17). Driven through
+    # the real contact_block, with the fixture's fax row present in every case
+    # so a fax riding anybody would show here.
+    def people(name_row, phones, emails=None):
+        """(officers by name, the district's telephone, the warnings)."""
+        warnings = []
+        block = contact_block(_Session("Norridge", name_row, phones, emails),
+                              "016/999/99", "SELFTEST UNIT", warnings) or {}
+        shipped = {}
+        for _bucket, record in block.get("officers") or []:
+            shipped.setdefault(record["name"], []).append(
+                {k: v for k, v in record.items() if k not in ("name", "role")})
+        return shipped, block.get("phone"), warnings
+
+    # Illinois Prairie's FY2026 shape, with made-up numbers in the 555-01xx
+    # range: one person in A, B and D with an extension, a second person
+    # alone in C with a different number.
+    got, district, warned = people(
+        ["Ann", "Joyce", "Ann", "Joyce", "Cal", "Moss", "Ann", "Joyce"],
+        ["(309) 555-0114 Ext: 101", "(309) 555-0114 Ext: 101",
+         "(309) 555-0115", "(309) 555-0114 Ext: 101"])
+    check("an officer's own number rides that officer, extension and all",
+          got.get("Ann Joyce"), [{"phone": "(309) 555-0114 Ext: 101"}])
+    check("a second officer's own number rides that officer",
+          got.get("Cal Moss"), [{"phone": "(309) 555-0115"}])
+    check("and neither is the district's", district, "")
+    check("no fax rides anybody",
+          any("9999" in str(r) for rs in got.values() for r in rs), False)
+
+    # The default fixture: one number filed by four different surnames.
+    got, district, _ = people(None, None)
+    check("a number several people filed is the district's", district,
+          "(708) 457-1244")
+    check("and rides none of them",
+          [r for rs in got.values() for r in rs if r], [])
+
+    # Two people of one surname sharing a number: not the district's (one
+    # surname witnesses nothing) and not either person's (two officials).
+    got, district, _ = people(
+        ["Ann", "Smith", "Ann", "Smith", "Bob", "Smith", "Dee", "Fox"],
+        ["(309) 555-0101", "(309) 555-0101", "(309) 555-0101", ""])
+    check("a number two officials of one surname share rides neither",
+          [r for rs in got.values() for r in rs if r], [])
+    check("and is not the district's either", district, "")
+
+    # One person in both published slots with two different numbers.
+    got, _, _ = people(
+        ["Pat", "Reed", "Ann", "Joyce", "Ann", "Joyce", "Dee", "Fox"],
+        ["(309) 555-0109", "(309) 555-0121", "(309) 555-0187", ""])
+    check("a second number goes in phonesExtra, in slot order",
+          got.get("Ann Joyce", [None])[0],
+          {"phone": "(309) 555-0121", "phonesExtra": ["(309) 555-0187"]})
+    check("a filer this file does not emit carries nothing",
+          "Pat Reed" in got, False)
+
+    # The same person filed in two cases is one person here, as already_named
+    # treats them; a number only that person gave in slot D is theirs too.
+    got, _, _ = people(
+        ["Pat", "Reed", "Trace", "Evans", "Bo", "Lund", "trace", "evans"],
+        ["", "(309) 555-0121", "(309) 555-0102", "(309) 555-0187 Ext:"])
+    check("case-only respellings are one person and an empty Ext is cut",
+          got.get("Trace Evans", [None])[0],
+          {"phone": "(309) 555-0121", "phonesExtra": ["(309) 555-0187"]})
+
+    # Not a telephone number: dropped, warned about by slot, never printed.
+    got, _, warned = people(
+        ["Pat", "Reed", "Ann", "Joyce", "Bo", "Lund", "Dee", "Fox"],
+        ["", "call the station", "(309) 555-0102 / (309) 555-0103", ""])
+    check("a value that is not a number ships on nobody",
+          [r for rs in got.values() for r in rs if r], [])
+    check("the warning names the slots",
+          sorted(w.split(": slot ")[1][0] for w in warned if ": slot " in w),
+          ["B", "C"])
+    check("and never the value",
+          any("station" in w or "555" in w for w in warned), False)
+
+    # One person, two numbers one typing error apart: neither ships.
+    for second, label in (("(309) 555-0124", "one digit"),
+                          ("(309) 555-0132", "two neighbouring digits swapped")):
+        got, _, warned = people(
+            ["Pat", "Reed", "Ann", "Joyce", "Bo", "Lund", "Ann", "Joyce"],
+            ["", "(309) 555-0123", "(309) 555-0102", second])
+        check("numbers %s apart for one person: neither ships" % label,
+              got.get("Ann Joyce"), [{}])
+        check("and the warning names slots B and D, never a value",
+              [w.split(": slots ")[1].split(" file")[0] for w in warned
+               if ": slots " in w], ["B, D"])
+    got, _, _ = people(
+        ["Pat", "Reed", "Ann", "Joyce", "Bo", "Lund", "Ann", "Joyce"],
+        ["", "(309) 555-0123", "(309) 555-0102", "(815) 555-0199"])
+    check("two clearly different numbers for one person both ship",
+          got.get("Ann Joyce"),
+          [{"phone": "(309) 555-0123", "phonesExtra": ["(815) 555-0199"]}])
+    check("one_digit_apart: equal strings are one number, not a typo",
+          one_digit_apart("3095550123", "3095550123"), False)
+
+    # A number filed without an area code ships exactly as filed.
+    got, _, _ = people(
+        ["Pat", "Reed", "Ann", "Joyce", "Bo", "Lund", "Dee", "Fox"],
+        ["", "555-0114", "", ""])
+    check("a number with no area code ships as filed",
+          got.get("Ann Joyce"), [{"phone": "555-0114"}])
+
+    for value, want in (("(309) 555-0114 Ext: 101", True),
+                        ("309-555-0114", True), ("cell 309.555.0114", True),
+                        ("555-0114", True), ("(309) 555-0114 x12", True),
+                        ("309-555-0114, 309-555-0115", False),
+                        ("12 Main St", False), ("a@b.org", False),
+                        ("(309) 555-0114 IL 60706", False)):
+        check("shape of %r" % value, bool(OFFICER_PHONE_SHAPE.match(value)), want)
+
+    payload = {"districts": {"X": {
+        "office": {"phone": "(309) 555-0114"},
+        "board": [{"name": "A", "role": "President", "phone": "555-0114"},
+                  {"name": "B", "role": "Trustee", "phone": "12 Main St"}],
+        "heads": [{"name": "C", "role": "Director", "phone": "(309) 555-0101",
+                   "phonesExtra": ["a@b.org"]}]}}}
+    found = suspect_phones_in(payload)
+    check("suspect_phones_in finds each bad value",
+          [w for w, _why in found],
+          ["districts.X.board[1]", "districts.X.heads[0]"])
+    check("and never names the value",
+          any("Main" in why or "@" in why for _w, why in found), False)
+    check("count_officer_phones counts records, numbers and missing area codes",
+          count_officer_phones(payload),
+          {"officers": 3, "withPhone": 3, "withSecond": 1, "noAreaCode": 1})
+
+    check("line_digits drops an extension and a leading 1",
+          [line_digits(v) for v in ("(309) 555-0114 Ext: 101",
+                                    "1-309-555-0114", "555-0114 x2", "")],
+          ["3095550114", "3095550114", "5550114", ""])
+    check("same_line: a number with no area code matches the line it ends",
+          (same_line("5550114", "3095550114"), same_line("5550114", "3095550115"),
+           same_line("3095550114", "8155550114")), (True, False, False))
+    entry = {"office": {"phone": "(309) 555-0150"},
+             "board": [{"name": "A", "phone": "(309) 555-0114 Ext: 101",
+                        "phonesExtra": ["(309) 555-0116"]},
+                       {"name": "B", "phone": "555-0114"},
+                       {"name": "C", "phone": "(309) 555-0117"}],
+             "heads": [{"name": "D"}]}
+    dropped = drop_lines_from_officers(entry, ["309.555.0114", ""])
+    check("drop_lines_from_officers takes the body's line off every officer",
+          (dropped, entry["board"]),
+          (2, [{"name": "A", "phone": "(309) 555-0116"}, {"name": "B"},
+               {"name": "C", "phone": "(309) 555-0117"}]))
+    check("and leaves the office and an officer with no number alone",
+          (entry["office"], entry["heads"]),
+          ({"phone": "(309) 555-0150"}, [{"name": "D"}]))
+    entry = {"office": {"email": "Office@Example.org"},
+             "board": [{"name": "A", "email": "office@example.org"},
+                       {"name": "B", "email": "b@example.org"}],
+             "heads": [{"name": "C"}]}
+    check("drop_mail_from_officers takes the body's address off, any case",
+          (drop_mail_from_officers(entry, ["OFFICE@example.org", " "]),
+           entry["board"], entry["office"]),
+          (1, [{"name": "A"}, {"name": "B", "email": "b@example.org"}],
+           {"email": "Office@Example.org"}))
+
+    # AN OFFICER'S OWN E-MAIL ADDRESS (Adam's choice of 2026-10-17, "E-mails
+    # too"). Driven through the real contact_block. Every address here is on a
+    # made-up or reserved domain; slot B is the President and slot C the
+    # Treasurer, both shipped, while A and D ship only a board title.
+    def mails(emails, name_row=None):
+        """({officer name: e-mail}, the district's e-mail, the warnings)."""
+        warnings = []
+        block = contact_block(
+            _Session("Norridge",
+                     name_row or ["Pat", "Reed", "Ann", "Joyce",
+                                  "Cal", "Moss", "Dee", "Fox"],
+                     ["", "", "", ""], emails),
+            "016/999/99", "SELFTEST UNIT", warnings) or {}
+        shipped = {}
+        for _bucket, record in block.get("officers") or []:
+            shipped[record["name"]] = record.get("email")
+        return shipped, block.get("email"), warnings
+
+    got, district, _ = mails(["", "ann.joyce@example.com", "cmoss@example.net", ""])
+    check("an officer's own address rides that officer",
+          got, {"Ann Joyce": "ann.joyce@example.com", "Cal Moss": "cmoss@example.net"})
+    check("and is not the district's", district, "")
+
+    got, _, _ = mails(["", "Shared@Example.com", "shared@example.com", ""])
+    check("an address printed beside two people, in any case, rides neither",
+          got, {"Ann Joyce": None, "Cal Moss": None})
+
+    got, _, _ = mails(["pat.reed@example.com", "", "", "dee@example.com"])
+    check("an address in another person's slot is not an officer's",
+          got, {"Ann Joyce": None, "Cal Moss": None})
+
+    got, _, warned = mails(["", "cal.moss@example.com", "", ""])
+    check("an address named for another filer rides nobody",
+          got, {"Ann Joyce": None, "Cal Moss": None})
+    check("and the warning names the slot, never the value",
+          [w for w in warned if "named for another filer" in w],
+          ["SELFTEST UNIT: slot B files an e-mail named for another filer of "
+           "the same report; it ships on nobody"])
+    got, _, _ = mails(["", "bob.smith@example.com", "asmith@example.com", ""],
+                      ["Pat", "Reed", "Ann", "Smith", "Bob", "Smith", "Dee", "Fox"])
+    check("a shared surname decides nothing; a given name does",
+          got.get("Ann Smith"), None)
+    got, _, _ = mails(["", "asmith@example.com", "bob.smith@example.com", ""],
+                      ["Pat", "Reed", "Ann", "Smith", "Bob", "Smith", "Dee", "Fox"])
+    check("and each Smith keeps an address that names nobody else",
+          got, {"Ann Smith": "asmith@example.com", "Bob Smith": "bob.smith@example.com"})
+
+    got, district, _ = mails(["", "info@selftestfire.org", "cmoss@example.net", ""])
+    check("the district's own address stays the district's",
+          (district, got.get("Ann Joyce"), got.get("Cal Moss")),
+          ("info@selftestfire.org", None, "cmoss@example.net"))
+
+    both = ["Pat", "Reed", "Ann", "Joyce", "Cal", "Moss", "Ann", "Joyce"]
+    got, _, _ = mails(["", "annj@example.com", "", "ajoyce@selftest.il.us"], both)
+    check("one address per person, a government domain kept over another",
+          got.get("Ann Joyce"), "ajoyce@selftest.il.us")
+    got, district, _ = mails(["", "annj@example.com", "", "ann@selftestfire.org"],
+                             both)
+    check("and where the one kept is the district's, the officer carries none",
+          (district, got.get("Ann Joyce")), ("ann@selftestfire.org", None))
+    got, _, _ = mails(["", "annj@example.com", "", "ann.j@example.net"], both)
+    check("two addresses that both carry the officer's name: the first in slot order",
+          got.get("Ann Joyce"), "annj@example.com")
+    got, _, _ = mails(["", "bill@example.com", "", "kim@example.com"], both)
+    check("two addresses neither carrying the officer's name: neither ships",
+          got.get("Ann Joyce"), None)
+    got, _, _ = mails(["", "kim@example.com", "", "ann.joyce@example.net"], both)
+    check("two addresses, one carrying the officer's name: that one ships",
+          got.get("Ann Joyce"), "ann.joyce@example.net")
+    got, district, _ = mails(["", "selftestfire@example.com", "", "ann.joyce@example.com"],
+                             both)
+    check("a district mailbox at a provider stays the district's, "
+          "and the officer's own address ships",
+          (district, got.get("Ann Joyce")),
+          ("selftestfire@example.com", "ann.joyce@example.com"))
+    got, district, _ = mails(["", "selftestfire@example.com", "", "kim@example.com"],
+                             both)
+    check("beside a district mailbox, an address not carrying the name ships on nobody",
+          (district, got.get("Ann Joyce")), ("selftestfire@example.com", None))
+    got, _, _ = mails(["", "selftest13@example.com", "", ""])
+    check("an address named for the unit and not the officer is the unit's",
+          got.get("Ann Joyce"), None)
+    got, _, _ = mails(["", "admin@mackcpas.example", "office@ruralbank.example", ""])
+    check("an accountant's or a bank's address not carrying the name ships on nobody",
+          got, {"Ann Joyce": None, "Cal Moss": None})
+    got, _, _ = mails(["", "ann.joyce@joycecpa.example", "cmoss@example.net", ""])
+    check("and one carrying the officer's name ships",
+          got, {"Ann Joyce": "ann.joyce@joycecpa.example", "Cal Moss": "cmoss@example.net"})
+    check("firm_address reads the address's words, not a bare substring",
+          [firm_address(v) for v in ("staff@sycparks.example", "cpamb@example.net",
+                                     "jo.cpa@example.net", "redbird1992cpa@example.com",
+                                     "kim@tricountycpas.example", "x@farmerbank.example",
+                                     "x@ruralaccountinginc.example")],
+          [False, False, True, True, True, True, True])
+    got, _, warned = mails(["", "klet62@example.com", "", ""],
+                           ["Kathy", "Letterle", "Ann", "Joyce", "Cal", "Moss",
+                            "Dee", "Fox"])
+    check("an address made of another filer's initial and surname rides nobody",
+          got.get("Ann Joyce"), None)
+    check("and is warned about by slot",
+          [w for w in warned if "named for another filer" in w],
+          ["SELFTEST UNIT: slot B files an e-mail named for another filer of "
+           "the same report; it ships on nobody"])
+    check("person_tokens: words, initial with surname, given name with initial",
+          sorted(person_tokens("Kathy Letterle")),
+          ["kathy", "katl", "klet", "letterle"])
+    check("person_tokens: an apostrophe dropped and a suffix not a surname",
+          sorted(person_tokens("Charles O'Brien III")),
+          ["chao", "charles", "cobr", "obrien"])
+
+    got, _, warned = mails(["", "ann.joyce@example.com", "", "ann.joyce@exmple.com"],
+                           both)
+    check("two addresses one character apart for one person: neither ships",
+          got.get("Ann Joyce"), None)
+    check("and the warning names slots B and D, never a value",
+          [w.split(": slots ")[1].split(" file")[0] for w in warned
+           if ": slots " in w], ["B, D"])
+
+    got, _, warned = mails(["", "ann@example.com / ann2@example.com",
+                            "not an address", ""])
+    check("a cell not shaped like one address ships on nobody",
+          got, {"Ann Joyce": None, "Cal Moss": None})
+    check("the warning names the slots",
+          sorted(w.split(": slot ")[1][0] for w in warned if "not shaped" in w),
+          ["B", "C"])
+    check("and never the value", any("example" in w for w in warned), False)
+
+    got, _, _ = mails(["", "Ann.Joyce@Example.com", "MaxExton@example.com", ""])
+    check("an address ships in its filed case and is never cut at 'Ext'",
+          got, {"Ann Joyce": "Ann.Joyce@Example.com", "Cal Moss": "MaxExton@example.com"})
+
+    import contextlib
+    import io
+    with contextlib.redirect_stderr(io.StringIO()):
+        got, _, _ = mails(["", "eeeten@gmail.org", "", ""])
+    check("an address undeliverable.py lists stays withheld",
+          got.get("Ann Joyce"), None)
+
+    check("one_typo_apart: a dropped, a changed and a swapped character",
+          [one_typo_apart(a, b) for a, b in (("abcd", "abd"), ("abcd", "abxd"),
+                                             ("abcd", "abdc"), ("abcd", "abcd"),
+                                             ("abcd", "ab"))],
+          [True, True, True, False, False])
+
+    payload = {"districts": {"X": {
+        "office": {"email": "office@example.org"},
+        "board": [{"name": "A", "role": "President", "email": "a@example.org"},
+                  {"name": "B", "role": "Trustee", "email": "b c@example.org"}],
+        "heads": [{"name": "C", "role": "Director",
+                   "email": "c@example.org, d@example.org"},
+                  {"name": "D", "role": "Manager"}]}}}
+    found = suspect_emails_in(payload)
+    check("suspect_emails_in finds each bad value",
+          [w for w, _why in found],
+          ["districts.X.board[1]", "districts.X.heads[0]"])
+    check("and never names the value",
+          any("@" in why for _w, why in found), False)
+    check("count_officer_emails counts records and addresses",
+          count_officer_emails(payload), {"officers": 4, "withEmail": 3})
+
+    payload = {"districts": {
+        "X": {"board": [{"name": "Ann Joyce", "email": "admin@firm.example"},
+                        {"name": "Cal Moss", "email": "cmoss@example.net"}]},
+        "Y": {"board": [{"name": "Dee Fox", "email": "ADMIN@firm.example"},
+                        {"name": "CAL MOSS", "email": "cmoss@example.net"}]}}}
+    check("drop_mail_given_for_two: one address beside two people, across filings",
+          (drop_mail_given_for_two(payload),
+           [p.get("email") for d in ("X", "Y")
+            for p in payload["districts"][d]["board"]]),
+          (2, [None, "cmoss@example.net", None, "cmoss@example.net"]))
+
+    # ACROSS ROSTERS, built in either order and then again, as the weekly jobs
+    # build them: an address one roster gives Lee Park and another gives Mo
+    # Reyes ends on neither, and one both give Sal Ortiz stays on him in both.
+    import tempfile
+    library, special = AFR_ROSTERS[0], AFR_ROSTERS[1]
+
+    def roster(person):
+        return {"libraries": {"L": {"board": [
+            {"name": person, "email": "pat.home@example.net"},
+            {"name": "Sal Ortiz", "email": "sal@example.net"}]}}}
+
+    def build(app_dir, own, payload):
+        withheld = {}
+        drop_mail_given_for_two(payload, mail_elsewhere(app_dir, own), withheld)
+        if withheld:
+            payload[MAIL_GIVEN_FOR_TWO] = withheld
+        with open(os.path.join(app_dir, own), "w", encoding="utf-8") as fh:
+            json.dump(payload, fh)
+        return [p.get("email") for p in payload["libraries"]["L"]["board"]]
+
+    for order in ((library, special), (special, library)):
+        with tempfile.TemporaryDirectory() as app_dir:
+            who = {library: "Lee Park", special: "Mo Reyes"}
+            got = {}
+            for _round in range(2):
+                for own in order:
+                    got[own] = build(app_dir, own, roster(who[own]))
+            check("drop_mail_given_for_two: one address beside two people in two "
+                  "rosters, %s built first" % order[0].split("-")[1],
+                  (got[library], got[special]),
+                  ([None, "sal@example.net"], [None, "sal@example.net"]))
+            with open(os.path.join(app_dir, special), encoding="utf-8") as fh:
+                written = json.dumps(json.load(fh))
+            check("and the roster records it as digests, never the address or name",
+                  ("pat.home" in written.split(MAIL_GIVEN_FOR_TWO)[1],
+                   "Mo Reyes" in written.split(MAIL_GIVEN_FOR_TWO)[1]),
+                  (False, False))
+    with tempfile.TemporaryDirectory() as app_dir:
+        for _round in range(2):
+            for own in (library, special):
+                kept = build(app_dir, own, roster("Pat Home"))
+        check("one person given one address in two rosters keeps it in both",
+              kept, ["pat.home@example.net", "sal@example.net"])
+
     if failed:
         print("")
         print("%d CHECK(S) FAILED" % len(failed))
@@ -1002,8 +2143,10 @@ def _selftest():
             print("  " + f)
         return 1
     print("")
-    print("OK - LOCALITY_CORRECTIONS behaves in all three directions, and the "
-          "middle-initial comma is corrected, printed, and never guessed")
+    print("OK - LOCALITY_CORRECTIONS behaves in all three directions, the "
+          "middle-initial comma is corrected, printed, and never guessed, and "
+          "an officer's own telephone and e-mail address ride that officer and "
+          "nobody else")
     return 0
 
 

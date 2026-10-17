@@ -97,9 +97,11 @@ shapes are published as they stand.
 E-MAIL IS NOT SHIPPED FROM THIS SOURCE. 633 of the 641 rows carry one, and they
 are a mix of institutional mailboxes (acorn@acornlibrary.org) and named
 individuals' work addresses (medjo@addisonlibrary.org). The AFR route ships an
-e-mail only where the filing witnesses it as the unit's; a directory row cannot
-make that distinction, so this one carries the address and telephone and leaves
-the mailbox alone.
+e-mail as the library's only where the filing witnesses it as the library's, and
+as a person's only where the filing prints it in that person's own slot (since
+2026-10-17, comptroller_afr.py's OFFICER E-MAIL section); a directory row says
+neither, so this one carries the address and telephone and leaves the mailbox
+alone.
 """
 
 import argparse

@@ -396,11 +396,22 @@ def afr_people(rec):
     name would separate a district's president from its treasurer, and sorting
     the two groups together would mix elected trustees with appointed staff in
     a column where the reader is told which is which by the role beside them.
+
+    AN OFFICER'S OWN TELEPHONE IS CARRIED, since Adam's ruling of 2026-10-17
+    ("if the official government source uses personal phone numbers, we publish
+    those"): comptroller_afr.py puts the number a filing prints beside one
+    officer alone on that officer's record, and `phone` and `phonesExtra` are
+    copied here so the table's Telephone column prints them.
     """
     out = []
     for person in list(rec.get("board") or []) + list(rec.get("heads") or []):
         if person.get("name"):
-            out.append({"name": person["name"], "role": person.get("role")})
+            row = {"name": person["name"], "role": person.get("role")}
+            if person.get("phone"):
+                row["phone"] = person["phone"]
+            if person.get("phonesExtra"):
+                row["phonesExtra"] = list(person["phonesExtra"])
+            out.append(row)
     return out
 
 

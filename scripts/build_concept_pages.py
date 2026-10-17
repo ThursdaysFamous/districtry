@@ -876,21 +876,36 @@ def dispatch_counties(layer):
     return len(keys)
 
 
-def office_table(units, noun, plural):
+def office_table(units, noun, plural, own_line=""):
     """One row per district that publishes an office, from the same filings.
 
-    THE ADDRESS AND THE TELEPHONE BELONG TO THE DISTRICT, NOT TO A PERSON, so
-    they sit here rather than beside a name in the table above — the rule the
-    township-hall table already follows, and for the same reason: a filing
-    publishes one office per district and one telephone, often a named
-    officer's own line, and printing it next to one trustee would make it
+    THE ADDRESS AND THE TELEPHONE HERE BELONG TO THE DISTRICT, NOT TO A PERSON,
+    so they sit here rather than beside a name in the table above — the rule the
+    township-hall table already follows. comptroller_afr.py ships a district's
+    address or telephone only where two differently-surnamed people on its
+    filing both gave it, so printing it next to one trustee would make it
     theirs.
 
-    NO E-MAIL COLUMN. About a third of these filings carry one and it is
-    almost always a named officer's work address rather than the district's, so
-    it stays on the map's card where the question is who to contact about this
-    district, and off a page that would publish several hundred of them in one
-    scrapeable block.
+    A TELEPHONE THE FILING PRINTS BESIDE ONE PERSON ALONE IS THAT PERSON'S, and
+    since Adam's ruling of 2026-10-17 ("if the official government source uses
+    personal phone numbers, we publish those") it ships on that person's record
+    and the people table above prints it beside their name, whosever line it
+    is. Until that day this docstring and the paragraph below said this site
+    never prints a telephone beside a name. `own_line` finishes the page's
+    sentence where a further number is kept off its people: a library officer
+    does not carry a number the library systems' directory lists as the
+    library's own (build_il_library_district_officials.py), so the sentence
+    says so on the library page and only there.
+
+    NO E-MAIL COLUMN, in this table or in the people table above. The
+    district's own address has always shipped on the map's card, and since Adam
+    chose "E-mails too" on 2026-10-17 each officer's own address does too; both
+    stay on the card, where the question is who to contact about this district,
+    and off a page that would publish several hundred of them in one block a
+    single request can read. The people table's generator carries no e-mail
+    column for any roster (build_officeholder_tables.py says why). That is a
+    decision about this page and not about the addresses, which ship in the
+    data the card reads, and the paragraph below says where they are.
     """
     rows = []
     for name, rec in units:
@@ -910,9 +925,11 @@ def office_table(units, noun, plural):
     return """  <section>
     <h2>Where to reach each %(noun)s</h2>
     <p>Where %(n)d of these %(plural)s say to reach them, in their own filings. The address and
-      the telephone belong to the <strong>%(noun)s</strong> rather than to any one person on
-      it: a filing publishes one of each, often a named officer's own line, so this
-      site never prints either beside a name.</p>
+      the telephone here belong to the <strong>%(noun)s</strong> rather than to any one person
+      on it: each is one that two different people on the filing both gave. The table above
+      prints a telephone beside a person's name where the filing lists it for that person
+      alone%(own_line)s. E-mail addresses, the %(noun)s's own and each person's, are on the
+      map's card and not on this page.</p>
     <div class="flow-table-wrap">
     <table class="flow">
       <thead><tr><th>%(head)s</th><th>Office</th><th>Telephone</th></tr></thead>
@@ -924,7 +941,7 @@ def office_table(units, noun, plural):
   </section>
 
 """ % dict(n=len(rows), rows="\n".join(rows), noun=esc(noun), plural=esc(plural),
-           head=esc(noun[0].upper() + noun[1:]))
+           head=esc(noun[0].upper() + noun[1:]), own_line=own_line)
 
 
 def afr_provenance(noun, name_note):
@@ -987,8 +1004,9 @@ def fire_district_page(tag, spec, worksheet):
     <h2>What the lookup shows</h2>
     <div class="answer-card">
       <p>Select any point and the card names the <strong>fire protection district</strong>
-        covering it, the people its latest filing names, and the district's office and
-        telephone.</p>
+        covering it, the people its latest filing names, each with any telephone or e-mail
+        address the filing gives as that person's own, and the district's office, telephone
+        and e-mail.</p>
       <p>The map draws these districts in %(counties)d Illinois counties. This page names the
         %(units)d districts among them that file an annual report the state publishes. A
         district the filings do not reach still draws on the map, and its card may still name
@@ -1045,7 +1063,9 @@ def park_district_page(tag, spec, worksheet):
     <h2>What the lookup shows</h2>
     <div class="answer-card">
       <p>Select any point and the card names the <strong>park district</strong> covering it,
-        the people its latest filing names, and the district's office and telephone.</p>
+        the people its latest filing names, each with any telephone or e-mail address the
+        filing gives as that person's own, and the district's office, telephone and
+        e-mail.</p>
       <p>The map draws park districts in %(counties)d Illinois counties. This page names the
         %(units)d districts among them that file an annual report the state publishes. A
         district the filings do not reach still draws on the map, and its card may still name
@@ -1114,7 +1134,9 @@ def library_district_page(tag, spec, worksheet):
     <div class="answer-card">
       <p>Select any point and the card names the <strong>library</strong> serving it, whether
         it is a district you live inside or a municipal library whose area is simply the
-        village, the people its latest filing names, and its office and telephone.</p>
+        village, the people its latest filing names, each with any telephone or e-mail address
+        the filing gives as that person's own (never the library's own line), and its office,
+        telephone and e-mail.</p>
       <p>The map draws library boundaries in %(counties)d Illinois counties. This page names
         %(units)d of them from the annual report the library files with the state and
         %(site)d more from the library's own website. A library in neither table still draws
@@ -1150,7 +1172,10 @@ def library_district_page(tag, spec, worksheet):
   </section>
 
 """  % dict(counties=counties, units=len(units), districts=districts, site=len(site))
-    sections += office_table(units, "library", "libraries")
+    sections += office_table(
+        units, "library", "libraries",
+        own_line=" and the Illinois library systems' shared directory does not list it as "
+                 "the library's own telephone")
     sections += afr_provenance("library", LIBRARY_NAME_NOTE)
 
     return dict(

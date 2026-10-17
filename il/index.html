@@ -18186,7 +18186,18 @@ function initChiExplorer() {
    * A DISTRICT THAT FILES UNDER ANOTHER COUNTY SAYS SO, because a reader
    * checking the filing needs to know where to look: a cross-county district
    * files once, under its home county, so Logan's Armington Community files in
-   * Tazewell and its San Jose in Mason. */
+   * Tazewell and its San Jose in Mason.
+   *
+   * A FILED OFFICER CARRIES THE TELEPHONE AND THE E-MAIL ADDRESS THE FILING
+   * PRINTS BESIDE THAT OFFICER, whosever line or mailbox it is, since Adam's
+   * ruling of 2026-10-17 ("if the official government source uses personal
+   * phone numbers, we publish those") and his choice of "E-mails too" the
+   * same day. comptroller_afr.py decides which values are an officer's own and
+   * which are the district's; a value the district shares stays in the office
+   * row below and rides nobody, and so does one a second publisher prints as
+   * the district's own (the library directory's telephone, Lake County's
+   * office telephone and e-mail). A person from the library's own website or
+   * the shared directory is drawn exactly as before, name and title only. */
   function afrDistrictPeople(result, opts) {
     var info = result && result.officials;
     if (!info) return null;
@@ -18196,6 +18207,15 @@ function initChiExplorer() {
     function person(m) {
       var out = { name: String(m.name) };
       if (m.role) out.badge = String(m.role);
+      return out;
+    }
+    function filedPerson(m) {
+      var out = person(m);
+      if (m.phone) out.phone = String(m.phone);
+      if (m.phonesExtra && m.phonesExtra.length) {
+        out.phonesExtra = m.phonesExtra.map(function (p) { return String(p); });
+      }
+      if (m.email) out.email = String(m.email);
       return out;
     }
     var filed = info.filedFor
@@ -18224,7 +18244,7 @@ function initChiExplorer() {
       : null;
     if (board.length) {
       frag.appendChild(renderSectionLabel("Board"));
-      frag.appendChild(renderPersonRows(board.map(person)));
+      frag.appendChild(renderPersonRows(board.map(filedPerson)));
     }
     // THE LIBRARY'S OWN SITE, where no filing named a board. Only the library
     // layer sets this and only in that case, so it can never sit beside the
@@ -18259,7 +18279,7 @@ function initChiExplorer() {
     }
     if (heads.length) {
       frag.appendChild(renderSectionLabel("Administration"));
-      frag.appendChild(renderPersonRows(heads.map(person)));
+      frag.appendChild(renderPersonRows(heads.map(filedPerson)));
     }
     if ((board.length || heads.length) && filed) {
       frag.appendChild(renderBodyIntro({ note: filed }));

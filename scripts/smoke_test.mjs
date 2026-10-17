@@ -1455,6 +1455,58 @@ try {
     await context.close();
   }
 
+  // 1k3. A PARK DISTRICT OFFICER'S OWN TELEPHONE AND E-MAIL ADDRESS SIT ON
+  //     THAT OFFICER'S ROW, since Adam's ruling of 2026-10-17 ("if the
+  //     official government source uses personal phone numbers, we publish
+  //     those") and his choice of "E-mails too" the same day. The Loop is in
+  //     the Chicago Park District, whose officers come from its own filing
+  //     with the Comptroller (il-special-district-officials.json). Cook's park
+  //     tiling is read live from the county, so it is stubbed with one square
+  //     carrying the district's name and the card is known; what is expected
+  //     is read from the shipped roster, so a weekly refresh that changes a
+  //     number changes what is expected, and a filing that gives its officers
+  //     neither is reported rather than passed. The card prints numbers with
+  //     no-break hyphens, folded back before comparing.
+  {
+    const [plat, plng] = POINT.split(",").map(Number);
+    const d = 0.01;
+    const parks = JSON.stringify({ features: [{ attributes: { agency_description: "CHICAGO PARK DISTRICT" },
+      geometry: { rings: [[[plng - d, plat - d], [plng - d, plat + d], [plng + d, plat + d],
+        [plng + d, plat - d], [plng - d, plat - d]]] } }] });
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=park-district`, async (p) => {
+      await p.route(/politicalBoundary\/MapServer\/23\/query/, (r) =>
+        r.fulfill({ status: 200, contentType: "application/json", body: parks }));
+    });
+    const want = await page.evaluate(async () => {
+      const r = await fetch("data/app/il-special-district-officials.json").then((x) => x.json());
+      const rec = (((r.counties || {}).cook || {}).park || {})["CHICAGO PARK DISTRICT"] || {};
+      return [].concat(rec.board || [], rec.heads || [])
+        .filter((m) => m && m.name && (m.phone || m.email))
+        .map((m) => ({ name: m.name, phones: [m.phone].concat(m.phonesExtra || []).filter(Boolean),
+          email: m.email || null }));
+    });
+    const card = await cardText(page, "park-district");
+    const rows = await page.evaluate(() => Array.from(document.querySelectorAll("#card-park-district .card-person"))
+      .map((row) => ({
+        name: (row.querySelector(".card-person-name") || {}).textContent || "",
+        phones: Array.from(row.querySelectorAll("a.card-phone")).map((a) => a.textContent.replace(/‑/g, "-")),
+        email: Array.from(row.querySelectorAll('a[href^="mailto:"]')).map((a) => a.getAttribute("href").slice(7))[0] || null,
+      })));
+    if (!want.length) {
+      console.log("  SKIP  park-district officers' own telephone and e-mail — the Chicago Park District's filing gives its officers neither");
+    } else {
+      const wrong = want.filter((w) => {
+        const row = rows.find((r) => r.name === w.name);
+        return !row || row.phones.join("|") !== w.phones.join("|") || row.email !== w.email;
+      });
+      check("the Loop's park district card shows each officer's own telephone and e-mail address on that officer's row",
+        !card.error && wrong.length === 0,
+        JSON.stringify({ wrong: wrong.map((w) => w.name), rows: rows.map((r) => r.name), card: card.text.slice(0, 120) }));
+    }
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view
