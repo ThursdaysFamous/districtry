@@ -11653,10 +11653,14 @@ def main():
         # The two checks every Wisconsin roster builder shares run here too,
         # because this selftest is the one CI runs (smoke-test.yml) and the
         # builders' own runs happen only in the weekly workflows. Each exits
-        # non-zero on a failure.
+        # non-zero on a failure. So does the town-board package's reading of
+        # Cloudflare-scrambled addresses (Iron County's town pages), for the
+        # same reason.
         import wi_phone_shape            # noqa: PLC0415 - this script's own folder
+        import town_boards               # noqa: PLC0415 - this script's own folder
         wi_phone_shape._selftest()
         wi_email_rules._selftest()
+        town_boards._selftest()
         return
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT

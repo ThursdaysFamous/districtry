@@ -68,8 +68,11 @@ So does one e-mail address per officer, whatever its domain (Adam, 2026-10-17:
     government's own domain ships, else the first printed (`choose_email`).
     An address is lower-cased and otherwise kept as printed; one whose last
     part is not a top-level domain (cut off at the end of a line, or
-    misspelt) is not read, and an address a page hides behind a script
-    (Cloudflare's "email protection") is not decoded.
+    misspelt) is not read. An address a page scrambles with Cloudflare's
+    "email protection" is written back the way every visitor's browser
+    writes it back (`cloudflare_page`), on the pages a module asks for it
+    (`ctx.fetch_text(url, cloudflare=True)`): measured 2026-10-17, Iron
+    County's town pages are the ones that need it.
 
 A module that cannot tell a name from an address must drop the row rather than
 guess. Nothing is ever invented to fill a gap: a number printed without an area
@@ -138,6 +141,9 @@ class Ctx:
         # and addresses it links as mailto: to a different address
         self.tel_disagree = set()
         self.mail_disagree = set()
+        # the label each Cloudflare-scrambled link showed, by the address it
+        # wrote back (`cloudflare_page`), for `normalize`'s `label_fits`
+        self.cf_labels = {}
 
     def _pace(self, host):
         last = self._last.get(host)
@@ -186,8 +192,14 @@ class Ctx:
                 last = exc
         raise RuntimeError("%s: %s" % (url, last))
 
-    def fetch_text(self, url, **kw):
+    def fetch_text(self, url, cloudflare=False, **kw):
+        """A web page's HTML. With `cloudflare=True`, the page as a visitor's
+        browser shows it once Cloudflare's own script has written its
+        scrambled addresses back (`cloudflare_page`), so that the text
+        `shared_emails` counts holds those addresses too."""
         page = self.fetch_bytes(url, **kw).decode("utf-8", "replace")
+        if cloudflare:
+            page = cloudflare_page(page, self.cf_labels)
         self._texts.setdefault(url, html_text(page))
         self.tel_disagree |= tel_disagreements(page)
         self.mail_disagree |= mail_disagreements(page)
@@ -371,8 +383,9 @@ def docx_mail_disagreements(data):
 # "Click here to email") is how some pages print an officer's address: the
 # page shows the label beside the officer and the link holds the address.
 # `html_text` reads such a link as "Email: <address>". The address is read
-# from the link as written, never decoded from anything else; an address a
-# page hides behind a script (Cloudflare's "email protection") stays hidden.
+# from the link as written; the one other place an address is read from is a
+# Cloudflare-scrambled link or element, which `cloudflare_page` writes back
+# where a module asks it to.
 _MAILTO = re.compile(r"(?is)<a\b[^>]*?href\s*=\s*[\"']mailto:([^\"']*)[\"'][^>]*>"
                      r"(.*?)</a>")
 _MAIL_LABEL = re.compile(r"(?i)^(?:click\s+here\s+to\s+)?(?:send\s+(?:an?\s+)?)?"
@@ -431,6 +444,101 @@ def mail_disagreements(page):
             out.update(shown)
             out.add(linked.lower())
     return out
+
+
+# ---- Cloudflare's "email protection" ------------------------------------
+#
+# A site behind Cloudflare can have every address on its pages scrambled
+# before they are sent: a mailto: link becomes a link to
+# /cdn-cgi/l/email-protection#<hex>, an address printed as text becomes an
+# element carrying data-cfemail="<hex>" that shows "[email protected]", and a
+# script Cloudflare adds to the page writes each one back in the visitor's
+# browser. The hex is the address with every byte XORed with the first byte.
+# THAT IS NOT AN ACCESS CONTROL (Adam, 2026-10-09): the page hands the key to
+# every visitor in the same bytes, so writing the addresses back reads the
+# page as published — the reading wi_county_board_scraper.py and
+# wi_alderperson_scraper.py already apply. A token that does not decode to
+# exactly one address is left as it is, and nothing is read from it.
+_CF_HEX = r"([0-9A-Fa-f]{4,})"
+_CF_SHOWN = re.compile(r"(?is)<(span|a)\b[^>]*?\bdata-cfemail\s*=\s*[\"']%s[\"']"
+                       r"[^>]*>.*?</\1>" % _CF_HEX)
+_CF_LINK = re.compile(r"(?is)<a\b[^>]*?\bhref\s*=\s*[\"'][^\"']*/cdn-cgi/l/"
+                      r"email-protection#%s[^\"']*[\"'][^>]*>(.*?)</a>" % _CF_HEX)
+_ONE_ADDRESS = re.compile(r"[A-Za-z0-9._%+'-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def cf_decode(token):
+    """The address one Cloudflare token stands for, or None where the token
+    is not hex pairs or does not decode to exactly one address. A mailto
+    target's query ("?subject=...") is not part of the address."""
+    try:
+        raw = bytes.fromhex(token or "")
+    except ValueError:
+        return None
+    if len(raw) < 2:
+        return None
+    try:
+        text = bytes(b ^ raw[0] for b in raw[1:]).decode("utf-8")
+    except UnicodeDecodeError:
+        return None
+    text = text.split("?", 1)[0].strip()
+    return text if _ONE_ADDRESS.fullmatch(text) else None
+
+
+def cloudflare_page(page, labels=None):
+    """`page` as a visitor's browser shows it once Cloudflare's script has
+    written its scrambled addresses back. An element carrying data-cfemail
+    becomes the address it stands for, as text. A link to
+    /cdn-cgi/l/email-protection#<hex> that shows an address becomes a
+    mailto: link to its own address, so that `mail_disagreements` still
+    compares the two; one that shows a label instead ("Email", "Email Jane
+    Doe") is read as "Email: <address>", the form `html_text` gives a mailto
+    link labelled "Email", and its label is added to `labels` (address ->
+    [label, ...]), which `normalize` reads to keep an address whose label
+    names somebody else off the officer it sits beside (`label_fits`)."""
+    def shown(m):
+        addr = cf_decode(m.group(2))
+        return H.escape(addr) if addr else m.group(0)
+
+    def link(m):
+        addr = cf_decode(m.group(1))
+        inner = m.group(2)
+        # an element inside the link that did not decode (every one that did
+        # is text by now): the link is left scrambled rather than read
+        # without the address it shows
+        if not addr or re.search(r"(?i)\bdata-cfemail\b", inner):
+            return m.group(0)
+        if email_tokens(_inner_text(inner)):
+            return '<a href="mailto:%s">%s</a>' % (H.escape(addr), inner)
+        if labels is not None:
+            labels.setdefault(addr.lower(), []).append(_inner_text(inner))
+        return " Email: %s " % H.escape(addr)
+
+    return _CF_LINK.sub(link, _CF_SHOWN.sub(shown, page or ""))
+
+
+# the words a label opens with before it names anybody ("Email Jane Doe",
+# "Send an e-mail to Jane Doe")
+_LABEL_LEAD = re.compile(r"(?i)^(?:click\s+here\s+to\s+)?(?:send\s+(?:an?\s+)?)?"
+                         r"e-?\s?mail(?:\s+(?:to|me|us|him|her|address))?\b\W*")
+
+
+def _words(s):
+    return " ".join(re.findall(r"[a-z]+", (s or "").lower()))
+
+
+def label_fits(labels, name):
+    """True unless a link label an address was shown with (`cloudflare_page`)
+    names anything but the officer it was read beside: a label that is
+    "Email" and nothing more fits anyone, and one naming a person must name
+    exactly this officer ("Email Jane Doe" beside Jane Doe). Measured
+    2026-10-17, every Iron County town page labels a board member's link
+    either "Email" or with that member's own name."""
+    for label in labels or ():
+        rest = _words(_LABEL_LEAD.sub("", (label or "").strip(), count=1))
+        if rest and rest != _words(name):
+            return False
+    return True
 
 
 def html_text(page):
@@ -753,13 +861,16 @@ def normalize(towns, ctx):
     module read (`ctx.read_text()`) is taken off every member who carries
     it, and so is a number a page links as tel: to a different number than
     it shows (`tel_disagreements`). The same is done for e-mail addresses
-    (`shared_emails`, `mail_disagreements`), and of the addresses left the
-    one that ships is chosen (`choose_email`). Returns (towns, rows dropped,
-    numbers taken off)."""
+    (`shared_emails`, `mail_disagreements`), an address a Cloudflare link
+    labelled with somebody else's name is kept off the officer it sits
+    beside (`label_fits`), and of the addresses left the one that ships is
+    chosen (`choose_email`). Returns (towns, rows dropped, numbers taken
+    off)."""
     owners = [p.get("name") for ps in towns.values() for p in ps]
     text = ctx.read_text()
     shared = shared_numbers(text, owners) | ctx.tel_disagree
     shared_mail = shared_emails(text, owners) | ctx.mail_disagree
+    cf_labels = getattr(ctx, "cf_labels", None) or {}
     out, dropped, taken = {}, 0, 0
     for town, people in towns.items():
         keep = []
@@ -767,8 +878,11 @@ def normalize(towns, ctx):
             if not p.get("role") or not looks_like_person(p.get("name")):
                 dropped += 1
                 continue
+            mails = [e for e in emails_of(p)
+                     if label_fits(cf_labels.get((e or "").strip().lower()),
+                                   p["name"])]
             rec = person(p["name"], p["role"], phones_of(p), shared,
-                         emails_of(p), shared_mail)
+                         mails, shared_mail)
             taken += len(phones_of(p)) - len(phones_of(rec))
             keep.append(rec)
         if keep:
@@ -1278,3 +1392,113 @@ def role_then_name(block, stop_re=None, follow=True):
                     i += 1
         i += 1
     return people
+
+
+def _cf_token(addr, key=0x5A):
+    """`addr` scrambled the way Cloudflare scrambles it, for the selftest."""
+    return "%02x" % key + "".join("%02x" % (b ^ key) for b in addr.encode("utf-8"))
+
+
+def _selftest():
+    """The Cloudflare reading on made-up names, reserved example domains and
+    555-01xx numbers: the decoder, what the page reads as, the label rule,
+    and one town table through `role_then_name` and `normalize`. Exits
+    non-zero on a failure."""
+    bad = []
+
+    def same(label, got, want):
+        if got != want:
+            bad.append("%s: got %r, want %r" % (label, got, want))
+
+    pat, lee, hall = ("pat.doe@example.com", "lroe@example.net",
+                      "townhall@example.org")
+    same("decodes", cf_decode(_cf_token(pat)), pat)
+    same("decodes with another key", cf_decode(_cf_token(pat, 0x13)), pat)
+    same("a mailto query is not the address",
+         cf_decode(_cf_token(pat + "?subject=Board")), pat)
+    same("not hex", cf_decode("zz" + _cf_token(pat)[2:]), None)
+    same("odd length", cf_decode(_cf_token(pat)[:-1]), None)
+    same("too short", cf_decode("5a"), None)
+    same("not one address", cf_decode(_cf_token("Pat Doe")), None)
+    same("two addresses", cf_decode(_cf_token(pat + " " + lee)), None)
+
+    def link(addr, shows):
+        return '<a href="/cdn-cgi/l/email-protection#%s">%s</a>' % (_cf_token(addr), shows)
+
+    def span(addr):
+        return ('<span class="__cf_email__" data-cfemail="%s">[email&#160;'
+                'protected]</span>' % _cf_token(addr))
+
+    labels = {}
+    page = cloudflare_page("<p>%s</p>" % link(pat, "Email Pat Doe"), labels)
+    same("a label link reads as Email: <address>", html_text(page),
+         "Email: " + pat)
+    same("its label is recorded", labels, {pat: ["Email Pat Doe"]})
+    page = cloudflare_page("<p>%s</p>" % link(pat, span(pat)))
+    same("a link showing its own address", html_text(page), pat)
+    same("...agrees with itself", mail_disagreements(page), set())
+    page = cloudflare_page("<p>%s</p>" % link(pat, span(lee)))
+    same("a link showing another address is a disagreement",
+         mail_disagreements(page), {pat, lee})
+    page = cloudflare_page("<p>Write to %s</p>" % span(lee))
+    same("an address printed as text", html_text(page), "Write to " + lee)
+    broken = '<p><a href="/cdn-cgi/l/email-protection#zz">Email</a></p>'
+    same("a token that does not decode is left alone",
+         cloudflare_page(broken), broken)
+    inner = ('<a href="/cdn-cgi/l/email-protection#%s"><span class="__cf_email__" '
+             'data-cfemail="zz">[email&#160;protected]</span></a>' % _cf_token(pat))
+    same("a link around an element that does not decode is left alone",
+         email_tokens(html_text(cloudflare_page(inner))), [])
+    same("absolute link", html_text(cloudflare_page(
+        '<a href="https://www.example.gov/cdn-cgi/l/email-protection#%s">Email</a>'
+        % _cf_token(lee))), "Email: " + lee)
+
+    same("no label", label_fits(None, "Pat Doe"), True)
+    same("a bare label", label_fits(["Email"], "Pat Doe"), True)
+    same("a label naming the officer", label_fits(["Email Pat Doe"], "Pat Doe"), True)
+    same("a label naming another", label_fits(["Email Lee Roe"], "Pat Doe"), False)
+    same("a label naming an office", label_fits(["Email Town Clerk"], "Pat Doe"),
+         False)
+    same("one of two labels naming another",
+         label_fits(["Email Pat Doe", "Email Lee Roe"], "Pat Doe"), False)
+
+    # one town's table, as Iron County lays it out: a chair labelled with
+    # his own name, a supervisor whose link is labelled with the chair's
+    # name, and a supervisor whose address the clerk's row prints too
+    def row(title, name, phone, mail):
+        return ("<tr><td><p>%s</p></td><td><p>%s</p></td><td><p>%s</p></td>"
+                "<td><p>%s</p></td></tr>" % (title, name, phone, mail))
+
+    table = ("<table><thead><tr><th><p>Title</p></th><th><p>Name</p></th>"
+             "<th><p>Phone</p></th><th><p>Email</p></th></tr></thead><tbody>"
+             + row("Chairman", "Pat Doe", "715-555-0101", link(pat, "Email Pat Doe"))
+             + row("Supervisor", "Lee Roe", "715-555-0102", link(lee, "Email Pat Doe"))
+             + row("Supervisor", "Kim Poe", "715-555-0103", link(hall.replace(
+                 "townhall", "kpoe"), "Email"))
+             + row("Clerk", "Dee Coe", "715-555-0104", link(hall.replace(
+                 "townhall", "kpoe"), "Email"))
+             + "</tbody></table>")
+
+    class _Offline(Ctx):
+        def fetch_bytes(self, url, tries=3, timeout=90):
+            self.read[url] = ("<html><body><h1>Town of Example</h1>%s"
+                              "</body></html>" % table).encode("utf-8")
+            return self.read[url]
+
+    ctx = _Offline()
+    text = html_text(ctx.fetch_text("https://example.gov/1/Town-of-Example",
+                                    cloudflare=True))
+    people = role_then_name(text[text.find("\nTitle\n"):])
+    towns, _dropped, _taken = normalize({"Example": people}, ctx)
+    got = {p["name"]: p.get("email") for p in towns.get("Example", [])}
+    same("the chair's own address ships", got.get("Pat Doe"), pat)
+    same("an address labelled with another's name does not",
+         got.get("Lee Roe"), None)
+    same("an address the clerk's row prints too does not", got.get("Kim Poe"),
+         None)
+    same("the numbers are untouched", [p.get("phone") for p in towns["Example"]],
+         ["715-555-0101", "715-555-0102", "715-555-0103"])
+
+    if bad:
+        raise SystemExit("town_boards selftest FAILED: " + "; ".join(bad))
+    print("town_boards selftest: Cloudflare reading holds")
