@@ -13673,6 +13673,105 @@ function initNorthCarolinaExplorer() {
     });
   }
 
+  /* ---------- The soil and water conservation district, on the County card.
+   *
+   * The state's District Directory names the supervisors of the district
+   * that covers each county (nc/scripts/build_nc_conservation_boards.py;
+   * data/app/nc-conservation-boards.json, keyed by county GEOID). A board has
+   * five seats, three elected without party labels and two appointed by the
+   * state Soil and Water Conservation Commission. 95 districts follow county
+   * lines; the Albemarle district covers five counties and the directory
+   * lists its supervisors county by county, so each of those cards names the
+   * ones listed for its county and says the district covers all five. A
+   * seat the directory lists with no name is shown that way and never called
+   * a vacancy. The builder's --check requires the sentence on how a board is
+   * chosen to stay as the builder states it.
+   * ---------- */
+  var loadConservationBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-conservation-boards.json", {}, 2);
+  });
+  var NC_CONSERVATION_CHOSEN = "Most districts have five supervisors: " +
+    "three elected by the county's voters without party labels at the " +
+    "general election, and " +
+    "two appointed by the state Soil and Water Conservation Commission on " +
+    "the board's recommendation, each for four years.";
+  function ncConservationFor(result) {
+    return loadConservationBoards().then(function (r) {
+      result.conservation = r[String(result.geoid)] || null;
+    }, function () {
+      result.conservationFailed = true;
+    });
+  }
+  function conservationRank(role) {
+    var r = String(role || "");
+    if (/^chair/i.test(r)) return 0;
+    if (/^vice/i.test(r)) return 1;
+    if (/secretary|treasurer|financial/i.test(r)) return 2;
+    return 3;
+  }
+  // The board's officers first, then the directory's own order.
+  function ncConservationRows(members) {
+    return (members || []).map(function (m, i) {
+      return { m: m, i: i };
+    }).sort(function (a, b) {
+      return (conservationRank(a.m.role) - conservationRank(b.m.role)) || (a.i - b.i);
+    }).map(function (x) {
+      var m = x.m;
+      var bits = [];
+      if (m.chosen) bits.push(m.chosen === "appointed" ? "Appointed" : "Elected");
+      var term = /^(\d{4})-(\d{4})$/.exec(String(m.term || ""));
+      if (term) bits.push(term[1] + "–" + term[2] + " term");
+      var row = {
+        name: m.name ? String(m.name) : "No name listed",
+        badge: m.role ? String(m.role) : null,
+        note: bits.length ? bits.join(" · ") : null
+      };
+      if (m.unlisted) {
+        row.details = { label: "Why", items: ["The state's directory lists this " +
+          "seat with no name and does not say whether it is vacant."] };
+      }
+      return row;
+    });
+  }
+  function ncConservationSection(wrap, result) {
+    var districts = (result.conservation && result.conservation.districts) || [];
+    if (!districts.length) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Soil and water conservation district",
+        value: result.conservationFailed
+          ? "The list of conservation district supervisors did not load, so " +
+            "no names are shown."
+          : "Not shown: the state's district directory lists no board for " +
+            "this county."
+      }]));
+      return;
+    }
+    districts.forEach(function (d) {
+      wrap.appendChild(renderSectionLabel(String(d.name)));
+      wrap.appendChild(renderPersonRows(ncConservationRows(d.members)));
+      var rows = [];
+      if (d.note) rows.push({ label: "Covers several counties", value: String(d.note) });
+      rows.push({ label: "How the board is chosen", value: NC_CONSERVATION_CHOSEN });
+      var printed = ncDate(d.dated);
+      var read = ncDate(d.read);
+      rows.push({
+        label: "Where these names come from",
+        value: "The North Carolina Department of Agriculture's district " +
+          "directory" + (printed ? ", printed " + printed : "") +
+          (read ? (printed ? " and" : ",") + " read on " + read : "") + ". " +
+          "A seat that has changed hands since it was printed may still " +
+          "show the earlier supervisor."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      if (d.sourceUrl) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "North Carolina district directory (PDF) ↗",
+            url: String(d.sourceUrl) }]
+        }));
+      }
+    });
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -13696,13 +13795,16 @@ function initNorthCarolinaExplorer() {
           geoid: findPropCI(props, ["geoid"]),
           board: null
         };
-        // A roster that fails to load leaves the county answer standing and
+        // A list that fails to load leaves the county answer standing and
         // says so, rather than taking the boundary answer down with it.
-        return loadCountyCommissioners().then(function (r) {
-          result.board = r[String(result.geoid)] || null;
-          return result;
-        }, function () {
-          result.rosterFailed = true;
+        return Promise.all([
+          loadCountyCommissioners().then(function (r) {
+            result.board = r[String(result.geoid)] || null;
+          }, function () {
+            result.rosterFailed = true;
+          }),
+          ncConservationFor(result)
+        ]).then(function () {
           return result;
         });
       });
@@ -13749,6 +13851,7 @@ function initNorthCarolinaExplorer() {
             url: "https://er.ncsbe.gov/" }]
         }));
       }
+      ncConservationSection(wrap, result);
       return wrap;
     }
   });

@@ -428,8 +428,16 @@ question.
   directors, because the Commission publishes no list of them, and Arkansas's
   971 fire districts, from the map state law has each fire district file with
   the Arkansas GIS Office, naming nobody, because the map names no one who
-  runs a district. Kentucky, North Carolina, South Carolina and Tennessee still
-  owe the entry.
+  runs a district. Since the same day Kentucky, North Carolina and South
+  Carolina answer it with their conservation districts, whose boards the County
+  card names from each state's own list of them (Adam's choice of 2026-10-16).
+  Each of those districts covers a whole county or several, so they need no map
+  of their own; the one exception is Kentucky's Logan County, which has two
+  districts whose line this app does not draw, and its card lists both boards.
+  Tennessee still owes the entry: its only list of conservation district
+  supervisors is on a state web host that refused six of this project's nine
+  reads on the evening of 2026-10-16, and nothing is built from a read that
+  happened to be served.
 - Tribal governments: no app answers one.
 
 ## Launching is a lower bar than being done

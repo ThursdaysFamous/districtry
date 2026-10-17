@@ -338,8 +338,14 @@ def load_rosters():
 # A record naming a PERSON carries one of these beside its name. The list is
 # what the fleet's own rosters publish; it is deliberately short, because the
 # question is only "does this file name people", never "who".
+#
+# `termEnds` JOINED 2026-10-16 with Kentucky's conservation boards, whose
+# sheets give a supervisor's name and the year the term ends and nothing else,
+# so 843 named supervisors read as a file naming nobody. Measured on the tree
+# that day it moved one other count, nc-county-commissioners.json from 583 to
+# 584, a winner whose record carries a term end and no party.
 PERSON_FIELDS = ("email", "phone", "party", "role", "title", "term",
-                 "profileUrl", "vacant")
+                 "termEnds", "profileUrl", "vacant")
 
 # A RECORD CAN NAME A PERSON WITHOUT A FIELD CALLED `name`, and reading only
 # that one key published a false claim about the whole fleet. Found by the
@@ -1690,7 +1696,12 @@ ANSWERS = {
         # The State Board of Elections compiles all 3,194 precincts statewide
         # from the counties' own files, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # ANSWERED 2026-10-16 ON THE COUNTY CARD, by Adam's choice of that day
+        # ("Count them"): every county is one conservation district (Logan two,
+        # whose line no publisher draws), so its seven supervisors are named
+        # on the County card from the Division of Conservation's sheet for each
+        # district rather than drawn (ky/scripts/build_ky_conservation_boards.py).
+        "special-districts": answers("county"),
         # NO TRIBAL LAND IN KENTUCKY, measured 2026-10-01 against the Census
         # AIANNHA service over an envelope covering the whole state: zero
         # features in federal reservations, off-reservation trust lands, state
@@ -1805,7 +1816,12 @@ ANSWERS = {
         # The State Board of Elections' statewide file carries all 2,625
         # precincts, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # ANSWERED 2026-10-16 ON THE COUNTY CARD, by Adam's choice of that day
+        # ("Count them"): 95 soil and water conservation districts follow county
+        # lines and the 96th covers five whole counties, so each board is named
+        # on the County card from the state's District Directory rather than
+        # drawn (nc/scripts/build_nc_conservation_boards.py).
+        "special-districts": answers("county"),
         # SHIPPED 2026-10-10 (#1496): the Eastern Band of Cherokee Indians'
         # Qualla Boundary and its one piece of trust land, the only tribal
         # land in the state, named with the government that answers there.
@@ -1923,7 +1939,12 @@ ANSWERS = {
         # 2,315 precincts the General Assembly sets by act, and the app draws
         # them (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # ANSWERED 2026-10-16 ON THE COUNTY CARD, by Adam's choice of that day
+        # ("Count them"): each county is one conservation district, so its five
+        # commissioners are named on the County card from the Department of
+        # Natural Resources' page for each district rather than drawn
+        # (sc/scripts/build_sc_conservation_boards.py).
+        "special-districts": answers("county"),
         # SHIPPED 2026-10-12: the Catawba Nation's reservation and its trust
         # land in York County, the only tribal land in the state, named with
         # the nation's executive committee.

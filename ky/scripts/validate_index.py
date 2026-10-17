@@ -123,6 +123,7 @@ ROSTER_FILES = {
     "ky-judge-roster.json": 3,  # Kentucky's judges, keyed by the numbered district or circuit each was elected from, from the Court of Justice's own pages; refreshed weekly by update-ky-judges-roster.yml. Jefferson's circuit 30 and district 30 are recorded as asked about rather than left silent.
     "ky-city-officials.json": 400,  # Each Kentucky city's mayor and council or commission, keyed by Census place id, from the Department for Local Government's municipal directory; refreshed weekly by update-ky-city-officials.yml.
     "ky-county-officials.json": 120,  # Each Kentucky county's governing body and elected officers, keyed by county GEOID, from the Department for Local Government's county directory; refreshed weekly by update-ky-county-officials.yml.
+    "ky-conservation-boards.json": 120,  # The supervisors of each county's conservation district (two in Logan County), keyed by county GEOID, read from the Division of Conservation's sheet for each district by ky/scripts/build_ky_conservation_boards.py, whose --check holds the file to its record of the sheets read and to the County card's wording. Re-read quarterly and in January after the November election (ky/WATCH.md).
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at
