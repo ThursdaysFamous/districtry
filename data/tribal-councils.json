@@ -1397,37 +1397,43 @@
      "name": "Joseph (Zeke) Rupnick",
      "role": "Chairperson",
      "phone": "785-966-4008",
-     "termEnds": "2026"
+     "email": "josephrupnick@pbpnation.org",
+     "termEnds": "2030"
     },
     {
      "name": "Zach Pahmahmie",
      "role": "Vice Chairperson",
      "phone": "785-966-4037",
+     "email": "ZachPahmahmie@pbpnation.org",
      "termEnds": "2028"
     },
     {
      "name": "Wade Pahmahmie",
      "role": "Treasurer",
      "phone": "785-966-4005",
+     "email": "WadePahmahmie@pbpnation.org",
      "termEnds": "2028"
     },
     {
      "name": "Lorrie Melchior",
      "role": "Secretary",
      "phone": "785-966-4022",
-     "termEnds": "2026"
+     "email": "lorriemelchior@pbpnation.org",
+     "termEnds": "2030"
     },
     {
      "name": "William (Bill) Evans",
      "role": "Council Member",
      "phone": "785-966-3991",
+     "email": "williamevans@pbpnation.org",
      "note": "seat 1",
-     "termEnds": "2026"
+     "termEnds": "2030"
     },
     {
      "name": "Ronald (Tony) Wahweotten Jr.",
      "role": "Council Member",
      "phone": "785-966-3991",
+     "email": "ronaldwahweotten@pbpnation.org",
      "note": "seat 2",
      "termEnds": "2028"
     },
@@ -1435,12 +1441,12 @@
      "name": "Raphael J. Wahwassuck",
      "role": "Council Member",
      "phone": "785-966-4048",
+     "email": "raphaelwahwassuck@pbpnation.org",
      "note": "seat 3",
      "termEnds": "2028"
     }
    ],
-   "read": "2026-10-10",
-   "carriedFrom": "2026-10-10"
+   "read": "2026-10-17"
   },
   "3085": {
    "source": "nation",

@@ -155,12 +155,34 @@ _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|foote
           r"label|title|hr)")
 
 
+def _cf_decode(hexstr):
+    """One address Cloudflare's e-mail protection hides: the first byte is
+    the key and every later byte is a character XORed with it."""
+    key = int(hexstr[:2], 16)
+    return "".join(chr(int(hexstr[i:i + 2], 16) ^ key) for i in range(2, len(hexstr), 2))
+
+
+def _cf_emails(body):
+    """Each element Cloudflare's e-mail protection fills with "[email
+    protected]" is replaced by the address it carries in data-cfemail, which
+    the page's own script shows every visitor. Only that element is
+    replaced: a link whose href alone is protected keeps its own text,
+    because Upper Sioux's footer wraps its telephone line in one. Decoded
+    since 2026-10-17 under the operator's rule that contact details an
+    official government page prints are published (the fleet already does
+    this for Will, Warren, Tennessee, Wisconsin and Aitkin pages); measured
+    that day, no nation's parsed council changes except Prairie Band's."""
+    return re.sub(r'(?is)<(a|span)\b[^>]*\bdata-cfemail="([0-9a-fA-F]+)"[^>]*>.*?</\1>',
+                  lambda m: _cf_decode(m.group(2)), body)
+
+
 def lines_of(body, br=" \n"):
     """Page text, one line per block element; inline tags join. A <br> ends a
     line by default, because Red Cliff separates its whole council with them,
     and a page that breaks one NAME across a <br> inside a heading (Lac Vieux
     Desert) says so with `"br": " "` in NATIONS."""
     t = re.sub(r"(?is)<(script|style|noscript|template)\b.*?</\1>", " ", body)
+    t = _cf_emails(t)
     t = re.sub(r"(?is)<!--.*?-->", " ", t)
     t = re.sub(r"(?i)<br\b[^>]*>", br, t)
     t = re.sub(r"(?i)</?%s\b[^>]*>" % _BLOCK, "\n", t)
@@ -503,10 +525,11 @@ def p_prairie_band(pages):
     # term and telephone sit in their own block there; the block is opened by
     # its "Term:" line.
     #
-    # The e-mail addresses are NOT carried: the site prints every one as
-    # Cloudflare's "[email protected]" placeholder, and decoding that is a
-    # question put to the operator rather than settled here. The telephone is
-    # the "P)" line inside the member's own block; the fax ("F)") is dropped.
+    # The e-mail is the "Email:" line inside the member's own block, which
+    # the site hides behind Cloudflare's e-mail protection and lines_of
+    # decodes; the "Assistant Email:" line beside it is the assistant's and
+    # is not carried. The telephone is the "P)" line in the same block; the
+    # fax ("F)") is dropped.
     ls = _after(pages[0], "Meet Our Council Officers")
     out, seen = [], set()
     office = re.compile(r"(?:Tribal Council Chairperson|Vice Chair Person|Treasurer|"
@@ -532,6 +555,9 @@ def p_prairie_band(pages):
         end = re.search(r"(20\d\d)\s*$", term[0])
         phones = [_phone(l) for l in block if l.startswith("P)")]
         phone = phones[0] if phones else None
+        emails = [_email(l) for l in block if l.startswith("Email:")]
+        if len(emails) > 1:
+            raise ValueError("%r has %d Email lines" % (ls[k], len(emails)))
         seat = None
         m = re.match(r"Council Member - (\d)$", label)
         if m:
@@ -542,8 +568,8 @@ def p_prairie_band(pages):
             role = "Vice Chairperson"
         else:
             role = label
-        out.append(_m(name, role, phone=phone, note=seat,
-                      termEnds=end.group(1) if end else None))
+        out.append(_m(name, role, phone=phone, email=emails[0] if emails else None,
+                      note=seat, termEnds=end.group(1) if end else None))
         seen.add(name)
     return out
 
@@ -946,6 +972,13 @@ def selftest():
                            ["Treasurer", "Council Member"])[-1] == ("Council Member", "Herb Daniels Jr.")
     assert _phone("920-869-4420") == "920-869-4420" and _phone("none") is None
     assert _email("x thill7@oneidanation.org y") == "thill7@oneidanation.org"
+    # Cloudflare's own example key: 0x15 XORed through "ab@c.de"
+    hidden = "15" + "".join("%02x" % (ord(c) ^ 0x15) for c in "ab@c.de")
+    assert lines_of('<p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" '
+                    'data-cfemail="%s">[email&#160;protected]</a></p>' % hidden) == ["Email: ab@c.de"]
+    # a link whose href alone is protected keeps its own text
+    assert lines_of('<a href="/cdn-cgi/l/email-protection#%s"><span>(320) 564-3853</span></a>'
+                    % hidden) == ["(320) 564-3853"]
     NATIONS["9999"] = {"nation": "Test", "seats": 2}
     try:
         for bad in ([_m("A B", "Chair")],
