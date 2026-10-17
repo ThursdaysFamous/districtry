@@ -14134,6 +14134,12 @@ function initMississippiExplorer() {
   var loadMsCityCouncils = makeCached(function () {
     return fetchJSONWithRetry("data/app/ms-city-councils.json", {}, 2);
   });
+  // The cities whose wards the City Ward layer (5b) draws, by Census id, so
+  // the card can say for this city whether its ward is shown. Gated by
+  // ms/scripts/build_ms_city_wards.py --check, which fails when this list and
+  // the cities that builder draws disagree.
+  var MS_WARD_CITIES = ["2808300", "2814420", "2829700", "2836000", "2854040",
+    "2854840", "2855760", "2869280", "2874840"];
   // "Mayor", "At large", "Ward 3": a seat as a badge, in the city's own words
   // and with no title a city does not print.
   function msCitySeatBadge(seat) {
@@ -14279,10 +14285,16 @@ function initMississippiExplorer() {
         });
         var byWard = (council.seats || []).some(function (s) { return /^Ward /.test(s.seat); });
         if (byWard) {
+          var wardsDrawn = MS_WARD_CITIES.indexOf(String(result.geoid)) !== -1;
           after.push({
             label: "Your ward",
-            value: "Where this app draws the city's wards, the City Ward " +
-              "layer shows which ward this point is in and names its member."
+            value: wardsDrawn
+              ? "The City Ward layer draws " + String(council.name) + "'s " +
+                "wards, so it shows which ward this point is in and names " +
+                "its member."
+              : "This app does not draw " + String(council.name) + "'s " +
+                "wards, so it cannot say which ward this point is in or " +
+                "name its member."
           });
         }
       }

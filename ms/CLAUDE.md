@@ -286,7 +286,9 @@ each from a published map layer of the city's wards (the city's own for five, De
 Southaven, which records the city's adoption date, and the Central Mississippi Planning and
 Development District's for Clinton, Pearl and Brandon, each shown in a map viewer the city's own
 website links or embeds), cut at the Census Bureau's map of the city so that the ward card and the
-City card never put a point in different cities. The build stops unless every ward's 2020 census
+City card never put a point in different cities. The City card says for each ward-elected city
+whether this app draws its wards, from a list of the nine in `ms/index.html` that the build's
+`--check` holds to the cities it draws. The build stops unless every ward's 2020 census
 population matches the figure pinned for it and each city's wards are exactly its roster's ward
 seats. The other six are in `NOT_DRAWN` with their reasons: Biloxi's, Hattiesburg's and Horn Lake's
 layers are not shown to be the plan in force, and Meridian, Madison and Greenville publish their

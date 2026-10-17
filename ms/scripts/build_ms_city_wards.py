@@ -1237,13 +1237,16 @@ def _city_list(text):
 
 
 def check_stated_cities(roster):
-    """Two sentences a reader is shown say which cities are drawn, and both are
-    written by hand: the ward card's empty state in ms/index.html, and the
+    """Three things a reader is shown say which cities are drawn, and all three
+    are written by hand: the ward card's empty state in ms/index.html, the
+    City card's list of the cities whose wards are drawn (MS_WARD_CITIES,
+    which decides whether that card says a city's ward is shown), and the
     sources page's "Where it applies" for this layer, which the worksheet
-    carries. Each must name exactly the cities CITIES draws, give their count
-    in words, and name no city NOT_DRAWN records, and the sources page must
-    name exactly the NOT_DRAWN cities as the ones left out. A city added to or
-    taken out of CITIES therefore fails here until both sentences say so."""
+    carries. The two sentences must name exactly the cities CITIES draws, give
+    their count in words, and name no city NOT_DRAWN records, the list must
+    hold exactly CITIES' Census ids, and the sources page must name exactly
+    the NOT_DRAWN cities as the ones left out. A city added to or taken out of
+    CITIES therefore fails here until all three say so."""
     drawn = [c["city"] for c in CITIES]
     left = [v.split(":", 1)[0] for v in NOT_DRAWN.values()]
     if set(roster) != {c["geoid"] for c in CITIES} | set(NOT_DRAWN):
@@ -1270,6 +1273,15 @@ def check_stated_cities(roster):
     if stray:
         fail("ms/index.html: the City Ward card's empty state names %s, which this "
              "file does not draw" % stray)
+    listed = re.search(r'var MS_WARD_CITIES = \[([^\]]*)\];', app)
+    if listed is None:
+        fail("ms/index.html: no MS_WARD_CITIES list, which the City card reads to "
+             "say whether a city's wards are drawn")
+    ids = re.findall(r'"(\d{7})"', listed.group(1))
+    want = sorted(c["geoid"] for c in CITIES)
+    if sorted(ids) != want or len(ids) != len(set(ids)):
+        fail("ms/index.html: MS_WARD_CITIES lists %s, and CITIES draws %s"
+             % (ids, want))
     with open(WORKSHEET_FILE, encoding="utf-8") as fh:
         layer = [x for x in json.load(fh)["layers"] if x["id"] == "city-ward"]
     if len(layer) != 1:
@@ -1290,9 +1302,9 @@ def check_stated_cities(roster):
     if "in the %s Mississippi cities" % count not in answers:
         fail("ms/metro-worksheet.json: the City Ward row's \"What it answers\" does not "
              "say \"in the %s Mississippi cities\"" % count)
-    print("check: the City Ward card's empty state and the sources page name the %s "
-          "cities drawn, and the sources page the %s left out" % (count, len(left)),
-          file=sys.stderr)
+    print("check: the City Ward card's empty state, the City card's list and the "
+          "sources page name the %s cities drawn, and the sources page the %s left "
+          "out" % (count, len(left)), file=sys.stderr)
 
 
 def check_source_record(record):

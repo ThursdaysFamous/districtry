@@ -1499,7 +1499,9 @@ try {
   //     that each card agrees with them and says where they come from.
   //       - The City card in Jackson (the place query stubbed, as in 7) names
   //         the mayor and every member by seat, says when the city's page was
-  //         read, links the mayor's page and, in its footer, the council's.
+  //         read, links the mayor's page and, in its footer, the council's,
+  //         and says the City Ward layer draws Jackson's wards. In Biloxi,
+  //         whose wards are not drawn, it says so.
   //       - Greenville's names nobody and says why; a roster that fails to
   //         load leaves the place standing and says no name is shown.
   //       - The City Ward card at the Capitol names its ward, the ward's
@@ -1566,9 +1568,17 @@ try {
         !c.error && names.length === j.seats.length && missing.length === 0 &&
           /Mayor/.test(c.text) && /Ward 7/.test(c.text) &&
           /as Jackson's own website named them on \d{1,2} [A-Z][a-z]+ \d{4}/.test(c.text) &&
-          /Your ward/.test(c.text) && !/Not named here/.test(c.text) &&
+          /Your ward/.test(c.text) && /The City Ward layer draws Jackson's wards/.test(c.text) &&
+          !/Not named here/.test(c.text) &&
           c.links.body.includes(j.mayorUrl) && c.links.footer.includes(j.councilUrl),
         `missing=${missing} links=${JSON.stringify(c.links)} ${c.text.slice(0, 140)}`);
+    }
+    {
+      const c = await cityAt({ GEOID: "2806220", NAME: "Biloxi city", BASENAME: "Biloxi", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
+      check("the City card in Biloxi, whose wards are not drawn, names its council and says this app does not draw its wards",
+        !c.error && c.text.includes(councils["2806220"].seats[0].name) &&
+          /This app does not draw Biloxi's wards/.test(c.text) && !/City Ward layer draws/.test(c.text),
+        c.text.slice(0, 200));
     }
     {
       const c = await cityAt({ GEOID: "2829180", NAME: "Greenville city", BASENAME: "Greenville", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
