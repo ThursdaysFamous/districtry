@@ -205,6 +205,19 @@ PROVENANCE = [
             "(75 of 75 correct) plus eleven OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "ar-precincts.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/11",
+        "note": (
+            "Arkansas's 2,920 voting precincts from the Arkansas GIS Office's "
+            "statewide layer of what each county reports (2,928 records: "
+            "seven precincts are published in pieces and joined), pre-built "
+            "by ar/scripts/build_ar_precincts.py through "
+            "scripts/statewide_precincts.py; the quarterly --watch row in "
+            "ar/WATCH.md compares the fingerprint recorded at the build."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -281,6 +294,16 @@ ENDPOINTS = [
                 "&geometry=-94.70%2C32.95%2C-89.55%2C36.55&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 850,   # 942 measured 2026-10-13
+    },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in ar/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://gis.arkansas.gov/arcgis/rest/services/"
+                "FEATURESERVICES/Boundaries/FeatureServer/11/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2630,  # 2,928 records measured 2026-10-15
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

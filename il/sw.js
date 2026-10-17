@@ -45,7 +45,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v44";
+const CACHE_NAME = "districtry-il-shell-v45";
 
 const SHELL_URLS = [
   "./",
@@ -105,6 +105,10 @@ const GEOMETRY_URLS = [
   "./data/app/christian-county-outline.json",
   "./data/app/christian-county-board-districts.json",
   "./data/app/ford-county-board-districts.json",
+  "./data/app/fayette-county-board-districts.json",
+  "./data/app/cumberland-county-board-districts.json",
+  "./data/app/jersey-county-board-districts.json",
+  "./data/app/lawrence-county-board-districts.json",
   "./data/app/clark-county-board-districts.json",
   "./data/app/clark-county-outline.json",
   "./data/app/calhoun-precincts.json",
@@ -455,6 +459,10 @@ const ROSTER_URLS = [
   "./data/app/vermilion-county-board-members.json",
   "./data/app/wayne-county-board-members.json",
   "./data/app/ford-county-board-members.json",
+  "./data/app/fayette-county-board-members.json",
+  "./data/app/cumberland-county-board-members.json",
+  "./data/app/jersey-county-board-members.json",
+  "./data/app/lawrence-county-board-members.json",
   "./data/app/christian-county-board-members.json",
   "./data/app/clay-county-board-members.json",
   "./data/app/st-clair-precinct-polling.json",

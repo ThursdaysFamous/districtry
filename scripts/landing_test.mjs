@@ -36,6 +36,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const FLEET = JSON.parse(readFileSync(
   join(HERE, "..", "metros.json"), "utf8")).metros;
 const TAGS = FLEET.map((m) => m.tag).filter(Boolean);
+// The host the site is served at, which the manifest's share target names.
+const SITE_HOST = readFileSync(join(HERE, "..", "CNAME"), "utf8").trim();
 const failures = [];
 function check(name, ok, detail) {
   console.log(`  ${ok ? "PASS" : "FAIL"}  ${name}${detail ? "  — " + detail : ""}`);
@@ -998,9 +1000,11 @@ try {
         manifest.name === "districtry",
       JSON.stringify(manifest && { id: manifest.id, name: manifest.name, scope: manifest.scope,
         start_url: manifest.start_url, display: manifest.display }));
+    // The address is the launcher's FULL one: the Google Play app copies it as
+    // written, and Chrome drops a share whose address names no site.
     const st = manifest && manifest.share_target;
-    check("the manifest puts the app in the Share menu, sending title, text and url to the launcher by GET",
-      !!st && st.action === "/app/" && st.method === "GET" && !st.enctype &&
+    check("the manifest puts the app in the Share menu, sending title, text and url to the launcher's full address by GET",
+      !!st && st.action === `https://${SITE_HOST}/app/` && st.method === "GET" && !st.enctype &&
         JSON.stringify(st.params) === JSON.stringify({ title: "title", text: "text", url: "url" }),
       JSON.stringify(st));
     await ctx.close();

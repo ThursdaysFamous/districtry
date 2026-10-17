@@ -4293,7 +4293,9 @@ function initMichiganExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -9384,7 +9386,7 @@ function initMichiganExplorer() {
     "county-commissioner", // 619 districts across all 83 counties — the finest tiling this instance ships, smaller than a state House district
     "county-subdivision", // 1,581 records tiling the state, live from TIGERweb (no data/app file) — 1,122 general-law townships, 118 charter townships, 301 city placeholder records for 281 distinct cities (18 of which cross a county line), and 40 'not defined' records that are pure Great Lakes water
     "zip-code",          // 1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct
-    "city-ward",         // Eleven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek, Jackson, Pontiac, Midland, Muskegon and Holland. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
+    "city-ward",         // Twelve cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek, Jackson, Pontiac, Midland, Muskegon, Holland and Walker. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
     "precinct",          // 3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships
     "tribal-government", // Tribal land — Michigan has 24 pieces across 12 nations, from the Isabella Reservation's 564.926 km² down to a 0.074 km² Grand Traverse parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 3.021 km² MEDIAN, below the precinct fabric's measured 6.400 — medians rather than means, because this layer's own mean of 39.8 km² is Isabella and L'Anse and describes none of the other 22 parcels. The places layer below it is live and publishes a mean rather than a median, so no claim is made here about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Michigan is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 1 of them in Michigan and it is Lac Vieux Desert's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Nine of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; three cannot be read, two behind a managed challenge and one publishing its council to its members only, and the card says which. Michigan has no current state list of tribal officials to fall back on. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean
@@ -16015,6 +16017,23 @@ function initMichiganExplorer() {
     seatsNote: "Muskegon elects one commissioner from each of four wards and two at large.",
     linesFrom: "Muskegon County's ward map, since the city publishes no map of its own."
   });
+  var walkerEntry = municipalWardEntry({
+    key: "walker", label: "Walker", geoid: "2682960", unit: "Ward",
+    file: "data/app/mi-walker-wards.json",
+    body: "Walker City Commission",
+    bodyUrl: "https://www.walker.city/325/Elected-City-Officials",
+    seatsNote: "Walker elects two commissioners from each of three wards, and a mayor "
+             + "at large.",
+    // The map's notice, quoted whole; mi/scripts/build_mi_walker_wards.py
+    // refuses to rebuild if it changes. Drawn on the operator's 2026-10-16
+    // ruling that this notice does not stop the wards being drawn.
+    linesFrom: "The city's own 2025 precinct map, which says: \u201cThis map does not "
+             + "represent a legal document. It is intended to serve as an aid in graphic "
+             + "representation only. Information shown on this map is not warranted for "
+             + "accuracy and should be verified through other means. Any duplication is "
+             + "restricted under copyright laws and the Enhanced Access to Public Records "
+             + "Act, PA 462 of 1996, as amended.\u201d"
+  });
   var pontiacEntry = municipalWardEntry({
     key: "pontiac", label: "Pontiac", geoid: "2665440", unit: "District",
     file: "data/app/mi-pontiac-wards.json",
@@ -16046,10 +16065,10 @@ function initMichiganExplorer() {
     // selections land in should be tried first. Detroit, then Warren, then
     // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek,
     // then Jackson; the four drawn on 2026-10-15 follow in the same order
-    // (Pontiac, Midland, Muskegon, Holland).
+    // (Pontiac, Midland, Muskegon, Holland), then Walker, drawn 2026-10-16.
     entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry,
               rochesterHillsEntry, battleCreekEntry, jacksonEntry,
-              pontiacEntry, midlandEntry, muskegonEntry, hollandEntry]
+              pontiacEntry, midlandEntry, muskegonEntry, hollandEntry, walkerEntry]
   });
 
 

@@ -77,7 +77,12 @@ jobs:
           # scope (measured 2026-09-02 on update-municipal-officials).
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wi/data/app/wi-municipal-boards.json
+          # docs/EAM_STATUS.md counts the municipalities this roster names, so
+          # a refresh that moves a count fails the smoke gate's
+          # `build_eam_status.py --check` on this PR unless it is rebuilt here
+          # (#1572 went red that way on 2026-10-15).
+          python3 scripts/build_eam_status.py
+          git add wi/data/app/wi-municipal-boards.json docs/EAM_STATUS.md
           git commit -m "Update the WI at-large municipal board roster from each municipality's own source"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

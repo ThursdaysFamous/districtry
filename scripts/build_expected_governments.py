@@ -63,7 +63,7 @@ FLOOR = 25000
 STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "mn": "27", "ky": "21", "ny": "36", "in": "18",
               "nc": "37", "ok": "40", "sc": "45", "tn": "47",
-              "ar": "05"}
+              "ar": "05", "ms": "28"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -97,6 +97,12 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     # county subdivisions, measured 2026-10-13 in ar/CLAUDE.md), so no active
     # one can reach the floor; added at its go-live, 2026-10-15.
     "ar": None,
+    # Mississippi's county subdivisions are its 410 supervisor districts, every
+    # one FUNCSTAT N (non-functioning), measured 2026-10-15 in ms/CLAUDE.md:
+    # a supervisor district elects a member of the county's board and governs
+    # nobody itself, so no active one can reach the floor. Added at its
+    # go-live.
+    "ms": None,
 }
 
 

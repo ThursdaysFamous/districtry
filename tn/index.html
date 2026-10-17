@@ -4218,8 +4218,8 @@ function initTennesseeExplorer() {
   var LAYER_CODES = { "us-house": "us", "tn-senate": "tns", "county": "co", "tn-house": "tnh",
     "school-district-unified": "su", "county-commissioner": "cm", "county-subdivision": "cs",
     "zip-code": "zp", "school-district-elementary": "se", "school-district-secondary": "sh",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
-    "tribal-government": "tg" };
+    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4227,7 +4227,8 @@ function initTennesseeExplorer() {
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["tn-senate"],
     "state-house": ["tn-house"], "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
@@ -4294,7 +4295,9 @@ function initTennesseeExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -9383,6 +9386,7 @@ function initTennesseeExplorer() {
     "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
     "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
     "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
+    "voting-precinct",   // 1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)
     "municipality",      // 345 incorporated places, live from TIGERweb
     "tribal-government", // Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13851,6 +13855,112 @@ function initTennesseeExplorer() {
     }
   });
 
+  /* ---------- Voting precinct — the Comptroller's statewide layer ----------
+   * Tennessee's 1,870 precincts from the Comptroller of the Treasury's
+   * Voter District Lookup layer; the Comptroller does the map work for the
+   * counties and each county election commission sets its precincts.
+   * Pre-built by tn/scripts/build_tn_precincts.py through
+   * scripts/statewide_precincts.py (Douglas-Peucker at 8 m;
+   * data/app/tn-precincts.json, same-origin), so a click is answered in the
+   * browser and no point is sent anywhere.
+   *
+   * A PRECINCT ELECTS NO ONE TO PUBLIC OFFICE, so the card has no
+   * officeholder row to be missing and says why. Names are printed as the
+   * counties write them, and some include a polling place, which may have
+   * moved since (inferred, not measured), so the card sends a reader to the
+   * county election commission for where to vote. Davidson's eight small
+   * pieces named only as "Precinct Created by Split CCD & Senate Districts"
+   * get a card saying the state's map does not name their precinct, rather
+   * than being called part of no precinct, which would be false. The card
+   * does not spell out "CCD": the same service carries County Commission
+   * District layers and no census-division layer, so it most likely means a
+   * county commission district (inferred from the service's layer list,
+   * 2026-10-15), and the card needs only the label's own words.
+   * ---------- */
+  var loadTnPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-precincts.json", {}, 2);
+  });
+
+  // A precinct elects no one to public office, so the card says so rather
+  // than leaving a reader to wonder which name is missing.
+  var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
+    "and how your ballots are reported, not a district with a representative of its own.";
+
+  // The card's title: a name that is only a number reads "Precinct 0908", so
+  // it cannot be taken for a district number; one of Davidson's eight small
+  // pieces the Comptroller's map leaves unnamed says so; any other name is
+  // printed as the state publishes it.
+  function precinctTitle(props) {
+    if (props.unnamed) return "Unnamed piece of a precinct";
+    var name = props.name != null ? String(props.name).trim() : "";
+    if (!name) return null;
+    return /^[0-9][0-9-]*$/.test(name) ? "Precinct " + name : name;
+  }
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadTnPrecincts,
+      // the finest tiling on this map: a light stroke, so it reads under the
+      // broader boundaries rather than competing with them
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return precinctTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadTnPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: precinctTitle(props),
+          unnamed: props.unnamed === true,
+          county: props.county != null ? String(props.county) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title || "Unknown precinct",
+        note: result.county
+      }));
+      var rows = [];
+      if (result.unnamed) {
+        rows.push({
+          label: "Which precinct",
+          value: "The state's map does not name the precinct this small area belongs to. It " +
+            "labels the area only as a piece created where district lines split a precinct. " +
+            "Your county election commission can tell you which precinct you vote in."
+        });
+      }
+      rows.push({ label: "Who it elects", value: PRECINCT_ELECTS });
+      rows.push({
+        label: "Where to vote",
+        value: "Your county election commission sets where each precinct votes. A precinct's " +
+          "name can include a place people voted at when it was named, which may not be where " +
+          "you vote now."
+      });
+      rows.push({
+        label: "How exact this line is",
+        value: "The Comptroller of the Treasury keeps this map for the county election " +
+          "commissions, which set the precincts. The lines are drawn here to within 8 metres; " +
+          "for a definitive answer, ask your county election commission."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Check your voter registration",
+        url: "https://tnmap.tn.gov/voterlookup/"
+      };
+    }
+  });
+
   /* ---------- 5. City or Town — live TIGERweb, incorporated places ----------
    * Tennessee incorporates cities and towns under several charters, and the
    * Census records the style each one's charter uses. Measured 2026-10-10
@@ -15966,7 +16076,7 @@ function initTennesseeExplorer() {
     "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
-    "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16449,13 +16559,13 @@ function initTennesseeExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
-    "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD",
-    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
-    "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA33D",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA",
-    "#D19133": "#FED7A7"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
+    "#8C2E4A": "#F47294", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

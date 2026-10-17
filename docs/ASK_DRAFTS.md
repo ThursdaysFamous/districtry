@@ -406,8 +406,9 @@ nobody, and the county's own page is the evidence.
 ### Still with no letter to draft
 
 A letter cannot be put in the mailbox until somebody writes it. These have a recipient
-and an argument here and no wording: Asks 13, 25, 33, `wi-oshkosh-council` and
-`ia-pottawattamie-tama-wright-boards`. (Ask 11, CCGISC, was listed here as having no
+and an argument here and no wording: Asks 13, 25, 33 and
+`ia-pottawattamie-tama-wright-boards` (`wi-oshkosh-council` was listed here too and is
+withdrawn as of 2026-10-16: the city's new site is read directly). (Ask 11, CCGISC, was listed here as having no
 recipient address; it was sent on 2026-08-05, and its follow-up is drafted.) The thirteen Illinois county letters that exist only in state notes are being
 rewritten as follow-ups, because every one of them bar Scott was asked in early August
 and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) answered.
@@ -5131,6 +5132,14 @@ round.
 
 ## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
 
+> **WITHDRAWN 2026-10-16. DO NOT SEND.** The question this letter asks has answered itself.
+> On 2026-10-15 the city's council page had moved to `www.oshkoshwi.gov`, whose robots.txt
+> (621 bytes) answered our own reader and permits both pages read, and `#1559` reads the Common
+> Council from there: seven members at large, every one with an `@oshkoshwi.gov` address, in
+> `wi/data/app/wi-municipal-boards.json` as of 2026-10-15. The old host's connection failure no
+> longer stands between the city and the map, so there is nothing left to ask. The text below
+> is kept as it was written; any copy of it in the operator's mailbox should be deleted unsent.
+
 > **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE LETTER STANDS AS WRITTEN.**
 > The rule asks whether names we called unreadable sit in a feed we could read. Oshkosh's do
 > not need one: its council page carries the seven names in its own HTML, which is why the
@@ -5211,8 +5220,8 @@ work out how. A yes costs the city nothing it has not already published.
 ## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
 > **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
-> 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
-> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
+> 14:48 and 14:51 UTC. BURTON WAS ASKED 2026-10-12**, at 15:06 UTC, once the operator had
+> supplied its clerk's address (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
 > correction to each, in the same thread, at 15:21-15:23 UTC; see "Three letters went out on a
 > wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
@@ -5267,7 +5276,7 @@ e-mail addresses from automated readers, so its draft has no recipient yet.
 | Shelby Township | Stanley Grot, Township Clerk | `sgrot@shelbytwp.org` | the township clerk's office page |
 | Northville Township | Cynthia L. Jankowski, Township Clerk | `cjankowski@twp.northville.mi.us` | the township clerk's office page (the office's shared address is Clerk@twp.northville.mi.us) |
 | Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office. Township Clerk Debbie Swanson (`dswanson@ypsitownship.org`) answered it herself |
-| Burton | Racheal Boggs, City Clerk | **none recorded** | NOT FOUND: the city's clerk page hides its e-mail addresses from automated readers, so the address must be read in a browser |
+| Burton | Racheal Boggs, City Clerk | `r.boggs@burtonmi.gov` | supplied by the operator, since the city's clerk page hides its e-mail addresses from automated readers; the letter went 2026-10-12 |
 | Lansing | Chris Swope, City Clerk | `city.clerk@lansingmi.gov` | the Clerk's Office address printed on the city's own published notices |
 | Wyoming | Kelli VandenBerg, City Clerk | `clerk_info@wyomingmi.gov` | a search listing of the city's clerk page; this project does not read the city's site |
 
@@ -7587,37 +7596,47 @@ the counties' own sites and the next election's results stay the route.
 > (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
 > been searched for earlier correspondence with MARIS; do that before it goes.
 
-**Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
+**Why this is asked.** Mississippi's map names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
-County's District 3 is vacant), and can draw the districts they represent in only 20 counties:
-12 from the Census Bureau's current edition and 8 from the county's own published map, the 8
-added after this letter was drafted. The letter's text does not count what the map draws, so it
-is unchanged. The only statewide map of supervisor districts found is the Census
-Bureau's, where Mississippi's county subdivisions are the supervisor districts. Measured
-2026-10-15 by `ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own
-blocks: the Bureau's current edition differs from its 2020 edition in 12 counties, which the map
-draws; in 64
+County's District 3 is vacant), and can draw the districts they represent in only 23 counties: 12
+from the Census Bureau's current edition and 11 from the county's own published map, all 11 added
+after this letter was drafted (8 on 2026-10-15, and Lee, Pearl River and Perry on 2026-10-16). The
+letter's text does not count what the map draws, so that left it unchanged; its body gained two
+sentences on 2026-10-16, about the Bureau's 2010 edition (below), and the Letters thread added them
+to the Gmail draft the same day, while it was still unsent and the operator had not edited it. The
+only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's county
+subdivisions are the supervisor districts. Measured 2026-10-15 by
+`ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
+Bureau's current edition differs from its 2020 edition in 12 counties, which the map draws; in 64
 counties the lines it shows are unchanged since 2020 and have a total population deviation above
 10% on the 2020 census (the largest district less the smallest, as a share of an equal district: a
 median of 37%, and as much as 304%), which suggests those counties have redrawn them since (an
-inference: nothing published says which counties redrew); in the last 6 they are
-unchanged and balanced, which proves nothing either way. MARIS publishes the Bureau's 2020 file
-as its supervisor district layer (`MS_SupervDists_2020`, publication date 2021-02-01, source
-"Census MAF/TIGER database" of 2021-01-29, read from its metadata 2026-10-15), and its
-`Political/MS_SupervisorDistricts_2020` map service listed no layers when read the same day,
-while it publishes the 2025 legislative maps and county parcels and point addresses county by
-county. A survey the same day of every county's website and planning and development district
-(the record is `/mnt/project-files/ms/supervisor-map-survey/`) found 25 counties publishing a
-usable map: 14 whose own lines differ from the Bureau's current ones, where across those 14
-counties the Bureau's lines place 146,842 of 1,065,116 residents in a different district; 10 whose
-own map confirms the Bureau's; and Tippah, whose current plan was found with its publisher not
-established. 21 counties had nothing online, 20 publish only a copy of the Bureau's lines, 15 only
-older or unresolved layers, and Yazoo a planning-district plan whose date is not established. Two
-planning and development districts publish supervisor maps for many of their counties: the
-Central Mississippi PDD from its own server, and the Golden Triangle PDD from an ArcGIS Online
-organisation whose portal record names it. One state office collecting the counties' current maps
-is the change in how Mississippi publishes this information that the project exists to
-encourage, and a no from MARIS is the evidence that it takes more than asking.
+inference: nothing published says which counties redrew); in the last 6 they are unchanged and
+balanced, which proves nothing either way. Measured 2026-10-16 by the same survey against the
+Bureau's 2010 edition (`tigerWMS_Census2010` layer 28, the January 1, 2010 vintage, whose POP100 is
+the 2010 census's own count of each district): in 52 of the 64, the 2020 edition puts every 2020
+resident in the same district as the 2010 edition, and 49 of those 52 measured more than 10% on the
+2010 census's own counts; those 49 held 1,504,204 of the state's 2,961,279 residents in 2020. Seven
+of the 49 hold a 2020 block of more than 1,000 people, which may be a prison or a campus that a
+plan can leave out of its count; estimated from that block against an equal share, it could account
+for the whole figure only in Coahoma and Sunflower, and the other 47 held 1,456,843 residents, so
+"about half" in the letter holds either way. MARIS publishes the Bureau's 2020 file as its
+supervisor district layer (`MS_SupervDists_2020`, publication date 2021-02-01, source "Census
+MAF/TIGER database" of 2021-01-29, read from its metadata 2026-10-15), and its
+`Political/MS_SupervisorDistricts_2020` map service listed no layers when read the same day, while
+it publishes the 2025 legislative maps and county parcels and point addresses county by county. A
+survey the same day of every county's website and planning and development district (the record is
+`/mnt/project-files/ms/supervisor-map-survey/`) found 25 counties publishing a usable map: 14 whose
+own lines differ from the Bureau's current ones, where across those 14 counties the Bureau's lines
+place 146,842 of 1,065,116 residents in a different district; 10 whose own map confirms the
+Bureau's; and Tippah, whose current plan was found with its publisher not established. 21 counties
+had nothing online, 20 publish only a copy of the Bureau's lines, 15 only older or unresolved
+layers, and Yazoo a planning-district plan whose date is not established. Two planning and
+development districts publish supervisor maps for many of their counties: the Central Mississippi
+PDD from its own server, and the Golden Triangle PDD from an ArcGIS Online organisation whose
+portal record names it. One state office collecting the counties' current maps is the change in how
+Mississippi publishes this information that the project exists to encourage, and a no from MARIS is
+the evidence that it takes more than asking.
 
 > Subject: Mississippi's county supervisor district maps
 >
@@ -7625,7 +7644,7 @@ encourage, and a no from MARIS is the evidence that it takes more than asking.
 >
 > I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
 > a point on a map, or type an address, and see every district that covers it and who represents
-> them there. We are building Mississippi's map now; it is not public yet.
+> them there. Mississippi's map is at https://districtry.com/ms/.
 >
 > For the county boards, we can name every sitting supervisor in all 82 counties from the
 > Secretary of State's directory. What we cannot find is a current map of the districts they
@@ -7633,7 +7652,9 @@ encourage, and a no from MARIS is the evidence that it takes more than asking.
 > district layer is the Bureau's 2020 file. The Bureau's current edition has new lines for only 12
 > counties. In 64 others the lines it still shows are the ones it showed in 2020, and they are out
 > of balance on the 2020 census, most of them badly, which suggests those counties have redrawn
-> them since.
+> them since. In 52 of those 64 they put every resident in the same district as the Bureau's 2010
+> edition did, and in 49 of them they were already out of balance on the 2010 census. Those 49
+> counties are home to about half of Mississippi's residents.
 >
 > On 15 October I looked for each county's own map on its website and its planning and development
 > district's. 25 counties publish one that can be used. In 14 of them the county's map differs from
@@ -7683,8 +7704,12 @@ that needs a change in law, is then the next question; nothing here establishes 
   since, say so.
 - The sentence about the empty map service is a courtesy and can be cut. Check it first: if the
   service shows its layer again, cut it.
-- Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
-  Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
+- The 52, the 49 and "about half" must still match the last line of
+  `ms/scripts/build_ms_supervisor_districts.py --survey`, which re-measures them.
+- Mississippi's map went public on 2026-10-16, and the change that published it made the letter
+  link https://districtry.com/ms/ in place of "We are building Mississippi's map now; it is not
+  public yet". The Gmail draft was made before that, so the Letters thread makes the same edit
+  there, unless the operator has edited the draft, in which case the operator is asked.
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 

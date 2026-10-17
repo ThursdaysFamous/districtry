@@ -34,6 +34,7 @@
         "quorum-court",
         "school-district-unified",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -218,6 +219,7 @@
         "school-district-unified",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -251,7 +253,8 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
-        "us-house"
+        "us-house",
+        "voting-precinct"
       ]
     },
     "mi": {
@@ -396,6 +399,7 @@
         "school-district-unified",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -524,6 +528,7 @@
         "school-district-unified",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
@@ -560,6 +565,7 @@
         "tn-senate",
         "tribal-government",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },

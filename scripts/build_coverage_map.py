@@ -134,6 +134,13 @@ AREAS = {
     # over the whole state, the quorum court layer included (its 775
     # districts tile all 75 counties). Its coverage_key carries `outside` alone.
     "ar": {"outline": "ar/data/app/metro-outline.json", "state_outline": None},
+    # Mississippi joined at its go-live. ONE tier, like tn and ar: its layers
+    # answer over the whole state, except the supervisor district layer, which
+    # is drawn only in the counties whose current lines are confirmed and hides
+    # in the others, where the County card still names all five supervisors.
+    # A county-by-county layer is not a second ring the wash could draw, so
+    # the coverage_key carries `outside` alone.
+    "ms": {"outline": "ms/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,
