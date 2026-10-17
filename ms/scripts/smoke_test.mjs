@@ -368,10 +368,9 @@ try {
   //     state line, and measured against fleet-outlines.json it lies inside
   //     Arkansas's outline and no other, and outside this app's coverage ring.
   //     Alabama is served by nobody, so a click near York, Alabama must stay
-  //     here (1a2-ii below). This instance is also DARK, so it has no entry in
-  //     fleet-outlines.json at all and answers its own side from the coverage
-  //     rings the wash retained — no fetch. Chicago proves the file is still
-  //     read for ground far from here.
+  //     here (1a2-ii below). This instance answers its own side from the
+  //     coverage rings the wash retained — no fetch. Chicago proves the file
+  //     is still read for ground far from here.
   //
   //     LOUISIANA IS DELIBERATELY NOT A CASE. It is on the next-states list,
   //     so a "stays here" case there would start failing the day it goes

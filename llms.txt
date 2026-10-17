@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 14 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee and Arkansas. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 15 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -16,9 +16,9 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 ## Illinois
 
-96 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats.
+97 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats.
 
-- [Illinois district lookup](https://districtry.com/il/): 41 layers, 96 counties.
+- [Illinois district lookup](https://districtry.com/il/): 41 layers, 97 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
 - [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 97 of them, each naming every member with whatever contact details that county publishes.
 - [Who runs my fire protection district?](https://districtry.com/il/fire-district.html)
@@ -188,6 +188,17 @@ All 75 counties and their quorum court districts: townships, cities and towns, v
 - [Sources & data layers](https://districtry.com/ar/sources.html)
 - [Who is my Arkansas legislator?](https://districtry.com/ar/state-legislature.html)
 - [Arkansas district questions](https://districtry.com/ar/faq.html)
+
+## Mississippi
+
+All 82 counties and their boards of supervisors: cities and towns, school districts, ZIP codes, the Mississippi Band of Choctaw Indians' land, the Supreme Court, Court of Appeals, chancery and circuit court districts, and the nearest police station, fire station and post office — plus the Mississippi Senate, House and U.S. House districts, with who holds each seat. Every county's five supervisors and five election commissioners are named from the Secretary of State's directory, and the court districts' judges from the Judiciary's own lists. Supervisor district lines are drawn in the 23 counties whose current map is confirmed, and the Data gaps panel says why the other 59 are not.
+
+- [Mississippi district lookup](https://districtry.com/ms/): 16 layers, all 82 counties.
+- [Who is my U.S. representative?](https://districtry.com/ms/congress.html)
+- [Who is my county supervisor?](https://districtry.com/ms/county-supervisor.html): links a page per county, 82 of them, each naming every member with the board of supervisors' office address and telephone where the Secretary of State's directory prints them.
+- [Sources & data layers](https://districtry.com/ms/sources.html)
+- [Who is my Mississippi legislator?](https://districtry.com/ms/state-legislature.html)
+- [Mississippi district questions](https://districtry.com/ms/faq.html)
 
 ## Where the answers come from
 

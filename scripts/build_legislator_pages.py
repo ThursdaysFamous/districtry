@@ -339,6 +339,34 @@ INSTANCES = {
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Arkansas"),
+    ),
+    # Mississippi joined at its go-live with both chambers named from the
+    # Legislature's own member gallery and every member's profile (three seats
+    # the gallery shows as vacant print as vacancies). No term length is
+    # stated: the sentence is the Secretary of State's own 2026-2027 election
+    # calendar, which lists both chambers among the offices elected on
+    # November 2, 2027.
+    "ms": dict(
+        worksheet="ms/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Mississippi legislator?",
+            body="the Mississippi Legislature",
+            short="Mississippi Legislature",
+            term="The Secretary of State's election calendar lists state "
+                 "senators and state representatives among the offices elected "
+                 "at the general election of November 2, 2027.",
+            chambers=[
+                dict(layer="ms-senate", name="Mississippi Senate", short="Senate",
+                     holder="Senator", roster="ms-senate-members.json"),
+                dict(layer="ms-house", name="Mississippi House of Representatives", short="House",
+                     holder="Representative", roster="ms-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Mississippi"),
     ),}
 
 

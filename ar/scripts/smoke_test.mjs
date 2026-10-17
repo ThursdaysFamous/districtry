@@ -362,9 +362,8 @@ try {
   //     ARKANSAS HAS NEIGHBOURS THE FLEET SERVES AND NEIGHBOURS IT DOES NOT,
   //     so both halves are its own. Oklahoma is live, so a click on Sallisaw
   //     must open that app; Texas is served by nobody, so a click on
-  //     Texarkana, Texas must stay here (1a2-ii below). This instance is also
-  //     DARK, so it has no entry in fleet-outlines.json at all and answers its
-  //     own side from the coverage rings the wash retained — no fetch.
+  //     Texarkana, Texas must stay here (1a2-ii below). This instance answers
+  //     its own side from the coverage rings the wash retained — no fetch.
   //     Chicago proves the file is still read for ground far from here.
   //     Tennessee went live while this instance was being built, so Memphis
   //     joined as a case when that go-live was merged in: Overton Park sits
@@ -374,11 +373,16 @@ try {
   //     and correctly: this dark instance's sibling list (`metro_explorers`,
   //     hand-seeded until go-live runs --sync-fleet) still lacked South
   //     Carolina and Tennessee, so the hand-off had nowhere to send the point.
+  //     Mississippi joined as a case in the change that published it
+  //     (2026-10-16): Clarksdale, the Coahoma County seat, sits about 15 km
+  //     east of this app's own outline, inside Mississippi's outline in
+  //     fleet-outlines.json and no other.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Sallisaw, Oklahoma", lat: 35.4604, lng: -94.7875, want: "https://districtry.com/ok/" },
       { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
+      { name: "Clarksdale, Mississippi", lat: 34.2001, lng: -90.5709, want: "https://districtry.com/ms/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -413,8 +417,11 @@ try {
     }, { n: EXPORTS_NAME });
     await page.waitForTimeout(3000);
     const url = page.url();
+    // Still under BASE means still this app. This asked for the URL NOT to
+    // name one of a list of sibling tags, and a list needs a new entry each
+    // time a state goes live: the tag it lacks reads as staying here.
     check("a click on Texarkana, Texas stays in this app",
-      !/districtry\.com\/(il|wi|ia|mi|ny|ca|mn|ky|in|nc|ok|sc|tn)\//.test(url), url);
+      url.startsWith(BASE), url);
     await context.close();
   }
 

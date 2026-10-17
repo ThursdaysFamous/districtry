@@ -190,6 +190,35 @@
   "readOn": "2026-10-15",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
+ "091": {
+  "county": "Humboldt",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Bruce Reimers"
+   },
+   "2": {
+    "name": "Dennis Thompson"
+   },
+   "3": {
+    "name": "Rick Pedersen"
+   },
+   "4": {
+    "name": "Mike Carpenter"
+   },
+   "5": {
+    "name": "Bob Rasmussen"
+   }
+  },
+  "readOn": "2026-10-15",
+  "sourceUrl": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php"
+ },
  "093": {
   "asOf": "2026-10-01",
   "asOfWhy": "Ida County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",

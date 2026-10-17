@@ -406,8 +406,9 @@ nobody, and the county's own page is the evidence.
 ### Still with no letter to draft
 
 A letter cannot be put in the mailbox until somebody writes it. These have a recipient
-and an argument here and no wording: Asks 13, 25, 33, `wi-oshkosh-council` and
-`ia-pottawattamie-tama-wright-boards`. (Ask 11, CCGISC, was listed here as having no
+and an argument here and no wording: Asks 13, 25, 33 and
+`ia-pottawattamie-tama-wright-boards` (`wi-oshkosh-council` was listed here too and is
+withdrawn as of 2026-10-16: the city's new site is read directly). (Ask 11, CCGISC, was listed here as having no
 recipient address; it was sent on 2026-08-05, and its follow-up is drafted.) The thirteen Illinois county letters that exist only in state notes are being
 rewritten as follow-ups, because every one of them bar Scott was asked in early August
 and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) answered.
@@ -5131,6 +5132,14 @@ round.
 
 ## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
 
+> **WITHDRAWN 2026-10-16. DO NOT SEND.** The question this letter asks has answered itself.
+> On 2026-10-15 the city's council page had moved to `www.oshkoshwi.gov`, whose robots.txt
+> (621 bytes) answered our own reader and permits both pages read, and `#1559` reads the Common
+> Council from there: seven members at large, every one with an `@oshkoshwi.gov` address, in
+> `wi/data/app/wi-municipal-boards.json` as of 2026-10-15. The old host's connection failure no
+> longer stands between the city and the map, so there is nothing left to ask. The text below
+> is kept as it was written; any copy of it in the operator's mailbox should be deleted unsent.
+
 > **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE LETTER STANDS AS WRITTEN.**
 > The rule asks whether names we called unreadable sit in a feed we could read. Oshkosh's do
 > not need one: its council page carries the seven names in its own HTML, which is why the
@@ -5211,8 +5220,8 @@ work out how. A yes costs the city nothing it has not already published.
 ## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
 > **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
-> 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
-> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
+> 14:48 and 14:51 UTC. BURTON WAS ASKED 2026-10-12**, at 15:06 UTC, once the operator had
+> supplied its clerk's address (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
 > correction to each, in the same thread, at 15:21-15:23 UTC; see "Three letters went out on a
 > wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
@@ -5267,7 +5276,7 @@ e-mail addresses from automated readers, so its draft has no recipient yet.
 | Shelby Township | Stanley Grot, Township Clerk | `sgrot@shelbytwp.org` | the township clerk's office page |
 | Northville Township | Cynthia L. Jankowski, Township Clerk | `cjankowski@twp.northville.mi.us` | the township clerk's office page (the office's shared address is Clerk@twp.northville.mi.us) |
 | Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office. Township Clerk Debbie Swanson (`dswanson@ypsitownship.org`) answered it herself |
-| Burton | Racheal Boggs, City Clerk | **none recorded** | NOT FOUND: the city's clerk page hides its e-mail addresses from automated readers, so the address must be read in a browser |
+| Burton | Racheal Boggs, City Clerk | `r.boggs@burtonmi.gov` | supplied by the operator, since the city's clerk page hides its e-mail addresses from automated readers; the letter went 2026-10-12 |
 | Lansing | Chris Swope, City Clerk | `city.clerk@lansingmi.gov` | the Clerk's Office address printed on the city's own published notices |
 | Wyoming | Kelli VandenBerg, City Clerk | `clerk_info@wyomingmi.gov` | a search listing of the city's clerk page; this project does not read the city's site |
 
@@ -6501,7 +6510,7 @@ numbering being checked.
 | Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. The operator asked for it on 2026-10-07 and a follow-up was drafted below the table, then **WITHDRAWN UNSENT the same evening**: the county's own GIS map (its supervisor-district layer, supplied by the operator as a screenshot) numbers the five districts exactly as this instance does, so **the numbering is CHECKED and Chickasaw's supervisors SHIPPED keyed 2026-10-07**. |
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | **ANSWERED 2026-10-07, USABLE and SHIPPED the same day.** The auditor replied "Here is a map of the precincts and supervisor districts" with the county's own precinct map (PDF, dated 2026-02-03), which the operator put in Drive. It draws each of the county's seven precincts wholly inside one district, and those precincts sit in the same-numbered districts of this instance's layer, so the numbering is CHECKED (identity) and Grundy's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
-| Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
+| Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. **ANSWERED 2026-10-16, USABLE and SHIPPED the same day.** The county sent two maps, which the operator put in Drive: its "2021 BOS DISTRICT MAP", which colours every section by district and names each district's supervisor (the same five its board page names), and its voting-precinct map drawn to the 2020 census. Twelve township and eight town census points each land in the same-numbered district of our layer, so the numbering is checked and the five supervisors are keyed. The district map also prints a telephone number beside each supervisor, the same five the board page does; those still do not ship, which stays the operator's question. |
 | Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | **SETTLED WITHOUT A REPLY 2026-10-15** from the Secretary of State's certified 2026 primary returns, which list the precincts voting in each supervisor contest; matched to this instance's precinct layer they place every district (one by elimination), so the numbering is CHECKED and the supervisors are keyed. A reply is still welcome and would be a second witness; nothing further is owed. |
 | Mitchell | Rachel Foster | 5 | **ANSWERED 2026-10-12 (13:54 UTC), USABLE and SHIPPED.** The auditor replied from `rfoster@mitchellcountyiowa.gov` (a different address from the `mitchellcoia.us` one the auditors roster carries), listing the precincts in each district: 2, 3 and 11 in District 1; 1, 4 and 12 in 2; 5 and 6 in 3; 7 and 8 in 4; 9 and 10 in 5. Each of this instance's twelve Mitchell precincts lies at least 99.7% inside one district of our layer, and the county's Districts 1 and 2 are our 2 and 1 (3 to 5 match). The county's own supervisor-district map, which she pointed to (robots.txt checked first: none published, so allowed), colours the same five groups and puts District 1 on the west side of Osage, where our district 2 is. So the numbering is CHECKED and Mitchell's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
@@ -7587,7 +7596,7 @@ the counties' own sites and the next election's results stay the route.
 > (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
 > been searched for earlier correspondence with MARIS; do that before it goes.
 
-**Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
+**Why this is asked.** Mississippi's map names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
 County's District 3 is vacant), and can draw the districts they represent in only 23 counties: 12
 from the Census Bureau's current edition and 11 from the county's own published map, all 11 added
@@ -7635,7 +7644,7 @@ the evidence that it takes more than asking.
 >
 > I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
 > a point on a map, or type an address, and see every district that covers it and who represents
-> them there. We are building Mississippi's map now; it is not public yet.
+> them there. Mississippi's map is at https://districtry.com/ms/.
 >
 > For the county boards, we can name every sitting supervisor in all 82 counties from the
 > Secretary of State's directory. What we cannot find is a current map of the districts they
@@ -7697,8 +7706,10 @@ that needs a change in law, is then the next question; nothing here establishes 
   service shows its layer again, cut it.
 - The 52, the 49 and "about half" must still match the last line of
   `ms/scripts/build_ms_supervisor_districts.py --survey`, which re-measures them.
-- Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
-  Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
+- Mississippi's map went public on 2026-10-16, and the change that published it made the letter
+  link https://districtry.com/ms/ in place of "We are building Mississippi's map now; it is not
+  public yet". The Gmail draft was made before that, so the Letters thread makes the same edit
+  there, unless the operator has edited the draft, in which case the operator is asked.
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 
