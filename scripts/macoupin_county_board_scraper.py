@@ -22,10 +22,12 @@ phone or e-mail that can be trusted per person (see the municipal scraper's
 measurement), so none ships. That is a question of attribution and not of
 privacy: under Adam's ruling of 2026-10-17 ("if the official government source
 uses personal phone numbers, we publish those") a member's own mobile number
-would ship, and the detail endpoint's second-contact slot carries one for 16 of
-the 19 board offices, but measured that day the slot belongs to the office and
-could not be tied to the member holding it (the municipal scraper's docstring
-has the counts). No party is published.
+would ship, and under his choice the same day to publish personal e-mail
+addresses as well ("E-mails too") so would the member's own e-mail address.
+The detail endpoint's second-contact slot carries a number for 16 of the 19
+board offices and an e-mail address for 14, but measured that day the slot
+belongs to the office and could not be tied to the member holding it (the
+municipal scraper's docstring has the counts). No party is published.
 
 THE CLIENT is this project's own token, not the browser string the municipal
 scraper sends: measured 2026-10-15, the list, text and robots requests all
