@@ -78,6 +78,7 @@ import glob
 import json
 import os
 import re
+import subprocess
 import sys
 import urllib.parse
 
@@ -2752,16 +2753,27 @@ EXTENSION_RE = re.compile(r"(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d", re.I)
 
 def dial_digits(value):
     """What a tel: link dials for one printed number: its digits (and a
-    leading +), stopping where an extension begins."""
+    leading +), stopping where an extension begins. Where two numbers are
+    printed as one ("217/555-0100; 217/555-0101") it dials the first, as
+    cardPhoneDial does: seven digits where the text opens with a local number
+    (three digits, then four), eleven where it opens with the country code 1,
+    and ten otherwise; a number written with a leading + is left whole."""
     value = value or ""
     m = EXTENSION_RE.search(value)
     if m:
         value = value[:m.start() + len(m.group(1))]
-    return re.sub(r"[^0-9+]", "", value)
+    dial = re.sub(r"[^0-9+]", "", value)
+    if not dial.startswith("+") and len(dial) > 11:
+        g = re.findall(r"\d+", value)
+        dial = dial[:7 if len(g) > 1 and len(g[0]) == 3 and len(g[1]) == 4
+                    else 11 if dial.startswith("1") else 10]
+    return dial
 
 
 # Made-up numbers, each with what its tel: link must dial. "fax" is there for
-# the x a word can end in, which is not an extension.
+# the x a word can end in, which is not an extension. The last five are two
+# numbers printed as one, in the shapes measured on 2026-10-17 (Mason County's
+# municipal officials and Chicago's Ward 2) and three more a source could use.
 DIAL_CASES = (
     ("(402) 555-0101 ext. 3203", "4025550101"),
     ("608-555-0102 EXT 105", "6085550102"),
@@ -2771,14 +2783,20 @@ DIAL_CASES = (
     ("cell 555-0106", "5550106"),
     ("+1 608 555 0107", "+16085550107"),
     ("fax 555-0108", "5550108"),
+    ("217/555-0109; 217/555-0110", "2175550109"),
+    ("(312) 555-0111 / 0112/0113", "3125550111"),
+    ("555-0114 / 555-0115", "5550114"),
+    ("1-800-555-0116 or 1-800-555-0117", "18005550116"),
+    ("Home: (608) 555-0118 Cell: (608) 555-0119", "6085550118"),
 )
 CARD_HELPERS = os.path.join(REPO_ROOT, "engine", "index.html", "card-helpers.txt")
 
 
 def check_dial_rule():
     """[] or the problems with how a tel: link is built: dial_digits must
-    answer DIAL_CASES, and the apps' cardPhoneDial must read an extension with
-    the same pattern, so a card and a page cannot dial a number differently."""
+    answer DIAL_CASES, the apps' cardPhoneDial must read an extension with the
+    same pattern, and cardPhoneDial, run as shipped in Node, must answer
+    DIAL_CASES too, so a card and a page cannot dial a number differently."""
     out = ["dial_digits(%r) gives %r, not %r" % (v, dial_digits(v), want)
            for v, want in DIAL_CASES if dial_digits(v) != want]
     try:
@@ -2796,20 +2814,49 @@ def check_dial_rule():
         out.append("cardPhoneDial reads an extension as /%s/i and dial_digits as "
                    "/%s/i: a card and a page would dial a number differently"
                    % (m.group(1), EXTENSION_RE.pattern))
+    # THE FUNCTION ITSELF, RUN AS SHIPPED, because the extension pattern is not
+    # all of the rule: what a link dials where two numbers are printed as one
+    # is code, and two copies of code agree only when both are run.
+    fn = re.search(r"^( *)function cardPhoneDial\(phone\) \{\n.*?^\1\}$", block,
+                   re.S | re.M)
+    if not fn:
+        out.append("cardPhoneDial in %s cannot be found as one function, so it "
+                   "cannot be run against DIAL_CASES"
+                   % os.path.relpath(CARD_HELPERS, REPO_ROOT))
+        return out
+    src = (fn.group(0) + "\nprocess.stdout.write(JSON.stringify(%s.map(cardPhoneDial)));"
+           % json.dumps([v for v, _ in DIAL_CASES]))
+    try:
+        run = subprocess.run(["node", "-e", src], capture_output=True, text=True,
+                             timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return out + ["cardPhoneDial could not be run in Node (%s), so it cannot be "
+                      "compared with dial_digits" % exc]
+    if run.returncode != 0:
+        said = [ln for ln in run.stderr.splitlines() if "Error" in ln]
+        return out + ["cardPhoneDial failed in Node: %s"
+                      % (said or run.stderr.strip().splitlines() or ["no output"])[0]]
+    for (v, want), got in zip(DIAL_CASES, json.loads(run.stdout)):
+        if got != want:
+            out.append("cardPhoneDial(%r) gives %r, not %r: a card and a page would "
+                       "dial a number differently" % (v, got, want))
     return out
 
 
 def member_phones(m):
     """Every number a roster carries for one person, first one first: `phone`,
     then `phonesExtra`, the further numbers a source prints for the same
-    person (a home and a cell line, say), each with its label in the text."""
+    person (a home and a cell line, say), each with its label in the text.
+    A value with no digit in it is no number: Kankakee County's board page
+    printed four members' telephones as "Coming Soon" until 2026-10-17, each
+    a link that dialled nothing, where the card shows no telephone at all."""
     extras = m.get("phonesExtra") or []
     if isinstance(extras, str):
         extras = [extras]
     out = []
     for value in [m.get("phone")] + list(extras):
         value = (value or "").strip() if isinstance(value, str) else ""
-        if value and value not in out:
+        if value and re.search(r"\d", value) and value not in out:
             out.append(value)
     return out
 

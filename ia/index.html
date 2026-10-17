@@ -11991,7 +11991,19 @@ function initIowaExplorer() {
     var s = String(phone);
     var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
     if (m) s = s.slice(0, m.index + m[1].length);
-    return s.replace(/[^\d+]/g, "");
+    var dial = s.replace(/[^\d+]/g, "");
+    // TWO NUMBERS PRINTED AS ONE ("217/555-0100; 217/555-0101", "(312)
+    // 555-0100 / 0101/0102") would run together into a number nobody has. The
+    // link dials the first, the one the text opens with, and the rest stays
+    // in the text: seven digits where the text opens with a local number
+    // (three digits, then four), eleven where it opens with the country code
+    // 1, and ten otherwise. A number written with a leading + is left whole.
+    if (dial.charAt(0) !== "+" && dial.length > 11) {
+      var g = s.match(/\d+/g);
+      dial = dial.slice(0, g.length > 1 && g[0].length === 3 && g[1].length === 4
+        ? 7 : dial.charAt(0) === "1" ? 11 : 10);
+    }
+    return dial;
   }
   function cardPhoneLink(phone) {
     var dial = cardPhoneDial(phone);
