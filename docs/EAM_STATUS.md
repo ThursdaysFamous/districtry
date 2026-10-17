@@ -150,7 +150,7 @@ this instance is in maintenance.
 
 - **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ms-chancery-court-districts-2027.json`, `ms-chancery-court-districts.json`, `ms-circuit-court-districts-2027.json`, `ms-circuit-court-districts.json`, `ms-court-of-appeals-districts.json`, `ms-house-districts.json`, `ms-senate-districts.json`, `ms-supervisor-counties.json`, `ms-supervisor-districts.json`, `ms-supreme-court-districts.json`, `state-counties.json`
 - **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 23 of 82 counties name a governing body and draw it where it is elected by district; 59 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **4. The county governing body, in every county of the state** — open. 25 of 82 counties name a governing body and draw it where it is elected by district; 57 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 15 units at 25,000+ name a governing body; unanswered: Biloxi city, Brandon city, Clinton city, Greenville city, Gulfport city, Hattiesburg city, Horn Lake city, Jackson city and 7 more
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
