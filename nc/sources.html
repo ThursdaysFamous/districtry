@@ -1162,7 +1162,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1292,7 +1292,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">1 layer</span></h2>
+        <h2>Schools <span class="matrix-count">2 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1310,6 +1310,19 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. North Carolina's boards of education are elected, and no statewide roster of their members was found in this pass — recorded as a gap rather than left unstated.</td>
                 <td data-label="Where it applies">North Carolina — statewide. The label carries no qualifier because there is nothing to distinguish it from: the elementary-only and secondary-only tilings TIGERweb serves for other states are EMPTY in North Carolina (0 features each, measured 2026-09-29), so one tiling ships where Illinois ships three.</td>
+              </tr>
+              <tr id="layer-school-board-district">
+                <th scope="row"><span class="layer-name">School Board District</span><code>school-board-district</code></th>
+                <td data-label="What it answers">The election district of a North Carolina school board that elects members by district, and the school district whose board it is. Where one election's ballots in a precinct carried two of a board's districts, both are named; where different elections put different districts on the ballot, each election's are named and none is chosen; where the results place no current district seat, the card says so.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip" target="_blank" rel="noopener">North Carolina State Board of Elections — precinct-level election results (results_pct_&lt;date&gt;.zip), one file for each election from May 17, 2022 to the November 3, 2026 ballot the State Board posted on October 5, 2026: each district is the precincts whose ballots carried its seat's latest contest, cut to the school district. Read 2026-10-17 and pre-built by nc/scripts/build_nc_school_board_districts.py, shipped with the app. The State Board's ShapeFiles folder carries its precinct maps and no map of these districts.</a></li>
+                    <li><a href="https://dl.ncsbe.gov/ShapeFiles/Precinct/SBE_PRECINCTS_20260824.zip" target="_blank" rel="noopener">North Carolina State Board of Elections — its statewide precinct maps (SBE_PRECINCTS_&lt;date&gt;.zip), nine dated January 18, 2022 to August 24, 2026: each election's precincts are read in the map holding the most of that election's precinct codes, read 2026-10-17.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts): the boundary each board's districts are cut to, read 2026-10-17.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO MEMBER IS NAMED YET. The results name each contest's winner, but a board fills a vacancy by appointment, which no results file records, and the seats on the November 3, 2026 ballot stay with the members serving now until that election's winners take office. Matching the winners to the members serving now has not been done, so the card names no one rather than guessing — recorded as gap nc-school-board-members. The card links each board's school district website instead: the address that the National Center for Education Statistics' Common Core of Data district directory for the 2025-26 school year gives, kept where it answered with a page when the file was built, which all 38 did on 2026-10-17.</td>
+                <td data-label="Where it applies">The 38 North Carolina school districts whose boards elect members by district, measured 2026-10-17 from the results as the boards whose district seats are each voted on in only part of the school district: Alexander, Anson, Beaufort, Bladen, Buncombe, Caswell, Charlotte-Mecklenburg, Craven, Cumberland, Duplin, Durham, Edenton-Chowan, Edgecombe, Forsyth, Franklin, Granville, Guilford, Harnett, Hickory City, Iredell-Statesville, Lenoir, Lexington City, Madison, Martin, Montgomery, Nash-Rocky Mount, Newton-Conover City, Pamlico, Pitt, Robeson, Rockingham, Union, Vance, Wake, Watauga, Wayne, Whiteville City and Wilson. 45 boards are elected at large, and 32 more label seats by district while every precinct votes on each of them; neither kind has districts to draw, and the empty card says so.</td>
               </tr>
             </tbody>
           </table>
@@ -1540,6 +1553,38 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "North Carolina — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/nc/sources.html#dataset-school-board-district",
+      "identifier": "school-board-district",
+      "name": "School Board District",
+      "description": "The election district of a North Carolina school board that elects members by district, and the school district whose board it is. Where one election's ballots in a precinct carried two of a board's districts, both are named; where different elections put different districts on the ballot, each election's are named and none is chosen; where the results place no current district seat, the card says so. NO MEMBER IS NAMED YET. The results name each contest's winner, but a board fills a vacancy by appointment, which no results file records, and the seats on the November 3, 2026 ballot stay with the members serving now until that election's winners take office. Matching the winners to the members serving now has not been done, so the card names no one rather than guessing — recorded as gap nc-school-board-members. The card links each board's school district website instead: the address that the National Center for Education Statistics' Common Core of Data district directory for the 2025-26 school year gives, kept where it answered with a page when the file was built, which all 38 did on 2026-10-17.",
+      "url": "https://districtry.com/nc/sources.html#layer-school-board-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/nc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "North Carolina State Board of Elections — precinct-level election results (results_pct_<date>.zip), one file for each election from May 17, 2022 to the November 3, 2026 ballot the State Board posted on October 5, 2026: each district is the precincts whose ballots carried its seat's latest contest, cut to the school district. Read 2026-10-17 and pre-built by nc/scripts/build_nc_school_board_districts.py, shipped with the app. The State Board's ShapeFiles folder carries its precinct maps and no map of these districts.",
+          "url": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip"
+        },
+        {
+          "@type": "Dataset",
+          "name": "North Carolina State Board of Elections — its statewide precinct maps (SBE_PRECINCTS_<date>.zip), nine dated January 18, 2022 to August 24, 2026: each election's precincts are read in the map holding the most of that election's precinct codes, read 2026-10-17.",
+          "url": "https://dl.ncsbe.gov/ShapeFiles/Precinct/SBE_PRECINCTS_20260824.zip"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts): the boundary each board's districts are cut to, read 2026-10-17.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 38 North Carolina school districts whose boards elect members by district, measured 2026-10-17 from the results as the boards whose district seats are each voted on in only part of the school district: Alexander, Anson, Beaufort, Bladen, Buncombe, Caswell, Charlotte-Mecklenburg, Craven, Cumberland, Duplin, Durham, Edenton-Chowan, Edgecombe, Forsyth, Franklin, Granville, Guilford, Harnett, Hickory City, Iredell-Statesville, Lenoir, Lexington City, Madison, Martin, Montgomery, Nash-Rocky Mount, Newton-Conover City, Pamlico, Pitt, Robeson, Rockingham, Union, Vance, Wake, Watauga, Wayne, Whiteville City and Wilson. 45 boards are elected at large, and 32 more label seats by district while every precinct votes on each of them; neither kind has districts to draw, and the empty card says so"
       }
     },
     {

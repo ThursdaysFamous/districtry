@@ -287,11 +287,45 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board Division",
+      "group": "schools",
+      "area_rank": 12,
+      "rank_note": "13 features in 2 counties — the 5 divisions of the Jefferson County board, from the precinct lists in KRS 160.211, the 5 of the Rowan County board, from the 2022 and 2024 general election results, and 3 Jefferson precincts placed in no division — 136.22 km2 mean area (median 126.46), measured 2026-10-17 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a voting precinct (32.75)",
+      "source": {
+        "answers": "The division of a Kentucky county board of education that contains the point, in the counties whose divisions this map draws (Jefferson and Rowan), and, in Jefferson County, the three precincts the statute leaves for the county board of elections to place.",
+        "boundary": [
+          {
+            "label": "KRS 160.211, created by 2026 Ky. Acts ch. 154, sec. 9 (effective April 14, 2026) — the precinct codes of the Jefferson County board's five divisions; the repository's copy (ky/data/source/statutes/krs160.211.txt) is held to section 9 of the act as enacted on every build",
+            "url": "https://apps.legislature.ky.gov/law/acts/26RS/documents/0154.pdf"
+          },
+          {
+            "label": "Kentucky State Board of Elections — voting precincts, joined to the statute's codes and to the election results by precinct code (ky/scripts/build_ky_school_board_divisions.py)",
+            "url": "https://services3.arcgis.com/ghsX9CKghMvyYjBU/arcgis/rest/services/Ky_SBE_VTD_Boundaries_WM/FeatureServer/0"
+          },
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts): the Jefferson County and Rowan County school district boundaries each division is cut to",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          },
+          {
+            "label": "Kentucky State Board of Elections — 2024 general election recap sheets, which with the 2022 sheets place every Rowan County precinct in one division's race",
+            "url": "https://elect.ky.gov/results/2020-2029/Pages/2024General-Recap-Sheets.aspx"
+          },
+          {
+            "label": "Kentucky State Board of Elections — 2022 general election recap sheets",
+            "url": "https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx"
+          }
+        ],
+        "people": "NO OFFICEHOLDER NAMED. No list of a county board's members by division has been read for this app, so the card names the division, says how it was drawn and links the board's own page. Recorded as the coverage gap ky-school-board-members.",
+        "applies": "Jefferson County, inside the Jefferson County School District (the Anchorage Independent School District, whose board is elected at large, is in no division), and Rowan County. Elsewhere the card says the county's divisions are not drawn here yet."
+      }
+    },
+    {
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 12,
-      "rank_note": "3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a city (12.00)",
+      "area_rank": 13,
+      "rank_note": "3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a school board division (136.22 km2), larger than a city (12.00)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
         "boundary": [
@@ -308,7 +342,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
       "source": {
         "answers": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.",
@@ -326,7 +360,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
       "source": {
         "answers": "The elementary-only school district covering the point, in the four places Kentucky has one.",
@@ -344,7 +378,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling",
       "source": {
         "answers": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.",
@@ -359,7 +393,7 @@
       }
     }
   ],
-  "min_register_layer": 6,
+  "min_register_layer": 7,
   "anchor_point": {
     "lat": 38.2527,
     "lng": -85.7585,
@@ -457,6 +491,12 @@
         "min_features": 3194,
         "max_features": 3194,
         "note": "Every Kentucky voting precinct, pre-built by ky/scripts/build_ky_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 3,194 count on the fetch and the drawn file). 10.2 MB, 2.49 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "ky-school-board-divisions.json",
+        "min_features": 13,
+        "max_features": 13,
+        "note": "County school board divisions, built by ky/scripts/build_ky_school_board_divisions.py: Jefferson County's five from the precinct lists in KRS 160.211 and Rowan County's five from the 2022 and 2024 general election recap sheets, each cut to its Census school district, plus three Jefferson precincts the statute does not list, shipped whole and placed in no division. Its --check holds the file to its source record, the statute as kept in the repository and the precinct codes in ky-precincts.json."
       }
     ],
     "rosters": [
