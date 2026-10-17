@@ -4216,15 +4216,17 @@ function initSouthCarolinaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "sc-senate": "scs", "county": "co",
-    "school-district-unified": "su", "sc-house": "sch", "county-subdivision": "cs",
-    "county-council": "cu", "zip-code": "zp", "voting-precinct": "vp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "school-district-unified": "su", "sc-house": "sch", "sc-circuit-court": "scc",
+    "county-subdivision": "cs", "county-council": "cu", "zip-code": "zp",
+    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["sc-senate"],
-    "state-house": ["sc-house"], "county": ["county"], "county-board": ["county-council"],
+    "state-house": ["sc-house"], "trial-court-district": ["sc-circuit-court"],
+    "county": ["county"], "county-board": ["county-council"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
@@ -9558,6 +9560,7 @@ function initSouthCarolinaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 7 congressional districts — the largest districts South Carolina carries below the state itself
+    "sc-circuit-court",  // 16 judicial circuits of whole counties, 5,185 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (1,804 km2), smaller than a congressional district
     "sc-senate",         // 46 Senate districts — the same count as the state's counties, and drawn independently of them
     "county",            // 46 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 72 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
@@ -13928,6 +13931,131 @@ function initSouthCarolinaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
+  /* ---------- 4b. Judicial Circuit — 16 groups of whole counties ----------
+   * S.C. Code Section 14-5-610 divides the state into sixteen judicial
+   * circuits and names each one's counties, so no map is read:
+   * sc/scripts/build_sc_judicial_circuits.py dissolves the county fabric this
+   * instance already ships, following the section's text as the Legislature
+   * publishes it (read 2026-10-16, kept in data/source/courts/).
+   *
+   * VOTERS DO NOT ELECT THESE JUDGES. The General Assembly elects every
+   * circuit judge by a joint public vote, for six years (S.C. Const. art. V,
+   * sec. 13): Section 14-5-610(B) sets how many for each circuit, from one to
+   * five, and (C) adds seven from the state at large. The judges then rotate
+   * around the state (art. V, sec. 14). What the circuit's own voters elect is
+   * its solicitor, the prosecutor, for four years (Section 1-7-310), and that
+   * is half of why the circuit is drawn; Adam was asked on 2026-10-16 whether
+   * to draw it at all, and the default, to draw it, stands until he answers.
+   *
+   * MEAN AREA 5,185 km2 against the Senate's 1,804, which puts the layer
+   * second in the area rank, under the U.S. House.
+   *
+   * NOBODY IS NAMED: no list of the judges or the solicitors by circuit has
+   * been read (gap sc-judicial-circuit-officers).
+   * ---------- */
+  var loadScJudicialCircuits = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-judicial-circuits.json", {}, 2);
+  });
+  var SC_CIRCUIT_STATUTE = "https://www.scstatehouse.gov/code/t14c005.php";
+  var SC_JUDGE_WORDS = ["One", "Two", "Three", "Four", "Five", "Six", "Seven",
+    "Eight", "Nine"];
+
+  // "Kershaw and Richland Counties"
+  function scCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  // 5 -> "5th", the form the state itself writes ("the fifth circuit") in
+  // figures, so a reader who knows the Fifth Circuit Solicitor finds it here.
+  function scOrdinal(n) {
+    var k = Number(n);
+    if (!isFinite(k)) return String(n);
+    var tens = k % 100;
+    var suffix = (tens >= 11 && tens <= 13) ? "th"
+      : ({ 1: "st", 2: "nd", 3: "rd" })[k % 10] || "th";
+    return k + suffix;
+  }
+
+  function scCircuitUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  registerLayer({
+    id: "sc-circuit-court",
+    group: "political",
+    label: "Judicial Circuit",
+    overlay: {
+      load: loadScJudicialCircuits,
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = scCircuitUnit(feature);
+      return unit == null ? null : scOrdinal(unit) + " Judicial Circuit";
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadScJudicialCircuits, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: scCircuitUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          judges: findPropCI(props, ["judge_count"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? scOrdinal(result.unit) + " Judicial Circuit"
+          : "Unknown judicial circuit",
+        note: scCountyPhrase(result.counties)
+      }));
+      var n = Number(result.judges);
+      var count = n >= 1 && n <= SC_JUDGE_WORDS.length
+        ? SC_JUDGE_WORDS[n - 1] + (n === 1 ? " judge is" : " judges are")
+        : null;
+      var rows = [
+        {
+          label: "Solicitor",
+          value: "The circuit's prosecutor, elected by its voters for a " +
+            "four-year term. This app does not name the solicitor yet."
+        },
+        {
+          label: "Circuit judges",
+          value: (count ? count + " elected for this circuit, and must live " +
+              "in it. " : "") +
+            "Voters do not elect them: the General Assembly does, for " +
+            "six-year terms, and it elects seven more from the whole state. " +
+            "The judges rotate around the state, so the judge hearing a case " +
+            "here need not be one of this circuit's. This app does not name " +
+            "them yet."
+        },
+        {
+          label: "The court",
+          value: "The circuit court is South Carolina's general trial court, " +
+            "for civil and criminal cases."
+        }
+      ];
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "S.C. Code Section 14-5-610", url: SC_CIRCUIT_STATUTE };
+    }
+  });
+
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Columbia" + " city") or a prefix. Returns null when the two are equal
   // or unrelated, so a TIGER change shows up as a missing type row rather
@@ -16123,6 +16251,9 @@ function initSouthCarolinaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "sc-senate", "sc-house",
+    // The judicial circuit follows the chambers, as Kentucky's courts do: its
+    // voters elect its solicitor, and the General Assembly its judges.
+    "sc-circuit-court",
     // The county council sits with the chambers rather than down in
     // geography: like them it is a member elected by this district alone.
     "county-council",
@@ -16614,8 +16745,8 @@ function initSouthCarolinaExplorer() {
     "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

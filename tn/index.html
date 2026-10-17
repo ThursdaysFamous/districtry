@@ -4216,16 +4216,17 @@ function initTennesseeExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "tn-senate": "tns", "county": "co", "tn-house": "tnh",
-    "school-district-unified": "su", "county-commissioner": "cm", "county-subdivision": "cs",
-    "zip-code": "zp", "school-district-elementary": "se", "school-district-secondary": "sh",
-    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "tn-judicial-district": "tnj", "school-district-unified": "su", "county-commissioner": "cm",
+    "county-subdivision": "cs", "zip-code": "zp", "school-district-elementary": "se",
+    "school-district-secondary": "sh", "voting-precinct": "vp", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["tn-senate"],
-    "state-house": ["tn-house"], "county": ["county"], "county-board": ["county-commissioner"],
+    "state-house": ["tn-house"], "trial-court-district": ["tn-judicial-district"],
+    "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
@@ -9561,6 +9562,7 @@ function initTennesseeExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 9 congressional districts — the largest districts Tennessee carries below the state itself
+    "tn-judicial-district", // 32 judicial districts of whole counties, 3,409 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (3,306 km2), smaller than a congressional district
     "tn-senate",         // 33 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
@@ -13714,6 +13716,122 @@ function initTennesseeExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
+  /* ---------- 4b. Judicial District — 32 groups of whole counties ----------
+   * Tennessee's trial courts sit in 32 judicial districts: circuit and
+   * chancery courts in every one, a separate criminal court in some. The
+   * district's voters elect its circuit judges and chancellors for eight-year
+   * terms (CTAS, "Trial Courts", citing Tenn. Const. art. VI, sec. 4) and its
+   * district attorney general for an eight-year term too (the District
+   * Attorneys General Conference's own pages).
+   *
+   * EVERY DISTRICT IS A SET OF WHOLE COUNTIES, so no map is read:
+   * tn/scripts/build_tn_judicial_districts.py dissolves the county fabric this
+   * instance already ships, following the conference's own county list (read
+   * 2026-10-16), which agrees with 31 district pages and with the
+   * Comptroller's FY2019 judicial map apart from the 21st's later split into
+   * the 21st and 32nd. The statute itself was not read: its public copy is
+   * published by LexisNexis, the General Assembly's site admits only named
+   * search engines and archives in robots.txt, and the courts' site answers
+   * with a managed challenge; all three are recorded as data-publishing
+   * hurdles.
+   *
+   * MEAN AREA 3,409 km2 against the Senate's 3,306, which puts the layer
+   * second in the area rank, under the U.S. House.
+   *
+   * NOBODY IS NAMED: no list of the judges or the district attorneys by
+   * district has been read (gap tn-judicial-district-officers). The card says
+   * who elects them and links the district attorney's page the conference's
+   * county list sends the district to.
+   * ---------- */
+  var loadTnJudicialDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-judicial-districts.json", {}, 2);
+  });
+  var TN_DA_CONFERENCE = "https://tennesseeda.gov/";
+
+  // "Carter, Johnson, Unicoi and Washington Counties" — the county list a card
+  // prints under its own district number.
+  function tnCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  function tnJudicialUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  registerLayer({
+    id: "tn-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    overlay: {
+      load: loadTnJudicialDistricts,
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = tnJudicialUnit(feature);
+      return unit == null ? null : "Judicial District " + unit;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadTnJudicialDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: tnJudicialUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          url: findPropCI(props, ["url"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? "Judicial District " + result.unit
+          : "Unknown judicial district",
+        note: tnCountyPhrase(result.counties)
+      }));
+      var rows = [
+        {
+          label: "Judges",
+          value: "The district's voters elect its circuit judges and " +
+            "chancellors, each for an eight-year term. This app does not " +
+            "name them yet."
+        },
+        {
+          label: "District attorney general",
+          value: "One for the district, who prosecutes its criminal cases, " +
+            "elected by its voters for an eight-year term. This app does not " +
+            "name the district attorney yet; the link below opens the " +
+            "district attorney's own page."
+        },
+        {
+          label: "The court",
+          value: "Circuit and chancery courts, Tennessee's main trial courts, " +
+            "sit in every judicial district, and some districts also have a " +
+            "separate criminal court."
+        }
+      ];
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return {
+        label: "District attorney's page",
+        url: result && result.url ? String(result.url) : TN_DA_CONFERENCE
+      };
+    }
+  });
+
   /* ---------- 5. County Commission District ----------
    * Pre-built from the Comptroller of the Treasury's statewide layer of every
    * county's commission districts (tn/scripts/build_tn_commission_districts.py
@@ -16257,6 +16375,9 @@ function initTennesseeExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "tn-senate", "tn-house",
+    // The judicial district follows the chambers, as Kentucky's courts do:
+    // its voters elect its judges and its district attorney general.
+    "tn-judicial-district",
     "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
@@ -16748,8 +16869,8 @@ function initTennesseeExplorer() {
     "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#5E3A8C": "#B283F5",
     "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+    "#8C2E4A": "#F47294", "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

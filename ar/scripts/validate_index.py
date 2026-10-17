@@ -87,16 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 11
+MIN_REGISTER_LAYER = 13
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ar-senate", "county", "ar-house", "school-district-unified",
-    "zip-code", "quorum-court", "county-subdivision", "voting-precinct",
-    "municipality", "police-station", "fire-station", "post-office",
+    "us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate",
+    "county", "ar-house", "school-district-unified", "zip-code",
+    "quorum-court", "county-subdivision", "voting-precinct", "municipality",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +110,8 @@ GEOMETRY_FILES = {
     "ar-quorum-court-districts.json": (775, 775),  # The 775 justice of the peace districts of all 75 counties, from the state's own layer (ar/scripts/build_ar_quorum_court_districts.py).
     "ar-townships.json": (820, 820),  # The 820 townships of all 75 counties, from the state's own layer (ar/scripts/build_ar_townships.py).
     "ar-precincts.json": (2920, 2920),  # Every Arkansas voting precinct, pre-built by ar/scripts/build_ar_precincts.py through scripts/statewide_precincts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,920 count on the drawn file, after the eight records that are further pieces of seven precincts are joined into them). 9.3 MB, 2.44 MB gzipped, fetched only when a reader switches the layer on.
+    "ar-appeals-districts.json": (7, 7),  # The 7 Court of Appeals districts, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following Act 1812 of 2003's county lists.
+    "ar-judicial-circuits.json": (28, 28),  # The 28 judicial circuits, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following the circuit judge directory's county lists.
 }
 
 # file -> minimum key count (officeholder rosters).

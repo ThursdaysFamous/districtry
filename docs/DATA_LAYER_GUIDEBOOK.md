@@ -59,12 +59,12 @@ in the researched-but-unbuilt backlog.
   "michigan": ["us-house", "mi-senate", "county", "mi-house", "school-district-unified", "school-district-elementary", "county-commissioner", "county-subdivision", "zip-code", "city-ward", "precinct", "municipality", "police-station", "fire-station", "post-office", "mi-court-of-appeals", "mi-circuit-court", "mi-isd", "tribal-government"],
   "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "tribal-government", "municipality", "city-ward", "school-district-secondary", "police-station", "fire-station", "post-office"],
   "kentucky": ["us-house", "ky-supreme-court", "ky-court-of-appeals", "ky-senate", "ky-circuit-court", "ky-district-court", "ky-house", "county", "school-district-unified", "county-subdivision", "fiscal-court", "voting-precinct", "municipality", "school-district-elementary", "school-district-secondary"],
-  "indiana": ["us-house", "in-senate", "county", "in-house", "county-council", "school-district-unified", "zip-code", "county-subdivision", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "indiana": ["in-court-of-appeals", "us-house", "in-senate", "county", "in-house", "county-council", "school-district-unified", "zip-code", "county-subdivision", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "voting-precinct", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
-  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "county-subdivision", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
-  "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-subdivision", "county-council", "zip-code", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "county-subdivision", "zip-code", "school-district-elementary", "school-district-secondary", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "county-subdivision", "voting-precinct", "municipality", "police-station", "fire-station", "post-office"],
+  "oklahoma": ["us-house", "ok-judicial-district", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "county-subdivision", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
+  "southcarolina": ["us-house", "sc-circuit-court", "sc-senate", "county", "school-district-unified", "sc-house", "county-subdivision", "county-council", "zip-code", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "tennessee": ["us-house", "tn-judicial-district", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "county-subdivision", "zip-code", "school-district-elementary", "school-district-secondary", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "arkansas": ["us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "county-subdivision", "voting-precinct", "municipality", "police-station", "fire-station", "post-office"],
   "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
 }
 ```
@@ -3109,6 +3109,18 @@ trusted.
           "why": "This app names the councils of Indiana's largest places so far, from the state's election results and three towns' own pages. Council district lines are not on the map, so the card lists every seat.",
           "wanted": "The mayor or town council president, the council members and the clerk of each city and town, and the council district covering the point.",
           "blocker": "PARTLY BUILT. On 2026-10-11 the mayor and council of 36 of the 39 places the Census counted at 25,000 or more shipped, each the winner of that seat's most recent election in the Election Division's certified 2023 municipal general (in/scripts/build_in_city_officials.py). The other three are towns — Plainfield (no race in the 2023 results at all), Brownsburg and Schererville (three wards each) — because a town holds no general election for an uncontested seat; since 2026-10-15 those three councils are read from each town's own council page and dated to the read, so all 39 places over 25,000 are named. The smaller 527 places are the same source's next step. UNBUILT WORK WITH A MEASURED SOURCE. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division: its 2023 municipal returns name 1,327 officeholders, including 428 districted city council seats. The COUNCIL DISTRICTS THEMSELVES have no statewide geometry, so a districted council seat cannot be placed until a city or its county publishes wards — and under Adam's ruling of 2026-09-21, the state precinct fabric may CHECK a city-published ward boundary and never stand in for one. The roster half is buildable now; the ward half is per-city work."
+      },
+      {
+            "id": "in-court-of-appeals-judges",
+            "concept": "Court of Appeals judges",
+            "area": "Indiana — the Court of Appeals' 1st, 2nd and 3rd Districts",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "in-court-of-appeals",
+            "summary": "Your Court of Appeals District card says which district you are in and how its judges are chosen and kept, and names none of its three judges yet.",
+            "why": "The court publishes its fifteen judges, and this app does not yet read which district each one comes from.",
+            "wanted": "Nothing from a reader — this one is ours to build.",
+            "blocker": "MEASURED 2026-10-16. The court's own districts page (www.in.gov/courts/appeals/districts/) lists all fifteen judges in its menu and names the 2025 presiding judge of each district, but not which three judges come from each of the 1st, 2nd and 3rd Districts; each judge's own page on the same site is the likely place, and none was read in this change. The districts' counties are read from the court's district map image (in/scripts/build_in_appeals_districts.py, sources in in/data/source/courts/), because the Indiana Code is published only through iga.in.gov, which serves a page with no text to any client that does not run its scripts, robots.txt included (measured 2026-10-15). That is a data-publishing hurdle. Naming the judges needs a weekly refresh workflow, since a judge can retire or be appointed between retention votes."
       }
   ],
   "northcarolina": [
@@ -3237,6 +3249,18 @@ trusted.
             "why": "Each nation publishes its own government on its own site, and this app has not read any Oklahoma nation's council list yet.",
             "wanted": "Each nation's own published list of its council, and its district map where it elects by district.",
             "blocker": "SHIPPED 2026-10-10 as `tribal-government`, on Adam's exception for Oklahoma (\"Make an exception for OK\"): 31 areas across 33 nations — the Osage Reservation, the Shawnee Tribe's trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas, simplified by Douglas-Peucker at 20 m (worst stray 21.8 m against a 25 m ceiling). Every statistical-area card says the Census draws the area to count people and that it is not a legal boundary. An area whose Census name names several nations names every one, each with its own seat and site. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. Five governments have no area of their own — the United Keetoowah Band and the Delaware Tribe of Indians, seated in the Cherokee OTSA, and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns, seated in the Creek OTSA — so the builder places each by the Census's internal point for its seat city (SEAT_STATES) and the card lists it as \"Also seated in this area\"; --check fails if any government the Bureau seats in Oklahoma is named nowhere. Which ground each of them answers for is not something the Census's map settles, and the card says so. The record below is what the build started from. MEASURED 2026-10-09 with scripts/tribal_areas.py, control passed (the state layer answers code 40), scored by real intersection area against TIGERweb's own Oklahoma polygon: ONE federal reservation, `Osage Reservation`, 5,967.409 km² and wholly inside the state; ONE off-reservation trust land, `Shawnee Trust Land`, 0.430 km²; NO state reservation. Everything else the Census records for Oklahoma's nations is an Oklahoma Tribal Statistical Area, and under Adam's ruling of 2026-09-30 a statistical area is read only to decide which nation to name and is NEVER DRAWN as territory. THAT IS THE CENSUS'S CLASSIFICATION AND NOT A LEGAL ONE: since McGirt v. Oklahoma (2020) federal courts have held several of these reservations were never disestablished, so which ground a nation governs is a different question from which layer the Census puts it in, and this record settles neither. The fleet-wide tribal-government thread owns the build (https://claude.ai/artifact/CbZNWt4QDr7SBS7abdC1L2); Cherokee Nation was written to on 2026-10-01 about its district map and had not replied as of 2026-10-06. Oklahoma is dark as of this record."
+      },
+      {
+            "id": "ok-judicial-district-judges",
+            "concept": "District judges",
+            "area": "Oklahoma — all 26 judicial districts",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "ok-judicial-district",
+            "summary": "Your Judicial District card says which district you are in and which counties elect each of its district judges, and names none of the judges yet.",
+            "why": "The only list read so far is the State Election Board's roster from March 2025, which may be out of date, and the court system's own website asks automated readers to stay away.",
+            "wanted": "A current list of each district's judges that this project may read, or the State Election Board's next roster.",
+            "blocker": "MEASURED 2026-10-16. The 26 districts and their 75 district judge offices, with the counties whose voters elect each office, are read from the State Election Board's 2024 Roster of State and County Officers, published 2025-03-18 (ok/scripts/build_ok_judicial_districts.py, excerpts in ok/data/source/courts/). The same roster names each judge, beside a home town, which this project never copies; its names were not carried because the roster is a snapshot taken after the November 2024 election and nothing re-asserts it, so a judge appointed since would be missed. The court system's own site, www.oscn.net, carries a `*` group of `Disallow: /` that leaves only its news feeds open (re-read 2026-10-16, on the second attempt), and the Legislature's, www.oklegislature.gov, disallows every page to `*` while admitting named search engines, so neither the statutes nor a court directory can be read here. Both are data-publishing hurdles. The appellate courts are not drawn: the roster lists the districts the Supreme Court, the Court of Criminal Appeals and the Court of Civil Appeals are chosen from, but not whether a retention vote is held in the district or across the state, and the constitution that says so could not be read for the same reason."
       }
   ],
   "southcarolina": [
@@ -3276,6 +3300,18 @@ trusted.
             "why": "South Carolina's school boards are not all chosen the same way, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-10 against TIGERweb's School service for STATE='45': 72 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 46-county total (77,866 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. How each board is chosen is set district by district in state law; the planning pass read that a few are appointed rather than elected, and the split has NOT been tabulated here. The route is the state Department of Education or each board's own list; not attempted in this change."
+      },
+      {
+            "id": "sc-judicial-circuit-officers",
+            "concept": "Circuit judges and solicitors",
+            "area": "South Carolina — all 16 judicial circuits",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "sc-circuit-court",
+            "summary": "Your Judicial Circuit card says which circuit you are in, how many judges are elected for it and who elects them, and names neither the judges nor the solicitor yet.",
+            "why": "No list of South Carolina's circuit judges or solicitors by circuit has been read yet.",
+            "wanted": "Nothing from a reader yet. The court system's own list of judges and the solicitors' list are the next places this project will read.",
+            "blocker": "MEASURED 2026-10-16. The 16 circuits are drawn from S.C. Code Section 14-5-610 as the Legislature publishes it at scstatehouse.gov (sc/scripts/build_sc_judicial_circuits.py, sources in sc/data/source/courts/), which also sets how many resident judges are elected for each circuit (46 in all, plus seven at large); the card carries that count. Section 1-7-310 gives each circuit one solicitor, elected by its voters for four years, and Article V of the Constitution has the General Assembly elect the circuit judges for six years and rotate them around the state. Nobody is named because no roster was looked for in this change: the Judicial Department's own judge directory and the solicitors' association's list are the first places to read, and neither has been fetched or had its robots.txt read yet. Adam was asked on 2026-10-16 whether to draw the circuits at all, given that legislators rather than voters elect the judges; the default, to draw them, stands until he says otherwise."
       }
   ],
   "tennessee": [
@@ -3320,6 +3356,18 @@ trusted.
             "why": "Tennessee's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and grades and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-10 against TIGERweb's School service for STATE='47': 127 unified districts over 105,791.82 km2 of land, and 15 elementary plus 15 secondary districts over the same 980.06 km2 — Tennessee's city and special school districts, which run the lower grades while the county runs the high school there. Unified plus elementary is exactly the 95-county total. The boundary carries the district's name and grade range and no board member. The Comptroller's statewide redistricting service also carries school board districts (layer 5, 115 features, read during planning on 2026-10-09) for the boards elected by district; neither those nor the members are wired here. The route for the names is the state Department of Education or each board's own list; not attempted in this change."
+      },
+      {
+            "id": "tn-judicial-district-officers",
+            "concept": "Trial court judges and district attorneys",
+            "area": "Tennessee — all 32 judicial districts",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tn-judicial-district",
+            "summary": "Your Judicial District card says which district you are in and who elects its judges and district attorney, and names none of them yet.",
+            "why": "The district attorneys' own pages name each one, and this app does not read them yet. No list of the judges by district has been read: the courts' own website turns away automated requests.",
+            "wanted": "Nothing from a reader for the district attorneys, which is ours to build. For the judges, a list of each district's circuit judges and chancellors that this project can read.",
+            "blocker": "MEASURED 2026-10-16. The 32 districts are drawn from the District Attorneys General Conference's own county selector (requested at tennesseeda.gov, served at www.tndagc.org), checked against 31 of the 32 district pages and against the Comptroller's FY2019 judicial map, which differs only in the 21st, later split into the 21st and 32nd (tn/scripts/build_tn_judicial_districts.py, sources in tn/data/source/courts/). EVERY DISTRICT PAGE READ NAMES ITS DISTRICT ATTORNEY GENERAL — the 21st's reads \"Stacey B. Edmonson, 21st District Attorney General\" — so the district attorneys are ours to build, as a weekly roster from the same pages, which needs a new refresh workflow. District 2's page leads to the district attorney's own site, sullivancountyda.com, whose robots.txt answered HTTP 521 on 2026-10-16 (disallow-all under RFC 9309), so that one district needs a second route. THE JUDGES ARE HARDER: the courts' own site, www.tncourts.gov, answers every request, robots.txt included, with a managed challenge (re-read 2026-10-16 with the districtry token), which this project never works around, and no other list of circuit judges and chancellors by district has been read. THE STATUTE WAS NOT READ EITHER: the public copy of the Tennessee Code is published by LexisNexis, and the General Assembly's own site, capitol.tn.gov, admits eight named search and archive crawlers in robots.txt and refuses every other client (re-read 2026-10-16). All three are data-publishing hurdles."
       }
   ],
   "arkansas": [
@@ -3359,6 +3407,30 @@ trusted.
             "why": "Arkansas's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-13 against TIGERweb's School service for STATE='05': 234 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 75-county total (134,659 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. The planning pass on 2026-10-09 read that the state maps board zones for 176 of its 238 school districts, that whether the other 62 elect at large is NOT measured, and that the state's school directory (adedata.arkansas.gov) lists no board members. Four of the state's 238 districts have no national code, so the Census's 234 is not a miscount. Not attempted in this change."
+      },
+      {
+            "id": "ar-appeals-judges",
+            "concept": "Court of Appeals judges",
+            "area": "Arkansas — all seven Court of Appeals districts",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "ar-court-of-appeals",
+            "summary": "Your Court of Appeals District card says which district you are in and how many of the court's twelve judges its voters elect, and names none of them yet.",
+            "why": "The court publishes its judges district by district, and this app does not read that list yet.",
+            "wanted": "Nothing from a reader — this one is ours to build.",
+            "blocker": "MEASURED 2026-10-16. The seven districts are drawn from Act 1812 of 2003 as the Arkansas GIS Office's metadata for its Appeals Court Districts layer quotes it, held county by county to that layer (ar/scripts/build_ar_court_districts.py, sources in ar/data/source/courts/). The court's own district map page, arcourts.gov/courts/court-of-appeals/map, whose robots.txt permits the path, lists each district's judges by position with the next election year, so the names are ours to build; only the positions were carried in this change. Naming them needs a weekly refresh workflow, since a judge can leave or be appointed between elections. THE ACT WAS NOT READ AT SOURCE: the official Arkansas Code is published by LexisNexis behind a page that carries no text without a browser's scripts and cookies, and the two free copies tried answered robots.txt with HTTP 403 and the page with a managed challenge (measured 2026-10-15). The General Assembly's own site publishes each session's acts but not the consolidated Code. That is a data-publishing hurdle."
+      },
+      {
+            "id": "ar-circuit-judges",
+            "concept": "Circuit judges",
+            "area": "Arkansas — all 28 judicial circuits",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "ar-circuit-court",
+            "summary": "Your Judicial Circuit card says which circuit you are in and how many judges its voters elect, and names none of them yet.",
+            "why": "The court system's directory names every circuit judge, and this app does not read it yet. In five circuits a federal court order divides the voters into two subdistricts, and which judges each one elects has not been read.",
+            "wanted": "Nothing from a reader for the names, which are ours to build. For the five divided circuits, a published list of which judgeships each subdistrict elects.",
+            "blocker": "MEASURED 2026-10-16. The 28 circuits are drawn from the Administrative Office of the Courts' circuit judge directory, arcourts.gov/directories/circuit-judges, whose robots.txt permits the path: it lists each of the 126 judges under every county the judge serves, the builder stops if any judge serves only some of a circuit's counties, and the state GIS office's Circuit Court Districts layer puts every county in the same circuit (ar/scripts/build_ar_court_districts.py, sources in ar/data/source/courts/). The same directory names each judge with an office telephone, so the names are ours to build as a weekly roster, which needs a new refresh workflow. THE SUBDISTRICTS ARE NOT DRAWN: a federal court order (Hunt v. State of Arkansas, 1991) created two election subdistricts in each of the 1st, 2nd, 6th, 10th and 11th West circuits, which split fifteen counties (measured on the state layer 2026-10-15); which judgeships each subdistrict elects is set by that court and was not read, so those circuits are drawn whole and their cards say so. The count becomes 127 judges on 1 January 2027, when the 19th West's eighth judgeship (Act 220 of 2025) takes office; ar/WATCH.md carries that date."
       }
   ],
   "mississippi": [

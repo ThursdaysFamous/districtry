@@ -8,7 +8,7 @@ districtry Oklahoma: a single-file, dependency-light web app. Click a point in O
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/ok/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships FOURTEEN layers, and it went **LIVE** in its go-live change,
+the Illinois root-scripts shape. It ships FIFTEEN layers, and it went **LIVE** in its go-live change,
 which Adam held until the fleet-wide tribal thread had drawn Oklahoma's tribal areas: it has a
 `metros.json` entry and a landing card, the Pages deploy publishes `ok/` (keeping
 `ok/data/state`, `ok/data/source` and `ok/scripts` out), and `ok/congress.html` and
@@ -72,6 +72,25 @@ the two seats it lists vacant (Oklahoma County 1, Okmulgee County 1) say vacant 
 field outside the ones the card reads. The County card lists the whole board, and
 `build_county_pages.py` writes a page per county under `ok/county-commissioner/`.
 
+**THE 26 DISTRICT COURT JUDICIAL DISTRICTS ARE DRAWN SINCE 2026-10-16, FROM THE ELECTION BOARD'S
+ROSTER.** `ok-judicial-district` dissolves the county fabric this instance ships, by
+`ok/scripts/build_ok_judicial_districts.py` through the fleet module `scripts/whole_county_courts.py`.
+The districts are set in the Oklahoma Statutes, and both of the state's publishers of them refuse
+this project in robots.txt (the `*` group in each disallows every page, while oklegislature.gov
+admits named search engines and oscn.net leaves its news feeds open), so the county lists come
+from the State Election Board's 2024 roster of state and county officers: every district judge
+office with the counties that elect it, and the roster's own key of each county's district, which
+the build requires to agree on every county. Only the office headings are kept, never a judge's
+name or home town. MOST DISTRICTS ELECT EVERY JUDGE DISTRICT-WIDE AND THREE DO NOT: in District 4
+one office is elected by five counties and two by the other four, in District 12 Office 2 is
+elected by all three counties and the others by parts, and in District 14 nine offices are elected
+by Pawnee and Tulsa and five by Tulsa alone. So each district ships its offices with their
+electorates, and the card says which offices the clicked county votes for rather than claiming
+every judge answers to every county. It names nobody (gap `ok-judicial-district-judges`) and links
+the roster. The appellate courts are not drawn: the roster lists their districts but not whether a
+retention vote is held in the district or across the state, and the constitution that says so
+could not be read. The re-check, after each November general election, is in `ok/WATCH.md`.
+
 **TRIBAL AREAS ARE DRAWN, AND THIS IS THE ONE INSTANCE THAT DRAWS CENSUS STATISTICAL AREAS.**
 Measured with `scripts/tribal_areas.py` on 2026-10-09, the Census draws one federal reservation
 in Oklahoma (Osage, 5,967 km²) and one off-reservation trust land (the Shawnee Tribe's, 0.43 km²);
@@ -111,8 +130,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Oklahoma (`oklahoma`) — https://districtry.com/ok/
 - Geocoders: address Photon (Oklahoma-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oklahoma-bounded, serial >=1s queue)
-- Ground truth: 35.49230,-97.50340 (the State Capitol, Oklahoma City, Oklahoma County) → county Oklahoma County; us-house 5; ok-senate 48; ok-house 99. Negative point 33.65000,-97.15000 (near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.).
-- Layers: 14 registered (political 5, safety 2, schools 2, geography 5); `registerLayer(` floor 9. Debug namespace `window.OklahomaExplorer`.
+- Ground truth: 35.49230,-97.50340 (the State Capitol, Oklahoma City, Oklahoma County) → county Oklahoma County; us-house 5; ok-senate 48; ok-house 99; ok-judicial-district 7. Negative point 33.65000,-97.15000 (near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.).
+- Layers: 15 registered (political 6, safety 2, schools 2, geography 5); `registerLayer(` floor 10. Debug namespace `window.OklahomaExplorer`.
 - Scheduled workflows: `update-ok-congress-roster.yml` (Mon 16:45 UTC); `update-ok-legislature-roster.yml` (Tue 16:45 UTC); `update-ok-commissioner-roster.yml` (Wed 16:45 UTC); `ok-validate-sources.yml` (1st of month 19:00 UTC).
 - Source registry: `ok/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

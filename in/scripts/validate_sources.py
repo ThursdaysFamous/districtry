@@ -196,6 +196,20 @@ PROVENANCE = [
             "a later edition, on the quarterly row in in/WATCH.md."
         ),
     },
+    {
+        "layer": "in-court-of-appeals",
+        "app_file": "in-appeals-districts.json",
+        "source_url": "https://www.in.gov/courts/appeals/images/coa-district-map.jpg",
+        "note": (
+            "The Court of Appeals' 1st, 2nd and 3rd Districts, dissolved from "
+            "the county fabric by in/scripts/build_in_appeals_districts.py "
+            "following the court's own district map image (read 2026-10-16; "
+            "its SHA-256 and the county-by-county reading are in "
+            "in/data/source/courts/). The Indiana Code that sets the districts "
+            "is not readable here. A changed image is the signal to re-read "
+            "the map; the re-hash is a row in in/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [

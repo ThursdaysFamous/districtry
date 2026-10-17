@@ -1,0 +1,87 @@
+# The Arkansas Administrative Office of the Courts' circuit judge directory,
+# https://arcourts.gov/directories/circuit-judges, read 2026-10-16 with this project's own client, districtry/1.0 (+https://districtry.com/ar/), after reading robots.txt,
+# which permits the path. Page: 801349 bytes, SHA-256 dbf01ffd7c928aeb9b46961386f390971d72784caafe5629a1aa528d6f7a6704.
+#
+# The page has one table per county (75), and in it one row for each circuit
+# judge who serves that county, naming the judge's circuit and division (373
+# rows). This file keeps, for each county, its circuit as the directory writes
+# it and the division numbers that serve it. It does NOT keep the judges'
+# names, addresses or telephone numbers, which this project does not publish
+# yet (gap ar-circuit-judges).
+#
+# county <TAB> circuit, as the directory writes it <TAB> divisions serving the county
+Arkansas	Eleventh East Judicial Circuit	1
+Ashley	Tenth Judicial Circuit	1,2,3,4,5
+Baxter	Fourteenth Judicial Circuit	1,2,3,4
+Benton	Nineteenth West Judicial Circuit	1,2,3,4,5,6,7
+Boone	Fourteenth Judicial Circuit	1,2,3,4
+Bradley	Tenth Judicial Circuit	1,2,3,4,5
+Calhoun	Thirteenth Judicial Circuit	1,2,3,4,5,6
+Carroll	Nineteenth East Judicial Circuit	1
+Chicot	Tenth Judicial Circuit	1,2,3,4,5
+Clark	Ninth East Judicial Circuit	1
+Clay	Second Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12
+Cleburne	Sixteenth Judicial Circuit	1,2,3,4
+Cleveland	Thirteenth Judicial Circuit	1,2,3,4,5,6
+Columbia	Thirteenth Judicial Circuit	1,2,3,4,5,6
+Conway	Fifteenth Judicial Circuit	1,2,3
+Craighead	Second Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12
+Crawford	Twenty-First Judicial Circuit	1,2,3
+Crittenden	Second Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12
+Cross	First Judicial Circuit	1,2,3,4,5
+Dallas	Thirteenth Judicial Circuit	1,2,3,4,5,6
+Desha	Tenth Judicial Circuit	1,2,3,4,5
+Drew	Tenth Judicial Circuit	1,2,3,4,5
+Faulkner	Twentieth Judicial Circuit	1,2,3,4,5
+Franklin	Fifth Judicial Circuit	1,2,3,4
+Fulton	Sixteenth Judicial Circuit	1,2,3,4
+Garland	Eighteenth East Judicial Circuit	1,2,3,4
+Grant	Seventh Judicial Circuit	1,2
+Greene	Second Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12
+Hempstead	Eighth North Judicial Circuit	1,2
+Hot Spring	Seventh Judicial Circuit	1,2
+Howard	Ninth West Judicial Circuit	1,2
+Independence	Sixteenth Judicial Circuit	1,2,3,4
+Izard	Sixteenth Judicial Circuit	1,2,3,4
+Jackson	Third Judicial Circuit	1,2,3
+Jefferson	Eleventh West Judicial Circuit	1,2,3,4,5,6
+Johnson	Fifth Judicial Circuit	1,2,3,4
+Lafayette	Eighth South Judicial Circuit	1,2,3
+Lawrence	Third Judicial Circuit	1,2,3
+Lee	First Judicial Circuit	1,2,3,4,5
+Lincoln	Eleventh West Judicial Circuit	1,2,3,4,5,6
+Little River	Ninth West Judicial Circuit	1,2
+Logan	Fifteenth Judicial Circuit	1,2,3
+Lonoke	Twenty-Third Judicial Circuit	1,2,3
+Madison	Fourth Judicial Circuit	1,2,3,4,5,6,7,8
+Marion	Fourteenth Judicial Circuit	1,2,3,4
+Miller	Eighth South Judicial Circuit	1,2,3
+Mississippi	Second Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12
+Monroe	First Judicial Circuit	1,2,3,4,5
+Montgomery	Eighteenth West Judicial Circuit	1
+Nevada	Eighth North Judicial Circuit	1,2
+Newton	Fourteenth Judicial Circuit	1,2,3,4
+Ouachita	Thirteenth Judicial Circuit	1,2,3,4,5,6
+Perry	Sixth Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
+Phillips	First Judicial Circuit	1,2,3,4,5
+Pike	Ninth West Judicial Circuit	1,2
+Poinsett	Second Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12
+Polk	Eighteenth West Judicial Circuit	1
+Pope	Fifth Judicial Circuit	1,2,3,4
+Prairie	Seventeenth Judicial Circuit	1,2,3
+Pulaski	Sixth Judicial Circuit	1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
+Randolph	Third Judicial Circuit	1,2,3
+Saline	Twenty-Second Judicial Circuit	1,2,3,4
+Scott	Fifteenth Judicial Circuit	1,2,3
+Searcy	Twentieth Judicial Circuit	1,2,3,4,5
+Sebastian	Twelfth Judicial Circuit	1,2,3,4,5,6,7
+Sevier	Ninth West Judicial Circuit	1,2
+Sharp	Third Judicial Circuit	1,2,3
+St. Francis	First Judicial Circuit	1,2,3,4,5
+Stone	Sixteenth Judicial Circuit	1,2,3,4
+Union	Thirteenth Judicial Circuit	1,2,3,4,5,6
+Van Buren	Twentieth Judicial Circuit	1,2,3,4,5
+Washington	Fourth Judicial Circuit	1,2,3,4,5,6,7,8
+White	Seventeenth Judicial Circuit	1,2,3
+Woodruff	First Judicial Circuit	1,2,3,4,5
+Yell	Fifteenth Judicial Circuit	1,2,3

@@ -1,0 +1,9 @@
+# Constitution of South Carolina, Article V, Sections 13 and 14, as published
+# by the South Carolina Legislature at
+# https://www.scstatehouse.gov/scconstitution/A05.pdf, read 2026-10-16
+# (123,185 bytes, SHA-256
+# 95047a73cff65d0b13fd5d17530c59d81fbb3884a7ebfbcfef5f534dcecd133b). The two
+# sections' text, joined into one line each from the PDF's text layer; the
+# editor's notes are not copied.
+SECTION 13. Judicial circuits. The General Assembly shall divide the State into judicial circuits of compact and contiguous territory. For each circuit a judge or judges shall be elected by a joint public vote of the General Assembly; provided, that in any contested election, the vote of each member of the General Assembly present and voting shall be recorded. He shall hold office for a term of six years, and at the time of his election he shall be an elector of a county of, and during his continuance in office he shall reside in, the circuit of which he is judge. The General Assembly may by law provide for additional circuit judges, to be assigned by the Chief Justice. Such additional circuit judges shall be elected in the same manner and for the same term as provided in the preceding paragraph of this section for other circuit judges, except that residence in a particular county or circuit shall not be a qualification for office. (1972 (57) 3176; 1973 (58) 161; 1985 Act No. 9.)
+SECTION 14. Rotation of judges. Judges of the Circuit Court shall interchange circuits and all judges shall be systematically rotated throughout the State as directed by the Chief Justice. (1972 (57) 3176; 1973 (58) 161; 1985 Act No. 9.)
