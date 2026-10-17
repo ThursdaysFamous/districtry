@@ -6,18 +6,23 @@ its own field (`district-number`), an at-large member's carries the label
 "Council Member At-Large" and a link to /at-large-N, so neither is read from
 page order. The phones are the council office's own numbered lines
 (615-432-13NN, the last two digits the seat), printed on the government's page
-for every member, so they are official. E-mails are Cloudflare-obfuscated and
-decoded; only nashville.gov addresses are kept. The council was elected in
+for every member. Each is read from the visible text of the member's
+"district-phone" block, and a block whose tel: link dials a different number
+keeps that member's number off the record. The council office's main line in
+the page footer is OFFICE_LINES and never lands on a member. E-mails are
+Cloudflare-obfuscated and decoded; a member block's address is kept whatever
+its domain (every one was on nashville.gov on 2026-10-17). The council was elected in
 August 2023 for a term to 2027, so this list is the sitting council."""
 import re
-from ._common import txt, mailtos, county_email, member
+from ._common import txt, read_emails, member_email, member, read_phones
 
 COUNTY = "Davidson"; FIPS = "037"
 DOMAINS = ("nashville.gov",)
 URLS = ["https://www.nashville.gov/departments/council/districts"]
 SEATS = {str(i): 1 for i in range(1, 36)}
 AT_LARGE = 5
-PHONES = True
+# The council office's main line, in the page footer.
+OFFICE_LINES = ("615-862-6780",)
 TITLE = "Council Member"
 BODY = "Metro Council"
 BASE = "https://www.nashville.gov"
@@ -36,9 +41,9 @@ def parse(pages):
             raise ValueError("a council block with no name field")
         name = txt(nm.group(1))
         href = re.search(r'href="(/departments/council/districts/(?:district|at-large)-\d+)"', b)
-        tel = re.search(r'href="tel:([0-9-]{12})"', b)
-        email = county_email(mailtos(b), DOMAINS)
-        rec = member(name, email=email, phone=tel.group(1) if tel else None,
+        tel = re.search(r'<div class="district-phone">(.*?)</div>', b, re.S)
+        email = member_email(read_emails(b), DOMAINS)
+        rec = member(name, email=email, phones=read_phones(tel.group(1), strict=True) if tel else None,
                      profileUrl=BASE + href.group(1) if href else None)
         num = re.search(r'field--name-field-select-district-numeric[^>]*>\s*District\s+(\d+)\s*<', b)
         if num:

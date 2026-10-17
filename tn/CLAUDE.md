@@ -8,7 +8,7 @@ districtry Tennessee: a single-file, dependency-light web app. Click a point in 
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/tn/** as a folder of the consolidated
 districtry repo, following the statewide shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships EIGHTEEN layers, and **IT IS PUBLISHED** since Adam's word
+Illinois root-scripts shape. It ships NINETEEN layers, and **IT IS PUBLISHED** since Adam's word
 of 2026-10-13. It arrived dark on 2026-10-10 (no `metros.json` entry, `tn/**` blanket-excluded
 from the Pages deploy) and the go-live change narrowed that exclude to the build inputs the
 siblings exclude, registered the instance and regenerated every surface that counts the fleet,
@@ -126,6 +126,70 @@ not drawn (gap `tn-school-board-districts`), and no statewide list of board memb
 so the card names nobody (gap `tn-school-board-members`). The layer states no licence. The
 quarterly re-check is in `tn/WATCH.md`.
 
+**THE 28 CITIES AND TOWNS ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL SINCE 2026-10-16, AND
+NINE OF THE THIRTEEN THAT ELECT BY DISTRICT DRAW THEIR DISTRICTS.** No state office publishes who
+holds Tennessee's city offices, so `tn/data/source/tn-city-council-seats.json` writes each city's
+mayor and council down by hand from the city's own pages (211 seats, the names and nothing
+else: Franklin's board page also prints its members' e-mail addresses, and Knoxville's its
+members' e-mail addresses and telephone numbers), and
+`tn/scripts/build_tn_city_councils.py`, through the fleet module `scripts/city_councils.py`,
+re-reads every page it cites on each build and refuses to write unless every name is on its page.
+The University of Tennessee's Municipal Technical Advisory Service publishes a page per city, and
+it is not used: it gives no seat, ward or date, says it is unverified, and on 2026-10-16 disagreed
+with five cities' own pages. Some names come from a second page, and the builder lists them:
+Nashville's mayor and vice mayor and Clarksville's and Knoxville's mayors from their own pages,
+Memphis's members each from their own page, Lebanon's council
+and mayor from the city's staff directory, and Johnson City's commissioners from the city's page
+about a board vote, because the board's own list is on a site whose robots.txt shuts this project
+out; the last two cards say so. **NASHVILLE'S ENTRY NAMES ITS MAYOR AND VICE MAYOR ONLY**: the
+Metropolitan Council's 35 district members and 5 elected countywide are already named on the
+County Commission District card, because the council is Davidson County's legislative body. Which
+seats a city elects by district is set by its charter or ordinances and recorded nowhere
+statewide, so it was read from each city's charter or code, its own pages, or a county election
+commission's results, and the builder says which for each city. Twelve cities elect every seat by
+the whole city, and Spring Hill and Bristol tie seats to districts or wards and elect them by the
+whole city too, so a reader votes for every seat wherever they live and nothing is drawn for any
+of them. Knoxville did the same until 2025: in Knox County's official results for November 2025
+each district's contest was on that district's precincts alone, so its districts elect their own
+members now, and District 5's member, elected citywide in 2023, is named as that district's with
+the city's sentence saying so. `city-ward` (labelled City Council District) draws the 72
+districts and wards of Memphis, Clarksville, Chattanooga, Franklin, Jackson, Hendersonville,
+Cleveland, Gallatin, Columbia, Mount Juliet and Morristown, each from the city's own map or, for
+Chattanooga and Hendersonville, a published copy of it, pre-built by
+`tn/scripts/build_tn_city_wards.py` through `scripts/city_ward_maps.py`. **MEMPHIS ELECTS BY TWO
+KINDS OF DISTRICT**, seven districts and two super districts of three positions each, and its map
+server publishes each kind as a layer of its own, so both are drawn, a point in Memphis lies in
+one of each, and the card names the members of both while the map lights the district. The
+district layer's name field names another district for six of the seven, so the builder reads
+the number fields alone, and four of the city's own PDF district maps of January 2024 agree with the layers on
+98.96% to 99.87% of their district pixels. Only Memphis's, Jackson's and Morristown's maps say
+which plan they are; that the other six are plans drawn after the 2020 census is inferred from how
+closely each balances the 2020 count, and the builder records it as an inference. Mount Juliet's districts
+reach annexed land beyond the Census's outline of the city, so a point there answers its district
+while the City or Town card does not yet show the city. Franklin's ward layer carries contact
+fields and Mount Juliet's district field packs each commissioner's name beside the number, so the
+builder asks Franklin for the ward number alone and reads Mount Juliet's number from a separate
+field. **CHATTANOOGA AND HENDERSONVILLE ARE DRAWN FROM COPIES, AND WERE RECORDED UNREADABLE
+UNTIL A SEARCH FOR EVERY PUBLISHED COPY FOUND THEM** (2026-10-17): Hamilton County's map server
+lists Chattanooga's districts with their shapes withheld and the city's own map server's
+robots.txt shuts this project out, while the city publishes a copy of the same districts on
+ArcGIS Online; and Hendersonville's map server answers a request for its robots.txt with HTTP 500,
+while Sumner County's property-search service carries a copy of its wards. Each copy was measured
+against the 2020 census before it was drawn (Chattanooga's within 4.6% of an equal share where the
+city's two 2024 copies run to 13.1%; Hendersonville's population fields summing to the city's 2020
+count), the builder says what each copy cannot show, and the card says whose copy it is.
+**KNOXVILLE AND LEBANON ARE NOT DRAWN**: the only copy of Knoxville's districts published as data,
+from Knoxville and Knox County's mapping agency (KGIS), reserves all rights and allows no copy
+without its written permission, which is the operator's to ask for or not; and Lebanon publishes
+its wards only as PDF files. Their cards name the members and say why there is no map, and
+`scripts/build_eam_status.py` counts Tennessee's cities as 26 of 28 answered. Murfreesboro's,
+Franklin's, Bristol's, Knoxville's, Collierville's and Germantown's sites refuse this project's own
+token (Cloudflare's block page at Murfreesboro, Bristol and Knoxville, Akamai's at the other three),
+so those six cities' pages are read with Chrome and its client hints, and the measurement that
+allows it is in the builder. The 317 smaller places name nobody
+(gap `tn-municipal-officeholders`), and no state office publishes a city ward, all evidence for
+the publishing ask. The quarterly re-checks are in `tn/WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE TENNESSEE.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP (Bowling Green, Kentucky gives 42101; a
 point just over the Alabama line 35773; the Capitol 37219). The envelope the app downloads
@@ -199,8 +263,20 @@ last good record for 45 days, dated to the day it was read, and past that the we
 (`update-tn-commissioner-roster.yml`, Wednesday) fails. **PRIVACY IS A WHITELIST, NOT A
 FILTER**: county pages print home addresses, personal mobile numbers and personal e-mail beside
 the official ones, so a member record can carry only a name, a seat, a role, an e-mail on the
-county's own domain, and a telephone only for the one county (Davidson) whose numbers are the
-Council's own office lines. **NASHVILLE IS A METROPOLITAN COUNCIL, NOT A COMMISSION**, with 35
+county's own domain, telephone numbers and a link to the member's page on the county's site, and
+never an address. **SINCE 2026-10-17 A MEMBER'S OWN NUMBERS SHIP**, on Adam's ruling for every
+state ("if the official government source uses personal phone numbers, we publish those"): a
+number the county prints beside a member is kept as printed, with the page's own label ("cell",
+"home"), the first in `phone` and any others in `phonesExtra`. Until that day only Davidson's
+numbers, the Council's own office lines, were kept, under a `PHONES` flag that is now retired
+and that the scraper refuses if a module still sets it. A number printed for two or more members,
+or equal to one of a module's `OFFICE_LINES`, stays the office's; a fax and a number whose tel:
+link dials something other than the number printed stay out; a number printed without an area
+code ships without one (Warren, gap `warren-commission-phone-area-code`); and the builder refuses
+anything in a phone field that is not one telephone number, with a floor on how many members
+carry one. Six counties print the numbers on each member's own page (Coffee, Lawrence, Maury,
+Montgomery, Washington, Wilson), which the scraper reads only where the roster page links it
+(`member_pages`). **NASHVILLE IS A METROPOLITAN COUNCIL, NOT A COMMISSION**, with 35
 district members and 5 elected countywide, so its record carries its own body name and member
 title, and its generated page is titled "Davidson County Metro Council". The per-county pages
 under `tn/county-commissioner/` and their index on `tn/county-commissioner.html` are generated
@@ -250,7 +326,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Tennessee (`tennessee`) — https://districtry.com/tn/
 - Geocoders: address Photon (Tennessee-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Tennessee-bounded, serial >=1s queue)
 - Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19; voting-precinct Precinct 19-4; tn-judicial-district 20. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
-- Layers: 18 registered (political 6, safety 2, schools 4, geography 6); `registerLayer(` floor 15. Debug namespace `window.TennesseeExplorer`.
+- Layers: 19 registered (political 7, safety 2, schools 4, geography 6); `registerLayer(` floor 16. Debug namespace `window.TennesseeExplorer`.
 - Scheduled workflows: `update-tn-congress-roster.yml` (Mon 17:15 UTC); `update-tn-legislature-roster.yml` (Tue 17:15 UTC); `update-tn-commissioner-roster.yml` (Wed 17:15 UTC); `tn-validate-sources.yml` (1st of month 19:30 UTC).
 - Source registry: `tn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -313,9 +389,10 @@ others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
-cards degrade to the district number + the chamber's own directory on a roster miss; the county,
-school-district and municipality cards carry no roster at all and **say so on the
-card**. External strings always render through `sanitize()`/`textContent`. Roster refreshes
+cards degrade to the district number + the chamber's own directory on a roster miss; the county
+and school-district cards carry no roster at all and **say so on the card**, and the municipality
+card names the mayor and council of the 28 cities and towns above 25,000 people and says so on the
+card for every other city and town. External strings always render through `sanitize()`/`textContent`. Roster refreshes
 always land as PRs for human review — never as direct commits to main.
 
 ## Data pipeline
@@ -337,7 +414,10 @@ write when fewer than 30 Senate or 92 House seats are named, when Open States ma
 90% of the named seats, when the state map answers an error, or when a district falls outside
 the chamber's range or appears twice. A vacancy record cites the map query that answers for that
 seat, because the service's HTML directory is switched off and a bare layer URL opens an error
-page.
+page. The city councils (`tn-city-councils.json`) and their districts (`tn-city-wards.json`) are
+not refreshed by a weekly job: they are re-read each quarter through each builder's `--watch`,
+which says whether every name is still on its page and whether any city's map has changed
+(`tn/WATCH.md`).
 
 robots.txt is read before the first fetch through `scraper_common.require_robots_once`.
 `data.openstates.org` answers its robots.txt with HTTP 403, which RFC 9309 files with a 404:

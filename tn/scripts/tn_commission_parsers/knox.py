@@ -16,19 +16,28 @@ Election Commission's official cumulative results for 6 August 2026
 (Huckaby D3, Beeler D7, Cofer Seat 10, Holt Seat 11) are the four this page
 lists with 2026-2030 terms.
 
-Left out for privacy: every per-member phone. They are individual numbers
-(865-320-..., 865-203-..., none the commission office's 865-215-2534), with
-no label saying they are office lines, and some are printed beside what is a
-residential street address or a personal P.O. box. The address line is never
-read. E-mails are kept only on knoxcounty.org."""
+Phones: the number in a member's "Phone" contact item is recorded as printed
+(ten of the eleven print one), under Adam's ruling of 2026-10-17 that a
+number a government publishes beside an official ships whosever line it is.
+They are individual numbers (865-320-..., 865-203-...), with no label saying
+they are office lines, and some are printed beside what is a residential
+street address or a personal P.O. box. Only the "Phone" item is read; the
+"Address" item is never read. The commission office's phone and fax are
+OFFICE_LINES and never land on a member. A member's e-mail is kept whatever
+its domain, under Adam's ruling of 2026-10-17 that an e-mail address a
+government page prints beside an official ships too (on that day every one
+was on knoxcounty.org)."""
 import re
-from ._common import txt, mailtos, county_email, member, district_number
+from ._common import (txt, read_emails, member_email, member, district_number, read_phones,
+                      Withheld)
 
 COUNTY = "Knox"; FIPS = "093"
 DOMAINS = ("knoxcounty.org", "knoxcountytn.gov")
 URLS = ["https://commission.knoxcountytn.gov/people/"]
 SEATS = {str(i): 1 for i in range(1, 10)}
 AT_LARGE = 2
+# The commission office's phone and fax.
+OFFICE_LINES = ("865-215-2534", "865-215-2038")
 
 ROLE_LINE = re.compile(r"^(Chair(?:man|woman|person)?|Vice[- ]Chair(?:man|woman|person)?|"
                        r"Chair(?:man)? Pro[- ]Tem(?:pore)?)$", re.I)
@@ -36,6 +45,18 @@ TERM_LINE = re.compile(r"^\d+(?:st|nd|rd|th) Term:\s*\d{4}\s*[-–]\s*\d{4}$", r
 DISTRICT_LINE = re.compile(r"^(\d{1,2})(?:st|nd|rd|th) District Commissioner$", re.I)
 AT_LARGE_LINE = re.compile(r"^At[- ]Large Seat (\d{1,2}) Commissioner$", re.I)
 PROFILE = re.compile(r'href="(https://commission\.knoxcountytn\.gov/people/[a-z0-9-]+/)"')
+PHONE_ITEM = re.compile(r'<li class="post__contact-item post__contact-item--phone"[^>]*>(.*?)</li>', re.S)
+
+
+def _phones(b):
+    """The numbers in the article's "Phone" contact items, in order."""
+    out = []
+    for item in PHONE_ITEM.findall(b):
+        got = read_phones(item, strict=True)
+        if isinstance(got, Withheld):
+            return got
+        out += got
+    return out
 
 
 def parse(pages):
@@ -80,9 +101,9 @@ def parse(pages):
         if (dist is not None and not cat_district) or (seat is not None and not cat_at_large):
             raise ValueError("%r: subtitle %r disagrees with the article's category" % (name, parts))
         prof = PROFILE.search(b)
-        email = county_email(mailtos(b), DOMAINS)
+        email = member_email(read_emails(b), DOMAINS)
         rec = member(name, seat=("Seat " + seat) if seat else None, role=role, email=email,
-                     profileUrl=prof.group(1) if prof else None)
+                     profileUrl=prof.group(1) if prof else None, phones=_phones(b))
         if dist is not None:
             districts.setdefault(dist, []).append(rec)
         else:

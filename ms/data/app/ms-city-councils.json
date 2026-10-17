@@ -1,0 +1,564 @@
+{
+ "2836000": {
+  "name": "Jackson",
+  "body": "City Council",
+  "councilUrl": "https://jacksonms.gov/government/city-council/",
+  "mayorUrl": "https://jacksonms.gov/government/mayor-office/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "John Horhn"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Ashby M. Foote"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Tina Clay"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Kenneth Stokes"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Brian C. Grizzell"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Vernon Hartley"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Lashia Brown-Thomas"
+   },
+   {
+    "seat": "Ward 7",
+    "name": "Kevin Parkinson"
+   }
+  ]
+ },
+ "2829700": {
+  "name": "Gulfport",
+  "body": "City Council",
+  "councilUrl": "https://www.gulfport-ms.gov/government/city_council.php",
+  "mayorUrl": "https://www.gulfport-ms.gov/government/office_of_the_mayor/index.php",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Hugh D. Keating"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Kendal Lamar Buckner"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Bryan Caldwell"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Ella Holmes-Hines"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "F.B. ‘Rusty’ Walker, IV"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "B.J. Sellers, Jr."
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Carrissa Corbett"
+   },
+   {
+    "seat": "Ward 7",
+    "name": "Johnny Hoggatt"
+   }
+  ]
+ },
+ "2869280": {
+  "name": "Southaven",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://southaven.org/462/Board-of-Aldermen",
+  "mayorUrl": "https://southaven.org/155/Mayors-Office",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Darren Musselwhite"
+   },
+   {
+    "seat": "At Large",
+    "name": "George Payne"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Judy Jenkins"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Charlie Hoots"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "William Jerome"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Joel Gallagher"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "John David Wheeler"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Raymond Flores"
+   }
+  ]
+ },
+ "2806220": {
+  "name": "Biloxi",
+  "body": "City Council",
+  "councilUrl": "https://biloxi.ms.us/departments/city-council/",
+  "mayorUrl": "https://biloxi.ms.us/departments/mayor/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Andrew “FoFo” Gilich"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Wayne Gray"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Anthony Marshall"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Mike Nail"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Jamie Creel"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Paul Tisdale"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Kenny Glavan"
+   },
+   {
+    "seat": "Ward 7",
+    "name": "David Shoemaker"
+   }
+  ]
+ },
+ "2831020": {
+  "name": "Hattiesburg",
+  "body": "City Council",
+  "councilUrl": "https://www.hattiesburgms.com/council/",
+  "mayorUrl": "https://www.hattiesburgms.com/tobybarker/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Toby Barker"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Jeffrey George"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Eric Boney"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "LeAnn Vance"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Dave Ware"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Nicholas Brown"
+   }
+  ]
+ },
+ "2854040": {
+  "name": "Olive Branch",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://www.obms.us/230/Board-of-Aldermen",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Ken Adams"
+   },
+   {
+    "seat": "At Large",
+    "name": "George Collins"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Gil Earhart"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Pat Hamilton"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Don Gammage"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "David Wallace"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Jan Aldridge"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Dale Dickerson"
+   }
+  ]
+ },
+ "2874840": {
+  "name": "Tupelo",
+  "body": "City Council",
+  "councilUrl": "https://www.tupeloms.gov/my-government/city-council",
+  "mayorUrl": "https://www.tupeloms.gov/my-government/mayor",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Todd Jordan"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Chad Mims"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Lynn Bryan"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Travis Beard"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Nettie Davis"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Bentley Nolan"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Janet Gaston"
+   },
+   {
+    "seat": "Ward 7",
+    "name": "Rosie Jones"
+   }
+  ]
+ },
+ "2846640": {
+  "name": "Meridian",
+  "body": "City Council",
+  "councilUrl": "https://meridianms.org/government/city-council/",
+  "mayorUrl": "https://meridianms.org/government/mayor/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Percy Bland"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Elliot Brewer"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Dwayne Davis"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Tracy Tims"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Romande Gail Walker"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Dustin Hill"
+   }
+  ]
+ },
+ "2829180": {
+  "name": "Greenville",
+  "body": "City Council",
+  "councilUrl": "https://greenvillems.org/government/",
+  "read": "2026-10-16",
+  "unnamed": "Greenville's own website does not name its mayor or its council members: its City Council page is the city clerk's page, which names no member, and its mayor's page describes a term that began in January 2020"
+ },
+ "2814420": {
+  "name": "Clinton",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://clintonms.org/people/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Will Purdie"
+   },
+   {
+    "seat": "At Large",
+    "name": "Robert Chapman"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Karen Godfrey"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "TJ McSparrin"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Amanda M. Jones"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Chip Wilbanks"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Beverly Oliver"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "James Lott"
+   }
+  ]
+ },
+ "2844520": {
+  "name": "Madison",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://madisonthecity.com/government/aldermen/",
+  "mayorUrl": "https://madisonthecity.com/government/mayor/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Mary Hawkins Butler"
+   },
+   {
+    "seat": "At Large",
+    "name": "Sandra Strain"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Tawanna Tatum"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Pat Peeler"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Janie Jarvis"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Paul Tankersley"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Mike Hudgins"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Guy Bowering"
+   }
+  ]
+ },
+ "2855760": {
+  "name": "Pearl",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://www.cityofpearl.com/government/board-of-aldermen/",
+  "mayorUrl": "https://www.cityofpearl.com/government/mayors-office/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Jake Windham"
+   },
+   {
+    "seat": "At Large",
+    "name": "David Stovall"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Sammy Williams"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Keith Dennis"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Gary Broadwater"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Casey Foy"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Dwight Knight"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Kyle Foster"
+   }
+  ]
+ },
+ "2833700": {
+  "name": "Horn Lake",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://www.hornlake.org/government",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Jimmy Stokes"
+   },
+   {
+    "seat": "At Large",
+    "name": "Larry McKinney"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Joshua Langston"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Tommy Bledsoe"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Jackie C. Bostick"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Kelly Lee Smith"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "LaShonda Johnson"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Charlotte Armstrong"
+   }
+  ]
+ },
+ "2854840": {
+  "name": "Oxford",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://www.oxfordms.net/board-of-aldermen",
+  "mayorUrl": "https://www.oxfordms.net/departments/mayor-s-office",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Robyn Tannehill"
+   },
+   {
+    "seat": "At Large",
+    "name": "Mary Martha Crowe"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Erin Smith"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Mark Huelse"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Brian Hyneman"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Kesha Howell Atkinson"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Preston E. Taylor"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "Jason Bailey"
+   }
+  ]
+ },
+ "2808300": {
+  "name": "Brandon",
+  "body": "Board of Aldermen",
+  "councilUrl": "https://brandonms.org/government/board-of-aldermen/",
+  "mayorUrl": "https://brandonms.org/government/office-of-the-mayor/",
+  "read": "2026-10-17",
+  "seats": [
+   {
+    "seat": "Mayor",
+    "name": "Butch Lee"
+   },
+   {
+    "seat": "At Large",
+    "name": "Sharon Womack"
+   },
+   {
+    "seat": "Ward 1",
+    "name": "Jarrad Craine"
+   },
+   {
+    "seat": "Ward 2",
+    "name": "Cris Vinson"
+   },
+   {
+    "seat": "Ward 3",
+    "name": "Harry Williams"
+   },
+   {
+    "seat": "Ward 4",
+    "name": "Lu Coker"
+   },
+   {
+    "seat": "Ward 5",
+    "name": "Jereme King"
+   },
+   {
+    "seat": "Ward 6",
+    "name": "David Farris"
+   }
+  ]
+ }
+}

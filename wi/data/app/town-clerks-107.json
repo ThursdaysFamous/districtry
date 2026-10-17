@@ -18,6 +18,9 @@
     "clerk": "Margaret Fiser",
     "municipality": "Big Falls",
     "phone": "715-532-7480",
+    "phonesExtra": [
+      "608-397-3290"
+    ],
     "recordUpdated": "2023-12-01"
   },
   "5510713550": {
@@ -55,12 +58,18 @@
     "clerk": "Shirley A Severson",
     "municipality": "Hawkins",
     "phone": "715-585-6366",
+    "phonesExtra": [
+      "715-492-6244"
+    ],
     "recordUpdated": "2026-02-02"
   },
   "5510736125": {
     "clerk": "Jolene Zeman",
     "municipality": "Hubbard",
     "phone": "715-532-9848",
+    "phonesExtra": [
+      "715-415-7636"
+    ],
     "recordUpdated": "2023-12-28"
   },
   "5510742950": {
@@ -79,6 +88,9 @@
     "clerk": "Tracey Larsen",
     "municipality": "Murry",
     "phone": "715-868-8063",
+    "phonesExtra": [
+      "715-415-7250"
+    ],
     "recordUpdated": "2026-01-27",
     "url": "https://townofmurry.com/"
   },
@@ -92,6 +104,9 @@
     "clerk": "Anne Konvicka",
     "municipality": "Rusk",
     "phone": "715-642-3399",
+    "phonesExtra": [
+      "715-642-0665"
+    ],
     "recordUpdated": "2024-01-03",
     "url": "https://www.townofrusk.com"
   },
@@ -99,6 +114,9 @@
     "clerk": "April Eckes",
     "municipality": "South Fork",
     "phone": "715-826-0293",
+    "phonesExtra": [
+      "715-567-0612"
+    ],
     "recordUpdated": "2023-12-28"
   },
   "5510777775": {
@@ -137,6 +155,9 @@
     "clerk": "Lynn Sances",
     "municipality": "Wilkinson",
     "phone": "715-699-4053",
+    "phonesExtra": [
+      "715-353-2565"
+    ],
     "recordUpdated": "2025-10-30"
   },
   "5510787175": {

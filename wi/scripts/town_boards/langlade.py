@@ -4,13 +4,17 @@ named "as of 9-1-2026").
 Under "TOWN OFFICIALS" each town is headed by its name in capitals on a line
 of its own ("ACKLEY"). Each office is one line, "CHAIR: <name>, <home
 address>" or "SUPV: #1 <name>, <home address>", with the town, ZIP code and
-telephone on the line below; only the text before the first comma is read,
-so the address is never kept. Read with the token on 2026-10-15 (robots.txt
-served empty, so everything is allowed)."""
+telephone on the line below; only the text before the first comma is read
+for the name, so the address is never kept, and on the line below only the
+telephone after the dot leader is read, never the town and ZIP before it. An
+e-mail address printed on a line of its own under that ships on the officer.
+Read with the token on 2026-10-15 (robots.txt served empty, so everything is
+allowed)."""
 
 import re
 
-from . import looks_like_person, norm_role, person, split_blocks
+from . import (following_emails, following_phones, looks_like_person,
+               norm_role, person, split_blocks)
 
 COUNTY_FIPS = "067"
 COUNTY_NAME = "Langlade"
@@ -24,8 +28,9 @@ _SUFFIX = re.compile(r"^(Jr|Sr|II|III|IV)\.?$", re.I)
 
 def _officers(block):
     people = []
-    for ln in block.split("\n"):
-        m = _ROW.match(ln.strip())
+    lines = [ln.strip() for ln in block.split("\n") if ln.strip()]
+    for i, ln in enumerate(lines):
+        m = _ROW.match(ln)
         if not m:
             continue
         role = norm_role("Supervisor" if m.group(1).upper().startswith("SUP")
@@ -39,7 +44,9 @@ def _officers(block):
         if len(parts) > 1 and _SUFFIX.match(parts[1]):
             name += ", " + parts[1]
         if looks_like_person(name):
-            people.append(person(name, role))
+            people.append(person(name, role,
+                                 following_phones(lines, i + 1, limit=2),
+                                 emails=following_emails(lines, i + 1, limit=2)))
     return people
 
 

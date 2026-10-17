@@ -1,0 +1,166 @@
+{
+ "districts_per_geoid": {
+  "4004450": 5,
+  "4006400": 5,
+  "4023950": 6,
+  "4048350": 6,
+  "4049200": 3,
+  "4052500": 8,
+  "4055000": 8,
+  "4066800": 6,
+  "4075000": 9
+ },
+ "fetched": "2026-10-16",
+ "fingerprint": {
+  "districts": 56,
+  "sha256": "98d2e3eaf6025731fffc54025b164f5d3b6452c3b895410e639118728e9a1c86"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "a905f3cdaa798e5f656699d81847354e67ad4c835aa8e6fd5576b98fe03811ad",
+ "sources": {
+  "4004450": {
+   "city": "Bartlesville",
+   "covers_place_pct": 99.7,
+   "field": "DIST_ID",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "fd737f9db5f3a13270f3d9321a78450e33b9cd4ceccffef3c601998e674c57e4"
+   },
+   "item": "a450c0c483f24b1fa21003ad26230716",
+   "layer": "https://arcgissrv.cityofbartlesville.org/arcgisserver/rest/services/Citymaps/CityMaps_BvilleGIS/MapServer/32",
+   "layer_edited": null,
+   "outside_place_pct": 0.4,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  },
+  "4006400": {
+   "city": "Bixby",
+   "covers_place_pct": 97.5,
+   "field": "Ward",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "11181340f24cc477c27821a9e25b295da3a2d0d7520abd0513c71fd5af41e900"
+   },
+   "item": "5d619312357944ef921b5c277e5667eb",
+   "layer": "https://services6.arcgis.com/TI4WUPORw6hUtDVO/arcgis/rest/services/City_Council_Wards/FeatureServer/0",
+   "layer_edited": "2026-08-26T14:28:46Z",
+   "outside_place_pct": 0.7,
+   "part_records_joined": 6,
+   "records": 11,
+   "where": "1=1"
+  },
+  "4023950": {
+   "city": "Enid",
+   "covers_place_pct": 99.6,
+   "field": "WARD_CODE",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "c17ac855c071f633c9bd16ff222b63e13926e01b82a17b6292a8ad4105aa76cd"
+   },
+   "item": "4b9684ce68e14a80ab83412d90f679f0",
+   "layer": "https://services6.arcgis.com/LIvKKeLD11lMmJuJ/arcgis/rest/services/Ward_Publishing_Doc/FeatureServer/8",
+   "layer_edited": "2025-08-04T16:30:23Z",
+   "outside_place_pct": 0.1,
+   "part_records_joined": 1,
+   "records": 7,
+   "where": "1=1"
+  },
+  "4048350": {
+   "city": "Midwest City",
+   "covers_place_pct": 99.5,
+   "field": "Ward",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "2bfd56f3fa389aabdc37b1a15a1fe380b086edd21ecba740151d0df3907e0a4c"
+   },
+   "item": "9c7bd9d483114c189e78f638a0e5bb12",
+   "layer": "https://maps.midwestcityok.org/arcgis/rest/services/OpenData/CouncilWards/MapServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.3,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "4049200": {
+   "city": "Moore",
+   "covers_place_pct": 99.9,
+   "field": "NAME",
+   "fingerprint": {
+    "districts": 3,
+    "sha256": "3368d712e59a11daa0b4962a1d0a4ad1d8ed0c19945ac05f8279a3e39c224163"
+   },
+   "item": "2485a25594fe40c4a0503cdc7727f855",
+   "layer": "https://gis.cityofmoore.com/arcgis/rest/services/OpenData/Government_Services/MapServer/20",
+   "layer_edited": null,
+   "outside_place_pct": 0.1,
+   "part_records_joined": 0,
+   "records": 3,
+   "where": "1=1"
+  },
+  "4052500": {
+   "city": "Norman",
+   "covers_place_pct": 100.0,
+   "field": "WARDNO",
+   "fingerprint": {
+    "districts": 8,
+    "sha256": "9a19cf720f2da4971fa36f889af21bd29b36d6610e0b1a5433bc743b88448f3a"
+   },
+   "item": "6cc446cda3074f46a9bef86eb471160f",
+   "layer": "https://services.arcgis.com/rt1leD4Hj3sLGHNL/arcgis/rest/services/Council_Wards/FeatureServer/1",
+   "layer_edited": "2026-03-20T20:33:18Z",
+   "outside_place_pct": 0.2,
+   "part_records_joined": 0,
+   "records": 8,
+   "where": "1=1"
+  },
+  "4055000": {
+   "city": "Oklahoma City",
+   "covers_place_pct": 99.7,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 8,
+    "sha256": "3740200bd86c40a8d9d93ec916c5677784603d0e55058a30d8b1dee957348a3c"
+   },
+   "item": "500690346b0e44f6ba455922d5c65c8d",
+   "layer": "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2",
+   "layer_edited": null,
+   "outside_place_pct": 0.3,
+   "part_records_joined": 0,
+   "records": 8,
+   "where": "1=1"
+  },
+  "4066800": {
+   "city": "Shawnee",
+   "covers_place_pct": 99.2,
+   "field": "STATEFP10",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "d7c189a9783eb78fa1b31e566d213bccaf53fe6eae70c35ed6205039165a7bc3"
+   },
+   "item": "7049ef45b6e241c9a9d0503954664da8",
+   "layer": "https://maps.shawneeok.org/server/rest/services/City_Wards/FeatureServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.4,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  },
+  "4075000": {
+   "city": "Tulsa",
+   "covers_place_pct": 99.6,
+   "field": "DISTRICTID",
+   "fingerprint": {
+    "districts": 9,
+    "sha256": "dbb2282f0e2087c597c9940cc8ad4d070b0b84a6e5a10a7211ed430d94d0aa3b"
+   },
+   "item": "a475c4126f01471c84e948648f64bbc8",
+   "layer": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Council_Districts/FeatureServer/0",
+   "layer_edited": "2026-01-29T22:30:22Z",
+   "outside_place_pct": 0.2,
+   "part_records_joined": 0,
+   "records": 9,
+   "where": "1=1"
+  }
+ }
+}

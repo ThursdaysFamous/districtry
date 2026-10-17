@@ -4,6 +4,9 @@
     "deputyClerk": "Ginger Murphy",
     "municipality": "Belgium",
     "phone": "262-285-3326",
+    "phonesExtra": [
+      "262-227-4670"
+    ],
     "recordUpdated": "2026-01-07",
     "url": "https://www.townofbelgiumwi.gov/"
   },
@@ -20,6 +23,9 @@
     "deputyClerk": "Rose Paulus",
     "municipality": "Fredonia",
     "phone": "262-692-9673",
+    "phonesExtra": [
+      "262-707-3959"
+    ],
     "recordUpdated": "2026-01-29",
     "url": "https://www.fredoniawi.gov/town-fredonia-wi"
   },
@@ -36,6 +42,9 @@
     "deputyClerk": "Doris Feider-Schlenvogt",
     "municipality": "Port Washington",
     "phone": "262-284-5235",
+    "phonesExtra": [
+      "262-339-4396"
+    ],
     "recordUpdated": "2024-01-22",
     "url": "http://www.town.port-washington.wi.us"
   },

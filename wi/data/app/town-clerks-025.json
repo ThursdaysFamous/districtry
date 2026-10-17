@@ -47,6 +47,9 @@
     "deputyClerk": "Connie Bushee",
     "municipality": "Burke",
     "phone": "608-825-8420",
+    "phonesExtra": [
+      "608-825-8421"
+    ],
     "recordUpdated": "2024-01-23",
     "url": "http://www.townofburke.com/"
   },
@@ -62,6 +65,9 @@
     "deputyClerk": "Jennifer Millage",
     "municipality": "Cottage Grove",
     "phone": "608-839-5021 EXT 132",
+    "phonesExtra": [
+      "608-698-4282"
+    ],
     "recordUpdated": "2026-02-04",
     "url": "https://www.tn.cottagegrove.wi.gov/"
   },
@@ -78,6 +84,9 @@
     "deputyClerk": "Kendra Tutsch",
     "municipality": "Dane",
     "phone": "608-575-3365",
+    "phonesExtra": [
+      "608-849-4335"
+    ],
     "recordUpdated": "2025-03-17",
     "url": "https://townofdane.gov/"
   },
@@ -100,6 +109,9 @@
     "deputyClerk": "Erik Greenfield",
     "municipality": "Dunn",
     "phone": "608-838-1081 EXT 5",
+    "phonesExtra": [
+      "608-838-1081 EXT 3"
+    ],
     "recordUpdated": "2025-04-11",
     "url": "https://www.townofdunnwi.gov/"
   },
@@ -114,6 +126,9 @@
     "clerk": "Stephanie Lulling",
     "municipality": "Medina",
     "phone": "608-219-3556",
+    "phonesExtra": [
+      "920-210-6243"
+    ],
     "recordUpdated": "2023-12-06",
     "url": "https://townofmedina.wi.gov/"
   },
@@ -121,6 +136,9 @@
     "clerk": "Barbara Roesslein",
     "municipality": "Middleton",
     "phone": "608-833-5887",
+    "phonesExtra": [
+      "608-833-2706"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://town.middleton.wi.us/"
   },
@@ -128,6 +146,9 @@
     "clerk": "Jennifer Armstrong",
     "municipality": "Montrose",
     "phone": "608-424-3848",
+    "phonesExtra": [
+      "608-576-7318"
+    ],
     "recordUpdated": "2024-01-04",
     "url": "https://www.townofmontrose.com/"
   },
@@ -136,6 +157,9 @@
     "deputyClerk": "Stephanie Goth",
     "municipality": "Oregon",
     "phone": "608-835-3200 EXT 1",
+    "phonesExtra": [
+      "608-835-2982"
+    ],
     "recordUpdated": "2024-11-13",
     "url": "https://town.oregon.wi.us/"
   },
@@ -152,6 +176,9 @@
     "deputyClerk": "Danielle Wenker",
     "municipality": "Pleasant Springs",
     "phone": "608-873-3063",
+    "phonesExtra": [
+      "608-358-0273"
+    ],
     "recordUpdated": "2026-01-26",
     "url": "https://pleasantsprings.org/"
   },
@@ -167,6 +194,9 @@
     "clerk": "Lisa Meinholz",
     "municipality": "Roxbury",
     "phone": "608-643-8281",
+    "phonesExtra": [
+      "608-576-7490"
+    ],
     "recordUpdated": "2023-12-22",
     "url": "http://town.roxbury.wi.us/"
   },
@@ -175,6 +205,9 @@
     "deputyClerk": "Amanda Bartlett",
     "municipality": "Rutland",
     "phone": "608-455-3925",
+    "phonesExtra": [
+      "608-535-0983"
+    ],
     "recordUpdated": "2025-10-13",
     "url": "https://town.rutland.wi.us/"
   },
@@ -212,6 +245,9 @@
     "clerk": "Teresa Withee",
     "municipality": "Verona",
     "phone": "608-807-4466",
+    "phonesExtra": [
+      "608-845-7187"
+    ],
     "recordUpdated": "2023-08-29",
     "url": "https://www.town.verona.wi.us/"
   },
@@ -220,6 +256,9 @@
     "deputyClerk": "Lori L Breiwa",
     "municipality": "Vienna",
     "phone": "608-846-3800",
+    "phonesExtra": [
+      "608-846-3802"
+    ],
     "recordUpdated": "2023-12-28",
     "url": "https://www.vienna-wis.com/"
   },
@@ -235,6 +274,9 @@
     "clerk": "Jessa Lane",
     "municipality": "York",
     "phone": "608-445-7941",
+    "phonesExtra": [
+      "414-803-5943"
+    ],
     "recordUpdated": "2026-08-04",
     "url": "https://townofyorkwi.com/"
   },

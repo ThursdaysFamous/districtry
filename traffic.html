@@ -814,6 +814,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1236,6 +1242,22 @@ code {
     </div>
   </section>
 
+  <section class="ruled three">
+    <div class="panel">
+      <h2 class="kicker">Shared map links<sup class="ref"><a href="#note-8" aria-label="Note 8">8</a></sup></h2>
+      <p class="lead"><span data-stat="mapLinkNote">This window's data was fetched before map links were counted.</span></p>
+      <div class="bars" data-bars="mapLinkSources" data-empty="None counted yet."></div>
+    </div>
+    <div class="panel">
+      <h2 class="kicker">What the search showed</h2>
+      <div class="bars" data-bars="mapLinkResults" data-empty="None counted yet."></div>
+    </div>
+    <div class="panel">
+      <h2 class="kicker">Where they were read</h2>
+      <div class="bars" data-bars="mapLinkPlaces" data-empty="None counted yet."></div>
+    </div>
+  </section>
+
   <section class="ruled">
     <div class="sec-head">
       <h2>What people search for<sup class="ref"><a href="#note-6" aria-label="Note 6">6</a></sup></h2>
@@ -1270,6 +1292,7 @@ code {
       <li id="note-4"><strong>Layer ids share one namespace across the fleet,</strong> so a layer more than one app registers reports into ONE row and its count sums across them. <span data-stat="layerScopeNote">Five of the ten drawn here are registered by more than one app, and a toggle has carried its own app's tag since September 29; an unattributed figure is toggles from before that date, or ones whose per-app row fell below the ten each app's list holds: Congress (Illinois 52, New York 19, San Francisco 2 and 66 unattributed), County (Arkansas 1, Illinois 57, Indiana 3, Iowa 5, Kentucky 3, Michigan 12, Minnesota 6, North Carolina 5, Oklahoma 2, Tennessee 2 and Wisconsin 4), County board (Illinois 45, Wisconsin 8 and 65 unattributed), Ward (Illinois 90 and 108 unattributed) and us-house (Arkansas 1, Indiana 13, Iowa 6, Kentucky 3, Michigan 20, Minnesota 4, North Carolina 3, South Carolina 1, Tennessee 3 and Wisconsin 5). The other five are registered by one app and are unambiguous: County precinct, IL House, IL Senate, School board and Ward precinct.</span> How much blending there could be is measurable even though the blending itself is not: the other <span data-stat="otherCount">fourteen</span> instances have <span data-stat="otherInst">498</span> page visits between them against Illinois&rsquo;s <span data-stat="topInst">1,504</span>, so a shared id could carry at most that share and the single-app ids carry none of it. That ceiling grows as the other instances do, and this note is where it will be visible when it stops being small. The layer list is the top 10 of those recorded.</li>
       <li id="note-5"><strong>The referrer list is a top six.</strong> GoatCounter&rsquo;s dashboard shows a &ldquo;Show more&rdquo; beyond it that this page cannot query into. The six sum to <span data-stat="refSum">3,777</span> of <span data-stat="total">8,007</span> visits, so a named search engine&rsquo;s true total could run higher than what is shown here. <code>utm_source</code> tags count in the referrer list; the campaigns list counts only visits from links tagged with <code>?utm_campaign=&hellip;</code>.</li>
       <li id="note-6"><strong>Search counts combine <span data-stat="searchProps">2</span> Search Console properties,</strong> because the site renamed mid-window and the old domain still appears in results and redirects across; those are two different results for one search, not one counted twice. Google withholds rare queries before anyone sees them, so these will not reconcile exactly with Search Console&rsquo;s own reports. This is also the one thing the visit counter cannot see: Google strips the query from the referrer, so every one of these searches arrives in the referrer list as an anonymous &ldquo;Google&rdquo;. On Bing the figures combine <span data-stat="bingProps">2</span> verified properties: <span data-stat="bingNewHost">districtry.com</span> first appeared in these results on <span data-stat="bingNewFirst">September 13</span>, with <span data-stat="bingNewImpressions">10,379</span> impressions against chidistricts.com&rsquo;s <span data-stat="bingOldImpressions">449</span>. <span data-stat="bingSplitNote">districtry.com carries most of the figure now; chidistricts.com’s share is the early days of this window, which the rolling window is dropping.</span></li>
+      <li id="note-8"><strong>Shared map links.</strong> Each Google Maps or Apple Maps link a search box reads is counted once, with what the search showed, starting <span data-stat="mapLinkFrom">October 17</span>. The count says which maps app the link came from, whether it was a short link, whether it was pasted or arrived in the page&rsquo;s address (which is how a place shared into the installed app arrives), and which app or the front page read it. It never records the link, the place or its position. A place the front page sends on to a state&rsquo;s map is read again there, so it is counted once by each.<span data-stat="mapLinkCutNote"></span></li>
       <li id="note-7"><strong>The day-by-day sources.</strong> Each day&rsquo;s referrer list is asked for on its own, so these are that day&rsquo;s counts rather than a share of the two-month list above. &ldquo;Other sites&rdquo; is any other site that sent a visit, such as LinkedIn, a news story, a smaller search engine like Ecosia, or a districtry link someone shared. &ldquo;No source&rdquo; is a visit whose browser did not say where it came from: a typed address, a bookmark, or an app that hides the link; it is in the table and not the chart. A cell ending in + is a day whose list the dashboard cut short, so the smallest sources are missing from it and the true figure is higher.</li>
     </ol>
   </section>
@@ -1490,6 +1513,21 @@ code {
     campaigns: [
       ["2026-08", 68], ["districtry-launch", 53]
     ],
+    /* Google Maps and Apple Maps links the search boxes read, counted since
+       mapLinks.from: by which maps app, what the search showed, and which app
+       or the front page read it. `measured` is false for a data file fetched
+       before the count existed, which the page says rather than reading as
+       zero. */
+    mapLinkSources: [
+      
+    ],
+    mapLinkResults: [
+      
+    ],
+    mapLinkPlaces: [
+      
+    ],
+    mapLinks: {"cut": false, "failed": 0, "from": "October 17", "measured": false, "opened": 0, "retried": 0, "short": 0, "total": 0},
     /* geolocate-success events; the meter is geoSuccess / Geolocations.
        NULL, NOT ZERO, when the dashboard's ten-row events list does not carry
        the row. Absence and zero are different facts and `.get(key, 0)` made
@@ -2085,6 +2123,23 @@ code {
       }
       return line + ".";
     })(),
+    /* The shared-map-link lede, from the counts the bars below it draw. */
+    mapLinkNote: (function () {
+      var m = barData.mapLinks;
+      if (!m.measured) return "This window's data was fetched before map links were counted.";
+      if (!m.total) return "No Google Maps or Apple Maps links have been read since " + m.from + ".";
+      var line = fmt(m.total) + (m.total === 1 ? " map link has" : " map links have") +
+        " been read since " + m.from + ": " + fmt(m.short) + " short, " +
+        fmt(m.opened) + " opened from a share or a hand-off rather than pasted";
+      if (m.failed) line += ", and " + fmt(m.failed) + " short " +
+        (m.failed === 1 ? "link" : "links") + " the lookup could not read";
+      if (m.retried) line += "; " + fmt(m.retried) + " read only on a retry";
+      return line + ".";
+    })(),
+    mapLinkFrom: barData.mapLinks.from,
+    mapLinkCutNote: barData.mapLinks.cut
+      ? " At least one app's list of these was cut short by the dashboard, so the counts are a floor."
+      : "",
     ref3: (barData.refs[2] || ["—"])[0],
     ref4: (barData.refs[3] || ["—"])[0],
     /* "strongest day since the rebrand" — the rebrand day itself is the
@@ -2131,6 +2186,13 @@ code {
   var groups = document.querySelectorAll("[data-bars]");
   Array.prototype.forEach.call(groups, function (el) {
     var rows = barData[el.getAttribute("data-bars")];
+    if (!rows.length && el.getAttribute("data-empty")) {
+      var none = document.createElement("p");
+      none.className = "empty";
+      none.textContent = el.getAttribute("data-empty");
+      el.replaceWith(none);
+      return;
+    }
     if (!rows.length) {
       var empty = document.createElement("p");
       empty.className = "empty";

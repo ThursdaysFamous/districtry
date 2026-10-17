@@ -21,13 +21,21 @@ section's district; any other text mentioning a vacancy raises.
 E-mail: each card's address is Cloudflare-obfuscated and decodes to a
 first.last@polkcountytn.gov address; it is recorded where it is on
 polkcountytn.gov and its local part carries the member's surname (all nine;
-Deborah Anne Davis's reads debbie.davis@, James Mush Davis's james.davis@).
+Deborah Anne Davis's reads debbie.davis@, James Mush Davis's james.davis@). An
+address on another domain in a member's own card is kept as printed when it
+prints no county one, under Adam's ruling of 2026-10-17 that an e-mail address
+a government page prints beside an official ships too.
 
 PRIVACY: every card prints a phone, several of them Georgia (706) mobile
-numbers, and nothing calls any a county line, so no phone is recorded. The
-county's own September 2026 commissioner list (below) prints personal gmail,
-yahoo, outlook and bellsouth addresses and phones for the members; it is not
-read by the parser and nothing from it is recorded.
+numbers, and nothing calls any a county line. Each card's "Phone:" number is
+recorded as printed, under Adam's ruling of 2026-10-17 that a number a
+government publishes beside an official ships whosever line it is; it is
+read from the text after the card's own title line, up to the next card's
+title. The cards print no address. The County Executive's office and the two
+non-emergency lines in the page footer are OFFICE_LINES and never land on a
+member. The county's own September 2026 commissioner list (below) prints
+personal gmail, yahoo, outlook and bellsouth addresses and phones for the
+members; it is not read by the parser and nothing from it is recorded.
 
 Currency: NO results of the 6 August 2026 election were found on a
 government host. The county site's "Election Commission" menu item points
@@ -51,13 +59,16 @@ results were compared; and neither document says how many seats District 2
 elects, which rests on this page's own vacancy notice. The page names no
 chair, so no role is recorded."""
 import re
-from ._common import txt, lines, mailtos, district_number, member, vacant
+from ._common import (txt, lines, mailtos, district_number, member, vacant, read_phones,
+                      other_email)
 
 COUNTY = "Polk"; FIPS = "139"
 DOMAINS = ("polkcountytn.gov",)
 URLS = ["https://polkcountytn.gov/county-commissioners/"]
 SEATS = {"1": 3, "2": 2, "3": 3, "4": 2}
 AT_LARGE = 0
+# The County Executive's office and the two non-emergency lines, in the footer.
+OFFICE_LINES = ("(423) 338-4527", "(423) 338-8215", "(423) 496-3301")
 
 H2 = re.compile(r"<h2\b[^>]*>(.*?)</h2>", re.S)
 HEAD_RE = re.compile(r"^District\s+(\d{1,2})$")
@@ -82,7 +93,7 @@ def _email(name, fragment):
         if _surname(name) in a.split("@", 1)[0].lower():
             return a
         raise ValueError("county address %r in %r's card does not carry the surname" % (a, name))
-    return None
+    return other_email(fragment, DOMAINS)
 
 
 def read_section(d, sec):
@@ -98,7 +109,7 @@ def read_section(d, sec):
         if not NAME.match(name) or name in ("Phone:", "Email:") or re.search(r"\bvacan", name, re.I):
             raise ValueError("District %s: %r above a card title does not look like a name" % (d, name))
         after = sec[t.end():titles[i + 1].start() if i + 1 < len(titles) else len(sec)]
-        seats.append(member(name, email=_email(name, after)))
+        seats.append(member(name, email=_email(name, after), phones=read_phones(after)))
     text = txt(sec)
     vac = VACANCY.findall(text)
     if any(v != d for v in vac):

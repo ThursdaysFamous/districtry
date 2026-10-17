@@ -4218,8 +4218,9 @@ function initKentuckyExplorer() {
   var LAYER_CODES = { "us-house": "us", "ky-supreme-court": "kyj", "ky-court-of-appeals": "kya",
     "ky-senate": "kys", "ky-circuit-court": "kyc", "ky-district-court": "kyd",
     "ky-house": "kyh", "county": "co", "school-district-unified": "su",
-    "county-subdivision": "cs", "fiscal-court": "fc", "voting-precinct": "vp",
-    "municipality": "mu", "school-district-elementary": "se", "school-district-secondary": "sh" };
+    "county-subdivision": "cs", "fiscal-court": "fc", "school-board-district": "bd",
+    "voting-precinct": "vp", "municipality": "mu", "school-district-elementary": "se",
+    "school-district-secondary": "sh" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4233,7 +4234,8 @@ function initKentuckyExplorer() {
     "voting-precinct": ["voting-precinct"],
     "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
-    "school-district-secondary": ["school-district-secondary"] };
+    "school-district-secondary": ["school-district-secondary"],
+    "school-board-district": ["school-board-district"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8625,6 +8627,7 @@ function initKentuckyExplorer() {
       geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
         ", which districtry doesn't cover yet.";
       geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
       return true;
     }
     var row = siblingRow(metro, link.text, function () {
@@ -8640,6 +8643,7 @@ function initKentuckyExplorer() {
     geoResultsList.appendChild(row);
     geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
     geoStatus.className = "geo-status";
+    countLinkRead("other-state");
     return true;
   }
 
@@ -9170,6 +9174,56 @@ function initKentuckyExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   street       the street the address is on, framed for a tap
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9187,11 +9241,13 @@ function initKentuckyExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9200,6 +9256,7 @@ function initKentuckyExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9212,6 +9269,7 @@ function initKentuckyExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9242,6 +9300,8 @@ function initKentuckyExplorer() {
 
   function runGeocodeSearch(q, fromLink) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
@@ -9257,6 +9317,7 @@ function initKentuckyExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
       return runAddressSearch(q, fromLink);
@@ -9314,20 +9375,27 @@ function initKentuckyExplorer() {
       if (results && results.length) {
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
         return;
       }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
       if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
-          if (name.length < 3) return;
+          if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
+            if (seq !== districtSearchSeq) return;
+            if (!named || !named.length) return countLinkRead("none");
+            countLinkRead("name");
             listByName(named);
             geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
               "A search for its name, \u201c" + name + "\u201d, found " +
@@ -9398,6 +9466,7 @@ function initKentuckyExplorer() {
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
+    countLinkRead("street");
     var a = addressParts(bare);
     var bounds = null;
     street.forEach(function (r) {
@@ -9481,6 +9550,7 @@ function initKentuckyExplorer() {
    * state's app it belongs to, so a place shared into the installed app
    * opens in its own state. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
@@ -9507,6 +9577,7 @@ function initKentuckyExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q)
@@ -9530,6 +9601,7 @@ function initKentuckyExplorer() {
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -9571,7 +9643,8 @@ function initKentuckyExplorer() {
     "school-district-unified", // 170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county
     "county-subdivision", // 493 census county divisions, live from TIGERweb (no data/app file) — median 196.8 km2 of land (mean 207.4), measured 2026-10-15: smaller than a unified school district, larger than a city
     "fiscal-court",      // 314 districts in 58 counties: the magisterial districts of 56 fiscal courts and the council districts of Louisville Metro and Lexington-Fayette, 169 km2 mean feature area over 53,163 km2, so smaller than a school district and larger than a city
-    "voting-precinct",   // 3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a city (12.00)
+    "school-board-district", // 13 features in 2 counties — the 5 divisions of the Jefferson County board, from the precinct lists in KRS 160.211, the 5 of the Rowan County board, from the 2022 and 2024 general election results, and 3 Jefferson precincts placed in no division — 136.22 km2 mean area (median 126.46), measured 2026-10-17 on the drawn file: smaller on average than a magistrate or council district (169 km2), larger than a voting precinct (32.75)
+    "voting-precinct",   // 3,194 precincts tiling the state, pre-built from the State Board of Elections' own layer — 32.75 km2 mean area, land and water (median 8.70), measured 2026-10-15 on the drawn file: smaller on average than a school board division (136.22 km2), larger than a city (12.00)
     "municipality",      // 415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land
     "school-district-elementary", // 4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points
     "school-district-secondary" // 4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling
@@ -11887,7 +11960,8 @@ function initKentuckyExplorer() {
    *   - mailto:/tel: hrefs are built HERE from a raw address/number — an
    *     email address is never printed (the "Email" label is the link), and
    *     a phone number displays with non-breaking hyphens while its tel:
-   *     href keeps only dialable characters.
+   *     href keeps only dialable characters, and stops where an extension
+   *     begins.
    * A render() returns one wrapper element with class "card-flush"; the
    * styles-card-v2 rules key row padding/borders off that marker. */
   function cardEl(tag, className, text) {
@@ -11906,21 +11980,37 @@ function initKentuckyExplorer() {
     a.textContent = String(label || safe);
     return a;
   }
+  function cardPhoneDial(phone) {
+    // What a tel: link dials for one printed number: its digits (and a
+    // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
+    // "x 236"). Run onto the end of the number, an extension's digits would
+    // dial a different number; the extension stays in the text, where the
+    // reader sees it.
+    var s = String(phone);
+    var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+    if (m) s = s.slice(0, m.index + m[1].length);
+    return s.replace(/[^\d+]/g, "");
+  }
   function cardPhoneLink(phone) {
-    var dial = String(phone).replace(/[^\d+]/g, "");
+    var dial = cardPhoneDial(phone);
     if (!dial) return null;
     var a = cardEl("a", "card-phone", String(phone).replace(/-/g, "‑"));
     a.href = "tel:" + dial;
     return a;
   }
   function cardContactLine(spec) {
-    // spec: { phone?, email?, links?: [{label, url}] } -> one wrapping line of
-    // phone / Email / external links separated by middots; null when empty.
+    // spec: { phone?, phonesExtra?: [string], email?, links?: [{label, url}] }
+    // -> one wrapping line of phones / Email / external links separated by
+    // middots; null when empty. phonesExtra are further numbers the source
+    // prints for the same person, each as printed: a label the source gives
+    // ("cell 519-3104") stays in the text, and only the digits reach the
+    // tel: href, so a label never changes the number dialled.
     var items = [];
-    if (spec.phone) {
-      var p = cardPhoneLink(spec.phone);
+    [spec.phone].concat(spec.phonesExtra || []).forEach(function (phone) {
+      if (!phone) return;
+      var p = cardPhoneLink(phone);
       if (p) items.push(p);
-    }
+    });
     if (spec.email) {
       var e = document.createElement("a");
       e.href = "mailto:" + String(spec.email);
@@ -11981,8 +12071,8 @@ function initKentuckyExplorer() {
     return el;
   }
   function renderPersonRows(people, opts) {
-    // people: [{ name, badge?, note?, phone?, email?, links?, details?:
-    // {label, items}, detailsOpen? }]. A person with details renders as a
+    // people: [{ name, badge?, note?, phone?, phonesExtra?, email?, links?,
+    // details?: {label, items}, detailsOpen? }]. A person with details renders as a
     // native <details> expander; absent fields render nothing (no
     // placeholders, no guessed officeholders — honesty rules).
     var tinted = opts && opts.tinted;
@@ -13204,8 +13294,9 @@ function initKentuckyExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, districtOffice?, capitolOffice? }; office fields only
-    // render when the roster supplies them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
+    // districtOffice?, capitolOffice? }; office fields only render when the
+    // roster supplies them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -13374,6 +13465,25 @@ function initKentuckyExplorer() {
         }
         var person = { name: String(member.name) };
         if (member.party) person.badge = String(member.party);
+        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+        // the chamber prints for the member apart from the office blocks
+        // below, such as a home or cell line. Published since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is shown even where it may be the official's own; a label
+        // the source prints ("home 803-555-0100") rides inside the string.
+        if (member.phone) person.phone = String(member.phone);
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
+        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+        // 2026-10-17 this card showed no legislator's address at all, though
+        // eight states' rosters carried one for nearly every seat. Measured
+        // that day, every one of them is the chamber's own mailbox except
+        // fifteen Arkansas members' personal addresses, which the
+        // legislature's own member pages print and which Adam chose to show
+        // ("E-mails too"). A roster reads it from the legislature's pages or
+        // from Open States' compilation of them.
+        if (member.email) person.email = String(member.email);
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
@@ -13589,6 +13699,93 @@ function initKentuckyExplorer() {
     return row;
   }
 
+  /* ---------- The conservation district, on the County card.
+   *
+   * The Division of Conservation publishes a sheet for each conservation
+   * district naming its seven supervisors and the year each one's term ends
+   * (ky/scripts/build_ky_conservation_boards.py;
+   * data/app/ky-conservation-boards.json, keyed by county GEOID). Every
+   * county has one district except Logan, which has two whose line this app
+   * does not draw, so Logan's card lists both boards. The sheets name no
+   * officers and do not say how each seat was filled; the card says how the
+   * statute fills them (KRS 262.240), and the builder's --check requires that
+   * sentence to stay as the builder states it.
+   * ---------- */
+  var loadConservationBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-conservation-boards.json", {}, 2);
+  });
+  var KY_CONSERVATION_CHOSEN = "The district's voters " +
+    "elect all seven supervisors at the November general election, for " +
+    "four-year terms, three in one election and four in the next. Where no " +
+    "more candidates file than there are seats, the state Soil and Water " +
+    "Conservation Commission " +
+    "declares them elected without an election, and it fills a vacancy for " +
+    "the rest of the term.";
+  var KY_CONSERVATION_MONTHS = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+  function kyConservationDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return KY_CONSERVATION_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  function kyConservationFor(result) {
+    return loadConservationBoards().then(function (r) {
+      result.conservation = result.geoid != null ? r[String(result.geoid)] || null : null;
+    }, function () {
+      result.conservationFailed = true;
+    });
+  }
+  function kyConservationSection(wrap, result) {
+    var districts = (result.conservation && result.conservation.districts) || [];
+    if (!districts.length) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Conservation district",
+        value: result.conservationFailed
+          ? "The list of conservation district supervisors did not load, so no " +
+            "names are shown."
+          : "Not shown: the state's list of conservation districts has no sheet " +
+            "for this county."
+      }]));
+      return;
+    }
+    if (districts.length > 1) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Conservation districts",
+        value: String(result.name) + " has " +
+          (districts.length === 2 ? "two" : String(districts.length)) +
+          " conservation districts, and this app does not draw the line " +
+          "between them, so every board is listed."
+      }]));
+    }
+    districts.forEach(function (d, i) {
+      wrap.appendChild(renderSectionLabel(String(d.name)));
+      wrap.appendChild(renderPersonRows((d.members || []).map(function (m) {
+        return {
+          name: m.vacant ? "Vacant" : String(m.name),
+          note: m.termEnds ? "Term ending " + String(m.termEnds) : null
+        };
+      })));
+      var rows = [];
+      if (i === 0) rows.push({ label: "How the board is chosen", value: KY_CONSERVATION_CHOSEN });
+      var dated = kyConservationDate(d.dated);
+      var read = kyConservationDate(d.read);
+      rows.push({
+        label: "Where these names come from",
+        value: "The Kentucky Division of Conservation's sheet for this district" +
+          (dated ? ", last changed " + dated : "") +
+          (read ? (dated ? " and" : ",") + " read on " + read : "") + ". The " +
+          "sheet names no officers and does not say whether a seat was filled " +
+          "by election or by the Commission."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      if (d.sourceUrl) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "This district's sheet (PDF) ↗", url: String(d.sourceUrl) }]
+        }));
+      }
+    });
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -13611,11 +13808,14 @@ function initKentuckyExplorer() {
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"])
         };
-        return loadKyCountyOfficials().then(function (roster) {
-          base.officials = base.geoid != null ? (roster || {})[String(base.geoid)] || null : null;
-          return base;
-        }, function () {
-          base.rosterFailed = true;
+        return Promise.all([
+          loadKyCountyOfficials().then(function (roster) {
+            base.officials = base.geoid != null ? (roster || {})[String(base.geoid)] || null : null;
+          }, function () {
+            base.rosterFailed = true;
+          }),
+          kyConservationFor(base)
+        ]).then(function () {
           return base;
         });
       });
@@ -13711,6 +13911,7 @@ function initKentuckyExplorer() {
           }]
         }));
       }
+      kyConservationSection(wrap, result);
       return wrap;
     },
     primaryLink: function (result) {
@@ -14201,6 +14402,251 @@ function initKentuckyExplorer() {
     if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
     return null;
   }
+
+  /* ---------- 5b. School board division — the divisions county boards are elected from ----------
+   * Kentucky elects every county board of education from five divisions made
+   * of whole voting precincts, and every independent district's board at
+   * large (KRS 160.210, as amended effective April 14, 2026). No office
+   * publishes the divisions for the whole state, so this layer draws them two
+   * ways, and each card says which. Pre-built by
+   * ky/scripts/build_ky_school_board_divisions.py (Douglas-Peucker at 8 m, in
+   * one run, so a line two divisions share is drawn once;
+   * data/app/ky-school-board-divisions.json, same-origin, so a click is
+   * answered in the browser and no point is sent anywhere).
+   *
+   * JEFFERSON COUNTY, FROM THE STATUTE. The 2026 law that cut the Jefferson
+   * County board from seven members to five (2026 Ky. Acts ch. 154) lists
+   * each division's precinct codes in section 160.211 of the Kentucky Revised
+   * Statutes. Each division here is the union of its listed precincts on the
+   * State Board of Elections' precinct map, cut to the Census Bureau's
+   * boundary of the Jefferson County School District, so the part of a
+   * precinct in the Anchorage Independent School District, whose board is
+   * elected at large, is in no division. Three current precincts are on no
+   * list (F154, F155 and F183). The statute has the county board of elections
+   * add the part of such a precinct inside the county district to a division
+   * next to it; no such assignment was found published, so each of the three
+   * is drawn whole as its own area, marked as placed in no division, and its
+   * card says so rather than guessing. The builder reads LOJIC's precinct
+   * layer and two published maps of the divisions (LOJIC's and the school
+   * district's) as checks on its reading of the statute, never as sources.
+   *
+   * ROWAN COUNTY, FROM ELECTION RESULTS. Each division is the precincts whose
+   * ballots carried that division's board race in the 2022 or 2024 general
+   * election, by the State Board's recap sheet for the county, cut to the
+   * Census boundary of the Rowan County School District. The builder tests
+   * nine counties this way and draws a county only if every one of its
+   * precincts is placed, each board race was on every ballot its precinct
+   * cast, and the precincts have not changed since; Rowan alone passed,
+   * measured 2026-10-17.
+   *
+   * NO MEMBER IS NAMED (gap ky-school-board-members): no list of members by
+   * division has been read for this app. The builder's --check fails if this
+   * card stops stating the interval the file was drawn at, the statute's
+   * citation or the date of the Jefferson divisions' first election.
+   * ---------- */
+  var loadKySchoolBoardDivisions = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-school-board-divisions.json", {}, 2);
+  });
+
+  var KY_BOARD_MEMBERS = "Not named here. No list of this board's members by " +
+    "division has been read for this app, so it names no one rather than " +
+    "guessing. The board's own page is linked below.";
+
+  // The seven members elected under the old map serve until December 31,
+  // 2026 (2026 Ky. Acts ch. 154, sections 17 and 18), so the card stops
+  // describing that arrangement once it has ended.
+  var KY_JEFFERSON_INTERIM_ENDS = Date.UTC(2027, 0, 1);
+
+  function kyBoardDivisionRows(result) {
+    var rows = [];
+    var board = result.board || "the county board of education";
+    if (result.drawnFrom === "statute") {
+      var shortTerm = result.division === "4" || result.division === "5";
+      rows.push({
+        label: "Who it elects",
+        value: "One of the five members of the " + board + ". A 2026 law " +
+          "(2026 Ky. Acts ch. 154) cut the board from seven members to five and " +
+          "set out its five divisions, precinct by precinct, in KRS 160.211. " +
+          "The law sets their first election for the November 3, 2026 general " +
+          "election, " + (shortTerm
+            ? "when the member for this division is elected for two years; after that the term is four years."
+            : "when the member for this division is elected for four years.") +
+          " The new board is called to its first meeting within ten days of January 1, 2027."
+      });
+      if (Date.now() < KY_JEFFERSON_INTERIM_ENDS) {
+        rows.push({
+          label: "Until the new board takes office",
+          value: "The seven members elected from the old seven divisions serve " +
+            "until their terms end on December 31, 2026. Until then the same law " +
+            "gives each new division one of them: the member who lives in it, " +
+            "chosen by drawing lots if two or more do, or drawn by lot from the " +
+            "others if none does. Any member left over serves the whole district."
+        });
+      }
+      rows.push({ label: "Members", value: KY_BOARD_MEMBERS });
+      rows.push({
+        label: "How this line is drawn",
+        value: "From the law: KRS 160.211 lists the precincts that make up each " +
+          "division, as the county clerk's office kept them on March 19, 2026. " +
+          "This map joins that list to the State Board of Elections' precinct map " +
+          "and cuts it to the Census Bureau's boundary of the Jefferson County " +
+          "School District, so the part of the county in the Anchorage " +
+          "Independent School District, whose board is elected at large, is in " +
+          "no division." + (result.precincts != null
+            ? " This division is made of " + String(result.precincts) + " precincts."
+            : "") +
+          " The lines are drawn here to within 8 metres; for a definitive answer, " +
+          "ask the county board of elections."
+      });
+      return rows;
+    }
+    // drawn from election results
+    var day = kyConservationDate(result.election);
+    rows.push({
+      label: "Who it elects",
+      value: "One of the five members of the " + board + ", who serve four-year " +
+        "terms." + (day && result.contest
+          ? " This division's seat was on the ballot in the " + day + " general " +
+            "election, as “" + result.contest + "”."
+          : "")
+    });
+    rows.push({ label: "Members", value: KY_BOARD_MEMBERS });
+    rows.push({
+      label: "How this line is drawn",
+      value: "From election results: the precincts whose ballots carried this " +
+        "division's race" + (day ? " in the " + day + " general election" : "") +
+        ", by the State Board of Elections' recap sheet for " +
+        (result.county ? result.county + " County" : "the county") + ", cut to " +
+        "the Census Bureau's boundary of the county school district. Every " +
+        "precinct in the county voted whole in one division's race, and the " +
+        "precincts have not changed since, so this is taken to be the division " +
+        "as it stands." + (result.precincts != null
+          ? " It is made of " + String(result.precincts) + " precincts." : "") +
+        " The lines are drawn here to within 8 metres; for a definitive answer, " +
+        "ask the board of education."
+    });
+    return rows;
+  }
+
+  // A precinct the statute's lists leave out. It lies across the line
+  // between the county and Anchorage school districts, so the card describes
+  // the whole precinct, both sides, with its size and its 2022 ballots, and
+  // places none of it in a division.
+  function kyUnplacedRows(result) {
+    var rows = [];
+    var code = result.precinct || "this precinct";
+    rows.push({
+      label: "Why no division",
+      value: "Precinct " + code + " lies across the line between the Jefferson " +
+        "County and Anchorage Independent school districts, and it is on none of " +
+        "the five lists of precincts in KRS 160.211, the law that drew the " +
+        "Jefferson County board's divisions. That law has the county board of " +
+        "elections add the part of such a precinct inside the Jefferson County " +
+        "School District to a division next to it. No such assignment has been " +
+        "found published, so this map does not guess which division that part " +
+        "is in; the county board of elections can say. The part in the Anchorage " +
+        "district is in no division, because that board is elected at large."
+    });
+    if (result.km2 != null) {
+      rows.push({
+        label: "Size",
+        value: String(result.km2) + " km\u00b2 in all." + (result.anchorageKm2 != null
+          ? " The Census Bureau's map of the school districts puts " +
+            String(result.anchorageKm2) + " km\u00b2 of it in the Anchorage " +
+            "Independent School District and the rest in the Jefferson County " +
+            "School District."
+          : "")
+      });
+    }
+    if (result.ballots2022 != null && result.countyBoard2022 != null && result.anchorage2022 != null) {
+      rows.push({
+        label: "Ballots in 2022",
+        value: "In the November 8, 2022 general election the precinct cast " +
+          String(result.ballots2022) + " ballots: " + String(result.countyBoard2022) +
+          " carried a Jefferson County board race and " + String(result.anchorage2022) +
+          " carried the Anchorage board's, so it had voters in both school districts."
+      });
+    }
+    return rows;
+  }
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board Division",
+    emptyNote: "This point is not in a school board division this map draws. " +
+      "Kentucky elects each county board of education from five divisions and " +
+      "each independent district's board at large, and no office publishes the " +
+      "divisions for the whole state. This map draws two counties' divisions: " +
+      "Jefferson County's, from the precinct lists in KRS 160.211, and Rowan " +
+      "County's, from the 2022 and 2024 general election results. In Jefferson " +
+      "County, the part in the Anchorage Independent School District is in no " +
+      "division, because that board is elected at large. Other counties' " +
+      "divisions are not drawn here yet.",
+    overlay: {
+      load: loadKySchoolBoardDivisions,
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (p.kind === "unplaced") {
+        return p.precinct != null ? "Precinct " + String(p.precinct) + ", placed in no division" : null;
+      }
+      return p.county != null && p.division != null
+        ? String(p.county) + " County board, Division " + String(p.division) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadKySchoolBoardDivisions, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        function text(v) { return v != null && String(v) !== "" ? String(v) : null; }
+        return {
+          seq: seq,
+          kind: text(p.kind),
+          county: text(p.county),
+          board: text(p.board),
+          web: text(p.web),
+          division: text(p.division),
+          drawnFrom: text(p.drawnFrom),
+          election: text(p.election),
+          contest: text(p.contest),
+          precincts: p.precincts != null ? p.precincts : null,
+          precinct: text(p.precinct),
+          km2: p.km2 != null ? p.km2 : null,
+          anchorageKm2: p.anchorageKm2 != null ? p.anchorageKm2 : null,
+          ballots2022: p.ballots2022 != null ? p.ballots2022 : null,
+          countyBoard2022: p.countyBoard2022 != null ? p.countyBoard2022 : null,
+          anchorage2022: p.anchorage2022 != null ? p.anchorage2022 : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      if (result.kind === "unplaced") {
+        wrap.appendChild(renderBodyIntro({
+          title: "Placed in no division",
+          note: "Precinct " + (result.precinct || "unknown") +
+            (result.county ? ", " + result.county + " County" : "")
+        }));
+        wrap.appendChild(renderFieldStack(kyUnplacedRows(result)));
+        return wrap;
+      }
+      wrap.appendChild(renderBodyIntro({
+        title: result.division ? "Division " + result.division : "Unknown division",
+        note: result.board
+      }));
+      wrap.appendChild(renderFieldStack(kyBoardDivisionRows(result)));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      if (result && result.web) {
+        return { label: result.board || "The county board of education", url: result.web };
+      }
+      return kySchoolLink();
+    }
+  });
 
   /* ---------- Census County Division — live TIGERweb, the level-14 map ----------
    * Which county subdivision a point is in, owed in every state whether or
@@ -16349,7 +16795,11 @@ function initKentuckyExplorer() {
     "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
     "ky-district-court", "fiscal-court",
     "school-district-unified", "school-district-elementary",
-    "school-district-secondary", "county", "county-subdivision",
+    "school-district-secondary",
+    // The board division sits under the school tilings it divides, and
+    // answers only in the two counties whose divisions are drawn.
+    "school-board-district",
+    "county", "county-subdivision",
     "municipality", "voting-precinct"];
   (function applySidebarRank() {
     var pos = {};
@@ -16841,10 +17291,10 @@ function initKentuckyExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1F6FB2": "#74BBFF",
     "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#2F7A6A": "#69CAB3", "#3B8FD4": "#A2D2FF",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4AA893": "#74EFD3",
-    "#4C8F59": "#82DB92", "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
-    "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#8A692C": "#DDB061", "#8C2E4A": "#F47294",
-    "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE",
+    "#753B07": "#D7864B", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#8A692C": "#DDB061",
+    "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -3,7 +3,9 @@
 
 Under "TOWN OFFICERS" each town is headed "TOWN OF <NAME>", and each office is
 one line, "CHAIRMAN, <name> ..... <telephone>" or "SUPERVISOR, <name> .....
-<telephone>", with the officer's home address on the line below.
+<telephone>", with the officer's home address on the line below. The telephone
+ships on the officer, exactly as printed (most without an area code); the
+address is not read.
 
 CLIENT. Read with Chrome on 2026-10-15. The same day this project's token got
 a plain HTTP 403 on both robots.txt and the document; read as Chrome,
@@ -12,7 +14,8 @@ allowed."""
 
 import re
 
-from . import looks_like_person, norm_role, person, split_blocks, strip_contact
+from . import (looks_like_person, norm_role, person, phones_after_name,
+               split_blocks, strip_contact)
 
 COUNTY_FIPS = "073"
 COUNTY_NAME = "Marathon"
@@ -33,7 +36,7 @@ def _officers(block):
         role = norm_role(m.group(1))
         name = strip_contact(_CUT.sub("", m.group(2)))
         if role and looks_like_person(name):
-            people.append(person(name, role))
+            people.append(person(name, role, phones_after_name(ln, name)))
     return people
 
 

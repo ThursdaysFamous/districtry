@@ -2,14 +2,17 @@
 "FINAL 5/5/26").
 
 Under "TOWN, VILLAGE AND CITY OFFICERS" each town is headed "TOWN OF <NAME>:"
-and each office is one line, "Chairman . . . . . <name>" or "Supervisor #1
-. . . . <name>", with the officer's home address and telephone and e-mail on
-the two lines below. Read with the token on 2026-10-15 (robots.txt served
-empty, so everything is allowed)."""
+and each office is one line, "Chairman . . . . . <name>" or
+"Supervisor #1 . . . . <name>", with the officer's home address and telephone
+and e-mail on the two lines below. The telephone line ships on the officer,
+with the e-mail address printed after the number on it; the address is not
+read. Read with the token on 2026-10-15 (robots.txt served empty, so
+everything is allowed)."""
 
 import re
 
-from . import norm_role, person, split_blocks
+from . import (following_emails, following_phones, norm_role, person,
+               split_blocks)
 
 COUNTY_FIPS = "061"
 COUNTY_NAME = "Kewaunee"
@@ -22,15 +25,19 @@ _ROW = re.compile(r"^((?:Chair\w*|Supervisor)(?:\s*#\s*\d+)?)\s*[. ]{3,}\s*(.+)$
 
 def _officers(block):
     people = []
-    for ln in block.split("\n"):
-        m = _ROW.match(ln.strip())
+    lines = [ln.strip() for ln in block.split("\n") if ln.strip()]
+    for i, ln in enumerate(lines):
+        m = _ROW.match(ln)
         if not m:
             continue
         role = norm_role(m.group(1))
         # the typesetting puts a space before a full stop ("Barry J . Fenendael")
         name = re.sub(r"\s+\.", ".", m.group(2)).strip()
         if role:
-            people.append(person(name, role))
+            # the address line, then "920-555-0100 - e-mail"
+            people.append(person(name, role,
+                                 following_phones(lines, i + 1, limit=3),
+                                 emails=following_emails(lines, i + 1, limit=3)))
     return people
 
 

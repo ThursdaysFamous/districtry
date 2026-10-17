@@ -31,7 +31,8 @@
 | Chancery Court District | 20 | pre-built | the district's chancellors, every one of the district where a chancellor is elected from part of it (gap `ms-court-subdistricts`) |
 | Circuit Court District | 23, and 22 from 1 January 2027 | pre-built | the district's circuit judges, on the same terms |
 | Tribal Government | 2 | pre-built | the Tribal Chief and the seventeen council members, each with the community they represent |
-| City, Town or Village | 300 | live | nobody (gap `ms-municipal-officeholders`) |
+| City, Town or Village | 300 | live | the mayor and council of 14 of the 15 cities of 25,000 people or more, from each city's own website (added after go-live); nobody elsewhere (gap `ms-municipal-officeholders`) |
+| City Ward | 57 in 9 cities (added after go-live) | pre-built | the ward's member, from the City card's list; the other six of the 15 cities are not drawn (gap `ms-city-ward-lines`) |
 | School District | 137 | live | nobody (gap `ms-school-board-members`) |
 | ZIP Code | hidden outside Mississippi | live | — |
 | Police Station | — | live | — (a station is a facility) |
@@ -41,7 +42,8 @@
 Counts are the ones `ms/CLAUDE.md` records with their measurement dates (2026-10-15 and
 2026-10-16). Six files have a weekly workflow that opens a pull request: the U.S. House roster,
 the two chamber rosters, the county officials, the judges and the Choctaw council, which the
-fleet's shared tribal refresh reads.
+fleet's shared tribal refresh reads. The city councils and wards were read once, on 2026-10-17,
+and have no weekly workflow; the monthly source check re-reads both.
 
 ## What Mississippi taught that a copy of a sibling would have got wrong
 
@@ -74,8 +76,10 @@ was built from and that figure is 13.0 km². The four files are about twice the 
 and Directory names all 410 supervisors and all 410 election commissioners by district, once a
 year, so every County card lists its board even where the map draws no districts. The directory
 also prints addresses and telephones that may be homes: a board's address or telephone is carried
-only where at least three of its five supervisors print the same one, and nothing after a
-commissioner's name is kept.
+only where at least three of its five supervisors print the same one, and no other address is
+kept. Since Adam's ruling of 2026-10-17 ("if the official government source uses personal phone
+numbers, we publish those") a supervisor's or commissioner's own telephone is carried on that
+person, and the addresses still never are.
 
 **Mississippi has no township government.** All 410 county subdivisions the Census publishes are
 the supervisor districts, recorded as having no functioning government.
@@ -130,8 +134,10 @@ at go-live with the same answer, and the two live neighbours gained a routing ca
 - **Every supervisor and legislator after 2 November 2027.** The Secretary of State's election
   calendar lists county supervisors and both chambers of the legislature among the offices
   elected that day, so the directory's next edition and the legislature's pages change after it.
-- **City and town officials, and school board members** (gaps `ms-municipal-officeholders` and
-  `ms-school-board-members`).
+- **The officials of the other 285 municipalities and of Greenville, the wards of six of the 15
+  largest cities, and school board members** (gaps `ms-municipal-officeholders`,
+  `ms-city-ward-lines` and `ms-school-board-members`). A weekly refresh of the 15 cities' council
+  pages waits on the operator's word, since it would be a new weekly workflow.
 - **The Court of Appeals' precinct lines and the parts of chancery and circuit districts** (gaps
   `ms-coa-precinct-lines` and `ms-court-subdistricts`).
 - **Precincts, school board districts and special districts.**

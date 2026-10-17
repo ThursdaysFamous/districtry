@@ -3,6 +3,9 @@
     "clerk": "Kathleen Pitzner",
     "municipality": "Aztalan",
     "phone": "920-728-5711",
+    "phonesExtra": [
+      "920-390-0450"
+    ],
     "recordUpdated": "2025-06-17",
     "url": "https://www.townofaztalan.org/"
   },
@@ -60,6 +63,9 @@
     "clerk": "Robin Untz",
     "municipality": "Lake Mills",
     "phone": "920-648-5867",
+    "phonesExtra": [
+      "920-728-2685"
+    ],
     "recordUpdated": "2025-05-20",
     "url": "http://www.townoflakemills.org/"
   },
@@ -67,6 +73,9 @@
     "clerk": "Karen Schadt",
     "municipality": "Milford",
     "phone": "920-285-2180",
+    "phonesExtra": [
+      "920-648-3198"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "http://www.townofmilford.org/"
   },
@@ -97,6 +106,9 @@
     "deputyClerk": "Lindsay Jilek",
     "municipality": "Sumner",
     "phone": "608-884-7925",
+    "phonesExtra": [
+      "920-988-8150"
+    ],
     "recordUpdated": "2023-04-13",
     "url": "https://www.sumner-jc-wi.gov/"
   },
@@ -111,6 +123,9 @@
     "clerk": "James Wendt",
     "municipality": "Watertown",
     "phone": "920-261-5690",
+    "phonesExtra": [
+      "920-988-9025"
+    ],
     "recordUpdated": "2023-12-11",
     "url": "https://townofwatertown.us/"
   },

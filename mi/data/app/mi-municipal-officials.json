@@ -1801,6 +1801,9 @@
     "role": "Council Member",
     "seat": "Ward 1",
     "phone": "810-766-7418 ext. 3160",
+    "phonesExtra": [
+     "cell 810-265-9034"
+    ],
     "email": "lel-alamin@cityofflint.com"
    },
    {
@@ -1808,6 +1811,9 @@
     "role": "Council Member",
     "seat": "Ward 2",
     "phone": "810-766-7418 ext. 3162",
+    "phonesExtra": [
+     "cell 810-407-2877"
+    ],
     "email": "llewis@cityofflint.com"
    },
    {
@@ -1815,6 +1821,9 @@
     "role": "Council Member",
     "seat": "Ward 3",
     "phone": "810-766-7418 ext. 3161",
+    "phonesExtra": [
+     "cell 810-877-5897"
+    ],
     "email": "lrjohnson@cityofflint.com"
    },
    {
@@ -1822,6 +1831,9 @@
     "role": "Council Member",
     "seat": "Ward 4",
     "phone": "810-766-7418 ext. 3164",
+    "phonesExtra": [
+     "810-345-0494"
+    ],
     "email": "jpriestley@cityofflint.com"
    },
    {
@@ -1829,6 +1841,9 @@
     "role": "Council Member",
     "seat": "Ward 5",
     "phone": "810-766-7418 ext. 3167",
+    "phonesExtra": [
+     "cell 810-397-3621"
+    ],
     "email": "jwinfrey-carter@cityofflint.com"
    },
    {
@@ -1836,6 +1851,9 @@
     "role": "Council Member",
     "seat": "Ward 6",
     "phone": "810-766-7418 ext. 3165",
+    "phonesExtra": [
+     "cell 810-744-2380"
+    ],
     "email": "tburns@cityofflint.com"
    },
    {
@@ -1843,6 +1861,9 @@
     "role": "Council Member",
     "seat": "Ward 7",
     "phone": "810-766-7418 ext. 3163",
+    "phonesExtra": [
+     "cell 810-496-9769"
+    ],
     "email": "ccmushatt@cityofflint.com"
    },
    {
@@ -1850,6 +1871,9 @@
     "role": "Council Member",
     "seat": "Ward 8",
     "phone": "810-766-7418 ext. 3159",
+    "phonesExtra": [
+     "cell 810-282-3251"
+    ],
     "email": "dpfeiffer@cityofflint.com"
    },
    {
@@ -1857,11 +1881,14 @@
     "role": "Council Member",
     "seat": "Ward 9",
     "phone": "810-766-7418 ext. 3158",
+    "phonesExtra": [
+     "cell 810-219-2254"
+    ],
     "email": "jejarrett@cityofflint.com"
    }
   ],
   "sourceUrl": "https://www.cityofflint.com/city-council/",
-  "readAt": "2026-10-01"
+  "readAt": "2026-10-17"
  },
  "2631420": {
   "name": "Garden City",

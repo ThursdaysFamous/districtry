@@ -4,13 +4,16 @@ The "TOWN OFFICIALS" section (ending at "VILLAGE OFFICIALS") opens each town
 with a line "Town of <Name> – (Town Hall – address)". Each office is an
 all-capital heading ("CHAIRMAN", "SUPERVISORS", "CLERK", ...) followed by one
 line per officer: "Name – (telephone) ...... home address", sometimes with an
-e-mail line after it. Only the text before the telephone is read. Read with the
-token on 2026-10-15 (robots.txt: 816 bytes, no rule matches the document's
-path)."""
+e-mail line after it. The name is the text before the telephone, and the
+numbers between the name and the dot leader ship on the officer, as does the
+e-mail address on an "Email:" line directly under the officer's line; the
+address after the leader is not read. Read with the token on 2026-10-15 (robots.txt:
+816 bytes, no rule matches the document's path)."""
 
 import re
 
-from . import clean, looks_like_person, person
+from . import (add_emails, clean, line_emails, looks_like_person, person,
+               phones_after_name)
 
 COUNTY_FIPS = "017"
 COUNTY_NAME = "Chippewa"
@@ -30,10 +33,18 @@ def _name(line):
 
 def _people(block):
     people, role = [], None
+    last = None         # the board member on the line just above
     for ln in block.split("\n"):
         ln = ln.strip()
         if not ln:
             continue
+        if re.match(r"^e-?mail", ln, re.I):
+            # the e-mail line under a board member's line is theirs
+            if last is not None:
+                add_emails(last, line_emails(ln))
+            last = None
+            continue
+        last = None
         if _HEADING.match(ln):
             if re.match(r"^CHAIR(MAN|PERSON|WOMAN)?$", ln):
                 role = "Chairperson"
@@ -42,11 +53,12 @@ def _people(block):
             else:
                 role = None
             continue
-        if role is None or re.match(r"^e-?mail", ln, re.I):
+        if role is None:
             continue
         name = _name(ln)
         if looks_like_person(name):
-            people.append(person(name, role))
+            last = person(name, role, phones_after_name(ln, name))
+            people.append(last)
             if role == "Chairperson":
                 role = None
     return people

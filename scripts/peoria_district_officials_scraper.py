@@ -19,7 +19,12 @@ THE FORM CARRIES NO UNIT ADDRESS, and this docstring claimed one until
 2026-09-10. Three Peoria districts were shipping a trustee's own address and
 telephone as the district's office as a result; comptroller_afr.py's CONTACT
 WITNESSES section carries the measurement and the two tests a contact value
-now has to pass.
+now has to pass. Those tests decide the DISTRICT's contact. Since Adam's ruling
+of 2026-10-17 ("if the official government source uses personal phone numbers,
+we publish those"), the telephone a slot prints beside one officer alone ships
+on that officer's own record, whosever line it is, and since he chose "E-mails
+too" the same day so does the e-mail address a slot prints beside one officer
+alone; no officer's street address ships.
 
 ONLY TWO OF THE FOUR ROLE SLOTS ARE READ, and the form itself says why. Slots
 B and C are captioned "Your name will be listed with this responsibility on

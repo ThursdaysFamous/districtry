@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ar-senate", "ar-house", "quorum-court", 
 const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74", "quorum-court": "6", "county-subdivision": "Big Rock Township", "voting-precinct": "Precinct 098", "ar-court-of-appeals": "6", "ar-circuit-court": "6th Judicial Circuit", "fire-district": "Little Rock" };
 const NEGATIVE_POINT = "33.40000,-94.40000"; // near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.
 const APP_NAME = "districtry Arkansas";
-const EXPECT_LAYERS = 17;
+const EXPECT_LAYERS = 18;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -512,6 +512,41 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A LEGISLATOR'S OWN NUMBER RIDES THE PERSON ROW, as the member's
+    //     page prints it, since Adam's ruling of 2026-10-17 ("if the official
+    //     government source uses personal phone numbers, we publish those").
+    //     The number expected is read from the shipped roster for each
+    //     chamber's anchor district, so a weekly refresh that changes it
+    //     changes what is expected; a record carrying none is reported, never
+    //     passed as a check. The card shows numbers with no-break hyphens,
+    //     folded back before comparing.
+    //     The member's e-mail address rides the same row since Adam chose
+    //     "E-mails too" the same day; it shows as a link labelled Email, so
+    //     the link's own address is what is compared.
+    for (const [id, file] of [["ar-senate", "ar-senate-members.json"], ["ar-house", "ar-house-members.json"]]) {
+      const rec = await page.evaluate(async ({ f, d }) => {
+        const r = await fetch("data/app/" + f).then((x) => x.json());
+        return r[d] || {};
+      }, { f: file, d: EXPECT_DISTRICT[id] });
+      const want = rec.phone || null;
+      const info = await cardText(page, id);
+      const text = (info.text || "").replace(/‑/g, "-");
+      if (!want) {
+        console.log(`  SKIP  ${id} member's own number — the anchor's member prints none`);
+      } else {
+        check(`${id} card shows the number the member's own page prints`,
+          !info.error && text.includes(want), `want ${want}; got ${text.slice(0, 160)}`);
+      }
+      if (!rec.email) {
+        console.log(`  SKIP  ${id} member's e-mail — the anchor's member prints none`);
+      } else {
+        const hrefs = await page.evaluate((cid) =>
+          Array.from(document.querySelectorAll("#card-" + cid + " a[href^='mailto:']"))
+            .map((a) => a.getAttribute("href")), id);
+        check(`${id} card links the e-mail address the member's own page prints`,
+          hrefs.includes("mailto:" + rec.email), JSON.stringify(hrefs));
+      }
+    }
     await context.close();
   }
 
@@ -741,6 +776,11 @@ try {
   //        working government where the Census records none.
   //    (c) The one school tiling answers, under the label with no qualifier,
   //        because the unified districts cover the state alone.
+  //    (d) A city above 25,000 names its mayor and every council seat from
+  //        the roster, joined on the Census id the stub carries, with who
+  //        elects each seat; a place outside the 19 says it names nobody.
+  //        The roster is the shipped data/app file, so this also holds the
+  //        join to it.
   {
     function esriPolygon(props) {
       return {
@@ -759,20 +799,30 @@ try {
 
     const cases = [
       {
-        name: "a city names itself a city",
+        name: "a city names itself a city, and names its mayor and board",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "0541000", NAME: "Little Rock city", BASENAME: "Little Rock", STATE: "05", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Little Rock city/, /Incorporated city/, /Not named here/],
-        reject: [/INACTIVE/, /Incorporated town/]
+        want: [/Little Rock city/, /Incorporated city/, /Frank Scott Jr\./, /Virgil Miller Jr\./,
+          /Director, Ward 1/, /elected by Ward 1/, /Director, Position 8 \(at large\)/, /Joan Adcock/,
+          /How the seats are elected/, /Read on/, /Which ward this point is in/],
+        reject: [/INACTIVE/, /Incorporated town/, /Not named here/]
       },
       {
-        name: "a town names itself a town, not a city",
+        name: "a city that elects every seat citywide says so for each seat",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "0566080", NAME: "Springdale city", BASENAME: "Springdale", STATE: "05", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Springdale city/, /Doug Sprouse/, /Council, Ward 1, Position 1/, /elected by the whole city/],
+        reject: [/elected by Ward/, /Which ward this point is in/, /Not named here/]
+      },
+      {
+        name: "a town names itself a town, not a city, and names nobody",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "0507150", NAME: "Blue Eye town", BASENAME: "Blue Eye", STATE: "05", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Blue Eye town/, /Incorporated town/],
-        reject: [/INACTIVE/, /Incorporated city/]
+        want: [/Blue Eye town/, /Incorporated town/, /Not named here/],
+        reject: [/INACTIVE/, /Incorporated city/, /Mayor/]
       },
       {
         name: "an affix the card does not carry prints NO type row",
@@ -1051,6 +1101,39 @@ try {
     check(`judicial circuit card at ${c.name} says the circuit, its judges and only the subdistricts it has`,
       !circuit.error && circuitMissing.length === 0 && unwanted.length === 0,
       `missing=${circuitMissing} unwanted=${unwanted} text=${(circuit.text || "").slice(0, 160)}`);
+    await context.close();
+  }
+
+  // 12. THE CITY COUNCIL DISTRICT CARD, drawn for the twelve cities above
+  //    25,000 people that elect by ward and answered from the shipped files
+  //    alone, so nothing here is stubbed. At the Capitol, in Little Rock's
+  //    Ward 1, it names the director that ward elects and no other; in Hot
+  //    Springs it calls the unit a district, as the city does; and in
+  //    Springdale, which ties each seat to a ward and elects every one
+  //    citywide, there is no ward to draw and the card says why. Each point
+  //    and its ward is one the builder's own anchors hold to the state's map.
+  for (const c of [
+    { name: "the Capitol", point: POINT,
+      want: [/Ward 1\b/, /Little Rock Board of Directors/, /Virgil Miller Jr\./, /Director, Ward 1/,
+        /Elected by the whole city/, /The mayor and three directors/, /not the exact legal boundaries/],
+      reject: [/Ken Richardson/, /Joan Adcock/, /Frank Scott/] },
+    { name: "Hot Springs", point: "34.50410,-93.05540",
+      want: [/District 1\b/, /Hot Springs Board of Directors/, /Erin Holliday/, /elected by District 1/,
+        /The mayor\. The City or Town card names the mayor\./],
+      reject: [/Ward 1/, /Phyllis Beard/] },
+    { name: "Springdale", point: "36.18670,-94.12900",
+      want: [/not in a city council ward this map draws/, /elect every seat by the whole city/],
+      reject: [/Ward 4/, /Springdale City Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that ward elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
     await context.close();
   }
 } finally {

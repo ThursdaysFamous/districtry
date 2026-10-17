@@ -77,6 +77,15 @@ WHAT EACH PAGE PUBLISHES, AND THE ONE PARSE THAT IS DELIBERATELY SOFT.
              breaks silently the week the letter is rewritten. So the mayor is
              read if an anchored pattern matches and the run prints a warning
              if it does not; the fourteen aldermen are what the floors hold.
+             THE E-MAIL IS THE ONE UNDER THE ENTRY'S "Email" LABEL, on any
+             domain (Adam's choice of 2026-10-17, "E-mails too"); until that
+             day only a quincyil.gov address was read. Each page's footer
+             prints the city's general mailbox, the same on all fourteen, and
+             that is never the member's. An address printed on two or more
+             members' pages, or whose local part carries another member's
+             surname and not this member's, ships on nobody, and the run says
+             which ward. Measured that day: 14 of 14 aldermen, all on
+             quincyil.gov.
   Danville   One page carrying the mayor and all fourteen aldermen, each with a
              ward and a direct telephone.
 
@@ -96,7 +105,7 @@ import sys
 import requests
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from scraper_common import UA_ROSTER_BOT, require_robots_once  # noqa: E402
+from scraper_common import UA_ROSTER_BOT, person_email_problem, require_robots_once  # noqa: E402
 
 HEADERS = {"User-Agent": UA_ROSTER_BOT}
 TIMEOUT = 60
@@ -266,12 +275,59 @@ def read_normal(city, warn):
 QUINCY_WARD_RE = re.compile(
     r"\n([A-Z][A-Za-z.'’ -]{3,40})\nWard (\d+) (Alderman|Alderperson)\b")
 QUINCY_TEL_RE = re.compile(r"\nTelephone\n([0-9()\- .]{10,20})\n")
-QUINCY_MAIL_RE = re.compile(r"\n([A-Za-z0-9._%+-]+@quincyil\.gov)\b")
+# The address under the entry's own "Email" label, on any domain (see the
+# docstring). The footer's general mailbox sits under "E:", and the page's
+# share-by-e-mail link is a label followed by "Print", so neither matches.
+QUINCY_MAIL_RE = re.compile(
+    r"\nEmail\n([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})(?=\n)")
 # Anchored on the sentence the mayor's own page uses to introduce her. A letter
 # is not a roster, so a miss here warns and never fails — see the docstring.
 QUINCY_MAYOR_RE = re.compile(
     r"I[’']m ([A-Z][A-Za-z.'’-]+(?: [A-Z][A-Za-z.'’-]+){1,3}),"
     r"[^.]{0,80}serve as Mayor")
+
+
+def surname_letters(name):
+    """The letters of a name's last word, lower case, a Jr/Sr/II/III/IV dropped."""
+    words = [w for w in re.sub(r"[^A-Za-z\s'’-]", " ", name or "").lower().split()
+             if w not in ("jr", "sr", "ii", "iii", "iv")]
+    return re.sub(r"[^a-z]", "", words[-1]) if words else ""
+
+
+def quincy_emails(records, mails, warn):
+    """Set each alderman's person_email from the addresses read under the
+    "Email" label of their own page (mails[i] belongs to records[i]); see the
+    docstring. Messages name the ward and the member, never the address."""
+    pages = {}
+    for found in mails:
+        for address in found:
+            pages[address.lower()] = pages.get(address.lower(), 0) + 1
+    surnames = [surname_letters(r["name"]) for r in records]
+    for i, (rec, found) in enumerate(zip(records, mails)):
+        where = "quincy: %s (%s)" % (rec["district"], rec["name"])
+        if not found:
+            continue
+        if len(found) > 1:
+            warn("%s: the entry prints %d addresses under its Email label; none "
+                 "ships rather than one guessed" % (where, len(found)))
+            continue
+        address = found[0]
+        local = re.sub(r"[^a-z]", "", address.split("@", 1)[0].lower())
+        own = surnames[i]
+        others = [s for j, s in enumerate(surnames)
+                  if j != i and len(s) >= 3 and s != own]
+        if pages[address.lower()] > 1:
+            warn("%s: the e-mail is printed on %d members' pages, so it is not "
+                 "this member's; not shipped" % (where, pages[address.lower()]))
+        elif not (len(own) >= 3 and own in local) and any(s in local for s in others):
+            warn("%s: the e-mail's local part carries another member's surname "
+                 "and not this member's; not shipped" % where)
+        else:
+            problem = person_email_problem(address)
+            if problem:
+                raise SystemExit("il-large-city-councils: Quincy %s (%s): the "
+                                 "e-mail %s" % (rec["district"], rec["name"], problem))
+            rec["person_email"] = address
 
 
 def read_quincy(city, warn):
@@ -281,7 +337,7 @@ def read_quincy(city, warn):
         index)})
     skip = {"City-Council-Meeting-Archive", "Municipal-Codebook",
             "Quincy-Strategic-Plan", "Quincy-Ward-Maps"}
-    out = []
+    out, mails = [], []
     for url in links:
         if url.rsplit("/", 1)[-1] in skip:
             continue
@@ -291,13 +347,17 @@ def read_quincy(city, warn):
             warn("quincy: %s names no ward — dropped rather than guessed" % url)
             continue
         tel = QUINCY_TEL_RE.search(text)
-        mail = QUINCY_MAIL_RE.search(text)
         out.append(record(
             city, seat.group(3), seat.group(1),
             district="Ward %d" % int(seat.group(2)),
             person_phone=phone(tel.group(1), city) if tel else None,
-            person_email=mail.group(1) if mail else None,
             source_url=url))
+        found = []
+        for address in QUINCY_MAIL_RE.findall(text[seat.end():]):
+            if address.lower() not in [a.lower() for a in found]:
+                found.append(address)
+        mails.append(found)
+    quincy_emails(out, mails, warn)
     mayor_page = "https://www.quincyil.gov/Government/Mayors-Office"
     mayor = QUINCY_MAYOR_RE.search(visible(get(mayor_page)))
     if mayor:
@@ -384,6 +444,10 @@ CITIES = {
         # Seven wards, two aldermen each. The mayor is read where the page
         # still introduces her and is deliberately not a floor.
         "min_officials": 14, "min_districts": 14, "min_heads": 0,
+        # Aldermen with an e-mail of their own: 14 of 14, measured 2026-10-17.
+        # About two thirds, so a page change that stops the "Email" label
+        # being read fails the run instead of emptying the e-mails quietly.
+        "min_emails": 9,
     },
     "danville": {
         "jurisdiction": "City of Danville",
@@ -429,6 +493,9 @@ def main():
                            % (districts, city["min_districts"]))
         if heads < city["min_heads"]:
             trouble.append("%d heads < floor %d" % (heads, city["min_heads"]))
+        emails = sum(1 for r in officials if r.get("person_email"))
+        if emails < city.get("min_emails", 0):
+            trouble.append("%d e-mails < floor %d" % (emails, city["min_emails"]))
         for warning in warnings:
             print("  warning: %s" % warning, file=sys.stderr)
         if trouble:

@@ -35,3 +35,13 @@ read, and a builder reads them from here rather than re-fetching. Anything that
 needs to re-verify a section against the live site has to rediscover the route
 first. `apps.legislature.ky.gov` publishes no robots.txt — HTTP 404, which is
 allow-all under RFC 9309 §2.3.1.3 — measured with this project's own client.
+
+**`krs160.211.txt` IS NOW HELD TO A LIVE COPY** (2026-10-17). The act that
+wrote Jefferson County's five division lists, 2026 Ky. Acts ch. 154, is
+published as a session-law PDF at
+`https://apps.legislature.ky.gov/law/acts/26RS/documents/0154.pdf`, and
+`ky/scripts/build_ky_school_board_divisions.py` reads its section 9 on every
+build and stops if any division's list differs from this file's. Measured that
+day, the two agree code for code: 643 precinct codes, 135, 144, 127, 127 and
+110 to Divisions One to Five. Only the lists are compared, not the words
+around them, and the route to the codified section is still not known.

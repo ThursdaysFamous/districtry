@@ -18,6 +18,17 @@ Names, phones, and emails are read verbatim from the county's own directory —
 never guessed. The per-member tel: link is the member's own published number
 (distinct from the general 630-407-6500 board-office line).
 
+E-MAIL ON ANY DOMAIN, SINCE 2026-10-17. Until that day only a mailto: on the
+county's own domain was read. Under Adam's choice that day to publish personal
+e-mail addresses ("E-mails too"), the address a member's own block links ships
+whatever its domain, checked for its shape (scraper_common.person_email_problem).
+Site-template and role inboxes (BOILERPLATE_EMAIL) are still never a member's;
+an address linked from two or more member blocks is an office's or a shared
+inbox and ships on neither; and an address scripts/undeliverable.py lists ships
+nowhere. Measured 2026-10-17 on the list page: each of the 19 blocks links
+exactly one mailto:, every one on the county's domain, and the page links no
+mailto: outside the blocks.
+
 Usage:
     python3 dupage_county_board_scraper.py [output.json]   # default: stdout
 """
@@ -28,13 +39,17 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup
-from scraper_common import require_robots_once, UA_ROSTER_COMPACT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+import undeliverable  # noqa: E402  (the fleet's withhold list)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT, fetch as fetch_with_retry, person_email_problem  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.dupagecounty.gov"
 LIST_URL = BASE + "/government/county_board/county_board_members/"
 UA = {"User-Agent": UA_ROSTER_COMPACT}
 # mailto: local-parts that are site chrome / role inboxes, not a member address.
 BOILERPLATE_EMAIL = ("noreply", "webpageupdate", "bootstrap", "webmaster", "info@")
+# Not an allow-list since 2026-10-17: it only decides which address a block
+# keeps when it links more than one, so that a member carries one address.
+COUNTY_EMAIL_DOMAIN = "dupagecounty.gov"
 
 
 def fetch(url):
@@ -66,14 +81,64 @@ def format_phone(raw):
 
 
 def block_email(block):
-    """The member's own @dupagecounty.gov address from a mailto: link, if any."""
+    """The member's address from a mailto: link in their own block, if any.
+
+    Any domain (see the module docstring). Where the block links two or more
+    addresses, the one on the county's domain is kept and the others are not
+    read, so the member carries one address; with none on the county's domain,
+    the first the block links is kept."""
+    found = []
     for a in block.find_all("a", href=True):
         h = a["href"].strip()
         if h.lower().startswith("mailto:"):
             addr = h[7:].split("?")[0].strip()
-            if addr.lower().endswith("@dupagecounty.gov") and not addr.lower().startswith(BOILERPLATE_EMAIL):
-                return addr
-    return None
+            if (addr and not addr.lower().startswith(BOILERPLATE_EMAIL)
+                    and addr.lower() not in {f.lower() for f in found}):
+                found.append(addr)
+    for addr in found:
+        if addr.lower().endswith("@" + COUNTY_EMAIL_DOMAIN):
+            return addr
+    return found[0] if found else None
+
+
+def seat_label(rec, records):
+    """'DuPage County District 3, member 2 of 3 in page order', or the Chair.
+    Names the seat for an error or a note, never the address."""
+    if rec["role"] == "Chair":
+        return "DuPage County Board Chair"
+    same = [r for r in records if r["district"] == rec["district"] and r["role"] != "Chair"]
+    place = next(i for i, r in enumerate(same, 1) if r is rec)
+    return ("DuPage County District %s, member %d of %d in page order"
+            % (rec["district"], place, len(same)))
+
+
+def check_emails(records):
+    """Shape-check every address and withhold the ones that are not a member's
+    own: an address linked from two or more member blocks, and one
+    scripts/undeliverable.py lists. Prints the seat, never the address."""
+    linked = {}
+    for rec in records:
+        if rec.get("email"):
+            linked[rec["email"].lower()] = linked.get(rec["email"].lower(), 0) + 1
+    for rec in records:
+        email = rec.get("email")
+        if not email:
+            continue
+        seat = seat_label(rec, records)
+        problem = person_email_problem(email)
+        if problem:
+            sys.exit("dupage-board-scraper: FAIL — %s: the directory's e-mail %s"
+                     % (seat, problem))
+        if email.lower() in undeliverable.UNDELIVERABLE:
+            why = "scripts/undeliverable.py lists it as an address that cannot receive mail"
+        elif linked[email.lower()] > 1:
+            why = ("it is linked from %d member blocks, so it is not this "
+                   "member's own" % linked[email.lower()])
+        else:
+            continue
+        del rec["email"]
+        print("  WITHHELD the e-mail the directory links for %s: %s" % (seat, why),
+              file=sys.stderr)
 
 
 def block_phone(block):
@@ -112,6 +177,7 @@ def scrape():
         if email:
             rec["email"] = email
         records.append(rec)
+    check_emails(records)
     return records
 
 

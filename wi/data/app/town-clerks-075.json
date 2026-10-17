@@ -10,6 +10,9 @@
     "clerk": "Tina M Barnes",
     "municipality": "Athelstane",
     "phone": "715-856-5335",
+    "phonesExtra": [
+      "715-467-1547"
+    ],
     "recordUpdated": "2025-08-26",
     "url": "https://www.athelstanewi.com/"
   },
@@ -17,12 +20,18 @@
     "clerk": "Barb Patz",
     "municipality": "Beaver",
     "phone": "920-897-4378",
+    "phonesExtra": [
+      "920-619-9598"
+    ],
     "recordUpdated": "2023-12-28"
   },
   "5507506000": {
     "clerk": "Cindy Butterfield",
     "municipality": "Beecher",
     "phone": "715-324-5535",
+    "phonesExtra": [
+      "715-324-5567"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "http://www.townofbeecher.com/"
   },
@@ -45,6 +54,9 @@
     "clerk": "Lisa Witak",
     "municipality": "Grover",
     "phone": "715-938-4099",
+    "phonesExtra": [
+      "715-582-4468"
+    ],
     "recordUpdated": "2023-03-29",
     "url": "https://www.townofgroverwi.com/"
   },
@@ -53,6 +65,9 @@
     "deputyClerk": "Debra Doubek",
     "municipality": "Lake",
     "phone": "715-854-2995",
+    "phonesExtra": [
+      "715-927-7899"
+    ],
     "recordUpdated": "2025-11-13",
     "url": "http://townoflakewi.com/"
   },
@@ -89,6 +104,9 @@
     "deputyClerk": "Amy Linstad",
     "municipality": "Porterfield",
     "phone": "715-789-2391",
+    "phonesExtra": [
+      "715-789-2044"
+    ],
     "recordUpdated": "2025-09-03",
     "url": "https://www.townofporterfield.com/"
   },
@@ -97,6 +115,9 @@
     "deputyClerk": "Dorothy L Kaminski",
     "municipality": "Pound",
     "phone": "920-897-4211",
+    "phonesExtra": [
+      "920-591-0111"
+    ],
     "recordUpdated": "2023-12-28",
     "url": "https://townofpoundwi.com/"
   },
@@ -105,6 +126,9 @@
     "deputyClerk": "Lisa Weinrich",
     "municipality": "Silver Cliff",
     "phone": "715-850-1122",
+    "phonesExtra": [
+      "715-757-3163"
+    ],
     "recordUpdated": "2026-04-01",
     "url": "https://www.silvercliffwi.com/"
   },
@@ -113,6 +137,9 @@
     "deputyClerk": "Jennifer Olson",
     "municipality": "Stephenson",
     "phone": "715-854-2942",
+    "phonesExtra": [
+      "715-927-8746"
+    ],
     "recordUpdated": "2023-12-26",
     "url": "http://stephensonwisc.com/"
   },
@@ -120,6 +147,9 @@
     "clerk": "Margo Renikow",
     "municipality": "Wagner",
     "phone": "715-927-5125",
+    "phonesExtra": [
+      "715-732-6008"
+    ],
     "recordUpdated": "2023-07-09",
     "url": "https://www.townofwagnerwi.org/"
   },

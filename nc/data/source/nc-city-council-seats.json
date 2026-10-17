@@ -1,0 +1,2436 @@
+{
+ "_about": "Kept by hand. The mayor and council of each of North Carolina's 42 cities and towns above 25,000 people, transcribed from each one's own pages, from the list a council page fills itself in from, or from the State Board of Elections' results, and keyed by its Census place id. nc/scripts/build_nc_city_councils.py re-reads every page cited here and refuses to write nc/data/app/nc-city-councils.json unless every name is on the page its seat cites. 'by' is 'ward' for a seat the ward's or district's own voters elect and 'city' for one the whole city or town elects; 'as' is the page's own words where they differ from the name, which for a name from the State Board's results is the contest and the winner as nc/scripts/ncsbe_results.py writes them.",
+ "cities": {
+  "3701520": {
+   "name": "Apex",
+   "body": "Town Council",
+   "how": "The mayor and all five council members are elected by the voters of the whole town.",
+   "sources": {
+    "council": "https://www.apexnc.org/780/Meet-Your-Town-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Jacques Gilbert",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Terry Mahaffey",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Arno Zegerman",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Edward Gray",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Shane Reese",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Sue Mu",
+     "from": "council"
+    }
+   ]
+  },
+  "3702080": {
+   "name": "Asheboro",
+   "body": "City Council",
+   "how": "The mayor and all seven council members are elected by the voters of the whole city.",
+   "sources": {
+    "feed": "https://www.asheboronc.gov/_includes_/published/catalogue.json"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Joey Trogdon",
+     "from": "feed"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Eddie Burks",
+     "from": "feed"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Cam Mills",
+     "from": "feed"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Mary Joan Pugh",
+     "from": "feed"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Phil Skeen",
+     "from": "feed"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Charlie Swiers",
+     "from": "feed"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Phillip Cheek",
+     "from": "feed"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kelly Heath",
+     "from": "feed"
+    }
+   ],
+   "note": "As listed on Asheboro's own website, in the list of members its council page fills itself in from.",
+   "page": "https://www.asheboronc.gov/government/city_council/index.php"
+  },
+  "3702140": {
+   "name": "Asheville",
+   "body": "City Council",
+   "how": "The mayor and all six council members are elected by the voters of the whole city.",
+   "sources": {
+    "council": "https://www.ashevillenc.gov/government/meet-city-council/"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Esther E. Manheimer",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "S. Antanette Mosley",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kim Roney",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Sheneika Smith",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Sage Turner",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Maggie Ullman",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Bo Hess",
+     "from": "council"
+    }
+   ]
+  },
+  "3709060": {
+   "name": "Burlington",
+   "body": "City Council",
+   "how": "The mayor and all four council members are elected by the voters of the whole city.",
+   "sources": {
+    "council": "https://www.burlingtonnc.gov/43/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Beth Kennett",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Bob Ward",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Ian Baltutis",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Dejuana Bigelow",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jeffrey Smythe",
+     "from": "council"
+    }
+   ]
+  },
+  "3710740": {
+   "name": "Cary",
+   "body": "Town Council",
+   "wardWord": "District",
+   "how": "The mayor and two council members are elected by the voters of the whole town, and each of the four districts elects its own council member.",
+   "sources": {
+    "council": "https://www.carync.gov/mayor-council/town-council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Harold Weinbrecht",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Lori Bush",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Carissa Kohn-Johnson",
+     "from": "council"
+    },
+    {
+     "seat": "District A",
+     "ward": "A",
+     "by": "ward",
+     "name": "Brittany Richards",
+     "from": "council"
+    },
+    {
+     "seat": "District B",
+     "ward": "B",
+     "by": "ward",
+     "name": "Michelle Craig",
+     "from": "council"
+    },
+    {
+     "seat": "District C",
+     "ward": "C",
+     "by": "ward",
+     "name": "Bella Huang",
+     "from": "council"
+    },
+    {
+     "seat": "District D",
+     "ward": "D",
+     "by": "ward",
+     "name": "Sarika Bansal",
+     "from": "council"
+    }
+   ]
+  },
+  "3711800": {
+   "name": "Chapel Hill",
+   "body": "Town Council",
+   "how": "The mayor and all eight council members are elected by the voters of the whole town.",
+   "sources": {
+    "council": "https://www.chapelhillnc.gov/Town-Government/Mayor-and-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Jessica Anderson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Camille Berry",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Melissa McCullough",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Wes McMahon",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Paris Miller-Foushee",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Theodore Nollert",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Louie Rivers III",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Amy Ryan",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Elizabeth Sharp",
+     "from": "council"
+    }
+   ]
+  },
+  "3712000": {
+   "name": "Charlotte",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "The mayor and four council members are elected by the voters of the whole city, and each of the seven districts elects its own council member. The council appointed the current mayor in June 2026 to serve out the term that ends in December 2027.",
+   "sources": {
+    "council": "https://www.charlottenc.gov/City-Government/Leadership/City-Council",
+    "mayor": "https://www.charlottenc.gov/City-Government/Leadership/Mayor/Meet-the-Mayor"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Rob Harrington",
+     "from": "mayor"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Dimple Ajmera",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "LaWana Mayfield",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "James Mitchell Jr.",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Victoria Watlington",
+     "from": "council"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Danté Anderson",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Malcolm Graham",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Joi Mayo",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Reneé Johnson",
+     "from": "council"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "JD Mazuera Arias",
+     "from": "council"
+    },
+    {
+     "seat": "District 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Kimberly Owens",
+     "from": "council"
+    },
+    {
+     "seat": "District 7",
+     "ward": "7",
+     "by": "ward",
+     "name": "Edmund H. Driggs",
+     "from": "council"
+    }
+   ]
+  },
+  "3712860": {
+   "name": "Clayton",
+   "body": "Town Council",
+   "how": "The mayor and all five council members are elected by the voters of the whole town.",
+   "sources": {
+    "council": "https://www.claytonnc.gov/480/Mayor-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Jody McLeod",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Andria Archer",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Ruth Anderson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Porter Casey",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Amanda Underwood",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Gretchen Williams",
+     "from": "council"
+    }
+   ]
+  },
+  "3714100": {
+   "name": "Concord",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "The mayor and all seven council members are elected by the voters of the whole city; each member holds the seat of one of the city's seven districts.",
+   "sources": {
+    "council": "https://concordnc.gov/Government/City-Government/Council",
+    "mayor": "https://concordnc.gov/Government/City-Government/Mayor"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Stephen M. Morris",
+     "from": "mayor"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Andy Langford",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Lori A. Clay",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "city",
+     "name": "Betty M. Stocks",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "city",
+     "name": "Alvarys Santana",
+     "from": "council"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "city",
+     "name": "Terry Crawford",
+     "from": "council"
+    },
+    {
+     "seat": "District 6",
+     "ward": "6",
+     "by": "city",
+     "name": "Jennifer P. Hubbard",
+     "from": "council"
+    },
+    {
+     "seat": "District 7",
+     "ward": "7",
+     "by": "city",
+     "name": "John Sweat, Jr.",
+     "from": "council"
+    }
+   ]
+  },
+  "3714700": {
+   "name": "Cornelius",
+   "body": "Board of Commissioners",
+   "member": "Commissioner",
+   "how": "The mayor and all five commissioners are elected by the voters of the whole town.",
+   "sources": {
+    "board": "https://www.cornelius.org/government/boards___commissions/elected_officials/"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Denis Bilodeau",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Michael Osborne",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Robert Carney",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Susan Johnson",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Colin Furcht",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "unnamed": "The town's own pages disagree about who holds this seat: its list of the board names Scott Higgins, and its page about the Neighborhood Advisory Committee names Todd Sansbury as a commissioner. In the State Board of Elections' results for November 4, 2025, Todd Sansbury was among the five candidates with the most votes and Scott Higgins was not on the ballot.",
+     "from": "board"
+    }
+   ]
+  },
+  "3719000": {
+   "name": "Durham",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "The mayor and all six council members are elected by the voters of the whole city; three of the members each represent one of the city's three wards.",
+   "sources": {
+    "council": "https://www.durhamnc.gov/1396/City-Council-Members"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Leonardo Williams",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Javiera Caballero",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Nate Baker",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Carl Rist",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Matt Kopac",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Shanetta Burris",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "city",
+     "name": "Chelsea Cook",
+     "from": "council"
+    }
+   ]
+  },
+  "3722920": {
+   "name": "Fayetteville",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "Each of the city's nine districts elects its own council member. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.fayettevillenc.gov/City-Council/City-Council-Members"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Mitch Colvin",
+     "from": "council"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Stephon Ferguson",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Malik Davis",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Antonio Jones",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "D.J. Haire",
+     "from": "council"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Lynne Greene",
+     "from": "council"
+    },
+    {
+     "seat": "District 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Derrick Thompson",
+     "from": "council"
+    },
+    {
+     "seat": "District 7",
+     "ward": "7",
+     "by": "ward",
+     "name": "Brenda McNair",
+     "from": "council"
+    },
+    {
+     "seat": "District 8",
+     "ward": "8",
+     "by": "ward",
+     "name": "Shaun McMillan",
+     "from": "council"
+    },
+    {
+     "seat": "District 9",
+     "ward": "9",
+     "by": "ward",
+     "name": "Deno Hondros",
+     "from": "council"
+    }
+   ]
+  },
+  "3725300": {
+   "name": "Fuquay-Varina",
+   "body": "Board of Commissioners",
+   "how": "The mayor and all five commissioners are elected by the voters of the whole town.",
+   "sources": {
+    "board": "https://www.fuquay-varina.org/317/Board-of-Commissioners"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Bill Harris",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Marilyn Gardner",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Charlie Adcock",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Bryan Haynes",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Larry Smith",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kris Vorren",
+     "from": "board"
+    }
+   ],
+   "member": "Commissioner"
+  },
+  "3725480": {
+   "name": "Garner",
+   "body": "Town Council",
+   "how": "The mayor and all five council members are elected by the voters of the whole town.",
+   "sources": {
+    "council": "https://www.garnernc.gov/government/town-council/town-council-members"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Buddy Gupton",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Demian Dellinger",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Phil Matthews",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Gra Singleton",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kelvin Stallings",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Elmo Vance",
+     "from": "council"
+    }
+   ]
+  },
+  "3725580": {
+   "name": "Gastonia",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "Wards 1, 2 and 5 each elect their own council member. The members for Wards 3, 4 and 6 were elected by the voters of the whole city, and from 2027 those wards elect their own members too. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.gastonianc.gov/government/city-council-info.html"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Richard Franks",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Demetrios Koutsoupias",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Glenn Silverman",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "city",
+     "name": "James Gallagher",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "city",
+     "name": "Angela Dreher",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Jennifer M. Stepp",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "city",
+     "name": "Donyel Barber",
+     "from": "council"
+    }
+   ]
+  },
+  "3726880": {
+   "name": "Goldsboro",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "Each of the city's six districts elects its own council member. The mayor is elected by the whole city.",
+   "note": "As listed on Goldsboro's own website, in the list of members its council page fills itself in from.",
+   "page": "https://www.goldsboronc.gov/mayor-of-goldsboro/meet-the-city-council/",
+   "sources": {
+    "feed": "https://www.goldsboronc.gov/api/COG/CouncilMembers"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Charles Gaylor",
+     "from": "feed"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Hiawatha Jones",
+     "from": "feed"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Chris Boyette",
+     "from": "feed"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Jamie Taylor",
+     "from": "feed"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Brandi Matthews",
+     "from": "feed"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Beverly Weeks",
+     "from": "feed"
+    },
+    {
+     "seat": "District 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Roderick White",
+     "from": "feed"
+    }
+   ]
+  },
+  "3728000": {
+   "name": "Greensboro",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "The mayor and three council members are elected by the voters of the whole city, and each of the five districts elects its own council member.",
+   "sources": {
+    "council": "https://www.greensboro-nc.gov/government/city-council/connect-with-city-council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Marikay Abuzuaiter",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Denise Roth",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Irving Allen",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Hugh Holston",
+     "from": "council"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Crystal Black",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Cecile \"CC\" Crawford",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "April Parker",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Adam Marshall",
+     "from": "council"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Tammi Thurm",
+     "from": "council"
+    }
+   ]
+  },
+  "3728080": {
+   "name": "Greenville",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "The mayor and one council member are elected by the voters of the whole city, and each of the five districts elects its own council member.",
+   "sources": {
+    "council": "https://www.greenvillenc.gov/183/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "P.J. Connelly",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Portia Willis",
+     "from": "council"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Arjenae Jones",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Tonya Foreman",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Seth Hardee",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Matthew Scully",
+     "from": "council"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Les Robinson",
+     "from": "council"
+    }
+   ]
+  },
+  "3731060": {
+   "name": "Hickory",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "The mayor and all six council members are elected by the voters of the whole city; each member holds the seat of one of the city's six wards.",
+   "sources": {
+    "council": "https://hickorync.gov/city-council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Hank Guess",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Tony Wood",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Charlotte Williams",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "city",
+     "name": "Danny Seaver",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "city",
+     "name": "Anthony Freeman",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "city",
+     "name": "Arnita Dula",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "city",
+     "name": "Jill Patton",
+     "from": "council"
+    }
+   ]
+  },
+  "3731400": {
+   "name": "High Point",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "The mayor and two council members are elected by the voters of the whole city, and each of the six wards elects its own council member.",
+   "sources": {
+    "council": "https://www.highpointnc.gov/153/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Cyril Jefferson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Britt W. Moore",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Chris Williams",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Vickie M. McKiver",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Tyrone Johnson",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Monica Peters",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Patrick H. Harman",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Tim Andrew",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Michael A. Holmes",
+     "from": "council"
+    }
+   ]
+  },
+  "3732260": {
+   "name": "Holly Springs",
+   "body": "Town Council",
+   "how": "The mayor and all five council members are elected by the voters of the whole town.",
+   "sources": {
+    "council": "https://www.hollyspringsnc.gov/143/Mayor-Town-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Mike Kondratick",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Annie Drees",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Chris Deshazor",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kara Foster",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Danielle Hewetson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Sarah Larson",
+     "from": "council"
+    }
+   ]
+  },
+  "3733120": {
+   "name": "Huntersville",
+   "body": "Board of Commissioners",
+   "how": "The mayor and all six commissioners are elected by the voters of the whole town.",
+   "sources": {
+    "board": "https://www.huntersville.org/170/Town-Board-of-Commissioners"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Christy Clark",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jennifer Hunt",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Scott Coronet",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Edwin Quarles",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "LaToya Rivers",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Heather Smallwood",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Nick Walsh",
+     "from": "board"
+    }
+   ],
+   "member": "Commissioner"
+  },
+  "3733560": {
+   "name": "Indian Trail",
+   "body": "Town Council",
+   "how": "The mayor and all five council members are elected by the voters of the whole town.",
+   "sources": {
+    "council": "https://www.indiantrail.org/312/Town-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "David Cohn",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Clarence Alsobrooks",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Tom Amburgey",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Todd Barber",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Crystal Buchaluk",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Marcus McIntyre",
+     "from": "council"
+    }
+   ]
+  },
+  "3734200": {
+   "name": "Jacksonville",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "The mayor and two council members are elected by the voters of the whole city, and each of the four wards elects its own council member.",
+   "sources": {
+    "council": "https://www.jacksonvillenc.gov/291/Mayor-Council",
+    "directory": "https://www.jacksonvillenc.gov/m/directory/department?did=19"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Sammy Phillips",
+     "from": "directory"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Jerome Willingham",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Mickey Smith",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Logan Sosa",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Angelia Washington",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Cindy Edwards",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Michael Yaniero",
+     "from": "council"
+    }
+   ]
+  },
+  "3735200": {
+   "name": "Kannapolis",
+   "body": "City Council",
+   "how": "The mayor and all six council members are elected by the voters of the whole city.",
+   "sources": {
+    "council": "https://www.kannapolisnc.gov/citycouncil"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Doug Wilson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Ryan G. Dayvault",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Dianne Berry",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jeanne Dixon",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Darrell Jackson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Naomi Hatchell",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Isaiah Payne",
+     "from": "council"
+    }
+   ]
+  },
+  "3735600": {
+   "name": "Kernersville",
+   "body": "Board of Aldermen",
+   "how": "The mayor and all five aldermen are elected by the voters of the whole town.",
+   "sources": {
+    "board": "https://toknc.com/government/aldermen/"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Dawn H. Morgan",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "J.R. Gorham",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Bill Apple",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Randall Pegram",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Sarah Sabanis",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Chris Thompson",
+     "from": "board"
+    }
+   ],
+   "member": "Alderman"
+  },
+  "3741960": {
+   "name": "Matthews",
+   "body": "Board of Commissioners",
+   "member": "Commissioner",
+   "how": "The mayor and all six commissioners are elected by the voters of the whole town.",
+   "note": "The town's website does not let this app read it, so these are the candidates with the most votes in the State Board of Elections' results for the election of November 4, 2025.",
+   "page": "https://www.matthewsnc.gov/pview.aspx?id=20705&catid=0",
+   "sources": {
+    "results": "https://dl.ncsbe.gov/ENRS/2025_11_04/results_pct_20251104.zip"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "John Higdon",
+     "as": "TOWN OF MATTHEWS MAYOR: John Higdon",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Susan Chambers",
+     "as": "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Susan Chambers",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "John Urban",
+     "as": "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: John Urban",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kerry Lamson",
+     "as": "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Kerry Lamson",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jonathan Clayton",
+     "as": "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Jonathan Clayton",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jennefer Cross Garrity",
+     "as": "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Jennefer Cross Garrity",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Brian Hacker",
+     "as": "TOWN OF MATTHEWS BOARD OF COMMISSIONERS: Brian Hacker",
+     "from": "results"
+    }
+   ]
+  },
+  "3743480": {
+   "name": "Mint Hill",
+   "body": "Board of Commissioners",
+   "how": "The mayor and all four commissioners are elected by the voters of the whole town.",
+   "sources": {
+    "board": "https://www.minthill.com/government/mayor_and_commissioners/index.php"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Dale Dalton",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Twanna Henderson",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Patrick Holton",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Tony Long",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Trey Long",
+     "from": "board"
+    }
+   ],
+   "member": "Commissioner"
+  },
+  "3743920": {
+   "name": "Monroe",
+   "body": "City Council",
+   "how": "The mayor and all six council members are elected by the voters of the whole city.",
+   "note": "As listed on Monroe's own website; that one seat is empty is from the minutes of the council's meeting of August 11, 2026.",
+   "sources": {
+    "council": "https://www.monroenc.org/288/City-Council",
+    "packet": "https://monroenc.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=7783,plainText=true)"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Robert Burns",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Surluta Anthony",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "David Dotson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "James Kerr",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Franco McGee",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Julie Thompson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "vacant": true,
+     "as": "resigned from Council on Friday, July 31, 2026",
+     "from": "packet"
+    }
+   ]
+  },
+  "3744220": {
+   "name": "Mooresville",
+   "body": "Board of Commissioners",
+   "member": "Commissioner",
+   "wardWord": "Ward",
+   "how": "Each of the town's four wards elects its own commissioner, and the mayor and two commissioners are elected by the voters of the whole town. The town announced that its mayor would retire on September 30, 2026; under the town charter, the mayor pro tem performs the mayor's duties in the mayor's absence.",
+   "sources": {
+    "board": "https://www.mooresvillenc.gov/government/town_board/your_town_board.php",
+    "news": "https://www.mooresvillenc.gov/news_detail_T4_R429.php"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "vacant": true,
+     "as": "would retire on September 30, 2026",
+     "from": "news"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Eddie Dingler",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Will Aven",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Frank Owens",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Dana L. Tucker",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Edward Karriker",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Gary West",
+     "from": "board"
+    }
+   ]
+  },
+  "3744520": {
+   "name": "Morrisville",
+   "body": "Town Council",
+   "wardWord": "District",
+   "how": "The mayor and all six council members are elected by the voters of the whole town; four of the members each hold the seat of one of the town's four districts.",
+   "sources": {
+    "council": "https://www.morrisvillenc.gov/Government/Meet-Your-Town-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "TJ Cawley",
+     "from": "council"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Anne Robotti",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Ashit Patel",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "city",
+     "name": "Liz Johnson",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "city",
+     "name": "Vicki Scroggins-Johnson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Satish Garimella",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Harrison Kesling",
+     "from": "council"
+    }
+   ]
+  },
+  "3746340": {
+   "name": "New Bern",
+   "body": "Board of Aldermen",
+   "member": "Alderman",
+   "wardWord": "Ward",
+   "how": "Each of the city's six wards elects its own alderman. The mayor is elected by the whole city.",
+   "sources": {
+    "board": "https://www.newbernnc.gov/departments/administration/board_of_aldermen.php"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Jeffrey T. Odham",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Trey Ferguson",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Sharon C. Bryant",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Robert \"Bobby\" Aster",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Lainy White",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Barbara J. Best",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Dana E. Outlaw",
+     "from": "board"
+    }
+   ]
+  },
+  "3755000": {
+   "name": "Raleigh",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "The mayor and two council members are elected by the voters of the whole city, and each of the five districts elects its own council member.",
+   "note": "Raleigh's website does not let this app read it, so these are the candidates with the most votes in the State Board of Elections' results for the election of November 5, 2024. Every seat is on the ballot again on November 3, 2026.",
+   "page": "https://raleighnc.gov/city-council",
+   "sources": {
+    "results": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Janet Cowell",
+     "as": "CITY OF RALEIGH MAYOR: Janet Cowell",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Stormie Denise Forte",
+     "as": "CITY OF RALEIGH CITY COUNCIL AT-LARGE: Stormie Denise Forte",
+     "from": "results"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jonathan Lambert-Melton",
+     "as": "CITY OF RALEIGH CITY COUNCIL AT-LARGE: Jonathan Lambert-Melton",
+     "from": "results"
+    },
+    {
+     "seat": "District A",
+     "ward": "A",
+     "by": "ward",
+     "name": "Mitchell Silver",
+     "as": "CITY OF RALEIGH CITY COUNCIL DISTRICT A: Mitchell Silver",
+     "from": "results"
+    },
+    {
+     "seat": "District B",
+     "ward": "B",
+     "by": "ward",
+     "name": "Megan Patton",
+     "as": "CITY OF RALEIGH CITY COUNCIL DISTRICT B: Megan Patton",
+     "from": "results"
+    },
+    {
+     "seat": "District C",
+     "ward": "C",
+     "by": "ward",
+     "name": "Corey Branch",
+     "as": "CITY OF RALEIGH CITY COUNCIL DISTRICT C: Corey Branch",
+     "from": "results"
+    },
+    {
+     "seat": "District D",
+     "ward": "D",
+     "by": "ward",
+     "name": "Jane Harrison",
+     "as": "CITY OF RALEIGH CITY COUNCIL DISTRICT D: Jane Harrison",
+     "from": "results"
+    },
+    {
+     "seat": "District E",
+     "ward": "E",
+     "by": "ward",
+     "name": "Christina Jones",
+     "as": "CITY OF RALEIGH CITY COUNCIL DISTRICT E: Christina Jones",
+     "from": "results"
+    }
+   ]
+  },
+  "3757500": {
+   "name": "Rocky Mount",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "Each of the city's seven wards elects its own council member. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.rockymountnc.gov/176"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "C. Saunders Roberson, Jr.",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Andre Knight",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Reuben C. Blackwell, IV",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Charles Roberson",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "T.J. Walker",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Lige Daughtridge",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Tom Harris",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 7",
+     "ward": "7",
+     "by": "ward",
+     "name": "Jabaris D. Walker",
+     "from": "council"
+    }
+   ]
+  },
+  "3758860": {
+   "name": "Salisbury",
+   "body": "City Council",
+   "how": "The mayor and all four council members are elected by the voters of the whole city.",
+   "note": "As listed on Salisbury's own website; that one seat is empty is from the city's newsroom, which says a member resigned effective October 15, 2026.",
+   "sources": {
+    "council": "https://salisburync.gov/Government/City-Council",
+    "news": "https://salisburync.gov/Government/Community-Engagement/Newsroom"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Tamara Sheffield",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Susan Kluttz",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Carlton A. Jackson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Gemale A. Black",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "vacant": true,
+     "as": "announced his resignation, effective Oct. 15, 2026",
+     "from": "news"
+    }
+   ]
+  },
+  "3759280": {
+   "name": "Sanford",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "The mayor and two council members are elected by the voters of the whole city, and each of the five wards elects its own council member.",
+   "sources": {
+    "council": "https://www.sanfordnc.net/313/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Rebecca Wyhof Salmon",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Mark Akinosho",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Charles Taylor",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Chris Petty",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Byron Buckels",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Jean Dabbs",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Linda Rhodes",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Walter Ferguson",
+     "from": "council"
+    }
+   ]
+  },
+  "3764740": {
+   "name": "Statesville",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "The mayor and two council members are elected by the voters of the whole city, and each of the six wards elects its own council member.",
+   "sources": {
+    "council": "https://www.statesvillenc.net/statesville-city-council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Doug Hendrix",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "David Jones",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Kristi Pfeufer",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Doris Allison",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Amy Lawton",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Tip Nicholson",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Lisa Pearson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "James Pressly",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Trey Robertson",
+     "from": "council"
+    }
+   ]
+  },
+  "3767420": {
+   "name": "Thomasville",
+   "body": "City Council",
+   "how": "The mayor and all seven council members are elected by the voters of the whole city.",
+   "sources": {
+    "council": "https://thomasville-nc.gov/government/meet_the_officials/index.php"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Raleigh York, Jr.",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Doug Hunt",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "JacQuez Johnson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Dana Lomba",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Ericka Sanders",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Lisa Shell",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "D. Hunter Thrift",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Payton Williams",
+     "from": "council"
+    }
+   ]
+  },
+  "3770540": {
+   "name": "Wake Forest",
+   "body": "Board of Commissioners",
+   "how": "The mayor and all five commissioners are elected by the voters of the whole town.",
+   "sources": {
+    "board": "https://www.wakeforestnc.gov/board-commissioners/mayor-board-members"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Ben Clapsaddle",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Faith Cross",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Daniel Hupp",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "R. Keith Shackleford",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Nick Sliwinski",
+     "from": "board"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Adam Wright",
+     "from": "board"
+    }
+   ],
+   "member": "Commissioner"
+  },
+  "3774440": {
+   "name": "Wilmington",
+   "body": "City Council",
+   "how": "The mayor and all six council members are elected by the voters of the whole city.",
+   "sources": {
+    "council": "https://www.wilmingtonnc.gov/Connect-With-Us/City-Mayor-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Bill Saffo",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kevin Spears",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Salette Andrews",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Chakema Clinton-Quintana",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "David Joyner",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "JC Lyle",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Cassidy Santaguida",
+     "from": "council"
+    }
+   ]
+  },
+  "3774540": {
+   "name": "Wilson",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "Each of the city's seven districts elects its own council member. The mayor is elected by the whole city.",
+   "note": "As listed on Wilson's own website, except the mayor's full name: the council page says only Mayor Stevens, so the full name is from the city's own map server.",
+   "sources": {
+    "council": "https://www.wilsonnc.org/residents/all-departments/administration/mayor-city-council",
+    "gis": "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34/query?where=1%3D1&outFields=MAYOR&returnGeometry=false&f=json"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Carlton L. Stevens",
+     "from": "gis"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Gillettia Morgan",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Michael Bell",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Tom Fyle",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "James Johnson",
+     "from": "council"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Susan Kellum",
+     "from": "council"
+    },
+    {
+     "seat": "District 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Eduardo Herrera-Picasso",
+     "from": "council"
+    },
+    {
+     "seat": "District 7",
+     "ward": "7",
+     "by": "ward",
+     "name": "Lenwood Ward",
+     "from": "council"
+    }
+   ]
+  },
+  "3775000": {
+   "name": "Winston-Salem",
+   "body": "City Council",
+   "wardWord": "Ward",
+   "how": "Each of the city's eight wards elects its own council member. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.cityofws.org/3499/City-Council",
+    "mayor": "https://www.cityofws.org/556/Mayor"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "J. Allen Joines",
+     "from": "mayor"
+    },
+    {
+     "seat": "East Ward",
+     "ward": "East",
+     "by": "ward",
+     "name": "Annette Scippio",
+     "from": "council"
+    },
+    {
+     "seat": "North Ward",
+     "ward": "North",
+     "by": "ward",
+     "name": "Denise D. Adams",
+     "from": "council"
+    },
+    {
+     "seat": "Northeast Ward",
+     "ward": "Northeast",
+     "by": "ward",
+     "name": "Barbara H. Burke",
+     "from": "council"
+    },
+    {
+     "seat": "Northwest Ward",
+     "ward": "Northwest",
+     "by": "ward",
+     "name": "Regina Ford Hall",
+     "from": "council"
+    },
+    {
+     "seat": "South Ward",
+     "ward": "South",
+     "by": "ward",
+     "name": "Vivián V. Joiner",
+     "from": "council"
+    },
+    {
+     "seat": "Southeast Ward",
+     "ward": "Southeast",
+     "by": "ward",
+     "name": "James Taylor",
+     "from": "council"
+    },
+    {
+     "seat": "Southwest Ward",
+     "ward": "Southwest",
+     "by": "ward",
+     "name": "Scott Andree-Bowen",
+     "from": "council"
+    },
+    {
+     "seat": "West Ward",
+     "ward": "West",
+     "by": "ward",
+     "name": "Robert C. Clark",
+     "from": "council"
+    }
+   ]
+  }
+ }
+}
