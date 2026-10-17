@@ -580,6 +580,55 @@ try {
   }
 
 
+  // 2c. The County card names the supervisors of the county's soil and water
+  //     conservation district from the state's District Directory
+  //     (nc-conservation-boards.json, keyed by county GEOID; a same-origin
+  //     file, so no stub). What is asserted: every name the file gives for
+  //     the county is on the card, with the district's name and the sentence
+  //     saying how a board is chosen; at Pasquotank, one of the five counties
+  //     of the Albemarle district, the card says the district covers several
+  //     counties; and at Person, where the directory lists a seat with no
+  //     name, the card says so and never calls the seat vacant.
+  for (const c of [
+    { point: POINT, geoid: "37183", label: "Wake", want: [], reject: [] },
+    { point: "36.29460,-76.25110", geoid: "37139", label: "Pasquotank",
+      want: [/Covers several counties/, /covers Camden, Chowan, Currituck, Pasquotank and Perquimans counties/],
+      reject: [] },
+    { point: "36.39380,-78.98280", geoid: "37145", label: "Person",
+      want: [/No name listed/], reject: [/\bVacant\b/] }
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=county`);
+    const boards = await page.evaluate(() =>
+      fetch("data/app/nc-conservation-boards.json").then((r) => r.json()));
+    const districts = (boards[c.geoid] || {}).districts || [];
+    const names = [].concat(...districts.map((d) =>
+      (d.members || []).filter((m) => m.name).map((m) => m.name)));
+    const info = await cardText(page, "county");
+    const text = info.text || "";
+    const want = [/three elected by the county's voters without party labels/,
+      /two appointed by the state Soil and Water Conservation Commission/].concat(c.want);
+    const missingNames = names.filter((n) => !text.includes(n));
+    // a section label is drawn in capitals, which innerText reports, so the
+    // district's name is matched without regard to case
+    const lower = text.toLowerCase();
+    const missingDistricts = districts.map((d) => d.name).filter((n) => !lower.includes(n.toLowerCase()));
+    const missing = want.filter((re) => !re.test(text));
+    // the conservation section alone, so a vacancy elsewhere on the card
+    // (the county board's own roster) cannot satisfy or fail its tests
+    const end = "North Carolina district directory (PDF)";
+    const from = districts.length ? lower.indexOf(districts[0].name.toLowerCase()) : -1;
+    const section = from >= 0 ? text.slice(from, text.lastIndexOf(end) + end.length) : "";
+    const present = c.reject.filter((re) => re.test(section));
+    check(`county names ${c.label} County's conservation district supervisors from the directory`,
+      !info.error && names.length >= 3 && !missingNames.length && !missingDistricts.length &&
+        !missing.length && !present.length,
+      `names ${names.length}; missing names: ${missingNames.join(", ") || "none"}; ` +
+        `missing districts: ${missingDistricts.join(", ") || "none"}; missing text: ${missing.join(", ") || "none"}; ` +
+        `unwanted: ${present.join(", ") || "none"}`);
+    await context.close();
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the

@@ -389,6 +389,21 @@ PROVENANCE = [
             "September 2026 (see the Charlotte row)."
         ),
     },
+    {
+        "layer": "county",
+        "app_file": "nc-conservation-boards.json",
+        "source_url": "https://www.ncagr.gov/divisions/soil-water/district-directory/open",
+        "note": (
+            "The supervisors of each county's soil and water conservation "
+            "district, read from the Division of Soil and Water Conservation's "
+            "District Directory (a 242-page PDF printed on 29 September 2026 "
+            "when read on 2026-10-16) by "
+            "nc/scripts/build_nc_conservation_boards.py and named on the County "
+            "card. The address serves the current edition (inferred). Re-read "
+            "quarterly and after each November general election; WATCH.md "
+            "carries the row."
+        ),
+    },
 ]
 
 ENDPOINTS = [

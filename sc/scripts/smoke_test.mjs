@@ -588,6 +588,58 @@ try {
   }
 
 
+  // 2c. The County card names the commissioners of the county's
+  //     conservation district from the Department of Natural Resources' page
+  //     for it (sc-conservation-boards.json, keyed by county GEOID; a
+  //     same-origin file, so no stub). What is asserted: every name the file
+  //     gives for the county is on the card, every vacancy reads "Vacant",
+  //     the district's name and the sentences saying how the board is chosen
+  //     and that a commissioner whose term has ended serves until a successor
+  //     takes office are there; and where a printed term ended more than two
+  //     days ago (two at Greenville on the day this was written), the card
+  //     says "term ended" beside that name rather than calling the seat
+  //     vacant.
+  for (const c of [
+    { point: POINT, geoid: "45079", label: "Richland" },
+    { point: "34.85260,-82.39400", geoid: "45045", label: "Greenville" }
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=county`);
+    const boards = await page.evaluate(() =>
+      fetch("data/app/sc-conservation-boards.json").then((r) => r.json()));
+    const districts = (boards[c.geoid] || {}).districts || [];
+    const members = [].concat(...districts.map((d) => d.members || []));
+    const names = members.filter((m) => m.name).map((m) => m.name);
+    const vacant = members.filter((m) => m.vacant).length;
+    const cutoff = new Date(Date.now() - 2 * 86400000).toISOString().slice(0, 10);
+    const ended = members.filter((m) => m.name && m.termEnds && m.termEnds < cutoff).length;
+    const info = await cardText(page, "county");
+    const text = info.text || "";
+    const want = [/three elected by the county's voters without party labels/,
+      /two appointed by the board of the state Department of Natural Resources/,
+      /serves until a successor takes office/];
+    const missingNames = names.filter((n) => !text.includes(n));
+    // a section label is drawn in capitals, which innerText reports, so the
+    // district's name is matched without regard to case
+    const lower = text.toLowerCase();
+    const missingDistricts = districts.map((d) => d.name).filter((n) => !lower.includes(n.toLowerCase()));
+    const missing = want.filter((re) => !re.test(text));
+    // the conservation section alone, so a vacancy elsewhere on the card
+    // (the county council's own roster) cannot satisfy or fail its count
+    const end = "This district's page at SC DNR";
+    const from = districts.length ? lower.indexOf(districts[0].name.toLowerCase()) : -1;
+    const section = from >= 0 ? text.slice(from, text.lastIndexOf(end) + end.length) : "";
+    const vacantShown = (section.match(/\bVacant\b/g) || []).length;
+    const endedShown = (section.match(/term ended /g) || []).length;
+    check(`county names ${c.label} County's conservation district commissioners from SC DNR`,
+      !info.error && names.length >= 3 && !missingNames.length && !missingDistricts.length &&
+        !missing.length && vacantShown === vacant && endedShown >= ended,
+      `names ${names.length}; missing names: ${missingNames.join(", ") || "none"}; ` +
+        `missing districts: ${missingDistricts.join(", ") || "none"}; missing text: ${missing.join(", ") || "none"}; ` +
+        `vacant ${vacantShown}/${vacant}; term ended ${endedShown}/${ended}`);
+    await context.close();
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the

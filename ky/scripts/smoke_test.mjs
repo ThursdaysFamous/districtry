@@ -643,6 +643,53 @@ try {
     await context.close();
   }
 
+  // 2g2. The County card names the supervisors of the county's conservation
+  //      district from the Division of Conservation's sheet for it
+  //      (ky-conservation-boards.json, keyed by county GEOID; a same-origin
+  //      file, so no stub). What is asserted: every name the file gives for
+  //      the county is on the card, every vacancy reads "Vacant", each
+  //      district's name and the sentence saying how the board is chosen are
+  //      there; at Logan, the one county with two districts, both boards
+  //      are listed and the card says why; and at Scott, whose sheet marks a
+  //      seat "Vacant" (one of four on 2026-10-16), the card shows it.
+  for (const c of [
+    { point: POINT, geoid: "21111", label: "Jefferson", want: [] },
+    { point: "36.84540,-86.88720", geoid: "21141", label: "Logan",
+      want: [/has two conservation districts, and this app does not draw the line between them/] },
+    { point: "38.20980,-84.55880", geoid: "21209", label: "Scott", want: [] }
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=county`);
+    const boards = await page.evaluate(() =>
+      fetch("data/app/ky-conservation-boards.json").then((r) => r.json()));
+    const districts = (boards[c.geoid] || {}).districts || [];
+    const members = [].concat(...districts.map((d) => d.members || []));
+    const names = members.filter((m) => m.name).map((m) => m.name);
+    const vacant = members.filter((m) => m.vacant).length;
+    const info = await cardText(page, "county");
+    const text = info.text || "";
+    const want = [/elect all seven supervisors/, /declares them elected without an election/].concat(c.want);
+    const missingNames = names.filter((n) => !text.includes(n));
+    // a section label is drawn in capitals, which innerText reports, so the
+    // district's name is matched without regard to case
+    const lower = text.toLowerCase();
+    const missingDistricts = districts.map((d) => d.name).filter((n) => !lower.includes(n.toLowerCase()));
+    const missing = want.filter((re) => !re.test(text));
+    // the conservation section alone, so a vacancy elsewhere on the card
+    // (the county's own governing body) cannot satisfy or fail its count
+    const end = "This district's sheet (PDF)";
+    const from = districts.length ? lower.indexOf(districts[0].name.toLowerCase()) : -1;
+    const section = from >= 0 ? text.slice(from, text.lastIndexOf(end) + end.length) : "";
+    const vacantShown = (section.match(/\bVacant\b/g) || []).length;
+    check(`county names ${c.label} County's conservation district supervisors from the Division's sheet`,
+      !info.error && names.length >= 5 && !missingNames.length && !missingDistricts.length &&
+        !missing.length && vacantShown === vacant,
+      `names ${names.length}; missing names: ${missingNames.join(", ") || "none"}; ` +
+        `missing districts: ${missingDistricts.join(", ") || "none"}; missing text: ${missing.join(", ") || "none"}; ` +
+        `vacant ${vacantShown}/${vacant}`);
+    await context.close();
+  }
+
   // 2h. The Census County Division card, the level-14 map. Every Kentucky
   //     subdivision is a census county division (LSADC 22, FUNCSTAT S, all
   //     493, measured 2026-10-15). The layer reads TIGERweb live, which a

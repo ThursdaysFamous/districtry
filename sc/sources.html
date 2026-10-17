@@ -1357,13 +1357,13 @@ table.matrix code {
             <tbody>
               <tr id="layer-county">
                 <th scope="row"><span class="layer-name">County</span><code>county</code></th>
-                <td data-label="What it answers">Which county contains the point.</td>
+                <td data-label="What it answers">Which county contains the point, the council members the county elects by the whole county, and the commissioners of its conservation district.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 46 features, measured 2026-10-10.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">None yet — identity only. Every South Carolina county is governed by an elected county council; the state Revenue and Fiscal Affairs Office publishes every council district and the State Election Commission's results name the winners, and neither is wired in this first change. Recorded as gap sc-county-council.</td>
+                <td data-label="Who it names">The council members the county elects by the whole county, from sc-county-council-members.json, the file the County Council District layer reads (see that layer). The card also names the five commissioners of the county's conservation district, from the Department of Natural Resources' page for each district, read by sc/scripts/build_sc_conservation_boards.py: each commissioner's position, whether the seat is elected or appointed, and the date the term ends; re-read quarterly and in February after the elected seats change hands (sc/WATCH.md). A commissioner whose printed term has ended is shown with that date and not as a vacancy, because under S.C. Code section 48-9-1230 a commissioner holds office until a successor qualifies.</td>
                 <td data-label="Where it applies">South Carolina — statewide, all 46 counties.</td>
               </tr>
               <tr id="layer-county-subdivision">
@@ -1521,7 +1521,7 @@ table.matrix code {
       "@id": "https://districtry.com/sc/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point. None yet — identity only. Every South Carolina county is governed by an elected county council; the state Revenue and Fiscal Affairs Office publishes every council district and the State Election Commission's results name the winners, and neither is wired in this first change. Recorded as gap sc-county-council.",
+      "description": "Which county contains the point, the council members the county elects by the whole county, and the commissioners of its conservation district. The council members the county elects by the whole county, from sc-county-council-members.json, the file the County Council District layer reads (see that layer). The card also names the five commissioners of the county's conservation district, from the Department of Natural Resources' page for each district, read by sc/scripts/build_sc_conservation_boards.py: each commissioner's position, whether the seat is elected or appointed, and the date the term ends; re-read quarterly and in February after the elected seats change hands (sc/WATCH.md). A commissioner whose printed term has ended is shown with that date and not as a vacancy, because under S.C. Code section 48-9-1230 a commissioner holds office until a successor qualifies.",
       "url": "https://districtry.com/sc/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/sc/sources.html#catalog"
