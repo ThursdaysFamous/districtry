@@ -9,6 +9,9 @@
     "clerk": "Quinn Bennett",
     "municipality": "Beloit",
     "phone": "608-364-2990",
+    "phonesExtra": [
+      "608-728-1140"
+    ],
     "recordUpdated": "2026-07-21",
     "url": "https://www.townofbeloitwi.gov/"
   },
@@ -16,6 +19,9 @@
     "clerk": "Marlina Jackson",
     "municipality": "Bradford",
     "phone": "608-713-2631",
+    "phonesExtra": [
+      "608-756-4274"
+    ],
     "recordUpdated": "2025-01-24",
     "url": "https://www.townofbradfordwi.com/"
   },
@@ -44,6 +50,9 @@
     "clerk": "Courtney Ross",
     "municipality": "Harmony",
     "phone": "608-563-4477",
+    "phonesExtra": [
+      "608-214-9235"
+    ],
     "recordUpdated": "2025-01-16",
     "url": "https://townofharmony.com/"
   },
@@ -59,6 +68,9 @@
     "clerk": "Kat Mawhinney",
     "municipality": "Johnstown",
     "phone": "608-974-6111",
+    "phonesExtra": [
+      "262-490-7504"
+    ],
     "recordUpdated": "2026-04-10",
     "url": "https://johnstownrockcowi.gov/"
   },
@@ -101,6 +113,9 @@
     "clerk": "Ashley Colcord",
     "municipality": "Plymouth",
     "phone": "608-879-4012",
+    "phonesExtra": [
+      "608-751-9817"
+    ],
     "recordUpdated": "2025-06-17",
     "url": "https://plymouthrockwi.gov/"
   },
@@ -116,6 +131,9 @@
     "deputyClerk": "Ranay Zillmer",
     "municipality": "Rock",
     "phone": "608-752-4292",
+    "phonesExtra": [
+      "608-290-0118"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://www.townofrockwi.gov/"
   },
@@ -124,6 +142,9 @@
     "deputyClerk": "Helen Melin",
     "municipality": "Spring Valley",
     "phone": "608-897-4288",
+    "phonesExtra": [
+      "608-449-1219"
+    ],
     "recordUpdated": "2026-04-06",
     "url": "https://www.townofspringvalley.com/"
   },
@@ -132,6 +153,9 @@
     "deputyClerk": "Ranay Zillmer",
     "municipality": "Turtle",
     "phone": "608-362-0655",
+    "phonesExtra": [
+      "608-290-0118"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://www.townofturtlewi.gov/"
   },

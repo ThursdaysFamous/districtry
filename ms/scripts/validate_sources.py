@@ -40,6 +40,15 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
   7. The judges' changes: the court's news page and the Governor's newsroom
      carry no headline after the last one reviewed that could mean a judge
      left or arrived, which build_ms_judges.py's CHANGES would then need.  [WARN]
+  8. The cities' ward maps: each drawn city's ward layer still has the name
+     its witness pins (Southaven's, the adoption date), still holds the wards
+     that were drawn, and still serves the lines the shipped file was drawn
+     from, and the Census Bureau's map of the city's limits has not moved
+     (build_ms_city_wards.py's record of what it read).                  [WARN]
+  9. The city councils: each city's own pages, read the council builder's
+     way, still name the mayor and members the shipped file names, and
+     Greenville's still prints no seat label. No weekly job reads these
+     pages yet, so this is the only check that would notice a change.    [WARN]
 
 Exit status: 0 when nothing needs a human (OK or WARN only), 1 on any FAIL.
 Newer-edition detection is deliberately WARN, not FAIL — the current dataset
@@ -1083,6 +1092,199 @@ def check_judge_news(findings, offline):
                      % (len(newer), GOVERNOR_NEWS_REVIEWED))
 
 
+# ---- check 8: the cities' ward maps still serve the lines that were drawn ---
+def check_city_wards(findings, offline):
+    """Each drawn city's wards come from the layer build_ms_city_wards.py's
+    CITIES names, cut at the Census Bureau's map of the city, and the build
+    records a fingerprint of both (data/source/ms-city-wards.source.json).
+    Nothing runs that build on a schedule, and a city can redraw inside a
+    layer whose name stays the same, so each layer is asked again, the build's
+    way, for its name, its wards and its lines."""
+    if offline:
+        return
+    import build_ms_city_wards as wards
+    label = "city-ward"
+    try:
+        with open(wards.SOURCE_RECORD, encoding="utf-8") as fh:
+            record = json.load(fh)
+    except (OSError, ValueError) as e:
+        findings.add(FAIL, label, "the ward build's record of what it read could not be "
+                     "read (%s), so no ward map was checked: %s" % (e, wards.SOURCE_RECORD))
+        return
+    built = record.get("built")
+    for c in wards.CITIES:
+        city = c["city"]
+        rec = (record.get("cities") or {}).get(c["geoid"])
+        if not rec:
+            findings.add(FAIL, label, "%s: the ward build's record names no layer for this "
+                         "city; rebuild with build_ms_city_wards.py" % city)
+            continue
+        ok, meta = http_get(c["layer"], params={"f": "json"}, attempts=2)
+        time.sleep(wards.MIN_DELAY_S)
+        if not ok or (isinstance(meta, dict) and "error" in meta):
+            findings.add(WARN, label, "%s: the ward layer could not be read (%s), so its "
+                         "wards were not checked; it may have been moved or removed: %s"
+                         % (city, meta.get("error") if ok else meta, c["layer"]))
+            continue
+        moved = []
+        pinned = c["witness"].get("layer_name")
+        if pinned and meta.get("name") != pinned:
+            moved.append("the layer is now named %r, not %r, and a renamed ward layer is "
+                         "a new plan until a person has read it" % (meta.get("name"), pinned))
+        ok, fc = http_get(c["layer"] + "/query", params=wards.layer_params(c), attempts=2)
+        time.sleep(wards.MIN_DELAY_S)
+        if not ok or not isinstance(fc, dict) or "error" in fc or fc.get("exceededTransferLimit"):
+            findings.add(WARN, label, "%s: the ward layer's wards could not be read (%s), so "
+                         "its lines were not checked: %s"
+                         % (city, (fc.get("error") or "the answer hit its transfer limit")
+                            if ok and isinstance(fc, dict) else fc, c["layer"]))
+            continue
+        skip = c.get("skip") or {}
+        kept = [f.get("attributes") or {} for f in fc.get("features") or []]
+        kept = [a for a in kept if not (skip and all(a.get(k) == v for k, v in skip.items()))]
+        try:
+            have = sorted(set(c["read"](a.get(c["field"])) for a in kept))
+        except (TypeError, ValueError):
+            have = None
+        drawn = sorted(int(w) for w in c["people"])
+        if have != drawn:
+            moved.append("the layer now holds wards %s, and the shipped file draws wards %s"
+                         % (have if have is not None else "this check cannot read", drawn))
+        if "adopted" in c["witness"]:
+            dates = sorted(set(wards._date(a.get("ADOPTED")) for a in kept), key=str)
+            if dates != [c["witness"]["adopted"]]:
+                moved.append("the county's layer now gives adoption dates %s, not %s, and a "
+                             "new adoption date is a redistricting until a person has read "
+                             "it" % (dates, c["witness"]["adopted"]))
+        if have is not None and wards.lines_sha256(fc, c) != rec.get("lines_sha256"):
+            moved.append("the layer serves different lines from the ones the shipped file was "
+                         "drawn from on %s (it gives its last edit as %s)"
+                         % (built, wards._date((meta.get("editingInfo") or {}).get(
+                             "dataLastEditDate") or (meta.get("editingInfo") or {}).get(
+                             "lastEditDate")) or "not stated"))
+        ok, pfc = http_get(wards.TIGERWEB_PLACE + "/query", params=wards.place_params(c),
+                           attempts=2)
+        time.sleep(wards.MIN_DELAY_S)
+        if not ok or not isinstance(pfc, dict) or "error" in pfc:
+            findings.add(WARN, label, "%s: the Census Bureau's map of the city could not be "
+                         "read (%s), so the city's limits were not checked: %s"
+                         % (city, pfc.get("error") if ok and isinstance(pfc, dict) else pfc,
+                            wards.TIGERWEB_PLACE))
+        elif wards.lines_sha256(pfc) != rec.get("place_sha256"):
+            moved.append("the Census Bureau's map of the city's limits, where the wards are "
+                         "cut, has changed since %s" % built)
+        if moved:
+            findings.add(WARN, label, "%s: %s. Rebuild with ms/scripts/build_ms_city_wards.py, "
+                         "which stops if any ward's people moved, and read the city's map "
+                         "before raising anything it pins: %s"
+                         % (city, "; ".join(moved), c["page"]))
+        else:
+            findings.add(OK, label, "%s: the ward layer still serves the lines drawn on %s, "
+                         "wards %d to %d, and the Census map of the city is unchanged"
+                         % (city, built, drawn[0], drawn[-1]))
+
+
+# ---- check 9: the city councils the cities' own pages name -----------------
+def check_city_councils(findings, offline):
+    """The City card names each city's mayor and council from the city's own
+    pages, read once (data/app/ms-city-councils.json), with the telephone
+    numbers five of those pages print inside a person's own entry and the
+    e-mail addresses nine of them print there (Hattiesburg's in a card for
+    each member). No weekly job reads them again yet, so each page is read
+    here the council builder's way, with its own client and robots.txt
+    reading, and compared seat by seat: the name, the numbers in the order
+    the page prints them, and the address. A finding names the city and the
+    seat and never prints a number or an address."""
+    if offline:
+        return
+    import build_ms_city_councils as councils
+    label = "municipality (city councils)"
+    try:
+        with open(councils.OUT, encoding="utf-8") as fh:
+            shipped = json.load(fh)
+    except (OSError, ValueError) as e:
+        findings.add(FAIL, label, "the shipped council file could not be read (%s): %s"
+                     % (e, councils.OUT))
+        return
+    fetcher = councils.Fetcher()
+    today = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+    for c in councils.CITIES:
+        name = c["name"]
+        old = shipped.get(c["geoid"]) or {}
+        try:
+            council = fetcher.get(c["council"])
+            if c["geoid"] in councils.NOT_PUBLISHED:
+                seats = councils.printed_seats(councils.page_lines(council))
+                if seats:
+                    findings.add(WARN, label, "%s: the city's page now prints seat labels "
+                                 "(%s), where on %s it printed none. If it now names its "
+                                 "council, take the city out of the council builder's "
+                                 "NOT_PUBLISHED, give it the shape its page prints, and "
+                                 "rebuild: %s" % (name, ", ".join(seats),
+                                                  councils.NOT_PUBLISHED[c["geoid"]]["measured"],
+                                                  c["council"]))
+                else:
+                    findings.add(OK, label, "%s: the city's page still prints no seat label, "
+                                 "as on %s" % (name, councils.NOT_PUBLISHED[c["geoid"]]["measured"]))
+                continue
+            mayor = fetcher.get(c["mayor_page"]) if c["mayor"][0] == "mayor" else ""
+            rec = councils.read_city(c, council, mayor, today)
+        except SystemExit as e:
+            findings.add(WARN, label, "%s: the city's pages no longer read the way they did "
+                         "on %s (%s), so its council was not checked: %s"
+                         % (name, old.get("read"), e, c["council"]))
+            continue
+        except Exception as e:  # noqa: BLE001 — one city's page is one finding
+            findings.add(WARN, label, "%s: the city's pages could not be read (%s), so its "
+                         "council was not checked: %s" % (name, e, c["council"]))
+            continue
+        def numbers(seat):
+            return ([seat["phone"]] if seat.get("phone") else []) + list(seat.get("phonesExtra") or [])
+        before = {s.get("seat"): s for s in old.get("seats") or []}
+        changed = []
+        for s in rec["seats"]:
+            was_seat = before.get(s["seat"]) or {}
+            was, now = was_seat.get("name"), s.get("name")
+            if was != now:
+                changed.append("%s: the shipped file names %s, the city's page now %s"
+                               % (s["seat"], was or "nobody", now or "shows it vacant"))
+                continue
+            if len(numbers(was_seat)) != len(numbers(s)):
+                changed.append("%s: the city's page now prints %d telephone number%s for "
+                               "this person, where the shipped file carries %d"
+                               % (s["seat"], len(numbers(s)), "" if len(numbers(s)) == 1 else "s",
+                                  len(numbers(was_seat))))
+            elif numbers(was_seat) != numbers(s):
+                changed.append("%s: the city's page now prints a different telephone number "
+                               "for this person than the shipped file carries" % s["seat"])
+            was_mail = (was_seat.get("email") or "").lower()
+            now_mail = (s.get("email") or "").lower()
+            if was_mail != now_mail:
+                changed.append("%s: %s" % (s["seat"], (
+                    "the city's page now prints an e-mail address of this person's own, "
+                    "where the shipped file carries none") if not was_mail else (
+                    "the city's page no longer prints, as this person's own, the e-mail "
+                    "address the shipped file carries") if not now_mail else (
+                    "the city's page now prints a different e-mail address for this person "
+                    "than the shipped file carries")))
+        if changed:
+            findings.add(WARN, label, "%s: %s. Rebuild with "
+                         "ms/scripts/build_ms_city_councils.py: %s"
+                         % (name, "; ".join(changed), c["council"]))
+        else:
+            phoned = sum(len(numbers(s)) for s in rec["seats"])
+            mailed = sum(1 for s in rec["seats"] if s.get("email"))
+            same = ([("the same %d telephone number%s" % (phoned, "" if phoned == 1 else "s"))]
+                    if phoned else []) + \
+                   ([("the same %d e-mail address%s" % (mailed, "" if mailed == 1 else "es"))]
+                    if mailed else [])
+            findings.add(OK, label, "%s: the city's pages still name the %d people the "
+                         "shipped file names%s (read %s)"
+                         % (name, sum(1 for s in rec["seats"] if s.get("name")),
+                            (", with " + " and ".join(same)) if same else "",
+                            old.get("read")))
+
+
 def render(findings):
     order = {FAIL: 0, WARN: 1, OK: 2}
     rows = sorted(findings.rows, key=lambda r: (order[r[0]], r[1]))
@@ -1136,6 +1338,8 @@ def main():
         check_court_pages(findings, args.offline)
         check_court_laws(findings, args.offline)
         check_judge_news(findings, args.offline)
+        check_city_wards(findings, args.offline)
+        check_city_councils(findings, args.offline)
     finally:
         _drop_bundles()
 

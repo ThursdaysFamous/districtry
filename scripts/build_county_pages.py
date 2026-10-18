@@ -78,6 +78,7 @@ import glob
 import json
 import os
 import re
+import subprocess
 import sys
 import urllib.parse
 
@@ -1732,6 +1733,13 @@ def tn_commissioners(inst):
         def person(m):
             p = {k: m[k].strip() for k in ("name", "email", "phone", "profileUrl")
                  if isinstance(m.get(k), str) and m[k].strip()}
+            # The further numbers the county prints for the same member (a home
+            # and a cell line), carried since Adam's ruling of 2026-10-17 that a
+            # member's own numbers ship.
+            extra = [x.strip() for x in m.get("phonesExtra") or []
+                     if isinstance(x, str) and x.strip()]
+            if extra:
+                p["phonesExtra"] = extra
             role = ", ".join(x for x in ((m.get("role") or "").strip(),
                                          _tn_seat(m.get("seat"))) if x)
             if role:
@@ -2350,8 +2358,13 @@ def ms_supervisors(inst):
             if s.get("vacant") is True:
                 districts.append(district(label, vacancies=1))
             elif held:
-                districts.append(district(label, [{"name": held,
-                                                   "role": inst["member_word"]}]))
+                member = {"name": held, "role": inst["member_word"]}
+                # The supervisor's own number where the directory prints one
+                # that is not the board's (the board's is in the page's office
+                # block), published since Adam's ruling of 2026-10-17.
+                if (s.get("phone") or "").strip():
+                    member["phone"] = s["phone"].strip()
+                districts.append(district(label, [member]))
             else:
                 problems.append("ms %s County %s names nobody and is not marked "
                                 "vacant" % (name, label))
@@ -2719,6 +2732,145 @@ def party_name(value):
     return PARTY_NAMES.get(v.lower(), v)
 
 
+# A label the source prints before a number ("home (843) 665-7321", "cell
+# 519-3104") rides in the visible text, where a reader needs it to tell two
+# numbers apart, and is left out of the structured data, whose telephone
+# property is the number. A value with no label is unchanged.
+PHONE_LABEL_RE = re.compile(r"^[A-Za-z][A-Za-z .]*?\s+(?=[(+0-9])")
+
+
+def schema_telephone(value):
+    return PHONE_LABEL_RE.sub("", (value or "").strip())
+
+
+# Where an extension begins in a printed number ("ext. 12", "EXT 105",
+# "x 236"). A tel: link dials the number before it: run onto the end of the
+# number, the extension's digits would dial a different number. The extension
+# stays in the text, where a reader sees it. The apps' cardPhoneDial (engine
+# card-helpers) reads a number the same way.
+EXTENSION_RE = re.compile(r"(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d", re.I)
+
+
+def dial_digits(value):
+    """What a tel: link dials for one printed number: its digits (and a
+    leading +), stopping where an extension begins. Where two numbers are
+    printed as one ("217/555-0100; 217/555-0101") it dials the first, as
+    cardPhoneDial does: seven digits where the text opens with a local number
+    (three digits, then four), eleven where it opens with the country code 1,
+    and ten otherwise; a number written with a leading + is left whole."""
+    value = value or ""
+    m = EXTENSION_RE.search(value)
+    if m:
+        value = value[:m.start() + len(m.group(1))]
+    dial = re.sub(r"[^0-9+]", "", value)
+    if not dial.startswith("+") and len(dial) > 11:
+        g = re.findall(r"\d+", value)
+        dial = dial[:7 if len(g) > 1 and len(g[0]) == 3 and len(g[1]) == 4
+                    else 11 if dial.startswith("1") else 10]
+    return dial
+
+
+# Made-up numbers, each with what its tel: link must dial. "fax" is there for
+# the x a word can end in, which is not an extension. The last five are two
+# numbers printed as one, in the shapes measured on 2026-10-17 (Mason County's
+# municipal officials and Chicago's Ward 2) and three more a source could use.
+DIAL_CASES = (
+    ("(402) 555-0101 ext. 3203", "4025550101"),
+    ("608-555-0102 EXT 105", "6085550102"),
+    ("(217) 555-0103 x 236", "2175550103"),
+    ("(712) 555-0104 x2", "7125550104"),
+    ("555-0105 Ext: 7", "5550105"),
+    ("cell 555-0106", "5550106"),
+    ("+1 608 555 0107", "+16085550107"),
+    ("fax 555-0108", "5550108"),
+    ("217/555-0109; 217/555-0110", "2175550109"),
+    ("(312) 555-0111 / 0112/0113", "3125550111"),
+    ("555-0114 / 555-0115", "5550114"),
+    ("1-800-555-0116 or 1-800-555-0117", "18005550116"),
+    ("Home: (608) 555-0118 Cell: (608) 555-0119", "6085550118"),
+)
+CARD_HELPERS = os.path.join(REPO_ROOT, "engine", "index.html", "card-helpers.txt")
+
+
+def check_dial_rule():
+    """[] or the problems with how a tel: link is built: dial_digits must
+    answer DIAL_CASES, the apps' cardPhoneDial must read an extension with the
+    same pattern, and cardPhoneDial, run as shipped in Node, must answer
+    DIAL_CASES too, so a card and a page cannot dial a number differently."""
+    out = ["dial_digits(%r) gives %r, not %r" % (v, dial_digits(v), want)
+           for v, want in DIAL_CASES if dial_digits(v) != want]
+    try:
+        block = open(CARD_HELPERS, encoding="utf-8").read()
+    except OSError:
+        return out + ["%s is missing: cardPhoneDial cannot be compared with "
+                      "dial_digits" % os.path.relpath(CARD_HELPERS, REPO_ROOT)]
+    m = re.search(r"function cardPhoneDial\(phone\) \{.*?var m = /(.+?)/i\.exec\(s\);",
+                  block, re.S)
+    if not m:
+        out.append("cardPhoneDial in %s no longer reads an extension with one "
+                   "/.../i pattern, so it cannot be compared with dial_digits"
+                   % os.path.relpath(CARD_HELPERS, REPO_ROOT))
+    elif m.group(1) != EXTENSION_RE.pattern:
+        out.append("cardPhoneDial reads an extension as /%s/i and dial_digits as "
+                   "/%s/i: a card and a page would dial a number differently"
+                   % (m.group(1), EXTENSION_RE.pattern))
+    # THE FUNCTION ITSELF, RUN AS SHIPPED, because the extension pattern is not
+    # all of the rule: what a link dials where two numbers are printed as one
+    # is code, and two copies of code agree only when both are run.
+    fn = re.search(r"^( *)function cardPhoneDial\(phone\) \{\n.*?^\1\}$", block,
+                   re.S | re.M)
+    if not fn:
+        out.append("cardPhoneDial in %s cannot be found as one function, so it "
+                   "cannot be run against DIAL_CASES"
+                   % os.path.relpath(CARD_HELPERS, REPO_ROOT))
+        return out
+    src = (fn.group(0) + "\nprocess.stdout.write(JSON.stringify(%s.map(cardPhoneDial)));"
+           % json.dumps([v for v, _ in DIAL_CASES]))
+    try:
+        run = subprocess.run(["node", "-e", src], capture_output=True, text=True,
+                             timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return out + ["cardPhoneDial could not be run in Node (%s), so it cannot be "
+                      "compared with dial_digits" % exc]
+    if run.returncode != 0:
+        said = [ln for ln in run.stderr.splitlines() if "Error" in ln]
+        return out + ["cardPhoneDial failed in Node: %s"
+                      % (said or run.stderr.strip().splitlines() or ["no output"])[0]]
+    for (v, want), got in zip(DIAL_CASES, json.loads(run.stdout)):
+        if got != want:
+            out.append("cardPhoneDial(%r) gives %r, not %r: a card and a page would "
+                       "dial a number differently" % (v, got, want))
+    return out
+
+
+def member_phones(m):
+    """Every number a roster carries for one person, first one first: `phone`,
+    then `phonesExtra`, the further numbers a source prints for the same
+    person (a home and a cell line, say), each with its label in the text.
+    A value with no digit in it is no number: Kankakee County's board page
+    printed four members' telephones as "Coming Soon" until 2026-10-17, each
+    a link that dialled nothing, where the card shows no telephone at all."""
+    extras = m.get("phonesExtra") or []
+    if isinstance(extras, str):
+        extras = [extras]
+    out = []
+    for value in [m.get("phone")] + list(extras):
+        value = (value or "").strip() if isinstance(value, str) else ""
+        if value and re.search(r"\d", value) and value not in out:
+            out.append(value)
+    return out
+
+
+def schema_telephones(m):
+    """The structured-data telephone: one number as a string, several as a
+    list, none as None."""
+    numbers = [schema_telephone(p) for p in member_phones(m)]
+    numbers = [n for n in numbers if n]
+    if not numbers:
+        return None
+    return numbers[0] if len(numbers) == 1 else numbers
+
+
 def member_node(m):
     """One officeholder as a schema.org Person, from the same fields
     member_html renders. Every field is optional: a roster that does not publish
@@ -2730,7 +2882,7 @@ def member_node(m):
     email = (m.get("email") or "").strip()
     if email:
         person["email"] = email
-    phone = (m.get("phone") or "").strip()
+    phone = schema_telephones(m)
     if phone:
         person["telephone"] = phone
     # `url` and `profileUrl` are the same field under two names — Illinois's
@@ -2859,10 +3011,9 @@ def member_html(m):
     email = (m.get("email") or "").strip()
     if email:
         contact.append('<a href="mailto:%s">%s</a>' % (esc(email), esc(email)))
-    phone = (m.get("phone") or "").strip()
-    if phone:
+    for phone in member_phones(m):
         contact.append('<a href="tel:%s">%s</a>'
-                       % (esc(re.sub(r"[^0-9+]", "", phone)), esc(phone)))
+                       % (esc(dial_digits(phone)), esc(phone)))
     for field, label in (("url", "Official profile"),
                          ("profileUrl", "Official profile"),
                          ("documentUrl", "County directory")):
@@ -4077,8 +4228,10 @@ def ms_board_contact(inst):
     a line printed for one supervisor may be that person's own, so the builder
     keeps a line only where the directory prints it for at least three of the
     county's five, which makes it the board's office (build_ms_county_officials.py).
-    Nothing per supervisor is carried, and a county where no line passes that
-    test carries no contact rather than one supervisor's."""
+    A county where no line passes that test carries no board contact rather
+    than one supervisor's. A supervisor's own telephone is on that supervisor's
+    row instead (ms_supervisors), and no supervisor's own address is carried
+    anywhere."""
     path = os.path.join(app_data("ms"), "ms-county-officials.json")
     if not os.path.exists(path):
         return {}, [path]
@@ -4107,7 +4260,7 @@ def contact_html(c):
     details = []
     if c["phone"]:
         details.append('<a href="tel:%s">%s</a>'
-                       % (esc(re.sub(r"[^0-9+]", "", c["phone"])), esc(c["phone"])))
+                       % (esc(dial_digits(c["phone"])), esc(c["phone"])))
     if c["email"]:
         details.append('<a href="mailto:%s">%s</a>'
                        % (esc(c["email"]), esc(c["email"])))
@@ -4198,6 +4351,7 @@ def main():
         nameless_keys |= {_nobody_key(inst, c) for c in nameless}
         read_by_instance[inst_key(inst)] = {os.path.basename(p) for p in paths}
     problems += check_workflows(read_by_instance)
+    problems += check_dial_rule()
     reg_problems, candidates = check_registration(all_paths)
     problems += reg_problems
     for key, rec in sorted(NAMES_NOBODY.items()):

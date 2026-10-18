@@ -4,12 +4,15 @@ Its Town Officials pages give each town under a "TOWN OF <NAME>" heading (a town
 whose list runs onto a second page repeats the heading there). Each officer is
 one line, the office in capitals, a dot leader, then the name
 ("CHAIRPERSON……Thomas Winker", "SEAT 1 SUPERVISOR……Wayne Pipkorn"), followed by
-lines of e-mail, phone and home address that are never read. Read with the
-token on 2026-10-15 (robots.txt: 816 bytes, no rule matches the file)."""
+a line of e-mail and telephone number and lines of home address. The number
+and the e-mail address are read from the lines below the officer's line that
+hold nothing but an e-mail address and numbers, up to the next office; the
+home address lines are not read. Read with the token on 2026-10-15
+(robots.txt: 816 bytes, no rule matches the file)."""
 
 import re
 
-from . import clean
+from . import clean, following_emails, following_phones, person
 
 COUNTY_FIPS = "089"
 COUNTY_NAME = "Ozaukee"
@@ -18,6 +21,8 @@ SOURCES = ["https://ozaukeecounty.gov/DocumentCenter/View/57"]
 _TOWN = re.compile(r"^TOWN OF ([A-Z][A-Z .']+?)\s*$")
 _ROW = re.compile(r"^(?:SEAT\s+(\d+)\s+)?(CHAIRPERSON|CHAIRMAN|SUPERVISOR)"
                   r"\s*[.…]+\s*(.+)$")
+# the next office's line, or the next town, ends an officer's lines
+_STOP = r"^(?:SEAT\s+\d+\s+)?[A-Z][A-Z/ ]+\s*[.…]|^TOWN OF "
 
 
 def scrape(ctx):
@@ -29,8 +34,8 @@ def scrape(ctx):
     section = text[start:end] if end > 0 else text[start:]
     towns = {}
     town = None
-    for line in section.split("\n"):
-        line = line.strip()
+    lines = [ln.strip() for ln in section.split("\n")]
+    for i, line in enumerate(lines):
         m = _TOWN.match(line)
         if m:
             town = m.group(1).title()
@@ -40,8 +45,11 @@ def scrape(ctx):
             continue
         role = "Chairperson" if r.group(2).startswith("CHAIR") else (
             "Supervisor" + (" #" + r.group(1) if r.group(1) else ""))
-        towns.setdefault(town, []).append({"name": clean(r.group(3)),
-                                           "role": role})
+        below = [ln for ln in lines[i + 1:i + 5] if ln]
+        phones = following_phones(below, 0, limit=3, stop_re=_STOP)
+        emails = following_emails(below, 0, limit=3, stop_re=_STOP)
+        towns.setdefault(town, []).append(person(clean(r.group(3)), role,
+                                                 phones, emails=emails))
     m = re.search(r"\b(20\d\d)\s*[-–]\s*(20\d\d)\b", text[:400])
     return {"towns": towns,
             "edition": ("%s-%s" % m.groups()) if m else None}

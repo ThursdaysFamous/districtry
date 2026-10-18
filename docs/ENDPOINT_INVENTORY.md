@@ -37,8 +37,13 @@ per-app measurement, so the two cannot disagree.
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
 only when a reader pastes one or shares one into the installed app,
-and answers with the full link it leads to. `build_privacy_page.py`
-names it as a recipient.
+and answers with the full link it leads to.
+Every app also sends it, at `?a=`, **the street address a map link carried**
+when the map's own search knows the street and not the house number,
+and it asks the U.S. Census Bureau's geocoder where that number falls.
+No served file names the Census host, because only the lookup asks it.
+`build_privacy_page.py` names the lookup and the Census Bureau as
+recipients.
 
 ### Basemap tiles — 3 host(s)
 
@@ -139,15 +144,15 @@ prose.
 | wi | 1 | 32 |
 | ia | 0 | 21 |
 | mi | 0 | 19 |
-| mn | 6 | 20 |
-| ky | 5 | 15 |
-| in | 4 | 17 |
-| nc | 4 | 13 |
-| ok | 5 | 16 |
-| sc | 4 | 16 |
-| tn | 6 | 18 |
-| ar | 3 | 17 |
-| ms | 3 | 16 |
+| mn | 0 | 20 |
+| ky | 0 | 16 |
+| in | 0 | 17 |
+| nc | 0 | 15 |
+| ok | 0 | 17 |
+| sc | 0 | 17 |
+| tn | 0 | 19 |
+| ar | 0 | 18 |
+| ms | 0 | 17 |
 
 ### Where each layer's shapes come from
 
@@ -289,7 +294,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `city-ward`.
 
-#### ky — 4 of 15 layers fetch their shapes
+#### ky — 4 of 16 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -299,7 +304,7 @@ measured until the next run describes it.
 | School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
-- **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`, `voting-precinct`.
+- **Not measured** — declared since the probe ran: `county-subdivision`, `fiscal-court`, `school-board-district`, `voting-precinct`.
 
 #### in — 4 of 17 layers fetch their shapes
 
@@ -314,7 +319,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `county-council`, `in-court-of-appeals`, `conservancy-district`, `school-board-district`, `voting-precinct`, `tribal-government`.
 
-#### nc — 4 of 13 layers fetch their shapes
+#### nc — 4 of 15 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -325,9 +330,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `nc-senate`, `county`, `nc-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `school-board-district`, `voting-precinct`, `city-ward`, `tribal-government`.
 
-#### ok — 4 of 16 layers fetch their shapes
+#### ok — 4 of 17 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -338,9 +343,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `ok-senate`, `county`, `ok-house`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `conservation-district`, `ok-judicial-district`, `county-subdivision`, `county-commissioner`.
+- **Not measured** — declared since the probe ran: `conservation-district`, `ok-judicial-district`, `city-ward`, `county-subdivision`, `county-commissioner`.
 
-#### sc — 3 of 16 layers fetch their shapes
+#### sc — 3 of 17 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -350,9 +355,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `sc-senate`, `county`, `sc-house`, `county-council`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `sc-circuit-court`, `county-subdivision`, `school-board-district`, `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `sc-circuit-court`, `county-subdivision`, `school-board-district`, `voting-precinct`, `city-ward`, `tribal-government`.
 
-#### tn — 5 of 18 layers fetch their shapes
+#### tn — 5 of 19 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -364,7 +369,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `tn-senate`, `county`, `tn-house`, `county-commissioner`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `tn-judicial-district`, `school-board-district`, `county-subdivision`, `voting-precinct`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `tn-judicial-district`, `school-board-district`, `county-subdivision`, `voting-precinct`, `city-ward`, `tribal-government`.
 
 #### ar — not measured
 
@@ -381,17 +386,17 @@ measured until the next run describes it.
 | ia | 71 | 69 | 0 |
 | mi | 37 | 66 | 1 |
 | mn | 29 | 20 | 0 |
-| ky | 21 | 15 | 0 |
+| ky | 31 | 17 | 0 |
 | in | 22 | 19 | 0 |
-| nc | 19 | 12 | 0 |
-| ok | 22 | 15 | 0 |
-| sc | 23 | 16 | 0 |
-| tn | 24 | 16 | 0 |
-| ar | 26 | 17 | 0 |
-| ms | 41 | 21 | 0 |
-| **total** | **613** | **1009** | **12** |
+| nc | 38 | 16 | 0 |
+| ok | 31 | 17 | 0 |
+| sc | 36 | 19 | 0 |
+| tn | 34 | 18 | 0 |
+| ar | 28 | 19 | 0 |
+| ms | 41 | 23 | 0 |
+| **total** | **676** | **1026** | **12** |
 
-**167 distinct source hosts** across the six manifests. Each instance's
+**199 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

@@ -32,7 +32,8 @@ printed in mixed case, show none in any of these 24 names.
 
 PRIVACY: the page prints no address, phone or e-mail for any commissioner.
 The county government's page does print each member's home street address,
-town, ZIP and a personal phone; it is not read.
+town, ZIP and a phone number. It is not read because it still lists the
+2022-2026 commission (above), not for privacy, so none of its numbers ship.
 
 Currency: checked 2026-10-11 against the Sullivan County Election
 Commission's own results of the 6 August 2026 County General

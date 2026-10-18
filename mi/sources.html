@@ -843,6 +843,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1349,7 +1355,7 @@ table.matrix code {
                 <td data-label="What it answers">The unified (K-12) school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 514 features for Michigan, measured 2026-09-04</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 514 features for Michigan, measured 2026-09-04</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Michigan school boards are elected (MCL 380.11a et seq.), and no statewide roster of the ~540 boards' members was found in the research pass — recorded as gap mi-school-board-members rather than guessed at. Per-district rosters are later phase work.</td>
@@ -1360,7 +1366,7 @@ table.matrix code {
                 <td data-label="What it answers">The elementary school district covering the point, in the 27 places Michigan runs one.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 27 features for Michigan, measured 2026-09-04. Layer 1 (SECONDARY) returns ZERO features for Michigan and is a recorded drop, not an empty toggle — see docs/DATA_LAYER_GUIDEBOOK.md</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 27 features for Michigan, measured 2026-09-04. Layer 1 (SECONDARY) returns ZERO features for Michigan and is a recorded drop, not an empty toggle — see docs/DATA_LAYER_GUIDEBOOK.md</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER — the same gap as the unified layer (mi-school-board-members); the card names the district only.</td>
@@ -1396,7 +1402,7 @@ table.matrix code {
                 <td data-label="What it answers">The township covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,581 features for Michigan, measured 2026-09-04</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 1,581 features for Michigan, measured 2026-09-04</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS SO. Michigan townships elect a supervisor, clerk, treasurer and trustees (MCL 41.61; MCL 42.3 for charter townships), and no statewide roster of them was found in the research pass — recorded as gap mi-township-officers. The card names the office and states plainly that this app does not know who holds it. The 301 city records and the 40 water records are Census bookkeeping constructs, not governments, so no roster claim applies to them at all.</td>
@@ -1407,7 +1413,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='26' — and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape, since passing this instance's {minLng,...} METRO_BBOX makes TIGERweb answer HTTP 200 with a JSON error envelope and zero features (measured 2026-09-04)</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='26' — and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape, since passing this instance's {minLng,...} METRO_BBOX makes TIGERweb answer HTTP 200 with a JSON error envelope and zero features (measured 2026-09-04)</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more than it does.</td>
@@ -1418,7 +1424,7 @@ table.matrix code {
                 <td data-label="What it answers">The incorporated city or village covering the point, if any — and which of the two it is, because in Michigan that changes what else governs the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 533 features for Michigan, measured 2026-09-04</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 533 features for Michigan, measured 2026-09-04</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS SO — no statewide source names Michigan's mayors, village presidents, council members or clerks; the Michigan Municipal League's directory is membership-facing and the state publishes no aggregate. Recorded as gap mi-municipal-officeholders. Per-municipality rosters are later phase work, the route every other instance took.</td>
@@ -1621,7 +1627,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 514 features for Michigan, measured 2026-09-04",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 514 features for Michigan, measured 2026-09-04",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1643,7 +1649,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 27 features for Michigan, measured 2026-09-04. Layer 1 (SECONDARY) returns ZERO features for Michigan and is a recorded drop, not an empty toggle — see docs/DATA_LAYER_GUIDEBOOK.md",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 27 features for Michigan, measured 2026-09-04. Layer 1 (SECONDARY) returns ZERO features for Michigan and is a recorded drop, not an empty toggle — see docs/DATA_LAYER_GUIDEBOOK.md",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
       ],
@@ -1687,7 +1693,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,581 features for Michigan, measured 2026-09-04",
+          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 1,581 features for Michigan, measured 2026-09-04",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
       ],
@@ -1709,7 +1715,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='26' — and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape, since passing this instance's {minLng,...} METRO_BBOX makes TIGERweb answer HTTP 200 with a JSON error envelope and zero features (measured 2026-09-04)",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='26' — and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape, since passing this instance's {minLng,...} METRO_BBOX makes TIGERweb answer HTTP 200 with a JSON error envelope and zero features (measured 2026-09-04)",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1852,7 +1858,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 533 features for Michigan, measured 2026-09-04",
+          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 533 features for Michigan, measured 2026-09-04",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],

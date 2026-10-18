@@ -155,12 +155,34 @@ _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|foote
           r"label|title|hr)")
 
 
+def _cf_decode(hexstr):
+    """One address Cloudflare's e-mail protection hides: the first byte is
+    the key and every later byte is a character XORed with it."""
+    key = int(hexstr[:2], 16)
+    return "".join(chr(int(hexstr[i:i + 2], 16) ^ key) for i in range(2, len(hexstr), 2))
+
+
+def _cf_emails(body):
+    """Each element Cloudflare's e-mail protection fills with "[email
+    protected]" is replaced by the address it carries in data-cfemail, which
+    the page's own script shows every visitor. Only that element is
+    replaced: a link whose href alone is protected keeps its own text,
+    because Upper Sioux's footer wraps its telephone line in one. Decoded
+    since 2026-10-17 under the operator's rule that contact details an
+    official government page prints are published (the fleet already does
+    this for Will, Warren, Tennessee, Wisconsin and Aitkin pages); measured
+    that day, no nation's parsed council changes except Prairie Band's."""
+    return re.sub(r'(?is)<(a|span)\b[^>]*\bdata-cfemail="([0-9a-fA-F]+)"[^>]*>.*?</\1>',
+                  lambda m: _cf_decode(m.group(2)), body)
+
+
 def lines_of(body, br=" \n"):
     """Page text, one line per block element; inline tags join. A <br> ends a
     line by default, because Red Cliff separates its whole council with them,
     and a page that breaks one NAME across a <br> inside a heading (Lac Vieux
     Desert) says so with `"br": " "` in NATIONS."""
     t = re.sub(r"(?is)<(script|style|noscript|template)\b.*?</\1>", " ", body)
+    t = _cf_emails(t)
     t = re.sub(r"(?is)<!--.*?-->", " ", t)
     t = re.sub(r"(?i)<br\b[^>]*>", br, t)
     t = re.sub(r"(?i)</?%s\b[^>]*>" % _BLOCK, "\n", t)
@@ -186,7 +208,8 @@ def _m(name, role, **extra):
     out = {"name": name.strip(), "role": role.strip()}
     for k, v in extra.items():
         if v:
-            out[k] = v.strip()
+            # phonesExtra is a list of further numbers, each kept as printed
+            out[k] = [x.strip() for x in v] if isinstance(v, list) else v.strip()
     return out
 
 
@@ -503,10 +526,11 @@ def p_prairie_band(pages):
     # term and telephone sit in their own block there; the block is opened by
     # its "Term:" line.
     #
-    # The e-mail addresses are NOT carried: the site prints every one as
-    # Cloudflare's "[email protected]" placeholder, and decoding that is a
-    # question put to the operator rather than settled here. The telephone is
-    # the "P)" line inside the member's own block; the fax ("F)") is dropped.
+    # The e-mail is the "Email:" line inside the member's own block, which
+    # the site hides behind Cloudflare's e-mail protection and lines_of
+    # decodes; the "Assistant Email:" line beside it is the assistant's and
+    # is not carried. The telephone is the "P)" line in the same block; the
+    # fax ("F)") is dropped.
     ls = _after(pages[0], "Meet Our Council Officers")
     out, seen = [], set()
     office = re.compile(r"(?:Tribal Council Chairperson|Vice Chair Person|Treasurer|"
@@ -532,6 +556,9 @@ def p_prairie_band(pages):
         end = re.search(r"(20\d\d)\s*$", term[0])
         phones = [_phone(l) for l in block if l.startswith("P)")]
         phone = phones[0] if phones else None
+        emails = [_email(l) for l in block if l.startswith("Email:")]
+        if len(emails) > 1:
+            raise ValueError("%r has %d Email lines" % (ls[k], len(emails)))
         seat = None
         m = re.match(r"Council Member - (\d)$", label)
         if m:
@@ -542,18 +569,29 @@ def p_prairie_band(pages):
             role = "Vice Chairperson"
         else:
             role = label
-        out.append(_m(name, role, phone=phone, note=seat,
-                      termEnds=end.group(1) if end else None))
+        out.append(_m(name, role, phone=phone, email=emails[0] if emails else None,
+                      note=seat, termEnds=end.group(1) if end else None))
         seen.add(name)
     return out
 
 
 def p_bois_forte(pages):
     # each member: name, office, then "Office:" / "Cell:" / "Fax:" lines and an
-    # e-mail. The office line is carried; a cell number is the member's own
-    # and the page prints one for every member, but the office line is what a
-    # reader calling the government wants, so that is the one carried.
+    # e-mail. The first office line is carried in `phone`, as it always was.
+    # The member's own number is carried too, in `phonesExtra`, under Adam's
+    # ruling of 2026-10-17 ("if the official government source uses personal
+    # phone numbers, we publish those"): a "Cell:" line as "cell <number>",
+    # and the one line the page labels with the member's own name instead (the
+    # Vice-Chairperson's, read 2026-10-17) as the bare number, because the page
+    # gives no word for what kind of line it is and none is invented. A fax
+    # line is never read, and a number the page prints more than once (a
+    # government office's main line) is never carried as anyone's own.
     ls = _after(pages[0], "Bois Forte Tribal Council")
+    printed = {}
+    for l in ls:
+        for n in re.findall(r"\(?\d{3}\)?[-. ]\d{3}-\d{4}", l):
+            key = re.sub(r"\D", "", n)
+            printed[key] = printed.get(key, 0) + 1
     office = re.compile(r"(Chairperson|Secretary Treasurer|District (I+) Representative)")
     out = []
     for k, line in enumerate(ls):
@@ -576,6 +614,11 @@ def p_bois_forte(pages):
             if pm:
                 phone = pm.group(1)
                 break
+        own = []
+        for l in block:
+            cm = re.match(r"(Cell|%s): (\(?\d{3}\)?[-. ]\d{3}-\d{4})$" % re.escape(line), l)
+            if cm and printed.get(re.sub(r"\D", "", cm.group(2))) == 1:
+                own.append(("cell " if cm.group(1) == "Cell" else "") + cm.group(2))
         district = None
         dm = re.search(r"District (I+) Representative", label)
         if dm:
@@ -586,7 +629,7 @@ def p_bois_forte(pages):
             role = "District Representative"
         else:
             role = label
-        out.append(_m(line, role, district=district, phone=phone,
+        out.append(_m(line, role, district=district, phone=phone, phonesExtra=own,
                       email=_email(block[-1]) if block else None))
     return out
 
@@ -946,6 +989,29 @@ def selftest():
                            ["Treasurer", "Council Member"])[-1] == ("Council Member", "Herb Daniels Jr.")
     assert _phone("920-869-4420") == "920-869-4420" and _phone("none") is None
     assert _email("x thill7@oneidanation.org y") == "thill7@oneidanation.org"
+    # Cloudflare's own example key: 0x15 XORed through "ab@c.de"
+    hidden = "15" + "".join("%02x" % (ord(c) ^ 0x15) for c in "ab@c.de")
+    assert lines_of('<p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" '
+                    'data-cfemail="%s">[email&#160;protected]</a></p>' % hidden) == ["Email: ab@c.de"]
+    # a link whose href alone is protected keeps its own text
+    assert lines_of('<a href="/cdn-cgi/l/email-protection#%s"><span>(320) 564-3853</span></a>'
+                    % hidden) == ["(320) 564-3853"]
+    # Bois Forte's shape (numbers invented): the office line stays in phone,
+    # the member's own line rides phonesExtra with the page's word "cell" or
+    # bare where the page labels it with the name; a fax and a number printed
+    # for the government office as well are not carried as anyone's own.
+    bf = p_bois_forte([["Bois Forte Tribal Council",
+                        "Ann Example", "Chairperson",
+                        "Office: 555-010-1000 x 1", "Cell: 555-010-2001",
+                        "ann@example.org",
+                        "Bob Sample", "District II Representative, Vice-Chairperson",
+                        "Vermilion Office: 555-010-3000", "Fax: 555-010-4000",
+                        "Bob Sample: 555-010-2002", "Cell: 555-010-3000",
+                        "bob@example.org",
+                        "Office: 555-010-3000"]])
+    assert bf[0]["phone"] == "555-010-1000 x 1" and bf[0]["phonesExtra"] == ["cell 555-010-2001"], bf
+    assert bf[1]["phone"] == "555-010-3000" and bf[1]["phonesExtra"] == ["555-010-2002"], bf
+    assert _m("A B", "Chair", phonesExtra=[" cell 1 "])["phonesExtra"] == ["cell 1"]
     NATIONS["9999"] = {"nation": "Test", "seats": 2}
     try:
         for bad in ([_m("A B", "Chair")],

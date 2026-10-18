@@ -442,6 +442,52 @@ def email_witnesses(name, email):
     return False
 
 
+def county_domain(county, email):
+    """Is this address on the COUNTY's own domain? It is when the domain ends
+    in .gov or carries the county's own name (humboldtcounty.iowa.gov,
+    tamacounty.org). A consumer or internet-provider host is neither, so no
+    list of them is needed."""
+    dom = email.rsplit("@", 1)[-1].lower()
+    if dom.endswith(".gov") or ".gov." in dom:
+        return True
+    cn = re.sub(r"[^a-z]", "", (county or "").lower())
+    return bool(cn) and cn in re.sub(r"[^a-z]", "", dom)
+
+
+def supervisor_address(county, members, idx):
+    """The address a county's own board page prints in members[idx]'s block,
+    and whether it ships on that supervisor: (address, None) when it does,
+    (None, why) when it does not, (None, None) when there is none.
+
+    `members` are the page's members under the names this build ships. Since
+    2026-10-17 the block is the attribution, as it already was for the phone
+    beside it -- Adam ruled that day, for every state, that a personal address
+    a government page prints beside an official ships -- so an address carrying
+    no name at all ships too. Three refusals remain, each for a way an address
+    in the block is measurably not this supervisor's: the page prints it for
+    another supervisor too (the board's, the same rule as a shared phone); it
+    is on the county's own domain and names neither this supervisor (a county
+    mailbox is issued to whoever holds the seat, so one naming nobody here is a
+    predecessor's or the board's); or it carries another supervisor's name (a
+    welded block).
+    """
+    email = (members[idx].get("email") or "").strip()
+    if not email:
+        return None, None
+    others = [m for j, m in enumerate(members) if j != idx]
+    for m in others:
+        if (m.get("email") or "").strip().lower() == email.lower():
+            return None, "the page prints it for %s too" % m.get("name")
+    if email_witnesses(members[idx].get("name"), email):
+        return email, None
+    if county_domain(county, email):
+        return None, "a county mailbox that does not name this supervisor"
+    for m in others:
+        if email_witnesses(m.get("name"), email):
+            return None, "it carries the name of %s" % m.get("name")
+    return email, None
+
+
 def clean_phone(raw):
     """Keep a phone only if it really is one; never ship a fragment."""
     if not raw:
@@ -519,6 +565,39 @@ PARTY_JOIN_CASES = [
 ]
 
 
+# supervisor_address(), on the shapes the board pages print. Every address and
+# host here is made up (.example); the shapes are the measured ones: a
+# supervisor's own name at a consumer host (Tama), a county mailbox (Humboldt,
+# Tama), and the three ways an address in one block is not that supervisor's.
+SUPERVISOR_ADDRESS_CASES = [
+    ("own name, personal host", "Tama",
+     [("Jane Doe", "janedoe@example.com"), ("Al Roe", "aroe@tamacounty.example")],
+     0, "janedoe@example.com"),
+    ("own name, county host", "Humboldt",
+     [("Jane Doe", "jdoe@humboldtcounty.example"), ("Al Roe", None)],
+     0, "jdoe@humboldtcounty.example"),
+    # the ruling's case: personal mail printed in the block, naming nobody
+    ("no name, personal host", "Tama",
+     [("Jane Doe", "bluebird7@example.net"), ("Al Roe", None)],
+     0, "bluebird7@example.net"),
+    # a county mailbox is issued to whoever holds the seat
+    ("county mailbox naming somebody else", "Tama",
+     [("Jane Doe", "kfrost@tamacounty.example"), ("Al Roe", None)],
+     0, None),
+    (".gov mailbox naming nobody here", "Humboldt",
+     [("Jane Doe", "board@example.gov"), ("Al Roe", None)],
+     0, None),
+    # a welded block: the neighbour's own address
+    ("carries another supervisor's name", "Tama",
+     [("Jane Doe", "aroe55@example.com"), ("Al Roe", None)], 0, None),
+    # printed for two supervisors, so it is the board's, as a shared phone is
+    ("printed for two", "Tama",
+     [("Jane Doe", "board5@example.com"), ("Al Roe", "Board5@example.com")],
+     0, None),
+    ("no address", "Tama", [("Jane Doe", None), ("Al Roe", None)], 0, None),
+]
+
+
 def selftest():
     bad = []
     for raw, want in DISPLAY_CASES:
@@ -534,7 +613,15 @@ def selftest():
             bad.append("%s -> %r, wanted %r" % (label, got, want))
         print("  %-4s %-24s -> %-6r %s"
               % ("OK" if got == want else "FAIL", label, got, why))
-    total = len(DISPLAY_CASES) + len(PARTY_JOIN_CASES)
+    for label, county, rows, idx, want in SUPERVISOR_ADDRESS_CASES:
+        members = [{"name": n, "email": e} for n, e in rows]
+        got, why = supervisor_address(county, members, idx)
+        if got != want:
+            bad.append("%s -> %r, wanted %r" % (label, got, want))
+        print("  %-4s %-36s -> %r %s"
+              % ("OK" if got == want else "FAIL", label, got, why or ""))
+    total = (len(DISPLAY_CASES) + len(PARTY_JOIN_CASES)
+             + len(SUPERVISOR_ADDRESS_CASES))
     if bad:
         sys.exit("build-ia-county-officers --selftest: FAIL — %d case(s): %s"
                  % (len(bad), "; ".join(bad)))
@@ -610,6 +697,7 @@ def main():
     boards = withheld = divergences = mislabels = resolved = switchboards = 0
     from_page = 0
     scraped_emails = unwitnessed = carried_emails = dropped_emails = 0
+    page_emails = 0
     pins_used = set()
     withheld_detail = []
     # Every name this build strips a leading honorific from, printed so the
@@ -819,24 +907,35 @@ def main():
                       file=sys.stderr)
             else:
                 members = []
-                for r in page_members:
+                shown_rows = [{"name": display_name(r["name"]),
+                               "email": r.get("email")} for r in page_members]
+                for i, r in enumerate(page_members):
                     shown = display_name(r["name"])
                     if shown != r["name"]:
                         honorifics.append("%s supervisor: %r -> %r"
                                           % (county, r["name"], shown))
-                    # ONE SHAPE FOR ALL 99 COUNTIES. These pages also publish
-                    # a district label, a term and often an e-mail, and the
-                    # cache keeps all three as the page's own witness -- but no
-                    # other county's supervisors carry them, nothing on the
-                    # card renders them, and four counties of 99 with extra
-                    # fields is an inconsistency a reader would see. So the
-                    # shipped record is name, phone and party, exactly like
-                    # every other board, and the structural refusal below stays
-                    # as tight as it was.
+                    # These pages also publish a district label and a term,
+                    # and the cache keeps both as the page's own witness, but
+                    # no other county's supervisors carry them and nothing on
+                    # the card renders them, so neither ships. The E-MAIL DOES
+                    # SHIP, since 2026-10-17: it is contact the county itself
+                    # prints beside this supervisor, the card renders it, and
+                    # Adam ruled that day that a personal address a government
+                    # page prints beside an official ships (Tama's page gives
+                    # one supervisor a gmail address). supervisor_address()
+                    # keeps the three refusals that say an address in this
+                    # block is not this supervisor's.
                     m = {"name": shown}
                     ph = clean_phone(r.get("phone"))
                     if ph:
                         m["phone"] = ph
+                    addr, why = supervisor_address(county, shown_rows, i)
+                    if addr:
+                        m["email"] = addr
+                        page_emails += 1
+                    elif why:
+                        print("  PAGE      %-13s %s's address is not shipped: %s"
+                              % (county, shown, why), file=sys.stderr)
                     members.append(m)
                 members.sort(key=lambda m: surname(m["name"]))
                 entry["supervisors"] = members
@@ -957,9 +1056,9 @@ def main():
                                    "name/phone/email/party may ship"
                                    % (geoid, key, sorted(set(rec) - {"name", "phone", "email", "party"})))
         for m in v.get("supervisors", []):
-            if set(m) - {"name", "phone", "party"}:
+            if set(m) - {"name", "phone", "email", "party"}:
                 raise RuntimeError("%s supervisor carries unexpected field(s) %s"
-                                   % (geoid, sorted(set(m) - {"name", "phone", "party"})))
+                                   % (geoid, sorted(set(m) - {"name", "phone", "email", "party"})))
 
     for line in party_joins:
         print(line, file=sys.stderr)
@@ -977,6 +1076,8 @@ def main():
     print("  e-mails carried forward from the shipped file, same officeholder: "
           "%d (+%d dropped, the office changed hands)"
           % (carried_emails, dropped_emails), file=sys.stderr)
+    print("  supervisor e-mails from the counties' own board pages: %d"
+          % page_emails, file=sys.stderr)
     print("ia-county-officers: %d counties | %s | boards %d, withheld %d | "
           "%d e-mails, %d phones | %d office(s) withheld for divergence, "
           "%d ISAC mislabel(s) corrected, %d pinned divergence(s)"
@@ -1002,6 +1103,13 @@ def main():
                     value["email"], "%s %s" % (rec.get("county") or geoid, office))
                 if kept is None:
                     del value["email"]
+        for m in rec.get("supervisors") or []:
+            if m.get("email"):
+                kept, _why = undeliverable.withhold(
+                    m["email"], "%s supervisor %s" % (rec.get("county") or geoid,
+                                                     m.get("name")))
+                if kept is None:
+                    del m["email"]
 
     payload = json.dumps(directory, indent=1, sort_keys=True) + "\n"
     if check_only:

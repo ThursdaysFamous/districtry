@@ -14,15 +14,17 @@ The page's last article is a "Text" post (the commission's legal notice of
 2026 meeting dates) and is not a district.
 
 PRIVACY: every member's block carries a home street address or P.O. box, a
-town and ZIP, and a personal phone number. None of those is read; only the
-first line (the name) and the e-mail link are. Each block's e-mail link is a
-percent-encoded mailto (%6d%77...@...) whose visible text is the plain
-address; the two must agree. An address is kept only on marshallcountytn.gov
-and only when it is the member's own: its local part must start with the
-member's first initial and contain the surname (every one on the page does,
-e.g. mwaggoner@, gosborne@). The page prints Geoffrey "Spanky" Osborne's
-nickname in quotes and that is kept as printed. Photos carry no name (alt
-text like "Img 7298 2") and are not read.
+town and ZIP, and a phone number. The phone is recorded as printed, under
+Adam's ruling of 2026-10-17 that a number a government publishes beside an
+official ships whosever line it is; only telephone-shaped numbers are read
+from a block, and the street, box, town and ZIP are never read. Each block's
+e-mail link is a percent-encoded mailto (%6d%77...@...) whose visible text is
+the plain address; the two must agree. An address is kept only on
+marshallcountytn.gov and only when it is the member's own: its local part must
+start with the member's first initial and contain the surname (every one on
+the page does, e.g. mwaggoner@, gosborne@). The page prints Geoffrey "Spanky"
+Osborne's nickname in quotes and that is kept as printed. Photos carry no name
+(alt text like "Img 7298 2") and are not read.
 
 Currency: checked 2026-10-11 against the Marshall County Election Commission's
 "Election Summary Report", 2026 State Primary and County General, 6 August
@@ -43,7 +45,7 @@ Shaun Arndt, Nathan Johnson, Susan Hunter, Debbie Gilbert) are the ballot's
 names."""
 import re
 from urllib.parse import unquote
-from ._common import txt, member, district_number
+from ._common import txt, member, district_number, read_phones
 
 COUNTY = "Marshall"; FIPS = "117"
 DOMAINS = ("marshallcountytn.gov",)
@@ -116,7 +118,8 @@ def parse(pages):
             name = segs[0]
             if not NAME.match(name):
                 raise ValueError("District %s: first line %r is not a name" % (d, name))
-            found.append(member(name, email=_email(desc.group(1), name)))
+            found.append(member(name, email=_email(desc.group(1), name),
+                                phones=read_phones(desc.group(1))))
         if not found:
             raise ValueError("District %s has no members" % d)
         districts[d] = found

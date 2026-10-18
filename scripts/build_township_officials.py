@@ -78,7 +78,7 @@ import json
 import os
 import re
 import sys
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import make_fail, person_email_problem  # noqa: E402  (shared machinery — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 COUSUB_FILE = os.path.join(REPO_ROOT, "il", "data", "source", "st17_il_cousub2020.txt")
@@ -114,19 +114,28 @@ EXCLUDED_OFFICES = {"Democratic Township Committeeperson",
 # shipping; a residence must never ride this file.
 HALL_ADDRESS_TYPE = 3
 
-# The one contact surface this file ships is the hall block, and the feed's
-# OWN committeeperson records prove the Email field CAN carry a personal
-# mailbox (gmail/yahoo/aol on 31 of 57 of them, live 2026-08-19). Every
-# governing record carries an organizational domain today; if one ever turns
-# personal — a small township re-pointing "contact" at the supervisor's own
-# gmail — publishing it under the Township Hall label would be both a
-# privacy leak and a misattribution, so the build REFUSES and a human looks.
-PERSONAL_EMAIL_DOMAINS = {
-    "gmail.com", "googlemail.com", "yahoo.com", "aol.com", "hotmail.com",
-    "outlook.com", "live.com", "msn.com", "icloud.com", "me.com",
-    "comcast.net", "sbcglobal.net", "att.net", "ameritech.net",
-    "protonmail.com", "proton.me",
-}
+# The one contact surface this file ships is the hall block's e-mail: the
+# address the Clerk's directory lists as the township's own contact. Until
+# 2026-10-17 the build REFUSED to write when that address sat on a personal
+# mailbox provider (gmail, yahoo and the like), on the reasoning that a small
+# township re-pointing its contact at a supervisor's own mailbox would be a
+# privacy leak shown under the Township Hall label. Adam's choice of that day
+# ("E-mails too") is that an address a government source publishes as an
+# official's or an office's contact ships whatever its domain, so the domain
+# test is gone. Two checks apply instead: the value must be exactly one
+# address (scraper_common.person_email_problem; the error names the township,
+# never the address), and an address two or more townships give as their hall
+# e-mail is none of theirs, so it ships on none of them and the run says
+# which. Measured that day: 29 of 29 townships list a hall e-mail, none on a
+# provider the old test named and no two the same. The committeeperson
+# records, whose e-mails are the personal ones (31 of 57 on 2026-08-19), stay
+# out of this file because they are party offices, not because of their
+# domains.
+#
+# Hall e-mails that ship: 29, measured 2026-10-17. About two thirds, so a
+# feed change that empties the field fails the build instead of shipping a
+# roster with the contact gone.
+MIN_HALL_EMAILS = 19
 
 # Jurisdictions expected to hold ZERO governing records after the
 # exclusions. Evanston Township dissolved into the City of Evanston in 2014;
@@ -251,10 +260,11 @@ def hall_of(rec, jurisdiction):
         city_zip = "%s IL %s" % (clean(addr.get("City")), clean(addr.get("Zip")) or "")
         city_zip = city_zip.strip()
     email = clean(addr.get("Email"))
-    if email and email.rsplit("@", 1)[-1].lower() in PERSONAL_EMAIL_DOMAINS:
-        fail("%s's hall e-mail is a personal mailbox (%s) — a personal "
-             "address must never ship as the Township Hall; re-read the "
-             "directory before shipping" % (jurisdiction, email))
+    if email:
+        problem = person_email_problem(email)
+        if problem:
+            fail("%s's hall e-mail %s — re-read the directory before shipping"
+                 % (jurisdiction, problem))
     office = {
         "address": ", ".join(p for p in (street, city_zip) if p) or None,
         # The hall block's phone ONLY — the record-level Phone sits outside
@@ -421,13 +431,35 @@ def main():
         fail("only %d officials resolved (floor %d) — refusing to overwrite "
              "a good file with a partial scrape" % (total_members, MIN_MEMBERS))
 
+    # An address two or more townships give as their hall e-mail belongs to
+    # none of them (see MIN_HALL_EMAILS above); it ships on none.
+    givers = {}
+    for geoid, entry in roster.items():
+        email = (entry.get("office") or {}).get("email")
+        if email:
+            givers.setdefault(email.lower(), []).append(geoid)
+    for geoids in givers.values():
+        if len(geoids) > 1:
+            warn("%s give the same hall e-mail, so it is none of theirs; it "
+                 "ships on none of them" % ", ".join(sorted(roster[g]["name"] for g in geoids)))
+            for g in geoids:
+                del roster[g]["office"]["email"]
+                if not roster[g]["office"]:
+                    del roster[g]["office"]
+    hall_emails = sum(1 for e in roster.values() if (e.get("office") or {}).get("email"))
+    if hall_emails < MIN_HALL_EMAILS:
+        fail("only %d townships carry a hall e-mail (floor %d) — the directory "
+             "may have stopped publishing it; re-read it before shipping"
+             % (hall_emails, MIN_HALL_EMAILS))
+
     out_path = os.path.join(args.out_dir, "township-officials.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(roster, f, indent=2, ensure_ascii=False, sort_keys=True)
         f.write("\n")
     heads = sum(1 for e in roster.values() if e.get("head"))
     print("build-township-officials: wrote %s — %d townships, %d officials "
-          "(%d heads)" % (out_path, len(roster), total_members, heads))
+          "(%d heads), %d hall e-mails" % (out_path, len(roster), total_members,
+                                           heads, hall_emails))
 
 
 if __name__ == "__main__":

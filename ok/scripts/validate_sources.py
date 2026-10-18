@@ -223,6 +223,97 @@ PROVENANCE = [
             "this row notices the page going away."
         ),
     },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2",
+        "note": (
+            "Oklahoma City's 8 council wards, from the city's own map, which says "
+            "nothing about when it was drawn, one of the 56 wards and districts of "
+            "the 9 Oklahoma cities above 25,000 people whose wards elect their own "
+            "members, pre-built by ok/scripts/build_ok_city_wards.py through "
+            "scripts/city_ward_maps.py, which takes the cities to draw from "
+            "ok/data/source/ok-city-council-seats.json; the quarterly --watch row "
+            "in ok/WATCH.md compares each map's fingerprint recorded at the build. "
+            "The names on the cards come from each city's own pages, and "
+            "ok/scripts/build_ok_city_councils.py --watch is what notices one of "
+            "those changing."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Council_Districts/FeatureServer/0",
+        "note": (
+            "Tulsa's 9 council districts, from the city's own map, which carries "
+            "each district's metes-and-bounds description and was last edited on "
+            "29 January 2026 (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services.arcgis.com/rt1leD4Hj3sLGHNL/arcgis/rest/services/Council_Wards/FeatureServer/1",
+        "note": (
+            "Norman's 8 council wards, from the city's own map, which says it was "
+            "\"Updated September 13, 2022 by O-2223-8\" (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://gis.cityofmoore.com/arcgis/rest/services/OpenData/Government_Services/MapServer/20",
+        "note": (
+            "Moore's 3 council wards, each electing two members, from the city's "
+            "own map (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://maps.midwestcityok.org/arcgis/rest/services/OpenData/CouncilWards/MapServer/0",
+        "note": (
+            "Midwest City's 6 council wards, from the city's own map (see the "
+            "Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services6.arcgis.com/LIvKKeLD11lMmJuJ/arcgis/rest/services/Ward_Publishing_Doc/FeatureServer/8",
+        "note": (
+            "Enid's 6 commission wards, from the city's own map, last edited on 4 "
+            "August 2025, Ward 2 in two records (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://arcgissrv.cityofbartlesville.org/arcgisserver/rest/services/Citymaps/CityMaps_BvilleGIS/MapServer/32",
+        "note": (
+            "Bartlesville's 5 council wards, from the city's own map (see the "
+            "Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://maps.shawneeok.org/server/rest/services/City_Wards/FeatureServer/0",
+        "note": (
+            "Shawnee's 6 commission wards, from the city's own map, which carries "
+            "each ward's number in a field named STATEFP10 and was last edited on "
+            "22 September 2026 (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services6.arcgis.com/TI4WUPORw6hUtDVO/arcgis/rest/services/City_Council_Wards/FeatureServer/0",
+        "note": (
+            "Bixby's 5 council wards, from the city's own map, in 11 records, last "
+            "edited on 26 August 2026 (see the Oklahoma City row)."
+        ),
+    },
 ]
 
 ENDPOINTS = [

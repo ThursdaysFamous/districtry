@@ -1,0 +1,229 @@
+{
+ "districts_per_geoid": {
+  "4714000": 9,
+  "4715160": 12,
+  "4715400": 5,
+  "4716540": 5,
+  "4727740": 4,
+  "4728540": 5,
+  "4733280": 6,
+  "4737640": 9,
+  "4748000": 9,
+  "4750280": 4,
+  "4750780": 4
+ },
+ "fetched": "2026-10-17",
+ "fingerprint": {
+  "districts": 72,
+  "sha256": "f6043b417171d880d64f4dd39369b89574e6706bbf901620ecf9a4bc85602add"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "44bf6c33ca66449c0a797149065d5c6ab6f441758b0c171a008614108f38bceb",
+ "sources": {
+  "4714000": {
+   "city": "Chattanooga",
+   "covers_place_pct": 99.8,
+   "field": "COUNCIL",
+   "fingerprint": {
+    "districts": 9,
+    "sha256": "3ce8506286f3b68b5210c01fb107fc5e00ba586e587d362113a99c74e7a3ef67"
+   },
+   "item": "f7c14c7fe3b748998dc4320ab31f7f19",
+   "layer": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Council_Districts/FeatureServer/0",
+   "layer_edited": "2025-11-26T16:07:02Z",
+   "outside_place_pct": 0.2,
+   "part_records_joined": 0,
+   "records": 9,
+   "where": "1=1"
+  },
+  "4715160": {
+   "city": "Clarksville",
+   "covers_place_pct": 99.6,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 12,
+    "sha256": "6b864cde7957cbc04b0cc612e93b4d4aacf4fe3686340209d454a26db5df58f8"
+   },
+   "item": "4541dff6e6854a3cadd3382ec48bc56f",
+   "layer": "https://gis.mcgtn.org/arcgis/rest/services/CityWard/MapServer/1",
+   "layer_edited": null,
+   "outside_place_pct": 0.0,
+   "part_records_joined": 0,
+   "records": 12,
+   "where": "1=1"
+  },
+  "4715400": {
+   "city": "Cleveland",
+   "covers_place_pct": 99.7,
+   "field": "DISTRICTID",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "2a9b3c19318cdf6fdfac0e39523b49648ad6da0dd01063d9941017be88c6d251"
+   },
+   "item": null,
+   "layer": "https://gis.clevelandtn.gov/arcgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 4.9,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  },
+  "4716540": {
+   "city": "Columbia",
+   "covers_place_pct": 99.1,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "a2851257e212f9b4c7b00c342bc3c4b163ec68179833ed9286f1712a15350e7f"
+   },
+   "item": "efb5d54363a44efcbfda28878b63fce2",
+   "layer": "https://services6.arcgis.com/ubRvNDgGwwJuZMcL/arcgis/rest/services/Wards_VL/FeatureServer/0",
+   "layer_edited": "2025-09-15T19:32:50Z",
+   "outside_place_pct": 1.2,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  },
+  "4727740": {
+   "city": "Franklin",
+   "covers_place_pct": 99.8,
+   "field": "NAME",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "0b80d380ff6f61ae32a426d1e061c449a9886ac93b3e93117045e3ad9798cfdd"
+   },
+   "item": null,
+   "layer": "https://publicmaps.franklintn.gov/arcgis/rest/services/Maps/GovernmentServices/MapServer/21",
+   "layer_edited": null,
+   "outside_place_pct": 0.8,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "4728540": {
+   "city": "Gallatin",
+   "covers_place_pct": 99.2,
+   "field": "District",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "6768a6682eae445d97376374032a7394af45de121e7158f045ee59a17ee58cd5"
+   },
+   "item": "637c3db18e354a9bb6527838cfb8fd47",
+   "layer": "https://arcweb.gallatin-tn.gov/arcgis/rest/services/Features/City_Council_Districts/MapServer/2",
+   "layer_edited": null,
+   "outside_place_pct": 3.2,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  },
+  "4733280": {
+   "city": "Hendersonville",
+   "covers_place_pct": 85.0,
+   "field": "DISTRICT",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "5ed9765dd453ab3714fc59ef304d3734fc1b2ee79dfdaaba3d8a87c05c7ccf50"
+   },
+   "item": "3c1512dfa9d549838d4e249e86c79af5",
+   "layer": "https://services5.arcgis.com/I2fcoygeHRmx0WzS/arcgis/rest/services/PSALayers/FeatureServer/29",
+   "layer_edited": "2026-06-26T13:44:40Z",
+   "outside_place_pct": 0.3,
+   "part_records_joined": 13,
+   "records": 19,
+   "where": "1=1"
+  },
+  "4737640": {
+   "city": "Jackson",
+   "covers_place_pct": 99.6,
+   "field": "District",
+   "fingerprint": {
+    "districts": 9,
+    "sha256": "fae9aa52daf2a88cc8b2e0d04274b139ab1ead602230acd32fc531b1940b689b"
+   },
+   "item": "75fda9f22473473184ef55018f96c827",
+   "layer": "https://services3.arcgis.com/k6aQP9AQncZQEtBv/arcgis/rest/services/PSALayers/FeatureServer/86",
+   "layer_edited": "2026-08-26T19:58:44Z",
+   "outside_place_pct": 1.8,
+   "part_records_joined": 0,
+   "records": 9,
+   "where": "1=1"
+  },
+  "4748000": {
+   "city": "Memphis",
+   "covers_place_pct": 99.9,
+   "districts": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+   ],
+   "field": "CD",
+   "fingerprint": {
+    "districts": 7,
+    "sha256": "6935dc4945b709ab26c1768947d8f04c6b9db516850d53a57dbf37b0c8f6d180"
+   },
+   "item": "1e86a62b9700489a906cfbe7872a3ac0",
+   "layer": "https://gis.memphistn.gov/server/rest/services/Basemaps/Administrative_Boundaries/MapServer/1",
+   "layer_edited": null,
+   "outside_place_pct": 0.8,
+   "part_records_joined": 0,
+   "records": 7,
+   "where": "1=1"
+  },
+  "4748000-sd": {
+   "city": "Memphis",
+   "covers_place_pct": 99.9,
+   "districts": [
+    "8",
+    "9"
+   ],
+   "field": "SD",
+   "fingerprint": {
+    "districts": 2,
+    "sha256": "e7c4b8716bec0cdb4546c7bdb348f4087c940989fddec1e213488e1d49326a7d"
+   },
+   "item": "1e86a62b9700489a906cfbe7872a3ac0",
+   "layer": "https://gis.memphistn.gov/server/rest/services/Basemaps/Administrative_Boundaries/MapServer/2",
+   "layer_edited": null,
+   "outside_place_pct": 0.8,
+   "part_records_joined": 0,
+   "records": 2,
+   "where": "1=1"
+  },
+  "4750280": {
+   "city": "Morristown",
+   "covers_place_pct": 99.8,
+   "field": "districtid",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "53b22e6fc1f31f1c9d85c29c9a11f2e26921d0349cbee766ccae8c41ccfbdebb"
+   },
+   "item": "336e5c6731ff46028db7231d745ce2a5",
+   "layer": "https://services.arcgis.com/xhDV83hFoiDFnMbw/arcgis/rest/services/Morristown_Ward_Map/FeatureServer/0",
+   "layer_edited": "2026-06-03T14:23:37Z",
+   "outside_place_pct": 0.3,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "4750780": {
+   "city": "Mount Juliet",
+   "covers_place_pct": 99.6,
+   "field": "CITYDIST",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "d891a88171779eb2cc1adf11bdd0a4d73c5069f84e9c7da30274a0e385d60d37"
+   },
+   "item": "28cba190538244e298eafbe7ca3f14c5",
+   "layer": "https://utility.arcgis.com/usrsvcs/servers/621b088a06a84f16b412e25b8d127804/rest/services/Administration_City/FeatureServer/1",
+   "layer_edited": "2026-08-25T16:40:49Z",
+   "outside_place_pct": 10.3,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  }
+ }
+}

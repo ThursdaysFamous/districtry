@@ -80,16 +80,17 @@ CAPABILITIES = [
 # The constants below are GENERATED from metro-worksheet.json (Conversion 2 —
 # edit the worksheet, run scripts/generate_metro_files.py). Fork history worth
 # keeping by hand: this instance's registerLayer floor arithmetic is 1 function
-# definition + 5 factory bodies + 3 direct registerLayer() calls (county, and
-# phase 3's county-subdivision and municipality) = 9 today, against a floor of
-# 6. THE PARAGRAPH THAT USED TO SIT HERE WAS ILLINOIS'S, inherited verbatim
+# definition + 5 factory bodies + 6 direct registerLayer() calls (county,
+# county-subdivision, voting-precinct, municipality, city-ward and
+# school-board-district) = 12, counted 2026-10-17, and the floor is that count.
+# THE PARAGRAPH THAT USED TO SIT HERE WAS ILLINOIS'S, inherited verbatim
 # when this validator was cloned: it described 11 direct calls, a
 # police-station/fire-station move and a township layer, none of which this
 # instance has ever had. The same stale paragraph is still in ia/ and wi/.
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 12
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -97,8 +98,9 @@ MIN_REGISTER_LAYER = 9
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "nc-senate", "county", "nc-house", "school-district-unified",
-    "county-subdivision", "zip-code", "tribal-government", "voting-precinct",
-    "municipality", "police-station", "fire-station", "post-office",
+    "county-subdivision", "school-board-district", "zip-code",
+    "tribal-government", "voting-precinct", "municipality", "city-ward",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +112,8 @@ GEOMETRY_FILES = {
     "nc-house-districts.json": (120, 120),  # The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files.
     "tribal-areas.json": (2, 2),  # North Carolina's tribal land (scripts/build_tribal_areas.py) — the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians'. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
     "nc-precincts.json": (2625, 2625),  # Every North Carolina voting precinct, pre-built by nc/scripts/build_nc_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' file as NC OneMap serves it (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 2,625 count on the fetch and the drawn file). 8.2 MB, 2.43 MB gzipped, fetched only when a reader switches the layer on.
+    "nc-city-wards.json": (100, 100),  # The 100 council districts and wards of the 17 cities above 25,000 people that elect council members by district or ward, pre-built by nc/scripts/build_nc_city_wards.py through scripts/city_ward_maps.py from the map each city or its county publishes (Douglas-Peucker at 4 m; a 6,800-point agreement gate over the seventeen cities' extents, measured 99.94%, with no overlap; each map held to its city's Census outline). 1.46 MB, 410 KB gzipped, fetched only when a reader switches the layer on.
+    "nc-school-board-districts.json": (423, 423),  # The election districts of the 38 school boards that elect members by district, pre-built by nc/scripts/build_nc_school_board_districts.py from the State Board of Elections' precinct-level results and precinct maps, cut to the Census school districts (Douglas-Peucker at 15 m in one shared pass; an 8,443-point agreement gate, measured 99.657% with no point in two pieces; the widest hole between a board's pieces held under 90 m). 3.70 MB, 986 KB gzipped, fetched only when a reader switches the layer on. The floor and ceiling are equal because the pieces follow the results: a new results file can move them, and that wants reading.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -118,7 +122,9 @@ ROSTER_FILES = {
     "nc-senate-members.json": 45,  # NC Senate roster from Open States, refreshed weekly. The floor is below 50 because a vacant seat is a real event.
     "nc-house-members.json": 110,  # NC House roster from Open States, refreshed weekly. The floor is below 120 for the same reason.
     "nc-county-commissioners.json": 100,  # Every county's board of commissioners, each seat the winner of its most recent general in the State Board of Elections' results, built by nc/scripts/build_nc_county_commissioners.py and refreshed weekly by update-nc-county-commissioners.yml.
+    "nc-city-councils.json": 42,  # The mayor and council of each of the 42 cities and towns above 25,000 people, keyed by Census place id, written down from each city's own pages and proved against them by nc/scripts/build_nc_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn districts. Every page it cites is re-read weekly (watch-city-council-pages.yml), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (nc/WATCH.md).
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "nc-conservation-boards.json": 100,  # The supervisors of the soil and water conservation district covering each county, keyed by county GEOID, read from the state's District Directory by nc/scripts/build_nc_conservation_boards.py, whose --check holds the file to its record of the directory read and to the County card's wording. Re-read quarterly and after each November election (nc/WATCH.md).
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

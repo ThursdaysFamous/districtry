@@ -846,6 +846,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1414,7 +1420,7 @@ table.matrix code {
                 <td data-label="What it answers">The union high school district serving the point, where elementary and high school districts are separate.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), live</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined; the card names the district.</td>
@@ -1436,7 +1442,7 @@ table.matrix code {
                 <td data-label="What it answers">The elementary school district serving the point, where elementary and high school districts are separate.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), live</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined; the card names the district.</td>
@@ -1519,7 +1525,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area containing the point — the Census Bureau's approximation of USPS ZIP delivery areas, not the postal boundaries themselves.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas), live</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas), copied into a tile archive served from this site, re-fetched from the Census weekly</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">No officeholder exists for a ZIP code.</td>
@@ -1814,7 +1820,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), live",
+          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
         }
       ],
@@ -1858,7 +1864,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), live",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
       ],
@@ -2017,7 +2023,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas), live",
+          "name": "U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas), copied into a tile archive served from this site, re-fetched from the Census weekly",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],

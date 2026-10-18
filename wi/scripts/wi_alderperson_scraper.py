@@ -35,7 +35,9 @@ THE FIRST SIX, each with its route and its measured trap:
                     The district comes from each alder's own /council/
                     districtN page — its H1 states "District N - Alder
                     SURNAME" or "District N - Vacant" — and the seat e-mail
-                    districtN@cityofmadison.com rides the page.
+                    districtN@cityofmadison.com rides the page, as does,
+                    since 2026-10-17, the number its own contact block
+                    prints (madison_phones).
   Green Bay (12)  — the city's staff directory, parsed per <li> entry
                     (never flattened: the responsive layout prints each
                     title twice). Name, real mailto, phone, profile URL.
@@ -83,6 +85,16 @@ the CITY CLERK's own polling-locations page turned out to state the
 composition, and build_wi_aldermanic_districts.py now composes the fifteen
 districts from it under three independent witnesses and a second edition of
 one of them. A roster and the boundary it rides ship together or not at all.
+
+AN ADDRESS A CITY PRINTS IN A MEMBER'S OWN ROW SHIPS WHATEVER ITS DOMAIN, since
+2026-10-17, on Adam's choice that day ("E-mails too"). Until then Algoma,
+Marion, Black River Falls and Neenah read only an address on the city's own
+domain, and Green Bay's decoded Cloudflare address had to be on its domain too.
+Each of those readers now takes the address from the member's own block and
+stops where the next member's begins, because the domain test had also been
+keeping a neighbour's address off the row. An address printed for
+two members, or one that names another member, is the builder's to settle
+(wi_email_rules.py), and no log line or error here prints an address.
 """
 
 import html as H
@@ -710,32 +722,388 @@ def cf_decode(token):
     return "".join(chr(c ^ raw[0]) for c in raw[1:])
 
 
-def cf_email(fragment, label, domain=None):
+# One address, as a member's own block prints it: in a mailto link or as text.
+ADDRESS = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def cf_email(fragment, label):
     """{"email": ...} from the one scrambled address in FRAGMENT, or {}.
 
     THE SCRAMBLING IS NOT AN ACCESS CONTROL (Adam, 2026-10-09): the page hands
     the key to every visitor inside the same bytes, so decoding it reads the
-    page as published. Two tokens decoding to different addresses, or a token
-    that does not decode to an address (on DOMAIN, where the city has one),
-    fails — a wrong address on a card is worse than none.
+    page as published. FRAGMENT is one member's own entry, and the address it
+    decodes to ships whatever its domain (Adam's choice of 2026-10-17, "E-mails
+    too"); until that day Green Bay's had to be on the city's domain. Two
+    tokens decoding to different addresses, or a token that does not decode to
+    one address, fails — a wrong address on a card is worse than none. An
+    address shared by two members or naming another is the builder's to
+    settle. No message here prints the decoded value.
     """
     got = set()
     for t in CF_TOKEN.findall(fragment):
         try:
             got.add(cf_decode(t).strip())
         except ValueError:
-            raise SystemExit("%s: a Cloudflare email token is not hex pairs: %r" % (label, t))
+            raise SystemExit("%s: a Cloudflare email token is not hex pairs" % label)
     if not got:
         return {}
     if len(got) > 1:
-        raise SystemExit("%s: one entry carries %d different scrambled addresses %s"
-                         % (label, len(got), sorted(got)))
+        raise SystemExit("%s: one entry carries %d different scrambled addresses"
+                         % (label, len(got)))
     addr = got.pop()
-    if not re.fullmatch(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", addr) or (
-            domain and not addr.lower().endswith("@" + domain)):
-        raise SystemExit("%s: a Cloudflare token decoded to %r, not an address%s"
-                         % (label, addr, " on " + domain if domain else ""))
+    if not ADDRESS.fullmatch(addr):
+        raise SystemExit("%s: a Cloudflare token decoded to something that is not "
+                         "one address" % label)
     return {"email": addr}
+
+
+# ------------------------------------------- a member's own telephone number
+# A NUMBER PRINTED IN ONE MEMBER'S OWN BLOCK SHIPS ON THAT MEMBER, whatever
+# kind of line it is, with the label the page prints beside it: Adam's ruling
+# of 2026-10-17, for every state, that a number a government source prints
+# beside one official is published. Madison and West Bend are read this way
+# from that day (scrape_madison, scrape_west_bend).
+#
+# A number is read the way wi_county_board_scraper.py reads a supervisor's,
+# through that file's own helpers rather than a second copy of them: a line
+# holding nothing but numbers and the words labelling them gives each number
+# with its label ("cell 608-..."; "Phone" names the field, not a kind of line,
+# and is not kept), a fax number is left out, and a line holding anything else
+# (a street, a town, a ZIP code) gives nothing. What stays off: a number
+# printed for two or more members, a number the city's or council's own pages
+# print as the office's line, and a number whose tel: link dials a different
+# number than the one it shows. No message here prints a number.
+def _county():
+    """wi_county_board_scraper, imported when a reader first needs it rather
+    than at the top of this file, so that file's selftest can import this one
+    without either module loading the other as it is imported."""
+    import wi_county_board_scraper as county  # noqa: PLC0415 - this script's own folder
+    return county
+
+
+_BLOCK_TAG = re.compile(r"(?i)<(?:/?(?:p|div|li|ul|ol|tr|td|th|table|tbody|thead|"
+                        r"h[1-6]|section|article|header|footer|nav|address|dl|dt|"
+                        r"dd)|br)\b[^>]*>")
+
+
+def _block_lines(fragment):
+    """FRAGMENT's visible text, one line per block element. An inline tag (a
+    link, a span, bold) does not break a line, so a label stays beside its
+    number ("Cell: <a>608-...</a>")."""
+    t = re.sub(r"(?is)<script\b.*?</script>|<style\b.*?</style>|<!--.*?-->",
+               " ", fragment or "")
+    t = re.sub(r"<[^>]+>", " ", _BLOCK_TAG.sub("\n", t))
+    return [" ".join(line.split()) for line in H.unescape(t).split("\n")
+            if line.strip()]
+
+
+def own_numbers(fragment):
+    """(numbers, refused) for one member's own markup FRAGMENT.
+
+    `numbers` is [(the phone as it ships, its digit key), ...] in the page's
+    order, each number once: every number on a line holding nothing but
+    numbers and their labels, then the number a tel: link shows as its own
+    text where the line around the link holds other things too (West Bend
+    prints the number, the seat mailbox and a street address as three links
+    in one row, and only the number is read). `refused` holds the digit keys
+    of every tel: link that dials a different number than the one it shows;
+    neither of the two ships for this member."""
+    county = _county()
+    refused, shown_by_link = set(), []
+    for href, inner in county.TEL_LINK.findall(fragment or ""):
+        text = " ".join(_block_lines(inner))
+        if not re.search(r"\d", text):
+            continue
+        if county.tel_agrees(href, text):
+            shown_by_link.append(text)
+        else:
+            refused |= {county.phone_key(text), county.phone_key(href)}
+    out, seen = [], set()
+    for line in _block_lines(fragment) + shown_by_link:
+        for label, number in county.labelled_numbers(line) or ():
+            key = county.phone_key(number)
+            if key and key not in seen and key not in refused:
+                seen.add(key)
+                out.append((county.phone_text(label, number), key))
+    return out, refused
+
+
+_HEADING = re.compile(r"(?is)<h([1-6])\b[^>]*>(.*?)</h\1>")
+
+
+def heading_sections(page):
+    """[(heading text, start, end), ...]: each heading's section of PAGE, from
+    the heading to the next one."""
+    hs = list(_HEADING.finditer(page or ""))
+    return [(_clean(h.group(2)), h.start(),
+             hs[i + 1].start() if i + 1 < len(hs) else len(page))
+            for i, h in enumerate(hs)]
+
+
+def _cut(page, spans):
+    """PAGE with each (start, end) span taken out."""
+    parts, last = [], 0
+    for start, end in sorted(spans):
+        parts.append(page[last:start])
+        last = max(last, end)
+    parts.append(page[last:])
+    return "".join(parts)
+
+
+def set_phones(city, where, entry, phones):
+    """The first number in `phone` and any further ones in `phonesExtra`, the
+    fleet's shape for an official who publishes several."""
+    if not phones:
+        return
+    entry["phone"] = phones[0]
+    if len(phones) > 1:
+        entry["phonesExtra"] = list(phones[1:])
+        print("  note  %-12s %s publishes %d numbers; the first is `phone`, the "
+              "other %d `phonesExtra`" % (city, where, len(phones), len(phones) - 1),
+              file=sys.stderr)
+
+
+def madison_phones(index, pages):
+    """{district number: [phone, ...]} from Madison's council pages.
+
+    `index` is the council index page; `pages` is {district number: that
+    district's page}. A member's own blocks are the district page's "Contact
+    Information" section and its "Contact Alder SURNAME" card, which print the
+    same number. That number ships when no other district's page prints it
+    anywhere and the index prints it nowhere outside the alders' own sections:
+    the council office's line and its fax sit in the "Common Council" footer of
+    every one of these pages, and a number two alders shared would sit on both
+    their pages. Measured 2026-10-17: each of the twenty district pages prints
+    one number in its own blocks, as "Phone: ...", twenty distinct numbers,
+    none of them on any other page.
+    """
+    county = _county()
+    own, printed = {}, {}
+    for n, page in sorted(pages.items()):
+        blocks = "".join(page[a:b] for head, a, b in heading_sections(page)
+                         if head == "Contact Information"
+                         or head.startswith("Contact Alder"))
+        own[n], refused = own_numbers(blocks)
+        if refused:
+            print("  phone madison      district %d: a tel: link dials a different "
+                  "number than it shows; neither ships" % n, file=sys.stderr)
+        printed[n] = county.page_numbers(page)
+    office = county.page_numbers(_cut(index, [(a, b) for head, a, b in
+                                              heading_sections(index)
+                                              if head.startswith("Alder ")]))
+    out = {}
+    for n, numbers in sorted(own.items()):
+        keep = [phone for phone, key in numbers
+                if key not in office
+                and not any(key in keys for m, keys in printed.items() if m != n)]
+        if len(keep) < len(numbers):
+            print("  phone madison      district %d: %d number(s) the council's own "
+                  "lines or another alder's page also print; the office's, left off"
+                  % (n, len(numbers) - len(keep)), file=sys.stderr)
+        if keep:
+            out[n] = keep
+    return out
+
+
+_WEST_BEND_CARD = re.compile(r'(?is)<div class="rz-business-block">(.*?)'
+                             r'<!--/\.rz-business-block-->')
+# "NAME, District N Alderman", or "NAME, Council President, District N
+# Alderman": the name line scrape_west_bend reads off the flattened page, and
+# the card reader below off one card.
+_WEST_BEND_NAME = re.compile(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                             r",\s*(?:[A-Za-z ]{0,24},\s*)?District\s+(\d{1,2})\s+"
+                             r"Alder(?:man|woman|person)")
+
+
+def west_bend_phones(page):
+    """{district key: (name, [phone, ...])} from West Bend's council page.
+
+    Each member is one card (`rz-business-block`): a "District N" heading,
+    "NAME, District N Alderman", then a telephone link, the seat mailbox and a
+    street address, which is never read. A card whose heading and name line
+    name different districts gives no number. A number ships when no other
+    card prints it and the page prints it nowhere outside the cards, where the
+    city's own line is. Measured 2026-10-17: each of the eight cards prints one
+    number, as a tel: link that dials it, eight distinct numbers, none of them
+    anywhere else on the page.
+    """
+    county = _county()
+    cards = list(_WEST_BEND_CARD.finditer(page or ""))
+    found = []
+    for m in cards:
+        card = m.group(1)
+        head = re.search(r"(?is)<h[1-6][^>]*>\s*District\s+(\d{1,2})\s*</h[1-6]>",
+                         card)
+        desc = _WEST_BEND_NAME.search(re.sub(r"<[^>]+>", "|", H.unescape(card)))
+        if not head or not desc:
+            continue
+        if int(head.group(1)) != int(desc.group(2)):
+            print("  phone west bend    a card headed district %s names district "
+                  "%s; its number is not read" % (head.group(1), desc.group(2)),
+                  file=sys.stderr)
+            continue
+        numbers, refused = own_numbers(card)
+        if refused:
+            print("  phone west bend    district %s: a tel: link dials a different "
+                  "number than it shows; neither ships" % head.group(1),
+                  file=sys.stderr)
+        found.append(("%02d" % int(head.group(1)), " ".join(desc.group(1).split()),
+                      numbers))
+    outside = county.page_numbers(_cut(page, [m.span() for m in cards]))
+    holders = {}
+    for _key, _name, numbers in found:
+        for k in {k for _p, k in numbers}:
+            holders[k] = holders.get(k, 0) + 1
+    out = {}
+    for key, name, numbers in found:
+        keep = [p for p, k in numbers if holders[k] == 1 and k not in outside]
+        if len(keep) < len(numbers):
+            print("  phone west bend    district %s: %d number(s) another card or "
+                  "the city's own lines also print; the office's, left off"
+                  % (key, len(numbers) - len(keep)), file=sys.stderr)
+        if keep:
+            out[key] = (name, keep)
+    return out
+
+
+def _phone_selftest():
+    """The two phone readers on made-up pages: every number is a 555-01xx
+    number and the one street is "123 Main St". Run by this file's --selftest
+    and by wi_county_board_scraper.py's, which is the one CI runs. Exits
+    non-zero naming what went wrong, never a number."""
+    import contextlib  # noqa: PLC0415 - only the selftest needs it
+
+    def check(ok, what):
+        if not ok:
+            raise SystemExit("wi_alderperson_scraper phone selftest: " + what)
+
+    def quiet(fn, *args):
+        log = io.StringIO()
+        with contextlib.redirect_stderr(log):
+            got = fn(*args)
+        check("555" not in log.getvalue(), "a log line prints a number")
+        return got, log.getvalue()
+
+    footer = ("<footer><h2>Common Council</h2><p>Phone: 608-555-0199</p>"
+              "<p>Fax: 608-555-0198</p></footer>")
+
+    def district(n, own, after=""):
+        return ("<h1>District %d - Alder Test%s</h1><h2>Contact Information</h2>"
+                "%s%s%s" % (n, chr(96 + n), own, after, footer))
+
+    # --- Madison, the reader alone
+    pages = {
+        1: district(1, "<p>Phone: 608-555-0101</p>"),
+        2: district(2, "<p>Cell: 608-555-0102</p>"),
+        3: district(3, "<p>Phone: 608-555-0180</p>"),    # the council office's
+        4: district(4, "<p>Phone: 608-555-0104</p><p>Fax: 608-555-0197</p>"),
+        5: district(5, "<p>Phone: 608-555-0105</p>"),    # printed for two alders
+        6: district(6, "<p>Phone: 608-555-0105</p>"),
+        7: district(7, '<p>Phone: <a href="tel:6085550170">608-555-0107</a></p>'),
+        8: district(8, "<p>123 Main St, Testville 608-555-0108</p>"),
+        9: district(9, "<p>Phone: 608-555-0109</p>",
+                    "<h2>Contact Alder Testi</h2><p>Phone: 608-555-0109</p>"),
+        10: district(10, "<p>By appointment.</p>",
+                     "<h2>Resources</h2><p>Phone: 608-555-0110</p>"),
+        11: district(11, "<p>Phone: 608-555-0111</p><p>Cell: 608-555-0112</p>"),
+    }
+    index = ("<h1>Council members</h1><h2>Alder Testa</h2><p>Phone: 608-555-0101</p>"
+             "<h2>Council Office</h2><p>Phone: 608-555-0180</p>" + footer)
+    got, log = quiet(madison_phones, index, pages)
+    want = {1: ["608-555-0101"], 2: ["cell 608-555-0102"], 4: ["608-555-0104"],
+            9: ["608-555-0109"], 11: ["608-555-0111", "cell 608-555-0112"]}
+    for n in sorted(set(got) | set(want)):
+        check(got.get(n) == want.get(n), "madison district %d read wrong" % n)
+    for n in (3, 5, 6):
+        check("district %d: 1 number(s)" % n in log,
+              "madison district %d's office or shared number left no log line" % n)
+    check("district 7: a tel: link" in log, "madison's disagreeing tel: link "
+          "left no log line")
+
+    # --- Madison, the whole scrape: the number rides the alder its page names
+    named = ['<a href="/council/district%d">Alder Pat Test%s</a>' % (n, chr(96 + n))
+             for n in range(2, 21)]
+    index = ("<h1>Council members</h1>" + "".join(
+        "<h2>Alder Test%s</h2>%s" % (chr(96 + n), a)
+        for n, a in zip(range(2, 21), named))
+        + "<h2>Council Office</h2><p>Phone: 608-555-0180</p>" + footer)
+    pages = {1: "<h1>District 1 - Vacant</h1>" + footer}
+    for n in range(2, 21):
+        own = "<p>Phone: 608-555-01%02d</p>" % n
+        if n == 5:
+            own = "<p>Phone: 608-555-0180</p>"
+        if n == 20:
+            own += "<p>Cell: 608-555-0121</p>"
+        pages[n] = district(n, own)
+    served = {MADISON_INDEX: index}
+    served.update({MADISON_DISTRICT % n: p for n, p in pages.items()})
+    real = globals()["fetch"]
+    globals()["fetch"] = lambda url, **_kw: served[url]
+    try:
+        (members, _src, extra), log = quiet(scrape_madison)
+    finally:
+        globals()["fetch"] = real
+    check(extra.get("vacantDistricts") == [1], "madison's vacant district moved")
+    for n in range(2, 21):
+        entry = members["%02d" % n]
+        want = None if n == 5 else "608-555-01%02d" % n
+        check(entry.get("phone") == want, "madison district %d's phone" % n)
+        check(entry.get("phonesExtra") == (["cell 608-555-0121"] if n == 20 else None),
+              "madison district %d's further numbers" % n)
+
+    # --- West Bend, the reader alone
+    def card(head, name, seat, body):
+        return ('<div class="rz-business-block"><h3>District %d</h3>'
+                "<p>%s, District %d Alderman</p>%s<!--/.rz-business-block-->"
+                % (head, name, seat, body))
+
+    tel = '<p><a href="tel:%s">%s</a></p>'
+    page = ("<h1>Common Council</h1>"
+            + card(1, "Ann Testa", 1,
+                   '<p><a href="tel:2625550101">262-555-0101</a> | '
+                   '<a href="mailto:district1@example.com">district1@example.com</a>'
+                   ' | <a href="#">123 Main St</a></p>')
+            + card(2, "Bo Testb", 2, tel % ("2625550120", "262-555-0102"))
+            + card(3, "Cy Testc", 3, "<p>Cell: 262-555-0103</p>")
+            + card(4, "Di Testd", 4, tel % ("2625550199", "262-555-0199"))
+            + card(5, "Ed Teste", 5, tel % ("2625550105", "262-555-0105"))
+            + card(6, "Flo Testf", 6, tel % ("2625550105", "262-555-0105"))
+            + card(7, "Gus Testg", 8, tel % ("2625550107", "262-555-0107"))
+            + card(8, "Hal Testh", 8,
+                   "<p>Phone: 262-555-0108</p><p>Fax: 262-555-0198</p>")
+            + '<footer><p>City Hall: <a href="tel:2625550199">262-555-0199</a>'
+              "</p></footer>")
+    got, log = quiet(west_bend_phones, page)
+    want = {"01": ("Ann Testa", ["262-555-0101"]),
+            "03": ("Cy Testc", ["cell 262-555-0103"]),
+            "08": ("Hal Testh", ["262-555-0108"])}
+    for key in sorted(set(got) | set(want)):
+        check(got.get(key) == want.get(key), "west bend district %s read wrong" % key)
+    check("district 2: a tel: link" in log, "west bend's disagreeing tel: link "
+          "left no log line")
+    check("headed district 7 names district 8" in log,
+          "west bend's mismatched card left no log line")
+    for key in ("04", "05", "06"):
+        check("district %s: 1 number(s)" % key in log,
+              "west bend district %s's office or shared number left no log line" % key)
+
+    # --- West Bend, the whole scrape, one card in the council president's form
+    cards = [card(n, "Pat Test%s" % chr(96 + n), n,
+                  tel % ("26255501%02d" % n, "262-555-01%02d" % n))
+             for n in range(1, 9)]
+    cards[3] = card(4, "Pat Testd, Council President", 4,
+                    tel % ("2625550104", "262-555-0104"))
+    page = "<h1>Common Council</h1>" + "".join(cards)
+    globals()["fetch"] = lambda url, **_kw: page
+    try:
+        (members, _src), log = quiet(scrape_west_bend)
+    finally:
+        globals()["fetch"] = real
+    for n in range(1, 9):
+        seat = members["%02d" % n]
+        check(len(seat) == 1 and seat[0].get("phone") == "262-555-01%02d" % n,
+              "west bend district %d's phone" % n)
+    print("wi_alderperson_scraper phone selftest: Madison and West Bend readers OK")
 
 
 def strip_tags(html):
@@ -899,8 +1267,10 @@ def scrape_madison():
                          "with vacancies) — the page shape moved" % len(by_href))
     members = {}
     vacant = []
+    pages = {}
     for n in range(1, 21):
         page = fetch(MADISON_DISTRICT % n)
+        pages[n] = page
         h1 = re.search(r"<h1[^>]*>(.*?)</h1>", page, re.S)
         head = H.unescape(re.sub(r"<[^>]+>", "", h1.group(1))).strip() if h1 else ""
         if not head.startswith("District %d" % n):
@@ -918,6 +1288,13 @@ def scrape_madison():
         if m:
             entry["email"] = m.group(1)
         members["%02d" % n] = entry
+    # THE NUMBER EACH ALDER'S OWN PAGE PRINTS, since 2026-10-17: its "Contact
+    # Information" section and its "Contact Alder" card print one "Phone:"
+    # line, which ships unless the council's own pages or another alder's page
+    # print it too (madison_phones).
+    for n, phones in madison_phones(index, pages).items():
+        if "%02d" % n in members:
+            set_phones("madison", "district %d" % n, members["%02d" % n], phones)
     if len(members) + len(vacant) != 20:
         raise SystemExit("madison: %d named + %d vacant != 20" % (len(members), len(vacant)))
     if len(members) < 17:
@@ -953,7 +1330,7 @@ def scrape_green_bay():
         if em:
             entry["email"] = em.group(1).strip()
         else:
-            entry.update(cf_email(li, "green bay D%d" % n, "greenbaywi.gov"))
+            entry.update(cf_email(li, "green bay D%d" % n))
         ph = re.search(r'href="tel:([^",]+)', li)
         if ph:
             entry["phone"] = ph.group(1).strip()
@@ -2100,6 +2477,13 @@ def scrape_algoma():
     THE MAILBOX IS NUMBERED BY SEAT, NOT BY DISTRICT — alder1@ and alder2@ are
     both District 1 — so it is carried as that member's own address and never
     used to derive which district anybody sits in.
+
+    THE ADDRESS SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on algomacity.org was read. It is
+    the first address in the seat's block that sits before the block's phone,
+    and within its first 200 characters, because the last block runs on to
+    the page's footer. Measured that day, every seat prints its mailbox about
+    45 characters into its block and its phone about 30 after that.
     """
     page = fetch(ALGOMA_INDEX)
     flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
@@ -2110,10 +2494,10 @@ def scrape_algoma():
         if not nm:
             continue
         entry = {"name": " ".join(nm.group(1).split())}
-        em = re.search(r"([A-Za-z0-9._%+-]+@algomacity\.org)", block)
-        if em:
-            entry["email"] = em.group(1).lower()
         ph = re.search(r"\b(\d{3})-(\d{3})-(\d{4})\b", block)
+        em = ADDRESS.search(block[:min(ph.start() if ph else 200, 200)])
+        if em:
+            entry["email"] = em.group(0).lower()
         if ph:
             entry["phone"] = "(%s) %s-%s" % ph.groups()
         _put("algoma", members, "%02d" % int(hit.group(1)), entry)
@@ -2210,6 +2594,12 @@ def scrape_marion():
     supervisor rule (wi_county_board_scraper.drop_shared_phones), so it is
     dropped from both and the first number left ships. Home addresses are
     stepped over and never stored.
+
+    THE CARD'S MAILTO SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's
+    choice that day, "E-mails too"); until then only one on cityofmarionwi.gov
+    was read. It is read from the seat's own card, and where a card prints two
+    the city's ships. Measured that day, each named seat's card prints one
+    mailto, on the city's domain.
     """
     page = fetch(MARION_INDEX, headers=sc.UA_HEADERS_ROSTER_BOT)
     start = page.find('<h3 class="block-heading-1">CITY OF MARION</h3>')
@@ -2229,9 +2619,10 @@ def scrape_marion():
         phones = ["(%s) %s-%s" % ph.groups() for ph in
                   re.finditer(r'href="tel:\+?1?(\d{3})(\d{3})(\d{4})"',
                               H.unescape(art))]
-        em = re.search(r'href="mailto:([^"?]+@cityofmarionwi\.gov)"', art)
-        cards.append((int(m.group(1)), name, phones,
-                      em.group(1).strip().lower() if em else None))
+        mails = [a.strip().lower() for a in re.findall(r'href="mailto:([^"?]+)"', art)
+                 if ADDRESS.fullmatch(a.strip())]
+        mails = ([a for a in mails if a.endswith("@cityofmarionwi.gov")] or mails)
+        cards.append((int(m.group(1)), name, phones, mails[0] if mails else None))
     counts = {}
     for _, _, phones, _ in cards:
         for ph in set(phones):
@@ -2279,6 +2670,19 @@ def scrape_black_river_falls():
     The per-member anchor is `Serving Since YYYY`, not a separator count: the
     tag strip leaves seventeen `|` runs between Ward 4's first name and its
     anchor and eight between Ward 1's, on one page.
+
+    THE ADDRESS SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on blackriverfallswi.gov was read.
+    It is read from the text after the member's own anchor and before the next
+    member's, or the next ward heading, because the 400 characters the phone is
+    read from can run into the next member's entry. The last member of the last
+    ward has no next anchor, so their text is still the 400 characters after
+    their own: if they printed no address and the page printed one within that
+    distance after the list, it would be read as theirs. That was as true of an
+    address on the city's domain before this change. The page could not be
+    read from the sandbox this was written in (its robots.txt did not answer),
+    so how far the list's end sits from the next address on the page is not
+    measured.
     """
     require_ward_is_district("Black River Falls", "C", 4)
     page = fetch(BLACK_RIVER_FALLS_INDEX)
@@ -2288,9 +2692,13 @@ def scrape_black_river_falls():
     for i, hit in enumerate(wards):
         end = wards[i + 1].start() if i + 1 < len(wards) else min(len(flat), hit.end() + 2600)
         block, prev = flat[hit.end():end], 0
-        for seat in re.finditer(r"Serving Since\s+(\d{4})", block):
+        anchors = list(re.finditer(r"Serving Since\s+(\d{4})", block))
+        for k, seat in enumerate(anchors):
             seg = block[prev:seat.start()]
             prev = seat.end()
+            # this member's own text: up to the next member's anchor
+            own = block[seat.end():anchors[k + 1].start() if k + 1 < len(anchors)
+                        else min(len(block), seat.end() + 400)]
             names = re.findall(NAME_RE, ROLE_RE.sub(" ", seg))
             if not names:
                 continue
@@ -2302,9 +2710,9 @@ def scrape_black_river_falls():
             ph = re.search(r"Phone:\s*\((\d{3})\)\s*(\d{3})-(\d{4})", tail)
             if ph:
                 entry["phone"] = "(%s) %s-%s" % ph.groups()
-            em = re.search(r"([A-Za-z0-9._%+-]+@blackriverfallswi\.gov)", tail)
+            em = ADDRESS.search(own)
             if em:
-                entry["email"] = em.group(1).lower()
+                entry["email"] = em.group(0).lower()
             _put("black river falls", members, "%02d" % int(hit.group(1)), entry)
     _seats_or_die("black river falls", members, 4, page,
                   ("WARD N", r"WARD\s+\d{1,2}\b"))
@@ -2325,11 +2733,19 @@ def scrape_neenah():
     2026-2027`), and it is name-shaped: the first draft of this parser read
     `Council President` as the member's name for exactly the seat that has
     one. It is stripped for the name test and kept as the note.
+
+    THE ADDRESS SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on neenahwi.gov was read. It is
+    read from the text after the member's own label and before the next label,
+    and within 200 characters of it. The 400 characters the phone is read from
+    are not bounded that way, and measured that day six of the nine reach the
+    next member's address; each member's own sits about 60 characters in.
     """
     page = fetch(NEENAH_INDEX)
     flat = H.unescape(re.sub(r"<[^>]+>", "|", page))
     members, prev = {}, 0
-    for hit in re.finditer(r"(\d)(?:st|nd|rd|th)\s+Aldermanic\s+District", flat):
+    labels = list(re.finditer(r"(\d)(?:st|nd|rd|th)\s+Aldermanic\s+District", flat))
+    for k, hit in enumerate(labels):
         seg = flat[prev:hit.start()]
         prev = hit.end()
         names = re.findall(NAME_RE, ROLE_RE.sub(" ", seg))
@@ -2343,9 +2759,10 @@ def scrape_neenah():
         ph = re.search(r"\b(\d{3})[-.](\d{3})[-.](\d{4})\b", tail)
         if ph:
             entry["phone"] = "(%s) %s-%s" % ph.groups()
-        em = re.search(r"([A-Za-z0-9._%+-]+@neenahwi\.gov)", tail)
+        stop = labels[k + 1].start() if k + 1 < len(labels) else len(flat)
+        em = ADDRESS.search(flat[hit.end():min(stop, hit.end() + 200)])
         if em:
-            entry["email"] = em.group(1).lower()
+            entry["email"] = em.group(0).lower()
         _put("neenah", members, "%02d" % int(hit.group(1)), entry)
     _seats_or_die("neenah", members, 3, page,
                   ("Nth Aldermanic District", r"\d(?:st|nd|rd|th)\s+Aldermanic\s+District"))
@@ -2586,20 +3003,30 @@ def scrape_west_bend():
     number inside the name line is what keys the seat; the e-mail is matched on
     its own district number rather than on position, which is what stops a
     missing line sliding every address up one seat.
+
+    Since 2026-10-17 each member's card is also read for the number it prints
+    (west_bend_phones), which ships on the member whose name and district the
+    card carries.
     """
     page = fetch(WEST_BEND_INDEX)
     flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
     members, mails = {}, {}
     for m in re.finditer(r"district(\d{1,2})@westbendwi\.gov", flat, re.I):
         mails["%02d" % int(m.group(1))] = m.group(0).lower()
-    for m in re.finditer(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
-                         r",\s*(?:[A-Za-z ]{0,24},\s*)?District\s+(\d{1,2})\s+"
-                         r"Alder(?:man|woman|person)", flat):
+    for m in _WEST_BEND_NAME.finditer(flat):
         key = "%02d" % int(m.group(2))
         entry = {"name": " ".join(m.group(1).split())}
         if key in mails:
             entry["email"] = mails[key]
         _put("west bend", members, key, entry)
+    for key, (name, phones) in west_bend_phones(page).items():
+        seat = [e for e in members.get(key, []) if fold(e["name"]) == fold(name)]
+        if len(seat) != 1:
+            print("  phone west bend    district %s: the card's name matches %d "
+                  "member(s) read for that seat; its number is not used"
+                  % (key, len(seat)), file=sys.stderr)
+            continue
+        set_phones("west bend", "district %s" % key, seat[0], phones)
     return _seats_or_die("west bend", members, 8, page,
                          ("District N Alderman",
                           r"District\s+\d{1,2}\s+Alder")), WEST_BEND_INDEX
@@ -3033,6 +3460,9 @@ def scrape_west_allis():
 
 def main():
     argv = sys.argv[1:]
+    if "--selftest" in argv:
+        _phone_selftest()
+        return
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
 
     got, failures = {}, {}

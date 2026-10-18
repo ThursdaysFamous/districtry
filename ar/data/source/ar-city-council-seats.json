@@ -1,0 +1,1619 @@
+{
+ "_about": "Kept by hand. The mayor and council of each of Arkansas's 19 cities above 25,000 people, transcribed from each city's own pages and keyed by the city's Census place id. ar/scripts/build_ar_city_councils.py re-reads every page cited here and refuses to write ar/data/app/ar-city-councils.json unless every name is on the page its seat cites. 'by' is 'ward' for a seat the ward's own voters elect and 'city' for one the whole city elects, whether or not the seat is tied to a ward; 'as' is the page's own spelling where it differs. 'email', 'phone' and 'phonesExtra' are what the page a seat cites prints beside that member alone (scripts/city_councils.py, CONTACTS), and the build proves each on that page; 'officeLines' and 'officeMailboxes' are the office's own lines and mailboxes the city's pages print, which no seat may carry.",
+ "cities": {
+  "0541000": {
+   "name": "Little Rock",
+   "body": "Board of Directors",
+   "member": "Director",
+   "how": "Seven directors are each elected by the voters of their own ward, and three more, in Positions 8 to 10, by the whole city. The mayor is elected by the whole city.",
+   "sources": {
+    "board": "https://littlerock.gov/government/board-of-directors/meet-your-board-members/",
+    "mayor": "https://littlerock.gov/government/mayors-office/"
+   },
+   "officeLines": [
+    "501-371-4510",
+    "501-371-6801"
+   ],
+   "officeMailboxes": [
+    "info@littlerock.gov",
+    "asadler@littlerock.gov"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Frank Scott Jr.",
+     "from": "mayor",
+     "email": "mayorscott@littlerock.gov"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Virgil Miller Jr.",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Ken Richardson",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Kathy Webb",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Capi Peck",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Lance Hines",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Andrea Hogan Lewis",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 7",
+     "ward": "7",
+     "by": "ward",
+     "name": "B.J. Wyrick",
+     "as": "B.J. (Brenda) Wyrick",
+     "from": "board"
+    },
+    {
+     "seat": "Position 8 (at large)",
+     "by": "city",
+     "name": "Dean Kumpuris",
+     "from": "board"
+    },
+    {
+     "seat": "Position 9 (at large)",
+     "by": "city",
+     "name": "Antwan Phillips",
+     "from": "board"
+    },
+    {
+     "seat": "Position 10 (at large)",
+     "by": "city",
+     "name": "Joan Adcock",
+     "from": "board"
+    }
+   ]
+  },
+  "0523290": {
+   "name": "Fayetteville",
+   "body": "City Council",
+   "how": "Each of the city's four wards elects its own two council members. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.fayetteville-ar.gov/247/City-Council",
+    "mayor": "https://www.fayetteville-ar.gov/526/Mayor"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Molly Rawn",
+     "from": "mayor"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Robert Stafford",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "ward",
+     "name": "D'Andre Jones",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "ward",
+     "name": "Sarah Moore",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Mike Wiederkehr",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "ward",
+     "name": "Scott Berna",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "ward",
+     "name": "Sarah Bunch",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "ward",
+     "name": "Teresa Turk",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "ward",
+     "name": "Monique Jones",
+     "from": "council"
+    }
+   ]
+  },
+  "0524550": {
+   "name": "Fort Smith",
+   "body": "Board of Directors",
+   "member": "Director",
+   "how": "Four directors, in Positions 1 to 4, are each elected by the voters of their own ward, and three more, in Positions 5 to 7, by the whole city. The mayor is elected by the whole city.",
+   "sources": {
+    "board": "https://www.fortsmithar.gov/government/leadership/board-of-directors"
+   },
+   "officeLines": [
+    "479-784-2208"
+   ],
+   "officeMailboxes": [
+    "boardmembers@fortsmithar.gov"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "George B. McGill",
+     "from": "board",
+     "email": "mayor@fortsmithar.gov"
+    },
+    {
+     "seat": "Ward 1 (Position 1)",
+     "ward": "1",
+     "by": "ward",
+     "name": "Jarred Rego",
+     "from": "board",
+     "email": "jarred.rego@fortsmithar.gov"
+    },
+    {
+     "seat": "Ward 2 (Position 2)",
+     "ward": "2",
+     "by": "ward",
+     "name": "André Good",
+     "from": "board",
+     "email": "andre.good@fortsmithar.gov"
+    },
+    {
+     "seat": "Ward 3 (Position 3)",
+     "ward": "3",
+     "by": "ward",
+     "name": "Lee Kemp",
+     "from": "board",
+     "email": "lee.kemp@fortsmithar.gov"
+    },
+    {
+     "seat": "Ward 4 (Position 4)",
+     "ward": "4",
+     "by": "ward",
+     "name": "George Catsavis",
+     "from": "board",
+     "email": "george.catsavis@fortsmithar.gov"
+    },
+    {
+     "seat": "Position 5 (at large)",
+     "by": "city",
+     "name": "Christina Catsavis",
+     "from": "board",
+     "email": "christina.catsavis@fortsmithar.gov"
+    },
+    {
+     "seat": "Position 6 (at large)",
+     "by": "city",
+     "name": "Kevin Settle",
+     "from": "board",
+     "email": "kevin.settle@fortsmithar.gov"
+    },
+    {
+     "seat": "Position 7 (at large)",
+     "by": "city",
+     "name": "Neal Martin",
+     "from": "board",
+     "email": "neal.martin@fortsmithar.gov"
+    }
+   ]
+  },
+  "0566080": {
+   "name": "Springdale",
+   "body": "City Council",
+   "how": "All eight council members are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's four wards. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.springdalear.gov/page/city-council",
+    "mayor": "https://www.springdalear.gov/page/mayors-office"
+   },
+   "officeLines": [
+    "479-750-8110",
+    "479-750-8114",
+    "479-756-8200",
+    "479-751-4510",
+    "(479) 750-8185",
+    "(479) 750-8165",
+    "(479) 750-8180"
+   ],
+   "officeMailboxes": [
+    "cfulfer@springdalear.gov",
+    "amckinney@springdalear.gov"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Doug Sprouse",
+     "from": "mayor",
+     "email": "dsprouse@springdalear.gov"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Mike Lawson",
+     "from": "council",
+     "email": "mlawson@springdalear.gov",
+     "phone": "(479) 236-6355"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "Randall Harriman",
+     "from": "council",
+     "email": "rharriman@springdalear.gov",
+     "phone": "(479) 466-4673"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "city",
+     "name": "Mike Overton",
+     "from": "council",
+     "email": "moverton@springdalear.gov",
+     "phone": "(479) 530-3380"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Rex Bailey",
+     "from": "council",
+     "email": "rbailey@springdalear.gov",
+     "phone": "(479) 320-6778"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "city",
+     "name": "Brian Powell",
+     "from": "council",
+     "email": "bpowell@springdalear.gov",
+     "phone": "(479) 263-7738"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "Jeff Watson",
+     "from": "council",
+     "email": "jwatson@springdalear.gov",
+     "phone": "(479) 790-6215"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "city",
+     "name": "Amelia Taldo",
+     "from": "council",
+     "email": "awilliams@springdalear.gov",
+     "phone": "(479) 466-2053"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "city",
+     "name": "Mark Fougerousse",
+     "from": "council",
+     "email": "mfougerousse@springdalear.gov",
+     "phone": "(479) 871-9156"
+    }
+   ]
+  },
+  "0535710": {
+   "name": "Jonesboro",
+   "body": "City Council",
+   "how": "All twelve council members are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's six wards. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.jonesboroar.gov/181/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Harold Copenhaver",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Janice Porter",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "Brian Emison",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "city",
+     "name": "Charles Coleman",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Chris Moore",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "city",
+     "name": "Ann Williams",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "Chris Gibson",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "city",
+     "name": "John Street",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "city",
+     "name": "Kevin Miller",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5, Position 1",
+     "ward": "5",
+     "by": "city",
+     "name": "LJ Bryant",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 5, Position 2",
+     "ward": "5",
+     "by": "city",
+     "name": "Joe Hafner",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 6, Position 1",
+     "ward": "6",
+     "by": "city",
+     "name": "Anthony Coleman",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 6, Position 2",
+     "ward": "6",
+     "by": "city",
+     "name": "David McClain",
+     "from": "council"
+    }
+   ]
+  },
+  "0560410": {
+   "name": "Rogers",
+   "body": "City Council",
+   "how": "All eight council members are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's four wards. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.rogersar.gov/413/City-Council",
+    "mayor": "https://www.rogersar.gov/738/Mayors-Office"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Greg Hines",
+     "from": "mayor"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Mandy Brashear",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "Betsy Reithemeyer",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "city",
+     "name": "Gary Townzen",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Marge Wolf",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "city",
+     "name": "Clay Kendall",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "Hayes Minor",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "city",
+     "name": "Barney Hayes",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "city",
+     "name": "Roger Surly",
+     "from": "council"
+    }
+   ]
+  },
+  "0550450": {
+   "name": "North Little Rock",
+   "body": "City Council",
+   "how": "Each of the city's four wards elects its own two council members. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://nlr.ar.gov/elected-officials/city-council/",
+    "mayor": "https://nlr.ar.gov/elected-officials/mayors-office/"
+   },
+   "officeLines": [
+    "501-975-8601"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Terry Hartwick",
+     "from": "mayor",
+     "email": "mayor@nlr.ar.gov"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Debi Ross",
+     "from": "council",
+     "email": "dross@nlr.ar.gov",
+     "phone": "501-753-0733"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Nathan Hamilton",
+     "from": "council",
+     "email": "nhamilton@nlr.ar.gov",
+     "phone": "text 501-952-7679"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Linda Robinson",
+     "from": "council",
+     "email": "lrobinson@nlr.ar.gov",
+     "phone": "501-945-8820"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Nicole Hart",
+     "from": "council",
+     "email": "nhart@nlr.ar.gov",
+     "phone": "501-960-2461"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Steve Baxter",
+     "from": "council",
+     "email": "sbaxter@nlr.ar.gov",
+     "phone": "501-804-0928"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Ron Harris",
+     "from": "council",
+     "email": "ronharris@nlr.ar.gov",
+     "phone": "501-758-2877"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Vince Insalaco III",
+     "from": "council",
+     "email": "vinsalaco@nlr.ar.gov",
+     "phone": "501-951-0786"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Scott Fowler",
+     "from": "council",
+     "email": "sfowler@nlr.ar.gov",
+     "phone": "501-765-5868"
+    }
+   ]
+  },
+  "0515190": {
+   "name": "Conway",
+   "body": "City Council",
+   "how": "Each of the city's four wards has two council members: the one in Position 1 is elected by the ward's own voters and the one in Position 2 by the whole city. The mayor is elected by the whole city.",
+   "note": "No page listing Conway's council was found on the city's website, so these names are the ones printed at the head of the council's 19 August 2026 special meeting agenda.",
+   "sources": {
+    "agenda": "https://media.conwayarkansas.gov/media/2026/08/August-19-2026-Special-City-Council-Agenda.pdf"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Bart Castleberry",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Andy Hawkins",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "David Grimes",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "ward",
+     "name": "Drew Spurgers",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Shelley Mehl",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "ward",
+     "name": "Mark Ledbetter",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "Spencer Hawks",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "ward",
+     "name": "Theodore Jones Jr.",
+     "from": "agenda"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "city",
+     "name": "Shelia Isby",
+     "from": "agenda"
+    }
+   ]
+  },
+  "0505320": {
+   "name": "Bentonville",
+   "body": "City Council",
+   "how": "All eight council members are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's four wards. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.bentonville.ar.gov/427/City-Council",
+    "mayor": "https://www.bentonville.ar.gov/594/Mayors-Office"
+   },
+   "officeLines": [
+    "479-271-3112"
+   ],
+   "officeMailboxes": [
+    "mayor.assistant@bentonville.ar.gov"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Stephanie Orman",
+     "from": "mayor",
+     "email": "stephanie.orman@bentonville.ar.gov",
+     "phone": "479-271-5966"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Beckie Seba",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "Daniel Grover",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "city",
+     "name": "Cindy Acree",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Chris Sooter",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "city",
+     "name": "Aubrey Patterson",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "Bill Burckart",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "city",
+     "name": "Octavio Sanchez",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "city",
+     "name": "Holly Hook",
+     "from": "council"
+    }
+   ]
+  },
+  "0555310": {
+   "name": "Pine Bluff",
+   "body": "City Council",
+   "how": "Each of the city's four wards elects its own two council members. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.cityofpinebluff-ar.gov/elected-officials",
+    "mayor": "https://www.cityofpinebluff-ar.gov/office-of-the-mayor"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Vivian Flowers",
+     "from": "mayor"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Lloyd Holcomb Jr.",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "LaTisha Brunson",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Glen Brown Jr.",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Yvonne Denton",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Lanette Frazier",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "William Fells",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Steven Mays Sr.",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Bruce Lockett",
+     "from": "council"
+    }
+   ]
+  },
+  "0533400": {
+   "name": "Hot Springs",
+   "body": "Board of Directors",
+   "member": "Director",
+   "how": "Each of the city's six districts elects one director. The mayor is elected by the whole city.",
+   "wardWord": "District",
+   "sources": {
+    "board": "https://www.hotspringsar.gov/223/Board-of-Directors"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Pat McCabe",
+     "from": "board"
+    },
+    {
+     "seat": "District 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Erin Holliday",
+     "from": "board"
+    },
+    {
+     "seat": "District 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Phyllis Beard",
+     "from": "board"
+    },
+    {
+     "seat": "District 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Marcia Dobbs-Smith",
+     "from": "board"
+    },
+    {
+     "seat": "District 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Dudley Webb III",
+     "from": "board"
+    },
+    {
+     "seat": "District 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Karen Garcia",
+     "from": "board"
+    },
+    {
+     "seat": "District 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Steve Trusty",
+     "from": "board"
+    }
+   ]
+  },
+  "0505290": {
+   "name": "Benton",
+   "body": "City Council",
+   "how": "Each of the city's five wards elects its own two council members, as the state's election results show for the six seats whose contests could be read, though the city's own council page says its members are typically elected at large. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.bentonar.gov/city-council",
+    "mayor": "https://www.bentonar.gov/departments/mayorsoffice/mayor"
+   },
+   "officeLines": [
+    "501-776-5900",
+    "501-315-6008"
+   ],
+   "officeMailboxes": [
+    "jordyn.efird@bentonar.gov"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Tom Farmer",
+     "from": "mayor",
+     "email": "tom.farmer@bentonar.gov"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Frank Baptist",
+     "from": "council",
+     "email": "frank.baptist@bentonar.gov",
+     "phone": "501-590-3835"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "ward",
+     "name": "Steve Brown",
+     "from": "council",
+     "email": "steve.brown@bentonar.gov",
+     "phone": "501-840-3736"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "ward",
+     "name": "Ann Spencer-Cole",
+     "from": "council",
+     "email": "ann.spencer@bentonar.gov",
+     "phone": "501-551-2993"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Evelyn Reed",
+     "from": "council",
+     "email": "evelyn.reed@bentonar.gov",
+     "phone": "501-672-5764"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "ward",
+     "name": "Chad Slaughter",
+     "from": "council",
+     "email": "chad.slaughter@bentonar.gov",
+     "phone": "501-840-6057"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "ward",
+     "name": "Jeff Morrow",
+     "from": "council",
+     "email": "jeff.morrow@bentonar.gov",
+     "phone": "501-690-2020"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "ward",
+     "name": "Judd Hart",
+     "from": "council",
+     "email": "judd.hart@bentonar.gov",
+     "phone": "501-626-2808"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "ward",
+     "name": "Trevor Villines",
+     "from": "council",
+     "email": "trevor.villines@bentonar.gov",
+     "phone": "501-672-8515"
+    },
+    {
+     "seat": "Ward 5, Position 1",
+     "ward": "5",
+     "by": "ward",
+     "name": "Steve Lee",
+     "from": "council",
+     "email": "steve.lee@bentonar.gov",
+     "phone": "501-860-1859"
+    },
+    {
+     "seat": "Ward 5, Position 2",
+     "ward": "5",
+     "by": "ward",
+     "name": "Jeff Hamm",
+     "from": "council",
+     "email": "jeff.hamm@bentonar.gov",
+     "phone": "501-860-3057"
+    }
+   ]
+  },
+  "0563800": {
+   "name": "Sherwood",
+   "body": "City Council",
+   "how": "Each of the city's four wards elects its own two council members. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.sherwoodar.gov/page/city-council",
+    "mayor": "https://www.sherwoodar.gov/page/mayors-office"
+   },
+   "officeLines": [
+    "501-835-6620",
+    "(501)835-5319"
+   ],
+   "officeMailboxes": [
+    "dprice@cityofsherwood.net"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Mary Jo Heye-Townsell",
+     "from": "mayor",
+     "email": "mayormaryjo@cityofsherwood.net"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "April Broderick",
+     "from": "council",
+     "email": "abroderick@cityofsherwood.net",
+     "phone": "501-920-0072"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "ward",
+     "name": "Kallie McCullough",
+     "from": "council",
+     "email": "kmccullough@cityofsherwood.net",
+     "phone": "405-627-9092"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "ward",
+     "name": "Shelby Thomas",
+     "from": "council",
+     "email": "sthomas@cityofsherwood.net",
+     "phone": "501-231-5458"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Meredith Townsend",
+     "from": "council",
+     "email": "mtownsend@cityofsherwood.net",
+     "phone": "501-951-1305"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "ward",
+     "name": "Beverly Williams",
+     "from": "council",
+     "email": "bwilliams@cityofsherwood.net",
+     "phone": "501-554-4275"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "ward",
+     "name": "Marina Brooks",
+     "from": "council",
+     "email": "mbrooks@cityofsherwood.net",
+     "phone": "501-835-8572"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "ward",
+     "name": "Kyle Wade",
+     "from": "council",
+     "email": "kwade@cityofsherwood.net",
+     "phone": "501-804-5464"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "ward",
+     "name": "Monica Treat",
+     "from": "council",
+     "email": "mtreat@cityofsherwood.net",
+     "phone": "501-416-6258"
+    }
+   ]
+  },
+  "0504840": {
+   "name": "Bella Vista",
+   "body": "City Council",
+   "how": "All six council members are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's three wards. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.bellavistaar.gov/government/elected_officials/city_council/index.php",
+    "mayor": "https://www.bellavistaar.gov/government/elected_officials/mayors_office.php"
+   },
+   "officeLines": [
+    "479-876-1255"
+   ],
+   "officeMailboxes": [
+    "citycouncil@bellavistaar.gov"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "John D. Flynn",
+     "from": "mayor",
+     "email": "jflynn@bellavistaar.gov"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Travis Harp",
+     "from": "council",
+     "email": "tharp@bellavistaar.gov",
+     "phone": "479-295-7336"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "Wendy Hughes",
+     "from": "council",
+     "email": "whughes@bellavistaar.gov",
+     "phone": "479-601-4856"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "city",
+     "name": "Shea Newport",
+     "from": "council",
+     "email": "snewport@bellavistaar.gov",
+     "phone": "479-274-8183"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Larry Wilms",
+     "from": "council",
+     "email": "lwilms@bellavistaar.gov",
+     "phone": "479-876-1991"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "city",
+     "name": "Anna Isbell",
+     "from": "council",
+     "email": "aisbell@bellavistaar.gov",
+     "phone": "952-239-6519"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "Craig Honchell",
+     "from": "council",
+     "email": "chonchell@bellavistaar.gov",
+     "phone": "479-215-6209"
+    }
+   ]
+  },
+  "0553390": {
+   "name": "Paragould",
+   "body": "City Council",
+   "how": "Each of the city's four wards elects its own two council members. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.paragouldcityar.gov/222/City-Council",
+    "mayor": "https://www.paragouldcityar.gov/235/Mayor"
+   },
+   "officeLines": [
+    "870-239-7510"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Josh Agee",
+     "from": "mayor",
+     "email": "josh.agee@paragouldcity.org"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Tim Roswell",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "ward",
+     "name": "Susan Wooldridge",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "ward",
+     "name": "Jared Pickney",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Pat Austin",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "ward",
+     "name": "Dustin Rumsey",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "ward",
+     "name": "Jackie Branch",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "ward",
+     "name": "Neal Adams",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "ward",
+     "name": "Brad Baine",
+     "from": "council"
+    }
+   ]
+  },
+  "0534750": {
+   "name": "Jacksonville",
+   "body": "City Council",
+   "how": "All ten council members are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's five wards. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.jacksonvillear.gov/m/directory/department?did=48",
+    "mayor": "https://www.jacksonvillear.gov/231/Elected-Officials"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Jeff Elmore",
+     "from": "mayor"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Mike Dietz",
+     "from": "council",
+     "email": "mmddietz@aol.com",
+     "phone": "(501) 529-3800"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "Tanner Ruple",
+     "from": "council",
+     "email": "ruplet@yahoo.com",
+     "phone": "(501) 454-4927"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "city",
+     "name": "Kevin McCleary",
+     "from": "council",
+     "email": "keveve69@yahoo.com",
+     "phone": "(501) 982-5144"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Trenika McCoy",
+     "from": "council",
+     "email": "trenikamccoy@icloud.com",
+     "phone": "(501) 247-4521"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "city",
+     "name": "Reedie Ray",
+     "from": "council",
+     "email": "reediehardman@gmail.com",
+     "phone": "(501) 982-5650"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "Michael LaBron",
+     "from": "council",
+     "email": "time_to_shine_detail@yahoo.com",
+     "phone": "(501) 960-8481"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "city",
+     "name": "Richard Moss",
+     "from": "council",
+     "email": "rlmoss12@gmail.com",
+     "phone": "(501) 960-1704"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "city",
+     "name": "Mary Twitty",
+     "from": "council",
+     "email": "mctwitty5959@gmail.com",
+     "phone": "(501) 912-9422"
+    },
+    {
+     "seat": "Ward 5, Position 1",
+     "ward": "5",
+     "by": "city",
+     "name": "Joy Kinman",
+     "from": "council",
+     "email": "joykinman@centurytel.net",
+     "phone": "(501) 982-4073"
+    },
+    {
+     "seat": "Ward 5, Position 2",
+     "ward": "5",
+     "by": "city",
+     "name": "Katrina Mimms",
+     "from": "council",
+     "email": "coachmimms@yahoo.com",
+     "phone": "(501) 993-6363"
+    }
+   ]
+  },
+  "0568810": {
+   "name": "Texarkana",
+   "body": "Board of Directors",
+   "member": "Director",
+   "how": "Each of the city's six wards elects one director. The mayor is elected by the whole city.",
+   "sources": {
+    "board": "https://texarkanaar.gov/government/board_of_directors/index.php"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Allen Brown",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Terry Roberts",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Laney Harris",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 3",
+     "ward": "3",
+     "by": "ward",
+     "name": "Steven Hollibush",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 4",
+     "ward": "4",
+     "by": "ward",
+     "name": "Ulysses Brewer",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 5",
+     "ward": "5",
+     "by": "ward",
+     "name": "Danny Jewel",
+     "from": "board"
+    },
+    {
+     "seat": "Ward 6",
+     "ward": "6",
+     "by": "ward",
+     "name": "Steve Smith",
+     "from": "board"
+    }
+   ]
+  },
+  "0561670": {
+   "name": "Russellville",
+   "body": "City Council",
+   "how": "Each of the city's four wards elects its own two council members. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.russellvillear.gov/446/City-Council-Members"
+   },
+   "officeLines": [
+    "479-968-2098"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Fred Teague",
+     "from": "council",
+     "email": "fteague@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "ward",
+     "name": "Nathan George",
+     "from": "council",
+     "email": "ngeorge@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "ward",
+     "name": "Laura Wetzel",
+     "from": "council",
+     "email": "lwetzel@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "ward",
+     "name": "Emily Young",
+     "from": "council",
+     "email": "eyoung@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "ward",
+     "name": "Chris Olson",
+     "from": "council",
+     "email": "colson@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "ward",
+     "name": "Seth Bradley",
+     "from": "council",
+     "email": "sbradley@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "ward",
+     "name": "Joe Pearson",
+     "from": "council",
+     "email": "jpearson@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "ward",
+     "name": "Paul Gray",
+     "from": "council",
+     "email": "pgray@russellvillear.gov"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "ward",
+     "name": "Justin Keller",
+     "from": "council",
+     "email": "jkeller@russellvillear.gov"
+    }
+   ]
+  },
+  "0510300": {
+   "name": "Cabot",
+   "body": "City Council",
+   "how": "All eight council members are elected by the voters of the whole city; each holds one of the two seats assigned to each of the city's four wards. The mayor is elected by the whole city.",
+   "sources": {
+    "council": "https://www.cabotar.gov/207/City-Council",
+    "mayor": "https://www.cabotar.gov/206/Mayor"
+   },
+   "officeLines": [
+    "501-843-3566"
+   ],
+   "officeMailboxes": [
+    "nwilliams@cabotar.gov"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Ken Kincade",
+     "from": "mayor",
+     "email": "kenkincade@cabotar.gov"
+    },
+    {
+     "seat": "Ward 1, Position 1",
+     "ward": "1",
+     "by": "city",
+     "name": "Eddie Long",
+     "from": "council",
+     "email": "eddie.long.cabot@gmail.com",
+     "phone": "501-786-2691"
+    },
+    {
+     "seat": "Ward 1, Position 2",
+     "ward": "1",
+     "by": "city",
+     "name": "Corey Spangler",
+     "from": "council",
+     "email": "coreyspangler.cabot@gmail.com",
+     "phone": "501-712-0245"
+    },
+    {
+     "seat": "Ward 2, Position 1",
+     "ward": "2",
+     "by": "city",
+     "name": "Stephen Redd",
+     "from": "council",
+     "email": "stephenredd.cabot@gmail.com",
+     "phone": "501-259-8883"
+    },
+    {
+     "seat": "Ward 2, Position 2",
+     "ward": "2",
+     "by": "city",
+     "name": "Brandon Hillenburg",
+     "from": "council",
+     "email": "hillenburgforcabot@gmail.com",
+     "phone": "501-743-8619"
+    },
+    {
+     "seat": "Ward 3, Position 1",
+     "ward": "3",
+     "by": "city",
+     "name": "Maggie Cope",
+     "from": "council",
+     "email": "maggieforcabot@gmail.com",
+     "phone": "501-681-3520"
+    },
+    {
+     "seat": "Ward 3, Position 2",
+     "ward": "3",
+     "by": "city",
+     "name": "James Reid",
+     "from": "council",
+     "email": "jamesreid.cabot@gmail.com",
+     "phone": "501-951-0457"
+    },
+    {
+     "seat": "Ward 4, Position 1",
+     "ward": "4",
+     "by": "city",
+     "name": "Matt Webber",
+     "from": "council",
+     "email": "mpwebber47@centurytel.net",
+     "phone": "501-920-2122"
+    },
+    {
+     "seat": "Ward 4, Position 2",
+     "ward": "4",
+     "by": "city",
+     "name": "Kyle Pickard",
+     "from": "council",
+     "email": "pickardkyle07@gmail.com",
+     "phone": "501-259-0461"
+    }
+   ]
+  }
+ }
+}

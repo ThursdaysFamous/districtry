@@ -20,11 +20,13 @@ card that names the county's five supervisors), **U.S. House** (4 districts, TIG
 joined to the public-domain unitedstates/congress-legislators roster), **Mississippi Senate** and
 **Mississippi House** (52 and 122 districts, TIGERweb geometry joined to the legislature's own
 member gallery and member profiles), the LIVE TIGERweb fabric — **City, Town or Village**
-(`municipality`, 300), **School District** (137) and **ZIP Code** — and three nearest-N layers from
+(`municipality`, 300, whose card names the mayor and council of 14 of the 15 cities of 25,000
+people or more), **School District** (137) and **ZIP Code** — and three nearest-N layers from
 the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**). Beside it,
 **County Supervisor District** (`county-supervisor`) draws the five districts of each of the 25
 counties whose current lines are confirmed (12 from the Census's lines, 13 from other published
-maps), and is hidden in the other 57. **Tribal Government** (`tribal-government`) draws the
+maps), and is hidden in the other 57. **City Ward** (`city-ward`) draws the 57 wards of nine of
+those 15 cities and names the ward's member. **Tribal Government** (`tribal-government`) draws the
 Mississippi Band of Choctaw Indians' reservation and its off-reservation trust land, the only
 tribal land the Census draws in the state, and names the Tribal Chief and the seventeen council
 members from the band's own page. Four court layers draw the districts of the four courts whose
@@ -87,10 +89,15 @@ TELEPHONES IN SOME COUNTIES**, which may be homes: a board address or telephone 
 where at least three of the five supervisors print the same one, because five people do not share a
 home — 76 counties have an address and 68 a telephone on the 2026 edition, and Amite, Coahoma,
 Humphreys, Lincoln, Sunflower and Yalobusha, which print a different address for each supervisor,
-have none. No supervisor's own line is ever carried. **THE SAME DIRECTORY NAMES THE FIVE ELECTION
-COMMISSIONERS, AND ONLY THEIR NAMES ARE CARRIED**: each commissioner's line runs on from the name
-to the commissioner's own address, which may be a home, so the builder cuts the line at its first
-run of dots and keeps nothing after the name, and its errors name only the county and the district.
+have none. **A SUPERVISOR'S OWN TELEPHONE IS CARRIED AND THEIR OWN ADDRESS NEVER IS** (Adam,
+2026-10-17, for the whole fleet: "if the official government source uses personal phone numbers,
+we publish those"): a number printed for one supervisor that is not the board's, and Copiah's
+"(c)" numbers (kept as "cell"), ride on that supervisor's row, 81 of them on the 2026 edition. **THE SAME DIRECTORY
+NAMES THE FIVE ELECTION COMMISSIONERS, AND THEIR NAMES AND OWN TELEPHONES ARE CARRIED**: each
+commissioner's line runs on from the name to the commissioner's own address, which may be a home,
+and on 45 lines in nine counties to a telephone. The builder keeps the name (everything before the
+line's first run of dots) and a last field that is a telephone and nothing else, never the address
+between them, and its errors name only the county and the district.
 All 410 were named on the 2026 edition, numbered District 1 to 5 in every county, even the five
 whose supervisor districts are beats. The County card lists them; the supervisor-district card
 names the one with the same number only where the directory uses the same word for both lists.
@@ -260,8 +267,12 @@ announcement, are applied on top (`CHANGES`): two chancellors replaced; two chan
 the 5th and 9th Chancery Districts, whose cards say so and that no appointment had been announced
 when the news was read; and a circuit judge who joined the Supreme Court and was replaced. Every entry fails the build once the list catches up with
 it, and a person then re-reads the list and deletes the entry. **THE PDF LISTS ALSO PRINT THE JUDGES'
-STAFF, SOME WITH STREET ADDRESSES**: the parse reads only each judge's name, the judges' own
-addresses and telephones are not carried, and neither PDF is ever written into the repository. A
+STAFF, SOME WITH STREET ADDRESSES**: the parse reads each judge's name and, since 2026-10-17 on
+Adam's ruling that a number an official government source prints beside an official is published,
+the judge's own telephone, read by position from the list's Phone column so the fax beside it is
+never taken for it; a number the list prints for two or more judges is the court office's line and
+rides none of them. Nothing of the staff's is read, the judges' own addresses are not carried, and
+neither PDF is ever written into the repository. A
 trial list's district headings name their counties, so the builder records which map the list
 describes, and a card names chancellors or circuit judges only from a list describing the map it
 draws. **SO FROM 1 JANUARY 2027 THE CHANCERY AND CIRCUIT CARDS NAME NOBODY** until a list describing
@@ -272,6 +283,59 @@ close that before the day.
 live service answers with a neighbouring state's ZIP (the Alabama negative point gives 36925,
 measured 2026-10-15). The coverage test reads the shipped outline, and the smoke test asserts both
 halves.
+
+**THE CITY COUNCILS COME FROM EACH CITY'S OWN WEBSITE, AND A CITY'S WARDS ARE DRAWN ONLY WHERE ITS
+CURRENT PLAN IS CONFIRMED** (2026-10-17). The City card names the mayor and the council or board of
+aldermen of the 15 cities of 25,000 people or more, seat by seat, from each city's own pages
+(`ms/scripts/build_ms_city_councils.py`: the seat, the name and, where the city prints them, the
+person's own telephone numbers and e-mail address). Fourteen print every member; Greenville's site
+names none, so its record says so and names nobody. **A TELEPHONE NUMBER IS CARRIED ONLY WHERE ONE
+PERSON'S OWN ENTRY PRINTS IT AND NOTHING ELSE ON THE CITY'S PAGES DOES** (2026-10-17, under Adam's
+ruling that a number a government source prints beside an official is published even where it may
+be personal). Olive Branch, Madison, Horn Lake, Oxford and Brandon print numbers inside members'
+entries, 38 numbers for 35 people, carried in the page's order and with the page's own word for
+which number it is where the page gives one (Oxford's home, work and cell, one Horn Lake mobile);
+where the page prints no word, or only "Phone" or "Tel", the number is carried bare. A number the
+council page or the mayor's page also prints anywhere else, such as Oxford's mayor's office line or
+a city hall's main line, is the office's and is not carried; a fax never is; and Oxford's entries
+print a street address beside each alderman, which is never carried, written or printed, not even
+in an error. Jackson, Gulfport, Southaven, Biloxi, Hattiesburg, Tupelo, Meridian, Clinton and Pearl
+print no member's own number. **AN E-MAIL ADDRESS IS CARRIED ON THE SAME TERMS** (2026-10-17, when
+Adam extended the ruling to a personal e-mail address a government page prints beside an
+official): printed inside one person's entry, nowhere else on the city's pages that are read, and
+not an office's mailbox (info, city hall, clerk, council and the like). 61 people in nine cities
+carry one: Olive Branch's and Horn Lake's mayors and aldermen, the seven members each of Gulfport,
+Tupelo, Madison, Pearl and Brandon, and the five each of Hattiesburg and Meridian. Horn Lake's are
+named for the seat rather than the person, Madison's and one of Gulfport's are at domains other
+than the city's, and Hattiesburg prints them in a card for each member, which is read card by card
+and held to the name its list gives the seat. An address a page scrambles with Cloudflare's e-mail
+protection is read the way the script Cloudflare adds to the page writes it back, because Adam ruled
+on 2026-10-09 that the scrambling is not an access control (the page hands every visitor the key;
+`wi/scripts/wi_alderperson_scraper.py` records the ruling), and it is then judged like any other
+address. No page read on 2026-10-17 scrambles one, and those 25 pages, scrambled the way Cloudflare
+does, build the same file (measured that day). The build stops on two addresses for one person, on
+a scrambled address it cannot decode, and on a link with no text of its own that its entry does not
+also print. Jackson, Southaven, Biloxi, Clinton and Oxford print
+none inside a member's entry. No staff member is named, and no staff member's number or address is
+carried. The Mississippi Municipal League's member pages list members by title with no ward and no
+date, and are not used.
+The City Ward layer (`ms/scripts/build_ms_city_wards.py`) draws the 57 wards of nine of the fifteen,
+each from a published map layer of the city's wards (the city's own for five, DeSoto County's for
+Southaven, which records the city's adoption date, and the Central Mississippi Planning and
+Development District's for Clinton, Pearl and Brandon, each shown in a map viewer the city's own
+website links or embeds), cut at the Census Bureau's map of the city so that the ward card and the
+City card never put a point in different cities. The City card says for each ward-elected city
+whether this app draws its wards, from a list of the nine in `ms/index.html` that the build's
+`--check` holds to the cities it draws. The build stops unless every ward's 2020 census
+population matches the figure pinned for it and each city's wards are exactly its roster's ward
+seats. The other six are in `NOT_DRAWN` with their reasons: Biloxi's, Hattiesburg's and Horn Lake's
+layers are not shown to be the plan in force, and Meridian, Madison and Greenville publish their
+ward maps as PDFs only. **NO WEEKLY JOB READS EITHER SOURCE YET**, because a new weekly workflow
+needs the operator's word, so the card prints the date the pages were read. The monthly source
+check re-reads the nine ward layers and the fifteen council pages and warns on any change. A ward
+layer can be redrawn under the same name (Gulfport's is named Wards and Tupelo's WARDS), so the
+build records a fingerprint of the lines each layer served, and of the Census map of each city, in
+`data/source/ms-city-wards.source.json`, and the monthly check compares them.
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
@@ -287,8 +351,9 @@ other instance via `scripts/compose_app.py`.
 **EACH COUNTY HAS A BOARD OF SUPERVISORS PAGE**, `ms/county-supervisor/<county>.html`, indexed
 from `ms/county-supervisor.html` and generated by `scripts/build_county_pages.py` from the same
 file the County card reads: the five supervisors as the Secretary of State's directory lists them,
-the board's office only where the directory prints one address or telephone for at least three of
-the five, and the directory's page as the source. The election commissioners are not on these
+each with the telephone the directory prints for that supervisor alone where it prints one, the
+board's office only where the directory prints one address or telephone for at least three of the
+five, and the directory's page as the source. The election commissioners are not on these
 pages, because they are not members of the board, and each page says whether the map draws that
 county's districts.
 
@@ -299,7 +364,7 @@ county's districts.
 - Metro: Mississippi (`mississippi`) — https://districtry.com/ms/
 - Geocoders: address Photon (Mississippi-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Mississippi-bounded, serial >=1s queue)
 - Ground truth: 32.30380,-90.18220 (the State Capitol, Jackson, Hinds County) → county Hinds County; us-house 2; ms-senate 29; ms-house 67. Negative point 32.48000,-88.25000 (near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.).
-- Layers: 16 registered (political 9, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
+- Layers: 17 registered (political 10, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MississippiExplorer`.
 - Scheduled workflows: `update-ms-congress-roster.yml` (Mon 18:11 UTC); `update-ms-legislature-roster.yml` (Tue 18:11 UTC); `update-ms-county-officials.yml` (Wed 18:11 UTC); `update-ms-judges-roster.yml` (Thu 18:11 UTC); `ms-validate-sources.yml` (1st of month 20:13 UTC).
 - Source registry: `ms/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -376,8 +441,8 @@ vacancy record as a vacant seat with its reason and source), and the three neare
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
 cards degrade to the district number + the legislature's own member list on a roster miss, and
-a vacant seat says it is vacant; the school-district and municipality cards carry no roster at all
-and **say so on the card**. External strings always render through `sanitize()`/`textContent`.
+a vacant seat says it is vacant; the school-district card carries no roster at all, nor does the
+municipality card outside the 15 cities of 25,000 people or more, and both **say so on the card**. External strings always render through `sanitize()`/`textContent`.
 Roster refreshes always land as PRs for review — never as direct commits to main.
 
 ## Data pipeline
@@ -402,7 +467,12 @@ dissolved from `state-counties.json`). Rosters: `congress-roster.json`
 `ms-{senate,house}-members.json` (`ms/scripts/build_ms_legislature_roster.py`, from the
 legislature's own pages) and `ms-county-officials.json` (`ms/scripts/build_ms_county_officials.py`,
 from the Secretary of State's directory) and `ms-judge-roster.json` (`ms/scripts/build_ms_judges.py`,
-from the Judiciary's own lists) — all count-guarded, all scheduled weekly in CI as reviewed PRs. The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both
+from the Judiciary's own lists) — all count-guarded, all scheduled weekly in CI as reviewed PRs.
+The 15 cities' councils are `ms-city-councils.json` (`ms/scripts/build_ms_city_councils.py`, from
+each city's own website) and nine cities' wards `ms-city-wards.json`
+(`ms/scripts/build_ms_city_wards.py`, with what each ward layer served recorded in
+`data/source/ms-city-wards.source.json`); neither is scheduled, both were read on 2026-10-17, and the
+monthly source check re-reads both sources. The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both
 written by the fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government
 join every instance uses (`data/tribal-government-join.json`); the council is re-read weekly from
 the band's own page by `scripts/tribal_council_scraper.py` in the fleet's

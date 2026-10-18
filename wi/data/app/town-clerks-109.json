@@ -24,6 +24,9 @@
     "deputyClerk": "William Peavey",
     "municipality": "Eau Galle",
     "phone": "715-684-3015",
+    "phonesExtra": [
+      "715-928-9999"
+    ],
     "recordUpdated": "2023-12-06",
     "url": "https://townofeaugallewi.gov/"
   },
@@ -59,6 +62,9 @@
     "clerk": "Linda Hawkins",
     "municipality": "Hammond",
     "phone": "715-796-2165",
+    "phonesExtra": [
+      "715-781-2100"
+    ],
     "recordUpdated": "2025-11-24",
     "url": "https://www.townofhammond.com/"
   },
@@ -87,6 +93,9 @@
     "clerk": "Patrick Earley",
     "municipality": "Richmond",
     "phone": "715-808-1795",
+    "phonesExtra": [
+      "715-246-3595"
+    ],
     "recordUpdated": "2023-11-19",
     "url": "https://townofrichmondwi.gov/"
   },
@@ -137,6 +146,9 @@
     "deputyClerk": "Sue Rowen",
     "municipality": "Troy",
     "phone": "715-425-2665 EXT 102",
+    "phonesExtra": [
+      "715-425-2665 EXT 103"
+    ],
     "recordUpdated": "2026-07-24",
     "url": "https://townoftroy.org/"
   },

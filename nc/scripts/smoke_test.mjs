@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "nc-senate", "nc-house", "voting-precinct
 const EXPECT_DISTRICT = { "county": "Wake County", "us-house": "2", "nc-senate": "14", "nc-house": "38", "voting-precinct": "Precinct 01-14" };
 const NEGATIVE_POINT = "35.60000,-75.30000"; // the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.
 const APP_NAME = "districtry North Carolina";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -73,7 +73,9 @@ const GEOCODER_STUB_FEATURE = {
   type: "Feature",
   geometry: { type: "Point", coordinates: [-78.6391, 35.7804] },
   properties: {
-    housenumber: "100",
+    // the typed number: an answer without it shows the street instead of
+    // a row (ENGINE geocoder-search runAddressSearch)
+    housenumber: "16",
     street: "W Jones St",
     city: "Capital City",
     state: "North Carolina",
@@ -97,6 +99,16 @@ const failures = [];
 function check(name, ok, detail) {
   console.log(`  ${ok ? "PASS" : "FAIL"}  ${name}${detail ? "  — " + detail : ""}`);
   if (!ok) failures.push(name);
+}
+
+// A council member's own e-mail address and numbers now ride the city cards,
+// and a log names a city and a seat but never a member's contact, so the card
+// text the city checks print has every number and address replaced first (the
+// card prints a number with no-break hyphens, U+2011, so those count as well).
+function noContacts(text) {
+  return String(text)
+    .replace(/[^\s<>"'(),;:@]+@[^\s<>"'(),;:@]+\.[A-Za-z]{2,}/g, "<e-mail>")
+    .replace(/\(?\b\d{3}\)?[\s.\-\u2011]*\d{3}[\s.\-\u2011]*\d{4}\b/g, "<number>");
 }
 
 // Each check runs in its own context with service workers BLOCKED. The app's
@@ -580,6 +592,55 @@ try {
   }
 
 
+  // 2c. The County card names the supervisors of the county's soil and water
+  //     conservation district from the state's District Directory
+  //     (nc-conservation-boards.json, keyed by county GEOID; a same-origin
+  //     file, so no stub). What is asserted: every name the file gives for
+  //     the county is on the card, with the district's name and the sentence
+  //     saying how a board is chosen; at Pasquotank, one of the five counties
+  //     of the Albemarle district, the card says the district covers several
+  //     counties; and at Person, where the directory lists a seat with no
+  //     name, the card says so and never calls the seat vacant.
+  for (const c of [
+    { point: POINT, geoid: "37183", label: "Wake", want: [], reject: [] },
+    { point: "36.29460,-76.25110", geoid: "37139", label: "Pasquotank",
+      want: [/Covers several counties/, /covers Camden, Chowan, Currituck, Pasquotank and Perquimans counties/],
+      reject: [] },
+    { point: "36.39380,-78.98280", geoid: "37145", label: "Person",
+      want: [/No name listed/], reject: [/\bVacant\b/] }
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=county`);
+    const boards = await page.evaluate(() =>
+      fetch("data/app/nc-conservation-boards.json").then((r) => r.json()));
+    const districts = (boards[c.geoid] || {}).districts || [];
+    const names = [].concat(...districts.map((d) =>
+      (d.members || []).filter((m) => m.name).map((m) => m.name)));
+    const info = await cardText(page, "county");
+    const text = info.text || "";
+    const want = [/three elected by the county's voters without party labels/,
+      /two appointed by the state Soil and Water Conservation Commission/].concat(c.want);
+    const missingNames = names.filter((n) => !text.includes(n));
+    // a section label is drawn in capitals, which innerText reports, so the
+    // district's name is matched without regard to case
+    const lower = text.toLowerCase();
+    const missingDistricts = districts.map((d) => d.name).filter((n) => !lower.includes(n.toLowerCase()));
+    const missing = want.filter((re) => !re.test(text));
+    // the conservation section alone, so a vacancy elsewhere on the card
+    // (the county board's own roster) cannot satisfy or fail its tests
+    const end = "North Carolina district directory (PDF)";
+    const from = districts.length ? lower.indexOf(districts[0].name.toLowerCase()) : -1;
+    const section = from >= 0 ? text.slice(from, text.lastIndexOf(end) + end.length) : "";
+    const present = c.reject.filter((re) => re.test(section));
+    check(`county names ${c.label} County's conservation district supervisors from the directory`,
+      !info.error && names.length >= 3 && !missingNames.length && !missingDistricts.length &&
+        !missing.length && !present.length,
+      `names ${names.length}; missing names: ${missingNames.join(", ") || "none"}; ` +
+        `missing districts: ${missingDistricts.join(", ") || "none"}; missing text: ${missing.join(", ") || "none"}; ` +
+        `unwanted: ${present.join(", ") || "none"}`);
+    await context.close();
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the
@@ -739,6 +800,11 @@ try {
   //    tigerweb.geo.census.gov, with the same query answering 200 to curl
   //    through the agent proxy in the same minute).
   //
+  //    SINCE 2026-10-17 THESE LAYERS ARE ANSWERED FROM SAME-ORIGIN TILE
+  //    ARCHIVES, and the stubs stay anyway: several cases below exist in no
+  //    archive (an affix no table carries, an inactive municipality), so
+  //    each case refuses its layer's archive and the stub decides the card.
+  //
   //    WHAT IS ACTUALLY WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of
   //    it is exercised by a live fetch that happens to work. Three claims, each
   //    written for North Carolina and each wrong in a way a reader would see:
@@ -756,6 +822,12 @@ try {
   //        three FUNCSTAT I municipalities. A per-style note would invent a
   //        distinction the statute denies; a missing status row would imply a
   //        working government where the Census records none.
+  //    (d) A place above 25,000 names its mayor and every council seat from
+  //        the roster, joined on the Census id the stub carries, with who
+  //        elects each seat; a place outside the 42 says it names nobody.
+  //        The roster is the shipped data/app file, so this also holds the
+  //        join to it. Each id and NAME is the Census's own (TIGERweb,
+  //        read 2026-10-16).
   {
     function esriPolygon(props) {
       return {
@@ -798,12 +870,50 @@ try {
         reject: [/^[\s\S]*Type[\s\S]*$/]
       },
       {
-        name: "a town gets the ONE municipality note and no status row",
+        name: "a town below 25,000 gets the ONE municipality note, no status row and no names",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
-        props: { GEOID: "3714100", NAME: "Cary town", BASENAME: "Cary", STATE: "37", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Cary town/, /same kind of government/, /Not named here/],
-        reject: [/INACTIVE/]
+        props: { GEOID: "3736080", NAME: "Knightdale town", BASENAME: "Knightdale", STATE: "37", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Knightdale town/, /same kind of government/, /Not named here/, /42 cities and towns above 25,000/],
+        reject: [/INACTIVE/, /Mayor/]
+      },
+      {
+        name: "a city names its mayor and council, and who elected each seat",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3725580", NAME: "Gastonia city", BASENAME: "Gastonia", STATE: "37", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Gastonia city/, /same kind of government/, /Richard Franks/, /Demetrios Koutsoupias/,
+          /Council, Ward 1/, /elected by Ward 1/, /James Gallagher/, /Council, Ward 3/,
+          /elected by the whole city/, /How the seats are elected/, /Read on/, /Which ward this point is in/],
+        reject: [/INACTIVE/, /Not named here/]
+      },
+      {
+        name: "a town that elects every seat by the whole town says so",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3701520", NAME: "Apex town", BASENAME: "Apex", STATE: "37", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Apex town/, /Jacques Gilbert/, /Council, At large/, /elected by the whole town/,
+          /all five council members are elected by the voters of the whole town/],
+        reject: [/elected by (Ward|District)/, /this point is in/, /Not named here/]
+      },
+      {
+        name: "a city that ties seats to wards and elects them all citywide says so",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3719000", NAME: "Durham city", BASENAME: "Durham", STATE: "37", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Durham city/, /Matt Kopac/, /Council, Ward 1/, /elected by the whole city/,
+          /three of the members each represent one of the city's three wards/],
+        reject: [/elected by Ward/, /this point is in/, /Not named here/]
+      },
+      {
+        name: "a city whose website this app cannot read says where its names come from",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "3755000", NAME: "Raleigh city", BASENAME: "Raleigh", STATE: "37", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Raleigh city/, /Janet Cowell/, /Corey Branch/, /elected by District C/,
+          /Raleigh's website does not let this app read it/, /State Board of Elections' results/,
+          /Which district this point is in/],
+        reject: [/Not named here/, /As listed on Raleigh's own website/]
       },
       {
         name: "a village gets the SAME note, not one of its own",
@@ -834,10 +944,12 @@ try {
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
-        // Both the point query and the statewide overlay download go to the
-        // same service path, so one route answers both with the same feature —
-        // which also proves the card comes from the POINT query rather than
-        // from the 27 MB statewide set: the app renders before that finishes.
+        // The layer is drawn and answered from a tile archive since 2026-10-17,
+        // so the archive is refused here: the card then falls back to the
+        // census loader, whose point query and whole-set download go to the
+        // same service path, and this one route answers either with the same
+        // feature (the archive-failure path il's smoke check 2d also holds).
+        await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
       });
@@ -847,8 +959,59 @@ try {
       const present = c.reject.filter((re) => re.test(text));
       check(c.name, !info.error && missing.length === 0 && present.length === 0,
         missing.length || present.length
-          ? `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`
-          : text.slice(0, 90));
+          ? `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 160)}`
+          : noContacts(text).slice(0, 90));
+      await context.close();
+    }
+
+    // (e) A member's own e-mail address and numbers reach that member's row
+    //     as links. Where a city's page prints them beside one member, the
+    //     seat carries them (scripts/city_councils.py, CONTACTS), and the
+    //     build proved every one in the shipped file on the page its seat
+    //     cites. The expected links are read from that file, so this check
+    //     prints counts and never a value; a member the file gives nothing
+    //     must show no link.
+    {
+      const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/nc-city-councils.json"), "utf8"));
+      const props = { GEOID: "3732260", NAME: "Holly Springs town", BASENAME: "Holly Springs", STATE: "37", LSADC: "43", FUNCSTAT: "A" };
+      const dial = (phone) => {
+        // the engine's cardPhoneDial: the digits, stopping at an extension
+        let s = String(phone);
+        const m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+        if (m) s = s.slice(0, m.index + m[1].length);
+        return "tel:" + s.replace(/[^\d+]/g, "");
+      };
+      const want = roster[props.GEOID].seats.filter((s) => s.name).map((s) => ({
+        name: s.name,
+        mails: s.email ? ["mailto:" + s.email] : [],
+        tels: [s.phone].concat(s.phonesExtra || []).filter(Boolean).map(dial)
+      }));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+        // The municipality layer reads its tile archive before it asks the
+        // Census, so the archive is refused and the stubbed query answers.
+        await p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
+        await p.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: esriBody(props) }));
+      });
+      await cardText(page, "municipality");
+      const rows = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-municipality .card-person")).map((row) => ({
+          name: (row.querySelector(".card-person-name") || {}).textContent || "",
+          mails: Array.from(row.querySelectorAll('a[href^="mailto:"]')).map((a) => a.getAttribute("href")),
+          tels: Array.from(row.querySelectorAll('a[href^="tel:"]')).map((a) => a.getAttribute("href"))
+        })));
+      const differ = want.filter((w) => {
+        const row = rows.find((r) => r.name === w.name);
+        return !row || JSON.stringify(row.mails) !== JSON.stringify(w.mails) ||
+          JSON.stringify(row.tels) !== JSON.stringify(w.tels);
+      }).length;
+      const mails = want.filter((w) => w.mails.length).length;
+      const tels = want.reduce((n, w) => n + w.tels.length, 0);
+      check(`${props.BASENAME}'s members' own e-mail addresses and numbers are links on their own rows`,
+        mails > 0 && tels > 0 && differ === 0,
+        `${mails} e-mail links and ${tels} numbers across ${want.length} named members; ` +
+        `${differ} rows differ from the shipped file`);
       await context.close();
     }
   }
@@ -894,6 +1057,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("27601") }));
       });
@@ -908,6 +1075,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("23504") }));
       });
@@ -959,6 +1130,131 @@ try {
     check("a point off tribal land is told so in the layer's own words",
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- City Council District, drawn for the seventeen cities above 25,000
+  // people that elect members by district or ward, and answered from the
+  // shipped files alone, so nothing here is stubbed. In Charlotte, Raleigh,
+  // Greensboro and Winston-Salem it names the member that district or ward
+  // elects and no other, in the city's own word for the unit, and says whose
+  // map the line comes from; in Gastonia's Ward 3 it names the ward's member
+  // and says the whole city elected them; in Durham and Concord, which tie
+  // seats to wards and districts and elect them all citywide, and in
+  // Asheville, which elects every seat citywide, there is nothing to answer
+  // and the card says why. Raleigh's point is the State Capitol, which lies
+  // in District C; the Charlotte, Greensboro and Winston-Salem points and
+  // the three outside points are the ward builder's own anchors; the
+  // Gastonia point is shapely's representative point of Ward 3. Each lies
+  // inside the Census outline of the city named (TIGERweb, read 2026-10-16).
+  for (const c of [
+    { name: "Charlotte", point: "35.24796,-80.80292",
+      want: [/District 1\b/, /Charlotte City Council/, /Danté Anderson/, /Council, District 1/,
+        /elected by District 1/, /The mayor and four more members\. The City or Town card names them\./,
+        /the City of Charlotte's own map/, /within 4 metres/],
+      reject: [/Malcolm Graham/, /Dimple Ajmera/, /Rob Harrington/, /elected by Ward/] },
+    { name: "Raleigh", point: POINT,
+      want: [/District C\b/, /Raleigh City Council/, /Corey Branch/, /elected by District C/,
+        /The mayor and two more members/, /Raleigh's website does not let this app read it/,
+        /published by the city in November 2021/, /2024 election/],
+      reject: [/Mitchell Silver/, /Janet Cowell/, /Stormie Denise Forte/] },
+    { name: "Greensboro", point: "36.07530,-79.86492",
+      want: [/District 4\b/, /Greensboro City Council/, /Adam Marshall/, /elected by District 4/,
+        /The mayor and three more members/, /Guilford County's map of Greensboro's districts/],
+      reject: [/Tammi Thurm/, /Hugh Holston/, /Marikay Abuzuaiter/] },
+    { name: "Winston-Salem", point: "36.09319,-80.16777",
+      want: [/East Ward/, /Winston-Salem City Council/, /Annette Scippio/, /Council, East Ward/,
+        /elected by the East Ward/, /The mayor\. The City or Town card names the mayor\./],
+      reject: [/Denise D\. Adams/, /J\. Allen Joines/, /elected by Ward/] },
+    { name: "Gastonia's Ward 3", point: "35.22074,-81.14536",
+      want: [/Ward 3\b/, /Gastonia City Council/, /James Gallagher/, /Council, Ward 3/,
+        /elected by the whole city/, /The mayor and two more members/,
+        /from 2027 those wards elect their own members too/],
+      reject: [/Demetrios Koutsoupias/, /Angela Dreher/, /elected by Ward 3/] },
+    { name: "Durham", point: "35.99400,-78.89860",
+      want: [/not in a council district or ward this map draws/, /Durham, Concord, Hickory and Morrisville/],
+      reject: [/Durham City Council/] },
+    { name: "Concord", point: "35.40880,-80.57950",
+      want: [/not in a council district or ward this map draws/, /Durham, Concord, Hickory and Morrisville/],
+      reject: [/Concord City Council/] },
+    { name: "Asheville", point: "35.59510,-82.55150",
+      want: [/not in a council district or ward this map draws/, /names the mayor and council of all 42/],
+      reject: [/Asheville City Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that district elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
+    await context.close();
+  }
+
+  // ---- School Board District, drawn from the State Board of Elections'
+  // precinct-level results and answered from the shipped file alone, so
+  // nothing here is stubbed. Each point is shapely's representative point of
+  // the shipped piece shrunk by about 200 m, so it is no nearer an edge than
+  // that (nc/data/app/nc-school-board-districts.json, 2026-10-17). The State
+  // Capitol is in Wake's District 6, last elected on November 5, 2024: the card
+  // names the seat, the election it is drawn from and the school district's
+  // website, and must NOT name either candidate in that contest (Sam Hershey
+  // won it), because the app names no member. A split precinct names both
+  // seats and says the results do not place the line; ground two elections put
+  // different seats on names both elections and chooses neither; Watauga's
+  // ground that no district seat's latest contest reached says so; Durham
+  // names the consolidated district over its district; and Smithfield, whose
+  // Johnston County board labels seats by district while every precinct votes
+  // on each, gets the empty card and no district.
+  for (const c of [
+    { name: "the State Capitol (Wake District 6)", point: POINT,
+      want: [/District 6\b/, /Wake County Schools \(Wake County Board of Education\)/,
+        /The election of November 5, 2024: the precincts whose ballots carried this seat's contest/,
+        /Members Not named here/, /Results by precinct/, /Look up your voter registration/],
+      reject: [/Sam Hershey/, /Josh Points/, /Members elected at large/, /Districts from/],
+      footer: ["Wake County Schools website", "https://www.wcpss.net/"] },
+    { name: "Bladen's COLLY precinct (split)", point: "34.66595,-78.49338",
+      want: [/District 1 or District 3/, /Why two districts/,
+        /COLLY precinct carried the contests for District 1 and District 3 in the ballot of November 3, 2026, which the State Board posted on October 5, 2026, before the election was held/,
+        /the results do not say where/, /Members elected at large/],
+      reject: [/Drawn from/, /Districts from/] },
+    { name: "Duplin ground two elections disagree on (overlap)", point: "34.79927,-77.82405",
+      want: [/Districts from two elections/, /The ballot of November 3, 2026, which the State Board posted on October 5, 2026, before the election was held District 3/,
+        /The election of November 5, 2024 District 4/, /chooses none/,
+        /Results of November 3, 2026/, /Results of November 5, 2024/],
+      reject: [/Drawn from/] },
+    { name: "Watauga ground no district contest reached (unplaced)", point: "36.23570,-81.83690",
+      want: [/No district placed here/, /On the ballot here/, /At large \(November 5, 2024\)/,
+        /The results do not say which/],
+      reject: [/Drawn from/, /Districts from/] },
+    { name: "Durham District 1 under Consolidated District A", point: "35.97381,-78.88550",
+      want: [/District 1\b/, /Durham Public Schools \(Durham County Board of Education\)/,
+        /Also elects Consolidated District A, which covers District 1 and District 2 and elects a member of its own/],
+      reject: [/Districts from/, /No district placed here/] },
+    { name: "Smithfield (Johnston, district-labelled seats voted on everywhere)", point: "35.50850,-78.33940",
+      empty: true,
+      want: [/No school board election district is drawn at this point/, /elected at large/],
+      reject: [/Not named here/, /Drawn from/, /District \d/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=school-board-district`);
+    const info = await cardText(page, "school-board-district");
+    const text = info.text || "";
+    const footer = await page.evaluate(() => {
+      const el = document.getElementById("card-school-board-district");
+      const block = el && el.closest(".layer-block");
+      const a = block && block.querySelector(".card-footer-link");
+      return a ? [a.textContent.trim(), a.getAttribute("href")] : null;
+    });
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    const footerOk = !c.footer || (!!footer && footer[0] === c.footer[0] && footer[1] === c.footer[1]);
+    check(`school-board-district card at ${c.name} says what the results place there and names no member`,
+      !info.error && (c.empty ? info.empty : !info.empty) &&
+        missing.length === 0 && present.length === 0 && footerOk,
+      `missing=${missing} unwanted=${present} footer=${JSON.stringify(footer)} text=${text.slice(0, 240)}`);
     await context.close();
   }
 } finally {

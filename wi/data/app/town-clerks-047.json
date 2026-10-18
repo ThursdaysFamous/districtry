@@ -3,6 +3,9 @@
     "clerk": "Brenda Murkley",
     "municipality": "Berlin",
     "phone": "920-361-4717",
+    "phonesExtra": [
+      "920-361-3189"
+    ],
     "recordUpdated": "2023-08-29"
   },
   "5504710125": {
@@ -36,6 +39,9 @@
     "clerk": "Vicky Sievert",
     "municipality": "Manchester",
     "phone": "920-767-1695",
+    "phonesExtra": [
+      "608-575-0484"
+    ],
     "recordUpdated": "2023-12-28"
   },
   "5504749525": {

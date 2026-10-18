@@ -26,6 +26,16 @@ phone/email/address and the per-person columns are empty for all 1,134
 records. It is therefore emitted once under `office`, never on a person, so
 the card cannot imply a direct line to a trustee that does not exist.
 
+Where a source DOES print a number beside a person, every such number ships on
+that person: the first in `phone`, any others in `phonesExtra`, each keeping a
+label word the source printed ("cell 815-555-0100"). That is Adam's ruling of
+2026-10-17 ("if the official government source uses personal phone numbers, we
+publish those"). A string a source wrote holding two numbers (Mason's directory
+prints "618/555-0100; 618/555-0101" in one cell) is split into the two, a
+further number printed for two or more people in one county's source is an
+office line and is not added, and every number is checked for its shape before
+the file is written.
+
 Usage:
     python3 build_municipal_officials_roster.py cook_municipal_officials.json [more...] [--out-dir DIR]
 
@@ -43,6 +53,10 @@ from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import undeliverable  # noqa: E402  (the fleet's withhold list)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    PERSON_PHONE_LABELS,
+    person_phone_problem,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -769,6 +783,122 @@ def format_phone(phone):
     return "%s-%s-%s" % (digits[:3], digits[3:6], digits[6:])
 
 
+# A label word a source prints before a person's own number, spelled the way
+# scraper_common.PERSON_PHONE_LABELS spells it ("cell 815-555-0100").
+_PERSON_LABELS = "|".join(PERSON_PHONE_LABELS)
+PERSON_LABEL_RE = re.compile(r"^((?:%s)(?:\s+or\s+(?:%s))?)\s+(?=[(+0-9])"
+                             % (_PERSON_LABELS, _PERSON_LABELS), re.I)
+LABEL_BEFORE_RE = re.compile(r"\b(%s)\W*$" % _PERSON_LABELS, re.I)
+# One number inside a string that may hold several.
+NUMBER_IN_TEXT_RE = re.compile(r"(?:\(\d{3}\)\s?|\d{3}[\s./\-]?)?\d{3}[\s.\-]\d{4}")
+
+
+def format_person_phone(value):
+    """format_phone for one of a person's numbers, keeping a label word the
+    source printed before it: "cell 8155550100" -> "cell 815-555-0100"."""
+    text = (value or "").strip()
+    if not text:
+        return None
+    m = PERSON_LABEL_RE.match(text)
+    if not m:
+        return format_phone(text)
+    return "%s %s" % (m.group(1).lower(), format_phone(text[m.end():]))
+
+
+def split_numbers(value):
+    """A person's phone string as a list of single numbers, in its order. One
+    number comes back as itself, formatted; a string holding several is split,
+    each keeping a label word printed directly before it."""
+    text = (value or "").strip()
+    if not text:
+        return []
+    found = list(NUMBER_IN_TEXT_RE.finditer(text))
+    if len(found) < 2:
+        return [format_person_phone(text)]
+    out, last = [], 0
+    for m in found:
+        before, last = text[last:m.start()], m.end()
+        label = LABEL_BEFORE_RE.search(before)
+        number = format_phone(m.group(0))
+        out.append("%s %s" % (label.group(1).lower(), number) if label else number)
+    return out
+
+
+def phone_digits(value):
+    """The ten digits of a number, for comparing two spellings of one line."""
+    return re.sub(r"\D", "", value or "")[-10:]
+
+
+def people_in(node):
+    """Every person dict under `node`: a dict carrying both `name` and `role`
+    (a municipality carries `name` and no `role`, an `office` block no `name`)."""
+    if isinstance(node, dict):
+        if isinstance(node.get("name"), str) and "role" in node:
+            yield node
+        for value in node.values():
+            yield from people_in(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from people_in(item)
+
+
+def person_numbers_sweep(roster):
+    """Give every person one number per string, and return what fails its shape.
+
+    This runs over the ASSEMBLED roster for the reason the name and withhold
+    sweeps do: a person reaches this file by three routes, and an entry carried
+    forward from the shipped roster (--preserved) was written before this rule
+    existed — Mason's entries, for one, held two numbers in one string. So each
+    person's `phone` is split into single numbers (the first stays in `phone`,
+    the rest go to `phonesExtra`, ahead of any further number already there), a
+    further number printed for two or more people in one county's source is
+    dropped as an office line, and every number is held to the shape a
+    person's number may take (scraper_common.person_phone_problem). Each
+    problem names the county, the municipality and the seat, never the value,
+    because a wrong column may be a home address."""
+    by_county = defaultdict(list)
+    for geoid, entry in roster.items():
+        for person in people_in(entry):
+            by_county[entry.get("county") or "?"].append((geoid, entry, person))
+    problems = []
+    for county, people in by_county.items():
+        numbers = {}
+        for _geoid, _entry, person in people:
+            own, seen = [], set()
+            for number in (split_numbers(person.get("phone"))
+                           + list(person.get("phonesExtra") or [])):
+                key = phone_digits(number) or number
+                if key not in seen:
+                    seen.add(key)
+                    own.append(number)
+            numbers[id(person)] = own
+        printed = defaultdict(int)
+        for own in numbers.values():
+            for number in own:
+                printed[phone_digits(number) or number] += 1
+        for geoid, entry, person in people:
+            own = numbers[id(person)]
+            extras = [n for n in own[1:] if printed[phone_digits(n) or n] < 2]
+            person.pop("phone", None)
+            person.pop("phonesExtra", None)
+            if own:
+                person["phone"] = own[0]
+            if extras:
+                person["phonesExtra"] = extras
+            values = ([("phone", own[0])] if own else []) + \
+                [("phonesExtra[%d]" % i, v) for i, v in enumerate(extras)]
+            for field, value in values:
+                why = person_phone_problem(value)
+                if why:
+                    seat = person.get("role") or "?"
+                    if person.get("district"):
+                        seat = "%s, district %s" % (seat, person["district"])
+                    problems.append("%s County, %s %s, %s: %s %s"
+                                    % (county, geoid, entry.get("name") or "",
+                                       seat, field, why))
+    return problems
+
+
 def normalize_website(url):
     if not url:
         return None
@@ -841,12 +971,22 @@ def build_county(payload, by_county, statewide, legal, warnings, apply_floors=Tr
             if rec.get("appointed"):
                 person["appointed"] = True
             # Per-PERSON contact, carried only where the source publishes it per
-            # member (McHenry prints a direct line or office e-mail for a few
-            # officials). The municipality-level hall contact below is never
+            # member (McHenry prints a work line, a cell or an office e-mail for
+            # a few officials; Mason prints one or two numbers for most;
+            # Macoupin's scraper passes on an office's second-contact e-mail
+            # only where the address names the person holding it). Every
+            # number the source prints for the person ships: the first in
+            # `phone`, the others in `phonesExtra` (Adam's ruling of
+            # 2026-10-17). The municipality-level hall contact below is never
             # copied onto a person — that would imply a direct line that the
             # source does not publish.
-            if rec.get("person_phone"):
-                person["phone"] = format_phone(rec["person_phone"])
+            numbers = split_numbers(rec.get("person_phone"))
+            numbers += [format_person_phone(v)
+                        for v in rec.get("person_phones_extra") or [] if v]
+            if numbers:
+                person["phone"] = numbers[0]
+            if numbers[1:]:
+                person["phonesExtra"] = numbers[1:]
             if rec.get("person_email"):
                 person["email"] = rec["person_email"]
             # When this seat is next on the ballot, where the source publishes
@@ -1078,6 +1218,10 @@ def merge_contact(existing, addition, warnings):
         # A "direct" number that is just the main line is not a direct line.
         if phone and phone != hall.get("phone") and not match.get("phone"):
             match["phone"] = phone
+            extras = [n for n in person.get("phonesExtra") or []
+                      if phone_digits(n) != phone_digits(hall.get("phone"))]
+            if extras and not match.get("phonesExtra"):
+                match["phonesExtra"] = extras
         email = person.get("email")
         if email and email != hall.get("email") and not match.get("email"):
             match["email"] = email
@@ -1379,6 +1523,16 @@ def main():
             print("    ... and %d more" % (len(fabricated) - 40), file=sys.stderr)
         sys.exit(1)
 
+    # EVERY NUMBER ON A PERSON IS ONE NUMBER, checked over the assembled roster
+    # for the reason the two sweeps beside it are: see person_numbers_sweep.
+    bad_numbers = person_numbers_sweep(roster)
+    if bad_numbers:
+        print("FATAL: %d person number(s) are not one telephone number — refusing "
+              "to write. Fix the source's parser:" % len(bad_numbers), file=sys.stderr)
+        for line in bad_numbers[:40]:
+            print("    %s" % line, file=sys.stderr)
+        sys.exit(1)
+
     # THE WITHHOLD SWEEP RUNS ONCE, OVER THE ASSEMBLED ROSTER. An address
     # reaches this file by three different routes — a village hall's `office`
     # block, an `officers` row and a `board` row — and all three carry an
@@ -1410,8 +1564,11 @@ def main():
 
     n_board = sum(len(e.get("board") or []) for e in roster.values())
     n_seats = sum(1 for e in roster.values() for m in (e.get("board") or []) if m.get("district"))
-    print("wrote %s: %d municipalities, %d board members (%d ward/district seats)"
-          % (out_path, len(roster), n_board, n_seats), file=sys.stderr)
+    n_phones = sum(1 for e in roster.values() for m in people_in(e) if m.get("phone"))
+    n_extra = sum(1 for e in roster.values() for m in people_in(e) if m.get("phonesExtra"))
+    print("wrote %s: %d municipalities, %d board members (%d ward/district seats); "
+          "%d people carry a number of their own, %d of them a further number"
+          % (out_path, len(roster), n_board, n_seats, n_phones, n_extra), file=sys.stderr)
     if preserved_counts:
         # Printed so the run log and the PR body both name every source that did
         # NOT refresh — a preserved county is data that is shipped but no longer

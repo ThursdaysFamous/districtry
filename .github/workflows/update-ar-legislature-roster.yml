@@ -10,8 +10,8 @@ name: Update Arkansas legislature roster
 # The builder reads the one member list and all 138 member pages (a departed
 # member keeps a row on the list, and only their own page says "Resigned" or
 # "Deceased"), two seconds apart, so the rebuild takes about five minutes. It
-# reads each page's heading, status line and district and never the mailing
-# address or telephone the same pages print.
+# reads each page's heading, status line, district and telephone, and never
+# the mailing address the same pages print.
 #
 # THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN SCRAPED A
 # SECOND TIME, the update-ilga-roster.yml pattern: a second pass would ask the

@@ -18,6 +18,9 @@
     "deputyClerk": "Judith A Suhs",
     "municipality": "Dayton",
     "phone": "715-258-0930",
+    "phonesExtra": [
+      "715-252-2926"
+    ],
     "recordUpdated": "2026-05-27",
     "url": "https://town-dayton.com/"
   },
@@ -25,6 +28,9 @@
     "clerk": "April Krueger",
     "municipality": "Dupont",
     "phone": "715-853-9092",
+    "phonesExtra": [
+      "715-754-2492"
+    ],
     "recordUpdated": "2024-01-08",
     "url": "https://townofdupont.org/"
   },
@@ -32,6 +38,9 @@
     "clerk": "Anjela Hamm",
     "municipality": "Farmington",
     "phone": "715-258-2779",
+    "phonesExtra": [
+      "715-467-7208"
+    ],
     "recordUpdated": "2024-12-12",
     "url": "https://farmingtonwaup.gov/"
   },
@@ -46,6 +55,9 @@
     "clerk": "Carrie Powell",
     "municipality": "Harrison",
     "phone": "715-677-6902",
+    "phonesExtra": [
+      "715-347-2976"
+    ],
     "recordUpdated": "2026-01-28"
   },
   "5513533850": {
@@ -88,6 +100,9 @@
     "clerk": "Jackie Beyer",
     "municipality": "Little Wolf",
     "phone": "920-596-2080",
+    "phonesExtra": [
+      "920-596-2143"
+    ],
     "recordUpdated": "2024-05-22",
     "url": "http://town-littlewolf.com/"
   },
@@ -151,6 +166,9 @@
     "deputyClerk": "Brenda Jashinsky",
     "municipality": "Wyoming",
     "phone": "715-754-5375",
+    "phonesExtra": [
+      "715-250-3308"
+    ],
     "recordUpdated": "2024-10-09",
     "url": "http://townwyoming.com/"
   },
