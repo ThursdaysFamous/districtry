@@ -1301,7 +1301,7 @@ table.matrix code {
                 <td data-label="What it answers">The school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Indiana school board members are elected — the Election Division certifies a School Board Member office category, whose own description says most members are elected and some are appointed — and the certified returns name 742 of them, but this change ships no roster and no districted geometry exists statewide, so nobody is named. Recorded as gap in-school-board-members.</td>
@@ -1348,7 +1348,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one.</td>
@@ -1359,7 +1359,7 @@ table.matrix code {
                 <td data-label="What it answers">The civil township covering the point — in Indiana a real unit of government, not a Census construct.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,012 features for Indiana, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 1,012 features for Indiana, measured 2026-09-29</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The township trustee and the three-member township board, as elected at the November 2022 general, from the Indiana Election Division's certified results (in-township-officials.json): 973 trustees and 921 boards of the 1,004 civil townships. A township the results do not cover, including Marion County's five-member boards, says so on the card, and the names are election winners rather than a roster the township keeps. Recorded as gap in-township-officers.</td>
@@ -1373,7 +1373,7 @@ table.matrix code {
                     <li><a href="https://gisdata.in.gov/server/rest/services/Hosted/Conservancy_Districts_of_Indiana_20250528/FeatureServer/54" target="_blank" rel="noopener">Indiana Department of Natural Resources — Conservancy Districts of Indiana, layer 54 on gisdata.in.gov: the 100 districts the map marks active, measured 2026-10-16, pre-built by in/scripts/build_in_conservancy_districts.py and shipped with the app. One district the department's 2026 directory lists, Hidden Hills, carries no status on the map and is not drawn. The layer states no licence.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, names and roles only. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and personal contacts the directory gives are never carried.</td>
+                <td data-label="Who it names">Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, with the telephone and e-mail the directory prints beside each person and each district's own (on the copy read 2026-10-17, 145 people with a telephone and 181 with an e-mail, 86 districts with a telephone and 83 with an e-mail). A value printed for two or more people, or equal to the district's own, is the district's and is not shown on a person. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and addresses the directory gives are never carried.</td>
                 <td data-label="Where it applies">Indiana — wherever a district has been set up; most of the state is in none.</td>
               </tr>
               <tr id="layer-voting-precinct">
@@ -1392,7 +1392,7 @@ table.matrix code {
                 <td data-label="What it answers">The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 566 features for Indiana, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 566 features for Indiana, measured 2026-09-29</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The mayor and council of all 39 places over 25,000 people. For 36 of them (all 33 cities and three of six towns) each name is the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election; a winner is not a sitting member, because Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so their councils are read from each town's own council page and dated to the read. Rebuilt weekly by in/scripts/build_in_city_officials.py. Smaller places are not named yet. Recorded as gap in-municipal-officeholders.</td>
@@ -1578,7 +1578,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1600,7 +1600,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1622,7 +1622,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,012 features for Indiana, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 1,012 features for Indiana, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
       ],
@@ -1636,7 +1636,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-conservancy-district",
       "identifier": "conservancy-district",
       "name": "Conservancy District",
-      "description": "The conservancy district or districts covering the point — special districts a circuit court sets up, when property owners ask, to deal with flooding, drainage, sewers, water supply or a lake — and who sits on each one's board. Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, names and roles only. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and personal contacts the directory gives are never carried.",
+      "description": "The conservancy district or districts covering the point — special districts a circuit court sets up, when property owners ask, to deal with flooding, drainage, sewers, water supply or a lake — and who sits on each one's board. Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, with the telephone and e-mail the directory prints beside each person and each district's own (on the copy read 2026-10-17, 145 people with a telephone and 181 with an e-mail, 86 districts with a telephone and 83 with an e-mail). A value printed for two or more people, or equal to the district's own, is the district's and is not shown on a person. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and addresses the directory gives are never carried.",
       "url": "https://districtry.com/in/sources.html#layer-conservancy-district",
       "isPartOf": {
         "@id": "https://districtry.com/in/sources.html#catalog"
@@ -1710,7 +1710,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 566 features for Indiana, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 566 features for Indiana, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],

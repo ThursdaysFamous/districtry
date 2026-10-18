@@ -39,9 +39,11 @@ council's own list:
     (`page`), which is not read.
   * Goldsboro's and Asheboro's from the list each council page fills itself
     in from (the read-the-page-first rule in CLAUDE.md): Goldsboro's page
-    loads /api/COG/CouncilMembers and Asheboro's loads the site's
-    catalogue.json, whose council entries are category 30. The card says so
-    and links the council page itself.
+    loads /api/Public/GetCouncilMembers, which carries its members' e-mail
+    addresses as well as their names (its other list, /api/COG/CouncilMembers,
+    carries names only and was read until 2026-10-17), and Asheboro's loads
+    the site's catalogue.json, whose council entries are category 30. The card
+    says so and links the council page itself.
   * Wilson's mayor's full name from the city's own map server (the MAYOR
     field of its council district layer), because the council page names the
     mayor only as "Mayor Stevens". The card says so.
@@ -125,14 +127,47 @@ reCAPTCHA key in their content-management system's settings for the site's
 forms and no challenge. Every other page here is read with this project's
 own token, and each served it.
 
-PRIVACY. Only names are carried. Several of these pages also print members'
-e-mail addresses, telephone numbers or street addresses (Rocky Mount's,
-Cary's, Garner's, Greenville's, Wake Forest's, Thomasville's, Morrisville's
-and others), Greensboro's members' biographies, Asheboro's list each
-member's street address, and Monroe's packet and Wake Forest's pages name
-residents and applicants, and none of it is copied. Goldsboro's page also
-loads a second list that carries each member's e-mail address and telephone
-number, which is not read.
+PRIVACY AND CONTACTS. A member's e-mail address and telephone numbers are
+carried where the page the seat cites prints them beside that member alone,
+under Adam's rulings of 2026-10-17; scripts/city_councils.py (CONTACTS) says
+what does not ship and how the build proves each value on its page. Read on
+2026-10-17:
+  * The pages cited for Apex, Burlington, Cary, Chapel Hill, Durham,
+    Fuquay-Varina, Greensboro, Hickory, Indian Trail, Jacksonville, Monroe,
+    Wilson and Winston-Salem print no e-mail address or number beside any one
+    member, only the city's or the council's own or none, so their members
+    carry none. Winston-Salem's mayor's page prints a mail link and numbers
+    for the Mayor's Office in its list of the office's staff, one of them
+    labelled as the mayor's number beside an assistant's name; they are the
+    office's and are not carried. Raleigh's and Matthews's members carry none
+    because their names come from the State Board of Elections' results,
+    which print no contact details.
+  * Charlotte's council page prints none for its members, and only the
+    mayor's own page gives the mayor's. Sanford's page prints one member's
+    e-mail address and puts the council's contact details on a separate page,
+    which this build does not read. High Point's page prints one member's
+    e-mail address beside that member and a link that mails the whole
+    council, which is no one member's.
+  * Concord's council page prints each member's number without a label on
+    the lines of that member's street address, which go with the address, and
+    the City Hall number for two members, which is the office's, so Concord's
+    members carry their e-mail addresses and no number. Greenville's page
+    prints its members' numbers the same way, and they are not carried either.
+  * Rocky Mount's page reaches its members' e-mail through a form, so they
+    carry their numbers only. Wilmington's page prints the city's office line
+    beside the mayor, which is not carried.
+  * Morrisville's page prints one member's e-mail address in a link that
+    sends to another member's, so that member carries no e-mail address.
+    Clayton's page has, beside its members, mail links that show no text; the
+    e-mail address in the link labelled with each member's name is the one
+    carried.
+  * The list Goldsboro's council page fills itself in from carries an empty
+    telephone field for every member, so its members carry their e-mail
+    addresses only.
+No street address is carried: Asheboro's list prints each member's, and none
+is copied. Greensboro's page prints its members' biographies, and Monroe's
+packet and Wake Forest's pages name residents and applicants; none of that is
+copied either.
 
 PUBLISHING GAPS, recorded as evidence for the state-publishing ask (gap
 nc-municipal-officeholders): no state office publishes who holds North
@@ -222,6 +257,10 @@ SPEC = cc.Spec(
     seats_file="nc-city-council-seats.json",
     out_file="nc-city-councils.json",
     seats=SEATS,
+    # 144 members' e-mail addresses and 111 members' numbers were written down
+    # on 2026-10-17; these floors are about two thirds of each.
+    min_emails=96,
+    min_phones=74,
     browser={
         DURHAM_COUNCIL: UA_HINTS_CHROME_126,
         GREENSBORO_COUNCIL: UA_HINTS_CHROME_126,

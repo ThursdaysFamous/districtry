@@ -123,6 +123,7 @@ node scripts/map_link_test.mjs                            # pasted Google/Apple 
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists
+python3 scripts/validate_telephones.py                    # every tel: link a page serves dials one number; every shipped telephone holds at most one
 python3 scripts/build_metro_outline.py --check           # IL ring + anchor registry
 python3 wi/scripts/build_metro_outline.py --check
 python3 ia/scripts/build_metro_outline.py --check
@@ -147,6 +148,7 @@ python3 wi/scripts/validate_sources.py --selftest        # the LTSB filing watch
 python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county board scrape's robots decision: a site-wide disallow refuses, an API host's 403 does not, 5xx and 202 refuse, and the Archive rung never routes round a disallow
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 scripts/il_library_trustees_scraper.py --selftest   # the library board-page reader's six shapes and five refusals
+python3 scripts/build_il_library_trustees.py --selftest   # whose a library page's printed telephone or e-mail is: one trustee's entry ships, a shared one ships on nobody
 python3 scripts/peoria_county_board_scraper.py --selftest   # both index shapes at once: the CivicPlus editor paragraphs, the retired subhead headings, and the prose the anchor keeps out
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
@@ -210,8 +212,8 @@ python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's
 python3 ms/scripts/build_ms_court_districts.py --check           # Mississippi's six court maps against the court's own county lists and the laws that redraw them in 2027 and 2031, every saved copy re-hashed
 python3 ms/scripts/build_ms_judges.py --selftest                 # the judges' parse and the change table's staleness tests, on literals
 python3 ms/scripts/build_ms_judges.py --check                    # the shipped judges against their shape, their counts and the court maps
-python3 ms/scripts/build_ms_city_councils.py --selftest           # the city council page readers, on literals: the four seat shapes, the name test, the seat labels a page prints
-python3 ms/scripts/build_ms_city_councils.py --check              # the 15 cities' councils against their declared seats and the name test, Greenville naming nobody with its reason
+python3 ms/scripts/build_ms_city_councils.py --selftest           # the city council page readers, on literals: the four seat shapes, the name test, the seat labels a page prints, each person's own telephone numbers and five refusals of them, and each person's own e-mail address, read by entry and by card, scrambled by Cloudflare's e-mail protection or not, and eleven refusals of it
+python3 ms/scripts/build_ms_city_councils.py --check              # the 15 cities' councils against their declared seats and the name test, Greenville naming nobody with its reason, and each city's telephone numbers and e-mail addresses against the cities that declare them and their floors, with no address carried for two people or as an office's mailbox
 python3 ms/scripts/build_ms_city_wards.py --check                 # the nine cities' wards against their councils' ward seats, the card's empty state, the sources page and the record of what each ward layer served
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one

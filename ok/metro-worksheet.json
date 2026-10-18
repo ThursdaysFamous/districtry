@@ -221,12 +221,12 @@
       "label": "School District (Unified)",
       "group": "schools",
       "area_rank": 10,
-      "rank_note": "415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly",
+      "rank_note": "415 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 91 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 415 features for Oklahoma, measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 415 features for Oklahoma, measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -239,12 +239,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 11,
-      "rank_note": "1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma",
+      "rank_note": "666 ZIP Code Tabulation Areas overlapping Oklahoma, of the 1,058 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Oklahoma",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='40'. 1,058 features in Oklahoma's box, measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='40'. 1,058 features in Oklahoma's box, measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -257,12 +257,12 @@
       "label": "School District (Elementary)",
       "group": "schools",
       "area_rank": 12,
-      "rank_note": "91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves",
+      "rank_note": "91 elementary (dependent) districts, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime; 91 features for Oklahoma, measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 91 features for Oklahoma, measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
@@ -275,16 +275,16 @@
       "label": "City or Town",
       "group": "geography",
       "area_rank": 13,
-      "rank_note": "600 incorporated cities and towns, live from TIGERweb",
+      "rank_note": "600 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 600 features for Oklahoma (165 cities, 435 towns), measured 2026-10-09.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 600 features for Oklahoma (165 cities, 435 towns), measured 2026-10-09.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "In the 16 cities above 25,000 people, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by ok/scripts/build_ok_city_councils.py, which fails when a name is no longer on the page it cites (ok/data/app/ok-city-councils.json). Muskogee's website does not let this app read it, so its names come from the county election board's official results for February 10, 2026 and from news reports, and the card says so. Each seat says whether its ward's own voters or the whole city elect it, read from each city's charter, its own pages, a county election board's results or news reports, because nothing the state publishes records it. Oklahoma's other cities and towns name nobody yet, recorded as gap ok-municipal-officeholders.",
+        "people": "In the 16 cities above 25,000 people, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by ok/scripts/build_ok_city_councils.py, which fails when a name is no longer on the page it cites (ok/data/app/ok-city-councils.json). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Muskogee's website does not let this app read it, so its names come from the county election board's official results for February 10, 2026 and from news reports, and the card says so. Each seat says whether its ward's own voters or the whole city elect it, read from each city's charter, its own pages, a county election board's results or news reports, because nothing the state publishes records it. Oklahoma's other cities and towns name nobody yet, recorded as gap ok-municipal-officeholders.",
         "applies": "Oklahoma — statewide. A point outside every city and town is unincorporated, which the card states."
       }
     },
@@ -415,12 +415,12 @@
       "label": "Census County Division",
       "group": "geography",
       "area_rank": 9,
-      "rank_note": "305 census county divisions, live from TIGERweb (no data/app file) — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)",
+      "rank_note": "305 census county divisions, from TIGERweb, drawn from a mirrored tile archive — median 478.6 km2 of land (mean 582.5), measured 2026-10-15: smaller than the median tribal area, larger on average than a unified school district (400.5 km2 mean)",
       "source": {
         "answers": "The census county division containing the point, and its county.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
@@ -576,7 +576,7 @@
       {
         "file": "ok-city-councils.json",
         "min_keys": 16,
-        "note": "The mayor and council of each of the 16 cities above 25,000 people, keyed by Census place id, written down from each city's own pages (Muskogee's from its election results and news reports) and proved against them by ok/scripts/build_ok_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn wards. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name has gone from its page and never edits the file; the seats file is changed by hand (ok/WATCH.md)."
+        "note": "The mayor and council of each of the 16 cities above 25,000 people, keyed by Census place id, written down from each city's own pages (Muskogee's from its election results and news reports) and proved against them by ok/scripts/build_ok_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn wards. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (ok/WATCH.md)."
       },
       {
         "file": "coverage-gaps.json",
