@@ -9547,9 +9547,9 @@ function initIndianaExplorer() {
    * Every answer is listed, as before, and one whose label lacks the number
    * is marked no-number, which #q= never selects (prefillGeocodeSearch).
    * When none carries the number, a row on the address's street shows that
-   * street when it is picked (showStreetOnly), with the Census Bureau's pin,
-   * instead of selecting a spot along it, and the status says what the
-   * map's search knows. */
+   * street when it is picked (showStreetOnly), and the point the Census
+   * Bureau gives the number, instead of selecting a spot somewhere along
+   * the street, and the status says what the map's search knows. */
   function listHeldAnswers(answers, address, street, sent) {
     var none = !answers.some(function (r) { return labelCarriesNumber(r.display_name, address); });
     renderGeocodeResults(answers, null, {
@@ -9569,7 +9569,7 @@ function initIndianaExplorer() {
       geoStatus.textContent = "The map's search knows " + a.street + " in " +
         (names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0]) +
         " but not number " + a.number + " on it. Pick " +
-        (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map, then tap the place.";
+        (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map.";
     } else if (sent) {
       geoStatus.textContent = "None of these has the house number " + addressStreet(address).number +
         ", so pick one only if it's the place you meant, or tap the place on the map.";
@@ -9629,8 +9629,9 @@ function initIndianaExplorer() {
    * from the Google Maps app answered three other places with similar
    * names, 20 to 50 km from its street. At the same time the Census
    * Bureau is asked where the number falls on the street (lookupAddressRanges),
-   * and its answer is a pin the reader can tap, which also selects nothing
-   * by itself. */
+   * and its answer is a pin whose point is selected, with the message saying
+   * it can be a few doors off, unless another state's app answers there
+   * (placeRangePin). */
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
@@ -9646,7 +9647,7 @@ function initIndianaExplorer() {
       bounds = bounds ? bounds.extend(b) : b;
     });
     clearResultRows(false);
-    var pin = null, near = [];
+    var pin = null, pinPicked = false, near = [];
     // every answer came from OpenStreetMap's data (normalizePhoton), so the
     // message can offer its note form; New York's city search reads the
     // city's own address file, which OpenStreetMap's volunteers do not keep
@@ -9662,14 +9663,20 @@ function initIndianaExplorer() {
     function current() { return !answered && seq === districtSearchSeq && picked === state.sequence; }
     function compose() {
       var text = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number + " on it";
-      text += pin ? ". The pin is where the Census Bureau's street records put that number, which can be a few doors off."
-                  : ", so the map is showing that street.";
+      // the pin's point is selected (pinPicked) unless another state's app
+      // answers there, and then the pin waits for a tap (placeRangePin)
+      var tapPin = !!pin && !pinPicked;
+      text += !pin ? ", so the map is showing that street." : pinPicked ?
+        ". The map has selected the pin, where the Census Bureau's street records put that number. " +
+        "That can be a few doors off, and a district line can run between two doors." :
+        ". The pin is where the Census Bureau's street records put that number, which can be a few doors off.";
       if (near.length) {
         text += " A search for its name, \u201c" + name + "\u201d, " + (pin ? "also " : "") + "found " +
           (near.length === 1 ? "the place below. Pick it if it's the one you meant" : "the places below. Pick the one you meant") +
-          (pin ? ", tap the pin, or tap the map." : ", or tap the map.");
+          (tapPin ? ", tap the pin, or tap the map." : ", or tap the map.");
       } else {
-        text += pin ? " Tap the pin to use it, or tap the place you meant." : " Tap the place you meant.";
+        text += tapPin ? " Tap the pin to use it, or tap the place you meant." :
+          pinPicked ? " If the place is elsewhere, tap it on the map." : " Tap the place you meant.";
       }
       geoStatus.textContent = text;
       geoStatus.className = "geo-status";
@@ -9704,10 +9711,20 @@ function initIndianaExplorer() {
       // is shown, the house pinned or the street alone (countLinkRead)
       if (seq === districtSearchSeq) countLinkRead(m && current() ? "pin" : "street");
       if (!m || !current()) return;
-      pin = m;
-      placeRangePin(m, a, done); // so is a point selected any other way, which takes the pin
-      compose();
-      framePin();
+      // the app that answers at the pin decides whether its point is selected
+      // here (ENGINE metro-portal); an owner that cannot be told leaves it
+      // here, as a tap there would
+      return placeOwner(m.lat, m.lng)["catch"](function () { return null; }).then(function (owner) {
+        if (!current()) return;
+        pin = m;
+        pinPicked = !owner || owner === "here";
+        // the reader's tap on the map answers the message (done), and so does
+        // a point selected any other way, which takes the pin
+        placeRangePin(m, a, done, pinPicked);
+        if (pinPicked) picked = state.sequence; // the pin's own selection answers nothing
+        compose();
+        framePin();
+      });
     });
     if (name.length < 3) return ranged;
     var named = search(name).then(function (found) {
@@ -9791,15 +9808,15 @@ function initIndianaExplorer() {
    * found: asked on 2026-10-14 for a Westmont address, the Census geocoder
    * offered that number on Oakley Ln and on Oakley Ct, two other streets.
    *
-   * THE PIN SELECTS NOTHING UNTIL IT IS TAPPED. An estimate from address
-   * ranges can be a few doors off, and in Chicago a ward's edge often runs
-   * down the alley in the middle of a block, so a selected estimate could
-   * put the place in the wrong district and every card would follow it. A
-   * tap on the pin selects its point as a tap on the map would, through
-   * the map's own click (ENGINE selection-controls), so a pin in another
-   * state's app opens that app; any other selection, a new search or a tap
-   * elsewhere removes the pin. Resolves to that match's position, or to
-   * null when there is none, the lookup fails or it takes longer than
+   * THE PIN'S POINT IS SELECTED AT ONCE, on Adam's choice of 2026-10-18,
+   * and the message says what that can cost (showStreetOnly): an estimate
+   * from address ranges can be a few doors off, and in Chicago a ward's
+   * edge often runs down the alley in the middle of a block, so the cards
+   * can name the district next door. For its first day the pin selected
+   * nothing until it was tapped, for that reason; Adam chose the cards at
+   * once, with the warning, over a tap the reader had to know to make
+   * (placeRangePin). Resolves to that match's position, or to null when
+   * there is none, the lookup fails or it takes longer than
    * ADDRESS_RANGES_TIMEOUT_MS; it never rejects. */
   var ADDRESS_RANGES_TIMEOUT_MS = 9000;
   var RANGE_PIN_COLOR = "#1d5fd6"; // the token file's --data-500, the selection's own blue
@@ -9823,6 +9840,14 @@ function initIndianaExplorer() {
       })["catch"](function () { return null; })
       .then(function (m) { clearTimeout(timer); return m; });
   }
+  /* The pin, with its point selected (selectNow). That pin ignores a tap,
+   * which would only move the selection a few metres off the estimate and
+   * take the message with it. Where another state's app answers at the pin
+   * (showStreetOnly asks placeOwner), a selection would open that app with
+   * the point and without the message, so the pin waits for a tap, which
+   * selects its point as a tap on the map would, through the map's own
+   * click (ENGINE selection-controls), and so opens that app. Either way
+   * any other selection, a new search or a tap elsewhere removes the pin. */
   var rangePin = null;
   function clearRangePin() {
     if (!rangePin) return;
@@ -9830,32 +9855,42 @@ function initIndianaExplorer() {
     map.removeLayer(rangePin.marker);
     rangePin = null;
   }
-  function placeRangePin(m, a, onGone) {
+  function placeRangePin(m, a, onGone, selectNow) {
     clearRangePin();
-    var picked = state.sequence;
-    var label = "Where the Census Bureau puts " + a.number + " " + a.street + ". Select this point.";
-    var marker = L.marker([m.lat, m.lng], { icon: poiPinIcon(RANGE_PIN_COLOR), title: label, zIndexOffset: 1000 });
+    var at = L.latLng(m.lat, m.lng);
+    var where = "Where the Census Bureau puts " + a.number + " " + a.street;
+    var label = selectNow ? where : where + ". Select this point.";
+    var marker = L.marker(at, { icon: poiPinIcon(RANGE_PIN_COLOR), title: label, zIndexOffset: 1000,
+                                keyboard: !selectNow });
     function select() {
-      var at = marker.getLatLng();
       clearRangePin();
       map.fire("click", { latlng: at });
     }
-    marker.on("click", select);
-    // Leaflet makes a marker focusable and a button, and leaves Enter and
-    // Space to the page
-    marker.on("keydown", function (e) {
-      var key = e.originalEvent && e.originalEvent.key;
-      if (key !== "Enter" && key !== " ") return;
-      e.originalEvent.preventDefault();
-      select();
-    });
+    if (!selectNow) {
+      marker.on("click", select);
+      // Leaflet makes a marker focusable and a button, and leaves Enter and
+      // Space to the page
+      marker.on("keydown", function (e) {
+        var key = e.originalEvent && e.originalEvent.key;
+        if (key !== "Enter" && key !== " ") return;
+        e.originalEvent.preventDefault();
+        select();
+      });
+    }
     marker.addTo(map);
     var el = marker.getElement();
-    if (el) el.setAttribute("aria-label", label);
+    if (el) {
+      el.setAttribute("aria-label", label);
+      // a picture of where the selected point came from, which a tap leaves
+      // as it is (a marker's click does not reach the map)
+      if (selectNow) { el.setAttribute("role", "img"); el.style.cursor = "default"; }
+    }
+    if (selectNow) setSelectedPoint(at.lat, at.lng, { skipPan: true });
+    var picked = state.sequence;
     // Every selection adds the selected point's marker (setSelectedPoint), so
     // a point selected any other way (a result row, the keyboard's select
     // button, a located point) is seen here, and the pin goes with it, as
-    // does the message asking for a tap on it (onGone).
+    // does the message about it (onGone).
     var watch = function () {
       if (state.sequence === picked) return;
       clearRangePin();
@@ -10002,13 +10037,13 @@ function initIndianaExplorer() {
     "county",            // 92 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "in-house",          // 100 House districts — the finest political tiling this instance ships today
     "county-council",    // 241 districts in 55 counties: four per county, and Indianapolis's 25 City-County Council districts
-    "school-district-unified", // 291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
-    "zip-code",          // 882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
-    "county-subdivision", // 1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
+    "school-district-unified", // 291 unified (K-12) districts, from TIGERweb, drawn from a mirrored tile archive. Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
+    "zip-code",          // 807 ZIP Code Tabulation Areas overlapping Indiana (882 counting the 75 that only touch its line), in a mirrored tile archive, measured 2026-10-17 — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
+    "county-subdivision", // 1,012 county-subdivision records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
     "conservancy-district", // The 100 active conservancy districts on the Department of Natural Resources' map, pre-built with the app — 75.5 km2 mean area (median 4.44, largest 1,342), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, and larger than an Indianapolis Public Schools board district (41.6). Some overlap; together they cover 8.0% of the state, overlaps counted once.
     "school-board-district", // The 5 districts the Indianapolis Public Schools board is elected from, pre-built from the City of Indianapolis's layer — 41.6 km2 mean area (median 40.0), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, larger than a voting precinct (18.40)
     "voting-precinct",   // 5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)
-    "municipality",      // 566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
+    "municipality",      // 566 incorporated places, from TIGERweb, drawn from a mirrored tile archive — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
     "tribal-government", // Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // 650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer
@@ -12354,7 +12389,19 @@ function initIndianaExplorer() {
     var s = String(phone);
     var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
     if (m) s = s.slice(0, m.index + m[1].length);
-    return s.replace(/[^\d+]/g, "");
+    var dial = s.replace(/[^\d+]/g, "");
+    // TWO NUMBERS PRINTED AS ONE ("217/555-0100; 217/555-0101", "(312)
+    // 555-0100 / 0101/0102") would run together into a number nobody has. The
+    // link dials the first, the one the text opens with, and the rest stays
+    // in the text: seven digits where the text opens with a local number
+    // (three digits, then four), eleven where it opens with the country code
+    // 1, and ten otherwise. A number written with a leading + is left whole.
+    if (dial.charAt(0) !== "+" && dial.length > 11) {
+      var g = s.match(/\d+/g);
+      dial = dial.slice(0, g.length > 1 && g[0].length === 3 && g[1].length === 4
+        ? 7 : dial.charAt(0) === "1" ? 11 : 10);
+    }
+    return dial;
   }
   function cardPhoneLink(phone) {
     var dial = cardPhoneDial(phone);
@@ -13978,8 +14025,17 @@ function initIndianaExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // THIS HELPER IS USED, AND CARRYING IT UNUSED WOULD BE A FALSE STATEMENT
   // ON THE PRIVACY PAGE RATHER THAN DEAD BYTES. Michigan's go-live found a
@@ -13987,10 +14043,13 @@ function initIndianaExplorer() {
   // build_privacy_page.py MEASURES point-query layers by counting
   // loadArcGISPointGeoJSON call sites minus its definition — so an unused
   // wrapper made the published page say a layer sent your exact selected
-  // point to a government server when none did. Four layers below are live
-  // TIGERweb and really do send the point, so the count is true. If those
-  // layers ever leave, this helper leaves with them. Re-run
-  // scripts/build_privacy_page.py with any change to this block.
+  // point to a government server when none did. The four layers below still
+  // use it, for the whole set and for the point query when their archive
+  // cannot be read (above), and the privacy page now counts the hooks a
+  // browser probe sees FIRE (scripts/probe_point_transmission.mjs) rather
+  // than call sites, so a hook held for that case is not reported as a
+  // transmission. If those layers ever leave, this helper leaves with them.
+  // Re-run scripts/build_privacy_page.py with any change to this block.
   function tigerStatewideLoader(servicePath, layerIndex, outFields, label) {
     var load = makeCached(function () {
       return loadTigerLayer(servicePath, layerIndex, outFields, label);
@@ -14771,9 +14830,10 @@ function initIndianaExplorer() {
 
 
   /* ---------- 6. County Subdivision — live TIGERweb ----------
-   * The WI/IA/MI module with Indiana's own civil-division vocabulary. Live
-   * TIGERweb fetch (no builder script, no committed data/app file), so a
-   * TIGER vintage roll reaches this layer on its own.
+   * The WI/IA/MI module with Indiana's own civil-division vocabulary. Drawn
+   * and answered from a tile archive mirrored from TIGERweb
+   * (scripts/mirror_tiger_tiles.py), so a TIGER vintage roll reaches this
+   * layer through update-tiger-tiles.yml's weekly pull request.
    *
    * INDIANA IS THE MIRROR OF MICHIGAN HERE, AND THE CARDS SAY SO RATHER THAN
    * LEAVING A READER TO WORK IT OUT. A Michigan city is INDEPENDENT of any
@@ -14815,6 +14875,7 @@ function initIndianaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Township or City",
     // Every subdivision belongs to exactly one county BY CONSTRUCTION, not by
@@ -15045,6 +15106,7 @@ function initIndianaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Indiana",
@@ -15165,6 +15227,7 @@ function initIndianaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     loader: loadSchoolDistrictsUnified,
@@ -15304,12 +15367,16 @@ function initIndianaExplorer() {
    * THE BOARDS COME FROM THE DEPARTMENT'S 2026 DIRECTORY
    * (in/scripts/build_in_conservancy_directors.py;
    * data/app/in-conservancy-directors.json), which the law requires each
-   * board's chair to keep current. Names and roles only: the directory also
-   * gives home towns, and for many districts a director's own address,
-   * telephone or e-mail as the district's contact, and none of that is
-   * carried. Staff a district hires (attorneys, managers, operators) are not
-   * shown either. A district that sent the department no list, or that is
-   * newer than the directory, says so rather than naming anyone.
+   * board's chair to keep current. Each person shows the telephone and e-mail
+   * the directory prints beside them, and the district shows its own; for
+   * many districts that contact is a director's own line or mailbox, which
+   * Adam's rulings of 2026-10-17 publish wherever a government source prints
+   * it. A value printed for two or more people, or equal to the district's
+   * own, is the district's and is not shown on a person. Home towns and
+   * addresses are never carried. Staff a district hires (attorneys,
+   * managers, operators) are not shown. A district that sent the department
+   * no list, or that is newer than the directory, says so rather than naming
+   * anyone.
    *
    * THE NAME ON THE CARD AND IN THE HOVER IS THE DIRECTORY'S where the district
    * has an entry there, and the map's otherwise. The two differ for 21 of the
@@ -15426,17 +15493,28 @@ function initIndianaExplorer() {
         var people = board && board.people ? board.people : [];
         // the directory's address is newer than the map's, so it comes first
         var site = board && board.url ? board.url : p.url;
+        // the district's own telephone and e-mail, as the directory gives them
         wrap.appendChild(renderLinkRow({
           title: conservancyName(p, result.boards),
+          phone: board && board.phone ? String(board.phone) : null,
+          email: board && board.email ? String(board.email) : null,
           links: site ? [{ label: "Website", url: String(site) }] : []
         }));
         if (people.length) {
           wrap.appendChild(renderSectionLabel("Board and officers"));
           wrap.appendChild(renderPersonRows(people.map(function (person) {
-            return {
+            var row = {
               name: person.vacant ? "Vacant" : String(person.name),
               badge: person.role != null ? String(person.role) : null
             };
+            if (!person.vacant) {
+              if (person.phone) row.phone = String(person.phone);
+              if (person.phonesExtra && person.phonesExtra.length) {
+                row.phonesExtra = person.phonesExtra.map(String);
+              }
+              if (person.email) row.email = String(person.email);
+            }
+            return row;
           })));
         }
         var rows = [];
@@ -15516,7 +15594,10 @@ function initIndianaExplorer() {
    * line, so an envelope round the state necessarily catches Chicago's,
    * Louisville's and Cincinnati's. This is the same interlocking-states fact
    * metros.json records about the fleet hand-off box, and the same behaviour
-   * ia/, wi/ and mi/ ship.
+   * ia/, wi/ and mi/ ship. Since 2026-10-17 the card and the overlay read a
+   * tile archive that keeps only the ZCTAs overlapping Indiana, so the
+   * neighbours appear only where the whole set is drawn (on the raster basemap,
+   * or after the archive fails to load).
    *
    * THE SENTENCE THAT STOOD HERE SAID "The card is unaffected: it answers
    * from a point query, so a reader always gets the ZCTA they are actually
@@ -15584,6 +15665,7 @@ function initIndianaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     coverage: insideIndiana,
@@ -15591,8 +15673,11 @@ function initIndianaExplorer() {
     // NO emptyNote, AND THE ONE THAT SHIPPED HERE WAS FALSE TWICE OVER. It
     // read "No ZIP code here. This map holds Indiana's ZIP codes only, so a
     // point outside Indiana gets none", citing scripts/mirror_tiger_tiles.py's
-    // STATE_OVERLAP_MIN — an ARCHIVE THIS INSTANCE DOES NOT SHIP, ZIP being
-    // one of its seven live layers with no committed data/app file. It also
+    // STATE_OVERLAP_MIN — an archive this instance did not then ship, ZIP
+    // being one of its seven live layers with no committed data/app file
+    // (it ships one since 2026-10-17, which keeps only the ZCTAs overlapping
+    // Indiana, so the note's reason is now true and it still could not
+    // render outside Indiana, where coverage hides the layer). It also
     // asserted a state filter the code does not apply, and it could never
     // render, because the card always answers. It was copied from a sibling
     // that does mirror the layer. With coverage declared above, outside

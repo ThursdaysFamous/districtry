@@ -972,7 +972,9 @@ def build_county(payload, by_county, statewide, legal, warnings, apply_floors=Tr
                 person["appointed"] = True
             # Per-PERSON contact, carried only where the source publishes it per
             # member (McHenry prints a work line, a cell or an office e-mail for
-            # a few officials; Mason prints one or two numbers for most). Every
+            # a few officials; Mason prints one or two numbers for most;
+            # Macoupin's scraper passes on an office's second-contact e-mail
+            # only where the address names the person holding it). Every
             # number the source prints for the person ships: the first in
             # `phone`, the others in `phonesExtra` (Adam's ruling of
             # 2026-10-17). The municipality-level hall contact below is never

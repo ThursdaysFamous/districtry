@@ -45,7 +45,55 @@ A page lists names and seats, and a transcription could put Ward 2's member
 under Ward 3 with every name still on the page. The cross-check against the
 drawn wards catches a ward the map does not have, never a swap inside one
 city, so which seat a person holds is the reading of whoever wrote it down,
-and --watch re-reads only the names.
+and --watch re-reads only the names and the contacts below.
+
+CONTACTS, by Adam's rulings of 2026-10-17 ("if the official government source
+uses personal phone numbers, we publish those", and then "E-mails too"). Where
+a city's own page prints an e-mail address or a telephone number beside one
+member, the seat carries it and the card shows it, whatever the address's
+domain and whether the number is a city line, a home number or a cell number.
+A seat carries at most one `email`, its first number in `phone` and any
+others in `phonesExtra`, each number as the page prints it, with the page's
+own label in front where the page gives one ("cell 615-555-0123", "home
+(803) 555-0145"); a one-letter label such as "C:" is written out, and a label
+that says only that it is a number ("Phone", "Tel.") is left off. What does
+not ship:
+  * A value the page prints for two or more members, or that is the
+    council's, the clerk's or the city's own line or mailbox. These are the
+    office's. The seats file records the office lines and mailboxes each
+    city's pages print (`officeLines`, `officeMailboxes`), and the build
+    refuses a seat whose value equals one of them, and a value two seats in
+    one city share. Two numbers that differ only by an extension are one
+    line.
+  * A street address, which is never carried, and an unlabelled number
+    printed on an address's lines, which goes with it. A number on a row of
+    its own, with a label ("Cell", "Phone", "(H)"), is not part of the
+    address and ships.
+  * A fax number, anything the page marks confidential or an official has
+    asked in writing to be left off, anything about residents or applicants,
+    and biographies.
+  * A number printed in a tel: link that dials a different number, and an
+    address printed in a mailto: link that sends to a different address,
+    together with the number the link dials or the address it sends to unless
+    the page prints that one as well. A misprint is never corrected, so an
+    address on a misspelt domain stays out, and so does an address on
+    scripts/undeliverable.py's list.
+  * A second e-mail address for the same person: where a page prints two, the
+    one on the city's own domain ships.
+Cloudflare's e-mail protection (an address a page writes as code that a
+script turns back into the address for the reader) is not an access control,
+and the build decodes it (Adam, 2026-10-09). Every value is proved on the page
+its seat cites, as a name is: an e-mail address, case folded, among the
+addresses in the page's text, its mailto: links, its Cloudflare-protected
+addresses and its data blocks; a number by its ten digits among the numbers
+the page prints, where a tel: link's own address is not printed text and does
+not count. That a value sits beside the member it is written against is the
+reading of whoever wrote it down, as a seat is, and the refusals above are the
+part of the rule a build can check. The build refuses to write while a value
+is missing from its page or a link on the page contradicts it, and --watch
+reports the first as CONTACT GONE and the second as CONTACT REFUSED, naming
+the city and the seat and never the value; errors and logs never print a
+value.
 
 A PAGE THAT CANNOT BE READ KEEPS WHAT IT LAST SAID, the operator's ruling of
 2026-09-19 (a refusal stops the fetch and never unpublishes what was fetched
@@ -80,28 +128,37 @@ THE FILES:
     `page` is the council's own page for the card to link where the pages
     its seats cite are not ones a reader would open (a block of data the
     council page fills itself in from, or a zip of election results); it is
-    linked and never read, so it proves nothing.
+    linked and never read, so it proves nothing. A named seat may carry
+    `email`, `phone` and `phonesExtra` (CONTACTS above), and a city
+    `officeLines` and `officeMailboxes`, the office values its pages print,
+    which no seat may carry.
   * the record (the seats file's name with .source.json, written by the
     build): each page's read date, the client it was read with, its final
-    address, size and hash, and the names found on it. A page that is not a
-    web page (North Carolina's election results, a zip of tab-separated
-    files) is turned into text by a reader the builder names, and its size and
-    hash are the file's as it was downloaded.
+    address, size and hash, the names found on it, and the e-mail addresses
+    (`emails`) and the ten digits of the numbers (`phones`) its seats carry
+    that were found on it. A page that is not a web page (North Carolina's
+    election results, a zip of tab-separated files) is turned into text by a
+    reader the builder names, and its size and hash are the file's as it was
+    downloaded.
   * the app's file (<tag>/data/app/<out_file>): each city by its Census id,
     `{name, body, how, read, seats}` (`note`, `page` and `wardWord` where set, and
     `wardsDrawn: false` for a city whose wards elect seats and are not drawn),
     every seat `{seat, name, role, byWard, sourceUrl}` plus `ward` where it has
-    one, and `vacant` or `unnamed` in place of `name` for a seat that names
+    one, `email`, `phone` and `phonesExtra` where the seats file gives them,
+    and `vacant` or `unnamed` in place of `name` for a seat that names
     nobody. `role` is "Mayor" or "Vice Mayor" for a seat labelled so, whether
     the voters elect its holder to it or the council chooses one of its
     members (the city's `how` says which), and for every other seat the
     city's `member` word, or "Council member" where it has none.
 
-`--check` is offline and is what the instance's own checks run: the seats
-file is well formed, names exactly the state's cities at the done standard's
-floor (docs/expected-governments.json) and gives each the number of seats the
-builder states; the record covers exactly its pages and found every name on
-the page its seat cites; the app's file is exactly what the two produce; and
+`--check` is offline and is what the instance's own checks run: the contact
+reader passes its self-test on a page made up for it; the seats file is well
+formed, names exactly the state's cities at the done standard's floor
+(docs/expected-governments.json), gives each the number of seats the builder
+states, carries no contact the rules above refuse and at least as many e-mail
+addresses and numbers as the builder's floors; the record covers exactly its
+pages and found every name and every contact on the page its seat cites; the
+app's file is exactly what the two produce; and
 where the state draws wards, the wards on the map and the wards the seats
 name agree city by city and ward by ward, labels included. A city is drawn
 when any of its seats is elected by its ward's own voters, and then every ward
@@ -133,6 +190,7 @@ if FLEET_SCRIPTS not in sys.path:
     sys.path.insert(0, FLEET_SCRIPTS)
 
 import scraper_common as sc  # noqa: E402
+import undeliverable  # noqa: E402
 
 EXPECTED = os.path.join(REPO_ROOT, "docs", "expected-governments.json")
 PACE_SECONDS = 2.0
@@ -143,9 +201,25 @@ TRIES = 2
 MAX_HOPS = 8
 
 CITY_KEYS = {"name", "census", "body", "how", "note", "page", "sources", "seats", "wardWord",
-             "wardWords", "member"}
+             "wardWords", "member", "officeLines", "officeMailboxes"}
 OFFICES = ("Mayor", "Vice Mayor")
-SEAT_KEYS = {"seat", "by", "ward", "name", "as", "from", "vacant", "unnamed"}
+SEAT_KEYS = {"seat", "by", "ward", "name", "as", "from", "vacant", "unnamed",
+             "email", "phone", "phonesExtra"}
+
+# The labels a seat's number may carry, each the word the page prints or the
+# word a one-letter label stands for. A label is never invented: a number the
+# page prints without one carries none.
+PHONE_LABELS = ("cell", "home", "mobile", "office", "work", "business", "text",
+                "town hall", "city office")
+# A number as a page prints it: ten digits in the usual groupings, with a
+# leading 1 allowed, which ten_digits() drops.
+PHONE_RE = re.compile(r"(?<![\d])(?:\+?1[\s.\-]?)?\(?\d{3}\)?[\s.\-]{0,3}\d{3}[\s.\-]{1,3}\d{4}(?![\d])")
+SEAT_PHONE_RE = re.compile(r"(?:(?P<label>%s) )?(?P<number>\(?\d{3}\)?[ .\-]{0,2}\d{3}[ .\-]\d{4})"
+                           % "|".join(PHONE_LABELS))
+# An e-mail address as the seats file writes it: lower case, as the build
+# compares it.
+SEAT_EMAIL_RE = re.compile(r"[a-z0-9][a-z0-9._+'\-]*@[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?"
+                           r"(?:\.[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?)*\.[a-z]{2,}")
 # A ward is a number, a letter (Raleigh's District A) or a name (Winston-Salem's
 # East Ward).
 WARD_RE = re.compile(r"[1-9][0-9]?|[A-Z]|[A-Z][a-z]+")
@@ -188,14 +262,21 @@ class Spec(object):
     {Census id: why} for a city whose wards elect seats and are not on it.
     `readers` is {page: function} for a page that is not a web page, such as
     a zip of election results: the function turns the page's bytes into the
-    text its names are looked for in."""
+    text its names are looked for in. `min_emails` and `min_phones` are the
+    fewest seats that may carry an e-mail address and a number, set at about
+    two thirds of what the pages printed when the contacts were written down,
+    so a seats file that loses most of its contacts fails rather than
+    shipping cards that quietly stopped offering them."""
 
     def __init__(self, tag, label, user_agent, seats_file, out_file, seats,
-                 browser=None, wards_file=None, undrawn=None, readers=None):
+                 browser=None, wards_file=None, undrawn=None, readers=None,
+                 min_emails=0, min_phones=0):
         self.tag = tag
         self.label = label
         self.user_agent = user_agent
         self.seats = dict(seats)
+        self.min_emails = min_emails
+        self.min_phones = min_phones
         self.browser = dict(browser or {})
         self.readers = dict(readers or {})
         self.undrawn = dict(undrawn or {})
@@ -341,6 +422,132 @@ def proof_name(seat):
     return seat.get("as") or seat.get("name")
 
 
+# ---------- a seat's contacts ----------
+def ten_digits(text):
+    """The ten digits of the first number printed in `text`, without a
+    leading 1 and without any extension; None when `text` prints none."""
+    m = PHONE_RE.search(text or "")
+    if not m:
+        return None
+    digits = re.sub(r"\D", "", m.group(0))
+    if len(digits) == 11 and digits[0] == "1":
+        digits = digits[1:]
+    return digits if len(digits) == 10 else None
+
+
+def seat_numbers(seat):
+    """A seat's numbers as the seats file writes them, `phone` first."""
+    return ([seat["phone"]] if seat.get("phone") else []) + list(seat.get("phonesExtra") or [])
+
+
+def which_number(i, n):
+    return "its number" if n == 1 else "number %d of its %d" % (i + 1, n)
+
+
+def seat_label(city, seat):
+    """How an error names a seat: city, seat and holder, never a contact."""
+    return "%s, %s (%s)" % (city.get("name"), seat.get("seat"),
+                            seat.get("name") or "names nobody")
+
+
+def check_contacts(spec, cities):
+    """Problems with the contacts the seats file gives, before anything is
+    read: the rules in CONTACTS above that a file can be held to. Every
+    message names the city and the seat and never the value."""
+    problems = []
+    emails = phones = 0
+    for geoid, c in sorted(cities.items()):
+        where = "%s (%s)" % (c.get("name"), geoid)
+        office_lines, office_boxes = set(), set()
+        for key in ("officeLines", "officeMailboxes"):
+            if key in c and (not isinstance(c[key], list) or not c[key]):
+                problems.append("%s: %s is set and is not a list of values" % (where, key))
+        for i, line in enumerate(c.get("officeLines") or []):
+            if not isinstance(line, str) or len(PHONE_RE.findall(line)) != 1 \
+                    or not ten_digits(line):
+                problems.append("%s: officeLines entry %d is not one telephone number"
+                                % (where, i + 1))
+            else:
+                office_lines.add(ten_digits(line))
+        for i, box in enumerate(c.get("officeMailboxes") or []):
+            if not (isinstance(box, str) and SEAT_EMAIL_RE.fullmatch(box)):
+                problems.append("%s: officeMailboxes entry %d is not one lower-case e-mail "
+                                "address" % (where, i + 1))
+            else:
+                office_boxes.add(box)
+        seen_e, seen_p = {}, {}
+        for s in c.get("seats") or []:
+            label = seat_label(c, s)
+            carried = [k for k in ("email", "phone", "phonesExtra") if k in s]
+            if carried and "name" not in s:
+                problems.append("%s carries %s and names nobody" % (label, ", ".join(carried)))
+            if "email" in s:
+                e = s["email"]
+                if not (isinstance(e, str) and SEAT_EMAIL_RE.fullmatch(e)):
+                    problems.append("%s: its e-mail address is not one lower-case address" % label)
+                else:
+                    emails += 1
+                    if e in office_boxes:
+                        problems.append("%s: its e-mail address is one the seats file records as "
+                                        "the office's" % label)
+                    if e in undeliverable.UNDELIVERABLE:
+                        problems.append("%s: its e-mail address is on scripts/undeliverable.py's "
+                                        "list of addresses mail cannot reach" % label)
+                    if e in seen_e:
+                        problems.append("%s: its e-mail address is also given to %s, so it is the "
+                                        "office's" % (label, seen_e[e]))
+                    seen_e.setdefault(e, label)
+            numbers = []
+            if "phone" in s:
+                numbers.append(s["phone"])
+            if "phonesExtra" in s:
+                extra = s["phonesExtra"]
+                if not isinstance(extra, list) or not extra or "phone" not in s:
+                    problems.append("%s: phonesExtra must be a list of further numbers beside a "
+                                    "phone" % label)
+                else:
+                    numbers += extra
+            own = []
+            for i, p in enumerate(numbers):
+                which = which_number(i, len(numbers))
+                m = SEAT_PHONE_RE.fullmatch(p) if isinstance(p, str) else None
+                if not m:
+                    problems.append("%s: %s is not one number as a page prints it, with no label "
+                                    "or one of: %s" % (label, which, ", ".join(PHONE_LABELS)))
+                    continue
+                d = ten_digits(m.group("number"))
+                if d in own:
+                    problems.append("%s: %s repeats another of its numbers" % (label, which))
+                    continue
+                own.append(d)
+                if d in office_lines:
+                    problems.append("%s: %s is a line the seats file records as the office's"
+                                    % (label, which))
+                if d in seen_p:
+                    problems.append("%s: %s is also given to %s, so it is the office's"
+                                    % (label, which, seen_p[d]))
+            for d in own:
+                seen_p.setdefault(d, label)
+            if numbers:
+                phones += 1
+    if emails < spec.min_emails:
+        problems.append("the seats file gives %d members an e-mail address, and the builder's "
+                        "floor is %d" % (emails, spec.min_emails))
+    if phones < spec.min_phones:
+        problems.append("the seats file gives %d members a number, and the builder's floor is %d"
+                        % (phones, spec.min_phones))
+    return problems
+
+
+def count_contacts(cities):
+    """(seats with an e-mail address, seats with a number, seats with two or
+    more numbers)."""
+    seats = [s for c in cities.values() for s in c.get("seats") or []]
+    return (sum(1 for s in seats if s.get("email")),
+            sum(1 for s in seats if s.get("phone")),
+            sum(1 for s in seats if s.get("phonesExtra")))
+
+
 # ---------- reading a page ----------
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, *args, **kwargs):
@@ -424,6 +631,249 @@ def on_page(name, normalised_text):
     return needle.strip() != "" and needle in normalised_text
 
 
+# ---------- the contacts a page prints ----------
+ANCHOR_RE = re.compile(r"(?is)<a\b([^>]*)>(.*?)</a\s*>")
+HREF_RE = re.compile(r"""(?is)\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>"']+))""")
+MAILTO_RE = re.compile(r"""(?i)mailto:([^"'<>\s\\]+)""")
+CF_SPAN_RE = re.compile(r"""(?is)<(\w+)\b[^>]*\bdata-cfemail\s*=\s*["']?([0-9a-f]+)["']?[^>]*>"""
+                        r""".*?</\1\s*>""")
+CF_HEX_RE = re.compile(r"""(?i)(?:\bdata-cfemail\s*=\s*["']?|/cdn-cgi/l/email-protection#)"""
+                       r"""([0-9a-f]+)""")
+ADDRESS_RE = re.compile(r"[a-z0-9._%+'\-]+@[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?"
+                        r"(?:\.[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?)*\.[a-z]{2,}")
+TEL_RE = re.compile(r"""(?i)tel:[^"'<>\s\\]*""")
+DIAL_CUT_RE = re.compile(r"(?i)[,;pwx]|ext")
+
+
+def cf_decode(hexstr):
+    """An address Cloudflare's e-mail protection wrote as code (each byte
+    after the first XORed with the first), or None when it is not one."""
+    if len(hexstr) < 4 or len(hexstr) % 2:
+        return None
+    try:
+        raw = bytes.fromhex(hexstr)
+    except ValueError:
+        return None
+    return bytes(b ^ raw[0] for b in raw[1:]).decode("utf-8", "replace").strip()
+
+
+INLINE_TAG_RE = re.compile(r"(?i)</?(?:a|abbr|b|em|font|i|mark|small|span|strong|sub|sup|u)\b[^>]*>")
+
+
+def _visible(markup):
+    """Markup as a reader sees it, with each Cloudflare-protected address
+    written out, twice: every tag turned into a space, and the tags that run
+    inside a line of text (a span, a link, bold) removed without one, since
+    an address can be split across them ("l<span>isa@...</span>")."""
+    markup = CF_SPAN_RE.sub(lambda m: cf_decode(m.group(2)) or "", markup)
+    return [html.unescape(TAG_RE.sub(" ", markup)),
+            html.unescape(TAG_RE.sub(" ", INLINE_TAG_RE.sub("", markup)))]
+
+
+def _sent_to(href):
+    """The addresses a link sends mail to, case folded, or None for a link
+    that is not a mail link: a mailto: link's, or the one a
+    Cloudflare-protected link decodes to."""
+    href = html.unescape(href).strip()
+    m = re.search(r"(?i)/cdn-cgi/l/email-protection#([0-9a-f]+)", href)
+    if m:
+        address = cf_decode(m.group(1))
+        return {address.casefold()} if address else set()
+    if href[:7].lower() != "mailto:":
+        return None
+    part = urllib.parse.unquote(href[7:]).split("?")[0]
+    return {a.strip().casefold() for a in re.split(r"[,;]", part) if a.strip()}
+
+
+def _dialled(href):
+    """The digits a tel: link dials, without a leading 1 or an extension."""
+    number = DIAL_CUT_RE.split(urllib.parse.unquote(html.unescape(href).strip()[4:]))[0]
+    digits = re.sub(r"\D", "", number)
+    return digits[1:] if len(digits) == 11 and digits[0] == "1" else digits
+
+
+def _printed(email, text):
+    """Whether `email` (lower case) appears whole in `text` (case folded)."""
+    pattern = r"(?<![a-z0-9._%+'\-])" + re.escape(email) + r"(?![a-z0-9\-]|\.[a-z0-9])"
+    return re.search(pattern, text) is not None
+
+
+def page_contacts(body, text=None):
+    """What a seat's contact is proved against on one page: `text`, the
+    page's text case folded, an address being looked for in it whole;
+    `mails`, the addresses its mail links send to and its Cloudflare-protected
+    addresses; `numbers`, the ten digits of every number its text prints, a
+    tel: link's own address not being printed text; and `bad_mails` and
+    `bad_numbers`, the values a link contradicts. A mail link that prints an
+    address it does not send to has its printed address refused, and the
+    address it sends to as well unless the page prints that one too; a tel:
+    link that prints a number it does not dial likewise. `text` is given for a
+    page that is not markup (a PDF, or a page a builder's reader turns into
+    text), which has no links."""
+    if text is not None:
+        variants, texts = [], [text]
+    else:
+        raw = body.decode("utf-8", "replace")
+        variants = [raw]
+        for _ in range(2):
+            nxt = _unescape_once(variants[-1])
+            if nxt == variants[-1]:
+                break
+            variants.append(nxt)
+        texts = [t for v in variants for t in _visible(v)]
+    folded = "\n".join(texts).casefold()
+    numbers = set()
+    for t in texts:
+        for p in PHONE_RE.finditer(TEL_RE.sub(" ", t)):
+            d = ten_digits(p.group(0))
+            if d:
+                numbers.add(d)
+    mails, bad_mails, bad_numbers = set(), set(), set()
+    for v in variants:
+        for m in CF_HEX_RE.finditer(v):
+            address = cf_decode(m.group(1))
+            if address:
+                mails.add(address.casefold())
+        for m in MAILTO_RE.finditer(v):
+            mails |= _sent_to("mailto:" + m.group(1))
+        for m in ANCHOR_RE.finditer(v):
+            hrefs = [h for group in HREF_RE.findall(m.group(1)) for h in group if h]
+            if not hrefs:
+                continue
+            shown = _visible(m.group(2))
+            sent = _sent_to(hrefs[0])
+            if sent is not None:
+                # a link agrees when either reading of its text prints only
+                # addresses it sends to
+                readings = [set(ADDRESS_RE.findall(t.casefold())) for t in shown]
+                if any(readings) and not any(r and r <= sent for r in readings):
+                    bad_mails |= set().union(*readings) - sent
+                    bad_mails |= {a for a in sent if not _printed(a, folded)}
+            elif html.unescape(hrefs[0]).strip()[:4].lower() == "tel:":
+                dialled = _dialled(hrefs[0])
+                if not dialled:
+                    continue
+                for d in {ten_digits(p.group(0)) for t in shown for p in PHONE_RE.finditer(t)}:
+                    if d and d != dialled and not (len(dialled) == 7 and d.endswith(dialled)):
+                        bad_numbers.add(d)
+                        if len(dialled) == 10 and dialled not in numbers:
+                            bad_numbers.add(dialled)
+    return {"text": folded, "mails": mails, "numbers": numbers,
+            "bad_mails": bad_mails, "bad_numbers": bad_numbers}
+
+
+def email_on(email, contacts):
+    """Whether `email` (lower case) is on the page: among its mail links'
+    addresses, or whole in its text."""
+    return email in contacts["mails"] or _printed(email, contacts["text"])
+
+
+def prove_contacts(cities, seats, contacts):
+    """The contacts of `seats` (one page's) proved on that page: (the e-mail
+    addresses found, the ten digits of the numbers found, problems), each
+    problem naming the city and the seat and never the value."""
+    emails, phones, problems = set(), set(), []
+    for geoid, s in seats:
+        label = seat_label(cities[geoid], s)
+        if s.get("email"):
+            e = s["email"]
+            if e in contacts["bad_mails"]:
+                problems.append(("refused", "%s: its e-mail address is in a mail link whose "
+                                 "printed and sent addresses differ" % label))
+            elif email_on(e, contacts):
+                emails.add(e)
+            else:
+                problems.append(("contact", "%s: its e-mail address is not on the page" % label))
+        numbers = seat_numbers(s)
+        for i, p in enumerate(numbers):
+            d = ten_digits(p)
+            which = which_number(i, len(numbers))
+            if d in contacts["bad_numbers"]:
+                problems.append(("refused", "%s: %s is in a tel: link whose printed and dialled "
+                                 "numbers differ" % (label, which)))
+            elif d in contacts["numbers"]:
+                phones.add(d)
+            else:
+                problems.append(("contact", "%s: %s is not on the page" % (label, which)))
+    return emails, phones, problems
+
+
+def contacts_selftest():
+    """Problems with the contact reader, held to a page made up for the
+    purpose (example.com addresses, 555-01xx numbers): what it proves, what a
+    link contradicts, and that no message carries a value. --check runs it."""
+    def cf(address, key=0x42):
+        return "%02x" % key + "".join("%02x" % (b ^ key) for b in address.encode())
+    page = (
+        '<p>Jane Doe<br>Cell: <a href="tel:+15555550101">(555) 555-0101</a><br>'
+        '<a href="mailto:Jane.Doe@Example.com?subject=Hello">jane.doe@example.com</a></p>'
+        '<p>Call the office: <a href="tel:555-555-0102">Call us</a></p>'
+        '<p>Sam Roe <a href="tel:5555550103">555-555-0104</a> '
+        '<a href="mailto:sam.r@example.com">sam.roe@example.com</a></p>'
+        '<p>Kim Poe <a href="/cdn-cgi/l/email-protection#%s">k<span style="color: #000;">'
+        '<span class="__cf_email__" data-cfemail="%s">[email&#160;protected]</span></span></a></p>'
+        '<p>Ray Moe <a href="mailto:ray.m@example.com"><span class="__cf_email__" '
+        'data-cfemail="%s">[email&#160;protected]</span></a></p>'
+        '<p><a href="/cdn-cgi/l/email-protection#%s">Email Pat Hoe</a> '
+        '<a href="mailto:%%20Lou.Koe%%40example.com">Email Lou Koe</a></p>'
+        '<p>Lee Moe 555-555-0106 ext. 12, home 1-555-555-0107, Fax: 555-555-0108</p>'
+        '<script>var d = {"email": "dee.loe\\u0040example.com", "phone": "555-555-0109"};</script>'
+        % (cf("kim.poe@example.com"), cf("im.poe@example.com"), cf("ray.moe@example.com"),
+           cf("pat.hoe@example.com", 0x5a)))
+    pc = page_contacts(page.encode("utf-8"))
+    problems = []
+
+    def expect(what, ok):
+        if not ok:
+            problems.append("the contact reader's self-test: %s" % what)
+    expect("a printed number beside a tel: link is proved", "5555550101" in pc["numbers"])
+    expect("a tel: link's own number is not printed text", "5555550102" not in pc["numbers"])
+    expect("a tel: link that dials another number is refused, both numbers",
+           {"5555550103", "5555550104"} <= pc["bad_numbers"])
+    expect("an extension and a leading 1 are not part of a number",
+           {"5555550106", "5555550107"} <= pc["numbers"])
+    expect("a mail link's address is proved, case folded and with its escapes read",
+           email_on("jane.doe@example.com", pc) and email_on("lou.koe@example.com", pc))
+    expect("a mail link that sends elsewhere is refused, both addresses",
+           {"sam.roe@example.com", "sam.r@example.com"} <= pc["bad_mails"])
+    expect("a Cloudflare-protected address is decoded",
+           email_on("kim.poe@example.com", pc) and email_on("pat.hoe@example.com", pc))
+    expect("a Cloudflare-protected address a mail link does not send to is refused",
+           {"ray.moe@example.com", "ray.m@example.com"} <= pc["bad_mails"])
+    expect("an address split by a tag inside its link is read whole",
+           "kim.poe@example.com" not in pc["bad_mails"]
+           and "im.poe@example.com" not in pc["bad_mails"])
+    expect("an address in a data block is proved", email_on("dee.loe@example.com", pc))
+    expect("a number in a data block is proved", "5555550109" in pc["numbers"])
+    expect("an address is proved only whole", not email_on("ane.doe@example.com", pc))
+    cities = {"0000001": {"name": "Testville", "seats": [
+        {"seat": "Mayor", "name": "Jane Doe", "email": "jane.doe@example.com",
+         "phone": "cell (555) 555-0101"},
+        {"seat": "District 1", "name": "Sam Roe", "email": "sam.roe@example.com",
+         "phone": "555-555-0104"},
+        {"seat": "District 2", "name": "Ann Coe", "email": "ann.coe@example.com"}]}}
+    seats = [("0000001", s) for s in cities["0000001"]["seats"]]
+    emails, phones, found = prove_contacts(cities, seats, pc)
+    expect("a seat's contacts are proved",
+           emails == {"jane.doe@example.com"} and phones == {"5555550101"})
+    expect("a refused and a missing value are each reported",
+           sorted(kind for kind, _msg in found) == ["contact", "refused", "refused"])
+    messages = [msg for _kind, msg in found]
+    cities["0000001"]["officeLines"] = ["555-555-0102"]
+    cities["0000001"]["seats"][2]["phone"] = "office 555-555-0102"
+    cities["0000001"]["seats"][1]["email"] = "jane.doe@example.com"
+
+    class Floors(object):
+        min_emails = 4
+        min_phones = 0
+    refusals = check_contacts(Floors(), cities)
+    expect("an office line, a shared address and a low floor are refused",
+           len(refusals) == 3 and sum("the office's" in m for m in refusals) == 2)
+    expect("no message carries a value",
+           not any("@" in m or re.search(r"\d{3}\D{0,2}\d{4}", m) for m in messages + refusals))
+    return problems
+
+
 def _retry_after(err):
     """Seconds an HTTP 429 asks the client to wait, within RATE_LIMIT_WAIT_MAX;
     RATE_LIMIT_WAIT when it names none this builder can read."""
@@ -489,17 +939,32 @@ def read_all(spec, cities, prior):
                 carried.append(url)
             continue
         reader = spec.readers.get(url)
-        text = norm(reader(body) if reader else page_text(body))
+        plain = reader(body) if reader else page_text(body)
+        text = norm(plain)
         wanted = {proof_name(s) for _g, s in seats if proof_name(s)}
         found = sorted(n for n in wanted if on_page(n, text))
         for geoid, s in seats:
             if proof_name(s) and proof_name(s) not in found:
                 problems.append(("missing", url, "%s, %s: %r is not on the page"
                                  % (cities[geoid]["name"], s["seat"], proof_name(s))))
-        out[url] = {"read": today, "client": client, "final": final, "bytes": len(body),
-                    "sha256": hashlib.sha256(body).hexdigest(), "names": found}
-        print("%s: read %s (%s, %d bytes): %d of %d names found"
-              % (spec.label, url, client, len(body), len(found), len(wanted)))
+        entry = {"read": today, "client": client, "final": final, "bytes": len(body),
+                 "sha256": hashlib.sha256(body).hexdigest(), "names": found}
+        line = "%d of %d names found" % (len(found), len(wanted))
+        want_e = sum(1 for _g, s in seats if s.get("email"))
+        want_p = sum(len(seat_numbers(s)) for _g, s in seats)
+        if want_e or want_p:
+            markup = not reader and body[:5] != b"%PDF-"
+            contacts = page_contacts(body, None if markup else plain)
+            emails, phones, contact_problems = prove_contacts(cities, seats, contacts)
+            problems += [(kind, url, msg) for kind, msg in contact_problems]
+            if emails:
+                entry["emails"] = sorted(emails)
+            if phones:
+                entry["phones"] = sorted(phones)
+            line += (", %d of %d e-mail addresses and %d of %d numbers"
+                     % (len(emails), want_e, len(phones), want_p))
+        out[url] = entry
+        print("%s: read %s (%s, %d bytes): %s" % (spec.label, url, client, len(body), line))
     return out, problems, carried
 
 
@@ -515,7 +980,9 @@ def record_doc(pages):
     return {
         "_about": ("Written by the builder, never by hand: for every page the seats file "
                    "cites, the date it was last read, the client it was read with, the "
-                   "address it ended at, its size and hash, and the names found on it."),
+                   "address it ended at, its size and hash, the names found on it, and the "
+                   "e-mail addresses and the ten digits of the numbers its seats carry that "
+                   "were found on it."),
         "pages": pages,
     }
 
@@ -536,7 +1003,7 @@ def app_doc(cities, pages, undrawn=()):
                     "role": s["seat"] if s["seat"] in OFFICES
                     else c.get("member") or "Council member",
                     "sourceUrl": c["sources"][s["from"]]}
-            for key in ("name", "vacant", "unnamed"):
+            for key in ("name", "vacant", "unnamed", "email", "phone", "phonesExtra"):
                 if key in s:
                     seat[key] = s[key]
             if s.get("ward"):
@@ -568,11 +1035,23 @@ def check_record(spec, cities, pages):
                             "with the %s client; run the build"
                             % (url, entry.get("client"), want_client))
         names = set(entry.get("names") or [])
+        emails = set(entry.get("emails") or [])
+        phones = set(entry.get("phones") or [])
         for geoid, s in seats:
             if proof_name(s) and proof_name(s) not in names:
                 problems.append("%s, %s: %r was not found on %s when it was last read (%s); "
                                 "run the build" % (cities[geoid]["name"], s["seat"],
                                                    proof_name(s), url, entry.get("read")))
+            label = seat_label(cities[geoid], s)
+            if s.get("email") and s["email"] not in emails:
+                problems.append("%s: its e-mail address was not found on %s when it was last "
+                                "read (%s); run the build" % (label, url, entry.get("read")))
+            numbers = seat_numbers(s)
+            for i, p in enumerate(numbers):
+                if ten_digits(p) not in phones:
+                    problems.append("%s: %s was not found on %s when it was last read (%s); "
+                                    "run the build" % (label, which_number(i, len(numbers)),
+                                                       url, entry.get("read")))
     return problems
 
 
@@ -626,9 +1105,15 @@ def report(spec, problems, mode):
         raise SystemExit(1)
 
 
+def contacts_said(cities):
+    emails, phones, two = count_contacts(cities)
+    return ("%d members with an e-mail address and %d with a number, %d of them with two or more"
+            % (emails, phones, two))
+
+
 def run_check(spec):
     cities = load_seats(spec)
-    problems = check_seats(spec, cities)
+    problems = contacts_selftest() + check_seats(spec, cities) + check_contacts(spec, cities)
     report(spec, problems, "--check")
     pages = load_record(spec)
     problems = check_record(spec, cities, pages)
@@ -643,39 +1128,45 @@ def run_check(spec):
     report(spec, problems, "--check")
     seats = sum(len(c["seats"]) for c in cities.values())
     oldest = min(e["read"] for e in pages.values())
-    print("%s --check: OK — %d cities, %d seats, every name found on the page it cites "
-          "(pages read %s to %s)%s"
-          % (spec.label, len(cities), seats, oldest, max(e["read"] for e in pages.values()),
+    print("%s --check: OK — %d cities, %d seats, every name and contact found on the page it "
+          "cites (%s; pages read %s to %s)%s"
+          % (spec.label, len(cities), seats, contacts_said(cities), oldest,
+             max(e["read"] for e in pages.values()),
              "; the drawn wards and the wards the seats name agree" if spec.wards_path else ""))
+
+
+WATCH_WORDS = {"unread": "NOT READ", "missing": "NAME GONE", "contact": "CONTACT GONE",
+               "refused": "CONTACT REFUSED"}
 
 
 def run_watch(spec):
     cities = load_seats(spec)
-    report(spec, check_seats(spec, cities), "--watch")
+    report(spec, check_seats(spec, cities) + check_contacts(spec, cities), "--watch")
     prior = load_record(spec)
     pages, problems, _carried = read_all(spec, cities, prior)
     changed = sorted(u for u in pages if prior.get(u) and
                      prior[u].get("sha256") != pages[u].get("sha256"))
     for url in changed:
-        print("%s --watch: %s has changed since it was read on %s (every name on it is "
-              "still checked above)" % (spec.label, url, prior[url].get("read")))
+        print("%s --watch: %s has changed since it was read on %s (every name and contact on "
+              "it is still checked above)" % (spec.label, url, prior[url].get("read")))
     if problems:
         for kind, url, msg in problems:
-            print("%s --watch: %s: %s" % (spec.label, "NOT READ" if kind == "unread"
-                                          else "NAME GONE", msg))
+            print("%s --watch: %s: %s" % (spec.label, WATCH_WORDS[kind], msg))
         print("%s --watch: re-read the pages above and update the seats file; a name that "
-              "has gone from its page usually means the seat changed hands" % spec.label)
+              "has gone from its page usually means the seat changed hands, and a contact "
+              "that has gone from its page, or that a link on it now contradicts, comes off "
+              "its seat until the page prints it beside the member again" % spec.label)
         raise SystemExit(1)
-    print("%s --watch: every name is still on the page it cites (%d pages read)"
+    print("%s --watch: every name and contact is still on the page it cites (%d pages read)"
           % (spec.label, len(pages)))
 
 
 def run_build(spec):
     cities = load_seats(spec)
-    report(spec, check_seats(spec, cities), "build")
+    report(spec, check_seats(spec, cities) + check_contacts(spec, cities), "build")
     prior = load_record(spec)
     pages, problems, carried = read_all(spec, cities, prior)
-    hard = [msg for kind, url, msg in problems if kind == "missing"]
+    hard = [msg for kind, url, msg in problems if kind in ("missing", "contact", "refused")]
     hard += ["%s could not be read and has never been read: %s" % (url, msg)
              for kind, url, msg in problems if kind == "unread" and url not in carried]
     report(spec, hard, "build")
@@ -689,8 +1180,9 @@ def run_build(spec):
     with open(spec.out_path, "w", encoding="utf-8") as fh:
         fh.write(dumps(app_doc(cities, pages, spec.undrawn)))
     seats = sum(len(c["seats"]) for c in cities.values())
-    print("wrote %s: %d cities, %d seats, every name found on the page it cites"
-          % (os.path.relpath(spec.out_path, REPO_ROOT), len(cities), seats))
+    print("wrote %s: %d cities, %d seats, every name and contact found on the page it cites "
+          "(%s)" % (os.path.relpath(spec.out_path, REPO_ROOT), len(cities), seats,
+                    contacts_said(cities)))
 
 
 def main(spec, doc):
@@ -698,7 +1190,8 @@ def main(spec, doc):
     ap.add_argument("--check", action="store_true",
                     help="offline: hold the app's file to the seats file and the record")
     ap.add_argument("--watch", action="store_true",
-                    help="re-read every page and report any name no longer on it; writes nothing")
+                    help="re-read every page and report any name or contact no longer on it; "
+                         "writes nothing")
     args = ap.parse_args()
     if args.check:
         run_check(spec)

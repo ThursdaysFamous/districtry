@@ -9556,9 +9556,9 @@ function initTennesseeExplorer() {
    * Every answer is listed, as before, and one whose label lacks the number
    * is marked no-number, which #q= never selects (prefillGeocodeSearch).
    * When none carries the number, a row on the address's street shows that
-   * street when it is picked (showStreetOnly), with the Census Bureau's pin,
-   * instead of selecting a spot along it, and the status says what the
-   * map's search knows. */
+   * street when it is picked (showStreetOnly), and the point the Census
+   * Bureau gives the number, instead of selecting a spot somewhere along
+   * the street, and the status says what the map's search knows. */
   function listHeldAnswers(answers, address, street, sent) {
     var none = !answers.some(function (r) { return labelCarriesNumber(r.display_name, address); });
     renderGeocodeResults(answers, null, {
@@ -9578,7 +9578,7 @@ function initTennesseeExplorer() {
       geoStatus.textContent = "The map's search knows " + a.street + " in " +
         (names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0]) +
         " but not number " + a.number + " on it. Pick " +
-        (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map, then tap the place.";
+        (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map.";
     } else if (sent) {
       geoStatus.textContent = "None of these has the house number " + addressStreet(address).number +
         ", so pick one only if it's the place you meant, or tap the place on the map.";
@@ -9638,8 +9638,9 @@ function initTennesseeExplorer() {
    * from the Google Maps app answered three other places with similar
    * names, 20 to 50 km from its street. At the same time the Census
    * Bureau is asked where the number falls on the street (lookupAddressRanges),
-   * and its answer is a pin the reader can tap, which also selects nothing
-   * by itself. */
+   * and its answer is a pin whose point is selected, with the message saying
+   * it can be a few doors off, unless another state's app answers there
+   * (placeRangePin). */
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
@@ -9655,7 +9656,7 @@ function initTennesseeExplorer() {
       bounds = bounds ? bounds.extend(b) : b;
     });
     clearResultRows(false);
-    var pin = null, near = [];
+    var pin = null, pinPicked = false, near = [];
     // every answer came from OpenStreetMap's data (normalizePhoton), so the
     // message can offer its note form; New York's city search reads the
     // city's own address file, which OpenStreetMap's volunteers do not keep
@@ -9671,14 +9672,20 @@ function initTennesseeExplorer() {
     function current() { return !answered && seq === districtSearchSeq && picked === state.sequence; }
     function compose() {
       var text = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number + " on it";
-      text += pin ? ". The pin is where the Census Bureau's street records put that number, which can be a few doors off."
-                  : ", so the map is showing that street.";
+      // the pin's point is selected (pinPicked) unless another state's app
+      // answers there, and then the pin waits for a tap (placeRangePin)
+      var tapPin = !!pin && !pinPicked;
+      text += !pin ? ", so the map is showing that street." : pinPicked ?
+        ". The map has selected the pin, where the Census Bureau's street records put that number. " +
+        "That can be a few doors off, and a district line can run between two doors." :
+        ". The pin is where the Census Bureau's street records put that number, which can be a few doors off.";
       if (near.length) {
         text += " A search for its name, \u201c" + name + "\u201d, " + (pin ? "also " : "") + "found " +
           (near.length === 1 ? "the place below. Pick it if it's the one you meant" : "the places below. Pick the one you meant") +
-          (pin ? ", tap the pin, or tap the map." : ", or tap the map.");
+          (tapPin ? ", tap the pin, or tap the map." : ", or tap the map.");
       } else {
-        text += pin ? " Tap the pin to use it, or tap the place you meant." : " Tap the place you meant.";
+        text += tapPin ? " Tap the pin to use it, or tap the place you meant." :
+          pinPicked ? " If the place is elsewhere, tap it on the map." : " Tap the place you meant.";
       }
       geoStatus.textContent = text;
       geoStatus.className = "geo-status";
@@ -9713,10 +9720,20 @@ function initTennesseeExplorer() {
       // is shown, the house pinned or the street alone (countLinkRead)
       if (seq === districtSearchSeq) countLinkRead(m && current() ? "pin" : "street");
       if (!m || !current()) return;
-      pin = m;
-      placeRangePin(m, a, done); // so is a point selected any other way, which takes the pin
-      compose();
-      framePin();
+      // the app that answers at the pin decides whether its point is selected
+      // here (ENGINE metro-portal); an owner that cannot be told leaves it
+      // here, as a tap there would
+      return placeOwner(m.lat, m.lng)["catch"](function () { return null; }).then(function (owner) {
+        if (!current()) return;
+        pin = m;
+        pinPicked = !owner || owner === "here";
+        // the reader's tap on the map answers the message (done), and so does
+        // a point selected any other way, which takes the pin
+        placeRangePin(m, a, done, pinPicked);
+        if (pinPicked) picked = state.sequence; // the pin's own selection answers nothing
+        compose();
+        framePin();
+      });
     });
     if (name.length < 3) return ranged;
     var named = search(name).then(function (found) {
@@ -9800,15 +9817,15 @@ function initTennesseeExplorer() {
    * found: asked on 2026-10-14 for a Westmont address, the Census geocoder
    * offered that number on Oakley Ln and on Oakley Ct, two other streets.
    *
-   * THE PIN SELECTS NOTHING UNTIL IT IS TAPPED. An estimate from address
-   * ranges can be a few doors off, and in Chicago a ward's edge often runs
-   * down the alley in the middle of a block, so a selected estimate could
-   * put the place in the wrong district and every card would follow it. A
-   * tap on the pin selects its point as a tap on the map would, through
-   * the map's own click (ENGINE selection-controls), so a pin in another
-   * state's app opens that app; any other selection, a new search or a tap
-   * elsewhere removes the pin. Resolves to that match's position, or to
-   * null when there is none, the lookup fails or it takes longer than
+   * THE PIN'S POINT IS SELECTED AT ONCE, on Adam's choice of 2026-10-18,
+   * and the message says what that can cost (showStreetOnly): an estimate
+   * from address ranges can be a few doors off, and in Chicago a ward's
+   * edge often runs down the alley in the middle of a block, so the cards
+   * can name the district next door. For its first day the pin selected
+   * nothing until it was tapped, for that reason; Adam chose the cards at
+   * once, with the warning, over a tap the reader had to know to make
+   * (placeRangePin). Resolves to that match's position, or to null when
+   * there is none, the lookup fails or it takes longer than
    * ADDRESS_RANGES_TIMEOUT_MS; it never rejects. */
   var ADDRESS_RANGES_TIMEOUT_MS = 9000;
   var RANGE_PIN_COLOR = "#1d5fd6"; // the token file's --data-500, the selection's own blue
@@ -9832,6 +9849,14 @@ function initTennesseeExplorer() {
       })["catch"](function () { return null; })
       .then(function (m) { clearTimeout(timer); return m; });
   }
+  /* The pin, with its point selected (selectNow). That pin ignores a tap,
+   * which would only move the selection a few metres off the estimate and
+   * take the message with it. Where another state's app answers at the pin
+   * (showStreetOnly asks placeOwner), a selection would open that app with
+   * the point and without the message, so the pin waits for a tap, which
+   * selects its point as a tap on the map would, through the map's own
+   * click (ENGINE selection-controls), and so opens that app. Either way
+   * any other selection, a new search or a tap elsewhere removes the pin. */
   var rangePin = null;
   function clearRangePin() {
     if (!rangePin) return;
@@ -9839,32 +9864,42 @@ function initTennesseeExplorer() {
     map.removeLayer(rangePin.marker);
     rangePin = null;
   }
-  function placeRangePin(m, a, onGone) {
+  function placeRangePin(m, a, onGone, selectNow) {
     clearRangePin();
-    var picked = state.sequence;
-    var label = "Where the Census Bureau puts " + a.number + " " + a.street + ". Select this point.";
-    var marker = L.marker([m.lat, m.lng], { icon: poiPinIcon(RANGE_PIN_COLOR), title: label, zIndexOffset: 1000 });
+    var at = L.latLng(m.lat, m.lng);
+    var where = "Where the Census Bureau puts " + a.number + " " + a.street;
+    var label = selectNow ? where : where + ". Select this point.";
+    var marker = L.marker(at, { icon: poiPinIcon(RANGE_PIN_COLOR), title: label, zIndexOffset: 1000,
+                                keyboard: !selectNow });
     function select() {
-      var at = marker.getLatLng();
       clearRangePin();
       map.fire("click", { latlng: at });
     }
-    marker.on("click", select);
-    // Leaflet makes a marker focusable and a button, and leaves Enter and
-    // Space to the page
-    marker.on("keydown", function (e) {
-      var key = e.originalEvent && e.originalEvent.key;
-      if (key !== "Enter" && key !== " ") return;
-      e.originalEvent.preventDefault();
-      select();
-    });
+    if (!selectNow) {
+      marker.on("click", select);
+      // Leaflet makes a marker focusable and a button, and leaves Enter and
+      // Space to the page
+      marker.on("keydown", function (e) {
+        var key = e.originalEvent && e.originalEvent.key;
+        if (key !== "Enter" && key !== " ") return;
+        e.originalEvent.preventDefault();
+        select();
+      });
+    }
     marker.addTo(map);
     var el = marker.getElement();
-    if (el) el.setAttribute("aria-label", label);
+    if (el) {
+      el.setAttribute("aria-label", label);
+      // a picture of where the selected point came from, which a tap leaves
+      // as it is (a marker's click does not reach the map)
+      if (selectNow) { el.setAttribute("role", "img"); el.style.cursor = "default"; }
+    }
+    if (selectNow) setSelectedPoint(at.lat, at.lng, { skipPan: true });
+    var picked = state.sequence;
     // Every selection adds the selected point's marker (setSelectedPoint), so
     // a point selected any other way (a result row, the keyboard's select
     // button, a located point) is seen here, and the pin goes with it, as
-    // does the message asking for a tap on it (onGone).
+    // does the message about it (onGone).
     var watch = function () {
       if (state.sequence === picked) return;
       clearRangePin();
@@ -10010,15 +10045,15 @@ function initTennesseeExplorer() {
     "tn-senate",         // 33 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
-    "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
+    "school-district-unified", // 127 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 15 elementary districts they cover the state exactly
     "school-board-district", // 114 districts on the boards of education of 18 counties, pre-built from the Comptroller of the Treasury's layer — 200.6 km2 mean area (median 143.7), measured 2026-10-16 on the drawn file: smaller on average than a unified school district, larger than a county commission district, of which 859 tile the state
     "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
-    "county-subdivision", // 855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
-    "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
-    "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
-    "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
+    "county-subdivision", // 855 civil districts, from TIGERweb, drawn from a mirrored tile archive — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
+    "zip-code",          // 643 ZIP Code Tabulation Areas overlapping Tennessee, of the 1,070 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Tennessee
+    "school-district-elementary", // 15 city and special school districts running the lower grades, from TIGERweb, drawn from a mirrored tile archive
+    "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, from TIGERweb, drawn from a mirrored tile archive
     "voting-precinct",   // 1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)
-    "municipality",      // 345 incorporated places, live from TIGERweb
+    "municipality",      // 345 incorporated places, from TIGERweb, drawn from a mirrored tile archive
     "city-ward",         // 72 council districts and wards in the 11 cities above 25,000 people that elect council members by district or ward and publish a map that can be drawn, ranked just after City or Town, which each one divides, so a district draws on top of its city
     "tribal-government", // Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -12365,7 +12400,19 @@ function initTennesseeExplorer() {
     var s = String(phone);
     var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
     if (m) s = s.slice(0, m.index + m[1].length);
-    return s.replace(/[^\d+]/g, "");
+    var dial = s.replace(/[^\d+]/g, "");
+    // TWO NUMBERS PRINTED AS ONE ("217/555-0100; 217/555-0101", "(312)
+    // 555-0100 / 0101/0102") would run together into a number nobody has. The
+    // link dials the first, the one the text opens with, and the rest stays
+    // in the text: seven digits where the text opens with a local number
+    // (three digits, then four), eleven where it opens with the country code
+    // 1, and ten otherwise. A number written with a leading + is left whole.
+    if (dial.charAt(0) !== "+" && dial.length > 11) {
+      var g = s.match(/\d+/g);
+      dial = dial.slice(0, g.length > 1 && g[0].length === 3 && g[1].length === 4
+        ? 7 : dial.charAt(0) === "1" ? 11 : 10);
+    }
+    return dial;
   }
   function cardPhoneLink(phone) {
     var dial = cardPhoneDial(phone);
@@ -13991,8 +14038,17 @@ function initTennesseeExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE FOUR LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14584,6 +14640,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Civil District",
     subOf: "county",
@@ -14837,7 +14894,10 @@ function initTennesseeExplorer() {
       return {
         name: String(seat.name),
         badge: tnCouncilBadge(seat),
-        note: tnSeatElectedBy(council, seat, where)
+        note: tnSeatElectedBy(council, seat, where),
+        phone: seat.phone,
+        phonesExtra: seat.phonesExtra,
+        email: seat.email
       };
     });
   }
@@ -14877,6 +14937,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Tennessee",
@@ -15352,6 +15413,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     emptyNote: "This point is in one of Tennessee's fifteen city or special " +
@@ -15370,6 +15432,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Elementary)",
     emptyNote: "This point is in a unified school district rather than an " +
@@ -15389,6 +15452,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-secondary",
+    tiles: "data/app/tiles/school-district-secondary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Secondary)",
     emptyNote: "This point is in a unified school district rather than a " +
@@ -15520,8 +15584,11 @@ function initTennesseeExplorer() {
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
    * THAT: the envelope returns 1,070 ZCTAs (measured 2026-10-10), 638 of them
    * with their interior point in Tennessee, and necessarily reaches into all
-   * eight neighbouring states. The card answers from a point query, and the
-   * coverage test below hides the layer outside the state.
+   * eight neighbouring states. Since 2026-10-17 the card and the overlay read a
+   * tile archive that keeps only the ZCTAs overlapping Tennessee, so the
+   * neighbours appear only where the whole set is drawn (on the raster basemap,
+   * or after the archive fails to load), and the coverage test below hides the
+   * layer outside the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -15580,6 +15647,7 @@ function initTennesseeExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,
