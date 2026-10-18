@@ -174,9 +174,10 @@ TESTERS_GROUP = "https://groups.google.com/g/districtry-testers/about"
 # The closed test's opt-in page. Google's help (answer 9845334, read
 # 2026-10-18) says each tester opts in there after joining the group, and that
 # Play Console shows the link only once the test is published; it does not
-# print the address. This is the form third-party guides give for the
-# console's shareable link, which is an inference until it is compared with
-# the console's own.
+# print the address. This was the form third-party guides give for the
+# console's shareable link, and it was an inference until the same day, when
+# Adam, asked to compare it with the link Play Console's Testers tab shows,
+# confirmed it and pasted the same address.
 PLAY_TEST = "https://play.google.com/apps/testing/com.districtry.app"
 # The app's listing. It answered 404 to a visitor who was not signed in,
 # measured 2026-10-18 while the app was in its closed test, which is why the
