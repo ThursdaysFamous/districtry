@@ -81,7 +81,7 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "tn": "Tennessee",
                   "ar": "Arkansas",
                   "ms": "Mississippi",
-                  "landing": "Fleet landing"}
+                  "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
 # and recorded here rather than re-read, so this build needs no git and cannot
@@ -678,9 +678,9 @@ def build():
         rows(named(gc["referrers"], REF_NAMES)),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["systems"]]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["browsers"]]),
-        rows([("Point selects", ev.get("select", 0)),
-              ("Address searches", ev.get("address-search", 0)),
-              ("Geolocations", ev.get("geolocate", 0))]),
+        rows([("Points chosen", ev.get("select", 0)),
+              ("Searches", ev.get("address-search", 0)),
+              ("Location requests", ev.get("geolocate", 0))]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["locations"]]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["campaigns"]], 2),
         rows(ml_sources, 2), rows(ml_results, 2), rows(ml_places, 2),
