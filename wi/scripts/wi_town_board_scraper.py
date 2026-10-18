@@ -14,15 +14,19 @@ labels (Adam, 2026-10-17: "if the official government source uses personal
 phone numbers, we publish those"). E-mail addresses are treated the same way
 (Adam, 2026-10-17: "E-mails too"): one printed for anyone else, one a link
 writes to while showing another, and a mailbox named for an office are taken
-off, and one address per officer is kept. Matching town names to the map and
-deciding what ships is `build_wi_town_boards.py`'s job.
+off, and one address per officer is kept; so is an address a Cloudflare link
+labelled with somebody else's name sits beside (`town_boards.label_fits`).
+Matching town names to the map and deciding what ships is
+`build_wi_town_boards.py`'s job.
 
     python3 wi/scripts/wi_town_board_scraper.py              # every county
     python3 wi/scripts/wi_town_board_scraper.py --county clark,door
     python3 wi/scripts/wi_town_board_scraper.py --county clark --print
+    python3 wi/scripts/wi_town_board_scraper.py --selftest   # offline
 
 `--print` shows what a module returned, town by town, for checking a parser
-against its document by eye.
+against its document by eye. `--selftest` runs the package's own checks on
+made-up pages and fetches nothing.
 """
 
 import argparse
@@ -77,7 +81,11 @@ def main():
     ap.add_argument("--county", help="comma-separated module names")
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--print", action="store_true", dest="show")
+    ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args()
+    if args.selftest:
+        town_boards._selftest()
+        return
 
     wanted = list(modules())
     if args.county:

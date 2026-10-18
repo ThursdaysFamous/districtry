@@ -256,7 +256,7 @@
             "url": "https://gisdata.in.gov/server/rest/services/Hosted/Conservancy_Districts_of_Indiana_20250528/FeatureServer/54"
           }
         ],
-        "people": "Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, names and roles only. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and personal contacts the directory gives are never carried.",
+        "people": "Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, with the telephone and e-mail the directory prints beside each person and each district's own (on the copy read 2026-10-17, 145 people with a telephone and 181 with an e-mail, 86 districts with a telephone and 83 with an e-mail). A value printed for two or more people, or equal to the district's own, is the district's and is not shown on a person. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and addresses the directory gives are never carried.",
         "applies": "Indiana — wherever a district has been set up; most of the state is in none."
       }
     },
@@ -530,7 +530,7 @@
       {
         "file": "in-conservancy-directors.json",
         "min_keys": 95,
-        "note": "The board of each conservancy district as it reported it to the Department of Natural Resources for its 2026 directory, keyed by the district's id on the map, built by in/scripts/build_in_conservancy_directors.py: names and roles only, 99 districts. The directory is published once a year, so this is rebuilt by hand when a new edition appears (in/WATCH.md)."
+        "note": "The board of each conservancy district as it reported it to the Department of Natural Resources for its 2026 directory, keyed by the district's id on the map, built by in/scripts/build_in_conservancy_directors.py: names, roles, and the telephone and e-mail the directory prints beside each person and for each district, 99 districts. The directory is published once a year, so this is rebuilt by hand when a new edition appears (in/WATCH.md)."
       },
       {
         "file": "coverage-gaps.json",

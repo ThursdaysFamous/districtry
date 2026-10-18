@@ -6,8 +6,9 @@ name: Watch city council pages
 # publishes who sits on a city council and each city publishes its own council
 # its own way (scripts/city_councils.py says why a person reads the pages
 # rather than a parser per city). This job re-reads every page the five seats
-# files cite, once a week, and checks that every name is still on the page its
-# seat cites. Adam chose weekly over quarterly on 2026-10-16.
+# files cite, once a week, and checks that every name, and every e-mail address
+# and number written against a member, is still on the page its seat cites.
+# Adam chose weekly over quarterly on 2026-10-16.
 #
 # The files whose pages it re-reads:
 #   ar/data/app/ar-city-councils.json
@@ -21,7 +22,10 @@ name: Watch city council pages
 # holds is something only a person reading the page can say, so the output is
 # a request for a person rather than a diff: it opens or updates ONE tracking
 # issue for all five states, and closes it after a run that reads every page
-# and finds every name. A NOT READ line is a page this run could not read; the
+# and finds every name and contact. A CONTACT GONE line is a contact no longer
+# on its page, and a CONTACT REFUSED line one that a link on the page now
+# contradicts; either comes off its seat until the page prints it beside the
+# member again. A NOT READ line is a page this run could not read; the
 # card keeps what the page said when it was last read (the operator's ruling
 # of 2026-09-19), and a page read with a browser's client is re-measured with
 # scripts/probe_user_agents.py before anything changes. A host that refuses is
@@ -114,15 +118,15 @@ jobs:
 
           if [ "$WATCH_CODE" = "0" ]; then
             if [ -n "$existing" ]; then
-              gh issue close "$existing" --comment "The weekly re-read on $(date -u +%Y-%m-%d) read every cited page and found every name on the page its seat cites."
+              gh issue close "$existing" --comment "The weekly re-read on $(date -u +%Y-%m-%d) read every cited page and found every name and contact on the page its seat cites."
               echo "Closed issue #$existing."
             else
-              echo "Every page read and every name found; no open tracking issue."
+              echo "Every page read and every name and contact found; no open tracking issue."
             fi
             exit 0
           fi
 
-          grep -E '^### |--watch: (NOT READ|NAME GONE|FAIL)|FATAL|Traceback|Error' watch-report.txt \
+          grep -E '^### |--watch: (NOT READ|NAME GONE|CONTACT GONE|CONTACT REFUSED|FAIL)|FATAL|Traceback|Error' watch-report.txt \
             > watch-lines.txt || true
           {
             echo "_Automated by \`.github/workflows/watch-city-council-pages.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app._"
@@ -134,6 +138,8 @@ jobs:
             echo '```'
             echo
             echo "- **NAME GONE**: a name is no longer on the page its seat cites, which usually means the seat changed hands."
+            echo "- **CONTACT GONE**: an e-mail address or number written against a member is no longer on the page its seat cites. Take it off the seat, or write down the new one if the page now prints a different one beside that member."
+            echo "- **CONTACT REFUSED**: a link on the page now dials or mails something other than the contact written against the member. Take it off the seat until the page agrees with itself again."
             echo "- **NOT READ**: the page could not be read this week. The card keeps what the page said when it was last read. For a page read with a browser's client, re-measure with \`scripts/probe_user_agents.py\` before changing anything, and never ask a refusing host again with a different client."
             echo "- **FAIL**, **FATAL** or a traceback: the seats file or the builder itself has a problem; the full report below says which."
             echo

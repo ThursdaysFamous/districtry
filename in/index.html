@@ -12354,7 +12354,19 @@ function initIndianaExplorer() {
     var s = String(phone);
     var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
     if (m) s = s.slice(0, m.index + m[1].length);
-    return s.replace(/[^\d+]/g, "");
+    var dial = s.replace(/[^\d+]/g, "");
+    // TWO NUMBERS PRINTED AS ONE ("217/555-0100; 217/555-0101", "(312)
+    // 555-0100 / 0101/0102") would run together into a number nobody has. The
+    // link dials the first, the one the text opens with, and the rest stays
+    // in the text: seven digits where the text opens with a local number
+    // (three digits, then four), eleven where it opens with the country code
+    // 1, and ten otherwise. A number written with a leading + is left whole.
+    if (dial.charAt(0) !== "+" && dial.length > 11) {
+      var g = s.match(/\d+/g);
+      dial = dial.slice(0, g.length > 1 && g[0].length === 3 && g[1].length === 4
+        ? 7 : dial.charAt(0) === "1" ? 11 : 10);
+    }
+    return dial;
   }
   function cardPhoneLink(phone) {
     var dial = cardPhoneDial(phone);
@@ -15320,12 +15332,16 @@ function initIndianaExplorer() {
    * THE BOARDS COME FROM THE DEPARTMENT'S 2026 DIRECTORY
    * (in/scripts/build_in_conservancy_directors.py;
    * data/app/in-conservancy-directors.json), which the law requires each
-   * board's chair to keep current. Names and roles only: the directory also
-   * gives home towns, and for many districts a director's own address,
-   * telephone or e-mail as the district's contact, and none of that is
-   * carried. Staff a district hires (attorneys, managers, operators) are not
-   * shown either. A district that sent the department no list, or that is
-   * newer than the directory, says so rather than naming anyone.
+   * board's chair to keep current. Each person shows the telephone and e-mail
+   * the directory prints beside them, and the district shows its own; for
+   * many districts that contact is a director's own line or mailbox, which
+   * Adam's rulings of 2026-10-17 publish wherever a government source prints
+   * it. A value printed for two or more people, or equal to the district's
+   * own, is the district's and is not shown on a person. Home towns and
+   * addresses are never carried. Staff a district hires (attorneys,
+   * managers, operators) are not shown. A district that sent the department
+   * no list, or that is newer than the directory, says so rather than naming
+   * anyone.
    *
    * THE NAME ON THE CARD AND IN THE HOVER IS THE DIRECTORY'S where the district
    * has an entry there, and the map's otherwise. The two differ for 21 of the
@@ -15442,17 +15458,28 @@ function initIndianaExplorer() {
         var people = board && board.people ? board.people : [];
         // the directory's address is newer than the map's, so it comes first
         var site = board && board.url ? board.url : p.url;
+        // the district's own telephone and e-mail, as the directory gives them
         wrap.appendChild(renderLinkRow({
           title: conservancyName(p, result.boards),
+          phone: board && board.phone ? String(board.phone) : null,
+          email: board && board.email ? String(board.email) : null,
           links: site ? [{ label: "Website", url: String(site) }] : []
         }));
         if (people.length) {
           wrap.appendChild(renderSectionLabel("Board and officers"));
           wrap.appendChild(renderPersonRows(people.map(function (person) {
-            return {
+            var row = {
               name: person.vacant ? "Vacant" : String(person.name),
               badge: person.role != null ? String(person.role) : null
             };
+            if (!person.vacant) {
+              if (person.phone) row.phone = String(person.phone);
+              if (person.phonesExtra && person.phonesExtra.length) {
+                row.phonesExtra = person.phonesExtra.map(String);
+              }
+              if (person.email) row.email = String(person.email);
+            }
+            return row;
           })));
         }
         var rows = [];

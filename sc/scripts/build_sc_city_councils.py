@@ -79,6 +79,30 @@ that same client before the page is. The page carries a reCAPTCHA key for its
 site forms and no challenge. Every other page here is read with this project's
 own token, and each served it.
 
+PRIVACY AND CONTACTS. A member's e-mail address and telephone numbers are
+carried where the page the seat cites prints them beside that member alone,
+under Adam's rulings of 2026-10-17; scripts/city_councils.py (CONTACTS) says
+what does not ship and how the build proves each value on its page. Read on
+2026-10-17:
+  * The pages cited for Bluffton, Columbia, Florence, Goose Creek,
+    Greenville, Mount Pleasant and Rock Hill print no e-mail address or
+    number beside any one member, only the city's or the council's own or
+    none, so their members carry none. Charleston's council page prints none
+    for its members either, and only the mayor carries what the mayor's own
+    page prints.
+  * Aiken's council page prints one city line for several members, which is
+    the office's and is not carried, and its own number for each of the
+    others, which is.
+  * Anderson's page prints one member's e-mail address in a link that sends
+    to a differently spelled one, and Myrtle Beach's prints one member's in a
+    link that sends to another, so neither member carries an e-mail address.
+    Anderson's seat whose name comes from a newspaper carries nothing, since
+    contacts come only from the city's own pages.
+  * North Charleston's mayor's page prints the Mayor's Office's e-mail
+    address and lines, which are the office's and are not carried.
+No street address is carried, nor anything about residents or applicants, nor
+a biography.
+
 PUBLISHING GAPS, recorded as evidence for the state-publishing ask (gap
 sc-municipal-officeholders): no state office publishes who holds South
 Carolina's city offices, and the Municipal Association's pages, the only
@@ -132,6 +156,10 @@ SPEC = cc.Spec(
     seats_file="sc-city-council-seats.json",
     out_file="sc-city-councils.json",
     seats=SEATS,
+    # 59 members' e-mail addresses and 39 members' numbers were written down
+    # on 2026-10-17; these floors are about two thirds of each.
+    min_emails=39,
+    min_phones=26,
     browser={ROCK_HILL_MEMBERS: UA_HINTS_CHROME_126},
     wards_file="sc-city-wards.json",
     undrawn={"4501360": "the city publishes its six council districts only as pictures in PDF files"},
