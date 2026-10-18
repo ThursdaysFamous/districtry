@@ -1828,6 +1828,35 @@ data changed; measured here, fetching, building and gating all forty took
 14 min 48 s, inside the job's 45-minute step even in a week when every set
 changed.
 
+**THE WEEKLY JOB NOW ASKS BEFORE IT DOWNLOADS** (2026-10-17, the operator's
+choice the same day). Fetching every mirrored set's shapes, as the job did each
+Sunday, downloaded 940.7 MB in about ten minutes when measured here that day,
+and found every set unchanged, so `mirror_tiger_tiles.py --refresh` first asks
+for every feature's attributes with no shapes: the row's own fields plus
+`AREALAND`, `AREAWATER`, `INTPTLAT` and `INTPTLON`, which the Census derives
+from the shape. It holds the number of features it read to the server's own
+count, hashes them with the query, the engine's converter, the text of the
+script's own fetch-and-convert section, any spliced file and, for a ZIP row,
+the same four values for the state and the shapely and GEOS versions that
+decide which ZCTAs overlap it, and records the hash as `fingerprint_sha256`.
+Only a set whose hash moved, or whose recorded query is not the one the script
+makes today, is fetched whole, and only one whose data then moved is rebuilt;
+the query is compared whole because the check's own query leaves out
+`geometryPrecision=5`, so removing it from the shapes query would otherwise
+change the archive without moving the hash. Measured here, the check took 7.7
+MB and 38 seconds for every mirrored set, and every run after the first that
+day found all 62 hashes unchanged. **The script's own code is in the hash, not
+a version number somebody bumps**: a first draft carried a
+`FINGERPRINT_VERSION` to be raised by hand whenever the processing changed,
+which is the `CACHE_NAME` comment `check_cache_version.py` exists to replace.
+Now an edit to the fetch-and-convert section moves every hash by itself and
+costs one week of full fetches. What the check cannot see is stated rather than
+implied: a boundary edit that leaves every feature's land area, water area and
+internal point exactly as they were, and an edit elsewhere in the script,
+outside the fetch-and-convert section and the query, that changes what a
+fetched set becomes (`SPLICES` and `STATE_OVERLAP_MIN` are hashed themselves).
+A missing or changed hash falls back to the full fetch.
+
 Still live after 6d: the layers phase 6c names, `il ward`'s four sources and
 the county servers. No layer in the nine newest apps fetches its shapes from
 any host but TIGERweb, so their census hooks and whole-set loaders are now
