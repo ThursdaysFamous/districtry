@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Generate the root redirect shells, the short addresses, and the branded 404.
 
-All three answer the same question — what a reader gets at a path that is not
-a page — which is why they share a script. A shell is for the eight paths this
-origin USED to serve and can name the page they became; a short address is a
-path printed or posted where it cannot be taken back, which forwards to a page
-on another site; the 404 is for every other miss, and can only offer the way
-back in.
+All three answer for an address that no ordinary page of this site lives at,
+which is why they share a script. A shell is for the eight paths this origin
+USED to serve and can name the page they became; a short address is a path
+printed or posted where it cannot be taken back, which either forwards to
+another site or shows a small page of its own; the 404 is for every other miss,
+and can only offer the way back in.
 
 WHY THESE FILES EXIST. Before R2.3 the Illinois app served from this origin's
 ROOT, so /school-board.html and its siblings were real, indexed pages. They are
@@ -37,17 +37,22 @@ derivation was checked.
 Put a real 301 in front of the origin and every one of these can be deleted.
 
 A SHORT ADDRESS IS THE OTHER DIRECTION (added 2026-10-18): a path on this
-origin that was never a page and forwards OFF it. districtry.com/android is the
-QR code on the in-person sign-up sheet for the Google Play closed test. A code
-printed with the Google Group's own address goes stale the day the app is
-published; printed with ours it keeps working, because the address stays put
-and SHORT_LINKS below says where it goes today. Each is noindex with no
-canonical, since nothing on this origin is the destination, and carries no
-counter: validate_analytics.py skips every page with a meta refresh, and a page
-that leaves at once would mostly count nothing. Nothing passes the query or the
-fragment on. A short address cannot take a name a page already uses, and the
-script fails on a root page that says this script generated it when no entry
-here still does, so a retired address cannot go on forwarding unchecked.
+origin that was never a page, printed or posted where it cannot be taken back.
+districtry.com/android is the QR code on the in-person sign-up sheet for the
+Google Play closed test. A code printed with somebody else's address goes stale
+the day that address changes; printed with ours it keeps working, because the
+address stays put and SHORT_LINKS below says what it shows today. An entry
+takes one of two forms: a FORWARD to another site (`target`), or a small PAGE
+of its own (`body`). /android was a forward to the testers' Google Group for
+its first hours and became a page that afternoon, when Adam asked for the code
+to open the testing steps instead. Both forms are noindex with no canonical,
+since neither is a page to find by searching. A page carries the counter every
+page here carries; a forward carries none, because validate_analytics.py skips
+every page with a meta refresh and a page that leaves at once would mostly
+count nothing. Nothing passes the query or the fragment on. A short address
+cannot take a name a page already uses, and the script fails on a root page
+that says this script generated it when no entry here still does, so a retired
+address cannot go on answering unchecked.
 
 THE 404 IS DELIBERATELY SELF-CONTAINED: no webfont, no external stylesheet, no
 script. It is the page a reader reaches when something is already wrong, and
@@ -73,6 +78,10 @@ import os
 import re
 import sys
 from urllib.parse import urlsplit
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from build_privacy_page import shared_goatcounter  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -144,29 +153,95 @@ TEMPLATE = """<!DOCTYPE html>
 
 
 # Short addresses: the published name (one root .html, served by GitHub Pages
-# at the name without the .html) and the page somewhere else it forwards to.
-# The words are the page a reader sees for the moment before it leaves, or for
-# good if their browser blocks the forward, and the preview a chat app draws
-# when the address is shared.
+# at the name without the .html) and what it shows. A FORWARD names its
+# `target` on another site, with the words a reader sees for the moment before
+# it leaves, or for good if their browser blocks the forward. A PAGE carries
+# its own `body`, a list of blocks: ("p", text), ("note", text) for a quieter
+# line, ("h2", heading), ("list", [text, ...]) and ("steps", [(text, button),
+# ...]), where a button is (label, address) or None. Text takes **bold** and
+# [words](address) and nothing else, and an address is https://, mailto: or a
+# path on this site. Both forms take the `title` and `description` a chat app
+# shows when the address is shared.
 #
-# /android, 2026-10-18: the in-person sign-up sheet's QR code. While the closed
-# test runs it opens the testers' Google Group, at its /about page and never the
-# bare group address, which gives a signed-out visitor a permission error. When
-# the app is published, point `target` at its Play listing,
-# https://play.google.com/store/apps/details?id=com.districtry.app, reword the
-# entry and regenerate; every printed code follows.
+# /android, 2026-10-18: the in-person sign-up sheet's QR code. For its first
+# hours it forwarded to the testers' Google Group; Adam then asked for the code
+# to open the testing steps, with the group's link and the app's Play listing,
+# so it is a page. The group is linked at its /about page and never the bare
+# group address, which gives a signed-out visitor a permission error. When the
+# app is published, turn the entry back into a forward to PLAY_LISTING and
+# regenerate; every printed code follows.
+TESTERS_GROUP = "https://groups.google.com/g/districtry-testers/about"
+# The closed test's opt-in page. Google's help (answer 9845334, read
+# 2026-10-18) says each tester opts in there after joining the group, and that
+# Play Console shows the link only once the test is published; it does not
+# print the address. This is the form third-party guides give for the
+# console's shareable link, which is an inference until it is compared with
+# the console's own.
+PLAY_TEST = "https://play.google.com/apps/testing/com.districtry.app"
+# The app's listing. It answered 404 to a visitor who was not signed in,
+# measured 2026-10-18 while the app was in its closed test, which is why the
+# monthly link check records it in NOT_YET_PUBLIC rather than calling it dead.
+PLAY_LISTING = "https://play.google.com/store/apps/details?id=com.districtry.app"
+
 SHORT_LINKS = {
     "android.html": dict(
-        target="https://groups.google.com/g/districtry-testers/about",
         title="Help test districtry on Android",
-        description="Help test districtry’s Android app before it is "
-                    "published on Google Play. Join the testers’ group "
-                    "with the Google account your Play Store uses.",
-        lead="districtry’s Android app is being tested on Google Play "
-             "before it is published. Testers join a Google Group first, then "
-             "install the app from Google Play.",
-        link="Join the testers’ group",
-        note="Join with the Google account your Play Store uses."),
+        description="How to join the test of districtry’s Android app: join "
+                    "the testers’ group, become a tester on Google Play, then "
+                    "install the app.",
+        body=[
+            ("p", "districtry’s Android app is being tested on Google Play "
+                  "before it goes public. Google needs at least 12 people to "
+                  "use it from Google Play for 14 days in a row first. Joining "
+                  "takes about five minutes."),
+            ("h2", "Join the test"),
+            ("steps", [
+                ("**Check your Play Store account.** On your Android phone, "
+                 "open the Play Store and tap your picture in the top right "
+                 "corner. Use that Google account for every step below, in "
+                 "your browser too.", None),
+                ("**Join the testers’ group.** On the group’s page, tap **Join "
+                 "group**. If it asks how you want email, choose **Each "
+                 "email**, so news about the test reaches you.",
+                 ("Open the testers’ group", TESTERS_GROUP)),
+                ("**Become a tester.** On Google Play’s test page, tap "
+                 "**Become a tester**. It works only after you have joined "
+                 "the group.",
+                 ("Open Google Play’s test page", PLAY_TEST)),
+                ("**Install the app.** Tap **Install**. Google Play shows "
+                 "districtry only to testers, so this works after step 3.",
+                 ("Open districtry on Google Play", PLAY_LISTING)),
+                ("**Remove any copy from the website.** If you added "
+                 "districtry to your home screen from the website, press and "
+                 "hold its icon, then tap **Uninstall**. Otherwise links and "
+                 "shares can open the wrong copy.", None),
+            ]),
+            ("note", "If Google Play says it can’t find the app, wait an hour "
+                     "and open the link again. If the test page has no "
+                     "**Become a tester** button, check that your browser is "
+                     "signed in to the account you joined the group with. If "
+                     "it is, the test may not have opened yet, and the group "
+                     "sends an email when it does."),
+            ("h2", "For the next 14 days"),
+            ("list", [
+                "Stay in the group and in the test for 14 days in a row. If "
+                "you leave either one and join again, your 14 days start over.",
+                "Open the app a few times a week. Look up places you know, "
+                "like your home, your work or a relative’s house, and check "
+                "what the cards say against your voter registration card or "
+                "a sample ballot.",
+                "Share a place to districtry from Google Maps: tap **Share**, "
+                "then pick districtry.",
+            ]),
+            ("h2", "Report a problem"),
+            ("p", "Scroll to the bottom of the app’s panel and tap **Report a "
+                  "bug or leave a comment**. It attaches the map view you’re "
+                  "looking at, so pick a spot you’re happy to share. You can "
+                  "also email [hello@overberg.co](mailto:hello@overberg.co)."),
+            ("note", "Only Android phones can join this test. On an iPhone or "
+                     "a computer, districtry works in the browser at "
+                     "[districtry.com](/)."),
+        ]),
 }
 
 MARKER = "GENERATED by scripts/build_redirect_stubs.py"
@@ -231,6 +306,78 @@ SHORT_LINK_TEMPLATE = """<!DOCTYPE html>
 </body>
 </html>
 """
+
+# The page form. Self-contained like the 404, with no webfont and no
+# stylesheet to fetch, because it is opened from a phone's camera in a
+# corridor or a meeting room and every extra request is a wait there.
+SHORT_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>%(title)s</title>
+<meta name="description" content="%(description)s" />
+<meta name="robots" content="noindex" />
+<!-- SHORT ADDRESS, GENERATED by scripts/build_redirect_stubs.py. Do not edit;
+     change its entry in SHORT_LINKS there and regenerate. districtry.com/%(name)s
+     is printed or posted where it cannot be taken back, so the address stays put
+     and that entry says what it shows today. noindex with no canonical, because
+     it is for the people holding that address rather than for search, and it
+     carries the counter every page here carries. -->
+%(goatcounter)s
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="districtry" />
+<meta property="og:title" content="%(title)s" />
+<meta property="og:description" content="%(description)s" />
+<meta property="og:url" content="https://districtry.com/%(name)s" />
+<meta property="og:image" content="https://districtry.com/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="districtry — every district that covers a point, and who represents it." />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<style>
+  :root {
+    color-scheme: light dark;
+    --ground: #f4f7f9; --ink: #14181c; --muted: #4a5560; --accent: #5730ab;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ground: #121119; --ink: #eeebf6; --muted: #a39db6; --accent: #a98bff; }
+  }
+  body { margin: 0; padding: 32px 16px 48px; background: var(--ground); color: var(--ink);
+         font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 34rem; margin: 0 auto; }
+  h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 0.75rem; }
+  h2 { font-size: 1.25rem; line-height: 1.3; margin: 2rem 0 0.75rem; }
+  p, ul { margin: 0 0 1rem; }
+  ul { padding-left: 1.25rem; }
+  li { margin: 0 0 0.5rem; }
+  .note { color: var(--muted); }
+  a { color: var(--accent); font-weight: 600; }
+  ol.steps { margin: 0 0 1rem; padding-left: 1.75rem; }
+  ol.steps > li { margin: 0 0 1.25rem; padding-left: 0.25rem; }
+  ol.steps > li::marker { color: var(--accent); font-weight: 700; }
+  ol.steps p { margin: 0 0 0.6rem; }
+  /* A step's button is the one thing to tap in it, so a target well past
+     WCAG 2.5.8's 24px: it is alone in its paragraph, which leaves the Inline
+     exception nothing to be inline within. A link inside a sentence keeps the
+     exception. */
+  .go a { display: inline-block; padding: 0.6rem 1rem; border: 2px solid var(--accent);
+          border-radius: 6px; text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>%(title)s</h1>
+%(body)s</main>
+</body>
+</html>
+"""
+
+# [words](address) in a page's text. Square brackets and parentheses are the
+# whole syntax, so neither may appear inside one.
+PAGE_LINK = re.compile(r"\[([^\[\]]+)\]\(([^()\s]+)\)")
 
 
 NOT_FOUND = "404.html"
@@ -359,15 +506,94 @@ def render(path, override):
     return TEMPLATE % {"path": path, "title": title, "phrase": phrase}
 
 
+def page_href(name, href):
+    """An address a short page may link, escaped for an attribute: https://,
+    mailto: or a path on this site, with nothing that needs quoting."""
+    if not re.fullmatch(r"(https://|mailto:|/)[^\s\"'<>\\*()\[\]]*", href):
+        fail("short address %s links %r; an address there is https://, mailto: "
+             "or a path on this site, with nothing that needs quoting"
+             % (name, href))
+    if (href.startswith("https://")
+            and urlsplit(href).hostname in ("districtry.com", "www.districtry.com")):
+        fail("short address %s links %s in full; a page on this site is "
+             "written as its path" % (name, href))
+    return html.escape(href)
+
+
+def page_text(name, text):
+    """Escaped text with **bold** and [words](address), and nothing else."""
+    parts, pos = [], 0
+    for m in PAGE_LINK.finditer(text):
+        parts.append(html.escape(text[pos:m.start()]))
+        parts.append('<a href="%s">%s</a>' % (page_href(name, m.group(2)),
+                                              html.escape(m.group(1))))
+        pos = m.end()
+    parts.append(html.escape(text[pos:]))
+    out = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", "".join(parts))
+    # Whatever is left over is markup the two rules above did not read, and it
+    # would reach the reader as stray asterisks or brackets.
+    if re.search(r"[*\[\]]", out):
+        fail("short address %s has text it cannot read as **bold** or "
+             "[words](address): %r" % (name, text))
+    return out
+
+
+def page_block(name, block):
+    """One block of a short page's body; see the comment above SHORT_LINKS."""
+    kind, args = block[0], block[1:]
+    if kind == "h2" and len(args) == 1:
+        return "  <h2>%s</h2>\n" % html.escape(args[0])
+    if kind in ("p", "note") and len(args) == 1:
+        return "  <p%s>%s</p>\n" % (' class="note"' if kind == "note" else "",
+                                    page_text(name, args[0]))
+    if kind == "list" and len(args) == 1 and args[0]:
+        return "  <ul>\n%s  </ul>\n" % "".join(
+            "    <li>%s</li>\n" % page_text(name, item) for item in args[0])
+    if kind == "steps" and len(args) == 1 and args[0]:
+        items = ""
+        for text, button in args[0]:
+            items += "    <li>\n      <p>%s</p>\n" % page_text(name, text)
+            if button:
+                label, href = button
+                items += ('      <p class="go"><a href="%s">%s</a></p>\n'
+                          % (page_href(name, href), html.escape(label)))
+            items += "    </li>\n"
+        return '  <ol class="steps">\n%s  </ol>\n' % items
+    fail("short address %s has a block it cannot render: %r" % (name, block))
+
+
+def render_short_page(name, entry):
+    """A short address that shows a page of its own."""
+    for key in ("title", "description", "body"):
+        if not entry.get(key):
+            fail("short address %s has no %s" % (name, key))
+    extra = sorted(set(entry) - {"title", "description", "body"})
+    if extra:
+        fail("short address %s is a page and carries %s, which only a forward "
+             "reads" % (name, ", ".join(extra)))
+    return SHORT_PAGE_TEMPLATE % {
+        "name": name[:-len(".html")],
+        "title": html.escape(entry["title"]),
+        "description": html.escape(entry["description"]),
+        "goatcounter": shared_goatcounter(),
+        "body": "".join(page_block(name, b) for b in entry["body"]),
+    }
+
+
 def render_short_link(name, entry):
-    """One short address: a forward off this origin, and the words a reader
-    sees for the moment before it leaves."""
+    """One short address: a forward off this origin, with the words a reader
+    sees for the moment before it leaves, or a page of its own."""
     if name in STUBS or name == NOT_FOUND:
         fail("%s is both a short address and %s" % (
             name, "a redirect shell" if name in STUBS else "the 404"))
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]*\.html", name):
         fail("short address %r must be one lowercase name at the root ending "
              "in .html, which GitHub Pages serves without the .html" % name)
+    if ("target" in entry) == ("body" in entry):
+        fail("short address %s needs exactly one of `target` (a forward) and "
+             "`body` (a page)" % name)
+    if "body" in entry:
+        return render_short_page(name, entry)
     for key in ("target", "title", "description", "lead", "link", "note"):
         if not entry.get(key):
             fail("short address %s has no %s" % (name, key))
