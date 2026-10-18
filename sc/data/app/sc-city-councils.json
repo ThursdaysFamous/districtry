@@ -3,11 +3,12 @@
   "body": "City Council",
   "how": "Each of the city's six districts elects one council member. The mayor is elected by the whole city.",
   "name": "Aiken",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
     "name": "Teddy Milner",
+    "phone": "803-295-2850",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.cityofaikensc.gov/government/city-council/"
@@ -15,6 +16,7 @@
    {
     "byWard": true,
     "name": "Gail Diggs",
+    "phone": "803-293-6704",
     "role": "Council member",
     "seat": "District 1",
     "sourceUrl": "https://www.cityofaikensc.gov/government/city-council/",
@@ -23,6 +25,7 @@
    {
     "byWard": true,
     "name": "Lessie Price",
+    "phone": "803-439-8292",
     "role": "Council member",
     "seat": "District 2",
     "sourceUrl": "https://www.cityofaikensc.gov/government/city-council/",
@@ -31,6 +34,7 @@
    {
     "byWard": true,
     "name": "Kay Brohl",
+    "phone": "803-642-8386",
     "role": "Council member",
     "seat": "District 3",
     "sourceUrl": "https://www.cityofaikensc.gov/government/city-council/",
@@ -68,17 +72,20 @@
   "how": "Six council members, in Seats 1 to 6, are each elected by the voters of their own district, and two more, in Seats 7 and 8, by the whole city. The mayor is elected by the whole city.",
   "name": "Anderson",
   "note": "Seat 5's name is from the Anderson Observer's report of the city's 7 April 2026 election, because the city's own page still lists that seat as vacant. The city's six council districts are not drawn on this map: the city publishes them only as pictures in PDF files.",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "troberts@cityofandersonsc.com",
     "name": "Terence Roberts",
+    "phone": "work (864) 231-1135",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.cityofandersonsc.com/city-council-members/"
    },
    {
     "byWard": true,
+    "email": "knewton@cityofandersonsc.com",
     "name": "Kyle Newton",
     "role": "Council member",
     "seat": "Seat 1",
@@ -87,7 +94,9 @@
    },
    {
     "byWard": true,
+    "email": "mpickens@cityofandersonsc.com",
     "name": "Marshall I. Pickens III",
+    "phone": "cell (864) 844-5928",
     "role": "Council member",
     "seat": "Seat 2",
     "sourceUrl": "https://www.cityofandersonsc.com/city-council-members/",
@@ -95,7 +104,12 @@
    },
    {
     "byWard": true,
+    "email": "jeffroberts@cityofandersonsc.com",
     "name": "Jeff Roberts",
+    "phone": "work (864) 226-2531",
+    "phonesExtra": [
+     "home (864) 226-8837"
+    ],
     "role": "Council member",
     "seat": "Seat 3",
     "sourceUrl": "https://www.cityofandersonsc.com/city-council-members/",
@@ -104,6 +118,7 @@
    {
     "byWard": true,
     "name": "Tony Stewart",
+    "phone": "cell (864) 915-1122",
     "role": "Council member",
     "seat": "Seat 4",
     "sourceUrl": "https://www.cityofandersonsc.com/city-council-members/",
@@ -119,7 +134,12 @@
    },
    {
     "byWard": true,
+    "email": "gsteele@cityofandersonsc.com",
     "name": "Greg Steele",
+    "phone": "work (864) 326-4468",
+    "phonesExtra": [
+     "cell (864) 651-2351"
+    ],
     "role": "Council member",
     "seat": "Seat 6",
     "sourceUrl": "https://www.cityofandersonsc.com/city-council-members/",
@@ -127,14 +147,18 @@
    },
    {
     "byWard": false,
+    "email": "mharbin@cityofandersonsc.com",
     "name": "Matt Harbin",
+    "phone": "cell (864) 376-4968",
     "role": "Council member",
     "seat": "Seat 7 (at large)",
     "sourceUrl": "https://www.cityofandersonsc.com/city-council-members/"
    },
    {
     "byWard": false,
+    "email": "jroberts@cityofandersonsc.com",
     "name": "John Roberts",
+    "phone": "work (864)-261-1311",
     "role": "Council member",
     "seat": "Seat 8 (at large)",
     "sourceUrl": "https://www.cityofandersonsc.com/city-council-members/"
@@ -147,7 +171,7 @@
   "body": "Town Council",
   "how": "All four council members are elected by the voters of the whole town, as is the mayor.",
   "name": "Bluffton",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -190,11 +214,13 @@
   "body": "City Council",
   "how": "Each of the city's twelve districts elects one council member. The mayor is elected by the whole city.",
   "name": "Charleston",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "cogswellw@charleston-sc.gov",
     "name": "William S. Cogswell Jr.",
+    "phone": "843-724-7396",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.charleston-sc.gov/400/Mayor"
@@ -302,7 +328,7 @@
   "body": "City Council",
   "how": "Four council members are each elected by the voters of their own district, and two by the whole city. The mayor is elected by the whole city.",
   "name": "Columbia",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -364,7 +390,7 @@
   "body": "City Council",
   "how": "Three council members are each elected by the voters of their own district, and three by the whole city. The mayor is elected by the whole city.",
   "name": "Florence",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -425,7 +451,7 @@
   "body": "City Council",
   "how": "All six council members are elected by the voters of the whole city, as is the mayor.",
   "name": "Goose Creek",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -482,7 +508,7 @@
   "body": "City Council",
   "how": "Four council members are each elected by the voters of their own district, and two by the whole city. The mayor is elected by the whole city.",
   "name": "Greenville",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -544,18 +570,22 @@
   "body": "City Council",
   "how": "Each of the city's six districts elects one council member. The mayor is elected by the whole city.",
   "name": "Greer",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "rdanner@cityofgreersc.gov",
     "name": "Rick Danner",
+    "phone": "(864) 801-2027",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.cityofgreersc.gov/page/city-council"
    },
    {
     "byWard": true,
+    "email": "jarrowood@cityofgreersc.gov",
     "name": "Jay Arrowood",
+    "phone": "(864) 877-9388",
     "role": "Council member",
     "seat": "District 1",
     "sourceUrl": "https://www.cityofgreersc.gov/page/city-council",
@@ -563,7 +593,9 @@
    },
    {
     "byWard": true,
+    "email": "kbooker@cityofgreersc.gov",
     "name": "Karuiam Booker",
+    "phone": "(864) 469-6540",
     "role": "Council member",
     "seat": "District 2",
     "sourceUrl": "https://www.cityofgreersc.gov/page/city-council",
@@ -571,7 +603,9 @@
    },
    {
     "byWard": true,
+    "email": "mhopper@cityofgreersc.gov",
     "name": "Mark Hopper",
+    "phone": "(864) 901-0453",
     "role": "Council member",
     "seat": "District 3",
     "sourceUrl": "https://www.cityofgreersc.gov/page/city-council",
@@ -579,7 +613,9 @@
    },
    {
     "byWard": true,
+    "email": "clander@cityofgreersc.gov",
     "name": "Charles Lander",
+    "phone": "(864) 630-4805",
     "role": "Council member",
     "seat": "District 4",
     "sourceUrl": "https://www.cityofgreersc.gov/page/city-council",
@@ -587,7 +623,9 @@
    },
    {
     "byWard": true,
+    "email": "wbettis@cityofgreersc.gov",
     "name": "Wryley Bettis",
+    "phone": "(864) 879-2371",
     "role": "Council member",
     "seat": "District 5",
     "sourceUrl": "https://www.cityofgreersc.gov/page/city-council",
@@ -595,7 +633,9 @@
    },
    {
     "byWard": true,
+    "email": "plamb@cityofgreersc.gov",
     "name": "Paul Lamb",
+    "phone": "(864) 905-0882",
     "role": "Council member",
     "seat": "District 6",
     "sourceUrl": "https://www.cityofgreersc.gov/page/city-council",
@@ -608,18 +648,22 @@
   "body": "Town Council",
   "how": "Each of the town's six wards elects one council member. The mayor is elected by the whole town.",
   "name": "Hilton Head Island",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "alanp@hiltonheadislandsc.gov",
     "name": "Alan Perry",
+    "phone": "(843) 384-2895",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://hiltonheadislandsc.gov/government/town_council/index.php"
    },
    {
     "byWard": true,
+    "email": "alexb@hiltonheadislandsc.gov",
     "name": "Alex Brown",
+    "phone": "(843) 290-5943",
     "role": "Council member",
     "seat": "Ward 1",
     "sourceUrl": "https://hiltonheadislandsc.gov/government/town_council/index.php",
@@ -627,7 +671,9 @@
    },
    {
     "byWard": true,
+    "email": "patsyb@hiltonheadislandsc.gov",
     "name": "Patsy Brison",
+    "phone": "(843) 384-4181",
     "role": "Council member",
     "seat": "Ward 2",
     "sourceUrl": "https://hiltonheadislandsc.gov/government/town_council/index.php",
@@ -635,7 +681,9 @@
    },
    {
     "byWard": true,
+    "email": "steved@hiltonheadislandsc.gov",
     "name": "Steve DeSimone",
+    "phone": "(854) 272-7115",
     "role": "Council member",
     "seat": "Ward 3",
     "sourceUrl": "https://hiltonheadislandsc.gov/government/town_council/index.php",
@@ -643,7 +691,9 @@
    },
    {
     "byWard": true,
+    "email": "tamarab@hiltonheadislandsc.gov",
     "name": "Tamara Becker",
+    "phone": "(843) 816-6372",
     "role": "Council member",
     "seat": "Ward 4",
     "sourceUrl": "https://hiltonheadislandsc.gov/government/town_council/index.php",
@@ -651,7 +701,9 @@
    },
    {
     "byWard": true,
+    "email": "stevea@hiltonheadislandsc.gov",
     "name": "Steve Alfred",
+    "phone": "(843) 384-2421",
     "role": "Council member",
     "seat": "Ward 5",
     "sourceUrl": "https://hiltonheadislandsc.gov/government/town_council/index.php",
@@ -659,7 +711,9 @@
    },
    {
     "byWard": true,
+    "email": "melindat@hiltonheadislandsc.gov",
     "name": "Melinda Tunner",
+    "phone": "(854) 272-7114",
     "role": "Council member",
     "seat": "Ward 6",
     "sourceUrl": "https://hiltonheadislandsc.gov/government/town_council/index.php",
@@ -671,7 +725,7 @@
   "body": "Town Council",
   "how": "All eight council members are elected by the voters of the whole town, as is the mayor.",
   "name": "Mount Pleasant",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -742,10 +796,11 @@
   "body": "City Council",
   "how": "All six council members are elected by the voters of the whole city, as is the mayor.",
   "name": "Myrtle Beach",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "mkruea@cityofmyrtlebeach.com",
     "name": "Mark Kruea",
     "role": "Mayor",
     "seat": "Mayor",
@@ -753,6 +808,7 @@
    },
    {
     "byWard": false,
+    "email": "mlowder@cityofmyrtlebeach.com",
     "name": "Mike Lowder",
     "role": "Council member",
     "seat": "At large",
@@ -760,6 +816,7 @@
    },
    {
     "byWard": false,
+    "email": "mchestnut@cityofmyrtlebeach.com",
     "name": "Mike Chestnut",
     "role": "Council member",
     "seat": "At large",
@@ -767,6 +824,7 @@
    },
    {
     "byWard": false,
+    "email": "dconner@cityofmyrtlebeach.com",
     "name": "Debbie Conner",
     "role": "Council member",
     "seat": "At large",
@@ -781,6 +839,7 @@
    },
    {
     "byWard": false,
+    "email": "bmcclure@cityofmyrtlebeach.com",
     "name": "Bill McClure",
     "role": "Council member",
     "seat": "At large",
@@ -788,6 +847,7 @@
    },
    {
     "byWard": false,
+    "email": "prender@cityofmyrtlebeach.com",
     "name": "Philip Render",
     "role": "Council member",
     "seat": "At large",
@@ -799,7 +859,7 @@
   "body": "City Council",
   "how": "Each of the city's ten districts elects one council member. The mayor is elected by the whole city.",
   "name": "North Charleston",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -810,7 +870,9 @@
    },
    {
     "byWard": true,
+    "email": "gperry@northcharleston.org",
     "name": "Greg Perry",
+    "phone": "(843) 557-5351",
     "role": "Council member",
     "seat": "District 1",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -818,7 +880,9 @@
    },
    {
     "byWard": true,
+    "email": "rjerome@northcharleston.org",
     "name": "Rhonda Jerome",
+    "phone": "(843) 813-4404",
     "role": "Council member",
     "seat": "District 2",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -826,7 +890,9 @@
    },
    {
     "byWard": true,
+    "email": "sganawaypasley@northcharleston.org",
     "name": "Stephanie Ganaway-Pasley",
+    "phone": "(843) 270-1961",
     "role": "Council member",
     "seat": "District 3",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -834,7 +900,9 @@
    },
    {
     "byWard": true,
+    "email": "cpalmerroberts@northcharleston.org",
     "name": "Charmaine Palmer-Roberts",
+    "phone": "(843) 819-9170",
     "role": "Council member",
     "seat": "District 4",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -842,7 +910,9 @@
    },
    {
     "byWard": true,
+    "email": "cemde@northcharleston.org",
     "name": "Christopher Emde",
+    "phone": "(843) 751-6214",
     "role": "Council member",
     "seat": "District 5",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -850,7 +920,9 @@
    },
    {
     "byWard": true,
+    "email": "nbrown@northcharleston.org",
     "name": "Nefertiti Brown",
+    "phone": "(843) 790-4098",
     "role": "Council member",
     "seat": "District 6",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -858,7 +930,9 @@
    },
    {
     "byWard": true,
+    "email": "mibrown@northcharleston.org",
     "name": "Michael Brown Jr.",
+    "phone": "(843) 367-3714",
     "role": "Council member",
     "seat": "District 7",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -866,7 +940,9 @@
    },
    {
     "byWard": true,
+    "email": "bhudson@northcharleston.org",
     "name": "Brandon Hudson",
+    "phone": "(803) 292-6044",
     "role": "Council member",
     "seat": "District 8",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -874,7 +950,9 @@
    },
    {
     "byWard": true,
+    "email": "kskipper@northcharleston.org",
     "name": "Kenny Skipper",
+    "phone": "(843) 200-7520",
     "role": "Council member",
     "seat": "District 9",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -882,7 +960,9 @@
    },
    {
     "byWard": true,
+    "email": "bmichaelchr@aol.com",
     "name": "Michael Brown",
+    "phone": "(843) 747-3531",
     "role": "Council member",
     "seat": "District 10",
     "sourceUrl": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
@@ -895,7 +975,7 @@
   "body": "City Council",
   "how": "Each of the city's six wards elects one council member. The mayor is elected by the whole city.",
   "name": "Rock Hill",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -958,10 +1038,11 @@
   "body": "City Council",
   "how": "Each of the city's six districts elects one council member. The mayor is elected by the whole city.",
   "name": "Spartanburg",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "jerome.rice@cityofspartanburg.org",
     "name": "Jerome Rice",
     "role": "Mayor",
     "seat": "Mayor",
@@ -969,6 +1050,7 @@
    },
    {
     "byWard": true,
+    "email": "mesmith@cityofspartanburg.org",
     "name": "Meghan Smith",
     "role": "Council member",
     "seat": "District 1",
@@ -977,6 +1059,7 @@
    },
    {
     "byWard": true,
+    "email": "lrodgers@cityofspartanburg.org",
     "name": "Leslie Rodgers",
     "role": "Council member",
     "seat": "District 2",
@@ -985,6 +1068,7 @@
    },
    {
     "byWard": true,
+    "email": "rlittlejohn@cityofspartanburg.org",
     "name": "Ruth Littlejohn",
     "role": "Council member",
     "seat": "District 3",
@@ -993,6 +1077,7 @@
    },
    {
     "byWard": true,
+    "email": "jfulmer@cityofspartanburg.org",
     "name": "Jamie Fulmer",
     "role": "Council member",
     "seat": "District 4",
@@ -1001,6 +1086,7 @@
    },
    {
     "byWard": true,
+    "email": "jsalley@cityofspartanburg.org",
     "name": "Janie Salley",
     "role": "Council member",
     "seat": "District 5",
@@ -1009,6 +1095,7 @@
    },
    {
     "byWard": true,
+    "email": "ebrown@cityofspartanburg.org",
     "name": "Erica Brown",
     "role": "Council member",
     "seat": "District 6",
@@ -1022,17 +1109,20 @@
   "body": "Town Council",
   "how": "Each of the town's six districts elects one council member. The mayor is elected by the whole town.",
   "name": "Summerville",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "rtouchberry@summervillesc.gov",
     "name": "Russ Touchberry",
+    "phone": "843-693-8707",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.summervillesc.gov/253/Elected-Officials"
    },
    {
     "byWard": true,
+    "email": "dmack@summervillesc.gov",
     "name": "Dexcter Mack",
     "role": "Council member",
     "seat": "District 1",
@@ -1041,6 +1131,7 @@
    },
    {
     "byWard": true,
+    "email": "tjohnson@summervillesc.gov",
     "name": "Tiffany Johnson",
     "role": "Council member",
     "seat": "District 2",
@@ -1049,6 +1140,7 @@
    },
    {
     "byWard": true,
+    "email": "mhalter@summervillesc.gov",
     "name": "Matt Halter",
     "role": "Council member",
     "seat": "District 3",
@@ -1057,6 +1149,7 @@
    },
    {
     "byWard": true,
+    "email": "rwaring@summervillesc.gov",
     "name": "Richard G. Waring IV",
     "role": "Council member",
     "seat": "District 4",
@@ -1065,7 +1158,9 @@
    },
    {
     "byWard": true,
+    "email": "kgarten@summervillesc.gov",
     "name": "Kima Garten",
+    "phone": "843-821-9337",
     "role": "Council member",
     "seat": "District 5",
     "sourceUrl": "https://www.summervillesc.gov/253/Elected-Officials",
@@ -1073,7 +1168,9 @@
    },
    {
     "byWard": true,
+    "email": "bjackson@summervillesc.gov",
     "name": "Bob Jackson",
+    "phone": "843-810-0449",
     "role": "Council member",
     "seat": "District 6",
     "sourceUrl": "https://www.summervillesc.gov/253/Elected-Officials",
@@ -1086,10 +1183,11 @@
   "body": "City Council",
   "how": "Each of the city's six wards elects one council member. The mayor is elected by the whole city.",
   "name": "Sumter",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "dmerchant@sumtersc.gov",
     "name": "David P. Merchant",
     "role": "Mayor",
     "seat": "Mayor",
@@ -1097,6 +1195,7 @@
    },
    {
     "byWard": true,
+    "email": "agibson@sumtersc.gov",
     "name": "Anthony Gibson",
     "role": "Council member",
     "seat": "Ward 1",
@@ -1105,6 +1204,7 @@
    },
    {
     "byWard": true,
+    "email": "jbblass@usa.net",
     "name": "James B. Blassingame",
     "role": "Council member",
     "seat": "Ward 2",
@@ -1113,6 +1213,7 @@
    },
    {
     "byWard": true,
+    "email": "chastie@sumtersc.gov",
     "name": "Calvin K. Hastie Sr.",
     "role": "Council member",
     "seat": "Ward 3",
@@ -1121,6 +1222,7 @@
    },
    {
     "byWard": true,
+    "email": "rkennedy@sumtersc.gov",
     "name": "Rebecca Lynn Kennedy",
     "role": "Council member",
     "seat": "Ward 4",
@@ -1129,6 +1231,7 @@
    },
    {
     "byWard": true,
+    "email": "cdavis@sumtersc.gov",
     "name": "Colin C. Davis",
     "role": "Council member",
     "seat": "Ward 5",
@@ -1137,6 +1240,7 @@
    },
    {
     "byWard": true,
+    "email": "gshaw@cu-tigers.com",
     "name": "Gifford M. Shaw",
     "role": "Council member",
     "seat": "Ward 6",

@@ -133,9 +133,21 @@ drawn yet. MUSKOGEE'S WARDS ARE NOT DRAWN because the city publishes no copy
 this project may read; the University of Oklahoma publishes one, and its
 terms of use are not settled.
 
-PRIVACY. Only names are carried. Broken Arrow's council page also prints its
-members' city e-mail addresses and the council's telephone number, and none is
-copied.
+PRIVACY AND CONTACTS. A member's e-mail address and telephone numbers are
+carried where the page the seat cites prints them beside that member alone,
+under Adam's rulings of 2026-10-17; scripts/city_councils.py (CONTACTS) says
+what does not ship and how the build proves each value on its page. Read on
+2026-10-17:
+  * The pages cited for Bixby, Edmond, Jenks, Lawton, Stillwater and Tulsa
+    print no e-mail address or number beside any one member, only the city's
+    or the council's own or none, so their members carry none. Muskogee's
+    members carry none because their names come from the county election
+    board's results and from news reports, not from the city's own pages.
+  * Broken Arrow's council page prints each member's city e-mail address,
+    which is carried, and the council's own telephone number for all of them,
+    which is the office's and is not.
+No street address is carried, nor anything about residents or applicants, nor
+a biography.
 
 PUBLISHING GAPS, recorded as evidence for the state-publishing ask (gap
 ok-municipal-officeholders): no state office publishes who holds Oklahoma's
@@ -193,6 +205,10 @@ SPEC = cc.Spec(
     seats_file="ok-city-council-seats.json",
     out_file="ok-city-councils.json",
     seats=SEATS,
+    # 61 members' e-mail addresses and 30 members' numbers were written down
+    # on 2026-10-17; these floors are about two thirds of each.
+    min_emails=41,
+    min_phones=20,
     browser={
         BROKEN_ARROW_COUNCIL: UA_HINTS_CHROME_126,
     },

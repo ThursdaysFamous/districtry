@@ -229,12 +229,12 @@
       "label": "School District",
       "group": "schools",
       "area_rank": 7,
-      "rank_note": "234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
+      "rank_note": "234 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 234 features for Arkansas, measured 2026-10-13.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 234 features for Arkansas, measured 2026-10-13.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -247,12 +247,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 8,
-      "rank_note": "942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas",
+      "rank_note": "620 ZIP Code Tabulation Areas overlapping Arkansas, of the 942 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Arkansas",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -359,16 +359,16 @@
       "label": "City or Town",
       "group": "geography",
       "area_rank": 14,
-      "rank_note": "501 incorporated cities and towns, live from TIGERweb",
+      "rank_note": "501 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "In the 19 cities above 25,000 people, the mayor and every council member or director, written down from each city's own pages and proved against those pages by ar/scripts/build_ar_city_councils.py, which fails when a name is no longer on the page it cites (ar/data/app/ar-city-councils.json, 174 seats read 2026-10-16). Each seat says whether its ward's own voters or the whole city elect it, measured from the ballot because nothing the state publishes records it. The Arkansas Municipal League's statewide directory is not used: it gives no ward or position and disagreed with five of the twelve cities' own pages where both could be compared. Arkansas's other 482 cities and towns name nobody yet, recorded as gap ar-municipal-officeholders.",
+        "people": "In the 19 cities above 25,000 people, the mayor and every council member or director, written down from each city's own pages and proved against those pages by ar/scripts/build_ar_city_councils.py, which fails when a name is no longer on the page it cites (ar/data/app/ar-city-councils.json, 174 seats read 2026-10-17). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, measured from the ballot because nothing the state publishes records it. The Arkansas Municipal League's statewide directory is not used: it gives no ward or position and disagreed with five of the twelve cities' own pages where both could be compared. Arkansas's other 482 cities and towns name nobody yet, recorded as gap ar-municipal-officeholders.",
         "applies": "Arkansas — statewide. A point outside every city and town is unincorporated, which the card states."
       }
     },
@@ -606,7 +606,7 @@
       {
         "file": "ar-city-councils.json",
         "min_keys": 19,
-        "note": "The mayor and council of each of the 19 cities above 25,000 people, keyed by Census place id, written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn wards. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name has gone from its page and never edits the file; the seats file is changed by hand (ar/WATCH.md)."
+        "note": "The mayor and council of each of the 19 cities above 25,000 people, keyed by Census place id, written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn wards. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (ar/WATCH.md)."
       },
       {
         "file": "coverage-gaps.json",

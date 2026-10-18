@@ -225,12 +225,12 @@
       "label": "School District (Unified)",
       "group": "schools",
       "area_rank": 9,
-      "rank_note": "170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county",
+      "rank_note": "170 districts covering all but 39 km2 of Kentucky, from TIGERweb, drawn from a mirrored tile archive — 601 km2 mean feature area, just under a county",
       "source": {
         "answers": "The unified (every-grade) school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -243,12 +243,12 @@
       "label": "Census County Division",
       "group": "geography",
       "area_rank": 10,
-      "rank_note": "493 census county divisions, live from TIGERweb (no data/app file) — median 196.8 km2 of land (mean 207.4), measured 2026-10-15: smaller than a unified school district, larger than a city",
+      "rank_note": "493 census county divisions, from TIGERweb, drawn from a mirrored tile archive — median 196.8 km2 of land (mean 207.4), measured 2026-10-15: smaller than a unified school district, larger than a city",
       "source": {
         "answers": "The census county division containing the point, and its county.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
@@ -343,12 +343,12 @@
       "label": "City",
       "group": "geography",
       "area_rank": 14,
-      "rank_note": "415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
+      "rank_note": "415 incorporated places, from TIGERweb, drawn from a mirrored tile archive — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
       "source": {
         "answers": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row",
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
@@ -361,12 +361,12 @@
       "label": "School District (Elementary)",
       "group": "schools",
       "area_rank": 15,
-      "rank_note": "4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
+      "rank_note": "4 independent districts the Census places in its elementary tiling, from TIGERweb, drawn from a mirrored tile archive — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
       "source": {
         "answers": "The elementary-only school district covering the point, in the four places Kentucky has one.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01",
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
@@ -379,12 +379,12 @@
       "label": "School District (Secondary)",
       "group": "schools",
       "area_rank": 16,
-      "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling",
+      "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, from TIGERweb, drawn from a mirrored tile archive — 9.75 km2 mean feature area, the same ground as the elementary tiling",
       "source": {
         "answers": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01",
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
           }
         ],

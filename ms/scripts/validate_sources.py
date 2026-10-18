@@ -1187,9 +1187,14 @@ def check_city_wards(findings, offline):
 # ---- check 9: the city councils the cities' own pages name -----------------
 def check_city_councils(findings, offline):
     """The City card names each city's mayor and council from the city's own
-    pages, read once (data/app/ms-city-councils.json). No weekly job reads them
-    again yet, so each page is read here the council builder's way, with its
-    own client and robots.txt reading, and compared seat by seat."""
+    pages, read once (data/app/ms-city-councils.json), with the telephone
+    numbers five of those pages print inside a person's own entry and the
+    e-mail addresses nine of them print there (Hattiesburg's in a card for
+    each member). No weekly job reads them again yet, so each page is read
+    here the council builder's way, with its own client and robots.txt
+    reading, and compared seat by seat: the name, the numbers in the order
+    the page prints them, and the address. A finding names the city and the
+    seat and never prints a number or an address."""
     if offline:
         return
     import build_ms_city_councils as councils
@@ -1233,21 +1238,50 @@ def check_city_councils(findings, offline):
             findings.add(WARN, label, "%s: the city's pages could not be read (%s), so its "
                          "council was not checked: %s" % (name, e, c["council"]))
             continue
-        before = {s.get("seat"): s.get("name") for s in old.get("seats") or []}
+        def numbers(seat):
+            return ([seat["phone"]] if seat.get("phone") else []) + list(seat.get("phonesExtra") or [])
+        before = {s.get("seat"): s for s in old.get("seats") or []}
         changed = []
         for s in rec["seats"]:
-            was, now = before.get(s["seat"]), s.get("name")
+            was_seat = before.get(s["seat"]) or {}
+            was, now = was_seat.get("name"), s.get("name")
             if was != now:
                 changed.append("%s: the shipped file names %s, the city's page now %s"
                                % (s["seat"], was or "nobody", now or "shows it vacant"))
+                continue
+            if len(numbers(was_seat)) != len(numbers(s)):
+                changed.append("%s: the city's page now prints %d telephone number%s for "
+                               "this person, where the shipped file carries %d"
+                               % (s["seat"], len(numbers(s)), "" if len(numbers(s)) == 1 else "s",
+                                  len(numbers(was_seat))))
+            elif numbers(was_seat) != numbers(s):
+                changed.append("%s: the city's page now prints a different telephone number "
+                               "for this person than the shipped file carries" % s["seat"])
+            was_mail = (was_seat.get("email") or "").lower()
+            now_mail = (s.get("email") or "").lower()
+            if was_mail != now_mail:
+                changed.append("%s: %s" % (s["seat"], (
+                    "the city's page now prints an e-mail address of this person's own, "
+                    "where the shipped file carries none") if not was_mail else (
+                    "the city's page no longer prints, as this person's own, the e-mail "
+                    "address the shipped file carries") if not now_mail else (
+                    "the city's page now prints a different e-mail address for this person "
+                    "than the shipped file carries")))
         if changed:
             findings.add(WARN, label, "%s: %s. Rebuild with "
                          "ms/scripts/build_ms_city_councils.py: %s"
                          % (name, "; ".join(changed), c["council"]))
         else:
+            phoned = sum(len(numbers(s)) for s in rec["seats"])
+            mailed = sum(1 for s in rec["seats"] if s.get("email"))
+            same = ([("the same %d telephone number%s" % (phoned, "" if phoned == 1 else "s"))]
+                    if phoned else []) + \
+                   ([("the same %d e-mail address%s" % (mailed, "" if mailed == 1 else "es"))]
+                    if mailed else [])
             findings.add(OK, label, "%s: the city's pages still name the %d people the "
-                         "shipped file names (read %s)"
+                         "shipped file names%s (read %s)"
                          % (name, sum(1 for s in rec["seats"] if s.get("name")),
+                            (", with " + " and ".join(same)) if same else "",
                             old.get("read")))
 
 

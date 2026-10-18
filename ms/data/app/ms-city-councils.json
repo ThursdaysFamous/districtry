@@ -53,31 +53,38 @@
    },
    {
     "seat": "Ward 1",
-    "name": "Kendal Lamar Buckner"
+    "name": "Kendal Lamar Buckner",
+    "email": "klbuckner@gulfport-ms.gov"
    },
    {
     "seat": "Ward 2",
-    "name": "Bryan Caldwell"
+    "name": "Bryan Caldwell",
+    "email": "bcaldwell@gulfport-ms.gov"
    },
    {
     "seat": "Ward 3",
-    "name": "Ella Holmes-Hines"
+    "name": "Ella Holmes-Hines",
+    "email": "ehines@gulfport-ms.gov"
    },
    {
     "seat": "Ward 4",
-    "name": "F.B. ‘Rusty’ Walker, IV"
+    "name": "F.B. ‘Rusty’ Walker, IV",
+    "email": "rusty@rustywalker.com"
    },
    {
     "seat": "Ward 5",
-    "name": "B.J. Sellers, Jr."
+    "name": "B.J. Sellers, Jr.",
+    "email": "bjsellers@gulfport-ms.gov"
    },
    {
     "seat": "Ward 6",
-    "name": "Carrissa Corbett"
+    "name": "Carrissa Corbett",
+    "email": "ccorbett@gulfport-ms.gov"
    },
    {
     "seat": "Ward 7",
-    "name": "Johnny Hoggatt"
+    "name": "Johnny Hoggatt",
+    "email": "jhoggatt@gulfport-ms.gov"
    }
   ]
  },
@@ -176,23 +183,28 @@
    },
    {
     "seat": "Ward 1",
-    "name": "Jeffrey George"
+    "name": "Jeffrey George",
+    "email": "jrgeorge@hattiesburgms.com"
    },
    {
     "seat": "Ward 2",
-    "name": "Eric Boney"
+    "name": "Eric Boney",
+    "email": "eboney@hattiesburgms.com"
    },
    {
     "seat": "Ward 3",
-    "name": "LeAnn Vance"
+    "name": "LeAnn Vance",
+    "email": "lvance@hattiesburgms.com"
    },
    {
     "seat": "Ward 4",
-    "name": "Dave Ware"
+    "name": "Dave Ware",
+    "email": "dware@hattiesburgms.com"
    },
    {
     "seat": "Ward 5",
-    "name": "Nicholas Brown"
+    "name": "Nicholas Brown",
+    "email": "nbrown@hattiesburgms.com"
    }
   ]
  },
@@ -204,35 +216,51 @@
   "seats": [
    {
     "seat": "Mayor",
-    "name": "Ken Adams"
+    "name": "Ken Adams",
+    "phone": "662-892-9201",
+    "email": "ken.adams@obms.us"
    },
    {
     "seat": "At Large",
-    "name": "George Collins"
+    "name": "George Collins",
+    "phone": "901-486-3594",
+    "email": "gcollins@obms.us"
    },
    {
     "seat": "Ward 1",
-    "name": "Gil Earhart"
+    "name": "Gil Earhart",
+    "phone": "662-890-0851",
+    "email": "gil.earhart@obms.us"
    },
    {
     "seat": "Ward 2",
-    "name": "Pat Hamilton"
+    "name": "Pat Hamilton",
+    "phone": "901-827-1035",
+    "email": "phamilton@obms.us"
    },
    {
     "seat": "Ward 3",
-    "name": "Don Gammage"
+    "name": "Don Gammage",
+    "phone": "901-870-2255",
+    "email": "don.gammage@obms.us"
    },
    {
     "seat": "Ward 4",
-    "name": "David Wallace"
+    "name": "David Wallace",
+    "phone": "901-619-6992",
+    "email": "dwallace@obms.us"
    },
    {
     "seat": "Ward 5",
-    "name": "Jan Aldridge"
+    "name": "Jan Aldridge",
+    "phone": "901-268-4119",
+    "email": "jan.aldridge@obms.us"
    },
    {
     "seat": "Ward 6",
-    "name": "Dale Dickerson"
+    "name": "Dale Dickerson",
+    "phone": "662-895-2543",
+    "email": "ddickerson@obms.us"
    }
   ]
  },
@@ -249,31 +277,38 @@
    },
    {
     "seat": "Ward 1",
-    "name": "Chad Mims"
+    "name": "Chad Mims",
+    "email": "chad.mims@tupeloms.gov"
    },
    {
     "seat": "Ward 2",
-    "name": "Lynn Bryan"
+    "name": "Lynn Bryan",
+    "email": "lynn.bryan@tupeloms.gov"
    },
    {
     "seat": "Ward 3",
-    "name": "Travis Beard"
+    "name": "Travis Beard",
+    "email": "travis.beard@tupeloms.gov"
    },
    {
     "seat": "Ward 4",
-    "name": "Nettie Davis"
+    "name": "Nettie Davis",
+    "email": "nettie.davis@tupeloms.gov"
    },
    {
     "seat": "Ward 5",
-    "name": "Bentley Nolan"
+    "name": "Bentley Nolan",
+    "email": "bentley.nolan@tupeloms.gov"
    },
    {
     "seat": "Ward 6",
-    "name": "Janet Gaston"
+    "name": "Janet Gaston",
+    "email": "janet.gaston@tupeloms.gov"
    },
    {
     "seat": "Ward 7",
-    "name": "Rosie Jones"
+    "name": "Rosie Jones",
+    "email": "rosie.jones@tupeloms.gov"
    }
   ]
  },
@@ -290,23 +325,28 @@
    },
    {
     "seat": "Ward 1",
-    "name": "Elliot Brewer"
+    "name": "Elliot Brewer",
+    "email": "ElliotBrewer@MeridianMS.org"
    },
    {
     "seat": "Ward 2",
-    "name": "Dwayne Davis"
+    "name": "Dwayne Davis",
+    "email": "DwayneDavis@MeridianMS.org"
    },
    {
     "seat": "Ward 3",
-    "name": "Tracy Tims"
+    "name": "Tracy Tims",
+    "email": "TracyTims@MeridianMS.org"
    },
    {
     "seat": "Ward 4",
-    "name": "Romande Gail Walker"
+    "name": "Romande Gail Walker",
+    "email": "RomandeWalker@MeridianMS.org"
    },
    {
     "seat": "Ward 5",
-    "name": "Dustin Hill"
+    "name": "Dustin Hill",
+    "email": "DustinHill@MeridianMS.org"
    }
   ]
  },
@@ -370,31 +410,44 @@
    },
    {
     "seat": "At Large",
-    "name": "Sandra Strain"
+    "name": "Sandra Strain",
+    "phone": "601-573-9284",
+    "email": "wstrain93@comcast.net"
    },
    {
     "seat": "Ward 1",
-    "name": "Tawanna Tatum"
+    "name": "Tawanna Tatum",
+    "phone": "601-540-6552",
+    "email": "tawanna.tatum.s@gmail.com"
    },
    {
     "seat": "Ward 2",
-    "name": "Pat Peeler"
+    "name": "Pat Peeler",
+    "phone": "601-856-6267",
+    "email": "patriciahpeeler@gmail.com"
    },
    {
     "seat": "Ward 3",
-    "name": "Janie Jarvis"
+    "name": "Janie Jarvis",
+    "phone": "601-955-0467",
+    "email": "janiejarvisalderman3@gmail.com"
    },
    {
     "seat": "Ward 4",
-    "name": "Paul Tankersley"
+    "name": "Paul Tankersley",
+    "phone": "601-260-9138",
+    "email": "ptankers@bellsouth.net"
    },
    {
     "seat": "Ward 5",
-    "name": "Mike Hudgins"
+    "name": "Mike Hudgins",
+    "phone": "601-214-6456",
+    "email": "mike@natcheztracefuneralhome.com"
    },
    {
     "seat": "Ward 6",
-    "name": "Guy Bowering"
+    "name": "Guy Bowering",
+    "email": "boweringguy@gmail.com"
    }
   ]
  },
@@ -411,31 +464,38 @@
    },
    {
     "seat": "At Large",
-    "name": "David Stovall"
+    "name": "David Stovall",
+    "email": "dstovall@cityofpearl.com"
    },
    {
     "seat": "Ward 1",
-    "name": "Sammy Williams"
+    "name": "Sammy Williams",
+    "email": "swilliams@cityofpearl.com"
    },
    {
     "seat": "Ward 2",
-    "name": "Keith Dennis"
+    "name": "Keith Dennis",
+    "email": "kdennis@cityofpearl.com"
    },
    {
     "seat": "Ward 3",
-    "name": "Gary Broadwater"
+    "name": "Gary Broadwater",
+    "email": "gbroadwater@cityofpearl.com"
    },
    {
     "seat": "Ward 4",
-    "name": "Casey Foy"
+    "name": "Casey Foy",
+    "email": "cfoy@cityofpearl.com"
    },
    {
     "seat": "Ward 5",
-    "name": "Dwight Knight"
+    "name": "Dwight Knight",
+    "email": "dknight@cityofpearl.com"
    },
    {
     "seat": "Ward 6",
-    "name": "Kyle Foster"
+    "name": "Kyle Foster",
+    "email": "kfoster@cityofpearl.com"
    }
   ]
  },
@@ -447,35 +507,54 @@
   "seats": [
    {
     "seat": "Mayor",
-    "name": "Jimmy Stokes"
+    "name": "Jimmy Stokes",
+    "phone": "662-342-3502",
+    "email": "MayorStokes@hornlake.org"
    },
    {
     "seat": "At Large",
-    "name": "Larry McKinney"
+    "name": "Larry McKinney",
+    "phone": "662-655-7459",
+    "email": "AWardAL@hornlake.org"
    },
    {
     "seat": "Ward 1",
-    "name": "Joshua Langston"
+    "name": "Joshua Langston",
+    "phone": "662-655-7463",
+    "email": "Award1@hornlake.org"
    },
    {
     "seat": "Ward 2",
-    "name": "Tommy Bledsoe"
+    "name": "Tommy Bledsoe",
+    "phone": "662-393-4332",
+    "phonesExtra": [
+     "mobile 901-606-6392"
+    ],
+    "email": "tbledsoe@hornlake.org"
    },
    {
     "seat": "Ward 3",
-    "name": "Jackie C. Bostick"
+    "name": "Jackie C. Bostick",
+    "phone": "662-536-9010",
+    "email": "Aldermanward3@HornLake.org"
    },
    {
     "seat": "Ward 4",
-    "name": "Kelly Lee Smith"
+    "name": "Kelly Lee Smith",
+    "phone": "662-655-7458",
+    "email": "Award4@hornlake.org"
    },
    {
     "seat": "Ward 5",
-    "name": "LaShonda Johnson"
+    "name": "LaShonda Johnson",
+    "phone": "662-655-7461",
+    "email": "AWard5@hornlake.org"
    },
    {
     "seat": "Ward 6",
-    "name": "Charlotte Armstrong"
+    "name": "Charlotte Armstrong",
+    "phone": "662-655-7462",
+    "email": "Award6@hornlake.org"
    }
   ]
  },
@@ -496,27 +575,39 @@
    },
    {
     "seat": "Ward 1",
-    "name": "Erin Smith"
+    "name": "Erin Smith",
+    "phone": "home 662-571-2452"
    },
    {
     "seat": "Ward 2",
-    "name": "Mark Huelse"
+    "name": "Mark Huelse",
+    "phone": "work 662-236-3977",
+    "phonesExtra": [
+     "cell 662-607-0877"
+    ]
    },
    {
     "seat": "Ward 3",
-    "name": "Brian Hyneman"
+    "name": "Brian Hyneman",
+    "phone": "home 662-234-4000"
    },
    {
     "seat": "Ward 4",
-    "name": "Kesha Howell Atkinson"
+    "name": "Kesha Howell Atkinson",
+    "phone": "home 662-380-1110"
    },
    {
     "seat": "Ward 5",
-    "name": "Preston E. Taylor"
+    "name": "Preston E. Taylor",
+    "phone": "home 662-234-5195"
    },
    {
     "seat": "Ward 6",
-    "name": "Jason Bailey"
+    "name": "Jason Bailey",
+    "phone": "cell 662-816-0038",
+    "phonesExtra": [
+     "work 662-513-9990"
+    ]
    }
   ]
  },
@@ -533,31 +624,45 @@
    },
    {
     "seat": "At Large",
-    "name": "Sharon Womack"
+    "name": "Sharon Womack",
+    "phone": "601-624-3603",
+    "email": "swomack@brandonms.org"
    },
    {
     "seat": "Ward 1",
-    "name": "Jarrad Craine"
+    "name": "Jarrad Craine",
+    "phone": "601-454-2506",
+    "email": "jcraine@brandonms.org"
    },
    {
     "seat": "Ward 2",
-    "name": "Cris Vinson"
+    "name": "Cris Vinson",
+    "phone": "601-824-8884",
+    "email": "cvinson@brandonms.org"
    },
    {
     "seat": "Ward 3",
-    "name": "Harry Williams"
+    "name": "Harry Williams",
+    "phone": "601-825-8970",
+    "email": "hwilliams@brandonms.org"
    },
    {
     "seat": "Ward 4",
-    "name": "Lu Coker"
+    "name": "Lu Coker",
+    "phone": "601-573-0281",
+    "email": "lcoker@brandonms.org"
    },
    {
     "seat": "Ward 5",
-    "name": "Jereme King"
+    "name": "Jereme King",
+    "phone": "601-260-6150",
+    "email": "jeking@brandonms.org"
    },
    {
     "seat": "Ward 6",
-    "name": "David Farris"
+    "name": "David Farris",
+    "phone": "601-540-1711",
+    "email": "dfarris@brandonms.org"
    }
   ]
  }
