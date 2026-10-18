@@ -7936,7 +7936,9 @@ function initTennesseeExplorer() {
     return feats.map(function (f) {
       var c = (f.geometry && f.geometry.coordinates) || [];
       var p = f.properties || {};
-      return { lat: c[1], lon: c[0], display_name: photonLabel(p), extent: p.extent };
+      // source: whose data the answer is; the street-only message offers
+      // OpenStreetMap's note form for its data alone (ENGINE geocoder-search)
+      return { lat: c[1], lon: c[0], display_name: photonLabel(p), extent: p.extent, source: "openstreetmap" };
     }).filter(function (r) {
       return r.lat != null && r.lon != null && r.display_name;
     });
@@ -8248,28 +8250,35 @@ function initTennesseeExplorer() {
    * and the reader taps the place (ENGINE geocoder-search showStreetOnly),
    * and the front door opens the app that covers it.
    *
-   * addressParts splits an address into its house number, street, town and
-   * ZIP code, or returns null unless it opens with a house number and has a
-   * part after the street. labelOnStreet says whether a geocoder's answer is
-   * on that street in that town: one part of the answer, less any house
-   * number, must name the same street once both are written in the
-   * abbreviations above, and another part must be the town or the ZIP code,
-   * because most street names are in many towns. A direction written on one
-   * side and not the other still matches; two different directions do not,
-   * because West and East Madison Street are miles apart. */
-  function addressParts(address) {
-    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
-    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(parts[0] || "");
-    if (!m || parts.length < 2) return null;
+   * addressStreet reads the house number and the street from an address's
+   * first part, or returns null unless it opens with a house number.
+   * addressParts adds the town and the ZIP code, and returns null unless
+   * there is a part after the street. labelOnStreet says whether a
+   * geocoder's answer is on that street in that town: one part of the
+   * answer, less any house number, must name the same street once both are
+   * written in the abbreviations above, and another part must be the town or
+   * the ZIP code, because most street names are in many towns. A direction
+   * written on one side and not the other still matches; two different
+   * directions do not, because West and East Madison Street are miles
+   * apart. */
+  function addressStreet(address) {
+    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(String(address || "").split(",")[0].trim());
+    if (!m) return null;
     // a unit at the end of the street line is not part of the street's name
     var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
+    return { number: m[1], street: street };
+  }
+  function addressParts(address) {
+    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
+    var a = addressStreet(parts[0]);
+    if (!a || parts.length < 2) return null;
     var town = parts[1], zip = "", i, s;
     for (i = 2; i < parts.length; i++) {
       s = /^[a-z]{2}(?:\s+(\d{5})(?:-\d{4})?)?$/i.exec(parts[i]);  // "IL 60559", "IL"
       if (s) { town = parts[i - 1]; zip = s[1] || ""; break; }
     }
     if (!zip) zip = (/(?:^|[\s,])(\d{5})(?:-\d{4})?(?=[\s,]|$)/.exec(parts.slice(1).join(", ")) || [])[1] || "";
-    return { number: m[1], street: street, town: town, zip: zip };
+    return { number: a.number, street: a.street, town: town, zip: zip };
   }
   // A street's name as a matching key: every word in its abbreviation, so
   // "Drive" and "Dr" agree wherever they stand, then a leading and a
@@ -8290,6 +8299,13 @@ function initTennesseeExplorer() {
     key.core = words.join(" ");
     return key;
   }
+  // Whether one part of an answer's label, less any house number, names the
+  // street `want` (a streetNameKey) names
+  function partNamesStreet(part, want) {
+    var got = streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
+    return got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
+      (!got.post || !want.post || got.post === want.post);
+  }
   function labelOnStreet(label, address) {
     var a = addressParts(address);
     if (!a) return false;
@@ -8299,11 +8315,47 @@ function initTennesseeExplorer() {
     String(label || "").split(",").forEach(function (part) {
       var low = part.trim().toLowerCase();
       if (low && (low === town || low === a.zip)) inTown = true;
-      var got = streetNameKey(part.trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
-      if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
-          (!got.post || !want.post || got.post === want.post)) onStreet = true;
+      if (partNamesStreet(part, want)) onStreet = true;
     });
     return onStreet && inTown;
+  }
+
+  /* ---------- the town an answer puts a typed address in ----------
+   * An address typed into a state's app often names no town ("1600 W
+   * North Ave"), or names it with no comma before it ("1600 W North Ave
+   * Chicago"), and the map's search may answer the street in one town or
+   * in several. addressInTownOf gives the address in the town and state of
+   * an answer on its street ("1600 W North Ave, Chicago, IL"), read
+   * from the answer's label: the part before a state's name is the town.
+   * When the address names a town, after a comma (labelOnStreet) or as the
+   * words after the street, and the answer is not in it, the result is
+   * null, as it is for an answer on another street or a label that names no
+   * state. The ZIP code is left out, because one long street runs through
+   * several. */
+  function addressInTownOf(address, label) {
+    var a = addressStreet(address);
+    if (!a || (addressParts(address) && !labelOnStreet(label, address))) return null;
+    var parts = String(label || "").split(",").map(function (p) { return p.trim(); });
+    var at = -1, tag = "", j, n, i;
+    for (j = parts.length - 1; j >= 2 && !tag; j--) {
+      tag = stateTagOfName(parts[j]);
+      if (tag) at = j;
+    }
+    if (!tag) return null;
+    var town = parts[at - 1], low = town.toLowerCase();
+    var words = a.street.split(/\s+/);
+    for (n = words.length; n >= 1; n--) {
+      var rest = words.slice(n).join(" ").toLowerCase();
+      if (rest && rest !== low && rest.indexOf(low + " ") !== 0) continue;
+      var want = streetNameKey(words.slice(0, n).join(" "));
+      if (!want.core) continue;
+      for (i = 0; i < at - 1; i++) {
+        if (partNamesStreet(parts[i], want)) {
+          return a.number + " " + words.slice(0, n).join(" ") + ", " + town + ", " + tag.toUpperCase();
+        }
+      }
+    }
+    return null;
   }
 
   /* ---------- the state a place's address names ----------
@@ -8342,11 +8394,13 @@ function initTennesseeExplorer() {
       return m[1].toLowerCase();
     }
     m = /,\s*([a-z][a-z .]*?)(?:\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
-    if (m) {
-      var name = m[1].replace(/\s+/g, " ").toLowerCase();
-      for (var k in US_STATE_NAMES) {
-        if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
-      }
+    return m ? stateTagOfName(m[1]) : "";
+  }
+  // The tag of the state a name names ("Wisconsin" -> "wi"), or ""
+  function stateTagOfName(text) {
+    var name = String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
+    for (var k in US_STATE_NAMES) {
+      if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
     }
     return "";
   }
@@ -8377,8 +8431,12 @@ function initTennesseeExplorer() {
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one
-   * or shares one into the installed app.
+   * A short link is sent to it only when a reader pastes one or shares one
+   * into the installed app. An app's search also sends it an address a
+   * reader searched for, typed or carried by a map link, for the Census
+   * Bureau's geocoder, when the map's own search holds the street and not
+   * the house number (ENGINE geocoder-search lookupAddressRanges); the front
+   * door never does.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
@@ -8519,7 +8577,10 @@ function initTennesseeExplorer() {
   /* ==== ENGINE:END map-link ==== */
 
   /* ==== ENGINE:BEGIN geocoder-search ==== */
-  function renderGeocodeResults(results, fromLink) {
+  // `rows`, when given, can name a class for a row (rows.mark) and take a
+  // row's click instead of selecting its point, by returning true
+  // (rows.pick): listHeldAnswers uses both
+  function renderGeocodeResults(results, fromLink, rows) {
     // the district section (district-result / district-hint rows) is owned by
     // renderDistrictSection and stays on top; only address rows are replaced
     clearResultRows(false);
@@ -8534,6 +8595,7 @@ function initTennesseeExplorer() {
     }
     results.forEach(function (r) {
       var li = document.createElement("li");
+      if (rows && rows.mark) li.className = rows.mark(r);
       var btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = r.display_name; // textContent — never innerHTML — for untrusted geocoder output
@@ -8542,6 +8604,7 @@ function initTennesseeExplorer() {
         // response can't re-open the list over the "Selected:" status
         clearTimeout(debounceTimer);
         if (inFlightController) inFlightController.abort();
+        if (rows && rows.pick && rows.pick(r)) return;
         trackEvent("address-search");
         setSelectedPoint(parseFloat(r.lat), parseFloat(r.lon));
         geoResultsList.innerHTML = "";
@@ -8592,6 +8655,19 @@ function initTennesseeExplorer() {
       trackEvent("metro-portal-go/" + metro.id, "search");
       window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
     });
+  }
+  // An answer without the house number an address opens with: that app is
+  // opened with the address, as #q=, and searches it there, where such an
+  // answer is never selected (listHeldAnswers); the answer's own point is a
+  // spot somewhere along a street, not the address
+  function handOnSiblingRow(metro, r, address) {
+    var li = siblingRow(metro, r.display_name, function () {
+      trackEvent("metro-portal-go/" + metro.id, "search");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(address);
+    });
+    li.className += " no-number";
+    return li;
   }
 
   /* ---------- a link to a place in another state ----------
@@ -8649,7 +8725,10 @@ function initTennesseeExplorer() {
   }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
-  function maybeRenderSiblingMatches(query, mustCarry, seen) {
+  // `handOn` is an address held to its house number (runAddressSearch): when
+  // no answer carries the number, the answers are listed as rows that open
+  // their app with the address (handOnSiblingRow) instead of being dropped
+  function maybeRenderSiblingMatches(query, mustCarry, seen, handOn) {
     var anySibling = METRO_EXPLORERS.some(function (m) { return m.id !== THIS_METRO && m.bbox; });
     if (!anySibling) return;
     // share the geocoder's abort slot so a new keystroke/search cancels this
@@ -8680,6 +8759,8 @@ function initTennesseeExplorer() {
         var results = !mustCarry ? got.results : got.results.filter(function (r) {
           return labelCarriesNumber(r.display_name, mustCarry);
         });
+        var away = !!handOn && !results.length;
+        if (away) results = got.results;
         var perMetro = {}; // id -> rows rendered
         var labels = [];
         results.forEach(function (r) {
@@ -8689,7 +8770,7 @@ function initTennesseeExplorer() {
           perMetro[metro.id] = (perMetro[metro.id] || 0) + 1;
           if (perMetro[metro.id] > SIBLING_ROWS_PER_METRO) return;
           if (labels.indexOf(metro.label) === -1) labels.push(metro.label);
-          geoResultsList.appendChild(buildSiblingResultRow(metro, r));
+          geoResultsList.appendChild(away ? handOnSiblingRow(metro, r, handOn) : buildSiblingResultRow(metro, r));
         });
         if (!labels.length) return 0; // leave the standard "no matches" status as-is
         geoStatus.textContent = "Nothing in " + appPlaceName() + " matched — but it looks like you're searching " +
@@ -9189,12 +9270,16 @@ function initTennesseeExplorer() {
    * in the box); and <outcome> what the reader was shown:
    *   point        a position the link carried, offered as one row
    *   found        address rows for the place
-   *   street       the street the address is on, framed for a tap
+   *   pin          the street the address is on, with the Census Bureau's
+   *                pin for its house number (showStreetOnly)
+   *   street       the street the address is on, framed for a tap, or
+   *                listed to pick (listHeldAnswers)
    *   name         places with the link's name, listed for the reader
    *   other-state  the place is another app's, offered there
    *   uncovered    the place is in a state no app covers
    *   district     a district name (DISTRICT_SEARCH_URL) answered alone
-   *   none         nothing matched
+   *   none         nothing matched, or only answers on other streets
+   *                without the house number (listHeldAnswers)
    *   unreadable   the link names no place (a directions link, for one)
    *   failed-<why> the lookup could not read a short link, and why
    *                (resolveShortMapLink's reasons, or "other")
@@ -9235,6 +9320,7 @@ function initTennesseeExplorer() {
   var mapLinkController = null;
   function showMapLink(link) {
     var seq = ++districtSearchSeq;  // a newer search owns the list now
+    clearRangePin();
     if (inFlightController) inFlightController.abort();
     if (mapLinkController) mapLinkController.abort();
     clearResultRows(true);
@@ -9299,13 +9385,16 @@ function initTennesseeExplorer() {
     return li;
   }
 
-  function runGeocodeSearch(q, fromLink) {
+  // `submitted` is a search the reader sent (Search or Enter, or #q=), as
+  // against one the box runs while they type (runAddressSearch)
+  function runGeocodeSearch(q, fromLink, submitted) {
     var link = parseMapLink(q);
     // a search of the text a short link led to is still that link's read
     if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
+    clearRangePin(); // a pin answers the search before this one
     var tag = fromLink ? addressStateTag(q) : "";
     if (tag && tag !== METRO_BRAND.instanceTag && showLinkElsewhere(fromLink, tag)) return Promise.resolve();
     return findDistricts(q).then(function (found) {
@@ -9321,7 +9410,7 @@ function initTennesseeExplorer() {
         countLinkRead("district");
         return;
       }
-      return runAddressSearch(q, fromLink);
+      return runAddressSearch(q, fromLink, submitted);
     });
   }
 
@@ -9352,37 +9441,74 @@ function initTennesseeExplorer() {
    * the address's street in its town (labelOnStreet) is kept aside, and when
    * no answer carries the number the map shows that street and asks the
    * reader to tap the place (showStreetOnly), here when this app's own
-   * search found it and after the sibling apps' lookup otherwise. */
-  function runAddressSearch(q, fromLink) {
+   * search found it and after the sibling apps' lookup otherwise.
+   *
+   * AN ADDRESS WITH NO NAME IN FRONT, typed or carried by a link, is held
+   * to its house number as well, from 2026-10-17, because an answer without
+   * the number is a street and a street's point is a spot somewhere along
+   * it. Typed into the front door, such an answer opened its app with that
+   * spot selected, and a question page's address box selected it whenever
+   * it was the only answer, so a reader asking about one address was shown
+   * the cards for another, a ward or more away, with nothing to say so:
+   * Photon holds a Chicago storefront's street and not its number. Every
+   * answer is still listed, and one without the number is marked
+   * (listHeldAnswers) so that nothing selects it for the reader. When no
+   * answer carries the number but one is on the address's street
+   * (addressInTownOf, which also reads a town typed with no comma, or not
+   * typed at all, from the answer's own label), a search the reader sent
+   * shows that street and the Census Bureau's pin as for a shared link, if
+   * the answers put the street in one town; while the reader is typing, the
+   * street's row does that when it is picked. The geocoder is asked as often
+   * as before, bar one retry without a unit ("Apt 2") when the first answers
+   * lack the number. */
+  function runAddressSearch(q, fromLink, submitted) {
     var seq = districtSearchSeq;
     var bare = fromLink ? addressAfterName(q) : null;
     var name = bare ? q.split(",")[0].trim() : "";
-    var tries = [], held = [], street = [];
+    var numbered = !bare && OPENS_WITH_ADDRESS.test(q) ? q : null;
+    var sent = submitted || !!fromLink; // a link is sent when it is pasted or shared
+    var tries = [], held = [], street = [], loose = null, looseOnStreet = false;
     function add(t, mustCarry) {
       if (t && tries.indexOf(t) < 0) { tries.push(t); held.push(mustCarry || null); }
     }
+    // each answer on the address's street, with the address it is in there
     function keepStreet(results) {
-      (results || []).forEach(function (r) { if (labelOnStreet(r.display_name, bare)) street.push(r); });
+      (results || []).forEach(function (r) {
+        var at = numbered ? addressInTownOf(numbered, r.display_name) : labelOnStreet(r.display_name, bare) ? bare : null;
+        if (at) street.push({ answer: r, at: at });
+      });
     }
-    add(q); add(cleanPoiAddress(q));
+    add(q, numbered); add(cleanPoiAddress(q), numbered);
     if (bare) { add(bare, bare); add(cleanPoiAddress(bare), bare); }
     var i = 0;
     function next(results) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      var all = results, before = street.length;
       if (results && held[i]) {
         keepStreet(results);
         results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
       }
       if (results && results.length) {
+        if (numbered) return listHeldAnswers(all, numbered, street, sent);
         renderGeocodeResults(results);
         if (bare) markLinkPlace(name, bare);
         countLinkRead("found");
         return;
       }
+      // the answers listed if none carries the number: the first try's, or
+      // a later try's that found the street when the first did not
+      if (numbered && all && all.length && (!loose || (!looseOnStreet && street.length > before))) {
+        loose = all;
+        looseOnStreet = street.length > before;
+      }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
-      if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
+      var towns = streetTowns(street);
+      if (towns.length === 1 && (bare || sent)) {
+        return showStreetOnly(streetIn(street, towns[0]), towns[0], name, geocodeAddress);
+      }
+      if (loose) return listHeldAnswers(loose, numbered, street, sent);
       renderGeocodeResults(results, fromLink);
-      return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+      return Promise.resolve(maybeRenderSiblingMatches(q, numbered, null, numbered)).then(function (found) {
         if (seq !== districtSearchSeq) return;
         if (found) return countLinkRead("other-state");
         // 0, never undefined: an aborted or sibling-less lookup tries no more
@@ -9391,7 +9517,7 @@ function initTennesseeExplorer() {
           if (seq !== districtSearchSeq) return;
           if (again) return countLinkRead("other-state");
           if (again !== 0) return countLinkRead("none");
-          if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
+          if (street.length) return showStreetOnly(streetIn(street, bare), bare, name, searchEverywhere);
           if (name.length < 3) return countLinkRead("none");
           return geocodeAddress(name).then(function (named) {
             if (seq !== districtSearchSeq) return;
@@ -9413,6 +9539,52 @@ function initTennesseeExplorer() {
   function searchEverywhere(text) {
     inFlightController = new AbortController();
     return geocodeUnbounded(text, inFlightController.signal);
+  }
+
+  // The addresses the answers on a street are in (keepStreet), one per town,
+  // and the answers in one of them
+  function streetTowns(street) {
+    var towns = [];
+    street.forEach(function (s) { if (towns.indexOf(s.at) < 0) towns.push(s.at); });
+    return towns;
+  }
+  function streetIn(street, at) {
+    return street.filter(function (s) { return s.at === at; }).map(function (s) { return s.answer; });
+  }
+
+  /* Answers to an address held to its house number (runAddressSearch).
+   * Every answer is listed, as before, and one whose label lacks the number
+   * is marked no-number, which #q= never selects (prefillGeocodeSearch).
+   * When none carries the number, a row on the address's street shows that
+   * street when it is picked (showStreetOnly), with the Census Bureau's pin,
+   * instead of selecting a spot along it, and the status says what the
+   * map's search knows. */
+  function listHeldAnswers(answers, address, street, sent) {
+    var none = !answers.some(function (r) { return labelCarriesNumber(r.display_name, address); });
+    renderGeocodeResults(answers, null, {
+      mark: function (r) { return labelCarriesNumber(r.display_name, address) ? "" : "no-number"; },
+      pick: function (r) {
+        var at = none ? addressInTownOf(address, r.display_name) : null;
+        if (!at) return false;
+        showStreetOnly(streetIn(street, at), at, "", geocodeAddress);
+        return true;
+      }
+    });
+    if (!none) return countLinkRead("found");
+    var towns = streetTowns(street.filter(function (s) { return answers.indexOf(s.answer) >= 0; }));
+    if (towns.length) {
+      var names = towns.map(function (at) { return addressParts(at).town; });
+      var a = addressParts(towns[0]);
+      geoStatus.textContent = "The map's search knows " + a.street + " in " +
+        (names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0]) +
+        " but not number " + a.number + " on it. Pick " +
+        (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map, then tap the place.";
+    } else if (sent) {
+      geoStatus.textContent = "None of these has the house number " + addressStreet(address).number +
+        ", so pick one only if it's the place you meant, or tap the place on the map.";
+    }
+    geoStatus.className = "geo-status";
+    countLinkRead(towns.length ? "street" : "none");
   }
 
   /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
@@ -9454,8 +9626,9 @@ function initTennesseeExplorer() {
     }
   }
 
-  /* The street a shared address is on, when no answer carries its house
-   * number (labelOnStreet, ENGINE map-link). The map frames the street, from
+  /* The street a shared or typed address is on, when no answer carries its
+   * house number (labelOnStreet, addressInTownOf, ENGINE map-link); `bare`
+   * is the address in the street's town. The map frames the street, from
    * the extent the geocoder gives it, and the reader taps the place: nothing
    * is selected, because a point on a street is not the place and a
    * district's edge can run down the middle of the street. The place's name
@@ -9463,11 +9636,15 @@ function initTennesseeExplorer() {
    * within STREET_NEAR_MILES of the street, since that is where the place
    * is: on 2026-10-14 a search for the name of a small business shared
    * from the Google Maps app answered three other places with similar
-   * names, 20 to 50 km from its street. */
+   * names, 20 to 50 km from its street. At the same time the Census
+   * Bureau is asked where the number falls on the street (lookupAddressRanges),
+   * and its answer is a pin the reader can tap, which also selects nothing
+   * by itself. */
   var STREET_NEAR_MILES = 0.5;
   function showStreetOnly(street, bare, name, search) {
     var seq = districtSearchSeq;
-    countLinkRead("street");
+    var picked = state.sequence; // a point selected after this answers the message
+    var answered = false;
     var a = addressParts(bare);
     var bounds = null;
     street.forEach(function (r) {
@@ -9478,24 +9655,73 @@ function initTennesseeExplorer() {
       bounds = bounds ? bounds.extend(b) : b;
     });
     clearResultRows(false);
-    var where = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number +
-      " on it, so the map is showing that street.";
-    geoStatus.textContent = where + " Tap the place you meant.";
-    geoStatus.className = "geo-status";
+    var pin = null, near = [];
+    // every answer came from OpenStreetMap's data (normalizePhoton), so the
+    // message can offer its note form; New York's city search reads the
+    // city's own address file, which OpenStreetMap's volunteers do not keep
+    var osm = street.length > 0 && street.every(function (r) { return r.source === "openstreetmap"; });
+    function noteAt() {
+      if (pin) return { lat: pin.lat, lng: pin.lng, zoom: 19 };
+      // the middle of the part of the map below the search panel, which is
+      // where the street was framed
+      var size = map.getSize();
+      var c = map.containerPointToLatLng([size.x / 2, (clearOfSearchPanel() + size.y) / 2]);
+      return { lat: c.lat, lng: c.lng, zoom: Math.min(19, Math.max(17, Math.round(map.getZoom()))) };
+    }
+    function current() { return !answered && seq === districtSearchSeq && picked === state.sequence; }
+    function compose() {
+      var text = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number + " on it";
+      text += pin ? ". The pin is where the Census Bureau's street records put that number, which can be a few doors off."
+                  : ", so the map is showing that street.";
+      if (near.length) {
+        text += " A search for its name, \u201c" + name + "\u201d, " + (pin ? "also " : "") + "found " +
+          (near.length === 1 ? "the place below. Pick it if it's the one you meant" : "the places below. Pick the one you meant") +
+          (pin ? ", tap the pin, or tap the map." : ", or tap the map.");
+      } else {
+        text += pin ? " Tap the pin to use it, or tap the place you meant." : " Tap the place you meant.";
+      }
+      geoStatus.textContent = text;
+      geoStatus.className = "geo-status";
+      if (!osm) return;
+      geoStatus.appendChild(document.createTextNode(" The search reads OpenStreetMap's data. If you know where number " +
+        a.number + " is yourself, not from another map, you can "));
+      geoStatus.appendChild(osmNoteLink(noteAt));
+      geoStatus.appendChild(document.createTextNode(" so its volunteers can add it."));
+    }
+    compose();
     refreshSearchShellExpanded();
     map.fitBounds(bounds, { paddingTopLeft: [24, clearOfSearchPanel()], paddingBottomRight: [24, 24], maxZoom: 17 });
     // the reader's tap answers the message, which then goes
-    map.once("click", function () {
+    function done() {
+      if (answered) return;
+      answered = true;
       if (seq !== districtSearchSeq) return;
+      clearRangePin();
       clearResultRows(false);
       geoStatus.textContent = "";
       collapseAfterSelect = true;
       refreshSearchShellExpanded();
+    }
+    map.once("click", done);
+    // a pin needs far less room below the search panel than a street does
+    function framePin() {
+      map.fitBounds(L.latLngBounds([pin.lat, pin.lng], [pin.lat, pin.lng]),
+        { paddingTopLeft: [24, clearOfSearchPanel(64)], paddingBottomRight: [24, 24], maxZoom: 18 });
+    }
+    var ranged = lookupAddressRanges(bare, bounds).then(function (m) {
+      // a link's read is counted once the Census answer says what the reader
+      // is shown, the house pinned or the street alone (countLinkRead)
+      if (seq === districtSearchSeq) countLinkRead(m && current() ? "pin" : "street");
+      if (!m || !current()) return;
+      pin = m;
+      placeRangePin(m, a, done); // so is a point selected any other way, which takes the pin
+      compose();
+      framePin();
     });
-    if (name.length < 3) return Promise.resolve();
-    return search(name).then(function (named) {
-      if (seq !== districtSearchSeq) return;
-      var near = (named || []).filter(function (r) {
+    if (name.length < 3) return ranged;
+    var named = search(name).then(function (found) {
+      if (!current()) return;
+      near = (found || []).filter(function (r) {
         var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
         return haversineMiles(lat, lng,
           Math.max(bounds.getSouth(), Math.min(bounds.getNorth(), lat)),
@@ -9503,24 +9729,163 @@ function initTennesseeExplorer() {
       });
       if (!near.length) return;
       listByName(near);
-      geoStatus.textContent = where + " A search for its name, \u201c" + name + "\u201d, found " +
-        (near.length === 1 ? "the place below. Pick it if it's the one you meant, or tap the map."
-                           : "the places below. Pick the one you meant, or tap the map.");
-      geoStatus.className = "geo-status";
+      compose();
+      if (pin) framePin(); // the list grew the panel the pin is framed below
     });
+    return Promise.all([ranged, named]);
+  }
+
+  /* OPENSTREETMAP'S NOTE FORM, for a reader who knows where a house number
+   * the map's search lacks is. Photon is built from OpenStreetMap's data, so
+   * a number missing there is missing from OpenStreetMap or from Photon's copy
+   * of it, and OpenStreetMap's volunteers add one when a note says where it
+   * is. Added on Adam's choice of 2026-10-17. Its wiki (wiki.openstreetmap.org
+   * /wiki/Notes, read that day) says a note needs no account, that it is a
+   * message from one person to another ("Don't create automated notes"), and
+   * that it must not be copied from another map, "even if they do not cost
+   * money or are from the government"; a reader who arrived with a Google
+   * Maps link is the likeliest to copy one, which is why the message says
+   * "not from another map", and a note is public, which is why the link says
+   * so. So the link only opens the form, with nothing filled in, and
+   * districtry sends OpenStreetMap nothing. The place is in the part of the
+   * address after "#", which a browser never sends to a server: the form's
+   * page reads it to open its map there and puts the new note's marker in
+   * the middle of that map, where the reader drags it, or taps the map, to
+   * move it to the place (read 2026-10-17 in the new-note script
+   * openstreetmap.org serves, which takes ?lat=&lon= instead when given
+   * them; a query string is sent, so it is not used). The link opens at the
+   * pin, or, when there is no pin, at the part of the street the map is
+   * showing, read again each time the map stops moving while the link is on
+   * the page, because the reader may have moved the map to the place.
+   * Following it is counted as osm-note, never by place. */
+  var OSM_NOTE_URL = "https://www.openstreetmap.org/note/new#map=";
+  function osmNoteLink(where) {
+    var link = document.createElement("a");
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "leave OpenStreetMap a public note";
+    function aim() {
+      // a message rewritten or cleared has dropped the link
+      if (link.href && !document.body.contains(link)) { map.off("moveend", aim); return; }
+      var at = where();
+      link.href = OSM_NOTE_URL + at.zoom + "/" + at.lat.toFixed(5) + "/" + at.lng.toFixed(5);
+    }
+    aim();
+    map.on("moveend", aim);
+    link.addEventListener("click", function () { trackEvent("osm-note"); });
+    return link;
+  }
+
+  /* ---------- where the Census Bureau puts a house number ----------
+   * A place shared from the Google Maps app is its name and its address
+   * with no position, and Photon often holds the street and not the number
+   * on it. The Census Bureau's geocoder estimates where a number falls on a
+   * street from the address ranges in its TIGER street file. Measured
+   * 2026-10-17 for a Chicago storefront Photon knew only as its street: the
+   * estimate was on the right side of the street and on the storefront's
+   * block, about 45 m from the building. The Census geocoder sends no CORS
+   * header, so it is asked through districtry's lookup (MAP_LINK_LOOKUP,
+   * ENGINE map-link; services/link-lookup/main.ts), which passes on each
+   * match's address and position: the Census Bureau sees the lookup and
+   * not the reader, and the privacy page names both, measured from the
+   * `?a=` call below (build_privacy_page.py). Only an address the reader
+   * searched for is sent: one a shared map link carried, or one typed and
+   * then sent with Search or Enter, handed over as #q=, or picked from the
+   * list by its street (runAddressSearch, listHeldAnswers), never text while
+   * it is being typed.
+   *
+   * An answer is used only if it is the ONE match on the address's own
+   * street in its town with its house number (labelOnStreet,
+   * labelCarriesNumber), within STREET_NEAR_MILES of the street the map
+   * found: asked on 2026-10-14 for a Westmont address, the Census geocoder
+   * offered that number on Oakley Ln and on Oakley Ct, two other streets.
+   *
+   * THE PIN SELECTS NOTHING UNTIL IT IS TAPPED. An estimate from address
+   * ranges can be a few doors off, and in Chicago a ward's edge often runs
+   * down the alley in the middle of a block, so a selected estimate could
+   * put the place in the wrong district and every card would follow it. A
+   * tap on the pin selects its point as a tap on the map would, through
+   * the map's own click (ENGINE selection-controls), so a pin in another
+   * state's app opens that app; any other selection, a new search or a tap
+   * elsewhere removes the pin. Resolves to that match's position, or to
+   * null when there is none, the lookup fails or it takes longer than
+   * ADDRESS_RANGES_TIMEOUT_MS; it never rejects. */
+  var ADDRESS_RANGES_TIMEOUT_MS = 9000;
+  var RANGE_PIN_COLOR = "#1d5fd6"; // the token file's --data-500, the selection's own blue
+  function lookupAddressRanges(address, bounds) {
+    if (!MAP_LINK_LOOKUP || typeof AbortController === "undefined") return Promise.resolve(null);
+    var ctl = new AbortController();
+    var timer = setTimeout(function () { ctl.abort(); }, ADDRESS_RANGES_TIMEOUT_MS);
+    return fetch(MAP_LINK_LOOKUP + "?a=" + encodeURIComponent(cleanPoiAddress(address)), { signal: ctl.signal })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (body) {
+        var on = (body && Array.isArray(body.matches) ? body.matches : []).filter(function (m) {
+          if (!m || typeof m.address !== "string") return false;
+          var lat = Number(m.lat), lng = Number(m.lng);
+          return isFinite(lat) && isFinite(lng) &&
+            labelOnStreet(m.address, address) && labelCarriesNumber(m.address, address) &&
+            haversineMiles(lat, lng,
+              Math.max(bounds.getSouth(), Math.min(bounds.getNorth(), lat)),
+              Math.max(bounds.getWest(), Math.min(bounds.getEast(), lng))) <= STREET_NEAR_MILES;
+        });
+        return on.length === 1 ? { lat: Number(on[0].lat), lng: Number(on[0].lng) } : null;
+      })["catch"](function () { return null; })
+      .then(function (m) { clearTimeout(timer); return m; });
+  }
+  var rangePin = null;
+  function clearRangePin() {
+    if (!rangePin) return;
+    map.off("layeradd", rangePin.watch);
+    map.removeLayer(rangePin.marker);
+    rangePin = null;
+  }
+  function placeRangePin(m, a, onGone) {
+    clearRangePin();
+    var picked = state.sequence;
+    var label = "Where the Census Bureau puts " + a.number + " " + a.street + ". Select this point.";
+    var marker = L.marker([m.lat, m.lng], { icon: poiPinIcon(RANGE_PIN_COLOR), title: label, zIndexOffset: 1000 });
+    function select() {
+      var at = marker.getLatLng();
+      clearRangePin();
+      map.fire("click", { latlng: at });
+    }
+    marker.on("click", select);
+    // Leaflet makes a marker focusable and a button, and leaves Enter and
+    // Space to the page
+    marker.on("keydown", function (e) {
+      var key = e.originalEvent && e.originalEvent.key;
+      if (key !== "Enter" && key !== " ") return;
+      e.originalEvent.preventDefault();
+      select();
+    });
+    marker.addTo(map);
+    var el = marker.getElement();
+    if (el) el.setAttribute("aria-label", label);
+    // Every selection adds the selected point's marker (setSelectedPoint), so
+    // a point selected any other way (a result row, the keyboard's select
+    // button, a located point) is seen here, and the pin goes with it, as
+    // does the message asking for a tap on it (onGone).
+    var watch = function () {
+      if (state.sequence === picked) return;
+      clearRangePin();
+      if (onGone) onGone();
+    };
+    map.on("layeradd", watch);
+    rangePin = { marker: marker, watch: watch };
   }
   /* How far below the map's top edge the street is framed. The search panel
    * floats over the top of the map while it holds the message, and on a phone
    * it covers nearly half of it (measured at 412x915: the panel ends 168 px
    * into a 384 px map), so the street is framed in the part below the panel.
-   * Not when that part is too short to frame a street in; the street then
-   * sits at the middle of the map, as any search result does. */
-  function clearOfSearchPanel() {
+   * Not when that part is too short to frame a street in (`room`, 160 px
+   * unless the caller frames something smaller); the street then sits at
+   * the middle of the map, as any search result does. */
+  function clearOfSearchPanel(room) {
     var top = 24;
     var panel = document.getElementById("search-extra");
     var r = panel ? panel.getBoundingClientRect() : null;
     var m = map.getContainer().getBoundingClientRect();
-    if (r && r.height > 0 && r.left < m.right && r.right > m.left && r.bottom > m.top && m.bottom - r.bottom >= 160) {
+    if (r && r.height > 0 && r.left < m.right && r.right > m.left && r.bottom > m.top && m.bottom - r.bottom >= (room || 160)) {
       top = Math.max(top, Math.round(r.bottom - m.top) + 12);
     }
     return top;
@@ -9549,18 +9914,24 @@ function initTennesseeExplorer() {
    * one; and the row a link to a place in another state draws
    * (showLinkElsewhere) is followed, because the address itself says which
    * state's app it belongs to, so a place shared into the installed app
-   * opens in its own state. */
+   * opens in its own state.
+   *
+   * NOR IS AN ANSWER WITHOUT THE HOUSE NUMBER the address opens with
+   * (listHeldAnswers), though it be the only one: that answer is a street,
+   * and its point a spot somewhere along it. Until 2026-10-17 a question
+   * page's address box selected it, and the cards named the districts of
+   * another stretch of the street. */
   function prefillGeocodeSearch(q) {
     linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
-    return runGeocodeSearch(q).then(function () {
+    return runGeocodeSearch(q, null, true).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
       var place = geoResultsList.querySelectorAll("li.link-place > button");
       var away = geoResultsList.querySelectorAll("li.map-link-away > button");
-      if (own.length === 1) own[0].click();
+      if (own.length === 1) { if (!/\bno-number\b/.test(own[0].parentNode.className)) own[0].click(); }
       else if (place.length === 1) place[0].click();
       else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
@@ -9581,7 +9952,7 @@ function initTennesseeExplorer() {
     linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
-    runGeocodeSearch(q)
+    runGeocodeSearch(q, null, true)
       .catch(function (err) {
         if (err.name === "AbortError") return;
         geoStatus.textContent = "Search failed — the geocoder may be busy. Try again in a moment.";
@@ -9598,6 +9969,7 @@ function initTennesseeExplorer() {
       if (inFlightController) inFlightController.abort();
       geoResultsList.innerHTML = "";
       geoStatus.textContent = "";
+      clearRangePin();
       return;
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
@@ -9638,15 +10010,15 @@ function initTennesseeExplorer() {
     "tn-senate",         // 33 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
-    "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
+    "school-district-unified", // 127 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 15 elementary districts they cover the state exactly
     "school-board-district", // 114 districts on the boards of education of 18 counties, pre-built from the Comptroller of the Treasury's layer — 200.6 km2 mean area (median 143.7), measured 2026-10-16 on the drawn file: smaller on average than a unified school district, larger than a county commission district, of which 859 tile the state
     "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
-    "county-subdivision", // 855 civil districts, live from TIGERweb (no data/app file) — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
-    "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
-    "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
-    "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
+    "county-subdivision", // 855 civil districts, from TIGERweb, drawn from a mirrored tile archive — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
+    "zip-code",          // 643 ZIP Code Tabulation Areas overlapping Tennessee, of the 1,070 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Tennessee
+    "school-district-elementary", // 15 city and special school districts running the lower grades, from TIGERweb, drawn from a mirrored tile archive
+    "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, from TIGERweb, drawn from a mirrored tile archive
     "voting-precinct",   // 1,870 precincts tiling the state, pre-built from the Comptroller of the Treasury's layer — 58.34 km2 mean area, land and water (median 31.36), measured 2026-10-15 on the drawn file: smaller on average than the 15 elementary and secondary school districts (65.34 km2 of land), larger than a city or town (30.75)
-    "municipality",      // 345 incorporated places, live from TIGERweb
+    "municipality",      // 345 incorporated places, from TIGERweb, drawn from a mirrored tile archive
     "city-ward",         // 72 council districts and wards in the 11 cities above 25,000 people that elect council members by district or ward and publish a map that can be drawn, ranked just after City or Town, which each one divides, so a district draws on top of its city
     "tribal-government", // Tribal land — Tennessee has 1 piece, the Tennessee part (0.695 km², about 4% of the whole) of the Mississippi Choctaw Off-Reservation Trust Land near Henning in Lauderdale County, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since it is smaller than any city, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -13631,8 +14003,17 @@ function initTennesseeExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE FOUR LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -14224,6 +14605,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Civil District",
     subOf: "county",
@@ -14520,6 +14902,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Tennessee",
@@ -14995,6 +15378,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     emptyNote: "This point is in one of Tennessee's fifteen city or special " +
@@ -15013,6 +15397,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Elementary)",
     emptyNote: "This point is in a unified school district rather than an " +
@@ -15032,6 +15417,7 @@ function initTennesseeExplorer() {
 
   registerLayer({
     id: "school-district-secondary",
+    tiles: "data/app/tiles/school-district-secondary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Secondary)",
     emptyNote: "This point is in a unified school district rather than a " +
@@ -15163,8 +15549,11 @@ function initTennesseeExplorer() {
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
    * THAT: the envelope returns 1,070 ZCTAs (measured 2026-10-10), 638 of them
    * with their interior point in Tennessee, and necessarily reaches into all
-   * eight neighbouring states. The card answers from a point query, and the
-   * coverage test below hides the layer outside the state.
+   * eight neighbouring states. Since 2026-10-17 the card and the overlay read a
+   * tile archive that keeps only the ZCTAs overlapping Tennessee, so the
+   * neighbours appear only where the whole set is drawn (on the raster basemap,
+   * or after the archive fails to load), and the coverage test below hides the
+   * layer outside the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -15223,6 +15612,7 @@ function initTennesseeExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

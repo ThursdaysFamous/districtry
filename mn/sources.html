@@ -1320,7 +1320,7 @@ table.matrix code {
                 <td data-label="What it answers">The unified (every-grade) school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 322 features for Minnesota, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 322 features for Minnesota, measured 2026-09-29</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The winners of each board's most recent elections, from the Office of the Minnesota Secretary of State's school district results files (electionresultsfiles.sos.mn.gov), dated to each election and joined to the Census district through the Minnesota Department of Education's own district layer: 1,882 of 2,099 seats on 326 boards, measured 2026-10-07. A winner is not a claim about who sits today, and the card says so; a seat a special election leaves unsettled names nobody and says why. Built weekly by mn/scripts/build_mn_school_boards.py. Gap mn-school-board-members.</td>
@@ -1344,7 +1344,7 @@ table.matrix code {
                 <td data-label="What it answers">The elementary-tiling school district covering the point, in the eight places Minnesota has one.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The same school board roster as the unified layer's row, keyed by this layer's Census district id. Gap mn-school-board-members.</td>
@@ -1355,7 +1355,7 @@ table.matrix code {
                 <td data-label="What it answers">The secondary school district covering the point, in the one place Minnesota has one.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NOBODY IS NAMED HERE, deliberately: the one secondary district (Park Rapids, grades 9-12) lies over the Pine Point district, whose voters elect Pine Point's own board, so naming Park Rapids's board on this card would name people a reader there does not vote for. The Elementary card is the one for Pine Point.</td>
@@ -1402,7 +1402,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS SO IN AS MANY WORDS: a ZIP code elects nobody. It is a postal delivery grouping the Census approximates as an area, and the card states that rather than leaving a reader to wonder why no name appears.</td>
@@ -1413,7 +1413,7 @@ table.matrix code {
                 <td data-label="What it answers">The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 2,762 features for Minnesota, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 2,762 features for Minnesota, measured 2026-09-29</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes. For 416 of those towns the card names the officers on their county's own list of township officers instead — 29 counties publish one this app reads (measured 2026-10-16) — each dated to the list and the day it was read, and only where the election results name nobody; the rest name nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py; the county lists by mn/scripts/mn_county_town_officers_scraper.py and build_mn_county_town_officers.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.</td>
@@ -1435,7 +1435,7 @@ table.matrix code {
                 <td data-label="What it answers">The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">In the 43 cities above 25,000 people, the mayor and council members, each the winner of the most recent election for that seat, from the Office of the Minnesota Secretary of State's city results files (electionresultsfiles.sos.mn.gov), dated to that election: 249 of 268 seats. A winner is not a claim about who sits today, and the card says so; a seat decided in later ranked-choice rounds, which the state's file does not carry, names nobody and says why. Built weekly by mn/scripts/build_mn_city_councils.py. The 813 smaller cities name nobody yet, recorded as the coverage gap mn-municipal-officeholders.</td>
@@ -1621,7 +1621,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 322 features for Minnesota, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 322 features for Minnesota, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1712,7 +1712,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1734,7 +1734,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
       ],
@@ -1756,7 +1756,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 2,762 features for Minnesota, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 2,762 features for Minnesota, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
       ],
@@ -1822,7 +1822,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
+          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],
@@ -1871,7 +1871,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
+          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
         }
       ],

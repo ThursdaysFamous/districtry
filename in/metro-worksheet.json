@@ -193,12 +193,12 @@
       "label": "School District",
       "group": "schools",
       "area_rank": 7,
-      "rank_note": "291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles",
+      "rank_note": "291 unified (K-12) districts, from TIGERweb, drawn from a mirrored tile archive. Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles",
       "source": {
         "answers": "The school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -211,12 +211,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 8,
-      "rank_note": "882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan",
+      "rank_note": "807 ZIP Code Tabulation Areas overlapping Indiana (882 counting the 75 that only touch its line), in a mirrored tile archive, measured 2026-10-17 — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -229,12 +229,12 @@
       "label": "Township",
       "group": "geography",
       "area_rank": 9,
-      "rank_note": "1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29",
+      "rank_note": "1,012 county-subdivision records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29",
       "source": {
         "answers": "The civil township covering the point — in Indiana a real unit of government, not a Census construct.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,012 features for Indiana, measured 2026-09-29",
+            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 1,012 features for Indiana, measured 2026-09-29",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
@@ -301,12 +301,12 @@
       "label": "City or Town",
       "group": "geography",
       "area_rank": 13,
-      "rank_note": "566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29",
+      "rank_note": "566 incorporated places, from TIGERweb, drawn from a mirrored tile archive — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29",
       "source": {
         "answers": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 566 features for Indiana, measured 2026-09-29",
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 566 features for Indiana, measured 2026-09-29",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
