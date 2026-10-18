@@ -159,9 +159,13 @@ Indiana"), pre-built by `in/scripts/build_in_conservancy_districts.py` through t
 `scripts/published_district_layers.py`; they cover 8.0% of the state and some overlap, so the card
 lists every district at the point. The boards come from the department's yearly Indiana
 Conservancy District Directory, which each board's chair must keep current, read by
-`in/scripts/build_in_conservancy_directors.py`: names and roles only, 465 people and 6 vacant seats
-across 93 districts in the 2026 edition. Hired staff are left out, and the home towns and the
-directors' own telephones and e-mails the directory gives as contacts are never carried. Six
+`in/scripts/build_in_conservancy_directors.py`: 465 people and 6 vacant seats across 93 districts
+in the 2026 edition. Hired staff are left out and home towns are never carried. **A DIRECTOR'S OWN
+TELEPHONE AND E-MAIL SHOW SINCE 2026-10-17**, on Adam's two rulings of that day that a number or an
+address a government source prints beside one official is published: 145 people carry a number and
+181 an address. One the directory prints beside two or more different people, or equal to the
+district's own contact line, belongs to the district and is shown on no person, and the district's
+own telephone and e-mail show above its board (86 and 83 districts). Six
 districts sent no list and one is missing from the directory, so those cards name nobody (gap
 `in-conservancy-district-records`). **THE MAP AND THE DIRECTORY DISAGREE, AND THE BUILDERS SAY
 WHERE.** The directory gives four districts another district's id, so the join runs through a

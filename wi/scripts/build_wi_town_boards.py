@@ -233,6 +233,8 @@ MIN_EMAILS = {
     "039": 32,   # Fond du Lac, 49 measured
     "043": 50,   # Grant, 76 measured
     "045": 20,   # Green, 31 measured
+    "051": 4,    # Iron, 6 measured, on the first read that writes back
+                 # Cloudflare's scrambled addresses (town_boards/iron.py)
     "055": 30,   # Jefferson, 45 measured
     "057": 10,   # Juneau, 15 measured
     "059": 4,    # Kenosha, 7 measured

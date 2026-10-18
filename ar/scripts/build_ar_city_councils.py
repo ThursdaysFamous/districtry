@@ -72,6 +72,21 @@ reads in a row of its robots.txt, and served both normally in between. When a
 page cannot be read the build keeps what it last said, with that date, so a
 NOT READ line for Cabot is worth a second run before it is worth a look.
 
+PRIVACY AND CONTACTS. A member's e-mail address and telephone numbers are
+carried where the page the seat cites prints them beside that member alone,
+under Adam's rulings of 2026-10-17; scripts/city_councils.py (CONTACTS) says
+what does not ship and how the build proves each value on its page. Read on
+2026-10-17:
+  * The pages cited for Conway (a council agenda), Fayetteville, Hot Springs,
+    Jonesboro, Pine Bluff, Rogers and Texarkana print no e-mail address or
+    number beside any one member, only the city's or the council's own or
+    none, so their members carry none.
+  * Bentonville's, Little Rock's and Paragould's council pages print none for
+    their members either, and only their mayors carry what the mayor's own
+    page prints. Jacksonville's mayor's page prints none for the mayor.
+No street address is carried, nor anything about residents or applicants, nor
+a biography.
+
 PUBLISHING GAPS, recorded as evidence for the state-publishing ask (gap
 ar-municipal-officeholders): no state office publishes who holds Arkansas's
 city offices, and the Municipal League's directory, the only statewide list,
@@ -124,6 +139,10 @@ SPEC = cc.Spec(
     seats_file="ar-city-council-seats.json",
     out_file="ar-city-councils.json",
     seats=SEATS,
+    # 84 members' e-mail addresses and 59 members' numbers were written down
+    # on 2026-10-17; these floors are about two thirds of each.
+    min_emails=56,
+    min_phones=39,
     browser={FORT_SMITH_BOARD: UA_HINTS_CHROME_126},
     wards_file="ar-city-wards.json",
 )

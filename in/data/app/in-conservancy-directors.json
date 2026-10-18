@@ -7,49 +7,61 @@
   "people": [
    {
     "name": "Russel Collins",
+    "phone": "219-863-0166",
     "role": "Chair"
    },
    {
     "name": "Brian Moore",
+    "phone": "219-869-8503",
     "role": "Vice Chair"
    },
    {
     "name": "Dave Fisher",
+    "phone": "765-376-3886",
     "role": "Secretary"
    },
    {
     "name": "Kim DeWees",
+    "phone": "219-819-3657",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-863-0500",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "101": {
   "edition": "2026",
+  "email": "lisamassey38@comcast.net",
   "modified": "2026-05-01",
   "name": "Pine Lake Conservancy District",
   "people": [
    {
+    "email": "tarachristenson@yahoo.com",
     "name": "Tara Christenson",
     "role": "Chair"
    },
    {
+    "email": "belcorp1@gmail.com",
     "name": "Norm Beles",
     "role": "Vice Chair"
    },
    {
+    "email": "Bwilmsen1@gmail.com",
     "name": "Bill Willmsen",
     "role": "Board Member"
    },
    {
+    "email": "traceostergren@gmail.com",
     "name": "Trace Ostergren",
     "role": "Board Member"
    }
   ],
+  "phone": "219-362-0061",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "102": {
   "edition": "2026",
+  "email": "Cvogel@btbhlaw.com",
   "meeting": "3rd Monday of February",
   "modified": "2026-05-01",
   "name": "Twin Creeks Conservancy District",
@@ -87,11 +99,13 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-464-1041",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://twincreeksconservancy.com/"
  },
  "103": {
   "edition": "2026",
+  "email": "lbrucecd@aol.com",
   "meeting": "3rd Thursday of February",
   "modified": "2026-05-01",
   "name": "Lake Bruce Conservancy District",
@@ -102,25 +116,31 @@
    },
    {
     "name": "Phil Kline",
+    "phone": "574-542-4315",
     "role": "Vice Chair"
    },
    {
     "name": "Tereasa Mollencupp",
+    "phone": "574-817-0514",
     "role": "Secretary"
    },
    {
     "name": "Nick Field",
+    "phone": "574-344-7197",
     "role": "Director"
    },
    {
     "name": "Kyle Mollencupp",
+    "phone": "574-817-0515",
     "role": "Director"
    }
   ],
+  "phone": "317-695-4150",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "104": {
   "edition": "2026",
+  "email": "CVogel@btbhlaw.com",
   "meeting": "1st Saturday of February",
   "modified": "2026-05-01",
   "name": "Fish Lake Conservancy District",
@@ -162,27 +182,33 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-464-1041",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "105": {
   "edition": "2026",
+  "email": "tastbury@astburygroup.com",
   "meeting": "1st Monday in January",
   "modified": "2026-05-01",
   "name": "Nyona South Mud Conservancy District",
   "people": [
    {
+    "email": "terrywaynepierce@gmail.com",
     "name": "Terry Pierce",
     "role": "Chair"
    },
    {
+    "email": "twmygran@gmail.com",
     "name": "Ted Mygrant",
     "role": "Vice Chair"
    },
    {
+    "email": "Nsmlcd.secretary@gmail.com",
     "name": "Jami Boe Jeffery",
     "role": "Secretary"
    },
    {
+    "email": "nyonasouthmudconservancy@gmail.com",
     "name": "Kevin Umbarger",
     "role": "Clerk"
    },
@@ -191,41 +217,54 @@
     "role": "Board Member"
    }
   ],
+  "phone": "888-804-2590",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://nyonasouthmudlakecd.com/"
  },
  "108": {
   "edition": "2026",
+  "email": "youngandyounglaw@gmail.com",
   "modified": "2026-05-01",
   "name": "Northeast Lake Conservancy District",
   "people": [
    {
+    "email": "krichhart2@gmail.com",
     "name": "Kimberly Richhart",
+    "phone": "317-374-4134",
     "role": "Chair"
    },
    {
+    "email": "ptnccpastor1@gmail.com",
     "name": "Thomas Knight",
+    "phone": "317-443-3752",
     "role": "Vice Chair"
    },
    {
+    "email": "Kerry.donnarichards@gmail.com",
     "name": "Kerry Richards",
+    "phone": "317-946-0905",
     "role": "Secretary"
    },
    {
+    "email": "jp.alexander@comcast.net",
     "name": "Janet Alexander",
+    "phone": "317-619-6547",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "317-736-7117",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "11": {
   "edition": "2026",
+  "email": "hillarywc@gmail.com",
   "meeting": "2nd Thursday of February",
   "modified": "2026-05-01",
   "name": "Springs Valley Conservancy District",
   "people": [
    {
     "name": "Rudy Freeman",
+    "phone": "812-227-0052",
     "role": "Chair"
    },
    {
@@ -245,35 +284,45 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "812-277-0052",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "110": {
   "edition": "2026",
+  "email": "plcd06@gmail.com",
   "modified": "2026-05-01",
   "name": "Pretty Lake Conservancy District",
   "people": [
    {
     "name": "John Chamberlin",
+    "phone": "574-780-1390",
     "role": "Chair"
    },
    {
+    "email": "mcoas@hotmail.com",
     "name": "Jaqueline Wright",
+    "phone": "574-952-5163",
     "role": "Board Member"
    },
    {
+    "email": "ndschmelter@comcast.net",
     "name": "Dan Schmelter",
+    "phone": "574-780-0198",
     "role": "Board Member"
    }
   ],
+  "phone": "574-286-2145",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "111": {
   "edition": "2026",
+  "email": "Fallingwatersconservancydist@gmail.com",
   "modified": "2026-05-01",
   "name": "Falling Waters Conservancy District",
   "people": [
    {
     "name": "Dave Cullom",
+    "phone": "219-714-4107",
     "role": "Chair"
    },
    {
@@ -285,19 +334,23 @@
     "role": "Director"
    },
    {
+    "email": "Kareng2565@yahoo.com",
     "name": "Karen Giesler",
     "role": "Financial Secretary"
    }
   ],
+  "phone": "219-405-1826",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "112": {
   "edition": "2026",
+  "email": "jbeauchamp@nardobuilders.com",
   "meeting": "2nd Tuesday of February",
   "modified": "2026-05-01",
   "name": "Damon Run Conservancy District",
   "people": [
    {
+    "email": "jack@nardobuilders.com",
     "name": "John Barko",
     "role": "Chair"
    },
@@ -310,6 +363,7 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-395-1800",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "113": {
@@ -317,22 +371,27 @@
   "modified": "2026-05-01",
   "name": "Hants Lake Conservancy District",
   "noList": true,
+  "phone": "317-736-7117",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "115": {
   "edition": "2026",
+  "email": "cvogel@btbhlaw.com",
   "modified": "2026-05-01",
   "name": "South Coast Conservancy District",
   "people": [
    {
+    "email": "sturner@pnw.edu",
     "name": "Stephen Turner",
     "role": "Chair"
    },
    {
+    "email": "msakich@igcre.com",
     "name": "Michael Sakich",
     "role": "Vice Chair"
    },
    {
+    "email": "lenson@pnw.edu",
     "name": "Jacob Lenson",
     "role": "Board Member"
    },
@@ -349,10 +408,12 @@
     "vacant": true
    }
   ],
+  "phone": "219-464-1041",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "117": {
   "edition": "2026",
+  "email": "torchwood1095@icloud.com",
   "modified": "2026-05-01",
   "name": "North Lake Conservancy District",
   "people": [
@@ -361,11 +422,15 @@
     "role": "Chair"
    },
    {
+    "email": "bskeel@gmail.com",
     "name": "Becky Skeel",
+    "phone": "317-319-5821",
     "role": "Vice Chair"
    },
    {
+    "email": "dougcaister@gmail.com",
     "name": "Douglas Caister",
+    "phone": "317-501-6654",
     "role": "Treasurer"
    },
    {
@@ -373,14 +438,19 @@
     "vacant": true
    },
    {
+    "email": "jkouns35@gmail.com",
     "name": "Jamie Kouns",
+    "phone": "317-741-1423",
     "role": "Secretary"
    },
    {
+    "email": "jp.alexander@comcast.net",
     "name": "Janet Alexander",
+    "phone": "317-619-6547",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "317-340-2522",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "119": {
@@ -388,10 +458,12 @@
   "modified": "2026-05-01",
   "name": "Lake Waveland Conservancy District",
   "noList": true,
+  "phone": "317-713-3587",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "12": {
   "edition": "2026",
+  "email": "amyb@oakparkcd.us",
   "meeting": "January 14th",
   "modified": "2026-05-01",
   "name": "Oak Park Conservancy District",
@@ -413,6 +485,7 @@
     "role": "Board Member"
    }
   ],
+  "phone": "812-283-3960",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.oakparkcd.us/"
  },
@@ -423,22 +496,27 @@
   "name": "Wildwood Dam Conservancy District",
   "people": [
    {
+    "email": "karlagoblue@att.net",
     "name": "Karla Hench",
     "role": "Chair"
    },
    {
+    "email": "Williamp1982@yahoo.com",
     "name": "Will Pea",
     "role": "Vice Chair"
    },
    {
+    "email": "leooconnor1949@gmail.com",
     "name": "Leo O’Connor",
     "role": "Secretary"
    },
    {
+    "email": "r_freewalt@yahoo.com",
     "name": "Bob Freewalt",
     "role": "Financial Clerk"
    },
    {
+    "email": "Lmccleary12@gmail.com",
     "name": "Louise McCleary",
     "role": "Treasurer"
    }
@@ -447,63 +525,81 @@
  },
  "121": {
   "edition": "2026",
+  "email": "klacd@knapplakeareaconservancy.com",
   "modified": "2026-05-01",
   "name": "Knapp Lake Area Conservancy District",
   "people": [
    {
+    "email": "dean.bickel@yahoo.com",
     "name": "Dean Bickel",
     "role": "Chair"
    },
    {
+    "email": "nickstanger6@gmail.com",
     "name": "Nick Stanger",
     "role": "Vice Chair and Secretary"
    },
    {
+    "email": "tlrsd@tri-lakessewer.com",
     "name": "Tri-Lakes Regional Sewer District",
     "role": "Financial Clerk"
    },
    {
+    "email": "doubletreefarm@ligtel.com",
     "name": "John Chapel",
     "role": "Board Member"
    },
    {
+    "email": "johnparksauto@gmail.com",
     "name": "John Parks",
     "role": "Board Member"
    },
    {
+    "email": "mfvanlaeken@gmail.com",
     "name": "Michael VanLaeken",
     "role": "Board Member"
    }
   ],
+  "phone": "260-691-2820",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.knapplakeareaconservancy.com/"
  },
  "122": {
   "edition": "2026",
+  "email": "Swconservancy@gmail.com",
   "modified": "2026-05-01",
   "name": "South West Lake MaxinKuckee Conservancy District",
   "people": [
    {
+    "email": "johnc44101@aol.com",
     "name": "John Chris",
+    "phone": "317-431-5730",
     "role": "Chair"
    },
    {
+    "email": "j.stimson@att.net",
     "name": "John Stimson",
+    "phone": "317-373-6748",
     "role": "Vice Chair"
    },
    {
+    "email": "jpurucker@wswi.com",
     "name": "Jim Purucker",
+    "phone": "317-696-9189",
     "role": "Secretary"
    },
    {
+    "email": "rgeorge@ki-search.com",
     "name": "Richard George",
     "role": "Board Member"
    },
    {
+    "email": "tmfujimura@gmai.com",
     "name": "Tom Fujimura",
     "role": "Board Member"
    },
    {
+    "email": "Jacquelines1980@gmail.com",
     "name": "Jackie Smith",
     "role": "Board Member"
    }
@@ -512,10 +608,12 @@
  },
  "124": {
   "edition": "2026",
+  "email": "info@lakeedgewoodconservancydistrict.com",
   "modified": "2026-05-01",
   "name": "Lake Edgewood Conservancy District",
   "people": [
    {
+    "email": "breenealy@yahoo.com",
     "name": "Bree Nealy",
     "role": "Chair"
    },
@@ -528,6 +626,7 @@
     "role": "Financial Clerk"
    },
    {
+    "email": "madytlane@gmail.com",
     "name": "Mady Miller",
     "role": "Secretary"
    },
@@ -536,31 +635,38 @@
     "role": "Board Member"
    },
    {
+    "email": "gillyjoyce@yahoo.com",
     "name": "Joyce Gilly",
     "role": "Board Member"
    },
    {
+    "email": "Joseph.stallsworth@fedex.com",
     "name": "Joseph Stallsworth",
     "role": "Board Member"
    }
   ],
+  "phone": "317-677-6560",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://lakeedgewoodconservancydistrict.com/"
  },
  "125": {
   "edition": "2026",
+  "email": "scdckramer@yahoo.com",
   "modified": "2026-05-01",
   "name": "Graybrook Lake Conservancy District",
   "people": [
    {
+    "email": "Japril302@yahoo.com",
     "name": "Jason Pinkard",
     "role": "Director"
    },
    {
+    "email": "sandywelsh58@comcast.net",
     "name": "Sandy Welsh",
     "role": "Director"
    },
    {
+    "email": "sak00000@sbcglobal.net",
     "name": "Scott Kramer",
     "role": "Director"
    },
@@ -569,6 +675,7 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "812-829-9611",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "126": {
@@ -576,6 +683,7 @@
   "modified": "2026-05-01",
   "name": "Prairie Lakes Conservancy District",
   "noList": true,
+  "phone": "773-792-2515",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "127": {
@@ -585,10 +693,12 @@
   "people": [
    {
     "name": "Mike Scheurich",
+    "phone": "574-583-8803",
     "role": "Chair"
    },
    {
     "name": "Shayla Brady",
+    "phone": "574-583-4141 Ext. 7074",
     "role": "Secretary and Treasurer"
    },
    {
@@ -597,9 +707,11 @@
    },
    {
     "name": "Scott Cooper",
+    "phone": "574-583-4141 Ext. 7152",
     "role": "Board Member"
    }
   ],
+  "phone": "574-583-4141",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "128": {
@@ -611,28 +723,34 @@
  },
  "129": {
   "edition": "2026",
+  "email": "jschiff@textron.com",
   "meeting": "2nd or 3rd Wednesday of February",
   "modified": "2026-05-01",
   "name": "South Richland Conservancy District",
   "people": [
    {
+    "email": "Jhunting6@gmail.com",
     "name": "Joseph Hunting",
     "role": "Chair"
    },
    {
+    "email": "dgarvison@rtcol.com",
     "name": "Doug Garvison",
     "role": "Vice Chair"
    },
    {
+    "email": "jschiff@texttron.com",
     "name": "Jamieson Schiff",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "401-457-2422",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://torxremediationproject.com/SR-Conservancy.html"
  },
  "13": {
   "edition": "2026",
+  "email": "vedwards@mcdin.com",
   "meeting": "1st Tuesday in February",
   "modified": "2026-05-01",
   "name": "Merrillville Conservancy District",
@@ -662,10 +780,12 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-472-8003",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "130": {
   "edition": "2026",
+  "email": "board@lakedeturk.org",
   "meeting": "3rd Wednesday of February",
   "modified": "2026-05-01",
   "name": "Lake Deturk Conservancy District",
@@ -683,24 +803,29 @@
     "role": "Secretary"
    },
    {
+    "email": "kshafer@reedyfinancialgroup.com",
     "name": "Katelyn Shafer",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "573-286-3883",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.lakedeturk.org/"
  },
  "131": {
   "edition": "2026",
+  "email": "jetolakecd@gmail.com",
   "modified": "2026-05-01",
   "name": "Je-To Lake Conservancy District",
   "people": [
    {
     "name": "Joy Sullian",
+    "phone": "317-417-2872",
     "role": "Chair"
    },
    {
     "name": "Mary Dugan",
+    "phone": "317-486-3861",
     "role": "Vice Chair"
    },
    {
@@ -708,10 +833,12 @@
     "role": "Secretary and Financial Clerk"
    }
   ],
+  "phone": "317-946-4256",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "132": {
   "edition": "2026",
+  "email": "jim.twiggs@coastali.com",
   "modified": "2026-05-01",
   "name": "Move Over Lake Conservancy District",
   "people": [
@@ -720,18 +847,25 @@
     "role": "Chair"
    },
    {
+    "email": "faust6475@comcast.net",
     "name": "Andy Faust",
+    "phone": "269-932-8191",
     "role": "Vice Chair"
    },
    {
+    "email": "stubnt@gmail.com",
     "name": "Larry Sweet",
+    "phone": "812-230-4878",
     "role": "Director"
    },
    {
+    "email": "birdjockey98@gmail.com",
     "name": "Mark Owens",
+    "phone": "317-997-5468",
     "role": "Treasurer"
    }
   ],
+  "phone": "812-243-3963",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "133": {
@@ -756,11 +890,13 @@
  },
  "134": {
   "edition": "2026",
+  "email": "kjofarrell@att.net",
   "modified": "2026-05-01",
   "name": "Upper Wildwood Shores Conservancy District",
   "people": [
    {
     "name": "Kevin O’Farrell",
+    "phone": "317-834-0534",
     "role": "Chair"
    },
    {
@@ -781,22 +917,27 @@
   "name": "Koontz Lake Conservancy District",
   "people": [
    {
+    "email": "Marty-wolf@comcast.net",
     "name": "Martin Wolf",
     "role": "Chair and Secretary"
    },
    {
+    "email": "raycroft@wcapra.com",
     "name": "Patrick Raycroft",
     "role": "Vice Chair"
    },
    {
+    "email": "Steve.troike@lakecitybank.com",
     "name": "Steven Troike",
     "role": "Financial Clerk"
    },
    {
+    "email": "Jim.ade@hotmail.com",
     "name": "James Ade",
     "role": "Board Member"
    },
    {
+    "email": "Matt.Rykiel@yahoo.com",
     "name": "Matthew Rykiel",
     "role": "Board Member"
    }
@@ -806,6 +947,7 @@
  },
  "136": {
   "edition": "2026",
+  "email": "jdranshaw@gmail.com",
   "meeting": "2nd Saturday of July",
   "modified": "2026-05-01",
   "name": "Lake George Conservancy District",
@@ -827,11 +969,13 @@
     "role": "Treasurer"
    }
   ],
+  "phone": "847-922-7814",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://lakegeorgeinfo.net/lgca/"
  },
  "137": {
   "edition": "2026",
+  "email": "whittiermark@gmail.com",
   "modified": "2026-05-01",
   "name": "Tall Oaks Lake Conservancy District",
   "people": [
@@ -844,35 +988,43 @@
  },
  "138": {
   "edition": "2026",
+  "email": "escdistrict@gmail.com",
   "modified": "2026-05-01",
   "name": "East Shore Lake Maxinkuckee Conservancy District",
   "people": [
    {
+    "email": "fsteck@winthropsupply.com",
     "name": "William Steck III",
     "role": "Chair"
    },
    {
+    "email": "Brianwelch0507@gmail.com",
     "name": "Brian Welch",
     "role": "Secretary"
    },
    {
+    "email": "Jim.bremner@icloud.com",
     "name": "Jim Bremner",
     "role": "Fiscal Clerk"
    },
    {
+    "email": "clevelandescd@gmail.com",
     "name": "Pete Cleveland",
     "role": "Board Member"
    },
    {
+    "email": "bwilson@wilogic.net",
     "name": "Brad Wilson",
     "role": "Board Member"
    }
   ],
+  "phone": "574-400-5450",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://eastshoresewer.org/"
  },
  "139": {
   "edition": "2026",
+  "email": "turkeycreekddcd@gmail.com",
   "modified": "2026-05-01",
   "name": "Turkey Creek Dam and Dike Conservancy District",
   "people": [
@@ -901,6 +1053,7 @@
  },
  "14": {
   "edition": "2026",
+  "email": "lattascreek14@yahoo.com",
   "meeting": "1st Thursday in March",
   "modified": "2026-05-01",
   "name": "Lattas Creek Conservancy District",
@@ -922,6 +1075,7 @@
     "role": "Board Member"
    }
   ],
+  "phone": "812-798-1967",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "141": {
@@ -933,11 +1087,13 @@
  },
  "15": {
   "edition": "2026",
+  "email": "littleweaconsv@yahoo.com",
   "modified": "2026-05-01",
   "name": "Little Wea Conservancy District",
   "people": [
    {
     "name": "Curtis Goings",
+    "phone": "765-376-4981",
     "role": "President"
    },
    {
@@ -946,13 +1102,16 @@
    },
    {
     "name": "Gregory Swank",
+    "phone": "765-404-1603",
     "role": "Board Member"
    }
   ],
+  "phone": "765-426-3215",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "16": {
   "edition": "2026",
+  "email": "lmswater@yahoo.com",
   "meeting": "2nd Tuesday of December",
   "modified": "2026-05-01",
   "name": "Lawrenceburg, Manchester, & Sparta Conservancy District",
@@ -978,57 +1137,70 @@
     "role": "Board Member"
    }
   ],
+  "phone": "812-926-2850",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "19": {
   "edition": "2026",
+  "email": "lisa.sfwu@gmail.com",
   "meeting": "Held in December",
   "modified": "2026-05-01",
   "name": "Stucker Fork Conservancy District",
   "people": [
    {
+    "email": "ace.5@hotmail.com",
     "name": "Scott Howser",
     "role": "Chair"
    },
    {
+    "email": "lynnelliott68@gmail.com",
     "name": "Lynn Elliot",
     "role": "Vice Chair"
    },
    {
+    "email": "Aaron.bressler@yahoo.com",
     "name": "Aaron Bressler",
     "role": "Secretary"
    },
    {
     "name": "Lisa Wheeler",
+    "phone": "812-291-5581",
     "role": "Financial Clerk"
    },
    {
+    "email": "dparker02gt@gmail.com",
     "name": "David Parker",
     "role": "Board Member"
    },
    {
+    "email": "bryson02@hotmail.com",
     "name": "Bryson Scott",
     "role": "Board Member"
    }
   ],
+  "phone": "812-794-0621",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.sfutility.com/"
  },
  "2": {
   "edition": "2026",
+  "email": "angela@bdconservancy.com",
   "modified": "2026-05-01",
   "name": "Ben Davis Sewer Conservancy District",
   "people": [
    {
     "name": "Fred Buckingham",
+    "phone": "317-965-9282",
     "role": "Chair"
    },
    {
     "name": "Beverly Matthews",
+    "phone": "317-440-9949",
     "role": "Vice Chair"
    },
    {
     "name": "Angela Wirth",
+    "phone": "317-656-1117",
     "role": "Secretary and Finance"
    },
    {
@@ -1036,6 +1208,7 @@
     "role": "Board Member"
    }
   ],
+  "phone": "317-241-2941",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "20": {
@@ -1046,27 +1219,33 @@
   "people": [
    {
     "name": "Tom Hackman",
+    "phone": "812-358-3377",
     "role": "Chair"
    },
    {
     "name": "Trent Bush",
+    "phone": "812-755-4654",
     "role": "Secretary"
    },
    {
     "name": "Roger Sweeney",
+    "phone": "812-883-2286",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "812-896-1272",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "21": {
   "edition": "2026",
+  "email": "janajones8055@gmail.com",
   "meeting": "4th Thursday of February",
   "modified": "2026-05-01",
   "name": "Kickapoo Creek Conservancy District",
   "people": [
    {
     "name": "Joseph Jones",
+    "phone": "765-585-1358",
     "role": "Chair"
    },
    {
@@ -1075,17 +1254,21 @@
    },
    {
     "name": "Fred Sundqvist",
+    "phone": "765-426-8070",
     "role": "Board Member"
    },
    {
     "name": "PJ Garriott",
+    "phone": "765-585-2886",
     "role": "Board Member"
    }
   ],
+  "phone": "765-585-9746",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "22": {
   "edition": "2026",
+  "email": "Jan.came@in.nacdent.net",
   "modified": "2026-05-01",
   "name": "Prairie Creek Vigo Conservancy District",
   "people": [
@@ -1095,6 +1278,7 @@
    },
    {
     "name": "Frank Mikolzek Jr",
+    "phone": "812-894-9838",
     "role": "Vice Chair"
    },
    {
@@ -1110,24 +1294,29 @@
     "role": "Secretary"
    }
   ],
+  "phone": "812-232-0193",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "23": {
   "edition": "2026",
+  "email": "dustin@salemattys.com",
   "meeting": "2nd Wednesday of February",
   "modified": "2026-05-01",
   "name": "Delany Creek Conservancy District",
   "people": [
    {
     "name": "Brian Clark",
+    "phone": "812-844-3286",
     "role": "Chair"
    },
    {
     "name": "Adam Nicholson",
+    "phone": "812-528-3966",
     "role": "Board Member"
    },
    {
     "name": "Joe Kachnavage",
+    "phone": "812-620-0498",
     "role": "Secretary"
    },
    {
@@ -1135,43 +1324,53 @@
     "role": "Financial Clerk and Attorney"
    }
   ],
+  "phone": "812-896-1272",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "24": {
   "edition": "2026",
+  "email": "bbrcd@bbrcd.org",
   "meeting": "2nd Thursday of January",
   "modified": "2026-05-01",
   "name": "Big Blue River Conservancy District",
   "people": [
    {
+    "email": "robrichdvm@yahoo.com",
     "name": "Robert Rich",
     "role": "Chair"
    },
    {
+    "email": "81rjdavis@gmail.com",
     "name": "Rob Davis",
     "role": "Vice Chair"
    },
    {
     "name": "David Pryor",
+    "phone": "765-717-3118",
     "role": "Treasurer"
    },
    {
     "name": "Joel Harvey",
+    "phone": "765-529-2100",
     "role": "Assistant Treasurer"
    },
    {
     "name": "Shane Hauck",
+    "phone": "260-729-1363",
     "role": "Board Member"
    },
    {
+    "email": "jan@bbrcd.org",
     "name": "Jan Crider",
     "role": "Contracting Officer"
    }
   ],
+  "phone": "765-987-7555",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "25": {
   "edition": "2026",
+  "email": "littleraccooncd@gmail.com",
   "meeting": "2nd Thursday of December",
   "modified": "2026-05-01",
   "name": "Little Raccoon Conservancy District",
@@ -1201,72 +1400,89 @@
     "role": "Board Member"
    }
   ],
+  "phone": "765-569-6710",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "26": {
   "edition": "2026",
+  "email": "pridescreek@hotmail.com",
   "meeting": "3rd Wednesday of January",
   "modified": "2026-05-01",
   "name": "Prides Creek Conservancy District",
   "people": [
    {
     "name": "Dennis Eversoll",
+    "phone": "812-582-1407",
     "role": "Chair"
    },
    {
     "name": "Dennis Beane",
+    "phone": "812-582-0207",
     "role": "Vice Chair"
    },
    {
     "name": "Karen Elgin",
+    "phone": "812-582-7789",
     "role": "Financial Clerk"
    },
    {
     "name": "David Holmes",
+    "phone": "812-582-1388",
     "role": "Board Member"
    },
    {
     "name": "Chad Brown",
+    "phone": "812-354-8541",
     "role": "Board Member"
    },
    {
     "name": "Stephen Edwards",
+    "phone": "812-380-1127",
     "role": "Board Member"
    }
   ],
+  "phone": "812-354-8881",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "27": {
   "edition": "2026",
+  "email": "bachelorrun@gmail.com",
   "meeting": "1st Tuesday in January",
   "modified": "2026-05-01",
   "name": "Bachelor Run Conservancy District",
   "people": [
    {
     "name": "Alan Barnard",
+    "phone": "574-967-3485",
     "role": "Chair"
    },
    {
     "name": "Earl Flora",
+    "phone": "574-963-3239",
     "role": "Vice Chair"
    },
    {
+    "email": "lawlady1@gmail.com",
     "name": "Miriam Robeson",
     "role": "Secretary and Attorney"
    },
    {
     "name": "Sam Zook",
+    "phone": "574-967-3041",
     "role": "Financial Clerk"
    },
    {
     "name": "Mark Cable",
+    "phone": "765-202-3667",
     "role": "Contracting Officer"
    }
   ],
+  "phone": "574-967-4958",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "28": {
   "edition": "2026",
+  "email": "waldronwater@yahoo.com",
   "meeting": "2nd Wednesday in January",
   "modified": "2026-05-01",
   "name": "Waldron Conservancy District",
@@ -1292,40 +1508,49 @@
     "role": "Director"
    }
   ],
+  "phone": "765-525-9696",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.waldronwater.com/"
  },
  "29": {
   "edition": "2026",
+  "email": "dustin@salemattys.com",
   "meeting": "Last Wednesday of January",
   "modified": "2026-05-01",
   "name": "Muddy Fork of Silver Creek Conservancy District",
   "people": [
    {
     "name": "Les Wright",
+    "phone": "812-987-1513",
     "role": "Chair"
    },
    {
     "name": "Larry Paris",
+    "phone": "812-246-1020",
     "role": "Vice Chair"
    },
    {
     "name": "Samuel Hagest",
+    "phone": "812-246-9982",
     "role": "Secretary"
    },
    {
     "name": "Richard Dreyer",
+    "phone": "812-246-3077",
     "role": "Financial Clerk"
    },
    {
     "name": "Alvin Popp",
+    "phone": "812-246-9141",
     "role": "Board Member"
    }
   ],
+  "phone": "812-967-1280",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "30": {
   "edition": "2026",
+  "email": "swcdfultonco@gmail.com",
   "meeting": "Held in January",
   "modified": "2026-05-01",
   "name": "Mill Creek Conservancy District",
@@ -1347,10 +1572,12 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "574-223-3220 Ext. 109",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "31": {
   "edition": "2026",
+  "email": "rockcreekcd@gmail.com",
   "modified": "2026-05-01",
   "name": "Rock Creek Wells Conservancy District",
   "people": [
@@ -1364,6 +1591,7 @@
    },
    {
     "name": "Pamela Gregory",
+    "phone": "260-703-0490",
     "role": "Financial Clerk"
    },
    {
@@ -1379,50 +1607,67 @@
     "role": "Board Member"
    }
   ],
+  "phone": "260-824-1930 Ext. 3",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://rockcreekcd.org/"
  },
  "35": {
   "edition": "2026",
+  "email": "littlewalnutdistrict@gmail.com",
   "meeting": "1st Wednesday of February",
   "modified": "2026-05-01",
   "name": "Little Walnut Creek Conservancy District",
   "people": [
    {
+    "email": "steve.stamper@comcast.net",
     "name": "Steven Stamper",
+    "phone": "765-653-9109",
     "role": "Chair"
    },
    {
+    "email": "mimialbin@gmail.com",
     "name": "Steve Albin",
+    "phone": "765-720-1085",
     "role": "Vice Chair"
    },
    {
+    "email": "mdean@callcarpenter.com",
     "name": "Michael Dean",
+    "phone": "765-653-2425",
     "role": "Secretary"
    },
    {
+    "email": "tiffany@deeraccounting.com",
     "name": "Tiffany Deer",
+    "phone": "765-653-6825",
     "role": "Financial Secretary"
    },
    {
+    "email": "kevinhubble@hotmail.com",
     "name": "Kevin Hubble",
+    "phone": "765-720-2360",
     "role": "Board Member"
    },
    {
+    "email": "zachmp2004@gmail.com",
     "name": "Zach Cox",
+    "phone": "765-720-6683",
     "role": "Board Member"
    }
   ],
+  "phone": "765-739-6722",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://littlewalnutdistrict.in.gov/"
  },
  "37": {
   "edition": "2026",
+  "email": "odonnellbrothers@tds.net",
   "modified": "2026-05-01",
   "name": "Rock Creek Cass Carroll Conservancy District",
   "people": [
    {
     "name": "David Helms",
+    "phone": "574-721-4879",
     "role": "Chair"
    },
    {
@@ -1434,14 +1679,17 @@
     "role": "Board Member"
    },
    {
+    "email": "odonnellbrother@tds.net",
     "name": "Joe O’Donnell",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "574-721-0137",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "39": {
   "edition": "2026",
+  "email": "contact@ihcd-in.gov",
   "meeting": "3rd Friday of February",
   "modified": "2026-05-01",
   "name": "Independence Hill Conservancy District",
@@ -1459,6 +1707,7 @@
     "role": "Treasurer"
    },
    {
+    "email": "lsattler@ihcd-in.com",
     "name": "Lynn Sattler",
     "role": "Financial Clerk"
    },
@@ -1471,17 +1720,20 @@
     "role": "Board Member"
    }
   ],
+  "phone": "219-769-3996",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "http://ihcd-in.com/"
  },
  "44": {
   "edition": "2026",
+  "email": "littletab2@gmail.com",
   "meeting": "3rd Tuesday of February",
   "modified": "2026-05-01",
   "name": "Jordan Creek Conservancy District",
   "people": [
    {
     "name": "Gary Larch",
+    "phone": "765-299-6383",
     "role": "Chair"
    },
    {
@@ -1501,6 +1753,7 @@
     "role": "Secretary and Financial Clerk"
    }
   ],
+  "phone": "765-404-4440",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "48": {
@@ -1529,56 +1782,74 @@
     "role": "Board Member"
    }
   ],
+  "phone": "812-382-4461",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "49": {
   "edition": "2026",
+  "email": "tiffany@deeraccounting.com",
   "meeting": "3rd Thursday of January",
   "modified": "2026-05-01",
   "name": "Clear Creek Conservancy District",
   "people": [
    {
+    "email": "jdkelly281@gmail.com",
     "name": "J. Duane Kelly",
+    "phone": "765-720-2285",
     "role": "Chair"
    },
    {
+    "email": "sfamily23-chris@yahoo.com",
     "name": "Chris Schubert",
+    "phone": "765-246-6014",
     "role": "Vice Chair"
    },
    {
+    "email": "caschafer10@gmail.com",
     "name": "Chris Schafer",
+    "phone": "317-341-5630",
     "role": "Secretary"
    }
   ],
+  "phone": "765-246-6585",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "5": {
   "edition": "2026",
+  "email": "dustin@salemattys.com",
   "meeting": "4th Tuesday in January",
   "modified": "2026-05-01",
   "name": "Elk Creek Conservancy District",
   "people": [
    {
+    "email": "kbaird1206@gmail.com",
     "name": "Kevin Baird",
+    "phone": "812-620-1626",
     "role": "Chair"
    },
    {
     "name": "Randall Wischmeier",
+    "phone": "812-595-0457",
     "role": "Vice Chair"
    },
    {
     "name": "William Deaton",
+    "phone": "812-752-3542",
     "role": "Secretary"
    },
    {
+    "email": "donnajent7814@gmail.com",
     "name": "Donna Jent",
+    "phone": "812-595-2103",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "812-896-1272",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "50": {
   "edition": "2026",
+  "email": "danielmoonlaw@gmail.com",
   "modified": "2026-05-01",
   "name": "Lower Patoka River Conservancy District",
   "people": [
@@ -1618,35 +1889,43 @@
  },
  "55": {
   "edition": "2026",
+  "email": "d.brewer@vlacd.org",
   "meeting": "3rd Wednesday of February",
   "modified": "2026-05-01",
   "name": "Valparaiso Lakes Area Conservancy District",
   "people": [
    {
+    "email": "khauber@msm.com",
     "name": "Kyle Hauber",
     "role": "Chair"
    },
    {
+    "email": "supfr@comcast.net",
     "name": "Chad Kuehl",
     "role": "Vice Chair"
    },
    {
+    "email": "dickte107@gmail.com",
     "name": "Richard Tegt",
     "role": "Board Member"
    },
    {
+    "email": "cjhughes53@aol.com",
     "name": "Connie Hughs",
     "role": "Board Member"
    },
    {
+    "email": "Crasven45@gmail.com",
     "name": "Christian Anderson",
     "role": "Board Member"
    },
    {
+    "email": "breitin@frontier.com",
     "name": "Walter Breitinger",
     "role": "Board Member"
    },
    {
+    "email": "Michaelcantieri@yahoo.com",
     "name": "Michael Cantieri",
     "role": "Board Member"
    },
@@ -1655,15 +1934,18 @@
     "role": "Financial Secretary"
    },
    {
+    "email": "R.colville@vlacd.org",
     "name": "Rachel Colville",
     "role": "Clerk"
    }
   ],
+  "phone": "219-464-3770",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://vlacd.org/"
  },
  "56": {
   "edition": "2026",
+  "email": "hlcdclerk@frontier.com",
   "meeting": "1st Monday of February",
   "modified": "2026-05-01",
   "name": "Hamilton Lake Conservancy District",
@@ -1682,6 +1964,7 @@
    },
    {
     "name": "Brittany Bacon",
+    "phone": "260-488-3304",
     "role": "Financial Clerk"
    },
    {
@@ -1689,44 +1972,59 @@
     "role": "Board Member"
    }
   ],
+  "phone": "260-488-3304 Ext. 2",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://hamiltonsewer.org/"
  },
  "58": {
   "edition": "2026",
+  "email": "Lakeelizaareaconservancy@gmail.com",
   "meeting": "1st Wednesday in January",
   "modified": "2026-05-01",
   "name": "Lake Eliza Area Conservancy District",
   "people": [
    {
+    "email": "ronippolito51@yahoo.com",
     "name": "Ronald Ippolito",
+    "phone": "219-477-8841",
     "role": "Chair"
    },
    {
+    "email": "beachwellservice@gmail.com",
     "name": "Brandon Chaffer",
+    "phone": "219-487-7664",
     "role": "Vice Chair"
    },
    {
+    "email": "kareng2565@yahoo.com",
     "name": "Karen Giesler",
     "role": "Financial Secretary"
    },
    {
+    "email": "rammit57@gmail.com",
     "name": "Bill Langel",
+    "phone": "219-299-7613",
     "role": "Board Member"
    },
    {
+    "email": "moonlite1962fender@gmail.com",
     "name": "David Bol",
+    "phone": "219-921-9270",
     "role": "Board Member"
    },
    {
+    "email": "steve.sandberg1863@gmail.com",
     "name": "Steve Sandberg",
+    "phone": "219-252-7799",
     "role": "Board Member"
    }
   ],
+  "phone": "219-405-1826",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "59": {
   "edition": "2026",
+  "email": "kingjm@purdue.edu",
   "meeting": "Held in December",
   "modified": "2026-05-01",
   "name": "Kentland Conservancy District",
@@ -1748,23 +2046,28 @@
     "role": "Secretary and Financial Clerk"
    }
   ],
+  "phone": "219-474-5062",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "6": {
   "edition": "2026",
+  "email": "Jessica_knepp@yahoo.com",
   "meeting": "1st Monday in January **2nd Monday if the 1st is a holiday",
   "modified": "2026-05-01",
   "name": "Prairie Creek Daviess Conservancy District",
   "people": [
    {
+    "email": "stevewilson9581@gmail.com",
     "name": "Steve Wilson",
     "role": "Chair"
    },
    {
+    "email": "tiffandgary10@gmail.com",
     "name": "Gary Arthur",
     "role": "Vice Chair"
    },
    {
+    "email": "shelleyryan64@gmail.com",
     "name": "Peter Ryan",
     "role": "Secretary"
    },
@@ -1773,27 +2076,34 @@
     "role": "Financial Secretary"
    },
    {
+    "email": "danandashley10@yahoo.com",
     "name": "Daniel Graber",
     "role": "Board Member"
    },
    {
+    "email": "alankeith@gmail.com",
     "name": "Alan Keith",
     "role": "Board Member"
    },
    {
+    "email": "ficklin.d@gmail.com",
     "name": "Dale Ficklin",
+    "phone": "812-486-5094",
     "role": "Contracting Officer"
    }
   ],
+  "phone": "812-787-1447",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "60": {
   "edition": "2026",
+  "email": "treasurer@battleground.in.gov",
   "meeting": "3rd Wednesday of February",
   "modified": "2026-05-01",
   "name": "Battle Ground Conservancy District",
   "people": [
    {
+    "email": "jandcwatson@comcast.net",
     "name": "Carol Watson",
     "role": "Chair"
    },
@@ -1826,40 +2136,49 @@
     "role": "Board Member"
    }
   ],
+  "phone": "765-567-2603",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.water.battleground.in.gov/"
  },
  "62": {
   "edition": "2026",
+  "email": "vblconservancy@airhop.com",
   "modified": "2026-05-01",
   "name": "Van Bibber Lake Conservancy District",
   "people": [
    {
+    "email": "rebeccajbilbrey@gmail.com",
     "name": "Rebecca Bilbrey",
     "role": "Chair"
    },
    {
+    "email": "Brenda.dossey@indy.gov",
     "name": "Brenda Dossey-King",
     "role": "Vice Chair"
    },
    {
+    "email": "mary@marktimm.com",
     "name": "Mary Timm",
     "role": "Secretary"
    },
    {
+    "email": "lynn.jelinek@yahoo.com",
     "name": "Lynn Jelinek",
     "role": "Board Member"
    },
    {
+    "email": "lzeeck@aol.com",
     "name": "Laren Zeek",
     "role": "Board Member"
    }
   ],
+  "phone": "765-739-6671",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://vanbibberlakecd.in.gov/"
  },
  "65": {
   "edition": "2026",
+  "email": "gaschnarr240@gmail.com",
   "meeting": "3rd Tuesday of January",
   "modified": "2026-05-01",
   "name": "Upper Patoka River Conservancy District",
@@ -1877,6 +2196,7 @@
     "role": "Secretary"
    },
    {
+    "email": "kgseng@hotmail.com",
     "name": "Greg Seng",
     "role": "Financial Clerk"
    },
@@ -1885,55 +2205,68 @@
     "role": "Fiscal Director"
    }
   ],
+  "phone": "812-630-8922",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "66": {
   "edition": "2026",
+  "email": "squires@emisonlaw.com",
   "meeting": "4th Wednesday of January",
   "modified": "2026-05-01",
   "name": "Brevoort Levee Conservancy District",
   "people": [
    {
     "name": "Rex Marchino",
+    "phone": "812-890-7941",
     "role": "Board Member"
    },
    {
     "name": "Daniel Stangle",
+    "phone": "812-881-7539",
     "role": "Board Member"
    },
    {
     "name": "Lawerence Rusch",
+    "phone": "812-890-1905",
     "role": "Board Member"
    },
    {
     "name": "John Gartner",
+    "phone": "812-887-5646",
     "role": "Board Member"
    },
    {
     "name": "Terry Vieck",
+    "phone": "812-887-7815",
     "role": "Board Member"
    },
    {
     "name": "Ed Mouzin",
+    "phone": "812-890-1482",
     "role": "Board Member"
    },
    {
     "name": "Michael Carter",
+    "phone": "812-890-0332",
     "role": "Board Member"
    },
    {
     "name": "Thomas Hess",
+    "phone": "812-887-1044",
     "role": "Board Member"
    },
    {
     "name": "Jamie Newton",
+    "phone": "812-881-8057",
     "role": "Board Member"
    }
   ],
+  "phone": "812-882-2280",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "67": {
   "edition": "2026",
+  "email": "business@lawrenceburgconservancydistrict.com",
   "meeting": "2nd Monday in January",
   "modified": "2026-05-01",
   "name": "Lawrenceburg Conservancy District",
@@ -1971,21 +2304,25 @@
     "role": "Board Member"
    }
   ],
+  "phone": "812-539-3136",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://lcdlevee.com/"
  },
  "69": {
   "edition": "2026",
+  "email": "cvogel@btbhlaw.com",
   "meeting": "2nd Thursday of February",
   "modified": "2026-05-01",
   "name": "White Oak Conservancy District",
   "people": [
    {
     "name": "John Hack",
+    "phone": "219-947-2363",
     "role": "Chair"
    },
    {
     "name": "Michael Jacobson",
+    "phone": "219-942-6439",
     "role": "Vice Chair"
    },
    {
@@ -1994,6 +2331,7 @@
    },
    {
     "name": "George Schaefer",
+    "phone": "219-947-1452",
     "role": "Treasurer"
    },
    {
@@ -2005,15 +2343,19 @@
     "role": "Board Member"
    }
   ],
+  "phone": "219-464-1041",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "7": {
   "edition": "2026",
+  "email": "youngandyounglaw@gmail.com",
   "modified": "2026-05-01",
   "name": "Cordry Sweetwater Conservancy District",
   "people": [
    {
+    "email": "mleavitt@cscd-in.org",
     "name": "Michael Leavitt",
+    "phone": "317-989-2805",
     "role": "Chair"
    },
    {
@@ -2021,19 +2363,26 @@
     "role": "Vice Chair"
    },
    {
+    "email": "tadolay@cscd-in.org",
     "name": "Ted Adolay",
+    "phone": "317-509-6310",
     "role": "Secretary"
    },
    {
+    "email": "rbrumfield@cscd-in.org",
     "name": "Randy Brumfield",
     "role": "Board Member"
    },
    {
+    "email": "sjohnson@cscd-in.org",
     "name": "Shena Johnson",
+    "phone": "989-621-2103",
     "role": "Board Member"
    },
    {
+    "email": "gharper@cscd-in.org",
     "name": "Greg Harper",
+    "phone": "317-995-1895",
     "role": "Board Member"
    },
    {
@@ -2041,6 +2390,7 @@
     "vacant": true
    }
   ],
+  "phone": "317-933-2893",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://cscd-in.org/"
  },
@@ -2050,11 +2400,14 @@
   "name": "Hart Lake Conservancy District",
   "people": [
    {
+    "email": "jhammel15@gmail.com",
     "name": "John Hammel",
+    "phone": "317-374-7648",
     "role": "Chair"
    },
    {
     "name": "Matthew Kerkhof",
+    "phone": "317-709-5384",
     "role": "Vice Chair"
    },
    {
@@ -2063,13 +2416,16 @@
    },
    {
     "name": "Pat Conners",
+    "phone": "317-996-2300",
     "role": "Board Member"
    }
   ],
+  "phone": "317-996-3938",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "75": {
   "edition": "2026",
+  "email": "service@ibcdonline.org",
   "meeting": "2nd Thursday of February",
   "modified": "2026-05-01",
   "name": "Indian Boundary Conservancy District",
@@ -2099,52 +2455,68 @@
     "role": "Financial Clerk and Secretary"
    }
   ],
+  "phone": "219-238-6446",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.in.gov/indianboundarycd/"
  },
  "77": {
   "edition": "2026",
+  "email": "youngandyoung@gmail.com",
   "modified": "2026-05-01",
   "name": "White Lake Conservancy District",
   "people": [
    {
+    "email": "shawnmseals@gmail.com",
     "name": "Shawn Seals",
+    "phone": "317-440-4721",
     "role": "Chair"
    },
    {
+    "email": "Fishman18048@gmail.com",
     "name": "Mike Richards",
+    "phone": "812-343-5016",
     "role": "Vice Chair"
    },
    {
+    "email": "brandon.parton@sparklight.biz",
     "name": "Brandon Parton",
+    "phone": "812-272-2391",
     "role": "Secretary"
    },
    {
+    "email": "jp.alexander@comcast.net",
     "name": "Janet Alexander",
+    "phone": "317-619-6547",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "317-736-7117",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "78": {
   "edition": "2026",
+  "email": "Tabitha.Dillner@basslakecd.in.gov",
   "meeting": "Last Saturday of June",
   "modified": "2026-05-01",
   "name": "Bass Lake Conservancy District",
   "people": [
    {
+    "email": "Gene.novello@basslakecd.in.gov",
     "name": "Gene Novello",
     "role": "Chair"
    },
    {
+    "email": "Larry.collura@basslakecd.in.gov",
     "name": "Larry Collura",
     "role": "Vice Chair"
    },
    {
+    "email": "Melissa.long@basslakecd.in.gov",
     "name": "Melissa Long",
     "role": "Board Member"
    },
    {
+    "email": "Russ.blais@basslakecd.in.gov",
     "name": "Russ Blais",
     "role": "Board Member"
    },
@@ -2153,19 +2525,23 @@
     "role": "Board Member"
    }
   ],
+  "phone": "574-772-2974",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://basslakecd.in.gov/"
  },
  "79": {
   "edition": "2026",
+  "email": "office@lhcd.net",
   "modified": "2026-05-01",
   "name": "Lake Holiday Conservancy District",
   "people": [
    {
+    "email": "darrenday1123@gmail.com",
     "name": "Darren Day",
     "role": "Chair"
    },
    {
+    "email": "bill5531@att.net",
     "name": "William Brenda",
     "role": "Vice Chair"
    },
@@ -2178,6 +2554,7 @@
     "role": "Board Member"
    },
    {
+    "email": "david.bardos@att.net",
     "name": "David Bardos",
     "role": "Board Member"
    },
@@ -2186,6 +2563,7 @@
     "role": "Secretary"
    }
   ],
+  "phone": "765-866-1009",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "8": {
@@ -2194,22 +2572,30 @@
   "name": "Middle Fork Conservancy District",
   "people": [
    {
+    "email": "nick.middleforkfarms@gmail.com",
     "name": "Nick Kleaving",
+    "phone": "812-549-5142",
     "role": "Chair"
    },
    {
+    "email": "waynedonnak@psci.net",
     "name": "Wayne Kleaving",
+    "phone": "812-608-2572",
     "role": "Secretary and Treasurer"
    },
    {
+    "email": "dlcbtaylor@psci.net",
     "name": "Darrel Taylor",
+    "phone": "812-549-6741",
     "role": "Board Member"
    }
   ],
+  "phone": "812-549-6142",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "80": {
   "edition": "2026",
+  "email": "Coatesville@ccrtc.com",
   "meeting": "3rd Monday of January",
   "modified": "2026-05-01",
   "name": "Amo Coatesville Sewer Conservancy District",
@@ -2247,10 +2633,12 @@
     "role": "Board Member"
    }
   ],
+  "phone": "765-386-7205",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "81": {
   "edition": "2026",
+  "email": "cmmckee@wilkinsonlaw.com",
   "meeting": "January 16th 2026",
   "modified": "2026-05-01",
   "name": "Honey Creek Vigo Conservancy District",
@@ -2280,6 +2668,7 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "812-232-4311",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "82": {
@@ -2289,6 +2678,7 @@
   "people": [
    {
     "name": "Patti Nugent",
+    "phone": "812-593-2210",
     "role": "Chair"
    },
    {
@@ -2300,30 +2690,40 @@
  },
  "83": {
   "edition": "2026",
+  "email": "youngandyounglaw@gmail.com",
   "modified": "2026-05-01",
   "name": "Nineveh Conservancy District",
   "people": [
    {
+    "email": "kevindw7842@gmail.com",
     "name": "Kevin Wilson",
+    "phone": "317-993-5916",
     "role": "Chair"
    },
    {
+    "email": "head2toesalon@gmail.com",
     "name": "Darlene Mudd",
+    "phone": "317-933-3974",
     "role": "Vice Chair"
    },
    {
+    "email": "cwathen309@gmail.com",
     "name": "Christine Wathen",
     "role": "Secretary"
    },
    {
+    "email": "CPAAllenA@franklinincpa.com",
     "name": "C. Allen Anderson",
+    "phone": "317-736-6500",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "317-933-3693",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "84": {
   "edition": "2026",
+  "email": "ariggle@wccdin.org",
   "modified": "2026-05-01",
   "name": "West Central Conservancy District",
   "people": [
@@ -2348,32 +2748,39 @@
     "role": "Board Member"
    }
   ],
+  "phone": "317-272-2980",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.wccdin.org/"
  },
  "85": {
   "edition": "2026",
+  "email": "npcdsmith6100@yahoo.com",
   "meeting": "Held 4th Tuesday of February",
   "modified": "2026-05-01",
   "name": "New Paris Conservancy District",
   "people": [
    {
+    "email": "Npcd.bod2@gmail.com",
     "name": "Gary Brumbaugh",
     "role": "Chair"
    },
    {
+    "email": "Npcd.bod3@gmail.com",
     "name": "Rodney Waldron",
     "role": "Vice Chair"
    },
    {
+    "email": "Npcd.bod1@gmail.com",
     "name": "Robin Loucks",
     "role": "Finance President"
    },
    {
+    "email": "Npcd.bod5@gmail.com",
     "name": "Robert Stutzman",
     "role": "Board Member"
    },
    {
+    "email": "Npcd.bod4@gmail.com",
     "name": "Donn Neff",
     "role": "Board Member"
    },
@@ -2382,24 +2789,29 @@
     "role": "Financial Clerk and Secretary"
    }
   ],
+  "phone": "574-831-6100",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://newparisconservancydistrict.com/"
  },
  "87": {
   "edition": "2026",
+  "email": "srainford@townofmorocco.in.gov",
   "meeting": "1st Tuesday of March",
   "modified": "2026-05-01",
   "name": "Morocco Conservancy District",
   "people": [
    {
+    "email": "kingc82@icloud.com",
     "name": "King Clark",
     "role": "Chair"
    },
    {
+    "email": "wgsmart46@gmail.com",
     "name": "William Smart",
     "role": "Vice Chair"
    },
    {
+    "email": "jashott@gmail.com",
     "name": "Jason Cornell",
     "role": "Secretary"
    },
@@ -2408,10 +2820,12 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-285-2070 Ext. 1",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "88": {
   "edition": "2026",
+  "email": "jeffschitter56@gmail.com",
   "meeting": "3rd Tuesday of January",
   "modified": "2026-05-01",
   "name": "Ireland Madison Conservancy District",
@@ -2425,48 +2839,64 @@
     "role": "Secretary"
    },
    {
+    "email": "craigbeck02@yahoo.com",
     "name": "Craig Beck",
+    "phone": "812-630-4694",
     "role": "Treasurer"
    },
    {
     "name": "Dana Senninger",
+    "phone": "812-827-6104",
     "role": "Board Member"
    },
    {
     "name": "Eugene Mehringer",
+    "phone": "812-639-0462",
     "role": "Board Member"
    },
    {
     "name": "Tim Nordhoff",
+    "phone": "812-631-8088",
     "role": "Board Member"
    },
    {
     "name": "Pat Nordhoff",
+    "phone": "812-309-0480",
     "role": "Board Member"
    }
   ],
+  "phone": "812-630-9123",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "9": {
   "edition": "2026",
+  "email": "bussrecorder@gmail.com",
   "meeting": "Held 1st Tuesday of January",
   "modified": "2026-05-01",
   "name": "Busseron Conservancy District",
   "people": [
    {
+    "email": "bredewega@yahoo.com",
     "name": "Brain Bredeweg",
+    "phone": "812-798-0191",
     "role": "Chair"
    },
    {
+    "email": "rustydeckard@hotmail.com",
     "name": "Rusty Deckard",
+    "phone": "812-243-4541",
     "role": "Vice Chair"
    },
    {
+    "email": "kylerknotts@hotmail.com",
     "name": "Kyler Knotts",
+    "phone": "812-239-8995",
     "role": "Secretary"
    },
    {
+    "email": "don@wellsfarm.us",
     "name": "Don Wells",
+    "phone": "812-239-7174",
     "role": "Treasurer"
    },
    {
@@ -2474,31 +2904,39 @@
     "role": "Recorder and Financial Clerk"
    },
    {
+    "email": "pickeraj67@aol.com",
     "name": "Andrew Pickering",
+    "phone": "812-495-5230",
     "role": "Board Member"
    }
   ],
+  "phone": "812-814-0280",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "91": {
   "edition": "2026",
+  "email": "jan.came@usda.gov",
   "modified": "2026-05-01",
   "name": "Greenfield Bayou Levee and Ditch Conservancy District",
   "people": [
    {
     "name": "Jay Gard",
+    "phone": "217-826-6115",
     "role": "Chair"
    },
    {
     "name": "Fred Wilson III",
+    "phone": "812-208-6400",
     "role": "Vice Chair"
    },
    {
     "name": "Bobi Kincaid",
+    "phone": "812-898-9538",
     "role": "Secretary"
    },
    {
     "name": "Dennis Harlan",
+    "phone": "812-898-2617",
     "role": "Treasurer"
    },
    {
@@ -2510,10 +2948,12 @@
     "role": "Board Member"
    }
   ],
+  "phone": "812-232-0193",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "92": {
   "edition": "2026",
+  "email": "jstein@psci.net",
   "modified": "2026-05-01",
   "name": "Lamar Conservancy District",
   "people": [
@@ -2530,15 +2970,18 @@
  },
  "93": {
   "edition": "2026",
+  "email": "lapranger@romecity-in.org",
   "meeting": "Held in January, usually in the 1st or 2nd week",
   "modified": "2026-05-01",
   "name": "Rome City Conservancy District",
   "people": [
    {
+    "email": "jaydeemorley@gmail.com",
     "name": "Jay Morley",
     "role": "Chair"
    },
    {
+    "email": "johnkl@gmx.com",
     "name": "John Klassen",
     "role": "Vice Chair"
    },
@@ -2547,26 +2990,32 @@
     "role": "Secretary and Financial Clerk"
    },
    {
+    "email": "jmaz51@icloud.com",
     "name": "John Mazur",
     "role": "Board Member"
    },
    {
+    "email": "neisec17@gmail.com",
     "name": "Cheryl Clifton",
     "role": "Board Member"
    },
    {
+    "email": "srsmith1190@gmail.com",
     "name": "Steve Smith",
     "role": "Board Member"
    }
   ],
+  "phone": "260-854-2412",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "94": {
   "edition": "2026",
+  "email": "earnold39north@gmail.com",
   "modified": "2026-05-01",
   "name": "Thirty Nine North Conservancy District",
   "people": [
    {
+    "email": "markchildress@tfcoinc.com",
     "name": "Mark Childress",
     "role": "Chair"
    },
@@ -2583,39 +3032,48 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-393-0414",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "95": {
   "edition": "2026",
+  "email": "manager@lakelemon.org",
   "meeting": "3rd Thursday in February",
   "modified": "2026-05-01",
   "name": "Lake Lemon Conservancy District",
   "people": [
    {
+    "email": "lwadzins@IU.edu",
     "name": "Les Wadzinski",
     "role": "Chair"
    },
    {
+    "email": "bhuber1@iuhealth.org",
     "name": "Bret Huber",
     "role": "Vice Chair"
    },
    {
+    "email": "dmladyman@gmail.com",
     "name": "Debra Ladyman",
     "role": "Treasurer"
    },
    {
+    "email": "David_carrico_945@comcast.net",
     "name": "Dave Carrico",
     "role": "Director"
    },
    {
+    "email": "info@lemonmarina.com",
     "name": "Stephen Werner",
     "role": "Director"
    },
    {
+    "email": "mmcclure@energryaccess.com",
     "name": "Malcom McClure",
     "role": "Director"
    },
    {
+    "email": "SubAreaVII@lakelemon.org",
     "name": "Mike Blackwell",
     "role": "Director"
    },
@@ -2624,66 +3082,86 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "812-334-0233",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.lakelemon.org/"
  },
  "96": {
   "edition": "2026",
+  "email": "jray@1stpropertymanagers.com",
   "meeting": "3rd Wednesday of February",
   "modified": "2026-05-01",
   "name": "Nature Works Conservancy District",
   "people": [
    {
+    "email": "steele@bcclegal.com",
     "name": "Kevin Steele",
+    "phone": "219-465-5230",
     "role": "Chair"
    },
    {
+    "email": "spoulos@valpo.us",
     "name": "Steve Poulos",
+    "phone": "219-548-3909",
     "role": "Vice Chair"
    },
    {
+    "email": "Geoff.blanco@riggsdirect.com",
     "name": "Geoff Blanco",
+    "phone": "219-548-8857",
     "role": "Board Member"
    },
    {
+    "email": "dmdalton24@aol.com",
     "name": "Dillon Dalton",
+    "phone": "219-476-0687",
     "role": "Board Member"
    },
    {
+    "email": "engineeringguy92@gmail.com",
     "name": "David Janney",
+    "phone": "219-201-9675",
     "role": "Board Member"
    },
    {
     "name": "Jennifer Ray",
+    "phone": "219-464-3536",
     "role": "Financial Clerk"
    }
   ],
+  "phone": "219-464-3536 Ext. 320",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://natureworks.myruralwater.com/"
  },
  "97": {
   "edition": "2026",
+  "email": "lwilson881@aol.com",
   "meeting": "3rd Saturday of February",
   "modified": "2026-05-01",
   "name": "Simonton Lake Conservancy District",
   "people": [
    {
+    "email": "gkingbevans@gmail.com",
     "name": "Bob Evans",
     "role": "Chair"
    },
    {
+    "email": "hard2blev@juno.com",
     "name": "Randy Hoff",
     "role": "Vice Chair"
    },
    {
+    "email": "haydomk@gmail.com",
     "name": "Hayden Kruger",
     "role": "Board Member"
    },
    {
+    "email": "rmath1952@gmail.com",
     "name": "Ryan Matherly",
     "role": "Board Member"
    },
    {
+    "email": "walter@reimerdistributing.com",
     "name": "Walter Reimer",
     "role": "Board Member"
    },
@@ -2692,21 +3170,26 @@
     "role": "Financial Secretary"
    }
   ],
+  "phone": "574-206-8485",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://www.simontonlakecd.com/"
  },
  "98": {
   "edition": "2026",
+  "email": "blcd@bluelakeconservancydistrict.com",
   "meeting": "Last Saturday of February",
   "modified": "2026-05-01",
   "name": "Blue Lake Conservancy District",
   "people": [
    {
+    "email": "lisarotarybiz@live.com",
     "name": "Lisa Waterman",
+    "phone": "260-479-7520",
     "role": "Chair"
    },
    {
     "name": "Randall Dunn",
+    "phone": "260-403-0775",
     "role": "Vice Chair"
    },
    {
@@ -2714,35 +3197,46 @@
     "role": "Financial Clerk"
    },
    {
+    "email": "v.simmers@aol.com",
     "name": "Vincent Simmers",
+    "phone": "260-609-1532",
     "role": "Secretary"
    },
    {
+    "email": "ramus.darlene@gmail.com",
     "name": "Darlene Ramus",
+    "phone": "260-908-0838",
     "role": "Treasurer"
    },
    {
+    "email": "steven.shrock@yahoo.com",
     "name": "Steven Shrock",
+    "phone": "260-687-8740",
     "role": "Board Member"
    }
   ],
+  "phone": "260-693-0281",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory"
  },
  "99": {
   "edition": "2026",
+  "email": "dpasotti@mysamco.com",
   "meeting": "2nd Tuesday of February",
   "modified": "2026-05-01",
   "name": "Tri County Conservancy District",
   "people": [
    {
+    "email": "tjs@mysamco.com",
     "name": "Tim Shrout",
     "role": "Chair"
    },
    {
+    "email": "dnsmith@mysamco.com",
     "name": "David Smith",
     "role": "Vice Chair"
    },
    {
+    "email": "gbruzas@drinc.com",
     "name": "Greg Bruzas",
     "role": "Secretary"
    },
@@ -2751,6 +3245,7 @@
     "role": "Financial Clerk"
    }
   ],
+  "phone": "317-777-6300",
   "sourceUrl": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
   "url": "https://tricountyconservancy-in.gov/"
  }

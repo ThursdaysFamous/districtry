@@ -1,5 +1,5 @@
 {
- "_about": "Kept by hand. The mayor and council of each of South Carolina's 17 cities and towns above 25,000 people, transcribed from each one's own pages and keyed by its Census place id. sc/scripts/build_sc_city_councils.py re-reads every page cited here and refuses to write sc/data/app/sc-city-councils.json unless every name is on the page its seat cites. 'by' is 'ward' for a seat the ward's or district's own voters elect and 'city' for one the whole city or town elects; 'as' is the page's own spelling where it differs.",
+ "_about": "Kept by hand. The mayor and council of each of South Carolina's 17 cities and towns above 25,000 people, transcribed from each one's own pages and keyed by its Census place id. sc/scripts/build_sc_city_councils.py re-reads every page cited here and refuses to write sc/data/app/sc-city-councils.json unless every name is on the page its seat cites. 'by' is 'ward' for a seat the ward's or district's own voters elect and 'city' for one the whole city or town elects; 'as' is the page's own spelling where it differs. 'email', 'phone' and 'phonesExtra' are what the page a seat cites prints beside that member alone (scripts/city_councils.py, CONTACTS), and the build proves each on that page; 'officeLines' and 'officeMailboxes' are the office's own lines and mailboxes the city's pages print, which no seat may carry.",
  "cities": {
   "4500550": {
    "name": "Aiken",
@@ -9,33 +9,41 @@
    "sources": {
     "council": "https://www.cityofaikensc.gov/government/city-council/"
    },
+   "officeLines": [
+    "803-642-7654",
+    "803-642-7600"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Teddy Milner",
-     "from": "council"
+     "from": "council",
+     "phone": "803-295-2850"
     },
     {
      "seat": "District 1",
      "ward": "1",
      "by": "ward",
      "name": "Gail Diggs",
-     "from": "council"
+     "from": "council",
+     "phone": "803-293-6704"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Lessie Price",
-     "from": "council"
+     "from": "council",
+     "phone": "803-439-8292"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Kay Brohl",
-     "from": "council"
+     "from": "council",
+     "phone": "803-642-8386"
     },
     {
      "seat": "District 4",
@@ -70,40 +78,55 @@
     "council": "https://www.cityofandersonsc.com/city-council-members/",
     "observer": "https://www.andersonobserver.com/news/roberts-reelected-as-mayor-winbush-wins-council-seat-5"
    },
+   "officeLines": [
+    "(864) 231-7854",
+    "(864) 225-9401"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Terence Roberts",
-     "from": "council"
+     "from": "council",
+     "email": "troberts@cityofandersonsc.com",
+     "phone": "work (864) 231-1135"
     },
     {
      "seat": "Seat 1",
      "ward": "1",
      "by": "ward",
      "name": "Kyle Newton",
-     "from": "council"
+     "from": "council",
+     "email": "knewton@cityofandersonsc.com"
     },
     {
      "seat": "Seat 2",
      "ward": "2",
      "by": "ward",
      "name": "Marshall I. Pickens III",
-     "from": "council"
+     "from": "council",
+     "email": "mpickens@cityofandersonsc.com",
+     "phone": "cell (864) 844-5928"
     },
     {
      "seat": "Seat 3",
      "ward": "3",
      "by": "ward",
      "name": "Jeff Roberts",
-     "from": "council"
+     "from": "council",
+     "email": "jeffroberts@cityofandersonsc.com",
+     "phone": "work (864) 226-2531",
+     "phonesExtra": [
+      "home (864) 226-8837"
+     ]
     },
     {
      "seat": "Seat 4",
      "ward": "4",
      "by": "ward",
      "name": "Tony Stewart",
-     "from": "council"
+     "from": "council",
+     "phone": "cell (864) 915-1122"
     },
     {
      "seat": "Seat 5",
@@ -117,19 +140,28 @@
      "ward": "6",
      "by": "ward",
      "name": "Greg Steele",
-     "from": "council"
+     "from": "council",
+     "email": "gsteele@cityofandersonsc.com",
+     "phone": "work (864) 326-4468",
+     "phonesExtra": [
+      "cell (864) 651-2351"
+     ]
     },
     {
      "seat": "Seat 7 (at large)",
      "by": "city",
      "name": "Matt Harbin",
-     "from": "council"
+     "from": "council",
+     "email": "mharbin@cityofandersonsc.com",
+     "phone": "cell (864) 376-4968"
     },
     {
      "seat": "Seat 8 (at large)",
      "by": "city",
      "name": "John Roberts",
-     "from": "council"
+     "from": "council",
+     "email": "jroberts@cityofandersonsc.com",
+     "phone": "work (864)-261-1311"
     }
    ]
   },
@@ -182,12 +214,20 @@
     "council": "https://www.charleston-sc.gov/180/Members-Districts",
     "mayor": "https://www.charleston-sc.gov/400/Mayor"
    },
+   "officeLines": [
+    "843.724.7311"
+   ],
+   "officeMailboxes": [
+    "citizenservices@charleston-sc.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "William S. Cogswell Jr.",
-     "from": "mayor"
+     "from": "mayor",
+     "email": "cogswellw@charleston-sc.gov",
+     "phone": "843-724-7396"
     },
     {
      "seat": "District 1",
@@ -505,54 +545,74 @@
    "sources": {
     "council": "https://www.cityofgreersc.gov/page/city-council"
    },
+   "officeLines": [
+    "(864) 848-2150"
+   ],
+   "officeMailboxes": [
+    "planning@cityofgreersc.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Rick Danner",
-     "from": "council"
+     "from": "council",
+     "email": "rdanner@cityofgreersc.gov",
+     "phone": "(864) 801-2027"
     },
     {
      "seat": "District 1",
      "ward": "1",
      "by": "ward",
      "name": "Jay Arrowood",
-     "from": "council"
+     "from": "council",
+     "email": "jarrowood@cityofgreersc.gov",
+     "phone": "(864) 877-9388"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Karuiam Booker",
-     "from": "council"
+     "from": "council",
+     "email": "kbooker@cityofgreersc.gov",
+     "phone": "(864) 469-6540"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Mark Hopper",
-     "from": "council"
+     "from": "council",
+     "email": "mhopper@cityofgreersc.gov",
+     "phone": "(864) 901-0453"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Charles Lander",
-     "from": "council"
+     "from": "council",
+     "email": "clander@cityofgreersc.gov",
+     "phone": "(864) 630-4805"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Wryley Bettis",
-     "from": "council"
+     "from": "council",
+     "email": "wbettis@cityofgreersc.gov",
+     "phone": "(864) 879-2371"
     },
     {
      "seat": "District 6",
      "ward": "6",
      "by": "ward",
      "name": "Paul Lamb",
-     "from": "council"
+     "from": "council",
+     "email": "plamb@cityofgreersc.gov",
+     "phone": "(864) 905-0882"
     }
    ]
   },
@@ -563,54 +623,78 @@
    "sources": {
     "council": "https://hiltonheadislandsc.gov/government/town_council/index.php"
    },
+   "officeLines": [
+    "843-341-4600",
+    "843-341-4701",
+    "843-384-2532"
+   ],
+   "officeMailboxes": [
+    "kimberlyg@hiltonheadislandsc.gov",
+    "marco@hiltonheadislandsc.gov",
+    "renet@hiltonheadislandsc.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Alan Perry",
-     "from": "council"
+     "from": "council",
+     "email": "alanp@hiltonheadislandsc.gov",
+     "phone": "(843) 384-2895"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "ward",
      "name": "Alex Brown",
-     "from": "council"
+     "from": "council",
+     "email": "alexb@hiltonheadislandsc.gov",
+     "phone": "(843) 290-5943"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "ward",
      "name": "Patsy Brison",
-     "from": "council"
+     "from": "council",
+     "email": "patsyb@hiltonheadislandsc.gov",
+     "phone": "(843) 384-4181"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "ward",
      "name": "Steve DeSimone",
-     "from": "council"
+     "from": "council",
+     "email": "steved@hiltonheadislandsc.gov",
+     "phone": "(854) 272-7115"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "ward",
      "name": "Tamara Becker",
-     "from": "council"
+     "from": "council",
+     "email": "tamarab@hiltonheadislandsc.gov",
+     "phone": "(843) 816-6372"
     },
     {
      "seat": "Ward 5",
      "ward": "5",
      "by": "ward",
      "name": "Steve Alfred",
-     "from": "council"
+     "from": "council",
+     "email": "stevea@hiltonheadislandsc.gov",
+     "phone": "(843) 384-2421"
     },
     {
      "seat": "Ward 6",
      "ward": "6",
      "by": "ward",
      "name": "Melinda Tunner",
-     "from": "council"
+     "from": "council",
+     "email": "melindat@hiltonheadislandsc.gov",
+     "phone": "(854) 272-7114"
     }
    ]
   },
@@ -685,30 +769,38 @@
    "sources": {
     "council": "https://www.cityofmyrtlebeach.com/government/mayor___city_council/index.php"
    },
+   "officeMailboxes": [
+    "dearcitycouncil@cityofmyrtlebeach.com",
+    "info@cityofmyrtlebeach.com"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Mark Kruea",
-     "from": "council"
+     "from": "council",
+     "email": "mkruea@cityofmyrtlebeach.com"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Mike Lowder",
-     "from": "council"
+     "from": "council",
+     "email": "mlowder@cityofmyrtlebeach.com"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Mike Chestnut",
-     "from": "council"
+     "from": "council",
+     "email": "mchestnut@cityofmyrtlebeach.com"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Debbie Conner",
-     "from": "council"
+     "from": "council",
+     "email": "dconner@cityofmyrtlebeach.com"
     },
     {
      "seat": "At large",
@@ -720,13 +812,15 @@
      "seat": "At large",
      "by": "city",
      "name": "Bill McClure",
-     "from": "council"
+     "from": "council",
+     "email": "bmcclure@cityofmyrtlebeach.com"
     },
     {
      "seat": "At large",
      "by": "city",
      "name": "Philip Render",
-     "from": "council"
+     "from": "council",
+     "email": "prender@cityofmyrtlebeach.com"
     }
    ]
   },
@@ -739,6 +833,12 @@
     "council": "https://www.northcharleston.org/government/city_council/city_council_members_and_districts.php",
     "mayor": "https://www.northcharleston.org/government/office_of_the_mayor/index.php"
    },
+   "officeLines": [
+    "(843) 740-2504"
+   ],
+   "officeMailboxes": [
+    "mayor@northcharleston.org"
+   ],
    "seats": [
     {
      "seat": "Mayor",
@@ -752,70 +852,90 @@
      "ward": "1",
      "by": "ward",
      "name": "Greg Perry",
-     "from": "council"
+     "from": "council",
+     "email": "gperry@northcharleston.org",
+     "phone": "(843) 557-5351"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Rhonda Jerome",
-     "from": "council"
+     "from": "council",
+     "email": "rjerome@northcharleston.org",
+     "phone": "(843) 813-4404"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Stephanie Ganaway-Pasley",
-     "from": "council"
+     "from": "council",
+     "email": "sganawaypasley@northcharleston.org",
+     "phone": "(843) 270-1961"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Charmaine Palmer-Roberts",
-     "from": "council"
+     "from": "council",
+     "email": "cpalmerroberts@northcharleston.org",
+     "phone": "(843) 819-9170"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Christopher Emde",
-     "from": "council"
+     "from": "council",
+     "email": "cemde@northcharleston.org",
+     "phone": "(843) 751-6214"
     },
     {
      "seat": "District 6",
      "ward": "6",
      "by": "ward",
      "name": "Nefertiti Brown",
-     "from": "council"
+     "from": "council",
+     "email": "nbrown@northcharleston.org",
+     "phone": "(843) 790-4098"
     },
     {
      "seat": "District 7",
      "ward": "7",
      "by": "ward",
      "name": "Michael Brown Jr.",
-     "from": "council"
+     "from": "council",
+     "email": "mibrown@northcharleston.org",
+     "phone": "(843) 367-3714"
     },
     {
      "seat": "District 8",
      "ward": "8",
      "by": "ward",
      "name": "Brandon Hudson",
-     "from": "council"
+     "from": "council",
+     "email": "bhudson@northcharleston.org",
+     "phone": "(803) 292-6044"
     },
     {
      "seat": "District 9",
      "ward": "9",
      "by": "ward",
      "name": "Kenny Skipper",
-     "from": "council"
+     "from": "council",
+     "email": "kskipper@northcharleston.org",
+     "phone": "(843) 200-7520"
     },
     {
      "seat": "District 10",
      "ward": "10",
      "by": "ward",
      "name": "Michael Brown",
-     "from": "council"
+     "from": "council",
+     "email": "bmichaelchr@aol.com",
+     "phone": "(843) 747-3531"
     }
    ]
   },
@@ -885,54 +1005,68 @@
    "sources": {
     "council": "https://www.cityofspartanburg.org/316/City-Council"
    },
+   "officeLines": [
+    "864-596-2000",
+    "864-596-2796"
+   ],
+   "officeMailboxes": [
+    "clindsey@cityofspartanburg.org"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Jerome Rice",
-     "from": "council"
+     "from": "council",
+     "email": "jerome.rice@cityofspartanburg.org"
     },
     {
      "seat": "District 1",
      "ward": "1",
      "by": "ward",
      "name": "Meghan Smith",
-     "from": "council"
+     "from": "council",
+     "email": "mesmith@cityofspartanburg.org"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Leslie Rodgers",
-     "from": "council"
+     "from": "council",
+     "email": "lrodgers@cityofspartanburg.org"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Ruth Littlejohn",
-     "from": "council"
+     "from": "council",
+     "email": "rlittlejohn@cityofspartanburg.org"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Jamie Fulmer",
-     "from": "council"
+     "from": "council",
+     "email": "jfulmer@cityofspartanburg.org"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Janie Salley",
-     "from": "council"
+     "from": "council",
+     "email": "jsalley@cityofspartanburg.org"
     },
     {
      "seat": "District 6",
      "ward": "6",
      "by": "ward",
      "name": "Erica Brown",
-     "from": "council"
+     "from": "council",
+     "email": "ebrown@cityofspartanburg.org"
     }
    ]
   },
@@ -944,54 +1078,70 @@
    "sources": {
     "council": "https://www.summervillesc.gov/253/Elected-Officials"
    },
+   "officeLines": [
+    "843-871-6000"
+   ],
+   "officeMailboxes": [
+    "bmesservy@summervillesc.gov"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "Russ Touchberry",
-     "from": "council"
+     "from": "council",
+     "email": "rtouchberry@summervillesc.gov",
+     "phone": "843-693-8707"
     },
     {
      "seat": "District 1",
      "ward": "1",
      "by": "ward",
      "name": "Dexcter Mack",
-     "from": "council"
+     "from": "council",
+     "email": "dmack@summervillesc.gov"
     },
     {
      "seat": "District 2",
      "ward": "2",
      "by": "ward",
      "name": "Tiffany Johnson",
-     "from": "council"
+     "from": "council",
+     "email": "tjohnson@summervillesc.gov"
     },
     {
      "seat": "District 3",
      "ward": "3",
      "by": "ward",
      "name": "Matt Halter",
-     "from": "council"
+     "from": "council",
+     "email": "mhalter@summervillesc.gov"
     },
     {
      "seat": "District 4",
      "ward": "4",
      "by": "ward",
      "name": "Richard G. Waring IV",
-     "from": "council"
+     "from": "council",
+     "email": "rwaring@summervillesc.gov"
     },
     {
      "seat": "District 5",
      "ward": "5",
      "by": "ward",
      "name": "Kima Garten",
-     "from": "council"
+     "from": "council",
+     "email": "kgarten@summervillesc.gov",
+     "phone": "843-821-9337"
     },
     {
      "seat": "District 6",
      "ward": "6",
      "by": "ward",
      "name": "Bob Jackson",
-     "from": "council"
+     "from": "council",
+     "email": "bjackson@summervillesc.gov",
+     "phone": "843-810-0449"
     }
    ]
   },
@@ -1002,54 +1152,64 @@
    "sources": {
     "council": "https://www.sumtersc.gov/city-council"
    },
+   "officeLines": [
+    "803-436-2500"
+   ],
    "seats": [
     {
      "seat": "Mayor",
      "by": "city",
      "name": "David P. Merchant",
-     "from": "council"
+     "from": "council",
+     "email": "dmerchant@sumtersc.gov"
     },
     {
      "seat": "Ward 1",
      "ward": "1",
      "by": "ward",
      "name": "Anthony Gibson",
-     "from": "council"
+     "from": "council",
+     "email": "agibson@sumtersc.gov"
     },
     {
      "seat": "Ward 2",
      "ward": "2",
      "by": "ward",
      "name": "James B. Blassingame",
-     "from": "council"
+     "from": "council",
+     "email": "jbblass@usa.net"
     },
     {
      "seat": "Ward 3",
      "ward": "3",
      "by": "ward",
      "name": "Calvin K. Hastie Sr.",
-     "from": "council"
+     "from": "council",
+     "email": "chastie@sumtersc.gov"
     },
     {
      "seat": "Ward 4",
      "ward": "4",
      "by": "ward",
      "name": "Rebecca Lynn Kennedy",
-     "from": "council"
+     "from": "council",
+     "email": "rkennedy@sumtersc.gov"
     },
     {
      "seat": "Ward 5",
      "ward": "5",
      "by": "ward",
      "name": "Colin C. Davis",
-     "from": "council"
+     "from": "council",
+     "email": "cdavis@sumtersc.gov"
     },
     {
      "seat": "Ward 6",
      "ward": "6",
      "by": "ward",
      "name": "Gifford M. Shaw",
-     "from": "council"
+     "from": "council",
+     "email": "gshaw@cu-tigers.com"
     }
    ]
   }
