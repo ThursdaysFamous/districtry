@@ -858,9 +858,9 @@ try {
   //      AN ADDRESS TYPED WITH NO NAME IN FRONT is held to its house number
   //      too (runAddressSearch, listHeldAnswers): an answer without it is
   //      marked and never selected for the reader, a sent search frames the
-  //      street with the Census pin when the answers put it in one town, and
-  //      while the reader types nothing goes to the Census lookup until the
-  //      street's row is picked. Every answer here is OpenStreetMap's, so the
+  //      street with the Census pin, whose point it selects, when the answers
+  //      put it in one town, and while the reader types nothing goes to the
+  //      Census lookup until the street's row is picked. Every answer here is OpenStreetMap's, so the
   //      street's message links OpenStreetMap's note form at the street or
   //      the pin (osmNoteLink), and following it counts osm-note. A shared
   //      link that ends on its street is counted once the Census answer is
@@ -1057,28 +1057,38 @@ try {
 
     // THE CENSUS BUREAU'S PIN (lookupAddressRanges). The one estimate on the
     // address's street, in its town and near the street the map found, is a
-    // pin to tap: the map frames it below the search panel and selects
-    // nothing, a tap on it selects its point, the keyboard can press it, and
-    // a point selected any other way takes it away.
+    // pin whose point is selected at once (Adam's choice of 2026-10-18): the
+    // map frames it below the search panel, the message says it can be a
+    // few doors off, the pin is a picture rather than a button, and a tap on
+    // the map beside it, a row for the place's name or a point selected any
+    // other way selects that instead and takes the pin and the message away.
+    // A pin another state's app answers for waits for a tap (below).
     const ranged = () => ({ status: 200, matches: [ON_RANGE] });
     const PIN = '[aria-label^="Where the Census Bureau puts"]';
-    const pinShown = () => /The pin is where the Census Bureau/.test(document.getElementById("geo-status").textContent);
-    const tapPin = async (page, read) => {
-      await page.locator(PIN).tap();
-      // the pin selects through the map's own click, which waits for the
-      // coverage wash or fleet-outlines.json as a tap on the map does
-      await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
-      return read();
+    const pinShown = () => /Census Bureau's street records put that number/.test(document.getElementById("geo-status").textContent);
+    const atPin = (p) => !!p && Math.abs(p.lat - PIN_AT.lat) < 1e-7 && Math.abs(p.lng - PIN_AT.lng) < 1e-7;
+    // a tap on the map 80 px to the pin's left, clear of the pin and of the
+    // selected point's own marker
+    const tapBeside = async (page, read) => {
+      const spot = await page.evaluate(([ns, at]) => {
+        const map = window[ns].map, tip = map.latLngToContainerPoint(at);
+        return { x: tip.x - 80, y: tip.y, at: map.containerPointToLatLng([tip.x - 80, tip.y]), sequence: window[ns].state.sequence };
+      }, [EXPORTS_NAME, [PIN_AT.lat, PIN_AT.lng]]);
+      const box = await page.locator("#map").boundingBox();
+      await page.touchscreen.tap(box.x + spot.x, box.y + spot.y);
+      await page.waitForFunction(([ns, n]) => window[ns].state.sequence > n, [EXPORTS_NAME, spot.sequence],
+        { timeout: QUERY_TIMEOUT }).catch(() => {});
+      return { tapped: spot.at, ...(await read()) };
     };
     const pinned = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),
-      pinShown, S_FULL, tapPin, true, ranged);
+      pinShown, S_FULL, tapBeside, true, ranged);
     const pg = pinned.got, pa = pinned.after;
-    check("the Census Bureau's estimate is a pin below the search panel, and nothing is selected",
-      !pg.point && !!pg.pin && pg.zoom >= 17.5 && pg.pin.top >= pg.panelBelow && pg.pin.bottom <= pg.height &&
-        pg.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The pin is where the Census Bureau's " +
-          "street records put that number, which can be a few doors off. Tap the pin to use it, or tap the place you meant.") >= 0 &&
-        pg.pin.label === "Where the Census Bureau puts 9 W Oakley Dr NW. Select this point." &&
-        pg.pin.role === "button" && pg.pin.tabindex === "0",
+    check("the Census Bureau's estimate is a pin below the search panel, and its point is selected at once",
+      atPin(pg.point) && !!pg.pin && pg.zoom >= 17.5 && pg.pin.top >= pg.panelBelow && pg.pin.bottom <= pg.height &&
+        pg.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The map has selected the pin, where the Census " +
+          "Bureau's street records put that number. That can be a few doors off, and a district line can run between two doors. " +
+          "If the place is elsewhere, tap it on the map.") >= 0 &&
+        pg.pin.label === "Where the Census Bureau puts 9 W Oakley Dr NW" && pg.pin.role === "img" && pg.pin.tabindex === null,
       JSON.stringify(pg));
     check("a shared link whose house the Census Bureau pins is counted once, as pin",
       linkReads(pa) === "map-link-read/il/google/short/opened/pin", JSON.stringify(pa.events));
@@ -1086,26 +1096,25 @@ try {
     check("with the pin, the note form opens at the pin",
       !!pn && pn.zoom === 19 && Math.abs(pn.lat - PIN_AT.lat) < 1e-9 && Math.abs(pn.lng - PIN_AT.lng) < 1e-9,
       JSON.stringify(pg.note));
-    check("a tap on the pin selects the pin's point, and the pin and the message go",
-      !!pa.point && Math.abs(pa.point.lat - PIN_AT.lat) < 1e-7 && Math.abs(pa.point.lng - PIN_AT.lng) < 1e-7 &&
-        !pa.pin && pa.status === "",
+    check("a tap on the map beside the pin selects the point tapped instead, and the pin and the message go",
+      !!pa.point && !atPin(pa.point) && Math.abs(pa.point.lat - pa.tapped.lat) < 2e-5 && Math.abs(pa.point.lng - pa.tapped.lng) < 2e-5 &&
+        Math.abs(pa.point.lng - PIN_AT.lng) > 1e-4 && !pa.pin && pa.status === "",
       JSON.stringify(pa));
-    const pressPin = async (page, read) => {
-      await page.focus(PIN);
-      await page.keyboard.press("Enter");
-      await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const pickName = async (page, read) => {
+      await page.locator("#geocode-results li.name-result button").first().click();
+      await page.waitForTimeout(200);
       return read();
     };
-    const keyed = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR, CLOSE] : []),
-      () => /also found the place below/.test(document.getElementById("geo-status").textContent), S_FULL, pressPin, false, ranged);
-    check("with an answer to the place's name near the street as well, both are offered and neither is selected",
-      !keyed.got.point && !!keyed.got.pin && keyed.got.rows.length === 1 && keyed.got.rows[0].cls === "name-result" &&
-        keyed.got.status.indexOf("also found the place below. Pick it if it's the one you meant, tap the pin, or tap the map.") >= 0,
-      JSON.stringify(keyed.got));
-    check("Enter on the focused pin selects its point",
-      !!keyed.after.point && Math.abs(keyed.after.point.lat - PIN_AT.lat) < 1e-7 &&
-        Math.abs(keyed.after.point.lng - PIN_AT.lng) < 1e-7 && !keyed.after.pin,
-      JSON.stringify(keyed.after));
+    const both = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR, CLOSE] : []),
+      () => /also found the place below/.test(document.getElementById("geo-status").textContent), S_FULL, pickName, false, ranged);
+    check("with an answer to the place's name near the street as well, the pin's point is selected and the name is offered",
+      atPin(both.got.point) && !!both.got.pin && both.got.rows.length === 1 && both.got.rows[0].cls === "name-result" &&
+        both.got.status.indexOf("also found the place below. Pick it if it's the one you meant, or tap the map.") >= 0,
+      JSON.stringify(both.got));
+    check("picking the name's row selects that place instead, and the pin goes",
+      !!both.after.point && Math.abs(both.after.point.lat - 41.8218) < 1e-7 && Math.abs(both.after.point.lng + 87.9790) < 1e-7 &&
+        !both.after.pin,
+      JSON.stringify(both.after));
     // Following the link opens the form in a new tab (stood in for here, so
     // nothing reaches OpenStreetMap), counts osm-note and leaves the map as it was
     const followNote = async (page, read) => {
@@ -1121,10 +1130,10 @@ try {
     };
     const noted = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : []),
       pinShown, S_FULL, followNote, false, ranged);
-    check("following the note link opens OpenStreetMap's form at the pin, counts osm-note once and selects nothing",
+    check("following the note link opens OpenStreetMap's form at the pin, counts osm-note once and leaves the pin's point selected",
       noted.after.opened === "https://www.openstreetmap.org/note/new#map=19/41.82195/-87.97955" &&
         noted.after.events.filter((e) => e === "osm-note").length === 1 && !noted.got.events.some((e) => e === "osm-note") &&
-        !noted.after.point && !!noted.after.pin,
+        atPin(noted.after.point) && !!noted.after.pin,
       JSON.stringify({ opened: noted.after.opened, events: noted.after.events, point: noted.after.point }));
     const otherwise = async (page, read) => {
       await page.evaluate((ns) => window[ns].setSelectedPoint(41.8240, -87.9760, { skipPan: true }), EXPORTS_NAME);
@@ -1133,10 +1142,45 @@ try {
     };
     const moved = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : []),
       pinShown, S_FULL, otherwise, false, ranged);
-    check("a point selected another way takes the pin away, and the message asking for a tap on it",
-      !!moved.got.pin && !!moved.after.point && Math.abs(moved.after.point.lat - 41.8240) < 1e-9 && !moved.after.pin &&
-        moved.after.status === "",
+    check("a point selected another way takes the pin away, and the message about it",
+      !!moved.got.pin && atPin(moved.got.point) && !!moved.after.point && Math.abs(moved.after.point.lat - 41.8240) < 1e-9 &&
+        !moved.after.pin && moved.after.status === "",
       JSON.stringify({ before: moved.got.pin, after: moved.after }));
+
+    // A PIN ANOTHER STATE'S APP ANSWERS FOR. This app's search box reaches
+    // into Iowa, so a typed address can find its street in Davenport, and a
+    // selection there would open Iowa's app with the point and without the
+    // message, so the pin waits for a tap. Enter on the focused pin opens
+    // that app with the pin's point. The street, the number and the estimate
+    // are made up; the sibling apps are stubbed.
+    const IA_ADDRESS = "9 W Sample St, Davenport";
+    const IA_PIN = { lat: 41.5300, lng: -90.5795 };
+    const IA_STREET = feature(-90.5800, 41.5300, { name: "West Sample Street", city: "Davenport", state: "Iowa",
+      postcode: "52803", type: "street", extent: [-90.5830, 41.5302, -90.5770, 41.5298] });
+    const IA_RANGE = { address: "9 W SAMPLE ST, DAVENPORT, IA, 52803", ...IA_PIN };
+    const pressPinAway = async (page) => {
+      await page.route("https://districtry.com/**", (route) =>
+        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+      const to = page.waitForURL((u) => !u.href.startsWith(BASE), { timeout: QUERY_TIMEOUT }).then(() => page.url(), () => null);
+      await page.focus(PIN);
+      await page.keyboard.press("Enter");
+      return to;
+    };
+    const iowa = await run(IA_ADDRESS, (q, bounded) => (bounded && q === IA_ADDRESS ? [IA_STREET] : []),
+      () => /Tap the pin to use it/.test(document.getElementById("geo-status").textContent), S_FULL, pressPinAway, false,
+      () => ({ status: 200, matches: [IA_RANGE] }));
+    const iw = iowa.got;
+    check("a Census pin another state's app answers for selects nothing here and waits for a tap",
+      !iw.point && !!iw.pin && iw.pin.role === "button" && iw.pin.tabindex === "0" &&
+        iw.pin.label === "Where the Census Bureau puts 9 W Sample St. Select this point." &&
+        iw.status.indexOf("W Sample St in Davenport but not number 9 on it. The pin is where the Census Bureau's street records " +
+          "put that number, which can be a few doors off. Tap the pin to use it, or tap the place you meant.") >= 0 &&
+        iowa.lookedUp.length === 1 && iowa.lookedUp[0] === IA_ADDRESS + ", IA",
+      JSON.stringify(iowa));
+    const iaPoint = iowa.after && /^https:\/\/districtry\.com\/ia\/#point=([-\d.]+),([-\d.]+)/.exec(iowa.after);
+    check("Enter on that pin opens that state's app with the pin's point",
+      !!iaPoint && Math.abs(+iaPoint[1] - IA_PIN.lat) < 1e-4 && Math.abs(+iaPoint[2] - IA_PIN.lng) < 1e-4,
+      String(iowa.after));
 
     // TYPED ADDRESSES, sent with #q= as a question page's box or the front
     // door sends them, or typed into the box. The number and the streets'
@@ -1151,9 +1195,9 @@ try {
     const typedSent = await run(T_ADDRESS, (q, bounded) => (bounded && q === T_ADDRESS ? [BESIDE, ON] : []),
       pinShown, S_FULL, null, true, ranged);
     const ts = typedSent.got;
-    check("a typed address sent without the house number the search has frames its street with the Census pin and selects nothing",
-      !ts.point && !!ts.pin && ts.pin.top >= ts.panelBelow && ts.rows.length === 0 &&
-        ts.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The pin is where the Census Bureau's") >= 0 &&
+    check("a typed address sent without the house number the search has frames its street with the Census pin and selects the pin's point",
+      atPin(ts.point) && !!ts.pin && ts.pin.top >= ts.panelBelow && ts.rows.length === 0 &&
+        ts.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The map has selected the pin, where the Census Bureau's") >= 0 &&
         typedSent.lookedUp.length === 1 && typedSent.lookedUp[0] === T_AT &&
         typedSent.asked.length === 1 && typedSent.asked[0] === "bounded:" + T_ADDRESS,
       JSON.stringify(typedSent));
@@ -1170,11 +1214,11 @@ try {
     check("a typed address on a street the search has in two towns lists both, marked, and selects neither",
       !tw.point && !tw.pin && tw.rows.length === 3 && tw.rows.every((r) => r.cls === "no-number") &&
         tw.status.indexOf("The map's search knows W Oakley Dr NW in Downers Grove and Westmont but not number 9 on it. " +
-          "Pick the street in the town you meant to see it on the map, then tap the place.") >= 0,
+          "Pick the street in the town you meant to see it on the map.") >= 0,
       JSON.stringify(tw));
-    check("picking the street in one town frames it there with the Census pin, asked once for that town",
-      !twa.point && !!twa.pin && twoTowns.lookedUp.length === 1 && twoTowns.lookedUp[0] === T_AT &&
-        twa.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The pin is where") >= 0,
+    check("picking the street in one town frames it there with the Census pin and its point selected, asked once for that town",
+      atPin(twa.point) && !!twa.pin && twoTowns.lookedUp.length === 1 && twoTowns.lookedUp[0] === T_AT &&
+        twa.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The map has selected the pin") >= 0,
       JSON.stringify({ after: twa, lookedUp: twoTowns.lookedUp }));
     const typing = async (page, read) => {
       await page.fill("#geocode-input", T_ADDRESS);
@@ -1190,10 +1234,10 @@ try {
     check("an address being typed lists the answers without its number, marked, and asks the Census lookup nothing",
       !tb.point && !tb.pin && tb.rows.length === 2 && tb.rows.every((r) => r.cls === "no-number") &&
         tb.status.indexOf("The map's search knows W Oakley Dr NW in Westmont but not number 9 on it. " +
-          "Pick the street to see it on the map, then tap the place.") >= 0,
+          "Pick the street to see it on the map.") >= 0,
       JSON.stringify(tb));
-    check("picking the street's row then frames it and asks the Census lookup once",
-      !tp.point && !!tp.pin && typeAhead.lookedUp.length === 1 && typeAhead.lookedUp[0] === T_AT,
+    check("picking the street's row then frames it, asks the Census lookup once and selects the pin's point",
+      atPin(tp.point) && !!tp.pin && typeAhead.lookedUp.length === 1 && typeAhead.lookedUp[0] === T_AT,
       JSON.stringify({ after: tp, lookedUp: typeAhead.lookedUp }));
     const loneStreet = await run(T_ADDRESS, (q, bounded) => (bounded ? [BESIDE] : []),
       () => /None of these has the house number 9/.test(document.getElementById("geo-status").textContent));
