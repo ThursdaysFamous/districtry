@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-11T17:48:56Z",
+  "generated": "2026-10-17T18:22:08Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -11,6 +11,7 @@
           "role": "Director"
         },
         {
+          "email": "Aliesha@alphapark.org",
           "name": "Aliesha Sullivan",
           "role": "Manager"
         }
@@ -28,10 +29,12 @@
       "filesIn": "Williamson",
       "heads": [
         {
+          "email": "mstoner@awlindsey.com",
           "name": "Mary Stoner",
           "role": "Director"
         },
         {
+          "email": "jennifer.leigh.sigler@gmail.com",
           "name": "Jennifer Sigler",
           "role": "Bookkeeper"
         }
@@ -69,6 +72,7 @@
           "role": "President"
         },
         {
+          "email": "info@aopld.org",
           "name": "Matt Honnold",
           "role": "Treasurer"
         }
@@ -85,11 +89,15 @@
     "Arthur Public Library District": {
       "board": [
         {
+          "email": "allen.cathy64@yahoo.com",
           "name": "Cathy Allen",
+          "phone": "(217) 317-1096",
           "role": "President"
         },
         {
+          "email": "adam@woodloft.com",
           "name": "Adam Fritz",
+          "phone": "(217) 543-2766",
           "role": "Treasurer"
         }
       ],
@@ -101,11 +109,15 @@
     "Ashley Public Library District": {
       "board": [
         {
+          "email": "hhdeaaron@gmail.com",
           "name": "Len Piasecki",
+          "phone": "(618) 534-5225",
           "role": "President"
         },
         {
+          "email": "amepplin@yahoo.com",
           "name": "Mary Dreas",
+          "phone": "(618) 521-6169",
           "role": "Treasurer"
         }
       ],
@@ -123,6 +135,7 @@
           "role": "President"
         },
         {
+          "email": "apldtreasurer@gmail.com",
           "name": "Brianne Risley",
           "role": "Treasurer"
         }
@@ -140,6 +153,7 @@
       "board": [
         {
           "name": "Debra Park",
+          "phone": "(309) 333-2518",
           "role": "President"
         },
         {
@@ -157,10 +171,12 @@
     "Atkinson Public Library District": {
       "board": [
         {
+          "email": "fmsm77@mchsi.com",
           "name": "Sherri Mapes",
           "role": "President"
         },
         {
+          "email": "Deedebrock@gmail.com",
           "name": "Devonne DeBrock",
           "role": "Treasurer"
         }
@@ -177,6 +193,7 @@
     "Atlanta Public Library District": {
       "board": [
         {
+          "email": "christopher.white@atlantapld.org",
           "name": "Christopher White",
           "role": "President"
         }
@@ -186,6 +203,7 @@
       "filesIn": "Logan",
       "heads": [
         {
+          "email": "sue.chinowth@atlantapld.org",
           "name": "Susan Chinowth",
           "role": "Treas./Admin."
         }
@@ -208,6 +226,7 @@
       "filesIn": "Piatt",
       "heads": [
         {
+          "email": "rledwards1025@gmail.com",
           "name": "Robert Edwards",
           "role": "Director"
         }
@@ -240,10 +259,12 @@
     "Barclay Public Library District": {
       "board": [
         {
+          "email": "j.munson@barclay.lib.il.us",
           "name": "Jean Munson",
           "role": "President"
         },
         {
+          "email": "kbrodbeck@barclay.lib.il.us",
           "name": "Katherine Brodbeck",
           "role": "Treasurer"
         }
@@ -261,10 +282,12 @@
     "Benton Public Library District": {
       "board": [
         {
+          "email": "dkclark_53@hotmail.com",
           "name": "Deborah Clark",
           "role": "President"
         },
         {
+          "email": "kathystorey72@gmail.com",
           "name": "Kathy Storey",
           "role": "Treasurer"
         }
@@ -311,7 +334,9 @@
     "Bradford Public Library District": {
       "board": [
         {
+          "email": "treasurerbpld@gmail.com",
           "name": "Barbara Fehr",
+          "phone": "(309) 264-6521",
           "role": "Trustee"
         }
       ],
@@ -320,6 +345,7 @@
       "filesIn": "Stark",
       "heads": [
         {
+          "email": "bdford.pld.rsa@gmail.com",
           "name": "Sarah Boehm",
           "role": "Director"
         }
@@ -338,6 +364,7 @@
       "filesIn": "Macoupin",
       "heads": [
         {
+          "email": "books@brightonpubliclibrary.org",
           "name": "Sheila Wilkie",
           "role": "Treas./Admin."
         }
@@ -352,6 +379,7 @@
     "Brown County Public Library District": {
       "board": [
         {
+          "email": "jflynn@fsb-tc.com",
           "name": "Jeremy Flynn",
           "role": "President"
         },
@@ -376,6 +404,7 @@
           "role": "President"
         },
         {
+          "email": "nvoumar@gmail.com",
           "name": "Monica Morrison",
           "role": "Treasurer"
         }
@@ -393,6 +422,7 @@
     "Bushnell Public Library District": {
       "board": [
         {
+          "email": "bplibrary.board@gmail.com",
           "name": "Donna Williams",
           "role": "President"
         },
@@ -427,6 +457,7 @@
       "filesIn": "Ogle",
       "heads": [
         {
+          "email": "jasons@byronlibrary.org",
           "name": "Jason Shirley",
           "role": "Director"
         }
@@ -459,11 +490,14 @@
     "Camargo Township District Library": {
       "board": [
         {
+          "email": "rosesvg@hotmail.com",
           "name": "Amy Rose",
           "role": "President"
         },
         {
+          "email": "slandeck@illinois.edu",
           "name": "Sandra Landeck",
+          "phone": "(217) 832-8146",
           "role": "Treasurer"
         }
       ],
@@ -478,11 +512,14 @@
     "Cambridge Public Library District": {
       "board": [
         {
+          "email": "gmrichter1975@gmail.com",
           "name": "Gary Richter",
+          "phone": "(309) 781-8857",
           "role": "President"
         },
         {
           "name": "John Roehrs",
+          "phone": "(309) 937-2245",
           "role": "Treasurer"
         }
       ],
@@ -494,19 +531,23 @@
     "Camp Point Public Library District": {
       "board": [
         {
+          "email": "bmock0907@gmail.com",
           "name": "Bobbi Mock",
           "role": "President"
-        },
-        {
-          "name": "Pat Sharow",
-          "role": "Sec./Treas."
         }
       ],
       "comptrollerCode": "001/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Adams",
+      "heads": [
+        {
+          "email": "psharow@adams.net",
+          "name": "Pat Sharow",
+          "role": "Treas./Admin."
+        }
+      ],
       "office": {
-        "address": "206 E. State St. P.O. Box 377",
+        "address": "206 E. State St P.O. Box 377",
         "city": "Camp Point IL 62320",
         "phone": "(217) 593-7021"
       }
@@ -514,11 +555,14 @@
     "Carlock Public Library District": {
       "board": [
         {
+          "email": "bethwagner85@gmail.com",
           "name": "Beth Wagner",
           "role": "President"
         },
         {
+          "email": "garrisond44@yahoo.com",
           "name": "David Garrison",
+          "phone": "(309) 846-0656",
           "role": "Treasurer"
         }
       ],
@@ -536,6 +580,7 @@
       "board": [
         {
           "name": "John C Dittmer",
+          "phone": "(217) 743-6260",
           "role": "President"
         },
         {
@@ -556,11 +601,15 @@
     "Caseyville Public Library District": {
       "board": [
         {
+          "email": "cbell@caseyvillelibrary.org",
           "name": "Christina Bell",
+          "phone": "(618) 407-4504",
           "role": "President"
         },
         {
+          "email": "jmauk@caseyvillelibrary.org",
           "name": "Jennifer Mauk",
+          "phone": "(618) 344-2768",
           "role": "Treasurer"
         }
       ],
@@ -597,11 +646,15 @@
     "Central Citizens' Library District": {
       "board": [
         {
+          "email": "rjlfarm@gmail.com",
           "name": "Robert Lemanager",
+          "phone": "(815) 228-2307",
           "role": "President"
         },
         {
+          "email": "scotts@centralenterprises.com",
           "name": "Scott Senffner",
+          "phone": "(815) 383-3127",
           "role": "Treasurer"
         }
       ],
@@ -613,15 +666,19 @@
     "Chadwick Public Library District": {
       "board": [
         {
+          "email": "abmarruffo@gmail.com",
           "name": "Aimee Marruffo",
+          "phone": "(815) 590-8706",
           "role": "President"
         },
         {
           "name": "Laurie Allspaugh",
+          "phone": "(815) 441-3760",
           "role": "V-President"
         },
         {
           "name": "Wendy Houzenga",
+          "phone": "(815) 564-7359",
           "role": "Treasurer"
         }
       ],
@@ -636,6 +693,7 @@
     "Chatham Area Public Library District": {
       "board": [
         {
+          "email": "mroubitc@chathamlib.org",
           "name": "Michael Roubitchek",
           "role": "President"
         }
@@ -659,11 +717,15 @@
     "Chatsworth Area Library District": {
       "board": [
         {
+          "email": "janetm@fairburyvision.com",
           "name": "Janet Millis",
+          "phone": "(815) 507-6812",
           "role": "President"
         },
         {
+          "email": "lisaaberle@gmail.com",
           "name": "Lisa Aberle",
+          "phone": "(815) 848-4812",
           "role": "Treasurer"
         }
       ],
@@ -677,11 +739,15 @@
     "Chenoa Public Library District": {
       "board": [
         {
+          "email": "dgroce@prairiecentral.org",
           "name": "Dan Groce",
+          "phone": "(815) 848-8264",
           "role": "President"
         },
         {
+          "email": "dneubauer81@hotmail.com",
           "name": "Dawn Neubauer",
+          "phone": "(309) 826-6721",
           "role": "Treasurer"
         }
       ],
@@ -700,6 +766,7 @@
           "role": "Director"
         },
         {
+          "email": "rebeccam@cherryvalleylib.org",
           "name": "Rebecca Mundell",
           "role": "Manager"
         }
@@ -714,10 +781,12 @@
     "Chillicothe Public Library District": {
       "board": [
         {
+          "email": "dcody@chillipld.org",
           "name": "Debbie Cody",
           "role": "President"
         },
         {
+          "email": "trazo@chillipld.org",
           "name": "Tom Razo",
           "role": "Treasurer"
         }
@@ -735,6 +804,7 @@
     "Cissna Park Community Library District": {
       "board": [
         {
+          "email": "heidi.breymeyer@cpschool.org",
           "name": "Heidi Breymeyer",
           "role": "Sec./Treas."
         }
@@ -758,10 +828,13 @@
       "board": [
         {
           "name": "Janet Rigg",
+          "phone": "(217) 883-3337",
           "role": "President"
         },
         {
+          "email": "bgraff@jwcc.edu",
           "name": "Brenda Graff",
+          "phone": "(217) 257-3051",
           "role": "Treasurer"
         }
       ],
@@ -796,6 +869,7 @@
       "filesIn": "Mcdonough",
       "heads": [
         {
+          "email": "abern39@comcast.net",
           "name": "Steve Altenbern",
           "role": "Accountant"
         }
@@ -810,6 +884,7 @@
     "Colona District Public Library": {
       "board": [
         {
+          "email": "shgolf18@aol.com",
           "name": "Steven Hughes",
           "role": "President"
         }
@@ -833,6 +908,7 @@
     "Cordova District Library": {
       "board": [
         {
+          "email": "mpeterson@cordovalibrary.com",
           "name": "Merredith Peterson",
           "role": "Treasurer"
         }
@@ -856,6 +932,7 @@
     "Crab Orchard Public Library District": {
       "board": [
         {
+          "email": "bkucharskicopl@gmail.com",
           "name": "Bonnie Kucharski",
           "role": "President"
         }
@@ -879,7 +956,7 @@
     "Creston-Dement Public Library District": {
       "board": [
         {
-          "name": "DOUG KROUPA",
+          "name": "Doug Kroupa",
           "role": "President"
         }
       ],
@@ -888,11 +965,12 @@
       "filesIn": "Ogle",
       "heads": [
         {
-          "name": "KRISTI SCHERER",
+          "email": "KSCHERER.CRESTONLIB@GMAIL.COM",
+          "name": "Kristi Scherer",
           "role": "C.E.O."
         },
         {
-          "name": "MOLLY JOHNSON",
+          "name": "Molly Johnson",
           "role": "C.F.O."
         }
       ],
@@ -906,10 +984,12 @@
     "Creve Coeur Public Library District": {
       "board": [
         {
+          "email": "carriebryant1971@gmail.com",
           "name": "Carrie Bryant",
           "role": "President"
         },
         {
+          "email": "jofleck@comcast.net",
           "name": "Joanna Fleckenstein",
           "role": "Treasurer"
         }
@@ -926,7 +1006,8 @@
     "Daugherty Public Library District": {
       "board": [
         {
-          "name": "KIM KUNI",
+          "email": "emtdqueokie@gmail.com",
+          "name": "Kim Kuni",
           "role": "President"
         }
       ],
@@ -935,11 +1016,13 @@
       "filesIn": "St. Clair",
       "heads": [
         {
-          "name": "CAROL BROCKMEYER",
+          "email": "carolb@dupolibrary.org",
+          "name": "Carol Brockmeyer",
           "role": "Director"
         },
         {
-          "name": "IDUS CLEVELAND",
+          "email": "i.d.cleveland@gmail.com",
+          "name": "Idus Cleveland",
           "role": "Fin. Officer"
         }
       ],
@@ -953,10 +1036,13 @@
       "board": [
         {
           "name": "Shea Kamp",
+          "phone": "(815) 540-4650",
           "role": "President"
         },
         {
+          "email": "linda.brown1240@frontier.com",
           "name": "Linda Brown",
+          "phone": "(309) 712-6144",
           "role": "Treasurer"
         }
       ],
@@ -968,11 +1054,15 @@
     "Dodge Memorial Public Library District": {
       "board": [
         {
+          "email": "lemccoy72@yahoo.com",
           "name": "Elizabeth McCoy",
+          "phone": "(573) 270-7749",
           "role": "President"
         },
         {
+          "email": "kevingerrie91@msn.com",
           "name": "Gerrie McCoy",
+          "phone": "(202) 578-3934",
           "role": "Sec./Treas."
         }
       ],
@@ -990,7 +1080,9 @@
           "role": "President"
         },
         {
+          "email": "reevescl18@yahoo.com",
           "name": "Carol Reeves",
+          "phone": "(618) 697-3316",
           "role": "Treasurer"
         }
       ],
@@ -1010,6 +1102,7 @@
           "role": "President"
         },
         {
+          "email": "ajcalderini@gmail.com",
           "name": "Amanda Calderini",
           "role": "Treasurer"
         }
@@ -1041,10 +1134,12 @@
     "East Dubuque District Library": {
       "board": [
         {
+          "email": "smlange713@gmail.com",
           "name": "Stephanie Lange",
           "role": "President"
         },
         {
+          "email": "leute.rick@frontier.com",
           "name": "Richard Leute",
           "role": "Treasurer"
         }
@@ -1089,7 +1184,9 @@
           "role": "Librarian"
         },
         {
+          "email": "dfever@elpasoil.org",
           "name": "David Fever",
+          "phone": "(309) 275-0139",
           "role": "Bookkeeper"
         }
       ],
@@ -1100,6 +1197,7 @@
     "Eldorado Memorial Public Library District": {
       "board": [
         {
+          "email": "jr918252@gmail.com",
           "name": "Jeff Campbell",
           "role": "President"
         }
@@ -1123,11 +1221,15 @@
     "Elkhart Public Library District": {
       "board": [
         {
+          "email": "pls124@hotmail.com",
           "name": "Phil Shelton",
+          "phone": "(217) 947-2009",
           "role": "President"
         },
         {
+          "email": "moughanelectric@yahoo.com",
           "name": "Mark Moughan",
+          "phone": "(217) 971-6408",
           "role": "Treasurer"
         }
       ],
@@ -1169,6 +1271,7 @@
           "role": "President"
         },
         {
+          "email": "schulzedh77@gmail.com",
           "name": "Helene Schulze",
           "role": "Treasurer"
         }
@@ -1185,7 +1288,7 @@
     "Evans Public Library District": {
       "board": [
         {
-          "name": "JOANNA HELM",
+          "name": "Joanna Helm",
           "role": "President"
         }
       ],
@@ -1194,7 +1297,8 @@
       "filesIn": "Fayette",
       "heads": [
         {
-          "name": "KIM SHANKS",
+          "email": "JKS62471@YAHOO.COM",
+          "name": "Kim Shanks",
           "role": "Treas./Admin."
         }
       ],
@@ -1211,6 +1315,7 @@
           "role": "President"
         },
         {
+          "email": "fwlibrary@royell.org",
           "name": "Cassandra Rovey",
           "role": "Treasurer"
         }
@@ -1231,6 +1336,7 @@
           "role": "President"
         },
         {
+          "email": "info@farmingtonpublic.org",
           "name": "Kristi Gronewold",
           "role": "Treasurer"
         }
@@ -1247,6 +1353,7 @@
     "Flagg-Rochelle Public Library District": {
       "board": [
         {
+          "email": "haggestads@comcast.net",
           "name": "Teresa Haggestad",
           "role": "President"
         }
@@ -1256,6 +1363,7 @@
       "filesIn": "Ogle",
       "heads": [
         {
+          "email": "juanm@flaggrochellepubliclibrary.org",
           "name": "Juan Martinez, Jr.",
           "role": "Dep. Director"
         }
@@ -1270,14 +1378,17 @@
     "Flanagan Public Library District": {
       "board": [
         {
+          "email": "fpldpresident@gmail.com",
           "name": "Kimberly Wargo",
           "role": "President"
         },
         {
+          "email": "fpldtreasurer@gmail.com",
           "name": "Richard Harnish",
           "role": "Treasurer"
         },
         {
+          "email": "fpldtrusteemk@gmail.com",
           "name": "Martin Kudla",
           "role": "Secretary"
         }
@@ -1294,6 +1405,7 @@
     "Fondulac Public Library District": {
       "board": [
         {
+          "email": "maryjocarbiener@fondulaclibrary.org",
           "name": "Mary Jo Carbiener",
           "role": "Treasurer"
         }
@@ -1317,7 +1429,8 @@
     "Forrest Public Library District": {
       "board": [
         {
-          "name": "PEG AUSTMAN",
+          "email": "pegaustman@gmail.com",
+          "name": "Peg Austman",
           "role": "President"
         }
       ],
@@ -1326,7 +1439,8 @@
       "filesIn": "Livingston",
       "heads": [
         {
-          "name": "MARSHA LANZ",
+          "email": "mmlanz01@outlook.com",
+          "name": "Marsha Lanz",
           "role": "Treas./Admin."
         }
       ],
@@ -1343,7 +1457,7 @@
       "filesIn": "Adams",
       "heads": [
         {
-          "name": "VALERIE SIMMONS",
+          "name": "Valerie Simmons",
           "role": "Director"
         }
       ],
@@ -1352,11 +1466,15 @@
     "Freeburg Area Library District": {
       "board": [
         {
+          "email": "T8989@hotmail.com",
           "name": "Tracey Drennen-Alexander",
+          "phone": "(618) 978-3847",
           "role": "President"
         },
         {
+          "email": "dora.becker@att.net",
           "name": "Dora Becker",
+          "phone": "(618) 539-3398",
           "role": "Treasurer"
         }
       ],
@@ -1368,6 +1486,7 @@
     "Galatia Public Library District": {
       "board": [
         {
+          "email": "tsisneygplibrary@gmail.com",
           "name": "Therese Sisney",
           "role": "President"
         },
@@ -1392,6 +1511,7 @@
           "role": "President"
         },
         {
+          "email": "Larys@galenalibrary.org",
           "name": "Debbie Larys",
           "role": "Treasurer"
         }
@@ -1413,6 +1533,7 @@
       "heads": [
         {
           "name": "Lauren Heck",
+          "phone": "(815) 875-1175",
           "role": "Librarian"
         }
       ],
@@ -1423,6 +1544,7 @@
     "Geneseo Public Library District": {
       "board": [
         {
+          "email": "pelib1@yahoo.com",
           "name": "Jim Luikart",
           "role": "Treasurer"
         }
@@ -1446,10 +1568,12 @@
     "Germantown Public Library District": {
       "board": [
         {
+          "email": "gma@gtownlibrary.org",
           "name": "Fran Holtmann",
           "role": "President"
         },
         {
+          "email": "kamik@gtownlibrary.org",
           "name": "Brenda Theising",
           "role": "Treasurer"
         }
@@ -1469,10 +1593,12 @@
       "filesIn": "Mclean",
       "heads": [
         {
+          "email": "jeanneh@bloomingtonlibrary.org",
           "name": "Jeanne Hamilton",
           "role": "Director"
         },
         {
+          "email": "kathyj@bloomingtonlibrary.org",
           "name": "Kathy Jeakins",
           "role": "Asst. Treasurer"
         }
@@ -1486,6 +1612,7 @@
     "Goose Creek District Library": {
       "board": [
         {
+          "email": "robin@lampertlane.com",
           "name": "Robin Lampert-Mitchell",
           "role": "President"
         }
@@ -1495,6 +1622,7 @@
       "filesIn": "Piatt",
       "heads": [
         {
+          "email": "m.adamsgcpl@gmail.com",
           "name": "Mia Adams",
           "role": "Director"
         }
@@ -1513,12 +1641,13 @@
           "role": "President"
         },
         {
+          "email": "libraryprint1401@gmail.com",
           "name": "Adriana Calamaco",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "050/005/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Lasalle",
       "office": {
         "address": "1401 W. Main Street",
@@ -1533,6 +1662,7 @@
           "role": "President"
         },
         {
+          "email": "gwcpld4@gmail.com",
           "name": "Karen Janssen",
           "role": "Treasurer"
         }
@@ -1561,10 +1691,12 @@
     "H.A. Peine District Library": {
       "board": [
         {
+          "email": "board.minierlibrary@gmail.com",
           "name": "Gail Peine",
           "role": "President"
         },
         {
+          "email": "karen.graber64@gmail.com",
           "name": "Karen Graber",
           "role": "V-President"
         }
@@ -1588,6 +1720,7 @@
           "role": "Librarian"
         },
         {
+          "email": "hdltrustees@harrisburglibrary.org",
           "name": "Sarah Wofford",
           "role": "Treas./Admin."
         }
@@ -1606,6 +1739,7 @@
           "role": "President"
         },
         {
+          "email": "mlayton57@gmail.com",
           "name": "Mary Layton",
           "role": "Treasurer"
         }
@@ -1630,6 +1764,7 @@
           "role": "Director"
         },
         {
+          "email": "sue.hardin@haynerlibrary.org",
           "name": "Sue Hardin",
           "role": "C.F.O."
         }
@@ -1644,11 +1779,15 @@
     "Henderson County Public Library District": {
       "board": [
         {
+          "email": "russell@hcil.net",
           "name": "Diana Russell",
+          "phone": "(309) 221-0821",
           "role": "President"
         },
         {
+          "email": "jenpainter48@gmail.com",
           "name": "Jennifer Painter",
+          "phone": "(217) 659-7559",
           "role": "Treasurer"
         }
       ],
@@ -1661,10 +1800,12 @@
       "board": [
         {
           "name": "Kira Stevens",
+          "phone": "(217) 872-1438",
           "role": "President"
         },
         {
           "name": "Amy Roehrig",
+          "phone": "(309) 824-8549",
           "role": "Treasurer"
         }
       ],
@@ -1682,6 +1823,7 @@
           "role": "President"
         },
         {
+          "email": "cnaylor@hillsborolibrary.com",
           "name": "Carol Naylor",
           "role": "Trustee"
         }
@@ -1699,6 +1841,7 @@
     "Hoopeston Public Library District": {
       "board": [
         {
+          "email": "boardoftrustees@hooplib.org",
           "name": "Tom Theesfield",
           "role": "President"
         }
@@ -1708,6 +1851,7 @@
       "filesIn": "Vermilion",
       "heads": [
         {
+          "email": "tricia@hooplib.org",
           "name": "Tricia Freeland",
           "role": "Director"
         }
@@ -1722,6 +1866,7 @@
       "board": [
         {
           "name": "Ronelle Roselieb",
+          "phone": "(309) 525-1440",
           "role": "President"
         }
       ],
@@ -1730,7 +1875,9 @@
       "filesIn": "Henry",
       "heads": [
         {
+          "email": "rachelsmith.smith7@gmail.com",
           "name": "Rachel Smith",
+          "phone": "(309) 631-0355",
           "role": "Treas./Admin."
         }
       ],
@@ -1743,7 +1890,9 @@
           "role": "President"
         },
         {
+          "email": "diannelibrary3@gmail.com",
           "name": "Dianne Feasley",
+          "phone": "(309) 660-1888",
           "role": "Trustee"
         }
       ],
@@ -1760,7 +1909,9 @@
     "Illinois Prairie District Public Library": {
       "board": [
         {
+          "email": "jackaweddle@gmail.com",
           "name": "Jack Weddle",
+          "phone": "(309) 645-0963",
           "role": "Treasurer"
         }
       ],
@@ -1769,6 +1920,7 @@
       "filesIn": "Woodford",
       "heads": [
         {
+          "email": "dawn@ipdpl.org",
           "name": "Dawn Smith",
           "role": "Mgr./Director"
         }
@@ -1785,7 +1937,8 @@
           "role": "President"
         },
         {
-          "name": "TRISHA HILDEBRANDT",
+          "email": "maryellengass@comcast.net",
+          "name": "Trisha Hildebrandt",
           "role": "Treasurer"
         }
       ],
@@ -1805,7 +1958,8 @@
           "role": "President"
         },
         {
-          "name": "TERRI DICKERSON",
+          "email": "boonestax4@gmail.com",
+          "name": "Terri Dickerson",
           "role": "Treasurer"
         }
       ],
@@ -1821,10 +1975,12 @@
     "Julia Hull District Library": {
       "board": [
         {
+          "email": "jmilr93@gmail.com",
           "name": "Jason Miller",
           "role": "President"
         },
         {
+          "email": "opgmickey@gmail.com",
           "name": "Jeff Mickey",
           "role": "Treasurer"
         }
@@ -1846,6 +2002,7 @@
         },
         {
           "name": "Lea Eastman",
+          "phone": "(309) 853-3333 Ext: 1136",
           "role": "Treasurer"
         }
       ],
@@ -1871,6 +2028,7 @@
       "filesIn": "Hancock",
       "heads": [
         {
+          "email": "princessofdv@yahoo.com",
           "name": "Brenda Coulter",
           "role": "Director"
         }
@@ -1885,11 +2043,15 @@
     "LaMoille-Clarion Public Library District": {
       "board": [
         {
+          "email": "sarahstuepfert@gmail.com",
           "name": "Sarah Stuepfert",
+          "phone": "(815) 866-2154",
           "role": "President"
         },
         {
+          "email": "bill@chris-eller.com",
           "name": "William Schwabenland",
+          "phone": "(815) 878-8250",
           "role": "Treasurer"
         }
       ],
@@ -1901,7 +2063,8 @@
     "Lawrence Public Library District": {
       "board": [
         {
-          "name": "JOHN WHITE",
+          "email": "office_weger@yahoo.com",
+          "name": "John White",
           "role": "President"
         },
         {
@@ -1922,10 +2085,12 @@
     "Lena Community District Library": {
       "board": [
         {
+          "email": "foleyfrm@gmail.com",
           "name": "Charlene Foley",
           "role": "President"
         },
         {
+          "email": "kathybenters@yahoo.com",
           "name": "Kathleen Benters",
           "role": "Treasurer"
         }
@@ -1942,10 +2107,12 @@
     "Lewistown Carnegie Public Library District": {
       "board": [
         {
+          "email": "lcpldboard@yahoo.com",
           "name": "Patty Wiegers",
           "role": "President"
         },
         {
+          "email": "lcpldkids@yahoo.com",
           "name": "Nancy Havera",
           "role": "Treasurer"
         }
@@ -1962,11 +2129,15 @@
     "Lexington Public Library District": {
       "board": [
         {
+          "email": "sljaug87@yahoo.com",
           "name": "Lucy Loper",
+          "phone": "(309) 310-3518",
           "role": "President"
         },
         {
+          "email": "tpayneschreiber@gmail.com",
           "name": "Terri Schreiber",
+          "phone": "(708) 302-1813",
           "role": "Treasurer"
         }
       ],
@@ -1982,6 +2153,7 @@
           "role": "President"
         },
         {
+          "email": "lill@lmelibrary.org",
           "name": "Diane Smith",
           "role": "Treasurer"
         }
@@ -1998,10 +2170,12 @@
     "Lincoln Public Library District": {
       "board": [
         {
+          "email": "rogermichalsen.121@gmail.com",
           "name": "Roger Michalsen",
           "role": "President"
         },
         {
+          "email": "srohrerlpl@gmail.com",
           "name": "Susan Rohrer",
           "role": "Treasurer"
         }
@@ -2045,7 +2219,9 @@
           "role": "President"
         },
         {
+          "email": "carolstoens@yahoo.com",
           "name": "Carol Stoens",
+          "phone": "(815) 368-3533",
           "role": "Treasurer"
         }
       ],
@@ -2059,10 +2235,12 @@
     "Lovington Public Library District": {
       "board": [
         {
+          "email": "lovbm6@gmail.com",
           "name": "Cara Rennert",
           "role": "President"
         },
         {
+          "email": "lovbm2@gmail.com",
           "name": "Rachel Kinney",
           "role": "Treasurer"
         }
@@ -2083,6 +2261,7 @@
           "role": "President"
         },
         {
+          "email": "vrevircm@adams.net",
           "name": "Carol Clark",
           "role": "Treasurer"
         }
@@ -2099,6 +2278,7 @@
     "Mackinaw District Public Library": {
       "board": [
         {
+          "email": "jdembry@yahoo.com",
           "name": "John Embry",
           "role": "President"
         }
@@ -2108,6 +2288,7 @@
       "filesIn": "Tazewell",
       "heads": [
         {
+          "email": "maclibrarian84@yahoo.com",
           "name": "Kiana Nafziger",
           "role": "Librarian"
         }
@@ -2121,11 +2302,11 @@
     "Macomb Public Library District": {
       "board": [
         {
-          "name": "GEORGE WANAMAKER",
+          "name": "George Wanamaker",
           "role": "Chairperson"
         },
         {
-          "name": "STACY DORSETT",
+          "name": "Stacy Dorsett",
           "role": "Treasurer"
         }
       ],
@@ -2150,6 +2331,7 @@
       "filesIn": "Knox",
       "heads": [
         {
+          "email": "leslielmartin72@gmail.com",
           "name": "Leslie Taylor",
           "role": "Treas./Admin."
         }
@@ -2163,6 +2345,7 @@
     "Maroa Public Library District": {
       "board": [
         {
+          "email": "nsmech@hotmail.com",
           "name": "Tony Norton",
           "role": "President"
         },
@@ -2184,11 +2367,13 @@
     "Marrowbone Public Library District": {
       "board": [
         {
+          "email": "timm315@yahoo.com",
           "name": "Timothy Moon",
           "role": "Trustee"
         },
         {
           "name": "Bettina Emel",
+          "phone": "(217) 335-3014",
           "role": "Treasurer"
         }
       ],
@@ -2204,22 +2389,29 @@
     "Marshall Area Public Library District": {
       "board": [
         {
-          "name": "Jeff Buress",
+          "name": "Jeff Burress",
+          "phone": "(812) 249-0805",
           "role": "President"
         },
         {
+          "email": "millerae@mchsi.com",
           "name": "Elaine Miller",
+          "phone": "(618) 553-3152",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "012/050/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Clark",
-      "office": {}
+      "office": {
+        "address": "11717 North River Road",
+        "city": "Marshall IL 62441"
+      }
     },
     "Martinsville Public Library District": {
       "board": [
         {
+          "email": "mvillelibrary2023@gmail.com",
           "name": "Stacy Callahan",
           "role": "Treasurer"
         },
@@ -2246,10 +2438,13 @@
     "Mason City Public Library District": {
       "board": [
         {
+          "email": "trustees@masoncitylibrary.org",
           "name": "Elizabeth Edison",
+          "phone": "(217) 482-5281",
           "role": "President"
         },
         {
+          "email": "director@masoncitylibrary.org",
           "name": "Kay Zimmerman",
           "role": "Treasurer"
         }
@@ -2265,6 +2460,7 @@
     "Milford District Library": {
       "board": [
         {
+          "email": "scrist555@gmail.com",
           "name": "Sue Crist",
           "role": "Treasurer"
         }
@@ -2288,11 +2484,15 @@
     "Milledgeville Public Library": {
       "board": [
         {
+          "email": "pattersonl1962@gmail.com",
           "name": "Liz Patterson",
+          "phone": "(815) 590-3450",
           "role": "President"
         },
         {
+          "email": "wrigshad@outlook.com",
           "name": "Jacob Ryder",
+          "phone": "(309) 429-9000",
           "role": "Treasurer"
         }
       ],
@@ -2329,11 +2529,15 @@
     "Mineral-Gold Public Library District": {
       "board": [
         {
-          "name": "CHARLOTTE RAKESTRAW",
+          "email": "rakestraw12@icloud.com",
+          "name": "Charlotte Rakestraw",
+          "phone": "(309) 288-5153",
           "role": "President"
         },
         {
-          "name": "NANCY SALZMANN",
+          "email": "newmi4@hotmail.com",
+          "name": "Nancy Salzmann",
+          "phone": "(309) 912-0511",
           "role": "Treasurer"
         }
       ],
@@ -2345,6 +2549,7 @@
     "Mississippi Valley Library District": {
       "board": [
         {
+          "email": "board@mvld.org",
           "name": "Ian Ashcraft",
           "role": "Treasurer"
         }
@@ -2354,6 +2559,7 @@
       "filesIn": "Madison",
       "heads": [
         {
+          "email": "kylaw@mvld.org",
           "name": "Kyla Waltermire",
           "role": "Director"
         }
@@ -2371,6 +2577,7 @@
           "role": "President"
         },
         {
+          "email": "tbrooksjune1@gmail.com",
           "name": "Theresa Brooks",
           "role": "Treasurer"
         }
@@ -2390,6 +2597,7 @@
       "filesIn": "Grundy",
       "heads": [
         {
+          "email": "kbarowsky@morrislibrary.com",
           "name": "Karen Barowsky",
           "role": "Acting Director"
         },
@@ -2408,10 +2616,12 @@
     "Morton Public Library District": {
       "board": [
         {
+          "email": "libraryboard@mortonlibrary.org",
           "name": "Laura Turner",
           "role": "President"
         },
         {
+          "email": "accounting@mortonlibrary.org",
           "name": "Kim Gryl",
           "role": "Treasurer"
         }
@@ -2429,6 +2639,7 @@
     "Mount Hope-Funk's Grove Townships Public Library District": {
       "board": [
         {
+          "email": "toolrep@mtco.com",
           "name": "Scott Sheldon",
           "role": "President"
         }
@@ -2449,10 +2660,13 @@
     "Mount Pulaski Public Library District": {
       "board": [
         {
+          "email": "trustee1.mpl@gmail.com",
           "name": "Michelle Fuller",
+          "phone": "(217) 792-5919",
           "role": "President"
         },
         {
+          "email": "Moochelle3@gmail.com",
           "name": "Michelle Hagenbuch",
           "role": "Treasurer"
         }
@@ -2474,6 +2688,7 @@
           "role": "President"
         },
         {
+          "email": "library@mtzion.lib.il.us",
           "name": "Michele Stine",
           "role": "Treasurer"
         }
@@ -2491,11 +2706,15 @@
     "Moyer District Library": {
       "board": [
         {
+          "email": "jmmarx2@gmail.com",
           "name": "Joy Zimmerman",
+          "phone": "(217) 781-2555",
           "role": "President"
         },
         {
+          "email": "nuss.erin@gcmsk12.org",
           "name": "Erin Nuss",
+          "phone": "(847) 207-8813",
           "role": "Secretary"
         }
       ],
@@ -2527,14 +2746,8 @@
       }
     },
     "New Athens District Library": {
-      "board": [
-        {
-          "name": "Laura Wildermuth",
-          "role": "Treasurer"
-        }
-      ],
       "comptrollerCode": "088/005/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "St. Clair",
       "heads": [
         {
@@ -2543,10 +2756,7 @@
         }
       ],
       "office": {
-        "address": "201 N Van Buren",
-        "city": "New Athens IL 62264",
-        "email": "ericapyle@newathenslibrary.org",
-        "phone": "(618) 475-3255"
+        "email": "ericapyle@newathenslibrary.org"
       }
     },
     "New Windsor Public Library District": {
@@ -2570,10 +2780,12 @@
     "Newman Regional Library District": {
       "board": [
         {
+          "email": "webemcgee@gmail.com",
           "name": "Kim McGee",
           "role": "President"
         },
         {
+          "email": "bwatson@newmanlibrary.org",
           "name": "Ben Watson",
           "role": "Treasurer"
         }
@@ -2591,6 +2803,7 @@
     "Norris City Memorial Public Library District": {
       "board": [
         {
+          "email": "ncmpldtrustees@yahoo.com",
           "name": "Joe Skaggs",
           "role": "President"
         }
@@ -2600,7 +2813,9 @@
       "filesIn": "White",
       "heads": [
         {
+          "email": "libraryncil@yahoo.com",
           "name": "Nicole Inboden",
+          "phone": "(618) 373-3713",
           "role": "Director"
         }
       ],
@@ -2612,11 +2827,14 @@
     "North Pike Library District": {
       "board": [
         {
+          "email": "deniseconkright@gmail.com",
           "name": "Denise Conkright",
+          "phone": "(217) 257-8013",
           "role": "President"
         },
         {
           "name": "Chance Vose",
+          "phone": "(217) 491-2794",
           "role": "Treasurer"
         }
       ],
@@ -2634,10 +2852,12 @@
       "filesIn": "Winnebago",
       "heads": [
         {
+          "email": "jonmarkb@northsld.org",
           "name": "Jon Mark Bolthouse",
           "role": "Director"
         },
         {
+          "email": "brianm@northsld.org",
           "name": "Brian McMahon",
           "role": "Manager"
         }
@@ -2651,10 +2871,12 @@
     "Oakwood Public Library District": {
       "board": [
         {
+          "email": "rsandusky@danvillepubliclibrary.org",
           "name": "Ruey Sandusky",
           "role": "President"
         },
         {
+          "email": "cgrupe59@yahoo.com",
           "name": "Christine Grupe",
           "role": "Treasurer"
         }
@@ -2679,7 +2901,9 @@
           "role": "Director"
         },
         {
+          "email": "pcleary4@hotmail.com",
           "name": "Paula Cleary",
+          "phone": "(815) 998-2612",
           "role": "Acting Agent"
         }
       ],
@@ -2692,6 +2916,7 @@
           "role": "President"
         },
         {
+          "email": "eweistart@oglesbylibrary.org",
           "name": "Janet Pearson",
           "role": "Treasurer"
         }
@@ -2709,15 +2934,21 @@
     "Ohio Public Library District": {
       "board": [
         {
+          "email": "romoalbrecht@gmail.com",
           "name": "Romaine Albrecht",
+          "phone": "(815) 878-0837",
           "role": "President"
         },
         {
+          "email": "marknada2@yahoo.com",
           "name": "Angie McDonald",
+          "phone": "(815) 303-3762",
           "role": "Treasurer"
         },
         {
+          "email": "pams424@msn.com",
           "name": "Pamela Gonigam",
+          "phone": "(309) 696-4473",
           "role": "Secretary"
         }
       ],
@@ -2747,6 +2978,7 @@
     "Oregon Public Library District": {
       "board": [
         {
+          "email": "board@oregonpubliclibrary.com",
           "name": "Richard Bunton",
           "role": "President"
         },
@@ -2768,6 +3000,7 @@
     "Palestine Public Library District": {
       "board": [
         {
+          "email": "kdelder@yahoo.com",
           "name": "Kristie Elder",
           "role": "Treasurer"
         }
@@ -2795,6 +3028,7 @@
           "role": "President"
         },
         {
+          "email": "kimtipsord@gmail.com",
           "name": "Kimberly Tipsord",
           "role": "Treasurer"
         }
@@ -2830,7 +3064,9 @@
     "Pecatonica Public Library District": {
       "board": [
         {
+          "email": "munsonk2002@yahoo.com",
           "name": "Karen Munson",
+          "phone": "(815) 847-8157",
           "role": "Treasurer"
         }
       ],
@@ -2850,7 +3086,9 @@
     "Pembroke Public Library District": {
       "board": [
         {
+          "email": "ppldi.t574@gmail.com",
           "name": "Carol Burton",
+          "phone": "(815) 954-7051",
           "role": "President"
         }
       ],
@@ -2874,6 +3112,7 @@
           "role": "Director"
         },
         {
+          "email": "eschaub@perulibrary.org",
           "name": "Emily Schaub",
           "role": "Director"
         }
@@ -2888,11 +3127,15 @@
     "Piper City Public Library District": {
       "board": [
         {
+          "email": "rsmccoy65@gmail.com",
           "name": "Rhonda McCoy",
+          "phone": "(765) 490-2270",
           "role": "President"
         },
         {
+          "email": "ajohns70@hotmail.com",
           "name": "Anne Johnson",
+          "phone": "(815) 848-3752",
           "role": "Sec./Treas."
         }
       ],
@@ -2906,11 +3149,15 @@
     "Polo Public Library District": {
       "board": [
         {
+          "email": "mom2twovikings@gmail.com",
           "name": "Beth Sundman",
+          "phone": "(269) 449-8345",
           "role": "President"
         },
         {
+          "email": "kjones@poloschools.net",
           "name": "Kelsi Jones",
+          "phone": "(815) 677-7249",
           "role": "Treasurer"
         }
       ],
@@ -2953,6 +3200,7 @@
       "filesIn": "Cass",
       "heads": [
         {
+          "email": "pspldkesselring@gmail.com",
           "name": "Kevin Kesselring",
           "role": "Treas./Admin."
         }
@@ -2970,6 +3218,7 @@
           "role": "President"
         },
         {
+          "email": "mcalbow@putnamcountylibrary.org",
           "name": "Joan Augustine",
           "role": "Treasurer"
         }
@@ -2987,6 +3236,7 @@
     "Reddick Public Library District": {
       "board": [
         {
+          "email": "n.reino@sbcglobal.net",
           "name": "Neil Reinhardt",
           "role": "President"
         },
@@ -3008,11 +3258,15 @@
     "Rick Warren Memorial Public Library District": {
       "board": [
         {
+          "email": "mhorstmann97@gmail.com",
           "name": "MaryAnn Horstmann",
+          "phone": "(618) 525-9799",
           "role": "Treasurer"
         },
         {
+          "email": "jelettalbrant@gmail.com",
           "name": "Jeletta Brant",
+          "phone": "(618) 708-3637",
           "role": "President"
         }
       ],
@@ -3032,10 +3286,12 @@
     "River Valley District Library": {
       "board": [
         {
+          "email": "jschadt.trustee@rivervalleylibrary.org",
           "name": "Jan Schadt",
           "role": "President"
         },
         {
+          "email": "Jstalsberg.trustee@rivervalleylibrary.org",
           "name": "Jordan Stalsberg",
           "role": "Treasurer"
         }
@@ -3067,6 +3323,7 @@
     "Robert W. Rowe Public Library District": {
       "board": [
         {
+          "email": "Mohara518@gmail.com",
           "name": "Mary Beth O'Hara",
           "role": "Treasurer"
         }
@@ -3092,10 +3349,12 @@
       "filesIn": "Crawford",
       "heads": [
         {
+          "email": "douglas.roberts.rpld@outlook.com",
           "name": "Douglas Roberts",
           "role": "Director"
         },
         {
+          "email": "janiceshick@outlook.com",
           "name": "Janice Shick",
           "role": "Accountant"
         }
@@ -3129,10 +3388,12 @@
       "filesIn": "Whiteside",
       "heads": [
         {
+          "email": "rfdistrict10@gmail.com",
           "name": "Amy Lego",
           "role": "Director"
         },
         {
+          "email": "rfdistrict@yahoo.com",
           "name": "Karla Portner",
           "role": "Clerk/Treas."
         }
@@ -3146,11 +3407,15 @@
     "Rock River Library District": {
       "board": [
         {
+          "email": "patheld43@hotmail.com",
           "name": "Pat Held",
+          "phone": "(563) 508-1690",
           "role": "President"
         },
         {
+          "email": "scfulbaw@gmail.com",
           "name": "Stacy Bawden",
+          "phone": "(309) 781-9146",
           "role": "Treasurer"
         }
       ],
@@ -3162,7 +3427,9 @@
     "Royalton Public Library District": {
       "board": [
         {
+          "email": "cathly8062@gmail.com",
           "name": "Cathy Lyons",
+          "phone": "(815) 601-9400",
           "role": "Acting President"
         }
       ],
@@ -3171,7 +3438,9 @@
       "filesIn": "Franklin",
       "heads": [
         {
+          "email": "mlssajo@yahoo.com",
           "name": "Melissa Peebels",
+          "phone": "(618) 923-3507",
           "role": "C.F.O."
         }
       ],
@@ -3182,11 +3451,15 @@
     "Saint Elmo Public Library District": {
       "board": [
         {
-          "name": "TONY KOBERLEIN",
+          "email": "aqkoberlein@hotmail.com",
+          "name": "Tony Koberlein",
+          "phone": "(618) 829-5326",
           "role": "President"
         },
         {
-          "name": "CONNIE KAMNICK",
+          "email": "ckamnick@gmail.com",
+          "name": "Connie Kamnick",
+          "phone": "(217) 415-5242",
           "role": "Treasurer"
         }
       ],
@@ -3202,6 +3475,7 @@
           "role": "President"
         },
         {
+          "email": "shostetler@mediacombb.net",
           "name": "Susan Hostetler",
           "role": "Treasurer"
         }
@@ -3228,10 +3502,12 @@
     "Schmaling Memorial Public Library District": {
       "board": [
         {
+          "email": "amberjo_1984@yahoo.com",
           "name": "Amber Turner",
           "role": "President"
         },
         {
+          "email": "aleyoop92@gmail.com",
           "name": "Aley Hamling",
           "role": "Treasurer"
         }
@@ -3249,10 +3525,12 @@
     "Seneca Public Library District": {
       "board": [
         {
+          "email": "margiw@senecalibrary.net",
           "name": "Margi Weber",
           "role": "President"
         },
         {
+          "email": "rapplebee@senecalibrary.net",
           "name": "Richard Applebee",
           "role": "Treasurer"
         }
@@ -3276,11 +3554,12 @@
     "Sheldon Public Library District": {
       "board": [
         {
-          "name": "SCOTT ZUMWALT",
+          "name": "Scott Zumwalt",
           "role": "President"
         },
         {
-          "name": "SUZANNE LIGHT",
+          "email": "suzannelight116@gmail.com",
+          "name": "Suzanne Light",
           "role": "Treasurer"
         }
       ],
@@ -3317,16 +3596,18 @@
     "Sherrard Public Library District": {
       "board": [
         {
+          "email": "aajje@frontiernet.com",
           "name": "Allen Holdsworth",
           "role": "President"
         },
         {
+          "email": "joedoc@frontier.com",
           "name": "Jackie Docherty",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "066/025/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mercer",
       "office": {
         "address": "501 3rd Street",
@@ -3338,6 +3619,7 @@
     "Sidell District Library": {
       "board": [
         {
+          "email": "gnichols@luekensackrider.com",
           "name": "Julie Norman",
           "role": "Secretary"
         }
@@ -3347,6 +3629,7 @@
       "filesIn": "Vermilion",
       "heads": [
         {
+          "email": "mraysidlib@yahoo.com",
           "name": "Mary Ray",
           "role": "Librarian"
         }
@@ -3360,6 +3643,7 @@
     "Smithton Public Library District": {
       "board": [
         {
+          "email": "ahart54@gmail.com",
           "name": "Ann Hart",
           "role": "Treasurer"
         }
@@ -3369,6 +3653,7 @@
       "filesIn": "St. Clair",
       "heads": [
         {
+          "email": "jdauer@smithtonpl.org",
           "name": "Jenna Dauer",
           "role": "Librarian"
         }
@@ -3382,6 +3667,7 @@
     "Somonauk Public Library District": {
       "board": [
         {
+          "email": "rmickelson@somonauklibrary.org",
           "name": "Roberta Mickelson",
           "role": "President"
         }
@@ -3392,6 +3678,7 @@
       "heads": [
         {
           "name": "Julie Harte",
+          "phone": "(815) 498-2240",
           "role": "Director"
         }
       ],
@@ -3405,7 +3692,9 @@
     "South County Public Library District": {
       "board": [
         {
+          "email": "lindaeberlin@yahoo.com",
           "name": "Linda Eberlin",
+          "phone": "(217) 653-1190",
           "role": "President"
         }
       ],
@@ -3414,7 +3703,9 @@
       "filesIn": "Calhoun",
       "heads": [
         {
+          "email": "scpld@frontiernet.net",
           "name": "Deborah Pohlman",
+          "phone": "(636) 696-5166",
           "role": "Treas./Admin."
         }
       ],
@@ -3445,7 +3736,9 @@
     "Steeleville Area Public Library District": {
       "board": [
         {
+          "email": "rwsutton1947@yahoo.com",
           "name": "Cheryn Sutton",
+          "phone": "(618) 965-3783",
           "role": "President"
         }
       ],
@@ -3454,7 +3747,9 @@
       "filesIn": "Randolph",
       "heads": [
         {
+          "email": "michaelminton@outlook.com",
           "name": "Michael Minton",
+          "phone": "(618) 965-3441",
           "role": "C.F.O."
         }
       ],
@@ -3470,6 +3765,7 @@
           "role": "Administrator"
         },
         {
+          "email": "jhughey@stinsonlibrary.org",
           "name": "John Hughey",
           "role": "Administrator"
         }
@@ -3484,10 +3780,12 @@
     "Talcott Free Library District": {
       "board": [
         {
+          "email": "garyk@talcottfreelibrary.com",
           "name": "Gary Kovanda",
           "role": "President"
         },
         {
+          "email": "marykl@talcottfreelibrary.com",
           "name": "Mary Katherine Lindt",
           "role": "Treasurer"
         }
@@ -3505,10 +3803,12 @@
     "Toluca Public Library District": {
       "board": [
         {
+          "email": "kayday_84@yahoo.com",
           "name": "Kim Junker",
           "role": "President"
         },
         {
+          "email": "mschum47@yahoo.com",
           "name": "Monica Schumacher",
           "role": "Treasurer"
         }
@@ -3545,6 +3845,7 @@
     "Towanda District Library": {
       "board": [
         {
+          "email": "audra.wyant@towandalibrary.org",
           "name": "Audra Wyant",
           "role": "President"
         },
@@ -3591,6 +3892,7 @@
           "role": "President"
         },
         {
+          "email": "ciamamma@aol.com",
           "name": "Deanna Marvin",
           "role": "Treasurer"
         }
@@ -3608,6 +3910,7 @@
     "Tri-Township Public Library District": {
       "board": [
         {
+          "email": "mjerschen9702@gmail.com",
           "name": "Michele Erschen",
           "role": "President"
         }
@@ -3617,6 +3920,7 @@
       "filesIn": "Madison",
       "heads": [
         {
+          "email": "elizabeth@troylibrary.org",
           "name": "Elizabeth Fischer",
           "role": "Director"
         }
@@ -3630,10 +3934,12 @@
     "Utica Public Library District": {
       "board": [
         {
+          "email": "tbubb1@comcast.net",
           "name": "Tony Bubb",
           "role": "President"
         },
         {
+          "email": "kevinheitz77@outlook.com",
           "name": "Kevin Heitz",
           "role": "Trustee"
         }
@@ -3650,11 +3956,14 @@
     "Valley District Library": {
       "board": [
         {
+          "email": "duffieldkimberle@gmail.com",
           "name": "Kimberle Duffield",
           "role": "President"
         },
         {
+          "email": "mark@fairviewstate.com",
           "name": "Mark McConkey",
+          "phone": "(309) 778-2248",
           "role": "Treasurer"
         }
       ],
@@ -3668,6 +3977,7 @@
     "Valmeyer Public Library District": {
       "board": [
         {
+          "email": "charness@valmeyerk12.org",
           "name": "Christopher Harness",
           "role": "Treasurer"
         }
@@ -3677,6 +3987,7 @@
       "filesIn": "Monroe",
       "heads": [
         {
+          "email": "lbrutton@valmeyerk12.org",
           "name": "Lori Brutton",
           "role": "Director"
         }
@@ -3690,10 +4001,12 @@
     "Vespasian Warner Public Library District": {
       "board": [
         {
+          "email": "glhale123@frontier.com",
           "name": "Laura Hale",
           "role": "President"
         },
         {
+          "email": "matthewelove1@gmail.com",
           "name": "Matthew Love",
           "role": "Treasurer"
         }
@@ -3711,6 +4024,7 @@
       "board": [
         {
           "name": "Kathy Carter",
+          "phone": "(309) 314-2485",
           "role": "President"
         },
         {
@@ -3730,7 +4044,9 @@
     "Walnut Public Library District": {
       "board": [
         {
+          "email": "bhelms@walnutpubliclibrary.org",
           "name": "Brenda Helms",
+          "phone": "(815) 499-2173",
           "role": "President"
         }
       ],
@@ -3740,6 +4056,7 @@
       "heads": [
         {
           "name": "Jaclyn G. Trujillo",
+          "phone": "(815) 973-6851",
           "role": "Director"
         }
       ],
@@ -3753,10 +4070,12 @@
       "filesIn": "Warren",
       "heads": [
         {
+          "email": "lgood@wcplibrary.org",
           "name": "Larissa Good",
           "role": "Director"
         },
         {
+          "email": "office@wcplibrary.org",
           "name": "Emma Chapin",
           "role": "Bookkeeper"
         }
@@ -3770,6 +4089,7 @@
     "Washington District Library": {
       "board": [
         {
+          "email": "ptomka@washingtondl.org",
           "name": "Pam Tomka",
           "role": "Treasurer"
         }
@@ -3779,7 +4099,8 @@
       "filesIn": "Tazewell",
       "heads": [
         {
-          "name": "LEXIE WALSH",
+          "email": "lwalsh@washingtondl.org",
+          "name": "Lexie Walsh",
           "role": "Director"
         }
       ],
@@ -3792,7 +4113,8 @@
     "Weldon Public Library District": {
       "board": [
         {
-          "name": "JERED SHOFNER",
+          "email": "JEREDSHOFNER@GMAIL.COM",
+          "name": "Jered Shofner",
           "role": "President"
         }
       ],
@@ -3801,7 +4123,8 @@
       "filesIn": "Dewitt",
       "heads": [
         {
-          "name": "CHRISTI BAKER",
+          "email": "XRISTI57@OUTLOOK.COM",
+          "name": "Christi Baker",
           "role": "Fin. Officer"
         }
       ],
@@ -3814,10 +4137,12 @@
     "West Sangamon Public Library District": {
       "board": [
         {
+          "email": "bbandy@pretzelpride.com",
           "name": "Brian Bandy",
           "role": "President"
         },
         {
+          "email": "caseybinkley1@gmail.com",
           "name": "Casey Binkley",
           "role": "Treasurer"
         }
@@ -3832,10 +4157,12 @@
     "West Union District Library": {
       "board": [
         {
+          "email": "wudl1985@yahoo.com",
           "name": "Keith Vahling",
           "role": "President"
         },
         {
+          "email": "kmacke2545@gmail.com",
           "name": "Kayte Macke",
           "role": "Treasurer"
         }
@@ -3852,6 +4179,7 @@
     "Western District Library": {
       "board": [
         {
+          "email": "director@orionlib.org",
           "name": "Janice Gustafson",
           "role": "President"
         }
@@ -3871,6 +4199,7 @@
       "filesIn": "Vermilion",
       "heads": [
         {
+          "email": "nasager00@gmail.com",
           "name": "Nick Sager",
           "role": "Director"
         }
@@ -3880,10 +4209,12 @@
     "Williamsfield Public Library District": {
       "board": [
         {
+          "email": "eric@wpld.org",
           "name": "Eric Bell",
           "role": "President"
         },
         {
+          "email": "jaime@wpld.org",
           "name": "Jamie Trotter",
           "role": "Treasurer"
         }
@@ -3900,6 +4231,7 @@
     "Windsor Storm Memorial Public Library District": {
       "board": [
         {
+          "email": "wsmlgail32@gmail.com",
           "name": "Glenda Miller",
           "role": "President"
         }
@@ -3909,6 +4241,7 @@
       "filesIn": "Shelby",
       "heads": [
         {
+          "email": "wsmpl13@gmail.com",
           "name": "Stacey Stremming",
           "role": "Director"
         }
@@ -3926,6 +4259,7 @@
           "role": "President"
         },
         {
+          "email": "jferrar007@aol.com",
           "name": "Victor Ferrar",
           "role": "Treasurer"
         }
@@ -3942,24 +4276,34 @@
     },
     "Wyoming Public Library District": {
       "comptrollerCode": "087/100/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Stark",
       "heads": [
         {
+          "email": "mmeaker@wyomingpubliclibrary.com",
           "name": "Mary Meaker",
           "role": "Director"
         },
         {
           "name": "Jane Scholl",
+          "phone": "(309) 229-1769",
           "role": "Librarian"
         }
       ],
       "office": {
-        "address": "119 N Seventh St",
+        "address": "119 N 7th St",
         "city": "Wyoming IL 61491",
         "email": "jscholl@wyomingpubliclibrary.com"
       }
     }
+  },
+  "mailGivenForTwo": {
+    "3110ed715344f5e2": [
+      "0956e5eb08d8e4df"
+    ],
+    "c16ca40c8025a206": [
+      "3aed96fc6173ee24"
+    ]
   },
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",

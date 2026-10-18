@@ -44,6 +44,9 @@
     "clerk": "Kiel Morello",
     "municipality": "Colburn",
     "phone": "715-703-0525",
+    "phonesExtra": [
+      "715-644-0914"
+    ],
     "recordUpdated": "2025-09-12",
     "url": "https://www.townofcolburnwi.com/"
   },
@@ -79,6 +82,9 @@
     "deputyClerk": "Billy Jo Anderson",
     "municipality": "Estella",
     "phone": "715-827-0456",
+    "phonesExtra": [
+      "715-827-0989"
+    ],
     "recordUpdated": "2025-12-12"
   },
   "5501729700": {
@@ -92,6 +98,9 @@
     "deputyClerk": "John R Andersen",
     "municipality": "Hallie",
     "phone": "715-577-4022",
+    "phonesExtra": [
+      "715-497-5447"
+    ],
     "recordUpdated": "2025-04-24",
     "url": "https://www.townofhalliewi.com/"
   },
@@ -127,6 +136,9 @@
     "clerk": "Louise Cody",
     "municipality": "Sampson",
     "phone": "715-933-2331",
+    "phonesExtra": [
+      "715-967-2050"
+    ],
     "recordUpdated": "2024-01-24",
     "url": "https://tn.sampson.wi.gov/"
   },
@@ -148,6 +160,9 @@
     "clerk": "Scott Deutscher",
     "municipality": "Wheaton",
     "phone": "715-874-5982",
+    "phonesExtra": [
+      "715-828-7756"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "http://www.townofwheaton.com/"
   },

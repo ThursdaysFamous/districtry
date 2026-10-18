@@ -83,8 +83,10 @@ def parse(pages):
                 raise ValueError("District %s: %r's title %r is not a commission office" % (n, name, title))
             content = CONTENT_RE.search(b)
             if content and txt(content.group(1)):
-                raise ValueError("District %s: %r's block now carries text %r; read it first"
-                                 % (n, name, txt(content.group(1))[:60]))
+                # The new text is not quoted: it may be an address.
+                raise ValueError("District %s: %r's block now carries %d characters of "
+                                 "text; read it first"
+                                 % (n, name, len(txt(content.group(1)))))
             found.append(member(name, role=title or None))
         if not found:
             raise ValueError("District %s heading has no members under it" % n)

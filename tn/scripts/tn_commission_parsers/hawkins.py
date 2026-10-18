@@ -13,8 +13,20 @@ with its position. A district row seen twice raises; the table's empty
 trailing row is skipped.
 
 PRIVACY: every member line carries the member's HOME ADDRESS (street, town,
-ZIP), and the third cell holds their personal phones; only the text before the
-first comma of each line is read. The page publishes no e-mail.
+ZIP); only the text before the first comma of each line is read. The third
+cell holds the members' phones, one per line, and they are recorded as
+printed, under Adam's ruling of 2026-10-17 that a number a government
+publishes beside an official ships whosever line it is. This is the one place
+a phone is paired by order: the row's phone cell lists one number for each
+member, in the order its Name cell lists the members, so the first number is
+the first member's. A row whose phone cell lists a different count of numbers
+than it has members keeps all of that row's numbers off the records rather
+than guess. A number whose tel: link dials something else is left off too:
+District 2's second line prints its number as two links, area code and
+exchange in one and the line in the other ("(423)-555-" and "0100" in that
+shape), the first dialling a different number. The county's own line, in the
+page footer, is OFFICE_LINES and never lands on a member. The page publishes
+no e-mail.
 
 Currency: NO RESULTS OF THE 6 AUGUST 2026 ELECTION COULD BE READ ON A
 GOVERNMENT HOST. hawkinscountytn.gov/election_commission.html links no
@@ -38,13 +50,15 @@ pairing rests on the page plus a non-government copy of the ballot.
 Not recorded: the minutes of 28 September 2026 elect Josh Gilliam Chair Pro
 Tempore and County Mayor David Linkous chairman; this page states neither."""
 import re
-from ._common import txt, member, district_number
+from ._common import txt, member, district_number, read_phones, Withheld
 
 COUNTY = "Hawkins"; FIPS = "073"
 DOMAINS = ("hawkinscountytn.gov",)
 URLS = ["https://www.hawkinscountytn.gov/county_commission.html"]
 SEATS = {str(i): 2 for i in range(1, 8)}
 AT_LARGE = 0
+# The county's own line, in the page footer.
+OFFICE_LINES = ("(423) 272-7359",)
 
 HEAD = ["District", "Name", "Phone"]
 NAME = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
@@ -52,7 +66,7 @@ SUFFIX = re.compile(r"^(Jr|Sr|II|III|IV)\.?$")
 ADDRESS = re.compile(r"^(\d|P\.?\s*O\.?\s*Box\b)", re.I)
 
 
-def _member_line(line, d):
+def _member_line(line, d, phones=None):
     parts = [p.strip() for p in line.split(",")]
     name = parts[0]
     rest = parts[1:]
@@ -63,7 +77,7 @@ def _member_line(line, d):
     bare = re.sub(r",\s*(Jr|Sr|II|III|IV)\.?$", "", name)
     if not NAME.match(bare):
         raise ValueError("District %s: %r is not a name" % (d, name))
-    return member(name)
+    return member(name, phones=phones)
 
 
 def parse(pages):
@@ -86,8 +100,14 @@ def parse(pages):
         d = str(district_number("District " + label))
         if d in districts:
             raise ValueError("District %s has two rows" % d)
-        lines_ = [txt(x) for x in re.split(r"<br\s*/?>", cells[0], flags=re.I)]
-        found = [_member_line(x, d) for x in lines_ if x]
+        lines_ = [x for x in (txt(x) for x in re.split(r"<br\s*/?>", cells[0], flags=re.I)) if x]
+        numbers = [x for x in re.split(r"<br\s*/?>", cells[1], flags=re.I) if txt(x)]
+        if len(numbers) == len(lines_):
+            phones = [read_phones(x, strict=True) for x in numbers]
+        else:
+            phones = [Withheld("the row's phone cell lists %d numbers for %d members"
+                               % (len(numbers), len(lines_)))] * len(lines_)
+        found = [_member_line(x, d, p) for x, p in zip(lines_, phones)]
         if not found:
             raise ValueError("District %s row names nobody" % d)
         districts[d] = found

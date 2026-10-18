@@ -842,6 +842,22 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_instance_assets.py
 
+      # Every telephone link a page serves dials one whole number, and every
+      # telephone in the apps' data holds at most one. Measured 2026-10-17, the
+      # day officials' own numbers began to ship, three surfaces dialled
+      # something nobody can answer with every gate green: Chicago's Ward 2
+      # link dialled the city's number and two four-digit fragments as one
+      # 18-digit number, Kankakee's board page linked "Coming Soon" as a
+      # telephone, and seven Mason County officials' entries each held two
+      # numbers, which the card dialled as one. Builders hold a value's shape
+      # where they build it and a page generator prints whatever a roster
+      # carries, so this reads what the pages and data files actually ship, on
+      # the surface the asset gate above discovers. Stdlib only; it never
+      # prints a number.
+      - name: Every telephone link dials one number
+        if: ${{ !cancelled() }}
+        run: python3 scripts/validate_telephones.py
+
       # THE COVERAGE WASH IS A CLAIM, AND ITS GATE WAS IN NO WORKFLOW. Each
       # statewide instance ships a dissolved outline of its served counties;
       # --check validates that shipped ring against the instance's hand-listed
@@ -1129,6 +1145,16 @@ jobs:
       - name: Library board-page reader still reads its measured shapes
         if: ${{ !cancelled() }}
         run: python3 scripts/il_library_trustees_scraper.py --selftest
+
+      # The builder is the half that decides whose a printed telephone or
+      # e-mail address is, under the fleet's rule of 2026-10-17: a value the
+      # page prints in one trustee's own entry ships on that trustee, and one it
+      # prints beside two trustees, or that another library's board or one of
+      # the Comptroller-filing rosters gives to somebody else, ships on nobody.
+      # Its fixtures are made up. Stdlib only, no network.
+      - name: Library trustees builder still decides whose contacts ship
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_il_library_trustees.py --selftest
 
       # Peoria's County Board index has now changed shape twice, and each time
       # the roster froze for a week with every member's name in the served
@@ -1632,7 +1658,16 @@ jobs:
       # 2026-09-27. It drives contact_block over fixture markup and covers the
       # only two places this module overrides a filing: LOCALITY_CORRECTIONS in
       # all three directions, and the middle initial's comma restored to a
-      # period, printed once, with a filed suffix comma left alone. Eight
+      # period, printed once, with a filed suffix comma left alone. Since
+      # 2026-10-17 it also holds which telephone rides an officer (Adam's ruling
+      # that day: "if the official government source uses personal phone
+      # numbers, we publish those"): a number printed beside one officer alone
+      # is that officer's, one another name also filed is the district's, and
+      # two numbers for one person a digit apart ship as neither. Since he
+      # chose "E-mails too" the same day it holds the e-mail address too: one
+      # printed in the officer's own slot rides that officer, and one printed
+      # beside a second person, named for another filer or for the district
+      # itself, or kept by an accountant or a bank rides nobody. Eight
       # scrapers import that parser, so a regression in it reaches eight weekly
       # rosters. Stdlib only, no network.
       - name: The AFR parser still corrects only what it declares

@@ -18,6 +18,9 @@
     "deputyClerk": "Debra Waldvogel",
     "municipality": "Burnett",
     "phone": "920-210-7892",
+    "phonesExtra": [
+      "920-210-7839"
+    ],
     "recordUpdated": "2025-04-24",
     "url": "http://townofburnett.com"
   },
@@ -25,6 +28,9 @@
     "clerk": "Marjorie Beilke",
     "municipality": "Calamus",
     "phone": "920-626-1029",
+    "phonesExtra": [
+      "920-885-5718"
+    ],
     "recordUpdated": "2025-04-24",
     "url": "https://townofcalamus.com/"
   },
@@ -60,6 +66,9 @@
     "deputyClerk": "Joy Pufahl",
     "municipality": "Fox Lake",
     "phone": "920-928-3573",
+    "phonesExtra": [
+      "920-763-7910"
+    ],
     "recordUpdated": "2025-07-28",
     "url": "https://townoffoxlake.org/"
   },
@@ -81,6 +90,9 @@
     "clerk": "Agnes Schultz",
     "municipality": "Hustisford",
     "phone": "920-349-8425",
+    "phonesExtra": [
+      "920-988-3687"
+    ],
     "recordUpdated": "2025-04-24",
     "url": "https://townofhustisford.gov/"
   },
@@ -104,6 +116,9 @@
     "clerk": "Sharon Belling",
     "municipality": "Lomira",
     "phone": "920-583-4011",
+    "phonesExtra": [
+      "920-948-3493"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://www.townoflomira.com/"
   },
@@ -137,6 +152,9 @@
     "clerk": "Julie Klusken",
     "municipality": "Shields",
     "phone": "920-261-7154",
+    "phonesExtra": [
+      "920-253-0135"
+    ],
     "recordUpdated": "2026-07-21",
     "url": "https://townofshieldsdcwi.gov/"
   },

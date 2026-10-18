@@ -11,6 +11,9 @@
     "deputyClerk": "Aaron Pluger",
     "municipality": "Bovina",
     "phone": "920-986-3289",
+    "phonesExtra": [
+      "920-570-0864"
+    ],
     "recordUpdated": "2023-12-06",
     "url": "https://townofbovina.com/"
   },
@@ -40,6 +43,9 @@
     "clerk": "Jenny Hunt",
     "municipality": "Dale",
     "phone": "920-779-4609",
+    "phonesExtra": [
+      "920-224-4950"
+    ],
     "recordUpdated": "2025-01-09",
     "url": "http://townofdale.org/"
   },
@@ -54,6 +60,9 @@
     "clerk": "Rachael Yogerst",
     "municipality": "Ellington",
     "phone": "920-757-5333",
+    "phonesExtra": [
+      "920-779-2707"
+    ],
     "recordUpdated": "2026-02-27",
     "url": "https://townofellington.org/"
   },
@@ -70,6 +79,9 @@
     "deputyClerk": "Michelle Mills",
     "municipality": "Grand Chute",
     "phone": "920-832-5644",
+    "phonesExtra": [
+      "920-380-2952"
+    ],
     "recordUpdated": "2026-04-29",
     "url": "https://www.grandchute.net/"
   },
@@ -98,6 +110,9 @@
     "clerk": "Lori Ann Klevesahl",
     "municipality": "Maine",
     "phone": "920-525-1150",
+    "phonesExtra": [
+      "920-525-5408"
+    ],
     "recordUpdated": "2023-12-22",
     "url": "https://townofmaineoutagamie.com/"
   },
@@ -127,6 +142,9 @@
     "deputyClerk": "Dawn Leisgang",
     "municipality": "Seymour",
     "phone": "920-676-3787",
+    "phonesExtra": [
+      "920-833-2942"
+    ],
     "recordUpdated": "2025-06-09",
     "url": "https://townofseymour-outagamie.com/"
   },

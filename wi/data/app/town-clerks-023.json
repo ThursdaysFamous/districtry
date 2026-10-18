@@ -17,6 +17,9 @@
     "clerk": "Sam Tesar, JR",
     "municipality": "Eastman",
     "phone": "608-874-4345",
+    "phonesExtra": [
+      "608-412-0426"
+    ],
     "recordUpdated": "2025-11-24",
     "url": "http://townofeastman.com/"
   },
@@ -42,18 +45,27 @@
     "clerk": "Tarra L Brewer",
     "municipality": "Prairie du Chien",
     "phone": "608-326-8014",
+    "phonesExtra": [
+      "608-306-2818"
+    ],
     "recordUpdated": "2024-10-09"
   },
   "5502372275": {
     "clerk": "Donna M Bell",
     "municipality": "Scott",
     "phone": "608-872-2414",
+    "phonesExtra": [
+      "608-606-1042"
+    ],
     "recordUpdated": "2025-11-12"
   },
   "5502372500": {
     "clerk": "Julie Payne",
     "municipality": "Seneca",
     "phone": "608-874-4944",
+    "phonesExtra": [
+      "608-306-3094"
+    ],
     "recordUpdated": "2026-07-24",
     "url": "https://thetownofseneca.com/"
   },
@@ -67,6 +79,9 @@
     "clerk": "Shawna L Walz",
     "municipality": "Wauzeka",
     "phone": "608-412-0232",
+    "phonesExtra": [
+      "608-874-4663"
+    ],
     "recordUpdated": "2023-11-02"
   },
   "_source": {

@@ -143,10 +143,33 @@ is read the same way. Franklin's page carries a reCAPTCHA key for its site
 forms and no challenge. Every other page here is read with this project's
 own token, and each served it.
 
-PRIVACY. Only names are carried. Franklin's board page also prints its
-members' e-mail addresses, one of them on a personal domain, and Knoxville's
-council page its members' e-mail addresses and telephone numbers, and none is
-copied.
+PRIVACY AND CONTACTS. A member's e-mail address and telephone numbers are
+carried where the page the seat cites prints them beside that member alone,
+under Adam's rulings of 2026-10-17; scripts/city_councils.py (CONTACTS) says
+what does not ship and how the build proves each value on its page. Read on
+2026-10-17:
+  * The pages cited for Bristol, Collierville, Germantown, Jackson, Johnson
+    City, La Vergne, Morristown and Murfreesboro print no e-mail address or
+    number beside any one member, only the city's or the board's own or none,
+    so their members carry none. Clarksville's and Cleveland's council pages
+    print none for their members either, and only their mayors carry the
+    contacts the mayor's own page or listing prints.
+  * Brentwood's board page prints each commissioner's cell or home number,
+    which is carried with that label, and the city's switchboard number with
+    an extension for each, which is the office's line and is not. Smyrna's
+    council page also gives its members extensions on one shared line, and
+    Gallatin's prints one number for several members; neither is carried.
+  * The pages of Chattanooga's, Knoxville's and Nashville's mayors print the
+    mayor's office's line or mailbox, which are the office's and are not
+    carried. Columbia's page links its mayor's contact details on a page this
+    build does not read.
+  * Franklin's board page prints one member's e-mail address on a personal
+    domain, beside that member alone, and it is carried.
+  * Spring Hill's board page has, beside one alderman, a second mail link that
+    shows no text and sends to a different e-mail address; the one in the
+    link labelled with that alderman's name is carried.
+No street address is carried, nor anything about residents or applicants, nor
+a biography.
 
 PUBLISHING GAPS, recorded as evidence for the state-publishing ask (gap
 tn-municipal-officeholders): no state office publishes who holds Tennessee's
@@ -220,6 +243,10 @@ SPEC = cc.Spec(
     seats_file="tn-city-council-seats.json",
     out_file="tn-city-councils.json",
     seats=SEATS,
+    # 120 members' e-mail addresses and 47 members' numbers were written down
+    # on 2026-10-17; these floors are about two thirds of each.
+    min_emails=80,
+    min_phones=31,
     browser={
         MURFREESBORO_COUNCIL: UA_HINTS_CHROME_126,
         FRANKLIN_BOARD: UA_HINTS_CHROME_126,

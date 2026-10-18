@@ -16,9 +16,13 @@ PRIVACY: the phone in each row is the member's own. The county's "COUNTY
 COMMISSIONERS 8-14-2026" PDF (putnamcountytn.gov, created 2026-08-28) prints
 21 of this page's 24 numbers beside the members' home street addresses and
 personal e-mails (gmail, yahoo, an employer's domain), so they are personal
-lines and none is recorded. That PDF is not read by this parser. The
-e-mail fields on the page are empty on 2026-10-11; if one fills in, only an
-address on putnamcountytn.gov is kept.
+lines. Each row's "phone" field is recorded as printed, under Adam's ruling
+of 2026-10-17 that a number a government publishes beside an official ships
+whosever line it is. That PDF is not read by this parser. The page prints no
+address. The e-mail fields on the page are empty on 2026-10-11; if one fills
+in, its address is kept whatever its domain, under Adam's ruling of
+2026-10-17 that an e-mail address a government page prints beside an official
+ships too.
 
 Currency: checked 2026-10-11 against the Putnam County Election Commission's
 "Election Summary Report" for 6 August 2026 on the county's own host
@@ -32,7 +36,7 @@ David K. Andrews). The closest seat is District 1, where Jonathan A. D.
 Williams (676) finished nine votes ahead of Morgan Franklin (667). The page
 names no chair, so no role is recorded."""
 import re
-from ._common import txt, mailtos, county_email, district_number, member
+from ._common import txt, read_emails, member_email, district_number, member, read_phones
 
 COUNTY = "Putnam"; FIPS = "141"
 DOMAINS = ("putnamcountytn.gov",)
@@ -81,8 +85,12 @@ def parse(pages):
             if re.search(r"\bvacan", name, re.I) or not re.fullmatch(r"[A-Z][A-Za-z.'’ -]+", name):
                 raise ValueError("District %s: %r does not look like a name" % (n, name))
             em = re.search(r'<div class="email">(.*?)</div>', r, re.S)
-            addrs = mailtos(em.group(1)) + re.findall(r"[\w.+-]+@[\w.-]+\.\w+", txt(em.group(1))) if em else []
-            seats.append(member(name, email=county_email(addrs, DOMAINS)))
+            addrs = read_emails(em.group(1)) if em else []
+            ph = re.findall(r'<div class="phone">(.*?)</div>', r, re.S)
+            if len(ph) > 1:
+                raise ValueError("District %s: %r's row has %d phone fields" % (n, name, len(ph)))
+            seats.append(member(name, email=member_email(addrs, DOMAINS),
+                                phones=read_phones(ph[0], strict=True) if ph else None))
         if len(seats) != SEATS.get(n):
             raise ValueError("District %s panel has %d rows, the county elects %s"
                              % (n, len(seats), SEATS.get(n)))

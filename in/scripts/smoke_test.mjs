@@ -77,7 +77,9 @@ const GEOCODER_STUB_FEATURE = {
   // rather than on the strip-and-retry path it exists to prove.
   geometry: { type: "Point", coordinates: [-86.1626, 39.7686] },
   properties: {
-    housenumber: "100",
+    // the typed number: an answer without it shows the street instead of
+    // a row (ENGINE geocoder-search runAddressSearch)
+    housenumber: "200",
     street: "W Washington St",
     city: "Capital City",
     state: "Indiana",
@@ -680,7 +682,11 @@ try {
     const [la, ln] = [41.0793, -85.1394];
     const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
       [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    // The layer is drawn and answered from a tile archive since 2026-10-17;
+    // refusing it sends the card to the census loader, which this stub
+    // answers (the archive-failure path il's smoke check 2d also holds).
     const page = await booted(context, `${BASE}#point=${la},${ln}&layers=municipality`, (p) =>
+      p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort()).then(() =>
       p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/4\/query/, (route) =>
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
           features: [{
@@ -688,7 +694,7 @@ try {
                           STATE: "18", LSADC: "25" },
             geometry: { rings: [ring] },
           }],
-        }) })));
+        }) }))));
     const fw = await cardText(page, "municipality");
     check("City or Town card names Fort Wayne's mayor and common council as dated winners",
       !fw.error && /Fort Wayne/.test(fw.text) && / MAYOR /.test(fw.text) &&
@@ -708,7 +714,11 @@ try {
     const [la, ln] = [39.7042, -86.3994];
     const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
       [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    // The layer is drawn and answered from a tile archive since 2026-10-17;
+    // refusing it sends the card to the census loader, which this stub
+    // answers (the archive-failure path il's smoke check 2d also holds).
     const page = await booted(context, `${BASE}#point=${la},${ln}&layers=municipality`, (p) =>
+      p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort()).then(() =>
       p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/4\/query/, (route) =>
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
           features: [{
@@ -716,7 +726,7 @@ try {
                           STATE: "18", LSADC: "43" },
             geometry: { rings: [ring] },
           }],
-        }) })));
+        }) }))));
     const pf = await cardText(page, "municipality");
     check("City or Town card names Plainfield's council from the town's own page, dated to the read",
       !pf.error && /PLAINFIELD TOWN COUNCIL/i.test(pf.text) && /District 5/.test(pf.text) &&
@@ -736,7 +746,11 @@ try {
     const [la, ln] = [41.0793, -85.1394];
     const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
       [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    // The layer is drawn and answered from a tile archive since 2026-10-17;
+    // refusing it sends the card to the census loader, which this stub
+    // answers (the archive-failure path il's smoke check 2d also holds).
     const page = await booted(context, `${BASE}#point=${la},${ln}&layers=county-subdivision`, (p) =>
+      p.route("**/data/app/tiles/county-subdivision.pmtiles", (r) => r.abort()).then(() =>
       p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/1\/query/, (route) =>
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
           features: [{
@@ -744,7 +758,7 @@ try {
                           STATE: "18", COUNTY: "003", LSADC: "44" },
             geometry: { rings: [ring] },
           }],
-        }) })));
+        }) }))));
     const tw = await cardText(page, "county-subdivision");
     check("Township card names Wayne Township's trustee and board as dated winners",
       !tw.error && /Wayne/.test(tw.text) && /TOWNSHIP TRUSTEE/i.test(tw.text) &&

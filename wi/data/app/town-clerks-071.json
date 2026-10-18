@@ -4,6 +4,9 @@
     "deputyClerk": "Mary Muench",
     "municipality": "Cato",
     "phone": "920-775-4741",
+    "phonesExtra": [
+      "920-323-6003"
+    ],
     "recordUpdated": "2025-12-22",
     "url": "https://townofcato.com/"
   },
@@ -32,6 +35,9 @@
     "clerk": "Cary Nate",
     "municipality": "Franklin",
     "phone": "920-754-4171",
+    "phonesExtra": [
+      "920-732-3337"
+    ],
     "recordUpdated": "2024-01-02"
   },
   "5507128975": {
@@ -80,6 +86,9 @@
     "clerk": "Valerie Spindler",
     "municipality": "Meeme",
     "phone": "920-693-3441",
+    "phonesExtra": [
+      "920-901-3161"
+    ],
     "recordUpdated": "2024-01-11",
     "url": "https://www.townofmeemewi.com/"
   },
@@ -110,6 +119,9 @@
     "deputyClerk": "Lindsay Meyer",
     "municipality": "Schleswig",
     "phone": "920-762-0483",
+    "phonesExtra": [
+      "920-905-4234"
+    ],
     "recordUpdated": "2023-12-28",
     "url": "https://townofschleswig.com/"
   },

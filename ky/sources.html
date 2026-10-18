@@ -843,6 +843,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1286,7 +1292,7 @@ table.matrix code {
                 <td data-label="What it answers">The unified (every-grade) school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.</td>
@@ -1312,7 +1318,7 @@ table.matrix code {
                 <td data-label="What it answers">The elementary-only school district covering the point, in the four places Kentucky has one.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.</td>
@@ -1323,7 +1329,7 @@ table.matrix code {
                 <td data-label="What it answers">The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.</td>
@@ -1359,7 +1365,7 @@ table.matrix code {
                 <td data-label="What it answers">The census county division containing the point, and its county.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and Kentucky has no townships, so the county governs everyone outside a city. The card names the division and its county and says it governs nobody.</td>
@@ -1381,7 +1387,7 @@ table.matrix code {
                 <td data-label="What it answers">The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The mayor and the city council or commission of each city, from the Kentucky Department for Local Government's municipal directory (kydlgweb.ky.gov/Cities/), read county by county and joined to the Census place id by name and checked against the county the directory names; built by ky/scripts/build_ky_city_officials.py and refreshed weekly by update-ky-city-officials.yml. Staff the directory lists beside them (clerk, attorney, chiefs) are left out. The directory dates nothing, so the card prints the day it was read.</td>
@@ -1595,7 +1601,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1617,7 +1623,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 493 features for Kentucky, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
       ],
@@ -1740,7 +1746,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row",
+          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],
@@ -1762,7 +1768,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
       ],
@@ -1784,7 +1790,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01",
+          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
         }
       ],

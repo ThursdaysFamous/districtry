@@ -48,6 +48,46 @@ is reported unread rather than filled in. Freeport, Harrisburg and Jerseyville
 are the measured examples: each has a board page, each hides the list behind a
 "Read more" or renders it in script, and each ships nobody.
 
+A TRUSTEE'S OWN TELEPHONE NUMBER AND E-MAIL ADDRESS ARE READ where the page
+prints them in that trustee's own entry, since 2026-10-17, under the fleet's
+rule that a number or an address a government publisher prints beside one
+official ships on that official. A public library's own website is that
+publisher for its own board. Measured over the pages read on 2026-10-17: of 60
+boards read, 15 print a number or an address between the board's heading and
+the end of its list, and 5 print one inside trustees' own entries, 55 values
+in all. Gilman-Danforth and Groff print one telephone and one address under
+every trustee (32 values), which are the library's; Centralia, Mascoutah and
+Morris print a different address for each trustee (23), each carrying that
+trustee's surname; and no page prints a trustee's own telephone. What this
+file reads, and where:
+
+  * Only a block holding one value and at most a label for it ("Cell:",
+    "Email Address:"), in the block itself or the one before. A value inside a
+    sentence is not read, because a sentence can be about somebody else.
+  * An entry runs from the trustee's name, or the role printed before it, to
+    the next trustee's. Nothing printed before the first trustee is anybody's.
+  * After the last trustee, a value is read only where two or more of the other
+    trustees print one of the same kind, and no further below the name than
+    they do, so the library's telephone in a footer a few lines under the list
+    is not given to the last trustee.
+  * A heading that is not a trustee or a role ends an entry, unless it is a
+    smaller heading under the trustee's own (Morris prints each term and
+    address in an h6 under an h4 name).
+  * A fax number is never read. A telephone's label word is kept on the number
+    as the fleet writes it ("cell 217-555-0100"), and a one-letter label is
+    written out (C cell, H home, W work); a word that only says "phone" is
+    dropped. A number needs its area code.
+  * An address shown only as a link labelled "Email", or hidden by Cloudflare's
+    e-mail protection, is not read, because the page does not print it.
+  * A mailto or tel link on a value is recorded beside it, and every number and
+    address the page prints or links outside the trustees' entries is recorded
+    as the page's own (`pageContacts`). A link on a trustee's own name is not
+    read and counts as the page's too; measured, no board read links one.
+
+Whether a value is the trustee's own or the library's is decided in
+build_il_library_trustees.py, which can also see the library's other
+publishers; this file only reports where the page printed it.
+
 Usage:
     python3 il_library_trustees_scraper.py [--out FILE] [--limit N] [--selftest]
 """
@@ -89,12 +129,31 @@ DROP = {"script", "style", "noscript", "svg", "head", "select", "option",
         "textarea", "nav"}
 
 
+def contact_href(href):
+    """'mailto:<address>' or 'tel:<digits>' for a link to one, else None."""
+    href = (href or "").strip()
+    low = href.lower()
+    if low.startswith("mailto:"):
+        address = urllib.parse.unquote(href[7:]).split("?")[0].strip()
+        return "mailto:" + address if address else None
+    if low.startswith("tel:"):
+        digits = re.sub(r"[^\d+]", "", urllib.parse.unquote(href[4:]))
+        return "tel:" + digits if digits else None
+    return None
+
+
 class _Blocks(html.parser.HTMLParser):
-    """Visible text, one record per block element, headings kept as headings."""
+    """Visible text, one record per block element, headings kept as headings.
+
+    Also `links`, block index -> the mailto and tel targets of the link whose
+    text that block is, and `bare`, the targets of such links that print no
+    text of their own (an envelope icon).
+    """
 
     def __init__(self):
         html.parser.HTMLParser.__init__(self, convert_charrefs=True)
         self.out, self._buf, self._stack, self._drop = [], [], [], 0
+        self.links, self.bare, self._anchors = {}, [], []
 
     def _flush(self):
         text = re.sub(r"\s+", " ", "".join(self._buf)).replace(" ", " ").strip()
@@ -102,6 +161,16 @@ class _Blocks(html.parser.HTMLParser):
             kind = next((k for k in reversed(self._stack) if k in HEADS), None)
             self.out.append((kind or (self._stack[-1] if self._stack else "text"), text))
         self._buf = []
+
+    def _close_anchor(self):
+        target, opened = self._anchors.pop()
+        if not target:
+            return
+        made = range(opened, len(self.out))
+        if not made:
+            self.bare.append(target)
+        for index in made:
+            self.links.setdefault(index, []).append(target)
 
     def handle_starttag(self, tag, attrs):
         if tag in DROP:
@@ -115,6 +184,9 @@ class _Blocks(html.parser.HTMLParser):
         if tag in BLOCKS:
             self._flush()
             self._stack.append(tag)
+        if tag == "a":
+            self._anchors.append((contact_href(dict(attrs).get("href")),
+                                  len(self.out)))
 
     def handle_endtag(self, tag):
         if tag in DROP:
@@ -128,6 +200,8 @@ class _Blocks(html.parser.HTMLParser):
                 while self._stack:
                     if self._stack.pop() == tag:
                         break
+        if tag == "a" and self._anchors:
+            self._close_anchor()
 
     def handle_data(self, data):
         if not self._drop:
@@ -136,16 +210,24 @@ class _Blocks(html.parser.HTMLParser):
     def close(self):
         html.parser.HTMLParser.close(self)
         self._flush()
+        while self._anchors:
+            self._close_anchor()
 
 
-def blocks(body):
+def page_blocks(body):
+    """The reader after reading `body`: `.out` the blocks, `.links` and `.bare`
+    the mailto and tel links on them."""
     reader = _Blocks()
     try:
         reader.feed(body)
         reader.close()
     except Exception:                                           # noqa: BLE001
         pass                    # a malformed page yields what it parsed
-    return reader.out
+    return reader
+
+
+def blocks(body):
+    return page_blocks(body).out
 
 
 # -------------------------------------------------------------- the reading ---
@@ -259,6 +341,203 @@ MIN_MEMBERS = 3
 # the library is reported rather than shipped.
 MAX_MEMBERS = 12
 
+# ----------------------------------------------- a trustee's own contact ---
+#
+# The rules are in the module docstring. These functions report where a page
+# printed a value; build_il_library_trustees.py decides whose it is.
+
+EMAIL_TEXT = re.compile(r"[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*"
+                        r"\.[A-Za-z]{2,}")
+# A number needs its area code: a run of seven digits on these pages is as
+# often an account number as a telephone, and one with no label says nothing
+# about which it is.
+PHONE_TEXT = re.compile(r"(?<![\d-])(?:\+?1[\s.-]?)?(?:\(\d{3}\)\s?|\d{3}[\s./-]?)"
+                        r"\d{3}[\s.-]?\d{4}"
+                        r"(?:\s*,?\s*(?:ext\.?|extension|x)\s*\d{1,6})?(?![\d-])",
+                        re.I)
+
+# The label words a person's number may be led by, as scraper_common's
+# PERSON_PHONE_LABELS spells them, with the one-letter labels a page uses
+# written out. A word that only says "telephone" adds nothing and is dropped.
+PHONE_LABEL_WORDS = {"cell": "cell", "cellular": "cell", "c": "cell",
+                     "mobile": "mobile", "home": "home", "h": "home",
+                     "work": "work", "w": "work", "business": "business",
+                     "office": "office", "personal": "personal",
+                     "residence": "residence"}
+PHONE_PLAIN_WORDS = {"phone", "telephone", "tel", "ph", "p", "number", "no"}
+EMAIL_LABEL_WORDS = {"email", "emails", "e", "mail", "address", "personal"}
+EITHER_WORDS = {"contact", "info", "information"}
+
+# Where a value sits in a block, everything around it that is not a label.
+_VALUE_EDGE = " \t:;,.|·•–—-()[]#"
+
+
+def contact_label(text):
+    """What a printed label says the value beside it is.
+
+    ("email", None), ("phone", label word or None), ("either", None) for a word
+    that only says "contact", ("fax", None), or None when the text is not a
+    label for a telephone or an e-mail address at all ("Term:", "Position:",
+    "Library Phone:", which names an office).
+    """
+    words = re.findall(r"[a-z]+", (text or "").lower())
+    if not words:
+        return None
+    if "fax" in words or "facsimile" in words or words == ["f"]:
+        return ("fax", None)
+    if "email" in words or "emails" in words or any(
+            pair == ("e", "mail") for pair in zip(words, words[1:])):
+        if set(words) <= EMAIL_LABEL_WORDS | EITHER_WORDS:
+            return ("email", None)
+        return None
+    if not set(words) <= (set(PHONE_LABEL_WORDS) | PHONE_PLAIN_WORDS
+                          | EITHER_WORDS | {"or"}):
+        return None
+    labels = []
+    for word in words:
+        label = PHONE_LABEL_WORDS.get(word)
+        if label and label not in labels:
+            labels.append(label)
+    if len(labels) > 2:
+        return None
+    if labels:
+        return ("phone", " or ".join(labels))
+    if set(words) <= EITHER_WORDS:
+        return ("either", None)
+    return ("phone", None)
+
+
+def block_value(text):
+    """(kind, value, label) when a block is one telephone number or one e-mail
+    address and at most a label for it, else None. `label` is contact_label's
+    answer for a label in the block itself, or None when there is none."""
+    emails = list(EMAIL_TEXT.finditer(text))
+    phones = list(PHONE_TEXT.finditer(text))
+    if len(emails) + len(phones) != 1:
+        return None
+    match, kind = (emails[0], "email") if emails else (phones[0], "phone")
+    before = text[:match.start()].strip(_VALUE_EDGE)
+    after = text[match.end():].strip(_VALUE_EDGE)
+    if before and after:
+        return None
+    rest = before or after
+    label = contact_label(rest) if rest else None
+    if rest and label is None:
+        return None
+    return kind, re.sub(r"\s+", " ", match.group(0)).strip(), label
+
+
+def block_contact(bl, links, index):
+    """The one value block `index` prints, as {"kind", "value"} with any
+    mailto or tel targets on it under "links", or None.
+
+    A label in the block itself wins; otherwise a short block just before it
+    that is a label says what the value is. A value labelled as something else
+    ("Term:"), labelled as the other kind, or labelled as a fax is not read.
+    """
+    got = block_value(bl[index][1])
+    if got is None:
+        return None
+    kind, value, label = got
+    if label is None and index > 0:
+        prev = bl[index - 1][1].strip()
+        said = contact_label(prev) if len(prev) <= 24 else None
+        if said is not None:
+            label = said
+        elif FIELD_LABEL.match(prev):
+            return None
+    if label is not None:
+        if label[0] == "fax":
+            return None
+        if label[0] in ("email", "phone") and label[0] != kind:
+            return None
+        if kind == "phone" and label[1]:
+            value = "%s %s" % (label[1], value)
+    found = {"kind": kind, "value": value}
+    if links.get(index):
+        found["links"] = list(links[index])
+    return found
+
+
+def _entry_scan(bl, links, run, end):
+    """(block, value) for each value block in one trustee's entry: after the
+    trustee's first block and before `end`, stopping at a heading that is not a
+    role unless it is smaller than a heading the trustee's own name sits in."""
+    _name, _role, first, last, at = run
+    own = bl[at][0]
+    own_level = int(own[1]) if own in HEADS else None
+    for index in range(first + 1, min(end, len(bl))):
+        found = block_contact(bl, links, index)
+        if found is not None:
+            yield index, found
+            continue
+        kind, text = bl[index]
+        if index <= last or kind not in HEADS:
+            continue
+        got = classify(text)
+        if got is not None and got[0] == "role":
+            continue
+        if own_level is not None and int(kind[1]) > own_level:
+            continue
+        return
+
+
+def entry_values(bl, links, runs, stop):
+    """{block: (name key, value)} for each value printed in one trustee's own
+    entry, by the rules in the module docstring.
+
+    `runs` is member_runs' answer for one section and `stop` the block that
+    ended it. A value after the last trustee is taken only where two or more of
+    the other trustees print one of the same kind and only as far below the
+    name as the furthest of theirs.
+    """
+    out, held = {}, {}
+    for k in range(len(runs) - 1):
+        run = runs[k]
+        for index, found in _entry_scan(bl, links, run, runs[k + 1][2]):
+            out[index] = (run[0].lower(), found)
+            held.setdefault(found["kind"], []).append((k, index - run[2]))
+    if runs:
+        run = runs[-1]
+        for index, found in _entry_scan(bl, links, run, stop):
+            seen = held.get(found["kind"], [])
+            holders = {k for k, _offset in seen}
+            reach = max([offset for _k, offset in seen] or [-1])
+            if len(holders) >= 2 and index - run[2] <= reach:
+                out[index] = (run[0].lower(), found)
+    return out
+
+
+def page_values(reader, taken):
+    """{"email": [...], "phone": [...]}: every address and number the page
+    prints or links outside the blocks `taken` gave a trustee a value."""
+    emails, phones = set(), set()
+
+    def add(target):
+        if target.startswith("mailto:"):
+            for one in re.split(r"[,;]", target[7:]):
+                if one.strip():
+                    emails.add(one.strip().lower())
+        elif target.startswith("tel:"):
+            phones.add(target[4:])
+
+    for index, (_kind, text) in enumerate(reader.out):
+        if index in taken:
+            continue
+        emails.update(m.group(0).lower() for m in EMAIL_TEXT.finditer(text))
+        phones.update(re.sub(r"\s+", " ", m.group(0)).strip()
+                      for m in PHONE_TEXT.finditer(text))
+        for target in reader.links.get(index, ()):
+            add(target)
+    for target in reader.bare:
+        add(target)
+    out = {}
+    if emails:
+        out["email"] = sorted(emails)
+    if phones:
+        out["phone"] = sorted(phones)
+    return out
+
 
 def strip_tail(text):
     text = text.strip()
@@ -349,7 +628,9 @@ def board_markers(bl):
 
 
 def read_section(bl, start, level, anchor_only=frozenset()):
-    """The typed tokens under one board marker, junk dropped, run bounded."""
+    """(tokens, stop): the typed tokens under one board marker, each as
+    (block, token), junk dropped, run bounded; and the block that ended the
+    section, or len(bl) when nothing did."""
     tokens, i, quiet = [], start + 1, 0
     while i < len(bl):
         kind, text = bl[i]
@@ -361,16 +642,16 @@ def read_section(bl, start, level, anchor_only=frozenset()):
             # board. A role label is not a stop — it belongs to a person.
             if STOP_HEAD.search(label) and not ROLE_ONLY.match(label) \
                     and classify(text) is None:
-                break
+                return tokens, i - 1
             if level >= 9 and BOARD_HEAD.match(label) and i - 1 != start:
-                break
+                return tokens, i - 1
         if kind in HEADS:
             if int(kind[1]) <= level or STOP_HEAD.search(text):
-                break
+                return tokens, i - 1
             inner = classify(text)
             if inner is not None and inner[0] != "role":
                 quiet = 0
-                tokens.append(inner)   # Auburn puts each trustee in an <h3>
+                tokens.append((i - 1, inner))   # Auburn puts each trustee in an <h3>
                 continue
             quiet = 0
             continue                   # a sub-heading (Officers, Members)
@@ -389,37 +670,46 @@ def read_section(bl, start, level, anchor_only=frozenset()):
                 continue
             quiet += 1
             if quiet >= 4 and tokens:
-                break
+                return tokens, i - 1
             continue
         quiet = 0
-        tokens.append(got)
-    return tokens
+        tokens.append((i - 1, got))
+    return tokens, len(bl)
 
 
-def pair_members(tokens):
-    """Walk the name/role stream into (name, role) members, in page order."""
+def member_runs(tokens):
+    """Walk read_section's (block, token) stream into (name, role, first,
+    last, at) runs, in page order with repeats kept: `first` and `last` are the
+    first and last blocks the pair was read from and `at` is the name's own. A
+    name listed twice still ends the entry before it."""
     out, i, count = [], 0, len(tokens)
     while i < count:
-        token = tokens[i]
+        at, token = tokens[i]
         if token[0] == "pair":
-            out.append((token[1], token[2]))
+            out.append((token[1], token[2], at, at, at))
             i += 1
             continue
         if token[0] == "name":
-            if i + 1 < count and tokens[i + 1][0] == "role":
-                out.append((token[1], tokens[i + 1][1]))
+            if i + 1 < count and tokens[i + 1][1][0] == "role":
+                out.append((token[1], tokens[i + 1][1][1], at, tokens[i + 1][0], at))
                 i += 2
                 continue
-            out.append((token[1], None))
+            out.append((token[1], None, at, at, at))
             i += 1
             continue
-        if i + 1 < count and tokens[i + 1][0] == "name":
-            out.append((tokens[i + 1][1], token[1]))
+        if i + 1 < count and tokens[i + 1][1][0] == "name":
+            name_at = tokens[i + 1][0]
+            out.append((tokens[i + 1][1][1], token[1], at, name_at, name_at))
             i += 2
             continue
         i += 1
+    return out
+
+
+def pair_members(tokens):
+    """(name, role) members in page order, a name listed twice kept once."""
     seen, unique = set(), []
-    for name, role in out:
+    for name, role, _first, _last, _at in member_runs(tokens):
         key = name.lower()
         if key in seen:
             continue
@@ -537,7 +827,10 @@ def names_this_library(library, haystack):
 
 
 def read_board(body, library, url="", rivals=()):
-    """(members, heading, note) — members is [] when the page names no board.
+    """(members, heading, note, page) — members is [] when the page names no
+    board. Each member is (name, role, contacts): the values printed in that
+    trustee's own entry (entry_values), and `page` is everything the page
+    prints or links outside the entries (page_values).
 
     THE CONTRACTING TRAP, and the two guards against it. Milan-Blackhawk Area
     Public Library District publishes rockislandlibrary.org as its website, and
@@ -549,25 +842,30 @@ def read_board(body, library, url="", rivals=()):
     word that belongs to this library and not to the other claimant, because
     Marshall Area and Marshall Public both answer to "marshall".
     """
-    bl = blocks(body)
+    reader = page_blocks(body)
+    bl = reader.out
     title = page_title(body)
     # Text that appears on this page ONLY inside an <a>. See read_section.
     seen_kinds = {}
     for kind, text in bl:
         seen_kinds.setdefault(strip_tail(text).lower(), set()).add(kind)
     anchor_only = frozenset(t for t, kinds in seen_kinds.items() if kinds == {"a"})
-    best, best_head = [], None
+    best, best_head, best_values = [], None, {}
     found = []
     for i, level in board_markers(bl):
-        members = pair_members(read_section(bl, i, level, anchor_only))
+        tokens, stop = read_section(bl, i, level, anchor_only)
+        members = pair_members(tokens)
         if not members:
             continue
-        found.append((bl[i][1], members))
+        values = entry_values(bl, reader.links, member_runs(tokens), stop)
+        found.append((bl[i][1], members, values))
         if len(members) > len(best):
-            best, best_head = members, bl[i][1]
+            best, best_head, best_values = members, bl[i][1], values
     if not best:
-        return [], None, "no board list on the page"
-    headings = [head for head, _members in found]
+        return [], None, "no board list on the page", {}
+    # The sections whose entries the returned members' values come from.
+    maps = [best_values]
+    headings = [entry[0] for entry in found]
     # SEVERAL SECTIONS IS USUALLY ONE BOARD, NOT TWO. Four libraries in the
     # pool list their officers under one heading and the rest of the board
     # under another — Fairview Heights' "2025-2026 Officers & Trustees" beside
@@ -579,7 +877,7 @@ def read_board(body, library, url="", rivals=()):
     # page repeats its six under a second heading) collapse in the dedupe.
     if len(found) > 1 and not rivals:
         merged, seen = [], set()
-        for _head, members in found:
+        for _head, members, _values in found:
             for name, role in members:
                 key = name.lower()
                 if key in seen:
@@ -588,12 +886,13 @@ def read_board(body, library, url="", rivals=()):
                 merged.append((name, role))
         if len(merged) <= MAX_MEMBERS:
             best = merged
+            maps = [values for _head, _members, values in found]
     if len(best) < MIN_MEMBERS:
         return [], best_head, "only %d name(s) read, below the floor of %d" % (
-            len(best), MIN_MEMBERS)
+            len(best), MIN_MEMBERS), {}
     if len(best) > MAX_MEMBERS:
         return [], best_head, "%d names read, past the ceiling of %d — the " \
-            "reader ran past the list" % (len(best), MAX_MEMBERS)
+            "reader ran past the list" % (len(best), MAX_MEMBERS), {}
     if rivals:
         host = host_of(url)
         mine = claim_score(library, host, title, headings)
@@ -602,20 +901,20 @@ def read_board(body, library, url="", rivals=()):
             return [], best_head, "%s also publishes this host (%s) and the " \
                 "page's own words do not say this board is %s's (%d against " \
                 "%d)" % (", ".join(sorted(rivals)), host or "?", library,
-                         mine, theirs)
+                         mine, theirs), {}
         if len(found) == 1:
             # One list, and the page's own words already said whose it is.
             # Pekin Public Library's page heads its four trustees "Members" and
             # its HOST carries Pekin's whole name; asking the heading to say it
             # again withheld a board from a library reading its own site.
-            return best, best_head, None
+            return _answer(best, best_head, maps, reader)
         # NO UNION ON A SHARED HOST. Silvis's page carries two boards under two
         # identical labels; merging them would have produced a fifteen-name
         # board, caught here only by the ceiling and not caught at all at five
         # names plus four. So each SECTION is scored on its own heading, and the
         # answer is the one section this library outscores every rival on.
         keep, seen = [], set()
-        for head, members in found:
+        for head, members, values in found:
             if claim_score(library, "", "", [head]) <= max(
                     claim_score(other, "", "", [head]) for other in rivals):
                 continue
@@ -623,22 +922,49 @@ def read_board(body, library, url="", rivals=()):
             if key in seen:
                 continue
             seen.add(key)
-            keep.append((head, members))
+            keep.append((head, members, values))
         if len(keep) != 1:
             return [], best_head, "%s also publishes this host (%s) and %d of " \
                 "its %d board list(s) name this library, so which is this " \
                 "board is not settled" % (", ".join(sorted(rivals)), host,
-                                          len(keep), len(found))
-        head, members = keep[0]
+                                          len(keep), len(found)), {}
+        head, members, values = keep[0]
         if not MIN_MEMBERS <= len(members) <= MAX_MEMBERS:
             return [], head, "%d name(s) under %r, outside %d..%d" % (
-                len(members), head, MIN_MEMBERS, MAX_MEMBERS)
-        return members, head, None
+                len(members), head, MIN_MEMBERS, MAX_MEMBERS), {}
+        return _answer(members, head, [values], reader)
     words = "%s %s %s" % (host_of(url), title, " ".join(headings))
     if not names_this_library(library, words):
         return [], best_head, "the page does not name this library (host %r, " \
-            "title %r) — it may be a neighbour's board" % (host_of(url), title[:60])
-    return best, best_head, None
+            "title %r) — it may be a neighbour's board" % (host_of(url), title[:60]), {}
+    return _answer(best, best_head, maps, reader)
+
+
+def _answer(members, heading, maps, reader):
+    """read_board's answer for a board it ships: each member with the values
+    its own entry printed, in page order and a value printed twice kept once;
+    the heading; no note; and the page's own values.
+
+    `maps` holds entry_values for every section the members were read from. A
+    block two sections give to two different trustees is nobody's.
+    """
+    owner, clash = {}, set()
+    for values in maps:
+        for index, (key, found) in values.items():
+            if index in owner and owner[index][0] != key:
+                clash.add(index)
+            owner.setdefault(index, (key, found))
+    for index in clash:
+        del owner[index]
+    by_name = {}
+    for index in sorted(owner):
+        key, found = owner[index]
+        mine = by_name.setdefault(key, [])
+        if found not in mine:
+            mine.append(found)
+    members = [(name, role, by_name.get(name.lower(), []))
+               for name, role in members]
+    return members, heading, None, page_values(reader, set(owner))
 
 
 # ------------------------------------------------------------------ fetch ---
@@ -859,7 +1185,7 @@ def scrape(limit=None, app_dir=APP_DIR, verbose=True):
         record["boardUrl"] = board_url
         record["boardLink"] = label
         record["via"] = via
-        members, heading, note = read_board(
+        members, heading, note, printed = read_board(
             page, library, board_url,
             sorted(rivals.get(host_of(board_url), set()) - {library}))
         if not members:
@@ -869,10 +1195,25 @@ def scrape(limit=None, app_dir=APP_DIR, verbose=True):
             continue
         record["verdict"] = "read"
         record["heading"] = heading
-        record["board"] = [{"name": n, "role": r} if r else {"name": n}
-                           for n, r in members]
-        say("READ %d" % len(members), "%s — %s" % (heading or "", board_url))
+        record["board"] = [trustee_record(n, r, c) for n, r, c in members]
+        if printed:
+            record["pageContacts"] = printed
+        held = sum(1 for _n, _r, c in members if c)
+        say("READ %d" % len(members), "%s%s — %s" % (
+            heading or "", ", %d with a value in their entry" % held if held else "",
+            board_url))
     return out
+
+
+def trustee_record(name, role, contacts):
+    """One trustee as the scrape writes it: the name, the role where the page
+    gives one, and the values printed in the trustee's own entry."""
+    record = {"name": name}
+    if role:
+        record["role"] = role
+    if contacts:
+        record["contacts"] = contacts
+    return record
 
 
 # --------------------------------------------------------------- selftest ---
@@ -1033,48 +1374,199 @@ REFUSALS = [
      "also publishes this host"),
 ]
 
+# WHERE A PAGE PRINTS A NUMBER OR AN ADDRESS, one fixture per shape measured on
+# 2026-10-17 and one per rule in the module docstring. Every name, number and
+# address here is made up; the STRUCTURE is the measured page's. Each case is
+# (slug, library, url, page, {trustee: values read from their entry}, the
+# page's own values), a value being (kind, value) or (kind, value, links).
+CONTACT_CASES = [
+    # Gilman-Danforth, Groff and Mascoutah: each trustee under a heading with a
+    # labelled field per block. The board's mailbox is printed above the first
+    # trustee and the library's telephone in the footer below the last, and
+    # neither is anybody's. A fax is never read, a one-letter label is written
+    # out, a link with no printed address is not read, and a value labelled as
+    # the library's is not the trustee's.
+    ("labelled fields", "Alpha Public Library",
+     "https://alphalibrary.example.com/board",
+     """<title>Board | Alpha Public Library</title>
+        <h2>Board of Trustees</h2>
+        <p>Email Address:</p><a href="mailto:board@example.com">board@example.com</a>
+        <h3>Ann Alpha</h3><strong>Position:</strong><p>President</p>
+        <strong>Cell Phone:</strong><p>217-555-0101</p>
+        <strong>Fax:</strong><p>217-555-0109</p>
+        <strong>Library Phone:</strong><p>217-555-0100</p>
+        <strong>Email Address:</strong><p>ann.alpha@example.com</p>
+        <h3>Bob Beta</h3><strong>Position:</strong><p>Secretary</p>
+        <p>C 217-555-0102</p><p>(217) 555-0103 (H)</p>
+        <strong>Email:</strong><p><a href="mailto:bbeta@example.com">Email</a></p>
+        <h3>Cal Gamma</h3><strong>Position:</strong><p>Treasurer</p>
+        <strong>Phone:</strong><p>217.555.0104</p>
+        <p>Copyright 2026 Alpha Public Library</p>
+        <span>Telephone</span><span>217-555-0100</span>""",
+     {"Ann Alpha": [("phone", "cell 217-555-0101"),
+                    ("email", "ann.alpha@example.com")],
+      "Bob Beta": [("phone", "cell 217-555-0102"),
+                   ("phone", "home (217) 555-0103")],
+      "Cal Gamma": [("phone", "217.555.0104")]},
+     {"email": ["bbeta@example.com", "board@example.com"],
+      "phone": ["217-555-0100", "217-555-0109"]}),
+    # Centralia: "Role: Name, elected ..." and the trustee's address on the
+    # next line, linked to itself.
+    ("role then name, linked", "Beta Regional Library District",
+     "https://betalibrary.example.com/board-of-trustees/",
+     """<title>Board of Trustees</title><h1>Board of Trustees</h1>
+        <strong>Members</strong><p>:</p>
+        <p>President: Dee Delta, elected April 2025, term expires April 30, 2031,</p>
+        <strong><a href="mailto:ddelta@example.com">ddelta@example.com</a></strong>
+        <p>Vice-President: Eve Epsilon, elected April 2023, term expires April 30, 2029,</p>
+        <strong><a href="mailto:eepsilon@example.com">eepsilon@example.com</a></strong>
+        <p>Fay Zeta, elected April 2021, term expires April 30, 2027,</p>
+        <strong><a href="mailto:fzeta@example.com">fzeta@example.com</a></strong>
+        <strong>Board Information</strong><p>:</p>""",
+     {"Dee Delta": [("email", "ddelta@example.com", ["mailto:ddelta@example.com"])],
+      "Eve Epsilon": [("email", "eepsilon@example.com",
+                       ["mailto:eepsilon@example.com"])],
+      "Fay Zeta": [("email", "fzeta@example.com", ["mailto:fzeta@example.com"])]},
+     {}),
+    # Morris: the name and role in h4s, the term, a committee and the address
+    # in smaller h6s under them. One printed address is linked to a different
+    # one, and both are recorded: build_il_library_trustees.py ships neither.
+    ("smaller headings", "Gamma Area Public Library District",
+     "https://gammalibrary.example.com/board-of-trustees",
+     """<title>Board of Trustees | Gamma Area Public Library District</title>
+        <h2>Board of Trustees</h2>
+        <h4>Gus Eta</h4><h4>President</h4><h6>2023-2027</h6>
+        <h6>Personnel Committee (Chair)</h6>
+        <h6><a href="mailto:geta@example.com">geta@example.com</a></h6>
+        <h4>Hal Theta</h4><h4>Trustee</h4><h6>2025-2029</h6>
+        <h6><a href="mailto:htheta@example.com">htehta@example.com</a></h6>
+        <h4>Ida Iota</h4><h4>Trustee</h4><h6>2023-2027</h6>
+        <h6><a href="mailto:iiota@example.com">iiota@example.com</a></h6>
+        <span>Four seats will be on the April ballot.</span>""",
+     {"Gus Eta": [("email", "geta@example.com", ["mailto:geta@example.com"])],
+      "Hal Theta": [("email", "htehta@example.com", ["mailto:htheta@example.com"])],
+      "Ida Iota": [("email", "iiota@example.com", ["mailto:iiota@example.com"])]},
+     {}),
+    # Dominy and Odell: no trustee prints anything, and the library's own
+    # telephone sits just below the last one. Fewer than two other trustees
+    # print a number, so it is the page's and not the last trustee's.
+    ("after the last", "Delta Memorial Library",
+     "https://deltalibrary.example.com/board",
+     """<title>Board | Delta Memorial Library</title>
+        <h3>Board of Trustees</h3>
+        <p>Jo Kappa</p><p>Kit Lambda</p><p>Lu Mu</p>
+        <p><a href="tel:+12175550100">217-555-0100</a></p>""",
+     {}, {"phone": ["+12175550100", "217-555-0100"]}),
+    # A value inside a sentence is not read, and a heading that is not a
+    # trustee or a role ends the entry above it, here between two trustees.
+    ("sentence and barrier", "Epsilon Public Library",
+     "https://epsilonlibrary.example.com/board",
+     """<title>Board | Epsilon Public Library</title>
+        <h2>Board of Trustees</h2>
+        <h3>Max Nu</h3><p>President</p>
+        <p>Write to Max at maxnu@example.com about the levy.</p>
+        <h3>Committees</h3><p>Email:</p><p>committees@example.com</p>
+        <h3>Ned Xi</h3><p>Secretary</p>
+        <h3>Ona Omicron</h3><p>Treasurer</p>""",
+     {}, {"email": ["committees@example.com", "maxnu@example.com"]}),
+]
+
 
 def selftest():
     checks = problems = 0
     for slug, library, url, page, expect in CASES:
-        members, heading, note = read_board(page, library, url)
-        got = [name for name, _role in members]
+        members, heading, note, _page = read_board(page, library, url)
+        got = [name for name, _role, _values in members]
         checks += 1
         if got != expect:
             problems += 1
             print("  FAIL %-12s expected %s\n              got      %s (%s)"
                   % (slug, expect, got, note or heading))
         # Every fixture that names a role must carry it through.
-        for name, role in members:
+        for name, role, _values in members:
             checks += 1
             if role is not None and not ROLE_ONLY.match(role + ":"):
                 problems += 1
                 print("  FAIL %-12s %r is not a role" % (slug, role))
     for slug, library, url, rivals, page, expect in SHARED_HOST_READS:
-        members, heading, note = read_board(page, library, url, rivals)
+        members, heading, note, _page = read_board(page, library, url, rivals)
         checks += 1
-        got = [name for name, _role in members]
+        got = [name for name, _role, _values in members]
         if got != expect:
             problems += 1
             print("  FAIL %-12s a shared host is not a wrong attribution: "
                   "expected %s\n              got      %s (%s)"
                   % (slug, expect, got, note or heading))
     for slug, library, url, rivals, page, want in REFUSALS:
-        members, _heading, note = read_board(page, library, url, rivals)
+        members, _heading, note, _page = read_board(page, library, url, rivals)
         checks += 1
         if members:
             problems += 1
             print("  FAIL %-12s should have been refused, read %s"
-                  % (slug, [n for n, _r in members]))
+                  % (slug, [n for n, _r, _v in members]))
         elif want not in (note or ""):
             problems += 1
             print("  FAIL %-12s refused for the wrong reason: %s" % (slug, note))
-    # The staff list above Breese's board must never reach it.
-    members, _h, _n = read_board(CASES[0][2], CASES[0][1])
+    # The staff list above Breese's board must never reach it. This check read
+    # the fixture's URL as its page until 2026-10-17, so it passed on a page
+    # holding no board at all; it reads the page now, and also asks that the
+    # board was read, so it cannot pass that way again.
+    members, _h, _n, _p = read_board(CASES[0][3], CASES[0][1], CASES[0][2])
     checks += 1
-    if any(name == "Jenna Astroth" for name, _r in members):
+    if not members or any(name == "Jenna Astroth" for name, _r, _v in members):
         problems += 1
-        print("  FAIL breese shipped the Library Director as a trustee")
+        print("  FAIL breese read no board, or shipped the Library Director as "
+              "a trustee")
+    # The values each trustee's own entry prints, and the page's own.
+    for slug, library, url, page, expect, expect_page in CONTACT_CASES:
+        members, heading, note, printed = read_board(page, library, url)
+        checks += 1
+        if not members:
+            problems += 1
+            print("  FAIL %-12s read no board (%s)" % (slug, note))
+            continue
+        got = {}
+        for name, _role, values in members:
+            for found in values:
+                got.setdefault(name, []).append(
+                    (found["kind"], found["value"], found["links"])
+                    if "links" in found else (found["kind"], found["value"]))
+        want = {name: [tuple(v) for v in values] for name, values in expect.items()}
+        if got != want:
+            problems += 1
+            print("  FAIL %-12s trustees' values\n              expected %s\n"
+                  "              got      %s" % (slug, want, got))
+        checks += 1
+        if printed != expect_page:
+            problems += 1
+            print("  FAIL %-12s the page's own values\n              expected %s\n"
+                  "              got      %s" % (slug, expect_page, printed))
+    # The label reader on its own, both ways.
+    for text, want in (("Cell:", ("phone", "cell")), ("C", ("phone", "cell")),
+                       ("(H)", ("phone", "home")), ("Cell/Work", ("phone", "cell or work")),
+                       ("Phone:", ("phone", None)), ("E-mail:", ("email", None)),
+                       ("Email Address:", ("email", None)), ("Fax:", ("fax", None)),
+                       ("Contact:", ("either", None)), ("Home Mail", None),
+                       ("Library Phone:", None), ("Term:", None)):
+        checks += 1
+        if contact_label(text) != want:
+            problems += 1
+            print("  FAIL contact_label(%r) is %r, not %r"
+                  % (text, contact_label(text), want))
+    # A number needs its area code, and two values in one block are a list.
+    for text in ("555-0101", "217-555-0101 or 217-555-0102",
+                 "ann@example.com, bob@example.com", "Account 2175550101234",
+                 "Cell 217-555-0101 home"):
+        checks += 1
+        if block_value(text) is not None:
+            problems += 1
+            print("  FAIL block_value read %r as one value" % text)
+    # A value under a label for the other kind is not read as either.
+    for label, value in (("Phone:", "ann@example.com"), ("Email:", "217-555-0101")):
+        checks += 1
+        if block_contact([("strong", label), ("p", value)], {}, 1) is not None:
+            problems += 1
+            print("  FAIL a value labelled %r was read" % label)
     # The floor and the ceiling.
     two = """<title>X Public Library</title><h1>Board of Trustees</h1>
              <p>Ann Alpha, President</p><p>Bob Beta, Secretary</p>"""

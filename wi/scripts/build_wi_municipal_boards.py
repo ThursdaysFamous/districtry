@@ -21,7 +21,26 @@ ONE FLOOR PER CITY, NEVER A TOTAL. A total lets one city's rows disappear while
 another's grow, which is the defect per-county floors exist to prevent
 everywhere else in this fleet. Each entry is (name, seats, min emails, min
 phones); a city that resolves fewer than its seats, or loses a contact column,
-fails the build.
+fails the build. A city that publishes a second number per member has a floor
+for those too (MIN_PHONES_EXTRA).
+
+EVERY NUMBER A CITY PRINTS BESIDE A MEMBER SHIPS, since 2026-10-17. Adam ruled
+that day, for every state: "if the official government source uses personal
+phone numbers, we publish those." So a member's first number is `phone` and any
+further one is in `phonesExtra`, with the label the city prints ("cell ...").
+Every value is held to ONE telephone number by wi/scripts/wi_phone_shape.py
+before anything is written, and a failure names the city and the member's
+position in its list, never the value.
+
+EVERY ADDRESS A CITY PRINTS IN A MEMBER'S OWN ENTRY SHIPS, WHATEVER ITS
+DOMAIN, since 2026-10-17, on Adam's choice that day ("E-mails too"). Before
+the floors count anything, wi_email_rules.settle_place() applies the checks
+every Wisconsin roster shares: an `email` that is not one address stops the
+build, naming the city and the member's position; an address printed for two
+or more members ships only for the one member whose surname it carries, when
+exactly one does, and for none of them otherwise; and an address that names
+another member of the same board and not this one is left off. No message
+prints an address.
 
 A CITY THAT COULD NOT BE READ KEEPS ITS LAST-GOOD ROWS. "Preserve data we have
 already fetched" (Adam, 2026-09-19): a refusal or an unreachable host stops the
@@ -44,6 +63,9 @@ import os
 import re
 import sys
 
+import wi_email_rules                    # this script's own folder
+import wi_phone_shape                    # this script's own folder
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.normpath(os.path.join(SCRIPT_DIR, ".."))
 RAW = os.path.join(SCRIPT_DIR, ".cache", "wi_municipal_boards_raw.json")
@@ -53,9 +75,9 @@ OUT = os.path.join(REPO_ROOT, "data", "app", "wi-municipal-boards.json")
 FLOORS = {
     "Caledonia": ("Caledonia", 7, 7, 7),
     "Oshkosh": ("Oshkosh", 7, 7, 6),
-    # Janesville's seven all carry a city e-mail and a direct city line. The
-    # city also publishes a Cell Phone column and the scraper does not emit it,
-    # so this phone floor counts city lines only and 7 is every member.
+    # Janesville's seven all carry a city e-mail and a direct city line, so 7
+    # is every member. The city also publishes a Cell Phone column; since
+    # 2026-10-17 the scraper emits it as a second number, floored below.
     "Janesville": ("Janesville", 7, 7, 7),
     # The tranche of 2026-10-15. Mount Pleasant prints an e-mail and a phone
     # for all seven. Menomonee Falls prints neither: its one phone is the
@@ -64,6 +86,15 @@ FLOORS = {
     "Mount Pleasant": ("Mount Pleasant", 7, 7, 7),
     "Menomonee Falls": ("Menomonee Falls", 7, 0, 0),
     "Fond du Lac": ("Fond du Lac", 7, 7, 7),
+}
+
+# label -> the fewest members that must carry a second number (`phonesExtra`).
+# Janesville prints a Cell Phone for five of its seven members beside the city
+# line (measured 2026-10-17); the floor is about two thirds of that, so a page
+# change that stops the column being read fails the build instead of emptying
+# it quietly.
+MIN_PHONES_EXTRA = {
+    "Janesville": 3,
 }
 
 
@@ -143,7 +174,23 @@ def main(argv):
                 row["email"] = str(m["email"])
             if m.get("phone"):
                 row["phone"] = str(m["phone"])
+            if m.get("phonesExtra"):
+                row["phonesExtra"] = [str(p) for p in m["phonesExtra"]]
+            bad = wi_phone_shape.problems(row, "%s member %d" % (label, len(members) + 1))
+            if bad:
+                for line in bad:
+                    print("%s — refusing to write" % line, file=sys.stderr)
+                return 1
             members.append(row)
+
+        refusals, settled = wi_email_rules.settle_place(
+            [("member %d" % n, row) for n, row in enumerate(members, 1)])
+        if refusals:
+            for line in refusals:
+                print("%s %s — refusing to write" % (label, line), file=sys.stderr)
+            return 1
+        for line in settled:
+            print("  e-mail %s %s" % (label, line))
 
         if len(members) < seats:
             print("%s: %d member(s) resolved against a floor of %d; refusing to "
@@ -151,10 +198,16 @@ def main(argv):
             return 1
         emails = sum(1 for m in members if m.get("email"))
         phones = sum(1 for m in members if m.get("phone"))
+        seconds = sum(1 for m in members if m.get("phonesExtra"))
         if emails < min_emails or phones < min_phones:
             print("%s: %d e-mail(s) and %d phone(s) against floors of %d and %d; "
                   "refusing to write" % (label, emails, phones, min_emails,
                                          min_phones), file=sys.stderr)
+            return 1
+        if seconds < MIN_PHONES_EXTRA.get(label, 0):
+            print("%s: %d member(s) carry a second number against a floor of %d; "
+                  "refusing to write" % (label, seconds, MIN_PHONES_EXTRA[label]),
+                  file=sys.stderr)
             return 1
 
         # NOT EVERY BODY HERE SAYS IT IS ELECTED AT LARGE. Menomonee Falls
@@ -180,8 +233,8 @@ def main(argv):
                 return 1
             record["howElected"] = how
         out[geoid] = record
-        notes.append("%s: %d member(s), %d e-mail(s), %d phone(s)"
-                     % (label, len(members), emails, phones))
+        notes.append("%s: %d member(s), %d e-mail(s), %d phone(s), %d with a "
+                     "second number" % (label, len(members), emails, phones, seconds))
 
     if not out:
         print("nothing to write", file=sys.stderr)

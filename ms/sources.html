@@ -843,6 +843,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1219,7 +1225,7 @@ table.matrix code {
                     <li><a href="https://billstatus.ls.state.ms.us/documents/2025/html/SB/2700-2799/SB2768SG.htm" target="_blank" rel="noopener">Mississippi Legislature — Senate Bill 2768 (2025), as sent to the Governor, which writes each chancery district's counties until and from 1 January 2027, and House Bill 1 (2026), which rewrote the Third Chancery District's section with the same counties. Both kept in ms/data/source/courts/. The app draws the 2027 map from midnight on that day in Mississippi.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors (names only; the list also prints court staff, some with street addresses, which are never carried). The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.</td>
+                <td data-label="Who it names">ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors: each chancellor's name and, since 2026-10-17, the chancellor's own telephone, where the list prints one for no other judge (a number several judges share is the court office's line). The list also prints court staff, some with street addresses, which are never carried. The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.</td>
                 <td data-label="Where it applies">Mississippi — statewide, all 20 districts.</td>
               </tr>
               <tr id="layer-ms-circuit-court">
@@ -1231,7 +1237,7 @@ table.matrix code {
                     <li><a href="https://billstatus.ls.state.ms.us/documents/2025/html/HB/1500-1599/HB1544SG.htm" target="_blank" rel="noopener">Mississippi Legislature — House Bill 1544 (2025), as sent to the Governor, which writes each circuit district's counties until and from 1 January 2027 (the 23rd Circuit District ends on that day), and House Bill 580 (2026), which rewrote the Fourth and Seventh Circuit Districts' sections with the same counties. Both kept in ms/data/source/courts/. The app draws the 2027 map from midnight on that day in Mississippi.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges (names only, as for the chancellors). The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.</td>
+                <td data-label="Who it names">ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges: names and, as for the chancellors, each judge's own telephone. The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.</td>
                 <td data-label="Where it applies">Mississippi — statewide, all 23 districts (22 from 1 January 2027).</td>
               </tr>
               <tr id="layer-ms-senate">
@@ -1290,7 +1296,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its wards are cut so the City Ward and City cards agree about which city a point is in</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">The member for each ward as the city's own website names them, from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.</td>
+                <td data-label="Who it names">The member for each ward as the city's own website names them, and, where the city's page prints them inside that member's own entry, the member's telephone numbers (Olive Branch, Oxford and Brandon) and e-mail address (Gulfport, Olive Branch, Tupelo, Pearl and Brandon), from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.</td>
                 <td data-label="Where it applies">Jackson, Gulfport, Southaven, Olive Branch, Tupelo, Clinton, Pearl, Oxford and Brandon. The other six cities of 25,000 people or more (Biloxi, Hattiesburg, Meridian, Greenville, Madison and Horn Lake) are not drawn, each for a reason ms/scripts/build_ms_city_wards.py records, and the City card still names their mayor and council where the city's own website does.</td>
               </tr>
               <tr id="layer-tribal-government">
@@ -1359,7 +1365,7 @@ table.matrix code {
                 <td data-label="What it answers">The public school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 137 features for Mississippi, measured 2026-10-15.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 137 features for Mississippi, measured 2026-10-15.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Mississippi's school boards are elected in most districts and appointed in some, and no statewide roster of their members has been read here. Recorded as gap ms-school-board-members.</td>
@@ -1387,7 +1393,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 82 features, measured 2026-10-15. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and for the election commissioners only their names are, because the directory prints each one's own address, which may be a home.</td>
+                <td data-label="Who it names">ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A telephone the directory prints for one supervisor or one election commissioner is carried on that person's own row, as printed, even where it may be the person's own line: 81 supervisors and 45 election commissioners have one on the 2026 edition. Their own addresses, which may be homes, are never carried.</td>
                 <td data-label="Where it applies">Mississippi — statewide, all 82 counties.</td>
               </tr>
               <tr id="layer-zip-code">
@@ -1395,7 +1401,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='28'. 827 features in Mississippi's box, measured 2026-10-15.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='28'. 827 features in Mississippi's box, measured 2026-10-15.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
@@ -1406,10 +1412,10 @@ table.matrix code {
                 <td data-label="What it answers">The city, town or village containing the point, if any.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 300 features for Mississippi (113 cities, 167 towns and 20 villages, one of the towns recorded by the Census as inactive), measured 2026-10-15.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 300 features for Mississippi (113 cities, 167 towns and 20 villages, one of the towns recorded by the Census as inactive), measured 2026-10-15.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.</td>
+                <td data-label="Who it names">The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. Five cities' pages (Olive Branch, Madison, Horn Lake, Oxford and Brandon) print telephone numbers inside a person's own entry, and the card carries each such number, labelled the way the page labels it; a number the pages print anywhere else, or for more than one person, is the office's and is not carried. Nine cities' pages (Olive Branch, Horn Lake, Gulfport, Tupelo, Madison, Pearl, Brandon, Hattiesburg and Meridian) print an e-mail address inside a person's own entry, and the card links each one on the same terms: an address the pages print anywhere else, or for more than one person, or that is named as an office's mailbox, is the office's and is not carried. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.</td>
                 <td data-label="Where it applies">Mississippi — statewide. A point outside every city, town and village is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1513,7 +1519,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-ms-chancery-court",
       "identifier": "ms-chancery-court",
       "name": "Chancery Court District",
-      "description": "The chancery court district covering the point and its chancellors, and, until 1 January 2027, what the redrawn map changes at the point. ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors (names only; the list also prints court staff, some with street addresses, which are never carried). The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.",
+      "description": "The chancery court district covering the point and its chancellors, and, until 1 January 2027, what the redrawn map changes at the point. ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of chancellors: each chancellor's name and, since 2026-10-17, the chancellor's own telephone, where the list prints one for no other judge (a number several judges share is the court office's line). The list also prints court staff, some with street addresses, which are never carried. The list read 2026-10-15 is dated 1 August 2025, so the builder applies the changes since then that this project confirmed from the court's own news and the Governor's announcements — two appointments and two deaths — each with its source, and fails once the list catches up.",
       "url": "https://districtry.com/ms/sources.html#layer-ms-chancery-court",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"
@@ -1540,7 +1546,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-ms-circuit-court",
       "identifier": "ms-circuit-court",
       "name": "Circuit Court District",
-      "description": "The circuit court district covering the point and its circuit judges, and, until 1 January 2027, what the redrawn map changes at the point. ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges (names only, as for the chancellors). The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.",
+      "description": "The circuit court district covering the point and its circuit judges, and, until 1 January 2027, what the redrawn map changes at the point. ms-judge-roster.json, rebuilt weekly by CI from the Judiciary's PDF list of circuit judges: names and, as for the chancellors, each judge's own telephone. The list read 2026-10-15 is dated 4 February 2026; the one appointment since then that this project confirmed, from the Governor's announcement, is applied by the builder with its source.",
       "url": "https://districtry.com/ms/sources.html#layer-ms-circuit-court",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"
@@ -1589,7 +1595,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point, the five supervisors on its board, and its five election commissioners. ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A supervisor's own address or telephone is never carried, and for the election commissioners only their names are, because the directory prints each one's own address, which may be a home.",
+      "description": "Which county contains the point, the five supervisors on its board, and its five election commissioners. ms-county-officials.json, rebuilt weekly: the five members of each county's board of supervisors and its five election commissioners, by district, from the Mississippi Secretary of State's County Offices and Directory (2026 edition, published 6 May 2026). The board's address and telephone are carried only where at least three of the five supervisors print the same one, because five people do not share a home: 76 counties have a board address and 68 a board telephone on the 2026 edition. A telephone the directory prints for one supervisor or one election commissioner is carried on that person's own row, as printed, even where it may be the person's own line: 81 supervisors and 45 election commissioners have one on the 2026 edition. Their own addresses, which may be homes, are never carried.",
       "url": "https://districtry.com/ms/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"
@@ -1641,7 +1647,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 137 features for Mississippi, measured 2026-10-15.",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 137 features for Mississippi, measured 2026-10-15.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1725,7 +1731,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='28'. 827 features in Mississippi's box, measured 2026-10-15.",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='28'. 827 features in Mississippi's box, measured 2026-10-15.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1739,7 +1745,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City, Town or Village",
-      "description": "The city, town or village containing the point, if any. The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.",
+      "description": "The city, town or village containing the point, if any. The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. Five cities' pages (Olive Branch, Madison, Horn Lake, Oxford and Brandon) print telephone numbers inside a person's own entry, and the card carries each such number, labelled the way the page labels it; a number the pages print anywhere else, or for more than one person, is the office's and is not carried. Nine cities' pages (Olive Branch, Horn Lake, Gulfport, Tupelo, Madison, Pearl, Brandon, Hattiesburg and Meridian) print an e-mail address inside a person's own entry, and the card links each one on the same terms: an address the pages print anywhere else, or for more than one person, or that is named as an office's mailbox, is the office's and is not carried. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.",
       "url": "https://districtry.com/ms/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"
@@ -1747,7 +1753,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 300 features for Mississippi (113 cities, 167 towns and 20 villages, one of the towns recorded by the Census as inactive), measured 2026-10-15.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 300 features for Mississippi (113 cities, 167 towns and 20 villages, one of the towns recorded by the Census as inactive), measured 2026-10-15.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],
@@ -1761,7 +1767,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-city-ward",
       "identifier": "city-ward",
       "name": "City Ward",
-      "description": "The ward containing the point, in the nine Mississippi cities of 25,000 people or more whose current ward map this app has confirmed, and the member of the city council or board of aldermen elected from it. The member for each ward as the city's own website names them, from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.",
+      "description": "The ward containing the point, in the nine Mississippi cities of 25,000 people or more whose current ward map this app has confirmed, and the member of the city council or board of aldermen elected from it. The member for each ward as the city's own website names them, and, where the city's page prints them inside that member's own entry, the member's telephone numbers (Olive Branch, Oxford and Brandon) and e-mail address (Gulfport, Olive Branch, Tupelo, Pearl and Brandon), from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.",
       "url": "https://districtry.com/ms/sources.html#layer-city-ward",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"

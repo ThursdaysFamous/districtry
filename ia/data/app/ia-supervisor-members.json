@@ -31,7 +31,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://adamscounty.iowa.gov/supervisors/"
  },
  "023": {
@@ -56,7 +56,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://butlercounty.iowa.gov/departments/supervisors"
  },
  "029": {
@@ -127,7 +127,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://chickasawcounty.iowa.gov/board_of_supervisors/"
  },
  "075": {
@@ -162,7 +162,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.grundycountyiowa.gov/departments/supervisors"
  },
  "089": {
@@ -187,7 +187,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
  "091": {
@@ -201,22 +201,32 @@
   },
   "districts": {
    "1": {
-    "name": "Bruce Reimers"
+    "email": "breimers@humboldtcounty.iowa.gov",
+    "name": "Bruce Reimers",
+    "phone": "515 770-1067"
    },
    "2": {
-    "name": "Dennis Thompson"
+    "email": "dthompson@humboldtcounty.iowa.gov",
+    "name": "Dennis Thompson",
+    "phone": "515 332-0597"
    },
    "3": {
-    "name": "Rick Pedersen"
+    "email": "rpedersen@humboldtcounty.iowa.gov",
+    "name": "Rick Pedersen",
+    "phone": "515 779-4591"
    },
    "4": {
-    "name": "Mike Carpenter"
+    "email": "mcarpenter@humboldtcounty.iowa.gov",
+    "name": "Mike Carpenter",
+    "phone": "515 332-0596"
    },
    "5": {
-    "name": "Bob Rasmussen"
+    "email": "brasmussen@humboldtcounty.iowa.gov",
+    "name": "Bob Rasmussen",
+    "phone": "515 770-0014"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php"
  },
  "093": {
@@ -276,7 +286,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.jonescountyiowa.gov/board_of_supervisors/"
  },
  "119": {
@@ -311,7 +321,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://lyoncounty.iowa.gov/supervisors/"
  },
  "121": {
@@ -336,7 +346,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://madisoncounty.iowa.gov/offices/board-of-supervisors/"
  },
  "131": {
@@ -371,7 +381,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://mitchellcounty.iowa.gov/departments/board-of-supervisors/"
  },
  "133": {
@@ -396,7 +406,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
  },
  "143": {
@@ -467,7 +477,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://pocahontascounty.iowa.gov/board-of-supervisors/"
  },
  "153": {
@@ -502,7 +512,7 @@
     "party": "Democratic"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.polkcountyiowa.gov/board-of-supervisors/"
  },
  "161": {
@@ -526,7 +536,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.saccountyiowa.gov/supervisors/"
  },
  "167": {
@@ -576,22 +586,32 @@
   },
   "districts": {
    "1": {
-    "name": "Curt Hilmer"
+    "email": "curthilmer@gmail.com",
+    "name": "Curt Hilmer",
+    "phone": "319-939-3291"
    },
    "2": {
-    "name": "David Turner"
+    "email": "dturner@tamacounty.org",
+    "name": "David Turner",
+    "phone": "641-481-2456"
    },
    "3": {
-    "name": "Heather Knebel"
+    "email": "hknebel@tamacounty.org",
+    "name": "Heather Knebel",
+    "phone": "641-481-2532"
    },
    "4": {
-    "name": "Mark Doland"
+    "email": "mdoland@tamacounty.org",
+    "name": "Mark Doland",
+    "phone": "641-481-2533"
    },
    "5": {
-    "name": "Curt Kupka"
+    "email": "ckupka@tamacounty.org",
+    "name": "Curt Kupka",
+    "phone": "641-481-2310"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.tamacounty.iowa.gov/supervisors/"
  },
  "173": {
@@ -615,7 +635,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://taylorcounty.iowa.gov/departments/board-of-supervisors/"
  },
  "183": {
@@ -650,7 +670,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://washingtoncounty.iowa.gov/148/Board-of-Supervisors"
  },
  "189": {
@@ -675,7 +695,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-15",
+  "readOn": "2026-10-17",
   "sourceUrl": "https://www.winnebagocountyiowa.gov/board_of_supervisors/"
  }
 }

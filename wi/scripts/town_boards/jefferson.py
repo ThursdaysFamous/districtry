@@ -4,15 +4,19 @@ Each town has a page headed "TOWN OF <NAME>". Every officer is a small block
 laid out in two columns: the officer's name and "PH: <telephone>" on the first
 line (or the name alone with the telephone on the next line), and the office
 ("Chair", "Supervisor", "Supervisor 2", "Clerk"...) in a left-hand column at
-the start of a following line, beside the officer's home address. The
-county-board members who represent the town follow at the foot of the page
-and carry no "PH:" line. Read with the token on 2026-10-15 (the file is
-served from cms4files.revize.com, whose robots.txt allows /*.pdf$; the county
-host has no robots.txt)."""
+the start of a following line, beside the officer's home address. The "PH:"
+number ships on the officer, and so does the e-mail address that ends the line
+under the office; the address beside the office, and the post office and ZIP
+code before the e-mail address, are not read. The county-board members who
+represent the town follow at the foot of the page and carry no "PH:" line. Read
+with the token on 2026-10-15 (the file is served from cms4files.revize.com,
+whose robots.txt allows /*.pdf$; the county host has no robots.txt)."""
 
 import re
 
-from . import looks_like_person, norm_role, person, split_blocks, strip_contact
+from . import (following_emails, following_phones, line_phones,
+               looks_like_person, norm_role, person, phones_after_name,
+               split_blocks, strip_contact)
 
 COUNTY_FIPS = "055"
 COUNTY_NAME = "Jefferson"
@@ -52,7 +56,13 @@ def _officers(block):
         # the two; when that line is the telephone alone the name is one line
         # higher still. A name with no telephone stands directly above.
         name = _name_part(m.group(3))
-        if not looks_like_person(name):
+        phones = []
+        if looks_like_person(name):
+            # "Chair Barry Boos PH: ...", or the office and name alone with
+            # an e-mail line and then "PH: ..." below them
+            phones = (phones_after_name(ln, name)
+                      or following_phones(lines, i + 1, limit=2))
+        else:
             name = ""
             j = i - 1
             while j >= 0 and j >= i - 3 and _STREET.match(lines[j]):
@@ -61,12 +71,16 @@ def _officers(block):
                 prev = lines[j]
                 if "PH:" in prev:
                     name = _name_part(prev)
+                    phones = phones_after_name(prev, name) if name else []
                     if not name and prev.startswith("PH:") and j > 0:
                         name = _name_part(lines[j - 1])
+                        phones = line_phones(prev)
                 elif j == i - 1:
                     name = _name_part(prev)
         if looks_like_person(name):
-            people.append(person(name, role))
+            # the e-mail address ends the post-office line under the office
+            people.append(person(name, role, phones,
+                                 emails=following_emails(lines, i + 1, limit=3)))
     return people
 
 

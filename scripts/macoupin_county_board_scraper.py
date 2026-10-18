@@ -16,10 +16,25 @@ means APPOINTED TO FILL AN UNEXPIRED TERM (the page's own legend, re-read and
 asserted every run). The board Chair is a separate office in the service's
 "Appointed County Officers" district, titled "Macoupin County Board Chair".
 
-WHAT IS NOT READ: the per-office detail endpoint, which carries officeholders'
-RESIDENCE addresses, is never called. The service publishes no per-member
-phone or e-mail that can be trusted per person (see the municipal scraper's
-measurement), so none ships. No party is published.
+THE SECOND-CONTACT E-MAIL, AND NOTHING ELSE FROM THE DETAIL ENDPOINT. Each
+office has a detail record (`getelectedofficial?officeId=N`) whose
+second-contact slot, `office.email2`, holds an e-mail address for 14 of the 19
+board offices (measured 2026-10-17). That record also carries the
+officeholder's RESIDENCE (`person`, the `address` array and `office.address2`),
+so this module reads `office.email2` and the three fields that tie the record to
+the seat (the office id, its title and the holder's ballot name) and keeps
+nothing else; the residence is never read into any output. It asks once per
+seat, paced as the municipal scraper paces the same endpoint, and a record whose
+id, title or holder differs from the list's gives no e-mail for that seat.
+
+The slot belongs to the OFFICE, not the person: the municipal scraper found
+primary e-mails left behind by a predecessor. So build_macoupin_county_board.py
+ships the address only where its local part carries the member's surname, which
+it did on 12 of the 14 on 2026-10-17, when Adam chose to publish members' own
+e-mail addresses, personal ones included ("E-mails too"); the other two are
+left out. The slot's telephone number (`phone2`, 16 of the 19) is not read:
+nothing in a number can tie it to the member, so it stays out. No party is
+published.
 
 THE CLIENT is this project's own token, not the browser string the municipal
 scraper sends: measured 2026-10-15, the list, text and robots requests all
@@ -39,12 +54,13 @@ import json
 import os
 import re
 import sys
+import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import requests  # noqa: E402
 from macoupin_municipal_officials_scraper import (  # noqa: E402  (one reader of one service)
-    AT_LARGE_LEGEND, AT_LARGE_LEGEND_KEY, LIST_URL, OFFICIALS_PAGE, TEXT_URL,
-    election_year, strip_jsonp,
+    AT_LARGE_LEGEND, AT_LARGE_LEGEND_KEY, DETAIL_PAUSE, DETAIL_URL, LIST_URL,
+    OFFICIALS_PAGE, TEXT_URL, election_year, strip_jsonp,
 )
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
     UA_HEADERS_ROSTER_BOT,
@@ -103,6 +119,8 @@ def read_members():
             "vacant": bool(office.get("postAtVacant")),
             "appointed": bool(office.get("effectiveAtLarge")),
             "nextElection": election_year(office.get("nextElectionDate")),
+            # Read by read_second_emails() and removed there; never written.
+            "_office": (office.get("id"), title, holder.strip()),
         })
     chairs = []
     for d in districts:
@@ -116,6 +134,38 @@ def read_members():
         fail("the directory names %r as %r, expected exactly one name"
              % (chairs, CHAIR_TITLE))
     return seats, chairs[0]
+
+
+def read_second_emails(seats):
+    """Set `email2` on each seat whose detail record's second-contact slot holds
+    an e-mail address. See the module docstring: only `office.email2` and the
+    fields that tie the record to the seat are read; the residence the same
+    record carries is never looked at. The Chair's own office is not asked,
+    because the Chair holds a district seat and that seat's record is asked."""
+    asked = 0
+    for seat in seats:
+        office_id, title, holder = seat.pop("_office")
+        if not isinstance(office_id, int) or seat["vacant"] or not holder:
+            continue
+        if asked:
+            time.sleep(DETAIL_PAUSE)
+        asked += 1
+        url = DETAIL_URL % office_id
+        record = (strip_jsonp(get(url).text, url) or {}).get("office") or {}
+        same = (record.get("id") == office_id
+                and (record.get("title") or "").strip() == title
+                and ((record.get("officeHolder") or {}).get("ballotDisplay")
+                     or "").strip() == holder)
+        value = (record.get("email2") or "").strip() if same else ""
+        del record
+        if not same:
+            print("macoupin-board-scraper: note — District %s: the detail record "
+                  "for this seat names a different office or holder than the "
+                  "list, so no e-mail is read for it" % seat["district"],
+                  file=sys.stderr)
+        elif value:
+            seat["email2"] = value
+    return asked
 
 
 def read_layer():
@@ -140,6 +190,7 @@ def main():
     ap.add_argument("-o", "--output", default="-")
     args = ap.parse_args()
     seats, chair = read_members()
+    asked = read_second_emails(seats)
     payload = {
         "source": OFFICIALS_PAGE,
         "seats": seats,
@@ -152,8 +203,10 @@ def main():
     else:
         with open(args.output, "w", encoding="utf-8") as handle:
             handle.write(text)
-    print("macoupin-board-scraper: %d seats, chair %s, %d layer districts"
-          % (len(seats), chair, len(payload["districtAreas"])), file=sys.stderr)
+    print("macoupin-board-scraper: %d seats, chair %s, %d layer districts; %d "
+          "detail records read, %d with a second-contact e-mail"
+          % (len(seats), chair, len(payload["districtAreas"]), asked,
+             sum(1 for s in seats if s.get("email2"))), file=sys.stderr)
 
 
 if __name__ == "__main__":

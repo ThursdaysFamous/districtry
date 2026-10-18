@@ -32,6 +32,9 @@
     "clerk": "Bryn Hand",
     "municipality": "Hayward",
     "phone": "715-634-4123 EXT 1",
+    "phonesExtra": [
+      "715-638-2599"
+    ],
     "recordUpdated": "2024-01-08",
     "url": "https://townofhayward.com/"
   },
@@ -67,6 +70,9 @@
     "clerk": "Jill Petit",
     "municipality": "Ojibwa",
     "phone": "715-266-2112",
+    "phonesExtra": [
+      "715-492-2899"
+    ],
     "recordUpdated": "2025-03-13"
   },
   "5511366075": {
@@ -80,6 +86,9 @@
     "deputyClerk": "Victoria Palya",
     "municipality": "Round Lake",
     "phone": "715-462-9271",
+    "phonesExtra": [
+      "715-462-3723"
+    ],
     "recordUpdated": "2025-04-17",
     "url": "http://townofroundlakewi.org"
   },
@@ -106,6 +115,9 @@
     "clerk": "Jenna M Petit",
     "municipality": "Winter",
     "phone": "715-266-3131",
+    "phonesExtra": [
+      "715-559-5555"
+    ],
     "recordUpdated": "2024-05-21",
     "url": "http://www.townofwinter.com/"
   },

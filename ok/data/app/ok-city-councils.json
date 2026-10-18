@@ -3,11 +3,13 @@
   "body": "City Council",
   "how": "Each of the city's five wards elects its own council member. The council chooses the mayor and vice mayor from among its members.",
   "name": "Bartlesville",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": true,
+    "email": "jimforward3@gmail.com",
     "name": "Jim Curd, Jr.",
+    "phone": "918.397.3092",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
@@ -15,7 +17,9 @@
    },
    {
     "byWard": true,
+    "email": "ward1council@cityofbartlesville.org",
     "name": "Tim Sherrick",
+    "phone": "918.280.9401",
     "role": "Council member",
     "seat": "Ward 1",
     "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
@@ -23,7 +27,9 @@
    },
    {
     "byWard": true,
+    "email": "ward2council@cityofbartlesville.org",
     "name": "Larry East",
+    "phone": "918.480.1238",
     "role": "Council member",
     "seat": "Ward 2",
     "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
@@ -31,7 +37,9 @@
    },
    {
     "byWard": true,
+    "email": "ward4council@cityofbartlesville.org",
     "name": "Aaron Kirkpatrick",
+    "phone": "918.914.9759",
     "role": "Council member",
     "seat": "Ward 4",
     "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
@@ -39,7 +47,9 @@
    },
    {
     "byWard": true,
+    "email": "ward5council@cityofbartlesville.org",
     "name": "Trevor Dorsey",
+    "phone": "918.886.3516",
     "role": "Council member",
     "seat": "Ward 5",
     "sourceUrl": "https://www.cityofbartlesville.org/city-government/city-council/",
@@ -51,7 +61,7 @@
   "body": "City Council",
   "how": "Each of the city's five wards elects its own councilor. The council chooses the mayor and vice mayor from among its members.",
   "name": "Bixby",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": true,
@@ -99,10 +109,11 @@
   "body": "City Council",
   "how": "All five council members are elected by the voters of the whole city: four must live in the ward they represent and one is elected at large. The council chooses the mayor and vice mayor from among its members.",
   "name": "Broken Arrow",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "dwimpee@brokenarrowok.gov",
     "name": "Debra Wimpee",
     "role": "Mayor",
     "seat": "Mayor",
@@ -111,6 +122,7 @@
    },
    {
     "byWard": false,
+    "email": "lford@brokenarrowok.gov",
     "name": "Lisa Ford",
     "role": "Council member",
     "seat": "Ward 2",
@@ -119,6 +131,7 @@
    },
    {
     "byWard": false,
+    "email": "david.pickel@brokenarrowok.gov",
     "name": "David Pickel",
     "role": "Council member",
     "seat": "Ward 3",
@@ -127,6 +140,7 @@
    },
    {
     "byWard": false,
+    "email": "jgreen@brokenarrowok.gov",
     "name": "Justin Green",
     "role": "Council member",
     "seat": "Ward 4",
@@ -135,6 +149,7 @@
    },
    {
     "byWard": false,
+    "email": "jparks@brokenarrowok.gov",
     "name": "Johnnie Parks",
     "role": "Council member",
     "seat": "At large",
@@ -146,7 +161,7 @@
   "body": "City Council",
   "how": "Each of the city's four wards has one council member. Where more than two people run for a ward's seat, that ward's voters narrow them to two in a primary, and the voters of the whole city then elect the member, as they elect the mayor.",
   "name": "Edmond",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -193,18 +208,22 @@
   "body": "City Commission",
   "how": "Each of the city's six wards elects its own commissioner, and the mayor is elected by the whole city.",
   "name": "Enid",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "dmason@enid.org",
     "name": "David Mason",
+    "phone": "580-616-7269",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.enid.org/Government/City-Council"
    },
    {
     "byWard": true,
+    "email": "ward1@enid.org",
     "name": "Cheryl Patterson",
+    "phone": "580-234-7960",
     "role": "Commissioner",
     "seat": "Ward 1",
     "sourceUrl": "https://www.enid.org/Government/City-Council",
@@ -212,7 +231,12 @@
    },
    {
     "byWard": true,
+    "email": "ward2@enid.org",
     "name": "Derwin Norwood",
+    "phone": "580-297-3860",
+    "phonesExtra": [
+     "cell 580-747-6131"
+    ],
     "role": "Commissioner",
     "seat": "Ward 2",
     "sourceUrl": "https://www.enid.org/Government/City-Council",
@@ -220,7 +244,9 @@
    },
    {
     "byWard": true,
+    "email": "ward3@enid.org",
     "name": "Frank Baker",
+    "phone": "580-478-4649",
     "role": "Commissioner",
     "seat": "Ward 3",
     "sourceUrl": "https://www.enid.org/Government/City-Council",
@@ -228,7 +254,9 @@
    },
    {
     "byWard": true,
+    "email": "ward4@enid.org",
     "name": "Whitney Roberts",
+    "phone": "405-714-7112",
     "role": "Commissioner",
     "seat": "Ward 4",
     "sourceUrl": "https://www.enid.org/Government/City-Council",
@@ -236,7 +264,9 @@
    },
    {
     "byWard": true,
+    "email": "ward5@enid.org",
     "name": "Rob Stallings",
+    "phone": "580-977-9310",
     "role": "Commissioner",
     "seat": "Ward 5",
     "sourceUrl": "https://www.enid.org/Government/City-Council",
@@ -244,7 +274,9 @@
    },
    {
     "byWard": true,
+    "email": "ward6@enid.org",
     "name": "Courtney Dennis",
+    "phone": "580-402-4642",
     "role": "Commissioner",
     "seat": "Ward 6",
     "sourceUrl": "https://www.enid.org/Government/City-Council",
@@ -256,7 +288,7 @@
   "body": "City Council",
   "how": "All seven council members are elected by the voters of the whole city: six must live in the ward they represent and one is elected at large. The council chooses the mayor and vice mayor from among its members.",
   "name": "Jenks",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -320,7 +352,7 @@
   "how": "Each of the city's eight wards elects its own council member, and the mayor is elected by the whole city.",
   "name": "Lawton",
   "note": "The city's eight wards are not drawn on this map yet: the only ward map the city publishes as data does not divide the 2020 census population evenly between its wards, as a map drawn after that census would, so it may not be the map in force.",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -400,17 +432,20 @@
   "body": "City Council",
   "how": "Each of the city's six wards elects its own council member, and the mayor is elected by the whole city.",
   "name": "Midwest City",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "mayor@midwestcityok.org",
     "name": "Rick Rice",
+    "phone": "405-739-1209",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.midwestcityok.org/164/City-Council"
    },
    {
     "byWard": true,
+    "email": "ward1@midwestcityok.org",
     "name": "Brian Triger",
     "role": "Council member",
     "seat": "Ward 1",
@@ -419,6 +454,7 @@
    },
    {
     "byWard": true,
+    "email": "ward2@midwestcityok.org",
     "name": "Pat Byrne",
     "role": "Council member",
     "seat": "Ward 2",
@@ -427,6 +463,7 @@
    },
    {
     "byWard": true,
+    "email": "ward3@midwestcityok.org",
     "name": "Raymond Melton",
     "role": "Council member",
     "seat": "Ward 3",
@@ -435,6 +472,7 @@
    },
    {
     "byWard": true,
+    "email": "ward4@midwestcityok.org",
     "name": "Marc Thompson",
     "role": "Council member",
     "seat": "Ward 4",
@@ -443,6 +481,7 @@
    },
    {
     "byWard": true,
+    "email": "ward5@midwestcityok.org",
     "name": "Sara Bana",
     "role": "Council member",
     "seat": "Ward 5",
@@ -451,6 +490,7 @@
    },
    {
     "byWard": true,
+    "email": "ward6@midwestcityok.org",
     "name": "Rick Favors",
     "role": "Council member",
     "seat": "Ward 6",
@@ -463,18 +503,22 @@
   "body": "City Council",
   "how": "Each of the city's three wards elects two council members, and the mayor is elected by the whole city.",
   "name": "Moore",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "mhamm@cityofmoore.com",
     "name": "Mark Hamm",
+    "phone": "(405) 613-6200",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.cityofmooreok.gov/government/city-council"
    },
    {
     "byWard": true,
+    "email": "awebb@cityofmoore.com",
     "name": "Adam Webb",
+    "phone": "(405) 320-2773",
     "role": "Council member",
     "seat": "Ward 1",
     "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
@@ -482,7 +526,9 @@
    },
    {
     "byWard": true,
+    "email": "kgriffith@cityofmoore.com",
     "name": "Kathy Griffith",
+    "phone": "(405) 213-7839",
     "role": "Council member",
     "seat": "Ward 1",
     "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
@@ -490,7 +536,9 @@
    },
    {
     "byWard": true,
+    "email": "rclark@cityofmoore.com",
     "name": "Rob Clark",
+    "phone": "(405) 585-8434",
     "role": "Council member",
     "seat": "Ward 2",
     "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
@@ -498,7 +546,9 @@
    },
    {
     "byWard": true,
+    "email": "mhunt@cityofmoore.com",
     "name": "Melissa Hunt",
+    "phone": "(405) 370-0690",
     "role": "Council member",
     "seat": "Ward 2",
     "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
@@ -506,7 +556,9 @@
    },
    {
     "byWard": true,
+    "email": "sporter@cityofmoore.com",
     "name": "Sid Porter",
+    "phone": "(405) 990-6779",
     "role": "Council member",
     "seat": "Ward 3",
     "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
@@ -514,7 +566,9 @@
    },
    {
     "byWard": true,
+    "email": "lwilliams@cityofmoore.com",
     "name": "Louie Williams",
+    "phone": "(405) 650-9501",
     "role": "Council member",
     "seat": "Ward 3",
     "sourceUrl": "https://www.cityofmooreok.gov/government/city-council",
@@ -528,7 +582,7 @@
   "name": "Muskogee",
   "note": "Muskogee's website does not let this app read it, so these names come from the county election board's official results for February 10, 2026, in the copy published by KJRH, a Tulsa television station, and from news reports by the Muskogee Phoenix and KJRH. The city's four wards are not drawn on this map yet: no copy of them that this app may use has been found.",
   "page": "https://www.muskogeeok.gov/government/city_council/index.php",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
@@ -608,18 +662,22 @@
   "body": "City Council",
   "how": "Each of the city's eight wards elects its own council member, and the mayor is elected by the whole city.",
   "name": "Norman",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "mayor@normanok.gov",
     "name": "Stephen T. Holman",
+    "phone": "405-876-9216",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council"
    },
    {
     "byWard": true,
+    "email": "ward1@normanok.gov",
     "name": "David Gandesbery",
+    "phone": "405-876-9170",
     "role": "Council member",
     "seat": "Ward 1",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -627,7 +685,9 @@
    },
    {
     "byWard": true,
+    "email": "ward2@normanok.gov",
     "name": "Jacy Deck",
+    "phone": "405-876-9196",
     "role": "Council member",
     "seat": "Ward 2",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -635,7 +695,9 @@
    },
    {
     "byWard": true,
+    "email": "ward3@normanok.gov",
     "name": "Robert Bruce",
+    "phone": "405-876-3143",
     "role": "Council member",
     "seat": "Ward 3",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -643,7 +705,9 @@
    },
    {
     "byWard": true,
+    "email": "ward4@normanok.gov",
     "name": "Helen Grant",
+    "phone": "405-876-9237",
     "role": "Council member",
     "seat": "Ward 4",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -651,7 +715,9 @@
    },
    {
     "byWard": true,
+    "email": "ward5@normanok.gov",
     "name": "Trey Kirby",
+    "phone": "405-876-9239",
     "role": "Council member",
     "seat": "Ward 5",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -659,7 +725,9 @@
    },
    {
     "byWard": true,
+    "email": "ward6@normanok.gov",
     "name": "Kyle Steele",
+    "phone": "405-876-9262",
     "role": "Council member",
     "seat": "Ward 6",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -667,7 +735,9 @@
    },
    {
     "byWard": true,
+    "email": "ward7@normanok.gov",
     "name": "Kimberly Blodgett",
+    "phone": "405-876-9263",
     "role": "Council member",
     "seat": "Ward 7",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -675,7 +745,9 @@
    },
    {
     "byWard": true,
+    "email": "ward8@normanok.gov",
     "name": "Scott Dixon",
+    "phone": "405-876-9166",
     "role": "Council member",
     "seat": "Ward 8",
     "sourceUrl": "https://www.normanok.gov/your-government/city-council",
@@ -687,17 +759,20 @@
   "body": "City Council",
   "how": "Each of the city's eight wards elects its own council member, and the mayor is elected by the whole city.",
   "name": "Oklahoma City",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "mayor@okc.gov",
     "name": "David Holt",
+    "phone": "(405) 297-2424",
     "role": "Mayor",
     "seat": "Mayor",
     "sourceUrl": "https://www.okc.gov/Government/Elected-Officials/City-Council"
    },
    {
     "byWard": true,
+    "email": "ward1@okc.gov",
     "name": "Bradley Carter",
     "role": "Council member",
     "seat": "Ward 1",
@@ -706,6 +781,7 @@
    },
    {
     "byWard": true,
+    "email": "ward2@okc.gov",
     "name": "James Cooper",
     "role": "Council member",
     "seat": "Ward 2",
@@ -714,6 +790,7 @@
    },
    {
     "byWard": true,
+    "email": "ward3@okc.gov",
     "name": "Katrina Avers",
     "role": "Council member",
     "seat": "Ward 3",
@@ -722,6 +799,7 @@
    },
    {
     "byWard": true,
+    "email": "ward4@okc.gov",
     "name": "Todd Stone",
     "role": "Council member",
     "seat": "Ward 4",
@@ -730,6 +808,7 @@
    },
    {
     "byWard": true,
+    "email": "ward5@okc.gov",
     "name": "Matt Hinkle",
     "role": "Council member",
     "seat": "Ward 5",
@@ -738,6 +817,7 @@
    },
    {
     "byWard": true,
+    "email": "ward6@okc.gov",
     "name": "JoBeth Hamon",
     "role": "Council member",
     "seat": "Ward 6",
@@ -746,6 +826,7 @@
    },
    {
     "byWard": true,
+    "email": "ward7@okc.gov",
     "name": "Camal Pennington",
     "role": "Council member",
     "seat": "Ward 7",
@@ -754,6 +835,7 @@
    },
    {
     "byWard": true,
+    "email": "ward8@okc.gov",
     "name": "Mark Stonecipher",
     "role": "Council member",
     "seat": "Ward 8",
@@ -766,10 +848,11 @@
   "body": "City Council",
   "how": "All five councilors are elected by the voters of the whole city, and each must live in the ward whose seat they hold. The council chooses the mayor from among its members.",
   "name": "Owasso",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "ploving@cityofowasso.com",
     "name": "Paul Loving",
     "role": "Mayor",
     "seat": "Mayor",
@@ -778,6 +861,7 @@
    },
    {
     "byWard": false,
+    "email": "cwalter@cityofowasso.com",
     "name": "Cody Walter",
     "role": "Councilor",
     "seat": "Ward 1",
@@ -786,6 +870,7 @@
    },
    {
     "byWard": false,
+    "email": "afruga@cityofowasso.com",
     "name": "Alvin Fruga",
     "role": "Councilor",
     "seat": "Ward 2",
@@ -794,6 +879,7 @@
    },
    {
     "byWard": false,
+    "email": "jdunn@cityofowasso.com",
     "name": "Jamie Dunn",
     "role": "Councilor",
     "seat": "Ward 4",
@@ -802,6 +888,7 @@
    },
    {
     "byWard": false,
+    "email": "cbalthrop@cityofowasso.com",
     "name": "Chad Balthrop",
     "role": "Councilor",
     "seat": "Ward 5",
@@ -814,10 +901,11 @@
   "body": "City Commission",
   "how": "Each of the city's six wards elects its own commissioner, and the mayor is elected by the whole city.",
   "name": "Shawnee",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,
+    "email": "eric.stephens@shawneeok.org",
     "name": "Eric Stephens",
     "role": "Mayor",
     "seat": "Mayor",
@@ -825,6 +913,7 @@
    },
    {
     "byWard": true,
+    "email": "daniel.matthews@shawneeok.org",
     "name": "Daniel Matthews",
     "role": "Commissioner",
     "seat": "Ward 1",
@@ -833,6 +922,7 @@
    },
    {
     "byWard": true,
+    "email": "greta.madson@shawneeok.org",
     "name": "Greta Schuler",
     "role": "Commissioner",
     "seat": "Ward 2",
@@ -841,6 +931,7 @@
    },
    {
     "byWard": true,
+    "email": "chris.odneal@shawneeok.org",
     "name": "Chris Odneal",
     "role": "Commissioner",
     "seat": "Ward 3",
@@ -849,6 +940,7 @@
    },
    {
     "byWard": true,
+    "email": "ashley.fichtner@shawneeok.org",
     "name": "Ashley Fichtner",
     "role": "Commissioner",
     "seat": "Ward 4",
@@ -857,6 +949,7 @@
    },
    {
     "byWard": true,
+    "email": "johnna.ervin@shawneeok.org",
     "name": "Johnna Ervin",
     "role": "Commissioner",
     "seat": "Ward 5",
@@ -865,6 +958,7 @@
    },
    {
     "byWard": true,
+    "email": "lauren.richter@shawneeok.org",
     "name": "Lauren Richter",
     "role": "Commissioner",
     "seat": "Ward 6",
@@ -877,7 +971,7 @@
   "body": "City Council",
   "how": "The mayor and all four councilors are elected by the voters of the whole city.",
   "name": "Stillwater",
-  "read": "2026-10-16",
+  "read": "2026-10-17",
   "seats": [
    {
     "byWard": false,

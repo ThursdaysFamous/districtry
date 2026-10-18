@@ -9,6 +9,9 @@
     "clerk": "Jane Patterson",
     "municipality": "Bloomington",
     "phone": "608-994-2297",
+    "phonesExtra": [
+      "608-994-2807"
+    ],
     "recordUpdated": "2024-02-07",
     "url": "https://townofbloomington.com/"
   },
@@ -60,6 +63,9 @@
     "clerk": "Nathan Niehaus",
     "municipality": "Harrison",
     "phone": "608-778-4718",
+    "phonesExtra": [
+      "608-348-7525"
+    ],
     "recordUpdated": "2026-03-17"
   },
   "5504333525": {
@@ -97,6 +103,9 @@
     "clerk": "Katie Webb",
     "municipality": "Little Grant",
     "phone": "608-994-2373",
+    "phonesExtra": [
+      "608-732-7918"
+    ],
     "recordUpdated": "2024-10-20"
   },
   "5504349350": {
@@ -176,6 +185,9 @@
     "clerk": "Tina McDonald",
     "municipality": "Waterloo",
     "phone": "608-725-5335",
+    "phonesExtra": [
+      "608-732-4263"
+    ],
     "recordUpdated": "2026-03-17"
   },
   "5504384075": {
@@ -200,6 +212,9 @@
     "clerk": "Michelle Newhouse",
     "municipality": "Wyalusing",
     "phone": "608-996-2212",
+    "phonesExtra": [
+      "608-412-4305"
+    ],
     "recordUpdated": "2026-03-17"
   },
   "_source": {

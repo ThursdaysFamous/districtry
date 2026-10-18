@@ -73,7 +73,9 @@ const GEOCODER_STUB_FEATURE = {
   type: "Feature",
   geometry: { type: "Point", coordinates: [-86.7844, 36.1659] },
   properties: {
-    housenumber: "100",
+    // the typed number: an answer without it shows the street instead of
+    // a row (ENGINE geocoder-search runAddressSearch)
+    housenumber: "16",
     street: "W Jones St",
     city: "Capital City",
     state: "Tennessee",
@@ -97,6 +99,16 @@ const failures = [];
 function check(name, ok, detail) {
   console.log(`  ${ok ? "PASS" : "FAIL"}  ${name}${detail ? "  — " + detail : ""}`);
   if (!ok) failures.push(name);
+}
+
+// A council member's own e-mail address and numbers now ride the city cards,
+// and a log names a city and a seat but never a member's contact, so the card
+// text the city checks print has every number and address replaced first (the
+// card prints a number with no-break hyphens, U+2011, so those count as well).
+function noContacts(text) {
+  return String(text)
+    .replace(/[^\s<>"'(),;:@]+@[^\s<>"'(),;:@]+\.[A-Za-z]{2,}/g, "<e-mail>")
+    .replace(/\(?\b\d{3}\)?[\s.\-\u2011]*\d{3}[\s.\-\u2011]*\d{4}\b/g, "<number>");
 }
 
 // Each check runs in its own context with service workers BLOCKED. The app's
@@ -519,6 +531,37 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A COMMISSIONER'S OWN NUMBERS RIDE THE PERSON ROW, as the county's
+    //     page prints them, since Adam's ruling of 2026-10-17 ("if the
+    //     official government source uses personal phone numbers, we publish
+    //     those"). The numbers expected are read from the shipped roster for
+    //     the anchor's own district, so a weekly refresh that changes them
+    //     changes what is expected; a district whose members carry none is
+    //     reported, never passed as a check. The card shows numbers with
+    //     no-break hyphens, folded back before comparing.
+    {
+      const id = "county-commissioner";
+      const want = await page.evaluate(async (d) => {
+        const r = await fetch("data/app/tn-commissioners.json").then((x) => x.json());
+        const county = r["47037"] || {};
+        const out = [];
+        ((county.districts || {})[d] || []).forEach((m) => {
+          if (m.phone) out.push(String(m.phone));
+          (m.phonesExtra || []).forEach((p) => out.push(String(p)));
+        });
+        return out;
+      }, EXPECT_DISTRICT[id]);
+      const info = await cardText(page, id);
+      const text = (info.text || "").replace(/\u2011/g, "-");
+      if (!want.length) {
+        console.log(`  SKIP  ${id} member's own number — the anchor district's members print none`);
+      } else {
+        const missing = want.filter((p) => !text.includes(p));
+        check(`${id} card shows every number the county prints for the anchor district`,
+          !info.error && missing.length === 0,
+          missing.length ? `${missing.length} of ${want.length} missing in: ${text.slice(0, 160)}` : `${want.length} shown`);
+      }
+    }
     await context.close();
   }
 
@@ -735,6 +778,11 @@ try {
   //    tigerweb.geo.census.gov, with the same query answering 200 to curl
   //    through the agent proxy in the same minute).
   //
+  //    SINCE 2026-10-17 THESE LAYERS ARE ANSWERED FROM SAME-ORIGIN TILE
+  //    ARCHIVES, and the stubs stay anyway: a case below exists in no
+  //    archive (an affix no table carries), so each case refuses its
+  //    layer's archive and the stub decides the card.
+  //
   //    WHAT IS ACTUALLY WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of
   //    it is exercised by a live fetch that happens to work. Three claims, each
   //    written for Tennessee and each wrong in a way a reader would see:
@@ -897,10 +945,12 @@ try {
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
-        // Both the point query and the statewide overlay download go to the
-        // same service path, so one route answers both with the same feature —
-        // which also proves the card comes from the POINT query rather than
-        // from the 27 MB statewide set: the app renders before that finishes.
+        // The layer is drawn and answered from a tile archive since 2026-10-17,
+        // so the archive is refused here: the card then falls back to the
+        // census loader, whose point query and whole-set download go to the
+        // same service path, and this one route answers either with the same
+        // feature (the archive-failure path il's smoke check 2d also holds).
+        await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
       });
@@ -910,8 +960,59 @@ try {
       const present = c.reject.filter((re) => re.test(text));
       check(c.name, !info.error && missing.length === 0 && present.length === 0,
         missing.length || present.length
-          ? `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`
-          : text.slice(0, 90));
+          ? `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 160)}`
+          : noContacts(text).slice(0, 90));
+      await context.close();
+    }
+
+    // (e) A member's own e-mail address and numbers reach that member's row
+    //     as links. Where a city's page prints them beside one member, the
+    //     seat carries them (scripts/city_councils.py, CONTACTS), and the
+    //     build proved every one in the shipped file on the page its seat
+    //     cites. The expected links are read from that file, so this check
+    //     prints counts and never a value; a member the file gives nothing
+    //     must show no link.
+    {
+      const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/tn-city-councils.json"), "utf8"));
+      const props = { GEOID: "4733280", NAME: "Hendersonville city", BASENAME: "Hendersonville", STATE: "47", LSADC: "25", FUNCSTAT: "A" };
+      const dial = (phone) => {
+        // the engine's cardPhoneDial: the digits, stopping at an extension
+        let s = String(phone);
+        const m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+        if (m) s = s.slice(0, m.index + m[1].length);
+        return "tel:" + s.replace(/[^\d+]/g, "");
+      };
+      const want = roster[props.GEOID].seats.filter((s) => s.name).map((s) => ({
+        name: s.name,
+        mails: s.email ? ["mailto:" + s.email] : [],
+        tels: [s.phone].concat(s.phonesExtra || []).filter(Boolean).map(dial)
+      }));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+        // The municipality layer reads its tile archive before it asks the
+        // Census, so the archive is refused and the stubbed query answers.
+        await p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
+        await p.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: esriBody(props) }));
+      });
+      await cardText(page, "municipality");
+      const rows = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-municipality .card-person")).map((row) => ({
+          name: (row.querySelector(".card-person-name") || {}).textContent || "",
+          mails: Array.from(row.querySelectorAll('a[href^="mailto:"]')).map((a) => a.getAttribute("href")),
+          tels: Array.from(row.querySelectorAll('a[href^="tel:"]')).map((a) => a.getAttribute("href"))
+        })));
+      const differ = want.filter((w) => {
+        const row = rows.find((r) => r.name === w.name);
+        return !row || JSON.stringify(row.mails) !== JSON.stringify(w.mails) ||
+          JSON.stringify(row.tels) !== JSON.stringify(w.tels);
+      }).length;
+      const mails = want.filter((w) => w.mails.length).length;
+      const tels = want.reduce((n, w) => n + w.tels.length, 0);
+      check(`${props.BASENAME}'s members' own e-mail addresses and numbers are links on their own rows`,
+        mails > 0 && tels > 0 && differ === 0,
+        `${mails} e-mail links and ${tels} numbers across ${want.length} named members; ` +
+        `${differ} rows differ from the shipped file`);
       await context.close();
     }
   }
@@ -955,6 +1056,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("37219") }));
       });
@@ -969,6 +1074,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("35773") }));
       });
@@ -993,7 +1102,10 @@ try {
   // county-commissioner NAMES THE DISTRICT'S SEATS FROM THE ROSTER, and says
   // so when it cannot. The roster is stubbed so this holds the CARD to a
   // fixture rather than to whichever names this week's refresh shipped: one
-  // district with a named seat carrying a seat label and a role, a vacancy the
+  // district with a named seat carrying a seat label, a role and two
+  // telephone numbers (the second with the county's own label, which the
+  // card must print, since Adam's ruling of 2026-10-17 that a number a
+  // government prints beside an official ships), a vacancy the
   // county states, and a countywide member, which must render under its own
   // label, and the county's own name for a district the state numbers
   // (Dyer letters its districts), beside the state's number. The second half
@@ -1004,9 +1116,10 @@ try {
       "47037": {
         county: "Davidson County", seatTitle: "Council Member", bodyName: "Metro Council",
         sourceUrl: "https://www.nashville.gov/departments/council/districts",
-        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"], phones: true,
+        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"],
         districts: { "19": [
-          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov" },
+          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov",
+            phone: "615-555-0100", phonesExtra: ["cell 615-555-0199"] },
           { vacant: true, seat: "B" }
         ] },
         districtLabels: { "19": "District S" },
@@ -1017,6 +1130,7 @@ try {
       ["names the district's seats, a stated vacancy and the countywide members",
        roster,
        [/Fixture Member/, /Council Member/, /Seat A/, /Chair/, /Seat B/, /Vacant/,
+        /615-555-0100/, /cell 615-555-0199/,
         /elects 2 members: 1 named above and 1 seat empty\./,
         /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/,
         /District S\. The state's map numbers it District 19\./],
@@ -1030,7 +1144,9 @@ try {
           r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) }));
       });
       const info = await cardText(page, "county-commissioner");
-      const text = info.text || "";
+      // the card prints a number's hyphens as U+2011 so it never breaks
+      // across a line; fold them back before comparing
+      const text = (info.text || "").replace(/\u2011/g, "-");
       const missing = want.filter((re) => !re.test(text)).map(String);
       check(`county-commissioner ${label}`,
         !info.error && missing.length === 0 && !wantNot.test(text),
@@ -1137,7 +1253,7 @@ try {
     const present = c.reject.filter((re) => re.test(text));
     check(`city-ward card at ${c.name} names only what that district elects, in the city's own word`,
       !info.error && missing.length === 0 && present.length === 0,
-      `missing=${missing} unwanted=${present} text=${text.slice(0, 200)}`);
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
     await context.close();
   }
 } finally {

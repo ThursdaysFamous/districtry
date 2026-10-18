@@ -33,12 +33,32 @@ each judge the list names a court reporter, a court administrator, a staff
 attorney or a law clerk, each with an address and a telephone, and some of those
 addresses are street addresses in small towns. A staff member is not an
 officeholder, and an address printed for one may be a home. So the parse reads
-exactly two lines per judge, the heading "Judge" and the name under it, and
-nothing else; the judges' own addresses and telephones are not carried either,
-and neither PDF is ever written into this repository (`--save` refuses a folder
-inside it). A name must look like a name: a line with a digit, "P.O." or an
-@ in it stops the build, because that is a layout change putting an address
-where a name was.
+two lines per judge, the heading "Judge" and the name under it, and from the
+judge's own row one cell, the telephone; the judges' own addresses are not
+carried, and neither PDF is ever written into this repository (`--save` refuses
+a folder inside it). A name must look like a name: a line with a digit, "P.O."
+or an @ in it stops the build, because that is a layout change putting an
+address where a name was.
+
+A JUDGE'S OWN TELEPHONE IS CARRIED SINCE 2026-10-17, on Adam's ruling for every
+state that a number an official government source prints beside an official is
+published, whosever line it is; until that day no judge's number was read. Each
+list is a table with an Address column, a town column, a Phone column and a Fax
+column (one circuit district heads its last column E-mail instead), and a
+judge's row is read BY POSITION, from the Phone column on the row that names
+the judge (judge_phone_cells), because the list's text read as lines puts the
+Fax column's number straight after the Phone column's, and on one row of the
+chancery list of 1 August 2025 both on one line: a line-based read could not
+tell a judge with no telephone and a fax from a judge with a telephone. The
+column after Phone, fax or e-mail, is never read. A number the list prints for two or more judges is
+the court office's line, as at Tupelo where three chancellors and their court
+administrator share one, and it is carried on no judge, the rule this project
+keeps for a number shared by officials; a number a judge shares only with the
+judge's own staff is that judge's chambers line and is carried. Measured on
+2026-10-17: 35 of the 52 chancellors and 55 of the 59 circuit judges the lists
+print have a number of their own, and once CHANGES is applied 32 of 50 and 54
+of 59 carry one (each court's phone_floor holds about two thirds of that). A
+number ships exactly as printed, "(601)359-0000" with no space.
 
 THE LISTS ARE OLDER THAN THE BENCH, SO FIVE CHANGES ARE APPLIED ON TOP, each from
 the court's own news or the Governor's own announcement, in CHANGES below. The
@@ -90,6 +110,7 @@ Usage:
 """
 
 import argparse
+import collections
 import datetime
 import html as html_module
 import json
@@ -131,13 +152,18 @@ COURTS = {
                  "maps": {"until-2027": "ms-chancery-court-districts.json",
                           "from-2027": "ms-chancery-court-districts-2027.json"},
                  # 52 on the list of 1 August 2025, 50 once two deaths are applied.
-                 "floor": 46},
+                 "floor": 46,
+                 # Judges carrying a number of their own: 32 on 2026-10-17
+                 # (see the module docstring), floored at about two thirds.
+                 "phone_floor": 21},
     "circuit": {"url": BASE + "/trialcourts/circuitcourt/cirjud.pdf",
                 "file": "cirjud.pdf", "word": "Circuit",
                 "maps": {"until-2027": "ms-circuit-court-districts.json",
                          "from-2027": "ms-circuit-court-districts-2027.json"},
                 # 59 on the list of 4 February 2026.
-                "floor": 53},
+                "floor": 53,
+                # 54 carrying a number of their own on 2026-10-17.
+                "phone_floor": 36},
 }
 APPELLATE_MAPS = {"supreme": "ms-supreme-court-districts.json",
                   "appeals": "ms-court-of-appeals-districts.json"}
@@ -193,6 +219,9 @@ MONTHS = {m: i for i, m in enumerate(
 UPDATED_RE = re.compile(r"Updated\s+([A-Z][a-z]+)\s+(\d{1,2}),\s+(\d{4})")
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z .,'\"()\-\u00c0-\u017f]*[A-Za-z.)\"\u00c0-\u017f]$")
 NOT_A_NAME = re.compile(r"\d|P\.\s*O\.|@|\bBox\b|\bDrawer\b|\bSuite\b", re.I)
+# A judge's Phone cell as the lists print it, "(662)432-2130"; a cell holding
+# anything else (two numbers, an extension, a word) carries nothing.
+PHONE_CELL_RE = re.compile(r"^\(\d{3}\) ?\d{3}-\d{4}$")
 
 
 def fail(msg):
@@ -325,7 +354,7 @@ def parse_appellate(raw, court):
     return rows
 
 
-def pdf_lines(raw):
+def open_pdf(raw):
     # Only the weekly read of the two PDF lists needs pymupdf, and
     # update-ms-judges-roster.yml installs it; --selftest and --check, which
     # the smoke job runs, never reach this line, so the import is declared
@@ -335,11 +364,78 @@ def pdf_lines(raw):
     except ImportError:
         raise RuntimeError("reading the judges' lists needs pymupdf: "
                            "pip install -c scripts/requirements.txt pymupdf")
-    doc = pymupdf.open(stream=raw, filetype="pdf")
+    return pymupdf.open(stream=raw, filetype="pdf")
+
+
+def pdf_lines(raw):
     lines = []
-    for page in doc:
+    for page in open_pdf(raw):
         lines.extend(page.get_text().split("\n"))
     return lines
+
+
+def judge_phone_cells(raw, court):
+    """{name: the Phone cell on that judge's row}, read by position.
+
+    Each header row ("Address", a town column, "Phone" and the column after
+    it, "Fax" on every district but one circuit district's "E-mail", read
+    2026-10-17) gives the columns' left edges, and every header must give the
+    same ones; a continuation page without a header takes them from the
+    others. A judge's row is one whose first word is "Judge" alone in the
+    left-hand column. The name is the words between that and the Address
+    column, and the telephone the words in the Phone column, left of the
+    column after it, which is never read. attach_phones() then requires the names to be
+    exactly the ones the line read found, so the two reads cannot describe
+    different tables."""
+    pages = [page.get_text("words") for page in open_pdf(raw)]
+    cols = set()
+    for words in pages:
+        for w in words:
+            if w[4] != "Phone":
+                continue
+            row = sorted((v for v in words if abs(v[1] - w[1]) < 2), key=lambda v: v[0])
+            addr = [v for v in row if v[4] == "Address"]
+            after = [v for v in row if v[0] > w[2]]
+            if addr and after:
+                cols.add((round(addr[0][0]), round(w[0]), round(after[0][0])))
+    if len(cols) != 1:
+        fail("the %s list's Address, Phone and next columns start at %s, not at one "
+             "place on every page: the layout changed" % (court, sorted(cols) or "no place"))
+    addr_x, phone_x, fax_x = cols.pop()
+    out = {}
+    for words in pages:
+        for w in words:
+            if w[4] != "Judge":
+                continue
+            row = sorted((v for v in words if abs(v[1] - w[1]) < 2), key=lambda v: v[0])
+            if tuple(row[0][:5]) != tuple(w[:5]) or len(row) < 2 or row[1][0] - w[2] < 10:
+                continue
+            name = tidy_name(" ".join(v[4] for v in row[1:] if v[2] <= addr_x - 2))
+            if name in out:
+                fail("the %s list prints two judges' rows named %s" % (court, name))
+            out[name] = clean(" ".join(v[4] for v in row
+                                       if phone_x - 3 <= v[0] < fax_x - 3))
+    return out
+
+
+def attach_phones(court, districts, cells):
+    """The list's judges, each as {"name", "phone"} where the judge has a number
+    of their own and as a bare name otherwise. Returns (judges whose Phone cell
+    is not one telephone number, judges whose number the list prints for another
+    judge too), both carried with no number; see the module docstring."""
+    names = [n for v in districts.values() for n in v["judges"]]
+    if sorted(names) != sorted(cells):
+        fail("the %s list's lines and its table rows name different judges (%s): "
+             "the layout changed" % (court, ", ".join(sorted(set(names) ^ set(cells))[:4])))
+    shaped = {n: p for n, p in cells.items() if PHONE_CELL_RE.match(p)}
+    odd = sorted(n for n, p in cells.items() if p and n not in shaped)
+    count = collections.Counter(re.sub(r"\D", "", p) for p in shaped.values())
+    shared = sorted(n for n, p in shaped.items() if count[re.sub(r"\D", "", p)] > 1)
+    for v in districts.values():
+        v["judges"] = [{"name": n, "phone": shaped[n]}
+                       if n in shaped and n not in shared else n
+                       for n in v["judges"]]
+    return odd, shared
 
 
 def split_counties(text):
@@ -561,7 +657,10 @@ def summary(payload):
         n = sum(len(d["members"]) for d in v["districts"].values())
         extra = ""
         if "listUpdated" in v:
-            extra = ", list of %s, %s" % (v["listUpdated"], v["structure"])
+            phones = sum(1 for d in v["districts"].values()
+                         for m in d["members"] if m.get("phone"))
+            extra = ", %d with a telephone, list of %s, %s" % (
+                phones, v["listUpdated"], v["structure"])
         parts.append("%s %d districts/%d judges%s" % (court, len(v["districts"]), n, extra))
     return "; ".join(parts)
 
@@ -594,6 +693,7 @@ def check(payload, maps, appellate_maps, changes=CHANGES):
                   if m.get("role") == spec["chief"]]
         if len(chiefs) != 1:
             problems.append("%s has %d %ss" % (court, len(chiefs), spec["chief"]))
+    phones = {"chancery": [], "circuit": []}
     for court in ("chancery", "circuit"):
         spec, v = COURTS[court], courts[court]
         if v.get("readFrom") != spec["url"]:
@@ -620,11 +720,24 @@ def check(payload, maps, appellate_maps, changes=CHANGES):
                 if n in names:
                     problems.append("%s district %s: %s also sits on the %s court"
                                     % (court, d, n, names[n]))
-                extra = set(m) - {"name", "note", "source"}
+                extra = set(m) - {"name", "note", "source", "phone"}
                 if extra:
                     problems.append("%s district %s: %s carries %s" % (court, d, n, sorted(extra)))
+                if "phone" in m:
+                    # The value is never printed: the message names the seat.
+                    if not PHONE_CELL_RE.match(str(m["phone"])):
+                        problems.append("%s district %s: %s's telephone is not one "
+                                        "telephone number" % (court, d, n))
+                    phones[court].append(re.sub(r"\D", "", str(m["phone"])))
         if total < spec["floor"]:
             problems.append("%s names %d judges, below its floor of %d" % (court, total, spec["floor"]))
+        shared = sorted(p for p, k in collections.Counter(phones[court]).items() if k > 1)
+        if shared:
+            problems.append("%s: %d telephone number(s) ride two or more judges, which "
+                            "makes them the court office's line" % (court, len(shared)))
+        if len(phones[court]) < spec["phone_floor"]:
+            problems.append("%s: %d judges carry a telephone, below its floor of %d"
+                            % (court, len(phones[court]), spec["phone_floor"]))
         # Every change is applied, and none has outlived its list.
         for ch in changes:
             if ch["court"] != court:
@@ -745,10 +858,29 @@ def selftest():
                      for c in letters for e in "ab"]}
                 for k, v in d.items()}
 
+    # Telephones. Every judge gets an invented number of their own, except two
+    # who share one (the court office's line, carried on neither) and one whose
+    # Phone cell holds two numbers (carried as nothing); the lists' real
+    # numbers are never written here either.
+    def phoned(court, dists):
+        names = [n for v in dists.values() for n in v["judges"]]
+        cells = {n: "(555)%03d-%04d" % (i // 10000, i % 10000) for i, n in enumerate(names)}
+        cells[names[2]] = cells[names[1]]
+        cells[names[3]] = "(555)000-0000 (555)000-0001"
+        odd, shared = attach_phones(court, dists, cells)
+        assert odd == [names[3]] and shared == sorted(names[1:3]), (odd, shared)
+        flat = [j for v in dists.values() for j in v["judges"]]
+        assert all(isinstance(j, str) for j in flat[1:4]), flat[:5]
+        assert all(PHONE_CELL_RE.match(j["phone"]) for j in flat[:1] + flat[4:]), flat[4:6]
+        return dists
+
     appellate = {"supreme": bench("supreme", 3, 3), "appeals": bench("appeals", 5, 2)}
     appellate_maps = {"supreme": {1, 2, 3}, "appeals": {1, 2, 3, 4, 5}}
-    trial = {"chancery": ("2025-08-01", benchful("Chancery", {k: v["judges"] for k, v in d.items()})),
-             "circuit": ("2026-02-04", benchful("Circuit", {}))}
+    trial = {"chancery": ("2025-08-01", phoned("chancery", benchful(
+                 "Chancery", {k: v["judges"] for k, v in d.items()}))),
+             "circuit": ("2026-02-04", phoned("circuit", benchful("Circuit", {})))}
+    expect_fail("a table naming a judge the lines do not", attach_phones, "circuit",
+                benchful("Circuit", {}), {"Somebody Else": "(555)000-0000"})
     all_maps = {"chancery": maps, "circuit": maps}
     payload = assemble(appellate, trial, all_maps, appellate_maps, [swap, died])
     assert payload["courts"]["chancery"]["structure"] == "until-2027"
@@ -759,6 +891,15 @@ def selftest():
     edited = json.loads(json.dumps(payload))
     edited["courts"]["chancery"]["districts"]["1"]["members"][0] = {"name": "Jacqueline Mask"}
     assert check(edited, all_maps, appellate_maps, changes=[swap, died])
+    # ...one number on two judges, and a telephone that is an address, whose
+    # value the message never prints.
+    for bad in ("shared", "street"):
+        edited = json.loads(json.dumps(payload))
+        members = [m for m in edited["courts"]["circuit"]["districts"]["2"]["members"]
+                   if m.get("phone")]
+        members[0]["phone"] = members[1]["phone"] if bad == "shared" else "100 Example Street"
+        found = check(edited, all_maps, appellate_maps, changes=[swap, died])
+        assert found and not any("Example" in f for f in found), (bad, found)
     # A trial judge who also sits on an appellate court stops the build.
     moved = benchful("Circuit", {1: [appellate["supreme"][0]["name"]]})
     expect_fail("a trial judge who sits on an appellate court", assemble, appellate,
@@ -769,7 +910,8 @@ def selftest():
                 appellate_maps, [swap, died])
     print("%s: selftest OK — appellate cells, the list's two lines per judge, an "
           "address refused as a name, map detection, every way a change goes stale, "
-          "the overlap and seat gates, and check() catching a hand edit" % LABEL)
+          "the overlap and seat gates, a judge's own telephone and the shared one "
+          "carried on nobody, and check() catching a hand edit" % LABEL)
 
 
 # ---------------------------------------------------------------- main
@@ -808,7 +950,19 @@ def main():
     else:
         raw = fetch_all(outside_repo(args.save) if args.save else None)
     appellate = {c: parse_appellate(raw[c], c) for c in ("supreme", "appeals")}
-    trial = {c: parse_trial_lines(pdf_lines(raw[c]), c) for c in ("chancery", "circuit")}
+    trial = {}
+    for c in ("chancery", "circuit"):
+        updated, districts = parse_trial_lines(pdf_lines(raw[c]), c)
+        odd, shared = attach_phones(c, districts, judge_phone_cells(raw[c], c))
+        # Names only, never a number: the run's log is public in Actions.
+        if odd:
+            print("%s: NOTE — the %s list's Phone cell for %s is not one telephone "
+                  "number, so no number is carried" % (LABEL, c, "; ".join(odd)))
+        if shared:
+            print("%s: NOTE — the %s list prints the same number for %d judges (%s), "
+                  "the court office's line, so it rides none of them"
+                  % (LABEL, c, len(shared), "; ".join(shared)))
+        trial[c] = (updated, districts)
     payload = assemble(appellate, trial, maps, appellate_maps)
     problems = check(payload, maps, appellate_maps)
     if problems:

@@ -4,15 +4,28 @@ name: Update TIGER tiles
 # tiles (scripts/mirror_tiger_tiles.py, docs/OPTIMIZATION_PLAYBOOK.md §10
 # phase 6). Opens a PR, never commits to main.
 #
-# A PR opens ONLY WHEN A CENSUS SET CHANGED. The script hashes each fetched
-# set in a canonical form and rebuilds only a layer whose hash moved, so a
-# quiet week writes nothing — and it must, because tippecanoe does not write
-# identical bytes twice, so a rebuild of unchanged data would be a PR of
-# noise. When a set does move (a new TIGER vintage, a corrected boundary) the
-# layer's archive is rebuilt and gated by build_vector_tiles.py's own gate
-# against the set just fetched, the record is rewritten, and each app whose
-# archive was REPLACED gets its service-worker cache name moved on, without
-# which a returning visitor would go on reading the old archive.
+# A PR opens ONLY WHEN A CENSUS SET CHANGED, or when the check below needs a
+# new value recorded. The script hashes each fetched set in a canonical form
+# and rebuilds only a layer whose hash moved, so a quiet week writes nothing
+# — and it must, because tippecanoe does not write identical bytes twice, so
+# a rebuild of unchanged data would be a PR of noise. When a set does move
+# (a new TIGER vintage, a corrected boundary) the layer's archive is rebuilt
+# and gated by build_vector_tiles.py's own gate against the set just
+# fetched, the record is rewritten, and each app whose archive was REPLACED
+# gets its service-worker cache name moved on, without which a returning
+# visitor would go on reading the old archive.
+#
+# THE CHEAP CHECK COMES FIRST (2026-10-17). Before it downloads a layer's
+# shapes the script asks for every feature's attributes with no shapes: the
+# layer's own fields plus the land area, water area and internal point the
+# Census derives from each shape. It downloads the shapes only where that
+# check's hash, or the query the script makes, differs from the record.
+# Measured that day, the check took
+# 7.7 MB for every mirrored set and the shapes it spares took 940.7 MB. A full
+# fetch that finds the data unchanged records the check's new value, and the
+# query, without rebuilding anything, so a PR can carry only those values; its
+# body says how to tell. The script's own fetch-and-convert code is part of the hash, so the
+# first weekly run after that code changes fetches every set whole.
 #
 # A RED RUN MEANS A FETCH OR A GATE FAILED: nothing is written for a layer
 # that failed, and the script exits non-zero naming it.
@@ -88,6 +101,6 @@ jobs:
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
             gh pr create --title "Update the Census TIGERweb tile archives" \
-              --body "Automated weekly re-mirror by \`scripts/mirror_tiger_tiles.py\`: at least one Census TIGERweb set the apps draw from tiles changed since it was last built. Each changed layer's archive was rebuilt and gated against the set just fetched; \`tiger-mirror.json\` records what was fetched, and each app whose archive was replaced carries a new service-worker cache name. Check the \`tiger-mirror.json\` diff for which layers moved and by how many features before merging." \
+              --body "Automated weekly re-mirror by \`scripts/mirror_tiger_tiles.py\`: at least one Census TIGERweb set the apps draw from tiles changed since it was last built, or the check the script runs before downloading a set's shapes needed a new value recorded. Each changed layer's archive was rebuilt and gated against the set just fetched; \`tiger-mirror.json\` records what was fetched, and each app whose archive was replaced carries a new service-worker cache name. In the \`tiger-mirror.json\` diff, a layer whose \`data_sha256\` moved was rebuilt, and one whose \`fingerprint_sha256\` or \`query\` alone moved had nothing to rebuild. Check which layers moved and by how many features before merging." \
               --base main --head "$branch"
           fi
