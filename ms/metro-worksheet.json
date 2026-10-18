@@ -360,7 +360,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.",
+        "people": "The mayor and the council or board of aldermen of each of the 15 cities of 25,000 people or more, seat by seat, as the city's own website names them (ms/scripts/build_ms_city_councils.py; data/app/ms-city-councils.json), dated on the card with the day the pages were read. Fourteen of the fifteen print every member; Greenville's website names no member, and its card says so. Five cities' pages (Olive Branch, Madison, Horn Lake, Oxford and Brandon) print telephone numbers inside a person's own entry, and the card carries each such number, labelled the way the page labels it; a number the pages print anywhere else, or for more than one person, is the office's and is not carried. Nine cities' pages (Olive Branch, Horn Lake, Gulfport, Tupelo, Madison, Pearl, Brandon, Hattiesburg and Meridian) print an e-mail address inside a person's own entry, and the card links each one on the same terms: an address the pages print anywhere else, or for more than one person, or that is named as an office's mailbox, is the office's and is not carried. The other cities, towns and villages name nobody here, because no statewide source naming Mississippi's mayors and aldermen has been read; recorded as gap ms-municipal-officeholders.",
         "applies": "Mississippi — statewide. A point outside every city, town and village is unincorporated, which the card states."
       }
     },
@@ -406,7 +406,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "The member for each ward as the city's own website names them, from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.",
+        "people": "The member for each ward as the city's own website names them, and, where the city's page prints them inside that member's own entry, the member's telephone numbers (Olive Branch, Oxford and Brandon) and e-mail address (Gulfport, Olive Branch, Tupelo, Pearl and Brandon), from the same roster the City card reads (ms/data/app/ms-city-councils.json), dated on the card with the day the pages were read. No weekly job reads them again yet.",
         "applies": "Jackson, Gulfport, Southaven, Olive Branch, Tupelo, Clinton, Pearl, Oxford and Brandon. The other six cities of 25,000 people or more (Biloxi, Hattiesburg, Meridian, Greenville, Madison and Horn Lake) are not drawn, each for a reason ms/scripts/build_ms_city_wards.py records, and the City card still names their mayor and council where the city's own website does."
       }
     },
@@ -632,7 +632,7 @@
       {
         "file": "ms-city-councils.json",
         "min_keys": 15,
-        "note": "The mayor and the council or board of aldermen of each of Mississippi's 15 cities of 25,000 people or more, keyed by the city's Census id, seat by seat as each city's own website names them, with the date the pages were read (ms/scripts/build_ms_city_councils.py). Greenville's record names nobody and says why. The City card and the City Ward card both read it."
+        "note": "The mayor and the council or board of aldermen of each of Mississippi's 15 cities of 25,000 people or more, keyed by the city's Census id, seat by seat as each city's own website names them, with the date the pages were read and, where a city's pages print them inside a person's own entry, that person's telephone numbers (five cities) and e-mail address (nine cities) (ms/scripts/build_ms_city_councils.py). Greenville's record names nobody and says why. The City card and the City Ward card both read it."
       },
       {
         "file": "coverage-gaps.json",
