@@ -63,6 +63,10 @@ Severities (a PUBLISHED link's worst severity is WARN):
     INCOMPLETE certificate chain fails verification for every plain client
     while loading fine in a browser. Listing it stops the report advising that
     a healthy link be treated as dead.
+  * not public yet — a 404 from a URL in NOT_YET_PUBLIC                   [OK]
+    A page that is there for its own readers before it is there for anyone:
+    districtry's Google Play listing answers 404 to everybody not signed in as
+    a tester until the app is published. The day it answers is the WARN.
   * REACHABLE again — a listed host that now answers                     [WARN]
   * rate-limited — 429 twice, eight seconds apart                        [WARN]
     Said softly on purpose: this probe is a plausible cause of a 429, so the
@@ -476,6 +480,15 @@ ROBOTS_DECLINED = {
 # path is not probed, and the day the rule goes is the WARN, because that is the
 # state a human can act on.
 ROBOTS_DECLINED_PATHS = {
+    "play.google.com": [
+        ("/apps/testing/",
+         "the `*` group disallows /apps, allowing only /apps/publish under it, "
+         "and Google Play's closed-test opt-in pages live there. Measured "
+         "2026-10-18 with this checker's own token through scripts/robots_policy.py. "
+         "districtry.com/android links the districtry test's page for testers, who "
+         "are readers following a link rather than crawlers; what this stops is "
+         "this check fetching it"),
+    ],
     "www.logancountyil.gov": [
         ("/images/",
          "the `*` group disallows /images/, where the County Clerk's Reference & "
@@ -487,6 +500,49 @@ ROBOTS_DECLINED_PATHS = {
          "still read"),
     ],
 }
+
+
+# A PAGE THAT IS THERE FOR ITS OWN READERS BEFORE IT IS THERE FOR ANYONE ELSE.
+# districtry's Google Play listing answered 404 to a visitor who was not signed
+# in while the app was in its closed test, so the monthly run would call a link
+# the testers use DEAD and tell somebody to find its new address. The same
+# inversion as the tables above: a 404 here reads OK, and the day the page
+# answers is the WARN, which for this entry is the news it is waiting for. An
+# entry no page cites any more is warned about too.
+#
+# Keyed by host and then by the whole path and query, matched exactly, because
+# the host serves millions of public pages. It is not written as one URL
+# because scripts/probe_user_agents.py reads a URL written in a script as a
+# host that script fetches by name, and this checker reaches it only through
+# the page that cites it, like every URL it checks.
+NOT_YET_PUBLIC = {
+    "play.google.com": [
+        ("/store/apps/details?id=com.districtry.app",
+         "districtry's own Google Play listing, which districtry.com/android links "
+         "for the closed test's testers. It answered 404 (`Not Found`, 1,673 bytes) "
+         "to this checker's token and to a browser string alike, measured "
+         "2026-10-18 while the app was in closed testing; what a signed-in tester "
+         "sees was not measured. When it answers here it is public: turn the "
+         "android.html entry in scripts/build_redirect_stubs.py's SHORT_LINKS into "
+         "a forward to the listing, regenerate, and delete this entry"),
+    ],
+}
+
+
+def page_key(url):
+    """(host, path and query) — how NOT_YET_PUBLIC names a page."""
+    parts = urllib.parse.urlsplit(url)
+    return ((parts.hostname or "").lower(),
+            parts.path + ("?" + parts.query if parts.query else ""))
+
+
+def not_yet_public(url):
+    """The NOT_YET_PUBLIC reason recorded for exactly this URL, or None."""
+    host, target = page_key(url)
+    for path, reason in NOT_YET_PUBLIC.get(host, ()):
+        if target == path:
+            return reason
+    return None
 
 
 EXPECTED_UNREACHABLE = {
@@ -1522,6 +1578,7 @@ def evaluate(cites, origin, results):
         res = results[url]
         host, state, detail = host_of(url), res["state"], res["detail"]
         expected = expected_block(host)
+        waiting = not_yet_public(url)
         who = origin[url]
         where = cite_summary(sorted(set(cites[url])))
 
@@ -1548,6 +1605,13 @@ def evaluate(cites, origin, results):
                 row(OK, "NOT PROBED (robots.txt declined) and its robots.txt could not "
                         "be re-read this run, so the recorded request stands. %s"
                         % detail)
+        elif waiting and state == "gone":
+            row(OK, "not public yet AS EXPECTED (%s) — %s" % (detail, waiting))
+        elif waiting and state == "ok":
+            row(WARN,
+                "ANSWERS now (%s), and NOT_YET_PUBLIC records it as not public yet, "
+                "so the page it was waiting for appears to be public. %s. Cited at %s"
+                % (detail, waiting, where))
         elif state == "ok":
             if expected:
                 row(WARN,
@@ -1666,6 +1730,13 @@ def check_expected_list_still_earned(cites, rows):
                              "listed in ROBOTS_DECLINED_PATHS (%s) but the app no longer "
                              "cites any URL under that prefix on this host — delete the "
                              "entry. Recorded request: %s" % (prefix, reason), AUTHORED))
+    cited_pages = {page_key(u) for u in cites}
+    for host, entries in sorted(NOT_YET_PUBLIC.items()):
+        for path, reason in entries:
+            if (host, path) not in cited_pages:
+                rows.append((WARN, host + path,
+                             "listed in NOT_YET_PUBLIC but no page cites this URL any "
+                             "more — delete the entry. Recorded: %s" % reason, AUTHORED))
 
 
 # ---- reporting ---------------------------------------------------------------
