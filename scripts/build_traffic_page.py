@@ -124,6 +124,10 @@ LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                "police-district": "Police district",
                "ccpsa-district-council": "Police council",
                "school-district": "School district", "county": "County",
+               # Every state app except Illinois, New York and San Francisco
+               # registers its U.S. House layer as "us-house"; it reached the
+               # top ten on 2026-10-18 and drew as the raw id.
+               "us-house": "U.S. House",
                # The three tilings the app registers separately. Only the
                # unified one has reached the top ten so far, and it did so
                # unnamed: an id with no entry ships as the raw id, so the bar
