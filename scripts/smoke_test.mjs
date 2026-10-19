@@ -862,7 +862,15 @@ try {
   //      put it in one town, and while the reader types nothing goes to the
   //      Census lookup until the street's row is picked. A town typed after a
   //      comma that the answers name only by its ZIP code is the town they
-  //      are put in (addressInTownOf). Every answer here is OpenStreetMap's, so the
+  //      are put in (addressInTownOf), with a ZIP code typed after it. An
+  //      answer is the house only if it is the number on the address's
+  //      street (labelAtHouse), so the number on another street is marked
+  //      other-street and never selected. WHEN THE SEARCH KNOWS NEITHER THE
+  //      HOUSE NOR ITS STREET in its town, a sent address is asked about as
+  //      the lookup asks about every other, in the app's state
+  //      (addressForLookup), and a Census answer that is the house is a pin
+  //      with its point selected, however far it is from any stretch of the
+  //      street the search knows. Every answer here is OpenStreetMap's, so the
   //      street's message links OpenStreetMap's note form at the street or
   //      the pin (osmNoteLink), and following it counts osm-note. A shared
   //      link that ends on its street is counted once the Census answer is
@@ -1010,13 +1018,14 @@ try {
     };
     // The Census Bureau's estimates, made up: one on the address's street and
     // near it, one on another street, and one on the address's street about
-    // 4 km from the part of it the map found.
+    // 4 km from the part of it the map found, which is a pin since
+    // 2026-10-19 (below).
     const PIN_AT = { lat: 41.82195, lng: -87.97955 };
     const ON_RANGE = { address: "9 W OAKLEY DR NW, WESTMONT, IL, 60559", ...PIN_AT };
     const OTHER_STREET = { address: "9 OAKLEY LN, WESTMONT, IL, 60559", lat: 41.8100, lng: -87.9700 };
     const FAR_ON_STREET = { address: "9 W OAKLEY DR NW, WESTMONT, IL, 60559", lat: 41.8400, lng: -87.9300 };
     const street = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : bounded && q === S_NAME ? [FAR] : []),
-      onStreet, S_FULL, tap, true, () => ({ status: 200, matches: [OTHER_STREET, FAR_ON_STREET] }));
+      onStreet, S_FULL, tap, true, () => ({ status: 200, matches: [OTHER_STREET] }));
     const g = street.got, t = street.after, f = t.frame;
     check("a shared address whose house number the search lacks frames its street clear of the search panel and selects nothing",
       !g.point && g.zoom >= 16 && f.below > 0 &&
@@ -1041,7 +1050,7 @@ try {
     check("a tap on the street then selects the point tapped and the message goes",
       !!t.point && Math.abs(t.point.lat - 41.8219565) < 0.0003 && Math.abs(t.point.lng + 87.9794949) < 0.0003 && t.status === "",
       JSON.stringify(t));
-    check("the Census Bureau is asked for the address, and an estimate on another street or far along this one draws no pin",
+    check("the Census Bureau is asked for the address, and an estimate on another street draws no pin",
       street.lookedUp.length === 1 && street.lookedUp[0] === S_BARE && !g.pin,
       JSON.stringify({ lookedUp: street.lookedUp, pin: g.pin }));
     const linkReads = (r) => r.events.filter((e) => /^map-link-read\//.test(e)).join();
@@ -1056,12 +1065,24 @@ try {
       JSON.stringify(near.got));
     check("a Census lookup that fails draws no pin and leaves the street's message as it was",
       near.lookedUp.length === 1 && !near.got.pin, JSON.stringify({ lookedUp: near.lookedUp, pin: near.got.pin }));
+    // FAR ALONG THE STREET: until 2026-10-19 an estimate more than half a
+    // mile from the stretch of the street the search knew drew no pin, and of
+    // 49 Cook County addresses typed into the search box that day it refused
+    // 2 whose district the Census Bureau's records had right. Adam chose its
+    // answer whenever it is the house ("Use Census").
+    const farAlong = await run(S_SHARED, (q, bounded) => (bounded && q === S_BARE ? [BESIDE, ON] : []),
+      () => /Census Bureau's street records put that number/.test(document.getElementById("geo-status").textContent),
+      S_FULL, null, false, () => ({ status: 200, matches: [OTHER_STREET, FAR_ON_STREET] }));
+    check("the one estimate that is the house is a pin with its point selected, however far along the street it is",
+      !!farAlong.got.pin && !!farAlong.got.point && Math.abs(farAlong.got.point.lat - FAR_ON_STREET.lat) < 1e-7 &&
+        Math.abs(farAlong.got.point.lng - FAR_ON_STREET.lng) < 1e-7 && farAlong.lookedUp.length === 1,
+      JSON.stringify({ got: farAlong.got, lookedUp: farAlong.lookedUp }));
 
     // THE CENSUS BUREAU'S PIN (lookupAddressRanges). The one estimate on the
     // address's street, in its town and near the street the map found, is a
     // pin whose point is selected at once (Adam's choice of 2026-10-18): the
     // map frames it below the search panel, the message says it can be a
-    // few doors off, the pin is a picture rather than a button, and a tap on
+    // block or more from the house, the pin is a picture rather than a button, and a tap on
     // the map beside it, a row for the place's name or a point selected any
     // other way selects that instead and takes the pin and the message away.
     // A pin another state's app answers for waits for a tap (below).
@@ -1088,8 +1109,8 @@ try {
     check("the Census Bureau's estimate is a pin below the search panel, and its point is selected at once",
       atPin(pg.point) && !!pg.pin && pg.zoom >= 17.5 && pg.pin.top >= pg.panelBelow && pg.pin.bottom <= pg.height &&
         pg.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The map has selected the pin, where the Census " +
-          "Bureau's street records put that number. That can be a few doors off, and a district line can run between two doors. " +
-          "If the place is elsewhere, tap it on the map.") >= 0 &&
+          "Bureau's street records put that number. It can be a block or more from the house, and a district line can run " +
+          "between the two. If the place is elsewhere, tap it on the map.") >= 0 &&
         pg.pin.label === "Where the Census Bureau puts 9 W Oakley Dr NW" && pg.pin.role === "img" && pg.pin.tabindex === null,
       JSON.stringify(pg));
     check("a shared link whose house the Census Bureau pins is counted once, as pin",
@@ -1176,8 +1197,8 @@ try {
       !iw.point && !!iw.pin && iw.pin.role === "button" && iw.pin.tabindex === "0" &&
         iw.pin.label === "Where the Census Bureau puts 9 W Sample St. Select this point." &&
         iw.status.indexOf("W Sample St in Davenport but not number 9 on it. The pin is where the Census Bureau's street records " +
-          "put that number, which can be a few doors off. Tap the pin to use it, or tap the place you meant.") >= 0 &&
-        iowa.lookedUp.length === 1 && iowa.lookedUp[0] === IA_ADDRESS + ", IA",
+          "put that number, which can be a block or more from the house. Tap the pin to use it, or tap the place you meant.") >= 0 &&
+        iowa.lookedUp.length === 1 && iowa.lookedUp[0] === IA_ADDRESS + ", IA 52803",
       JSON.stringify(iowa));
     const iaPoint = iowa.after && /^https:\/\/districtry\.com\/ia\/#point=([-\d.]+),([-\d.]+)/.exec(iowa.after);
     check("Enter on that pin opens that state's app with the pin's point",
@@ -1190,6 +1211,9 @@ try {
     const T_ADDRESS = "9 W Oakley Dr NW, Westmont";
     const T_NO_TOWN = "9 W Oakley Dr NW";
     const T_AT = "9 W Oakley Dr NW, Westmont, IL";
+    // as the Census lookup is asked about it once the search knows its
+    // street: with the one ZIP code the street's answers carry
+    const T_AT_ZIP = T_AT + " 60559";
     const ELSEWHERE = feature(-88.0110, 41.7960, { name: "West Oakley Drive Northwest", city: "Downers Grove", state: "Illinois",
       postcode: "60515", type: "street", extent: [-88.0120, 41.7965, -88.0100, 41.7955] });
     const NUMBERED = feature(PIN_AT.lng, PIN_AT.lat, { housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont",
@@ -1200,7 +1224,7 @@ try {
     check("a typed address sent without the house number the search has frames its street with the Census pin and selects the pin's point",
       atPin(ts.point) && !!ts.pin && ts.pin.top >= ts.panelBelow && ts.rows.length === 0 &&
         ts.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The map has selected the pin, where the Census Bureau's") >= 0 &&
-        typedSent.lookedUp.length === 1 && typedSent.lookedUp[0] === T_AT &&
+        typedSent.lookedUp.length === 1 && typedSent.lookedUp[0] === T_AT_ZIP &&
         typedSent.asked.length === 1 && typedSent.asked[0] === "bounded:" + T_ADDRESS,
       JSON.stringify(typedSent));
     const pickRow = (text, until = pinShown) => async (page, read) => {
@@ -1219,7 +1243,7 @@ try {
           "Pick the street in the town you meant to see it on the map.") >= 0,
       JSON.stringify(tw));
     check("picking the street in one town frames it there with the Census pin and its point selected, asked once for that town",
-      atPin(twa.point) && !!twa.pin && twoTowns.lookedUp.length === 1 && twoTowns.lookedUp[0] === T_AT &&
+      atPin(twa.point) && !!twa.pin && twoTowns.lookedUp.length === 1 && twoTowns.lookedUp[0] === T_AT_ZIP &&
         twa.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The map has selected the pin") >= 0,
       JSON.stringify({ after: twa, lookedUp: twoTowns.lookedUp }));
     // A TOWN TYPED AFTER A COMMA IS KEPT (addressInTownOf). On 2026-10-19
@@ -1238,9 +1262,9 @@ try {
       (q, bounded) => (bounded && q === E_TYPED ? [eugenie("North Chicago Township"), eugenie("Chicago")] : []),
       pinShown, S_FULL, null, false, () => ({ status: 200, matches: [{ address: "9 W EUGENIE ST, CHICAGO, IL, 60614", ...E_PIN }] }));
     const tt = township.got;
-    check("a typed town the answers name only by its ZIP code is kept: one street, the Census lookup asked about that town, its pin selected",
+    check("a typed town the answers name only by its ZIP code is kept: one street, the Census lookup asked about that town and ZIP code, its pin selected",
       !!tt.point && Math.abs(tt.point.lat - E_PIN.lat) < 1e-7 && Math.abs(tt.point.lng - E_PIN.lng) < 1e-7 && !!tt.pin &&
-        township.lookedUp.length === 1 && township.lookedUp[0] === "9 W Eugenie St, Chicago, IL" &&
+        township.lookedUp.length === 1 && township.lookedUp[0] === "9 W Eugenie St, Chicago, IL 60614" &&
         tt.status.indexOf("W Eugenie St in Chicago but not number 9 on it. The map has selected the pin") >= 0 &&
         tt.status.indexOf("Township") < 0,
       JSON.stringify(township));
@@ -1261,16 +1285,85 @@ try {
           "Pick the street to see it on the map.") >= 0,
       JSON.stringify(tb));
     check("picking the street's row then frames it, asks the Census lookup once and selects the pin's point",
-      atPin(tp.point) && !!tp.pin && typeAhead.lookedUp.length === 1 && typeAhead.lookedUp[0] === T_AT,
+      atPin(tp.point) && !!tp.pin && typeAhead.lookedUp.length === 1 && typeAhead.lookedUp[0] === T_AT_ZIP,
       JSON.stringify({ after: tp, lookedUp: typeAhead.lookedUp }));
     const loneStreet = await run(T_ADDRESS, (q, bounded) => (bounded ? [BESIDE] : []),
       () => /None of these has the house number 9/.test(document.getElementById("geo-status").textContent));
-    check("the one answer to a sent address, on another street and without its number, is listed and not selected",
-      !loneStreet.got.point && loneStreet.got.rows.length === 1 && loneStreet.got.rows[0].cls === "no-number" &&
+    check("the one answer to a sent address, on another street and without its number, is listed and not selected once the Census lookup has nothing",
+      !loneStreet.got.point && !loneStreet.got.pin && loneStreet.got.rows.length === 1 && loneStreet.got.rows[0].cls === "no-number" &&
         loneStreet.got.status.indexOf("None of these has the house number 9, so pick one only if it's the place you meant, " +
           "or tap the place on the map.") >= 0 &&
-        loneStreet.lookedUp.length === 0 && loneStreet.asked.every((a) => a.indexOf("unbounded:") !== 0),
+        loneStreet.lookedUp.length === 1 && loneStreet.lookedUp[0] === T_AT &&
+        loneStreet.asked.every((a) => a.indexOf("unbounded:") !== 0),
       JSON.stringify(loneStreet));
+    // THE SEARCH KNOWS NEITHER THE HOUSE NOR ITS STREET in the town typed
+    // (Adam's choice of 2026-10-19, "Use Census"): the Census Bureau is asked
+    // about the address, written out in this app's state (T_AT), and its
+    // answer, when it is the house, is the pin, with its point selected and
+    // nothing listed. With no answer from the search at all, it is asked
+    // once the sibling apps have none either.
+    const noStreetShown = () => /street records put it\./.test(document.getElementById("geo-status").textContent);
+    const noStreet = await run(T_ADDRESS, (q, bounded) => (bounded ? [BESIDE] : []), noStreetShown, S_FULL, null, true, ranged);
+    const ns = noStreet.got, nsn = noteAt(ns.note);
+    check("a sent address whose street the search lacks in its town goes to the Census lookup in this app's state, and its pin's point is selected",
+      atPin(ns.point) && !!ns.pin && ns.pin.top >= ns.panelBelow && ns.rows.length === 0 &&
+        ns.status.indexOf("The map's search didn't find that address. The map has selected the pin, where the Census Bureau's " +
+          "street records put it. It can be a block or more from the house, and a district line can run between the two. " +
+          "If the place is elsewhere, tap it on the map.") === 0 &&
+        !!nsn && nsn.zoom === 19 && Math.abs(nsn.lat - PIN_AT.lat) < 1e-9 && Math.abs(nsn.lng - PIN_AT.lng) < 1e-9 &&
+        noStreet.lookedUp.length === 1 && noStreet.lookedUp[0] === T_AT,
+      JSON.stringify(noStreet));
+    const nothing = await run(T_ADDRESS, () => [], noStreetShown, S_FULL, null, false, ranged);
+    check("a sent address the search finds nothing for, here or in the sibling apps, gets the Census pin too",
+      atPin(nothing.got.point) && !!nothing.got.pin && nothing.got.rows.length === 0 && !nothing.got.note &&
+        nothing.asked.indexOf("unbounded:" + T_ADDRESS) >= 0 && nothing.lookedUp.length === 1 && nothing.lookedUp[0] === T_AT,
+      JSON.stringify(nothing));
+    // THE NUMBER ON ANOTHER STREET is not the house (labelAtHouse): on
+    // 2026-10-19 the one answer for one of 49 Cook County addresses was its
+    // number on a different street, which a question page's address box
+    // selected. It is listed, marked other-street, and selected for nobody.
+    const NUMBER_BESIDE = feature(-87.9779586, 41.8216492, { housenumber: "9", street: "Oakley Drive North", city: "Westmont",
+      state: "Illinois", postcode: "60559" });
+    const otherStreet = await run(T_ADDRESS, (q, bounded) => (bounded ? [NUMBER_BESIDE] : []),
+      () => /None of these is number 9/.test(document.getElementById("geo-status").textContent));
+    check("the one answer to a sent address that is its number on another street is listed, marked other-street, and not selected",
+      !otherStreet.got.point && !otherStreet.got.pin && otherStreet.got.rows.length === 1 &&
+        otherStreet.got.rows[0].cls === "other-street" &&
+        otherStreet.got.status.indexOf("None of these is number 9 on the street you typed, so pick one only if it's the place " +
+          "you meant, or tap the place on the map.") >= 0 && otherStreet.lookedUp.length === 1,
+      JSON.stringify(otherStreet));
+    // AN ADDRESS TYPED WITH NO TOWN takes the town of the answers on its
+    // street, which for a Chicago street is the Cook County township, while
+    // the Census Bureau's answer names the city: the lookup is asked with
+    // the ZIP code those answers carry when they carry one, and the answer
+    // is the house when it is in a ZIP code they carry. Until 2026-10-19 the
+    // lookup was asked about the township alone and its answer refused as
+    // not in the township. A ZIP code typed with the address goes to the
+    // lookup with it.
+    const E_NO_TOWN = "9 W Eugenie St";
+    const E_ZIP = "9 W Eugenie St, IL 60614";
+    const E_RANGE = { address: "9 W EUGENIE ST, CHICAGO, IL, 60614", ...E_PIN };
+    const inTownship = (typed) => (q, bounded) => (bounded && q === typed ? [eugenie("North Chicago Township")] : []);
+    const noTown = await run(E_NO_TOWN, inTownship(E_NO_TOWN), pinShown, S_FULL, null, false,
+      () => ({ status: 200, matches: [E_RANGE] }));
+    check("an address typed with no town is asked about with the answers' township and ZIP code, and a Census answer in that ZIP code is its pin",
+      !!noTown.got.point && Math.abs(noTown.got.point.lat - E_PIN.lat) < 1e-7 && Math.abs(noTown.got.point.lng - E_PIN.lng) < 1e-7 &&
+        !!noTown.got.pin && noTown.lookedUp.length === 1 && noTown.lookedUp[0] === "9 W Eugenie St, North Chicago Township, IL 60614",
+      JSON.stringify(noTown));
+    const zipTyped = await run(E_ZIP, inTownship(E_ZIP), pinShown, S_FULL, null, false,
+      () => ({ status: 200, matches: [E_RANGE] }));
+    check("a ZIP code typed with no town goes to the Census lookup with the address",
+      !!zipTyped.got.pin && zipTyped.lookedUp.length === 1 &&
+        zipTyped.lookedUp[0] === "9 W Eugenie St, North Chicago Township, IL 60614",
+      JSON.stringify(zipTyped));
+    // the stubbed lookup answers at once; the second read is long after it
+    const later = async (page, read) => { await page.waitForTimeout(1500); return read(); };
+    const otherZip = await run(E_NO_TOWN, inTownship(E_NO_TOWN), onStreet, S_FULL, later, false,
+      () => ({ status: 200, matches: [{ ...E_RANGE, address: "9 W EUGENIE ST, CHICAGO, IL, 60601" }] }));
+    check("a Census answer in another ZIP code, and not in the town asked about, is not the pin",
+      !otherZip.after.pin && !otherZip.after.point && otherZip.lookedUp.length === 1 &&
+        otherZip.after.status.indexOf("showing that street") >= 0,
+      JSON.stringify(otherZip.after));
     const carried = await run(T_ADDRESS, (q, bounded) => (bounded ? [NUMBERED, ON] : []),
       () => document.querySelectorAll("#geocode-results li").length === 2, S_FULL, pickRow("9 West Oakley Drive Northwest", selected));
     check("beside an answer carrying a sent address's house number, one without it is marked, and neither is selected for the reader",
