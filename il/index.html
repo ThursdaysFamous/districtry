@@ -8822,6 +8822,20 @@ function initChiExplorer() {
     valleys: "VLYS", viaduct: "VIA", view: "VW", views: "VWS", village: "VLG",
     villages: "VLGS", ville: "VL", vista: "VIS", well: "WL", wells: "WLS"
   };
+  // Words of a street's name that are not street types and are written two
+  // ways, for matching names only (streetNameKey): a reader and the Census
+  // Bureau's geocoder abbreviate them, and OpenStreetMap's mappers often
+  // write them out, as in Saint Louis Avenue or Doctor Martin Luther King
+  // Junior Drive.
+  var STREET_NAME_WORDS = { saint: "ST", doctor: "DR", junior: "JR" };
+  // Every street type as streetNameKey writes it, the common ones and the
+  // rest of the Postal Service's list
+  var STREET_TYPE_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_TYPES) keys[STREET_TYPES[k].toUpperCase()] = true;
+    for (k in STREET_SUFFIXES) keys[STREET_SUFFIXES[k]] = true;
+    return keys;
+  })();
   function abbreviateStreetName(name) {
     var words = String(name || "").split(/\s+/).filter(Boolean);
     if (words.length < 2) return words.join(" ");
@@ -8891,29 +8905,94 @@ function initChiExplorer() {
   // "Drive" and "Dr", or "Trace" and "TRCE" (STREET_SUFFIXES), agree
   // wherever they stand, then a leading and a trailing direction set apart
   // when a name is left beside it, so "W North Ave" keeps North (a street
-  // named North) and loses W.
+  // named North) and loses W. `words` are the rest, each without the marks
+  // and accents inside it ("O'Brien" is OBRIEN), and `core` the same words
+  // as one string.
   function streetNameKey(name) {
     var dirs = {}, types = {}, k;
     for (k in STREET_DIRECTIONS) dirs[STREET_DIRECTIONS[k].toUpperCase()] = true;
     for (k in STREET_TYPES) types[STREET_TYPES[k].toUpperCase()] = true;
-    var words = String(name || "").replace(/\./g, "").split(/\s+/).filter(Boolean).map(function (w) {
-      var low = w.toLowerCase();
-      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || STREET_SUFFIXES[low] || w).toUpperCase();
-    });
+    var text = String(name || "");
+    if (text.normalize) text = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    var words = text.replace(/\./g, "").split(/\s+/).map(function (w) {
+      var low = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || STREET_SUFFIXES[low] || STREET_NAME_WORDS[low] || low).toUpperCase();
+    }).filter(Boolean);
     var named = function (rest) { return rest.length > 1 || (rest.length === 1 && !types[rest[0]]); };
     var key = { pre: "", post: "" };
     if (words.length > 1 && dirs[words[words.length - 1]] && named(words.slice(0, -1))) key.post = words.pop();
     if (words.length > 1 && dirs[words[0]] && named(words.slice(1))) key.pre = words.shift();
+    key.words = words;
     key.core = words.join(" ");
     return key;
+  }
+  /* Whether two streetNameKeys name one street: their directions do not
+   * differ, though either may be left off, and their names are the same
+   * once the spaces in them are taken out, so "N LA SALLE ST", as the
+   * Census Bureau's geocoder wrote City Hall's street on 2026-10-19, is
+   * North LaSalle Street. When the address names its street with no type
+   * ("9 W Eugenie, Chicago"), a name that only adds one is the same
+   * street. */
+  function sameStreet(got, want) {
+    if (!got.words.length || !want.words.length) return false;
+    if ((got.pre && want.pre && got.pre !== want.pre) || (got.post && want.post && got.post !== want.post)) return false;
+    var g = got.words, w = want.words;
+    if (g.join("") === w.join("")) return true;
+    var typed = w.length > 1 && STREET_TYPE_KEYS[w[w.length - 1]];
+    return !typed && g.length > 1 && !!STREET_TYPE_KEYS[g[g.length - 1]] && g.slice(0, -1).join("") === w.join("");
   }
   // Whether one part of an answer's label, less any house number, names the
   // street `want` (a streetNameKey) names
   function partNamesStreet(part, want) {
-    var got = streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
-    return got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
-      (!got.post || !want.post || got.post === want.post);
+    return sameStreet(streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), "")), want);
   }
+
+  /* ---------- the house an address names ----------
+   * labelCarriesNumber asks only whether an answer's label carries the
+   * address's house number somewhere, and on 2026-10-19 that let the map
+   * take another street's house with the same number for the house: of 49
+   * Cook County addresses typed into the Illinois map's search box, the one
+   * answer for one of them was that number on a different street, which a
+   * question page's address box selects when it is the only answer (ENGINE
+   * geocoder-search prefillGeocodeSearch). labelAtHouse asks for the house:
+   * a part of the label that opens with the number and goes on to name the
+   * address's street (sameStreet). The town is not read, because Photon
+   * names the Cook County township a Chicago street is in where the city's
+   * name would be (addressInTownOf). An address typed with its town and no
+   * comma ("9 W Eugenie St Chicago") names its street and then the town, so
+   * an answer whose street, ending in its type, is the first words after
+   * the number is the house too, unless a direction straight after it is
+   * another. A street the reader writes with fewer of its words than the
+   * answer does ("S King Dr" for South Doctor Martin Luther King Junior
+   * Drive) is not the house to this test, and the answer is still listed
+   * for the reader to pick: a test that let some of a name's words stand
+   * for all of them would take Oak Avenue for Oak Park Avenue. */
+  function labelAtHouse(label, address) {
+    var a = addressStreet(address);
+    if (!a) return false;
+    var want = streetNameKey(a.street), number = a.number.toLowerCase();
+    var opens = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s+(\\S.*)$", "i");
+    return String(label || "").split(",").some(function (part) {
+      var m = opens.exec(part);
+      if (!m || m[1].toLowerCase() !== number) return false;
+      var got = streetNameKey(m[2]);
+      return sameStreet(got, want) || streetThenTown(got, want);
+    });
+  }
+  function streetThenTown(got, want) {
+    var g = got.words, w = want.words, k;
+    if (!g.length || !STREET_TYPE_KEYS[g[g.length - 1]] || (got.pre && want.pre && got.pre !== want.pre)) return false;
+    for (k = 1; k < w.length; k++) {
+      if (w.slice(0, k).join("") !== g.join("")) continue;
+      return !(got.post && STREET_DIRECTION_KEYS[w[k]] && w[k] !== got.post);
+    }
+    return false;
+  }
+  var STREET_DIRECTION_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_DIRECTIONS) keys[STREET_DIRECTIONS[k].toUpperCase()] = true;
+    return keys;
+  })();
   function labelOnStreet(label, address) {
     var a = addressParts(address);
     if (!a) return false;
@@ -8937,7 +9016,22 @@ function initChiExplorer() {
    * address names a town, after a comma (labelOnStreet) or as the words
    * after the street, and the answer is not in it, the result is null, as
    * it is for an answer on another street or a label that names no state.
-   * The ZIP code is left out, because one long street runs through several.
+   *
+   * A ZIP CODE TYPED WITH THE ADDRESS IS KEPT ("1600 W North Ave, Chicago,
+   * IL 60622"), from 2026-10-19, because the Census Bureau's lookup
+   * (ENGINE geocoder-search lookupAddressRanges) finds a house by its ZIP
+   * code as well as by its town: asked that day for the Lincoln Park Zoo's
+   * address with its ZIP code and no town, it found the zoo, and asked
+   * with the Cook County township Photon names and a wrong ZIP code, it
+   * found nothing. Asked with the township alone it found the zoo too, but
+   * for three of 49 Cook County addresses tested that day it found nothing
+   * with the township alone. Until then the ZIP code was left out, so an
+   * address typed with a ZIP code and no town went to the lookup with the
+   * township alone. An answer's own ZIP code is not put in here, because
+   * one long street runs through several and the answer's is the street's,
+   * not the house's; the lookup is asked with it only when every answer on
+   * the street in that town names the same one (ENGINE geocoder-search
+   * showStreetOnly).
    *
    * THE TOWN TYPED AFTER A COMMA IS KEPT when the answer is in it only by
    * its ZIP code (townTypedIn). Otherwise the town is the answer's own, the
@@ -8958,11 +9052,18 @@ function initChiExplorer() {
    * all four. Answers naming the city and the township, or La Grange and La
    * Grange Park, were also listed as two towns for the reader to pick from.
    * An address that names no town, or only a state or a ZIP code after the
-   * comma, still takes the answer's town, township and all. A town the
-   * Census Bureau does not know, such as a misspelling or a neighbourhood
-   * typed with the right ZIP code, is kept too, so the lookup may find
-   * nothing where the answer's town would have found the house, and the
-   * map then shows the street as it does whenever the lookup finds none. */
+   * comma, still takes the answer's town, township and all, and the lookup
+   * is then asked with the ZIP code the answers on the street name when
+   * they name one, and takes a match in one of the ZIP codes they name
+   * (ENGINE geocoder-search showStreetOnly, lookupAddressRanges). A town
+   * the Census Bureau does not know, such as a misspelling or a
+   * neighbourhood the answer does not name, is kept too. It is kept only
+   * when the answer has the ZIP code typed with it (labelOnStreet), and
+   * that ZIP code goes to the lookup as well, with which the lookup found
+   * the zoo under the township's name; whether it finds a house typed with
+   * a misspelled town that way was not measured. When the lookup finds
+   * nothing, the map shows the street as it does whenever the lookup finds
+   * none. */
   function addressInTownOf(address, label) {
     var a = addressStreet(address), named = addressParts(address);
     if (!a || (named && !labelOnStreet(label, address))) return null;
@@ -8975,6 +9076,9 @@ function initChiExplorer() {
     if (!tag) return null;
     var town = parts[at - 1], low = town.toLowerCase();
     var called = townTypedIn(named, parts, tag) || town;
+    // the ZIP code typed after a comma, or as the last word of an address
+    // typed with no comma ("1600 W North Ave Chicago IL 60622")
+    var zip = named ? named.zip : (/\s(\d{5})(?:-\d{4})?\s*$/.exec(String(address)) || [])[1] || "";
     var words = a.street.split(/\s+/);
     for (n = words.length; n >= 1; n--) {
       var rest = words.slice(n).join(" ").toLowerCase();
@@ -8983,7 +9087,8 @@ function initChiExplorer() {
       if (!want.core) continue;
       for (i = 0; i < at - 1; i++) {
         if (partNamesStreet(parts[i], want)) {
-          return a.number + " " + words.slice(0, n).join(" ") + ", " + called + ", " + tag.toUpperCase();
+          return a.number + " " + words.slice(0, n).join(" ") + ", " + called + ", " + tag.toUpperCase() +
+            (zip ? " " + zip : "");
         }
       }
     }
@@ -9058,6 +9163,43 @@ function initChiExplorer() {
   // of Columbia".
   function stateInSentence(tag) {
     return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
+  }
+  /* An address as the Census Bureau's lookup is asked about it when the
+   * map's search knows neither the house nor its street (ENGINE
+   * geocoder-search showStreetOnly): the number and the street, then the
+   * town, the state and the ZIP code, each part after a comma, as
+   * addressInTownOf writes one. A state the address does not name is
+   * `tag`'s, the app's own. Until 2026-10-19 the lookup was asked only
+   * about addresses written that way, with the town and state of the
+   * search's answer or as a map link writes them, while an address typed
+   * into the search box often names no state and leaves out the comma
+   * after its town ("9 W Oakley Dr NW, Westmont IL 60559"). Null when it
+   * names no town and no ZIP code. */
+  function addressForLookup(address, tag) {
+    var a = addressParts(address);
+    if (!a) return null;
+    var parts = String(address).split(",").map(function (s) { return s.trim(); });
+    var at = 1, state = "", i, m, p;
+    for (i = 2; i < parts.length; i++) {
+      if (/^[a-z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/i.test(parts[i])) { at = i - 1; break; }
+    }
+    // the state after the town: its code, in either case, or its name
+    for (i = at + 1; i < parts.length && !state; i++) {
+      p = parts[i].replace(/\s+\d{5}(?:-\d{4})?$/, "");
+      state = /^[a-z]{2}$/i.test(p) && US_STATE_NAMES.hasOwnProperty(p.toLowerCase()) ? p.toLowerCase() : stateTagOfName(p);
+    }
+    // or its code after the town with no comma ("Westmont IL"), or in place
+    // of the town ("IL 60559"); a town named for a state (Oregon, Illinois)
+    // is a town
+    var town = a.town.replace(/(?:^|\s+)\d{5}(?:-\d{4})?$/, "").trim();
+    m = /(?:^|\s)([a-z]{2})$/i.exec(town);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase())) {
+      state = state || m[1].toLowerCase();
+      town = town.slice(0, -2).trim();
+    }
+    state = state || String(tag || "").toLowerCase();
+    if ((!town && !a.zip) || !US_STATE_NAMES.hasOwnProperty(state)) return null;
+    return a.number + " " + a.street + (town ? ", " + town : "") + ", " + state.toUpperCase() + (a.zip ? " " + a.zip : "");
   }
   /* The link handed to another app for a place it should search: the text
    * rebuilt as a link of the kind it came in, which that app's parseMapLink
@@ -9306,17 +9448,18 @@ function initChiExplorer() {
       window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
     });
   }
-  // An answer without the house number an address opens with: that app is
+  // An answer that is not the house an address names (isHouse): that app is
   // opened with the address, as #q=, and searches it there, where such an
   // answer is never selected (listHeldAnswers); the answer's own point is a
-  // spot somewhere along a street, not the address
+  // spot somewhere along a street, or another street's house, not the
+  // address
   function handOnSiblingRow(metro, r, address) {
     var li = siblingRow(metro, r.display_name, function () {
       trackEvent("metro-portal-go/" + metro.id, "search");
       var url = metroPortalUrl(metro);
       window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(address);
     });
-    li.className += " no-number";
+    li.className += " " + houseMark(r, address);
     return li;
   }
 
@@ -9376,8 +9519,9 @@ function initChiExplorer() {
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
   // `handOn` is an address held to its house number (runAddressSearch): when
-  // no answer carries the number, the answers are listed as rows that open
-  // their app with the address (handOnSiblingRow) instead of being dropped
+  // no answer is the house (isHouse), the answers are listed as rows that
+  // open their app with the address (handOnSiblingRow) instead of being
+  // dropped
   function maybeRenderSiblingMatches(query, mustCarry, seen, handOn) {
     var anySibling = METRO_EXPLORERS.some(function (m) { return m.id !== THIS_METRO && m.bbox; });
     if (!anySibling) return;
@@ -9404,10 +9548,10 @@ function initChiExplorer() {
         // every answer, before any is held back, for a caller looking for
         // the street a shared address is on (runAddressSearch)
         if (seen) seen(got.results);
-        // held to the house number when the query is an address without
-        // the name it was shared with (runAddressSearch)
+        // held to the house when the query is an address without the name
+        // it was shared with (runAddressSearch)
         var results = !mustCarry ? got.results : got.results.filter(function (r) {
-          return labelCarriesNumber(r.display_name, mustCarry);
+          return isHouse(r, mustCarry);
         });
         var away = !!handOn && !results.length;
         if (away) results = got.results;
@@ -9920,8 +10064,9 @@ function initChiExplorer() {
    * in the box); and <outcome> what the reader was shown:
    *   point        a position the link carried, offered as one row
    *   found        address rows for the place
-   *   pin          the street the address is on, with the Census Bureau's
-   *                pin for its house number (showStreetOnly)
+   *   pin          the Census Bureau's pin for the address, with the
+   *                street it is on when the search knows that street
+   *                (showStreetOnly)
    *   street       the street the address is on, framed for a tap, or
    *                listed to pick (listHeldAnswers)
    *   name         places with the link's name, listed for the reader
@@ -10079,9 +10224,9 @@ function initChiExplorer() {
    * the Google Maps app is its name and its address in one string, which a
    * geocoder often cannot match whole (ENGINE map-link addressAfterName).
    * The address alone is tried here and then in the sibling apps, and an
-   * answer to it counts only if it carries the address's house number
-   * (labelCarriesNumber): without one the geocoder answers with streets that
-   * partly match, and a single such answer would be selected as the place.
+   * answer to it counts only if it is the house (isHouse): without the
+   * house number the geocoder answers with streets that partly match, and a
+   * single such answer would be selected as the place.
    * Last, the place's name alone, whose answers are listed and never
    * selected, since a name can belong to another place; the reader can tell
    * from the address on the row. Typed text gets none of these, so typing
@@ -10101,16 +10246,36 @@ function initChiExplorer() {
    * it was the only answer, so a reader asking about one address was shown
    * the cards for another, a ward or more away, with nothing to say so:
    * Photon holds a Chicago storefront's street and not its number. Every
-   * answer is still listed, and one without the number is marked
+   * answer is still listed, and one that is not the house is marked
    * (listHeldAnswers) so that nothing selects it for the reader. When no
-   * answer carries the number but one is on the address's street
+   * answer is the house but one is on the address's street
    * (addressInTownOf, which also reads a town typed with no comma, or not
    * typed at all, from the answer's own label), a search the reader sent
    * shows that street and the Census Bureau's pin as for a shared link, if
    * the answers put the street in one town; while the reader is typing, the
    * street's row does that when it is picked. The geocoder is asked as often
    * as before, bar one retry without a unit ("Apt 2") when the first answers
-   * lack the number. */
+   * are not the house.
+   *
+   * THE HOUSE, NOT ONLY ITS NUMBER, from 2026-10-19: until then an answer
+   * carrying the house number anywhere in its label counted, and of 49
+   * Cook County addresses typed into the Illinois map's search box that day
+   * the one answer for one of them was that number on a different street,
+   * which a question page's address box selects when it is the only answer.
+   *
+   * WHEN THE SEARCH KNOWS NEITHER THE HOUSE NOR ITS STREET THERE, from the
+   * same day, a search the reader sent with the address's town asks the
+   * Census Bureau about the address (showStreetOnly with no street), written
+   * out with this app's state when it names none (addressForLookup, ENGINE
+   * map-link), before the answers are listed and, when there are none,
+   * after the sibling apps' lookup; its pin answers if it has the house,
+   * and otherwise the search ends as it did before. A link's address is
+   * asked about the same way before the place's name is searched. Of the 17 of
+   * those 49 addresses the map's search could not place, 12 had no answer
+   * on the street in its town, or only a stretch more than half a mile
+   * from the house (STREET_NEAR_MILES, no longer applied to the Census
+   * Bureau's answer), and its records put all 12 in the right district;
+   * Adam chose its pin for them ("Use Census"). */
   function runAddressSearch(q, fromLink, submitted) {
     var seq = districtSearchSeq;
     var bare = fromLink ? addressAfterName(q) : null;
@@ -10136,7 +10301,7 @@ function initChiExplorer() {
       var all = results, before = street.length;
       if (results && held[i]) {
         keepStreet(results);
-        results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
+        results = results.filter(function (r) { return isHouse(r, held[i]); });
       }
       if (results && results.length) {
         if (numbered) return listHeldAnswers(all, numbered, street, sent);
@@ -10145,8 +10310,8 @@ function initChiExplorer() {
         countLinkRead("found");
         return;
       }
-      // the answers listed if none carries the number: the first try's, or
-      // a later try's that found the street when the first did not
+      // the answers listed if none is the house: the first try's, or a
+      // later try's that found the street when the first did not
       if (numbered && all && all.length && (!loose || (!looseOnStreet && street.length > before))) {
         loose = all;
         looseOnStreet = street.length > before;
@@ -10156,11 +10321,25 @@ function initChiExplorer() {
       if (towns.length === 1 && (bare || sent)) {
         return showStreetOnly(streetIn(street, towns[0]), towns[0], name, geocodeAddress);
       }
+      // a sent address with its town, whose street the search does not know
+      // there either: the Census Bureau is asked about it, in this app's
+      // state when it names none (addressForLookup)
+      var unknown = sent && numbered && !towns.length ? addressForLookup(numbered, METRO_BRAND.instanceTag) : null;
+      if (loose && unknown) {
+        return showStreetOnly([], unknown, "", geocodeAddress, loose).then(function (shown) {
+          if (!shown && seq === districtSearchSeq) listHeldAnswers(loose, numbered, street, sent);
+        });
+      }
       if (loose) return listHeldAnswers(loose, numbered, street, sent);
       renderGeocodeResults(results, fromLink);
       return Promise.resolve(maybeRenderSiblingMatches(q, numbered, null, numbered)).then(function (found) {
         if (seq !== districtSearchSeq) return;
         if (found) return countLinkRead("other-state");
+        if (found === 0 && unknown) {
+          return showStreetOnly([], unknown, "", geocodeAddress, []).then(function (shown) {
+            if (!shown && seq === districtSearchSeq) countLinkRead("none");
+          });
+        }
         // 0, never undefined: an aborted or sibling-less lookup tries no more
         if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
@@ -10168,19 +10347,28 @@ function initChiExplorer() {
           if (again) return countLinkRead("other-state");
           if (again !== 0) return countLinkRead("none");
           if (street.length) return showStreetOnly(streetIn(street, bare), bare, name, searchEverywhere);
-          if (name.length < 3) return countLinkRead("none");
-          return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq) return;
-            if (!named || !named.length) return countLinkRead("none");
-            countLinkRead("name");
-            listByName(named);
-            geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
-              "A search for its name, \u201c" + name + "\u201d, found " +
-              (named.length === 1 ? "the place below. Pick it if it's the one you meant."
-                                  : "the places below. Pick the one you meant, if it's there.");
-            geoStatus.className = "geo-status";
+          var asked = addressForLookup(bare, METRO_BRAND.instanceTag);
+          if (!asked) return searchName();
+          return showStreetOnly([], asked, name, searchEverywhere, []).then(function (shown) {
+            if (!shown && seq === districtSearchSeq) return searchName();
           });
         });
+      });
+    }
+    // the place's name alone, last of all for a link: its answers are listed
+    // and never selected
+    function searchName() {
+      if (name.length < 3) return countLinkRead("none");
+      return geocodeAddress(name).then(function (named) {
+        if (seq !== districtSearchSeq) return;
+        if (!named || !named.length) return countLinkRead("none");
+        countLinkRead("name");
+        listByName(named);
+        geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
+          "A search for its name, \u201c" + name + "\u201d, found " +
+          (named.length === 1 ? "the place below. Pick it if it's the one you meant."
+                              : "the places below. Pick the one you meant, if it's there.");
+        geoStatus.className = "geo-status";
       });
     }
     return geocodeAddress(tries[0]).then(next);
@@ -10202,17 +10390,34 @@ function initChiExplorer() {
     return street.filter(function (s) { return s.at === at; }).map(function (s) { return s.answer; });
   }
 
+  /* Whether an answer is the house an address names. Photon's answers are
+   * OpenStreetMap's data, labelled by this app (normalizePhoton), and one is
+   * the house only if a part of its label is the number on the address's
+   * street (labelAtHouse, ENGINE map-link). An answer from another search,
+   * New York City's own address file, is held to the number alone
+   * (labelCarriesNumber), as every answer was until 2026-10-19: the street
+   * test was written for and tried on OpenStreetMap's labels, not that
+   * file's. houseMark is the class a row that is not the house carries:
+   * other-street when it has the number on another street, else no-number. */
+  function isHouse(r, address) {
+    return r.source === "openstreetmap" ? labelAtHouse(r.display_name, address)
+                                        : labelCarriesNumber(r.display_name, address);
+  }
+  function houseMark(r, address) {
+    return isHouse(r, address) ? "" : labelCarriesNumber(r.display_name, address) ? "other-street" : "no-number";
+  }
+
   /* Answers to an address held to its house number (runAddressSearch).
-   * Every answer is listed, as before, and one whose label lacks the number
-   * is marked no-number, which #q= never selects (prefillGeocodeSearch).
-   * When none carries the number, a row on the address's street shows that
+   * Every answer is listed, as before, and one that is not the house is
+   * marked (houseMark), which #q= never selects (prefillGeocodeSearch).
+   * When none is the house, a row on the address's street shows that
    * street when it is picked (showStreetOnly), and the point the Census
    * Bureau gives the number, instead of selecting a spot somewhere along
    * the street, and the status says what the map's search knows. */
   function listHeldAnswers(answers, address, street, sent) {
-    var none = !answers.some(function (r) { return labelCarriesNumber(r.display_name, address); });
+    var none = !answers.some(function (r) { return isHouse(r, address); });
     renderGeocodeResults(answers, null, {
-      mark: function (r) { return labelCarriesNumber(r.display_name, address) ? "" : "no-number"; },
+      mark: function (r) { return houseMark(r, address); },
       pick: function (r) {
         var at = none ? addressInTownOf(address, r.display_name) : null;
         if (!at) return false;
@@ -10230,7 +10435,10 @@ function initChiExplorer() {
         " but not number " + a.number + " on it. Pick " +
         (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map.";
     } else if (sent) {
-      geoStatus.textContent = "None of these has the house number " + addressStreet(address).number +
+      var typed = addressStreet(address);
+      var withNumber = answers.some(function (r) { return labelCarriesNumber(r.display_name, address); });
+      geoStatus.textContent = (withNumber ? "None of these is number " + typed.number + " on the street you typed"
+                                          : "None of these has the house number " + typed.number) +
         ", so pick one only if it's the place you meant, or tap the place on the map.";
     }
     geoStatus.className = "geo-status";
@@ -10276,10 +10484,10 @@ function initChiExplorer() {
     }
   }
 
-  /* The street a shared or typed address is on, when no answer carries its
-   * house number (labelOnStreet, addressInTownOf, ENGINE map-link); `bare`
-   * is the address in the street's town. The map frames the street, from
-   * the extent the geocoder gives it, and the reader taps the place: nothing
+  /* The street a shared or typed address is on, when no answer is its house
+   * (isHouse, labelOnStreet, addressInTownOf, ENGINE map-link); `bare` is
+   * the address in the street's town. The map frames the street, from the
+   * extent the geocoder gives it, and the reader taps the place: nothing
    * is selected, because a point on a street is not the place and a
    * district's edge can run down the middle of the street. The place's name
    * is searched next, and an answer is listed (never selected) only if it is
@@ -10287,30 +10495,44 @@ function initChiExplorer() {
    * is: on 2026-10-14 a search for the name of a small business shared
    * from the Google Maps app answered three other places with similar
    * names, 20 to 50 km from its street. At the same time the Census
-   * Bureau is asked where the number falls on the street (lookupAddressRanges),
-   * and its answer is a pin whose point is selected, with the message saying
-   * it can be a few doors off, unless another state's app answers there
-   * (placeRangePin). */
+   * Bureau is asked where the house is (lookupAddressRanges), and its
+   * answer is a pin whose point is selected, with the message saying it
+   * can be a block or more from the house, unless another state's app
+   * answers there (placeRangePin).
+   *
+   * WITH NO STREET (`street` empty, from 2026-10-19) the search knows
+   * neither the house nor its street there (runAddressSearch), and the
+   * Census Bureau is asked about the address the reader sent, with its town
+   * (addressForLookup).
+   * Nothing is shown until it answers: its pin and the message when it has
+   * the house, with the name's answers near the pin, and nothing at all
+   * when it has not, so that the caller shows what the search found. The
+   * promise resolves true when the pin is shown. `answers` are what the
+   * search found, which decide whether the message offers OpenStreetMap's
+   * note form. */
   var STREET_NEAR_MILES = 0.5;
-  function showStreetOnly(street, bare, name, search) {
+  function showStreetOnly(street, bare, name, search, answers) {
     var seq = districtSearchSeq;
     var picked = state.sequence; // a point selected after this answers the message
     var answered = false;
     var a = addressParts(bare);
-    var bounds = null;
+    var known = street.length > 0; // the search knows the street there
+    var bounds = null, zips = [];
     street.forEach(function (r) {
       var e = r.extent; // [west, north, east, south]
       var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
       var b = e && e.length === 4 ? L.latLngBounds([e[3], e[0]], [e[1], e[2]])
                                   : L.latLngBounds([lat, lng], [lat, lng]);
       bounds = bounds ? bounds.extend(b) : b;
+      var zip = labelZip(r.display_name);
+      if (zip && zips.indexOf(zip) < 0) zips.push(zip);
     });
-    clearResultRows(false);
     var pin = null, pinPicked = false, near = [];
     // every answer came from OpenStreetMap's data (normalizePhoton), so the
     // message can offer its note form; New York's city search reads the
     // city's own address file, which OpenStreetMap's volunteers do not keep
-    var osm = street.length > 0 && street.every(function (r) { return r.source === "openstreetmap"; });
+    var from = known ? street : answers || [];
+    var osm = from.length > 0 && from.every(function (r) { return r.source === "openstreetmap"; });
     function noteAt() {
       if (pin) return { lat: pin.lat, lng: pin.lng, zoom: 19 };
       // the middle of the part of the map below the search panel, which is
@@ -10321,14 +10543,16 @@ function initChiExplorer() {
     }
     function current() { return !answered && seq === districtSearchSeq && picked === state.sequence; }
     function compose() {
-      var text = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number + " on it";
+      var text = known ? "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number + " on it"
+                       : "The map's search didn't find that address";
+      var put = known ? "that number" : "it";
       // the pin's point is selected (pinPicked) unless another state's app
       // answers there, and then the pin waits for a tap (placeRangePin)
       var tapPin = !!pin && !pinPicked;
       text += !pin ? ", so the map is showing that street." : pinPicked ?
-        ". The map has selected the pin, where the Census Bureau's street records put that number. " +
-        "That can be a few doors off, and a district line can run between two doors." :
-        ". The pin is where the Census Bureau's street records put that number, which can be a few doors off.";
+        ". The map has selected the pin, where the Census Bureau's street records put " + put + ". " +
+        "It can be a block or more from the house, and a district line can run between the two." :
+        ". The pin is where the Census Bureau's street records put " + put + ", which can be a block or more from the house.";
       if (near.length) {
         text += " A search for its name, \u201c" + name + "\u201d, " + (pin ? "also " : "") + "found " +
           (near.length === 1 ? "the place below. Pick it if it's the one you meant" : "the places below. Pick the one you meant") +
@@ -10345,9 +10569,6 @@ function initChiExplorer() {
       geoStatus.appendChild(osmNoteLink(noteAt));
       geoStatus.appendChild(document.createTextNode(" so its volunteers can add it."));
     }
-    compose();
-    refreshSearchShellExpanded();
-    map.fitBounds(bounds, { paddingTopLeft: [24, clearOfSearchPanel()], paddingBottomRight: [24, 24], maxZoom: 17 });
     // the reader's tap answers the message, which then goes
     function done() {
       if (answered) return;
@@ -10359,47 +10580,70 @@ function initChiExplorer() {
       collapseAfterSelect = true;
       refreshSearchShellExpanded();
     }
-    map.once("click", done);
+    // the street, and the message, as soon as the search knows it
+    function show() {
+      clearResultRows(false);
+      compose();
+      refreshSearchShellExpanded();
+      map.once("click", done);
+    }
+    if (known) {
+      show();
+      map.fitBounds(bounds, { paddingTopLeft: [24, clearOfSearchPanel()], paddingBottomRight: [24, 24], maxZoom: 17 });
+    }
     // a pin needs far less room below the search panel than a street does
     function framePin() {
       map.fitBounds(L.latLngBounds([pin.lat, pin.lng], [pin.lat, pin.lng]),
         { paddingTopLeft: [24, clearOfSearchPanel(64)], paddingBottomRight: [24, 24], maxZoom: 18 });
     }
-    var ranged = lookupAddressRanges(bare, bounds).then(function (m) {
+    // the name's answers near the street, or near the pin with no street
+    function nearHere(r) {
+      var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+      var b = bounds || L.latLngBounds([pin.lat, pin.lng], [pin.lat, pin.lng]);
+      return haversineMiles(lat, lng,
+        Math.max(b.getSouth(), Math.min(b.getNorth(), lat)),
+        Math.max(b.getWest(), Math.min(b.getEast(), lng))) <= STREET_NEAR_MILES;
+    }
+    function searchName() {
+      return search(name).then(function (found) {
+        if (!current()) return;
+        near = (found || []).filter(nearHere);
+        if (!near.length) return;
+        listByName(near);
+        compose();
+        if (pin) framePin(); // the list grew the panel the pin is framed below
+      });
+    }
+    // the Census Bureau is asked with the ZIP code of the street's answers
+    // when they name one and the address none (lookupAddressRanges)
+    var ranged = lookupAddressRanges(zips.length === 1 ? withZip(bare, zips[0]) : bare, zips).then(function (m) {
       // a link's read is counted once the Census answer says what the reader
-      // is shown, the house pinned or the street alone (countLinkRead)
-      if (seq === districtSearchSeq) countLinkRead(m && current() ? "pin" : "street");
-      if (!m || !current()) return;
+      // is shown, the house pinned or the street alone (countLinkRead); with
+      // no street, only a pin is this function's to count
+      if (seq === districtSearchSeq && (known || (m && current()))) countLinkRead(m && current() ? "pin" : "street");
+      if (!m || !current()) return false;
       // the app that answers at the pin decides whether its point is selected
       // here (ENGINE metro-portal); an owner that cannot be told leaves it
       // here, as a tap there would
       return placeOwner(m.lat, m.lng)["catch"](function () { return null; }).then(function (owner) {
-        if (!current()) return;
+        if (!current()) return false;
         pin = m;
         pinPicked = !owner || owner === "here";
+        if (!known) show();
         // the reader's tap on the map answers the message (done), and so does
         // a point selected any other way, which takes the pin
         placeRangePin(m, a, done, pinPicked);
         if (pinPicked) picked = state.sequence; // the pin's own selection answers nothing
         compose();
         framePin();
+        return true;
       });
     });
     if (name.length < 3) return ranged;
-    var named = search(name).then(function (found) {
-      if (!current()) return;
-      near = (found || []).filter(function (r) {
-        var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
-        return haversineMiles(lat, lng,
-          Math.max(bounds.getSouth(), Math.min(bounds.getNorth(), lat)),
-          Math.max(bounds.getWest(), Math.min(bounds.getEast(), lng))) <= STREET_NEAR_MILES;
-      });
-      if (!near.length) return;
-      listByName(near);
-      compose();
-      if (pin) framePin(); // the list grew the panel the pin is framed below
+    if (known) return Promise.all([ranged, searchName()]);
+    return ranged.then(function (shown) {
+      return shown && searchName().then(function () { return true; });
     });
-    return Promise.all([ranged, named]);
   }
 
   /* OPENSTREETMAP'S NOTE FORM, for a reader who knows where a house number
@@ -10461,15 +10705,38 @@ function initChiExplorer() {
    * list by its street (runAddressSearch, listHeldAnswers), never text while
    * it is being typed.
    *
-   * An answer is used only if it is the ONE match on the address's own
-   * street in its town with its house number (labelOnStreet,
-   * labelCarriesNumber), within STREET_NEAR_MILES of the street the map
-   * found: asked on 2026-10-14 for a Westmont address, the Census geocoder
-   * offered that number on Oakley Ln and on Oakley Ct, two other streets.
+   * An answer is used only if it is the ONE match that is the house
+   * (labelAtHouse, ENGINE map-link) in the address's town or ZIP code
+   * (labelOnStreet), or in a ZIP code the map's answers on its street carry
+   * (`zips`, showStreetOnly), since one number on one street is one house
+   * in a ZIP code: asked on 2026-10-14 for a Westmont address, the Census
+   * geocoder offered that number on Oakley Ln and on Oakley Ct, two other
+   * streets. The ZIP codes are what take the house when the address names
+   * no town, which the map's answers then give as the Cook County township
+   * a street is in while the Census Bureau names the city (ENGINE map-link
+   * addressInTownOf). When those answers name one ZIP code and the address
+   * none, the lookup is asked with it (showStreetOnly). Measured
+   * 2026-10-19: asked about the Lincoln Park Zoo's address in the township
+   * Photon names, the Census geocoder found the zoo with the zoo's ZIP code
+   * and nothing with another, and asked about City Hall's in Chicago with
+   * another ZIP code, it still found City Hall. So the ZIP code costs
+   * nothing where the town is the city, and a house it misses in the
+   * township for being in another ZIP code would have been refused here
+   * anyway. Whether it finds, typed with no town, the three of 49 Cook
+   * County addresses the township alone found nothing for was not
+   * measured, because those addresses were not kept.
+   *
+   * Until 2026-10-19 the match also had to lie within STREET_NEAR_MILES of
+   * the street the map found, which refused it for 2 of 49 Cook County
+   * addresses tested that day, whose street the map's search knew only more
+   * than half a mile from the house; the Census Bureau had the right
+   * district for both. Adam chose that day to take its answer whenever it
+   * names the number, the street and the town ("Use Census").
    *
    * THE PIN'S POINT IS SELECTED AT ONCE, on Adam's choice of 2026-10-18,
    * and the message says what that can cost (showStreetOnly): an estimate
-   * from address ranges can be a few doors off, and in Chicago a ward's
+   * from address ranges can be a block or more from the house (14 to 296 m
+   * for the 48 of those 49 addresses it found), and in Chicago a ward's
    * edge often runs down the alley in the middle of a block, so the cards
    * can name the district next door. For its first day the pin selected
    * nothing until it was tapped, for that reason; Adam chose the cards at
@@ -10479,7 +10746,7 @@ function initChiExplorer() {
    * ADDRESS_RANGES_TIMEOUT_MS; it never rejects. */
   var ADDRESS_RANGES_TIMEOUT_MS = 9000;
   var RANGE_PIN_COLOR = "#1d5fd6"; // the token file's --data-500, the selection's own blue
-  function lookupAddressRanges(address, bounds) {
+  function lookupAddressRanges(address, zips) {
     if (!MAP_LINK_LOOKUP || typeof AbortController === "undefined") return Promise.resolve(null);
     var ctl = new AbortController();
     var timer = setTimeout(function () { ctl.abort(); }, ADDRESS_RANGES_TIMEOUT_MS);
@@ -10487,17 +10754,23 @@ function initChiExplorer() {
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (body) {
         var on = (body && Array.isArray(body.matches) ? body.matches : []).filter(function (m) {
-          if (!m || typeof m.address !== "string") return false;
-          var lat = Number(m.lat), lng = Number(m.lng);
-          return isFinite(lat) && isFinite(lng) &&
-            labelOnStreet(m.address, address) && labelCarriesNumber(m.address, address) &&
-            haversineMiles(lat, lng,
-              Math.max(bounds.getSouth(), Math.min(bounds.getNorth(), lat)),
-              Math.max(bounds.getWest(), Math.min(bounds.getEast(), lng))) <= STREET_NEAR_MILES;
+          if (!m || typeof m.address !== "string" || !isFinite(Number(m.lat)) || !isFinite(Number(m.lng))) return false;
+          return labelAtHouse(m.address, address) && (labelOnStreet(m.address, address) ||
+            (zips || []).some(function (zip) { return labelOnStreet(m.address, withZip(address, zip)); }));
         });
         return on.length === 1 ? { lat: Number(on[0].lat), lng: Number(on[0].lng) } : null;
       })["catch"](function () { return null; })
       .then(function (m) { clearTimeout(timer); return m; });
+  }
+  // The ZIP code an answer's label ends with, or ""
+  function labelZip(label) {
+    return (/(?:^|,)\s*(\d{5})(?:-\d{4})?\s*$/.exec(String(label || "")) || [])[1] || "";
+  }
+  // The address with `zip` written after it, unless it names a ZIP code of
+  // its own
+  function withZip(address, zip) {
+    var a = addressParts(address);
+    return a && !a.zip ? String(address).trim() + " " + zip : address;
   }
   /* The pin, with its point selected (selectNow). That pin ignores a tap,
    * which would only move the selection a few metres off the estimate and
@@ -10601,11 +10874,13 @@ function initChiExplorer() {
    * state's app it belongs to, so a place shared into the installed app
    * opens in its own state.
    *
-   * NOR IS AN ANSWER WITHOUT THE HOUSE NUMBER the address opens with
-   * (listHeldAnswers), though it be the only one: that answer is a street,
-   * and its point a spot somewhere along it. Until 2026-10-17 a question
-   * page's address box selected it, and the cards named the districts of
-   * another stretch of the street. */
+   * NOR IS AN ANSWER THAT IS NOT THE HOUSE the address names
+   * (listHeldAnswers), though it be the only one: an answer without the
+   * house number is a street, and its point a spot somewhere along it, and
+   * one with the number on another street is another house. Until
+   * 2026-10-17 a question page's address box selected the first, and the
+   * cards named the districts of another stretch of the street, and until
+   * 2026-10-19 the second. */
   function prefillGeocodeSearch(q) {
     linkVia = "opened";
     geocodeInputEl.value = q;
@@ -10616,7 +10891,7 @@ function initChiExplorer() {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
       var place = geoResultsList.querySelectorAll("li.link-place > button");
       var away = geoResultsList.querySelectorAll("li.map-link-away > button");
-      if (own.length === 1) { if (!/\bno-number\b/.test(own[0].parentNode.className)) own[0].click(); }
+      if (own.length === 1) { if (!/\b(?:no-number|other-street)\b/.test(own[0].parentNode.className)) own[0].click(); }
       else if (place.length === 1) place[0].click();
       else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
