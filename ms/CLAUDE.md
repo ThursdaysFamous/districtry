@@ -51,12 +51,20 @@ member gallery on `www.legislature.ms.gov` shows one card per seat, and a seat n
 card reading "Vacant" (Senate 34, House 70 and 77 on 2026-10-15); each member's profile names the
 party, the official `@senate.ms.gov` or `@house.ms.gov` address, and the Capitol office. The
 legislature's own member XML files on `billstatus.ls.state.ms.us` still list members who have left,
-so they are not read. **THE PROFILES ALSO PRINT A HOME ADDRESS, A PERSONAL TELEPHONE AND SOMETIMES
-A PERSONAL E-MAIL ADDRESS, AND THE BUILDER NEVER READS THEM**: only an address on the chamber's own
-domain is carried, and the office printed is the Capitol's. **THE HOST SENDS ONLY ITS OWN
-CERTIFICATE AND NOT THE INTERMEDIATE THAT SIGNED IT**, so a client that does not fetch missing
-intermediates fails to connect; the builder pins the GlobalSign intermediate through
-`scripts/aia_bundle.py` rather than turning verification off.
+so they are not read. **THE PROFILES ALSO PRINT A HOME ADDRESS AND THE MEMBER'S OWN TELEPHONES; THE
+TELEPHONES SHIP AND THE ADDRESS IS NEVER READ.** Until 2026-10-19 the telephones were not read
+either; under Adam's fleet ruling of 2026-10-17 ("if the official government source uses personal
+phone numbers, we publish those") each number in a profile's "Phone(s)" block now rides the member's
+row with the page's own word for it ("home", "business" or "cell") — 124 numbers on 96 members that
+day, 20 senators and 76 representatives. A line the page marks (F) is a fax and never ships, and a
+number on the Capitol's (601) 359 exchange, in the member's Capitol block or printed for two or more
+members is an office's (none were). Only an e-mail address on the chamber's own domain is carried:
+three biographies print a personal address for members whose chamber address ships, and the one
+profile whose e-mail block holds a personal address prints it with `@house.ms.gov` appended, which
+is not an address anyone can write to, so it is not carried. The office printed is the Capitol's.
+**THE HOST SENDS ONLY ITS OWN CERTIFICATE AND NOT THE INTERMEDIATE THAT SIGNED IT**, so a client
+that does not fetch missing intermediates fails to connect; the builder pins the GlobalSign
+intermediate through `scripts/aia_bundle.py` rather than turning verification off.
 
 **THE COUNTY BOARD IS A BOARD OF SUPERVISORS, AND ITS PEOPLE AND ITS LINES COME FROM DIFFERENT
 PLACES.** Every county elects five supervisors, each from a district (some counties call them
