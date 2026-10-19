@@ -1717,6 +1717,62 @@ footer .support b { color: var(--ink); }
     expressway: "Expy", freeway: "Fwy", highway: "Hwy", lane: "Ln", parkway: "Pkwy",
     place: "Pl", road: "Rd", square: "Sq", street: "St", terrace: "Ter", trail: "Trl"
   };
+  // The rest of the Postal Service's street types (Publication 28, appendix
+  // C1, read 2026-10-19), for matching names only (streetNameKey): the
+  // boundary-street labels print these words as CARTO does. The Census
+  // Bureau's geocoder writes every street type this way and OpenStreetMap,
+  // which Photon reads, writes it out, so until that day an answer on
+  // "ARROWHEAD TRCE" was not on Arrowhead Trace. A plural the Postal
+  // Service abbreviates as its singular (Parks, Parkways, Spurs, Walks) is
+  // left out, because every word of a name is matched in its abbreviation
+  // and Parks Road is not Park Road.
+  var STREET_SUFFIXES = {
+    alley: "ALY", anex: "ANX", annex: "ANX", arcade: "ARC", bayou: "BYU", beach: "BCH",
+    bend: "BND", bluff: "BLF", bluffs: "BLFS", bottom: "BTM", branch: "BR", bridge: "BRG",
+    brook: "BRK", brooks: "BRKS", burg: "BG", burgs: "BGS", bypass: "BYP", camp: "CP",
+    canyon: "CYN", cape: "CPE", causeway: "CSWY", center: "CTR", centers: "CTRS",
+    circles: "CIRS", cliff: "CLF", cliffs: "CLFS", club: "CLB", common: "CMN",
+    commons: "CMNS", corner: "COR", corners: "CORS", course: "CRSE", courts: "CTS",
+    cove: "CV", coves: "CVS", creek: "CRK", crescent: "CRES", crest: "CRST",
+    crossing: "XING", crossroad: "XRD", crossroads: "XRDS", curve: "CURV", dale: "DL",
+    dam: "DM", divide: "DV", drives: "DRS", estate: "EST", estates: "ESTS",
+    extension: "EXT", extensions: "EXTS", falls: "FLS", ferry: "FRY", field: "FLD",
+    fields: "FLDS", flat: "FLT", flats: "FLTS", ford: "FRD", fords: "FRDS", forest: "FRST",
+    forge: "FRG", forges: "FRGS", fork: "FRK", forks: "FRKS", fort: "FT", garden: "GDN",
+    gardens: "GDNS", gateway: "GTWY", glen: "GLN", glens: "GLNS", green: "GRN",
+    greens: "GRNS", grove: "GRV", groves: "GRVS", harbor: "HBR", harbors: "HBRS",
+    haven: "HVN", heights: "HTS", hill: "HL", hills: "HLS", hollow: "HOLW", inlet: "INLT",
+    island: "IS", islands: "ISS", junction: "JCT", junctions: "JCTS", key: "KY",
+    keys: "KYS", knoll: "KNL", knolls: "KNLS", lake: "LK", lakes: "LKS", landing: "LNDG",
+    light: "LGT", lights: "LGTS", loaf: "LF", lock: "LCK", locks: "LCKS", lodge: "LDG",
+    manor: "MNR", manors: "MNRS", meadow: "MDW", meadows: "MDWS", mill: "ML", mills: "MLS",
+    mission: "MSN", motorway: "MTWY", mount: "MT", mountain: "MTN", mountains: "MTNS",
+    neck: "NCK", orchard: "ORCH", overpass: "OPAS", passage: "PSGE", pine: "PNE",
+    pines: "PNES", plain: "PLN", plains: "PLNS", plaza: "PLZ", point: "PT", points: "PTS",
+    port: "PRT", ports: "PRTS", prairie: "PR", radial: "RADL", ranch: "RNCH", rapid: "RPD",
+    rapids: "RPDS", rest: "RST", ridge: "RDG", ridges: "RDGS", river: "RIV", roads: "RDS",
+    route: "RTE", shoal: "SHL", shoals: "SHLS", shore: "SHR", shores: "SHRS",
+    skyway: "SKWY", spring: "SPG", springs: "SPGS", squares: "SQS", station: "STA",
+    stravenue: "STRA", stream: "STRM", streets: "STS", summit: "SMT", throughway: "TRWY",
+    trace: "TRCE", track: "TRAK", trafficway: "TRFY", trailer: "TRLR", tunnel: "TUNL",
+    turnpike: "TPKE", underpass: "UPAS", union: "UN", unions: "UNS", valley: "VLY",
+    valleys: "VLYS", viaduct: "VIA", view: "VW", views: "VWS", village: "VLG",
+    villages: "VLGS", ville: "VL", vista: "VIS", well: "WL", wells: "WLS"
+  };
+  // Words of a street's name that are not street types and are written two
+  // ways, for matching names only (streetNameKey): a reader and the Census
+  // Bureau's geocoder abbreviate them, and OpenStreetMap's mappers often
+  // write them out, as in Saint Louis Avenue or Doctor Martin Luther King
+  // Junior Drive.
+  var STREET_NAME_WORDS = { saint: "ST", doctor: "DR", junior: "JR" };
+  // Every street type as streetNameKey writes it, the common ones and the
+  // rest of the Postal Service's list
+  var STREET_TYPE_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_TYPES) keys[STREET_TYPES[k].toUpperCase()] = true;
+    for (k in STREET_SUFFIXES) keys[STREET_SUFFIXES[k]] = true;
+    return keys;
+  })();
   function abbreviateStreetName(name) {
     var words = String(name || "").split(/\s+/).filter(Boolean);
     if (words.length < 2) return words.join(" ");
@@ -1783,31 +1839,97 @@ footer .support b { color: var(--ink); }
     return { number: a.number, street: a.street, town: town, zip: zip };
   }
   // A street's name as a matching key: every word in its abbreviation, so
-  // "Drive" and "Dr" agree wherever they stand, then a leading and a
-  // trailing direction set apart when a name is left beside it, so "W North
-  // Ave" keeps North (a street named North) and loses W.
+  // "Drive" and "Dr", or "Trace" and "TRCE" (STREET_SUFFIXES), agree
+  // wherever they stand, then a leading and a trailing direction set apart
+  // when a name is left beside it, so "W North Ave" keeps North (a street
+  // named North) and loses W. `words` are the rest, each without the marks
+  // and accents inside it ("O'Brien" is OBRIEN), and `core` the same words
+  // as one string.
   function streetNameKey(name) {
     var dirs = {}, types = {}, k;
     for (k in STREET_DIRECTIONS) dirs[STREET_DIRECTIONS[k].toUpperCase()] = true;
     for (k in STREET_TYPES) types[STREET_TYPES[k].toUpperCase()] = true;
-    var words = String(name || "").replace(/\./g, "").split(/\s+/).filter(Boolean).map(function (w) {
-      var low = w.toLowerCase();
-      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || w).toUpperCase();
-    });
+    var text = String(name || "");
+    if (text.normalize) text = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    var words = text.replace(/\./g, "").split(/\s+/).map(function (w) {
+      var low = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || STREET_SUFFIXES[low] || STREET_NAME_WORDS[low] || low).toUpperCase();
+    }).filter(Boolean);
     var named = function (rest) { return rest.length > 1 || (rest.length === 1 && !types[rest[0]]); };
     var key = { pre: "", post: "" };
     if (words.length > 1 && dirs[words[words.length - 1]] && named(words.slice(0, -1))) key.post = words.pop();
     if (words.length > 1 && dirs[words[0]] && named(words.slice(1))) key.pre = words.shift();
+    key.words = words;
     key.core = words.join(" ");
     return key;
+  }
+  /* Whether two streetNameKeys name one street: their directions do not
+   * differ, though either may be left off, and their names are the same
+   * once the spaces in them are taken out, so "N LA SALLE ST", as the
+   * Census Bureau's geocoder wrote City Hall's street on 2026-10-19, is
+   * North LaSalle Street. When the address names its street with no type
+   * ("9 W Eugenie, Chicago"), a name that only adds one is the same
+   * street. */
+  function sameStreet(got, want) {
+    if (!got.words.length || !want.words.length) return false;
+    if ((got.pre && want.pre && got.pre !== want.pre) || (got.post && want.post && got.post !== want.post)) return false;
+    var g = got.words, w = want.words;
+    if (g.join("") === w.join("")) return true;
+    var typed = w.length > 1 && STREET_TYPE_KEYS[w[w.length - 1]];
+    return !typed && g.length > 1 && !!STREET_TYPE_KEYS[g[g.length - 1]] && g.slice(0, -1).join("") === w.join("");
   }
   // Whether one part of an answer's label, less any house number, names the
   // street `want` (a streetNameKey) names
   function partNamesStreet(part, want) {
-    var got = streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), ""));
-    return got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
-      (!got.post || !want.post || got.post === want.post);
+    return sameStreet(streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), "")), want);
   }
+
+  /* ---------- the house an address names ----------
+   * labelCarriesNumber asks only whether an answer's label carries the
+   * address's house number somewhere, and on 2026-10-19 that let the map
+   * take another street's house with the same number for the house: of 49
+   * Cook County addresses typed into the Illinois map's search box, the one
+   * answer for one of them was that number on a different street, which a
+   * question page's address box selects when it is the only answer (ENGINE
+   * geocoder-search prefillGeocodeSearch). labelAtHouse asks for the house:
+   * a part of the label that opens with the number and goes on to name the
+   * address's street (sameStreet). The town is not read, because Photon
+   * names the Cook County township a Chicago street is in where the city's
+   * name would be (addressInTownOf). An address typed with its town and no
+   * comma ("9 W Eugenie St Chicago") names its street and then the town, so
+   * an answer whose street, ending in its type, is the first words after
+   * the number is the house too, unless a direction straight after it is
+   * another. A street the reader writes with fewer of its words than the
+   * answer does ("S King Dr" for South Doctor Martin Luther King Junior
+   * Drive) is not the house to this test, and the answer is still listed
+   * for the reader to pick: a test that let some of a name's words stand
+   * for all of them would take Oak Avenue for Oak Park Avenue. */
+  function labelAtHouse(label, address) {
+    var a = addressStreet(address);
+    if (!a) return false;
+    var want = streetNameKey(a.street), number = a.number.toLowerCase();
+    var opens = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s+(\\S.*)$", "i");
+    return String(label || "").split(",").some(function (part) {
+      var m = opens.exec(part);
+      if (!m || m[1].toLowerCase() !== number) return false;
+      var got = streetNameKey(m[2]);
+      return sameStreet(got, want) || streetThenTown(got, want);
+    });
+  }
+  function streetThenTown(got, want) {
+    var g = got.words, w = want.words, k;
+    if (!g.length || !STREET_TYPE_KEYS[g[g.length - 1]] || (got.pre && want.pre && got.pre !== want.pre)) return false;
+    for (k = 1; k < w.length; k++) {
+      if (w.slice(0, k).join("") !== g.join("")) continue;
+      return !(got.post && STREET_DIRECTION_KEYS[w[k]] && w[k] !== got.post);
+    }
+    return false;
+  }
+  var STREET_DIRECTION_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_DIRECTIONS) keys[STREET_DIRECTIONS[k].toUpperCase()] = true;
+    return keys;
+  })();
   function labelOnStreet(label, address) {
     var a = addressParts(address);
     if (!a) return false;
@@ -1826,17 +1948,62 @@ footer .support b { color: var(--ink); }
    * An address typed into a state's app often names no town ("1600 W
    * North Ave"), or names it with no comma before it ("1600 W North Ave
    * Chicago"), and the map's search may answer the street in one town or
-   * in several. addressInTownOf gives the address in the town and state of
-   * an answer on its street ("1600 W North Ave, Chicago, IL"), read
-   * from the answer's label: the part before a state's name is the town.
-   * When the address names a town, after a comma (labelOnStreet) or as the
-   * words after the street, and the answer is not in it, the result is
-   * null, as it is for an answer on another street or a label that names no
-   * state. The ZIP code is left out, because one long street runs through
-   * several. */
+   * in several. addressInTownOf gives the address in a town and the state
+   * of an answer on its street ("1600 W North Ave, Chicago, IL"). When the
+   * address names a town, after a comma (labelOnStreet) or as the words
+   * after the street, and the answer is not in it, the result is null, as
+   * it is for an answer on another street or a label that names no state.
+   *
+   * A ZIP CODE TYPED WITH THE ADDRESS IS KEPT ("1600 W North Ave, Chicago,
+   * IL 60622"), from 2026-10-19, because the Census Bureau's lookup
+   * (ENGINE geocoder-search lookupAddressRanges) finds a house by its ZIP
+   * code as well as by its town: asked that day for the Lincoln Park Zoo's
+   * address with its ZIP code and no town, it found the zoo, and asked
+   * with the Cook County township Photon names and a wrong ZIP code, it
+   * found nothing. Asked with the township alone it found the zoo too, but
+   * for three of 49 Cook County addresses tested that day it found nothing
+   * with the township alone. Until then the ZIP code was left out, so an
+   * address typed with a ZIP code and no town went to the lookup with the
+   * township alone. An answer's own ZIP code is not put in here, because
+   * one long street runs through several and the answer's is the street's,
+   * not the house's; the lookup is asked with it only when every answer on
+   * the street in that town names the same one (ENGINE geocoder-search
+   * showStreetOnly).
+   *
+   * THE TOWN TYPED AFTER A COMMA IS KEPT when the answer is in it only by
+   * its ZIP code (townTypedIn). Otherwise the town is the answer's own, the
+   * part of its label before the state's name, so a neighbourhood typed
+   * where the town would be ("1600 W North Ave, Wicker Park") gives the
+   * city the answer names. Until 2026-10-19 the town was always the
+   * answer's, while labelOnStreet also takes an answer whose only part in
+   * common with the address's town is its ZIP code. Measured that day over
+   * 49 Cook County addresses near county commissioner district lines: of
+   * the 75 answers the map listed for the 26 Chicago addresses, 57 named the
+   * Cook County township a street is in ("North Chicago Township") where
+   * the city's name would be, and an answer on Kemman Avenue in La Grange
+   * shares the ZIP code 60526 with La Grange Park. The township went into
+   * the address the Census Bureau's lookup was asked about (ENGINE
+   * geocoder-search lookupAddressRanges): it found nothing for three of the
+   * 49, and for a fourth it found the house in Chicago, which the app then
+   * refused as not in the township. Asked with the town as typed, it found
+   * all four. Answers naming the city and the township, or La Grange and La
+   * Grange Park, were also listed as two towns for the reader to pick from.
+   * An address that names no town, or only a state or a ZIP code after the
+   * comma, still takes the answer's town, township and all, and the lookup
+   * is then asked with the ZIP code the answers on the street name when
+   * they name one, and takes a match in one of the ZIP codes they name
+   * (ENGINE geocoder-search showStreetOnly, lookupAddressRanges). A town
+   * the Census Bureau does not know, such as a misspelling or a
+   * neighbourhood the answer does not name, is kept too. It is kept only
+   * when the answer has the ZIP code typed with it (labelOnStreet), and
+   * that ZIP code goes to the lookup as well, with which the lookup found
+   * the zoo under the township's name; whether it finds a house typed with
+   * a misspelled town that way was not measured. When the lookup finds
+   * nothing, the map shows the street as it does whenever the lookup finds
+   * none. */
   function addressInTownOf(address, label) {
-    var a = addressStreet(address);
-    if (!a || (addressParts(address) && !labelOnStreet(label, address))) return null;
+    var a = addressStreet(address), named = addressParts(address);
+    if (!a || (named && !labelOnStreet(label, address))) return null;
     var parts = String(label || "").split(",").map(function (p) { return p.trim(); });
     var at = -1, tag = "", j, n, i;
     for (j = parts.length - 1; j >= 2 && !tag; j--) {
@@ -1845,6 +2012,10 @@ footer .support b { color: var(--ink); }
     }
     if (!tag) return null;
     var town = parts[at - 1], low = town.toLowerCase();
+    var called = townTypedIn(named, parts, tag) || town;
+    // the ZIP code typed after a comma, or as the last word of an address
+    // typed with no comma ("1600 W North Ave Chicago IL 60622")
+    var zip = named ? named.zip : (/\s(\d{5})(?:-\d{4})?\s*$/.exec(String(address)) || [])[1] || "";
     var words = a.street.split(/\s+/);
     for (n = words.length; n >= 1; n--) {
       var rest = words.slice(n).join(" ").toLowerCase();
@@ -1853,11 +2024,30 @@ footer .support b { color: var(--ink); }
       if (!want.core) continue;
       for (i = 0; i < at - 1; i++) {
         if (partNamesStreet(parts[i], want)) {
-          return a.number + " " + words.slice(0, n).join(" ") + ", " + town + ", " + tag.toUpperCase();
+          return a.number + " " + words.slice(0, n).join(" ") + ", " + called + ", " + tag.toUpperCase() +
+            (zip ? " " + zip : "");
         }
       }
     }
     return null;
+  }
+  // The town an address names after a comma (addressParts), less a ZIP code
+  // and the state written after it with no comma between ("Chicago IL
+  // 60614"), when no part of the label (`parts`) is that town; "" when one
+  // is, when the address names none, or when the part after its comma is
+  // only a state or a ZIP code ("IL 60614"). `tag` is the label's state.
+  function townTypedIn(named, parts, tag) {
+    var t = named ? named.town.replace(/\s+\d{5}(?:-\d{4})?$/, "") : "";
+    [tag, US_STATE_NAMES[tag]].forEach(function (state) {
+      var end = " " + String(state || "").toLowerCase();
+      if (t.length > end.length && t.slice(-end.length).toLowerCase() === end) t = t.slice(0, -end.length);
+    });
+    var low = t.toLowerCase(), i;
+    if (!/[a-z]/i.test(t) || stateTagOfName(t) || US_STATE_NAMES.hasOwnProperty(low)) return "";
+    for (i = 0; i < parts.length; i++) {
+      if (parts[i].toLowerCase() === low) return "";
+    }
+    return t;
   }
 
   /* ---------- the state a place's address names ----------
@@ -1910,6 +2100,43 @@ footer .support b { color: var(--ink); }
   // of Columbia".
   function stateInSentence(tag) {
     return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
+  }
+  /* An address as the Census Bureau's lookup is asked about it when the
+   * map's search knows neither the house nor its street (ENGINE
+   * geocoder-search showStreetOnly): the number and the street, then the
+   * town, the state and the ZIP code, each part after a comma, as
+   * addressInTownOf writes one. A state the address does not name is
+   * `tag`'s, the app's own. Until 2026-10-19 the lookup was asked only
+   * about addresses written that way, with the town and state of the
+   * search's answer or as a map link writes them, while an address typed
+   * into the search box often names no state and leaves out the comma
+   * after its town ("9 W Oakley Dr NW, Westmont IL 60559"). Null when it
+   * names no town and no ZIP code. */
+  function addressForLookup(address, tag) {
+    var a = addressParts(address);
+    if (!a) return null;
+    var parts = String(address).split(",").map(function (s) { return s.trim(); });
+    var at = 1, state = "", i, m, p;
+    for (i = 2; i < parts.length; i++) {
+      if (/^[a-z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/i.test(parts[i])) { at = i - 1; break; }
+    }
+    // the state after the town: its code, in either case, or its name
+    for (i = at + 1; i < parts.length && !state; i++) {
+      p = parts[i].replace(/\s+\d{5}(?:-\d{4})?$/, "");
+      state = /^[a-z]{2}$/i.test(p) && US_STATE_NAMES.hasOwnProperty(p.toLowerCase()) ? p.toLowerCase() : stateTagOfName(p);
+    }
+    // or its code after the town with no comma ("Westmont IL"), or in place
+    // of the town ("IL 60559"); a town named for a state (Oregon, Illinois)
+    // is a town
+    var town = a.town.replace(/(?:^|\s+)\d{5}(?:-\d{4})?$/, "").trim();
+    m = /(?:^|\s)([a-z]{2})$/i.exec(town);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase())) {
+      state = state || m[1].toLowerCase();
+      town = town.slice(0, -2).trim();
+    }
+    state = state || String(tag || "").toLowerCase();
+    if ((!town && !a.zip) || !US_STATE_NAMES.hasOwnProperty(state)) return null;
+    return a.number + " " + a.street + (town ? ", " + town : "") + ", " + state.toUpperCase() + (a.zip ? " " + a.zip : "");
   }
   /* The link handed to another app for a place it should search: the text
    * rebuilt as a link of the kind it came in, which that app's parseMapLink
@@ -2181,8 +2408,13 @@ footer .support b { color: var(--ink); }
     // an address with no name in front, typed or carried by a link, is held
     // to its house number (searchAndRoute)
     var bare = link ? addressAfterName(q) : null;
-    searchAndRoute(q, bare, !bare && OPENS_WITH_ADDRESS.test(q) ? q : null, link ? mapLinkForText(link) : typed,
-      named && named.metro.whole ? named.metro : null, true);
+    var address = !bare && OPENS_WITH_ADDRESS.test(q) ? q : null;
+    // the state a typed address names, for when the search finds nothing
+    // any app covers (searchAndRoute `home`)
+    var home = !link && address ? namedState(q) : null;
+    searchAndRoute(q, bare, address, link ? mapLinkForText(link) : typed,
+      named && named.metro.whole ? named.metro : null, true,
+      home && home.metro && home.metro.whole ? home.metro : null);
   }
 
   /* THE STATE A LINK'S ADDRESS NAMES (ENGINE map-link addressStateTag), with
@@ -2205,7 +2437,8 @@ footer .support b { color: var(--ink); }
     return { tag: tag, metro: null };
   }
 
-  // A link handed to the app that covers its state, which searches it there
+  // A link or a typed address handed to the app that covers its state, which
+  // searches it there
   function handTo(metro, typed) {
     countLinkRead("to-" + metro.tag);
     setStatus("Opening " + metro.name + "\u2026", false);
@@ -2216,8 +2449,8 @@ footer .support b { color: var(--ink); }
    * text a map link carried, tried only when the whole text matches nothing
    * (ENGINE map-link addressAfterName): a place shared from the Google Maps
    * app is its name and its address in one string. Its answers count only
-   * if they carry its house number (labelCarriesNumber), as in the apps.
-   * When none does but one is on the address's street in its town
+   * if they are its house, its number on its street (labelAtHouse), as in
+   * the apps. When none is but one is on the address's street in its town
    * (labelOnStreet), the app covering that street is opened with what was
    * typed, and shows the street there for the reader to tap the place
    * (routeText).
@@ -2234,10 +2467,17 @@ footer .support b { color: var(--ink); }
    * reads a town typed with no comma, or not typed at all, from the
    * answer), or else the first answer any app covers, is opened with what
    * was typed, never with a point, and says there what its search knows.
+   * An answer with the number on another street is not the house either:
+   * until 2026-10-19 it opened its app with that house's point selected.
    *
    * `want` is the app a link's address names (namedState): only an answer
-   * there is routed, and when there is none the link is handed to it. */
-  function searchAndRoute(q, bare, mustCarry, typed, want, whole) {
+   * there is routed, and when there is none the link is handed to it.
+   * `home` is the app of the state a typed address names: when the search
+   * finds nothing any app covers, the address is handed to it, whose own
+   * search asks the Census Bureau's address records about it (ENGINE
+   * geocoder-search), where until 2026-10-19 this page said "No matches" or
+   * that the address was outside every place districtry covers. */
+  function searchAndRoute(q, bare, mustCarry, typed, want, whole, home) {
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -2250,17 +2490,18 @@ footer .support b { color: var(--ink); }
           street = feats.filter(function (f) {
             return whole ? !!addressInTownOf(mustCarry, photonParts(f)) : labelOnStreet(photonParts(f), mustCarry);
           });
-          feats = feats.filter(function (f) {
-            return labelCarriesNumber(f && f.properties && f.properties.housenumber, mustCarry);
-          });
+          feats = feats.filter(function (f) { return labelAtHouse(photonParts(f), mustCarry); });
         }
         if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed, want); return; }
         if (want && !feats.length) return handTo(want, typed);
         if (!feats.length && mustCarry && (street.length || loose.length)) {
           return routeText(street.length ? street : loose, typed).then(function (went) {
-            if (!went) { countLinkRead("uncovered"); resetButton(); setStatus("That address is outside every place districtry covers today \u2014 see what's covered below.", true); }
+            if (went) return;
+            if (home) return handTo(home, typed);
+            countLinkRead("uncovered"); resetButton(); setStatus("That address is outside every place districtry covers today \u2014 see what's covered below.", true);
           });
         }
+        if (home && !feats.length) return handTo(home, typed);
         return loadFleetOutlines().then(function (outlines) {
           if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
@@ -2298,13 +2539,12 @@ footer .support b { color: var(--ink); }
             p.district, p.city, p.state, p.postcode].filter(Boolean).join(", ");
   }
 
-  /* The street an address is on, or the answers to it, when none carries
-   * its house number: the app that covers the first of them any app covers
-   * is opened with what was typed, so it reads the link or the address
-   * again and shows the street there (ENGINE geocoder-search
-   * showStreetOnly), or lists the answers for the reader to pick from. It
-   * hands over the text and not a position, because a point on a street is
-   * not the place. */
+  /* The street an address is on, or the answers to it, when none is its
+   * house: the app that covers the first of them any app covers is opened
+   * with what was typed, so it reads the link or the address again and
+   * shows the street there (ENGINE geocoder-search showStreetOnly), or
+   * lists the answers for the reader to pick from. It hands over the text
+   * and not a position, because a point on a street is not the place. */
   function routeText(answers, typed) {
     return loadFleetOutlines().then(function (outlines) {
       for (var i = 0; i < answers.length; i++) {

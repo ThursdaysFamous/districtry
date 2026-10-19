@@ -17,7 +17,7 @@ import path from "node:path";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const src = readFileSync(path.join(root, "engine/shared/map-link.txt"), "utf8");
-const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, addressStreet, addressParts, labelOnStreet, addressInTownOf, addressStateTag, stateTagOfName, stateInSentence, mapLinkForText };")();
+const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, labelAtHouse, addressStreet, addressParts, labelOnStreet, addressInTownOf, addressForLookup, addressStateTag, stateTagOfName, stateInSentence, mapLinkForText };")();
 
 const near = (a, b) => Math.abs(a - b) < 1e-6;
 const cases = [
@@ -240,6 +240,51 @@ for (const [label, address, want] of carry) {
   }
 }
 
+// An answer is the house an address names when a part of its label opens
+// with the house number and goes on to name the address's street. On
+// 2026-10-19 the one answer the Illinois map's search gave for one of 49
+// Cook County addresses was that number on another street, which carries
+// the number and is not the house. The house numbers here are made up.
+const EUGENIE_9 = "9 W Eugenie St, Chicago, IL 60614";
+const house = [
+  ["9 West Eugenie Street, Lincoln Park, North Chicago Township, Illinois, 60614", EUGENIE_9, true],
+  ["9 W EUGENIE ST, CHICAGO, IL, 60614", EUGENIE_9, true],                         // as the Census Bureau writes it
+  ["Joe's, 9 West Eugenie Street, Chicago, Illinois, 60614", EUGENIE_9, true],     // a name before it
+  ["9 West North Avenue, Wicker Park, Chicago, Illinois, 60622", EUGENIE_9, false], // the number on another street
+  ["9 East Eugenie Street, Chicago, Illinois, 60614", EUGENIE_9, false],           // another direction
+  ["9 Eugenie Street, Chicago, Illinois, 60614", EUGENIE_9, true],                 // its direction left off
+  ["19 West Eugenie Street, Chicago, Illinois, 60614", EUGENIE_9, false],          // another number on it
+  ["West Eugenie Street, Chicago, Illinois, 60614", EUGENIE_9, false],             // the street alone
+  ["West Eugenie Street, 9, Chicago, Illinois", EUGENIE_9, false],                 // the number alone in a part
+  ["9 West Eugenie Street, Chicago, Illinois", "9 W Eugenie, Chicago", true],      // typed without its street type
+  ["9 West Eugenie Street, Chicago, Illinois", "9 W Eugenie St Chicago IL 60614", true], // its town typed with no comma
+  ["9 West Eugenie Street, Chicago, Illinois", "9 W Eugenie Chicago", false],      // neither its type nor a comma: listed, not taken
+  ["9 N LA SALLE ST, CHICAGO, IL, 60602", "9 N LaSalle St, Chicago, IL 60602", true], // the spaces in a name
+  ["9 Saint Louis Avenue, Chicago, Illinois", "9 S St Louis Ave, Chicago, IL", true],  // Saint and St
+  ["9 South Doctor Martin Luther King Junior Drive, Chicago, Illinois", "9 S Dr Martin Luther King Jr Dr, Chicago, IL", true],
+  ["9 South Doctor Martin Luther King Junior Drive, Chicago, Illinois", "9 S King Dr, Chicago, IL", false], // fewer of its words
+  ["9 Oak Park Avenue, Berwyn, Illinois", "9 Oak Ave, Berwyn, IL", false],         // Oak Avenue is not Oak Park Avenue
+  ["9 Oak Avenue, Berwyn, Illinois", "9 Oak Park Ave, Berwyn, IL", false],
+  ["9 O'Brien Lane, Peoria, Illinois", "9 OBrien Ln, Peoria, IL", true],            // the marks inside a name
+  ["9 Peña Boulevard, Denver, Colorado", "9 Pena Blvd, Denver, CO", true],      // and its accents
+  ["9 West Oakley Drive, Westmont, Illinois, 60559", "9 W Oakley Dr NW Westmont", true],
+  ["9 West Oakley Drive Southwest, Westmont, Illinois, 60559", "9 W Oakley Dr NW Westmont", false], // NW is not SW
+  ["9 West Oakley Drive Southwest, Westmont, Illinois, 60559", "9 W Oakley Dr NW, Westmont, IL 60559", false],
+  ["S5975 Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", true],
+  ["N5975 Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", false],
+  ["89-11 Merrick Boulevard, Queens, New York, NY, USA", "89-11 Merrick Blvd, Jamaica, NY 11432", true],
+  ["2668", "2668 E 875th Rd, Oglesby, IL 61348", false],                            // a number with no street
+  ["9 West Eugenie Street, Chicago, Illinois", "Starved Rock Lodge", false],       // no number to hold to
+  [undefined, EUGENIE_9, false],
+];
+for (const [label, address, want] of house) {
+  const got = api.labelAtHouse(label, address);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL labelAtHouse(" + JSON.stringify(label) + ", " + JSON.stringify(address) + ")\n  want " + want + "\n  got  " + got);
+  }
+}
+
 // An address's parts, for the street it is on: the number, the street (a
 // unit at its end left off), the town before the state and the ZIP code.
 const parts = [
@@ -306,6 +351,13 @@ const street = [
   ["West Oakley Drive Northwest, Westmont, Illinois, 60559", "Oakley Cake Shop", false],    // a name, no address
   ["Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", true],
   ["S5975 Park Road, Baraboo, Wisconsin", "S5975 Park Rd, Baraboo, WI 53913", true],       // its grid number left off
+  // the Census Bureau writes every street type as the Postal Service does,
+  // as in its answers of 2026-10-19 (the house numbers are made up)
+  ["9 ARROWHEAD TRCE, OAK FOREST, IL, 60452", "9 Arrowhead Trace, Oak Forest, IL", true],
+  ["Arrowhead Trace, Oak Forest, Illinois, 60452", "9 Arrowhead Trce, Oak Forest, IL 60452", true],
+  ["9 ARROWHEAD TRL, OAK FOREST, IL, 60452", "9 Arrowhead Trace, Oak Forest, IL", false],   // a trail is not a trace
+  ["Spring Crossing, Elgin, Illinois", "1 Spring Xing, Elgin, IL", true],
+  ["Parks Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", false],   // a plural is another name
 ];
 for (const [label, address, want] of street) {
   const got = api.labelOnStreet(label, address);
@@ -317,10 +369,12 @@ for (const [label, address, want] of street) {
 
 // An address typed with no town, or with a town and no comma before it, is
 // put in the town of an answer on its street, read from the answer's label,
-// the part before a state's name; an address that names a town keeps it.
+// the part before a state's name; an address that names a town keeps it,
+// and a ZIP code typed with it is kept too, for the Census Bureau's lookup.
 // The labels are in the shape the apps build from Photon (photonLabel).
 const WICKER = "West North Avenue, Wicker Park, Chicago, Illinois, 60622";
 const MELROSE = "West North Avenue, Melrose Park, Illinois, 60160";
+const EUGENIE = "West Eugenie Street, Lincoln Park, North Chicago Township, Illinois, 60614";
 const inTown = [
   ["1600 W North Ave", WICKER, "1600 W North Ave, Chicago, IL"],
   ["1600 W North Ave", MELROSE, "1600 W North Ave, Melrose Park, IL"],
@@ -329,7 +383,9 @@ const inTown = [
   ["1600 W North Ave chicago il", WICKER, "1600 W North Ave, Chicago, IL"],
   ["1600 W North Ave Chicago", MELROSE, null],                 // the town typed is another
   ["1600 W North Ave Melrose Park", WICKER, null],
-  ["1600 W North Ave, Chicago, IL 60622", WICKER, "1600 W North Ave, Chicago, IL"],
+  ["1600 W North Ave, Chicago, IL 60622", WICKER, "1600 W North Ave, Chicago, IL 60622"],
+  ["1600 W North Ave Chicago IL 60622", WICKER, "1600 W North Ave, Chicago, IL 60622"],   // a ZIP code with no comma
+  ["1600 W North Ave, Chicago, IL 60622-4321", WICKER, "1600 W North Ave, Chicago, IL 60622"],
   ["1600 W North Ave, Wicker Park", WICKER, "1600 W North Ave, Chicago, IL"],   // a neighbourhood the label names
   ["1600 W North Ave, Chicago", MELROSE, null],
   ["1600 W North Ave Apt 2", WICKER, "1600 W North Ave, Chicago, IL"],
@@ -340,7 +396,48 @@ const inTown = [
   ["1600 W North Ave", "1600 West North Avenue, Chicago, Illinois", "1600 W North Ave, Chicago, IL"],
   ["S5975 Park Rd", "Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI"],
   ["Starved Rock Lodge", WICKER, null],
+  // Photon names the Cook County township where Chicago's name would be
+  // (2026-10-19); an address that names no town takes it, as it did before,
+  // with the ZIP code typed, with which the Census Bureau's lookup found the
+  // Lincoln Park Zoo under the township's name. The house numbers here are
+  // made up.
+  ["9 W Eugenie St", EUGENIE, "9 W Eugenie St, North Chicago Township, IL"],
+  ["9 W Eugenie St, IL 60614", EUGENIE, "9 W Eugenie St, North Chicago Township, IL 60614"],
+  ["9 Kemman Ave, La Grange Park, IL 60526", "Kemman Avenue, La Grange Park, Illinois, 60526", "9 Kemman Ave, La Grange Park, IL 60526"],
 ];
+// An address that names a town the answer is in only by its ZIP code keeps
+// that town, so the Census Bureau's lookup is asked about the address as it
+// was typed, and its answer is then on the street of what it was asked about
+// (ENGINE geocoder-search lookupAddressRanges). Answers that name the city,
+// the township or a town that shares the ZIP code then give one address, not
+// two towns to pick from. These are left out of the check below, because the
+// label they are read from names neither the town nor a ZIP code it carries.
+const kept = [
+  ["9 W Eugenie St, Chicago, IL 60614", EUGENIE, "9 W Eugenie St, Chicago, IL 60614", "9 W EUGENIE ST, CHICAGO, IL, 60614"],
+  ["9 W Eugenie St, Chicago IL 60614", EUGENIE, "9 W Eugenie St, Chicago, IL 60614", "9 W EUGENIE ST, CHICAGO, IL, 60614"],
+  ["9 N Orchard St, Chicago, IL 60614", "North Orchard Street, Lincoln Park, North Chicago Township, Illinois, 60614",
+    "9 N Orchard St, Chicago, IL 60614", "9 N ORCHARD ST, CHICAGO, IL, 60614"],
+  ["9 Kemman Ave, La Grange Park, IL 60526", "North Kemman Avenue, La Grange, Illinois, 60526",
+    "9 Kemman Ave, La Grange Park, IL 60526", "9 KEMMAN AVE, LA GRANGE PARK, IL, 60526"],
+];
+for (const [address, label, want, census] of kept) {
+  const got = api.addressInTownOf(address, label);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL addressInTownOf(" + JSON.stringify(address) + ", " + JSON.stringify(label) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  } else if (!api.labelOnStreet(census, got) || !api.labelAtHouse(census, got)) {
+    failed++;
+    console.error("map-link: FAIL the Census answer " + JSON.stringify(census) + " is not at " + JSON.stringify(got));
+  }
+}
+// an answer naming the city and one naming its township give one address
+const ORCHARD = "9 N Orchard St, Chicago, IL 60614";
+const fromCity = api.addressInTownOf(ORCHARD, "North Orchard Street, Lincoln Park, Chicago, Illinois, 60614");
+const fromTownship = api.addressInTownOf(ORCHARD, "North Orchard Street, Lincoln Park, North Chicago Township, Illinois, 60614");
+if (!fromCity || fromCity !== fromTownship) {
+  failed++;
+  console.error("map-link: FAIL answers naming Chicago and its township put " + ORCHARD + " at " + JSON.stringify(fromCity) + " and " + JSON.stringify(fromTownship));
+}
 for (const [address, label, want] of inTown) {
   const got = api.addressInTownOf(address, label);
   if (got !== want) {
@@ -354,6 +451,41 @@ for (const [address, label, want] of inTown) {
   if (!api.addressParts(want) || !api.labelOnStreet(label, want)) {
     failed++;
     console.error("map-link: FAIL addressInTownOf(" + JSON.stringify(address) + ") gave " + JSON.stringify(want) + ", which labelOnStreet does not put on " + JSON.stringify(label));
+  }
+}
+// An address the map's search cannot place, nor find its street, is asked
+// about as the lookup is asked about every other (ENGINE geocoder-search
+// showStreetOnly): the number and the street, the town, the state and the
+// ZIP code, each after a comma, with the app's own state when the address
+// names none. The house numbers here are made up.
+const forLookup = [
+  ["9 W Oakley Dr NW, Westmont", "il", "9 W Oakley Dr NW, Westmont, IL"],
+  ["9 W Oakley Dr NW, Westmont, IL 60559", "il", "9 W Oakley Dr NW, Westmont, IL 60559"],
+  ["9 W Oakley Dr NW, Westmont IL 60559", "il", "9 W Oakley Dr NW, Westmont, IL 60559"],  // no comma after the town
+  ["9 W Oakley Dr NW, Westmont il", "il", "9 W Oakley Dr NW, Westmont, IL"],
+  ["9 W Oakley Dr NW, Westmont, il", "wi", "9 W Oakley Dr NW, Westmont, IL"],            // the reader's state, not the app's
+  ["9 W Oakley Dr NW, Westmont, Illinois 60559", "wi", "9 W Oakley Dr NW, Westmont, IL 60559"],
+  ["9 W Oakley Dr NW, Westmont 60559", "il", "9 W Oakley Dr NW, Westmont, IL 60559"],
+  ["9 W Oakley Dr NW, 60559", "il", "9 W Oakley Dr NW, IL 60559"],
+  ["9 W Oakley Dr NW, IL 60559", "wi", "9 W Oakley Dr NW, IL 60559"],
+  ["9 W Oakley Dr NW Apt 2, Westmont", "il", "9 W Oakley Dr NW, Westmont, IL"],          // a unit left off
+  ["9 S 4th St, Oregon", "il", "9 S 4th St, Oregon, IL"],                              // a town named for a state
+  ["9 S 4th St, Oregon, IL 61061", "il", "9 S 4th St, Oregon, IL 61061"],
+  ["9 Franklin St, Port Washington", "wi", "9 Franklin St, Port Washington, WI"],
+  ["9 Main St, IL", "il", null],                                                       // no town and no ZIP code
+  ["9 W Oakley Dr NW", "il", null],
+  ["Starved Rock Lodge, Oglesby", "il", null],
+  ["9 W Oakley Dr NW, Westmont", "", null],                                            // no state to write
+];
+for (const [address, tag, want] of forLookup) {
+  const got = api.addressForLookup(address, tag);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL addressForLookup(" + JSON.stringify(address) + ", " + JSON.stringify(tag) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  } else if (want && (!api.addressParts(want) || api.addressForLookup(want, "") !== want)) {
+    // what it writes is an address it reads back as itself
+    failed++;
+    console.error("map-link: FAIL addressForLookup(" + JSON.stringify(address) + ") gave " + JSON.stringify(want) + ", which it does not read back as itself");
   }
 }
 for (const [name, want] of [["Wisconsin", "wi"], ["  new   york ", "ny"], ["District of Columbia", "dc"], ["IL", ""], ["Chicago", ""]]) {
@@ -421,14 +553,15 @@ for (const [text, source] of rebuilt) {
   }
 }
 
-const total = cases.length + 2 + lookups.length + 2 + said.length + bare.length + carry.length + parts.length + street.length +
-  states.length + 3 + rebuilt.length * 2;
+const total = cases.length + 2 + lookups.length + 2 + said.length + bare.length + carry.length + house.length + parts.length + street.length +
+  kept.length + 1 + forLookup.length + states.length + 3 + rebuilt.length * 2;
 if (failed) { console.error("map-link: " + failed + " of " + total + " checks failed"); process.exit(1); }
 console.log("map-link: OK — " + cases.length + " pasted texts read as expected; a short link is sent only to the lookup; " +
   lookups.length + " lookup answers tried again or not as expected, a cancelled lookup stops, and " + said.length +
   " short-link messages say which side failed; " +
   bare.length + " place names split from their addresses as expected; " + carry.length +
-  " answers held to the address's house number as expected; " + parts.length + " addresses split into their parts, " +
+  " answers held to the address's house number and " + house.length + " to the house itself as expected; " + parts.length + " addresses split into their parts, " +
   streets.length + " into a number and a street, and " + street.length + " answers held to the address's street as expected; " +
-  inTown.length + " addresses put in an answer's town as expected; " + states.length +
+  inTown.length + " addresses put in an answer's town and " + kept.length + " kept in the town typed as expected; " +
+  forLookup.length + " written out for the Census lookup as expected; " + states.length +
   " addresses read for their state and " + rebuilt.length + " links rebuilt from their words as expected");
