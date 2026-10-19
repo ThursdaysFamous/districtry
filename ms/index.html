@@ -14935,8 +14935,11 @@ function initMississippiExplorer() {
    * address and the Capitol office from the member's own profile. The other
    * three seats (Senate 34, House 70 and 77) are cards reading "Vacant" in
    * the gallery, and ship as vacancy records the card prints with their
-   * source. The profiles also print a home address, a personal telephone and
-   * sometimes a personal e-mail address, and the builder never reads them.
+   * source. Since 2026-10-19 a member's own telephones, from the profile's
+   * "Phone(s)" block, ride the row as `phone` and `phonesExtra` with the
+   * page's own word for each ("home", "business", "cell"), under Adam's
+   * fleet ruling of 2026-10-17; a fax never does. The home address printed
+   * above them is never read.
    * ---------- */
   var loadMsSenateDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ms-senate-districts.json", {}, 2);

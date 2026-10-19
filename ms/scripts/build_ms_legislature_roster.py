@@ -10,7 +10,8 @@ and ms-house-members.json lazily on first click and join them to the pre-built
 legislative geometry by district number. This script reads the gallery each
 chamber's page on www.legislature.ms.gov embeds, and each member's profile, and
 writes the two rosters shaped for the registerIlgaChamber factory
-({district -> {name, party, email, capitolOffice, url}}, or a vacancy record). A
+({district -> {name, party, email, capitolOffice, phone?, phonesExtra?, url}}, or
+a vacancy record). A
 weekly GitHub Action (.github/workflows/update-ms-legislature-roster.yml) reruns
 this and opens a PR when a roster changes, so officeholder data gets a human look
 before it ships.
@@ -49,24 +50,58 @@ has a profile for.
 
 WHAT A PROFILE IS READ FOR, AND WHAT IT IS NEVER READ FOR. A profile prints the
 member's name, district, counties, party, a biography, the Capitol office, a
-"Home" address with "Phone(s)" — business, home and cell lines — and an e-mail
-address; several biographies also print a personal e-mail in their text. This
-script reads the heading block (name, district, party), the block headed
-"Capitol" and the block headed "Email", by their own headings, and nothing else:
-the Home block, the telephone block and the biography are never parsed, because
-a legislator's home is no part of answering who represents you. Inside what it
-does read it keeps only what is the legislature's: a Capitol telephone only on
-the Capitol's own (601) 359 exchange, and an e-mail address only as a plain
-address on the chamber's own domain (senate.ms.gov, house.ms.gov). Anything
-else in those two blocks is dropped and the run says so. THAT TEST IS ON THE
-WHOLE ADDRESS AND NOT ITS ENDING, and the measurement is why: the profile
-appends the chamber's domain to whatever the legislature stores, so on
-2026-10-15 nine House profiles printed "<name>@house.ms.gov@house.ms.gov", six
-printed "@house.ms.gov" with no mailbox in front of it, and one printed a
+"Home" address, a "Phone(s)" block and an e-mail address; three biographies also
+print a personal e-mail address in their text (2026-10-19). This script reads
+the heading block (name, district, party) and the blocks headed "Capitol",
+"Phone(s)" and "Email", each by its own heading, and nothing else: the Home
+block and the biography are never parsed, because a legislator's home address is
+no part of answering who represents you and this project never publishes one.
+Inside the Capitol block it keeps only what is the legislature's: a telephone
+only on the Capitol's own (601) 359 exchange. The Email block's address ships
+only as a plain address on the chamber's own domain (senate.ms.gov,
+house.ms.gov). Anything else in those two blocks is dropped and the run says so.
+THAT TEST IS ON THE WHOLE ADDRESS AND NOT ITS ENDING, and the measurement is why:
+the profile appends the chamber's domain to whatever the legislature stores, so
+on 2026-10-15 nine House profiles printed "<name>@house.ms.gov@house.ms.gov",
+six printed "@house.ms.gov" with no mailbox in front of it, and one printed a
 member's personal AOL address with "@house.ms.gov" stuck on the end — which an
-ends-with test would have published. chamber_email() takes one
-doubled copy of the domain off and refuses anything that is not then a plain
-chamber address.
+ends-with test would have published. chamber_email() takes one doubled copy of
+the domain off and refuses anything that is not then a plain chamber address.
+
+THE MEMBER'S OWN TELEPHONES SHIP SINCE 2026-10-19. Until then the Phone(s) block
+was not read either. On 2026-10-17 Adam ruled for the whole fleet, "if the
+official government source uses personal phone numbers, we publish those", and
+these profiles are the legislature's own pages printing each member's numbers.
+Each line of the block is a label and a tel: link, most with a letter in
+brackets after the number. Measured on 2026-10-19 across all 171 profiles, 96
+print the block, holding 132 lines in four shapes and no other: "Home:" with no
+letter (44), "Business:" with (W) (54), "Other:" with (C) (29) and "Other:" with
+(F) (5). The first three ship as "home", "business" and "cell" in front of the
+number as the page prints it ("cell (601) 555-0100"); the first number is the
+member's `phone` and the rest are `phonesExtra`, in page order. A line marked
+(F) is a fax and never ships, and a line in any other shape is not read and the
+run names its label. A number is also not carried on a member's row when its
+tel: link dials digits other than the ones it prints (none that day), when it is
+on the Capitol's (601) 359 exchange or equal to a number in the member's Capitol
+block, which the Capitol office already shows (none), when it is a second copy
+of a number earlier in the same block (three representatives, each carried once
+with its first label; a senator's business line printed again as the fax line
+ships once, as business), or when the profiles print it for two or more members,
+because a number two legislators share is an office's (none). That day 124
+numbers shipped on 96 members, 20 senators and 76 representatives, and the
+floors in CHAMBERS are about two thirds of those two counts.
+
+THE E-MAIL RULE DID NOT CHANGE WITH THE RULING ON PERSONAL ADDRESSES, AND THAT
+WAS CHECKED RATHER THAN ASSUMED. Adam chose on 2026-10-17 to publish a personal
+e-mail address a government page prints beside an official. On 2026-10-19 the
+three biographies that print one belong to members whose Email block prints
+their chamber address, and a card carries one address per person, the chamber's.
+The one profile whose Email block holds a personal address prints it with
+"@house.ms.gov" appended, which is not an address anyone can write to. Taking
+the suffix off would publish an address at another provider that the page never
+prints whole, so it stays dropped and the run says so; removing a doubled copy
+of the chamber's own domain is different, because what is left is the chamber
+mailbox the legislature itself runs.
 
 THE CERTIFICATE CHAIN IS INCOMPLETE. www.legislature.ms.gov serves only its leaf
 certificate (issued by GlobalSign RSA OV SSL CA 2018, measured 2026-10-15), so
@@ -124,14 +159,15 @@ RETRY_SECONDS = 5.0
 
 # Floors catch a truncated gallery or a layout change while tolerating real
 # vacancies: 51 of 52 senators and 120 of 122 representatives were named on
-# 2026-10-15.
+# 2026-10-15. "phones" floors the members carrying a telephone of their own: 20
+# senators and 76 representatives on 2026-10-19.
 CHAMBERS = {
     "S": {"page": BASE + "/legislators/senators/", "out": "ms-senate-members.json",
           "label": "Senate", "profile": "SENATE PROFILE", "domain": "senate.ms.gov",
-          "expected": 47, "seats": 52},
+          "expected": 47, "seats": 52, "phones": 13},
     "H": {"page": BASE + "/legislators/representatives/", "out": "ms-house-members.json",
           "label": "House", "profile": "HOUSE OF REPRESENTATIVES PROFILE",
-          "domain": "house.ms.gov", "expected": 110, "seats": 122},
+          "domain": "house.ms.gov", "expected": 110, "seats": 122, "phones": 50},
 }
 # Every named member carried a chamber e-mail and a Capitol block on
 # 2026-10-15. A field every row carries going missing is the Brown County
@@ -162,6 +198,22 @@ CAPITOL_RE = re.compile(r'<h6 class="fw-bold">Capitol</h6>\s*<p>(.*?)</p>', re.S
 EMAIL_RE = re.compile(r'<h6 class="fw-bold">Email</h6>\s*<p>\s*<a href="mailto:([^"]+)"')
 CAPITOL_PHONE_RE = re.compile(r'^\(601\) 359-\d{4}$')
 CAPITOL_CITY_RE = re.compile(r'^Jackson, MS 392\d\d(?:-\d{4})?$')
+# A Capitol-block line that holds a telephone: a number, and no five-digit ZIP.
+PHONE_IN_LINE_RE = re.compile(r"\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}")
+ZIP_IN_LINE_RE = re.compile(r"\d{5}")
+
+# The "Phone(s)" block: one line per number, each a <label> and a tel: link,
+# most with a letter in brackets after the number.
+PHONES_RE = re.compile(r'<h6 class="fw-bold">Phone\(s\)</h6>\s*<p>(.*?)</p>', re.S)
+PHONE_LABEL_RE = re.compile(r'<label>\s*([^<]*?)\s*</label>')
+PHONE_LETTER_RE = re.compile(r'<span>\s*([^<]*?)\s*</span>')
+PHONE_TEL_RE = re.compile(r'href="tel:([^"]*)"')
+PHONE_SHOWN_RE = re.compile(r'^\(\d{3}\) \d{3}-\d{4}$')
+# Every Phone(s) line on 2026-10-19 took one of these four shapes, by (label,
+# letter), and each ships with the word it maps to. None is a fax line, which
+# never ships. A line in any other shape is not read and the run names it.
+PHONE_KINDS = {("Home:", None): "home", ("Business:", "(W)"): "business",
+               ("Other:", "(C)"): "cell", ("Other:", "(F)"): None}
 
 _SESSION = None
 _LAST = [0.0]
@@ -361,7 +413,7 @@ def keep_capitol(lines, notes, where):
         return None
     kept = []
     for line in lines:
-        if re.search(r"\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}", line) and not re.search(r"\d{5}", line):
+        if PHONE_IN_LINE_RE.search(line) and not ZIP_IN_LINE_RE.search(line):
             if CAPITOL_PHONE_RE.match(line):
                 kept.append(line)
             else:
@@ -374,6 +426,77 @@ def keep_capitol(lines, notes, where):
                      % where)
         return None
     return kept
+
+
+def digits(text):
+    return re.sub(r"\D", "", text or "")
+
+
+def phone_lines(page, where, notes):
+    """[(kind, number)] from the profile's "Phone(s)" block, in page order.
+
+    Reads that block alone, never the Home block printed above it; see the
+    module docstring. A fax line, a line in a shape PHONE_KINDS does not name,
+    and a line whose tel: link dials digits other than the ones it prints are
+    not carried, and the run says so without printing the number."""
+    block = PHONES_RE.search(page)
+    if not block:
+        return []
+    out = []
+    for line in re.split(r"<br\s*/?>", block.group(1)):
+        if not re.sub(r"<[^>]+>|\s", "", line):
+            continue
+        label = PHONE_LABEL_RE.search(line)
+        letter = PHONE_LETTER_RE.search(line)
+        shape = (label.group(1) if label else None, letter.group(1) if letter else None)
+        if shape not in PHONE_KINDS:
+            notes.append("%s: a Phone(s) line labelled %r with the letter %r was not "
+                         "read" % (where, shape[0], shape[1]))
+            continue
+        kind = PHONE_KINDS[shape]
+        if kind is None:
+            notes.append("%s: a fax line was not carried" % where)
+            continue
+        shown = clean(re.sub(r"<[^>]+>", " ", re.sub(
+            r"<label>.*?</label>|<span>.*?</span>", " ", line, flags=re.S)))
+        tel = PHONE_TEL_RE.search(line)
+        dialled = digits(tel.group(1)) if tel else ""
+        if len(dialled) == 11 and dialled.startswith("1"):
+            dialled = dialled[1:]
+        if not PHONE_SHOWN_RE.match(shown):
+            notes.append("%s: a %s line does not print one ten-digit number, so it "
+                         "was not carried" % (where, kind))
+            continue
+        if dialled != digits(shown):
+            notes.append("%s: a %s line's link dials a different number from the one "
+                         "it prints, so it was not carried" % (where, kind))
+            continue
+        out.append((kind, shown))
+    return out
+
+
+def own_phones(page, capitol, where, notes):
+    """The member's own numbers as [(kind, number)], once each.
+
+    A number on the Capitol's (601) 359 exchange, or equal to a number in the
+    member's own Capitol block, is the Capitol office's, which the card already
+    shows. A number the block prints twice rides once, with its first label."""
+    office = {digits(line)[-10:] for line in (capitol or [])
+              if PHONE_IN_LINE_RE.search(line) and not ZIP_IN_LINE_RE.search(line)}
+    out, seen = [], set()
+    for kind, number in phone_lines(page, where, notes):
+        d = digits(number)
+        if d.startswith("601359") or d in office:
+            notes.append("%s: a Phone(s) number is the Capitol office's, so it rides "
+                         "the office and not the member" % where)
+            continue
+        if d in seen:
+            notes.append("%s: a number the Phone(s) block prints twice is carried "
+                         "once, with its first label" % where)
+            continue
+        seen.add(d)
+        out.append((kind, number))
+    return out
 
 
 def read_previous(out_dir, cfg):
@@ -460,6 +583,9 @@ def build(pages, out_dir, today):
             office = keep_capitol(capitol, notes, where)
             if office:
                 member["capitolOffice"] = office
+            # Settled below, once both chambers are read, because a number
+            # two members share is an office's.
+            member["_phones"] = own_phones(bio, capitol, where, notes)
             member["url"] = member_url(src, card["key"], card["district_raw"])
             if card["role"] and not card["role"].startswith("District"):
                 notes.append("%s: %s is carded as %s" % (where, card["name"], card["role"]))
@@ -482,6 +608,38 @@ def build(pages, out_dir, today):
                                  "profiles carried on every member stopped arriving"
                                  % (have, len(named), cfg["label"], field))
         built[chamber] = (roster, fiscal_year, notes)
+
+    # A number the profiles print for two or more members, in either chamber,
+    # is an office's and ships on no member's row.
+    holders = {}
+    for chamber, (roster, _, _) in built.items():
+        for district, member in roster.items():
+            for _, number in member.get("_phones", ()):
+                holders.setdefault(digits(number), []).append(
+                    "%s %s" % (CHAMBERS[chamber]["label"], district))
+    shared = {d for d, who in holders.items() if len(who) > 1}
+    for who in sorted(" and ".join(w) for w in holders.values() if len(w) > 1):
+        print("NOTE: a Phone(s) number is printed for %s, so it is an office's and "
+              "ships on no member's row" % who, file=sys.stderr)
+    for chamber, (roster, _, _) in built.items():
+        cfg = CHAMBERS[chamber]
+        for member in roster.values():
+            if "_phones" not in member:
+                continue
+            numbers = ["%s %s" % (kind, number) for kind, number in member.pop("_phones")
+                       if digits(number) not in shared]
+            if numbers:
+                url = member.pop("url")
+                member["phone"] = numbers[0]
+                if len(numbers) > 1:
+                    member["phonesExtra"] = numbers[1:]
+                member["url"] = url
+        have = sum(1 for m in roster.values() if m.get("phone"))
+        if have < cfg["phones"]:
+            raise SystemExit("FAIL: only %d %s members carry a telephone of their own "
+                             "(expected >= %d) — the profiles stopped printing the "
+                             "Phone(s) block, or its layout changed"
+                             % (have, cfg["label"], cfg["phones"]))
     if odd_parties:
         print("NOTE: no party word on the profile for %s" % "; ".join(odd_parties),
               file=sys.stderr)
@@ -531,10 +689,14 @@ def main():
             fh.write("\n")
         named = [m for m in roster.values() if m.get("name")]
         print("Wrote %s (fiscal-year %s gallery; %d of %d seats named, %d with an "
-              "e-mail, %d with a Capitol office)"
+              "e-mail, %d with a Capitol office, %d with a telephone of their own, "
+              "%d numbers in all)"
               % (out_path, fiscal_year, len(named), cfg["seats"],
                  sum(1 for m in named if m.get("email")),
-                 sum(1 for m in named if m.get("capitolOffice"))), file=sys.stderr)
+                 sum(1 for m in named if m.get("capitolOffice")),
+                 sum(1 for m in named if m.get("phone")),
+                 sum(1 + len(m.get("phonesExtra", ())) for m in named if m.get("phone"))),
+              file=sys.stderr)
         for note in notes:
             print("  " + note, file=sys.stderr)
 

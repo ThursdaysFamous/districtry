@@ -1149,7 +1149,7 @@ table.matrix code {
         </li>
         <li>
           <a href="https://www.legislature.ms.gov/" target="_blank" rel="noopener">Mississippi Legislature</a>
-          <span class="credit-note">Mississippi Senate and Mississippi House members, their parties and Capitol e-mail addresses, and which seats are vacant.</span>
+          <span class="credit-note">Mississippi Senate and Mississippi House members, their parties, Capitol e-mail addresses and own telephone numbers, and which seats are vacant.</span>
         </li>
         <li>
           <a href="https://www.sos.ms.gov/publications-external-affairs/publications/state-county-directory" target="_blank" rel="noopener">Mississippi Secretary of State</a>
@@ -1248,7 +1248,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 52 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved nine Senate districts (1, 2, 11, 19, 34, 41, 42, 44 and 45) for the special elections of 4 November 2025. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address and the Senate's Capitol office). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, a personal telephone and sometimes a personal e-mail address, and the builder never reads them.</td>
+                <td data-label="Who it names">ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address, the Senate's Capitol office and, since 2026-10-19, the member's own home, business and cell telephones, each with the word the profile prints for it). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, which the builder never reads, and sometimes a fax line, which never ships.</td>
                 <td data-label="Where it applies">Mississippi — statewide, all 52 districts.</td>
               </tr>
               <tr id="layer-ms-house">
@@ -1573,7 +1573,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-ms-senate",
       "identifier": "ms-senate",
       "name": "Mississippi Senate District",
-      "description": "The Mississippi Senate district covering the point, and the senator holding it. ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address and the Senate's Capitol office). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, a personal telephone and sometimes a personal e-mail address, and the builder never reads them.",
+      "description": "The Mississippi Senate district covering the point, and the senator holding it. ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address, the Senate's Capitol office and, since 2026-10-19, the member's own home, business and cell telephones, each with the word the profile prints for it). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, which the builder never reads, and sometimes a fax line, which never ships.",
       "url": "https://districtry.com/ms/sources.html#layer-ms-senate",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"
