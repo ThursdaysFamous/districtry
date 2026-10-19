@@ -99,7 +99,7 @@ python3 scripts/build_il_gis_board_rosters.py --check     # the seven Illinois b
 python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fleet it describes; its page set comes from sitemap.xml, so it cannot name a page that is not there
 python3 scripts/build_endpoint_inventory.py --check       # docs/ENDPOINT_INVENTORY.md vs the tree: runtime hosts, dataset counts, point transmission; also fails once the repo starts recording a term it calls unrecorded
 python3 scripts/build_sitemap.py --check                 # sitemap.xml PARSES as XML, and every page's lastmod matches its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters). A parse FAIL means no crawler can read any of it — that is what a double hyphen in its header comment did on 2026-09-12.
-python3 scripts/build_redirect_stubs.py --check           # the 8 root shells + 404.html vs their targets
+python3 scripts/build_redirect_stubs.py --check           # the 8 root shells, the /android short address and 404.html vs their sources
 python3 scripts/build_question_forms.py --check          # every question page's address box vs that page's own .cta
 python3 scripts/build_district_search.py --check         # the "33rd ward" index: every district present, its point inside it, live sources unchanged
 python3 scripts/build_legislator_pages.py --check         # the 12 state-legislature and congress pages vs their rosters and worksheets

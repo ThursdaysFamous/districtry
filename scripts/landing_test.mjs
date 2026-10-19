@@ -560,9 +560,10 @@ try {
 
   // ...a link from the Google Maps app carries no position, only the place's
   // name and address in one string. When that matches nothing, the address
-  // alone is asked, and an answer counts only if it carries the address's
-  // house number (ENGINE map-link labelCarriesNumber): a street that merely
-  // partly matches must route nowhere. The address's own street in its own
+  // alone is asked, and an answer counts only if it is the address's house,
+  // its number on its street (ENGINE map-link labelAtHouse; until
+  // 2026-10-19 the number anywhere in the label, labelCarriesNumber): a
+  // street that merely partly matches must route nowhere. The address's own street in its own
   // town, without the number (labelOnStreet), opens the app that covers it
   // with what was typed, so that app shows the street (showStreetOnly).
   // Typed text gets no such retry.
@@ -654,15 +655,21 @@ try {
   // without the number is a street, and its point a spot somewhere along it,
   // so the app covering the address's street (addressInTownOf), or else the
   // first covered answer, is opened with what was typed and never with a
-  // point. An answer carrying the number still opens its point. The number
-  // and the street's spot are made up.
+  // point. An answer that is the house (labelAtHouse) still opens its point,
+  // and since 2026-10-19 an answer with the number on another street does
+  // not. An address that names a state whose app covers the whole state is
+  // handed to that app when no answer is in a place districtry covers, so
+  // that its search asks the Census Bureau's address records. The number and
+  // the street's spot are made up.
   {
     const TYPED = "9 W Oakley Dr NW, Westmont, IL";
+    const NO_STATE = "9 W Oakley Dr NW, Westmont";
     const NO_TOWN = "9 W Oakley Dr NW";
     const at = (props) => ({ ...photonFeature(41.82196, -87.97949), properties: props });
     const ON = at({ name: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois", postcode: "60559" });
     const OTHER = at({ name: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
     const HOUSE = at({ housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois" });
+    const OTHER_HOUSE = at({ housenumber: "9", street: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
     const TEXAS = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "Dallas", state: "Texas" } };
     for (const c of [
       { name: "its street without the number opens /il/ with the address, not a point", text: TYPED, answer: [ON],
@@ -671,10 +678,18 @@ try {
         want: "/il/", hash: "#q=" + encodeURIComponent(NO_TOWN) },
       { name: "an answer on another street, without the number, opens /il/ with the address, not that street's point",
         text: TYPED, answer: [OTHER], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
-      { name: "an answer carrying the number opens its point, as before", text: TYPED, answer: [ON, HOUSE],
+      { name: "an answer that is the house opens its point, as before", text: TYPED, answer: [ON, HOUSE],
         want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
-      { name: "answers no app covers are said to be outside", text: TYPED, answer: [TEXAS],
-        want: "/", msg: /outside every place districtry covers/ },
+      { name: "its number on another street opens /il/ with the address, not that house's point", text: TYPED,
+        answer: [OTHER_HOUSE], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "answers no app covers, to an address that names no state, are said to be outside", text: NO_STATE,
+        answer: [TEXAS], want: "/", msg: /outside every place districtry covers/ },
+      { name: "answers no app covers, to an address in Illinois, open /il/ with the address", text: TYPED,
+        answer: [TEXAS], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "no answer at all, to an address in Illinois, opens /il/ with the address", text: TYPED,
+        answer: [], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "no answer at all, to an address that names no state, is said to match nothing", text: NO_STATE,
+        answer: [], want: "/", msg: /^No matches/ },
     ]) {
       const ctx = await browser.newContext({ serviceWorkers: "block" });
       const page = await ctx.newPage();

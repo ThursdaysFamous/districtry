@@ -227,9 +227,15 @@ LINK_LOOKUP_ROW = (
 # map's own search often holds the street and not the house number on it. An
 # app then asks the same lookup, at `?a=`, for the Census Bureau's estimate of
 # where the number falls on the street (engine geocoder-search
-# lookupAddressRanges), and shows it as a pin to tap. The same day it was
-# extended, on Adam's choice, to an address a reader types and sends, because
-# that search has the same gap; an address being typed is never sent. That
+# lookupAddressRanges), and shows it as a pin, whose point it has selected
+# since 2026-10-18. The same day it was extended, on Adam's choice, to an
+# address a reader types and sends, because that search has the same gap; an
+# address being typed is never sent. From 2026-10-19 (Adam's "Use Census") it
+# is also asked about an address whose street the map's search does not know
+# in its town either, with the app's own state added when the address names
+# none (engine map-link addressForLookup), and an address whose street it
+# knows is asked about with the ZIP code the street's answers carry when they
+# carry one and the address none (engine geocoder-search showStreetOnly). That
 # sends the address to Deno and from Deno to the Census Bureau, which sees
 # Deno's address and not the reader's. MEASURED from the call itself, so the
 # row names exactly the surfaces that make it: the front door reads the same
@@ -239,14 +245,16 @@ HOUSE_LOOKUP_CALL = re.compile(r'MAP_LINK_LOOKUP\s*\+\s*"\?a="')
 HOUSE_LOOKUP_ROW = (
     "U.S. Census Bureau", "house-number lookup",
     "https://www.census.gov/about/policies/privacy.html",
-    "Only when the map&#39;s own address search knows the street of an address you search "
-    "for but not the house number on it, whether you typed the address and sent the search "
-    "(with Search or Enter, or by picking that street from the list) or a map link you paste "
-    "or share carries it: the address, sent through districtry&#39;s lookup on Deno Deploy, "
-    "which asks the Census Bureau&#39;s geocoder where that number falls on the street and "
-    "sends its estimate back. The Census Bureau receives the address and the lookup&#39;s IP "
-    "address, not yours. Nothing is sent this way while you are still typing.",
-    "Only when you search for an address whose house number is not in the map's search.",
+    "Only when the map&#39;s own address search can&#39;t find the house at an address you "
+    "search for, because it knows the street but not the house number on it, or doesn&#39;t "
+    "know the street in that town at all, and you typed the address and sent the search "
+    "(with Search or Enter, or by picking its street from the list) or a map link you paste "
+    "or share carries it: the address, with its state and its street&#39;s ZIP code filled in "
+    "when you left them out, sent through districtry&#39;s lookup on Deno Deploy, which asks "
+    "the Census Bureau&#39;s geocoder where that number falls on the street and sends its "
+    "estimate back. The Census Bureau receives the address and the lookup&#39;s IP address, "
+    "not yours. Nothing is sent this way while you are still typing.",
+    "Only when the map's search can't find the house at an address you search for.",
     "house_lookup")
 
 
@@ -1094,12 +1102,12 @@ def render_recipient_rows(apps):
         if key == "link_lookup" and housed:
             where = ("every app" if set(housed) == set(mapped) else
                      ", ".join(housed[:-1]) + " and " + housed[-1] if len(housed) > 1 else housed[0])
-            what += (" In %s, when the map&#39;s own search knows the street of an address "
-                     "you search for, or of one a map link names, but not the house number on "
-                     "it, the lookup also receives <strong>that address</strong> and asks the "
-                     "U.S. Census Bureau where the number falls (the next row)." % esc(where))
-            when = ("Only when you paste or share a short map link, or, in %s, search for an "
-                    "address whose house number the map's search does not know." % where)
+            what += (" In %s, when the map&#39;s own search can&#39;t find the house at an "
+                     "address you search for, or at one a map link names, the lookup also "
+                     "receives <strong>that address</strong> and asks the U.S. Census Bureau "
+                     "where the number falls (the next row)." % esc(where))
+            when = ("Only when you paste or share a short map link, or, in %s, when the map's "
+                    "search can't find the house at an address you search for." % where)
         if label == "GitHub Pages" and tiled:
             where = ("every app" if set(tiled) == set(mapped) else
                      ", ".join(tiled[:-1]) + " and " + tiled[-1] if len(tiled) > 1 else tiled[0])
@@ -1776,9 +1784,9 @@ PRIVACY_BODY = """
         request. The launcher hands it to the map after the <span class="k">#</span>, and the map
         reads it as it would a link pasted into its search box: a link that carries its position
         is read on your phone, a short link goes to the short-link lookup in the table above, and
-        a place name or an address goes to the address search. When that search knows the
-        address's street and not its house number, the address also goes through the lookup to
-        the Census Bureau, which the table above names too. The launcher keeps that copy from
+        a place name or an address goes to the address search. When that search can't find the
+        house at the address, the address also goes through the lookup to the Census Bureau,
+        which the table above names too. The launcher keeps that copy from
         the first time the installed app opens, or from the moment you install districtry from a
         state's map. A share sent before then reaches this site's host, GitHub Pages, in the
         address of that request.</p>
