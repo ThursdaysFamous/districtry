@@ -68,27 +68,27 @@ member's personal AOL address with "@house.ms.gov" stuck on the end — which an
 ends-with test would have published. chamber_email() takes one doubled copy of
 the domain off and refuses anything that is not then a plain chamber address.
 
-THE MEMBER'S OWN TELEPHONES SHIP SINCE 2026-10-19. Until then the Phone(s)
-block was not read either. On 2026-10-17 Adam ruled for the whole fleet, "if
-the official government source uses personal phone numbers, we publish those",
-and these profiles are the legislature's own pages printing each member's
-numbers. Each line of the block is a label, a tel: link and, after the number,
-a letter in brackets. Measured on 2026-10-19 across all 171 profiles, 96 print
-the block, holding 132 lines in four shapes and no other: "Home:" with no letter
-(44), "Business:" with (W) (54), "Other:" with (C) (29) and "Other:" with (F)
-(5). The first three ship as "home", "business" and "cell" in front of the
+THE MEMBER'S OWN TELEPHONES SHIP SINCE 2026-10-19. Until then the Phone(s) block
+was not read either. On 2026-10-17 Adam ruled for the whole fleet, "if the
+official government source uses personal phone numbers, we publish those", and
+these profiles are the legislature's own pages printing each member's numbers.
+Each line of the block is a label and a tel: link, most with a letter in
+brackets after the number. Measured on 2026-10-19 across all 171 profiles, 96
+print the block, holding 132 lines in four shapes and no other: "Home:" with no
+letter (44), "Business:" with (W) (54), "Other:" with (C) (29) and "Other:" with
+(F) (5). The first three ship as "home", "business" and "cell" in front of the
 number as the page prints it ("cell (601) 555-0100"); the first number is the
-member's `phone` and the rest are `phonesExtra`, in page order. A line marked (F)
-is a fax and never ships, and a line in any other shape is not read and the run
-names its label. A number is also not carried on a member's row when its tel:
-link dials digits other than the ones it prints (none that day), when it is on
-the Capitol's (601) 359 exchange or equal to a number in the member's Capitol
+member's `phone` and the rest are `phonesExtra`, in page order. A line marked
+(F) is a fax and never ships, and a line in any other shape is not read and the
+run names its label. A number is also not carried on a member's row when its
+tel: link dials digits other than the ones it prints (none that day), when it is
+on the Capitol's (601) 359 exchange or equal to a number in the member's Capitol
 block, which the Capitol office already shows (none), when it is a second copy
 of a number earlier in the same block (three representatives, each carried once
 with its first label; a senator's business line printed again as the fax line
-ships once, as business), or when the profiles print it for two or more
-members, because a number two legislators share is an office's (none). That day
-124 numbers shipped on 96 members, 20 senators and 76 representatives, and the
+ships once, as business), or when the profiles print it for two or more members,
+because a number two legislators share is an office's (none). That day 124
+numbers shipped on 96 members, 20 senators and 76 representatives, and the
 floors in CHAMBERS are about two thirds of those two counts.
 
 THE E-MAIL RULE DID NOT CHANGE WITH THE RULING ON PERSONAL ADDRESSES, AND THAT
@@ -202,8 +202,8 @@ CAPITOL_CITY_RE = re.compile(r'^Jackson, MS 392\d\d(?:-\d{4})?$')
 PHONE_IN_LINE_RE = re.compile(r"\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}")
 ZIP_IN_LINE_RE = re.compile(r"\d{5}")
 
-# The "Phone(s)" block: one line per number, each a <label>, a tel: link and,
-# after the number, a letter in brackets.
+# The "Phone(s)" block: one line per number, each a <label> and a tel: link,
+# most with a letter in brackets after the number.
 PHONES_RE = re.compile(r'<h6 class="fw-bold">Phone\(s\)</h6>\s*<p>(.*?)</p>', re.S)
 PHONE_LABEL_RE = re.compile(r'<label>\s*([^<]*?)\s*</label>')
 PHONE_LETTER_RE = re.compile(r'<span>\s*([^<]*?)\s*</span>')
