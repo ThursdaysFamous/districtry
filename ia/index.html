@@ -8211,6 +8211,48 @@ function initIowaExplorer() {
     expressway: "Expy", freeway: "Fwy", highway: "Hwy", lane: "Ln", parkway: "Pkwy",
     place: "Pl", road: "Rd", square: "Sq", street: "St", terrace: "Ter", trail: "Trl"
   };
+  // The rest of the Postal Service's street types (Publication 28, appendix
+  // C1, read 2026-10-19), for matching names only (streetNameKey): the
+  // boundary-street labels print these words as CARTO does. The Census
+  // Bureau's geocoder writes every street type this way and OpenStreetMap,
+  // which Photon reads, writes it out, so until that day an answer on
+  // "ARROWHEAD TRCE" was not on Arrowhead Trace. A plural the Postal
+  // Service abbreviates as its singular (Parks, Parkways, Spurs, Walks) is
+  // left out, because every word of a name is matched in its abbreviation
+  // and Parks Road is not Park Road.
+  var STREET_SUFFIXES = {
+    alley: "ALY", anex: "ANX", annex: "ANX", arcade: "ARC", bayou: "BYU", beach: "BCH",
+    bend: "BND", bluff: "BLF", bluffs: "BLFS", bottom: "BTM", branch: "BR", bridge: "BRG",
+    brook: "BRK", brooks: "BRKS", burg: "BG", burgs: "BGS", bypass: "BYP", camp: "CP",
+    canyon: "CYN", cape: "CPE", causeway: "CSWY", center: "CTR", centers: "CTRS",
+    circles: "CIRS", cliff: "CLF", cliffs: "CLFS", club: "CLB", common: "CMN",
+    commons: "CMNS", corner: "COR", corners: "CORS", course: "CRSE", courts: "CTS",
+    cove: "CV", coves: "CVS", creek: "CRK", crescent: "CRES", crest: "CRST",
+    crossing: "XING", crossroad: "XRD", crossroads: "XRDS", curve: "CURV", dale: "DL",
+    dam: "DM", divide: "DV", drives: "DRS", estate: "EST", estates: "ESTS",
+    extension: "EXT", extensions: "EXTS", falls: "FLS", ferry: "FRY", field: "FLD",
+    fields: "FLDS", flat: "FLT", flats: "FLTS", ford: "FRD", fords: "FRDS", forest: "FRST",
+    forge: "FRG", forges: "FRGS", fork: "FRK", forks: "FRKS", fort: "FT", garden: "GDN",
+    gardens: "GDNS", gateway: "GTWY", glen: "GLN", glens: "GLNS", green: "GRN",
+    greens: "GRNS", grove: "GRV", groves: "GRVS", harbor: "HBR", harbors: "HBRS",
+    haven: "HVN", heights: "HTS", hill: "HL", hills: "HLS", hollow: "HOLW", inlet: "INLT",
+    island: "IS", islands: "ISS", junction: "JCT", junctions: "JCTS", key: "KY",
+    keys: "KYS", knoll: "KNL", knolls: "KNLS", lake: "LK", lakes: "LKS", landing: "LNDG",
+    light: "LGT", lights: "LGTS", loaf: "LF", lock: "LCK", locks: "LCKS", lodge: "LDG",
+    manor: "MNR", manors: "MNRS", meadow: "MDW", meadows: "MDWS", mill: "ML", mills: "MLS",
+    mission: "MSN", motorway: "MTWY", mount: "MT", mountain: "MTN", mountains: "MTNS",
+    neck: "NCK", orchard: "ORCH", overpass: "OPAS", passage: "PSGE", pine: "PNE",
+    pines: "PNES", plain: "PLN", plains: "PLNS", plaza: "PLZ", point: "PT", points: "PTS",
+    port: "PRT", ports: "PRTS", prairie: "PR", radial: "RADL", ranch: "RNCH", rapid: "RPD",
+    rapids: "RPDS", rest: "RST", ridge: "RDG", ridges: "RDGS", river: "RIV", roads: "RDS",
+    route: "RTE", shoal: "SHL", shoals: "SHLS", shore: "SHR", shores: "SHRS",
+    skyway: "SKWY", spring: "SPG", springs: "SPGS", squares: "SQS", station: "STA",
+    stravenue: "STRA", stream: "STRM", streets: "STS", summit: "SMT", throughway: "TRWY",
+    trace: "TRCE", track: "TRAK", trafficway: "TRFY", trailer: "TRLR", tunnel: "TUNL",
+    turnpike: "TPKE", underpass: "UPAS", union: "UN", unions: "UNS", valley: "VLY",
+    valleys: "VLYS", viaduct: "VIA", view: "VW", views: "VWS", village: "VLG",
+    villages: "VLGS", ville: "VL", vista: "VIS", well: "WL", wells: "WLS"
+  };
   function abbreviateStreetName(name) {
     var words = String(name || "").split(/\s+/).filter(Boolean);
     if (words.length < 2) return words.join(" ");
@@ -8277,16 +8319,17 @@ function initIowaExplorer() {
     return { number: a.number, street: a.street, town: town, zip: zip };
   }
   // A street's name as a matching key: every word in its abbreviation, so
-  // "Drive" and "Dr" agree wherever they stand, then a leading and a
-  // trailing direction set apart when a name is left beside it, so "W North
-  // Ave" keeps North (a street named North) and loses W.
+  // "Drive" and "Dr", or "Trace" and "TRCE" (STREET_SUFFIXES), agree
+  // wherever they stand, then a leading and a trailing direction set apart
+  // when a name is left beside it, so "W North Ave" keeps North (a street
+  // named North) and loses W.
   function streetNameKey(name) {
     var dirs = {}, types = {}, k;
     for (k in STREET_DIRECTIONS) dirs[STREET_DIRECTIONS[k].toUpperCase()] = true;
     for (k in STREET_TYPES) types[STREET_TYPES[k].toUpperCase()] = true;
     var words = String(name || "").replace(/\./g, "").split(/\s+/).filter(Boolean).map(function (w) {
       var low = w.toLowerCase();
-      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || w).toUpperCase();
+      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || STREET_SUFFIXES[low] || w).toUpperCase();
     });
     var named = function (rest) { return rest.length > 1 || (rest.length === 1 && !types[rest[0]]); };
     var key = { pre: "", post: "" };
@@ -8320,17 +8363,40 @@ function initIowaExplorer() {
    * An address typed into a state's app often names no town ("1600 W
    * North Ave"), or names it with no comma before it ("1600 W North Ave
    * Chicago"), and the map's search may answer the street in one town or
-   * in several. addressInTownOf gives the address in the town and state of
-   * an answer on its street ("1600 W North Ave, Chicago, IL"), read
-   * from the answer's label: the part before a state's name is the town.
-   * When the address names a town, after a comma (labelOnStreet) or as the
-   * words after the street, and the answer is not in it, the result is
-   * null, as it is for an answer on another street or a label that names no
-   * state. The ZIP code is left out, because one long street runs through
-   * several. */
+   * in several. addressInTownOf gives the address in a town and the state
+   * of an answer on its street ("1600 W North Ave, Chicago, IL"). When the
+   * address names a town, after a comma (labelOnStreet) or as the words
+   * after the street, and the answer is not in it, the result is null, as
+   * it is for an answer on another street or a label that names no state.
+   * The ZIP code is left out, because one long street runs through several.
+   *
+   * THE TOWN TYPED AFTER A COMMA IS KEPT when the answer is in it only by
+   * its ZIP code (townTypedIn). Otherwise the town is the answer's own, the
+   * part of its label before the state's name, so a neighbourhood typed
+   * where the town would be ("1600 W North Ave, Wicker Park") gives the
+   * city the answer names. Until 2026-10-19 the town was always the
+   * answer's, while labelOnStreet also takes an answer whose only part in
+   * common with the address's town is its ZIP code. Measured that day over
+   * 49 Cook County addresses near county commissioner district lines: of
+   * the 75 answers the map listed for the 26 Chicago addresses, 57 named the
+   * Cook County township a street is in ("North Chicago Township") where
+   * the city's name would be, and an answer on Kemman Avenue in La Grange
+   * shares the ZIP code 60526 with La Grange Park. The township went into
+   * the address the Census Bureau's lookup was asked about (ENGINE
+   * geocoder-search lookupAddressRanges): it found nothing for three of the
+   * 49, and for a fourth it found the house in Chicago, which the app then
+   * refused as not in the township. Asked with the town as typed, it found
+   * all four. Answers naming the city and the township, or La Grange and La
+   * Grange Park, were also listed as two towns for the reader to pick from.
+   * An address that names no town, or only a state or a ZIP code after the
+   * comma, still takes the answer's town, township and all. A town the
+   * Census Bureau does not know, such as a misspelling or a neighbourhood
+   * typed with the right ZIP code, is kept too, so the lookup may find
+   * nothing where the answer's town would have found the house, and the
+   * map then shows the street as it does whenever the lookup finds none. */
   function addressInTownOf(address, label) {
-    var a = addressStreet(address);
-    if (!a || (addressParts(address) && !labelOnStreet(label, address))) return null;
+    var a = addressStreet(address), named = addressParts(address);
+    if (!a || (named && !labelOnStreet(label, address))) return null;
     var parts = String(label || "").split(",").map(function (p) { return p.trim(); });
     var at = -1, tag = "", j, n, i;
     for (j = parts.length - 1; j >= 2 && !tag; j--) {
@@ -8339,6 +8405,7 @@ function initIowaExplorer() {
     }
     if (!tag) return null;
     var town = parts[at - 1], low = town.toLowerCase();
+    var called = townTypedIn(named, parts, tag) || town;
     var words = a.street.split(/\s+/);
     for (n = words.length; n >= 1; n--) {
       var rest = words.slice(n).join(" ").toLowerCase();
@@ -8347,11 +8414,29 @@ function initIowaExplorer() {
       if (!want.core) continue;
       for (i = 0; i < at - 1; i++) {
         if (partNamesStreet(parts[i], want)) {
-          return a.number + " " + words.slice(0, n).join(" ") + ", " + town + ", " + tag.toUpperCase();
+          return a.number + " " + words.slice(0, n).join(" ") + ", " + called + ", " + tag.toUpperCase();
         }
       }
     }
     return null;
+  }
+  // The town an address names after a comma (addressParts), less a ZIP code
+  // and the state written after it with no comma between ("Chicago IL
+  // 60614"), when no part of the label (`parts`) is that town; "" when one
+  // is, when the address names none, or when the part after its comma is
+  // only a state or a ZIP code ("IL 60614"). `tag` is the label's state.
+  function townTypedIn(named, parts, tag) {
+    var t = named ? named.town.replace(/\s+\d{5}(?:-\d{4})?$/, "") : "";
+    [tag, US_STATE_NAMES[tag]].forEach(function (state) {
+      var end = " " + String(state || "").toLowerCase();
+      if (t.length > end.length && t.slice(-end.length).toLowerCase() === end) t = t.slice(0, -end.length);
+    });
+    var low = t.toLowerCase(), i;
+    if (!/[a-z]/i.test(t) || stateTagOfName(t) || US_STATE_NAMES.hasOwnProperty(low)) return "";
+    for (i = 0; i < parts.length; i++) {
+      if (parts[i].toLowerCase() === low) return "";
+    }
+    return t;
   }
 
   /* ---------- the state a place's address names ----------

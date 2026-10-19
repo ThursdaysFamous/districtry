@@ -306,6 +306,13 @@ const street = [
   ["West Oakley Drive Northwest, Westmont, Illinois, 60559", "Oakley Cake Shop", false],    // a name, no address
   ["Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", true],
   ["S5975 Park Road, Baraboo, Wisconsin", "S5975 Park Rd, Baraboo, WI 53913", true],       // its grid number left off
+  // the Census Bureau writes every street type as the Postal Service does,
+  // as in its answers of 2026-10-19 (the house numbers are made up)
+  ["9 ARROWHEAD TRCE, OAK FOREST, IL, 60452", "9 Arrowhead Trace, Oak Forest, IL", true],
+  ["Arrowhead Trace, Oak Forest, Illinois, 60452", "9 Arrowhead Trce, Oak Forest, IL 60452", true],
+  ["9 ARROWHEAD TRL, OAK FOREST, IL, 60452", "9 Arrowhead Trace, Oak Forest, IL", false],   // a trail is not a trace
+  ["Spring Crossing, Elgin, Illinois", "1 Spring Xing, Elgin, IL", true],
+  ["Parks Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI 53913", false],   // a plural is another name
 ];
 for (const [label, address, want] of street) {
   const got = api.labelOnStreet(label, address);
@@ -321,6 +328,7 @@ for (const [label, address, want] of street) {
 // The labels are in the shape the apps build from Photon (photonLabel).
 const WICKER = "West North Avenue, Wicker Park, Chicago, Illinois, 60622";
 const MELROSE = "West North Avenue, Melrose Park, Illinois, 60160";
+const EUGENIE = "West Eugenie Street, Lincoln Park, North Chicago Township, Illinois, 60614";
 const inTown = [
   ["1600 W North Ave", WICKER, "1600 W North Ave, Chicago, IL"],
   ["1600 W North Ave", MELROSE, "1600 W North Ave, Melrose Park, IL"],
@@ -340,7 +348,46 @@ const inTown = [
   ["1600 W North Ave", "1600 West North Avenue, Chicago, Illinois", "1600 W North Ave, Chicago, IL"],
   ["S5975 Park Rd", "Park Road, Baraboo, Wisconsin, 53913", "S5975 Park Rd, Baraboo, WI"],
   ["Starved Rock Lodge", WICKER, null],
+  // Photon names the Cook County township where Chicago's name would be
+  // (2026-10-19); an address that names no town takes it, as it did before.
+  // The house numbers here are made up.
+  ["9 W Eugenie St", EUGENIE, "9 W Eugenie St, North Chicago Township, IL"],
+  ["9 W Eugenie St, IL 60614", EUGENIE, "9 W Eugenie St, North Chicago Township, IL"],
+  ["9 Kemman Ave, La Grange Park, IL 60526", "Kemman Avenue, La Grange Park, Illinois, 60526", "9 Kemman Ave, La Grange Park, IL"],
 ];
+// An address that names a town the answer is in only by its ZIP code keeps
+// that town, so the Census Bureau's lookup is asked about the address as it
+// was typed, and its answer is then on the street of what it was asked about
+// (ENGINE geocoder-search lookupAddressRanges). Answers that name the city,
+// the township or a town that shares the ZIP code then give one address, not
+// two towns to pick from. These are left out of the check below, because the
+// label they are read from names neither the town nor a ZIP code it carries.
+const kept = [
+  ["9 W Eugenie St, Chicago, IL 60614", EUGENIE, "9 W Eugenie St, Chicago, IL", "9 W EUGENIE ST, CHICAGO, IL, 60614"],
+  ["9 W Eugenie St, Chicago IL 60614", EUGENIE, "9 W Eugenie St, Chicago, IL", "9 W EUGENIE ST, CHICAGO, IL, 60614"],
+  ["9 N Orchard St, Chicago, IL 60614", "North Orchard Street, Lincoln Park, North Chicago Township, Illinois, 60614",
+    "9 N Orchard St, Chicago, IL", "9 N ORCHARD ST, CHICAGO, IL, 60614"],
+  ["9 Kemman Ave, La Grange Park, IL 60526", "North Kemman Avenue, La Grange, Illinois, 60526",
+    "9 Kemman Ave, La Grange Park, IL", "9 KEMMAN AVE, LA GRANGE PARK, IL, 60526"],
+];
+for (const [address, label, want, census] of kept) {
+  const got = api.addressInTownOf(address, label);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL addressInTownOf(" + JSON.stringify(address) + ", " + JSON.stringify(label) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  } else if (!api.labelOnStreet(census, got) || !api.labelCarriesNumber(census, got)) {
+    failed++;
+    console.error("map-link: FAIL the Census answer " + JSON.stringify(census) + " is not at " + JSON.stringify(got));
+  }
+}
+// an answer naming the city and one naming its township give one address
+const ORCHARD = "9 N Orchard St, Chicago, IL 60614";
+const fromCity = api.addressInTownOf(ORCHARD, "North Orchard Street, Lincoln Park, Chicago, Illinois, 60614");
+const fromTownship = api.addressInTownOf(ORCHARD, "North Orchard Street, Lincoln Park, North Chicago Township, Illinois, 60614");
+if (!fromCity || fromCity !== fromTownship) {
+  failed++;
+  console.error("map-link: FAIL answers naming Chicago and its township put " + ORCHARD + " at " + JSON.stringify(fromCity) + " and " + JSON.stringify(fromTownship));
+}
 for (const [address, label, want] of inTown) {
   const got = api.addressInTownOf(address, label);
   if (got !== want) {
@@ -422,7 +469,7 @@ for (const [text, source] of rebuilt) {
 }
 
 const total = cases.length + 2 + lookups.length + 2 + said.length + bare.length + carry.length + parts.length + street.length +
-  states.length + 3 + rebuilt.length * 2;
+  kept.length + 1 + states.length + 3 + rebuilt.length * 2;
 if (failed) { console.error("map-link: " + failed + " of " + total + " checks failed"); process.exit(1); }
 console.log("map-link: OK — " + cases.length + " pasted texts read as expected; a short link is sent only to the lookup; " +
   lookups.length + " lookup answers tried again or not as expected, a cancelled lookup stops, and " + said.length +
@@ -430,5 +477,5 @@ console.log("map-link: OK — " + cases.length + " pasted texts read as expected
   bare.length + " place names split from their addresses as expected; " + carry.length +
   " answers held to the address's house number as expected; " + parts.length + " addresses split into their parts, " +
   streets.length + " into a number and a street, and " + street.length + " answers held to the address's street as expected; " +
-  inTown.length + " addresses put in an answer's town as expected; " + states.length +
+  inTown.length + " addresses put in an answer's town and " + kept.length + " kept in the town typed as expected; " + states.length +
   " addresses read for their state and " + rebuilt.length + " links rebuilt from their words as expected");

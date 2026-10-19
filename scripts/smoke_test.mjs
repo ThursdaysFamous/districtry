@@ -860,7 +860,9 @@ try {
   //      marked and never selected for the reader, a sent search frames the
   //      street with the Census pin, whose point it selects, when the answers
   //      put it in one town, and while the reader types nothing goes to the
-  //      Census lookup until the street's row is picked. Every answer here is OpenStreetMap's, so the
+  //      Census lookup until the street's row is picked. A town typed after a
+  //      comma that the answers name only by its ZIP code is the town they
+  //      are put in (addressInTownOf). Every answer here is OpenStreetMap's, so the
   //      street's message links OpenStreetMap's note form at the street or
   //      the pin (osmNoteLink), and following it counts osm-note. A shared
   //      link that ends on its street is counted once the Census answer is
@@ -1220,6 +1222,28 @@ try {
       atPin(twa.point) && !!twa.pin && twoTowns.lookedUp.length === 1 && twoTowns.lookedUp[0] === T_AT &&
         twa.status.indexOf("W Oakley Dr NW in Westmont but not number 9 on it. The map has selected the pin") >= 0,
       JSON.stringify({ after: twa, lookedUp: twoTowns.lookedUp }));
+    // A TOWN TYPED AFTER A COMMA IS KEPT (addressInTownOf). On 2026-10-19
+    // Photon named the Cook County township where Chicago's name would be,
+    // West Eugenie Street's as North Chicago Township, and answered other
+    // Chicago streets once in Chicago and once in the township. The house
+    // number, the Census answer and the street's extent are made up. Until
+    // then the lookup was asked about the township, and its answer, in
+    // Chicago, was refused.
+    const E_TYPED = "9 W Eugenie St, Chicago, IL 60614";
+    const E_PIN = { lat: 41.91283, lng: -87.63862 };
+    const E_EXTENT = [-87.6430, 41.9131, -87.6345, 41.9125];
+    const eugenie = (city) => feature(-87.6390, 41.9128, { name: "West Eugenie Street", district: "Lincoln Park", city,
+      state: "Illinois", postcode: "60614", type: "street", extent: E_EXTENT });
+    const township = await run(E_TYPED,
+      (q, bounded) => (bounded && q === E_TYPED ? [eugenie("North Chicago Township"), eugenie("Chicago")] : []),
+      pinShown, S_FULL, null, false, () => ({ status: 200, matches: [{ address: "9 W EUGENIE ST, CHICAGO, IL, 60614", ...E_PIN }] }));
+    const tt = township.got;
+    check("a typed town the answers name only by its ZIP code is kept: one street, the Census lookup asked about that town, its pin selected",
+      !!tt.point && Math.abs(tt.point.lat - E_PIN.lat) < 1e-7 && Math.abs(tt.point.lng - E_PIN.lng) < 1e-7 && !!tt.pin &&
+        township.lookedUp.length === 1 && township.lookedUp[0] === "9 W Eugenie St, Chicago, IL" &&
+        tt.status.indexOf("W Eugenie St in Chicago but not number 9 on it. The map has selected the pin") >= 0 &&
+        tt.status.indexOf("Township") < 0,
+      JSON.stringify(township));
     const typing = async (page, read) => {
       await page.fill("#geocode-input", T_ADDRESS);
       await page.waitForFunction(() => /Pick the street to see it on the map/.test(document.getElementById("geo-status").textContent),
