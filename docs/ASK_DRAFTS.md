@@ -130,7 +130,7 @@ with, working as intended.
 | Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
 | Black Hawk and Guthrie county auditors (IA) | the same | none | — |
 | Calhoun County Auditor (IA) | the same | none | — |
-| Pottawattamie and Wright county auditors (IA) | how many supervisors, and who | none | — |
+| Wright County Auditor and Pottawattamie County elections office (IA) | how many supervisors, and who | none | — |
 | Tama County Auditor (IA) | the same | none | **ANSWERED same day**, in full: five supervisors with districts, and contact details that need care — District 1's address is a personal one and his telephone is outside the county's own number block, so neither ships until she says which lines are the county's |
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
@@ -5698,7 +5698,11 @@ Subject: Wyoming City Council members on districtry.com: how would you like them
 > messages, one per county, each to that county's Auditor at the address
 > `ia/data/app/ia-county-auditors.json` carries, every one confirmed in the operator's own sent
 > folder: Tama (Karen Rohrs, 14:53:51 UTC), Wright (Amanda Meyer, 14:53:56) and Pottawattamie
-> (Mary Ann Hanusa, 14:54:03). The ledger is updated in the
+> (14:54:03). **POTTAWATTAMIE'S WENT TO THE COUNTY'S ELECTIONS OFFICE, NOT TO THE AUDITOR'S OWN
+> MAILBOX** (corrected 2026-10-20, read from the sent message): the address that file carries for
+> the Auditor is `elections@pottcounty-ia.gov`, the elections office's shared mailbox, so the
+> letter opens "Dear Auditor Hanusa" and was delivered to that desk. A reply may come from
+> elections staff rather than from her. The ledger is updated in the
 > `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
 > `docs/DATA_LAYER_GUIDEBOOK.md` and in `ia/WATCH.md`, and both records now carry an `ask` block
 > reading `pending`. A follow-up falls due for the two still silent at about three weeks
