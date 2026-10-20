@@ -455,9 +455,9 @@ def split_by_instance(gc, pageviews):
         if row["key"] in INSTANCE_NAMES:
             named_rows.append((INSTANCE_NAMES[row["key"]], row["count"]))
         else:
-            # The fetcher's own "(not in the pages list)" row: the dashboard's
-            # pages list caps at ten, so the long tail is in the total and in
-            # no bar.
+            # "(other pages)": the site's own pages that belong to no app, and
+            # "(not in the pages list)" when the fetcher could not read the
+            # list to its end. Both are in the total and in no bar.
             residual += row["count"]
     named_rows.sort(key=lambda r: -r[1])
     attributed = sum(n for _, n in named_rows) + residual
@@ -636,9 +636,13 @@ def build():
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
     seo: { police: %d, school: %d },
-    /* Page visits no instance bar carries: the dashboard's pages list caps at
-       ten rows, so the long tail is in the pageview total and in no bar. */
+    /* Page visits no instance bar carries. Since 2026-10-20 the fetcher reads
+       the whole pages list, so these are the site's own pages that belong to
+       no app (privacy, about, the Android steps page); pagesCut is true only
+       when the list could not be read to its end, and then they are also the
+       visits to pages the list never reached. */
     instResidual: %d,
+    pagesCut: %s,
     /* Instances not LISTED on the front door for any day of this window, by
        display name. Their bars read zero because the app was not being served,
        not because the dashboard's ten-row cap hid them, and the zero-bar note
@@ -694,6 +698,7 @@ def build():
         long_label(LAYER_SPLIT),
         pg.get("/il/police-district.html", 0), pg.get("/il/school-board.html", 0),
         residual,
+        "true" if gc.get("pages_truncated", True) else "false",
         json.dumps(not_listed_yet(end), separators=(",", ":")),
         json.dumps(listed_partway(start, end), separators=(",", ":"),
                    sort_keys=True),
@@ -792,7 +797,7 @@ def main():
              gc["total"] - daily_sum))
     for name, count in instances:
         print("  %-16s %d" % (name, count))
-    print("  %-16s %d (long tail, in no bar)" % ("(not listed)", residual))
+    print("  %-16s %d (in no bar)" % ("(no app)", residual))
     print("  %d data-stat span(s) written from the data; %d key(s) keep a "
           "hand-typed fallback a crawler reads: %s"
           % (len(fallbacks), len(unwritten), ", ".join(sorted(unwritten)) or "none"))
