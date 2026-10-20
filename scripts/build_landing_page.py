@@ -370,8 +370,18 @@ REPO = "https://github.com/ThursdaysFamous/districtry"
 # IT STAYS UNTIL THE READER CLOSES IT. The rename notice faded after 15
 # seconds, which suited news and suits an invitation to act much less; and on
 # a phone it sat in the page's flow, so the fade moved the address box up under
-# a reader who had started typing. Closing it lasts for that page view only:
-# this page stores nothing on a reader's device, so it shows again next visit.
+# a reader who had started typing.
+#
+# A CLOSE OR A TAP ON ITS LINK IS REMEMBERED, "remember": "android-test" (Adam,
+# 2026-10-20: a "no" should stay closed). The page writes one word in the
+# browser's localStorage under the key the maps' own invitation to the test
+# uses, and notice_memory() reads both the key and the word from the engine's
+# install-app block, so a reader who closed or followed either invitation is
+# shown neither again, while a reader who only saw the maps' bar still sees
+# this one. localStorage and not a cookie: a cookie goes to the host with every
+# request, and this word never leaves the browser. The privacy page measures
+# the write and says so. The notice cannot outlive the maps' test: once
+# DST_ANDROID_TEST_URL there is null, this build fails until NOTICE changes.
 NOTICE = {
     "heading": "Help test districtry on Android",
     "body": ("districtry is coming to Google Play as an app, and Google needs at "
@@ -379,8 +389,11 @@ NOTICE = {
              "takes a few minutes."),
     "link": {"href": "/android.html?ref=front-page", "text": "See how to join"},
     "only": "android",
+    "remember": "android-test",
 }
 NOTICE_ONLY = ("android",)
+NOTICE_REMEMBER = ("android-test",)
+INSTALL_APP = os.path.join(REPO_ROOT, "engine", "index.html", "install-app.txt")
 
 # The independence line, and it earns its place rather than decorating the page.
 # On 2026-08-25 Google Safe Browsing flagged districtry.com under "Deceptive
@@ -610,6 +623,53 @@ def render_notice():
         '    </aside>\n'
         % (attrs, html.escape(NOTICE["heading"]), html.escape(NOTICE["body"]), cta)
     )
+
+
+def notice_memory():
+    """The notice's memory, as script: whether it was answered, and the answer.
+
+    "android-test" keeps the answer with the maps' invitation to the Android
+    test, so the key and the word are read from the engine's install-app
+    block, the one copy of both, and this page and the maps cannot come to
+    write two different things. With no "remember" the answer lasts for the
+    page view, and nothing is stored.
+    """
+    remember = NOTICE.get("remember") if NOTICE else None
+    if remember is None:
+        return ("  /* Closing the notice lasts for this page view: it remembers nothing. */\n"
+                "  function noticeAnswered() { return false; }\n"
+                "  function noticeAnswer() {}\n")
+    if remember not in NOTICE_REMEMBER:
+        fail('NOTICE["remember"] is %r; the page\'s script knows only %s.'
+             % (remember, ", ".join(NOTICE_REMEMBER)))
+    src = read(INSTALL_APP, "the maps' install invitation")
+    key = re.search(r'\bvar DST_INSTALL_INVITE_KEY = "([a-z-]+)";', src)
+    word = re.search(r'\bvar DST_TEST_INVITE_ANSWERED = "([a-z-]+)";', src)
+    if not key or not word:
+        fail("NOTICE remembers its answer with the maps' invitation to the Android "
+             "test, and engine/index.html/install-app.txt no longer declares "
+             "DST_INSTALL_INVITE_KEY and DST_TEST_INVITE_ANSWERED as plain strings, "
+             "so this page cannot know what to write.")
+    if not re.search(r'\bvar DST_ANDROID_TEST_URL = "', src):
+        fail("NOTICE remembers its answer with the maps' invitation to the Android "
+             "test, and that test has ended: DST_ANDROID_TEST_URL in "
+             "engine/index.html/install-app.txt is no longer an address. Change or "
+             "retire NOTICE in the same change.")
+    return (
+        "  /* The notice's answer, kept with the maps' own invitation to the Android\n"
+        "     test (engine/index.html/install-app.txt names the key and the word):\n"
+        "     closing the notice or following its link writes the word, and an\n"
+        "     answer on either page keeps both closed. localStorage, not a cookie,\n"
+        "     so the word never leaves the browser. */\n"
+        '  var NOTICE_KEY = "%s";\n'
+        '  var NOTICE_ANSWERED = "%s";\n'
+        "  function noticeAnswered() {\n"
+        "    try { return window.localStorage.getItem(NOTICE_KEY) === NOTICE_ANSWERED; } catch (e) { return false; }\n"
+        "  }\n"
+        "  function noticeAnswer() {\n"
+        "    try { window.localStorage.setItem(NOTICE_KEY, NOTICE_ANSWERED); } catch (e) { /* storage blocked: it shows again next visit */ }\n"
+        "  }\n"
+        % (key.group(1), word.group(1)))
 
 
 def render_independence():
@@ -1120,8 +1180,9 @@ body {
    a light ground and screen on a dark one; keep multiply on dark and they go
    muddy and near-black.
 
-   There is no theme toggle here. The sub-pages carry one because they read a
-   stored choice; this page follows the operating system and stores nothing,
+   There is no theme toggle here. The sub-pages carry one because they store a
+   choice; this page stores none of its own (it reads the one an app stored,
+   through the shared theme boot, and otherwise follows the operating system),
    and a control that looks like the sub-pages' but only lasts a page would be
    worse than none. */
 header.mast {
@@ -1587,19 +1648,20 @@ footer .support b { color: var(--ink); }
      where its condition holds. "android": a browser on Android, not an
      installed copy, which is display-mode standalone (the Play app's own
      window reports it too), and not a window the Play app's mark has set
-     (engine/shared/play-app.txt, run in the head). Closing it lasts for this
-     page view, because this page stores nothing. */
-  var notice = document.getElementById("notice");
+     (engine/shared/play-app.txt, run in the head). Not once it has been
+     answered, which noticeAnswered says (notice_memory). */
+%(notice_memory)s  var notice = document.getElementById("notice");
   if (notice) {
     var only = notice.getAttribute("data-only");
+    var answered = noticeAnswered();
     if (only === "android") {
       var installed = !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
         window.navigator.standalone === true);
       if (/\\bAndroid\\b/.test(window.navigator.userAgent || "") && !installed &&
-          !document.documentElement.classList.contains("dst-play-app")) {
+          !document.documentElement.classList.contains("dst-play-app") && !answered) {
         notice.hidden = false;
       }
-    } else if (!only) {
+    } else if (!only && !answered) {
       notice.hidden = false;
     }
     var dismiss = document.getElementById("notice-dismiss");
@@ -1610,9 +1672,13 @@ footer .support b { color: var(--ink); }
       var keyboard = false;
       try { keyboard = dismiss.matches(":focus-visible"); } catch (e) { /* older browser */ }
       notice.hidden = true;
+      noticeAnswer();
       var next = document.querySelector(".mast-nav a");
       if (keyboard && next) next.focus();
     });
+    /* Following the link answers it too; the browser follows it either way. */
+    var follow = notice.querySelector(".notice-cta a");
+    if (follow) follow.addEventListener("click", noticeAnswer);
   }
 
   /* ---------- address box: geocode, then route to the covered instance ----------
@@ -2166,6 +2232,7 @@ footer .support b { color: var(--ink); }
         "asks": render_asks(metros),
         "mark": load_mark(),
         "notice": render_notice(),
+        "notice_memory": notice_memory(),
         "independence": render_independence(),
         "answer_count": html.escape(answer_count),
         "answer_verb": answer_verb,

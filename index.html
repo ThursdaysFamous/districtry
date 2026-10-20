@@ -609,8 +609,9 @@ body {
    a light ground and screen on a dark one; keep multiply on dark and they go
    muddy and near-black.
 
-   There is no theme toggle here. The sub-pages carry one because they read a
-   stored choice; this page follows the operating system and stores nothing,
+   There is no theme toggle here. The sub-pages carry one because they store a
+   choice; this page stores none of its own (it reads the one an app stored,
+   through the shared theme boot, and otherwise follows the operating system),
    and a control that looks like the sub-pages' but only lasts a page would be
    worse than none. */
 header.mast {
@@ -1241,19 +1242,33 @@ footer .support b { color: var(--ink); }
      where its condition holds. "android": a browser on Android, not an
      installed copy, which is display-mode standalone (the Play app's own
      window reports it too), and not a window the Play app's mark has set
-     (engine/shared/play-app.txt, run in the head). Closing it lasts for this
-     page view, because this page stores nothing. */
+     (engine/shared/play-app.txt, run in the head). Not once it has been
+     answered, which noticeAnswered says (notice_memory). */
+  /* The notice's answer, kept with the maps' own invitation to the Android
+     test (engine/index.html/install-app.txt names the key and the word):
+     closing the notice or following its link writes the word, and an
+     answer on either page keeps both closed. localStorage, not a cookie,
+     so the word never leaves the browser. */
+  var NOTICE_KEY = "districtry-install-invite";
+  var NOTICE_ANSWERED = "test-answered";
+  function noticeAnswered() {
+    try { return window.localStorage.getItem(NOTICE_KEY) === NOTICE_ANSWERED; } catch (e) { return false; }
+  }
+  function noticeAnswer() {
+    try { window.localStorage.setItem(NOTICE_KEY, NOTICE_ANSWERED); } catch (e) { /* storage blocked: it shows again next visit */ }
+  }
   var notice = document.getElementById("notice");
   if (notice) {
     var only = notice.getAttribute("data-only");
+    var answered = noticeAnswered();
     if (only === "android") {
       var installed = !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
         window.navigator.standalone === true);
       if (/\bAndroid\b/.test(window.navigator.userAgent || "") && !installed &&
-          !document.documentElement.classList.contains("dst-play-app")) {
+          !document.documentElement.classList.contains("dst-play-app") && !answered) {
         notice.hidden = false;
       }
-    } else if (!only) {
+    } else if (!only && !answered) {
       notice.hidden = false;
     }
     var dismiss = document.getElementById("notice-dismiss");
@@ -1264,9 +1279,13 @@ footer .support b { color: var(--ink); }
       var keyboard = false;
       try { keyboard = dismiss.matches(":focus-visible"); } catch (e) { /* older browser */ }
       notice.hidden = true;
+      noticeAnswer();
       var next = document.querySelector(".mast-nav a");
       if (keyboard && next) next.focus();
     });
+    /* Following the link answers it too; the browser follows it either way. */
+    var follow = notice.querySelector(".notice-cta a");
+    if (follow) follow.addEventListener("click", noticeAnswer);
   }
 
   /* ---------- address box: geocode, then route to the covered instance ----------

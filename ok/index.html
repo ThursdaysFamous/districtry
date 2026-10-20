@@ -18682,9 +18682,17 @@ function initOklahomaExplorer() {
         that copy either, and Chrome's menu still does. The test is offered
         once too, recorded as DST_TEST_INVITE_SEEN under the same key, so a
         reader who was offered the install before the test began is asked
-        once more, about the test. Not in the Play app, whose window carries
-        the mark from engine/shared/play-app.txt. When the app is published,
-        set DST_ANDROID_TEST_URL to null and the install offer returns.
+        once more, about the test. Closing the bar or following its link
+        records DST_TEST_INVITE_ANSWERED instead, and the front page's own
+        invitation to the test reads and writes that word under the same key
+        (scripts/build_landing_page.py takes both names from this block), so
+        a reader who closed or followed either invitation is not shown the
+        other; only seeing this bar leaves the front page's in place (Adam,
+        2026-10-20: a "no" stays closed). Not in the Play app, whose window
+        carries the mark from engine/shared/play-app.txt. When the app is
+        published, set DST_ANDROID_TEST_URL to null and the install offer
+        returns; the front page's generator then fails until its notice
+        changes too.
 
      3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
         browser reports an install, `app-launch/<tag>` once per launch of the
@@ -18716,6 +18724,7 @@ function initOklahomaExplorer() {
   var DST_INVITE_DELAY_MS = 3000;
   var DST_ANDROID_TEST_URL = "/android.html?ref=map";
   var DST_TEST_INVITE_SEEN = "test-shown";
+  var DST_TEST_INVITE_ANSWERED = "test-answered";
   var dstFramed = (function () {
     try { return window.top !== window.self; } catch (e) { return true; }
   })();
@@ -18752,7 +18761,10 @@ function initOklahomaExplorer() {
     try { window.localStorage.setItem(DST_INSTALL_INVITE_KEY, value); } catch (e) { /* private mode: it may show again */ }
   }
   function dstTestInviteSeen() {
-    try { return window.localStorage.getItem(DST_INSTALL_INVITE_KEY) === DST_TEST_INVITE_SEEN; } catch (e) { return true; }
+    try {
+      var seen = window.localStorage.getItem(DST_INSTALL_INVITE_KEY);
+      return seen === DST_TEST_INVITE_SEEN || seen === DST_TEST_INVITE_ANSWERED;
+    } catch (e) { return true; }
   }
   /* A browser on Android while the test runs, outside the Play app. */
   function dstOnAndroidTest() {
@@ -18786,8 +18798,9 @@ function initOklahomaExplorer() {
   }
   /* Built through the DOM with textContent, the way every card is. `go` is
      the bar's one action, a button (onClick) or a link (href), or null for
-     the iPhone's tip; `closedAs` is what closing it is counted as. */
-  function dstShowInvite(label, text, go, closedAs) {
+     the iPhone's tip; `closedAs` is what closing it is counted as, and
+     `onClose`, when given, runs after. */
+  function dstShowInvite(label, text, go, closedAs, onClose) {
     if (dstInviteBar || dstInstalledLaunch() || !dstIsPhone()) return false;
     var bar = document.createElement("aside");
     bar.className = "install-invite";
@@ -18813,6 +18826,7 @@ function initOklahomaExplorer() {
     close.addEventListener("click", function () {
       dstHideInvite();
       dstInviteEvent(closedAs);
+      if (onClose) onClose();
     });
     bar.appendChild(close);
     document.body.appendChild(bar);
@@ -18902,12 +18916,13 @@ function initOklahomaExplorer() {
           text: "How to join",
           href: DST_ANDROID_TEST_URL,
           onClick: function () {
+            dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED);
             dstInviteEvent("test-join");
             /* after the link is followed, so a page brought back by the
                Back button does not ask again */
             setTimeout(dstHideInvite, 0);
           }
-        }, "test-closed");
+        }, "test-closed", function () { dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED); });
       if (shown) {
         dstMarkInviteSeen(DST_TEST_INVITE_SEEN);
         dstInviteEvent("test-shown");

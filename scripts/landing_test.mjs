@@ -246,12 +246,15 @@ try {
   // installed copy, linking the steps page with its ref, and closed on
   // request. It sits in the page's flow above the masthead and no longer
   // fades, so one that would not close would hold the address box down for
-  // the whole visit.
+  // the whole visit. A close or a followed link is remembered (Adam,
+  // 2026-10-20: a "no" stays closed) under the key the maps' own invitation
+  // to the test uses, so an answer on either page keeps both closed, while a
+  // reader who has only SEEN the maps' bar is still shown this one.
   {
-    async function noticeOn(opts, path, init) {
+    async function noticeOn(opts, path, init, initArg) {
       const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
       const page = await ctx.newPage();
-      if (init) await page.addInitScript(init);
+      if (init) await page.addInitScript(init, initArg);
       await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
       await page.waitForTimeout(300);
       const shown = await page.isVisible("#notice").catch(() => false);
@@ -290,7 +293,42 @@ try {
         await page.click("#notice-dismiss");
         const after = await page.isVisible("#notice");
         check("closing the invitation hides it", !after, String(after));
+        const kept = await page.evaluate(() => localStorage.getItem("districtry-install-invite"));
+        check("closing the invitation is remembered under the maps' invitation key",
+          kept === "test-answered", String(kept));
+        await page.reload({ waitUntil: "domcontentloaded" });
+        await page.waitForTimeout(300);
+        const again = await page.isVisible("#notice");
+        check("a closed invitation stays closed on the next visit", !again, String(again));
       }
+      await ctx.close();
+    }
+    {
+      const { ctx, page, shown } = await noticeOn(android, "/");
+      let kept = null;
+      let again = null;
+      if (shown) {
+        await Promise.all([
+          page.waitForURL(/\/android\.html/, { timeout: 15000 }).catch(() => null),
+          page.click(".notice-cta a"),
+        ]);
+        kept = await page.evaluate(() => localStorage.getItem("districtry-install-invite"));
+        await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+        await page.waitForTimeout(300);
+        again = await page.isVisible("#notice");
+      }
+      check("following the invitation's link is remembered too, and it is not shown again",
+        shown && kept === "test-answered" && again === false, JSON.stringify({ shown, kept, again }));
+      await ctx.close();
+    }
+    for (const [stored, want, what] of [
+      ["test-shown", true, "an Android phone that has only seen the maps' invitation is still shown this one"],
+      ["test-answered", false, "an Android phone that closed or followed the maps' invitation is not shown this one"],
+    ]) {
+      const { ctx, shown } = await noticeOn(android, "/", (v) => {
+        try { localStorage.setItem("districtry-install-invite", v); } catch (e) { /* reported by the check */ }
+      }, stored);
+      check(what, shown === want, String(shown));
       await ctx.close();
     }
     // Inside the Google Play app, which opens its first page with ref=play

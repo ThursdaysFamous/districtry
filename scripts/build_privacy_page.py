@@ -1248,20 +1248,39 @@ def render_storage_paragraphs(apps):
             # install-app block runs the test; measured from the apps rather
             # than remembered, so retiring the test cannot leave it standing.
             test = any(a["android_test"] for a in apps if a["name"] in users)
+            # The front door writes this key only to remember its own
+            # invitation to that test (scripts/build_landing_page.py NOTICE),
+            # so a write with no test running is a sentence nobody can write.
+            front = any(a["name"] in users and not a["tag"] for a in apps)
+            if front and not test:
+                fail("the front door writes %r for its invitation to the Android test, "
+                     "and no app runs that test any more, so the sentence about it would "
+                     "be false: retire the front page's NOTICE with the test" % key)
             if test:
                 lead = ("On a phone, the map makes an invitation only once: on Android, while "
                         "districtry’s Android app is being tested on Google Play, to join the "
                         "test, and elsewhere, to add districtry to your home screen. An Android "
                         "phone that was offered the home screen before the test began is asked "
-                        "once more, about the test. It records the invitation it made in %s "
-                        "under %s, so it does not make it again.")
+                        "once more, about the test.")
+                if front:
+                    lead += (" On Android the front door invites you to the test too, until you "
+                             "close that invitation or follow its link. The map records the "
+                             "invitation it made in %s under %s, so it does not make it again. "
+                             "Closing either invitation to the test, or following its link, "
+                             "records that under the same name, and then neither the map nor "
+                             "the front door shows it again.")
+                else:
+                    lead += (" It records the invitation it made in %s under %s, so it does "
+                             "not make it again.")
             else:
                 lead = ("On a phone, the map offers once to add districtry to your home screen. "
                         "It records that it has asked in %s under %s, so it does not ask again.")
             out.append(
                 "<p><strong>The install invitation.</strong> " + lead % (code(store), code(key)) +
                 " This is on %s. It is one word, and it never leaves your browser.</p>"
-                % esc(joined(users)))
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % esc(re.sub(r"^The ", "the ", joined(users))))
         elif key == "districtry-app-launch":
             out.append(
                 "<p><strong>A launch already counted.</strong> When you open the installed "

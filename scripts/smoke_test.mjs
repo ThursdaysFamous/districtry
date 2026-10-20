@@ -2169,6 +2169,9 @@ try {
     // links the steps page. A reader who was offered the install before the
     // test began (the key already reads "shown") is asked once about the
     // test, and not again; and the Play app's own window is not asked at all.
+    // A close or a followed link writes "test-answered", which the front
+    // page's own invitation to the test reads (Adam, 2026-10-20: a "no"
+    // stays closed), and an answer given there keeps this bar away too.
     const ANDROID_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36";
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
@@ -2205,8 +2208,8 @@ try {
         seen: localStorage.getItem("districtry-install-invite"),
       }));
       const events = await installEvents(page);
-      check("following the test link counts it, hands Chrome's dialog nothing, and the bar goes",
-        after.prompted === 0 && !after.bar && after.seen === "test-shown" &&
+      check("following the test link counts it, records the answer, hands Chrome's dialog nothing, and the bar goes",
+        after.prompted === 0 && !after.bar && after.seen === "test-answered" &&
         events.join() === "install-invite/test-shown,install-invite/test-join",
         JSON.stringify({ after, events }));
       await page.reload({ waitUntil: "domcontentloaded" });
@@ -2216,6 +2219,36 @@ try {
       const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
       check("the test is offered once: a later visit holds the event and shows nothing",
         heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      const page = await booted(context, VIEW, stubCounter);
+      const shown = await page.waitForSelector(".install-invite-close", { timeout: 10000 }).then(() => true, () => false);
+      if (shown) await page.click(".install-invite-close");
+      await page.waitForTimeout(200);
+      const after = await page.evaluate(() => ({
+        bar: !!document.querySelector(".install-invite"),
+        seen: localStorage.getItem("districtry-install-invite"),
+      }));
+      const events = await installEvents(page);
+      check("closing the test invitation records the answer the front page reads, and is counted once",
+        shown && !after.bar && after.seen === "test-answered" &&
+        events.join() === "install-invite/test-shown,install-invite/test-closed",
+        JSON.stringify({ shown, after, events }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      await context.addInitScript(() => {
+        try { localStorage.setItem("districtry-install-invite", "test-answered"); } catch (e) { /* reported below */ }
+      });
+      const page = await booted(context, VIEW, stubCounter);
+      await page.waitForTimeout(4500);
+      const bar = await page.evaluate(() => !!document.querySelector(".install-invite"));
+      const events = await installEvents(page);
+      check("a reader who answered the front page's invitation is not invited again on the map",
+        !bar && events.length === 0, JSON.stringify({ bar, events }));
       await context.close();
     }
     {
