@@ -13246,6 +13246,26 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
   static site, sends **no CORS header**, so it is reachable only via JSONP — remote script
   execution in an app whose posture is that every external string is sanitized. Chaining
   the two would reach 55/57 if that ever becomes worth the trust widening.
+- **Office-pin geocoding: New York's offices outside the city — CENSUS AS THE SECOND
+  LOOKUP (2026-10-20, Adam's "Use Census").** The CORS objection above no longer holds:
+  since 2026-10-17 districtry's own lookup on Deno asks the Census geocoder on a page's
+  behalf and passes on each match's address and position as JSON, so no JSONP is
+  involved. New York's office pins come from the city's own address search, which knows
+  city addresses only, and from #1660 an answer counts only in the office's own ZIP code,
+  which left every one of the 133 legislators' district offices outside the city with no
+  pin: the city's search had answered 115 of them with a city address, each now turned
+  away, and 18 with nothing. `poiGeocodeRequest` now hands
+  those to the engine's `lookupAddressRanges`, which keeps only the one match that is the
+  office's number on its street, in its town or ZIP code. Measured that day over the 133
+  U.S. House, Senate and Assembly district offices outside the city: **104 pinned** (14 of
+  14, 29 of 36, 61 of 83), every one in its own ZIP code; 15 found by neither, and 14
+  found by the Census geocoder but written in a way the house test refuses (a room before
+  the street, unit numbers after it, a building's name in front, "Route 32" for "State
+  Rte 32", "90-B"). Against the city's own address file, for 70 offices inside the city,
+  the Census estimate sat a median 28 m from the building and never more than 100 m. The
+  privacy page names the use, since which office a card shows says which district the
+  reader selected, and `build_privacy_page.py` measures it from where the code calls the
+  lookup.
 - **Statewide expansion: the next 10 counties — RESEARCH PASS 1 (2026-07-28).** The
   ultimate goal is all 102 counties. Today's seven cover **8,577,735 of 12,812,508
   Illinoisans — 66.9%** (2020 PL, via TIGERweb `tigerWMS_Census2020` layer 82, which
