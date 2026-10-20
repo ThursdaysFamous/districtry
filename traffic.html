@@ -1294,7 +1294,7 @@ code {
     <ol>
       <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">9,534</span> total is the visit counter&rsquo;s own figure. The daily columns add up to <span data-stat="dailySum">9,619</span>, <span data-stat="dailyGap">85</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The browser and system charts add up to the total; the country chart is 123 short because it lists only the top entries.</span> The counter uses no cookies and does not identify anyone.</li>
       <li id="note-2"><strong>The dates.</strong> This page covers the last two months, <span data-stat="range">August 19 – October 19, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 24">Until <strong>August 24</strong> the Illinois map was the site&rsquo;s front page; since then it has its own address and the front page lists every state.</span> <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page had <span data-stat="seoSchool">311</span> visits, the third most of any page.</li>
-      <li id="note-3"><strong>Visits by app.</strong> Older apps have had more time to collect visits, so read the order as age, not popularity.<span data-day="Aug 24"> Before August 24, visits to apps other than Illinois weren&rsquo;t recorded at all.</span> The counter lists only the ten most-visited pages, so <span data-stat="instResidual">1,103</span> of <span data-stat="pageviews">3,925</span> page visits are in no bar.<span data-stat="zeroInstNote"> A bar at zero (San Francisco, Minnesota, Kentucky, North Carolina, Oklahoma, Tennessee, Arkansas and Mississippi) means that app isn’t among those ten, not that nobody visited. Some were also on the front page for only part of these two months: San Francisco (57 days), Minnesota (20 days), Kentucky (20 days), North Carolina (11 days), Oklahoma (10 days), Tennessee (7 days), Arkansas (5 days) and Mississippi (4 days).</span></li>
+      <li id="note-3"><strong>Visits by app.</strong> Older apps have had more time to collect visits, so read the order as age, not popularity.<span data-day="Aug 24"> Before August 24, visits to apps other than Illinois weren&rsquo;t recorded at all.</span> <span data-stat="residualNote">38 of 3,925 page visits were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
       <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 68, New York 25 and San Francisco 2), County (Arkansas 15, Illinois 74, Indiana 6, Iowa 5, Kentucky 3, Michigan 13, Minnesota 7, North Carolina 6, Oklahoma 3, South Carolina 2, Tennessee 4 and Wisconsin 8), County board (Illinois 62 and Wisconsin 14), U.S. House (Arkansas 4, Indiana 19, Iowa 7, Kentucky 4, Michigan 20, Minnesota 4, North Carolina 4, Oklahoma 2, South Carolina 12, Tennessee 7 and Wisconsin 7) and Ward (Illinois 113 and 100 not by app). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
       <li id="note-5"><strong>Sources.</strong> Only the top six sources are shown. They add up to <span data-stat="refSum">4,473</span> of <span data-stat="total">9,534</span> visits, so a search engine&rsquo;s real total may be a little higher. The campaigns list counts only links tagged for a campaign.</li>
       <li id="note-6"><strong>Sources day by day.</strong> Each day is counted on its own. &ldquo;Other sites&rdquo; is any other website that sent a visitor, such as LinkedIn or a news story. &ldquo;No source&rdquo; means the browser didn&rsquo;t say where the visitor came from, such as a typed address or a bookmark; it is in the table but not the chart. A number ending in + means that day&rsquo;s list was cut short, so the real figure is higher.</li>
@@ -1483,12 +1483,12 @@ code {
 
   var barData = {
     instances: [
-      ["Illinois", 1600], ["Front page", 596], ["New York", 252],
-      ["Wisconsin", 114], ["Indiana", 75], ["Iowa", 68],
-      ["Michigan", 68], ["South Carolina", 49], ["San Francisco", 0],
-      ["Minnesota", 0], ["Kentucky", 0], ["North Carolina", 0],
-      ["Oklahoma", 0], ["Tennessee", 0], ["Arkansas", 0],
-      ["Mississippi", 0]
+      ["Illinois", 2008], ["Front page", 596], ["New York", 296],
+      ["Wisconsin", 215], ["Iowa", 130], ["Michigan", 107],
+      ["Indiana", 97], ["Arkansas", 90], ["Tennessee", 70],
+      ["South Carolina", 55], ["North Carolina", 52], ["Oklahoma", 52],
+      ["Minnesota", 51], ["Kentucky", 41], ["San Francisco", 25],
+      ["Mississippi", 2]
     ],
     layers: [
       ["School board", 237], ["Ward", 213], ["County", 146],
@@ -1555,10 +1555,14 @@ code {
     layerSplitFrom: "September 29",
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
-    seo: { police: 0, school: 311 },
-    /* Page visits no instance bar carries: the dashboard's pages list caps at
-       ten rows, so the long tail is in the pageview total and in no bar. */
-    instResidual: 1103,
+    seo: { police: 32, school: 311 },
+    /* Page visits no instance bar carries. Since 2026-10-20 the fetcher reads
+       the whole pages list, so these are the site's own pages that belong to
+       no app (privacy, about, the Android steps page); pagesCut is true only
+       when the list could not be read to its end, and then they are also the
+       visits to pages the list never reached. */
+    instResidual: 38,
+    pagesCut: false,
     /* Instances not LISTED on the front door for any day of this window, by
        display name. Their bars read zero because the app was not being served,
        not because the dashboard's ten-row cap hid them, and the zero-bar note
@@ -1934,7 +1938,21 @@ code {
       (" \u2014 and " + longMonth(bestSince[0]) +
        " remains the busiest day since the rename, at " +
        fmt(bestSince[1] + bestSince[2])),
-    instResidual: fmt(barData.instResidual),
+    /* WHAT THE VISITS IN NO BAR ARE DEPENDS ON WHETHER THE PAGES LIST WAS READ
+       TO ITS END. Until 2026-10-20 the fetcher read its first ten rows, so
+       this sentence said the counter lists only the ten most-visited pages;
+       it now reads the whole list, and what is left is the site's own pages
+       that belong to no app. pagesCut keeps the old sentence for a fetch that
+       could not reach the end. */
+    residualNote: barData.pagesCut
+      ? "The counter lists only the ten most-visited pages, so " +
+        fmt(barData.instResidual) + " of " + fmt(pageviews) +
+        " page visits are in no bar."
+      : (barData.instResidual
+          ? fmt(barData.instResidual) + " of " + fmt(pageviews) +
+            " page visits were to pages that belong to no app, such as the " +
+            "privacy page, so they are in no bar."
+          : ""),
     /* The sentence about a bar reading zero used to name Michigan as a
        literal, which is true until /mi enters the dashboard's ten-row list
        and false the day after. Derived from the bars: names every instance
@@ -1974,12 +1992,12 @@ code {
          when the app did. */
       var hidden = zero.filter(function (n) { return late.indexOf(n) === -1; });
       var out = "";
-      if (hidden.length === 1) {
-        out += " A bar at zero (" + hidden[0] + ") means that app isn\u2019t among " +
-          "those ten, not that nobody visited.";
-      } else if (hidden.length) {
+      if (hidden.length && barData.pagesCut) {
         out += " A bar at zero (" + join(hidden) + ") means that app isn\u2019t among " +
           "those ten, not that nobody visited.";
+      } else if (hidden.length) {
+        out += " A bar at zero (" + join(hidden) + ") means nobody visited " +
+          (hidden.length === 1 ? "that app" : "those apps") + " in these two months.";
       }
       var newly = zero.filter(function (n) { return !!part[n]; });
       if (newly.length) {
