@@ -234,7 +234,9 @@ def pages(html):
             continue
         title = re.search(r'<small class="page-title ?[^"]*">([^<]*)</small>',
                           block)
+        pid = re.search(r'<tr id="[^"]*"[^>]*\bdata-id="(\d+)"', block)
         row = {"path": html_lib.unescape(path.group(1)).strip(),
+               "id": int(pid.group(1)) if pid else None,
                "title": html_lib.unescape(title.group(1)).strip() if title else None,
                "count": int(count.group(1))}
         try:
@@ -569,21 +571,38 @@ def all_pages(s, total, start, end, mx):
     apps (SF, MN, KY, NC, OK, TN, AR, MS) read 0 and 1,103 pageviews were on
     the tail.
 
-    The pages widget takes `offset` (handlers/dashboard.go in GoatCounter's
-    source, read 2026-10-20), but that is a dashboard parameter rather than a
-    documented API, so it is checked rather than trusted, the way all_rows()
-    checks it: a page repeating a path already read, or adding nothing, means
-    the offset did nothing, and the list is returned with its `more` still
-    true so the residual row stays honest. Returns (rows, cut).
+    The pages widget takes `exclude`, a comma list of path ids
+    (handlers/dashboard.go in GoatCounter's source, read 2026-10-20), but that
+    is a dashboard parameter rather than a documented API, so it is checked
+    rather than trusted, the way all_rows() checks offset: a page repeating a
+    path already read, or adding nothing, means the exclude did nothing, and
+    the list is returned with its `more` still true so the residual row stays
+    honest. Returns (rows, cut).
     """
     out, seen = [], set()
     for _ in range(PAGE_PAGES):
-        page = pages(widget(s, 0, total, start, end, max=mx,
-                            filter="is:pageview", offset=len(out)))
+        # GoatCounter's own "show more" on this list sends the numeric ids of
+        # the rows already shown as `exclude`; a plain `offset` was tried
+        # first and on 2026-10-20 returned the same ten rows. The opening tag
+        # of the first row is printed once, because it is the only way to see
+        # the markup this depends on without the token.
+        ids = [r["id"] for r in out if r.get("id") is not None]
+        extra = {"exclude": ",".join(map(str, ids))} if ids else {}
+        html = widget(s, 0, total, start, end, max=mx, filter="is:pageview",
+                      **extra)
+        if not out:
+            first = re.search(r'<tr id="[^>]*>', html)
+            print("pages list: first row tag %s"
+                  % (first.group(0)[:200] if first else "(none)"))
+        page = pages(html)
         more = bool(MORE and MORE[0])
         fresh = [r for r in page if r["path"] not in seen]
+        if out and len(ids) < len(out):
+            print("pages list: rows carry no id to exclude, stopped at %d"
+                  % len(out))
+            return out, more
         if len(fresh) < len(page) or not fresh:
-            print("pages list: offset stopped after %d rows" % len(out))
+            print("pages list: exclude stopped after %d rows" % len(out))
             return out, True if out else more
         out += fresh
         seen.update(r["path"] for r in fresh)
