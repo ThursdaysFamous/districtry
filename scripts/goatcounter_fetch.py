@@ -404,9 +404,7 @@ def collect(s, total, start, end):
         daily.append({"date": date, "pageviews": pv,
                       "events": hits[date] - pv})
 
-    page_rows = pages(widget(s, 0, total, start, end, max=mx,
-                             filter="is:pageview"))
-    pages_truncated = MORE and MORE[0]
+    page_rows, pages_truncated = all_pages(s, total, start, end, mx)
     event_rows = pages(widget(s, 0, total, start, end, max=mx,
                               filter="is:event"))
     # THE EVENTS LIST IS CAPPED AT TEN ROWS AND THE PAGE NEEDS A ROW THAT FELL
@@ -504,7 +502,7 @@ def collect(s, total, start, end):
     attributed = sum(r["count"] for r in out["instances"])
     residual = out["pageviews"] - attributed
     share = residual / out["pageviews"] * 100 if out["pageviews"] else 0
-    print("instance split: %d of %d pageviews attributed to the ten listed "
+    print("instance split: %d of %d pageviews attributed to the listed "
           "rows, %d on the long tail (%.2f%%)"
           % (attributed, out["pageviews"], residual, share))
     if residual < 0 or share > 40:
@@ -553,6 +551,46 @@ def all_rows(s, n, total, start, end):
         seen.update(r["key"] for r in fresh)
         if not more:
             return out, False
+    return out, True
+
+
+# Pages of the pages list asked for before giving up on reaching its end. Ten
+# rows a page; 254 pages carried the counter on 2026-10-20, so 60 leaves room.
+PAGE_PAGES = 60
+
+
+def all_pages(s, total, start, end, mx):
+    """Every row of the pages list, following its "show more" by offset.
+
+    THE TEN-ROW CAP IS WHY AN APP READ 0. The per-app bars are summed from
+    this list, and until 2026-10-20 only its first ten rows were read, so an
+    app whose busiest page sat below rank ten had a bar of 0 while its visits
+    sat in the long-tail row. Measured on 2026-10-20's file, eight of fifteen
+    apps (SF, MN, KY, NC, OK, TN, AR, MS) read 0 and 1,103 pageviews were on
+    the tail.
+
+    The pages widget takes `offset` (handlers/dashboard.go in GoatCounter's
+    source, read 2026-10-20), but that is a dashboard parameter rather than a
+    documented API, so it is checked rather than trusted, the way all_rows()
+    checks it: a page repeating a path already read, or adding nothing, means
+    the offset did nothing, and the list is returned with its `more` still
+    true so the residual row stays honest. Returns (rows, cut).
+    """
+    out, seen = [], set()
+    for _ in range(PAGE_PAGES):
+        page = pages(widget(s, 0, total, start, end, max=mx,
+                            filter="is:pageview", offset=len(out)))
+        more = bool(MORE and MORE[0])
+        fresh = [r for r in page if r["path"] not in seen]
+        if len(fresh) < len(page) or not fresh:
+            print("pages list: offset stopped after %d rows" % len(out))
+            return out, True if out else more
+        out += fresh
+        seen.update(r["path"] for r in fresh)
+        if not more:
+            print("pages list: all %d rows read" % len(out))
+            return out, False
+    print("pages list: stopped at %d rows, list still cut short" % len(out))
     return out, True
 
 
