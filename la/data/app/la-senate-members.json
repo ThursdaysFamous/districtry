@@ -1,0 +1,458 @@
+{
+  "1": {
+    "name": "Robert \"Bob\" Owen",
+    "party": "Republican",
+    "email": "sen01@legis.la.gov",
+    "districtOffice": [
+      "250 Bouscaren Street",
+      "Suite 201",
+      "Slidell, LA 70458",
+      "100 Port Boulevard",
+      "Suite 20",
+      "Chalmette, LA 70043",
+      "(985) 639-0400"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=1"
+  },
+  "2": {
+    "name": "Edward J. \"Ed\" Price",
+    "party": "Democratic",
+    "email": "pricee@legis.la.gov",
+    "districtOffice": [
+      "2115 S. Burnside Ave.",
+      "Suite B",
+      "Gonzales, LA 70737",
+      "(225)644-6738"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=2"
+  },
+  "3": {
+    "name": "Sidney Barthelemy II",
+    "party": "Democratic",
+    "email": "sen03@legis.la.gov",
+    "districtOffice": [
+      "6305 Elysian Fields Avenue",
+      "Suite 400",
+      "New Orleans, LA 70122",
+      "(504)354-9778"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=3"
+  },
+  "4": {
+    "name": "Jimmy Harris",
+    "party": "Democratic",
+    "email": "harrisj@legis.la.gov",
+    "districtOffice": [
+      "2021 Lakeshore Drive",
+      "Suite 204",
+      "New Orleans, LA 70122",
+      "(504)286-1960"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=4"
+  },
+  "5": {
+    "name": "Royce Duplessis",
+    "party": "Democratic",
+    "email": "SEN05@legis.la.gov",
+    "districtOffice": [
+      "643 Magazine Street",
+      "Suite 302",
+      "New Orleans, LA 70130",
+      "(504) 568-2741"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=5"
+  },
+  "6": {
+    "name": "Rick Edmonds",
+    "party": "Republican",
+    "email": "sen06@legis.la.gov",
+    "districtOffice": [
+      "13440 Magnolia Square",
+      "Suite D1",
+      "Baton Rouge, LA 70818",
+      "(225)272-1324"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=6"
+  },
+  "7": {
+    "name": "Gary M. Carter, Jr.",
+    "party": "Democratic",
+    "email": "carterg@legis.la.gov",
+    "districtOffice": [
+      "2401 Westbend Parkway",
+      "Suite 3071",
+      "New Orleans, LA 70114",
+      "(504)361-6600"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=7"
+  },
+  "8": {
+    "name": "Patrick Connick",
+    "party": "Republican",
+    "email": "connickp@legis.la.gov",
+    "districtOffice": [
+      "5201 Westbank Expressway",
+      "Suite 315",
+      "Marrero, LA 70072",
+      "(504)371-0240"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=8"
+  },
+  "9": {
+    "name": "J. Cameron Henry, Jr.",
+    "party": "Republican",
+    "email": "henryc@legis.la.gov",
+    "districtOffice": [
+      "2573 Metairie Road",
+      "Suite C",
+      "Metairie, LA 70001",
+      "(504)838-5433"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=9"
+  },
+  "10": {
+    "name": "Kirk Talbot",
+    "party": "Republican",
+    "email": "talbotk@legis.la.gov",
+    "districtOffice": [
+      "9523 Jefferson Hwy.",
+      "Suite B",
+      "River Ridge, LA 70123",
+      "(504)736-7299"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=10"
+  },
+  "11": {
+    "name": "Patrick McMath",
+    "party": "Republican",
+    "email": "sen11@legis.la.gov",
+    "districtOffice": [
+      "2113 Lakeshore Drive",
+      "Mandeville, LA 70448",
+      "(985)900-6278"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=11"
+  },
+  "12": {
+    "name": "Beth Mizell",
+    "party": "Republican",
+    "email": "mizellb@legis.la.gov",
+    "districtOffice": [
+      "1051 Main Street",
+      "Franklinton, LA 70438",
+      "(985)839-3936"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=12"
+  },
+  "13": {
+    "name": "Valarie Hodges",
+    "party": "Republican",
+    "email": "sen13@legis.la.gov",
+    "districtOffice": [
+      "35055 La. Hwy. 16, Suite 2A",
+      "Denham Springs, LA 70706",
+      "(225) 791-2199"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=13"
+  },
+  "14": {
+    "vacant": true,
+    "vacantWhy": "The Louisiana Senate lists this seat as vacant on its members page.",
+    "sourceUrl": "https://senate.la.gov/Senators_FullInfo",
+    "asOf": "2026-10-20"
+  },
+  "15": {
+    "name": "Regina Ashford Barrow",
+    "party": "Democratic",
+    "email": "barrowr@legis.la.gov",
+    "districtOffice": [
+      "4811 Harding Blvd",
+      "Baton Rouge, LA 70811",
+      "(225)359-9400"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=15"
+  },
+  "16": {
+    "name": "Franklin J. Foil",
+    "party": "Republican",
+    "email": "foilf@legis.la.gov",
+    "districtOffice": [
+      "412 N. 4th St.",
+      "Suite 230",
+      "Baton Rouge, LA 70802",
+      "(225)342-6777"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=16"
+  },
+  "17": {
+    "name": "Caleb Seth Kleinpeter",
+    "party": "Republican",
+    "email": "sen17@legis.la.gov",
+    "districtOffice": [
+      "3741 Highway 1",
+      "Port Allen, LA 70767",
+      "(225)246-8838"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=17"
+  },
+  "18": {
+    "name": "Eddie J. Lambert",
+    "party": "Republican",
+    "email": "lamberte@legis.la.gov",
+    "districtOffice": [
+      "P.O. Box 241",
+      "Gonzales, LA 70707",
+      "(225)673-5048"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=18"
+  },
+  "19": {
+    "name": "Gregory A. Miller",
+    "party": "Republican",
+    "email": "sen19@legis.la.gov",
+    "districtOffice": [
+      "P. O. Box 190",
+      "Norco, LA 70079",
+      "(985) 764-9991"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=19"
+  },
+  "20": {
+    "name": "Michael \"Big Mike\" Fesi",
+    "party": "Republican",
+    "email": "sen20@legis.la.gov",
+    "districtOffice": [
+      "7910 Main Street",
+      "Suite 430",
+      "Houma, LA 70360",
+      "(985)858-2979"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=20"
+  },
+  "21": {
+    "name": "Robert Allain",
+    "party": "Republican",
+    "email": "sen21@legis.la.gov",
+    "districtOffice": [
+      "600 Main Street",
+      "Franklin, LA 70538",
+      "(337)828-9107"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=21"
+  },
+  "22": {
+    "name": "Blake Miguez",
+    "party": "Republican",
+    "email": "sen22@legis.la.gov",
+    "districtOffice": [
+      "1101 E. Admiral Doyle Drive",
+      "Suite 301-8",
+      "New Iberia, LA 70560",
+      "(337) 373-9400"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=22"
+  },
+  "23": {
+    "name": "Brach Jerad Myers",
+    "party": "Republican",
+    "email": "sen23@legis.la.gov",
+    "districtOffice": [
+      "P. O. Box 51499",
+      "Lafayette, LA 70505",
+      "Physical Address:",
+      "1438 South College",
+      "Lafayette, LA 70503",
+      "(337)295-1765"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=23"
+  },
+  "24": {
+    "name": "Gerald Boudreaux",
+    "party": "Democratic",
+    "email": "boudreauxg@legis.la.gov",
+    "districtOffice": [
+      "P.O. Box 91245",
+      "Lafayette, LA 70509",
+      "(337)267-7520"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=24"
+  },
+  "25": {
+    "name": "Mark Abraham",
+    "party": "Republican",
+    "email": "abrahamm@legis.la.gov",
+    "districtOffice": [
+      "130 Jamestown Road",
+      "Lake Charles, LA 70605",
+      "(337)475-3016"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=25"
+  },
+  "26": {
+    "name": "Bob Hensgens",
+    "party": "Republican",
+    "email": "sen26@legis.la.gov",
+    "districtOffice": [
+      "122 N. State Street",
+      "Suite 100",
+      "Abbeville, LA 70510",
+      "(337)740-6425"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=26"
+  },
+  "27": {
+    "name": "Jeremy P. Stine",
+    "party": "Republican",
+    "email": "sen27@legis.la.gov",
+    "districtOffice": [
+      "127 Broad Street",
+      "Suite 700",
+      "Lake Charles, LA 70601",
+      "(337)491-2016"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=27"
+  },
+  "28": {
+    "name": "Heather Miley Cloud",
+    "party": "Republican",
+    "email": "sen28@legis.la.gov",
+    "districtOffice": [
+      "P.O Box 269",
+      "Turkey Creek, LA 70585",
+      "7674 US Hwy 167",
+      "Ville Platte, La 70586",
+      "(337)461-2595"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=28"
+  },
+  "29": {
+    "name": "W. Jay Luneau",
+    "party": "Democratic",
+    "email": "luneauj@legis.la.gov",
+    "districtOffice": [
+      "301 Jackson Street",
+      "Suite 102",
+      "Alexandria, LA 71301",
+      "(318)484-2288"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=29"
+  },
+  "30": {
+    "name": "Mike Reese",
+    "party": "Republican",
+    "email": "sen30@legis.la.gov",
+    "districtOffice": [
+      "1206 South 5th Street",
+      "Leesville, LA 71446",
+      "218 West 4th Street",
+      "DeQuincy, LA 70633",
+      "401 West 1st Street",
+      "DeRidder, LA 70634",
+      "(337)238-6435"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=30"
+  },
+  "31": {
+    "name": "Alan Seabaugh",
+    "party": "Republican",
+    "email": "sen31@legis.la.gov",
+    "districtOffice": [
+      "515 South Capitol Street",
+      "Many, LA 71449",
+      "(318) 676-7990"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=31"
+  },
+  "32": {
+    "name": "Glen Womack",
+    "party": "Republican",
+    "email": "sen32@legis.la.gov",
+    "districtOffice": [
+      "P.O. Box 660",
+      "Harrisonburg, LA 71340",
+      "119 Pine Street",
+      "Suite B",
+      "Harrisonburg, LA 71340",
+      "(318)744-0005"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=32"
+  },
+  "33": {
+    "name": "Stewart Cathey, Jr.",
+    "party": "Republican",
+    "email": "sen33@legis.la.gov",
+    "districtOffice": [
+      "209 North Park Drive",
+      "Monroe, LA 71203",
+      "(318)582-5524"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=33"
+  },
+  "34": {
+    "name": "Katrina R. Jackson-Andrews",
+    "party": "Democratic",
+    "email": "jacksonk@legis.la.gov",
+    "districtOffice": [
+      "4106 DeSiard St.",
+      "Monroe, LA 71203-4526",
+      "(318)343-2877"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=34"
+  },
+  "35": {
+    "name": "John C. \"Jay\" Morris III",
+    "party": "Republican",
+    "email": "morrisjc@legis.la.gov",
+    "districtOffice": [
+      "1408 North 7th Street",
+      "West Monroe, La 71291",
+      "(318)362-4270"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=35"
+  },
+  "36": {
+    "name": "J. Adam Bass",
+    "party": "Republican",
+    "email": "sen36@legis.la.gov",
+    "districtOffice": [
+      "2123 Shed Road",
+      "Suite 5",
+      "Bossier City, LA 71111",
+      "(318)741-2812"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=36"
+  },
+  "37": {
+    "name": "William \"Bill\" Wheat, Jr.",
+    "party": "Republican",
+    "email": "sen37@legis.la.gov",
+    "districtOffice": [
+      "P. O. Box 2473",
+      "Ponchatoula, LA 70454",
+      "(985)543-4998"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=37"
+  },
+  "38": {
+    "name": "Thomas A. Pressly",
+    "party": "Republican",
+    "email": "sen38@legis.la.gov",
+    "districtOffice": [
+      "900 Pierremont Road, Suite 119",
+      "Shreveport, LA 71106",
+      "(318) 862-9920"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=38"
+  },
+  "39": {
+    "name": "Sam L. Jenkins, Jr.",
+    "party": "Democratic",
+    "email": "sen39@legis.la.gov",
+    "districtOffice": [
+      "2419 Kings Hwy.",
+      "Shreveport, LA 71103",
+      "(318) 632-5970"
+    ],
+    "url": "https://senate.la.gov/smembers.aspx?ID=39"
+  }
+}

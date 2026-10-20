@@ -81,6 +81,9 @@ const cases = [
     "1438 South College, Lafayette, LA 70503"],
   [["P.O. Box 660", "Harrisonburg, LA 71340", "119 Pine Street", "Suite B", "Harrisonburg, LA 71340", "(318)744-0005"],
     "119 Pine Street, Suite B, Harrisonburg, LA 71340"],
+  // the box in one town, the office in another, its state written "La"
+  [["P.O Box 269", "Turkey Creek, LA 70585", "7674 US Hwy 167", "Ville Platte, La 70586", "(337)461-2595"],
+    "7674 US Hwy 167, Ville Platte, La 70586"],
   // three offices in one block: the first is the one pinned
   [["1206 South 5th Street", "Leesville, LA 71446", "218 West 4th Street", "DeQuincy, LA 70633", "401 West 1st Street", "DeRidder, LA 70634", "(337)238-6435"],
     "1206 South 5th Street, Leesville, LA 71446"],
@@ -187,7 +190,11 @@ for (const [lines, want] of lookups) {
 // with an index.html and a data/app/, the rule the registration gate
 // discovers by, so a new state's rosters are read the day they land.
 const PHONE = /(?:\(\d{3}\)\s*|\b\d{3}[-.])\d{3}[-.]\d{4}\b|\b(?:phone|fax|e-?mail)\s*:/i;
-const CITY_LINE = /\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\s*$/;
+// The state's second letter may be lower case: the Louisiana Senate prints
+// "Ville Platte, La 70586" after a box in "Turkey Creek, LA 70585", and
+// the helper is right to pin the street address, which only this reading
+// counts as the block's city line.
+const CITY_LINE = /\b[A-Z][A-Za-z]\s+\d{5}(?:-\d{4})?\s*$/;
 // a house number and the street it is on: "317 Washington St", "2-6 E. 2nd St"
 const NUMBERED_STREET = new RegExp("(?:^|[\\s,])(\\d+[a-z]?(?:-\\d+[a-z]?)?\\s+(?:[nsew]\\.?\\s+)?" +
   "(?:[a-z0-9][a-z0-9'.-]*\\s+){0,3}(?:street|st|avenue|ave|road|rd|boulevard|blvd|drive|dr|lane|ln|place|pl|" +

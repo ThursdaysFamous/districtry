@@ -1,0 +1,117 @@
+name: Update Louisiana parish officials
+
+# Weekly refresh of every Louisiana parish's governing body and its parish
+# president or mayor (la/data/app/la-parish-officials.json, fetched by
+# la/index.html's Parish and Police Jury or Council District cards), rebuilt by
+# la/scripts/build_la_parish_officials.py from the Secretary of State's list of
+# elected officials: three CSV exports from voterportal.sos.la.gov, one per
+# office ("Police Juror", "Councilman at Large" and "Parish President"), two
+# seconds apart. If anything changed it opens a PR rather than committing
+# directly to main — officeholder data gets a look before it ships.
+#
+# The list is the Secretary of State's live record rather than a dated
+# edition, so the file carries the day it was read, and a run whose records
+# are unchanged keeps the previous day: most weeks change nothing and open no
+# PR. A seat changing hands, a resignation or a special election is what this
+# job exists to catch.
+#
+# The builder FAILS rather than writing when the exports stop reading the way
+# they were measured on 2026-10-20: all 64 parishes matched to the Census's
+# parishes, one kind of body per parish, every member with a name and a seat,
+# no telephone on two members' rows, the member and executive floors, and the
+# share of members carrying a telephone and a party.
+# A red run is the signal that a person needs to read the list.
+#
+# It reads each row's office, seat, name, telephone, party and term, and
+# never the race or gender the same rows print. An address ships only as a
+# body's office, where at least three members print the same one.
+#
+# THE PARISH DISTRICT FILE IS HELD TO THIS ROSTER, so the validate step runs
+# both builders' --check: la-parish-districts.json carries a district only
+# where the list names a seat for it, and a week in which a drawn parish's
+# seats change shape fails here, before a PR, rather than on the bot PR.
+#
+# robots.txt: voterportal.sos.la.gov permits every path under
+# /ElectedOfficials/ (read 2026-10-20), and the builder reads the policy before
+# its first fetch through scraper_common. www.sos.la.gov and
+# electionstatistics.sos.la.gov refuse every client and are never read.
+#
+# LOUISIANA IS DARK, so this job regenerates no parish page:
+# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
+# go-live adds its adapter.
+
+on:
+  schedule:
+    - cron: "23 19 * * 3" # Wednesday 19:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR runs CI; see
+      # update-la-legislature-roster.yml for why.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the three exports (the builder retries a reset or a
+      # timeout); the CSV is read with the stdlib. shapely is not used by the
+      # district builder's --check below, only by its build, which reads the
+      # Census's rings; it is installed because validate_workflow_deps.py reads
+      # every import in a script this workflow runs and cannot tell which
+      # functions run.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests shapely
+
+      - name: Rebuild the parish governing bodies
+        run: python3 la/scripts/build_la_parish_officials.py
+
+      - name: Validate app + data files
+        run: |
+          python3 la/scripts/build_la_parish_officials.py --check
+          python3 la/scripts/build_la_parish_districts.py --check
+          python3 la/scripts/validate_index.py la/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- la/data/app/la-parish-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/la-parish-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history; the rebuilt file is
+          # carried over the checkout as an uncommitted change.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add la/data/app/la-parish-officials.json
+          git commit -m "Update Louisiana parish governing bodies"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Louisiana parish governing bodies" \
+              --body "Automated weekly refresh of every Louisiana parish's police jury, council or commission and its parish president or mayor, from the Secretary of State's list of elected officials, generated by \`la/scripts/build_la_parish_officials.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

@@ -3894,6 +3894,15 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "la/data/app/la-parish-officials.json": dict(
+        date="2026-10-20",
+        reason="Louisiana's parish governing bodies — 38 police juries, 25 "
+               "councils and Caddo's commission, every member named from the "
+               "Secretary of State's list. They ARE these pages' subject, and "
+               "are recorded here only while the instance is dark: an adapter "
+               "would write pages for a folder the deploy does not publish. "
+               "Louisiana's go-live writes the adapter and drops this entry.",
+    ),
     "mn/data/app/mn-county-town-officers.json": dict(
         date="2026-10-16",
         reason="the supervisors, clerks and treasurers of 416 Minnesota "
@@ -3993,7 +4002,7 @@ NOT_COUNTY_BOARDS = {
 
 _NAME_FIELDS = ("name", "chair", "member", "supervisor", "commissioner")
 _COUNTY_WORDS = re.compile(r"county-board|county-commission|commissioner|"
-                           r"supervisor|county-officer")
+                           r"supervisor|county-officer|parish")
 
 
 def _names_people(obj):
@@ -4054,8 +4063,13 @@ def check_registration(read_paths):
             named = sum(1 for r in recs if _names_people(r))
             if named * 2 < len(recs):
                 continue
+            # LOUISIANA'S COUNTIES ARE PARISHES, and its roster says so: a
+            # record carries `parish`, never `county`, and the file is named
+            # for parish officials. Without this test and the word in
+            # _COUNTY_WORDS the gate let the fleet's first parish roster,
+            # la-parish-officials.json, land unseen (2026-10-20).
             county_keyed = sum(1 for r in recs if isinstance(r, dict)
-                               and (r.get("county") or "").strip())
+                               and (r.get("county") or r.get("parish") or "").strip())
             if not (county_keyed * 2 >= len(recs)
                     or _COUNTY_WORDS.search(os.path.basename(path))):
                 continue
