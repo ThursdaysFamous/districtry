@@ -2873,7 +2873,11 @@ try {
   //     in than the bare app with all of Chicago in view and no `z=` written,
   //     and the link it is rewritten to opens the same way again; one that
   //     also names a statewide layer keeps the state view; and one carrying
-  //     its own zoom keeps that zoom, centred on Chicago.
+  //     its own zoom keeps that zoom, centred on Chicago. The ward page's
+  //     layers also answer in the suburbs, so its link names its area
+  //     (`frame=chicago`): that opens on Chicago and stays in the rewritten
+  //     hash until a point is selected, the same layers without it keep the
+  //     state view, and an area this app does not declare is ignored.
   {
     const view = async (hash) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -2906,6 +2910,37 @@ try {
       zoomed.zoom === 12 && Math.abs(zoomed.center[0] - 41.834) < 0.05 &&
         Math.abs(zoomed.center[1] + 87.732) < 0.05 && zoomed.hash === "#l=sb&z=12",
       JSON.stringify(zoomed));
+    const wardLayers = "#layers=ward,ward-precinct,county-precinct";
+    const unnamed = await view(wardLayers);
+    check("the ward page's layers alone keep the state view",
+      unnamed.zoom === bare.zoom && near(unnamed, bare), JSON.stringify({ bare, unnamed }));
+    const named = await view(wardLayers + "&frame=chicago");
+    // The rewritten hash also names the parent layers the ward page's
+    // sub-layers turn on, so it is read for the three it must carry.
+    const namedCodes = (/^#l=([a-z0-9,]+)&f=chicago$/.exec(named.hash) || ["", ""])[1].split(",");
+    check("a link naming its area opens on it and keeps it in the hash",
+      named.zoom === city.zoom && near(named, city) && named.cityInView &&
+        ["wd", "wp", "cp"].every((c) => namedCodes.includes(c)),
+      JSON.stringify({ city, named }));
+    const namedAgain = await view(named.hash);
+    check("the link it is rewritten to opens on the area again",
+      namedAgain.zoom === named.zoom && near(namedAgain, named) && namedAgain.hash === named.hash,
+      JSON.stringify({ named, namedAgain }));
+    const unknown = await view("#layers=school-board&frame=nowhere");
+    check("an area this app does not declare is ignored and the layers decide",
+      unknown.zoom === city.zoom && near(unknown, city) && unknown.hash === "#l=sb",
+      JSON.stringify({ city, unknown }));
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}${named.hash}`);
+      const hash = await page.evaluate((n) => {
+        window[n].setSelectedPoint(41.8825, -87.6285);
+        return location.hash;
+      }, EXPORTS_NAME);
+      await context.close();
+      check("a selected point takes the area out of the hash",
+        /^#p=41\.8825,-87\.6285&/.test(hash) && !/(^|&)f=/.test(hash), hash);
+    }
   }
 
   // 2i. THE PANEL COUNT COUNTS WHAT THE SIDEBAR SHOWS. The results panel's

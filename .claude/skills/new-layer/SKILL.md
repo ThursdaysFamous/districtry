@@ -98,7 +98,9 @@ Where the worksheet declares `frames` (Illinois, New York and Wisconsin
 today) and the layer answers only inside one of those areas, set its `frame`
 to that area's name, so a map link naming it opens on that city or county
 rather than the whole state; leave it unset on a layer that answers anywhere
-outside the area, because a framed link shows the area alone. The generator
+outside the area, because a framed link shows the area alone (a question page
+about the area can still name it in its own map link, `&frame=<area>`, as
+Chicago's ward page does). The generator
 measures each area from the files `frames` names and refuses a framed layer
 whose vector-tile archive reaches past its area.
 Then one run:

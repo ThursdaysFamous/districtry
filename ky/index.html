@@ -6453,7 +6453,8 @@ function initKentuckyExplorer() {
   /* ==== ENGINE:END qr-code ==== */
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N mirrors the
+   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N (and f=area on a
+   * link with no point, namedArea below) mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
@@ -6535,6 +6536,7 @@ function initKentuckyExplorer() {
       pin: params.c !== undefined ? layerFromLinkCode(params.c) : params.pin,
       stats: pick("s", "stats"),
       zoom: pick("z", "zoom"),
+      frame: pick("f", "frame"),
       q: params.q
     };
   }
@@ -6568,6 +6570,18 @@ function initKentuckyExplorer() {
     }
     return any ? L.latLngBounds([s, w], [n, e]) : null;
   }
+  // A link can also name its area itself (`f=`, `frame=` in the long form),
+  // for a page about one city whose layers also answer outside it: Chicago's
+  // ward page opens on Chicago, while its ward layer, which draws suburban
+  // wards too, opens every other link on the state. Only an area this app
+  // declares is read; any other name is ignored and the layers decide.
+  // linkAreaName is the area a link opened on, kept in the hash rewritten
+  // from it until a point is selected, so a reload opens the same way.
+  var linkAreaName = null;
+  function namedArea(name) {
+    var b = name && Object.prototype.hasOwnProperty.call(layerFrames.areas, name) ? layerFrames.areas[name] : null;
+    return b ? L.latLngBounds([b[1], b[0]], [b[3], b[2]]) : null;
+  }
 
   function syncUrlHash() {
     var parts = [];
@@ -6591,6 +6605,9 @@ function initKentuckyExplorer() {
       // beside a pin, because the report is OF the pinned district.
       if (statsIsOpen()) parts.push("s=1");
     }
+    // The area a link named (namedArea), while no point is selected; a link
+    // with a point is not framed, so the area would say nothing.
+    if (linkAreaName && !state.selectedPoint) parts.push("f=" + linkAreaName);
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -6661,14 +6678,19 @@ function initKentuckyExplorer() {
     // rewritten to carries no `z=` and opens the same way again. With one, the
     // area only places the centre. Measured 2026-10-20: the state view showed
     // none of Chicago on a 412 by 860 phone and its southern sixth on a 1280 by
-    // 800 desktop; framed, all of it shows, at 9.5 and 10.5.
-    var area = selected ? null : linkFrame(params.named);
+    // 800 desktop; framed, all of it shows, at 9.5 and 10.5. An area the link
+    // names itself (namedArea) comes before the layers' own.
+    var area = selected ? null : namedArea(params.frame);
+    if (area) linkAreaName = params.frame;
+    else if (!selected) area = linkFrame(params.named);
     if (area) {
       var areaZoom = zoom !== null ? zoom : Math.max(map.getZoom(),
         Math.min(map.getBoundsZoom(area, false, L.point(48, 48)), 14));
       if (zoom === null) bootZoom = areaZoom;
       map.setView(area.getCenter(), areaZoom, { animate: false });
       framed = true;
+      // The layer toggles above rewrote the hash before the area was known.
+      if (linkAreaName) syncUrlHash();
     }
     if (zoom !== null && !framed) map.setView(map.getCenter(), zoom, { animate: false });
     // Parsed LAST, after the layers are on and the point is set, because a pin

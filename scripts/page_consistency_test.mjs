@@ -630,15 +630,16 @@ try {
       // does both jobs (Adam: "Search if an address is provided or open the
       // map if not"), so the page's own map link and its note are hidden
       // while the box shows, and both submits are measured by the URL they
-      // produce: ./#layers=<the page's own cta> from an empty box, and
-      // ./#q=<address>&layers=<cta> from a typed one, with the address in the
-      // HASH, where count.js cannot send it.
+      // produce: exactly the hash of the page's own map link from an empty
+      // box (its layers, and the area to open on where the page names one),
+      // and ./#q=<address>&<that hash> from a typed one, with the address in
+      // the HASH, where count.js cannot send it.
       if (await p.locator("#lookup").count()) {
         check(path, "address box unhides when its script runs",
               await p.locator("#lookup").isVisible());
         const cta = await p.evaluate(() => {
           const a = document.querySelector('a.cta[href^="./#layers="]');
-          return a ? a.getAttribute("href").split("#layers=")[1] : null;
+          return a ? a.getAttribute("href").split("#")[1] : null;
         });
         check(path, "address box sits above a cta naming its layers", !!cta);
         const doubled = await p.evaluate(() =>
@@ -670,7 +671,7 @@ try {
         check(path, "an empty box opens the map on the page's own layers",
               got.pathname === `/${tag}/` &&
               got.search === "" &&
-              got.hash === `#layers=${cta}`,
+              got.hash === `#${cta}`,
               p.url());
         await p.goto(BASE + path, { waitUntil: "domcontentloaded" });
         await p.waitForSelector("#lookup:not([hidden])", { timeout: 5000 }).catch(() => {});
@@ -679,7 +680,7 @@ try {
         check(path, "submitting hands the address to the app in the hash",
               got.pathname === `/${tag}/` &&
               got.search === "" &&
-              got.hash === `#q=233%20S%20Wacker%20Dr&layers=${cta}`,
+              got.hash === `#q=233%20S%20Wacker%20Dr&${cta}`,
               p.url());
       }
       await ctx.close();
