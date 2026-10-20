@@ -430,9 +430,33 @@ def build(feats, out_path, workdir):
 
 # ---- gate -------------------------------------------------------------------
 
+def read_directories_once():
+    """Parse each archive directory once, not on every tile read.
+
+    pmtiles' Reader.get unpacks the archive's root directory again for every
+    tile it returns, in pure Python, and a committed archive's root holds up
+    to 6,863 entries. The parse is a pure function of the directory's bytes
+    and nothing the reader does with its result writes to it, so reusing the
+    result for the same bytes changes no answer. Measured here on 2026-10-20,
+    --committed went from 88 s to 36 s and validate_vector_tiles.py from
+    166 s to 48 s, and both printed exactly the lines they printed before.
+    The library's own directory walk is kept, because validate_vector_tiles.py
+    holds the app's reader to it; only the name Reader.get looks up is
+    wrapped. Calling this again does nothing.
+    """
+    import functools
+    import pmtiles.reader
+    parse = pmtiles.reader.deserialize_directory
+    if not hasattr(parse, "cache_info"):
+        # every committed archive has one directory, its root; 64 leaves room
+        # for archives large enough to need leaf directories
+        pmtiles.reader.deserialize_directory = functools.lru_cache(maxsize=64)(parse)
+
+
 class Archive:
     def __init__(self, path):
         from pmtiles.reader import Reader, MmapSource
+        read_directories_once()
         self._fh = open(path, "rb")
         self._r = Reader(MmapSource(self._fh))
         self._cache = {}

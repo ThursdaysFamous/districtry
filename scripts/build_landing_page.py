@@ -342,20 +342,58 @@ CHIP_PLACE = {
 # account is a different entity and is deliberately not listed.
 REPO = "https://github.com/ThursdaysFamous/districtry"
 
-# The rename notice. Data, not markup, so retiring it is deleting a constant
-# rather than editing a page — set NOTICE to None when it has served its time.
-# It is deliberately plain about what happened and what it means for a reader
-# who typed the old name, because that is the only reason they are reading it.
-# Presentation: a dismissible toast that auto-fades after NOTICE_SECONDS (the
-# Claude Design handoff's default), never persisted across visits — every load
-# gets the chance to notice it, exactly like the banner it replaces did.
+# The front page's notice. Data, not markup, so retiring it is deleting a
+# constant rather than editing a page — set NOTICE to None when it has served
+# its time.
+#
+# It invites Android readers into the Google Play app's closed test (Adam,
+# 2026-10-20). It replaced the "chidistricts.com is now districtry.com" notice
+# that had stood here since the R2.3 move. A personal Play developer account
+# made after November 2023 may apply to publish an app only once at least 12
+# testers have each stayed opted in to its closed test for the 14 days before
+# it applies (Play Console help, read 2026-10-17), so the link goes to the
+# steps page the printed sign-up sheet opens, with ref=front-page so the
+# traffic report shows how many readers arrive there from this page
+# (GoatCounter reads ref as the referrer). It is linked as android.html, the
+# way this page links every other page, and not as the printed /android:
+# GitHub Pages answers both, but the server the browser checks run against
+# serves a file only by its own name, and page_consistency_test.mjs fetches
+# every link on the page, hidden or not.
+#
+# WHO SEES IT is "only": "android". The page ships the notice hidden, and its
+# script shows it when the user agent names Android, the window is not an
+# installed copy (display-mode standalone, which the Play app's own window
+# reports as well) and the Play app's mark from engine/shared/play-app.txt is
+# not set. A computer, an iPhone or a browser with no script shows nothing,
+# because what the notice offers exists only on Android.
+#
+# IT STAYS UNTIL THE READER CLOSES IT. The rename notice faded after 15
+# seconds, which suited news and suits an invitation to act much less; and on
+# a phone it sat in the page's flow, so the fade moved the address box up under
+# a reader who had started typing.
+#
+# A CLOSE OR A TAP ON ITS LINK IS REMEMBERED, "remember": "android-test" (Adam,
+# 2026-10-20: a "no" should stay closed). The page writes one word in the
+# browser's localStorage under the key the maps' own invitation to the test
+# uses, and notice_memory() reads both the key and the word from the engine's
+# install-app block, so a reader who closed or followed either invitation is
+# shown neither again, while a reader who only saw the maps' bar still sees
+# this one. localStorage and not a cookie: a cookie goes to the host with every
+# request, and this word never leaves the browser. The privacy page measures
+# the write and says so. The notice cannot outlive the maps' test: once
+# DST_ANDROID_TEST_URL there is null, this build fails until NOTICE changes.
 NOTICE = {
-    "heading": "chidistricts.com is now districtry.com",
-    "body": ("Same map, same data, same answers — a new name, because it now covers "
-             "more than Chicago and more than one state. Illinois lives at "
-             "districtry.com/il, and every link below goes straight there."),
+    "heading": "Help test districtry on Android",
+    "body": ("districtry is coming to Google Play as an app, and Google needs at "
+             "least 12 people to test it for 14 days in a row first. Joining "
+             "takes a few minutes."),
+    "link": {"href": "/android.html?ref=front-page", "text": "See how to join"},
+    "only": "android",
+    "remember": "android-test",
 }
-NOTICE_SECONDS = 15
+NOTICE_ONLY = ("android",)
+NOTICE_REMEMBER = ("android-test",)
+INSTALL_APP = os.path.join(REPO_ROOT, "engine", "index.html", "install-app.txt")
 
 # The independence line, and it earns its place rather than decorating the page.
 # On 2026-08-25 Google Safe Browsing flagged districtry.com under "Deceptive
@@ -559,16 +597,79 @@ def oxford_join(items):
 
 
 def render_notice():
+    """The notice's markup, or nothing when NOTICE is None.
+
+    A notice with an "only" condition ships hidden and the page's script shows
+    it where the condition holds, so a reader it is not for never sees it flash.
+    """
     if not NOTICE:
         return ""
+    only = NOTICE.get("only")
+    if only is not None and only not in NOTICE_ONLY:
+        fail('NOTICE["only"] is %r; the page\'s script knows only %s.'
+             % (only, ", ".join(NOTICE_ONLY)))
+    link = NOTICE.get("link")
+    cta = ""
+    if link:
+        cta = ('      <p class="notice-cta"><a href="%s">%s</a></p>\n'
+               % (html.escape(link["href"], quote=True), html.escape(link["text"])))
+    attrs = ' data-only="%s" hidden' % only if only else ""
     return (
-        '    <aside id="notice" class="notice" role="status" aria-live="polite">\n'
+        '    <aside id="notice" class="notice" aria-labelledby="notice-h"%s>\n'
         '      <p id="notice-h" class="notice-h">%s</p>\n'
         '      <p class="notice-b">%s</p>\n'
+        '%s'
         '      <button type="button" id="notice-dismiss" aria-label="Dismiss this notice">&#x2715;</button>\n'
         '    </aside>\n'
-        % (html.escape(NOTICE["heading"]), html.escape(NOTICE["body"]))
+        % (attrs, html.escape(NOTICE["heading"]), html.escape(NOTICE["body"]), cta)
     )
+
+
+def notice_memory():
+    """The notice's memory, as script: whether it was answered, and the answer.
+
+    "android-test" keeps the answer with the maps' invitation to the Android
+    test, so the key and the word are read from the engine's install-app
+    block, the one copy of both, and this page and the maps cannot come to
+    write two different things. With no "remember" the answer lasts for the
+    page view, and nothing is stored.
+    """
+    remember = NOTICE.get("remember") if NOTICE else None
+    if remember is None:
+        return ("  /* Closing the notice lasts for this page view: it remembers nothing. */\n"
+                "  function noticeAnswered() { return false; }\n"
+                "  function noticeAnswer() {}\n")
+    if remember not in NOTICE_REMEMBER:
+        fail('NOTICE["remember"] is %r; the page\'s script knows only %s.'
+             % (remember, ", ".join(NOTICE_REMEMBER)))
+    src = read(INSTALL_APP, "the maps' install invitation")
+    key = re.search(r'\bvar DST_INSTALL_INVITE_KEY = "([a-z-]+)";', src)
+    word = re.search(r'\bvar DST_TEST_INVITE_ANSWERED = "([a-z-]+)";', src)
+    if not key or not word:
+        fail("NOTICE remembers its answer with the maps' invitation to the Android "
+             "test, and engine/index.html/install-app.txt no longer declares "
+             "DST_INSTALL_INVITE_KEY and DST_TEST_INVITE_ANSWERED as plain strings, "
+             "so this page cannot know what to write.")
+    if not re.search(r'\bvar DST_ANDROID_TEST_URL = "', src):
+        fail("NOTICE remembers its answer with the maps' invitation to the Android "
+             "test, and that test has ended: DST_ANDROID_TEST_URL in "
+             "engine/index.html/install-app.txt is no longer an address. Change or "
+             "retire NOTICE in the same change.")
+    return (
+        "  /* The notice's answer, kept with the maps' own invitation to the Android\n"
+        "     test (engine/index.html/install-app.txt names the key and the word):\n"
+        "     closing the notice or following its link writes the word, and an\n"
+        "     answer on either page keeps both closed. localStorage, not a cookie,\n"
+        "     so the word never leaves the browser. */\n"
+        '  var NOTICE_KEY = "%s";\n'
+        '  var NOTICE_ANSWERED = "%s";\n'
+        "  function noticeAnswered() {\n"
+        "    try { return window.localStorage.getItem(NOTICE_KEY) === NOTICE_ANSWERED; } catch (e) { return false; }\n"
+        "  }\n"
+        "  function noticeAnswer() {\n"
+        "    try { window.localStorage.setItem(NOTICE_KEY, NOTICE_ANSWERED); } catch (e) { /* storage blocked: it shows again next visit */ }\n"
+        "  }\n"
+        % (key.group(1), word.group(1)))
 
 
 def render_independence():
@@ -1031,23 +1132,33 @@ body {
 .shell { position: relative; min-height: 100vh; }
 .wrap { max-width: 940px; margin: 0 auto; padding: 56px 24px 72px; }
 
-/* The rename toast: absolutely positioned against .shell (full viewport
-   width), never against .wrap (the centered 940px column) — it sits near the
-   top-right of the WINDOW, matching where a reader's eye actually lands, not
-   near the top-right of the text measure. */
+/* The notice: a card at the top of the column, in the page's flow, above the
+   masthead. It used to be a toast placed over the top-right of the window
+   that faded after 15 seconds; the notice now asks the reader to do
+   something and stays until it is closed, and a card that stays must not sit
+   over the masthead's links. See NOTICE for who it is shown to. */
 .notice {
-  position: absolute; z-index: 20; top: 18px; right: 24px;
-  width: 480px; max-width: calc(100%% - 48px);
-  padding: 14px 40px 15px 18px;
+  position: relative; margin: 0 0 24px;
+  padding: 14px 44px 15px 18px;
   background: var(--brand-tint); border: 1px solid var(--brand-border);
-  border-radius: var(--radius-card); box-shadow: 0 6px 22px rgba(23, 22, 28, .16);
-  opacity: 1;
+  border-radius: var(--radius-card);
 }
+.notice[hidden] { display: none; }
 .notice-h {
   margin: 0 0 5px; font: var(--font-heading-weight) 17px/1.25 var(--font-heading);
   color: var(--ink);
 }
 .notice-b { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-3); max-width: 52em; }
+/* The one thing in the notice to tap, on a 32px row so it clears WCAG 2.5.8's
+   24px with room to spare on a phone; the colours are the footer support
+   line's, on the same tint. */
+.notice-cta { margin: 6px 0 0; }
+.notice-cta a {
+  display: inline-flex; align-items: center; min-height: 32px;
+  font-size: 15px; font-weight: 600; color: var(--brand-600);
+}
+.notice-cta a:hover { color: var(--brand-700); }
+.notice-cta a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 4px; }
 .notice #notice-dismiss {
   position: absolute; top: 9px; right: 10px; width: 26px; height: 26px;
   display: flex; align-items: center; justify-content: center; padding: 0;
@@ -1058,9 +1169,6 @@ body {
 .notice #notice-dismiss:hover, .notice #notice-dismiss:focus-visible {
   background: var(--surface); border-color: var(--brand-border); color: var(--ink);
 }
-@keyframes notice-out { from { opacity: 1; } to { opacity: 0; } }
-.notice.is-fading { animation: notice-out 900ms ease forwards; }
-@media (prefers-reduced-motion: reduce) { .notice.is-fading { animation-duration: 1ms; } }
 
 /* The masthead: the mark beside the wordmark, at a size the mark is actually
    drawn for, in a bar the sub-pages already wear. It was a 64px mark over a
@@ -1072,8 +1180,9 @@ body {
    a light ground and screen on a dark one; keep multiply on dark and they go
    muddy and near-black.
 
-   There is no theme toggle here. The sub-pages carry one because they read a
-   stored choice; this page follows the operating system and stores nothing,
+   There is no theme toggle here. The sub-pages carry one because they store a
+   choice; this page stores none of its own (it reads the one an app stored,
+   through the shared theme boot, and otherwise follows the operating system),
    and a control that looks like the sub-pages' but only lasts a page would be
    worse than none. */
 header.mast {
@@ -1373,7 +1482,7 @@ footer .support b { color: var(--ink); }
   h1 { font-size: 31px; }
   h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
-  .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
+  .notice { margin-bottom: 22px; }
   .states { columns: 2; column-gap: 10px; }
   .states-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -1401,8 +1510,8 @@ footer .support b { color: var(--ink); }
 <body>
   <a href="#page-main" class="skip-link">Skip to content</a>
   <div class="shell">
-%(notice)s    <div class="wrap">
-    <header class="mast">
+    <div class="wrap">
+%(notice)s    <header class="mast">
       <div class="mast-brand">
         %(mark)s
         <span class="wordmark">districtry</span>
@@ -1534,40 +1643,42 @@ footer .support b { color: var(--ink); }
   </div>
 <script>
 (function () {
-  /* ---------- rename-notice toast: auto-fades, dismissible ---------- */
-  var notice = document.getElementById("notice");
+  /* ---------- the notice: shown where it applies, closed on request ----------
+     A notice with data-only ships hidden (render_notice), and this shows it
+     where its condition holds. "android": a browser on Android, not an
+     installed copy, which is display-mode standalone (the Play app's own
+     window reports it too), and not a window the Play app's mark has set
+     (engine/shared/play-app.txt, run in the head). Not once it has been
+     answered, which noticeAnswered says (notice_memory). */
+%(notice_memory)s  var notice = document.getElementById("notice");
   if (notice) {
-    var fadeTimer = null, cleanupTimer = null, faded = false;
-    function fade() {
-      if (faded) return;
-      faded = true;
-      clearTimeout(fadeTimer);
-      clearTimeout(cleanupTimer);
-      var done = function () {
-        notice.removeEventListener("animationend", done);
-        notice.style.display = "none";
-      };
-      notice.addEventListener("animationend", done);
-      notice.classList.add("is-fading");
-      // belt and braces: some browsers skip animationend for a 0-duration
-      // reduced-motion run, or a tab backgrounded mid-fade.
-      cleanupTimer = setTimeout(done, 3000);
+    var only = notice.getAttribute("data-only");
+    var answered = noticeAnswered();
+    if (only === "android") {
+      var installed = !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+        window.navigator.standalone === true);
+      if (/\\bAndroid\\b/.test(window.navigator.userAgent || "") && !installed &&
+          !document.documentElement.classList.contains("dst-play-app") && !answered) {
+        notice.hidden = false;
+      }
+    } else if (!only && !answered) {
+      notice.hidden = false;
     }
-    fadeTimer = setTimeout(fade, %(notice_seconds)d * 1000);
     var dismiss = document.getElementById("notice-dismiss");
-    if (dismiss) dismiss.addEventListener("click", fade);
-    /* The toast is FIRST in the DOM, so its dismiss button is the page's first
-       tab stop: a keyboard reader lands there before anything else. Auto-fading
-       it out from under them would destroy the focused element and drop focus
-       to <body> mid-navigation. While focus is inside, the timer does not run;
-       it restarts when focus leaves. A click still fades immediately, because
-       that is the reader ASKING for it to go. */
-    notice.addEventListener("focusin", function () { clearTimeout(fadeTimer); });
-    notice.addEventListener("focusout", function () {
-      if (faded) return;
-      clearTimeout(fadeTimer);
-      fadeTimer = setTimeout(fade, %(notice_seconds)d * 1000);
+    if (dismiss) dismiss.addEventListener("click", function () {
+      /* A keyboard reader's focus would drop to <body> with the button gone,
+         so it moves on to the masthead's first link, the next thing in the
+         tab order. A tap leaves focus alone. */
+      var keyboard = false;
+      try { keyboard = dismiss.matches(":focus-visible"); } catch (e) { /* older browser */ }
+      notice.hidden = true;
+      noticeAnswer();
+      var next = document.querySelector(".mast-nav a");
+      if (keyboard && next) next.focus();
     });
+    /* Following the link answers it too; the browser follows it either way. */
+    var follow = notice.querySelector(".notice-cta a");
+    if (follow) follow.addEventListener("click", noticeAnswer);
   }
 
   /* ---------- address box: geocode, then route to the covered instance ----------
@@ -2121,12 +2232,12 @@ footer .support b { color: var(--ink); }
         "asks": render_asks(metros),
         "mark": load_mark(),
         "notice": render_notice(),
+        "notice_memory": notice_memory(),
         "independence": render_independence(),
         "answer_count": html.escape(answer_count),
         "answer_verb": answer_verb,
         "key_wash": key_wash,
         "metros_js": render_metros_js(metros),
-        "notice_seconds": NOTICE_SECONDS,
     }
 
 
