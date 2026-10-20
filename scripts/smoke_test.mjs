@@ -2018,10 +2018,13 @@ try {
   //     browser's own dialog. It is offered ONCE: after a reload, with the
   //     event fired again, nothing shows. On a computer the event is left
   //     alone. An iPhone's Safari has no such event and gets a short tip with
-  //     no button. A launch of the installed app is counted once per window
-  //     and an install once, both by app and never by place. Chrome's real
-  //     event cannot be produced in a test, so a synthetic one carries the two
-  //     members the app uses, prompt() and userChoice.
+  //     no button. While the Android app is in Google Play's closed test, a
+  //     phone whose browser names Android is invited to the test instead; the
+  //     Install case below runs with this headless browser's own user agent,
+  //     which does not name Android. A launch of the installed app is counted
+  //     once per window and an install once, both by app and never by place.
+  //     Chrome's real event cannot be produced in a test, so a synthetic one
+  //     carries the two members the app uses, prompt() and userChoice.
   {
     const PHONE = { width: 390, height: 844 };
     const TAG = APP_DIR.replace(/\/$/, "");
@@ -2158,6 +2161,73 @@ try {
       const events = await installEvents(page);
       check("closing the tip removes it, and the tip and its closing are each counted once",
         gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
+      await context.close();
+    }
+    // WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST, an Android phone
+    // is invited to the test instead of being offered the website version:
+    // Chrome's event is still held, no Install button is offered, and the bar
+    // links the steps page. A reader who was offered the install before the
+    // test began (the key already reads "shown") is asked once about the
+    // test, and not again; and the Play app's own window is not asked at all.
+    const ANDROID_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36";
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      await context.addInitScript(() => {
+        try {
+          if (!sessionStorage.getItem("__inviteSeeded")) {
+            sessionStorage.setItem("__inviteSeeded", "1");
+            localStorage.setItem("districtry-install-invite", "shown");
+          }
+        } catch (e) { /* blocked storage: the checks below report it */ }
+      });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      const shown = await page.waitForSelector(".install-invite a.install-invite-go", { timeout: 10000 }).then(() => true, () => false);
+      const bar = await page.evaluate(() => {
+        const el = document.querySelector(".install-invite");
+        const a = el && el.querySelector("a.install-invite-go");
+        return el ? { text: el.textContent, href: a && a.getAttribute("href"),
+          install: !!el.querySelector("button.install-invite-go") } : null;
+      });
+      check("on an Android phone the app holds Chrome's install event and invites the reader to the Play test instead",
+        held === true && shown && !!bar && /Android app/.test(bar.text) && !bar.install &&
+        bar.href === "/android.html?ref=map", JSON.stringify({ held, bar }));
+      if (shown) {
+        await page.evaluate(() => document.addEventListener("click", (e) => {
+          if (e.target.closest && e.target.closest(".install-invite-go")) e.preventDefault();
+        }));
+        await page.click(".install-invite-go");
+      }
+      await page.waitForTimeout(200);
+      const after = await page.evaluate(() => ({
+        prompted: window.__prompted || 0,
+        bar: !!document.querySelector(".install-invite"),
+        seen: localStorage.getItem("districtry-install-invite"),
+      }));
+      const events = await installEvents(page);
+      check("following the test link counts it, hands Chrome's dialog nothing, and the bar goes",
+        after.prompted === 0 && !after.bar && after.seen === "test-shown" &&
+        events.join() === "install-invite/test-shown,install-invite/test-join",
+        JSON.stringify({ after, events }));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      const heldAgain = await fireInstallEvent(page);
+      await page.waitForTimeout(4500);
+      const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
+      check("the test is offered once: a later visit holds the event and shows nothing",
+        heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      const page = await booted(context, `${BASE}?ref=play#p=41.8825,-87.6285&l=cg`, stubCounter);
+      await page.waitForTimeout(4500);
+      const inApp = await page.evaluate(() => ({
+        marked: document.documentElement.classList.contains("dst-play-app"),
+        bar: !!document.querySelector(".install-invite"),
+      }));
+      check("inside the Play app nobody is invited to the test",
+        inApp.marked && !inApp.bar, JSON.stringify(inApp));
       await context.close();
     }
   }

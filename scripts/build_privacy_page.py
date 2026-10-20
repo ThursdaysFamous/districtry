@@ -415,8 +415,11 @@ def measure_address_list(src, name):
 # that the installed app was opened, once per launch, and into which app; and
 # `install-invite/<what>` what became of the one-time invitation on a phone
 # (shown, accepted, declined or closed; tip-shown or tip-closed for the
-# iPhone's directions). All three are by app and never by place: the launch
-# event is sent at boot, before any point is selected.
+# iPhone's directions; and since 2026-10-20, while the Android app is in
+# Google Play's closed test, test-shown, test-join or test-closed for the
+# invitation to that test, which an Android phone gets instead of the
+# install). All three are by app and never by place: the launch event is
+# sent at boot, before any point is selected.
 # `share-in/` joined on 2026-10-14, when the installed app joined Android's
 # Share menu (the manifest's share_target): `share-in/<tag>` records that a
 # place shared into the app opened that app, and nothing about the place,
@@ -529,6 +532,10 @@ def measure(rel, name, url, tag):
         app["ga"] = None
 
     app["district_search"] = bool(re.search(r"\bvar DISTRICT_SEARCH_URL\s*=", src))
+    # Whether the install invitation runs the Android app's closed test
+    # (engine install-app): the constant holds the steps page's address while
+    # it does, and null once the app is published.
+    app["android_test"] = bool(re.search(r'\bvar DST_ANDROID_TEST_URL\s*=\s*"', src))
 
     m = re.search(r'data-goatcounter="(https://([a-z0-9-]+)\.goatcounter\.com/count)"', src)
     app["goatcounter"] = {"url": m.group(1), "site": m.group(2)} if m else None
@@ -1237,12 +1244,24 @@ def render_storage_paragraphs(apps):
                 % (code("il"), code("ny"), code(store), code(key), esc(joined(users)),
                    code("/app/")))
         elif key == "districtry-install-invite":
+            # The Android test's clause is true only while the engine's
+            # install-app block runs the test; measured from the apps rather
+            # than remembered, so retiring the test cannot leave it standing.
+            test = any(a["android_test"] for a in apps if a["name"] in users)
+            if test:
+                lead = ("On a phone, the map makes an invitation only once: on Android, while "
+                        "districtry’s Android app is being tested on Google Play, to join the "
+                        "test, and elsewhere, to add districtry to your home screen. An Android "
+                        "phone that was offered the home screen before the test began is asked "
+                        "once more, about the test. It records the invitation it made in %s "
+                        "under %s, so it does not make it again.")
+            else:
+                lead = ("On a phone, the map offers once to add districtry to your home screen. "
+                        "It records that it has asked in %s under %s, so it does not ask again.")
             out.append(
-                "<p><strong>The install invitation.</strong> On a phone, the map offers once "
-                "to add districtry to your home screen. It records that it has asked in %s "
-                "under %s, so it does not ask again. This is on %s. It is one word, and it "
-                "never leaves your browser.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                "<p><strong>The install invitation.</strong> " + lead % (code(store), code(key)) +
+                " This is on %s. It is one word, and it never leaves your browser.</p>"
+                % esc(joined(users)))
         elif key == "districtry-app-launch":
             out.append(
                 "<p><strong>A launch already counted.</strong> When you open the installed "
