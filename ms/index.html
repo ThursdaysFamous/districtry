@@ -1383,8 +1383,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
      map, because on a phone the reader has usually scrolled down into the
      cards by the time it appears. Its z-index sits above the skip link (1000)
      and below the share popover (1100), the More menu (1200) and the feedback
-     form (2000), so it never covers any of them. Both buttons are 40px tall,
-     well clear of WCAG 2.5.8's 24px, because a miss lands on the page. */
+     form (2000), so it never covers any of them. Both controls are 40px
+     tall, well clear of WCAG 2.5.8's 24px, because a miss lands on the page;
+     the action is a button for the install and a link for the Android test,
+     drawn alike. */
   .install-invite {
     position: fixed;
     left: 12px;
@@ -1408,8 +1410,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .install-invite-text { flex: 1 1 auto; margin: 0; line-height: 1.4; }
   .install-invite-go {
     flex: none;
+    display: inline-flex;
+    align-items: center;
     min-height: 40px;
     padding: 0 14px;
+    text-decoration: none;
     background: transparent;
     color: var(--accent-deep, #0B5394);
     border: 1px solid var(--accent-deep, #0B5394);
@@ -6451,7 +6456,8 @@ function initMississippiExplorer() {
   /* ==== ENGINE:END qr-code ==== */
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N mirrors the
+   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N (and f=area on a
+   * link with no point, namedArea below) mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
@@ -6517,6 +6523,9 @@ function initMississippiExplorer() {
     }
     if (params.layers) params.layers.split(",").forEach(addLayer);
     if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    // The layers the link itself names, before `carry=` adds any: the ones
+    // linkFrame() opens the map on.
+    var named = layers.slice();
     // `carry=`: the layers a reader had on in the sibling app they just left,
     // named by what they mean. Each concept this app has turns on its own
     // layers for it; one it lacks is dropped, like an unknown id.
@@ -6526,9 +6535,11 @@ function initMississippiExplorer() {
     return {
       point: pick("p", "point"),
       layers: layers,
+      named: named,
       pin: params.c !== undefined ? layerFromLinkCode(params.c) : params.pin,
       stats: pick("s", "stats"),
       zoom: pick("z", "zoom"),
+      frame: pick("f", "frame"),
       q: params.q
     };
   }
@@ -6536,8 +6547,44 @@ function initMississippiExplorer() {
   // The zoom this fork boots at, read from the map rather than configured, so
   // the engine needs no per-metro constant and every fork gets its own default.
   // Safe to capture here: nothing between map creation and this line changes the
-  // zoom, and applyStateFromHash() runs at the end of boot.
+  // zoom, and applyStateFromHash() runs at the end of boot. A link framed on a
+  // city (linkFrame below) moves it to the zoom that city opened at.
   var bootZoom = map.getZoom();
+
+  // Where a link that names layers and no point opens. LAYER_FRAMES, generated
+  // from the worksheet's `frames`, names the city or county a layer answers in;
+  // a statewide app used to open every such link on the whole state, so the
+  // map link on Chicago's school board page showed central Illinois with
+  // Chicago at or past the top edge of the map. Guarded: an app with no table
+  // opens every link at its boot view, exactly as before.
+  var layerFrames = (typeof LAYER_FRAMES === "object" && LAYER_FRAMES) ? LAYER_FRAMES : { areas: {}, layers: {} };
+  // The extent covering every named layer's area, or null when any layer the
+  // app registers has no area, because then the boot view is the one that
+  // shows all of them. An id this app does not register is passed over.
+  function linkFrame(ids) {
+    var has = Object.prototype.hasOwnProperty, w = 180, s = 90, e = -180, n = -90, any = false;
+    for (var i = 0; i < ids.length; i++) {
+      if (!getLayerById(ids[i])) continue;
+      var area = has.call(layerFrames.layers, ids[i]) ? layerFrames.layers[ids[i]] : null;
+      var b = area !== null && has.call(layerFrames.areas, area) ? layerFrames.areas[area] : null;
+      if (!b) return null;
+      w = Math.min(w, b[0]); s = Math.min(s, b[1]); e = Math.max(e, b[2]); n = Math.max(n, b[3]);
+      any = true;
+    }
+    return any ? L.latLngBounds([s, w], [n, e]) : null;
+  }
+  // A link can also name its area itself (`f=`, `frame=` in the long form),
+  // for a page about one city whose layers also answer outside it: Chicago's
+  // ward page opens on Chicago, while its ward layer, which draws suburban
+  // wards too, opens every other link on the state. Only an area this app
+  // declares is read; any other name is ignored and the layers decide.
+  // linkAreaName is the area a link opened on, kept in the hash rewritten
+  // from it until a point is selected, so a reload opens the same way.
+  var linkAreaName = null;
+  function namedArea(name) {
+    var b = name && Object.prototype.hasOwnProperty.call(layerFrames.areas, name) ? layerFrames.areas[name] : null;
+    return b ? L.latLngBounds([b[1], b[0]], [b[3], b[2]]) : null;
+  }
 
   function syncUrlHash() {
     var parts = [];
@@ -6561,6 +6608,9 @@ function initMississippiExplorer() {
       // beside a pin, because the report is OF the pinned district.
       if (statsIsOpen()) parts.push("s=1");
     }
+    // The area a link named (namedArea), while no point is selected; a link
+    // with a point is not framed, so the area would say nothing.
+    if (linkAreaName && !state.selectedPoint) parts.push("f=" + linkAreaName);
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -6602,7 +6652,7 @@ function initMississippiExplorer() {
       var wanted = parseFloat(params.zoom);
       if (isFinite(wanted) && wanted >= map.getMinZoom() && wanted <= map.getMaxZoom()) zoom = wanted;
     }
-    var framed = false;
+    var framed = false, selected = false;
     if (params.point) {
       var pieces = params.point.split(",");
       var lat = parseFloat(pieces[0]), lng = parseFloat(pieces[1]);
@@ -6610,6 +6660,7 @@ function initMississippiExplorer() {
       if (isFinite(lat) && isFinite(lng) &&
           lat > PERMALINK_GATE.minLat && lat < PERMALINK_GATE.maxLat &&
           lng > PERMALINK_GATE.minLng && lng < PERMALINK_GATE.maxLng) {
+        selected = true;
         // skipPan when the link carries its own zoom, then frame it here.
         // setSelectedPoint's pan is ANIMATED and animates to at least zoom 15;
         // an animation in flight settles AFTER anything applied synchronously
@@ -6622,6 +6673,27 @@ function initMississippiExplorer() {
           framed = true;
         }
       }
+    }
+    // A link naming layers and no point opens on the area they answer in
+    // (linkFrame): the city, not the state around it. With no zoom of its own
+    // it takes the zoom that fits the area on this screen, never one farther
+    // out than the boot view, and makes that the boot zoom, so the hash it is
+    // rewritten to carries no `z=` and opens the same way again. With one, the
+    // area only places the centre. Measured 2026-10-20: the state view showed
+    // none of Chicago on a 412 by 860 phone and its southern sixth on a 1280 by
+    // 800 desktop; framed, all of it shows, at 9.5 and 10.5. An area the link
+    // names itself (namedArea) comes before the layers' own.
+    var area = selected ? null : namedArea(params.frame);
+    if (area) linkAreaName = params.frame;
+    else if (!selected) area = linkFrame(params.named);
+    if (area) {
+      var areaZoom = zoom !== null ? zoom : Math.max(map.getZoom(),
+        Math.min(map.getBoundsZoom(area, false, L.point(48, 48)), 14));
+      if (zoom === null) bootZoom = areaZoom;
+      map.setView(area.getCenter(), areaZoom, { animate: false });
+      framed = true;
+      // The layer toggles above rewrote the hash before the area was known.
+      if (linkAreaName) syncUrlHash();
     }
     if (zoom !== null && !framed) map.setView(map.getCenter(), zoom, { animate: false });
     // Parsed LAST, after the layers are on and the point is set, because a pin
@@ -14935,8 +15007,11 @@ function initMississippiExplorer() {
    * address and the Capitol office from the member's own profile. The other
    * three seats (Senate 34, House 70 and 77) are cards reading "Vacant" in
    * the gallery, and ship as vacancy records the card prints with their
-   * source. The profiles also print a home address, a personal telephone and
-   * sometimes a personal e-mail address, and the builder never reads them.
+   * source. Since 2026-10-19 a member's own telephones, from the profile's
+   * "Phone(s)" block, ride the row as `phone` and `phonesExtra` with the
+   * page's own word for each ("home", "business", "cell"), under Adam's
+   * fleet ruling of 2026-10-17; a fax never does. The home address printed
+   * above them is never read.
    * ---------- */
   var loadMsSenateDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ms-senate-districts.json", {}, 2);
@@ -18967,11 +19042,34 @@ function initMississippiExplorer() {
         embedded map is someone else's page), never once installed, and never
         a second time: showing it records DST_INSTALL_INVITE_KEY.
 
+        WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST (Adam,
+        2026-10-20), an Android phone is invited to the test instead of being
+        offered the website version to install: Google Play lets a new
+        personal account apply to publish its app only after 12 testers have
+        stayed in its closed test for 14 days, and the steps page at
+        DST_ANDROID_TEST_URL asks testers to remove the website copy. Chrome's
+        install event is still held, so its own mini-infobar does not offer
+        that copy either, and Chrome's menu still does. The test is offered
+        once too, recorded as DST_TEST_INVITE_SEEN under the same key, so a
+        reader who was offered the install before the test began is asked
+        once more, about the test. Closing the bar or following its link
+        records DST_TEST_INVITE_ANSWERED instead, and the front page's own
+        invitation to the test reads and writes that word under the same key
+        (scripts/build_landing_page.py takes both names from this block), so
+        a reader who closed or followed either invitation is not shown the
+        other; only seeing this bar leaves the front page's in place (Adam,
+        2026-10-20: a "no" stays closed). Not in the Play app, whose window
+        carries the mark from engine/shared/play-app.txt. When the app is
+        published, set DST_ANDROID_TEST_URL to null and the install offer
+        returns; the front page's generator then fails until its notice
+        changes too.
+
      3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
         browser reports an install, `app-launch/<tag>` once per launch of the
         installed app (DST_APP_LAUNCH_KEY in session storage marks the window
         as counted), `install-invite/<what>` for the invitation: shown,
-        accepted, declined or closed, and tip-shown or tip-closed on an iPhone,
+        accepted, declined or closed, tip-shown or tip-closed on an iPhone, and
+        test-shown, test-join or test-closed for the Android test,
         and `share-in/<tag>` when a place shared into the installed app opened
         this app (below). A launch is counted at boot, before GoatCounter's
         script has always arrived, so these wait for it rather than being lost.
@@ -18994,6 +19092,9 @@ function initMississippiExplorer() {
   var DST_APP_LAUNCH_KEY = "districtry-app-launch";
   var DST_SHARE_IN_KEY = "districtry-share-in";
   var DST_INVITE_DELAY_MS = 3000;
+  var DST_ANDROID_TEST_URL = "/android.html?ref=map";
+  var DST_TEST_INVITE_SEEN = "test-shown";
+  var DST_TEST_INVITE_ANSWERED = "test-answered";
   var dstFramed = (function () {
     try { return window.top !== window.self; } catch (e) { return true; }
   })();
@@ -19029,6 +19130,18 @@ function initMississippiExplorer() {
   function dstMarkInviteSeen(value) {
     try { window.localStorage.setItem(DST_INSTALL_INVITE_KEY, value); } catch (e) { /* private mode: it may show again */ }
   }
+  function dstTestInviteSeen() {
+    try {
+      var seen = window.localStorage.getItem(DST_INSTALL_INVITE_KEY);
+      return seen === DST_TEST_INVITE_SEEN || seen === DST_TEST_INVITE_ANSWERED;
+    } catch (e) { return true; }
+  }
+  /* A browser on Android while the test runs, outside the Play app. */
+  function dstOnAndroidTest() {
+    return !!DST_ANDROID_TEST_URL &&
+      /\bAndroid\b/.test(window.navigator.userAgent || "") &&
+      !document.documentElement.classList.contains("dst-play-app");
+  }
   /* An iPhone's own Safari. Other iOS browsers and in-app views name
      themselves in the user agent and put Share somewhere else, so the tip's
      directions would be wrong there; an iPad reports itself as a Mac and is
@@ -19053,32 +19166,37 @@ function initMississippiExplorer() {
     if (dstInviteBar && dstInviteBar.parentNode) dstInviteBar.parentNode.removeChild(dstInviteBar);
     dstInviteBar = null;
   }
-  /* Built through the DOM with textContent, the way every card is. */
-  function dstShowInvite(text, onInstall) {
+  /* Built through the DOM with textContent, the way every card is. `go` is
+     the bar's one action, a button (onClick) or a link (href), or null for
+     the iPhone's tip; `closedAs` is what closing it is counted as, and
+     `onClose`, when given, runs after. */
+  function dstShowInvite(label, text, go, closedAs, onClose) {
     if (dstInviteBar || dstInstalledLaunch() || !dstIsPhone()) return false;
     var bar = document.createElement("aside");
     bar.className = "install-invite";
-    bar.setAttribute("aria-label", "Add districtry to your home screen");
+    bar.setAttribute("aria-label", label);
     var p = document.createElement("p");
     p.className = "install-invite-text";
     p.textContent = text;
     bar.appendChild(p);
-    if (onInstall) {
-      var go = document.createElement("button");
-      go.type = "button";
-      go.className = "install-invite-go";
-      go.textContent = "Install";
-      go.addEventListener("click", onInstall);
-      bar.appendChild(go);
+    if (go) {
+      var action = document.createElement(go.href ? "a" : "button");
+      if (go.href) action.href = go.href;
+      else action.type = "button";
+      action.className = "install-invite-go";
+      action.textContent = go.text;
+      action.addEventListener("click", go.onClick);
+      bar.appendChild(action);
     }
     var close = document.createElement("button");
     close.type = "button";
     close.className = "install-invite-close";
-    close.setAttribute("aria-label", onInstall ? "Not now" : "Close");
+    close.setAttribute("aria-label", go ? "Not now" : "Close");
     close.textContent = "✕";
     close.addEventListener("click", function () {
       dstHideInvite();
-      dstInviteEvent(onInstall ? "closed" : "tip-closed");
+      dstInviteEvent(closedAs);
+      if (onClose) onClose();
     });
     bar.appendChild(close);
     document.body.appendChild(bar);
@@ -19123,20 +19241,24 @@ function initMississippiExplorer() {
     if (dstFramed || !dstIsPhone()) return;
     e.preventDefault();
     dstHeldPrompt = e;
-    if (dstInviteQueued || dstInviteSeen()) return;
+    if (dstInviteQueued || dstInviteSeen() || dstOnAndroidTest()) return;
     dstInviteQueued = true;
     dstAfterFirstAnswer(function () {
       if (!dstHeldPrompt || dstInviteSeen()) return;
-      var shown = dstShowInvite("Add districtry to your home screen. It opens to the state you used last.", function () {
-        var held = dstHeldPrompt;
-        dstHeldPrompt = null;
-        dstHideInvite();
-        if (!held) return;
-        held.prompt();
-        held.userChoice.then(function (choice) {
-          dstInviteEvent(choice && choice.outcome === "accepted" ? "accepted" : "declined");
-        }, function () {});
-      });
+      var shown = dstShowInvite("Add districtry to your home screen",
+        "Add districtry to your home screen. It opens to the state you used last.", {
+          text: "Install",
+          onClick: function () {
+            var held = dstHeldPrompt;
+            dstHeldPrompt = null;
+            dstHideInvite();
+            if (!held) return;
+            held.prompt();
+            held.userChoice.then(function (choice) {
+              dstInviteEvent(choice && choice.outcome === "accepted" ? "accepted" : "declined");
+            }, function () {});
+          }
+        }, "closed");
       if (shown) {
         dstMarkInviteSeen("shown");
         dstInviteEvent("shown");
@@ -19147,10 +19269,33 @@ function initMississippiExplorer() {
   if (!dstFramed && !dstInstalledLaunch() && dstIsIphoneSafari() && !dstInviteSeen()) {
     dstAfterFirstAnswer(function () {
       if (dstInviteSeen()) return;
-      var shown = dstShowInvite("Add districtry to your Home Screen: tap Share (in the ⋯ menu if you don’t see it), then Add to Home Screen.", null);
+      var shown = dstShowInvite("Add districtry to your home screen",
+        "Add districtry to your Home Screen: tap Share (in the ⋯ menu if you don’t see it), then Add to Home Screen.", null, "tip-closed");
       if (shown) {
         dstMarkInviteSeen("tip-shown");
         dstInviteEvent("tip-shown");
+      }
+    });
+  }
+
+  if (!dstFramed && !dstInstalledLaunch() && dstOnAndroidTest() && !dstTestInviteSeen()) {
+    dstAfterFirstAnswer(function () {
+      if (dstTestInviteSeen()) return;
+      var shown = dstShowInvite("Help test districtry’s Android app",
+        "Help test districtry’s Android app. Google Play needs 12 testers.", {
+          text: "How to join",
+          href: DST_ANDROID_TEST_URL,
+          onClick: function () {
+            dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED);
+            dstInviteEvent("test-join");
+            /* after the link is followed, so a page brought back by the
+               Back button does not ask again */
+            setTimeout(dstHideInvite, 0);
+          }
+        }, "test-closed", function () { dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED); });
+      if (shown) {
+        dstMarkInviteSeen(DST_TEST_INVITE_SEEN);
+        dstInviteEvent("test-shown");
       }
     });
   }

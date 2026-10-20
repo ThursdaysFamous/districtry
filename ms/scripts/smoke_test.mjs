@@ -512,6 +512,36 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // 2a. A LEGISLATOR'S OWN NUMBERS RIDE THE PERSON ROW, each with the word
+    //     the member's profile prints for it ("home", "business", "cell"),
+    //     since Adam's ruling of 2026-10-17 ("if the official government
+    //     source uses personal phone numbers, we publish those"). The numbers
+    //     expected are read from the shipped roster for each chamber's anchor
+    //     district, so a weekly refresh that changes them changes what is
+    //     expected; a record carrying none is reported, never passed as a
+    //     check. The card shows numbers with no-break hyphens, folded back
+    //     before comparing, and each must also be a telephone link that
+    //     dials its own digits, so a label never reaches the number dialled.
+    for (const [id, file] of [["ms-senate", "ms-senate-members.json"], ["ms-house", "ms-house-members.json"]]) {
+      const rec = await page.evaluate(async ({ f, d }) => {
+        const r = await fetch("data/app/" + f).then((x) => x.json());
+        return r[d] || {};
+      }, { f: file, d: EXPECT_DISTRICT[id] });
+      const want = rec.phone ? [rec.phone].concat(rec.phonesExtra || []) : [];
+      if (!want.length) {
+        console.log(`  SKIP  ${id} member's own numbers — the anchor's member prints none`);
+        continue;
+      }
+      const info = await cardText(page, id);
+      const text = (info.text || "").replace(/‑/g, "-");
+      const dialled = await page.evaluate((cid) =>
+        Array.from(document.querySelectorAll("#card-" + cid + " a[href^='tel:']"))
+          .map((a) => a.getAttribute("href").slice(4)), id);
+      const missing = want.filter((n) => !text.includes(n) || !dialled.includes(n.replace(/\D/g, "")));
+      check(`${id} card shows and dials every number the member's own profile prints, with its word`,
+        !info.error && missing.length === 0 && want.every((n) => /^(home|business|cell) /.test(n)),
+        `missing ${missing.length} of ${want.length}`);
+    }
     await context.close();
   }
 

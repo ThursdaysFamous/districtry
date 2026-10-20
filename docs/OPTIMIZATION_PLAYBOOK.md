@@ -203,7 +203,7 @@ Zero `tileerror` handlers (grep-verified); offline users get a booted app (the S
 **R10 — Repo/deploy hygiene.**
 - Pages deploys the whole branch (classic CNAME-file deploy, no `.nojekyll`, no Pages workflow): scrapers, docs, and 4.6 MB of `data/` ship to the CDN. After P0, `data/app/` *must* deploy — but `data/source/raw/` (2.1 MB of zips/xlsx) still needn't. An actions-based Pages deploy that uploads only the app files (+ `.nojekyll` to skip the Jekyll pass) is ~20 lines.
 - Bot branches are unique per run (`bot/ilga-roster-update-${run_id}`): an unmerged roster PR spawns a duplicate every week. Fixed branch name + force-push + `gh pr list` guard.
-- Scraper deps float (`pip install requests beautifulsoup4`, `python-version: "3.x"`): heuristic HTML parsers are exactly the code that breaks on silent dependency drift. Pin via `scripts/requirements.txt` + `cache: pip`.
+- Scraper deps float (`pip install requests beautifulsoup4`, `python-version: "3.x"`): heuristic HTML parsers are exactly the code that breaks on silent dependency drift. Pin via `scripts/requirements.txt` + `cache: pip`. *(2026-10-20: every workflow's install now names a pinned requirements file, with `-c` or `-r`; the Python is pinned to 3.14 only in the fourteen workflows that install shapely or pyproj, after runner images began carrying 3.15, for which neither publishes a wheel. The other workflows still ask for "3.x".)*
 - `CPD_DISTRICT_INFO` is still the 32-byte placeholder — the CPD rewrite path has never run against real data in production; treat its first live PR with extra care (or land R3 first). **Root cause now identified — see R11.**
 
 **R11 — The CPD scraper is blocked by Cloudflare's bot challenge; that is *why* the roster has never populated.**
@@ -1400,6 +1400,38 @@ returning visitor's cache (Wisconsin's cache moved anyway, because its school
 archive was rebuilt at zoom 12). `vector-tiles.yml` now also runs on changes
 to any app's `index.html` or the engine, since a registration or a query
 change can break the card without touching an archive.
+
+**Most of those two gates' time was the tile reader, not the checks**
+(2026-10-20). By 2026-10-19 a pull request's tile check spent 2 min 39 s in
+`--committed` (67 archives) and 5 min 32 s in `validate_vector_tiles.py`
+(146), on every run. Profiled, almost all of it was `pmtiles`' `Reader.get`
+unpacking the archive's whole root directory again, up to 6,863 entries in
+pure Python, for every tile it returned. `read_directories_once()` in
+`build_vector_tiles.py` keeps each parsed directory under its own bytes, which
+changes no answer because the parse depends on nothing else; both gates call
+it. Measured here, `--committed` went from 88 s to 36 s and
+`validate_vector_tiles.py` from 166 s to 48 s, and each printed exactly the
+lines it printed before. On GitHub they took 29 s and 52 s on the run that
+tested the change (job 118451375189).
+
+**Most of the card probe's time was downloading, and the downloads are now
+kept between runs** (2026-10-20). The probe fetches the whole set each
+mirrored layer was built from, to place its points and to answer the app's
+own whole-set request. Timed on GitHub, that was 1,067 s of an every-instance
+run's 1,392 s: about a gigabyte from the Census Bureau and three city
+portals, 643 s of it for the fifteen ZIP layers, which the census server
+answers 250 features at a time. `vector-tiles.yml` now keeps the sets in a
+GitHub Actions cache, and the probe files each one under its record's
+`data_sha256`, query and page size (`PROBE_SET_CACHE`), so a set is fetched
+again only when the weekly mirror job rewrites its record. Measured here on
+two apps (ar, ca), the probe took 36.1 s reading the copy against 61.8 s
+fetching, and printed the same results; a damaged part is fetched again, an
+error answer is never kept, and a set no record names is removed. Main keeps
+the copy pull requests read, because GitHub lets a pull request's own cache
+be read by that pull request alone, so the workflow also runs on main when a
+mirror record or the probe changes. The cost is that an upstream change
+between two weekly refreshes no longer shows up as a difference in whichever
+pull request runs the probe next; the weekly mirror job finds it.
 
 **Not yet on tiles (phase 5b).** The county-dispatched layers — Illinois's
 county board, county precinct, fire, park and library districts and judicial

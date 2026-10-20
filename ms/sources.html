@@ -697,25 +697,26 @@ main details p:first-of-type { margin-top: -2px; }
 
 /* The address box a question page carries above its .cta link. It does not
    geocode: it hands the typed text to the app as `./#q=<address>` and the app
-   runs its own bounded search. See the geocoder-search ENGINE block.
+   runs its own bounded search. See the geocoder-search ENGINE block. Its one
+   button also opens the map when the box is left empty.
 
    IT IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT, so a reader with no JavaScript
-   gets the .cta link below and never an input that cannot submit.
+   gets the .cta link below and never an input that cannot submit. Once it is
+   shown, the .cta link and its note are hidden: the box's own button makes
+   the same trip, and two buttons with the same words read as a mistake.
+   Hidden HERE rather than by the box's script, because that script runs
+   above the link, before the link is in the document.
 
    THE BUTTON FACE FLIPS IN DARK and that is a measurement, not a preference:
    white on --accent-deep reads 1.91:1 there (the shortfall validate_contrast
    already records for .cta), against 9.64:1 for --paper on the same violet.
    The landing page's search button made the same flip for the same reason.
 
-   THE STATUS LINE HAS NO ERROR COLOUR because the sub-page palette carries no
-   error token — the shell speaks --accent/--slate/--panel, and --error is not
-   among the eleven aliases build_brand_tokens.py emits. --accent-warm-deep is
-   this shell's caution hue (the .disclaimer rule below uses its lighter pair)
-   and measures 8.11:1 light / 8.64:1 dark on --panel, so the failure state is
-   painted with it rather than by adding a twelfth token. The message says what
-   went wrong in words either way. */
+   THE STATUS LINE HAS NO ERROR STATE since 2026-10-20: the one failure it
+   reported was an empty box, and an empty box now opens the map. */
 .lookup { margin: 6px 0 14px; max-width: 34rem; }
 .lookup[hidden] { display: none; }
+.lookup:not([hidden]) ~ .cta, .lookup:not([hidden]) ~ .cta-note { display: none; }
 .lookup-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -756,15 +757,19 @@ main details p:first-of-type { margin-top: -2px; }
 .lookup-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .lookup-go:disabled { opacity: .6; cursor: default; }
 :root[data-theme="dark"] .lookup-go { color: var(--paper); }
-.lookup-status {
+.lookup-hint {
   margin: 10px 0 0;
   font-size: 13.5px;
   line-height: 1.4;
   color: var(--slate);
 }
-.lookup-status.err { color: var(--accent-warm-deep); }
-.lookup-or { font-size: 13px; color: var(--slate); margin: 14px 0 2px; }
-.lookup-or[hidden] { display: none; }
+.lookup-status {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--slate);
+}
+.lookup-status:empty { margin: 0; }
 
 .answer-card {
   background: var(--panel);
@@ -1149,7 +1154,7 @@ table.matrix code {
         </li>
         <li>
           <a href="https://www.legislature.ms.gov/" target="_blank" rel="noopener">Mississippi Legislature</a>
-          <span class="credit-note">Mississippi Senate and Mississippi House members, their parties and Capitol e-mail addresses, and which seats are vacant.</span>
+          <span class="credit-note">Mississippi Senate and Mississippi House members, their parties, Capitol e-mail addresses and own telephone numbers, and which seats are vacant.</span>
         </li>
         <li>
           <a href="https://www.sos.ms.gov/publications-external-affairs/publications/state-county-directory" target="_blank" rel="noopener">Mississippi Secretary of State</a>
@@ -1248,7 +1253,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 52 features, measured 2026-10-15. These are the lines of the 2025 court-ordered redraw, which moved nine Senate districts (1, 2, 11, 19, 34, 41, 42, 44 and 45) for the special elections of 4 November 2025. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address and the Senate's Capitol office). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, a personal telephone and sometimes a personal e-mail address, and the builder never reads them.</td>
+                <td data-label="Who it names">ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address, the Senate's Capitol office and, since 2026-10-19, the member's own home, business and cell telephones, each with the word the profile prints for it). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, which the builder never reads, and sometimes a fax line, which never ships.</td>
                 <td data-label="Where it applies">Mississippi — statewide, all 52 districts.</td>
               </tr>
               <tr id="layer-ms-house">
@@ -1573,7 +1578,7 @@ table.matrix code {
       "@id": "https://districtry.com/ms/sources.html#dataset-ms-senate",
       "identifier": "ms-senate",
       "name": "Mississippi Senate District",
-      "description": "The Mississippi Senate district covering the point, and the senator holding it. ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address and the Senate's Capitol office). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, a personal telephone and sometimes a personal e-mail address, and the builder never reads them.",
+      "description": "The Mississippi Senate district covering the point, and the senator holding it. ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address, the Senate's Capitol office and, since 2026-10-19, the member's own home, business and cell telephones, each with the word the profile prints for it). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, which the builder never reads, and sometimes a fax line, which never ships.",
       "url": "https://districtry.com/ms/sources.html#layer-ms-senate",
       "isPartOf": {
         "@id": "https://districtry.com/ms/sources.html#catalog"

@@ -94,13 +94,22 @@ width from the `lines` table as well — its `weight:` set to the row's
 drawn as map pins). No layer, in a concept or not, sets a `dashArray:`: a dash
 on the map means a district crossing the edge of the one pinned for
 comparison, which the engine draws, and the generator refuses any other.
+Where the worksheet declares `frames` (Illinois, New York and Wisconsin
+today) and the layer answers only inside one of those areas, set its `frame`
+to that area's name, so a map link naming it opens on that city or county
+rather than the whole state; leave it unset on a layer that answers anywhere
+outside the area, because a framed link shows the area alone (a question page
+about the area can still name it in its own map link, `&frame=<area>`, as
+Chicago's ward page does). The generator
+measures each area from the files `frames` names and refuses a framed layer
+whose vector-tile archive reaches past its area.
 Then one run:
 
 ```bash
 python3 scripts/generate_metro_files.py
 ```
 
-emits `LAYER_AREA_RANK`, `LAYER_CODES`, `LAYER_CONCEPTS`, `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
+emits `LAYER_AREA_RANK`, `LAYER_CODES`, `LAYER_CONCEPTS`, `LAYER_FRAMES` (where `frames` is set), `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
 `sw.js` URL lists, the smoke test's `EXPECT_LAYERS`, the `sources.html` matrix
 row and the instance `CLAUDE.md` layer count.
 

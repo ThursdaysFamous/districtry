@@ -9,10 +9,10 @@ name: Update Mississippi legislature roster
 #
 # The builder reads the two chamber pages, the gallery each embeds and every
 # member's profile (about 175 requests, one second apart, so a few minutes).
-# It reads each profile's name, district, party, Capitol office and official
-# chamber e-mail address, and never the home address, home or business
-# telephone or personal e-mail address the same profiles print. A seat whose
-# gallery card reads "Vacant" ships as a vacancy record.
+# It reads each profile's name, district, party, Capitol office, official
+# chamber e-mail address and, since 2026-10-19, the member's own home,
+# business and cell telephones, and never the home address the same profiles
+# print. A seat whose gallery card reads "Vacant" ships as a vacancy record.
 #
 # THE LEGISLATURE'S SERVER SENDS ONLY ITS OWN CERTIFICATE, NOT THE INTERMEDIATE
 # THAT SIGNED IT, so the builder completes the chain from the GlobalSign

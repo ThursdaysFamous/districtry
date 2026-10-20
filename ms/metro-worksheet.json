@@ -220,7 +220,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
-        "people": "ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address and the Senate's Capitol office). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, a personal telephone and sometimes a personal e-mail address, and the builder never reads them.",
+        "people": "ms-senate-members.json, rebuilt weekly by CI from the Mississippi Legislature's own member gallery and each member's own profile (name, party, Senate e-mail address, the Senate's Capitol office and, since 2026-10-19, the member's own home, business and cell telephones, each with the word the profile prints for it). The gallery shows a vacant seat as a card reading Vacant, and the card says so: Senate 34 on 2026-10-15. The profiles also print a home address, which the builder never reads, and sometimes a fax line, which never ships.",
         "applies": "Mississippi — statewide, all 52 districts."
       }
     },
@@ -725,7 +725,7 @@
       {
         "label": "Mississippi Legislature",
         "url": "https://www.legislature.ms.gov/",
-        "note": "Mississippi Senate and Mississippi House members, their parties and Capitol e-mail addresses, and which seats are vacant."
+        "note": "Mississippi Senate and Mississippi House members, their parties, Capitol e-mail addresses and own telephone numbers, and which seats are vacant."
       },
       {
         "label": "Mississippi Secretary of State",
