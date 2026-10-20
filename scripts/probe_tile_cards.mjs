@@ -69,6 +69,17 @@
 // city answering 503 four times in fifteen seconds — and the page's own
 // request for that set is answered from the same copy.
 //
+// AND IT IS KEPT BETWEEN RUNS WHERE PROBE_SET_CACHE NAMES A DIRECTORY
+// (2026-10-20). Fetching every set again was 1,067 s of this probe's 1,392 s
+// on that day's every-instance run, about a gigabyte from the Census Bureau
+// and three city portals, 643 s of it for the ZIP layers. A set is filed
+// under its record's data_sha256, query and page size, so a set whose record
+// moves (the weekly mirror jobs rewrite a record when its source changes) is
+// fetched afresh and any other is read back exactly as it was fetched. Only a
+// response carrying a features array is kept, so a server's error answer is
+// never read back on the next run, and a directory no current record names
+// is removed at the end. Without the variable every set is fetched as before.
+//
 // AND ONLY THE INSTANCES A CHANGE CAN REACH ARE PROBED. On a pull request the
 // files it changes are read against its base and against this workflow's own
 // trigger paths: a file under one instance reaches that instance, and a
@@ -79,7 +90,9 @@
 
 import { chromium, request } from "playwright";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { appendFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync,
+  writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT, instances, vendorDir } from "./probe_points.mjs";
@@ -288,6 +301,49 @@ function curlBody(args) {
 }
 const secs = (ms) => `${(ms / 1000).toFixed(1)} s`;
 
+// One part of a mirrored layer's set ("whole", or a page's offset), read back
+// from the kept copy when there is one (see the header) and fetched by curl
+// otherwise. Returns the bytes, which seed the page's own request, and their
+// parse.
+const KEEP = process.env.PROBE_SET_CACHE || "";
+const kept = { read: 0, fetched: 0 };
+const keptName = (rec) => createHash("sha256")
+  .update(`${rec.data_sha256}\n${rec.query}\n${rec.page_size || ""}`).digest("hex").slice(0, 32);
+function fetchSet(rec, part, args) {
+  const file = KEEP && rec.data_sha256 ? join(KEEP, keptName(rec), `${part}.json`) : null;
+  if (file && existsSync(file)) {
+    const raw = readFileSync(file);
+    try {
+      const json = JSON.parse(raw);
+      kept.read++;
+      return { raw, json };
+    } catch {
+      rmSync(file, { force: true }); // a damaged copy is fetched again
+    }
+  }
+  const raw = curlBody(args);
+  const json = JSON.parse(raw);
+  if (file && Array.isArray(json.features) && !json.error) {
+    mkdirSync(join(KEEP, keptName(rec)), { recursive: true });
+    writeFileSync(`${file}.part`, raw);
+    renameSync(`${file}.part`, file);
+    kept.fetched++;
+  }
+  return { raw, json };
+}
+// the kept sets no current record names, removed; returns how many
+function pruneKept() {
+  if (!KEEP || !existsSync(KEEP)) return 0;
+  const want = new Set(Object.values(MIRROR).filter((r) => r.data_sha256).map(keptName));
+  let n = 0;
+  for (const name of readdirSync(KEEP)) {
+    if (want.has(name)) continue;
+    rmSync(join(KEEP, name), { recursive: true, force: true });
+    n++;
+  }
+  return n;
+}
+
 const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
 function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
@@ -443,9 +499,8 @@ try {
         const tok = appToken(tag);
         const url = rec.query + (tok ? (rec.query.includes("?") ? "&" : "?") + "$$app_token=" + tok : "");
         try {
-          const raw = curlBody(["-sS", "--fail", "-L", "--max-redirs", "5", ...CURL_RETRY, "--max-time", "600",
-            "-A", "districtry portal-tile mirror (+https://districtry.com/)", url]);
-          const fc = JSON.parse(raw);
+          const { raw, json: fc } = fetchSet(rec, "whole", ["-sS", "--fail", "-L", "--max-redirs", "5", ...CURL_RETRY,
+            "--max-time", "600", "-A", "districtry portal-tile mirror (+https://districtry.com/)", url]);
           for (const f of fc.features || []) if (f.geometry) feats.push(f);
           // the app's whole-set loader calls this same route with this same
           // token, so its file run reads these bytes rather than asking again
@@ -465,9 +520,8 @@ try {
             // --retry-all-errors: without it curl's --retry skips a reset
             // connection (exit 35), which is how a CI run lost ia:municipality
             // on 2026-09-27 with three retries unspent.
-            const raw = curlBody(["-sS", "--fail", ...CURL_RETRY, "--max-time", "300",
-              "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url]);
-            const page = JSON.parse(raw);
+            const { raw, json: page } = fetchSet(rec, rec.page_size ? String(offset) : "whole", ["-sS", "--fail",
+              ...CURL_RETRY, "--max-time", "300", "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url]);
             // a set fetched whole is held under its own query, which the app's
             // loader may or may not ask in exactly this form
             if (!rec.page_size) held.seed(url, raw);
@@ -621,6 +675,13 @@ try {
 } finally {
   await browser.close();
   await API.dispose();
+  if (KEEP) {
+    const pruned = pruneKept();
+    console.log(`  kept  ${kept.read} part(s) of the mirrored sets read from the kept copy, ${kept.fetched} fetched and kept` +
+      (pruned ? `, ${pruned} set(s) no record names any more removed` : ""));
+    // the workflow saves the copy only when this run added to it
+    if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `fetched=${kept.fetched}\n`);
+  }
 }
 if (layersDone || problems) console.log(`  time  ${secs(Date.now() - runStarted)} in all, ${secs(fetchMs)} of it fetching the sets mirrored layers were built from`);
 if (!layersDone && !problems) {

@@ -10,6 +10,18 @@ to search their address once they get there. The reader has already got their
 address in mind on the question page; asking them to carry it through a
 navigation is a step this does not need.
 
+ONE BUTTON DOES BOTH (Adam, 2026-10-20: "I'd rather one button that can do
+both. Search if an address is provided or open the map if not"). With an
+address typed, the button opens the map and searches it; with the box left
+empty, it opens the map with the same layers on and nothing searched. Until
+that day the box sat above the .cta link it shortens, under an "Or open the
+map" line, so a reader with JavaScript saw two buttons with the same words on
+them, and an empty box answered "Type an address or ZIP first" instead of
+opening the map. The .cta link and its note are now the NO-JAVASCRIPT path
+only: the shell's stylesheet hides both once this form is shown (a sibling
+rule in engine/shared/styles-subpage.txt, so nothing flashes), and a reader
+whose browser runs no script still gets the link.
+
 WHAT IT DOES NOT DO IS GEOCODE. The form builds `./#q=<address>` and hands the
 typed text to the app, which runs the search it already runs, bounded to the
 instance it already serves. Two things follow from that, and both are the
@@ -29,17 +41,29 @@ NOTHING HERE IS HAND-KEPT, which is the whole point of generating eleven copies
 of one form rather than writing eleven. Every per-page fact is read off the
 page itself or off metros.json:
 
-  layers          the `#layers=` value in the page's own .cta href
+  map link        the page's own .cta href after its `#`: its `layers=` and,
+                  where the page names one, its `frame=` area
   button label    the .cta link's text, minus its trailing arrow
   place name      metros.json landing_name for the instance the page sits in
 
 so a page that changes which layers it opens changes its form by regenerating,
 and a page that stops carrying a .cta is reported rather than silently left
-with a form pointing at layers it no longer names.
+with a form pointing at layers it no longer names. The form opens exactly what
+that link opens, with the typed address added in front.
 
 THE FORM IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT. A reader with no JavaScript
 cannot submit it — the navigation is the script — so they get the .cta link
 below it instead of an input that does nothing.
+
+WHERE THE MAP OPENS is the app's business, not this form's: a link naming
+layers and no point opens on the area those layers cover (ENGINE permalink,
+LAYER_FRAMES from the worksheet's `frames`), so Chicago's school board page
+opens on Chicago and a statewide layer's page on the state, whichever way the
+reader leaves this page. A page about one area whose layers also answer
+outside it names the area in its own link instead (`&frame=chicago` on
+Chicago's ward page, whose ward layer draws suburban wards too), and this
+fails on an area the page's app does not declare, because the app would
+ignore it without a word and open the link as if it named no area.
 
     python3 scripts/build_question_forms.py           # write the regions
     python3 scripts/build_question_forms.py --check   # drift gate for CI
@@ -72,7 +96,11 @@ NOT_QUESTIONS = {"index.html", "faq.html", "sources.html", "history.html",
                  "privacy.html"}
 
 CTA_RE = re.compile(
-    r'<a class="cta" href="\./#layers=([^"]+)">(.*?)</a>', re.S)
+    r'<a class="cta" href="\./#(layers=[^"]+)">(.*?)</a>', re.S)
+# What a .cta's hash may say: the layers, then optionally the area the map
+# opens on. Nothing else, and only characters that need no escaping inside the
+# script's string.
+MAP_RE = re.compile(r"^layers=[a-z0-9,-]+(?:&frame=([a-z0-9-]+))?$")
 
 
 def fail(msg):
@@ -114,6 +142,13 @@ def instances():
     return out
 
 
+def instance_areas(tag):
+    """The area names the instance's worksheet declares under `frames`."""
+    rel = "metro-worksheet.json" if tag == "il" else os.path.join(tag, "metro-worksheet.json")
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as f:
+        return set((json.load(f).get("frames") or {}).keys())
+
+
 def landing_names():
     with open(METROS, encoding="utf-8") as f:
         doc = json.load(f)
@@ -121,7 +156,7 @@ def landing_names():
 
 
 def question_pages(tag):
-    """(path, layers, label) for each page in <tag>/ that carries a .cta."""
+    """(path, map link, label) for each page in <tag>/ that carries a .cta."""
     found = []
     d = os.path.join(REPO_ROOT, tag)
     for name in sorted(os.listdir(d)):
@@ -140,67 +175,76 @@ def question_pages(tag):
             continue
         label = re.sub(r"\s+", " ", m.group(2)).strip()
         label = label.rstrip("→").strip()   # the trailing arrow
-        found.append((path, m.group(1), label))
+        link = html.unescape(m.group(1))
+        shape = MAP_RE.match(link)
+        if not shape:
+            fail("%s/%s's map link says #%s; it may name its layers and an "
+                 "area to open on (layers=…&frame=…) and nothing else"
+                 % (tag, name, link))
+        if shape.group(1) and shape.group(1) not in instance_areas(tag):
+            fail("%s/%s's map link names the area %r, which %s's worksheet "
+                 "does not declare under frames (%s) — the app would ignore "
+                 "it and open the link as if it named no area"
+                 % (tag, name, shape.group(1), tag,
+                    ", ".join(sorted(instance_areas(tag))) or "none"))
+        found.append((path, link, label))
     return found
 
 
-def render(layers, label, place):
+def render(link, label, place):
     """The region's contents — everything BETWEEN the two markers."""
     body = '''<!-- GENERATED by scripts/build_question_forms.py — do not hand-edit.
-     The layers and the button label are read from this page's own .cta link
-     below; the place name comes from metros.json. Edit those, then rerun. -->
+     The map link and the button label are read from this page's own .cta
+     link below; the place name comes from metros.json. Edit those, then rerun. -->
 <form class="lookup" id="lookup" hidden>
   <div class="lookup-card">
     <label class="lookup-label" for="lookup-q">Your address or ZIP</label>
     <div class="lookup-row">
       <input class="lookup-input" id="lookup-q" name="q" type="search"
              autocomplete="street-address" enterkeyhint="go" autocapitalize="words"
+             aria-describedby="lookup-hint"
              placeholder="Address or ZIP in %(place_attr)s">
       <button class="lookup-go" type="submit">%(label)s</button>
     </div>
+    <p class="lookup-hint" id="lookup-hint">Or leave it blank to open the map and pick your location there.</p>
     <p class="lookup-status" id="lookup-status" role="status"></p>
   </div>
 </form>
-<p class="lookup-or" id="lookup-or" hidden>Or open the map and pick your location on it:</p>
 <script>
 (function () {
   "use strict";
-  // Hands the typed address to the app as a HASH — never a query string, which
-  // count.js would send to the analytics host. The app geocodes; this does not.
-  var LAYERS = "%(layers)s";
+  // ONE button: with an address typed it opens the map and searches it, with
+  // the box empty it opens the map the page's own link below opens. The
+  // address goes to the app as a HASH, never a query string, which count.js
+  // would send to the analytics host. The app geocodes; this does not.
+  var MAP = "%(link)s";
   var form = document.getElementById("lookup");
   var input = document.getElementById("lookup-q");
   var status = document.getElementById("lookup-status");
-  // Both elements sit ABOVE this script on purpose: it runs inline, at parse
-  // time, so anything below it is not in the document yet. The first draft put
-  // the "Or open the map" line after this script and the guard below took
-  // the early return on all eleven pages — the form stayed hidden and looked
-  // exactly like a reader with JavaScript off.
-  var alt = document.getElementById("lookup-or");
-  if (!form || !input || !status || !alt) return;
-  // Both unhide together. Only a reader whose browser runs this can submit the
-  // form, and "Or open the map" is a sentence about a form that is not there
-  // otherwise.
+  // The form sits ABOVE this script on purpose: it runs inline, at parse
+  // time, so anything below it is not in the document yet. A first draft put
+  // a line after this script that the guard below waited for, and the early
+  // return left the form hidden on every page, which looked exactly like a
+  // reader with JavaScript off.
+  if (!form || !input || !status) return;
+  // Shown only here, because only a reader whose browser runs this can submit
+  // it. Showing it also hides the .cta link and its note below (a sibling
+  // rule in the shell's stylesheet): that link is the same trip for a reader
+  // with no script, and two buttons with the same words were one too many.
   form.hidden = false;
-  alt.hidden = false;
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var q = input.value.trim();
-    if (!q) {
-      status.textContent = "Type an address or ZIP first.";
-      status.className = "lookup-status err";
-      input.focus();
-      return;
-    }
     status.textContent = "Opening the map\\u2026";
-    status.className = "lookup-status";
-    window.location.href = "./#q=" + encodeURIComponent(q) + "&layers=" + LAYERS;
+    window.location.href = q
+      ? "./#q=" + encodeURIComponent(q) + "&" + MAP
+      : "./#" + MAP;
   });
 })();
 </script>''' % {
         "place_attr": html.escape(place, quote=True),
         "label": html.escape(label),
-        "layers": layers,
+        "link": link,
     }
     # A literal </script> anywhere inside the inline script ENDS the element,
     # whatever it is nested in — an HTML parser does not read JavaScript, so a
@@ -285,9 +329,9 @@ def main():
         if tag not in names:
             fail("instance %r is not in metros.json — the two must agree "
                  "before a question page there can name its place" % tag)
-        for path, layers, label in question_pages(tag):
+        for path, link, label in question_pages(tag):
             rel = os.path.relpath(path, REPO_ROOT)
-            body = render(layers, label, names[tag])
+            body = render(link, label, names[tag])
             state, detail = apply(path, body, args.check, rel)
             pages += 1
             if state == "drift":

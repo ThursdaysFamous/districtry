@@ -621,37 +621,66 @@ try {
       }
 
       // --- the question pages' address box, LAST because it navigates ------
-      // scripts/build_question_forms.py generates one form eleven times and
-      // its --check proves the bytes; this is the half a static check cannot
-      // have. The form ships `hidden` and its own script unhides it, so a
-      // reader with no JavaScript never meets an input that cannot submit —
+      // scripts/build_question_forms.py generates one form for every question
+      // page and its --check proves the bytes; this is the half a static check
+      // cannot have. The form ships `hidden` and its own script unhides it, so
+      // a reader with no JavaScript never meets an input that cannot submit —
       // which means "hidden" is also what a broken script looks like, and
-      // only a browser can tell the two apart. The submit is then measured by
-      // the URL it produces: ./#q=<address>&layers=<the page's own cta>, with
-      // the address in the HASH, where count.js cannot send it.
+      // only a browser can tell the two apart. Since 2026-10-20 its one button
+      // does both jobs (Adam: "Search if an address is provided or open the
+      // map if not"), so the page's own map link and its note are hidden
+      // while the box shows, and both submits are measured by the URL they
+      // produce: exactly the hash of the page's own map link from an empty
+      // box (its layers, and the area to open on where the page names one),
+      // and ./#q=<address>&<that hash> from a typed one, with the address in
+      // the HASH, where count.js cannot send it.
       if (await p.locator("#lookup").count()) {
         check(path, "address box unhides when its script runs",
               await p.locator("#lookup").isVisible());
         const cta = await p.evaluate(() => {
           const a = document.querySelector('a.cta[href^="./#layers="]');
-          return a ? a.getAttribute("href").split("#layers=")[1] : null;
+          return a ? a.getAttribute("href").split("#")[1] : null;
         });
         check(path, "address box sits above a cta naming its layers", !!cta);
+        const doubled = await p.evaluate(() =>
+          [".cta", ".cta-note"].filter((s) => {
+            const el = document.querySelector(s);
+            return el && el.getClientRects().length > 0;
+          }));
+        check(path, "the map link and its note are hidden beside the box",
+              doubled.length === 0, doubled.join(", ") + " still showing");
+        const controls = await p.evaluate(() =>
+          Array.from(document.querySelectorAll("#lookup button, #lookup a, #lookup input[type=submit], a.cta"))
+            .filter((el) => el.getClientRects().length > 0)
+            .map((el) => el.textContent.trim() || el.value));
+        check(path, "one button to press, which searches or opens the map",
+              controls.length === 1, controls.join(" | "));
         // The app is not this check's subject. Stubbing the instance root
-        // keeps eleven pages from booting a 26,000-line document each.
+        // keeps every question page from booting the whole app twice.
         await p.route(`**/${tag}/`, (r) => r.fulfill({
           status: 200, contentType: "text/html",
           body: "<!doctype html><title>stub</title>" }));
+        const submit = async () => {
+          await Promise.all([
+            p.waitForURL((u) => u.pathname === `/${tag}/`, { timeout: 5000 }).catch(() => {}),
+            p.click(".lookup-go"),
+          ]);
+          return new URL(p.url());
+        };
+        let got = await submit();
+        check(path, "an empty box opens the map on the page's own layers",
+              got.pathname === `/${tag}/` &&
+              got.search === "" &&
+              got.hash === `#${cta}`,
+              p.url());
+        await p.goto(BASE + path, { waitUntil: "domcontentloaded" });
+        await p.waitForSelector("#lookup:not([hidden])", { timeout: 5000 }).catch(() => {});
         await p.fill("#lookup-q", "233 S Wacker Dr");
-        await Promise.all([
-          p.waitForURL((u) => u.pathname === `/${tag}/`, { timeout: 5000 }).catch(() => {}),
-          p.click(".lookup-go"),
-        ]);
-        const got = new URL(p.url());
+        got = await submit();
         check(path, "submitting hands the address to the app in the hash",
               got.pathname === `/${tag}/` &&
               got.search === "" &&
-              got.hash === `#q=233%20S%20Wacker%20Dr&layers=${cta}`,
+              got.hash === `#q=233%20S%20Wacker%20Dr&${cta}`,
               p.url());
       }
       await ctx.close();
