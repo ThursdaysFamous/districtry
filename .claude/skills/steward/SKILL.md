@@ -120,6 +120,7 @@ python3 scripts/validate_python_hygiene.py                # a name imported nowh
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
 node scripts/map_link_test.mjs                            # pasted Google/Apple Maps links and coordinates, read by the one shared parser
+node scripts/office_address_test.mjs                      # the address a legislator's office pin is looked up by: fixtures, then every shipped district office (no phone number in it, its city and ZIP line kept)
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists
