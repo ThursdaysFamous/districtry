@@ -20,6 +20,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { chromium } from "playwright";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const [layerId, outPath] = process.argv.slice(2);
 if (!layerId || !outPath) {
@@ -37,7 +38,7 @@ const vendored = (name) => {
   return fs.existsSync(p) ? fs.readFileSync(p) : null;
 };
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   const context = await browser.newContext({ serviceWorkers: "block" });
   const page = await context.newPage();

@@ -25,6 +25,7 @@ import { chromium, devices } from "playwright";
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const BASE = process.env.BASE_URL || "http://localhost:8131";
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -66,17 +67,6 @@ async function serveVendoredLeaflet(page) {
   return true;
 }
 
-// A 1x1 transparent GIF for the CARTO basemap tiles. The map's correctness has
-// nothing to do with whether a raster tile painted, and letting real tile
-// requests fly would make this gate depend on a third party's uptime — and
-// spend the fleet's metered CARTO quota on CI.
-const BLANK_TILE = Buffer.from(
-  "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7", "base64");
-async function stubTiles(page) {
-  await page.route("**/*.basemaps.cartocdn.com/**", (route) =>
-    route.fulfill({ status: 200, contentType: "image/gif", body: BLANK_TILE }));
-}
-
 // One Photon response, shaped like the real thing. The address box is asserted
 // against a STUB rather than the live geocoder for the same reason /il/ is
 // stubbed below: a gate that needs photon.komoot.io to be up and to keep
@@ -108,7 +98,7 @@ async function textOrNull(page, selector) {
 // block 9b counts the launcher worker's requests to prove a share never
 // leaves the phone. Read at launch, so it is set here rather than in the job.
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // --- 1. a bare visit renders the landing page, and does NOT forward -------
   {
@@ -870,7 +860,6 @@ try {
     });
     page.on("pageerror", (e) => errs.push(String(e)));
     const vendored = await serveVendoredLeaflet(page);
-    await stubTiles(page);
     const resp = await page.goto(BASE + "/coverage-map.html", { waitUntil: "load" });
     check("coverage map loads", resp.status() === 200, `HTTP ${resp.status()}`);
     await page.waitForTimeout(1500);
@@ -937,7 +926,6 @@ try {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
     await serveVendoredLeaflet(page);
-    await stubTiles(page);
     // `domcontentloaded`, NOT `load` — see section 6 for the measurement. This
     // check reads an iframe attribute and fetches the map separately; neither
     // needs the page's subresources, and the landing page carries a
