@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**24 gap-record claims name a level, 8 of which carry a
+**25 gap-record claims name a level, 8 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -204,9 +204,9 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `tn-conservation-boards`, `tn-county-commissioners` account for every county in the state, which is what Examined rests on here: 57 of 95 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Watched, not rewritten:** `tn/data/app/tn-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
 - **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`, `tn-city-wards.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-judicial-districts.json`, `tn-precincts.json`, `tn-school-board-districts.json`, `tn-senate-districts.json`
-- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 57 of 95 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 26 of 28 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Knoxville city, Lebanon city
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 26 of 28 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Knoxville city, Lebanon city. A record declares this level and earns nothing: `tn-municipal-officeholders` (4740000) — KGIS, the mapping agency of the City of Knoxville, Knox County and the Knoxville Utilities Board (kgis@kgis.org) was asked on 2026-10-17 and has not answered; the record earns nothing until a thread writes the outcome
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
