@@ -38,9 +38,12 @@ districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
 only when a reader pastes one or shares one into the installed app,
 and answers with the full link it leads to.
-Every app also sends it, at `?a=`, **the street address a map link carried**
-when the map's own search knows the street and not the house number,
+Every app also sends it, at `?a=`, **the street address a reader searches for
+or a map link carries** when the map's own search can't find the house,
 and it asks the U.S. Census Bureau's geocoder where that number falls.
+The ny app sends it **the public address of an office a card shows** too,
+when the app's office-pin geocoder can't place that office's pin, which
+says which district the reader selected.
 No served file names the Census host, because only the lookup asks it.
 `build_privacy_page.py` names the lookup and the Census Bureau as
 recipients.
