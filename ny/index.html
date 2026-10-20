@@ -4332,6 +4332,19 @@ function initNycExplorer() {
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "library": ["library"],
     "tribal-government": ["tribal-government"] };
+  // Where a map link that names layers and no point opens (ENGINE permalink):
+  // `areas` are [west, south, east, north], measured from the shipped files the
+  // worksheet's `frames` names; `layers` answer only inside their area. A link
+  // naming any other layer opens at the boot view.
+  var LAYER_FRAMES = {
+    areas: { "nyc": [-74.256, 40.496, -73.7, 40.916] },
+    layers: { "borough": "nyc", "borough-president": "nyc", "district-attorney": "nyc",
+      "municipal-court": "nyc", "school-district": "nyc", "cec": "nyc", "fire-battalion": "nyc",
+      "council": "nyc", "community-district": "nyc", "election-district": "nyc",
+      "police-sector": "nyc", "police-precinct": "nyc", "zip-code": "nyc",
+      "neighborhood": "nyc", "hs-zone": "nyc", "ms-zone": "nyc", "es-zone": "nyc",
+      "police-station": "nyc" }
+  };
   var SOCRATA_HOST = "https://data.cityofnewyork.us";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -6653,6 +6666,9 @@ function initNycExplorer() {
     }
     if (params.layers) params.layers.split(",").forEach(addLayer);
     if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    // The layers the link itself names, before `carry=` adds any: the ones
+    // linkFrame() opens the map on.
+    var named = layers.slice();
     // `carry=`: the layers a reader had on in the sibling app they just left,
     // named by what they mean. Each concept this app has turns on its own
     // layers for it; one it lacks is dropped, like an unknown id.
@@ -6662,6 +6678,7 @@ function initNycExplorer() {
     return {
       point: pick("p", "point"),
       layers: layers,
+      named: named,
       pin: params.c !== undefined ? layerFromLinkCode(params.c) : params.pin,
       stats: pick("s", "stats"),
       zoom: pick("z", "zoom"),
@@ -6672,8 +6689,32 @@ function initNycExplorer() {
   // The zoom this fork boots at, read from the map rather than configured, so
   // the engine needs no per-metro constant and every fork gets its own default.
   // Safe to capture here: nothing between map creation and this line changes the
-  // zoom, and applyStateFromHash() runs at the end of boot.
+  // zoom, and applyStateFromHash() runs at the end of boot. A link framed on a
+  // city (linkFrame below) moves it to the zoom that city opened at.
   var bootZoom = map.getZoom();
+
+  // Where a link that names layers and no point opens. LAYER_FRAMES, generated
+  // from the worksheet's `frames`, names the city or county a layer answers in;
+  // a statewide app used to open every such link on the whole state, so the
+  // map link on Chicago's school board page showed central Illinois with
+  // Chicago at or past the top edge of the map. Guarded: an app with no table
+  // opens every link at its boot view, exactly as before.
+  var layerFrames = (typeof LAYER_FRAMES === "object" && LAYER_FRAMES) ? LAYER_FRAMES : { areas: {}, layers: {} };
+  // The extent covering every named layer's area, or null when any layer the
+  // app registers has no area, because then the boot view is the one that
+  // shows all of them. An id this app does not register is passed over.
+  function linkFrame(ids) {
+    var has = Object.prototype.hasOwnProperty, w = 180, s = 90, e = -180, n = -90, any = false;
+    for (var i = 0; i < ids.length; i++) {
+      if (!getLayerById(ids[i])) continue;
+      var area = has.call(layerFrames.layers, ids[i]) ? layerFrames.layers[ids[i]] : null;
+      var b = area !== null && has.call(layerFrames.areas, area) ? layerFrames.areas[area] : null;
+      if (!b) return null;
+      w = Math.min(w, b[0]); s = Math.min(s, b[1]); e = Math.max(e, b[2]); n = Math.max(n, b[3]);
+      any = true;
+    }
+    return any ? L.latLngBounds([s, w], [n, e]) : null;
+  }
 
   function syncUrlHash() {
     var parts = [];
@@ -6738,7 +6779,7 @@ function initNycExplorer() {
       var wanted = parseFloat(params.zoom);
       if (isFinite(wanted) && wanted >= map.getMinZoom() && wanted <= map.getMaxZoom()) zoom = wanted;
     }
-    var framed = false;
+    var framed = false, selected = false;
     if (params.point) {
       var pieces = params.point.split(",");
       var lat = parseFloat(pieces[0]), lng = parseFloat(pieces[1]);
@@ -6746,6 +6787,7 @@ function initNycExplorer() {
       if (isFinite(lat) && isFinite(lng) &&
           lat > PERMALINK_GATE.minLat && lat < PERMALINK_GATE.maxLat &&
           lng > PERMALINK_GATE.minLng && lng < PERMALINK_GATE.maxLng) {
+        selected = true;
         // skipPan when the link carries its own zoom, then frame it here.
         // setSelectedPoint's pan is ANIMATED and animates to at least zoom 15;
         // an animation in flight settles AFTER anything applied synchronously
@@ -6758,6 +6800,22 @@ function initNycExplorer() {
           framed = true;
         }
       }
+    }
+    // A link naming layers and no point opens on the area they answer in
+    // (linkFrame): the city, not the state around it. With no zoom of its own
+    // it takes the zoom that fits the area on this screen, never one farther
+    // out than the boot view, and makes that the boot zoom, so the hash it is
+    // rewritten to carries no `z=` and opens the same way again. With one, the
+    // area only places the centre. Measured 2026-10-20: the state view showed
+    // none of Chicago on a 412 by 860 phone and its southern sixth on a 1280 by
+    // 800 desktop; framed, all of it shows, at 9.5 and 10.5.
+    var area = selected ? null : linkFrame(params.named);
+    if (area) {
+      var areaZoom = zoom !== null ? zoom : Math.max(map.getZoom(),
+        Math.min(map.getBoundsZoom(area, false, L.point(48, 48)), 14));
+      if (zoom === null) bootZoom = areaZoom;
+      map.setView(area.getCenter(), areaZoom, { animate: false });
+      framed = true;
     }
     if (zoom !== null && !framed) map.setView(map.getCenter(), zoom, { animate: false });
     // Parsed LAST, after the layers are on and the point is set, because a pin

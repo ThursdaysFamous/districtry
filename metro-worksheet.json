@@ -29,6 +29,11 @@
   "population": {
     "index": "population/index.json"
   },
+  "frames": {
+    "chicago": ["school-board-districts.json"],
+    "cook": ["ccbr-districts.json"],
+    "dupage": ["dupage-county-outline.json"]
+  },
   "socrata_host": "https://data.cityofchicago.org",
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
@@ -213,6 +218,7 @@
       "id": "mwrd",
       "label": "Water Reclamation District (MWRD)",
       "group": "geography",
+      "frame": "cook",
       "area_rank": 6,
       "rank_note": "Metropolitan Water Reclamation District of Greater Chicago — ONE ~882 sq mi district (the Clerk's tax-agency boundary, county GIS politicalBoundary L21); nine commissioners elected at large, card links the official board; partial coverage (Cook's fringe townships sit outside the district), Cook-gated",
       "source": {
@@ -385,6 +391,7 @@
       "id": "ccbr",
       "label": "Cook County Board of Review District",
       "group": "political",
+      "frame": "cook",
       "area_rank": 14,
       "rank_note": "Cook County Board of Review district (only 3, county-wide)",
       "source": {
@@ -431,6 +438,7 @@
       "id": "dupage-county-special-police",
       "label": "DuPage Special Police District",
       "group": "safety",
+      "frame": "dupage",
       "area_rank": 16,
       "rank_note": "DuPage special police district (4; unincorporated-area township police-tax districts that fund supplemental DuPage County Sheriff patrol — Bloomingdale/Milton/Wayne/York townships; partial coverage, live from county GIS, coverage-gated to DuPage). DuPage-specific — no Will analog.",
       "source": {
@@ -513,6 +521,7 @@
       },
       "label": "Elected School Board District",
       "group": "political",
+      "frame": "chicago",
       "area_rank": 19,
       "rank_note": "Elected School Board district (10, citywide)",
       "source": {
@@ -531,6 +540,7 @@
       "id": "cps-hs-network",
       "label": "CPS Network (High School, admin office)",
       "group": "schools",
+      "frame": "chicago",
       "area_rank": 20,
       "rank_note": "CPS High School Network (admin grouping)",
       "source": {
@@ -549,6 +559,7 @@
       "id": "cps-network",
       "label": "CPS Network (K-8, admin office)",
       "group": "schools",
+      "frame": "chicago",
       "area_rank": 21,
       "rank_note": "CPS K-8 Network (admin grouping)",
       "source": {
@@ -600,6 +611,7 @@
       "id": "ward-precinct",
       "label": "Ward Precinct",
       "group": "political",
+      "frame": "chicago",
       "area_rank": 23,
       "rank_note": "Ward Precinct (sub-selection of City Ward)",
       "rank_comment": [
@@ -626,6 +638,7 @@
       },
       "label": "Police District",
       "group": "safety",
+      "frame": "chicago",
       "area_rank": 24,
       "rank_note": "Police District (22)",
       "source": {
@@ -644,6 +657,7 @@
       "id": "police-beat",
       "label": "Police Beat",
       "group": "safety",
+      "frame": "chicago",
       "area_rank": 25,
       "rank_note": "Police Beat (~277)",
       "rank_comment": [
@@ -666,6 +680,7 @@
       "id": "ccpsa-district-council",
       "label": "CCPSA District Council",
       "group": "safety",
+      "frame": "chicago",
       "area_rank": 26,
       "rank_comment": [
         "CCPSA District Council shares the police-district geometry exactly (22,",
@@ -688,6 +703,7 @@
       "id": "community-area",
       "label": "Community Area",
       "group": "geography",
+      "frame": "chicago",
       "area_rank": 27,
       "rank_note": "Community Area (77)",
       "source": {
@@ -724,6 +740,7 @@
       "id": "cps-high",
       "label": "CPS High School Zone",
       "group": "schools",
+      "frame": "chicago",
       "area_rank": 29,
       "rank_note": "High School attendance zone",
       "source": {
@@ -742,6 +759,7 @@
       "id": "cps-middle",
       "label": "CPS Middle School Zone",
       "group": "schools",
+      "frame": "chicago",
       "area_rank": 30,
       "rank_note": "Middle School attendance zone",
       "source": {
@@ -815,6 +833,7 @@
       "id": "ssa",
       "label": "Special Service Area",
       "group": "geography",
+      "frame": "chicago",
       "area_rank": 33,
       "rank_note": "Chicago Special Service Areas — the city's current ACTIVE tiling (58, Data Portal cmr6-dn8c). Ranked between county-precinct and tif-district on MEASURED median polygon area, geodesic WGS84: SSA 0.359 km² against TIF's 0.268 km² (both fetched 2026-09-12). TIF was first recorded as 0.269, which no projection gives; it is 0.268 in geodesic, EPSG:3435, UTM 16N and Albers alike. The projection is NAMED because SSA's last digit depends on it — 0.359 geodesic/3435/Albers, 0.358 UTM 16N — and because EPSG:3435 is in FEET, so an area divided by 1e6 there reads 0.36 as 3.86 and looks like a different measurement. The rank moves under none of them. SSA is also far under a suburban Cook precinct (1,430 over ~3,600 km²). Card shows the corridor name + the SSA number + the wards the city's own ward_2023 column lists (labelled as the city's list, because it disagrees with the ward geometry on 2 of 58) + status, and links the city's SSA program page; the dataset's comm_area column is deliberately not shown — bare community-area numbers, up to eight per SSA, that the Community Area layer already answers by name for the point; partial coverage (most points in the city are in no SSA), Chicago-gated. The portal carries FIVE deprecated editions behind this id, so it goes into validate_sources.py's manifest on day one. Dedicated Chicago layer per the consolidation rule until a second municipality ships SSAs — Cook's clerkTaxDistricts L13 carries 286 county-wide special-service tax districts, 63 of them Chicago's, recorded as the next entry",
       "source": {
@@ -833,6 +852,7 @@
       "id": "tif-district",
       "label": "TIF District",
       "group": "geography",
+      "frame": "cook",
       "area_rank": 34,
       "rank_note": "Cook TIF districts — the Clerk's current tax-increment-financing agency tiling (418, county GIS clerkTaxDistricts L18: the un-yeared layer the Clerk refreshes in place, retired year editions archived in the year-versioned service); card shows name + Clerk agency number + the Clerk's TIF-reports link; partial coverage (most points are in no TIF), Cook-gated. Dedicated Cook layer per the consolidation rule until a second county ships TIFs (Kendall's server carries a TIF_Districts service — recorded as the next entry)",
       "source": {
@@ -851,6 +871,7 @@
       "id": "cps-elementary",
       "label": "CPS Elementary School Zone",
       "group": "schools",
+      "frame": "chicago",
       "area_rank": 35,
       "rank_note": "Elementary School attendance zone — smallest polygon layer",
       "source": {
@@ -869,6 +890,7 @@
       "id": "school-site",
       "label": "School Location (all, incl. private, nearest N)",
       "group": "schools",
+      "frame": "chicago",
       "area_rank": 36,
       "rank_note": "individual school-campus footprints — smallest polygons, above the zones",
       "source": {
@@ -941,6 +963,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
+      "frame": "chicago",
       "area_rank": 40,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
@@ -959,6 +982,7 @@
       "id": "early-voting",
       "label": "Early Voting Site",
       "group": "political",
+      "frame": "chicago",
       "area_rank": 41,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {

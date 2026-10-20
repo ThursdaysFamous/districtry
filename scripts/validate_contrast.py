@@ -221,7 +221,7 @@ PAIRS = [
     ("ink",        "border",     "text", ".gap-suggest:hover — text with the border colour as its ground (styles-footer; the gaps modal is composed outside the hidden footer)"),
     ("ink-2",      "surface",    "text", "history.html .tile-l (build_history_page)"),
     ("ink-2",      "paper",      "text", "history.html .intro, .entry p, code (build_history_page)"),
-    ("ink-3",      "surface",    "text", "landing .cov-count beside its --ink strong, on the --surface .coverage card (build_landing_page); the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); .install-invite-close, the invitation's dismiss glyph, as --slate on its --panel bar (styles-app); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
+    ("ink-3",      "surface",    "text", "landing .cov-count beside its --ink strong, on the --surface .coverage card (build_landing_page); the question pages' .lookup-label, .lookup-hint and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); .install-invite-close, the invitation's dismiss glyph, as --slate on its --panel bar (styles-app); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
     ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app); the .lookup-input PLACEHOLDER, which is --slate rather than the --slate-soft every other placeholder in the fleet uses \u2014 that pair is 2.28:1 on --paper and is the recorded (faint, paper) shortfall below, so a new field does not join it"),
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body)"),
@@ -252,7 +252,6 @@ PAIRS = [
     # — error state —
     ("error-ink",  "surface",    "text", ".layer-card-body.state-error — styles-card-v2's literal #7c2d12 wins by source order over styles-app's var(--err) and equals --error-ink light; the skin's dark #fdba74 equals --error-ink dark — literal equals token"),
     ("error",      "surface",    "text", "landing .search-status.err at 13.5px (build_landing_page)"),
-    ("brand-warm-deep", "surface", "text", ".lookup-status.err at 13.5px on the --panel .lookup-card (shell) \u2014 the question pages' failed-search line. It is NOT --error: the sub-page palette build_brand_tokens.py emits carries eleven aliases and no error token, and adding a twelfth to paint one line would put a value in every sub-page that nothing else uses. --accent-warm-deep is this shell's caution hue, the darker pair of the .disclaimer rule"),
     ("error",      "surface",    "ui",   ".layer-block:has(> .layer-card-body.state-error) border-left (styles-card-v2 literal == --error; skin dark #f97316 == --error dark)"),
 
     # — literal white as text: the engine's button faces, on every accent —
@@ -472,7 +471,7 @@ TRAFFIC_PAIRS = [
 # each names the shell selector that would paint it.
 TRAFFIC_NOT_PAINTED = {
     "slate-soft": "the shell paints it on .cta-note and .updated, neither of which this page carries",
-    "accent-warm-deep": "the shell paints it on .lookup-status.err; this page has no address box",
+    "accent-warm-deep": "the shell declares it and paints it nowhere: its one rule, the question pages' .lookup-status.err, went with the address box's error line on 2026-10-20",
 }
 
 # Empty. An entry here takes the same shape as ACCEPTED_SHORTFALLS and is

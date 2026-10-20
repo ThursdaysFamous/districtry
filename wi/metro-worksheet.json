@@ -23,6 +23,10 @@
     "minLng": -93.09,
     "maxLng": -86.04
   },
+  "frames": {
+    "milwaukee": ["mps-school-board-districts.json"],
+    "madison": ["madison-outline.json"]
+  },
   "brand": {
     "app_name": "districtry Wisconsin",
     "product_name": "districtry",
@@ -415,6 +419,7 @@
       "id": "mpd-district",
       "label": "Milwaukee Police District",
       "group": "safety",
+      "frame": "milwaukee",
       "area_rank": 19,
       "rank_note": "Milwaukee's seven police districts — a seventh of the city each, the largest of the city-scoped tier; the fleet's second city police-district layer",
       "source": {
@@ -481,6 +486,7 @@
       "id": "mpd-squad-area",
       "label": "Milwaukee Police Squad Area",
       "group": "safety",
+      "frame": "milwaukee",
       "area_rank": 22,
       "rank_note": "The 25 MPD patrol squad areas — a twenty-fifth of the city each, nested inside the seven police districts (subOf), between the MPS board's eighths and the aldermanic fabric",
       "source": {
@@ -543,6 +549,7 @@
       "id": "milwaukee-neighborhoods",
       "label": "Milwaukee Neighborhood",
       "group": "geography",
+      "frame": "milwaukee",
       "area_rank": 25,
       "rank_note": "The city's 190 named neighborhoods — an identity fabric, not an electing body; below the ward layer's statewide average, above the amenity points",
       "source": {
@@ -599,6 +606,7 @@
       "id": "madison-neighborhood-assoc",
       "label": "Neighborhood Association (Madison)",
       "group": "geography",
+      "frame": "madison",
       "area_rank": 26,
       "rank_note": "116 active city-registered association boundaries averaging 1.1 km² — just below Milwaukee's neighborhood fabric (1.3 km²) and above the TID slices; they nest and overlap by design, so the card collects every association at the point",
       "source": {

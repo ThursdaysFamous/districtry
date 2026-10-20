@@ -10,6 +10,18 @@ to search their address once they get there. The reader has already got their
 address in mind on the question page; asking them to carry it through a
 navigation is a step this does not need.
 
+ONE BUTTON DOES BOTH (Adam, 2026-10-20: "I'd rather one button that can do
+both. Search if an address is provided or open the map if not"). With an
+address typed, the button opens the map and searches it; with the box left
+empty, it opens the map with the same layers on and nothing searched. Until
+that day the box sat above the .cta link it shortens, under an "Or open the
+map" line, so a reader with JavaScript saw two buttons with the same words on
+them, and an empty box answered "Type an address or ZIP first" instead of
+opening the map. The .cta link and its note are now the NO-JAVASCRIPT path
+only: the shell's stylesheet hides both once this form is shown (a sibling
+rule in engine/shared/styles-subpage.txt, so nothing flashes), and a reader
+whose browser runs no script still gets the link.
+
 WHAT IT DOES NOT DO IS GEOCODE. The form builds `./#q=<address>` and hands the
 typed text to the app, which runs the search it already runs, bounded to the
 instance it already serves. Two things follow from that, and both are the
@@ -40,6 +52,12 @@ with a form pointing at layers it no longer names.
 THE FORM IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT. A reader with no JavaScript
 cannot submit it — the navigation is the script — so they get the .cta link
 below it instead of an input that does nothing.
+
+WHERE THE MAP OPENS is the app's business, not this form's: a link naming
+layers and no point opens on the area those layers cover (ENGINE permalink,
+LAYER_FRAMES from the worksheet's `frames`), so Chicago's school board page
+opens on Chicago and a statewide layer's page on the state, whichever way the
+reader leaves this page.
 
     python3 scripts/build_question_forms.py           # write the regions
     python3 scripts/build_question_forms.py --check   # drift gate for CI
@@ -155,46 +173,43 @@ def render(layers, label, place):
     <div class="lookup-row">
       <input class="lookup-input" id="lookup-q" name="q" type="search"
              autocomplete="street-address" enterkeyhint="go" autocapitalize="words"
+             aria-describedby="lookup-hint"
              placeholder="Address or ZIP in %(place_attr)s">
       <button class="lookup-go" type="submit">%(label)s</button>
     </div>
+    <p class="lookup-hint" id="lookup-hint">Or leave it blank to open the map and pick your location there.</p>
     <p class="lookup-status" id="lookup-status" role="status"></p>
   </div>
 </form>
-<p class="lookup-or" id="lookup-or" hidden>Or open the map and pick your location on it:</p>
 <script>
 (function () {
   "use strict";
-  // Hands the typed address to the app as a HASH — never a query string, which
-  // count.js would send to the analytics host. The app geocodes; this does not.
+  // ONE button: with an address typed it opens the map and searches it, with
+  // the box empty it opens the map with the same layers on. The address goes
+  // to the app as a HASH, never a query string, which count.js would send to
+  // the analytics host. The app geocodes; this does not.
   var LAYERS = "%(layers)s";
   var form = document.getElementById("lookup");
   var input = document.getElementById("lookup-q");
   var status = document.getElementById("lookup-status");
-  // Both elements sit ABOVE this script on purpose: it runs inline, at parse
-  // time, so anything below it is not in the document yet. The first draft put
-  // the "Or open the map" line after this script and the guard below took
-  // the early return on all eleven pages — the form stayed hidden and looked
-  // exactly like a reader with JavaScript off.
-  var alt = document.getElementById("lookup-or");
-  if (!form || !input || !status || !alt) return;
-  // Both unhide together. Only a reader whose browser runs this can submit the
-  // form, and "Or open the map" is a sentence about a form that is not there
-  // otherwise.
+  // The form sits ABOVE this script on purpose: it runs inline, at parse
+  // time, so anything below it is not in the document yet. A first draft put
+  // a line after this script that the guard below waited for, and the early
+  // return left the form hidden on every page, which looked exactly like a
+  // reader with JavaScript off.
+  if (!form || !input || !status) return;
+  // Shown only here, because only a reader whose browser runs this can submit
+  // it. Showing it also hides the .cta link and its note below (a sibling
+  // rule in the shell's stylesheet): that link is the same trip for a reader
+  // with no script, and two buttons with the same words were one too many.
   form.hidden = false;
-  alt.hidden = false;
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var q = input.value.trim();
-    if (!q) {
-      status.textContent = "Type an address or ZIP first.";
-      status.className = "lookup-status err";
-      input.focus();
-      return;
-    }
     status.textContent = "Opening the map\\u2026";
-    status.className = "lookup-status";
-    window.location.href = "./#q=" + encodeURIComponent(q) + "&layers=" + LAYERS;
+    window.location.href = q
+      ? "./#q=" + encodeURIComponent(q) + "&layers=" + LAYERS
+      : "./#layers=" + LAYERS;
   });
 })();
 </script>''' % {
