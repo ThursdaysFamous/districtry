@@ -23,6 +23,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (Claude Code web), where
 // Chromium cannot reach cdnjs.cloudflare.com (it does not use the agent HTTPS
@@ -127,7 +128,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots on the SF map with the Thread-5 layers, SF-branded, clean console.
   {

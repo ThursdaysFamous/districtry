@@ -24,7 +24,10 @@
 // file, but it sends no CORS header, so a page cannot read its answer. This asks it on the page's behalf and passes on each
 // match's address and position, nothing else of the answer. The app checks
 // that a match is on the shared address's street, in its town, with its
-// number, and shows it as a pin for the reader to tap: it selects nothing.
+// number, and shows it as a pin, whose point it has selected since
+// 2026-10-18. Since 2026-10-20 New York's app also asks it about the public
+// address of an office a card shows, when the city's own address search
+// cannot place that office's map pin.
 // Measured 2026-10-17: a Chicago storefront Photon knew only as its street
 // came back on the right side of the street and on its block, about 45 m
 // from the building; asked on 2026-10-14 for a Westmont address, it offered
@@ -32,7 +35,8 @@
 //
 // WHY THERE IS NO robots.txt READ. robots.txt governs crawlers. This makes
 // one request for one link or address a reader shared, at the moment they
-// share it, which is a user agent acting for that reader, not a crawl
+// share it, or for the office on a card the reader opened, at the moment it
+// opens, which is a user agent acting for that reader, not a crawl
 // (RFC 9309 §1 scopes the protocol to automatic clients that crawl). The
 // Census host publishes no robots.txt in any case (HTTP 404, read
 // 2026-10-17).

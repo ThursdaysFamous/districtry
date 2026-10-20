@@ -4221,15 +4221,17 @@ function initNorthCarolinaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "nc-senate": "ncs", "county": "co", "nc-house": "nch",
-    "school-district-unified": "su", "county-subdivision": "cs", "school-board-district": "bd",
-    "zip-code": "zp", "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "nc-superior-court": "ncu", "nc-district-court": "ncd", "school-district-unified": "su",
+    "county-subdivision": "cs", "school-board-district": "bd", "zip-code": "zp",
+    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["nc-senate"],
-    "state-house": ["nc-house"], "county": ["county"],
+    "state-house": ["nc-house"], "trial-court-district": ["nc-superior-court"],
+    "limited-trial-court-district": ["nc-district-court"], "county": ["county"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
@@ -10201,11 +10203,14 @@ function initNorthCarolinaExplorer() {
    * ENGINE map-link; services/link-lookup/main.ts), which passes on each
    * match's address and position: the Census Bureau sees the lookup and
    * not the reader, and the privacy page names both, measured from the
-   * `?a=` call below (build_privacy_page.py). Only an address the reader
-   * searched for is sent: one a shared map link carried, or one typed and
-   * then sent with Search or Enter, handed over as #q=, or picked from the
-   * list by its street (runAddressSearch, listHeldAnswers), never text while
-   * it is being typed.
+   * `?a=` call below (build_privacy_page.py). From the map's search, only an
+   * address the reader searched for is sent: one a shared map link carried,
+   * or one typed and then sent with Search or Enter, handed over as #q=, or
+   * picked from the list by its street (runAddressSearch, listHeldAnswers),
+   * never text while it is being typed. An app's office-pin provider may
+   * also ask about the public address of an office a card shows, when its
+   * own geocoder cannot place it (New York's poiGeocodeRequest, from
+   * 2026-10-20). build_privacy_page.py fails on a call from anywhere else.
    *
    * An answer is used only if it is the ONE match that is the house
    * (labelAtHouse, ENGINE map-link) in the address's town or ZIP code
@@ -10468,7 +10473,9 @@ function initNorthCarolinaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 14 congressional districts — the largest districts North Carolina carries below the state itself
+    "nc-district-court", // 47 district court districts, 2,966 km2 mean area, measured 2026-10-20 on the drawn file — larger on average than a State Senate district (2,788 km2), smaller than a congressional district (9,956)
     "nc-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
+    "nc-superior-court", // 73 superior court districts, 1,909 km2 mean area, measured 2026-10-20 on the drawn file — smaller on average than a State Senate district (2,788 km2), larger than a county (1,394)
     "county",            // 100 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "nc-house",          // 120 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 118 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
@@ -16293,6 +16300,253 @@ function initNorthCarolinaExplorer() {
   });
 
 
+  /* ---------- 15. Superior Court and District Court — from the statutes ----------
+   * NORTH CAROLINA ELECTS ITS TRIAL JUDGES BY DISTRICT, AND THE GENERAL
+   * ASSEMBLY WRITES THE DISTRICTS INTO THE STATUTES: G.S. 7A-41 the 73
+   * superior court districts and G.S. 7A-133 the 47 district court districts.
+   * nc/scripts/build_nc_court_districts.py reads the text kept in
+   * data/source/statutes/, which every build holds to the General Assembly's
+   * live page, and draws each district from this instance's own county file.
+   * Where the law divides a county (nine for the superior court, two for the
+   * district court) it lists the 2010 Census voting districts and blocks of
+   * each part, and G.S. 7A-41(c1) keeps those 2010 lines where a voting
+   * district has moved since, so those parts are drawn from the Census
+   * Bureau's 2010 lines. Both files are this site's own, so a click sends
+   * nothing anywhere.
+   *
+   * NO JUDGE IS NAMED. The court system lists who serves in its judicial
+   * directory, and www.nccourts.gov's robots.txt disallows that path for every
+   * client, in the part of the file headed "Custom robot rules" (measured
+   * 2026-10-20 with a browser's client, the one its pages answer; the file
+   * says Last-Modified 16 October 2026), so nothing here reads it and the
+   * cards link it instead. Election results cannot stand in for it, because
+   * the Governor appoints a judge to a seat that comes open between
+   * elections. Gap nc-judges.
+   *
+   * THE LAW GIVES TWO JUDGE COUNTS FOR THREE DISTRICTS: superior court 31A
+   * (two in the table of 7A-41(a), one in 7A-41(b)), and district court 12
+   * (eleven in the table of 7A-133(a), eight in (b1)) and 32 (six, and five in
+   * (b3)). The cards say so rather than choosing, and the builder fails if any
+   * of the six numbers moves.
+   *
+   * WHAT EACH COURT HEARS, HOW ITS JUDGES ARE ELECTED AND THAT SUPERIOR COURT
+   * JUDGES ROTATE are the court system's own words, read 2026-10-20 from its
+   * superior court, district court and court officials pages, which its
+   * robots.txt allows; nc/WATCH.md says when to read them again.
+   *
+   * MEAN AREAS, measured 2026-10-20 on the drawn files, put the two where
+   * they sit in the area rank: U.S. House 9,956 km2, district court 2,966,
+   * N.C. Senate 2,788, superior court 1,909, county 1,394, N.C. House 1,162.
+   * ---------- */
+  var loadNcSuperiorCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-superior-court-districts.json", {}, 2);
+  });
+  var loadNcDistrictCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-district-court-districts.json", {}, 2);
+  });
+
+  // "Bladen, Brunswick and Columbus Counties"
+  function ncCountiesWord(names) {
+    return ncJoinList(names, "and") + (names.length === 1 ? " County" : " Counties");
+  }
+  // What the statute put in the district, so a reader sees it without opening
+  // the law: "Warren County and part of Vance County", "Parts of Edgecombe and
+  // Wilson Counties".
+  function ncCourtCounties(p) {
+    var whole = (p.counties || []).map(String);
+    var parts = (p.parts || []).map(String);
+    var bits = [];
+    if (whole.length) bits.push(ncCountiesWord(whole));
+    if (parts.length) {
+      bits.push((bits.length ? "part" : "Part") + (parts.length === 1 ? " of " : "s of ") +
+        ncCountiesWord(parts));
+    }
+    return bits.join(" and ");
+  }
+
+  // opts: { word, term, pieces, bench, rotate, gap, link } — `word` names one
+  // district, `term` the term of office ("an eight-year term"), `pieces` what
+  // the law lists inside a divided county, `bench` what the court hears,
+  // `rotate` whether its judges ride the division's districts, `gap` what the
+  // law says about ground no 2010 piece covers, and `link` the statute's own
+  // page.
+  function ncCourtCard(opts) {
+    return function (result) {
+      var p = result.props;
+      var wrap = cardEl("div", "card-flush");
+      var note = ncCourtCounties(p);
+      if (p.division) note += " · " + String(p.division) + " Division";
+      wrap.appendChild(renderBodyIntro({ title: opts.word + " " + String(p.unit), note: note }));
+
+      var rows = [];
+      var each = "elected by the voters of the whole district to " + opts.term;
+      if (p.judgesDisagree && p.judgesDisagree.length === 2) {
+        rows.push({
+          label: "Judges",
+          value: "The law gives two numbers for this district: the table in " +
+            String(p.authority) + "(a) lists " + Number(p.judgesDisagree[0]) +
+            " judges, and " + String(p.judgesDisagreeIn) + " gives " +
+            Number(p.judgesDisagree[1]) + ", so this app states neither. Each judge " +
+            "is " + each + " and must live in the district."
+        });
+      } else if (p.judgeCount) {
+        var n = Number(p.judgeCount);
+        rows.push({
+          label: "Judges",
+          value: n === 1
+            ? "One judge, " + each + ". The judge must live in the district."
+            : ncCapital(NC_SMALL_NUMBERS[n] || String(n)) + " judges, each " + each +
+              ". Each must live in the district."
+        });
+      }
+      rows.push({
+        label: "Who they are",
+        value: "Not named here. The court system's judicial directory, linked below, " +
+          "lists who serves now. Its website asks programs like this app not to read " +
+          "that page, and election results cannot stand in for it, because the " +
+          "Governor appoints a judge to a seat that comes open between elections."
+      });
+      if (p.residence) {
+        rows.push({
+          label: "Seats tied to a county",
+          value: "The voters of the whole district elect every judge, but for some or " +
+            "all of the seats the law lets only people who live in particular counties " +
+            "of the district run (" + String(p.residence) + ")."
+        });
+      }
+      if (opts.rotate && p.division) {
+        rows.push({
+          label: "Who holds court here",
+          value: "Superior court judges rotate among the districts of their division " +
+            "every six months, the court system says, so a judge holding court here " +
+            "may have been elected in another district of the " + String(p.division) +
+            " Division."
+        });
+      }
+      if (p.set && p.set.length) {
+        rows.push({
+          label: "Senior resident judge",
+          value: "Districts " + ncJoinList(p.set, "and") + " together make up " +
+            ncCountiesWord((p.setCounties || []).map(String)) + " and share one senior " +
+            "resident superior court judge, who manages the court's administrative " +
+            "duties there (G.S. 7A-41.1)."
+        });
+      }
+      if (p.endsOn) {
+        rows.push({
+          label: "From " + (ncDate(p.endsOn) || String(p.endsOn)),
+          value: "The law ends this district on that day, and as written today it does " +
+            "not say which district its ground joins (" + String(p.authority) + "(a))."
+        });
+      }
+      rows.push({ label: "The court", value: opts.bench });
+      rows.push({
+        label: "How this map is drawn",
+        value: (p.parts && p.parts.length)
+          ? "From the counties " + String(p.authority) + "(a) lists for this district " +
+            "and, inside " + ncCountiesWord(p.parts.map(String)) + ", from the 2010 " +
+            "Census " + opts.pieces + " " + String(p.authority) + "(b) lists, drawn " +
+            "here to within 8 metres of their 2010 lines. " + opts.gap
+          : "From the counties " + String(p.authority) + "(a) lists for this district, " +
+            "on the same county lines as the County card."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      wrap.appendChild(renderLinkRow({ links: [
+        { label: "Judicial directory", url: "https://www.nccourts.gov/judicial-directory" },
+        { label: "Judicial district maps", url: "https://www.nccourts.gov/documents/publications/judicial-districts-maps" },
+        opts.link
+      ] }));
+      return wrap;
+    };
+  }
+  function ncCourtQuery(load) {
+    return function (point, seq) {
+      return queryFeatureAt(load, point).then(function (feature) {
+        if (!feature || !feature.properties || feature.properties.unit == null) return null;
+        return { seq: seq, props: feature.properties };
+      });
+    };
+  }
+  function ncCourtHover(word) {
+    return function (feature) {
+      var unit = ((feature || {}).properties || {}).unit;
+      return unit == null ? null : word + " " + String(unit);
+    };
+  }
+  // A point a few metres off the coast or across the state line, where the
+  // County card's own map draws no county either.
+  function ncCourtEmpty(word) {
+    return "No " + word + " is drawn at this point. Every district is made of " +
+      "North Carolina's counties, drawn on the same lines as the County card, and " +
+      "this point is outside them all.";
+  }
+
+  registerLayer({
+    id: "nc-superior-court",
+    group: "political",
+    label: "Superior Court District",
+    emptyNote: ncCourtEmpty("superior court district"),
+    overlay: {
+      load: loadNcSuperiorCourts,
+      // the fleet's trial-court purple and line (layer-concepts.json `colors`
+      // and `lines`)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: ncCourtHover("Superior Court District"),
+    query: ncCourtQuery(loadNcSuperiorCourts),
+    render: ncCourtCard({
+      word: "Superior Court District",
+      term: "an eight-year term",
+      pieces: "voting districts and blocks",
+      rotate: true,
+      bench: "Superior courts hear civil and criminal cases, including felony cases " +
+        "and civil cases over $25,000, and appeals of misdemeanours and infractions " +
+        "from the district court.",
+      gap: "The law keeps those 2010 lines where a voting district has moved since " +
+        "(G.S. 7A-41(c1)). Where today's county line takes in ground no 2010 piece " +
+        "covers, the map gives it to the nearest district; the law says a block file " +
+        "kept by the General Assembly's clerks decides such ground (G.S. 7A-41(c2)), " +
+        "and this app has not found that file published.",
+      link: { label: "G.S. 7A-41", url: "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html" }
+    }),
+    primaryLink: function () {
+      return { label: "North Carolina superior courts", url: "https://www.nccourts.gov/courts/superior-court" };
+    }
+  });
+
+  registerLayer({
+    id: "nc-district-court",
+    group: "political",
+    label: "District Court District",
+    emptyNote: ncCourtEmpty("district court district"),
+    overlay: {
+      load: loadNcDistrictCourts,
+      // the limited-jurisdiction trial court's olive and line, shared with
+      // Kentucky's district court (layer-concepts.json `colors` and `lines`)
+      style: { color: "#5E6E00", weight: 1.5, fillColor: "#5E6E00", fillOpacity: 0.05 }
+    },
+    hoverName: ncCourtHover("District Court District"),
+    query: ncCourtQuery(loadNcDistrictCourts),
+    render: ncCourtCard({
+      word: "District Court District",
+      term: "a four-year term",
+      pieces: "voting districts",
+      rotate: false,
+      bench: "District courts hear divorce, child custody and child support cases, " +
+        "civil cases under $25,000, misdemeanours and infractions, and juvenile " +
+        "cases. Unlike superior court judges, district court judges do not rotate " +
+        "between districts.",
+      gap: "Where today's county line takes in ground no 2010 voting district " +
+        "covers, the map gives it to the nearest district; the law does not say " +
+        "where such ground belongs.",
+      link: { label: "G.S. 7A-133", url: "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html" }
+    }),
+    primaryLink: function () {
+      return { label: "North Carolina district courts", url: "https://www.nccourts.gov/courts/district-court" };
+    }
+  });
+
+
 
   /* ==== ENGINE:BEGIN hover-explorer ==== */
   /* =========================================================================
@@ -17783,6 +18037,9 @@ function initNorthCarolinaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "nc-senate", "nc-house",
+    // The courts follow the chambers, as Kentucky's do: each district's
+    // voters elect its superior or district court judges.
+    "nc-superior-court", "nc-district-court",
     // The city council district sits with the other districts that elect
     // someone of their own; it answers only in the seventeen cities whose
     // districts are drawn.
@@ -18277,9 +18534,10 @@ function initNorthCarolinaExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
     "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#5E6E00": "#A6BD42",
+    "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

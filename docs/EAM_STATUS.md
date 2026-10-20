@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**24 gap-record claims name a level, 8 of which carry a
+**25 gap-record claims name a level, 8 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -52,7 +52,7 @@ different thing from one it failed.
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 66 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 20 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 23 | all | 8 of 14 levels |
-| nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 16 | all | 13 of 14 levels |
+| nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 18 | all | all 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 17 | all | 11 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 19 | all | 13 of 14 levels |
@@ -104,7 +104,7 @@ this instance is in maintenance.
 
 - **Under a WATCH.md plan (51):** re-checked on a stated cadence rather than by a job — `adair-county-outline.json`, `ames-wards.json`, `bettendorf-wards.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `calhoun-county-outline.json`, `cedar-falls-wards.json`, `cedar-rapids-wards.json`, `cerro-gordo-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `davenport-wards.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `dubuque-wards.json`, `floyd-county-outline.json`, `franklin-county-outline.json`, `guthrie-county-outline.json`, `hamilton-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `kossuth-county-outline.json`, `lee-county-outline.json`, `linn-county-outline.json`, `marion-wards.json`, `marshalltown-wards.json`, `mason-city-wards.json`, `metro-outline.json`, `montgomery-county-outline.json`, `palo-alto-county-outline.json`, `pottawattamie-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `warren-county-outline.json`, `waterloo-wards.json`, `webster-county-outline.json`, `west-des-moines-wards.json`, `winneshiek-county-outline.json`, `worth-county-outline.json`, `wright-county-outline.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **4. The county governing body, in every county of the state** — open. 79 of 99 counties name a governing body and draw it where it is elected by district; 19 more name a body elected by district whose districts are not drawn, or not matched to their members. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` (wright) — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-supervisor-count-impossible` (pottawattamie) — County Auditor Mary Ann Hanusa was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
+  - **4. The county governing body, in every county of the state** — open. 79 of 99 counties name a governing body and draw it where it is elected by district; 19 more name a body elected by district whose districts are not drawn, or not matched to their members. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` (wright) — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-supervisor-count-impossible` (pottawattamie) — County elections office (letter addressed to Auditor Mary Ann Hanusa) was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
 
 ### il — EAM·
 
@@ -160,14 +160,17 @@ this instance is in maintenance.
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Mississippi has no sub-county general-purpose government — outside a city, town or village the county governs. The 410 sub-county units the Census publishes for Mississippi are its supervisor districts, which the Census records as having no functioning government.
 
-### nc — EAM·
+### nc — **E.A.M.C.**
 
-- **Watched, not rewritten:** `nc/data/app/nc-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nc-city-wards.json`, `nc-conservation-boards.json`, `nc-house-districts.json`, `nc-precincts.json`, `nc-school-board-districts.json`, `nc-senate-districts.json`, `state-counties.json`
-- **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+- **Covered: yes.** Every expected level of government is answered.
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — North Carolina's townships are boundaries without governments — the Census marks every one non-functioning — so outside a city or town limit the county governs.
+
+- **Watched, not rewritten:** `nc/data/app/nc-city-councils.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-city-council-pages.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
 
 ### ny — EAM·
 
@@ -204,9 +207,9 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `tn-conservation-boards`, `tn-county-commissioners` account for every county in the state, which is what Examined rests on here: 57 of 95 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Watched, not rewritten:** `tn/data/app/tn-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
 - **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`, `tn-city-wards.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-judicial-districts.json`, `tn-precincts.json`, `tn-school-board-districts.json`, `tn-senate-districts.json`
-- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 57 of 95 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 26 of 28 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Knoxville city, Lebanon city
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 26 of 28 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Knoxville city, Lebanon city. A record declares this level and earns nothing: `tn-municipal-officeholders` (4740000) — KGIS, the mapping agency of the City of Knoxville, Knox County and the Knoxville Utilities Board (kgis@kgis.org) was asked on 2026-10-17 and has not answered; the record earns nothing until a thread writes the outcome
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
