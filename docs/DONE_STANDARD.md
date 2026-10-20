@@ -389,8 +389,15 @@ question.
   a trial-court map would redraw the county map. Arkansas draws both levels
   that elect by district, its Court of Appeals districts and its 28 circuits;
   five circuits are divided into election subdistricts by a federal court
-  order, which are not drawn, and their cards say so. North Carolina still
-  owes the entry.
+  order, which are not drawn, and their cards say so. North Carolina answers
+  them since 2026-10-20 with both of its trial courts, 73 superior court
+  districts and 47 district court districts, each electing its own judges.
+  They are drawn from the text of the law, which the General Assembly
+  publishes where this project may read it. Most are whole counties; where the
+  law divides a county it lists the 2010 census voting districts and blocks of
+  each part, so those parts are drawn from the Census Bureau's 2010 lines. No
+  judge is named, because the court system lists its judges on a page its
+  website asks programs not to read.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
   statewide director districts, New York City's community education councils,
   Minnesota's fourteen boards that elect by district, and since 2026-10-16

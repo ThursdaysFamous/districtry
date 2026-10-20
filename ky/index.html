@@ -4233,7 +4233,8 @@ function initKentuckyExplorer() {
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ky-senate"],
     "state-house": ["ky-house"], "supreme-court-district": ["ky-supreme-court"],
     "appellate-court-district": ["ky-court-of-appeals"],
-    "trial-court-district": ["ky-circuit-court"], "county": ["county"],
+    "trial-court-district": ["ky-circuit-court"],
+    "limited-trial-court-district": ["ky-district-court"], "county": ["county"],
     "county-board": ["fiscal-court"], "county-subdivision": ["county-subdivision"],
     "municipality": ["municipality"], "city-council": ["fiscal-court"],
     "voting-precinct": ["voting-precinct"],
@@ -16233,7 +16234,7 @@ function initKentuckyExplorer() {
     label: "District Court",
     overlay: {
       load: loadDistrictCourts,
-      style: { color: "#2F7A6A", weight: 1.5, fillColor: "#4AA893", fillOpacity: 0.05 }
+      style: { color: "#5E6E00", weight: 1.5, fillColor: "#5E6E00", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("District"),
     query: kyCourtQuery(loadDistrictCourts, "district"),
@@ -18245,12 +18246,12 @@ function initKentuckyExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1F6FB2": "#74BBFF",
-    "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#2F7A6A": "#69CAB3", "#3B8FD4": "#A2D2FF",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4AA893": "#74EFD3",
-    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE",
-    "#753B07": "#D7864B", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#8A692C": "#DDB061",
-    "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#41B6E6": "#C6EBFD",
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD",
+    "#5E3A8C": "#B283F4", "#5E6E00": "#A6BD42", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
+    "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#8A692C": "#DDB061", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

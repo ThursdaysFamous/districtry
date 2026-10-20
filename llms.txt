@@ -138,7 +138,7 @@ All 92 counties: each county's commissioners and county council, townships, citi
 
 All 100 counties: each county's board of commissioners, townships, cities and towns, city council districts, voting precincts, school districts and school board districts, ZIP codes, the Eastern Band of Cherokee Indians' land, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. County commissioners are named for the winner of each seat's most recent election in the State Board of Elections' results, the mayor and council of each of the 42 cities and towns above 25,000 people from each place's own pages or, for two, the State Board's results, and each county's conservation district board from the Soil and Water Conservation Commission's directory. Nobody is named yet on the councils of smaller cities and towns, the school boards or the Eastern Band's council, and the Data gaps panel says why.
 
-- [North Carolina district lookup](https://districtry.com/nc/): 15 layers, all 100 counties.
+- [North Carolina district lookup](https://districtry.com/nc/): 17 layers, all 100 counties.
 - [Who is my U.S. representative?](https://districtry.com/nc/congress.html)
 - [Who are my county commissioners?](https://districtry.com/nc/county-commissioner.html): links a page per county, 100 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/nc/sources.html)

@@ -49,6 +49,8 @@ const GEOMETRY_URLS = [
   "./data/app/congress-districts.json",
   "./data/app/nc-senate-districts.json",
   "./data/app/nc-house-districts.json",
+  "./data/app/nc-superior-court-districts.json",
+  "./data/app/nc-district-court-districts.json",
   "./data/app/tribal-areas.json",
   "./data/app/nc-precincts.json",
   "./data/app/nc-city-wards.json",

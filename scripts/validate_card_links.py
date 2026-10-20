@@ -489,6 +489,18 @@ ROBOTS_DECLINED_PATHS = {
          "are readers following a link rather than crawlers; what this stops is "
          "this check fetching it"),
     ],
+    "www.nccourts.gov": [
+        ("/judicial-directory",
+         "the `*` group's section headed \"Custom robot rules\" disallows "
+         "/judicial-directory (line 54 of 1,320 bytes, last-modified 16 October 2026), "
+         "read 2026-10-20 with the Chrome 126 string and client hints on the stdlib "
+         "client, which this host serves. Its robots.txt answers this checker's "
+         "token 403 (CloudFront's error page, 919 bytes, measured the same day), so "
+         "the re-read below cannot see the rule go and nc/WATCH.md's re-read of the "
+         "court pages is where it would be noticed. The nc superior and district court cards link the judicial "
+         "directory and name no judge (gap nc-judges); the court pages they also "
+         "link are permitted and still checked"),
+    ],
     "www.logancountyil.gov": [
         ("/images/",
          "the `*` group disallows /images/, where the County Clerk's Reference & "
