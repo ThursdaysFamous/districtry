@@ -11853,8 +11853,36 @@ function initTennesseeExplorer() {
   // The same `(\S)` guard governs all three, so a PO-box-only address (no
   // street) is still left alone: it geocodes to nothing and the card honestly
   // drops its pin, rather than dropping one on a city centroid.
+  //
+  // Two more shapes, measured 2026-10-20 over every district office the apps
+  // ship, lost a house number or kept a box:
+  //   a building or floor named BEFORE the street — "Dulles State Office
+  //     Building 317 Washington St., Watertown"; "Oswego City Hall, Second
+  //     Floor 13 W. Oneida St."; "Room 419, Legislative Office Building 198
+  //     State St., Albany". The number after the word is the house number,
+  //     and the unit rule read it as a building number and removed it, so New
+  //     York Senate 49, 50 and 52 were looked up with no number at all. When
+  //     that number is followed by a street name and a street type, the words
+  //     before it are dropped and the number stays;
+  //   boxes spelled out or lettered — "Post Office Box 188"; "P.O. Box I".
+  var POI_STREET_TYPE = "(?:street|st|avenue|ave|av|road|rd|boulevard|blvd|drive|dr|lane|ln|place|pl|" +
+    "court|ct|highway|hwy|parkway|pkwy|terrace|ter|circle|cir|square|sq|trail|trl|way|turnpike|tpke|" +
+    "plaza|plz|expressway|expy|freeway|fwy|pike|row|alley|aly|loop|crescent|cres|concourse|walk|path)";
+  // "<number> [N|S|E|W] <one to four words> <street type>" or "<number> Broadway",
+  // ending the comma part or followed by a unit
+  var POI_STREET_AHEAD = "\\d+[a-z]?(?:-\\d+[a-z]?)?\\s+(?:broadway|(?:[nsew]\\.?\\s+)?" +
+    "(?:\\d+(?:st|nd|rd|th)\\s+|[a-z][a-z'.-]*\\s+){1,4}" + POI_STREET_TYPE + "\\b\\.?)" +
+    "\\s*(?:,|$|(?:suite|ste|room|rm|unit|apt|floor)\\b|#)";
+  var POI_NAMED_BEFORE_STREET = new RegExp(
+    "^[\\s\\S]*?\\b(?:building|bldg|floor)\\.?\\s+(?=" + POI_STREET_AHEAD + ")", "i");
+  // a street address already in what would be dropped ("28 Wells Ave., Building
+  // 3 5th Floor") means the building is a unit after it, so nothing is dropped
+  var POI_STREET_IN_PREFIX = new RegExp("\\d[^,]*\\b(?:" + POI_STREET_TYPE + "|broadway|route|rte)\\b", "i");
   function cleanPoiAddress(address) {
     var s = String(address);
+    s = s.replace(POI_NAMED_BEFORE_STREET, function (named) {
+      return POI_STREET_IN_PREFIX.test(named) ? named : "";
+    });
     // "<n>th Floor" — the ordinal precedes the token
     s = s.replace(/(\S)[,\s]+\d+(?:st|nd|rd|th)?\s+floors?\b\.?/gi, "$1 ");
     // "<Unit> <number>" — the token precedes the unit number
@@ -11868,7 +11896,8 @@ function initTennesseeExplorer() {
     // including the parenthesized form the Kane municipal roster uses
     // ("175 Water St., (P.O. Box 205), Burlington") and a trailing period
     // ("P.O. Box 226. LEWISTOWN"), both of which survived the bare-token rule.
-    s = s.replace(/(\S)[,\s]+\(?\s*p\.?\s*o\.?\s*box\.?\s*#?\s*\d+\s*\.?\s*\)?/gi, "$1 ");
+    // Spelled out ("Post Office Box 188") or lettered ("P.O. Box I") too.
+    s = s.replace(/(\S)[,\s]+\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\.?\s*#?\s*(?:\d+|[a-z]\d*(?![\w-]))\s*\.?\s*\)?/gi, "$1 ");
     // collapse the comma/space debris a removal leaves behind
     s = s.replace(/\s+/g, " ").replace(/\s+,/g, ",").replace(/,(?:\s*,)+/g, ",").replace(/^[\s,]+|[\s,]+$/g, "");
     // a separator dash that lost the fragment it introduced ("St. - 6th Floor").
@@ -14164,6 +14193,11 @@ function initTennesseeExplorer() {
   // is, so a block with no ZIP and no heading is joined as it always was, and a
   // block with no address line at all gets no pin rather than a lookup of a
   // telephone number.
+  //
+  // An address with no digit in it, no street number, ZIP code or box, names
+  // no place a pin could go, so it gets no pin either: measured 2026-10-20 over
+  // the same 693 offices, exactly three, Illinois House 13 ("By appointment
+  // only") and Wisconsin Senate 6 and 22 (the bare state, "WI").
   function officeAddressForGeocode(lines) {
     if (!lines || !lines.length) return null;
     var CONTACT = /^\s*(?:phone|telephone|tel|fax|cell|mobile|e-?mail)\s*[:.]/i;
@@ -14191,7 +14225,7 @@ function initTennesseeExplorer() {
     var picked = addresses.filter(function (a) { return !boxOnly(a); })[0] || addresses[0];
     if (!picked) return null;
     var addr = picked.join(", ").trim();
-    return addr || null;
+    return /\d/.test(addr) ? addr : null;
   }
   /* ==== ENGINE:END office-helpers ==== */
   /* ==== ENGINE:BEGIN chamber-factory ==== */
