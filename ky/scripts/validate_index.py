@@ -88,7 +88,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 6
+MIN_REGISTER_LAYER = 7
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -98,8 +98,8 @@ EXPECT_LAYER_IDS = [
     "us-house", "ky-supreme-court", "ky-court-of-appeals", "ky-senate",
     "ky-circuit-court", "ky-district-court", "ky-house", "county",
     "school-district-unified", "county-subdivision", "fiscal-court",
-    "voting-precinct", "municipality", "school-district-elementary",
-    "school-district-secondary",
+    "school-board-district", "voting-precinct", "municipality",
+    "school-district-elementary", "school-district-secondary",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -114,6 +114,7 @@ GEOMETRY_FILES = {
     "ky-district-court-districts.json": (59, 59),  # The 59 judicial districts of KRS 24A.030, dissolved from the county fabric. A second version is already enacted for 2031-01-01, taking it to 58; WATCH.md carries the row.
     "ky-county-districts.json": (300, 360),  # Magisterial and council districts, built by ky/scripts/build_ky_county_districts.py from the State Board of Elections' precinct map and recap sheets and from Louisville's and Lexington's council maps; its --check holds the file to its source record and each drawn county to its Census outline.
     "ky-precincts.json": (3194, 3194),  # Every Kentucky voting precinct, pre-built by ky/scripts/build_ky_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 3,194 count on the fetch and the drawn file). 10.2 MB, 2.49 MB gzipped, fetched only when a reader switches the layer on.
+    "ky-school-board-divisions.json": (13, 13),  # County school board divisions, built by ky/scripts/build_ky_school_board_divisions.py: Jefferson County's five from the precinct lists in KRS 160.211 and Rowan County's five from the 2022 and 2024 general election recap sheets, each cut to its Census school district, plus three Jefferson precincts the statute does not list, shipped whole and placed in no division. Its --check holds the file to its source record, the statute as kept in the repository and the precinct codes in ky-precincts.json.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -123,6 +124,7 @@ ROSTER_FILES = {
     "ky-judge-roster.json": 3,  # Kentucky's judges, keyed by the numbered district or circuit each was elected from, from the Court of Justice's own pages; refreshed weekly by update-ky-judges-roster.yml. Jefferson's circuit 30 and district 30 are recorded as asked about rather than left silent.
     "ky-city-officials.json": 400,  # Each Kentucky city's mayor and council or commission, keyed by Census place id, from the Department for Local Government's municipal directory; refreshed weekly by update-ky-city-officials.yml.
     "ky-county-officials.json": 120,  # Each Kentucky county's governing body and elected officers, keyed by county GEOID, from the Department for Local Government's county directory; refreshed weekly by update-ky-county-officials.yml.
+    "ky-conservation-boards.json": 120,  # The supervisors of each county's conservation district (two in Logan County), keyed by county GEOID, read from the Division of Conservation's sheet for each district by ky/scripts/build_ky_conservation_boards.py, whose --check holds the file to its record of the sheets read and to the County card's wording. Re-read quarterly and in January after the November election (ky/WATCH.md).
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

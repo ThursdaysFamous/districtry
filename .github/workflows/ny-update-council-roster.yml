@@ -91,7 +91,12 @@ jobs:
           python3 scripts/build_officeholder_tables.py
           python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add ny/data/app/council-members.json ny/council-district.html about.html sitemap.xml
+          # docs/EAM_STATUS.md counts the places this roster names, so a
+          # refresh that moves a count fails the smoke gate's
+          # `build_eam_status.py --check` on this PR unless it is rebuilt here,
+          # after the cut onto main (#1572 went red that way on 2026-10-15).
+          python3 scripts/build_eam_status.py
+          git add ny/data/app/council-members.json ny/council-district.html about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update City Council roster from council.nyc.gov"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

@@ -124,6 +124,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, ".cache", "ia_county_city_officials.json")
@@ -154,8 +155,9 @@ MIN_MAYORS = 96               # measured 102 of 102. North English straddles the
                               # Iowa/Keokuk line: its mayor and council come
                               # from Iowa County's page and its clerk from
                               # Keokuk's, so the merge is what makes it whole.
-MIN_EMAILS = 125              # measured 143; FIVE of the ten publish none
-                              # (Adams, Iowa, Jackson, Keokuk, Muscatine)
+MIN_EMAILS = 150              # measured 171 on 2026-10-17, 143 before that
+                              # day's address rule; FIVE of the ten publish
+                              # none (Adams, Iowa, Jackson, Keokuk, Muscatine)
 MIN_PHONES = 100              # measured 116; SIX of the ten publish none
                               # (Adams, Cerro Gordo, Iowa, Jackson, Keokuk,
                               # Muscatine)
@@ -174,11 +176,34 @@ MIN_PHONES = 100              # measured 116; SIX of the ten publish none
 # that IS the city's name, alone or with one short office suffix.
 #
 # The widening is deliberately narrow. `meserveymowman@` starts with its city's
-# name and is still dropped, because `mowman` is not an office suffix; so are
-# jbsauto@, mcfdmedic40@, pst559@ and nikkijo232002@. And Manilla's clerk Lori
-# Jahn is published at `laura@manillaia.com` -- a city-domain address carrying
-# somebody else's first name -- which fails all three tests and is dropped,
-# which is the whole point of testing the address against the name SHIPPED.
+# name and is still not an office mailbox, because `mowman` is not an office
+# suffix; nor are jbsauto@, mcfdmedic40@, pst559@ and nikkijo232002@. And
+# Manilla's clerk Lori Jahn is published at `laura@manillaia.com` -- a
+# city-domain address carrying somebody else's first name -- which fails all
+# three tests, which is the whole point of testing the address against the name
+# SHIPPED.
+#
+# AN ADDRESS THAT FAILS ALL THREE NO LONGER DROPS FOR THAT ALONE (2026-10-17).
+# Until that day it did, and on this file that meant 31 addresses the counties
+# print in an official's own row, 28 of them consumer or internet-provider mail
+# (gmail, yahoo, netins.net and the like) -- jbsauto@ and mcfdmedic40@ among
+# them -- while the phone printed in the same row shipped with no witness at
+# all. Adam ruled that day, for every state, that a personal address a
+# government page prints beside an official ships. So the row is the
+# attribution, as it already was for the phone, and address_verdict() keeps
+# three refusals, each for a measured way an address in the row is not this
+# official's:
+#   * it is on the CITY's own domain and names neither this official nor an
+#     office. A city mailbox is issued to whoever holds the post, and all three
+#     such addresses on these pages name somebody else -- two council members'
+#     rows (Mingo, Prairie City) each carry a mailbox in another person's name,
+#     and Lori Jahn's carries `laura@` -- the shape of a predecessor's mailbox
+#     left on a page whose names were updated;
+#   * it carries the name of ANOTHER official on the same county's list for the
+#     city, which is a welded row or a neighbour's address; or
+#   * the same list prints it for another official too, so it is not this
+#     official's alone.
+# A refused address is printed with its reason on every run.
 OFFICE_TOKEN = re.compile(
     r"clerk|cityof|city_of|cityhall|city_hall|council|mayor|admin|offic"
     r"|townof|town_of"
@@ -244,6 +269,46 @@ def email_witnesses(name, email):
     return False
 
 
+def own_domain(city, email, website):
+    """Is this address on the CITY's own domain?
+
+    It is when the domain ends in .gov, when it carries the city's own name
+    (manillaia.com, prairiecityiowa.us), or when it is the host of the city's
+    website as ia-city-contact.json records it. A consumer or internet-provider
+    host is none of those, so no list of them is needed.
+    """
+    dom = email.rsplit("@", 1)[-1].lower().strip(".")
+    if dom.endswith(".gov") or ".gov." in dom:
+        return True
+    cn = norm(city)
+    if cn and cn in norm(dom):
+        return True
+    host = (urllib.parse.urlparse(website or "").hostname or "").lower()
+    if host.startswith("www."):
+        host = host[4:]
+    return bool(host) and (dom == host or dom.endswith("." + host))
+
+
+def address_verdict(city, block, idx, website):
+    """None when the address in block[idx]'s own row ships on that official;
+    otherwise the reason it does not. `block` is one county's list of officials
+    for one city, the page the row was read from."""
+    off = block[idx]
+    email = off["email"].strip()
+    if email_witnesses(off["name"], email) or office_mailbox(city, email):
+        return None
+    if own_domain(city, email, website):
+        return "a city mailbox naming neither this official nor an office"
+    for j, other in enumerate(block):
+        if j == idx or VACANT_NAME.match(other.get("name") or ""):
+            continue
+        if (other.get("email") or "").strip().lower() == email.lower():
+            return "the same list prints it for %s too" % other["name"]
+        if email_witnesses(other["name"], email):
+            return "it carries the name of %s, on the same list" % other["name"]
+    return None
+
+
 def fail(msg):
     print("REFUSING TO WRITE: " + msg, file=sys.stderr)
     sys.exit(1)
@@ -304,7 +369,8 @@ def main():
                 entry["officeAddress"] = city["cityAddress"]
             if city.get("cityPhone") and not entry.get("officePhone"):
                 entry["officePhone"] = city["cityPhone"]
-            for off in city["officials"]:
+            website = (contact.get(geoid) or {}).get("url")
+            for idx, off in enumerate(city["officials"]):
                 if VACANT_NAME.match(off["name"] or ""):
                     vacant.append((name, off["name"]))
                     member = {"vacant": True, "role": off["role"],
@@ -322,11 +388,11 @@ def main():
                         member[key] = off[key]
                 email = off.get("email")
                 if email:
-                    if (email_witnesses(off["name"], email)
-                            or office_mailbox(name, email)):
+                    why = address_verdict(name, city["officials"], idx, website)
+                    if why is None:
                         member["email"] = email
                     else:
-                        dropped_emails.append((name, off["name"], email))
+                        dropped_emails.append((name, off["name"], email, why))
                 entry["members"].append(member)
 
     for geoid, entry in out.items():
@@ -420,9 +486,8 @@ def main():
         print("  %d city/cities already named from their OWN page, so the "
               "county's copy is not used: %s"
               % (len(shadowed), ", ".join(c for _, c in shadowed)))
-    for city, person, email in dropped_emails:
-        print("  DROPPED e-mail (neither the officeholder's name nor an office "
-              "form): %s / %s / %s" % (city, person, email))
+    for city, person, email, why in dropped_emails:
+        print("  DROPPED e-mail (%s): %s / %s / %s" % (why, city, person, email))
 
     if unmatched:
         fail("%d city name(s) do not join the shipped city list: %s"

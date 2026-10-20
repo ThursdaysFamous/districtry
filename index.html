@@ -86,7 +86,7 @@
       "@type": "ItemList",
       "name": "districtry instances",
       "itemListOrder": "https://schema.org/ItemListUnordered",
-      "numberOfItems": 14,
+      "numberOfItems": 15,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -171,6 +171,12 @@
           "position": 14,
           "name": "Arkansas",
           "url": "https://districtry.com/ar/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "name": "Mississippi",
+          "url": "https://districtry.com/ms/"
         }
       ]
     }
@@ -555,23 +561,33 @@ body {
 .shell { position: relative; min-height: 100vh; }
 .wrap { max-width: 940px; margin: 0 auto; padding: 56px 24px 72px; }
 
-/* The rename toast: absolutely positioned against .shell (full viewport
-   width), never against .wrap (the centered 940px column) — it sits near the
-   top-right of the WINDOW, matching where a reader's eye actually lands, not
-   near the top-right of the text measure. */
+/* The notice: a card at the top of the column, in the page's flow, above the
+   masthead. It used to be a toast placed over the top-right of the window
+   that faded after 15 seconds; the notice now asks the reader to do
+   something and stays until it is closed, and a card that stays must not sit
+   over the masthead's links. See NOTICE for who it is shown to. */
 .notice {
-  position: absolute; z-index: 20; top: 18px; right: 24px;
-  width: 480px; max-width: calc(100% - 48px);
-  padding: 14px 40px 15px 18px;
+  position: relative; margin: 0 0 24px;
+  padding: 14px 44px 15px 18px;
   background: var(--brand-tint); border: 1px solid var(--brand-border);
-  border-radius: var(--radius-card); box-shadow: 0 6px 22px rgba(23, 22, 28, .16);
-  opacity: 1;
+  border-radius: var(--radius-card);
 }
+.notice[hidden] { display: none; }
 .notice-h {
   margin: 0 0 5px; font: var(--font-heading-weight) 17px/1.25 var(--font-heading);
   color: var(--ink);
 }
 .notice-b { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-3); max-width: 52em; }
+/* The one thing in the notice to tap, on a 32px row so it clears WCAG 2.5.8's
+   24px with room to spare on a phone; the colours are the footer support
+   line's, on the same tint. */
+.notice-cta { margin: 6px 0 0; }
+.notice-cta a {
+  display: inline-flex; align-items: center; min-height: 32px;
+  font-size: 15px; font-weight: 600; color: var(--brand-600);
+}
+.notice-cta a:hover { color: var(--brand-700); }
+.notice-cta a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 4px; }
 .notice #notice-dismiss {
   position: absolute; top: 9px; right: 10px; width: 26px; height: 26px;
   display: flex; align-items: center; justify-content: center; padding: 0;
@@ -582,9 +598,6 @@ body {
 .notice #notice-dismiss:hover, .notice #notice-dismiss:focus-visible {
   background: var(--surface); border-color: var(--brand-border); color: var(--ink);
 }
-@keyframes notice-out { from { opacity: 1; } to { opacity: 0; } }
-.notice.is-fading { animation: notice-out 900ms ease forwards; }
-@media (prefers-reduced-motion: reduce) { .notice.is-fading { animation-duration: 1ms; } }
 
 /* The masthead: the mark beside the wordmark, at a size the mark is actually
    drawn for, in a bar the sub-pages already wear. It was a 64px mark over a
@@ -596,8 +609,9 @@ body {
    a light ground and screen on a dark one; keep multiply on dark and they go
    muddy and near-black.
 
-   There is no theme toggle here. The sub-pages carry one because they read a
-   stored choice; this page follows the operating system and stores nothing,
+   There is no theme toggle here. The sub-pages carry one because they store a
+   choice; this page stores none of its own (it reads the one an app stored,
+   through the shared theme boot, and otherwise follows the operating system),
    and a control that looks like the sub-pages' but only lasts a page would be
    worse than none. */
 header.mast {
@@ -897,7 +911,7 @@ footer .support b { color: var(--ink); }
   h1 { font-size: 31px; }
   h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
-  .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
+  .notice { margin-bottom: 22px; }
   .states { columns: 2; column-gap: 10px; }
   .states-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -925,12 +939,13 @@ footer .support b { color: var(--ink); }
 <body>
   <a href="#page-main" class="skip-link">Skip to content</a>
   <div class="shell">
-    <aside id="notice" class="notice" role="status" aria-live="polite">
-      <p id="notice-h" class="notice-h">chidistricts.com is now districtry.com</p>
-      <p class="notice-b">Same map, same data, same answers — a new name, because it now covers more than Chicago and more than one state. Illinois lives at districtry.com/il, and every link below goes straight there.</p>
+    <div class="wrap">
+    <aside id="notice" class="notice" aria-labelledby="notice-h" data-only="android" hidden>
+      <p id="notice-h" class="notice-h">Help test districtry on Android</p>
+      <p class="notice-b">districtry is coming to Google Play as an app, and Google needs at least 12 people to test it for 14 days in a row first. Joining takes a few minutes.</p>
+      <p class="notice-cta"><a href="/android.html?ref=front-page">See how to join</a></p>
       <button type="button" id="notice-dismiss" aria-label="Dismiss this notice">&#x2715;</button>
     </aside>
-    <div class="wrap">
     <header class="mast">
       <div class="mast-brand">
         <svg class="logo-mark" viewBox="0 0 96 96" aria-hidden="true"><g class="mk-blend"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g class="mk-blend"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g class="mk-blend"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="currentColor" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="currentColor" stroke-width="11"></line></svg>
@@ -954,7 +969,7 @@ footer .support b { color: var(--ink); }
                placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
-      <p class="search-help">districtry opens the map that covers the point. 13 states and San Francisco
+      <p class="search-help">districtry opens the map that covers the point. 14 states and San Francisco
          answer today — an address anywhere else says so instead of guessing.</p>
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
@@ -967,7 +982,7 @@ footer .support b { color: var(--ink); }
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
       <div class="cov-head">
-        <p class="cov-count"><strong>13 states and San Francisco answer today.</strong>
+        <p class="cov-count"><strong>14 states and San Francisco answer today.</strong>
           Pick one to open its map.</p>
         <ul class="cov-key" aria-label="Key">
           <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
@@ -981,7 +996,7 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Alabama</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Alaska</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arizona</span><span class="vh">, not yet</span></span></li>
-        <li><a class="st" href="https://districtry.com/ar/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arkansas</span><span class="st-scope">all 75 counties &#183; <span class="st-n">13</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/ar/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arkansas</span><span class="st-scope">all 75 counties &#183; <span class="st-n">18</span>&nbsp;layers</span></a></li>
         <li><a class="st st-part" href="https://districtry.com/ca/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">California</span><span class="st-scope">San Francisco only &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Colorado</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Connecticut</span><span class="vh">, not yet</span></span></li>
@@ -991,18 +1006,18 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Georgia</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Hawaii</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Idaho</span><span class="vh">, not yet</span></span></li>
-        <li><a class="st" href="https://districtry.com/il/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Illinois</span><span class="st-scope">96 counties &#183; <span class="st-n">41</span>&nbsp;layers</span></a></li>
-        <li><a class="st" href="https://districtry.com/in/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Indiana</span><span class="st-scope">all 92 counties &#183; <span class="st-n">14</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/il/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Illinois</span><span class="st-scope">97 counties &#183; <span class="st-n">41</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/in/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Indiana</span><span class="st-scope">all 92 counties &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
         <li><a class="st" href="https://districtry.com/ia/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Iowa</span><span class="st-scope">all 99 counties &#183; <span class="st-n">21</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Kansas</span><span class="vh">, not yet</span></span></li>
-        <li><a class="st" href="https://districtry.com/ky/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Kentucky</span><span class="st-scope">all 120 counties &#183; <span class="st-n">15</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/ky/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Kentucky</span><span class="st-scope">all 120 counties &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Louisiana</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Maine</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Maryland</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Massachusetts</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/mi/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Michigan</span><span class="st-scope">all 83 counties &#183; <span class="st-n">19</span>&nbsp;layers</span></a></li>
         <li><a class="st" href="https://districtry.com/mn/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Minnesota</span><span class="st-scope">all 87 counties &#183; <span class="st-n">20</span>&nbsp;layers</span></a></li>
-        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Mississippi</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/ms/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Mississippi</span><span class="st-scope">all 82 counties &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Missouri</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Montana</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Nebraska</span><span class="vh">, not yet</span></span></li>
@@ -1011,16 +1026,16 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New Jersey</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New Mexico</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/ny/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New York</span><span class="st-scope">statewide, 5 boroughs in depth &#183; <span class="st-n">39</span>&nbsp;layers</span></a></li>
-        <li><a class="st" href="https://districtry.com/nc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Carolina</span><span class="st-scope">all 100 counties &#183; <span class="st-n">13</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/nc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Carolina</span><span class="st-scope">all 100 counties &#183; <span class="st-n">15</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Dakota</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Ohio</span><span class="vh">, not yet</span></span></li>
-        <li><a class="st" href="https://districtry.com/ok/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Oklahoma</span><span class="st-scope">all 77 counties &#183; <span class="st-n">14</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/ok/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Oklahoma</span><span class="st-scope">all 77 counties &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Oregon</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Pennsylvania</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Rhode Island</span><span class="vh">, not yet</span></span></li>
-        <li><a class="st" href="https://districtry.com/sc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">South Carolina</span><span class="st-scope">all 46 counties &#183; <span class="st-n">14</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/sc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">South Carolina</span><span class="st-scope">all 46 counties &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">South Dakota</span><span class="vh">, not yet</span></span></li>
-        <li><a class="st" href="https://districtry.com/tn/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Tennessee</span><span class="st-scope">all 95 counties &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/tn/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Tennessee</span><span class="st-scope">all 95 counties &#183; <span class="st-n">19</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Texas</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Utah</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Vermont</span><span class="vh">, not yet</span></span></li>
@@ -1070,6 +1085,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/sc/congress.html">South Carolina<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/tn/congress.html">Tennessee<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ar/congress.html">Arkansas<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/ms/congress.html">Mississippi<span class="chip-topic"> &#183; U.S. House</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1086,6 +1102,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/sc/state-legislature.html">South Carolina<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/tn/state-legislature.html">Tennessee<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/ar/state-legislature.html">Arkansas<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/ms/state-legislature.html">Mississippi<span class="chip-topic"> &#183; Legislature</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1105,6 +1122,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/sc/county-council.html">South Carolina<span class="chip-topic"> &#183; county council</span></a></li>
           <li><a class="chip" href="/tn/county-commissioner.html">Tennessee<span class="chip-topic"> &#183; commissioners</span></a></li>
           <li><a class="chip" href="/ar/quorum-court.html">Arkansas<span class="chip-topic"> &#183; quorum court</span></a></li>
+          <li><a class="chip" href="/ms/county-supervisor.html">Mississippi<span class="chip-topic"> &#183; supervisors</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1219,40 +1237,55 @@ footer .support b { color: var(--ink); }
   </div>
 <script>
 (function () {
-  /* ---------- rename-notice toast: auto-fades, dismissible ---------- */
+  /* ---------- the notice: shown where it applies, closed on request ----------
+     A notice with data-only ships hidden (render_notice), and this shows it
+     where its condition holds. "android": a browser on Android, not an
+     installed copy, which is display-mode standalone (the Play app's own
+     window reports it too), and not a window the Play app's mark has set
+     (engine/shared/play-app.txt, run in the head). Not once it has been
+     answered, which noticeAnswered says (notice_memory). */
+  /* The notice's answer, kept with the maps' own invitation to the Android
+     test (engine/index.html/install-app.txt names the key and the word):
+     closing the notice or following its link writes the word, and an
+     answer on either page keeps both closed. localStorage, not a cookie,
+     so the word never leaves the browser. */
+  var NOTICE_KEY = "districtry-install-invite";
+  var NOTICE_ANSWERED = "test-answered";
+  function noticeAnswered() {
+    try { return window.localStorage.getItem(NOTICE_KEY) === NOTICE_ANSWERED; } catch (e) { return false; }
+  }
+  function noticeAnswer() {
+    try { window.localStorage.setItem(NOTICE_KEY, NOTICE_ANSWERED); } catch (e) { /* storage blocked: it shows again next visit */ }
+  }
   var notice = document.getElementById("notice");
   if (notice) {
-    var fadeTimer = null, cleanupTimer = null, faded = false;
-    function fade() {
-      if (faded) return;
-      faded = true;
-      clearTimeout(fadeTimer);
-      clearTimeout(cleanupTimer);
-      var done = function () {
-        notice.removeEventListener("animationend", done);
-        notice.style.display = "none";
-      };
-      notice.addEventListener("animationend", done);
-      notice.classList.add("is-fading");
-      // belt and braces: some browsers skip animationend for a 0-duration
-      // reduced-motion run, or a tab backgrounded mid-fade.
-      cleanupTimer = setTimeout(done, 3000);
+    var only = notice.getAttribute("data-only");
+    var answered = noticeAnswered();
+    if (only === "android") {
+      var installed = !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+        window.navigator.standalone === true);
+      if (/\bAndroid\b/.test(window.navigator.userAgent || "") && !installed &&
+          !document.documentElement.classList.contains("dst-play-app") && !answered) {
+        notice.hidden = false;
+      }
+    } else if (!only && !answered) {
+      notice.hidden = false;
     }
-    fadeTimer = setTimeout(fade, 15 * 1000);
     var dismiss = document.getElementById("notice-dismiss");
-    if (dismiss) dismiss.addEventListener("click", fade);
-    /* The toast is FIRST in the DOM, so its dismiss button is the page's first
-       tab stop: a keyboard reader lands there before anything else. Auto-fading
-       it out from under them would destroy the focused element and drop focus
-       to <body> mid-navigation. While focus is inside, the timer does not run;
-       it restarts when focus leaves. A click still fades immediately, because
-       that is the reader ASKING for it to go. */
-    notice.addEventListener("focusin", function () { clearTimeout(fadeTimer); });
-    notice.addEventListener("focusout", function () {
-      if (faded) return;
-      clearTimeout(fadeTimer);
-      fadeTimer = setTimeout(fade, 15 * 1000);
+    if (dismiss) dismiss.addEventListener("click", function () {
+      /* A keyboard reader's focus would drop to <body> with the button gone,
+         so it moves on to the masthead's first link, the next thing in the
+         tab order. A tap leaves focus alone. */
+      var keyboard = false;
+      try { keyboard = dismiss.matches(":focus-visible"); } catch (e) { /* older browser */ }
+      notice.hidden = true;
+      noticeAnswer();
+      var next = document.querySelector(".mast-nav a");
+      if (keyboard && next) next.focus();
     });
+    /* Following the link answers it too; the browser follows it either way. */
+    var follow = notice.querySelector(".notice-cta a");
+    if (follow) follow.addEventListener("click", noticeAnswer);
   }
 
   /* ---------- address box: geocode, then route to the covered instance ----------
@@ -1263,47 +1296,50 @@ footer .support b { color: var(--ink); }
      name ambiguous across states still has a fair shot at landing correctly
      rather than wherever result #1 happened to be. */
   var METROS = [
-    { id: "chicago", tag: "il", name: "Illinois", url: "https://districtry.com/il/",
+    { id: "chicago", tag: "il", name: "Illinois", url: "https://districtry.com/il/", whole: true,
       outline: "il/data/app/metro-outline.json",
       bbox: { minLat: 36.96, maxLat: 42.51, minLng: -91.52, maxLng: -87.01 } },
-    { id: "nyc", tag: "ny", name: "New York", url: "https://districtry.com/ny/",
+    { id: "nyc", tag: "ny", name: "New York", url: "https://districtry.com/ny/", whole: true,
       outline: "ny/data/app/metro-outline.json",
       bbox: { minLat: 40.43, maxLat: 45.07, minLng: -79.82, maxLng: -71.62 } },
-    { id: "sf", tag: "ca", name: "San Francisco", url: "https://districtry.com/ca/",
+    { id: "sf", tag: "ca", name: "San Francisco", url: "https://districtry.com/ca/", whole: false,
       bbox: { minLat: 37.6, maxLat: 37.95, minLng: -122.6, maxLng: -122.3 } },
-    { id: "wisconsin", tag: "wi", name: "Wisconsin", url: "https://districtry.com/wi/",
+    { id: "wisconsin", tag: "wi", name: "Wisconsin", url: "https://districtry.com/wi/", whole: true,
       outline: "wi/data/app/metro-outline.json",
       bbox: { minLat: 42.49, maxLat: 47.31, minLng: -92.89, maxLng: -86.25 } },
-    { id: "iowa", tag: "ia", name: "Iowa", url: "https://districtry.com/ia/",
+    { id: "iowa", tag: "ia", name: "Iowa", url: "https://districtry.com/ia/", whole: true,
       outline: "ia/data/app/metro-outline.json",
       bbox: { minLat: 40.37, maxLat: 43.5, minLng: -96.64, maxLng: -90.14 } },
-    { id: "michigan", tag: "mi", name: "Michigan", url: "https://districtry.com/mi/",
+    { id: "michigan", tag: "mi", name: "Michigan", url: "https://districtry.com/mi/", whole: true,
       outline: "mi/data/app/metro-outline.json",
       bbox: { minLat: 41.7, maxLat: 48.01, minLng: -87.6, maxLng: -82.11 } },
-    { id: "minnesota", tag: "mn", name: "Minnesota", url: "https://districtry.com/mn/",
+    { id: "minnesota", tag: "mn", name: "Minnesota", url: "https://districtry.com/mn/", whole: true,
       outline: "mn/data/app/metro-outline.json",
       bbox: { minLat: 43.44, maxLat: 49.44, minLng: -97.3, maxLng: -89.58 } },
-    { id: "kentucky", tag: "ky", name: "Kentucky", url: "https://districtry.com/ky/",
+    { id: "kentucky", tag: "ky", name: "Kentucky", url: "https://districtry.com/ky/", whole: true,
       outline: "ky/data/app/metro-outline.json",
       bbox: { minLat: 36.45, maxLat: 39.2, minLng: -89.62, maxLng: -81.91 } },
-    { id: "indiana", tag: "in", name: "Indiana", url: "https://districtry.com/in/",
+    { id: "indiana", tag: "in", name: "Indiana", url: "https://districtry.com/in/", whole: true,
       outline: "in/data/app/metro-outline.json",
       bbox: { minLat: 37.83, maxLat: 41.77, minLng: -88.1, maxLng: -84.78 } },
-    { id: "northcarolina", tag: "nc", name: "North Carolina", url: "https://districtry.com/nc/",
+    { id: "northcarolina", tag: "nc", name: "North Carolina", url: "https://districtry.com/nc/", whole: true,
       outline: "nc/data/app/metro-outline.json",
       bbox: { minLat: 33.74, maxLat: 36.6, minLng: -84.33, maxLng: -75.39 } },
-    { id: "oklahoma", tag: "ok", name: "Oklahoma", url: "https://districtry.com/ok/",
+    { id: "oklahoma", tag: "ok", name: "Oklahoma", url: "https://districtry.com/ok/", whole: true,
       outline: "ok/data/app/metro-outline.json",
       bbox: { minLat: 33.61, maxLat: 37.01, minLng: -103.01, maxLng: -94.43 } },
-    { id: "southcarolina", tag: "sc", name: "South Carolina", url: "https://districtry.com/sc/",
+    { id: "southcarolina", tag: "sc", name: "South Carolina", url: "https://districtry.com/sc/", whole: true,
       outline: "sc/data/app/metro-outline.json",
       bbox: { minLat: 31.99, maxLat: 35.16, minLng: -83.36, maxLng: -78.49 } },
-    { id: "tennessee", tag: "tn", name: "Tennessee", url: "https://districtry.com/tn/",
+    { id: "tennessee", tag: "tn", name: "Tennessee", url: "https://districtry.com/tn/", whole: true,
       outline: "tn/data/app/metro-outline.json",
       bbox: { minLat: 34.98, maxLat: 36.68, minLng: -90.32, maxLng: -81.64 } },
-    { id: "arkansas", tag: "ar", name: "Arkansas", url: "https://districtry.com/ar/",
+    { id: "arkansas", tag: "ar", name: "Arkansas", url: "https://districtry.com/ar/", whole: true,
       outline: "ar/data/app/metro-outline.json",
-      bbox: { minLat: 33.0, maxLat: 36.5, minLng: -94.62, maxLng: -89.64 } }
+      bbox: { minLat: 33.0, maxLat: 36.5, minLng: -94.62, maxLng: -89.64 } },
+    { id: "mississippi", tag: "ms", name: "Mississippi", url: "https://districtry.com/ms/", whole: true,
+      outline: "ms/data/app/metro-outline.json",
+      bbox: { minLat: 30.13, maxLat: 35.0, minLng: -91.66, maxLng: -88.09 } }
   ];
 
   function metrosClaiming(lat, lng) {
@@ -1635,6 +1671,21 @@ footer .support b { color: var(--ink); }
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a house number ----------
+   * Digits with an optional letter or a hyphenated second part ("2668",
+   * "123A", "89-11" in Queens), or a Wisconsin grid number: a direction and
+   * digits, once or twice ("N1234", "W123N4567"), which rural Wisconsin and
+   * the counties around Milwaukee use for every address. Photon holds them
+   * as written: asked on 2026-10-16 for Devil's Lake State Park's address,
+   * S5975 Park Rd in Baraboo, and for a two-part number in Menomonee Falls,
+   * it answered both numbers. Until that day only digits were read here, so
+   * a place shared with a grid address had no address to fall back to, and
+   * an answer at one could not count as carrying its number. A grid
+   * number's digits run to three or more, so a place named "N2 Bar" is
+   * still a name. Read with the "i" flag. */
+  var HOUSE_NUMBER = "(?:\\d+[a-z]?(?:-\\d+)?|[nsew]\\d+[nsew]\\d{3,}[a-z]?|[nsew]\\d{3,}[a-z]?)";
+  var OPENS_WITH_ADDRESS = new RegExp("^\\s*" + HOUSE_NUMBER + "\\s+\\S", "i");
+
   /* ---------- a place's name before its address ----------
    * A Google Maps link shared from the Android app carries no position. It
    * names the place as one string, its name and then its address
@@ -1644,12 +1695,13 @@ footer .support b { color: var(--ink); }
    * Lodge string, though it holds the lodge by name. So when text a map link
    * carried matches nothing whole, the app's search box and the front
    * door's both try the address alone. Returns null unless the text opens
-   * with words and a later part, after a comma, opens with a house number. */
+   * with a name (not itself an address) and a later part, after a comma,
+   * opens with a house number. */
   function addressAfterName(q) {
     var parts = String(q).split(",");
-    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    if (parts.length < 2 || OPENS_WITH_ADDRESS.test(parts[0])) return null;
     for (var i = 1; i < parts.length; i++) {
-      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+      if (OPENS_WITH_ADDRESS.test(parts[i])) return parts.slice(i).join(",").trim();
     }
     return null;
   }
@@ -1664,7 +1716,7 @@ footer .support b { color: var(--ink); }
    * in the town of Oglesby, about 6 km from the lodge. A single such answer
    * would be selected as the place that was shared. */
   function labelCarriesNumber(label, address) {
-    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    var m = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s", "i").exec(String(address || ""));
     if (!m) return false;
     return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
   }
@@ -1689,6 +1741,62 @@ footer .support b { color: var(--ink); }
     expressway: "Expy", freeway: "Fwy", highway: "Hwy", lane: "Ln", parkway: "Pkwy",
     place: "Pl", road: "Rd", square: "Sq", street: "St", terrace: "Ter", trail: "Trl"
   };
+  // The rest of the Postal Service's street types (Publication 28, appendix
+  // C1, read 2026-10-19), for matching names only (streetNameKey): the
+  // boundary-street labels print these words as CARTO does. The Census
+  // Bureau's geocoder writes every street type this way and OpenStreetMap,
+  // which Photon reads, writes it out, so until that day an answer on
+  // "ARROWHEAD TRCE" was not on Arrowhead Trace. A plural the Postal
+  // Service abbreviates as its singular (Parks, Parkways, Spurs, Walks) is
+  // left out, because every word of a name is matched in its abbreviation
+  // and Parks Road is not Park Road.
+  var STREET_SUFFIXES = {
+    alley: "ALY", anex: "ANX", annex: "ANX", arcade: "ARC", bayou: "BYU", beach: "BCH",
+    bend: "BND", bluff: "BLF", bluffs: "BLFS", bottom: "BTM", branch: "BR", bridge: "BRG",
+    brook: "BRK", brooks: "BRKS", burg: "BG", burgs: "BGS", bypass: "BYP", camp: "CP",
+    canyon: "CYN", cape: "CPE", causeway: "CSWY", center: "CTR", centers: "CTRS",
+    circles: "CIRS", cliff: "CLF", cliffs: "CLFS", club: "CLB", common: "CMN",
+    commons: "CMNS", corner: "COR", corners: "CORS", course: "CRSE", courts: "CTS",
+    cove: "CV", coves: "CVS", creek: "CRK", crescent: "CRES", crest: "CRST",
+    crossing: "XING", crossroad: "XRD", crossroads: "XRDS", curve: "CURV", dale: "DL",
+    dam: "DM", divide: "DV", drives: "DRS", estate: "EST", estates: "ESTS",
+    extension: "EXT", extensions: "EXTS", falls: "FLS", ferry: "FRY", field: "FLD",
+    fields: "FLDS", flat: "FLT", flats: "FLTS", ford: "FRD", fords: "FRDS", forest: "FRST",
+    forge: "FRG", forges: "FRGS", fork: "FRK", forks: "FRKS", fort: "FT", garden: "GDN",
+    gardens: "GDNS", gateway: "GTWY", glen: "GLN", glens: "GLNS", green: "GRN",
+    greens: "GRNS", grove: "GRV", groves: "GRVS", harbor: "HBR", harbors: "HBRS",
+    haven: "HVN", heights: "HTS", hill: "HL", hills: "HLS", hollow: "HOLW", inlet: "INLT",
+    island: "IS", islands: "ISS", junction: "JCT", junctions: "JCTS", key: "KY",
+    keys: "KYS", knoll: "KNL", knolls: "KNLS", lake: "LK", lakes: "LKS", landing: "LNDG",
+    light: "LGT", lights: "LGTS", loaf: "LF", lock: "LCK", locks: "LCKS", lodge: "LDG",
+    manor: "MNR", manors: "MNRS", meadow: "MDW", meadows: "MDWS", mill: "ML", mills: "MLS",
+    mission: "MSN", motorway: "MTWY", mount: "MT", mountain: "MTN", mountains: "MTNS",
+    neck: "NCK", orchard: "ORCH", overpass: "OPAS", passage: "PSGE", pine: "PNE",
+    pines: "PNES", plain: "PLN", plains: "PLNS", plaza: "PLZ", point: "PT", points: "PTS",
+    port: "PRT", ports: "PRTS", prairie: "PR", radial: "RADL", ranch: "RNCH", rapid: "RPD",
+    rapids: "RPDS", rest: "RST", ridge: "RDG", ridges: "RDGS", river: "RIV", roads: "RDS",
+    route: "RTE", shoal: "SHL", shoals: "SHLS", shore: "SHR", shores: "SHRS",
+    skyway: "SKWY", spring: "SPG", springs: "SPGS", squares: "SQS", station: "STA",
+    stravenue: "STRA", stream: "STRM", streets: "STS", summit: "SMT", throughway: "TRWY",
+    trace: "TRCE", track: "TRAK", trafficway: "TRFY", trailer: "TRLR", tunnel: "TUNL",
+    turnpike: "TPKE", underpass: "UPAS", union: "UN", unions: "UNS", valley: "VLY",
+    valleys: "VLYS", viaduct: "VIA", view: "VW", views: "VWS", village: "VLG",
+    villages: "VLGS", ville: "VL", vista: "VIS", well: "WL", wells: "WLS"
+  };
+  // Words of a street's name that are not street types and are written two
+  // ways, for matching names only (streetNameKey): a reader and the Census
+  // Bureau's geocoder abbreviate them, and OpenStreetMap's mappers often
+  // write them out, as in Saint Louis Avenue or Doctor Martin Luther King
+  // Junior Drive.
+  var STREET_NAME_WORDS = { saint: "ST", doctor: "DR", junior: "JR" };
+  // Every street type as streetNameKey writes it, the common ones and the
+  // rest of the Postal Service's list
+  var STREET_TYPE_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_TYPES) keys[STREET_TYPES[k].toUpperCase()] = true;
+    for (k in STREET_SUFFIXES) keys[STREET_SUFFIXES[k]] = true;
+    return keys;
+  })();
   function abbreviateStreetName(name) {
     var words = String(name || "").split(/\s+/).filter(Boolean);
     if (words.length < 2) return words.join(" ");
@@ -1724,48 +1832,128 @@ footer .support b { color: var(--ink); }
    * and the reader taps the place (ENGINE geocoder-search showStreetOnly),
    * and the front door opens the app that covers it.
    *
-   * addressParts splits an address into its house number, street, town and
-   * ZIP code, or returns null unless it opens with a house number and has a
-   * part after the street. labelOnStreet says whether a geocoder's answer is
-   * on that street in that town: one part of the answer, less any house
-   * number, must name the same street once both are written in the
-   * abbreviations above, and another part must be the town or the ZIP code,
-   * because most street names are in many towns. A direction written on one
-   * side and not the other still matches; two different directions do not,
-   * because West and East Madison Street are miles apart. */
-  function addressParts(address) {
-    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
-    var m = /^(\d+[a-z]?(?:-\d+)?)\s+(.+)$/i.exec(parts[0] || "");
-    if (!m || parts.length < 2) return null;
+   * addressStreet reads the house number and the street from an address's
+   * first part, or returns null unless it opens with a house number.
+   * addressParts adds the town and the ZIP code, and returns null unless
+   * there is a part after the street. labelOnStreet says whether a
+   * geocoder's answer is on that street in that town: one part of the
+   * answer, less any house number, must name the same street once both are
+   * written in the abbreviations above, and another part must be the town or
+   * the ZIP code, because most street names are in many towns. A direction
+   * written on one side and not the other still matches; two different
+   * directions do not, because West and East Madison Street are miles
+   * apart. */
+  function addressStreet(address) {
+    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(String(address || "").split(",")[0].trim());
+    if (!m) return null;
     // a unit at the end of the street line is not part of the street's name
     var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
+    return { number: m[1], street: street };
+  }
+  function addressParts(address) {
+    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
+    var a = addressStreet(parts[0]);
+    if (!a || parts.length < 2) return null;
     var town = parts[1], zip = "", i, s;
     for (i = 2; i < parts.length; i++) {
       s = /^[a-z]{2}(?:\s+(\d{5})(?:-\d{4})?)?$/i.exec(parts[i]);  // "IL 60559", "IL"
       if (s) { town = parts[i - 1]; zip = s[1] || ""; break; }
     }
     if (!zip) zip = (/(?:^|[\s,])(\d{5})(?:-\d{4})?(?=[\s,]|$)/.exec(parts.slice(1).join(", ")) || [])[1] || "";
-    return { number: m[1], street: street, town: town, zip: zip };
+    return { number: a.number, street: a.street, town: town, zip: zip };
   }
   // A street's name as a matching key: every word in its abbreviation, so
-  // "Drive" and "Dr" agree wherever they stand, then a leading and a
-  // trailing direction set apart when a name is left beside it, so "W North
-  // Ave" keeps North (a street named North) and loses W.
+  // "Drive" and "Dr", or "Trace" and "TRCE" (STREET_SUFFIXES), agree
+  // wherever they stand, then a leading and a trailing direction set apart
+  // when a name is left beside it, so "W North Ave" keeps North (a street
+  // named North) and loses W. `words` are the rest, each without the marks
+  // and accents inside it ("O'Brien" is OBRIEN), and `core` the same words
+  // as one string.
   function streetNameKey(name) {
     var dirs = {}, types = {}, k;
     for (k in STREET_DIRECTIONS) dirs[STREET_DIRECTIONS[k].toUpperCase()] = true;
     for (k in STREET_TYPES) types[STREET_TYPES[k].toUpperCase()] = true;
-    var words = String(name || "").replace(/\./g, "").split(/\s+/).filter(Boolean).map(function (w) {
-      var low = w.toLowerCase();
-      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || w).toUpperCase();
-    });
+    var text = String(name || "");
+    if (text.normalize) text = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    var words = text.replace(/\./g, "").split(/\s+/).map(function (w) {
+      var low = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || STREET_SUFFIXES[low] || STREET_NAME_WORDS[low] || low).toUpperCase();
+    }).filter(Boolean);
     var named = function (rest) { return rest.length > 1 || (rest.length === 1 && !types[rest[0]]); };
     var key = { pre: "", post: "" };
     if (words.length > 1 && dirs[words[words.length - 1]] && named(words.slice(0, -1))) key.post = words.pop();
     if (words.length > 1 && dirs[words[0]] && named(words.slice(1))) key.pre = words.shift();
+    key.words = words;
     key.core = words.join(" ");
     return key;
   }
+  /* Whether two streetNameKeys name one street: their directions do not
+   * differ, though either may be left off, and their names are the same
+   * once the spaces in them are taken out, so "N LA SALLE ST", as the
+   * Census Bureau's geocoder wrote City Hall's street on 2026-10-19, is
+   * North LaSalle Street. When the address names its street with no type
+   * ("9 W Eugenie, Chicago"), a name that only adds one is the same
+   * street. */
+  function sameStreet(got, want) {
+    if (!got.words.length || !want.words.length) return false;
+    if ((got.pre && want.pre && got.pre !== want.pre) || (got.post && want.post && got.post !== want.post)) return false;
+    var g = got.words, w = want.words;
+    if (g.join("") === w.join("")) return true;
+    var typed = w.length > 1 && STREET_TYPE_KEYS[w[w.length - 1]];
+    return !typed && g.length > 1 && !!STREET_TYPE_KEYS[g[g.length - 1]] && g.slice(0, -1).join("") === w.join("");
+  }
+  // Whether one part of an answer's label, less any house number, names the
+  // street `want` (a streetNameKey) names
+  function partNamesStreet(part, want) {
+    return sameStreet(streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), "")), want);
+  }
+
+  /* ---------- the house an address names ----------
+   * labelCarriesNumber asks only whether an answer's label carries the
+   * address's house number somewhere, and on 2026-10-19 that let the map
+   * take another street's house with the same number for the house: of 49
+   * Cook County addresses typed into the Illinois map's search box, the one
+   * answer for one of them was that number on a different street, which a
+   * question page's address box selects when it is the only answer (ENGINE
+   * geocoder-search prefillGeocodeSearch). labelAtHouse asks for the house:
+   * a part of the label that opens with the number and goes on to name the
+   * address's street (sameStreet). The town is not read, because Photon
+   * names the Cook County township a Chicago street is in where the city's
+   * name would be (addressInTownOf). An address typed with its town and no
+   * comma ("9 W Eugenie St Chicago") names its street and then the town, so
+   * an answer whose street, ending in its type, is the first words after
+   * the number is the house too, unless a direction straight after it is
+   * another. A street the reader writes with fewer of its words than the
+   * answer does ("S King Dr" for South Doctor Martin Luther King Junior
+   * Drive) is not the house to this test, and the answer is still listed
+   * for the reader to pick: a test that let some of a name's words stand
+   * for all of them would take Oak Avenue for Oak Park Avenue. */
+  function labelAtHouse(label, address) {
+    var a = addressStreet(address);
+    if (!a) return false;
+    var want = streetNameKey(a.street), number = a.number.toLowerCase();
+    var opens = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s+(\\S.*)$", "i");
+    return String(label || "").split(",").some(function (part) {
+      var m = opens.exec(part);
+      if (!m || m[1].toLowerCase() !== number) return false;
+      var got = streetNameKey(m[2]);
+      return sameStreet(got, want) || streetThenTown(got, want);
+    });
+  }
+  function streetThenTown(got, want) {
+    var g = got.words, w = want.words, k;
+    if (!g.length || !STREET_TYPE_KEYS[g[g.length - 1]] || (got.pre && want.pre && got.pre !== want.pre)) return false;
+    for (k = 1; k < w.length; k++) {
+      if (w.slice(0, k).join("") !== g.join("")) continue;
+      return !(got.post && STREET_DIRECTION_KEYS[w[k]] && w[k] !== got.post);
+    }
+    return false;
+  }
+  var STREET_DIRECTION_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_DIRECTIONS) keys[STREET_DIRECTIONS[k].toUpperCase()] = true;
+    return keys;
+  })();
   function labelOnStreet(label, address) {
     var a = addressParts(address);
     if (!a) return false;
@@ -1775,11 +1963,220 @@ footer .support b { color: var(--ink); }
     String(label || "").split(",").forEach(function (part) {
       var low = part.trim().toLowerCase();
       if (low && (low === town || low === a.zip)) inTown = true;
-      var got = streetNameKey(part.trim().replace(/^\d+[a-z]?(?:-\d+)?\s+/i, ""));
-      if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
-          (!got.post || !want.post || got.post === want.post)) onStreet = true;
+      if (partNamesStreet(part, want)) onStreet = true;
     });
     return onStreet && inTown;
+  }
+
+  /* ---------- the town an answer puts a typed address in ----------
+   * An address typed into a state's app often names no town ("1600 W
+   * North Ave"), or names it with no comma before it ("1600 W North Ave
+   * Chicago"), and the map's search may answer the street in one town or
+   * in several. addressInTownOf gives the address in a town and the state
+   * of an answer on its street ("1600 W North Ave, Chicago, IL"). When the
+   * address names a town, after a comma (labelOnStreet) or as the words
+   * after the street, and the answer is not in it, the result is null, as
+   * it is for an answer on another street or a label that names no state.
+   *
+   * A ZIP CODE TYPED WITH THE ADDRESS IS KEPT ("1600 W North Ave, Chicago,
+   * IL 60622"), from 2026-10-19, because the Census Bureau's lookup
+   * (ENGINE geocoder-search lookupAddressRanges) finds a house by its ZIP
+   * code as well as by its town: asked that day for the Lincoln Park Zoo's
+   * address with its ZIP code and no town, it found the zoo, and asked
+   * with the Cook County township Photon names and a wrong ZIP code, it
+   * found nothing. Asked with the township alone it found the zoo too, but
+   * for three of 49 Cook County addresses tested that day it found nothing
+   * with the township alone. Until then the ZIP code was left out, so an
+   * address typed with a ZIP code and no town went to the lookup with the
+   * township alone. An answer's own ZIP code is not put in here, because
+   * one long street runs through several and the answer's is the street's,
+   * not the house's; the lookup is asked with it only when every answer on
+   * the street in that town names the same one (ENGINE geocoder-search
+   * showStreetOnly).
+   *
+   * THE TOWN TYPED AFTER A COMMA IS KEPT when the answer is in it only by
+   * its ZIP code (townTypedIn). Otherwise the town is the answer's own, the
+   * part of its label before the state's name, so a neighbourhood typed
+   * where the town would be ("1600 W North Ave, Wicker Park") gives the
+   * city the answer names. Until 2026-10-19 the town was always the
+   * answer's, while labelOnStreet also takes an answer whose only part in
+   * common with the address's town is its ZIP code. Measured that day over
+   * 49 Cook County addresses near county commissioner district lines: of
+   * the 75 answers the map listed for the 26 Chicago addresses, 57 named the
+   * Cook County township a street is in ("North Chicago Township") where
+   * the city's name would be, and an answer on Kemman Avenue in La Grange
+   * shares the ZIP code 60526 with La Grange Park. The township went into
+   * the address the Census Bureau's lookup was asked about (ENGINE
+   * geocoder-search lookupAddressRanges): it found nothing for three of the
+   * 49, and for a fourth it found the house in Chicago, which the app then
+   * refused as not in the township. Asked with the town as typed, it found
+   * all four. Answers naming the city and the township, or La Grange and La
+   * Grange Park, were also listed as two towns for the reader to pick from.
+   * An address that names no town, or only a state or a ZIP code after the
+   * comma, still takes the answer's town, township and all, and the lookup
+   * is then asked with the ZIP code the answers on the street name when
+   * they name one, and takes a match in one of the ZIP codes they name
+   * (ENGINE geocoder-search showStreetOnly, lookupAddressRanges). A town
+   * the Census Bureau does not know, such as a misspelling or a
+   * neighbourhood the answer does not name, is kept too. It is kept only
+   * when the answer has the ZIP code typed with it (labelOnStreet), and
+   * that ZIP code goes to the lookup as well, with which the lookup found
+   * the zoo under the township's name; whether it finds a house typed with
+   * a misspelled town that way was not measured. When the lookup finds
+   * nothing, the map shows the street as it does whenever the lookup finds
+   * none. */
+  function addressInTownOf(address, label) {
+    var a = addressStreet(address), named = addressParts(address);
+    if (!a || (named && !labelOnStreet(label, address))) return null;
+    var parts = String(label || "").split(",").map(function (p) { return p.trim(); });
+    var at = -1, tag = "", j, n, i;
+    for (j = parts.length - 1; j >= 2 && !tag; j--) {
+      tag = stateTagOfName(parts[j]);
+      if (tag) at = j;
+    }
+    if (!tag) return null;
+    var town = parts[at - 1], low = town.toLowerCase();
+    var called = townTypedIn(named, parts, tag) || town;
+    // the ZIP code typed after a comma, or as the last word of an address
+    // typed with no comma ("1600 W North Ave Chicago IL 60622")
+    var zip = named ? named.zip : (/\s(\d{5})(?:-\d{4})?\s*$/.exec(String(address)) || [])[1] || "";
+    var words = a.street.split(/\s+/);
+    for (n = words.length; n >= 1; n--) {
+      var rest = words.slice(n).join(" ").toLowerCase();
+      if (rest && rest !== low && rest.indexOf(low + " ") !== 0) continue;
+      var want = streetNameKey(words.slice(0, n).join(" "));
+      if (!want.core) continue;
+      for (i = 0; i < at - 1; i++) {
+        if (partNamesStreet(parts[i], want)) {
+          return a.number + " " + words.slice(0, n).join(" ") + ", " + called + ", " + tag.toUpperCase() +
+            (zip ? " " + zip : "");
+        }
+      }
+    }
+    return null;
+  }
+  // The town an address names after a comma (addressParts), less a ZIP code
+  // and the state written after it with no comma between ("Chicago IL
+  // 60614"), when no part of the label (`parts`) is that town; "" when one
+  // is, when the address names none, or when the part after its comma is
+  // only a state or a ZIP code ("IL 60614"). `tag` is the label's state.
+  function townTypedIn(named, parts, tag) {
+    var t = named ? named.town.replace(/\s+\d{5}(?:-\d{4})?$/, "") : "";
+    [tag, US_STATE_NAMES[tag]].forEach(function (state) {
+      var end = " " + String(state || "").toLowerCase();
+      if (t.length > end.length && t.slice(-end.length).toLowerCase() === end) t = t.slice(0, -end.length);
+    });
+    var low = t.toLowerCase(), i;
+    if (!/[a-z]/i.test(t) || stateTagOfName(t) || US_STATE_NAMES.hasOwnProperty(low)) return "";
+    for (i = 0; i < parts.length; i++) {
+      if (parts[i].toLowerCase() === low) return "";
+    }
+    return t;
+  }
+
+  /* ---------- the state a place's address names ----------
+   * The installed app's launcher opens a shared place in the state the
+   * reader used last, and until 2026-10-16 that app searched for it there:
+   * a place in Wisconsin shared from a phone whose last map was Illinois's
+   * was looked for in Illinois, where a search bounded to the state either
+   * found nothing and offered a row to tap for Wisconsin, or found an
+   * Illinois street of the same name. An address names its own state, so
+   * the text a map link carries is read for it first (ENGINE
+   * geocoder-search, and the front door's address box): a postal code at
+   * the end, after a comma, in capitals or before a ZIP code ("Baraboo, WI
+   * 53913", "Peoria, IL"), or a state's name there ("Baraboo, Wisconsin").
+   * Only the end is read, so "Wisconsin Dells Inn, 1 Main St, Rockford, IL
+   * 61101" is in Illinois. Returns the code in lower case, which is also
+   * the tag of the app for that state, or "" when the text names none. */
+  var US_STATE_NAMES = {
+    al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
+    co: "Colorado", ct: "Connecticut", de: "Delaware", dc: "District of Columbia",
+    fl: "Florida", ga: "Georgia", hi: "Hawaii", id: "Idaho", il: "Illinois",
+    "in": "Indiana", ia: "Iowa", ks: "Kansas", ky: "Kentucky", la: "Louisiana",
+    me: "Maine", md: "Maryland", ma: "Massachusetts", mi: "Michigan", mn: "Minnesota",
+    ms: "Mississippi", mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada",
+    nh: "New Hampshire", nj: "New Jersey", nm: "New Mexico", ny: "New York",
+    nc: "North Carolina", nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon",
+    pa: "Pennsylvania", ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota",
+    tn: "Tennessee", tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia",
+    wa: "Washington", wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming"
+  };
+  function addressStateTag(text) {
+    // a country written after the address ("…, WI 53913, USA") is not a state
+    var t = String(text || "").trim()
+      .replace(/(?:,\s*|\s+)(?:usa|u\.s\.a\.?|u\.s\.?|us|united states(?: of america)?)\s*$/i, "").trim();
+    var m = /,\s*([a-z]{2})(\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase()) && (m[2] || /^[A-Z]{2}$/.test(m[1]))) {
+      return m[1].toLowerCase();
+    }
+    m = /,\s*([a-z][a-z .]*?)(?:\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    return m ? stateTagOfName(m[1]) : "";
+  }
+  // The tag of the state a name names ("Wisconsin" -> "wi"), or ""
+  function stateTagOfName(text) {
+    var name = String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
+    for (var k in US_STATE_NAMES) {
+      if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
+    }
+    return "";
+  }
+  // A state's name as it reads in a sentence: "in Ohio", "in the District
+  // of Columbia".
+  function stateInSentence(tag) {
+    return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
+  }
+  /* An address as the Census Bureau's lookup is asked about it when the
+   * map's search knows neither the house nor its street (ENGINE
+   * geocoder-search showStreetOnly): the number and the street, then the
+   * town, the state and the ZIP code, each part after a comma, as
+   * addressInTownOf writes one. A state the address does not name is
+   * `tag`'s, the app's own. Until 2026-10-19 the lookup was asked only
+   * about addresses written that way, with the town and state of the
+   * search's answer or as a map link writes them, while an address typed
+   * into the search box often names no state and leaves out the comma
+   * after its town ("9 W Oakley Dr NW, Westmont IL 60559"). Null when it
+   * names no town and no ZIP code. */
+  function addressForLookup(address, tag) {
+    var a = addressParts(address);
+    if (!a) return null;
+    var parts = String(address).split(",").map(function (s) { return s.trim(); });
+    var at = 1, state = "", i, m, p;
+    for (i = 2; i < parts.length; i++) {
+      if (/^[a-z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/i.test(parts[i])) { at = i - 1; break; }
+    }
+    // the state after the town: its code, in either case, or its name
+    for (i = at + 1; i < parts.length && !state; i++) {
+      p = parts[i].replace(/\s+\d{5}(?:-\d{4})?$/, "");
+      state = /^[a-z]{2}$/i.test(p) && US_STATE_NAMES.hasOwnProperty(p.toLowerCase()) ? p.toLowerCase() : stateTagOfName(p);
+    }
+    // or its code after the town with no comma ("Westmont IL"), or in place
+    // of the town ("IL 60559"); a town named for a state (Oregon, Illinois)
+    // is a town
+    var town = a.town.replace(/(?:^|\s+)\d{5}(?:-\d{4})?$/, "").trim();
+    m = /(?:^|\s)([a-z]{2})$/i.exec(town);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase())) {
+      state = state || m[1].toLowerCase();
+      town = town.slice(0, -2).trim();
+    }
+    state = state || String(tag || "").toLowerCase();
+    if ((!town && !a.zip) || !US_STATE_NAMES.hasOwnProperty(state)) return null;
+    return a.number + " " + a.street + (town ? ", " + town : "") + ", " + state.toUpperCase() + (a.zip ? " " + a.zip : "");
+  }
+  /* The link handed to another app for a place it should search: the text
+   * rebuilt as a link of the kind it came in, which that app's parseMapLink
+   * reads back as the same text from the same maker, so its search treats it
+   * as a link's text (the address alone, the street, the name), not as
+   * typing, and the short link is not looked up a second time. Spaces are
+   * written "+" and commas as they are, the way the makers write their own
+   * links, so it reads as words in the search box it lands in; punctuation
+   * at the very end is written in % form, since mapLinkUrl drops it from a
+   * link as the end of a sentence. */
+  function mapLinkForText(link) {
+    var q = encodeURIComponent(link.text).replace(/%20/g, "+").replace(/%2C/gi, ",")
+      .replace(/[.,;:!?)\]]+$/, function (tail) {
+        return tail.replace(/[\s\S]/g, function (ch) { return "%" + ch.charCodeAt(0).toString(16).toUpperCase(); });
+      });
+    return (link.source === "apple" ? "https://maps.apple.com/?q=" : "https://www.google.com/maps?q=") + q;
   }
 
   /* A SHORT LINK holds no position: only Google or Apple knows where it
@@ -1787,8 +2184,12 @@ footer .support b { color: var(--ink); }
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one
-   * or shares one into the installed app.
+   * A short link is sent to it only when a reader pastes one or shares one
+   * into the installed app. An app's search also sends it an address a
+   * reader searched for, typed or carried by a map link, for the Census
+   * Bureau's geocoder, when the map's own search holds the street and not
+   * the house number (ENGINE geocoder-search lookupAddressRanges); the front
+   * door never does.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
@@ -1937,6 +2338,37 @@ footer .support b { color: var(--ink); }
     status.textContent = text;
     status.className = "search-status" + (isError ? " err" : "");
   }
+
+  /* COUNTING A MAP LINK READ HERE. The apps count each Google Maps or Apple
+   * Maps link their search box reads (ENGINE geocoder-search countLinkRead),
+   * and this page counts the ones it reads in the same event, with "front"
+   * where an app puts its tag:
+   *
+   *   map-link-read/front/<source>/<form>/<via>/<outcome>
+   *
+   * <outcome> is where the link went: to-<tag> (the app it opened),
+   * uncovered, none, unreadable, search-failed, or failed-<why> when the
+   * lookup could not read a short link. A place shared into the installed
+   * app reaches this page (as "opened") when no state has been opened yet.
+   * Nothing about the place is in it. It is the one event this page sends,
+   * and the privacy page names it (build_privacy_page.py ROOT_EVENTS). The
+   * counter loads after this script, so a count waits for it, up to ten
+   * seconds, as the apps' do. */
+  var linkRead = null, linkVia = "pasted";
+  function trackEvent(path, tries) {
+    if (window.goatcounter && typeof window.goatcounter.count === "function") {
+      window.goatcounter.count({ path: path, title: path, event: true });
+      return;
+    }
+    if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    trackEvent("map-link-read/front/" + r.source + "/" + form + "/" + r.via + "/" + outcome);
+  }
   function resetButton() {
     button.disabled = false;
     button.textContent = "Show districts";
@@ -1955,12 +2387,16 @@ footer .support b { color: var(--ink); }
     // here by the same parser every app runs (engine/shared/map-link.txt),
     // so nothing it carries goes to the geocoder as address text.
     var link = parseMapLink(q);
+    linkRead = link && (link.source === "google" || link.source === "apple")
+      ? { source: link.source, short: link.kind === "short", retried: false, via: linkVia } : null;
+    linkVia = "pasted";
     if (link && link.kind === "short") {
       var signal = inFlight.signal;
       setStatus("Reading the link\u2026", false);
       // a failed lookup is tried again (ENGINE map-link), and the reader is
       // told so rather than left watching the same words
       resolveShortMapLink(link, signal, function () {
+        if (linkRead) linkRead.retried = true;
         if (!signal.aborted) setStatus("Reading the link\u2026 trying again", false);
       }).then(function (full) {
         if (signal.aborted) return;
@@ -1970,6 +2406,7 @@ footer .support b { color: var(--ink); }
         if (err && err.name === "AbortError") return;
         resetButton();
         setStatus(mapLinkMessage(link, err), true);
+        countLinkRead("failed-" + ((err && err.reason) || "other"));
       });
       return;
     }
@@ -1979,20 +2416,92 @@ footer .support b { color: var(--ink); }
   // `typed` is what was put in the box: the link itself, for a link
   function submitLink(link, q, typed) {
     if (link && link.kind === "point") { routePoint(link.lat, link.lng); return; }
-    if (link && link.kind !== "text") { resetButton(); setStatus(mapLinkMessage(link), true); return; }
-    searchAndRoute(q, link ? addressAfterName(q) : null, null, typed);
+    if (link && link.kind !== "text") {
+      resetButton(); setStatus(mapLinkMessage(link), true); countLinkRead("unreadable"); return;
+    }
+    var named = link ? namedState(q) : null;
+    if (named && !named.metro) {
+      countLinkRead("uncovered");
+      resetButton();
+      setStatus("That place is in " + stateInSentence(named.tag) +
+        ", which districtry doesn't cover yet \u2014 see what's covered below.", true);
+      return;
+    }
+    // a link is handed on rebuilt from its words (ENGINE map-link
+    // mapLinkForText), so a short link read here is not read again there;
+    // an address with no name in front, typed or carried by a link, is held
+    // to its house number (searchAndRoute)
+    var bare = link ? addressAfterName(q) : null;
+    var address = !bare && OPENS_WITH_ADDRESS.test(q) ? q : null;
+    // the state a typed address names, for when the search finds nothing
+    // any app covers (searchAndRoute `home`)
+    var home = !link && address ? namedState(q) : null;
+    searchAndRoute(q, bare, address, link ? mapLinkForText(link) : typed,
+      named && named.metro.whole ? named.metro : null, true,
+      home && home.metro && home.metro.whole ? home.metro : null);
+  }
+
+  /* THE STATE A LINK'S ADDRESS NAMES (ENGINE map-link addressStateTag), with
+   * the entry that answers there, or null when it names none. A place in a
+   * state nothing here covers is said to be, and nothing is searched. A
+   * place in a whole state's app goes to that app and no other: a search's
+   * first covered answer somewhere else is another place of the same name,
+   * and when the search finds nothing there the link is handed to that app,
+   * whose own search tries the address alone, the street and the name
+   * (2026-10-16: a Wisconsin place's short link, read here, said "No
+   * matches"). San Francisco's app carries California's tag and answers for
+   * one city, so an address in California decides nothing and the search
+   * routes by position as before. */
+  function namedState(text) {
+    var tag = addressStateTag(text);
+    if (!tag) return null;
+    for (var i = 0; i < METROS.length; i++) {
+      if (METROS[i].tag === tag) return { tag: tag, metro: METROS[i] };
+    }
+    return { tag: tag, metro: null };
+  }
+
+  // A link or a typed address handed to the app that covers its state, which
+  // searches it there
+  function handTo(metro, typed) {
+    countLinkRead("to-" + metro.tag);
+    setStatus("Opening " + metro.name + "\u2026", false);
+    window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
   }
 
   /* `bare` is the address without the place's name in front of it, for
    * text a map link carried, tried only when the whole text matches nothing
    * (ENGINE map-link addressAfterName): a place shared from the Google Maps
    * app is its name and its address in one string. Its answers count only
-   * if they carry its house number (labelCarriesNumber), as in the apps.
-   * When none does but one is on the address's street in its town
+   * if they are its house, its number on its street (labelAtHouse), as in
+   * the apps. When none is but one is on the address's street in its town
    * (labelOnStreet), the app covering that street is opened with what was
    * typed, and shows the street there for the reader to tap the place
-   * (routeStreet). */
-  function searchAndRoute(q, bare, mustCarry, typed) {
+   * (routeText).
+   *
+   * AN ADDRESS WITH NO NAME IN FRONT, typed or carried by a link, is held
+   * to its house number from the first try (`mustCarry` with `whole`), as
+   * in the apps (ENGINE geocoder-search runAddressSearch), because an
+   * answer without the number is a street and its point a spot somewhere
+   * along it: until 2026-10-17 a typed Chicago storefront's address, whose
+   * street Photon holds and whose number it does not, opened the Illinois
+   * app with a point on that street selected, a ward or more from the
+   * storefront, and nothing said so. When no answer carries the number, the
+   * app covering an answer on the address's street (addressInTownOf, which
+   * reads a town typed with no comma, or not typed at all, from the
+   * answer), or else the first answer any app covers, is opened with what
+   * was typed, never with a point, and says there what its search knows.
+   * An answer with the number on another street is not the house either:
+   * until 2026-10-19 it opened its app with that house's point selected.
+   *
+   * `want` is the app a link's address names (namedState): only an answer
+   * there is routed, and when there is none the link is handed to it.
+   * `home` is the app of the state a typed address names: when the search
+   * finds nothing any app covers, the address is handed to it, whose own
+   * search asks the Census Bureau's address records about it (ENGINE
+   * geocoder-search), where until 2026-10-19 this page said "No matches" or
+   * that the address was outside every place districtry covers. */
+  function searchAndRoute(q, bare, mustCarry, typed, want, whole, home) {
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -2000,29 +2509,35 @@ footer .support b { color: var(--ink); }
         return res.json();
       })
       .then(function (data) {
-        var feats = (data && data.features) || [], street = [];
+        var feats = (data && data.features) || [], street = [], loose = whole ? feats : [];
         if (mustCarry) {
-          street = feats.filter(function (f) { return labelOnStreet(photonParts(f), mustCarry); });
-          feats = feats.filter(function (f) {
-            return labelCarriesNumber(f && f.properties && f.properties.housenumber, mustCarry);
+          street = feats.filter(function (f) {
+            return whole ? !!addressInTownOf(mustCarry, photonParts(f)) : labelOnStreet(photonParts(f), mustCarry);
+          });
+          feats = feats.filter(function (f) { return labelAtHouse(photonParts(f), mustCarry); });
+        }
+        if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed, want); return; }
+        if (want && !feats.length) return handTo(want, typed);
+        if (!feats.length && mustCarry && (street.length || loose.length)) {
+          return routeText(street.length ? street : loose, typed).then(function (went) {
+            if (went) return;
+            if (home) return handTo(home, typed);
+            countLinkRead("uncovered"); resetButton(); setStatus("That address is outside every place districtry covers today \u2014 see what's covered below.", true);
           });
         }
-        if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed); return; }
-        if (!feats.length && street.length) {
-          return routeStreet(street, typed).then(function (went) {
-            if (!went) { resetButton(); setStatus("That address is outside every place districtry covers today \u2014 see what's covered below.", true); }
-          });
-        }
+        if (home && !feats.length) return handTo(home, typed);
         return loadFleetOutlines().then(function (outlines) {
-          if (!outlines) return routeByRectangles(feats);
+          if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
           // place name ambiguous across states gets a fair shot.
           for (var i = 0; i < feats.length; i++) {
             var c = feats[i] && feats[i].geometry && feats[i].geometry.coordinates;
             if (!c || c.length < 2) continue;
             var metro = fleetOwner(c[1], c[0], outlines);
-            if (metro) { go(metro, { lat: c[1], lng: c[0] }); return; }
+            if (metro && (!want || metro === want)) { go(metro, { lat: c[1], lng: c[0] }); return; }
           }
+          if (want) return handTo(want, typed);
+          countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
           setStatus(
             feats.length
@@ -2034,6 +2549,7 @@ footer .support b { color: var(--ink); }
       })
       ["catch"](function (err) {
         if (err && err.name === "AbortError") return;
+        countLinkRead("search-failed");
         resetButton();
         setStatus("Search failed \u2014 try again, or pick a place below.", true);
       });
@@ -2047,18 +2563,24 @@ footer .support b { color: var(--ink); }
             p.district, p.city, p.state, p.postcode].filter(Boolean).join(", ");
   }
 
-  /* The street a shared place's address is on, when no answer carries its
-   * house number: the app that covers the street is opened with what was
-   * typed, so it reads the link again and shows the street there (ENGINE
-   * geocoder-search showStreetOnly). It hands over the text and not the
-   * street's position, because a point on a street is not the place. */
-  function routeStreet(street, typed) {
+  /* The street an address is on, or the answers to it, when none is its
+   * house: the app that covers the first of them any app covers is opened
+   * with what was typed, so it reads the link or the address again and
+   * shows the street there (ENGINE geocoder-search showStreetOnly), or
+   * lists the answers for the reader to pick from. It hands over the text
+   * and not a position, because a point on a street is not the place. */
+  function routeText(answers, typed) {
     return loadFleetOutlines().then(function (outlines) {
-      var c = street[0].geometry && street[0].geometry.coordinates;
-      if (!c || c.length < 2) return null;
-      return outlines ? fleetOwner(c[1], c[0], outlines) : resolveMetro(c[1], c[0]);
+      for (var i = 0; i < answers.length; i++) {
+        var c = answers[i] && answers[i].geometry && answers[i].geometry.coordinates;
+        if (!c || c.length < 2) continue;
+        if (outlines) { var m = fleetOwner(c[1], c[0], outlines); if (m) return m; }
+        else if (metrosClaiming(c[1], c[0]).length) return resolveMetro(c[1], c[0]);
+      }
+      return null;
     }).then(function (metro) {
       if (!metro) return false;
+      countLinkRead("to-" + metro.tag);
       setStatus("Opening " + metro.name + "\u2026", false);
       window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
       return true;
@@ -2072,12 +2594,14 @@ footer .support b { color: var(--ink); }
       if (!outlines) return routeByRectangles(feats);
       var metro = fleetOwner(lat, lng, outlines);
       if (metro) { go(metro, { lat: lat, lng: lng }); return; }
+      countLinkRead("uncovered");
       resetButton();
       setStatus("That place is outside every place districtry covers today \u2014 see what's covered below.", true);
     });
   }
 
   function go(metro, hit) {
+    countLinkRead("to-" + metro.tag);
     setStatus("Opening " + metro.name + "\u2026", false);
     window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
   }
@@ -2097,6 +2621,7 @@ footer .support b { color: var(--ink); }
           if (metrosClaiming(c[1], c[0]).length) { hit = { lat: c[1], lng: c[0] }; break; }
         }
         if (!hit) {
+          countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
           setStatus(
             feats.length
@@ -2107,7 +2632,8 @@ footer .support b { color: var(--ink); }
           return;
         }
         return resolveMetro(hit.lat, hit.lng).then(function (metro) {
-          if (!metro) { resetButton(); setStatus("That address is outside every place districtry covers today \u2014 see what's covered below.", true); return; }
+          if (!metro) { countLinkRead("uncovered"); resetButton(); setStatus("That address is outside every place districtry covers today \u2014 see what's covered below.", true); return; }
+          countLinkRead("to-" + metro.tag);
           setStatus("Opening " + metro.name + "\u2026", false);
           window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
         });
@@ -2128,6 +2654,7 @@ footer .support b { color: var(--ink); }
     try { handedText = decodeURIComponent(handed[1]).trim(); } catch (err) { handedText = ""; }
     if (window.history && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
     if (handedText) {
+      linkVia = "opened";
       input.value = handedText;
       if (form.requestSubmit) form.requestSubmit(); else button.click();
     }

@@ -8,14 +8,14 @@ districtry South Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/sc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships FOURTEEN layers, and **the instance is LIVE since
+Illinois root-scripts shape. It ships SEVENTEEN layers, and **the instance is LIVE since
 2026-10-13**, on Adam's word: it has a `metros.json` entry and a landing card, its folder is
 published with the siblings' narrow deploy excludes, and its question pages (`county-council.html`
 with a page per county under `county-council/`, `congress.html`, `state-legislature.html`) are in
 the sitemap. It arrived dark on 2026-10-10; `docs/SC_EXPANSION_PLAN.md` is the record of both
 changes.
 
-**The national tier** — eleven of the fourteen layers answer from a national publisher or the
+**The national tier** — eleven of the seventeen layers answer from a national publisher or the
 General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),
 **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **South Carolina Senate** and **South Carolina House**
@@ -34,10 +34,16 @@ Carolina's arrivals took names from the Open States export; this one reads the G
 two chamber lists and all 170 member pages on `www.scstatehouse.gov`
 (`sc/scripts/build_sc_legislature_roster.py`). Every seat is filled (46 of 46, 124 of 124 on
 2026-10-10), and every card carries a party, the member's State House office and business
-telephone, and a link to the member's own page. **THE SAME PAGES PRINT A HOME ADDRESS AND HOME
-TELEPHONE, AND THE BUILDER NEVER READS THEM** — its parse is confined to the block headed
-"Columbia Address". The General Assembly publishes no e-mail address for any member (each page
-offers a message form), so the cards carry none.
+telephone, and a link to the member's own page. **THE SAME PAGES PRINT A HOME ADDRESS AND, UNDER
+IT, A HOME AND A BUSINESS TELEPHONE; THE TELEPHONES SHIP AND THE ADDRESS IS NEVER READ.** Until
+2026-10-17 neither was read; that day Adam ruled for the whole fleet, "if the official government
+source uses personal phone numbers, we publish those", and each number now rides the member's row
+with the page's own label ("home (843) 665-7321", "business (864) 638-4237") — 91 of 170 members on
+2026-10-17. A number equal to the member's own Columbia business phone, or printed for two or more
+members (two numbers that day, each shared by a senator and a representative from one county, which
+is what a county legislative delegation office looks like), is an office's and rides no member's
+row. The General Assembly publishes no e-mail address for any member (each page offers a message
+form), so the cards carry none.
 
 **THE COUNTY DIVISIONS ARE DRAWN, AND THE CARD SAYS THEY GOVERN NOBODY.** All 299 county
 subdivisions TIGERweb carries for STATE='45' are census county divisions (LSADC 22, FUNCSTAT S,
@@ -64,6 +70,71 @@ numbers for Beaufort, Greenville and Sumter; Beaufort's records cite one act bes
 different bill; one precinct code repeats inside Beaufort; and Aiken's Savannah River Site has no
 code. So the card prints the act and the date and no bill link. Those are evidence for the
 state-publishing ask. The quarterly re-check, and the one after each legislative session, is in
+`sc/WATCH.md`.
+
+**THE 16 JUDICIAL CIRCUITS ARE DRAWN SINCE 2026-10-16, FROM THE STATUTE THAT NAMES THEIR COUNTIES.**
+`sc-circuit-court` dissolves the county fabric this instance ships, following S.C. Code Section
+14-5-610, by `sc/scripts/build_sc_judicial_circuits.py` through the fleet module
+`scripts/whole_county_courts.py`; the section, Section 1-7-310 and Article V sections 13 and 14 of
+the constitution were read from the Legislature's own site, which permits it, and are kept in
+`sc/data/source/courts/`. VOTERS DO NOT ELECT THESE JUDGES: the General Assembly does, by joint
+vote, for six-year terms, and each must live in the circuit, while seven more are elected from the
+whole state and every judge rotates around it. The circuit is drawn anyway because it is the
+court's district, its resident judges' qualification and the electorate of its solicitor, whom its
+voters elect for four years. Adam was asked on 2026-10-16 whether to draw it on that reading, and
+the default, to draw it, stands until he says otherwise. The card says all of that, carries each
+circuit's number of resident judges (shipped as `judge_count`, because a property named `judges`
+reads to the fleet's checks as a list of people), names nobody (gap
+`sc-judicial-circuit-officers`), and links the section. The builder stops if a sentence the card
+repeats stops reading that way in the files. The annual re-check is in `sc/WATCH.md`.
+
+**SCHOOL BOARD DISTRICTS ARE DRAWN SINCE 2026-10-16, WITH WHO VOTES FOR EACH SEAT.**
+`school-board-district` draws the 383 districts the boards of 54 school districts are elected from,
+from the Revenue and Fiscal Affairs Office's statewide "School Board Districts" layer, which marks
+each of the other 18 boards "At Large". It is pre-built by
+`sc/scripts/build_sc_school_board_districts.py` through the fleet module
+`scripts/published_district_layers.py`. Each board is set by its own act of the General Assembly,
+read in its ratified text on scstatehouse.gov, and the card says how many members the district
+elects and who votes for them: the district's voters, every voter in the school district, or, for
+115 districts on 16 boards whose acts never say, that the act does not state it (gap
+`sc-school-board-who-votes`). No statewide list of board members has been read, so the card names
+nobody and links the school district's own website (gap `sc-school-board-members`). The layer
+states no licence. The quarterly re-check is in `sc/WATCH.md`.
+
+**THE 17 CITIES AND TOWNS ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL SINCE 2026-10-16, AND
+THE TWELVE THAT ELECT BY DISTRICT DRAW THEIR DISTRICTS.** No state office publishes who holds
+South Carolina's city offices, so `sc/data/source/sc-city-council-seats.json` writes each place's
+mayor and council down by hand from the place's own pages (131 seats, the names and nothing else:
+Anderson's pages also print members' home addresses and telephones), and
+`sc/scripts/build_sc_city_councils.py`, through the fleet module `scripts/city_councils.py`,
+re-reads every page it cites on each build and refuses to write unless every name is on its page.
+Three names come from a second page: Charleston's and North Charleston's mayors from each mayor's
+own page, and Anderson's Seat 5 from the Anderson Observer's report of the city's 7 April 2026
+election, because the city's page still lists that seat as vacant. The City or Town card lists
+them. Which seats a place elects by district is set by its own ordinances and recorded nowhere
+statewide, so it was read from the precincts each contest was on in the Election Commission's
+certified results, and from Anderson's notice of election; the seats no ballot covered are taken
+to follow their place's rule, and the builder lists them. Mount Pleasant, Goose Creek, Myrtle
+Beach and Bluffton elect every seat by the whole place, so a reader votes for every seat wherever
+they live and nothing is drawn. `city-ward` (labelled City Council District) draws the 75
+districts and wards of twelve of the other thirteen, pre-built by
+`sc/scripts/build_sc_city_wards.py` through `scripts/city_ward_maps.py` at Douglas-Peucker 4 m:
+nine from the place's own map, Sumter's from the election map on gis.sumter-sc.com, and Florence's
+and Aiken's from the Revenue and Fiscal Affairs Office's statewide copy, because Aiken's own map
+service has no shapes and Florence's own map was last edited before its current ordinance took
+effect. That statewide copy is not used for the other ten: in eight of them it leaves more of the
+place's people in no district than the place's own map does, and it draws a seventh Sumter
+district the city does not elect. Sumter's six wards leave out Shaw Air Force Base, so a point on
+the base answers no ward. Greenville's map writes each member's name into its district field, and
+only the number is kept. **ANDERSON, THE THIRTEENTH, IS NOT DRAWN**: it publishes its six
+districts only as pictures in PDF files, so its card names the members and says why there is no
+map, and `scripts/build_eam_status.py` counts South Carolina's cities as 16 of 17 answered. Rock
+Hill's site refuses this project's own token at its Akamai edge, so its members page is read with
+Chrome and its client hints, and the measurement that allows it is in the builder. The Municipal
+Association of South Carolina's pages, the only statewide list, give no seat, district or date,
+so they are not used. The 254 smaller cities and towns name nobody (gap
+`sc-municipal-officeholders`), and no place's map bar the state's copy says which plan it is or
+when it took effect, all evidence for the publishing ask. The quarterly re-checks are in
 `sc/WATCH.md`.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 72 districts
@@ -141,8 +212,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: South Carolina (`southcarolina`) — https://districtry.com/sc/
 - Geocoders: address Photon (South Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Carolina-bounded, serial >=1s queue)
-- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4; voting-precinct Ward 1. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
-- Layers: 14 registered (political 5, safety 2, schools 1, geography 6); `registerLayer(` floor 10. Debug namespace `window.SCExplorer`.
+- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4; voting-precinct Ward 1; sc-circuit-court 5th Judicial Circuit. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
+- Layers: 17 registered (political 7, safety 2, schools 2, geography 6); `registerLayer(` floor 13. Debug namespace `window.SCExplorer`.
 - Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `update-sc-county-council-roster.yml` (Wed 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
 - Source registry: `sc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -208,8 +279,9 @@ others).
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
 cards degrade to the district number + the chamber's own directory on a roster miss; the
 council and county cards keep the district or county and link the state association's county
-directory when the council roster does not load; the school-district and municipality cards carry no roster at all
-and **say so on the card**. External strings always render through `sanitize()`/`textContent`. Roster refreshes
+directory when the council roster does not load; the school-district card carries no roster at all and
+**says so on the card**, and the municipality card names the mayor and council of the 17 cities
+and towns above 25,000 people and says so on the card for every other city and town. External strings always render through `sanitize()`/`textContent`. Roster refreshes
 always land as PRs for human review — never as direct commits to main.
 
 ## Data pipeline
@@ -232,7 +304,13 @@ Election Commission's certified results) — all
 count-guarded, all refreshed weekly by CI as reviewed PRs. The legislature builder writes neither
 file unless BOTH chambers pass: no fewer than 42 senators and 114 representatives, every
 district inside the chamber's range and claimed once, the member page's own district and surname
-agreeing with the list, and at least 90% of seats carrying an office and a telephone.
+agreeing with the list, at least 90% of seats carrying an office and a telephone, and at least
+60 members across both chambers carrying a home or business number of their own (91 on
+2026-10-17), so a change to the page that stops those numbers being read fails the build rather
+than emptying them quietly. The city councils (`sc-city-councils.json`) and their districts
+(`sc-city-wards.json`) are not refreshed by a weekly job: they are re-read each quarter through
+each builder's `--watch`, which says whether every name is still on its page and whether any
+place's map has changed (`sc/WATCH.md`).
 
 robots.txt is read before the first fetch through `scraper_common.require_robots_once`, with the
 same client the fetches send. `www.scstatehouse.gov`'s robots.txt (176 bytes, read 2026-10-10)

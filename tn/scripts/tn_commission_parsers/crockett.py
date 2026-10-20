@@ -21,9 +21,16 @@ must have Positions 1 and 2. The widget also carries its whole table a
 second time, base64-encoded in a "data-ext" attribute; that copy is not read.
 
 PRIVACY: the table's "Address" and "Phone" columns are each member's home
-street address, town and ZIP and a personal phone. Only the first two cells
-of a row are read; no address, phone or e-mail is recorded (the page has no
-e-mail).
+street address, town and ZIP and a phone. The "Phone" cell is recorded as
+printed, under Adam's ruling of 2026-10-17 that a number a government
+publishes beside an official ships whosever line it is (the Election
+Commission is a county office). The "Address" cell is never read, and a
+"Phone" cell holding anything but a number and its label raises. One cell
+prints its number as "73.1-..." with a stray point inside the area code; it
+is not a whole telephone number as printed, so that member's number is left
+off rather than corrected. The Election Commission's own phone and fax, in
+the page footer, are OFFICE_LINES and never land on a member. The page has
+no e-mail.
 
 Names are kept as printed, middle initials included ("William C Hooten",
 "Ronde' J Howell", "Alice F McDearman").
@@ -43,13 +50,15 @@ only write-in the report names, and this page seats her. Ballot spellings
 differ only by punctuation ("Harvey D. Bradshaw", "Taylor L. Branch",
 "Ronde' J. Howell", "Alice F. McDearman", "Jared C. Foust")."""
 import re
-from ._common import txt, member
+from ._common import txt, member, read_phones
 
 COUNTY = "Crockett"; FIPS = "033"
 DOMAINS = ("crockettvote.com",)
 URLS = ["https://www.crockettvote.com/county-commission"]
 SEATS = {str(i): 2 for i in range(1, 13)}
 AT_LARGE = 0
+# The Election Commission's own phone and fax, in the page footer.
+OFFICE_LINES = ("731-696-5465", "731-696-4977")
 
 ROW = re.compile(r"<tr\b[^>]*>(.*?)</tr>", re.S | re.I)
 CELL = re.compile(r"<t([dh])\b[^>]*>(.*?)</t[dh]>", re.S | re.I)
@@ -85,7 +94,8 @@ def parse(pages):
         seen.add((d, pos))
         if re.search(r"\bvacan", name, re.I) or not NAME.match(name):
             raise ValueError("District %s %s: %r does not look like a name" % (d, pos, name))
-        districts.setdefault(d, []).append(member(name, seat=pos))
+        districts.setdefault(d, []).append(
+            member(name, seat=pos, phones=read_phones(cells[3][1], strict=True)))
     if not header_seen:
         raise ValueError("the table has no District/Name/Address/Phone header")
     want = {(str(i), "Position %d" % k) for i in range(1, 13) for k in (1, 2)}

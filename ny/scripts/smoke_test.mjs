@@ -21,6 +21,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -132,7 +133,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -165,6 +166,33 @@ try {
     check("toTitleCase keeps O'Brien's capital and leaves John's alone",
       tc.length === 0,
       tc.length ? tc.map((r) => `${r.input} -> ${r.got} (want ${r.want})`).join("; ") : "9/9 cases");
+
+    // THE OFFICE PIN TAKES ONLY AN ANSWER THAT IS THE ADDRESS, asserted with no
+    // network call. The city's address search answers an office outside the city
+    // with an address inside it, so until 2026-10-20 Senate 49's Watertown office
+    // was pinned on Washington Avenue in Brooklyn. These are answers it gave that
+    // day, as the app receives them: the address after cleanPoiAddress, and the
+    // first answer's postalcode and housenumber.
+    const fits = await page.evaluate(() => {
+      const f = window.NycExplorer.poiAnswerFits;
+      return [
+        // outside the city, answered inside it: no pin
+        ["317 Washington St., Watertown, NY 13601", { postalcode: "11205", housenumber: "317" }, false],
+        ["700 White Plains Road, Scarsdale, NY 10583", { postalcode: "10473", housenumber: "700" }, false],
+        // inside the city, answered on another street in another borough: no pin
+        ["107 and 109 Avenue B, New York, NY 10009", { postalcode: "11411", housenumber: "109-107" }, false],
+        // its own ZIP code: the pin stays
+        ["250 Broadway, New York, NY 10007", { postalcode: "10007", housenumber: "250" }, true],
+        // a building with a ZIP code of its own, answered with its street's: the pin stays
+        ["Queens Borough Hall, 120-55 Queens Blvd, Kew Gardens, NY 11424", { postalcode: "11415", housenumber: "120-55" }, true],
+        // no ZIP code in the address: taken as before
+        ["254 East 4th Street", { postalcode: "10009", housenumber: "254" }, true],
+      ].map(([address, props, want]) => ({ address, want, got: f(address, props) }))
+        .filter((r) => r.got !== r.want);
+    });
+    check("an office pin is placed only where the answer is the office's own address",
+      fits.length === 0,
+      fits.length ? fits.map((r) => `${r.address} -> ${r.got} (want ${r.want})`).join("; ") : "6/6 cases");
     await context.close();
   }
 

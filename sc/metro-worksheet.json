@@ -84,7 +84,9 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
     [
@@ -128,7 +130,7 @@
       "id": "sc-senate",
       "label": "South Carolina Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "46 Senate districts — the same count as the state's counties, and drawn independently of them",
       "source": {
         "answers": "The South Carolina Senate district covering the point, and the senator holding it.",
@@ -138,7 +140,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
-        "people": "sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone and the member's own page). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.",
+        "people": "sc-senate-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own Senate member pages (name, party, State House office, business telephone, the home and business telephones the page prints under the member's home address, which may be the member's own, and the member's own page; never the home address). The General Assembly publishes no e-mail addresses, only a message form on each member's page, so none is carried.",
         "applies": "South Carolina — statewide, all 46 districts."
       }
     },
@@ -146,17 +148,17 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "46 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
-        "answers": "Which county contains the point.",
+        "answers": "Which county contains the point, the council members the county elects by the whole county, and the commissioners of its conservation district.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 46 features, measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "None yet — identity only. Every South Carolina county is governed by an elected county council; the state Revenue and Fiscal Affairs Office publishes every council district and the State Election Commission's results name the winners, and neither is wired in this first change. Recorded as gap sc-county-council.",
+        "people": "The council members the county elects by the whole county, from sc-county-council-members.json, the file the County Council District layer reads (see that layer). The card also names the five commissioners of the county's conservation district, from the Department of Natural Resources' page for each district, read by sc/scripts/build_sc_conservation_boards.py: each commissioner's position, whether the seat is elected or appointed, and the date the term ends; re-read quarterly and in February after the elected seats change hands (sc/WATCH.md). A commissioner whose printed term has ended is shown with that date and not as a vacancy, because under S.C. Code section 48-9-1230 a commissioner holds office until a successor qualifies.",
         "applies": "South Carolina — statewide, all 46 counties."
       }
     },
@@ -164,13 +166,13 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 4,
-      "rank_note": "72 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
+      "area_rank": 5,
+      "rank_note": "72 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 72 features for South Carolina, measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 72 features for South Carolina, measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -182,7 +184,7 @@
       "id": "sc-house",
       "label": "South Carolina House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "124 House districts — the smallest of the three chamber tilings",
       "source": {
         "answers": "The South Carolina House district covering the point, and the representative holding it.",
@@ -192,21 +194,47 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
           }
         ],
-        "people": "sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages.",
+        "people": "sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages, with the same fields as the Senate's.",
         "applies": "South Carolina — statewide, all 124 districts."
+      }
+    },
+    {
+      "id": "sc-circuit-court",
+      "label": "Judicial Circuit",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "16 judicial circuits of whole counties, 5,185 km2 mean area, measured 2026-10-16 on the drawn file — larger on average than a State Senate district (1,804 km2), smaller than a congressional district",
+      "source": {
+        "answers": "The judicial circuit covering the point: the circuit court there, how many judges the General Assembly elects for it, and the solicitor its voters elect.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by sc/scripts/build_sc_judicial_circuits.py, following the county lists in S.C. Code Section 14-5-610 as the Legislature publishes it (read 2026-10-16).",
+            "url": "https://www.scstatehouse.gov/code/t14c005.php"
+          },
+          {
+            "label": "S.C. Code Section 1-7-310 — one solicitor for each circuit, elected by its voters for four years",
+            "url": "https://www.scstatehouse.gov/code/t01c007.php"
+          },
+          {
+            "label": "Constitution of South Carolina, Article V — circuit judges elected by the General Assembly for six years (section 13) and rotated around the state (section 14)",
+            "url": "https://www.scstatehouse.gov/scconstitution/A05.pdf"
+          }
+        ],
+        "people": "No judge or solicitor is named yet, because no list of them by circuit has been read; recorded as gap sc-judicial-circuit-officers. The card gives the number of judges the statute sets for the circuit and says the General Assembly, not the voters, elects them.",
+        "applies": "South Carolina — statewide, all 46 counties."
       }
     },
     {
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 6,
-      "rank_note": "299 census county divisions, live from TIGERweb (no data/app file) — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)",
+      "area_rank": 7,
+      "rank_note": "299 census county divisions, from TIGERweb, drawn from a mirrored tile archive — median 226.5 km2 of land (mean 260.4), measured 2026-10-15: smaller than a state House district (median 282.5 km2), larger than a county council district (median 172.0 km2)",
       "source": {
         "answers": "The census county division containing the point, and its county.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime (no builder script, no committed data/app file); 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 299 features for South Carolina, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
@@ -218,7 +246,7 @@
       "id": "county-council",
       "label": "County Council District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes",
       "source": {
         "answers": "The county council district covering the point, the council member(s) it elects, and the members elected by the whole county.",
@@ -233,16 +261,38 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 9,
+      "rank_note": "383 districts on the boards of 54 school districts, pre-built from the Revenue and Fiscal Affairs Office's layer — 195.4 km2 mean area (median 128.5), measured 2026-10-16 on the drawn file: smaller than a county council district (median 172.0 km2), larger than most ZIP codes",
+      "source": {
+        "answers": "The district a school board elects a member from, the school district whose board it is, how many members the district elects, and who votes for them, as the board's own act of the General Assembly says: the district's voters, every voter in the school district, or not stated.",
+        "boundary": [
+          {
+            "label": "South Carolina Revenue and Fiscal Affairs Office — \"School Board Districts\", layer 0 of the Boundaries_Districts service on gis.state.sc.us: 383 districts on the boards of 54 school districts and one record marked “At Large” for each of the other 18, measured 2026-10-16, pre-built by sc/scripts/build_sc_school_board_districts.py and shipped with the app. The service states no licence, only an as-is disclaimer.",
+            "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/School_Board_Districts/FeatureServer/0"
+          },
+          {
+            "label": "South Carolina General Assembly — each board's own act, read in its ratified text on 2026-10-16 (for example Act 230 of 2024, which sets the Aiken County board), for how many members each district elects and who votes for them; the builder lists all 54",
+            "url": "https://www.scstatehouse.gov/sess125_2023-2024/bills/1025.htm"
+          }
+        ],
+        "people": "NO NAMES YET. No statewide list of South Carolina's school board members has been read — the School Boards Association sends its directory on request, and the State Election Commission's results site answers GitHub's servers with no page — so the card names no one rather than guessing, and links the school district's own website; recorded as gap sc-school-board-members.",
+        "applies": "The 54 South Carolina school districts whose boards are elected from districts. The other 18 are marked “At Large” on the state's map and have no districts to draw; the empty card says so."
+      }
+    },
+    {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 8,
-      "rank_note": "841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina",
+      "area_rank": 10,
+      "rank_note": "424 ZIP Code Tabulation Areas overlapping South Carolina, of the 841 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside South Carolina",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='45'. 841 features in South Carolina's box, measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='45'. 841 features in South Carolina's box, measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -254,7 +304,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 11,
       "rank_note": "2,315 precincts tiling the state, pre-built from the Revenue and Fiscal Affairs Office's official maps — 35.84 km2 mean area, land and water (median 12.82), measured 2026-10-15 on the drawn file: smaller on average than a census county division (260.4 km2 of land), larger than a city or town (18.58)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -272,25 +322,83 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 10,
-      "rank_note": "271 incorporated cities and towns, live from TIGERweb",
+      "area_rank": 12,
+      "rank_note": "271 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 271 features for South Carolina (69 cities, 202 towns), measured 2026-10-10.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 271 features for South Carolina (69 cities, 202 towns), measured 2026-10-10.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. South Carolina's cities and towns elect councils, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap sc-municipal-officeholders.",
+        "people": "In the 17 cities and towns above 25,000 people, the mayor and every council member, written down from each place's own pages and proved against those pages by sc/scripts/build_sc_city_councils.py, which fails when a name is no longer on the page it cites (sc/data/app/sc-city-councils.json, 131 seats read 2026-10-17). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its district's own voters or the whole place elect it, which nothing the state publishes records: it was read from each contest's precincts in the Election Commission's certified results and from Anderson's notice of election, and the seats neither covers are taken to follow their place's rule, which the builder lists. The Municipal Association of South Carolina's pages are not used: they give no seat, district or date. South Carolina's other 254 cities and towns name nobody yet, recorded as gap sc-municipal-officeholders.",
         "applies": "South Carolina — statewide. A point outside every city and town is unincorporated, which the card states."
+      }
+    },
+    {
+      "id": "city-ward",
+      "label": "City Council District",
+      "group": "political",
+      "area_rank": 13,
+      "rank_note": "75 council districts and wards in the 12 cities and towns above 25,000 people that elect council members by district — 22.7 km2 mean area (median 14.9, from 5.1 in Greer to 249.1 in Columbia), measured 2026-10-16 on the drawn file — ranked just after City or Town, which each one divides, so a district draws on top of its city or town",
+      "source": {
+        "answers": "The city council district or ward containing the point, in the 12 South Carolina cities and towns above 25,000 people that elect council members by district, and the member its own voters elect.",
+        "boundary": [
+          {
+            "label": "City of Charleston GIS Division — council districts, layer 13 of its MapNet external service, found in the MapNet viewer's configuration: 12 districts, read 2026-10-16. It states no licence.",
+            "url": "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/13"
+          },
+          {
+            "label": "City of Columbia — council districts, layer 1 of its CoCInfoBoundary service: 4 districts, read 2026-10-16. It states no licence.",
+            "url": "https://gis.columbiasc.gov/cola/rest/services/Public/CoCInfoBoundary/MapServer/1"
+          },
+          {
+            "label": "City of North Charleston — Council_Districts, in the city's ArcGIS Online organization: 10 districts, last edited 2026-10-12 and read 2026-10-16, under the city's statement that it does not warrant its data.",
+            "url": "https://services3.arcgis.com/BLrzoqoB28p9t3a7/arcgis/rest/services/Council_Districts/FeatureServer/0"
+          },
+          {
+            "label": "City of Rock Hill — council wards, layer 9 of its DynamicService: 6 wards, read 2026-10-16. It states no licence.",
+            "url": "https://crh-vmw-gisvdr1.cityofrockhillsc.gov/arcgis/rest/services/DynamicStaticServices/DynamicService/MapServer/9"
+          },
+          {
+            "label": "City of Greenville — council districts, layer 1 of its Find_Your_Elected_Officials service: 4 districts, read 2026-10-16. It states no licence.",
+            "url": "https://citygis.greenvillesc.gov/arcgis/rest/services/FindElectedOfficials/Find_Your_Elected_Officials/MapServer/1"
+          },
+          {
+            "label": "Town of Summerville — Council_Districts, in the town's ArcGIS Online organization: 6 districts, last edited 2026-10-14 and read 2026-10-16. It states no licence.",
+            "url": "https://services8.arcgis.com/0zSnoqwLCR3i1Yfw/arcgis/rest/services/Council_Districts/FeatureServer/0"
+          },
+          {
+            "label": "Sumter's council wards — the “City of Sumter Council” layer of the ElectionAdministration service on gis.sumter-sc.com: 6 wards, read 2026-10-16.",
+            "url": "https://gis.sumter-sc.com/server/rest/services/ElectionAdministration/ElectionAdministration/MapServer/1109"
+          },
+          {
+            "label": "City of Spartanburg — CouncilDistricts_2023, in the city's ArcGIS Online organization: 6 districts, last edited 2026-04-24 and read 2026-10-16. It states no licence.",
+            "url": "https://services9.arcgis.com/HoRra3ATPLGmyjn6/arcgis/rest/services/CouncilDistricts_2023/FeatureServer/0"
+          },
+          {
+            "label": "Town of Hilton Head Island — 2022_Town_Council_Wards, in the town's ArcGIS Online organization: 6 wards, last edited 2026-02-27 and read 2026-10-16. It states no licence.",
+            "url": "https://services1.arcgis.com/t1pOARESVtLutuqb/arcgis/rest/services/2022_Town_Council_Wards/FeatureServer/0"
+          },
+          {
+            "label": "City of Greer — City_Council_Districts_Current, in the city's ArcGIS Online organization: 11 records for 6 districts, last edited 2026-08-27 and read 2026-10-16. It states no licence.",
+            "url": "https://services1.arcgis.com/bskBH6JV42oEWJvZ/arcgis/rest/services/City_Council_Districts_Current/FeatureServer/0"
+          },
+          {
+            "label": "South Carolina Revenue and Fiscal Affairs Office — Municipal_Council_Districts: 238 districts in 40 municipalities, read 2026-10-16, of which Florence's 3 and Aiken's 6 are drawn. The office says its map is not a legal description and that a user should not rely on it.",
+            "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Municipal_Council_Districts/FeatureServer/0"
+          }
+        ],
+        "people": "The member each district's own voters elect, from the same city council roster the City or Town card reads (sc/data/app/sc-city-councils.json), written down from each place's own pages and proved against them by sc/scripts/build_sc_city_councils.py. Which seats a district elects was read from the ballot, and the few seats no ballot covered are taken to follow their place's rule, as the builder records. Its check holds every drawn district to a seat its voters elect and every such seat to a drawn district, bar Anderson's, whose districts are not drawn.",
+        "applies": "The 12 South Carolina cities and towns above 25,000 people that elect council members by district or ward: Aiken, Charleston, Columbia, Florence, Greenville, Greer, Hilton Head Island, North Charleston, Rock Hill, Spartanburg, Summerville and Sumter. Anderson elects by district too and publishes its districts only as pictures in PDF files, so they are not drawn; Mount Pleasant, Goose Creek, Myrtle Beach and Bluffton elect every seat by the whole place, so a district there would elect no one of its own. The state's map carries districts for 28 more municipalities, all below 25,000 people, which are not drawn because this app does not name those councils. Sumter's six wards leave out Shaw Air Force Base, so a point on the base answers no ward."
       }
     },
     {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -308,7 +416,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 16,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -326,7 +434,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 14,
+      "area_rank": 17,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -344,7 +452,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "Tribal land — South Carolina has 2 pieces held by one nation, the Catawba Reservation (4.123 km²) and its off-reservation trust land (0.054 km²), both in York County near Rock Hill, MEASURED by scripts/build_tribal_areas.py. Drawn below municipalities, since the reservation is smaller than the city of Rock Hill beside it, and above the point layers. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — South Carolina has 2 such areas, both the Catawba Indian Nation's.",
@@ -359,7 +467,7 @@
       }
     }
   ],
-  "min_register_layer": 10,
+  "min_register_layer": 13,
   "anchor_point": {
     "lat": 34.00035,
     "lng": -81.03295,
@@ -389,6 +497,10 @@
     {
       "layer": "voting-precinct",
       "expected": "Ward 1"
+    },
+    {
+      "layer": "sc-circuit-court",
+      "expected": "5th Judicial Circuit"
     }
   ],
   "negative_point": {
@@ -449,6 +561,24 @@
         "min_features": 2315,
         "max_features": 2315,
         "note": "Every South Carolina voting precinct, pre-built by sc/scripts/build_sc_precincts.py through scripts/statewide_precincts.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,315 count on the fetch and the drawn file). 7.8 MB, 2.24 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "sc-school-board-districts.json",
+        "min_features": 383,
+        "max_features": 383,
+        "note": "Every South Carolina school board district, pre-built by sc/scripts/build_sc_school_board_districts.py through scripts/published_district_layers.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 383 count, after the 18 records marked “At Large” are skipped). 4.6 MB, 1.43 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "sc-judicial-circuits.json",
+        "min_features": 16,
+        "max_features": 16,
+        "note": "The 16 judicial circuits of S.C. Code Section 14-5-610, dissolved from the county fabric by sc/scripts/build_sc_judicial_circuits.py, each carrying the number of judges the section sets for it."
+      },
+      {
+        "file": "sc-city-wards.json",
+        "min_features": 75,
+        "max_features": 75,
+        "note": "The 75 council districts and wards of the 12 cities and towns above 25,000 people that elect council members by district, pre-built by sc/scripts/build_sc_city_wards.py through scripts/city_ward_maps.py: nine from the place's own map, Sumter's from the election map on gis.sumter-sc.com, and Florence's and Aiken's from the Revenue and Fiscal Affairs Office's copy (Douglas-Peucker at 4 m; a 4,800-point agreement gate over the twelve places' extents, measured 99.98% with zero overlaps; each map held to its place's Census outline). 1.26 MB, 349 KB gzipped, fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [
@@ -473,6 +603,11 @@
         "note": "County council members, one key per county FIPS, from the Election Commission's certified results, refreshed weekly by update-sc-county-council-roster.yml."
       },
       {
+        "file": "sc-city-councils.json",
+        "min_keys": 17,
+        "note": "The mayor and council of each of the 17 cities and towns above 25,000 people, keyed by Census place id, written down from each place's own pages and proved against them by sc/scripts/build_sc_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn districts. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (sc/WATCH.md)."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -481,6 +616,11 @@
         "file": "tribal-councils.json",
         "min_keys": 1,
         "note": "The Catawba Nation's Executive Committee, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
+        "file": "sc-conservation-boards.json",
+        "min_keys": 46,
+        "note": "The five commissioners of each county's conservation district, keyed by county GEOID, read from the Department of Natural Resources' page for each district by sc/scripts/build_sc_conservation_boards.py, whose --check holds the file to its record of the pages read and to the County card's wording. Re-read quarterly and in February after the elected seats change hands (sc/WATCH.md)."
       }
     ]
   },

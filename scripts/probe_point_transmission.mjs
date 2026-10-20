@@ -103,6 +103,7 @@ import { chromium } from "playwright";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, anchorOf as anchorOfShared, EXTRA_POINTS, instances, vendorDir } from "./probe_points.mjs";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const anchorOf = (tag) => anchorOfShared(tag, problem);
 const OUT = join(ROOT, "point-transmission.json");
@@ -446,7 +447,7 @@ async function measure(browser, tag) {
   };
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 const apps = {};
 for (const tag of instances()) {
   process.stdout.write(`  ${tag} … `);

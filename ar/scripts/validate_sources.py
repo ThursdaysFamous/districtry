@@ -122,7 +122,8 @@ PROVENANCE = [
             "member's own page, which is the only place a departed member is "
             "marked Resigned or Deceased; rebuilt weekly by "
             "ar/scripts/build_ar_legislature_roster.py. The member pages also "
-            "print a mailing address and a telephone, which the builder never "
+            "print a telephone, which ships as printed (Adam, 2026-10-17), and "
+            "a mailing address that may be a home, which the builder never "
             "reads."
         ),
     },
@@ -218,6 +219,80 @@ PROVENANCE = [
             "ar/WATCH.md compares the fingerprint recorded at the build."
         ),
     },
+    {
+        "layer": "school-board-district",
+        "app_file": "ar-school-board-zones.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/32",
+        "note": (
+            "965 school board zones on 176 school districts from the Arkansas "
+            "GIS Office's SCHOOL_BOARD_ZONES layer, which the Secretary of "
+            "State compiles (966 records: Jasper's zone 3 is published in two "
+            "pieces and joined), pre-built by "
+            "ar/scripts/build_ar_school_board_districts.py through "
+            "scripts/published_district_layers.py; the quarterly "
+            "--watch row in ar/WATCH.md compares the fingerprint recorded at "
+            "the build, and the eight boards changing to at large are re-read "
+            "whenever their zones move."
+        ),
+    },
+    {
+        "layer": "fire-district",
+        "app_file": "ar-fire-districts.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59",
+        "note": (
+            "971 fire districts from the Arkansas GIS Office's FIRE_DISTRICTS "
+            "layer, the map state law has each fire district file with it "
+            "(973 records: Siloam Springs is filed three times and joined), "
+            "pre-built by ar/scripts/build_ar_fire_districts.py through "
+            "scripts/published_district_layers.py; the quarterly --watch row "
+            "in ar/WATCH.md compares the fingerprint recorded at the build."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ar-city-wards.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/50",
+        "note": (
+            "56 council wards and districts of the twelve Arkansas cities "
+            "above 25,000 people that elect by ward, from the Arkansas GIS "
+            "Office's MUNICIPAL_WARDS layer (852 wards of 262 cities and towns "
+            "when read), pre-built by ar/scripts/build_ar_city_wards.py through "
+            "scripts/published_district_layers.py, which takes the cities to "
+            "draw from ar/data/source/ar-city-council-seats.json; the "
+            "quarterly --watch row in ar/WATCH.md compares the fingerprint "
+            "recorded at the build. The names on the cards come from each "
+            "city's own pages, and ar/scripts/build_ar_city_councils.py "
+            "--watch is what notices one of those changing."
+        ),
+    },
+    {
+        "layer": "ar-court-of-appeals",
+        "app_file": "ar-appeals-districts.json",
+        "source_url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html",
+        "note": (
+            "The Court of Appeals' 7 districts, dissolved from the county "
+            "fabric by ar/scripts/build_ar_court_districts.py following Act "
+            "1812 of 2003 as this metadata page quotes it (read 2026-10-16; "
+            "snapshot in ar/data/source/courts/), held county by county to "
+            "the GIS Office's Appeals Court Districts layer. The official "
+            "Code is not readable here: its copy is LexisNexis's. The re-read "
+            "is a row in ar/WATCH.md."
+        ),
+    },
+    {
+        "layer": "ar-circuit-court",
+        "app_file": "ar-judicial-circuits.json",
+        "source_url": "https://arcourts.gov/directories/circuit-judges",
+        "note": (
+            "The 28 judicial circuits, dissolved from the county fabric by "
+            "ar/scripts/build_ar_court_districts.py following the "
+            "Administrative Office of the Courts' circuit judge directory "
+            "(read 2026-10-16; county-level extract in "
+            "ar/data/source/courts/), held county by county to the GIS "
+            "Office's Circuit Court Districts layer. A circuit gains a judge "
+            "by act; the re-read is a row in ar/WATCH.md."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -304,6 +379,33 @@ ENDPOINTS = [
                 "FEATURESERVICES/Boundaries/FeatureServer/11/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 2630,  # 2,928 records measured 2026-10-15
+    },
+    # The school board zone layer the builder reads (2026-10-16). A floor, for
+    # the reason the precinct row above gives.
+    {
+        "layer": "school-board-district",
+        "url": ("https://gis.arkansas.gov/arcgis/rest/services/"
+                "FEATURESERVICES/Boundaries/FeatureServer/32/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 870,   # 966 records measured 2026-10-16
+    },
+    # The fire district layer the builder reads (2026-10-16). A floor, for
+    # the reason the precinct row above gives.
+    {
+        "layer": "fire-district",
+        "url": ("https://gis.arkansas.gov/arcgis/rest/services/"
+                "FEATURESERVICES/Boundaries/FeatureServer/59/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 875,   # 973 records measured 2026-10-16
+    },
+    # The municipal ward layer the city ward builder reads (2026-10-16). A
+    # floor, for the reason the precinct row above gives.
+    {
+        "layer": "city-ward",
+        "url": ("https://gis.arkansas.gov/arcgis/rest/services/"
+                "FEATURESERVICES/Boundaries/FeatureServer/50/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 765,   # 852 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

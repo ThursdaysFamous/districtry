@@ -52,6 +52,9 @@ const GEOMETRY_URLS = [
   "./data/app/tribal-areas.json",
   "./data/app/in-precincts.json",
   "./data/app/in-council-districts.json",
+  "./data/app/in-school-board-districts.json",
+  "./data/app/in-appeals-districts.json",
+  "./data/app/in-conservancy-districts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -63,6 +66,7 @@ const ROSTER_URLS = [
   "./data/app/in-county-councils.json",
   "./data/app/in-city-officials.json",
   "./data/app/in-township-officials.json",
+  "./data/app/in-conservancy-directors.json",
   "./data/app/coverage-gaps.json",
   "./data/app/tribal-councils.json",
 ];

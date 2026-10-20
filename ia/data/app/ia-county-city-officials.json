@@ -366,6 +366,7 @@
    },
    {
     "county": "Boone",
+    "email": "kenelsb@netins.net",
     "name": "Kenneth M. Elsberry",
     "phone": "(515) 360-5683",
     "role": "Mayor",
@@ -383,6 +384,7 @@
    },
    {
     "county": "Boone",
+    "email": "middle9@hotmail.com",
     "name": "Natalie Ericson",
     "phone": "(515) 231-4375",
     "role": "City Council",
@@ -391,6 +393,7 @@
    },
    {
     "county": "Boone",
+    "email": "ladybug3@netins.net",
     "name": "Paula Evans",
     "phone": "(515) 275-2779",
     "role": "City Council",
@@ -728,6 +731,7 @@
    },
    {
     "county": "Boone",
+    "email": "nate.kkhhomes@gmail.com",
     "name": "Nathan Stuhr",
     "phone": "(712) 830-6596",
     "role": "City Council",
@@ -736,6 +740,7 @@
    },
    {
     "county": "Boone",
+    "email": "lasvegas@wccta.net",
     "name": "Veva Teeters",
     "phone": "(515) 351-9336",
     "role": "City Council",
@@ -1095,6 +1100,7 @@
    },
    {
     "county": "Jasper",
+    "email": "citycolfax50054@gmail.com",
     "name": "Wade Wagoner",
     "role": "City Administrator"
    },
@@ -1502,6 +1508,7 @@
    },
    {
     "county": "Cerro Gordo",
+    "email": "nikkijo232002@yahoo.com",
     "name": "Nicolette Nagel",
     "role": "City Council",
     "seat": "At Large",
@@ -1654,6 +1661,7 @@
    },
    {
     "county": "Boone",
+    "email": "shibbyrockhound@hotmail.com",
     "name": "Amy Laube",
     "phone": "(515) 432-6160",
     "role": "City Council",
@@ -1669,6 +1677,7 @@
    },
    {
     "county": "Boone",
+    "email": "fraserpwd@yahoo.com",
     "name": "Stephanie Voughn",
     "role": "City Council",
     "termEnds": "2027",
@@ -2532,6 +2541,7 @@
    },
    {
     "county": "Jasper",
+    "email": "iaeds@pcpartner.net",
     "name": "Patrick Edwards",
     "role": "Mayor",
     "termEnds": "2027"
@@ -2715,6 +2725,7 @@
   "members": [
    {
     "county": "Jasper",
+    "email": "citylynnville@netins.net",
     "name": "Bev Arthur",
     "role": "City Clerk"
    },
@@ -3375,6 +3386,7 @@
    },
    {
     "county": "Cerro Gordo",
+    "email": "meserveymowman@yahoo.com",
     "name": "Richard Miller",
     "role": "Mayor",
     "termEnds": "2027",
@@ -4138,6 +4150,7 @@
    },
    {
     "county": "Jasper",
+    "email": "srtm54@gmail.com",
     "name": "Susan Martin",
     "role": "City Council",
     "termEnds": "2027",
@@ -4196,6 +4209,7 @@
    },
    {
     "county": "Boone",
+    "email": "andy5@netins.net",
     "name": "Lori Anderson",
     "phone": "(515) 275-2560",
     "role": "City Council",
@@ -4229,6 +4243,7 @@
    },
    {
     "county": "Boone",
+    "email": "mlsb@netins.net",
     "name": "Brian Reimers",
     "phone": "(515) 290-0508",
     "role": "City Council",
@@ -4439,6 +4454,7 @@
   "members": [
    {
     "county": "Boone",
+    "email": "ctypltmd@wccta.net",
     "name": "Leah Porter",
     "phone": "(515) 298-0720",
     "phoneIsOffice": true,
@@ -4446,6 +4462,7 @@
    },
    {
     "county": "Boone",
+    "email": "drp1225@gmail.com",
     "name": "Donald Porter",
     "phone": "(515) 230-9897",
     "role": "Mayor",
@@ -4481,6 +4498,7 @@
    },
    {
     "county": "Boone",
+    "email": "wkoester2008@gmail.com",
     "name": "Whitney Miller",
     "phone": "(515) 297-3797",
     "role": "City Council",
@@ -4489,6 +4507,7 @@
    },
    {
     "county": "Boone",
+    "email": "oldblue78.jm@gmail.com",
     "name": "Joshua Miller",
     "phone": "(515) 298-3782",
     "role": "City Council",
@@ -4857,6 +4876,7 @@
    },
    {
     "county": "Jasper",
+    "email": "cwbdr1988@yahoo.com",
     "name": "Derek Rice",
     "role": "City Council",
     "termEnds": "2027",
@@ -4864,6 +4884,7 @@
    },
    {
     "county": "Jasper",
+    "email": "trenaud500@yahoo.com",
     "name": "Tara Rose Rice",
     "role": "City Council",
     "termEnds": "2027",
@@ -4949,6 +4970,7 @@
   "members": [
    {
     "county": "Crawford",
+    "email": "pst559@outlook.com",
     "name": "Pam Tripp",
     "phone": "(712) 679-2411",
     "role": "City Clerk"
@@ -5091,6 +5113,7 @@
    },
    {
     "county": "Cerro Gordo",
+    "email": "mcfdmedic40@yahoo.com",
     "name": "Bradley Meyer",
     "role": "City Council",
     "seat": "At Large",
@@ -5721,6 +5744,7 @@
    },
    {
     "county": "Cerro Gordo",
+    "email": "fessler30@live.com",
     "name": "Makia Miller",
     "role": "City Council",
     "seat": "At Large",
@@ -5961,12 +5985,14 @@
    },
    {
     "county": "Jasper",
+    "email": "itzme30@aol.com",
     "name": "Kathie Forck",
     "role": "City Council",
     "termEnds": "2027"
    },
    {
     "county": "Jasper",
+    "email": "monteman715@gmail.com",
     "name": "Chris Molano",
     "role": "City Council",
     "termEnds": "2027"
@@ -5999,6 +6025,7 @@
    },
    {
     "county": "Cerro Gordo",
+    "email": "jbsauto@comm1net.net",
     "name": "Joe Schmit",
     "role": "Mayor",
     "termEnds": "2029",
@@ -6033,6 +6060,7 @@
    },
    {
     "county": "Cerro Gordo",
+    "email": "shropff35@gmail.com",
     "name": "Chuck Shropshire",
     "role": "City Council",
     "seat": "At Large",

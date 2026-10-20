@@ -217,9 +217,45 @@ LINK_LOOKUP_ROW = (
     "own lookup, which runs on Deno&#39;s servers, follows it to the full link and "
     "sends that back. Deno receives your IP address and the short link. The lookup&#39;s "
     "own code stores neither; Deno, not this project, keeps whatever request logs its "
-    "platform keeps. A full map link or a coordinate pair is read in "
-    "your browser and goes nowhere.",
+    "platform keeps. A map link or a coordinate pair that carries its position is read in "
+    "your browser and goes nowhere; a map link that names a place without one is searched "
+    "like typed text, by the address search below.",
     "Only when you paste or share a short map link.", "link_lookup")
+
+# THE ADDRESS ROUTE OF THAT LOOKUP (from 2026-10-17). A place shared from the
+# Google Maps app is its name and its street address with no position, and the
+# map's own search often holds the street and not the house number on it. An
+# app then asks the same lookup, at `?a=`, for the Census Bureau's estimate of
+# where the number falls on the street (engine geocoder-search
+# lookupAddressRanges), and shows it as a pin, whose point it has selected
+# since 2026-10-18. The same day it was extended, on Adam's choice, to an
+# address a reader types and sends, because that search has the same gap; an
+# address being typed is never sent. From 2026-10-19 (Adam's "Use Census") it
+# is also asked about an address whose street the map's search does not know
+# in its town either, with the app's own state added when the address names
+# none (engine map-link addressForLookup), and an address whose street it
+# knows is asked about with the ZIP code the street's answers carry when they
+# carry one and the address none (engine geocoder-search showStreetOnly). That
+# sends the address to Deno and from Deno to the Census Bureau, which sees
+# Deno's address and not the reader's. MEASURED from the call itself, so the
+# row names exactly the surfaces that make it: the front door reads the same
+# map-link block and carries the lookup's host, and never makes this call; an
+# address typed there is handed to the app that covers it, which does.
+HOUSE_LOOKUP_CALL = re.compile(r'MAP_LINK_LOOKUP\s*\+\s*"\?a="')
+HOUSE_LOOKUP_ROW = (
+    "U.S. Census Bureau", "house-number lookup",
+    "https://www.census.gov/about/policies/privacy.html",
+    "Only when the map&#39;s own address search can&#39;t find the house at an address you "
+    "search for, because it knows the street but not the house number on it, or doesn&#39;t "
+    "know the street in that town at all, and you typed the address and sent the search "
+    "(with Search or Enter, or by picking its street from the list) or a map link you paste "
+    "or share carries it: the address, with its state and its street&#39;s ZIP code filled in "
+    "when you left them out, sent through districtry&#39;s lookup on Deno Deploy, which asks "
+    "the Census Bureau&#39;s geocoder where that number falls on the street and sends its "
+    "estimate back. The Census Bureau receives the address and the lookup&#39;s IP address, "
+    "not yours. Nothing is sent this way while you are still typing.",
+    "Only when the map's search can't find the house at an address you search for.",
+    "house_lookup")
 
 
 # Geocoders, keyed by the host the measurement finds. What a geocoder receives is
@@ -239,8 +275,9 @@ LINK_LOOKUP_ROW = (
 GEOCODERS = {
     "photon.komoot.io": (
         "Photon / Komoot", "address search", "https://www.komoot.com/privacy",
-        "<strong>The text you type into the search box</strong> — sent as you type on the "
-        "apps' type-ahead boxes, and only when you press the button on the front door.",
+        "<strong>The text you type into the search box</strong>, or the place&#39;s name "
+        "and address from a map link you paste or share — sent as you type on the apps' "
+        "type-ahead boxes, and only when you press the button on the front door.",
         "Only while you are searching for an address."),
     "nominatim.openstreetmap.org": (
         "Nominatim / OpenStreetMap", "office pins",
@@ -252,7 +289,8 @@ GEOCODERS = {
     "geosearch.planninglabs.nyc": (
         "GeoSearch / NYC Planning", "address search, office pins",
         "https://www.nyc.gov/home/privacy-policy.page",
-        "<strong>The text you type into the search box</strong>, sent as you type so "
+        "<strong>The text you type into the search box</strong>, or the place&#39;s name "
+        "and address from a map link you paste or share, sent as you type so "
         "suggestions can appear. It also receives <em>public office addresses from the "
         "datasets</em> to place their map pins.",
         "Only while you are searching for an address, or when a card places an office "
@@ -377,22 +415,42 @@ def measure_address_list(src, name):
 # that the installed app was opened, once per launch, and into which app; and
 # `install-invite/<what>` what became of the one-time invitation on a phone
 # (shown, accepted, declined or closed; tip-shown or tip-closed for the
-# iPhone's directions). All three are by app and never by place: the launch
-# event is sent at boot, before any point is selected.
+# iPhone's directions; and since 2026-10-20, while the Android app is in
+# Google Play's closed test, test-shown, test-join or test-closed for the
+# invitation to that test, which an Android phone gets instead of the
+# install). All three are by app and never by place: the launch event is
+# sent at boot, before any point is selected.
 # `share-in/` joined on 2026-10-14, when the installed app joined Android's
 # Share menu (the manifest's share_target): `share-in/<tag>` records that a
 # place shared into the app opened that app, and nothing about the place,
 # which travels in the address hash and reaches analytics only as the
 # rounded `select` any selection sends.
+# `map-link-read/` joined on 2026-10-17, to count how often places are shared
+# or pasted as Google Maps and Apple Maps links and whether the search found
+# them: `map-link-read/<tag>/<source>/<form>/<via>/<outcome>`, sent once per
+# link the search box reads (engine geocoder-search countLinkRead). It names
+# the app, google or apple, whether the link was short, whether it came in
+# the page's address or was pasted, and what the reader was shown (a
+# position, an address, a street, another state's app, nothing, or why the
+# short link could not be read). It never carries the link, the place's
+# name, its address or its position. The front page sends the same event
+# with `front` for the tag (ROOT_EVENTS).
+# `osm-note` joined on 2026-10-17 (engine `geocoder-search` osmNoteLink): when
+# the map's search knows a street and not the house number on it, its message
+# links to OpenStreetMap's note form, and following that link records
+# `osm-note` and nothing about the street or the place.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
+# What the front page (the one untagged surface) sends: only the map-link
+# count above, from its address box. Gated, because the page says so.
+ROOT_EVENTS = ["map-link-read/front/"]
 
 
 def event_phrase(event, apps):
@@ -474,6 +532,10 @@ def measure(rel, name, url, tag):
         app["ga"] = None
 
     app["district_search"] = bool(re.search(r"\bvar DISTRICT_SEARCH_URL\s*=", src))
+    # Whether the install invitation runs the Android app's closed test
+    # (engine install-app): the constant holds the steps page's address while
+    # it does, and null once the app is published.
+    app["android_test"] = bool(re.search(r'\bvar DST_ANDROID_TEST_URL\s*=\s*"', src))
 
     m = re.search(r'data-goatcounter="(https://([a-z0-9-]+)\.goatcounter\.com/count)"', src)
     app["goatcounter"] = {"url": m.group(1), "site": m.group(2)} if m else None
@@ -523,6 +585,7 @@ def measure(rel, name, url, tag):
     app["tiles"] = "basemaps.cartocdn.com" in src_all
     app["cdn"] = "cdnjs.cloudflare.com" in src_all
     app["link_lookup"] = LINK_LOOKUP_HOST in src_all
+    app["house_lookup"] = bool(HOUSE_LOOKUP_CALL.search(src_all))
     # A layer drawn from a vector-tile archive (engine tile-overlay block)
     # asks this site's host for its map a piece at a time — the pieces under
     # the view and, for the card, the one under the selected point — where
@@ -807,6 +870,11 @@ def gate_fleet_claims(apps):
     maps = [a for a in apps if a["has_map"]]
     if not maps:
         fail("no app measured as carrying a map — the measurement is broken")
+    for a in apps:
+        if not a["has_map"] and a["events"] != ROOT_EVENTS:
+            fail("%s sends analytics events %s, and this page says the front page "
+                 "sends %s and nothing else. Change the page's sentence and "
+                 "ROOT_EVENTS together." % (a["file"], a["events"], ROOT_EVENTS))
     for a in maps:
         if a["events"] != EXPECTED_EVENTS:
             fail("%s sends analytics events %s, not the fleet set %s. The page "
@@ -1030,13 +1098,23 @@ def render_app_rows(apps):
 
 def render_recipient_rows(apps):
     rows = []
-    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW]:
+    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW, HOUSE_LOOKUP_ROW]:
         users = apps if key is None else [a for a in apps if a[key]]
         if not users:
             fail("no surface requests %s any more — the recipients table names it, "
                  "so either the fleet changed or the measurement is broken" % label)
         tiled = [a["name"] for a in users if a.get("vector_tiles")]
         mapped = [a["name"] for a in users if a.get("has_map")]
+        housed = [a["name"] for a in users if a.get("house_lookup")]
+        if key == "link_lookup" and housed:
+            where = ("every app" if set(housed) == set(mapped) else
+                     ", ".join(housed[:-1]) + " and " + housed[-1] if len(housed) > 1 else housed[0])
+            what += (" In %s, when the map&#39;s own search can&#39;t find the house at an "
+                     "address you search for, or at one a map link names, the lookup also "
+                     "receives <strong>that address</strong> and asks the U.S. Census Bureau "
+                     "where the number falls (the next row)." % esc(where))
+            when = ("Only when you paste or share a short map link, or, in %s, when the map's "
+                    "search can't find the house at an address you search for." % where)
         if label == "GitHub Pages" and tiled:
             where = ("every app" if set(tiled) == set(mapped) else
                      ", ".join(tiled[:-1]) + " and " + tiled[-1] if len(tiled) > 1 else tiled[0])
@@ -1090,8 +1168,8 @@ def render_recipient_rows(apps):
             "GoatCounter", "analytics", "https://www.goatcounter.com/help/privacy",
             "A page count and a few named events. See "
             '<a href="#analytics">Analytics, precisely</a>.',
-            "Every visit to any page. The named events come from an app\u2019s map "
-            "only.", counter_who(), once=True))
+            "Every visit to any page. The named events come from an app\u2019s map, "
+            "and one from the front page\u2019s address box.", counter_who(), once=True))
     ga_users = [a["name"] for a in apps if a["ga"]]
     if ga_users:
         rows.append(recipient_row(
@@ -1166,12 +1244,43 @@ def render_storage_paragraphs(apps):
                 % (code("il"), code("ny"), code(store), code(key), esc(joined(users)),
                    code("/app/")))
         elif key == "districtry-install-invite":
+            # The Android test's clause is true only while the engine's
+            # install-app block runs the test; measured from the apps rather
+            # than remembered, so retiring the test cannot leave it standing.
+            test = any(a["android_test"] for a in apps if a["name"] in users)
+            # The front door writes this key only to remember its own
+            # invitation to that test (scripts/build_landing_page.py NOTICE),
+            # so a write with no test running is a sentence nobody can write.
+            front = any(a["name"] in users and not a["tag"] for a in apps)
+            if front and not test:
+                fail("the front door writes %r for its invitation to the Android test, "
+                     "and no app runs that test any more, so the sentence about it would "
+                     "be false: retire the front page's NOTICE with the test" % key)
+            if test:
+                lead = ("On a phone, the map makes an invitation only once: on Android, while "
+                        "districtry’s Android app is being tested on Google Play, to join the "
+                        "test, and elsewhere, to add districtry to your home screen. An Android "
+                        "phone that was offered the home screen before the test began is asked "
+                        "once more, about the test.")
+                if front:
+                    lead += (" On Android the front door invites you to the test too, until you "
+                             "close that invitation or follow its link. The map records the "
+                             "invitation it made in %s under %s, so it does not make it again. "
+                             "Closing either invitation to the test, or following its link, "
+                             "records that under the same name, and then neither the map nor "
+                             "the front door shows it again.")
+                else:
+                    lead += (" It records the invitation it made in %s under %s, so it does "
+                             "not make it again.")
+            else:
+                lead = ("On a phone, the map offers once to add districtry to your home screen. "
+                        "It records that it has asked in %s under %s, so it does not ask again.")
             out.append(
-                "<p><strong>The install invitation.</strong> On a phone, the map offers once "
-                "to add districtry to your home screen. It records that it has asked in %s "
-                "under %s, so it does not ask again. This is on %s. It is one word, and it "
-                "never leaves your browser.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                "<p><strong>The install invitation.</strong> " + lead % (code(store), code(key)) +
+                " This is on %s. It is one word, and it never leaves your browser.</p>"
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % esc(re.sub(r"^The ", "the ", joined(users))))
         elif key == "districtry-app-launch":
             out.append(
                 "<p><strong>A launch already counted.</strong> When you open the installed "
@@ -1287,9 +1396,15 @@ def render_analytics_section(apps):
         'rel="noopener">GoatCounter</a> is cookieless and does not build a profile across '
         "sites. %s. Besides the "
         "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
-        "coordinates, <strong>rounded to %d decimal places</strong>. A page that is not an "
-        "app — a county list, a question page, this one — sends the page view and nothing "
-        "else. <strong>Nothing you type is ever sent to it.</strong></p>"
+        "coordinates, <strong>rounded to %d decimal places</strong>. When the search box reads a "
+        "Google Maps or Apple Maps link, map-link-read/ says which app it was in, which of the "
+        "two the link came from, whether it was a short link, whether it was pasted or "
+        "arrived in the page\u2019s address (as a place shared into the installed app does), "
+        "and what the search showed; it never carries the link, the place or its position. "
+        "The front page sends that one event, as map-link-read/front/, when its address box "
+        "reads such a link. Any other page that is not an app — a county list, a question "
+        "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
+        "ever sent to it.</strong></p>"
         % (where,
            esc(", ".join(event_phrase(e, apps) for e in EXPECTED_EVENTS)),
            esc(" and ".join(EXPECTED_COORD_EVENTS)), COORD_DECIMALS))
@@ -1707,7 +1822,9 @@ PRIVACY_BODY = """
         request. The launcher hands it to the map after the <span class="k">#</span>, and the map
         reads it as it would a link pasted into its search box: a link that carries its position
         is read on your phone, a short link goes to the short-link lookup in the table above, and
-        a place name or an address goes to the address search. The launcher keeps that copy from
+        a place name or an address goes to the address search. When that search can't find the
+        house at the address, the address also goes through the lookup to the Census Bureau,
+        which the table above names too. The launcher keeps that copy from
         the first time the installed app opens, or from the moment you install districtry from a
         state's map. A share sent before then reaches this site's host, GitHub Pages, in the
         address of that request.</p>
@@ -1718,8 +1835,9 @@ PRIVACY_BODY = """
     <h2>What there isn't</h2>
     <ul class="nope">
       <li>No accounts, logins, or passwords.</li>
-      <li>No database or back end operated by this project — there is nowhere for us to keep
-        anything.</li>
+      <li>No database operated by this project, and nowhere for us to keep anything. The one
+        service it runs, the map-link lookup in the table above, answers each request and keeps
+        no record of it.</li>
       <li>No advertising, ad networks, retargeting pixels, or social trackers.</li>
       <li>No sale or sharing of data. There is no data of yours to sell.</li>
       <li>No cross-site tracking or profile built by this project.</li>

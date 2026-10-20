@@ -119,11 +119,24 @@ def session(tok, start, end):
     if r.status_code != 200:
         sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
     DASH.append(r.text)
-    m = re.search(r'js-total-utc"?>([\d,]+)<', r.text)
+    return s, read_total(r.text)
+
+
+def read_total(text):
+    m = re.search(r'js-total-utc"?>([\d,]+)<', text)
     if not m:
         sys.exit("dashboard: no js-total-utc in %d bytes. The dashboard's "
-                 "markup has changed; run --explore." % len(r.text))
-    return s, int(m.group(1).replace(",", ""))
+                 "markup has changed; run --explore." % len(text))
+    return int(m.group(1).replace(",", ""))
+
+
+def period_total(s, start, end):
+    """The dashboard's own total for a period, on an authenticated session."""
+    r = s.get(SITE + "/", timeout=TIMEOUT,
+              params={"period-start": start, "period-end": end})
+    if r.status_code != 200:
+        sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
+    return read_total(r.text)
 
 
 def widget(s, n, total, start, end, **extra):
@@ -221,7 +234,9 @@ def pages(html):
             continue
         title = re.search(r'<small class="page-title ?[^"]*">([^<]*)</small>',
                           block)
+        pid = re.search(r'<tr id="[^"]*"[^>]*\bdata-id="(\d+)"', block)
         row = {"path": html_lib.unescape(path.group(1)).strip(),
+               "id": int(pid.group(1)) if pid else None,
                "title": html_lib.unescape(title.group(1)).strip() if title else None,
                "count": int(count.group(1))}
         try:
@@ -233,6 +248,29 @@ def pages(html):
 
 
 LAYER_PREFIX = "layer/"
+MAP_LINK_PREFIX = "map-link-read/"
+
+
+def map_links(s, total, start, end, mx, tags):
+    """Every `map-link-read/` row, past the dashboard's ten-row cap.
+
+    One filtered request first; only when that list is cut short is each app
+    (and the front page, `front`) asked for on its own, the way
+    layer_instances() gets past the same cap. Returns (rows, cut): cut is true
+    when even a per-app list was cut short, so the report can say its counts
+    are a floor rather than present a short list as complete.
+    """
+    rows_ = pages(widget(s, 0, total, start, end, max=mx, filter=MAP_LINK_PREFIX))
+    if not (MORE and MORE[0]):
+        return sorted(rows_, key=lambda r: (-r["count"], r["path"])), False
+    got, cut = {}, False
+    for tag in list(tags) + ["front"]:
+        for r in pages(widget(s, 0, total, start, end, max=mx,
+                              filter=MAP_LINK_PREFIX + tag + "/")):
+            if r["path"].startswith(MAP_LINK_PREFIX + tag + "/"):
+                got[r["path"]] = r
+        cut = cut or bool(MORE and MORE[0])
+    return sorted(got.values(), key=lambda r: (-r["count"], r["path"])), cut
 
 
 def layer_instances(s, total, start, end, mx, tags, fleet_rows):
@@ -368,9 +406,7 @@ def collect(s, total, start, end):
         daily.append({"date": date, "pageviews": pv,
                       "events": hits[date] - pv})
 
-    page_rows = pages(widget(s, 0, total, start, end, max=mx,
-                             filter="is:pageview"))
-    pages_truncated = MORE and MORE[0]
+    page_rows, pages_truncated = all_pages(s, total, start, end, mx)
     event_rows = pages(widget(s, 0, total, start, end, max=mx,
                               filter="is:event"))
     # THE EVENTS LIST IS CAPPED AT TEN ROWS AND THE PAGE NEEDS A ROW THAT FELL
@@ -395,6 +431,8 @@ def collect(s, total, start, end):
     # app-and-reason pairs, not every one.
     locate_fail_rows = pages(widget(s, 0, total, start, end, max=mx,
                                     filter="locate-fail/"))
+    map_link_rows, map_links_cut = map_links(s, total, start, end, mx,
+                                             fleet_tags())
     fleet_layer_rows = pages(widget(s, 0, total, start, end, max=mx,
                                     filter=LAYER_PREFIX))
     per_instance = layer_instances(s, total, start, end, mx, fleet_tags(),
@@ -409,6 +447,13 @@ def collect(s, total, start, end):
         "pages": top(page_rows, 20),
         "top_events": top(event_rows, 20),
         "locate_fail": top(locate_fail_rows, 10),
+        # Every Google Maps / Apple Maps link the search boxes read
+        # (`map-link-read/<tag>/<source>/<form>/<via>/<outcome>`, sent since
+        # 2026-10-17), one row per combination, and whether any list it was
+        # read from was cut short.
+        "map_links": [{"path": r["path"], "count": r["count"]}
+                      for r in map_link_rows],
+        "map_links_cut": map_links_cut,
         "layers": top(layer_rows, 20),
         # The ATTRIBUTED part: one row per (instance, layer) the new event
         # shape has recorded. Empty on the first runs after the engine change
@@ -459,7 +504,7 @@ def collect(s, total, start, end):
     attributed = sum(r["count"] for r in out["instances"])
     residual = out["pageviews"] - attributed
     share = residual / out["pageviews"] * 100 if out["pageviews"] else 0
-    print("instance split: %d of %d pageviews attributed to the ten listed "
+    print("instance split: %d of %d pageviews attributed to the listed "
           "rows, %d on the long tail (%.2f%%)"
           % (attributed, out["pageviews"], residual, share))
     if residual < 0 or share > 40:
@@ -475,6 +520,127 @@ def collect(s, total, start, end):
                     (5, "systems"), (6, "locations"), (7, "languages"),
                     (8, "sizes")]:
         out[name] = rows(widget(s, n, total, start, end))
+    # Last, because it changes the session's period: everything above is read
+    # against the window, and this asks the dashboard about one day at a time.
+    out["daily_referrers"] = daily_referrers(s, end)
+    return out
+
+
+# How many of the window's last days get a referrer list of their own.
+REF_DAYS = 14
+# Pages of a referrer list asked for before giving up on reaching its end.
+REF_PAGES = 6
+
+
+def all_rows(s, n, total, start, end):
+    """Every row of a bar widget, following its "show more" by offset.
+
+    THE OFFSET IS AN ASSUMPTION ABOUT A DASHBOARD THAT PUBLISHES NO API, so it
+    is checked rather than trusted: a page that repeats a key already read, or
+    adds nothing, means the offset did nothing, and the list is returned with
+    `more` still true. A list cut short must say so, because a breakdown that
+    looks complete while missing its smaller rows is how a total silently
+    stops adding up.
+    """
+    out, seen = [], set()
+    for _ in range(REF_PAGES):
+        page = rows(widget(s, n, total, start, end, offset=len(out)))
+        more = bool(MORE and MORE[0])
+        fresh = [r for r in page if r["key"] not in seen]
+        if len(fresh) < len(page) or not fresh:
+            return out, True if out else more
+        out += fresh
+        seen.update(r["key"] for r in fresh)
+        if not more:
+            return out, False
+    return out, True
+
+
+# Pages of the pages list asked for before giving up on reaching its end. Ten
+# rows a page; 254 pages carried the counter on 2026-10-20, so 60 leaves room.
+PAGE_PAGES = 60
+
+
+def all_pages(s, total, start, end, mx):
+    """Every row of the pages list, following its "show more" by offset.
+
+    THE TEN-ROW CAP IS WHY AN APP READ 0. The per-app bars are summed from
+    this list, and until 2026-10-20 only its first ten rows were read, so an
+    app whose busiest page sat below rank ten had a bar of 0 while its visits
+    sat in the long-tail row. Measured on 2026-10-20's file, eight of fifteen
+    apps (SF, MN, KY, NC, OK, TN, AR, MS) read 0 and 1,103 pageviews were on
+    the tail.
+
+    The pages widget takes `exclude`, a comma list of path ids
+    (handlers/dashboard.go in GoatCounter's source, read 2026-10-20), but that
+    is a dashboard parameter rather than a documented API, so it is checked
+    rather than trusted, the way all_rows() checks offset: a page repeating a
+    path already read, or adding nothing, means the exclude did nothing, and
+    the list is returned with its `more` still true so the residual row stays
+    honest. Returns (rows, cut).
+    """
+    out, seen = [], set()
+    for _ in range(PAGE_PAGES):
+        # GoatCounter's own "show more" on this list sends the numeric ids of
+        # the rows already shown as `exclude`; a plain `offset` was tried
+        # first and on 2026-10-20 returned the same ten rows. The opening tag
+        # of the first row is printed once, because it is the only way to see
+        # the markup this depends on without the token.
+        ids = [r["id"] for r in out if r.get("id") is not None]
+        extra = {"exclude": ",".join(map(str, ids))} if ids else {}
+        html = widget(s, 0, total, start, end, max=mx, filter="is:pageview",
+                      **extra)
+        if not out:
+            first = re.search(r'<tr id="[^>]*>', html)
+            print("pages list: first row tag %s"
+                  % (first.group(0)[:200] if first else "(none)"))
+        page = pages(html)
+        more = bool(MORE and MORE[0])
+        fresh = [r for r in page if r["path"] not in seen]
+        if out and len(ids) < len(out):
+            print("pages list: rows carry no id to exclude, stopped at %d"
+                  % len(out))
+            return out, more
+        if len(fresh) < len(page) or not fresh:
+            print("pages list: exclude stopped after %d rows" % len(out))
+            return out, True if out else more
+        out += fresh
+        seen.update(r["path"] for r in fresh)
+        if not more:
+            print("pages list: all %d rows read" % len(out))
+            return out, False
+    print("pages list: stopped at %d rows, list still cut short" % len(out))
+    return out, True
+
+
+def daily_referrers(s, end):
+    """Where each of the last REF_DAYS days' visits came from, one day at a time.
+
+    WHY ONE REQUEST PER DAY. The referrer widget answers for the period it is
+    asked about and has no daily series, so the two-month list says nothing
+    about which day a source sent its visits. The first look at the question
+    (2026-10-16) worked it out by subtracting one day's saved two-month list
+    from the next, which breaks whenever a source enters or leaves the top six
+    and read 9 October as Yahoo +77 and Bluesky -76. Asking each day for
+    itself is exact.
+
+    Each day is asked with ITS OWN total, for the reason session() gives: a
+    widget handed another period's total reports the wrong share of the wrong
+    whole.
+    """
+    last = datetime.date.fromisoformat(end)
+    out = []
+    for back in range(REF_DAYS - 1, -1, -1):
+        day = (last - datetime.timedelta(days=back)).isoformat()
+        total = period_total(s, day, day)
+        if total:
+            got, more = all_rows(s, 2, total, day, day)
+        else:
+            got, more = [], False
+        out.append({"date": day, "total": total, "rows": got, "more": more})
+        print("referrers %s: %d rows, sum %d of total %d%s"
+              % (day, len(got), sum(r["count"] for r in got), total,
+                 ", list cut short" if more else ""))
     return out
 
 

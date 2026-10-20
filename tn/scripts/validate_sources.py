@@ -201,6 +201,143 @@ PROVENANCE = [
             "tn/WATCH.md compares the fingerprint recorded at the build."
         ),
     },
+    {
+        "layer": "school-board-district",
+        "app_file": "tn-school-board-districts.json",
+        "source_url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/5",
+        "note": (
+            "114 school board districts in eighteen counties from the "
+            "Comptroller of the Treasury's School Board Districts New layer "
+            "(115 records: one has no county and no shape and is skipped), "
+            "pre-built by tn/scripts/build_tn_school_board_districts.py "
+            "through scripts/published_district_layers.py; the "
+            "quarterly --watch row in tn/WATCH.md compares the fingerprint "
+            "recorded at the build."
+        ),
+    },
+    {
+        "layer": "tn-judicial-district",
+        "app_file": "tn-judicial-districts.json",
+        "source_url": "https://tennesseeda.gov/",
+        "note": (
+            "Tennessee's 32 judicial districts, dissolved from the county "
+            "fabric by tn/scripts/build_tn_judicial_districts.py following the "
+            "District Attorneys General Conference's county selector (read "
+            "2026-10-16; snapshot in tn/data/source/courts/), checked against "
+            "31 district pages and the Comptroller's FY2019 judicial map. The "
+            "statute is not readable here: its public copy is LexisNexis's and "
+            "the General Assembly's site admits only named search engines. A "
+            "new district shows first on the conference's own selector; the "
+            "re-read is a row in tn/WATCH.md."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://gis.mcgtn.org/arcgis/rest/services/CityWard/MapServer/1",
+        "note": (
+            "Clarksville's 12 council wards, from the city's own map on "
+            "Clarksville and Montgomery County's shared GIS, one of the 72 "
+            "districts of the eleven Tennessee cities above 25,000 people "
+            "whose districts are drawn, pre-built by "
+            "tn/scripts/build_tn_city_wards.py through "
+            "scripts/city_ward_maps.py, which takes the cities to draw from "
+            "tn/data/source/tn-city-council-seats.json; the quarterly --watch "
+            "row in tn/WATCH.md compares each city's fingerprint recorded at "
+            "the build. The names on the cards come from each city's own "
+            "pages, and tn/scripts/build_tn_city_councils.py --watch is what "
+            "notices one of those changing."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://publicmaps.franklintn.gov/arcgis/rest/services/Maps/GovernmentServices/MapServer/21",
+        "note": (
+            "Franklin's 4 aldermanic wards, from the city's own map (see "
+            "the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services3.arcgis.com/k6aQP9AQncZQEtBv/arcgis/rest/services/PSALayers/FeatureServer/86",
+        "note": (
+            "Jackson's 9 council districts, from the city's own map of its "
+            "Plan A, effective May 2023 (see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://gis.clevelandtn.gov/arcgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0",
+        "note": (
+            "Cleveland's 5 council districts, from the city's own map (see "
+            "the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://arcweb.gallatin-tn.gov/arcgis/rest/services/Features/City_Council_Districts/MapServer/2",
+        "note": (
+            "Gallatin's 5 council districts, from the city's own map (see "
+            "the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services6.arcgis.com/ubRvNDgGwwJuZMcL/arcgis/rest/services/Wards_VL/FeatureServer/0",
+        "note": (
+            "Columbia's 5 council wards, from the city's own map (see the "
+            "Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://utility.arcgis.com/usrsvcs/servers/621b088a06a84f16b412e25b8d127804/rest/services/Administration_City/FeatureServer/1",
+        "note": (
+            "Mount Juliet's 4 commission districts, from the city's own "
+            "map, reached through the ArcGIS Online proxy the city "
+            "registers for it (see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services.arcgis.com/xhDV83hFoiDFnMbw/arcgis/rest/services/Morristown_Ward_Map/FeatureServer/0",
+        "note": (
+            "Morristown's 4 council wards, from the city's own map, updated "
+            "with its May 2026 redistricting (see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Council_Districts/FeatureServer/0",
+        "note": (
+            "Chattanooga's 9 council districts, from a copy the City of "
+            "Chattanooga publishes of its own map on ArcGIS Online, because "
+            "the city's own map server's robots.txt shuts this project out "
+            "and Hamilton County's copy withholds the shapes. Nothing on the "
+            "copy says which plan it draws; tn/scripts/build_tn_city_wards.py "
+            "says why it is taken to be the plan effective 14 April 2025 "
+            "(see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services5.arcgis.com/I2fcoygeHRmx0WzS/arcgis/rest/services/PSALayers/FeatureServer/29",
+        "note": (
+            "Hendersonville's 6 wards, from Sumner County's copy of the "
+            "City of Hendersonville's map, because the city's own map "
+            "server answers a request for its robots.txt with HTTP 500 "
+            "(see the Clarksville row)."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -303,6 +440,15 @@ ENDPOINTS = [
                 "Redistricting_Address_Lookup/FeatureServer/12/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 1690,  # 1,879 records measured 2026-10-15
+    },
+    # The school board district layer the builder reads (2026-10-16). A floor,
+    # for the reason the precinct row above gives.
+    {
+        "layer": "school-board-district",
+        "url": ("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/"
+                "Redistricting_Address_Lookup/FeatureServer/5/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 103,   # 115 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

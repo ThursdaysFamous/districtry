@@ -87,16 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 12
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ok-senate", "county", "ok-house", "county-commissioner",
+    "us-house", "ok-judicial-district", "ok-senate", "county",
+    "conservation-district", "ok-house", "county-commissioner",
     "tribal-government", "county-subdivision", "school-district-unified",
-    "zip-code", "school-district-elementary", "municipality",
+    "zip-code", "school-district-elementary", "municipality", "city-ward",
     "police-station", "fire-station", "post-office",
 ]
 
@@ -109,6 +110,9 @@ GEOMETRY_FILES = {
     "ok-house-districts.json": (101, 101),  # The 101 Oklahoma House districts.
     "tribal-areas.json": (31, 31),  # Oklahoma's tribal areas (scripts/build_tribal_areas.py) — the Osage Reservation, the Shawnee Tribe's trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas, simplified by Douglas-Peucker at 20 m and held to a 25 m ceiling. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
     "ok-commissioner-districts.json": (231, 231),  # The 231 county commissioner districts, three per county (ok/scripts/build_ok_commissioner_districts.py, from the state Department of Transportation). The floor and the ceiling are equal because 19 O.S. 321 fixes three per county.
+    "ok-judicial-districts.json": (26, 26),  # The 26 judicial districts, dissolved from the county fabric by ok/scripts/build_ok_judicial_districts.py, each carrying its 75 district judge offices' electorates from the State Election Board's 2024 roster.
+    "ok-conservation-districts.json": (84, 84),  # Oklahoma's 84 conservation districts, pre-built by ok/scripts/build_ok_conservation_districts.py through scripts/published_district_layers.py from the Conservation Commission's map (Douglas-Peucker at 4 m; 106 records joined into 84 shapes; a 33,600-point agreement gate, one group per district, and a coverage check against the county file, both measured 2026-10-16). 635 KB, fetched only when a reader switches the layer on. The floor and the ceiling are equal because the map and the Commission's directory both count 84.
+    "ok-city-wards.json": (56, 56),  # The 56 council wards and districts of the 9 cities above 25,000 people whose wards elect their own members and are drawn, pre-built by ok/scripts/build_ok_city_wards.py through scripts/city_ward_maps.py from the map each city publishes (Douglas-Peucker at 4 m; a 3,600-point agreement gate over the nine cities' extents, measured 100.00%, with no overlap; each map held to its city's Census outline). 123 KB, 30 KB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -117,6 +121,8 @@ ROSTER_FILES = {
     "ok-senate-members.json": 44,  # Oklahoma Senate roster from Open States, refreshed weekly. The floor is below 48 because a vacant seat is a real event; the export carried 47 on 2026-10-09.
     "ok-house-members.json": 93,  # Oklahoma House roster from Open States, refreshed weekly. The floor is below 101 for the same reason; the export carried 100 on 2026-10-09.
     "ok-county-commissioners.json": 231,  # One record per commissioner seat from the State Election Board's officer roster, refreshed weekly by update-ok-commissioner-roster.yml. Every seat has a record; a vacant seat carries vacant: true.
+    "ok-conservation-offices.json": 80,  # Each conservation district's office, telephone and e-mail from the Conservation Commission's directory of district offices, keyed by the district's number on the map, built by ok/scripts/build_ok_conservation_offices.py: 84 offices, no people. The directory is a web page the Commission edits by hand, so this is rebuilt by hand when it changes (ok/WATCH.md).
+    "ok-city-councils.json": 16,  # The mayor and council of each of the 16 cities above 25,000 people, keyed by Census place id, written down from each city's own pages (Muskogee's from its election results and news reports) and proved against them by ok/scripts/build_ok_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn wards. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (ok/WATCH.md).
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

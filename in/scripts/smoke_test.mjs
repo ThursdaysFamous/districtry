@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -49,11 +50,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "39.76860,-86.16260"; // the Indiana Statehouse, downtown Indianapolis (Marion County)
-const OFFLINE = ["county", "us-house", "in-senate", "in-house", "voting-precinct", "county-council"];
-const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97", "voting-precinct": "CN055", "county-council": "12" };
+const OFFLINE = ["county", "us-house", "in-senate", "in-house", "voting-precinct", "county-council", "in-court-of-appeals"];
+const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97", "voting-precinct": "CN055", "county-council": "12", "in-court-of-appeals": "2" };
 const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.
 const APP_NAME = "districtry Indiana";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -77,7 +78,9 @@ const GEOCODER_STUB_FEATURE = {
   // rather than on the strip-and-retry path it exists to prove.
   geometry: { type: "Point", coordinates: [-86.1626, 39.7686] },
   properties: {
-    housenumber: "100",
+    // the typed number: an answer without it shows the street instead of
+    // a row (ENGINE geocoder-search runAddressSearch)
+    housenumber: "200",
     street: "W Washington St",
     city: "Capital City",
     state: "Indiana",
@@ -193,7 +196,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -680,7 +683,11 @@ try {
     const [la, ln] = [41.0793, -85.1394];
     const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
       [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    // The layer is drawn and answered from a tile archive since 2026-10-17;
+    // refusing it sends the card to the census loader, which this stub
+    // answers (the archive-failure path il's smoke check 2d also holds).
     const page = await booted(context, `${BASE}#point=${la},${ln}&layers=municipality`, (p) =>
+      p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort()).then(() =>
       p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/4\/query/, (route) =>
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
           features: [{
@@ -688,7 +695,7 @@ try {
                           STATE: "18", LSADC: "25" },
             geometry: { rings: [ring] },
           }],
-        }) })));
+        }) }))));
     const fw = await cardText(page, "municipality");
     check("City or Town card names Fort Wayne's mayor and common council as dated winners",
       !fw.error && /Fort Wayne/.test(fw.text) && / MAYOR /.test(fw.text) &&
@@ -708,7 +715,11 @@ try {
     const [la, ln] = [39.7042, -86.3994];
     const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
       [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    // The layer is drawn and answered from a tile archive since 2026-10-17;
+    // refusing it sends the card to the census loader, which this stub
+    // answers (the archive-failure path il's smoke check 2d also holds).
     const page = await booted(context, `${BASE}#point=${la},${ln}&layers=municipality`, (p) =>
+      p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort()).then(() =>
       p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/4\/query/, (route) =>
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
           features: [{
@@ -716,7 +727,7 @@ try {
                           STATE: "18", LSADC: "43" },
             geometry: { rings: [ring] },
           }],
-        }) })));
+        }) }))));
     const pf = await cardText(page, "municipality");
     check("City or Town card names Plainfield's council from the town's own page, dated to the read",
       !pf.error && /PLAINFIELD TOWN COUNCIL/i.test(pf.text) && /District 5/.test(pf.text) &&
@@ -736,7 +747,11 @@ try {
     const [la, ln] = [41.0793, -85.1394];
     const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
       [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    // The layer is drawn and answered from a tile archive since 2026-10-17;
+    // refusing it sends the card to the census loader, which this stub
+    // answers (the archive-failure path il's smoke check 2d also holds).
     const page = await booted(context, `${BASE}#point=${la},${ln}&layers=county-subdivision`, (p) =>
+      p.route("**/data/app/tiles/county-subdivision.pmtiles", (r) => r.abort()).then(() =>
       p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/1\/query/, (route) =>
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
           features: [{
@@ -744,7 +759,7 @@ try {
                           STATE: "18", COUNTY: "003", LSADC: "44" },
             geometry: { rings: [ring] },
           }],
-        }) })));
+        }) }))));
     const tw = await cardText(page, "county-subdivision");
     check("Township card names Wayne Township's trustee and board as dated winners",
       !tw.error && /Wayne/.test(tw.text) && /TOWNSHIP TRUSTEE/i.test(tw.text) &&

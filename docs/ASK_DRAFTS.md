@@ -6510,7 +6510,7 @@ numbering being checked.
 | Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. The operator asked for it on 2026-10-07 and a follow-up was drafted below the table, then **WITHDRAWN UNSENT the same evening**: the county's own GIS map (its supervisor-district layer, supplied by the operator as a screenshot) numbers the five districts exactly as this instance does, so **the numbering is CHECKED and Chickasaw's supervisors SHIPPED keyed 2026-10-07**. |
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | **ANSWERED 2026-10-07, USABLE and SHIPPED the same day.** The auditor replied "Here is a map of the precincts and supervisor districts" with the county's own precinct map (PDF, dated 2026-02-03), which the operator put in Drive. It draws each of the county's seven precincts wholly inside one district, and those precincts sit in the same-numbered districts of this instance's layer, so the numbering is CHECKED (identity) and Grundy's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
-| Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
+| Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. **ANSWERED 2026-10-16, USABLE and SHIPPED the same day.** The county sent two maps, which the operator put in Drive: its "2021 BOS DISTRICT MAP", which colours every section by district and names each district's supervisor (the same five its board page names), and its voting-precinct map drawn to the 2020 census. Twelve township and eight town census points each land in the same-numbered district of our layer, so the numbering is checked and the five supervisors are keyed. The district map also prints a telephone number beside each supervisor, the same five the board page does; those still do not ship, which stays the operator's question. |
 | Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | **SETTLED WITHOUT A REPLY 2026-10-15** from the Secretary of State's certified 2026 primary returns, which list the precincts voting in each supervisor contest; matched to this instance's precinct layer they place every district (one by elimination), so the numbering is CHECKED and the supervisors are keyed. A reply is still welcome and would be a second witness; nothing further is owed. |
 | Mitchell | Rachel Foster | 5 | **ANSWERED 2026-10-12 (13:54 UTC), USABLE and SHIPPED.** The auditor replied from `rfoster@mitchellcountyiowa.gov` (a different address from the `mitchellcoia.us` one the auditors roster carries), listing the precincts in each district: 2, 3 and 11 in District 1; 1, 4 and 12 in 2; 5 and 6 in 3; 7 and 8 in 4; 9 and 10 in 5. Each of this instance's twelve Mitchell precincts lies at least 99.7% inside one district of our layer, and the county's Districts 1 and 2 are our 2 and 1 (3 to 5 match). The county's own supervisor-district map, which she pointed to (robots.txt checked first: none published, so allowed), colours the same five groups and puts District 1 on the west side of Osage, where our district 2 is. So the numbering is CHECKED and Mitchell's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
@@ -6873,8 +6873,9 @@ weekly refresh will keep proposing the change until the county's page is correct
 > before sending, keeping its substance: the same counts, the page link, the State Board plan and
 > the three ways he can be named, with the public-record note and the offer to wait. The two
 > questions went as a numbered pair, the Brace sentence was left out, and "A few sentences is
-> plenty" and the line about staying out of it were dropped. **No answer yet**; the follow-up clock
-> runs to about 2026-11-01.
+> plenty" and the line about staying out of it were dropped. **ANSWERED 2026-10-16** by telephone
+> to the operator. Nothing further is owed and no follow-up is due. What he said is deliberately not
+> recorded in this public file.
 
 **Why this is asked.** The operator spoke with him by phone after Ask 18 was answered; he suggested
 Kimball Brace (Election Data Services, which collected Illinois's precinct maps for the Census's
@@ -6927,42 +6928,67 @@ Board letter goes without them.
 
 ## Ask il-state-board-precinct-maps — Illinois State Board of Elections: publish the precinct maps it receives in one place
 
-> **NOT YET ASKED — DRAFTED 2026-10-10. HELD** until Dave Ostrander answers
-> `il-grundy-gis-state-board-view` (sent 2026-10-11) or two weeks pass with no answer, which is
-> 2026-10-25. `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director (named in a 7 July 2026
-> Justice Department letter reported by Capitol News Illinois). The Board's website refuses
-> automated readers (`User-agent: *` / `Disallow: /`), so its e-mail contact was not read from here:
-> the operator takes it from the Board's contact page in a browser. Postal: 2329 S. MacArthur Blvd.,
-> Springfield, IL 62704.
+> **SENT 2026-10-17, 00:35:12 UTC, to `webmaster@elections.il.gov`**, subject "For Executive
+> Director Matthews: publishing Illinois's precinct maps in one place", from the operator's own
+> mailbox (read off the sent folder). Drafted 2026-10-10 and revised twice on 2026-10-16: the
+> operator approved the revised letter that evening, then allowed one read of the Board's own
+> website to check it (nothing from the site was saved).
+>
+> **The operator reworded the draft below before sending it, and the sent wording is what was
+> asked.** It is shorter and keeps the substance: the county counts and the page link, the three
+> numbered asks (digital files with the PDFs, one place to download both, and in time a statewide
+> map like Wisconsin's and Minnesota's, with the Census Bureau's 2028 program), the law-change
+> paragraph, the line that this is not about voter records, and the offer to wait until the canvass
+> is done. The law-change paragraph went as "Section 11-6 could be amended to require
+> machine-readable submissions during precinct redraws", without the district lines, the Board
+> publishing the files, or Wisconsin as the precedent. No staff member is named, and the paragraph
+> on what the Board already has became one clause.
+>
+> **Follow-up: not before 2026-12-07**, the Monday after the canvass ends on 4 December, because the
+> letter says no answer is expected before then. The Board's 17 November meeting takes public
+> comment while its spring legislative proposals are likely still being chosen.
+>
+> The hold on `il-grundy-gis-state-board-view` ended when it was answered on 2026-10-16.
+>
+> `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director
+> (named on the Board's Executive Staff page). The Board publishes no e-mail address for her: its
+> contact page sends general questions to `webmaster@elections.il.gov`, so the letter goes there
+> with her name in the subject. Postal: 2329 S. MacArthur Blvd., Springfield, IL 62704.
 
 **Why this is asked.** Section 11-6 of the Election Code (10 ILCS 5/11-6, as amended by Public Act
 98-691 in 2014) has every election authority send the Board a PDF map of its current precincts and
 post it on any website it maintains, with new maps at least 90 days before the next election after
-precincts change. So the Board already receives every county's map, but only as a PDF, and nothing
-publishes them in one place. Wisconsin's counties file ward maps with the Legislature's technology
-bureau every 15 January and 15 July (Wis. Stat. 5.15(4)(br)), and Minnesota's Secretary of State
-publishes one statewide precinct layer. The asks run smallest first, so that a no to the statewide
-map does not sink the two the Board may be able to do without a change in law (an inference, not a
-lawyer's reading). The section's wording was read through FindLaw's copy of the code, current to
-1 January 2025, because the legislature's site did not answer from here: check it there before
-sending.
+precincts change. So the Board should already receive every election authority's map, but only as a
+PDF, and nothing publishes them in one place. Wisconsin's counties file ward maps with the
+Legislature's technology bureau every 15 January and 15 July (Wis. Stat. 5.15(4)(br)), and
+Minnesota's Secretary of State publishes one statewide precinct layer. The asks run smallest first,
+so that a no to the statewide map does not sink the two the Board may be able to do without a change
+in law (an inference, not a lawyer's reading). The section's wording is as the Board's own 2026
+Guide for Election Authorities states it in its "Precinct Maps" section, which also names Michael
+Gianasi as the Board's contact for counties whose precinct boundaries change. The law-proposal
+paragraph is there because the Board's 15 September 2026 minutes say staff are reviewing legislative
+requests for the spring session, to be presented for Board approval at a future meeting; it is
+conditional and kept apart from the three numbered asks so that a no to it does not sink them. It
+asks for a requirement, from each election authority's next redraw, because the same section already
+requires the PDF to show every district line, so the file adds a format rather than new content, and
+Wisconsin already requires its counties to file these lines.
 
-> Subject: Publishing Illinois's precinct maps in one place
+> Subject: For Executive Director Matthews: publishing Illinois's precinct maps in one place
 >
 > Dear Ms. Matthews,
 >
 > I live in Chicago and run districtry (https://districtry.com/il/), a free, non-commercial website.
 > Anyone can click a point on the map or type an address and see every district that covers it, from
 > their voting precinct and county board district up to Congress, and who represents them there. It
-> now covers 93 of Illinois's 102 counties.
+> now covers 96 of Illinois's 102 counties.
 >
-> The hardest part of keeping it accurate is the precinct map. Since 2014 the Election Code
-> (10 ILCS 5/11-6) has had each election authority send the Board a PDF map of its current precincts,
-> post it on its website, and send new maps at least 90 days before an election whenever its
-> precincts change. So the Board receives every county's map. But a computer cannot tell from a PDF
-> which side of a line an address falls on, so anyone who needs the actual boundaries, whether a
-> newsroom, a civic group, a researcher, a local government or a site like mine, has to collect them
-> from 102 counties one at a time.
+> The hardest part of keeping it accurate is the precinct map. Since 2014 the Election Code (10 ILCS
+> 5/11-6) has had each election authority send the Board a PDF map of its current precincts, post it
+> on its own website, and send new maps at least 90 days before an election whenever its precincts
+> change. So the Board should already receive every election authority's map. But a computer cannot
+> tell from a PDF which side of a line an address falls on, so anyone who needs the actual
+> boundaries, whether a newsroom, a civic group, a researcher, a local government or a site like
+> mine, has to collect them from more than a hundred election offices one at a time.
 >
 > On 10 October I checked what every county publishes. 44 counties publish their precinct map as
 > data a computer can read. 26 post it only in a form a person can look at but a computer cannot
@@ -6974,29 +7000,44 @@ sending.
 > https://districtry.com/il/precinct-maps.html. So the maps mostly exist; they just aren't published
 > in one place in a form people can use.
 >
-> [ONLY WITH DAVE OSTRANDER'S PERMISSION, IN HIS WORDS, NAMED AS HE CHOOSES. For example: "I asked
-> Dave Ostrander, GIS Director for Grundy County, what this would mean for a county GIS office. He
-> told me: '...'" Delete this paragraph if he declines or does not answer.]
+> [One more paragraph goes here in the version that is sent. It is kept out of this public file to
+> protect a source who is not named.]
+>
+> The Board already has much of what this would take. Its guide for election authorities names a
+> staff contact for counties whose precinct boundaries change, and its "Find My Elected Officials"
+> locator already serves legislative, congressional and other districts as map data. As far as I can
+> find, though, the Board's website does not post the precinct maps it receives. If it does and I
+> missed them, a pointer would answer most of this letter.
 >
 > I'd like to ask whether the Board would consider three things. Any one of them would help.
 >
-> 1. Where a county already keeps its precinct map as a digital file, accept that file alongside the
->    PDF the law already asks for.
-> 2. Publish the maps the Board receives in one place on its website, free, so anyone can find every
->    county's current map.
-> 3. In time, combine the digital files into one statewide precinct map, updated on a fixed
->    schedule. Wisconsin's Legislature does this from county filings every January and July, and
->    Minnesota's Secretary of State publishes one statewide precinct map.
+> 1. When a county's precincts change and it keeps the new map as a digital file, ask for that file
+>    along with the PDF the law already requires. If the Board already collects these files, I'd be
+>    glad to know.
+> 2. Publish the precinct maps the Board receives in one place, free: the PDFs for people to read
+>    and, wherever a county has sent one, the map file itself in a standard format anyone can
+>    download and a computer can read. The Board's locator already serves its districts as map data
+>    this way, so precincts could sit beside them.
+> 3. In time, combine those files into one statewide precinct map, updated on a fixed schedule and
+>    free to download. Wisconsin's Legislature does this from county filings every January and July,
+>    and Minnesota's Secretary of State publishes one statewide precinct map. Illinois took part in
+>    the Census Bureau's 2020 voting district program, and the Bureau will ask states for precinct
+>    maps again starting in early 2028, so a map kept up to date would serve that too.
+>
+> If the Board agrees that a change in the law would help, Section 11-6 could require each election
+> authority, starting with its next redraw, to send its precinct map as a map file a computer can
+> read and not only as a PDF, including the district lines the map must already show, and have the
+> Board publish those files for download. Wisconsin's law already has every county file its ward and
+> county board district lines with the state twice a year, so Illinois would not be the first. The
+> Board's legislative proposals for the spring session would be a natural place for such a change.
 >
 > This is only about precinct boundaries. I'm not asking about voter records or any personal
 > information.
 >
-> Your website asks automated programs not to read it, and I respect that, so I haven't checked what
-> the Board itself already posts. If the Board publishes the maps it receives, a pointer to them
-> would answer most of this letter.
->
-> A short answer either way is useful, including a no, or the name of the right person on staff. I'd
-> be glad to share everything I've gathered, or to meet with staff.
+> I know the Board is in the middle of the general election, so I don't expect an answer before the
+> canvass is done. A short answer either way is useful, including a no. I'd be glad to share
+> everything I've gathered, or to talk with Michael Gianasi or whoever on staff works with precinct
+> maps.
 >
 > Thank you for your time.
 >
@@ -7004,17 +7045,20 @@ sending.
 > <YOUR E-MAIL>
 > https://districtry.com/il/
 
-**Before sending:** the counts and the 93 must still match `il/precinct-maps.html` and
+**Before sending:** the counts and the 96 must still match `il/precinct-maps.html` and
 `docs/COUNTY_STATUS.md` on the day it goes. The Board has four members from each party by law, so
 nothing is added that reads as favouring either. The line about voter records is there because in
 April 2024 the Board asked a media company to take down voters' birth dates and addresses it had
 published (Northern Public Radio, 23 April 2024); it heads off that worry. Asking the Board to let
 automated readers back onto its own site is deliberately left out: it would dilute this ask and can
-be its own letter.
+be its own letter. The Board's meetings take up to 5 minutes of comment from anyone who signs in
+(its Public Comment Guidelines, adopted 17 October 2023), and the 17 November 2026 meeting comes
+before its spring proposals are likely approved, so the operator may want to speak there as well.
 
 **Any answer is useful.** A yes to the first two would let every county's current map be found in
 one place; a pointer to maps the Board already posts would answer most of the letter; a clean no
-closes the policy route and leaves a narrow change in law as the fallback.
+closes the policy route and leaves a narrow change in law as the fallback, which the law-proposal
+paragraph has already put in front of the Board.
 
 ## Ask sc-results-site-runner — South Carolina State Election Commission: a way for our weekly program to read the county council results
 
@@ -7492,7 +7536,10 @@ statewide source appears.
 
 ## Ask ar-aac-county-pages — Association of Arkansas Counties: a way for our weekly program to read the county pages, and each justice's district
 
-> **NOT YET ASKED — DRAFTED 2026-10-15**, to Christy L. Smith, Communications Director, at
+> **ASKED 2026-10-16** (sent 15:06:08 UTC from the operator's own mailbox to `csmith@arcounties.org`,
+> no cc, under the subject below; read in the sent folder on 2026-10-17, which is the day this was
+> recorded, one day late). No reply as of 2026-10-17; by rule 3 the follow-up is due around
+> 2026-11-06. Drafted 2026-10-15, to Christy L. Smith, Communications Director, at
 > `csmith@arcounties.org`, the address beside her name and title on the association's own staff
 > page (`arcounties.org/about-us/staff/`, read 2026-10-15 after its robots.txt, at the 20 seconds
 > between requests it asks for; the page hides every address behind Cloudflare's e-mail protection,
@@ -7503,7 +7550,7 @@ statewide source appears.
 > engineer, and the site credits a web vendor). Adam chose "Draft letter" on 2026-10-15, the day
 > Arkansas went live. The mailbox was searched the same day for any message to, from or copying
 > `arcounties.org`, for the association's name, and for "quorum court" and "justice of the peace":
-> none. On send, record `ASKED <date>` in gap `ar-quorum-court` and in `ar/WATCH.md`.
+> none. The send is recorded in gap `ar-quorum-court` and in `ar/WATCH.md`; record a reply in both.
 
 **Why this is asked.** Arkansas's map names every county judge and the justice of the peace in 737
 of 775 quorum court districts, and the justices' names come from the association's 75 county pages
@@ -7583,7 +7630,11 @@ the counties' own sites and the next election's results stay the route.
 
 ## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
 
-> **NOT YET ASKED — DRAFTED 2026-10-15.** To Jim Steil, Director of MARIS (the Mississippi
+> **ASKED 2026-10-16 — DRAFTED 2026-10-15.** The operator rewrote this draft and sent it on
+> 2026-10-16 at 15:05 UTC to `jsteil@mississippi.edu`, and the Letters thread logged it as sent, so
+> the text below is the draft and not the letter that went. If there is no answer by about 6
+> November, the follow-up can point to the live map at https://districtry.com/ms/. To Jim Steil,
+> Director of MARIS (the Mississippi
 > Automated Resource Information System, created by Miss. Code § 57-13-23 as "the mechanism
 > within state government for the storing, processing, extracting and disseminating of useful
 > data and information relating to the state's resources"), at `jsteil@mississippi.edu`. MARIS's
@@ -7593,17 +7644,16 @@ the counties' own sites and the next election's results stay the route.
 > On 2026-10-15 the operator chose to have it made into a Gmail draft ("Make the draft" on the
 > Mississippi thread's decision card), ahead of letters to the counties, because one office could
 > cover all 82 counties, which is the choice made for Tennessee on 2026-10-11
-> (`tn-ctas-commissioner-districts`). Sending it stays the operator's decision. The mailbox has not
-> been searched for earlier correspondence with MARIS; do that before it goes.
+> (`tn-ctas-commissioner-districts`).
 
-**Why this is asked.** Mississippi's map (still hidden) names every sitting supervisor in all 82
+**Why this is asked.** Mississippi's map names every sitting supervisor in all 82
 counties from the Secretary of State's county officials directory (409 of 410 seats; Sunflower
-County's District 3 is vacant), and can draw the districts they represent in only 23 counties: 12
-from the Census Bureau's current edition and 11 from the county's own published map, all 11 added
-after this letter was drafted (8 on 2026-10-15, and Lee, Pearl River and Perry on 2026-10-16). The
-letter's text does not count what the map draws, so that left it unchanged; its body gained two
-sentences on 2026-10-16, about the Bureau's 2010 edition (below), and the Letters thread added them
-to the Gmail draft the same day, while it was still unsent and the operator had not edited it. The
+County's District 3 is vacant), and can draw the districts they represent in only 25 counties: 12
+from the Census Bureau's current edition and 13 from other published maps, all 13 added after this
+letter was drafted (8 on 2026-10-15, and Lee, Pearl River, Perry, Covington and Tippah on
+2026-10-16). The letter's text does not count what the map draws, so that left it unchanged; its
+body gained two sentences on 2026-10-16, about the Bureau's 2010 edition (below), and the Letters
+thread added them to the Gmail draft the same day, while it was still unsent and the operator had not edited it. The
 only statewide map of supervisor districts found is the Census Bureau's, where Mississippi's county
 subdivisions are the supervisor districts. Measured 2026-10-15 by
 `ms/scripts/build_ms_supervisor_districts.py --survey` on the 2020 census's own blocks: the
@@ -7644,7 +7694,7 @@ the evidence that it takes more than asking.
 >
 > I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
 > a point on a map, or type an address, and see every district that covers it and who represents
-> them there. We are building Mississippi's map now; it is not public yet.
+> them there. Mississippi's map is at https://districtry.com/ms/.
 >
 > For the county boards, we can name every sitting supervisor in all 82 counties from the
 > Secretary of State's directory. What we cannot find is a current map of the districts they
@@ -7706,8 +7756,10 @@ that needs a change in law, is then the next question; nothing here establishes 
   service shows its layer again, cut it.
 - The 52, the 49 and "about half" must still match the last line of
   `ms/scripts/build_ms_supervisor_districts.py --survey`, which re-measures them.
-- Mississippi's map is not public, so the letter links the fleet's front page, not `/ms/`. If
-  Mississippi has gone live first, link https://districtry.com/ms/ and drop "it is not public yet".
+- Mississippi's map went public on 2026-10-16, and the change that published it made the letter
+  link https://districtry.com/ms/ in place of "We are building Mississippi's map now; it is not
+  public yet". The Gmail draft was made before that, so the Letters thread makes the same edit
+  there, unless the operator has edited the draft, in which case the operator is asked.
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 
@@ -7815,3 +7867,531 @@ PDF is read through the Holland reader and the area is assigned as the clerk say
 answer and its date recorded in the builder. Bay City: a current map is measured against the
 state's precincts again; an answer that the state's precincts are out of date is recorded in the
 gap with its date.
+
+## Ask ok-occ-conservation-directors — Oklahoma Conservation Commission, District Services: publish each conservation district's five directors, and confirm districtry may show the districts and their offices
+
+> **NOT YET ASKED — DRAFTED 2026-10-16.** To Clancy Green, Director of District Services at the
+> Oklahoma Conservation Commission, at `clancy.green@conservation.ok.gov` (telephone 405-522-2111).
+> The Commission's About page lists that name, title, address and number in its staff directory
+> (modified 2026-10-05, read 2026-10-16, after the host's robots.txt). District Services is the
+> division whose page sets out the director elections and links the directory of district offices.
+> The same directory lists Brandon Welborn, Administrative Programs Officer in that division, and
+> Shellie Willoughby, GIS Manager, whose account publishes the district map; copying her
+> (`shellie.willoughby@conservation.ok.gov`) would put the map question to the person who looks
+> after the map, and is the operator's choice. The Commission's contact page offers only a web
+> form. On 2026-10-16 the operator chose, on the Shared layers thread's decision card, to show the
+> districts before the Commission answers ("Show now"); the letter asks it to confirm either way. The
+> mailbox has not been searched for earlier correspondence with conservation.ok.gov; do that before
+> it goes.
+
+**Why this is asked.** Oklahoma's map (public) is gaining the state's 84 conservation districts,
+the one family of special districts the state maps statewide with elected boards, which the done
+standard counts (`docs/DONE_STANDARD.md`, entry 12). The districts are drawn from the Commission's
+own map and each card gives the district's office, telephone and e-mail from the Commission's
+directory of district offices; neither names a director. Each district is governed by five
+directors, three elected by its registered voters for staggered three-year terms (elected positions
+1, 2 and 3, one ending each June 30) and two appointed by the Commission (27A O.S. § 3-3-201, as the
+Commission's own copy of the act prints it, and its District Services page, read 2026-10-16), and
+the act has the Commission issue every director's certificate of election or appointment, so the
+Commission is the one office that holds all 84 boards. Its meeting packets name directors a few at
+a time as they are appointed or elected; nothing found names each district's five. The website's
+general terms of use, a stock template, allow only personal, non-commercial use of the site's
+content, so the letter also asks the Commission to confirm districtry's use. One published table of
+directors keyed by the map's district number, under a licence that allows republishing it, would
+close gap `ok-conservation-district-directors`, and is the kind of change in how Oklahoma publishes
+this information that the project exists to encourage. The record of what else it took to publish
+the map and the offices is that gap's `blocker`.
+
+> Subject: Conservation district directors on districtry.com
+>
+> Dear Clancy Green,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Oklahoma's map is at https://districtry.com/ok/.
+>
+> We are adding Oklahoma's 84 conservation districts to it. The districts are drawn from the
+> Commission's own map of them, and each district's card will give its office address, telephone
+> and e-mail from the Commission's directory of district offices, credited to the Commission. What
+> the card cannot do is name the district's board. The Commission's pages explain that each district
+> is governed by five directors, three elected by the district's voters and two appointed by the
+> Commission, and under the Conservation District Act the Commission issues each director's
+> certificate. But I have not found a list of who the five directors are in each district.
+>
+> Would the Commission consider publishing, for each district, its five current directors, the
+> position each holds (elected position 1, 2 or 3, or appointed), and the date each term ends? A
+> page or a spreadsheet on your website would do. Including the district number used on the
+> Commission's map would let anyone match the list to the districts without guessing. If a list
+> like that already exists, a pointer to it would answer this letter.
+>
+> I also have a smaller question. The Commission's website terms of use allow personal,
+> non-commercial use of its content. districtry is free to use, runs no advertising and sells
+> nothing; it asks for sponsorship toward its running costs, shown only in its footer. It shows
+> only public facts from the Commission: the districts' boundaries and each district's office
+> address, telephone and official e-mail. Could you confirm that showing them this way, credited to
+> the Commission, is acceptable? If you would like a different wording for the credit, I will use
+> it.
+>
+> A short answer to either question is useful, including a no. If someone else at the Commission
+> looks after the directors' records or the district map, I would be grateful if you could pass
+> this along.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A published list, or a pointer to one: read after the host's
+robots.txt, joined to the map by district number (or by name, through the corrections
+`ok/scripts/build_ok_conservation_offices.py` already carries), and each card names the five
+directors with their positions; the gap closes or shrinks and says where the list came from and
+its date. Only names, positions and term dates are ever carried, never a director's home address
+or personal contact. A confirmation of the use: recorded in the officer's own words, with the date,
+in `LICENSE-DATA.md` (the posture its Wisconsin Blue Book entry takes) and in both builders, and any
+credit wording asked for goes on the card. A no to the list: recorded in the gap with its date, and
+the cards keep the office and name no one. A no to the use: the layer comes down, the gap and both
+builders say so, and the builders refuse to write until the terms change.
+
+**Before sending:**
+
+- Re-read the Commission's About page in a browser and confirm the District Services Director and
+  the address are unchanged.
+- If the conservation districts are live on the map when this goes, change "We are adding" to "We
+  have added" and "will give" to "gives".
+- The sponsorship sentence is there because the question is whether the use is commercial. Keep it
+  as long as districtry asks for sponsorship.
+- The letter says "84 conservation districts". Check it against
+  `ok/data/app/ok-conservation-districts.json` on the day it goes.
+
+---
+
+## Ask tn-knoxville-council-districts — KGIS (Knoxville, Knox County and KUB's mapping agency): permission to show Knoxville's six council districts
+
+> **ASKED 2026-10-17** — sent by Adam at 13:09 UTC to KGIS at `kgis@kgis.org` (his sent folder,
+> read the same day by the Letters thread). No reply yet; the follow-up falls due about 7 November
+> 2026. Drafted the same day. The operator chose to ask on 2026-10-17, on a decision card in the
+> thread that drafted it, because the letter asks for a licence and commits districtry to
+> publishing a copy if the answer is yes. `kgis@kgis.org` is the "Contact us" address of KGIS's own
+> organisation on ArcGIS Online (read 2026-10-16). KGIS is the mapping agency the City of
+> Knoxville, Knox County and the Knoxville Utilities Board run together, and its Policy Board is
+> the body its terms name. The Letters thread found no earlier mail with kgis.org in the
+> operator's mailbox on 2026-10-17. Recorded as asked in gap `tn-municipal-officeholders` and in
+> the Tennessee row of `tn/WATCH.md` on 2026-10-17.
+>
+> **ADAM REWORDED IT BEFORE SENDING, AND THE LETTER BELOW IS THE DRAFT.** The Letters thread
+> compared the sent message with it the same day. The addressee, the request (the Policy Board's
+> authorization, or word that it is not available), outlines and district numbers only, the credit
+> and link on the card, the check every three months and the pointer to a City or Election
+> Commission copy went as drafted. Three things changed. The sent letter describes the copy as
+> "Download the six district outlines, slightly simplify the geometry, and host the file on
+> districtry.com for map rendering and district lookup", and no longer says that every reader's
+> browser downloads the file so anyone could save it. The sponsorship sentence reads "a
+> non-commercial project: it is free to use, runs no ads, sells no products, and relies solely on
+> optional sponsorships linked in the site footer to cover hosting costs". And "A no is also a
+> useful answer" was dropped. So a yes answers the letter as sent, and whether it covers a file
+> anyone can save is the operator's to decide when the answer comes.
+
+**Why this is asked.** Tennessee's map names the mayor and council of all 28 cities above 25,000
+people and draws the council districts of eleven of the thirteen that elect members by district
+(`tn/scripts/build_tn_city_wards.py`). Knoxville, which elects six of its nine council members
+from districts, is one of the two that are not drawn. The only copy of its districts published as
+data is KGIS's layer, "current as of December 22, 2025", whose terms say the KGIS Policy Board
+"reserves all rights thereto" and that no portion "may be reproduced in any form or by any means
+without the express written authorization of the KGIS Policy Board" (read 2026-10-16). So a
+Knoxville address gets a card saying the districts are not drawn, and the reader is left to find
+their council member some other way. The draft said plainly what drawing them involves: a
+simplified copy of the six outlines would be a file on districtry.com that every reader's browser
+downloads, so anyone could save it. It said so because a permission given without that
+description might not cover what districtry publishes. The letter as sent describes hosting the
+file "for map rendering and district lookup" and leaves that sentence out, so the question is
+open (see above).
+
+> Subject: Permission to show Knoxville's council districts on districtry.com
+>
+> Dear KGIS team,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Tennessee's map is at https://districtry.com/tn/.
+>
+> It names the mayor and council of every Tennessee city above 25,000 people, and it draws the
+> council districts of eleven of the thirteen that elect members by district. Knoxville is one of
+> the two it does not draw. The only copy of the six council districts I have found published as
+> data is KGIS's, and its terms say that no part of it may be reproduced without the written
+> authorization of the KGIS Policy Board. So I am writing to ask for that authorization, or to be
+> told it is not available.
+>
+> Here is exactly what showing the districts would involve. districtry would download the six
+> district outlines once, simplify them to within a few metres, and publish the simplified copy as
+> a file on districtry.com. Every reader's browser downloads that file to draw the map and to work
+> out which district a point is in, so the file would be available to anyone who looked for it. It
+> would carry only the outlines and the district numbers. The districts' card would credit KGIS
+> and link to your site, and districtry would check your layer every three months for a change.
+>
+> districtry is free to use, runs no advertising and sells nothing; it asks for sponsorship toward
+> its running costs, shown only in its footer.
+>
+> Would the KGIS Policy Board allow that? If it would, I will use any wording for the credit you
+> prefer. If the City of Knoxville or the Knox County Election Commission publishes a copy of the
+> districts for reuse, a pointer to it would answer this letter just as well. A no is also a useful
+> answer.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A written yes: recorded in the Board's own words, with its date, in
+`LICENSE-DATA.md` and in `tn/scripts/build_tn_city_wards.py`, which then reads KGIS's layer as a new
+source (after the host's robots.txt, requesting the district number alone) with Knoxville taken out
+of the council builder's `undrawn` table; any credit wording asked for goes on the card. A pointer
+to another published copy: read under that copy's own terms and measured against the 2020 census,
+as the two copies drawn on 2026-10-17 were. A no: recorded in the gap with its date, and the card
+keeps saying the districts are not drawn. No reply after the follow-up cadence: the gap records that
+KGIS was asked and did not answer.
+
+**Before sending:**
+
+- The operator chose to ask on 2026-10-17, knowing that a yes commits districtry to the
+  publication the letter describes.
+- Re-read KGIS's terms, the layer's "current as of" date and the Contact us address on the day it
+  goes.
+- Keep the sponsorship sentence as long as districtry asks for sponsorship.
+
+---
+
+## Ask tn-lebanon-ward-map — Wilson County Election Commission: Lebanon's six wards as a map file
+
+> **NOT YET ASKED — DRAFTED 2026-10-17.** To the Wilson County Election Commission at
+> `info@wilsontnvotes.gov` (telephone (615) 444-0216), the address its own website,
+> wilsontnvotes.gov, gives (read 2026-10-17, after the host's robots.txt). The commission
+> publishes Lebanon's ward maps as PDF files dated 22 October 2025, and Lebanon's own website
+> resets this project's connections, so the commission is the one office found publishing the
+> wards at all. The mailbox has not been searched for earlier correspondence with
+> wilsontnvotes.gov; do that before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17`
+> to `ASKED <date>` in gap `tn-municipal-officeholders` and in the Tennessee row of `tn/WATCH.md`.
+
+**Why this is asked.** Lebanon elects its mayor citywide and one council member from each of six
+wards. Its council is named on Tennessee's map and its wards are not drawn, because the only
+published copy is a set of pictures in PDF files, and this project does not trace pictures: a
+traced line is a guess about where a boundary runs, and a reader near the line would be given an
+answer nobody published. A map file of the six wards would let districtry draw them exactly; so
+would a pointer to the city's own copy if it publishes one.
+
+> Subject: Lebanon's ward boundaries as a map file
+>
+> Dear Wilson County Election Commission,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Tennessee's map is at https://districtry.com/tn/.
+>
+> It names Lebanon's mayor and council, but it cannot yet show Lebanon's six wards. The only copy
+> I have found is the set of ward maps on your website dated 22 October 2025, which are pictures in
+> PDF files. I do not trace pictures, because a traced line would be my guess about where the
+> boundary runs, and someone living near it could be shown the wrong ward.
+>
+> Would the commission be able to share the ward boundaries as a map file, such as a shapefile or
+> GeoJSON, or tell me where the City of Lebanon publishes one? districtry would simplify the
+> outlines to within a few metres, show them on the map credited to the commission (or the city),
+> and use nothing else from the file. I would also be grateful to know whether the 22 October 2025
+> maps show the wards in force today.
+>
+> A short answer is useful, including a no. If this is a question for the city rather than the
+> commission, I would be glad to be pointed there.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A file, or a pointer to a published one: read (after the host's
+robots.txt), held to Lebanon's Census outline and measured against the 2020 census as every drawn
+city's map was, then drawn by `tn/scripts/build_tn_city_wards.py` as a new source, with Lebanon taken
+out of the council builder's `undrawn` table. Any terms a file comes with are recorded with it. An
+answer on which maps are in force: recorded in the builder with its date. A no: recorded in the gap
+with its date, and the card keeps saying the wards are not drawn.
+
+**Before sending:**
+
+- Re-read the commission's website and confirm the address, the telephone number and the date on
+  the ward maps.
+
+---
+
+## Ask ok-lawton-ward-map — City of Lawton, City Clerk: which map shows the eight wards in force
+
+> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives the City
+> Clerk's office a telephone number, 580-581-3305, and a contact form, and no e-mail address (read
+> 2026-10-16). The draft goes in the operator's mailbox with the address field empty, which stops
+> it being sent by accident, and opens with a bracketed note naming the office, its telephone
+> number and the reason; it can go through the form or by post. The mailbox has not been searched
+> for earlier correspondence with the City of Lawton; do that before it goes. On send, change
+> `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `ok-municipal-officeholders`.
+
+**Why this is asked.** Lawton elects its mayor citywide and one council member from each of eight
+wards. Its council is named on Oklahoma's map and its wards are not drawn, because the only ward
+map the city publishes as data may not be the map in force. That layer (CouncilWard, on the city's
+ArcGIS Online organisation, its data last edited 2 July 2026) still carries 2010-census population
+fields, and measured against the 2020 census on 2026-10-16 its wards do not divide the population
+evenly: leaving out Ward 2, which holds Fort Sill and 18,668 people, they hold from 9,180 to 12,570
+against an even share of 11,296, and the layer's own population figures disagree with its lines.
+Every Oklahoma city map that is drawn holds its city's people within 5.3% of an even share. A city
+can keep a map this uneven, and a newer map can go unpublished; only the city can say which is the
+case here. Drawing the wrong map would tell some readers they live in a ward they do not.
+
+> [No e-mail address published. City of Lawton, City Clerk's Office, 580-581-3305. The city's
+> website offers a contact form; send through it or by post.]
+>
+> Subject: Which map shows Lawton's eight council wards?
+>
+> Dear City Clerk,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Oklahoma's map is at https://districtry.com/ok/.
+>
+> It names Lawton's mayor and council members, and I would like it to show the eight wards too, so
+> that someone can find their ward from their address. The city publishes a ward map as data (the
+> CouncilWard layer on its ArcGIS Online site), but I am not sure it is the map in force: it still
+> carries population figures from the 2010 census, and on the 2020 census its wards hold quite
+> different numbers of people. Rather than guess, I am asking.
+>
+> Is the CouncilWard layer the ward map in force today? If it is not, is the current map published
+> anywhere, as data or as a document, and when did it take effect?
+>
+> A short answer is useful, including a pointer to whoever looks after the ward map.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** "That layer is current": it is drawn as published, and the city's word
+is recorded in `ok/scripts/build_ok_city_wards.py` with its date in place of the balance measurement
+Lawton fails; only the ward number and outline are requested, never the layer's member name and
+contact fields. A pointer to a newer map published as data: read after the host's robots.txt,
+measured like the others, and drawn. A newer map published only as a picture: recorded and not
+traced. No reply after the follow-up cadence: the gap records that the city was asked, and the card
+keeps saying the wards are not drawn.
+
+**Before sending:**
+
+- Re-read the city's contact page and confirm the telephone number and the form.
+- Re-read the layer's last-edit date on the day it goes. If it has moved, re-measure first, since
+  the answer may already be published.
+
+---
+
+## Ask ok-csa-ward-layers — OU Center for Spatial Analysis: the same terms question for its Municipal_Wards and School_District_Wards layers
+
+> **NOT YET ASKED — DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
+> follow-up of Ask ok-csa-precinct-terms, which went to Dr Chengbin Deng with Dr Todd Fagin copied
+> and is due its follow-up around 2026-10-22. It rides that follow-up because it is the same
+> question about the same publisher, and a second letter to the same two people a week apart would
+> be one too many. The text was also sent to the Letters thread on 2026-10-17, because this file
+> will not reach `main` before the follow-up is due. On send, record it beside that follow-up in
+> gaps `ok-municipal-officeholders` and `ok-school-board-members`.
+
+**Why this is asked.** Two of Oklahoma's undrawn maps wait on the centre's terms. Muskogee elects
+its mayor citywide and two council members from each of four wards; its council is named on the
+map, from the county election board's results and the Muskogee Phoenix's reports, and its wards are
+not drawn, because the city's website shuts this project out in its robots.txt and the city
+publishes no other copy this project may read. The centre's statewide Municipal_Wards layer, in the
+same ArcGIS Online organisation as the precinct maps, carries Muskogee's wards and those of the ten
+other Oklahoma cities above 25,000 people that elect by ward. Nine of those ten are drawn from their
+own maps and stay that way, and Lawton's question is for the city (Ask ok-lawton-ward-map), so the
+centre's copy would be used for Muskogee alone. The centre's School_District_Wards layer (360 zones
+in 70 school districts, last edited 3 March 2025) is the only map found of the zones Oklahoma's
+school board members are elected from or must live in; in eleven districts, 59 seats, its VOTE_BY
+field reads "Office", which is inferred and not established to mean that only the zone's voters
+elect the seat. Oklahoma's school board district layer waits on this answer.
+
+> P.S. Two more of the centre's layers, if I may, on the same question. The Municipal_Wards layer
+> is the only published copy of Muskogee's four council wards I can use, because the City of
+> Muskogee's website does not allow automated reading, and the School_District_Wards layer is the
+> only map I have found of Oklahoma's school board zones. Whatever the answer on the precinct maps,
+> could you tell me whether districtry may show those two layers on the same terms, simplified and
+> credited to the centre? districtry would use only the outlines and their names and numbers.
+
+**What each answer means.** Yes: Muskogee's wards are read from the Municipal_Wards layer (after
+the host's robots.txt, requesting the ward fields alone), held to the city's Census outline and
+measured against the 2020 census like every other drawn city, then drawn by
+`ok/scripts/build_ok_city_wards.py`, with Muskogee taken out of the council builder's `undrawn`
+table and the centre credited; and Oklahoma gains its school board district layer from the
+School_District_Wards layer, with what VOTE_BY means checked against 70 O.S. § 5-107A before any
+card says who votes for a seat. No, or no answer: recorded in both gaps beside the precinct answer,
+and the cards keep saying the wards and zones are not drawn.
+
+---
+
+## Ask sc-anderson-council-districts — City of Anderson, Planning and Development: the six council districts as a map file
+
+> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives Planning and
+> Development at 601 South Main Street, Anderson, SC 29624, telephone (864) 231-2222, and the City
+> Council's office at 401 South Main Street, telephone (864) 231-1135, and no e-mail address for
+> either (read 2026-10-16). It goes to Planning and Development as the department most likely to
+> keep the city's maps (inferred; the Council's office is the other choice). The draft goes in the operator's mailbox with the address field empty,
+> which stops it being sent by accident, and opens with a bracketed note naming the office, its
+> telephone number and the reason; it can go by post or after a call. The mailbox has not been
+> searched for earlier correspondence with the City of Anderson; do that before it goes. On send,
+> change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `sc-municipal-officeholders`.
+
+**Why this is asked.** Anderson elects its mayor and two council members citywide and six from
+districts. Its council is named on South Carolina's map and its districts are not drawn, because the
+city publishes them only as pictures in PDF files dated 16 September 2024, and this project does not
+trace pictures. The city's own map server has an ElectionInformation service with nothing in it, and
+the state Revenue and Fiscal Affairs Office's statewide map of municipal council districts, which
+draws 238 districts in 40 municipalities, leaves Anderson out. A map file from the city would let
+districtry draw the districts exactly, and if the city also sent it to the Revenue and Fiscal
+Affairs Office (`mapping@rfa.sc.gov`), Anderson would be on the state's map too, for everyone who
+uses it.
+
+> [No e-mail address published. City of Anderson, Planning and Development, 601 South Main Street,
+> Anderson, SC 29624, (864) 231-2222. Send by post, or call first and ask where to send it.]
+>
+> Subject: Anderson's council districts as a map file
+>
+> Dear Planning and Development team,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> South Carolina's map is at https://districtry.com/sc/.
+>
+> It names Anderson's mayor and council, but it cannot yet show the six council districts. The only
+> copies I have found are the district maps on the city's website dated 16 September 2024, which
+> are pictures in PDF files. I do not trace pictures, because a traced line would be my guess about
+> where the boundary runs, and someone living near it could be shown the wrong district. The state's
+> map of municipal council districts, published by the Revenue and Fiscal Affairs Office, does not
+> include Anderson either.
+>
+> Would the city be able to share the six districts as a map file, such as a shapefile or GeoJSON,
+> or publish them on its map server? districtry would simplify the outlines to within a few metres,
+> show them credited to the city, and use nothing else from the file. Sending the same file to the
+> Revenue and Fiscal Affairs Office would put Anderson on the state's map as well.
+>
+> A short answer is useful, including a no, and so is a pointer to whoever looks after the district
+> map.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A file, or districts published on the city's map server: read (after the
+host's robots.txt), held to Anderson's Census outline and measured against the 2020 census as the
+twelve drawn places' maps were, then drawn by `sc/scripts/build_sc_city_wards.py` as a new source,
+with Anderson taken out of the council builder's `undrawn` table. If Anderson appears on the state's
+map instead, it is held to the same tests before it is used. A no: recorded in the gap with its date, and the card keeps saying
+the districts are not drawn.
+
+**Before sending:**
+
+- Re-read the city's Planning and Development page and confirm the address and telephone number.
+- Check the state's municipal council district map for Anderson on the day it goes; if Anderson has
+  been added, measure it before sending.
+
+---
+
+## Ask ky-kde-school-board-divisions — Kentucky Department of Education, KDE Data Services: each county school board's members by division, and the precincts in each division
+
+> **NOT YET ASKED — DRAFTED 2026-10-17.** To KDE Data Services (Office of Education Technology,
+> Division of School Data Services) at `kdedatarequest@education.ky.gov`. That is the address the
+> "KDE Data Services" link in the Page Contact box points to on the Department's "KY K-12 Data
+> Requests and Governance" page (`www.education.ky.gov/districts/tech/Pages/DataRequests.aspx`),
+> read 2026-10-17 after the host's robots.txt, which was served empty and so disallows nothing. The
+> same box gives 300 Sower Blvd., 4th Floor, Frankfort, KY 40601, and (502) 564-2020. The mailbox
+> has not been searched for earlier correspondence with the Department of Education; do that
+> before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap
+> `ky-school-board-members` and add the record's `ask` block.
+
+**Why this is asked.** Each of Kentucky's 120 county school boards is elected from five
+divisions, and every division is a set of whole voting precincts (KRS 160.210); the boards of
+its independent school districts are elected at large. districtry's Kentucky map now draws the
+divisions of two county boards: Jefferson County's, from the precinct lists KRS 160.211 writes
+into law, and Rowan County's, from the precincts each board race was on in the 2022 and 2024
+general elections. Election results cannot place every precinct in most counties: a survey of
+the State Board of Elections' county reports on 2026-10-16 placed 2,019 of the 3,194 current
+precincts in one division, and 67 of the 2022 reports are scans with no text. They also name
+only who won each race, so a member a board appoints to fill a vacancy under KRS 160.190
+appears in none of them. No card names a member, because no list of members by division has
+been found. The Department is asked first because two of its duties touch both halves:
+KRS 160.210(6) has a board of education publish any change in its division lines in a
+newspaper and file a copy of that newspaper with the chief state school officer within ten days
+(the subsection opens with large school districts, and whether that rule reaches every county
+board is not settled here), and the Department's FAQ on local board vacancies, revised
+12 August 2026, has a board that fails to fill a vacancy within 60 days notify the Commissioner.
+Whether the Department keeps a list of members by division, or of the precincts in each
+division, is not known; the letter asks. It goes to Data Services rather than through the
+Department's Online Data Request Form because it first asks whether the data exists (see
+**Before sending**).
+
+> Subject: Kentucky's county school board members and their divisions
+>
+> Dear KDE Data Services team,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> Kentucky's map is at https://districtry.com/ky/.
+>
+> I would like it to show, for any address in a county school district, which of the board's
+> five divisions it is in and who represents that division. Today it draws the divisions of only
+> two of the 120 county boards, and it names no members. Jefferson County's divisions are drawn
+> from the precinct lists in KRS 160.211, and Rowan County's from the precincts each board race
+> appeared on in the 2022 and 2024 general elections. For most counties the published election
+> results cannot place every precinct, and they do not show members appointed to fill a vacancy.
+>
+> I have two questions, and a short answer to either is useful:
+>
+> 1. Does the Department hold, or could it collect, a list of each county board of education's
+>    members with the division each represents?
+> 2. Does it hold each county board's divisions, either as lists of the precincts in each
+>    division or as the newspaper notices boards file when they change their division lines?
+>
+> If either exists, one statewide file would be ideal, but any form is welcome. Nothing I am
+> asking about concerns students. If this should go through the Online Data Request Form
+> instead, I am glad to submit one, and a pointer to whoever does hold this information would
+> help just as much. A no is a useful answer too: it lets the site tell its readers that the
+> Department was asked.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A list of members by division: in the counties the map draws, each
+division's card names its member with the list's date, and the other counties' members wait for
+their divisions; a list the Department publishes is read after its host's robots.txt on a
+schedule, and one sent once is dated on every card that uses it. Division precinct lists, or
+copies of the newspaper notices: each county is drawn as Jefferson is, from the union of its
+listed precincts on the State Board of Elections' current precinct map, cut to the Census
+boundary of its school district, and held to the same tests (every current precinct in exactly
+one division, and the election results used only as a check). Neither is held: recorded in gap
+`ky-school-board-members` with its date, the results-based drawing continues county by county
+as the 2026 general's reports arrive, and the next route is each county board of education,
+which KRS 160.210(6) has keep the record of its own changes; that is 118 letters, which is why
+the Department is asked first. Use the Online Data Request Form: submit it, stating the purpose;
+if an outside request needs an associate commissioner's sponsorship and none is offered, record
+that answer in the gap rather than pressing. No reply after the follow-up cadence: recorded as
+asked, and nothing changes on the map.
+
+**Before sending:**
+
+- Re-read the Data Requests page and confirm the Page Contact box and the address its link
+  points to. The page says every internal and external data request must go through the KDE
+  Online Data Request Form, and that an external request must be sponsored by a KDE associate
+  commissioner. This letter asks whether the data exists before any request is made, which is
+  why it goes to the page contact; if the answer is to use the form, use it.
+- The Department's open records page offers copies of its records to residents of Kentucky, on
+  a written and signed application to its General Counsel (read 2026-10-17). The newspaper copies
+  KRS 160.210(6) has boards file with the Commissioner would be records of that kind. That route
+  is open only if the sender is a Kentucky resident; do not use it otherwise.
+- Confirm the letter's figures against the shipped file on the day it goes: two county boards
+  drawn, Jefferson and Rowan. If another county has been drawn since, change the number and the
+  names.

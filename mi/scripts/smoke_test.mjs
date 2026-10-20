@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -179,7 +180,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -845,6 +846,18 @@ try {
         check(`${c.city}'s card names no other seat's member`,
           !others.some((n) => got.names.includes(n)) && !/Mays/.test(card.text || ""),
           JSON.stringify(got.names));
+        // Flint prints each member's own "Cell" (or "Phone") row beside the
+        // council office's line, and both ship since Adam's ruling of
+        // 2026-10-17. The card writes hyphens as U+2011, so they are put back
+        // before comparing; the wanted numbers come from the shipped roster.
+        if (c.city === "Flint") {
+          const want = board.members.filter((m) => m.seat === c.seat)
+            .flatMap((m) => [m.phone].concat(m.phonesExtra || [])).filter(Boolean);
+          const text = (card.text || "").replace(/\u2011/g, "-");
+          check("Flint Ward 5's card shows the office line and the member's own number",
+            want.length >= 2 && want.every((n) => text.includes(n)),
+            `want ${want.length} numbers; got ${text.slice(0, 160)}`);
+        }
         await page.close();
       }
 

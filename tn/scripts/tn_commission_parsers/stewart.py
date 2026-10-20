@@ -18,10 +18,15 @@ tags ("E<strong>ric Watkins</strong>", "Terry / Fitzhugh" across two source
 lines). Two photos carry the alt text "Thumb", so the photos are not read.
 
 PRIVACY: every member's text cell continues with a home street address, a
-town and ZIP, and one or two personal phones (Clint Mathis's first labelled
-"(Home)"); none of it is read. The photo links lead to per-member
-"full_info" pages, which are not read and not recorded as profile links. The
-page prints no e-mail. No address, phone or e-mail is recorded.
+town and ZIP, and one or two phone numbers (Clint Mathis's first labelled
+"(Home)"). Under Adam's ruling of 2026-10-17 that a number a government
+publishes beside an official ships whosever line it is, the numbers are read
+from the text cell, the first into `phone` and a second into `phonesExtra`,
+with the page's "(Home)" label kept as "home". Only telephone-shaped numbers
+are read; the street address, town and ZIP beside them are never read. The
+county's own lines in the page footer are OFFICE_LINES and stay off every
+member. The photo links lead to per-member "full_info" pages, which are not
+read and not recorded as profile links. The page prints no e-mail.
 
 Names are kept as printed. The ballot spells four of them more fully: "Ed
 Williams" (here Edward Williams), "Leslie Elkins Bickford", "Melissa L.
@@ -43,13 +48,15 @@ D6 Clint Mathis 542, Bradley Jones 451; D7 Mark Dortch 329, Alexis Holley
 Taylor 257."""
 import html as _html
 import re
-from ._common import member, district_number
+from ._common import member, district_number, read_phones
 
 COUNTY = "Stewart"; FIPS = "161"
 DOMAINS = ("stewartcogov.com",)
 URLS = ["https://www.stewartcogov.com/commissioners/commissioners.html"]
 SEATS = {str(i): 2 for i in range(1, 8)}
 AT_LARGE = 0
+# The county's own lines, printed in the page footer.
+OFFICE_LINES = ("(931) 232-3100", "(931) 232-5371")
 
 COLUMN = re.compile(r'<table\b[^>]*class="main_table"[^>]*>(.*?)</table>', re.S | re.I)
 ROW = re.compile(r"<tr\b[^>]*>(.*?)</tr>", re.S | re.I)
@@ -107,7 +114,7 @@ def parse(pages):
             name = first_line(cells[2])
             if re.search(r"\bvacan", name, re.I) or not NAME.match(name):
                 raise ValueError("District %s: %r does not look like a name" % (current, name))
-            districts[current].append(member(name))
+            districts[current].append(member(name, phones=read_phones(cells[2])))
     if set(districts) != set(SEATS):
         raise ValueError("the page names districts %s, not 1..7" % sorted(districts, key=int))
     for d, ms in districts.items():

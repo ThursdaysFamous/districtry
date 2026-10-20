@@ -80,6 +80,17 @@
       },
       "description": "OPTIONAL. Opts the instance into counting PEOPLE on the comparison stats screen. `index` is the data/app path of the per-county Census block population index scripts/build_block_population.py writes (`population/index.json`). The county files it names are served by the service worker's prefix rule and cached on first use, like every boundary file since 2026-09-26; they are fetched by URL prefix rather than listed, so neither the index nor the files belong in data_files. Absent = the stats screen compares by area only."
     },
+    "frames": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"pattern": "^[a-z0-9-]+$"},
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {"type": "string", "pattern": "^[a-z0-9-]+\\.json$"}
+      },
+      "description": "OPTIONAL. The areas a map link can open on (ENGINE permalink, 2026-10-20). Each entry names an area and the shipped data/app files whose ground it is; scripts/generate_metro_files.py measures their extent, rounds it outward to three decimals and emits it as LAYER_FRAMES. A layer whose whole ground is one of these areas names it in its own `frame`, and a link that names layers and no point, every one of them framed, opens on their areas instead of the boot view, so the map link on a question page about a Chicago-only layer opens on Chicago rather than on the whole state. The generator refuses an area no layer names, a `frame` naming no area, a file that is missing or holds no coordinates, an area outside metro_bbox, and a framed layer whose vector-tile archive reaches past its area. Absent = every link opens at the boot view, byte-identically to before."
+    },
     "socrata_host": {
       "type": "string",
       "format": "uri"
@@ -171,6 +182,11 @@
           "area_rank": {
             "type": "integer",
             "minimum": 1
+          },
+          "frame": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "OPTIONAL. The `frames` area this layer answers inside. Set only for a layer whose whole ground is that one city or county, never for a statewide or county-dispatched layer, because a link naming it then opens on that area alone."
           },
           "rank_note": {
             "type": "string",

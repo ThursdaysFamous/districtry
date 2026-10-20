@@ -8,30 +8,35 @@
   ],
   "apps": {
     "ar": {
-      "layers_sending_point": 3,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "ar-circuit-court",
+        "ar-court-of-appeals",
         "ar-house",
         "ar-senate",
+        "city-ward",
         "county",
         "county-subdivision",
+        "fire-district",
         "fire-station",
         "municipality",
         "police-station",
         "post-office",
         "quorum-court",
+        "school-board-district",
         "school-district-unified",
         "us-house",
         "voting-precinct",
@@ -191,31 +196,34 @@
       ]
     },
     "in": {
-      "layers_sending_point": 4,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "conservancy-district",
         "county",
         "county-council",
         "county-subdivision",
         "fire-station",
+        "in-court-of-appeals",
         "in-house",
         "in-senate",
         "municipality",
         "police-station",
         "post-office",
+        "school-board-district",
         "school-district-unified",
         "tribal-government",
         "us-house",
@@ -224,21 +232,21 @@
       ]
     },
     "ky": {
-      "layers_sending_point": 5,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load"
       ],
-      "atpoint_hooks_fired": 1,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
         "county-subdivision",
@@ -250,6 +258,7 @@
         "ky-senate",
         "ky-supreme-court",
         "municipality",
+        "school-board-district",
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
@@ -297,8 +306,9 @@
       ]
     },
     "mn": {
-      "layers_sending_point": 6,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-elementary",
@@ -306,14 +316,13 @@
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZctas"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "city-ward",
         "county",
@@ -338,21 +347,22 @@
       ]
     },
     "ms": {
-      "layers_sending_point": 3,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-supervisor",
         "fire-station",
@@ -372,22 +382,23 @@
       ]
     },
     "nc": {
-      "layers_sending_point": 4,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",
@@ -396,6 +407,7 @@
         "nc-senate",
         "police-station",
         "post-office",
+        "school-board-district",
         "school-district-unified",
         "tribal-government",
         "us-house",
@@ -466,29 +478,32 @@
       ]
     },
     "ok": {
-      "layers_sending_point": 5,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-elementary",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
+        "conservation-district",
         "county",
         "county-commissioner",
         "county-subdivision",
         "fire-station",
         "municipality",
         "ok-house",
+        "ok-judicial-district",
         "ok-senate",
         "police-station",
         "post-office",
@@ -500,22 +515,23 @@
       ]
     },
     "sc": {
-      "layers_sending_point": 4,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-council",
         "county-subdivision",
@@ -523,8 +539,10 @@
         "municipality",
         "police-station",
         "post-office",
+        "sc-circuit-court",
         "sc-house",
         "sc-senate",
+        "school-board-district",
         "school-district-unified",
         "tribal-government",
         "us-house",
@@ -533,8 +551,9 @@
       ]
     },
     "tn": {
-      "layers_sending_point": 6,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-elementary",
@@ -542,15 +561,15 @@
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-commissioner",
         "county-subdivision",
@@ -558,10 +577,12 @@
         "municipality",
         "police-station",
         "post-office",
+        "school-board-district",
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
         "tn-house",
+        "tn-judicial-district",
         "tn-senate",
         "tribal-government",
         "us-house",

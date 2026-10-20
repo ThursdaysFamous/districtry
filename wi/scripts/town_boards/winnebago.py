@@ -4,8 +4,14 @@ Under "Towns, Villages and Cities Information" each town has a "TOWN OF <NAME>"
 heading, then a "CHAIRPERSON" line with the chair's name on the next line and a
 "SUPERVISORS" line with one supervisor per line after it, sometimes numbered
 ("1. Teresa Van Aacken"). Each name line carries telephone numbers and often an
-e-mail address after the name, which are taken off. The numbers are printed as
-a list, not called seats, so the role is plain "Supervisor".
+e-mail address after the name. The numbers printed after the name ship as that
+officer's (Adam, 2026-10-17), with the label the directory gives ("Cell:"),
+and so does the e-mail address (Adam, 2026-10-17: "E-mails too"). Lines after
+the chair's own line ("Emails may be sent to the Town Clerk: ...") are not the
+chair's and are not read. Winneconne prints each supervisor's e-mail address
+on a line of its own under the supervisor's line, and a line holding nothing
+but an address there is read as that supervisor's. The supervisors are
+printed as a list, not called seats, so the role is plain "Supervisor".
 
 CLIENT. Measured 2026-10-15: with the districtry token, robots.txt and the file
 both answered HTTP 403 (the survey of the same day recorded a Cloudflare
@@ -15,7 +21,9 @@ served."""
 
 import re
 
-from . import looks_like_person, person, split_blocks, strip_contact
+from . import (add_emails, contact_line, emails_after_name, line_emails,
+               looks_like_person, person, phones_after_name, split_blocks,
+               strip_contact)
 
 COUNTY_FIPS = "139"
 COUNTY_NAME = "Winnebago"
@@ -47,24 +55,35 @@ def scrape(ctx):
     for town, block in split_blocks(section, r"(?m)^TOWN OF ([A-Z .'\-]+?)\s*$"):
         people = []
         role = None
+        last = None        # the supervisor on the line just read
         for raw in block.split("\n"):
             line = raw.strip()
             if not line:
                 continue
             if line == "CHAIRPERSON":
-                role = "Chairperson"
+                role, last = "Chairperson", None
                 continue
             if line == "SUPERVISORS":
-                role = "Supervisor"
+                role, last = "Supervisor", None
                 continue
             if _HEADING.match(line):
-                role = None
+                role, last = None, None
                 continue
             if role is None:
                 continue
+            if last is not None and contact_line(line):
+                # Winneconne: the supervisor's e-mail address on the line
+                # under the supervisor's own
+                add_emails(last, line_emails(line))
+                continue
+            last = None
             name = _name(line)
             if looks_like_person(name):
-                people.append(person(name, role))
+                rec = person(name, role, phones_after_name(line, name),
+                             emails=emails_after_name(line, name))
+                people.append(rec)
+                if role == "Supervisor":
+                    last = rec
             if role == "Chairperson":
                 # one chair; a following line is contact text, not a person
                 role = "_after_chair"

@@ -121,8 +121,9 @@ PROVENANCE = [
             "The General Assembly's own Senate list, plus each senator's own "
             "page for the business telephone; rebuilt weekly by "
             "sc/scripts/build_sc_legislature_roster.py. The member pages also "
-            "print a home address and telephone, which the builder never reads, "
-            "and no e-mail address."
+            "print a home and a business telephone, which ship as printed (Adam, "
+            "2026-10-17), a home address, which the builder never reads, and no "
+            "e-mail address."
         ),
     },
     {
@@ -203,6 +204,162 @@ PROVENANCE = [
             "through scripts/statewide_precincts.py. Lines move by act of the "
             "General Assembly, so the quarterly --watch row in sc/WATCH.md is "
             "also re-run after each session."
+        ),
+    },
+    {
+        "layer": "school-board-district",
+        "app_file": "sc-school-board-districts.json",
+        "source_url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/School_Board_Districts/FeatureServer/0",
+        "note": (
+            "383 school board districts on 54 school districts from the "
+            "Revenue and Fiscal Affairs Office's statewide layer (401 records: "
+            "the other 18 school districts are one record each marked At "
+            "Large, and are skipped), pre-built by "
+            "sc/scripts/build_sc_school_board_districts.py through "
+            "scripts/published_district_layers.py, with who votes read from "
+            "each board's own act. Districts move by act of the General "
+            "Assembly, so the quarterly --watch row in sc/WATCH.md is also "
+            "re-run after each session."
+        ),
+    },
+    {
+        "layer": "sc-circuit-court",
+        "app_file": "sc-judicial-circuits.json",
+        "source_url": "https://www.scstatehouse.gov/code/t14c005.php",
+        "note": (
+            "South Carolina's 16 judicial circuits, dissolved from the county "
+            "fabric by sc/scripts/build_sc_judicial_circuits.py following S.C. "
+            "Code Section 14-5-610 (read 2026-10-16; text in "
+            "sc/data/source/courts/), with each circuit's judge count from "
+            "subsection (B). The builder stops if the section, Section 1-7-310 "
+            "or Article V sections 13-14 stop reading the way the card says; "
+            "the re-read after each legislative session is a row in "
+            "sc/WATCH.md."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/13",
+        "note": (
+            "Charleston's 12 council districts, from the city's own map, one "
+            "of the 75 districts of the twelve South Carolina cities and "
+            "towns above 25,000 people that elect by district, pre-built by "
+            "sc/scripts/build_sc_city_wards.py through "
+            "scripts/city_ward_maps.py, which takes the places to draw from "
+            "sc/data/source/sc-city-council-seats.json; the quarterly --watch "
+            "row in sc/WATCH.md compares each place's fingerprint recorded at "
+            "the build. The names on the cards come from each place's own "
+            "pages, and sc/scripts/build_sc_city_councils.py --watch is what "
+            "notices one of those changing."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://gis.columbiasc.gov/cola/rest/services/Public/CoCInfoBoundary/MapServer/1",
+        "note": (
+            "Columbia's 4 council districts, from the city's own map (see the "
+            "Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://services3.arcgis.com/BLrzoqoB28p9t3a7/arcgis/rest/services/Council_Districts/FeatureServer/0",
+        "note": (
+            "North Charleston's 10 council districts, from the city's own map "
+            "(see the Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://crh-vmw-gisvdr1.cityofrockhillsc.gov/arcgis/rest/services/DynamicStaticServices/DynamicService/MapServer/9",
+        "note": (
+            "Rock Hill's 6 council wards, from the city's own map (see the "
+            "Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://citygis.greenvillesc.gov/arcgis/rest/services/FindElectedOfficials/Find_Your_Elected_Officials/MapServer/1",
+        "note": (
+            "Greenville's 4 council districts, from the city's own map (see "
+            "the Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://services8.arcgis.com/0zSnoqwLCR3i1Yfw/arcgis/rest/services/Council_Districts/FeatureServer/0",
+        "note": (
+            "Summerville's 6 council districts, from the town's own map (see "
+            "the Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://gis.sumter-sc.com/server/rest/services/ElectionAdministration/ElectionAdministration/MapServer/1109",
+        "note": (
+            "Sumter's 6 council wards, from the election map on "
+            "gis.sumter-sc.com (see the Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://services9.arcgis.com/HoRra3ATPLGmyjn6/arcgis/rest/services/CouncilDistricts_2023/FeatureServer/0",
+        "note": (
+            "Spartanburg's 6 council districts, from the city's own map (see "
+            "the Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://services1.arcgis.com/t1pOARESVtLutuqb/arcgis/rest/services/2022_Town_Council_Wards/FeatureServer/0",
+        "note": (
+            "Hilton Head Island's 6 council wards, from the town's own map "
+            "(see the Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://services1.arcgis.com/bskBH6JV42oEWJvZ/arcgis/rest/services/City_Council_Districts_Current/FeatureServer/0",
+        "note": (
+            "Greer's 6 council districts, from the city's own map (see the "
+            "Charleston row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sc-city-wards.json",
+        "source_url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/Municipal_Council_Districts/FeatureServer/0",
+        "note": (
+            "Florence's 3 and Aiken's 6 council districts, from the Revenue "
+            "and Fiscal Affairs Office's statewide map of municipal council "
+            "districts (238 districts in 40 municipalities when read), "
+            "because Aiken's own map service publishes no shapes and "
+            "Florence's own map was last edited before the ordinance the "
+            "state's copy names took effect (see the Charleston row)."
+        ),
+    },
+    {
+        "layer": "county",
+        "app_file": "sc-conservation-boards.json",
+        "source_url": "https://dnr.sc.gov/conservation/index.html",
+        "note": (
+            "The commissioners of each county's conservation district, read "
+            "from the Department of Natural Resources' page for each of the 46 "
+            "districts, which this index links, by "
+            "sc/scripts/build_sc_conservation_boards.py and named on the County "
+            "card. The pages carry no date. Re-read quarterly and in February "
+            "2027, after the elected terms that end on 31 January; WATCH.md "
+            "carries the row."
         ),
     },
 ]
@@ -297,6 +454,25 @@ ENDPOINTS = [
                 "Boundaries_Districts/Voter_Precincts/FeatureServer/0/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 2080,  # 2,315 records measured 2026-10-15
+    },
+    # The school board district layer the builder reads (2026-10-16). A floor,
+    # for the reason the precinct row above gives.
+    {
+        "layer": "school-board-district",
+        "url": ("https://gis.state.sc.us/arcgis/rest/services/"
+                "Boundaries_Districts/School_Board_Districts/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 360,  # 401 records measured 2026-10-16
+    },
+    # The state's map of municipal council districts, which the city ward
+    # builder reads for Florence and Aiken (2026-10-16). A floor, for the
+    # reason the precinct row above gives.
+    {
+        "layer": "city-ward",
+        "url": ("https://gis.state.sc.us/arcgis/rest/services/"
+                "Boundaries_Districts/Municipal_Council_Districts/FeatureServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 214,  # 238 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

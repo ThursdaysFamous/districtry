@@ -36,6 +36,9 @@
     "clerk": "Annette M. Stashek",
     "municipality": "Carson",
     "phone": "715-457-2170",
+    "phonesExtra": [
+      "715-498-1055"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "http://townofcarson.com/"
   },
@@ -43,6 +46,9 @@
     "clerk": "Angela Lochinger",
     "municipality": "Dewey",
     "phone": "715-344-2343",
+    "phonesExtra": [
+      "715-254-5584"
+    ],
     "recordUpdated": "2024-09-05",
     "url": "https://townofdewey.wi.gov"
   },
@@ -59,6 +65,9 @@
     "deputyClerk": "Vicky Zimmerman",
     "municipality": "Grant",
     "phone": "715-213-7370",
+    "phonesExtra": [
+      "941-376-0923"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://townofgrant-portage.wi.gov/"
   },
@@ -89,6 +98,9 @@
     "clerk": "Pat Zellmer",
     "municipality": "New Hope",
     "phone": "715-677-4784",
+    "phonesExtra": [
+      "715-899-0857"
+    ],
     "recordUpdated": "2025-03-03",
     "url": "https://tn.newhope.wi.gov/"
   },
@@ -102,6 +114,9 @@
     "clerk": "Patricia Weller",
     "municipality": "Plover",
     "phone": "715-344-7684",
+    "phonesExtra": [
+      "715-342-8072"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://townofplover.com/"
   },
@@ -110,6 +125,9 @@
     "deputyClerk": "Tracy Glodowski",
     "municipality": "Sharon",
     "phone": "715-592-6600",
+    "phonesExtra": [
+      "715-321-6201"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://townsharon.com/"
   },

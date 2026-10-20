@@ -2,10 +2,12 @@
 """Mirror the Census TIGERweb layers the apps fetch live into tile archives
 (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 6).
 
-Sixteen polygon layers across four apps download a whole state from
-tigerweb.geo.census.gov the first time they are switched on — Illinois's
-county subdivisions alone are 14.5 MB — and ask that server about the reader's
-point on every first click. Phase 5 put every layer whose shapes an app SHIPS
+Forty-eight polygon layers across thirteen apps — sixteen in four apps at
+phase 6a, thirty-two in the nine newest at phase 6d (2026-10-17) — download a
+whole state from tigerweb.geo.census.gov the first time they are switched on —
+Illinois's county subdivisions alone are 14.5 MB — and ask that server about
+the reader's point on every first click; the ZIP layers (ZIP_MIRRORS, phases
+6b and 6d) do the same by bounding box. Phase 5 put every layer whose shapes an app SHIPS
 on vector tiles; these ship nothing, so they were left. This mirrors them:
 it fetches each set exactly as the app does, builds a tile archive through
 scripts/build_vector_tiles.py's own build and gate, commits the archive, and
@@ -42,8 +44,38 @@ built from it. --check is offline and holds the tree to it:
   3. nothing is recorded that MIRRORS does not list.
 
 It cannot see the census data change; --refresh (weekly, update-tiger-tiles.yml)
-refetches, rebuilds only a layer whose data hash moved, gates it, and opens a
-pull request, which is how a new TIGER vintage reaches the apps.
+checks each set, refetches one whose check moved, rebuilds only a layer whose
+data hash moved, gates it, and opens a pull request, which is how a new TIGER
+vintage reaches the apps.
+
+THE CHEAP CHECK COMES FIRST (2026-10-17, the operator's choice). Refetching
+every layer's shapes each week downloaded 940.7 MB from the Census (measured
+2026-10-17), and that week every set came back unchanged. So --refresh
+first asks for every feature's attributes with no shapes at all: the row's own
+fields plus AREALAND, AREAWATER, INTPTLAT and INTPTLON, which the Census
+derives from the shape, so a boundary that moves moves them. It hashes those
+together with the query, the engine's converter, the text of this file's
+fetch-and-convert section, a spliced file where SPLICES names one and, for a
+ZIP row, the same four values for the state, whose outline decides which ZCTAs
+are kept, and the shapely and GEOS versions that make that decision, and it
+holds the number of features it read to the server's own count. A layer whose
+hash (fingerprint_sha256 in the record) is unchanged, whose archive is intact
+and whose recorded query is the one MIRRORS makes today is not fetched again;
+asking every mirrored set this way took 7.7 MB and 38 seconds, measured the
+same day. The query is compared whole because the hash covers only the
+check's own query, which leaves out geometryPrecision=5 and adds an ordering
+of its own, so removing the one from the shapes query, or adding the other,
+would otherwise go unseen. A missing or different fingerprint
+or query falls back to the full fetch, which is the safe direction, and a full
+fetch whose data turns out unchanged records the new fingerprint and query
+without rebuilding the archive. So an edit to the code that turns a fetched
+set into an archive's input costs one week of full fetches, with no version
+number for anybody to remember to bump. What the check cannot see is stated
+rather than implied: a boundary edit that leaves every feature's land area,
+water area and internal point exactly as they were, and an edit elsewhere in
+this file, outside the fetch-and-convert section and the query, that alters
+what a fetched set becomes (SPLICES and STATE_OVERLAP_MIN, which are outside
+it, are hashed themselves).
 
     python3 scripts/mirror_tiger_tiles.py --refresh            # every layer
     python3 scripts/mirror_tiger_tiles.py --refresh --only il  # one app
@@ -75,7 +107,9 @@ ARCGIS_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "arcgis-loader.tx
 # esriRingsToParts assigns a hole to its shell with pointInRing, which lives here
 PIP_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "point-in-polygon.txt")
 SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
-STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06"}
+STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06",
+              "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
+              "tn": "47", "ar": "05", "ms": "28"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -115,6 +149,38 @@ MIRRORS = [
     ("wi", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
     ("wi", "school-district-secondary", "School", 1, "GEOID,NAME,STATE"),
     ("wi", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
+    ("mn", "school-district-unified", "School", 0, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("mn", "school-district-elementary", "School", 2, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("mn", "school-district-secondary", "School", 1, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("mn", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC"),
+    ("mn", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
+    ("ky", "school-district-unified", "School", 0, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ky", "school-district-elementary", "School", 2, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ky", "school-district-secondary", "School", 1, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ky", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ky", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
+    ("in", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC"),
+    ("in", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC"),
+    ("in", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nc", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC"),
+    ("nc", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("nc", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ok", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ok", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ok", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("ok", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
+    ("sc", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("sc", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("sc", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("tn", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("tn", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("tn", "school-district-unified", "School", 0, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("tn", "school-district-elementary", "School", 2, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("tn", "school-district-secondary", "School", 1, "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE"),
+    ("ar", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ar", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("ms", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ms", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -141,6 +207,14 @@ ZIP_MIRRORS = [
     ("wi", "zip-code", "WI_BBOX_ENVELOPE", (-93.09, 42.29, -86.04, 47.51)),
     ("ny", "nys-zip-code", "NY_ZCTA_ENVELOPE", (-79.77, 40.47, -71.77, 45.02)),
     ("ca", "zip-code", "SF_BBOX_ENVELOPE", (-122.62, 37.58, -122.28, 37.96)),
+    ("mn", "zip-code", "MN_BBOX_ENVELOPE", (-97.30, 43.44, -89.43, 49.44)),
+    ("in", "zip-code", "IN_BBOX_ENVELOPE", (-88.10, 37.77, -84.78, 41.77)),
+    ("nc", "zip-code", "NC_BBOX_ENVELOPE", (-84.50, 33.60, -75.10, 36.75)),
+    ("ok", "zip-code", "OK_BBOX_ENVELOPE", (-103.10, 33.50, -94.30, 37.10)),
+    ("sc", "zip-code", "SC_BBOX_ENVELOPE", (-83.45, 31.90, -78.40, 35.30)),
+    ("tn", "zip-code", "TN_BBOX_ENVELOPE", (-90.40, 34.90, -81.55, 36.75)),
+    ("ar", "zip-code", "AR_BBOX_ENVELOPE", (-94.70, 32.95, -89.55, 36.55)),
+    ("ms", "zip-code", "MS_BBOX_ENVELOPE", (-91.75, 30.05, -88.00, 35.10)),
 ]
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250
@@ -153,16 +227,24 @@ PAGE_SIZE = 250
 # host) by more than this many square degrees, about 100 m² at these latitudes:
 # a ZCTA that merely touches the state line shares an edge, not ground. What it
 # costs is stated rather than implied: a reader who clicks OUTSIDE the state
-# gets no ZIP card where the live layer answered one, and each app's emptyNote
-# says so. THE FILTER changes no answer inside the state (measured 2026-09-27:
-# every dropped ZCTA that touches the state holds 0.00 m2 of it). FULL DETAIL,
-# the other half of the same change, DOES: the app's own loader asks for a
-# maxAllowableOffset=0.0005 simplification and this archive is the Census's own
-# drawing, so ground near an edge moves to the ZCTA the Census puts it in.
-# Measured that day around Chicago, 0.49% of 3,514 km2 (218 ZCTAs) and 0.71% of
-# 1,426 km2 (140 ZCTAs), the share depending on the box; every change is toward
-# the Census's edges, and it is largest for small ZCTAs, where an edge's move is
-# a bigger share of the whole (5.6% of 60208's area in the second box).
+# gets no ZIP card where the live layer answered one — and since 2026-09-30
+# every ZIP layer mirrored here but San Francisco's hides outside its state
+# anyway, through the app's coverage test against its own state outline, so the
+# archive and the live loader agree there (San Francisco's is ungated on
+# purpose: its box, the city and the inner Bay, reaches no other state). THE
+# FILTER changes no answer inside the state (measured 2026-09-27: every dropped
+# ZCTA that touches the state holds 0.00 m2 of it; measured again 2026-10-17 for
+# the eight phase-6d layers, where 87, 75, 103, 116, 64, 110, 96 and 68 dropped
+# ZCTAs touch Minnesota, Indiana, North Carolina, Oklahoma, South Carolina,
+# Tennessee, Arkansas and Mississippi and none holds more than 0.0000 m2 of it).
+# FULL DETAIL, the other half of the same change, DOES: the app's own loader
+# asks for a maxAllowableOffset=0.0005 simplification and this archive is the
+# Census's own drawing, so ground near an edge moves to the ZCTA the Census puts
+# it in. Measured that day around Chicago, 0.49% of 3,514 km2 (218 ZCTAs) and
+# 0.71% of 1,426 km2 (140 ZCTAs), the share depending on the box; every change
+# is toward the Census's edges, and it is largest for small ZCTAs, where an
+# edge's move is a bigger share of the whole (5.6% of 60208's area in the second
+# box).
 STATE_OVERLAP_MIN = 1e-8
 
 
@@ -392,6 +474,116 @@ def fetch_as_geojson(row, work):
     return url, out, len(fc["features"]), sha256_bytes(canon)
 
 
+# ---- the cheap check -----------------------------------------------------------
+
+# What the check reads for each feature beyond the row's own fields. The Census
+# derives all four from the shape, so a boundary that moves moves them.
+FINGERPRINT_FIELDS = ("AREALAND", "AREAWATER", "INTPTLAT", "INTPTLON")
+# The comment lines that open and close the section above. Its text is part of
+# every fingerprint, so an edit there makes the next --refresh fetch every layer
+# whole and compare, with no number for anybody to remember to bump.
+PROCESSING_BEGIN = re.compile(r"^# ---- fetch and convert -+$", re.M)
+PROCESSING_END = re.compile(r"^# ---- the cheap check -+$", re.M)
+
+
+def fingerprint_url(row):
+    """The layer's own query with the check's fields added and no shapes."""
+    fields = row["fields"].split(",")
+    fields += [f for f in FINGERPRINT_FIELDS if f not in fields]
+    url = query_url(row)
+    old = "&outFields=%s&" % row["fields"]
+    if url.count(old) != 1:
+        raise RuntimeError("the query carries no single outFields to extend")
+    url = url.replace(old, "&outFields=%s&" % ",".join(fields)).replace("&geometryPrecision=5", "")
+    if "&orderByFields=" not in url:
+        url += "&orderByFields=OBJECTID"
+    return url + "&returnGeometry=false"
+
+
+def fetch_attributes(url, work, name):
+    """Every feature's attributes, paged if the server caps a response."""
+    feats, offset = [], 0
+    while True:
+        path = os.path.join(work, "%s-%d.json" % (name, offset))
+        fetch(url if not offset else "%s&resultOffset=%d" % (url, offset), path)
+        payload = read_json(path)
+        got = payload.get("features") or []
+        feats += [f.get("attributes") or {} for f in got]
+        offset += len(got)
+        if not got or not payload.get("exceededTransferLimit"):
+            return feats
+
+
+_STATE_ATTRS = {}
+
+
+def state_attributes(tag, work):
+    """The four derived values for the app's state, whose outline decides
+    which of a box's ZCTAs a ZIP archive keeps."""
+    if tag not in _STATE_ATTRS:
+        url = ("%sState_County/MapServer/0/query?where=%s&outFields=STATE,%s&f=json&returnGeometry=false"
+               % (SERVICES, urllib.parse.quote("STATE='%s'" % STATE_FIPS[tag]), ",".join(FINGERPRINT_FIELDS)))
+        got = fetch_attributes(url, work, "state")
+        if len(got) != 1:
+            raise RuntimeError("TIGERweb returned %d states for STATE %s" % (len(got), STATE_FIPS[tag]))
+        _STATE_ATTRS[tag] = got[0]
+    return _STATE_ATTRS[tag]
+
+
+def converter_sha256():
+    """The engine code that turns a fetched set into the archive's input."""
+    with open(ARCGIS_BLOCK, encoding="utf-8") as fh:
+        block = fh.read()
+    start, end = block.find("function esriSignedRingArea"), block.find("function fetchArcGISAsGeoJSON")
+    if start < 0 or end < 0:
+        raise RuntimeError("the arcgis-loader block has moved")
+    with open(PIP_BLOCK, encoding="utf-8") as fh:
+        pip = fh.read()
+    return sha256_bytes("\0".join((CONVERT, block[start:end], pip)).encode())
+
+
+def processing_sha256():
+    """This file's fetch-and-convert section: the code that decides what a
+    fetched set becomes."""
+    with open(os.path.abspath(__file__), encoding="utf-8") as fh:
+        src = fh.read()
+    begin, end = PROCESSING_BEGIN.search(src), PROCESSING_END.search(src)
+    if not begin or not end or end.start() <= begin.end():
+        raise RuntimeError("the fetch-and-convert section's opening or closing comment has moved")
+    return sha256_bytes(src[begin.start():end.start()].encode())
+
+
+def fingerprint(row, work):
+    """(features, hash) of everything that decides a layer's archive, read
+    without fetching a single shape."""
+    url = fingerprint_url(row)
+    attrs = fetch_attributes(url, work, "attrs")
+    if not attrs:
+        raise RuntimeError("TIGERweb returned no features for the check")
+    # held to the server's own count, as fetch_pages holds a box row's pages:
+    # a check that read only part of a set would never see the rest change
+    query = query_url(row)
+    if query.count("&f=json") != 1:
+        raise RuntimeError("the query carries no single &f=json to ask a count with")
+    count_path = os.path.join(work, "attrs-count.json")
+    fetch(query.replace("&f=json", "&f=json&returnCountOnly=true"), count_path)
+    want = read_json(count_path).get("count")
+    if want != len(attrs):
+        raise RuntimeError("the check read %d features and the server counts %s" % (len(attrs), want))
+    parts = {"code": processing_sha256(), "query": url, "converter": converter_sha256(),
+             "attributes": sorted(json.dumps(a, sort_keys=True, separators=(",", ":")) for a in attrs)}
+    if row["env"] is not None:
+        import shapely
+        parts["state"] = state_attributes(row["tag"], work)
+        parts["overlap_min"] = STATE_OVERLAP_MIN
+        # keep_in_state's overlap test is shapely's and GEOS's arithmetic
+        parts["shapely"] = [shapely.__version__, shapely.geos_version_string]
+    sp = SPLICES.get((row["tag"], row["layer"]))
+    if sp:
+        parts["spliced"] = [sp[0], sp[1], sha256_file(os.path.join(REPO_ROOT, sp[0]))]
+    return len(attrs), sha256_bytes(json.dumps(parts, sort_keys=True, separators=(",", ":")).encode())
+
+
 # ---- the service worker's cache --------------------------------------------------
 
 def bump_cache(tags):
@@ -415,24 +607,52 @@ def refresh(only, force, n_points, seed):
     from scraper_common import require_robots_allowed
     why = require_robots_allowed(query_url(todo[0]), USER_AGENT, label="mirror-tiger-tiles")
     print("mirror-tiger-tiles: robots.txt — %s" % why, flush=True)
-    changed, failed, replaced = [], [], set()
+    changed, failed, replaced, recorded, light, whole = [], [], set(), [], [], []
     tmp = tempfile.mkdtemp(prefix="tiger-mirror-")
     try:
         for row in todo:
             tag, layer = row["tag"], row["layer"]
             k = key(tag, layer)
             work = tempfile.mkdtemp(dir=tmp)
+            old = rec.get(k) or {}
+            arch = archive_path(tag, layer)
+            intact = os.path.isfile(arch) and sha256_file(arch) == old.get("archive_sha256")
+            try:
+                checked, fp = fingerprint(row, work)
+            except RuntimeError as e:
+                print("  FAIL  %-36s %s" % (k, e), flush=True)
+                failed.append(k)
+                continue
+            # the hash covers the check's own query, which leaves out
+            # geometryPrecision=5, so the shapes query is compared whole
+            same_query = old.get("query") == query_url(row)
+            if not force and intact and same_query and old.get("fingerprint_sha256") == fp:
+                print("  same  %-36s %d %s, attributes and areas unchanged; shapes not fetched"
+                      % (k, checked, "ZCTAs in the box" if row["env"] is not None else "features"),
+                      flush=True)
+                light.append(k)
+                continue
             try:
                 url, path, n, digest = fetch_as_geojson(row, work)
             except RuntimeError as e:
                 print("  FAIL  %-36s %s" % (k, e), flush=True)
                 failed.append(k)
                 continue
-            old = rec.get(k) or {}
-            arch = archive_path(tag, layer)
-            if not force and old.get("data_sha256") == digest and os.path.isfile(arch) \
-                    and sha256_file(arch) == old.get("archive_sha256"):
-                print("  same  %-36s %d features, data unchanged" % (k, n), flush=True)
+            if not force and old.get("data_sha256") == digest and intact:
+                # the archive answers as today's set does, so today's query and
+                # check are recorded against it and next week's run can skip it
+                notes = []
+                if old.get("fingerprint_sha256") != fp:
+                    notes.append("the check's new value")
+                if old.get("query") != url:
+                    notes.append("the query that fetched it")
+                if notes:
+                    rec[k] = dict(old, fingerprint_sha256=fp, query=url)
+                    recorded.append(k)
+                whole.append(k)
+                print("  same  %-36s %d features, data unchanged (%.1f MB set)%s"
+                      % (k, n, os.path.getsize(path) / 1e6,
+                         "; %s recorded" % " and ".join(notes) if notes else ""), flush=True)
                 continue
             feats, _, skipped = bvt.collect(tag, layer, [(None, path)])
             os.makedirs(os.path.dirname(arch), exist_ok=True)
@@ -455,6 +675,7 @@ def refresh(only, force, n_points, seed):
                 "features": n,
                 "data_sha256": digest,
                 "archive_sha256": sha256_file(arch),
+                "fingerprint_sha256": fp,
             }
             if row.get("_splice_sha256"):
                 rec[k]["spliced"] = {"file": SPLICES[(tag, layer)][0], "sha256": row["_splice_sha256"]}
@@ -478,12 +699,13 @@ def refresh(only, force, n_points, seed):
                   flush=True)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
-    if changed:
+    if changed or recorded:
         write_record(rec)
     bump_cache(replaced)
     if failed:
         fail("%d layer(s) not mirrored: %s — nothing was written for them" % (len(failed), ", ".join(failed)))
-    print("mirror-tiger-tiles: OK — %d of %d layer(s) rebuilt" % (len(changed), len(todo)))
+    print("mirror-tiger-tiles: OK — %d of %d layer(s) rebuilt; %d fetched whole and unchanged; "
+          "%d checked without fetching their shapes" % (len(changed), len(todo), len(whole), len(light)))
 
 
 # ---- check ---------------------------------------------------------------------

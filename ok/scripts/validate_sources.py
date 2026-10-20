@@ -182,6 +182,138 @@ PROVENANCE = [
             "offline and proves the land-to-government join, never the Census's own set."
         ),
     },
+    {
+        "layer": "ok-judicial-district",
+        "app_file": "ok-judicial-districts.json",
+        "source_url": "https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf",
+        "note": (
+            "Oklahoma's 26 district court judicial districts and their 75 "
+            "district judge offices, dissolved from the county fabric by "
+            "ok/scripts/build_ok_judicial_districts.py from the State Election "
+            "Board's 2024 roster (published 2025-03-18; excerpts in "
+            "ok/data/source/courts/, with no judge's name or home town). The "
+            "statutes are not readable here: both of their publishers refuse "
+            "this project in robots.txt. The re-read when the 2026 roster is "
+            "posted is a row in ok/WATCH.md."
+        ),
+    },
+    {
+        "layer": "conservation-district",
+        "app_file": "ok-conservation-districts.json",
+        "source_url": "https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/cons_dis/FeatureServer/0",
+        "note": (
+            "Oklahoma's 84 conservation districts from the Conservation "
+            "Commission's map (106 records, five districts split across several "
+            "records each), pre-built by "
+            "ok/scripts/build_ok_conservation_districts.py through "
+            "scripts/published_district_layers.py; the quarterly --watch row in "
+            "ok/WATCH.md compares the fingerprint recorded at the build. A "
+            "district merged or redrawn reaches the app only through a rebuild."
+        ),
+    },
+    {
+        "layer": "conservation-district",
+        "app_file": "ok-conservation-offices.json",
+        "source_url": "https://conservation.ok.gov/conservation-district-directory/",
+        "note": (
+            "Each district's office, telephone and e-mail from the Conservation "
+            "Commission's directory of district offices (modified 2026-10-15), "
+            "read by ok/scripts/build_ok_conservation_offices.py. The page names "
+            "no directors. Rebuilt by hand on the quarterly row in ok/WATCH.md; "
+            "this row notices the page going away."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2",
+        "note": (
+            "Oklahoma City's 8 council wards, from the city's own map, which says "
+            "nothing about when it was drawn, one of the 56 wards and districts of "
+            "the 9 Oklahoma cities above 25,000 people whose wards elect their own "
+            "members, pre-built by ok/scripts/build_ok_city_wards.py through "
+            "scripts/city_ward_maps.py, which takes the cities to draw from "
+            "ok/data/source/ok-city-council-seats.json; the quarterly --watch row "
+            "in ok/WATCH.md compares each map's fingerprint recorded at the build. "
+            "The names on the cards come from each city's own pages, and "
+            "ok/scripts/build_ok_city_councils.py --watch is what notices one of "
+            "those changing."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Council_Districts/FeatureServer/0",
+        "note": (
+            "Tulsa's 9 council districts, from the city's own map, which carries "
+            "each district's metes-and-bounds description and was last edited on "
+            "29 January 2026 (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services.arcgis.com/rt1leD4Hj3sLGHNL/arcgis/rest/services/Council_Wards/FeatureServer/1",
+        "note": (
+            "Norman's 8 council wards, from the city's own map, which says it was "
+            "\"Updated September 13, 2022 by O-2223-8\" (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://gis.cityofmoore.com/arcgis/rest/services/OpenData/Government_Services/MapServer/20",
+        "note": (
+            "Moore's 3 council wards, each electing two members, from the city's "
+            "own map (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://maps.midwestcityok.org/arcgis/rest/services/OpenData/CouncilWards/MapServer/0",
+        "note": (
+            "Midwest City's 6 council wards, from the city's own map (see the "
+            "Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services6.arcgis.com/LIvKKeLD11lMmJuJ/arcgis/rest/services/Ward_Publishing_Doc/FeatureServer/8",
+        "note": (
+            "Enid's 6 commission wards, from the city's own map, last edited on 4 "
+            "August 2025, Ward 2 in two records (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://arcgissrv.cityofbartlesville.org/arcgisserver/rest/services/Citymaps/CityMaps_BvilleGIS/MapServer/32",
+        "note": (
+            "Bartlesville's 5 council wards, from the city's own map (see the "
+            "Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://maps.shawneeok.org/server/rest/services/City_Wards/FeatureServer/0",
+        "note": (
+            "Shawnee's 6 commission wards, from the city's own map, which carries "
+            "each ward's number in a field named STATEFP10 and was last edited on "
+            "22 September 2026 (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services6.arcgis.com/TI4WUPORw6hUtDVO/arcgis/rest/services/City_Council_Wards/FeatureServer/0",
+        "note": (
+            "Bixby's 5 council wards, from the city's own map, in 11 records, last "
+            "edited on 26 August 2026 (see the Oklahoma City row)."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -269,6 +401,17 @@ ENDPOINTS = [
                 "&geometry=-103.10%2C33.50%2C-94.30%2C37.10&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 950,   # 1,058 measured 2026-10-09
+    },
+    # The conservation district records the builder reads (2026-10-16): 106,
+    # drawing 84 districts. A floor, not the count: the quarterly --watch
+    # notices a changed district; this row notices the query failing or the
+    # layer emptying.
+    {
+        "layer": "conservation-district",
+        "url": ("https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/"
+                "cons_dis/FeatureServer/0/query"
+                "?where=1%3D1&returnCountOnly=true&f=json"),
+        "min_count": 95,    # 106 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

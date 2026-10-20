@@ -22,6 +22,9 @@
     "clerk": "Jean Gansch",
     "municipality": "Cary",
     "phone": "715-884-2962",
+    "phonesExtra": [
+      "715-712-1688"
+    ],
     "recordUpdated": "2024-01-04",
     "url": "https://www.townofcarywis.org/"
   },
@@ -85,6 +88,9 @@
     "clerk": "Tracey Draper",
     "municipality": "Port Edwards",
     "phone": "715-451-1767",
+    "phonesExtra": [
+      "715-886-4331"
+    ],
     "recordUpdated": "2025-06-24",
     "url": "https://www.townofportedwardswi.org/"
   },
@@ -92,6 +98,9 @@
     "clerk": "Brenda J Haasl",
     "municipality": "Remington",
     "phone": "715-323-2603",
+    "phonesExtra": [
+      "715-884-2531"
+    ],
     "recordUpdated": "2024-01-16",
     "url": "https://townofremingtonwi.com/"
   },
@@ -150,6 +159,9 @@
     "clerk": "Cathy Tritz",
     "municipality": "Wood",
     "phone": "715-884-2135",
+    "phonesExtra": [
+      "715-884-2116"
+    ],
     "recordUpdated": "2025-06-16",
     "url": "https://townofwoodwi.com/"
   },

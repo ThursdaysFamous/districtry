@@ -3,6 +3,9 @@
     "clerk": "Molly Madorin",
     "municipality": "Agenda",
     "phone": "715-769-3334",
+    "phonesExtra": [
+      "715-661-2347"
+    ],
     "recordUpdated": "2023-11-29",
     "url": "https://www.townofagenda.com/"
   },
@@ -16,6 +19,9 @@
     "clerk": "Cindy Pritzl",
     "municipality": "Chippewa",
     "phone": "715-769-3126",
+    "phonesExtra": [
+      "715-769-3239"
+    ],
     "recordUpdated": "2024-01-10",
     "url": "http://www.townofchippewawi.com/"
   },
@@ -30,6 +36,9 @@
     "clerk": "Vickie Stencil",
     "municipality": "Gordon",
     "phone": "715-264-2460",
+    "phonesExtra": [
+      "715-663-0905"
+    ],
     "recordUpdated": "2024-01-02"
   },
   "5500337775": {
@@ -58,6 +67,9 @@
     "clerk": "Theresa Koosmann",
     "municipality": "Morse",
     "phone": "715-274-2126",
+    "phonesExtra": [
+      "715-681-0456"
+    ],
     "recordUpdated": "2021-12-10"
   },
   "5500361600": {
@@ -83,6 +95,9 @@
     "clerk": "Valerie Jolma",
     "municipality": "White River",
     "phone": "715-413-8090",
+    "phonesExtra": [
+      "715-278-3752"
+    ],
     "recordUpdated": "2026-07-20"
   },
   "_source": {

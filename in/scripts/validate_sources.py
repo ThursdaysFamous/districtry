@@ -196,6 +196,61 @@ PROVENANCE = [
             "a later edition, on the quarterly row in in/WATCH.md."
         ),
     },
+    {
+        "layer": "school-board-district",
+        "app_file": "in-school-board-districts.json",
+        "source_url": "https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/9",
+        "note": (
+            "The five Indianapolis Public Schools board districts from the "
+            "City of Indianapolis's School Board Districts layer (26 areas; "
+            "only IPS's five are election districts), pre-built by "
+            "in/scripts/build_in_school_board_districts.py through "
+            "scripts/published_district_layers.py; the quarterly "
+            "--watch row in in/WATCH.md compares the fingerprint recorded at "
+            "the build."
+        ),
+    },
+    {
+        "layer": "in-court-of-appeals",
+        "app_file": "in-appeals-districts.json",
+        "source_url": "https://www.in.gov/courts/appeals/images/coa-district-map.jpg",
+        "note": (
+            "The Court of Appeals' 1st, 2nd and 3rd Districts, dissolved from "
+            "the county fabric by in/scripts/build_in_appeals_districts.py "
+            "following the court's own district map image (read 2026-10-16; "
+            "its SHA-256 and the county-by-county reading are in "
+            "in/data/source/courts/). The Indiana Code that sets the districts "
+            "is not readable here. A changed image is the signal to re-read "
+            "the map; the re-hash is a row in in/WATCH.md."
+        ),
+    },
+    {
+        "layer": "conservancy-district",
+        "app_file": "in-conservancy-districts.json",
+        "source_url": "https://gisdata.in.gov/server/rest/services/Hosted/Conservancy_Districts_of_Indiana_20250528/FeatureServer/54",
+        "note": (
+            "Indiana's 100 active conservancy districts from the Department of "
+            "Natural Resources' map (103 records marked active, three districts "
+            "split across two records each), pre-built by "
+            "in/scripts/build_in_conservancy_districts.py through "
+            "scripts/published_district_layers.py; the quarterly --watch row in "
+            "in/WATCH.md compares the fingerprint recorded at the build. A "
+            "district a court sets up or dissolves reaches the app only through "
+            "a rebuild."
+        ),
+    },
+    {
+        "layer": "conservancy-district",
+        "app_file": "in-conservancy-directors.json",
+        "source_url": "https://www.in.gov/dnr/water/publications/indiana-conservancy-district-directory",
+        "note": (
+            "Each district's board as it reported it to the Department of "
+            "Natural Resources for the 2026 directory (modified 2026-05-01), "
+            "read by in/scripts/build_in_conservancy_directors.py. Published "
+            "once a year, so a new edition is a hand rebuild on the yearly row "
+            "in in/WATCH.md; this row notices the page going away."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -314,6 +369,26 @@ ENDPOINTS = [
                 "Hosted/Voting_District_Boundaries_2026/FeatureServer/0/query?where=1%3D1"
                 "&returnCountOnly=true&f=json"),
         "min_count": 4600,  # 5,121 records measured 2026-10-15
+    },
+    # The five IPS districts the builder reads (2026-10-16): exactly five, so
+    # the floor is the count.
+    {
+        "layer": "school-board-district",
+        "url": ("https://gis.indy.gov/server/rest/services/OpenData/"
+                "OpenData_Political/MapServer/9/query?where=SCHOOLDIST%3D%27IPS%27"
+                "+AND+BOARDDISTR+IS+NOT+NULL&returnCountOnly=true&f=json"),
+        "min_count": 5,     # 5 records measured 2026-10-16
+    },
+    # The conservancy district records the builder reads (2026-10-16): 103
+    # marked active, drawing 100 districts. A floor, not the count: the
+    # quarterly --watch notices a changed district; this row notices the query
+    # failing or the layer emptying.
+    {
+        "layer": "conservancy-district",
+        "url": ("https://gisdata.in.gov/server/rest/services/Hosted/"
+                "Conservancy_Districts_of_Indiana_20250528/FeatureServer/54/query"
+                "?where=status%3D%27Active%27&returnCountOnly=true&f=json"),
+        "min_count": 95,    # 103 records measured 2026-10-16
     },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

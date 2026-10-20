@@ -203,7 +203,7 @@ Zero `tileerror` handlers (grep-verified); offline users get a booted app (the S
 **R10 — Repo/deploy hygiene.**
 - Pages deploys the whole branch (classic CNAME-file deploy, no `.nojekyll`, no Pages workflow): scrapers, docs, and 4.6 MB of `data/` ship to the CDN. After P0, `data/app/` *must* deploy — but `data/source/raw/` (2.1 MB of zips/xlsx) still needn't. An actions-based Pages deploy that uploads only the app files (+ `.nojekyll` to skip the Jekyll pass) is ~20 lines.
 - Bot branches are unique per run (`bot/ilga-roster-update-${run_id}`): an unmerged roster PR spawns a duplicate every week. Fixed branch name + force-push + `gh pr list` guard.
-- Scraper deps float (`pip install requests beautifulsoup4`, `python-version: "3.x"`): heuristic HTML parsers are exactly the code that breaks on silent dependency drift. Pin via `scripts/requirements.txt` + `cache: pip`.
+- Scraper deps float (`pip install requests beautifulsoup4`, `python-version: "3.x"`): heuristic HTML parsers are exactly the code that breaks on silent dependency drift. Pin via `scripts/requirements.txt` + `cache: pip`. *(2026-10-20: every workflow's install now names a pinned requirements file, with `-c` or `-r`; the Python is pinned to 3.14 only in the fourteen workflows that install shapely or pyproj, after runner images began carrying 3.15, for which neither publishes a wheel. The other workflows still ask for "3.x".)*
 - `CPD_DISTRICT_INFO` is still the 32-byte placeholder — the CPD rewrite path has never run against real data in production; treat its first live PR with extra care (or land R3 first). **Root cause now identified — see R11.**
 
 **R11 — The CPD scraper is blocked by Cloudflare's bot challenge; that is *why* the roster has never populated.**
@@ -1401,6 +1401,38 @@ archive was rebuilt at zoom 12). `vector-tiles.yml` now also runs on changes
 to any app's `index.html` or the engine, since a registration or a query
 change can break the card without touching an archive.
 
+**Most of those two gates' time was the tile reader, not the checks**
+(2026-10-20). By 2026-10-19 a pull request's tile check spent 2 min 39 s in
+`--committed` (67 archives) and 5 min 32 s in `validate_vector_tiles.py`
+(146), on every run. Profiled, almost all of it was `pmtiles`' `Reader.get`
+unpacking the archive's whole root directory again, up to 6,863 entries in
+pure Python, for every tile it returned. `read_directories_once()` in
+`build_vector_tiles.py` keeps each parsed directory under its own bytes, which
+changes no answer because the parse depends on nothing else; both gates call
+it. Measured here, `--committed` went from 88 s to 36 s and
+`validate_vector_tiles.py` from 166 s to 48 s, and each printed exactly the
+lines it printed before. On GitHub they took 29 s and 52 s on the run that
+tested the change (job 118451375189).
+
+**Most of the card probe's time was downloading, and the downloads are now
+kept between runs** (2026-10-20). The probe fetches the whole set each
+mirrored layer was built from, to place its points and to answer the app's
+own whole-set request. Timed on GitHub, that was 1,067 s of an every-instance
+run's 1,392 s: about a gigabyte from the Census Bureau and three city
+portals, 643 s of it for the fifteen ZIP layers, which the census server
+answers 250 features at a time. `vector-tiles.yml` now keeps the sets in a
+GitHub Actions cache, and the probe files each one under its record's
+`data_sha256`, query and page size (`PROBE_SET_CACHE`), so a set is fetched
+again only when the weekly mirror job rewrites its record. Measured here on
+two apps (ar, ca), the probe took 36.1 s reading the copy against 61.8 s
+fetching, and printed the same results; a damaged part is fetched again, an
+error answer is never kept, and a set no record names is removed. Main keeps
+the copy pull requests read, because GitHub lets a pull request's own cache
+be read by that pull request alone, so the workflow also runs on main when a
+mirror record or the probe changes. The cost is that an upstream change
+between two weekly refreshes no longer shows up as a difference in whichever
+pull request runs the probe next; the weekly mirror job finds it.
+
 **Not yet on tiles (phase 5b).** The county-dispatched layers — Illinois's
 county board, county precinct, fire, park and library districts and judicial
 subcircuits, the Iowa and Michigan city-ward layers, and New York's county
@@ -1733,3 +1765,133 @@ remap — so a diff there is more often real than in the TIGER job.
 
 Still live after 6c: `il ssa`, `ny neighborhood`, `ny school-district`,
 `ny cec`, `il ward`'s four sources and the county servers.
+
+### Phase 6d: the census layers of the nine newest apps (2026-10-17)
+
+Nine apps arrived after phase 6 was written — Minnesota, Kentucky, Indiana,
+North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi
+— and each drew its municipality and school district layers live from
+TIGERweb, as did seven of them a county subdivision layer and all but Kentucky
+a ZIP layer: a whole state downloaded on first toggle, and the reader's point
+sent to the Census on every first click. The operator chose to mirror them
+once the five shared-layer changes of that week had merged. Forty layers
+became thirty-two `MIRRORS` rows and eight `ZIP_MIRRORS` rows in
+`scripts/mirror_tiger_tiles.py`, built and gated exactly as in 6a and 6b;
+nothing in the method is new.
+
+| App | Layers | Features | Sets fetched | Archives |
+|---|---|---|---|---|
+| Minnesota | 6 | 4,836 | 59.2 MB | 16.9 MB |
+| Kentucky | 5 | 1,086 | 31.1 MB | 7.7 MB |
+| Indiana | 4 | 2,676 | 34.3 MB | 8.6 MB |
+| North Carolina | 4 | 2,564 | 86.0 MB | 17.3 MB |
+| Oklahoma | 5 | 2,077 | 46.6 MB | 11.3 MB |
+| South Carolina | 4 | 1,066 | 43.0 MB | 9.1 MB |
+| Tennessee | 6 | 2,000 | 78.7 MB | 15.0 MB |
+| Arkansas | 3 | 1,355 | 40.4 MB | 8.2 MB |
+| Mississippi | 3 | 865 | 33.2 MB | 6.3 MB |
+| **All nine** | **40** | **18,525** | **452.5 MB** | **100.5 MB** |
+
+The sets column is what the mirror fetched; 197.5 MB of it is the eight ZIP
+sets at full detail, which is more than an app ever downloaded, because seven
+of the eight apps' own ZIP loaders ask for the ~55 m simplification
+(Minnesota's asks for none). Every archive passed the builder's gate: of
+80,000 points placed near edges, the 59,982 two metres or more from every edge
+all answered from the tile as from the fetched set, and only points within two
+metres of an edge ever differed (2,575 of 20,018). The card probe
+(`scripts/probe_tile_cards.mjs`) then ran each of the forty layers' own query
+from the tile and from the fetched set at 1,984 points placed either side of
+edges, 1,650 of them inside a district: every card matched, none errored, and
+every one was answered from the tile.
+
+| ZIP layer | Kept | Dropped | Dropped ZCTAs touching the state | Archive |
+|---|---|---|---|---|
+| Minnesota | 887 | 498 | 87 | 5.47 MB |
+| Indiana | 807 | 399 | 75 | 3.51 MB |
+| North Carolina | 853 | 815 | 103 | 6.18 MB |
+| Oklahoma | 666 | 392 | 116 | 4.14 MB |
+| South Carolina | 424 | 417 | 64 | 3.35 MB |
+| Tennessee | 643 | 427 | 110 | 5.54 MB |
+| Arkansas | 620 | 322 | 96 | 4.91 MB |
+| Mississippi | 428 | 399 | 68 | 4.32 MB |
+
+**THE IN-STATE FILTER CHANGES NO ANSWER INSIDE THESE EIGHT STATES EITHER.**
+Re-fetched the same day — each kept set hashing to the one archived — and
+intersected with the Census's own state polygon, none of the 719 dropped ZCTAs
+that touch a state holds more than 0.0000 m² of it. As in 6b, what FULL DETAIL
+moves is the ground near an edge in the seven apps whose loader simplified: a
+first click there answers as it did, because the Census computed its point
+answer on its full drawing (bar the two metres at an edge where any tile can
+differ), while a click made after the whole set had downloaded used to read
+the simplified copy and now reads the full one. None of these ZIP layers
+answers outside its state, archive or not, because all eight declare a
+coverage test against the app's own state outline.
+
+**THOSE NINE APPS NOW SEND A READER'S POINT TO NO SERVER.** Measured by
+`scripts/probe_point_transmission.mjs` the same day, the layers sending a
+point on a first click went from 40 to 0 — Minnesota 6, Kentucky 5, Indiana 4,
+North Carolina 4, Oklahoma 5, South Carolina 4, Tennessee 6, Arkansas 3 and
+Mississippi 3, each now 0 — so thirteen of the fifteen apps send none, and
+what is left fleet-wide is Illinois's five layers and Wisconsin's ward layer.
+The hooks stay, as everywhere else, for a session whose archive cannot be
+read, and the privacy page's tile sentence now says "in every app", because
+every app now draws at least one layer from tiles.
+
+**SEVERAL SMOKE CHECKS STUBBED THE CENSUS SERVICE, AND A STUB NOBODY ASKS
+PASSES NOTHING.** North Carolina's, Oklahoma's, South Carolina's, Tennessee's,
+Arkansas's and Mississippi's checks 7 (the census layers' own cards) and 8
+(the ZIP coverage test), Kentucky's municipality and county-subdivision checks
+and Indiana's 2g, 2g2 and 2h answered the census query with a fixture. With
+the card reading the tile, that route would no longer be asked, and several
+fixtures exist in no archive — an affix no label table carries, an inactive
+municipality — so rewriting them as real points would have dropped the very
+cases they exist for. Each now refuses that layer's archive first, which sends
+the card down the census path the stub answers: the archive-failure path
+Illinois's check 2d already holds.
+
+**WHAT IT COSTS, STATED RATHER THAN IMPLIED.** About 100.5 MB more in the
+repository and on the published site, which went from about 458 MB to about
+559 MB against GitHub Pages' 1 GB limit. A census vintage roll can rebuild
+every one of these archives, and each rebuild adds another copy to the
+repository's history. And `update-tiger-tiles.yml` now fetches forty more sets
+from the Census every Sunday, 595.2 MB as downloaded and 452.5 MB once
+converted (both measured 2026-10-17), though it rebuilds only a layer whose
+data changed; measured here, fetching, building and gating all forty took
+14 min 48 s, inside the job's 45-minute step even in a week when every set
+changed.
+
+**THE WEEKLY JOB NOW ASKS BEFORE IT DOWNLOADS** (2026-10-17, the operator's
+choice the same day). Fetching every mirrored set's shapes, as the job did each
+Sunday, downloaded 940.7 MB in about ten minutes when measured here that day,
+and found every set unchanged, so `mirror_tiger_tiles.py --refresh` first asks
+for every feature's attributes with no shapes: the row's own fields plus
+`AREALAND`, `AREAWATER`, `INTPTLAT` and `INTPTLON`, which the Census derives
+from the shape. It holds the number of features it read to the server's own
+count, hashes them with the query, the engine's converter, the text of the
+script's own fetch-and-convert section, any spliced file and, for a ZIP row,
+the same four values for the state and the shapely and GEOS versions that
+decide which ZCTAs overlap it, and records the hash as `fingerprint_sha256`.
+Only a set whose hash moved, or whose recorded query is not the one the script
+makes today, is fetched whole, and only one whose data then moved is rebuilt;
+the query is compared whole because the check's own query leaves out
+`geometryPrecision=5`, so removing it from the shapes query would otherwise
+change the archive without moving the hash. Measured here, the check took 7.7
+MB and 38 seconds for every mirrored set, and every run after the first that
+day found all 62 hashes unchanged. **The script's own code is in the hash, not
+a version number somebody bumps**: a first draft carried a
+`FINGERPRINT_VERSION` to be raised by hand whenever the processing changed,
+which is the `CACHE_NAME` comment `check_cache_version.py` exists to replace.
+Now an edit to the fetch-and-convert section moves every hash by itself and
+costs one week of full fetches. What the check cannot see is stated rather than
+implied: a boundary edit that leaves every feature's land area, water area and
+internal point exactly as they were, and an edit elsewhere in the script,
+outside the fetch-and-convert section and the query, that changes what a
+fetched set becomes (`SPLICES` and `STATE_OVERLAP_MIN` are hashed themselves).
+A missing or changed hash falls back to the full fetch.
+
+Still live after 6d: the layers phase 6c names, `il ward`'s four sources and
+the county servers. No layer in the nine newest apps fetches its shapes from
+any host but TIGERweb, so their census hooks and whole-set loaders are now
+only the fallback; their station and post-office layers download a whole
+state's points from the USGS by the app's bounding box and send no reader's
+point.

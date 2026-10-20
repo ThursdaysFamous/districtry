@@ -1,6 +1,6 @@
 {
   "5511950": {
-    "asOf": "2026-10-15",
+    "asOf": "2026-10-17",
     "atLarge": true,
     "board": [
       {
@@ -51,7 +51,7 @@
     "sourceUrl": "https://www.caledonia-wi.gov/board"
   },
   "5526275": {
-    "asOf": "2026-10-15",
+    "asOf": "2026-10-17",
     "atLarge": false,
     "board": [
       {
@@ -103,31 +103,43 @@
     "sourceUrl": "https://www.fdl.wi.gov/city-council/contact-us/"
   },
   "5537825": {
-    "asOf": "2026-10-15",
+    "asOf": "2026-10-17",
     "atLarge": true,
     "board": [
       {
         "email": "squirel@janesvillewi.gov",
         "name": "Larry Squire",
         "phone": "(608) 373-6012",
+        "phonesExtra": [
+          "cell (608) 921-5550"
+        ],
         "role": "Council President"
       },
       {
         "email": "cassm@janesvillewi.gov",
         "name": "Michael Cass",
         "phone": "(608) 373-6015",
+        "phonesExtra": [
+          "cell (608) 305-4909"
+        ],
         "role": "Council Vice President"
       },
       {
         "email": "erdmanj@janesvillewi.gov",
         "name": "Joshua Erdman",
         "phone": "(608) 373-6017",
+        "phonesExtra": [
+          "cell (608) 352-3168"
+        ],
         "role": "Councilmember"
       },
       {
         "email": "millerh@ci.janesville.wi.us",
         "name": "Heather Miller",
         "phone": "(608) 373-6013",
+        "phonesExtra": [
+          "cell (608) 289-6555"
+        ],
         "role": "Councilmember"
       },
       {
@@ -140,6 +152,9 @@
         "email": "popec@janesvillewi.gov",
         "name": "Cassandra Pope",
         "phone": "(608) 373-6011",
+        "phonesExtra": [
+          "cell (608) 728-8232"
+        ],
         "role": "Councilmember"
       },
       {
@@ -154,7 +169,7 @@
     "sourceUrl": "https://www.janesvillewi.gov/government/city-council/contact-the-city-council"
   },
   "5551000": {
-    "asOf": "2026-10-15",
+    "asOf": "2026-10-17",
     "atLarge": false,
     "board": [
       {
@@ -192,7 +207,7 @@
     "sourceUrl": "https://www.menomoneefalls.gov/1410/Village-Board-Members"
   },
   "5554875": {
-    "asOf": "2026-10-15",
+    "asOf": "2026-10-17",
     "atLarge": true,
     "board": [
       {
@@ -243,7 +258,7 @@
     "sourceUrl": "https://www.mtpleasantwi.gov/319/Village-Board"
   },
   "5560500": {
-    "asOf": "2026-10-15",
+    "asOf": "2026-10-17",
     "atLarge": true,
     "board": [
       {

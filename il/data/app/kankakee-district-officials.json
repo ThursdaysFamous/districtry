@@ -3,10 +3,12 @@
     "AROMA FIRE": {
       "board": [
         {
+          "email": "verlemann2021@gmail.com",
           "name": "Verle Mann",
           "role": "President"
         },
         {
+          "email": "shortypat@comcast.net",
           "name": "Gene Hammac",
           "role": "Treasurer"
         }
@@ -23,6 +25,7 @@
     "BOURBONNAIS FIRE": {
       "board": [
         {
+          "email": "rmyers@bourbonnaisfire.org",
           "name": "Randy Myers",
           "role": "President"
         }
@@ -31,6 +34,7 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "bhemm@bourbonnaisfire.org",
           "name": "William Hemm",
           "role": "Treas./Admin."
         }
@@ -67,6 +71,7 @@
     "BOURBONNAIS TWP. PARK": {
       "board": [
         {
+          "email": "rromo@bradleyil.org",
           "name": "Robert Romo",
           "role": "Treasurer"
         }
@@ -75,6 +80,7 @@
       "filedFor": "2024",
       "heads": [
         {
+          "email": "mikeo@btpd.org",
           "name": "Michael O'Shea",
           "role": "Director"
         }
@@ -89,10 +95,12 @@
     "BRADLEY LIBRARY": {
       "board": [
         {
+          "email": "kbayer@bradleylibrary.org",
           "name": "Karen Bayer",
           "role": "President"
         },
         {
+          "email": "nallen@bradleylibrary.org",
           "name": "Nick Allen",
           "role": "Treasurer"
         }
@@ -114,7 +122,9 @@
           "role": "Trustee"
         },
         {
+          "email": "ajray217@yahoo.com",
           "name": "Patrick Koerner",
+          "phone": "(815) 949-1688",
           "role": "Sec./Treas."
         }
       ],
@@ -130,11 +140,15 @@
     "CENTRAL CITIZENS LIBRARY": {
       "board": [
         {
+          "email": "rjlfarm@gmail.com",
           "name": "Robert Lemanager",
+          "phone": "(815) 228-2307",
           "role": "President"
         },
         {
+          "email": "scotts@centralenterprises.com",
           "name": "Scott Senffner",
+          "phone": "(815) 383-3127",
           "role": "Treasurer"
         }
       ],
@@ -149,11 +163,14 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "director@momencelibrary.org",
           "name": "Keri Perkins",
+          "phone": "(815) 472-2581",
           "role": "Director"
         },
         {
           "name": "Scott Kistler",
+          "phone": "(630) 779-9965",
           "role": "Treas./Admin."
         }
       ],
@@ -167,6 +184,7 @@
           "role": "President"
         },
         {
+          "email": "pob3girls73@gmail.com",
           "name": "Patrick O'Brien",
           "role": "Treasurer"
         }
@@ -184,7 +202,9 @@
     "FOSSIL RIDGE LIBRARY": {
       "board": [
         {
+          "email": "sbautertrustee@fossilridge.org",
           "name": "Sandra Bauter",
+          "phone": "(815) 458-2545",
           "role": "President"
         }
       ],
@@ -193,7 +213,9 @@
       "filesIn": "Will",
       "heads": [
         {
+          "email": "tmsmith@fossilridge.org",
           "name": "Tammy Smith",
+          "phone": "(815) 458-2187 Ext: 111",
           "role": "Fin. Officer"
         }
       ],
@@ -207,6 +229,7 @@
       "board": [
         {
           "name": "Gene Rademacher",
+          "phone": "(815) 468-8800",
           "role": "President"
         }
       ],
@@ -220,10 +243,12 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "rbruni@kvpd.com",
           "name": "Ross Bruni",
           "role": "Director"
         },
         {
+          "email": "mwoodard@kvpd.com",
           "name": "Melissa Woodard",
           "role": "Superintendent"
         }
@@ -239,6 +264,7 @@
       "board": [
         {
           "name": "Dave Wulff",
+          "phone": "(815) 933-2762",
           "role": "President"
         }
       ],
@@ -250,10 +276,12 @@
     "LIMESTONE PARK": {
       "board": [
         {
+          "email": "gianotti.rosanne@gmail.com",
           "name": "Rosanne Gianotti",
           "role": "President"
         },
         {
+          "email": "mary.prairie@gmail.com",
           "name": "Mary Prairie",
           "role": "Treasurer"
         }
@@ -274,6 +302,7 @@
           "role": "Chief"
         },
         {
+          "email": "lherz@mantenofire.com",
           "name": "Linda Herz",
           "role": "Administrator"
         }
@@ -295,6 +324,7 @@
           "role": "Chief"
         },
         {
+          "email": "lherz@mantenofire.com",
           "name": "Linda Herz",
           "role": "Administrator"
         }
@@ -313,6 +343,7 @@
       "heads": [
         {
           "name": "Jamie Lockwood",
+          "phone": "(815) 468-3323",
           "role": "Director"
         }
       ],
@@ -324,6 +355,7 @@
     "MOMENCE PARK": {
       "board": [
         {
+          "email": "ojeda1119@gmail.com",
           "name": "Natalie Ojeda",
           "role": "President"
         },
@@ -351,11 +383,13 @@
     "OTTO FIRE": {
       "board": [
         {
-          "name": "WILLIAM SURPRENANT",
+          "name": "William Surprenant",
           "role": "President"
         },
         {
-          "name": "JOE ABRASSART",
+          "email": "CROSSCORNER8@MSN.COM",
+          "name": "Joe Abrassart",
+          "phone": "(815) 697-2422",
           "role": "Trustee"
         }
       ],
@@ -371,7 +405,9 @@
     "PEMBROKE FIRE": {
       "board": [
         {
-          "name": "CHARLENE ASHLEY",
+          "email": "ASHLEYCHARLENE1@GMAIL.COM",
+          "name": "Charlene Ashley",
+          "phone": "(815) 592-2555",
           "role": "President"
         }
       ],
@@ -379,7 +415,9 @@
       "filedFor": "2025",
       "heads": [
         {
-          "name": "GLENDA GRIFFIN",
+          "email": "SUSIEBELL40@YAHOO.COM",
+          "name": "Glenda Griffin",
+          "phone": "(815) 592-9804",
           "role": "Asst. Treasurer"
         }
       ],
@@ -389,7 +427,9 @@
     "PEMBROKE PUBLIC LIBRARY": {
       "board": [
         {
+          "email": "ppldi.t574@gmail.com",
           "name": "Carol Burton",
+          "phone": "(815) 954-7051",
           "role": "President"
         }
       ],
@@ -421,7 +461,8 @@
       "filesIn": "Livingston",
       "heads": [
         {
-          "name": "SUE BERGAN",
+          "name": "Sue Bergan",
+          "phone": "(815) 365-4911",
           "role": "C.E.O."
         }
       ],
@@ -431,11 +472,14 @@
     "SALINA FIRE": {
       "board": [
         {
+          "email": "Larry.Kirchner@salinatwpfire.org",
           "name": "Larry Kirchner",
+          "phone": "(815) 953-5042",
           "role": "President"
         },
         {
           "name": "Melanie Bauer",
+          "phone": "(815) 383-3343",
           "role": "Treasurer"
         }
       ],
@@ -449,15 +493,18 @@
     "ST. ANNE FIRE": {
       "board": [
         {
-          "name": "RALPH MERCIER",
+          "email": "RALPH.MVIRR@GMAIL.COM",
+          "name": "Ralph Mercier",
+          "phone": "(815) 354-6225",
           "role": "President"
         },
         {
-          "name": "SUSAN BONVALLET",
+          "name": "Susan Bonvallet",
+          "phone": "(815) 427-6798",
           "role": "Treasurer"
         },
         {
-          "name": "DENNIS BONVALLET",
+          "name": "Dennis Bonvallet",
           "role": "Trustee"
         }
       ],
@@ -467,7 +514,7 @@
       "office": {}
     }
   },
-  "generated": "2026-10-11T00:34:28Z",
+  "generated": "2026-10-17T23:33:26Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

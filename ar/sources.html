@@ -697,25 +697,26 @@ main details p:first-of-type { margin-top: -2px; }
 
 /* The address box a question page carries above its .cta link. It does not
    geocode: it hands the typed text to the app as `./#q=<address>` and the app
-   runs its own bounded search. See the geocoder-search ENGINE block.
+   runs its own bounded search. See the geocoder-search ENGINE block. Its one
+   button also opens the map when the box is left empty.
 
    IT IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT, so a reader with no JavaScript
-   gets the .cta link below and never an input that cannot submit.
+   gets the .cta link below and never an input that cannot submit. Once it is
+   shown, the .cta link and its note are hidden: the box's own button makes
+   the same trip, and two buttons with the same words read as a mistake.
+   Hidden HERE rather than by the box's script, because that script runs
+   above the link, before the link is in the document.
 
    THE BUTTON FACE FLIPS IN DARK and that is a measurement, not a preference:
    white on --accent-deep reads 1.91:1 there (the shortfall validate_contrast
    already records for .cta), against 9.64:1 for --paper on the same violet.
    The landing page's search button made the same flip for the same reason.
 
-   THE STATUS LINE HAS NO ERROR COLOUR because the sub-page palette carries no
-   error token — the shell speaks --accent/--slate/--panel, and --error is not
-   among the eleven aliases build_brand_tokens.py emits. --accent-warm-deep is
-   this shell's caution hue (the .disclaimer rule below uses its lighter pair)
-   and measures 8.11:1 light / 8.64:1 dark on --panel, so the failure state is
-   painted with it rather than by adding a twelfth token. The message says what
-   went wrong in words either way. */
+   THE STATUS LINE HAS NO ERROR STATE since 2026-10-20: the one failure it
+   reported was an empty box, and an empty box now opens the map. */
 .lookup { margin: 6px 0 14px; max-width: 34rem; }
 .lookup[hidden] { display: none; }
+.lookup:not([hidden]) ~ .cta, .lookup:not([hidden]) ~ .cta-note { display: none; }
 .lookup-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -756,15 +757,19 @@ main details p:first-of-type { margin-top: -2px; }
 .lookup-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .lookup-go:disabled { opacity: .6; cursor: default; }
 :root[data-theme="dark"] .lookup-go { color: var(--paper); }
-.lookup-status {
+.lookup-hint {
   margin: 10px 0 0;
   font-size: 13.5px;
   line-height: 1.4;
   color: var(--slate);
 }
-.lookup-status.err { color: var(--accent-warm-deep); }
-.lookup-or { font-size: 13px; color: var(--slate); margin: 14px 0 2px; }
-.lookup-or[hidden] { display: none; }
+.lookup-status {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--slate);
+}
+.lookup-status:empty { margin: 0; }
 
 .answer-card {
   background: var(--panel);
@@ -843,6 +848,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1156,7 +1167,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 1 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">18 layers — 7 political and legislative, 3 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1165,7 +1176,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1184,6 +1195,30 @@ table.matrix code {
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Arkansas — statewide, all 4 districts.</td>
               </tr>
+              <tr id="layer-ar-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>ar-court-of-appeals</code></th>
+                <td data-label="What it answers">The Court of Appeals district covering the point: the counties it is made of, and how many of the court's twelve judges its voters elect.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following Act 1812 of 2003's list of each district's counties as the Arkansas GIS Office's metadata for its Appeals Court Districts layer quotes it (read 2026-10-16), and held county by county to that layer. The act was not read at source: the official Code is published by LexisNexis behind a page that needs a browser's scripts, and the two free copies tried refuse this project's client.</a></li>
+                    <li><a href="https://arcourts.gov/courts/court-of-appeals/map" target="_blank" rel="noopener">Arkansas Judiciary — the Court of Appeals' district map page, which lists each district's judgeships (two in Districts 1, 2, 3, 4 and 6, one in Districts 5 and 7)</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge is named yet: the court's own pages name every judge, and this app does not publish them yet; recorded as gap ar-appeals-judges. The card says how many of the court's twelve judges the district elects and links the court's district page, which names them.</td>
+                <td data-label="Where it applies">Arkansas — statewide, all 75 counties.</td>
+              </tr>
+              <tr id="layer-ar-circuit-court">
+                <th scope="row"><span class="layer-name">Judicial Circuit</span><code>ar-circuit-court</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point: its circuit court, how many judges the circuit's voters elect, and whether a federal court order divides it into election subdistricts.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://arcourts.gov/directories/circuit-judges" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following the Administrative Office of the Courts' circuit judge directory, which lists each judge under every county the judge serves (read 2026-10-16), and held county by county to the Arkansas GIS Office's Circuit Court Districts layer. The five circuits a federal court order (Hunt v. State of Arkansas) divides into election subdistricts are drawn whole.</a></li>
+                    <li><a href="https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.CIRCUIT_COURT_export.html" target="_blank" rel="noopener">Arkansas GIS Office — the Circuit Court Districts layer's metadata, which summarises the court order</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No judge is named yet: the directory names every circuit judge, and this app does not publish them yet; recorded as gap ar-circuit-judges. The card gives the circuit's number of judges, from the directory, and links it.</td>
+                <td data-label="Where it applies">Arkansas — statewide, all 75 counties.</td>
+              </tr>
               <tr id="layer-ar-senate">
                 <th scope="row"><span class="layer-name">Arkansas Senate District</span><code>ar-senate</code></th>
                 <td data-label="What it answers">The Arkansas Senate district covering the point, and the senator holding it.</td>
@@ -1192,7 +1227,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 35 features, measured 2026-10-13. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail and the member's page). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.</td>
+                <td data-label="Who it names">ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail, the telephone the page prints, which may be the member's own, and the member's page; never the mailing address the page also prints). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.</td>
                 <td data-label="Where it applies">Arkansas — statewide, all 35 districts.</td>
               </tr>
               <tr id="layer-ar-house">
@@ -1217,13 +1252,24 @@ table.matrix code {
                 <td data-label="Who it names">ar-county-officials.json, read on 2026-10-13: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. A district's justice is named from the county's own site where it numbers them (20 counties, measured 2026-10-13), and elsewhere from the association's 2024 general election results for justices of the peace, updated 17 December 2024, only while the association's current list for the county still includes that winner; a district whose winner has left, or cannot be matched, says so and names no one. Recorded as gap ar-quorum-court.</td>
                 <td data-label="Where it applies">Arkansas — statewide, all 75 counties, 775 districts.</td>
               </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council ward or district containing the point, in the 12 Arkansas cities above 25,000 people that elect council members by ward, and the members its own voters elect.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/50" target="_blank" rel="noopener">Arkansas GIS Office — MUNICIPAL_WARDS, layer 50 of its Boundaries service: 852 wards of 262 cities and towns, measured 2026-10-16, of which the 56 wards of these twelve cities are pre-built by ar/scripts/build_ar_city_wards.py and shipped with the app. It carries the Arkansas GIS Office's copyright line, states no licence, and describes itself as not representing exact legal boundaries.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The members each ward's own voters elect, from the same city council roster the City or Town card reads (ar/data/app/ar-city-councils.json), written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py. Which seats a ward elects was measured from the ballot, and the builder's check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.</td>
+                <td data-label="Where it applies">The 12 Arkansas cities above 25,000 people that elect council members by ward: Benton, Conway, Fayetteville, Fort Smith, Hot Springs, Little Rock, North Little Rock, Paragould, Pine Bluff, Russellville, Sherwood and Texarkana. The state's map carries wards for 250 more cities and towns. Seven of them are the other cities above 25,000, which elect every seat by the whole city, so a ward there elects no one of its own; the rest are not drawn because this app does not name those councils.</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </section>
 
       <section class="matrix-group" id="safety">
-        <h2>Public safety <span class="matrix-count">2 layers</span></h2>
+        <h2>Public safety <span class="matrix-count">3 layers</span></h2>
         <p class="matrix-blurb">Who answers a call at this address, and where they answer it from.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1231,6 +1277,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-fire-district">
+                <th scope="row"><span class="layer-name">Fire District</span><code>fire-district</code></th>
+                <td data-label="What it answers">Every fire district the point is in on the Arkansas GIS Office's map, with the counties each serves, the date the map gives its lines and, for 90 districts, the record the GIS Office holds for them. Where the map labels ground rather than naming a district (&quot;Unserviced&quot; and three others), the card quotes the label.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59" target="_blank" rel="noopener">Arkansas GIS Office — FIRE_DISTRICTS, layer 59 of its Boundaries service: the map state law (A.C.A. § 12-10-329, as the layer's own description puts it) has every fire district keep, certified by the mayor, county judge or county fire coordinator, and send to the GIS Office. 971 districts from 973 records, measured 2026-10-16, pre-built by ar/scripts/build_ar_fire_districts.py and shipped with the app. It credits the Arkansas GIS Office and states no licence.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO NAMES. The GIS Office's map names each fire district and the counties it serves but not who runs it, and no statewide list of who runs Arkansas's fire districts has been read, so the card names no one rather than guessing; recorded as gap ar-fire-district-boards.</td>
+                <td data-label="Where it applies">Arkansas — statewide. The districts overlap in places and leave less than 1% of the state in no district, so the card lists every district the map puts the point in.</td>
+              </tr>
               <tr id="layer-police-station">
                 <th scope="row"><span class="layer-name">Police Station</span><code>police-station</code></th>
                 <td data-label="What it answers">The three nearest police stations to the point, by straight-line distance, with each one's address.</td>
@@ -1251,7 +1308,7 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.</td>
-                <td data-label="Where it applies">Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances.</td>
+                <td data-label="Where it applies">Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question, and the card says where the nearest are and never who serves you; the Fire District layer draws the state's map of fire districts. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances.</td>
               </tr>
             </tbody>
           </table>
@@ -1259,7 +1316,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">1 layer</span></h2>
+        <h2>Schools <span class="matrix-count">2 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1272,11 +1329,23 @@ table.matrix code {
                 <td data-label="What it answers">The public school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 234 features for Arkansas, measured 2026-10-13.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 234 features for Arkansas, measured 2026-10-13.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Arkansas's school boards are elected, and no statewide roster of their members has been established here; the state's school directory lists no board members. Recorded as gap ar-school-board-members.</td>
                 <td data-label="Where it applies">Arkansas — statewide. The label carries no qualifier because there is nothing to distinguish it from: the elementary and secondary tilings TIGERweb serves for other states are EMPTY in Arkansas (0 features each, measured 2026-10-13), and the 234 unified districts' Census land area sums to exactly the 75-county total (134,659 km2).</td>
+              </tr>
+              <tr id="layer-school-board-district">
+                <th scope="row"><span class="layer-name">School Board Zone</span><code>school-board-district</code></th>
+                <td data-label="What it answers">The zone a school board elects a member from, and the school district whose board it is. Where a board has resolved to elect every member at large and is changing a seat at a time, the card says when it resolved.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/32" target="_blank" rel="noopener">Arkansas GIS Office — SCHOOL_BOARD_ZONES, layer 32 of its Boundaries service, which the Arkansas Secretary of State compiles “to aid in election administration and future redistricting”: 965 zones on 176 school districts, measured 2026-10-16, pre-built by ar/scripts/build_ar_school_board_districts.py and shipped with the app. It credits the Secretary of State, is provided as is, and states no licence.</a></li>
+                    <li><a href="https://web.archive.org/web/20260513222106/https://gis.arkansas.gov/2026/04/09/date-update-school-board-zones/" target="_blank" rel="noopener">Arkansas GIS Office — its notes of 9 April 2026 on the school board zone update, naming the twelve boards that resolved to elect every member at large and when; read through the Internet Archive's copy of 13 May 2026, because the page itself now redirects</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO NAMES YET. No statewide list of Arkansas's school board members has been found — the Department of Education's report-card feed carries no board field — so the card names no one rather than guessing; recorded as gap ar-school-board-members.</td>
+                <td data-label="Where it applies">The 176 Arkansas school districts whose boards elect some or all members from zones. A board elected wholly at large has no zones, and the empty card says so.</td>
               </tr>
             </tbody>
           </table>
@@ -1308,7 +1377,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
@@ -1341,10 +1410,10 @@ table.matrix code {
                 <td data-label="What it answers">The city or town containing the point, if any.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. Arkansas's cities and towns elect councils or boards of directors, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ar-municipal-officeholders.</td>
+                <td data-label="Who it names">In the 19 cities above 25,000 people, the mayor and every council member or director, written down from each city's own pages and proved against those pages by ar/scripts/build_ar_city_councils.py, which fails when a name is no longer on the page it cites (ar/data/app/ar-city-councils.json, 174 seats read 2026-10-17). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, measured from the ballot because nothing the state publishes records it. The Arkansas Municipal League's statewide directory is not used: it gives no ward or position and disagreed with five of the twelve cities' own pages where both could be compared. Arkansas's other 482 cities and towns name nobody yet, recorded as gap ar-municipal-officeholders.</td>
                 <td data-label="Where it applies">Arkansas — statewide. A point outside every city and town is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1401,10 +1470,64 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-ar-court-of-appeals",
+      "identifier": "ar-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The Court of Appeals district covering the point: the counties it is made of, and how many of the court's twelve judges its voters elect. No judge is named yet: the court's own pages name every judge, and this app does not publish them yet; recorded as gap ar-appeals-judges. The card says how many of the court's twelve judges the district elects and links the court's district page, which names them.",
+      "url": "https://districtry.com/ar/sources.html#layer-ar-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following Act 1812 of 2003's list of each district's counties as the Arkansas GIS Office's metadata for its Appeals Court Districts layer quotes it (read 2026-10-16), and held county by county to that layer. The act was not read at source: the official Code is published by LexisNexis behind a page that needs a browser's scripts, and the two free copies tried refuse this project's client.",
+          "url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.APPEALS_COURT_export.html"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Arkansas Judiciary — the Court of Appeals' district map page, which lists each district's judgeships (two in Districts 1, 2, 3, 4 and 6, one in Districts 5 and 7)",
+          "url": "https://arcourts.gov/courts/court-of-appeals/map"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Arkansas — statewide, all 75 counties"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-ar-circuit-court",
+      "identifier": "ar-circuit-court",
+      "name": "Judicial Circuit",
+      "description": "The judicial circuit covering the point: its circuit court, how many judges the circuit's voters elect, and whether a federal court order divides it into election subdistricts. No judge is named yet: the directory names every circuit judge, and this app does not publish them yet; recorded as gap ar-circuit-judges. The card gives the circuit's number of judges, from the directory, and links it.",
+      "url": "https://districtry.com/ar/sources.html#layer-ar-circuit-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ar/scripts/build_ar_court_districts.py, following the Administrative Office of the Courts' circuit judge directory, which lists each judge under every county the judge serves (read 2026-10-16), and held county by county to the Arkansas GIS Office's Circuit Court Districts layer. The five circuits a federal court order (Hunt v. State of Arkansas) divides into election subdistricts are drawn whole.",
+          "url": "https://arcourts.gov/directories/circuit-judges"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — the Circuit Court Districts layer's metadata, which summarises the court order",
+          "url": "https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.CIRCUIT_COURT_export.html"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Arkansas — statewide, all 75 counties"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/ar/sources.html#dataset-ar-senate",
       "identifier": "ar-senate",
       "name": "Arkansas Senate District",
-      "description": "The Arkansas Senate district covering the point, and the senator holding it. ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail and the member's page). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.",
+      "description": "The Arkansas Senate district covering the point, and the senator holding it. ar-senate-members.json, rebuilt weekly by CI from the Arkansas State Legislature's own member list and each member's own page (name, party, e-mail, the telephone the page prints, which may be the member's own, and the member's page; never the mailing address the page also prints). A member the Legislature's page marks as resigned or deceased is not carried, so a seat with no current member reads as vacant: Senate 1 and 18 on 2026-10-13.",
       "url": "https://districtry.com/ar/sources.html#layer-ar-senate",
       "isPartOf": {
         "@id": "https://districtry.com/ar/sources.html#catalog"
@@ -1478,7 +1601,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 234 features for Arkansas, measured 2026-10-13.",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 234 features for Arkansas, measured 2026-10-13.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1500,7 +1623,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='05'. 942 features in Arkansas's box, measured 2026-10-13.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1555,6 +1678,55 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-fire-district",
+      "identifier": "fire-district",
+      "name": "Fire District",
+      "description": "Every fire district the point is in on the Arkansas GIS Office's map, with the counties each serves, the date the map gives its lines and, for 90 districts, the record the GIS Office holds for them. Where the map labels ground rather than naming a district (\"Unserviced\" and three others), the card quotes the label. NO NAMES. The GIS Office's map names each fire district and the counties it serves but not who runs it, and no statewide list of who runs Arkansas's fire districts has been read, so the card names no one rather than guessing; recorded as gap ar-fire-district-boards.",
+      "url": "https://districtry.com/ar/sources.html#layer-fire-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — FIRE_DISTRICTS, layer 59 of its Boundaries service: the map state law (A.C.A. § 12-10-329, as the layer's own description puts it) has every fire district keep, certified by the mayor, county judge or county fire coordinator, and send to the GIS Office. 971 districts from 973 records, measured 2026-10-16, pre-built by ar/scripts/build_ar_fire_districts.py and shipped with the app. It credits the Arkansas GIS Office and states no licence.",
+          "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/59"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Arkansas — statewide. The districts overlap in places and leave less than 1% of the state in no district, so the card lists every district the map puts the point in"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-school-board-district",
+      "identifier": "school-board-district",
+      "name": "School Board Zone",
+      "description": "The zone a school board elects a member from, and the school district whose board it is. Where a board has resolved to elect every member at large and is changing a seat at a time, the card says when it resolved. NO NAMES YET. No statewide list of Arkansas's school board members has been found — the Department of Education's report-card feed carries no board field — so the card names no one rather than guessing; recorded as gap ar-school-board-members.",
+      "url": "https://districtry.com/ar/sources.html#layer-school-board-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — SCHOOL_BOARD_ZONES, layer 32 of its Boundaries service, which the Arkansas Secretary of State compiles “to aid in election administration and future redistricting”: 965 zones on 176 school districts, measured 2026-10-16, pre-built by ar/scripts/build_ar_school_board_districts.py and shipped with the app. It credits the Secretary of State, is provided as is, and states no licence.",
+          "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/32"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — its notes of 9 April 2026 on the school board zone update, naming the twelve boards that resolved to elect every member at large and when; read through the Internet Archive's copy of 13 May 2026, because the page itself now redirects",
+          "url": "https://web.archive.org/web/20260513222106/https://gis.arkansas.gov/2026/04/09/date-update-school-board-zones/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 176 Arkansas school districts whose boards elect some or all members from zones. A board elected wholly at large has no zones, and the empty card says so"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/ar/sources.html#dataset-voting-precinct",
       "identifier": "voting-precinct",
       "name": "Voting Precinct",
@@ -1580,7 +1752,7 @@ table.matrix code {
       "@id": "https://districtry.com/ar/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The city or town containing the point, if any. NO OFFICEHOLDER YET. Arkansas's cities and towns elect councils or boards of directors, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap ar-municipal-officeholders.",
+      "description": "The city or town containing the point, if any. In the 19 cities above 25,000 people, the mayor and every council member or director, written down from each city's own pages and proved against those pages by ar/scripts/build_ar_city_councils.py, which fails when a name is no longer on the page it cites (ar/data/app/ar-city-councils.json, 174 seats read 2026-10-17). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, measured from the ballot because nothing the state publishes records it. The Arkansas Municipal League's statewide directory is not used: it gives no ward or position and disagreed with five of the twelve cities' own pages where both could be compared. Arkansas's other 482 cities and towns name nobody yet, recorded as gap ar-municipal-officeholders.",
       "url": "https://districtry.com/ar/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/ar/sources.html#catalog"
@@ -1588,13 +1760,35 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 501 features for Arkansas (315 cities, 186 towns), measured 2026-10-13.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
         "name": "Arkansas — statewide. A point outside every city and town is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ar/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council ward or district containing the point, in the 12 Arkansas cities above 25,000 people that elect council members by ward, and the members its own voters elect. The members each ward's own voters elect, from the same city council roster the City or Town card reads (ar/data/app/ar-city-councils.json), written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py. Which seats a ward elects was measured from the ballot, and the builder's check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.",
+      "url": "https://districtry.com/ar/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/ar/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Arkansas GIS Office — MUNICIPAL_WARDS, layer 50 of its Boundaries service: 852 wards of 262 cities and towns, measured 2026-10-16, of which the 56 wards of these twelve cities are pre-built by ar/scripts/build_ar_city_wards.py and shipped with the app. It carries the Arkansas GIS Office's copyright line, states no licence, and describes itself as not representing exact legal boundaries.",
+          "url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/50"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 12 Arkansas cities above 25,000 people that elect council members by ward: Benton, Conway, Fayetteville, Fort Smith, Hot Springs, Little Rock, North Little Rock, Paragould, Pine Bluff, Russellville, Sherwood and Texarkana. The state's map carries wards for 250 more cities and towns. Seven of them are the other cities above 25,000, which elect every seat by the whole city, so a ward there elects no one of its own; the rest are not drawn because this app does not name those councils"
       }
     },
     {
@@ -1638,7 +1832,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances"
+        "name": "Arkansas — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question, and the card says where the nearest are and never who serves you; the Fire District layer draws the state's map of fire districts. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances"
       }
     },
     {

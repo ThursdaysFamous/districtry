@@ -52,6 +52,11 @@ const GEOMETRY_URLS = [
   "./data/app/ar-quorum-court-districts.json",
   "./data/app/ar-townships.json",
   "./data/app/ar-precincts.json",
+  "./data/app/ar-school-board-zones.json",
+  "./data/app/ar-fire-districts.json",
+  "./data/app/ar-city-wards.json",
+  "./data/app/ar-appeals-districts.json",
+  "./data/app/ar-judicial-circuits.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -62,6 +67,7 @@ const ROSTER_URLS = [
   "./data/app/ar-senate-members.json",
   "./data/app/ar-house-members.json",
   "./data/app/ar-county-officials.json",
+  "./data/app/ar-city-councils.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

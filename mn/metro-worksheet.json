@@ -193,12 +193,12 @@
       "label": "School District (Unified)",
       "group": "schools",
       "area_rank": 7,
-      "rank_note": "322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings",
+      "rank_note": "322 districts covering almost all of Minnesota, from TIGERweb, drawn from a mirrored tile archive — 693 km2 mean feature area, the largest of the three school tilings",
       "source": {
         "answers": "The unified (every-grade) school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 322 features for Minnesota, measured 2026-09-29",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 322 features for Minnesota, measured 2026-09-29",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -267,12 +267,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 10,
-      "rank_note": "1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township",
+      "rank_note": "887 ZIP Code Tabulation Areas overlapping Minnesota, of the 1,385 intersecting its envelope, in a mirrored tile archive (measured 2026-10-17) — 250 km2 mean feature area over the 1,385, between a school district and a township",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -285,12 +285,12 @@
       "label": "School District (Elementary)",
       "group": "schools",
       "area_rank": 11,
-      "rank_note": "8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points",
+      "rank_note": "8 districts the Census places in its elementary tiling, from TIGERweb, drawn from a mirrored tile archive — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points",
       "source": {
         "answers": "The elementary-tiling school district covering the point, in the eight places Minnesota has one.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
@@ -303,12 +303,12 @@
       "label": "Township or City",
       "group": "geography",
       "area_rank": 12,
-      "rank_note": "2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water",
+      "rank_note": "2,762 records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water",
       "source": {
         "answers": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 2,762 features for Minnesota, measured 2026-09-29",
+            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 2,762 features for Minnesota, measured 2026-09-29",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
           }
         ],
@@ -339,12 +339,12 @@
       "label": "City",
       "group": "geography",
       "area_rank": 15,
-      "rank_note": "856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area",
+      "rank_note": "856 incorporated places, from TIGERweb, drawn from a mirrored tile archive — every one a city, with no village among them, at a 14.7 km2 mean feature area",
       "source": {
         "answers": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
@@ -379,12 +379,12 @@
       "label": "School District (Secondary)",
       "group": "schools",
       "area_rank": 17,
-      "rank_note": "1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
+      "rank_note": "1 district, from TIGERweb, drawn from a mirrored tile archive — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
       "source": {
         "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
           }
         ],
@@ -621,7 +621,7 @@
       {
         "file": "mn-county-town-officers.json",
         "min_keys": 360,
-        "note": "The officers of each Minnesota town the election results do not name that a county's own list of township officers names, keyed by the town's Census county subdivision GEOID: names, offices and terms only, with the county, the list's own date where it gives one, the day it was read and the list's address; read by mn/scripts/mn_county_town_officers_scraper.py and built by mn/scripts/build_mn_county_town_officers.py. No scheduled refresh yet."
+        "note": "The officers of each Minnesota town the election results do not name that a county's own list of township officers names, keyed by the town's Census county subdivision GEOID: names, offices, terms, the telephone each list prints beside an officer, with its own label and with no area code added where the list prints none (Adam's ruling of 2026-10-17), and the e-mail address it prints beside that officer alone (Adam's choice of 2026-10-17, \"E-mails too\"), never the officer's home address, with the county, the list's own date where it gives one, the day it was read and the list's address; read by mn/scripts/mn_county_town_officers_scraper.py and built by mn/scripts/build_mn_county_town_officers.py. No scheduled refresh yet."
       },
       {
         "file": "mn-school-boards.json",
@@ -720,7 +720,9 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "sources_page": {
     "file": "mn/sources.html",

@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -179,7 +180,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -614,8 +615,13 @@ try {
   //      them the county's own board page settles it, so those names rest on
   //      a publisher no other county's do and the card says so.
   //
+  //      Wright is the withheld row since 2026-10-17, when the statewide
+  //      directory stopped listing a sixth Pottawattamie supervisor and that
+  //      county's five shipped; Wright is then the one board still withheld.
+  //      If Wright resolves too, this row needs another withheld county.
+  //
   //      BOTH BRANCHES, for the reason 2a4 already gives. Adair must name a
-  //      supervisor AND carry the county-named sentence; Pottawattamie must
+  //      supervisor AND carry the county-named sentence; Wright must
   //      carry the withheld sentence and NOT the county-named one, because a
   //      county-named line over a board we do not publish would credit a
   //      page we were refused; and Marshall, the anchor county, comes from the
@@ -633,8 +639,8 @@ try {
        null, "Adair, named by the county's own page"],
       [41.33000, -94.47000, "Adair County", "Jerry Walker",
        null, "Adair names a supervisor the statewide directory lost"],
-      [41.23000, -95.850000, "Pottawattamie County", "Not shown",
-       "Named by the county", "Pottawattamie, withheld and not credited"],
+      [42.73160, -93.73270, "Wright County", "Not shown",
+       "Named by the county", "Wright, withheld and not credited"],
       [42.04940, -92.90710, "Marshall County", "Supervisor",
        "Named by the county", "Marshall, from the statewide directory"]
     ]) {
@@ -768,6 +774,51 @@ try {
       }
       await page.close();
     }
+    await context.close();
+  }
+
+  // 2a7. A SUPERVISOR'S OWN NUMBER, ON THE DISTRICT CARD. Humboldt's board
+  //      page prints a different number beside each of its five supervisors,
+  //      and since Adam's ruling of 2026-10-17 ("if the official government
+  //      source uses personal phone numbers, we publish those") the district
+  //      card carries it on the supervisor's own row. The point is Humboldt
+  //      township's census interior point, which the county's own map paints
+  //      District 4 (ia/scripts/check_county_district_numbering.py). The
+  //      name and number expected are read from the shipped roster, so a
+  //      weekly refresh that changes them changes what is expected, and a
+  //      record carrying no number is reported rather than passed. The number
+  //      is shown with no-break hyphens, so those are folded back before
+  //      comparing.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context,
+      `${BASE}#point=42.8693050,-94.1377566&layers=county-supervisor`);
+    const seat = await page.evaluate(async () => {
+      const r = await fetch("data/app/ia-supervisor-members.json").then((x) => x.json());
+      return ((r["091"] || {}).districts || {})["4"] || {};
+    });
+    const info = await cardText(page, "county-supervisor");
+    const text = (info.text || "").replace(/\u2011/g, "-");
+    if (!seat.name || !seat.phone) {
+      console.log("  SKIP  supervisor's own number — Humboldt District 4 carries no number");
+    } else {
+      check("supervisor district card shows the number the county prints beside its supervisor",
+        !info.error && text.includes("Humboldt County") && text.includes("District 4") &&
+          text.includes(seat.name) && text.includes(seat.phone), text.slice(0, 240));
+    }
+    // ...and the e-mail address the same page prints beside that supervisor
+    // (Adam chose "E-mails too", 2026-10-17). The row shows it as a link
+    // labelled Email, so the link's own address is what is compared.
+    if (!seat.name || !seat.email) {
+      console.log("  SKIP  supervisor's own e-mail — Humboldt District 4 carries no address");
+    } else {
+      const hrefs = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-county-supervisor a[href^='mailto:']"))
+          .map((a) => a.getAttribute("href")));
+      check("supervisor district card links the e-mail address the county prints beside its supervisor",
+        hrefs.includes("mailto:" + seat.email), JSON.stringify(hrefs));
+    }
+    await page.close();
     await context.close();
   }
 

@@ -1,0 +1,4838 @@
+{
+ "21001": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Julie Ann Day",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jay Melton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Danny Wilkinson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Brent Baker",
+      "termEnds": "2028"
+     },
+     {
+      "name": "James Bennett",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Blake Cowan",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mike McMinoway",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Adair County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Adair%20County.pdf"
+   }
+  ]
+ },
+ "21003": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Marcus Landers",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Vick",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Joe Young",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Randy Harston",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David Towe",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Danny Shipley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Danny Stinson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Allen County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Allen%20County.pdf"
+   }
+  ]
+ },
+ "21005": {
+  "districts": [
+   {
+    "dated": "2026-10-02",
+    "members": [
+     {
+      "name": "Don Sayre",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Roy Toney",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mike Wilson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Marna Bollinger",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Beverly McElwain",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Alayna Jacobs",
+      "termEnds": "2028"
+     },
+     {
+      "name": "James R Smith",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Anderson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Anderson%20County.pdf"
+   }
+  ]
+ },
+ "21007": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Max Gordon",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bob Middleton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jarrett Pace",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jeff Cooper",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Alan Foster",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Noah Sullivan",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Aaron Wilson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Ballard County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Ballard%20County.pdf"
+   }
+  ]
+ },
+ "21009": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Kenneth Edwards",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jackie Nuckols",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Drew Shockley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Charles Embry",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Floyd Jones, Jr.",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jerry Reed",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Donald Wilson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Barren County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Barren%20County.pdf"
+   }
+  ]
+ },
+ "21011": {
+  "districts": [
+   {
+    "dated": "2026-08-31",
+    "members": [
+     {
+      "name": "Travis Reed",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Vernon Stamper",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Colby Wells",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Valerie Ousley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jodi Purvis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Michael Staton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Aaron Watson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Bath County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bath%20County.pdf"
+   }
+  ]
+ },
+ "21013": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Hannah Browning",
+      "termEnds": "2026"
+     },
+     {
+      "name": "C. David Gibbons",
+      "termEnds": "2026"
+     },
+     {
+      "name": "William Partin",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Charles Blank",
+      "termEnds": "2028"
+     },
+     {
+      "name": "John Brock",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David Thomspon",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ethan Warren",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Bell County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bell%20County.pdf"
+   }
+  ]
+ },
+ "21015": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Kevin Bond",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Stork",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Wison",
+      "termEnds": "2026"
+     },
+     {
+      "name": "S. Galbraith-Kent",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kathleen King",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Casey Moll",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Debra Waller",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Boone County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boone%20County.pdf"
+   }
+  ]
+ },
+ "21017": {
+  "districts": [
+   {
+    "dated": "2026-08-31",
+    "members": [
+     {
+      "name": "Matthew Little",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Clayton McAlmond",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Wilson Wilder",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Samuel Clay IV",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bill Dickson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Dustin Mallory",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeffrey McAlmond",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Bourbon County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bourbon%20County.pdf"
+   }
+  ]
+ },
+ "21019": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Joe Childers",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Russell Crawford",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James David Grubb",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Danny Blevins",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mike Bowling",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Julie Helton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David Horn",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Boyd County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boyd%20County.pdf"
+   }
+  ]
+ },
+ "21021": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Bill Hundley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Rodney King",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Danny Lay",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Joey Gilbert",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Allen Goggin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Patrick Horn",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lee Welty",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Boyle County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boyle%20County.pdf"
+   }
+  ]
+ },
+ "21023": {
+  "districts": [
+   {
+    "dated": "2026-10-02",
+    "members": [
+     {
+      "name": "Phyllis Holleran",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Todd Klaber",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Darren Wright",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Eddie Hopkins",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David McDowell",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Natalee Bishop",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Paul Wright",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Bracken County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bracken%20County.pdf"
+   }
+  ]
+ },
+ "21025": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Barbara Smith",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ashley Hudson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Paul Turner",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tony Fugate",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Margaret Gross",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Greg Hollon",
+      "termEnds": "2028"
+     },
+     {
+      "name": "George Turner",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Breathitt County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Breathitt%20County.pdf"
+   }
+  ]
+ },
+ "21027": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "A. J. Critchelow",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Marion French",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Patrick Henderson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James Burks",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Eddie Dyer",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Steven Hinton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kenny Hinton",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Breckinridge County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Breckinridge%20County.pdf"
+   }
+  ]
+ },
+ "21029": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "James Dawson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bill Harned",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Melissa Huggett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Norman Philpot",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Hyte Rouse IV",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Don Samuels",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lewis Skidmore",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Bullitt County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bullitt%20County.pdf"
+   }
+  ]
+ },
+ "21031": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "LeeAnn Daugherty",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Carey Holton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Boyd Penrod",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Richard Castlen",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lance Lockhart",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Darren Rice",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Shane Wells",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Butler County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Butler%20County.pdf"
+   }
+  ]
+ },
+ "21033": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Daniel Bugg",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Trevor Gilkey",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Fred Hart",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James Eddie Boone",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Chase Roberts",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Charles Slaughter",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Caitlin Young",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Caldwell County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Caldwell%20County.pdf"
+   }
+  ]
+ },
+ "21035": {
+  "districts": [
+   {
+    "dated": "2026-08-31",
+    "members": [
+     {
+      "name": "Marty Carraway",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Randy McCallon",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Eddie Workman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Steve Carraway",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robert Hill",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Don Overbey",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robert Geurin",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Calloway County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Calloway%20County.pdf"
+   }
+  ]
+ },
+ "21037": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Kirsten Hill",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Amy Downton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Larry Schadler",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Richard Carr",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Greg Davis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Christy Geiman",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Richard Simon",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Campbell County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Campbell%20County.pdf"
+   }
+  ]
+ },
+ "21039": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Keith Elliott",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ross Martin",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bobby Toon",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ben Beasley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Clint Cannon",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mike Mantle",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brent Martin",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Carlisle County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carlisle%20County.pdf"
+   }
+  ]
+ },
+ "21041": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Mike Kelley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Joe Raisor",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Rowlett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Gail Becraft",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bobby Gibson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Billie Hotfil",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kimberly New",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Carroll County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carroll%20County.pdf"
+   }
+  ]
+ },
+ "21043": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Tracy Prichard",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Sexton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Barry Shaffer",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Buck",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Will Davis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brandon LaVoie",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Herbert Suttles",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Carter County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carter%20County.pdf"
+   }
+  ]
+ },
+ "21045": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Valerie Floyd",
+      "termEnds": "2026"
+     },
+     {
+      "name": "L.J. Watson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Roger Weddle",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Grider",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mary S Shoopman",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Curtis Todd",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brent Ware",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Casey County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Casey%20County.pdf"
+   }
+  ]
+ },
+ "21047": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Dustin Love",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Alan Cunningham",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Wesley Parker",
+      "termEnds": "2026"
+     },
+     {
+      "name": "N.R. Bardwell III",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lanny Boyd",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mark Claxton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Scotty Parsons Jr.",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Christian County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Christian%20County.pdf"
+   }
+  ]
+ },
+ "21049": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Greg McCord",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Joyce Pasley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "H. David Rupard",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Chism",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Clinton Pace",
+      "termEnds": "2028"
+     },
+     {
+      "name": "W. Kevin Vaughn",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Marcus Wiseman",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Clark County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clark%20County.pdf"
+   }
+  ]
+ },
+ "21051": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "James Combs",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Darrell McKeehan",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Billy Robinson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ronald Bowling",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeanette Gregory",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tim Lunsford",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jocelyn Wolfe",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Clay County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clay%20County.pdf"
+   }
+  ]
+ },
+ "21053": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Tommy Guffey",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kyle Mims",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Steve Young",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Greg Abston",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Roger Beard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kathy Conner",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Michael Conner",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Clinton County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clinton%20County.pdf"
+   }
+  ]
+ },
+ "21055": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "John Croft",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert Glinke",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Denis Hodge",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Larry Duvall",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tyler Guess",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Karen Maddux",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Anthony Wessel",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Crittenden County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Crittenden%20County.pdf"
+   }
+  ]
+ },
+ "21057": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Jeff Alexander",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Lannie Willen",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Phelps",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Dale McClusky",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeff Mowers",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeff Pickens",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Diane Poindexter",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Cumberland County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Cumberland%20County.pdf"
+   }
+  ]
+ },
+ "21059": {
+  "districts": [
+   {
+    "dated": "2026-02-24",
+    "members": [
+     {
+      "name": "Mark Irby",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jeff Rice",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Dustin Warren",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kent Moore",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lucas Brey",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jennifer Poole",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ray Wright",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Daviess County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Daviess%20County.pdf"
+   }
+  ]
+ },
+ "21061": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Brady Meeks",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Wayne Thompson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Huey Vincent",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Glenn Logsdon",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jimmie Luttrell",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Danny Vincent",
+      "termEnds": "2028"
+     },
+     {
+      "name": "James Riddle",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Edmonson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Edmonson%20County.pdf"
+   }
+  ]
+ },
+ "21063": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Alex Ford",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Courtney Rice",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mara Stamper",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Madison DeHart",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Roger Mayse",
+      "termEnds": "2028"
+     },
+     {
+      "name": "John Paul Skaggs",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joseph Adkins",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Elliott County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Elliott%20County.pdf"
+   }
+  ]
+ },
+ "21065": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Danny Click",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tom Hart",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jack Stickney",
+      "termEnds": "2026"
+     },
+     {
+      "name": "William Beard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Fred Brown",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jason Crowe",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jonathan Webb",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Estill County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Estill%20County.pdf"
+   }
+  ]
+ },
+ "21067": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Aaron Clark",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mark Coyne",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Allen Carter",
+      "termEnds": "2026"
+     },
+     {
+      "name": "B.J. Bentley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Perry Scott Gibson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ellen Harding",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeremy Faulk",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Fayette County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fayette%20County.pdf"
+   }
+  ]
+ },
+ "21069": {
+  "districts": [
+   {
+    "dated": "2026-08-31",
+    "members": [
+     {
+      "name": "Donald Christman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Emery Clark",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Cassie Porter",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Chase Brown",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Steve Brown",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mollie Dailey",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Gene Jarvis",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Fleming County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fleming%20County.pdf"
+   }
+  ]
+ },
+ "21071": {
+  "districts": [
+   {
+    "dated": "2026-05-04",
+    "members": [
+     {
+      "name": "Daniel Branson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Clyde D. DeRossett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bert Layne",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jeffrey Hall",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lenville Martin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ernie Tackett",
+      "termEnds": "2028"
+     },
+     {
+      "name": "James Taylor",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Floyd County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Floyd%20County.pdf"
+   }
+  ]
+ },
+ "21073": {
+  "districts": [
+   {
+    "dated": "2026-08-20",
+    "members": [
+     {
+      "name": "Steve Coleman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Mucci",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Charlotte Quarles",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Todd Akers",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Eddie Harrod",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Michael Johnson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Susan Wise",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Franklin County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Franklin%20County.pdf"
+   }
+  ]
+ },
+ "21075": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Ralph Adams, Jr.",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Phillip Amberg",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Nathan Wilson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Martha J. Burnette",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Patrick Linder",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brian Major",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David Sublette",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Fulton County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fulton%20County.pdf"
+   }
+  ]
+ },
+ "21077": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Deborah Brown",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Randy Cozine",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Vic Satchwell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Emily Epifanio",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bradley Noel",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joseph Smith",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Peggy Tinch",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Gallatin County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Gallatin%20County.pdf"
+   }
+  ]
+ },
+ "21079": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Scott Barnes",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Billy Doolin",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Sara V.L. Von Gruenigen",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jamie Barker",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Darrell Bolton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeff Dembo",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ricky Payne",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Garrard County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Garrard%20County.pdf"
+   }
+  ]
+ },
+ "21081": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Ronald Gabbert",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Timothy Henry",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tisha Woodward",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tim Epperson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jerry Martin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "J. Travis Woodyard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joseph Clemons",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Grant County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Grant%20County.pdf"
+   }
+  ]
+ },
+ "21083": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Adam Bell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Susie Fenwick",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Ray",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Phillip Holloway",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kimberly Mathis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Nathaniel H. Rose",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Greg Smith",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Graves County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Graves%20County.pdf"
+   }
+  ]
+ },
+ "21085": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Bradley A. Clemons",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Hayes",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Clay Leveronne",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kendall Childress",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Dustin Hayes",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Michael Shull",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Molly Terry",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Grayson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Grayson%20County.pdf"
+   }
+  ]
+ },
+ "21087": {
+  "districts": [
+   {
+    "dated": "2026-07-09",
+    "members": [
+     {
+      "name": "Ronnie Graves",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Stacy Sidebottom",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jeff Wright",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Patsy Bishop",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Gary Ferguson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David Hodges",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Edward Price",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Green County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Green%20County.pdf"
+   }
+  ]
+ },
+ "21089": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Rodney Bruce",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Doug Collins",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Terry Osborne",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Rancie Hannah",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Allen Hanson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "James Langley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Darrell McCarty",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Greenup County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Greenup%20County.pdf"
+   }
+  ]
+ },
+ "21091": {
+  "districts": [
+   {
+    "dated": "2026-07-14",
+    "members": [
+     {
+      "name": "Anthony Johnson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Gary Long",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Steven Ogle",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Daniel Emmick",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joseph Hagman",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Dennis Johnson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Loyd Ray Jr.",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Hancock County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hancock%20County.pdf"
+   }
+  ]
+ },
+ "21093": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Bruce Book",
+      "termEnds": "2026"
+     },
+     {
+      "name": "J. Larry Thomas",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Vincent Thompson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mason Goodin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Allen Morris",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Patrick Preston",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robert C. Wade",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Hardin County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hardin%20County.pdf"
+   }
+  ]
+ },
+ "21095": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "William Clem",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Howard",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Suzie Mavinidis",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert Jones",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Christian Metcalfe",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lonnie Saylor",
+      "termEnds": "2028"
+     },
+     {
+      "name": "June M. Whitaker",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Harlan County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Harlan%20County.pdf"
+   }
+  ]
+ },
+ "21097": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Leslie Bebensee",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Paul Tucker",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jennifer Yazell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Luke Arthur",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jennifer Burgan",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Nick Farmer",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Russell Gray",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Harrison County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Harrison%20County.pdf"
+   }
+  ]
+ },
+ "21099": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Tom Croghan",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bill Gardner",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Adam Maulden",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert Nunn",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Donald Reynolds",
+      "termEnds": "2028"
+     },
+     {
+      "name": "William Scott",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robert Thompson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Hart County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hart%20County.pdf"
+   }
+  ]
+ },
+ "21101": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Gary Eblen",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Rankin Powell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "William Wilson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Denton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ronnie Eblen",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joel King",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Allen Sutton",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Henderson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Henderson%20County.pdf"
+   }
+  ]
+ },
+ "21103": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Phillip Douglas",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mark Roberts",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Dave Stahl",
+      "termEnds": "2026"
+     },
+     {
+      "name": "E. Allan Bryant",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Larry Bryant",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brad Hargrove",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brad Steverson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Henry County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Henry%20County.pdf"
+   }
+  ]
+ },
+ "21105": {
+  "districts": [
+   {
+    "dated": "2026-02-26",
+    "members": [
+     {
+      "name": "Brett Mitchell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jonathan Reynolds",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James Stephens",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David N. Allison",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kirk Dixon",
+      "termEnds": "2028"
+     },
+     {
+      "name": "W. Todd Harper",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Thomas Webb",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Hickman County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hickman%20County.pdf"
+   }
+  ]
+ },
+ "21107": {
+  "districts": [
+   {
+    "dated": "2026-06-17",
+    "members": [
+     {
+      "name": "Jacob Dever",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Brian Lynn",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Pate Weir",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mike Calhoun",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jason Duncan",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mark Herring",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Gigi Smith",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Hopkins County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hopkins%20County.pdf"
+   }
+  ]
+ },
+ "21109": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Eddie Madden",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Brenda Truett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Howard Williams",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Chris Boggs",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tony Boggs",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jimmy Wells",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tim Wilson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Jackson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jackson%20County.pdf"
+   }
+  ]
+ },
+ "21111": {
+  "districts": [
+   {
+    "dated": "2026-03-11",
+    "members": [
+     {
+      "name": "Austin Clark",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tyler Lloyd",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Thomas Edison",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Elizabeth Everhart",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Sarah Beth Sammons",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Alexis McFadden",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David Kaelin",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Jefferson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jefferson%20County.pdf"
+   }
+  ]
+ },
+ "21113": {
+  "districts": [
+   {
+    "dated": "2026-07-09",
+    "members": [
+     {
+      "name": "George Dean",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Douglas McLaren",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ronald Ray",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Gary Burdine",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kay DeMoss",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Doug Marshall",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Douglas Teater",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Jessamine County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jessamine%20County.pdf"
+   }
+  ]
+ },
+ "21115": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Robert Blanton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Delmer J. Holbrook",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Keith Patrick",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kirby Castle",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tyler Ferguson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kevin Pelphrey",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Vessie Workman",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Johnson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Johnson%20County.pdf"
+   }
+  ]
+ },
+ "21117": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Nancy Kloentrup",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Larry Owen",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Anita Steffen",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Nicole Clements",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Andrew Johnson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Chris W. Kaeff",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mark Nienaber",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Kenton County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Kenton%20County.pdf"
+   }
+  ]
+ },
+ "21119": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Seth Amburgey",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James Childers",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Wilson Owsley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James B. Childers",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robert Cornett",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Wade Maggard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Stephen Slone",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Knott County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Knott%20County.pdf"
+   }
+  ]
+ },
+ "21121": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Tommy Bargo",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Bays",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Cloyce Hinkle",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Shirley Merida",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Dexter Smith",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jim Stewart",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jonathan Wells",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Knox County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Knox%20County.pdf"
+   }
+  ]
+ },
+ "21123": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Mark Howell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tyler Howell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Karl Stankovic",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Lawless",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kenley Conner",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kelly Flanders",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Max Ragland",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Larue County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/LaRue%20County.pdf"
+   }
+  ]
+ },
+ "21125": {
+  "districts": [
+   {
+    "dated": "2026-06-16",
+    "members": [
+     {
+      "name": "Clemons Bundy",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Stephen Davis",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Charles Massey",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Billy Browning",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brandon Fawbush",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ronnie Patton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Linda Wittenback",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Laurel County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Laurel%20County.pdf"
+   }
+  ]
+ },
+ "21127": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Norma Caudill",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mikel Compton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Leland Sexton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Stuart Blevins",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Benjamin Browning",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David McGuire",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bruce Short",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Lawrence County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lawrence%20County.pdf"
+   }
+  ]
+ },
+ "21129": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Orville Bennett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Eddie Cundiff",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jonathan Shuler",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Charles Cooper",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Sandra Gay",
+      "termEnds": "2028"
+     },
+     {
+      "name": "David Jennings",
+      "termEnds": "2028"
+     },
+     {
+      "name": "George Marshall",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Lee County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lee%20County.pdf"
+   }
+  ]
+ },
+ "21131": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Frank Baker",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tommy Roberts",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Logan Sizemore",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ronnie Gay",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jackie Howard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mary K. Kilburn",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Laura Sizemore",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Leslie County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Leslie%20County.pdf"
+   }
+  ]
+ },
+ "21133": {
+  "districts": [
+   {
+    "dated": "2026-07-09",
+    "members": [
+     {
+      "name": "Randy Bailey",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ronald Brunty",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Thomas Dollarhide",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Steve Dollarhide",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Winford Eldridge",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tex Isaac",
+      "termEnds": "2028"
+     },
+     {
+      "name": "James McAuley",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Letcher County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Letcher%20County.pdf"
+   }
+  ]
+ },
+ "21135": {
+  "districts": [
+   {
+    "dated": "2026-09-10",
+    "members": [
+     {
+      "name": "Stella Hull",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Timothy Shoemaker",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Frank Mawk",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jerry Bloomfield",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tim Douglas",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Nancy Powell",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Dwight Malone",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Lewis County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lewis%20County.pdf"
+   }
+  ]
+ },
+ "21137": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Paul Jeffries",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Dale Osterman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "K.D. Kirkpatrick",
+      "termEnds": "2026"
+     },
+     {
+      "name": "W.C. Brogle",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Debbie Gander",
+      "termEnds": "2028"
+     },
+     {
+      "name": "John Peek",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kenny Stamper",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Lincoln County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lincoln%20County.pdf"
+   }
+  ]
+ },
+ "21139": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "David Foster",
+      "termEnds": "2026"
+     },
+     {
+      "name": "T.L. Maddux Jr.",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bobby Williams",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert Brewer",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Casey Crittenden",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kenny Hardin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Darrell Jones",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Livingston County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Livingston%20County.pdf"
+   }
+  ]
+ },
+ "21141": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Lonny Epley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Steven Taylor",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bradford Hall",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jonathan Epley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Charles Miles",
+      "termEnds": "2028"
+     },
+     {
+      "name": "John Walpole",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Nathaniel Logsdon",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "North Logan County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Logan%20County%2C%20North%20and%20South.pdf"
+   },
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Zachary Armistead",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Matthew Rodgers",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Myra Johnson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Daniel Kemp",
+      "termEnds": "2028"
+     },
+     {
+      "name": "W. Trent Martin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Frank Orndorff",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bob Allen",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "South Logan County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Logan%20County%2C%20North%20and%20South.pdf"
+   }
+  ]
+ },
+ "21143": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Steven Herring",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Rod Murphy",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Sandra Rudolph",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Brian Dunning",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Thomas Jones",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Christopher Stewart",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tim Waters",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Lyon County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lyon%20County.pdf"
+   }
+  ]
+ },
+ "21145": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Dewain Gipson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Erick Harris",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Seaton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Wayne Elliott",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joshua Goodwin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robbie Scheer",
+      "termEnds": "2028"
+     },
+     {
+      "name": "D. Stephen Wurth III",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "McCracken County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McCracken%20County.pdf"
+   }
+  ]
+ },
+ "21147": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Vernon Gilreath",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Marion Gilreath",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Jones",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Earl Kidd",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Coby Stephens",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Paul Sumner Jr.",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Anthony Trammell",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "McCreary County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McCreary%20County.pdf"
+   }
+  ]
+ },
+ "21149": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Matthew Turner",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Russ Vickers",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Wright",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Freddie Adkins",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Nathan Howard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Louis Robertson Jr.",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bobby Sandefur",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "McLean County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McLean%20County.pdf"
+   }
+  ]
+ },
+ "21151": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Julia Adams",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Pigg",
+      "termEnds": "2026"
+     },
+     {
+      "name": "David Stipes",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Todd Maupin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Michael Parke",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Danny Renfro",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Wes Williams",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Madison County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Madison%20County.pdf"
+   }
+  ]
+ },
+ "21153": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Avavan Deaton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Dallas Patrick",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kenneth Williams",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Deborah Helton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "James Holliday",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Nicholas Stephens",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ryan Risner",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Magoffin County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Magoffin%20County.pdf"
+   }
+  ]
+ },
+ "21155": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Larry Jones",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Joe Luckett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Donald Veatch",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Steve Downs",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Thomas Glasscock",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Roger Hardin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joe Paul Mattingly",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Marion County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Marion%20County.pdf"
+   }
+  ]
+ },
+ "21157": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Jeff Futrell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kyle O’Dell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Eugenia Seibert",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ronald Davis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Taylor Hendley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brandon Mohler",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lauren Gibson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Marshall County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Marshall%20County.pdf"
+   }
+  ]
+ },
+ "21159": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Stephen Bowman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Thomas Dials",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Riley Maynard",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Haney",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Floyd Jude",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Terry Spence",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Vicky Evans",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Martin County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Martin%20County.pdf"
+   }
+  ]
+ },
+ "21161": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "J. Barnett-Gifford",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kathy Felice",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Curtis Rosser",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Yvonne Garrison",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brandon Moran",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Travis Robinson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Anthony Wenz, Jr.",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Mason County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Mason%20County.pdf"
+   }
+  ]
+ },
+ "21163": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "Melody Dodson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Andrew Ford",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Larry Schmidt",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Thomas Hollis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "J. Travis Scott",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Fred L. Sipes",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeremy D. Stull",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Meade County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Meade%20County.pdf"
+   }
+  ]
+ },
+ "21165": {
+  "districts": [
+   {
+    "dated": "2026-05-06",
+    "members": [
+     {
+      "name": "Ralph Collinsworth",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Penni Combs",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Frances Smallwood",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kevan Lane",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jacob Lawson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Barbara Mullins",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Charlene Smallwood",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Menifee County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Menifee%20County.pdf"
+   }
+  ]
+ },
+ "21167": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Paul Campbell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Zack Ison",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ian Thomas",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Stephen Bailey",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tony Best",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Dale Heise",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brooks Peavler",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Mercer County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Mercer%20County.pdf"
+   }
+  ]
+ },
+ "21169": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Billy Branstetter",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Henry Froggett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Frances Royse",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Thalia Pace",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mike Pedigo",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Timmy Slinker",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jason Tucker",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Metcalfe County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Metcalfe%20County.pdf"
+   }
+  ]
+ },
+ "21171": {
+  "districts": [
+   {
+    "dated": "2026-02-27",
+    "members": [
+     {
+      "name": "Ethan Brown",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jason Holland",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Loretta Lyons",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Marc Burnett",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kevin Deckard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Shane McPherson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jason Thompson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Monroe County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Monroe%20County.pdf"
+   }
+  ]
+ },
+ "21173": {
+  "districts": [
+   {
+    "dated": "2026-05-06",
+    "members": [
+     {
+      "name": "Danny Montgomery",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Linda Webb",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert Amburgey",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mike Gabbard",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Barry McCoy",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Shannon White",
+      "termEnds": "2028"
+     },
+     {
+      "name": "John Gabbard",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Montgomery County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Montgomery%20County.pdf"
+   }
+  ]
+ },
+ "21175": {
+  "districts": [
+   {
+    "dated": "2026-03-06",
+    "members": [
+     {
+      "name": "William Lacy",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Chris Lindon",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Deborah Wilson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Henry Ronald Cole",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kenneth Scarberry",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Travis Stacy",
+      "termEnds": "2028"
+     },
+     {
+      "termEnds": "2028",
+      "vacant": true
+     }
+    ],
+    "name": "Morgan County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Morgan%20County.pdf"
+   }
+  ]
+ },
+ "21177": {
+  "districts": [
+   {
+    "dated": "2026-03-06",
+    "members": [
+     {
+      "name": "Denise Brown",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Ted Jessup",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Wallace Slinker",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mary Jane Amos",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Terry Benton",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mark Bullock",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Gary Walker",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Muhlenberg County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Muhlenberg%20County.pdf"
+   }
+  ]
+ },
+ "21179": {
+  "districts": [
+   {
+    "dated": "2026-03-06",
+    "members": [
+     {
+      "name": "Danny Caldwell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John Filiatreau",
+      "termEnds": "2026"
+     },
+     {
+      "name": "William Craig Ice",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Greg Catlett",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mary K. Houghlin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "William Lutz",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kathy Hurst Settles",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Nelson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Nelson%20County.pdf"
+   }
+  ]
+ },
+ "21181": {
+  "districts": [
+   {
+    "dated": "2026-09-10",
+    "members": [
+     {
+      "name": "Andrew Fugitt",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Heather Garrett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Denise Matthews",
+      "termEnds": "2026"
+     },
+     {
+      "name": "William Bedini",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Todd Gaunce",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jimmy Martin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Eddie Tincher",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Nicholas County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Nicholas%20County.pdf"
+   }
+  ]
+ },
+ "21183": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Cletus Greer",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Darren Luttrell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Newman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jason Anderson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Garry Iglehart",
+      "termEnds": "2028"
+     },
+     {
+      "name": "D. Brianne Milligan",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Chad Porter",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Ohio County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Ohio%20County.pdf"
+   }
+  ]
+ },
+ "21185": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Boyd Johnson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kristopher Kelley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Melissa Ledford",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Weasie Gaines",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mary Lowry",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bert Pearson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Rosalind Streeter",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Oldham County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Oldham%20County.pdf"
+   }
+  ]
+ },
+ "21187": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Randy Bishop",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Josh Juett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "John New",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Richard Duvall",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Daniel Humphries",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kyle Jacobs",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Cody Anderson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Owen County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Owen%20County.pdf"
+   }
+  ]
+ },
+ "21189": {
+  "districts": [
+   {
+    "dated": "2026-06-15",
+    "members": [
+     {
+      "name": "James Cornett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Gary McIntosh",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jason Minter",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Dustin Gumm",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Denise Hoffman",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Eugene Reed Jr.",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Holly Wilder",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Owsley County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Owsley%20County.pdf"
+   }
+  ]
+ },
+ "21191": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Martha Gosney",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mary Lehner",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert McClanahan",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mark Gosney",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Maxie Kordes",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Larry Miller",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Edwin Monroe",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Pendleton County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pendleton%20County.pdf"
+   }
+  ]
+ },
+ "21193": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Bobby Brown",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Peggy Conway",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Christopher Osborne",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Stephen Barker",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Rebecca Dobson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Paul D. Hensley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Marcus R. Stidham",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Perry County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Perry%20County.pdf"
+   }
+  ]
+ },
+ "21195": {
+  "districts": [
+   {
+    "dated": "2026-05-04",
+    "members": [
+     {
+      "name": "Joey Collins",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Matthew Hager",
+      "termEnds": "2026"
+     },
+     {
+      "name": "F. Dale Johnson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Dorothy Coleman",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robert Helvey",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Lonetta Moses",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Charles Pinson",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Pike County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pike%20County.pdf"
+   }
+  ]
+ },
+ "21197": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "David Neal",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mike Reed",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Gail Ann Smith",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Gary Napier",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tim Snowden",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Elizabeth Stephens",
+      "termEnds": "2028"
+     },
+     {
+      "name": "John Stokley",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Powell County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Powell%20County.pdf"
+   }
+  ]
+ },
+ "21199": {
+  "districts": [
+   {
+    "dated": "2026-10-16",
+    "members": [
+     {
+      "name": "Rodney Dick",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Marty Wilson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Lyndon Woods",
+      "termEnds": "2026"
+     },
+     {
+      "name": "William Bingham",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Wes Hargis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Paul Merrick",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tim Tarter",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Pulaski County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pulaski%20County.pdf"
+   }
+  ]
+ },
+ "21201": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Gerry Becker",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Harley Flack",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Carl Miller",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James Brumagen",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Danny Case",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Grant Paynter",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Benny Renner",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Robertson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Robertson%20County.pdf"
+   }
+  ]
+ },
+ "21203": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Mark Dyehouse",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jerry Hasty",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Tim Mink",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James Ballinger",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Barry Hurst",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brenda Parsons",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Alvin Pigg",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Rockcastle County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Rockcastle%20County.pdf"
+   }
+  ]
+ },
+ "21205": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Anthony Anderson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Sam Hughes",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Doug Bradley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Angela Clatos",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Gary Ferguson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Steve Kelsey",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Clyde Mays",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Rowan County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Rowan%20County.pdf"
+   }
+  ]
+ },
+ "21207": {
+  "districts": [
+   {
+    "dated": "2026-07-09",
+    "members": [
+     {
+      "name": "Michael Rexroat",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Darrell Selby",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Sandra Voils",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mark Antle",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Victor Cooper",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Ronnie McFall",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Shane Roy",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Russell County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Russell%20County.pdf"
+   }
+  ]
+ },
+ "21209": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Robert H. Conway",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Keith Tingle",
+      "termEnds": "2026"
+     },
+     {
+      "termEnds": "2026",
+      "vacant": true
+     },
+     {
+      "name": "David McDowell",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Debbie Osborne",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Roger Quarles",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Landin Stadnyk",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Scott County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Scott%20County.pdf"
+   }
+  ]
+ },
+ "21211": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Bob Gravett",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Philip McCoun",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Fred Rothenburger",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Paul Case",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Tom Flowers",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Larry Tingle",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Gil Tucker",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Shelby County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Shelby%20County.pdf"
+   }
+  ]
+ },
+ "21213": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Joe Cushenberry",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Anthony Denning",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Chris Thurman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Bruce Akin",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Larry Gomer",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Chad Konow",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Bart Roberts",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Simpson County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Simpson%20County.pdf"
+   }
+  ]
+ },
+ "21215": {
+  "districts": [
+   {
+    "dated": "2026-03-10",
+    "members": [
+     {
+      "name": "Lowry Brown",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Joy Edwards",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Connie Jeffiers",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert Jones",
+      "termEnds": "2028"
+     },
+     {
+      "name": "John Reid Jr.",
+      "termEnds": "2028"
+     },
+     {
+      "name": "A.J. Shelburne",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Shirley Thomas",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Spencer County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Spencer%20County.pdf"
+   }
+  ]
+ },
+ "21217": {
+  "districts": [
+   {
+    "dated": "2026-05-04",
+    "members": [
+     {
+      "name": "Sandra Hinton",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Nevin Price",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Doug Underwood",
+      "termEnds": "2026"
+     },
+     {
+      "name": "R. David Cowherd",
+      "termEnds": "2028"
+     },
+     {
+      "name": "William Evans",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Matthew Hazel",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Sheila Thomas",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Taylor County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Taylor%20County.pdf"
+   }
+  ]
+ },
+ "21219": {
+  "districts": [
+   {
+    "dated": "2026-03-11",
+    "members": [
+     {
+      "name": "Kelvin Greenfield",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Don Laster",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Phil Templeman",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Pam Alder",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Brad Brookshire",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Garrett Sharp",
+      "termEnds": "2028"
+     },
+     {
+      "termEnds": "2028",
+      "vacant": true
+     }
+    ],
+    "name": "Todd County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Todd%20County.pdf"
+   }
+  ]
+ },
+ "21221": {
+  "districts": [
+   {
+    "dated": "2026-03-11",
+    "members": [
+     {
+      "name": "Perry Fourqurean",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Connie Rogers",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Kerry Underhill",
+      "termEnds": "2026"
+     },
+     {
+      "name": "James Adams III",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Barry Alexander",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kenneth Shipley",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Donovan Washer",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Trigg County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Trigg%20County.pdf"
+   }
+  ]
+ },
+ "21223": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Glenn Fisher",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Cody Heveline",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jonathan Turner",
+      "termEnds": "2026"
+     },
+     {
+      "name": "April Craig",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Thomas Webb",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Frank Heveline",
+      "termEnds": "2028"
+     },
+     {
+      "termEnds": "2028",
+      "vacant": true
+     }
+    ],
+    "name": "Trimble County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Trimble%20County.pdf"
+   }
+  ]
+ },
+ "21225": {
+  "districts": [
+   {
+    "dated": "2026-03-11",
+    "members": [
+     {
+      "name": "Jason Greenwell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Doug McElroy",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Matthew Wolles",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Carrie Divine",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Benjamin Dossett",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Daniel Hendrickson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jeremiah Jones",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Union County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Union%20County.pdf"
+   }
+  ]
+ },
+ "21227": {
+  "districts": [
+   {
+    "dated": "2026-03-11",
+    "members": [
+     {
+      "name": "Troy Ellis",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Garnett Owens",
+      "termEnds": "2026"
+     },
+     {
+      "name": "LaJuana Wilcher",
+      "termEnds": "2026"
+     },
+     {
+      "name": "J. Mark Chapman",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Rhodes Hester",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Benjamin Hudnall",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Emily Sharp",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Warren County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Warren%20County.pdf"
+   }
+  ]
+ },
+ "21229": {
+  "districts": [
+   {
+    "dated": "2026-05-04",
+    "members": [
+     {
+      "name": "Larry Hardin",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Raymond Johnson",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Martha Shewmaker",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Joseph Fowler",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Charlie Hahn",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Mark Hale",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Robert Osbourne",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Washington County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Washington%20County.pdf"
+   }
+  ]
+ },
+ "21231": {
+  "districts": [
+   {
+    "dated": "2026-08-19",
+    "members": [
+     {
+      "name": "Randy Cowan",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Wesley Elam",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Karen Floyd",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Jason Gregory",
+      "termEnds": "2028"
+     },
+     {
+      "name": "A. Margaret Hughes",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Travis Lewis",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jerry Sloan",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Wayne County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Wayne%20County.pdf"
+   }
+  ]
+ },
+ "21233": {
+  "districts": [
+   {
+    "dated": "2026-07-23",
+    "members": [
+     {
+      "name": "David Asher",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Mark Mitchell",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Sarah Scott",
+      "termEnds": "2026"
+     },
+     {
+      "name": "P.E. Chandler",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Larry Ranes",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Kelby Tapp",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Doug Turley",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Webster County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Webster%20County.pdf"
+   }
+  ]
+ },
+ "21235": {
+  "districts": [
+   {
+    "dated": "2026-03-11",
+    "members": [
+     {
+      "name": "Anne Bayes",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Owen Glen Croley",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Harold Prewitt",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Brian Prewitt",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Martin Lee Bryant",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jo Ann Siler",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Jack R. Smith",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Whitley County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Whitley%20County.pdf"
+   }
+  ]
+ },
+ "21237": {
+  "districts": [
+   {
+    "dated": "2026-03-31",
+    "members": [
+     {
+      "name": "Andrew Graham",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Chris Halsey",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Brandon Rose",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Lou Ellen Brewer",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Danny Dunn",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Henry Ferguson",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Roy Kelley",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Wolfe County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Wolfe%20County.pdf"
+   }
+  ]
+ },
+ "21239": {
+  "districts": [
+   {
+    "dated": "2026-03-11",
+    "members": [
+     {
+      "name": "Brad Carmickle",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Curtis Congleton Jr.",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Robert Richardson II",
+      "termEnds": "2026"
+     },
+     {
+      "name": "Michael Duckworth",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Joseph Greathouse",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Donald Mitchell",
+      "termEnds": "2028"
+     },
+     {
+      "name": "Peggy Seal",
+      "termEnds": "2028"
+     }
+    ],
+    "name": "Woodford County Conservation District",
+    "read": "2026-10-16",
+    "sourceUrl": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Woodford%20County.pdf"
+   }
+  ]
+ }
+}

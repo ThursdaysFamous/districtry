@@ -850,7 +850,8 @@
       "/il/data/app/fayette-county-board-districts.json",
       "/il/data/app/cumberland-county-board-districts.json",
       "/il/data/app/jersey-county-board-districts.json",
-      "/il/data/app/lawrence-county-board-districts.json"
+      "/il/data/app/lawrence-county-board-districts.json",
+      "/il/data/app/jasper-county-board-districts.json"
      ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
@@ -1084,7 +1085,8 @@
        "fayette",
        "cumberland",
        "jersey",
-       "lawrence"
+       "lawrence",
+       "jasper"
       ],
       "failed": [
        {
@@ -1224,6 +1226,9 @@
        ],
        "lawrence": [
         "/il/data/app/lawrence-county-board-districts.json"
+       ],
+       "jasper": [
+        "/il/data/app/jasper-county-board-districts.json"
        ]
       }
      },

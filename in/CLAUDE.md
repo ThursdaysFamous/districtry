@@ -8,9 +8,11 @@ districtry Indiana: a single-file, dependency-light web app. Click a point in In
 search an address) and it reports every civic district containing that point. It serves at
 **districtry.com/in/** as a folder of the consolidated districtry repo — following the
 Wisconsin/Iowa/Michigan shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships FOURTEEN layers; every boundary comes from a national publisher except
-two, which come from the state's mapping office: the county council districts and the voting
-precincts (below).
+root-scripts shape. It ships SEVENTEEN layers, all but five from a national publisher: the county
+council districts and the voting precincts come from the state's mapping office, the Court of
+Appeals districts group the Census's counties as the court's own district map does, the
+Indianapolis Public Schools board districts come from the City of Indianapolis, and the
+conservancy districts come from the Department of Natural Resources (all below).
 
 **LIVE SINCE THE GO-LIVE CHANGE OF 2026-10-07**, eight days after it arrived dark: it is in
 `metros.json`, `fleet-outlines.json`, the sitemap, the landing page and the coverage map, and
@@ -122,6 +124,60 @@ licence and carries no county name, only a three-digit code, so the county comes
 instance's own county file. Those two gaps and the yearly change of address are evidence for the
 state-publishing ask. The quarterly re-check is in `in/WATCH.md`.
 
+**THE COURT OF APPEALS' 1ST, 2ND AND 3RD DISTRICTS ARE DRAWN SINCE 2026-10-16, AND THE COUNTIES
+WERE READ OFF A PICTURE.** `in-court-of-appeals` dissolves the county fabric this instance ships,
+by `in/scripts/build_in_appeals_districts.py` through the fleet module
+`scripts/whole_county_courts.py`. Three of the court's fifteen judges come from each of these
+districts and stand for retention there alone, which the court's own districts page says; the 4th
+and 5th Districts' judges stand for retention statewide, so they are not drawn. The Indiana Code
+that assigns the counties is published only through a site that serves nothing to a reader that
+does not run its scripts, robots.txt included, so the counties were read from the court's own
+district map image, whose SHA-256 is recorded in `in/data/source/courts/`. Two guards make a
+misread county stop the build: the pinned counts (53, 19 and 20) and the rule that each district
+dissolves to one piece. The card says how the judges are chosen and retained, lists the district's
+counties, names nobody (gap `in-court-of-appeals-judges`) and links the court's districts page.
+THE TRIAL COURTS ARE NOT DRAWN: every judicial circuit is one county except the 7th, which Dearborn
+and Ohio share (the Prosecuting Attorneys Council's list, citing IC 33-33, which was not read), so a
+circuit map would redraw the county map. The annual re-check is in `in/WATCH.md`.
+
+**THE INDIANAPOLIS PUBLIC SCHOOLS BOARD'S FIVE DISTRICTS ARE DRAWN SINCE 2026-10-16, AND NO OTHER
+BOARD'S ARE.** `school-board-district` draws them from the City of Indianapolis and Marion County's
+School Board Districts layer, pre-built by `in/scripts/build_in_school_board_districts.py` through
+the fleet module `scripts/published_district_layers.py`. The same layer draws residence districts
+for the Lawrence and Washington township boards, which are not drawn because the whole township
+votes for every seat. Indiana publishes no statewide map of school board election districts, and
+the 2022 and 2024 certified results point to about forty other boards electing some members by
+district (gap `in-school-board-districts`). The card names nobody (gap `in-school-board-members`).
+The layer states no licence. The quarterly re-check is in `in/WATCH.md`.
+
+**CONSERVANCY DISTRICTS ARE DRAWN SINCE 2026-10-16, WITH THEIR BOARDS NAMED FROM THE STATE'S
+DIRECTORY.** A conservancy district is a unit of local government a circuit court sets up, when
+property owners petition, for flooding, drainage, sewers, water supply or a lake (IC 14-33); its
+directors are elected by the property owners in the district. `conservancy-district` draws the 100
+the Department of Natural Resources' map marks active (layer 54 of "Conservancy Districts of
+Indiana"), pre-built by `in/scripts/build_in_conservancy_districts.py` through the fleet module
+`scripts/published_district_layers.py`; they cover 8.0% of the state and some overlap, so the card
+lists every district at the point. The boards come from the department's yearly Indiana
+Conservancy District Directory, which each board's chair must keep current, read by
+`in/scripts/build_in_conservancy_directors.py`: 465 people and 6 vacant seats across 93 districts
+in the 2026 edition. Hired staff are left out and home towns are never carried. **A DIRECTOR'S OWN
+TELEPHONE AND E-MAIL SHOW SINCE 2026-10-17**, on Adam's two rulings of that day that a number or an
+address a government source prints beside one official is published: 145 people carry a number and
+181 an address. One the directory prints beside two or more different people, or equal to the
+district's own contact line, belongs to the district and is shown on no person, and the district's
+own telephone and e-mail show above its board (86 and 83 districts). Six
+districts sent no list and one is missing from the directory, so those cards name nobody (gap
+`in-conservancy-district-records`). **THE MAP AND THE DIRECTORY DISAGREE, AND THE BUILDERS SAY
+WHERE.** The directory gives four districts another district's id, so the join runs through a
+table of corrections; the name and county each source gives a district must agree before a board
+is attached; the map files Nature Works under a court whose county holds none of its land, so the
+card names no court for it; one establishment date predates the 1947 act, so the card prints none;
+and thirteen of the map's 35 website addresses reach nobody or the wrong place, so the card prefers
+the directory's. Every correction table stops the build once its entry no longer applies, and all
+of it is recorded in the gap as evidence for the state-publishing ask. The card and the hover use
+the directory's name for a district, which differs from the map's for 21. The quarterly map check
+and the yearly directory rebuild are in `in/WATCH.md`.
+
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
 roster-miss path, which is the honest card until a roster is built. Recorded as gap
@@ -157,8 +213,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Indiana (`indiana`) — https://districtry.com/in/
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
-- Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055; county-council 12. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
-- Layers: 14 registered (political 5, safety 2, schools 1, geography 6); `registerLayer(` floor 10. Debug namespace `window.IndianaExplorer`.
+- Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055; county-council 12; in-court-of-appeals 2. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
+- Layers: 17 registered (political 6, safety 2, schools 2, geography 7); `registerLayer(` floor 13. Debug namespace `window.IndianaExplorer`.
 - Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -218,8 +274,8 @@ after every await) and **per-layer failure isolation** (a layer's failure shows 
 its own card, never breaks the others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
-roster source exists, cards link to the official body instead of inventing a name. Eight of this
-instance's fourteen layers name nobody (U.S. House, County, County Council District, City or Town,
+roster source exists, cards link to the official body instead of inventing a name. Nine of this
+instance's fifteen layers name nobody (U.S. House, County, County Council District, City or Town,
 Township or City and the tribal layer name people), and every one of their cards says so. External strings
 always render through `sanitize()`/`textContent`. Roster refreshes always land as PRs for human
 review — never as direct commits to main.

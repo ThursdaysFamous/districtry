@@ -3,6 +3,9 @@
     "clerk": "Jessica Laeseke",
     "municipality": "Akan",
     "phone": "608-536-3432",
+    "phonesExtra": [
+      "608-604-7634"
+    ],
     "recordUpdated": "2024-01-24",
     "url": "https://townofakan.wixsite.com/akan"
   },
@@ -10,6 +13,9 @@
     "clerk": "Shelly Schweiger",
     "municipality": "Bloom",
     "phone": "608-963-7062",
+    "phonesExtra": [
+      "608-627-1110"
+    ],
     "recordUpdated": "2026-06-30",
     "url": "https://townofbloomwi.gov/"
   },
@@ -24,6 +30,9 @@
     "clerk": "Corrina Mott",
     "municipality": "Dayton",
     "phone": "608-475-0850",
+    "phonesExtra": [
+      "608-647-4637"
+    ],
     "recordUpdated": "2025-09-10",
     "url": "https://daytonrcwi.gov/"
   },
@@ -57,6 +66,9 @@
     "deputyClerk": "Brenda Cupp",
     "municipality": "Marshall",
     "phone": "608-383-9892",
+    "phonesExtra": [
+      "608-604-4497"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://townofmarshallwi.org/"
   },
@@ -65,6 +77,9 @@
     "deputyClerk": "Janet Brown",
     "municipality": "Orion",
     "phone": "608-739-0515",
+    "phonesExtra": [
+      "608-712-0035"
+    ],
     "recordUpdated": "2026-06-16",
     "url": "https://orionwi.gov/"
   },
@@ -80,6 +95,9 @@
     "deputyClerk": "Carol A Welsh",
     "municipality": "Richwood",
     "phone": "608-537-2907",
+    "phonesExtra": [
+      "720-933-7496"
+    ],
     "recordUpdated": "2025-12-23"
   },
   "5510368675": {
@@ -100,6 +118,9 @@
     "deputyClerk": "Ann Stiemke",
     "municipality": "Westford",
     "phone": "608-983-2700",
+    "phonesExtra": [
+      "414-750-5205"
+    ],
     "recordUpdated": "2026-07-20",
     "url": "https://westfordwi.gov/"
   },
