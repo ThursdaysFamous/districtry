@@ -242,12 +242,12 @@ PAIRS = [
     # — links and accents as text —
     ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep); the invitation's .install-invite-go, an outlined button on its --panel bar (styles-app). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
     ("brand-700",  "paper",      "text", "links on the app ground; privacy and history `a`; .locate-btn, .btn-secondary (styles-app, styles-footer)"),
-    ("brand-700",  "brand-tint", "text", "landing footer .support a:hover (build_landing_page — on body)"),
+    ("brand-700",  "brand-tint", "text", "landing footer .support a:hover and .notice-cta a:hover (build_landing_page — on body)"),
     ("brand-700",  "brand-tint@surface", "text", "privacy .masthead-actions a:hover — the masthead is a --surface panel (build_privacy_page)"),
     ("brand-700",  "surface-2",  "text", "the UNPRESSED .hover-toggle-btn and .pin-parent-btn in dark: --accent-deep (styles-app) on --dst-raised #262331 (skin), which equals --surface-2 dark — literal equals token"),
     ("brand",      "surface",    "text", "coverage-map attribution links at 10px; .dst-wordmark-link:hover (skin, as --accent)"),
     ("brand",      "paper",      "text", "landing footer a; sub-page summary::after glyph at 24px"),
-    ("brand",      "brand-tint", "text", "landing footer .support a (build_landing_page — on body)"),
+    ("brand",      "brand-tint", "text", "landing footer .support a and the notice's .notice-cta a (build_landing_page — on body)"),
 
     # — error state —
     ("error-ink",  "surface",    "text", ".layer-card-body.state-error — styles-card-v2's literal #7c2d12 wins by source order over styles-app's var(--err) and equals --error-ink light; the skin's dark #fdba74 equals --error-ink dark — literal equals token"),
