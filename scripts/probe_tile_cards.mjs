@@ -271,16 +271,22 @@ const CURL_RETRY = ["--retry", "6", "--retry-all-errors", "--retry-max-time", "2
 // download that stalled part-way and was retried came back as the partial
 // body followed by the whole one, and JSON.parse failed where the two met
 // (il:cps-high and ny:es-zone on 2026-10-16, on two runs of one commit).
+// Every call is timed, so a run's log says how much of its time went to these
+// downloads rather than to the browser.
+let fetchMs = 0;
 function curlBody(args) {
   const dir = mkdtempSync(join(tmpdir(), "probe-tile-cards-"));
   const out = join(dir, "body");
+  const started = Date.now();
   try {
     execFileSync("curl", [...args.slice(0, -1), "-o", out, args[args.length - 1]], { stdio: ["ignore", "ignore", "inherit"] });
     return readFileSync(out);
   } finally {
+    fetchMs += Date.now() - started;
     rmSync(dir, { recursive: true, force: true });
   }
 }
+const secs = (ms) => `${(ms / 1000).toFixed(1)} s`;
 
 const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
@@ -400,12 +406,14 @@ if (SCOPE) console.log(`  scope this change reaches ${SCOPE.length ? SCOPE.join(
   `the other ${ALL.length - SCOPE.length} instance(s) draw nothing it changed, so they are not probed`);
 
 let problems = 0, compared = 0, answered = 0, layersDone = 0;
+const runStarted = Date.now();
 const browser = await chromium.launch();
 try {
   for (const tag of TAGS) {
     const layers = tiledLayers(tag);
     if (!layers.length) continue;
     for (const id of layers) {
+      const layerStarted = Date.now(), fetchedBefore = fetchMs;
       const rec = SOURCES.apps[tag] && SOURCES.apps[tag].layers[id];
       const countyFiles = rec && rec.counties && rec.counties.files;
       const files = countyFiles ? Object.values(countyFiles).flat() : ((rec && rec.files) || []);
@@ -580,6 +588,8 @@ try {
         (county ? `, ${hoverBad.length} hover names differ` : `, ${notTiled.length} not answered from tiles`));
       if (rerun) console.log(`          the first run differed while the page gave up waiting on ${rerun} answer(s) from another host; ` +
         "this is the second run, with every answer already held");
+      if (fetchMs > fetchedBefore) console.log(`          ${secs(fetchMs - fetchedBefore)} of this layer's ${secs(Date.now() - layerStarted)} ` +
+        "went to fetching the set its archive was built from");
       if (county) {
         const byCounty = {};
         for (const r of res) {
@@ -612,6 +622,7 @@ try {
   await browser.close();
   await API.dispose();
 }
+if (layersDone || problems) console.log(`  time  ${secs(Date.now() - runStarted)} in all, ${secs(fetchMs)} of it fetching the sets mirrored layers were built from`);
 if (!layersDone && !problems) {
   console.log(SCOPE ? "probe-tile-cards: OK — no instance this change reaches draws a layer from tiles"
     : "probe-tile-cards: OK — no layer is drawn from tiles");
