@@ -51,6 +51,11 @@
   // is, so a block with no ZIP and no heading is joined as it always was, and a
   // block with no address line at all gets no pin rather than a lookup of a
   // telephone number.
+  //
+  // An address with no digit in it, no street number, ZIP code or box, names
+  // no place a pin could go, so it gets no pin either: measured 2026-10-20 over
+  // the same 693 offices, exactly three, Illinois House 13 ("By appointment
+  // only") and Wisconsin Senate 6 and 22 (the bare state, "WI").
   function officeAddressForGeocode(lines) {
     if (!lines || !lines.length) return null;
     var CONTACT = /^\s*(?:phone|telephone|tel|fax|cell|mobile|e-?mail)\s*[:.]/i;
@@ -78,5 +83,5 @@
     var picked = addresses.filter(function (a) { return !boxOnly(a); })[0] || addresses[0];
     if (!picked) return null;
     var addr = picked.join(", ").trim();
-    return addr || null;
+    return /\d/.test(addr) ? addr : null;
   }
