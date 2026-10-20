@@ -49,6 +49,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -310,7 +311,7 @@ const contrast = (fg, bg) => {
 // answer. PAGE_JOBS overrides the count; 1 is the old one-at-a-time run.
 const PAGE_JOBS = Math.max(1, parseInt(process.env.PAGE_JOBS || "4", 10) || 1);
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   const queue = [...paths];
   const checkPages = async () => {
