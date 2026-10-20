@@ -87,49 +87,36 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 8
+MIN_REGISTER_LAYER = 9
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "ms-supreme-court", "us-house", "ms-court-of-appeals",
-    "ms-chancery-court", "ms-circuit-court", "ms-senate", "county",
-    "ms-house", "school-district-unified", "county-supervisor", "zip-code",
-    "municipality", "city-ward", "tribal-government", "police-station",
+    "us-house", "la-senate", "county", "school-district-unified", "la-house",
+    "zip-code", "parish-district", "municipality", "police-station",
     "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
 GEOMETRY_FILES = {
-    "metro-outline.json": (1, 1),  # The whole-Mississippi outline for the coverage wash (loadMetroOutline), dissolved from the 82-county fabric.
-    "state-counties.json": (82, 82),  # The 82 counties — the instance's offline anchor layer and the ground the coverage tests use.
-    "congress-districts.json": (4, 4),  # The 4 U.S. House districts, TIGERweb layer 0 (CD120).
-    "ms-senate-districts.json": (52, 52),  # The 52 Mississippi Senate districts.
-    "ms-house-districts.json": (122, 122),  # The 122 Mississippi House districts.
-    "ms-supervisor-districts.json": (125, 125),  # The county supervisor districts of the 25 counties whose current lines are confirmed (ms/scripts/build_ms_supervisor_districts.py), five per county: 12 from the Census's lines and 13 from other published maps, redrawn along whole 2020 census blocks.
-    "ms-city-wards.json": (57, 57),  # The wards of the nine Mississippi cities of 25,000 people or more whose current ward map is confirmed (ms/scripts/build_ms_city_wards.py): each city's own published lines between wards, cut at the city's limits on the Census Bureau's map. Every ward's 2020 census people are pinned in the builder, so the floor and the ceiling are equal: a new city or a new ward plan changes this entry in the same change.
-    "tribal-areas.json": (2, 2),  # Mississippi's tribal land (scripts/build_tribal_areas.py) — the Mississippi Choctaw Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-15; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
-    "ms-supreme-court-districts.json": (3, 3),  # The 3 Supreme Court districts (ms/scripts/build_ms_court_districts.py), dissolved from state-counties.json.
-    "ms-court-of-appeals-districts.json": (15, 15),  # The 5 Court of Appeals districts as 15 features: the whole-county part of each district, and each of the ten counties two districts divide by voting precinct drawn on its own.
-    "ms-chancery-court-districts.json": (20, 20),  # The 20 chancery districts in force until 1 January 2027.
-    "ms-chancery-court-districts-2027.json": (20, 20),  # The 20 chancery districts from 1 January 2027 (Senate Bill 2768, 2025), which the app draws from that day.
-    "ms-circuit-court-districts.json": (23, 23),  # The 23 circuit districts in force until 1 January 2027.
-    "ms-circuit-court-districts-2027.json": (22, 22),  # The 22 circuit districts from 1 January 2027 (House Bill 1544, 2025), which the app draws from that day.
+    "metro-outline.json": (1, 1),  # The whole-Louisiana outline for the coverage wash (loadMetroOutline), dissolved from the 64-parish fabric.
+    "state-counties.json": (64, 64),  # The 64 parishes — the instance's offline anchor layer and the ground the coverage tests use.
+    "congress-districts.json": (6, 6),  # The 6 U.S. House districts, TIGERweb layer 4 (CD119), until 3 January 2027.
+    "la-senate-districts.json": (39, 39),  # The 39 Louisiana Senate districts.
+    "la-house-districts.json": (105, 105),  # The 105 Louisiana House districts.
+    "la-parish-districts.json": (56, 56),  # The police jury, council and commission districts of the 6 parishes whose current lines are confirmed (la/scripts/build_la_parish_districts.py).
 }
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
-    "congress-roster.json": 4,  # U.S. House (MS) roster, refreshed weekly by update-ms-congress-roster.yml.
-    "ms-senate-members.json": 52,  # Mississippi Senate roster from the Mississippi Legislature's own member gallery and profiles, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 34 read vacant on 2026-10-15.
-    "ms-house-members.json": 122,  # Mississippi House roster on the same terms; House 70 and 77 read vacant on 2026-10-15.
-    "ms-county-officials.json": 82,  # Every county's five supervisors by district, from the Secretary of State's County Offices and Directory, one record per county, refreshed weekly by update-ms-county-officials.yml.
-    "ms-supervisor-counties.json": 25,  # The 25 counties whose supervisor districts are drawn, by GEOID, written by the same build as ms-supervisor-districts.json and held to it by its --check. The County Supervisor District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
-    "ms-city-councils.json": 15,  # The mayor and the council or board of aldermen of each of Mississippi's 15 cities of 25,000 people or more, keyed by the city's Census id, seat by seat as each city's own website names them, with the date the pages were read and, where a city's pages print them inside a person's own entry, that person's telephone numbers (five cities) and e-mail address (nine cities) (ms/scripts/build_ms_city_councils.py). Greenville's record names nobody and says why. The City card and the City Ward card both read it.
+    "congress-roster.json": 6,  # U.S. House (LA) roster, refreshed weekly by update-la-congress-roster.yml.
+    "la-senate-members.json": 39,  # Louisiana Senate roster from the Senate's own list of senators and their pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate District 14 read vacant on 2026-10-20.
+    "la-house-members.json": 105,  # Louisiana House roster on the same terms; House Districts 77 and 92 read vacant on 2026-10-20.
+    "la-parish-officials.json": 64,  # Every parish's governing body by seat and its parish president or mayor, from the Secretary of State's list of elected officials, one record per parish, refreshed weekly by update-la-parish-officials.yml.
+    "la-parish-district-parishes.json": 6,  # The parishes whose districts the Police Jury or Council District layer draws, written by the same build as la-parish-districts.json; the layer's coverage test reads it.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
-    "tribal-councils.json": 1,  # The Mississippi Band of Choctaw Indians' Tribal Chief and Tribal Council, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
-    "ms-judge-roster.json": 1,  # The judges of the four courts by district (ms/scripts/build_ms_judges.py), from the courts' own pages and the Judiciary's lists of chancellors and circuit judges, with the changes since each list's date that this project confirmed applied with their sources; refreshed weekly by update-ms-judges-roster.yml. One top-level key, courts, so the floor is 1; the builder holds every court's district count and the appellate seat counts exactly.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at
@@ -401,7 +388,7 @@ def main():
         "LAYER_AREA_RANK + LAYER_SIDEBAR_RANK cover all %d ids, no inline datasets, %d well-formed "
         "METRO_EXPLORERS entries, all data/app files present and cached in "
         "exactly one sw.js list, %d dispatched counties all inside the coverage "
-        "ring whose %d counties match the shipped county layer and the supervisor roster exactly%s"
+        "ring whose %d parishes match the shipped parish layer and the governing-body roster exactly%s"
         % (n, len(EXPECT_LAYER_IDS), n_metros, n_counties, n_ring,
            "" if n_sourced is None else
            ", sources page linked and covering all %d layers" % n_sourced)
@@ -695,7 +682,7 @@ def check_county_coverage_list(html, repo_root):
 
 
 def check_coverage_ring_tracks_counties(repo_root, app_dir):
-    """METRO_COUNTY_FIPS must be exactly the counties this app answers for.
+    """METRO_COUNTY_FIPS must be exactly the parishes this app answers for.
 
     THE CHECK ABOVE CANNOT SEE THIS INSTANCE. It walks registerCountyLayer
     dispatch entries, and this instance has none — every concept it ships is ONE
@@ -705,24 +692,21 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
     same shape, closed this after seven counties sat greyed out for two days
     with every gate in the repo green; Iowa carried the identical hole.
 
-    TWO COMPARANDS, AND THE ROSTER IS THE STRICTER. Iowa holds its ring to
-    ia-county-officers.json, the roster that must answer everywhere its wash
-    reaches; the instances that shipped no county roster held theirs to the
-    county GEOMETRY, the only file enumerating the counties their cards answer
-    for. This instance has both: state-counties.json draws the 82 counties and
-    ms-county-officials.json names each one's board of supervisors, and the
-    County card reads the second for every county the first draws. So the ring,
-    the geometry and the roster must name the same counties: the wash may not
-    grey out a county whose card answers, may not promise one the app cannot
-    draw, and a county the map draws with no board on its card is a hole the
-    card would paper over with "the list did not load".
+    TWO COMPARANDS, AND THE ROSTER IS THE STRICTER. state-counties.json draws
+    the 64 parishes and la-parish-officials.json names each one's police jury,
+    council or commission, and the Parish card reads the second for every
+    parish the first draws. So the ring, the geometry and the roster must name
+    the same parishes: the wash may not grey out a parish whose card answers,
+    may not promise one the app cannot draw, and a parish the map draws with no
+    governing body on its card is a hole the card would paper over with "the
+    list did not load".
     """
     outline_py = os.path.join(repo_root, "scripts", "build_metro_outline.py")
     counties_path = os.path.join(app_dir, "state-counties.json")
-    roster_path = os.path.join(app_dir, "ms-county-officials.json")
+    roster_path = os.path.join(app_dir, "la-parish-officials.json")
     for path in (outline_py, counties_path, roster_path):
         if not os.path.exists(path):
-            fail("%s not found — the coverage-ring/county check cannot run"
+            fail("%s not found — the coverage-ring/parish check cannot run"
                  % os.path.relpath(path, repo_root))
             return 0
 
@@ -730,8 +714,8 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
     with open(counties_path, encoding="utf-8") as f:
         counties = json.load(f)
     features = counties.get("features") or []
-    # GEOID is 5 digits ("28049"), the ring is the 3-digit county code ("049").
-    # Sliced rather than stripped of a literal "28" so a malformed key cannot
+    # GEOID is 5 digits ("22071"), the ring is the 3-digit parish code ("071").
+    # Sliced rather than stripped of a literal "22" so a malformed key cannot
     # silently normalise to something plausible.
     drawn, malformed = set(), []
     for feat in features:
@@ -749,37 +733,39 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
 
     masked = sorted(drawn - in_ring)
     if masked:
-        fail("count%s this app DRAWS but which sit outside METRO_COUNTY_FIPS, so "
+        fail("parish%s this app DRAWS but which sit outside METRO_COUNTY_FIPS, so "
              "the out-of-scope wash greys them out while their cards answer in "
-             "full: %s. Add the FIPS to ms/scripts/build_metro_outline.py WITH an "
+             "full: %s. Add the FIPS to la/scripts/build_metro_outline.py WITH an "
              "INSIDE anchor and rebuild data/app/metro-outline.json."
-             % ("ies" if len(masked) > 1 else "y", ", ".join(masked)))
+             % ("es" if len(masked) > 1 else "", ", ".join(masked)))
     promised = sorted(in_ring - drawn)
     if promised:
-        fail("count%s inside METRO_COUNTY_FIPS with no feature in "
+        fail("parish%s inside METRO_COUNTY_FIPS with no feature in "
              "state-counties.json, so the wash promises an answer the map cannot "
-             "draw: %s. Either the county layer stopped resolving (rebuild it) or "
-             "the county was added to the ring too early."
-             % ("ies are" if len(promised) > 1 else "y is", ", ".join(promised)))
+             "draw: %s. Either the parish layer stopped resolving (rebuild it) or "
+             "the parish was added to the ring too early."
+             % ("es are" if len(promised) > 1 else " is", ", ".join(promised)))
 
     with open(roster_path, encoding="utf-8") as f:
         roster = json.load(f)
     named = set()
     for key in roster:
-        if len(key) != 5 or not key.isdigit() or not key.startswith("28"):
-            fail("ms-county-officials.json has a key that is not a Mississippi "
-                 "county GEOID: %r" % key)
+        if len(key) != 5 or not key.isdigit() or not key.startswith("22"):
+            fail("la-parish-officials.json has a key that is not a Louisiana "
+                 "parish GEOID: %r" % key)
             return 0
         named.add(key[-3:])
     unnamed = sorted(drawn - named)
     if unnamed:
-        fail("count%s the map draws with no board in ms-county-officials.json, "
-             "so the County card would say the list did not load: %s"
-             % ("ies" if len(unnamed) > 1 else "y", ", ".join(unnamed)))
+        fail("parish%s the map draws with no governing body in "
+             "la-parish-officials.json, so the Parish card would say the list "
+             "did not load: %s"
+             % ("es" if len(unnamed) > 1 else "", ", ".join(unnamed)))
     orphaned = sorted(named - drawn)
     if orphaned:
-        fail("ms-county-officials.json names a board for count%s the map does "
-             "not draw: %s" % ("ies" if len(orphaned) > 1 else "y", ", ".join(orphaned)))
+        fail("la-parish-officials.json names a governing body for parish%s the "
+             "map does not draw: %s"
+             % ("es" if len(orphaned) > 1 else "", ", ".join(orphaned)))
     return len(in_ring)
 
 

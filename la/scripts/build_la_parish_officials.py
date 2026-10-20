@@ -151,15 +151,16 @@ RETRY_SECONDS = 5.0
 COLUMNS = ["OfficeTitle", "OfficeTitleDescription", "FirstName", "LastName", "Suffix",
            "Address", "City", "State", "Zip", "Phone", "Party", "Race", "Gender",
            "ExpDate", "Parish"]
-# What each office title makes the body, and what its members are called.
+# What kind of body each member's office title makes. The card words its
+# members from the kind ("police juror", "council member"), so no title ships.
 MEMBER_TITLES = {
-    "Police Juror": ("police-jury", "Police juror"),
-    "Parish Commission Member": ("commission", "Commissioner"),
-    "Council Member": ("council", "Council member"),
-    "Councilman": ("council", "Council member"),
-    "Councilmember": ("council", "Council member"),
-    "Parish Council Member": ("council", "Council member"),
-    "Member of Parish Council": ("council", "Council member"),
+    "Police Juror": "police-jury",
+    "Parish Commission Member": "commission",
+    "Council Member": "council",
+    "Councilman": "council",
+    "Councilmember": "council",
+    "Parish Council Member": "council",
+    "Member of Parish Council": "council",
 }
 AT_LARGE_TITLES = {"Council Member at Large", "Councilman at Large",
                    "Councilmember at Large"}
@@ -355,11 +356,11 @@ def build(texts, previous, today):
         g = groups[key]
         kinds = {MEMBER_TITLES[r["OfficeTitle"]] for r in g["members"]}
         if g["at_large"]:
-            kinds.add(("council", "Council member"))
+            kinds.add("council")
         if len(kinds) != 1:
             raise SystemExit("FAIL: %s's rows name %d kinds of body: %s"
                              % (parish_name, len(kinds), sorted(kinds)))
-        kind, member_title = kinds.pop()
+        kind = kinds.pop()
         base = parish_name[:-len(" Parish")] if parish_name.endswith(" Parish") else parish_name
         body = BODY_OVERRIDES.get(parish_name) or "%s Parish %s" % (base, BODY_SUFFIX[kind])
         people = g["members"] + g["at_large"] + g["executive"]
@@ -406,8 +407,7 @@ def build(texts, previous, today):
                 else "At large"
             at_large.append(record(row, seat))
 
-        rec = {"parish": parish_name, "body": body, "kind": kind,
-               "memberTitle": member_title, "seats": seats}
+        rec = {"parish": parish_name, "body": body, "kind": kind, "seats": seats}
         if at_large:
             rec["atLarge"] = at_large
         skipped = unlisted_seats([s["seat"] for s in seats])
@@ -459,7 +459,7 @@ def build(texts, previous, today):
 
 # ---------------------------------------------------------------- gates
 
-ALLOWED = {"parish", "body", "kind", "memberTitle", "seats", "atLarge", "unlisted",
+ALLOWED = {"parish", "body", "kind", "seats", "atLarge", "unlisted",
            "executive", "boardAddress", "boardPhone", "source", "sourceUrl", "read"}
 PERSON = {"seat", "name", "party", "phone", "termEnds"}
 

@@ -10,7 +10,8 @@ silently supersedes with a new one:
     attendance-boundary layers, for example, are published fresh every school
     year under a BRAND NEW dataset id (…SY2526 → …SY2627), so the id hardcoded
     in index.html keeps returning last year's boundaries long after a newer one
-    exists. Nothing errors; the data just quietly goes stale.
+    exists. Nothing errors; the data just quietly goes stale. Louisiana's
+    instance reads no Socrata portal, so that list is empty here.
   * Pre-built boundary layers (in this instance: the TIGERweb-derived district
     files) were downloaded at build time. The check there is provenance: is
     the source we cite still reachable, and a reminder to re-verify after
@@ -30,54 +31,36 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
      edition than the one in use.                                         [WARN]
   3. Shapefile provenance: the cited source URL is reachable and the built
      data/app file is present.                             [WARN / FAIL if gone]
-  4. Live service endpoints (Census TIGERweb): reachable.                  [WARN]
-  5. The four court maps: each court's district page, read the way the court
-     map builder reads it, still lists the counties of the copy the maps were
-     drawn from.                                                          [WARN]
-  6. A later law: every measure of every session the Legislature has held
-     since 2025 whose short title names a court, a judge or a judicial
-     district, and that became law, has been read (LAWS_REVIEWED).        [WARN]
-  7. The judges' changes: the court's news page and the Governor's newsroom
-     carry no headline after the last one reviewed that could mean a judge
-     left or arrived, which build_ms_judges.py's CHANGES would then need.  [WARN]
-  8. The cities' ward maps: each drawn city's ward layer still has the name
-     its witness pins (Southaven's, the adoption date), still holds the wards
-     that were drawn, and still serves the lines the shipped file was drawn
-     from, and the Census Bureau's map of the city's limits has not moved
-     (build_ms_city_wards.py's record of what it read).                  [WARN]
-  9. The city councils: each city's own pages, read the council builder's
-     way, still name the mayor and members the shipped file names, and
-     Greenville's still prints no seat label. No weekly job reads these
-     pages yet, so this is the only check that would notice a change.    [WARN]
+  4. Live service endpoints (Census TIGERweb, the USGS National Map):
+     answering for Louisiana, with a count at or above its floor.          [WARN]
+  5. The congressional map: congress-districts.json is the 119th Congress's,
+     which is right until noon on 3 January 2027 and wrong after it. From
+     1 December 2026 this check says so every month; it also says so if
+     TIGERweb's layer 4 is no longer the 119th Congress's map, since the
+     builder would then refuse to rebuild it.                             [WARN]
 
 Exit status: 0 when nothing needs a human (OK or WARN only), 1 on any FAIL.
 Newer-edition detection is deliberately WARN, not FAIL — the current dataset
 still works and a person decides whether/when to migrate. The scheduled
-workflow (.github/workflows/ms-validate-sources.yml) opens an issue on WARN or
+workflow (.github/workflows/la-validate-sources.yml) opens an issue on WARN or
 FAIL so drift is never silent, without turning the build red.
 
 Usage:
-    python3 ms/scripts/validate_sources.py                 # human-readable report
-    python3 ms/scripts/validate_sources.py --report r.md   # also write markdown
-    python3 ms/scripts/validate_sources.py --status-file s.txt   # ok|warn|fail
-    python3 ms/scripts/validate_sources.py --offline       # manifest↔app checks only
+    python3 la/scripts/validate_sources.py                 # human-readable report
+    python3 la/scripts/validate_sources.py --report r.md   # also write markdown
+    python3 la/scripts/validate_sources.py --status-file s.txt   # ok|warn|fail
+    python3 la/scripts/validate_sources.py --offline       # manifest↔app checks only
 """
 
 import argparse
-import contextlib
 import datetime
-import html as html_module
-import io
-import json
 import os
 import re
 import sys
-import time
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
-import aia_bundle  # noqa: E402  (FLEET_SHARED — the one copy of the pins)
 
 try:
     import requests
@@ -90,15 +73,15 @@ APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 
 HTTP_TIMEOUT = 25
 
-# The freshness gate's source manifest for the Mississippi instance. Every
+# The freshness gate's source manifest for the Louisiana instance. Every
 # layer this instance adds gets its rows here in the same change (CLAUDE.md's
 # conventions; the reference repo's validate_sources.py shows a mature
 # manifest's full shape, including year-search patterns and the `blocked`
 # inversion).
-SOCRATA_DOMAIN = "data.invalid"  # this fork's Socrata portal, if it adopts one
+SOCRATA_DOMAIN = "data.invalid"  # this instance reads no Socrata portal
 CATALOG_API = "https://api.us.socrata.com/api/catalog/v1"
 
-# Socrata dataset ids the app hardcodes (none in the starter set).
+# Socrata dataset ids the app hardcodes (none).
 SOCRATA = []
 
 # Same-origin data/app files and the upstream source each was built from.
@@ -106,175 +89,116 @@ PROVENANCE = [
     {
         "layer": "us-house",
         "app_file": "congress-districts.json",
-        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4",
         "note": (
-            "4 congressional districts pre-built from TIGERweb by "
-            "ms/scripts/build_legislative_boundaries.py. THE DISTRICT FIELD IS "
-            "VERSIONED AND THE OLD ONE IS REMOVED, NOT MERELY STALE: this layer "
-            "is now '120th Congressional Districts' and its field is CD120; a "
-            "query naming the retired CD119 is rejected outright with HTTP 400. "
-            "On the next roll the builder's field list and the app's "
-            "CONGRESS_DISTRICT_FIELDS both need the new name. Mississippi did "
-            "not redraw for 2026, so layer 0 and the 119th's layer 4 carry the "
-            "same four districts with the same land area (measured 2026-10-15)."
+            "6 congressional districts pre-built from TIGERweb's layer 4, the "
+            "119th Congress's map, by la/scripts/build_legislative_boundaries.py. "
+            "LAYER 4 AND NOT LAYER 0, ON PURPOSE: Louisiana redrew for 2026 "
+            "(Act 2 of 2026) and layer 0 already carries that map, while the six "
+            "members congress-roster.json names were elected from the 2024 map "
+            "and serve until noon on 3 January 2027. Measured 2026-10-20 against "
+            "the legislature's own shapefile of the 2024 plan, layer 4 matches "
+            "every district at IoU 0.99999 or better and layer 0 keeps 76.66% of "
+            "the plan's area in the same-numbered district. Check 5 below says "
+            "when the map has to change."
         ),
     },
     {
         "layer": "us-house",
         "app_file": "congress-roster.json",
         "source_url": "https://unitedstates.github.io/congress-legislators/legislators-current.json",
-        "note": "Delegation roster from the public-domain congress-legislators project; refreshed weekly by update-ms-congress-roster.yml.",
+        "note": "Delegation roster from the public-domain congress-legislators project; refreshed weekly by update-la-congress-roster.yml.",
     },
     {
-        "layer": "ms-senate",
-        "app_file": "ms-senate-districts.json",
+        "layer": "la-senate",
+        "app_file": "la-senate-districts.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1",
         "note": (
-            "52 Senate districts pre-built from TIGERweb (SLDU) by "
-            "ms/scripts/build_legislative_boundaries.py, carrying the lines a "
-            "federal court ordered for the special elections of 4 November "
-            "2025; re-run after each redistricting."
+            "39 Senate districts pre-built from TIGERweb (SLDU) by "
+            "la/scripts/build_legislative_boundaries.py: the plan of the 2022 "
+            "First Extraordinary Session, which the sitting senators were "
+            "elected from. Act 955 of 2026 moves precincts between Districts "
+            "33, 34 and 35 from the 2027 election on; re-run then."
         ),
     },
     {
-        "layer": "ms-house",
-        "app_file": "ms-house-districts.json",
+        "layer": "la-house",
+        "app_file": "la-house-districts.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2",
-        "note": "122 House districts pre-built from TIGERweb (SLDL) by ms/scripts/build_legislative_boundaries.py; re-run after each redistricting.",
+        "note": "105 House districts pre-built from TIGERweb (SLDL) by la/scripts/build_legislative_boundaries.py; re-run after each redistricting.",
     },
     {
-        "layer": "ms-senate",
-        "app_file": "ms-senate-members.json",
-        "source_url": "https://www.legislature.ms.gov/legislators/senators/",
+        "layer": "la-senate",
+        "app_file": "la-senate-members.json",
+        "source_url": "https://senate.la.gov/Senators_FullInfo",
         "note": (
-            "The Mississippi Legislature's own member gallery, plus every "
-            "member's own profile; rebuilt weekly by "
-            "ms/scripts/build_ms_legislature_roster.py. The server sends only "
-            "its own certificate, so this check reads it, robots.txt "
-            "included, through the GlobalSign intermediate "
-            "scripts/aia_bundle.py pins (PINNED_CHAINS above). The profiles "
-            "also print a home address and personal telephone, which the "
-            "builder never reads."
+            "The Senate's own member list, plus every member's own page; "
+            "rebuilt weekly by la/scripts/build_la_legislature_roster.py. The "
+            "pages also name a legislative assistant and a fax number, which "
+            "the builder never reads."
         ),
     },
     {
-        "layer": "ms-house",
-        "app_file": "ms-house-members.json",
-        "source_url": "https://www.legislature.ms.gov/legislators/representatives/",
-        "note": "The same gallery and profiles as the Senate's, read by the same builder.",
+        "layer": "la-house",
+        "app_file": "la-house-members.json",
+        "source_url": "https://house.louisiana.gov/H_Reps/H_Reps_FullInfo",
+        "note": "The House's own member list and member pages, read by the same builder.",
     },
     {
         "layer": "county",
         "app_file": "state-counties.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
-            "All 82 counties pre-built from TIGERweb by "
-            "ms/scripts/build_state_counties.py (Douglas-Peucker at 5 m, held "
-            "to an 8 m fidelity ceiling). The card names each county's five "
-            "supervisors from ms-county-officials.json."
-        ),
-    },
-    {
-        "layer": "county-supervisor",
-        "app_file": "ms-supervisor-districts.json",
-        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
-        "note": (
-            "The supervisor districts of the 25 counties whose current lines "
-            "are confirmed, pre-built by "
-            "ms/scripts/build_ms_supervisor_districts.py: 12 from the Census's "
-            "county subdivisions (January 1, 2026 vintage), where the lines "
-            "changed after the 2020 census and balance on that census's own "
-            "blocks, and 13 from other published maps, redrawn along whole 2020 "
-            "blocks (their layers, and the five precinct maps that witness "
-            "Lee's, Pearl River's, Perry's, Covington's and Tippah's, are "
-            "counted under ENDPOINTS below). --survey "
-            "re-measures all 82, and a new vintage needs a survey and a "
-            "rebuild, which stops if the Census has received a county's own "
-            "lines."
+            "All 64 parishes pre-built from TIGERweb by "
+            "la/scripts/build_state_counties.py (Douglas-Peucker at 5 m, held "
+            "to an 8 m fidelity ceiling). The card names each parish's "
+            "governing body from la-parish-officials.json."
         ),
     },
     {
         "layer": "county",
-        "app_file": "ms-county-officials.json",
-        "source_url": "https://www.sos.ms.gov/publications-external-affairs/publications/state-county-directory",
+        "app_file": "la-parish-officials.json",
+        "source_url": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index",
         "note": (
-            "The Secretary of State's County Offices and Directory, published "
-            "once a year (the 2026 edition is dated 6 May 2026); the builder "
-            "finds each edition from this index page and reads the five "
-            "supervisors of all 82 counties out of the PDF. Rebuilt weekly by "
-            "ms/scripts/build_ms_county_officials.py, which changes nothing "
-            "until a new edition appears."
+            "The Secretary of State's list of elected officials, read as three "
+            "CSV exports (police jurors and the other district members, "
+            "councilmen at large, parish presidents); rebuilt weekly by "
+            "la/scripts/build_la_parish_officials.py. The rows also print a "
+            "mailing address, the official's race and gender; the race and "
+            "gender are never read, and an address ships only as a body's "
+            "office, where three members print it."
         ),
+    },
+    {
+        "layer": "parish-district",
+        "app_file": "la-parish-districts.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
+        "note": (
+            "The districts of the 6 parishes whose current lines are "
+            "confirmed, pre-built from the Census's county subdivisions "
+            "(January 1, 2026 vintage) by "
+            "la/scripts/build_la_parish_districts.py. A parish is drawn when its "
+            "lines changed after the 2020 census and balance on that census's "
+            "own blocks; --survey re-measures all 64, and a new vintage needs a "
+            "survey and a rebuild."
+        ),
+    },
+    {
+        "layer": "parish-district",
+        "app_file": "la-parish-district-parishes.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
+        "note": "The list of drawn parishes the layer's coverage test reads, written by the same build.",
     },
     {
         "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
-            "The coverage wash, dissolved from all 82 counties by "
-            "ms/scripts/build_metro_outline.py -- 1 ring, 2,834 vertices, "
+            "The coverage wash, dissolved from all 64 parishes by "
+            "la/scripts/build_metro_outline.py -- 1 ring, 3,984 vertices, "
             "measured rather than predicted. Its --check is offline and holds "
-            "the shipped file to one verified-interior INSIDE anchor per county "
-            "(82 of 82 correct) plus eleven OUTSIDE anchors over the state line."
-        ),
-    },
-    # The four courts whose judges are elected from districts. Every district
-    # is a list of whole counties, dissolved from state-counties.json by
-    # ms/scripts/build_ms_court_districts.py out of copies of the courts' pages
-    # and the 2025 and 2026 laws kept in data/source/courts/. These rows ask
-    # only that each source answers and each file ships; check 5 below asks
-    # whether each court's page still lists what was drawn, and check 6 whether
-    # a later law has redrawn a district.
-    {
-        "layer": "ms-supreme-court",
-        "app_file": "ms-supreme-court-districts.json",
-        "source_url": "https://courts.ms.gov/appellatecourts/sc/scdistricts.php",
-        "note": "3 districts, from the Supreme Court's own list of each district's counties.",
-    },
-    {
-        "layer": "ms-court-of-appeals",
-        "app_file": "ms-court-of-appeals-districts.json",
-        "source_url": "https://courts.ms.gov/appellatecourts/coa/coadistricts.php",
-        "note": (
-            "5 districts from the Court of Appeals' own list, which also names "
-            "the precincts by which two districts divide each of ten counties; "
-            "those ten are drawn on their own, naming both districts."
-        ),
-    },
-    {
-        "layer": "ms-chancery-court",
-        "app_file": "ms-chancery-court-districts.json",
-        "source_url": "https://courts.ms.gov/trialcourts/chancerycourt/chancerycourt.php",
-        "note": "20 districts in force until 1 January 2027, from the chancery courts' page, held to Senate Bill 2768 (2025).",
-    },
-    {
-        "layer": "ms-chancery-court",
-        "app_file": "ms-chancery-court-districts-2027.json",
-        "source_url": "https://billstatus.ls.state.ms.us/documents/2025/html/SB/2700-2799/SB2768SG.htm",
-        "note": "20 districts from 1 January 2027, from Senate Bill 2768 (2025) and House Bill 1 (2026); the app draws them from that day.",
-    },
-    {
-        "layer": "ms-circuit-court",
-        "app_file": "ms-circuit-court-districts.json",
-        "source_url": "https://courts.ms.gov/trialcourts/circuitcourt/circuitcourt.php",
-        "note": "23 districts in force until 1 January 2027, from the circuit courts' page, held to House Bill 1544 (2025).",
-    },
-    {
-        "layer": "ms-circuit-court",
-        "app_file": "ms-circuit-court-districts-2027.json",
-        "source_url": "https://billstatus.ls.state.ms.us/documents/2025/html/HB/1500-1599/HB1544SG.htm",
-        "note": "22 districts from 1 January 2027, from House Bill 1544 (2025) and House Bill 580 (2026); the app draws them from that day.",
-    },
-    {
-        "layer": "ms-supreme-court",
-        "app_file": "ms-judge-roster.json",
-        "source_url": "https://courts.ms.gov/appellatecourts/sc/scjustices.php",
-        "note": (
-            "The judges of all four courts, from the Supreme Court's and the "
-            "Court of Appeals' own pages and the Judiciary's chancery and "
-            "circuit lists, with the changes since those lists were printed "
-            "applied from the court's own news and the Governor's "
-            "announcements; rebuilt weekly by update-ms-judges-roster.yml."
+            "the shipped file to one INSIDE anchor per parish (64 of 64 correct) "
+            "plus twelve OUTSIDE anchors over the state line."
         ),
     },
 ]
@@ -282,28 +206,28 @@ PROVENANCE = [
 ENDPOINTS = [
     # The live layers -- no builder, no committed data/app file -- so a vintage
     # roll reaches them on its own and there is nothing here to rebuild. What
-    # this list watches is the endpoint still ANSWERING FOR MISSISSIPPI: a
+    # this list watches is the endpoint still ANSWERING FOR LOUISIANA: a
     # returnCountOnly query per layer, so a service moved, renamed or silently
     # emptied for this state surfaces as a WARN instead of as cards that quietly
     # stop resolving.
     #
-    # The counts below are measured 2026-10-15 and are RECORDED, not asserted:
-    # this validator reports, it never edits the app. Incorporated places 300 ·
-    # unified school districts 137.
+    # The counts below are measured 2026-10-20 and are RECORDED, not asserted:
+    # this validator reports, it never edits the app. Incorporated places 305 ·
+    # unified school districts 69.
     #
     # SCHOOL LAYERS 1 (SECONDARY) AND 2 (ELEMENTARY) ANSWER ZERO FOR
-    # MISSISSIPPI, measured the same day; the unified layer covers the state
+    # LOUISIANA, measured the same day; the unified layer covers the state
     # alone. Neither is watched -- a row whose count is zero on purpose cannot
     # tell a drop from the status quo.
     {
         "layer": "municipality",
-        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2728%27&returnCountOnly=true&f=json",
-        "min_count": 270,   # 300 measured 2026-10-15; floor set below it, not at it
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2722%27&returnCountOnly=true&f=json",
+        "min_count": 275,   # 305 measured 2026-10-20; floor set below it, not at it
     },
     {
         "layer": "school-district-unified",
-        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0/query?where=STATE%3D%2728%27&returnCountOnly=true&f=json",
-        "min_count": 123,   # 137 measured 2026-10-15
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0/query?where=STATE%3D%2722%27&returnCountOnly=true&f=json",
+        "min_count": 62,    # 69 measured 2026-10-20
     },
     # USGS structures, counted rather than fetched, because the count is the
     # thing at risk: the service caps a response at 2,000 records and says so
@@ -312,224 +236,58 @@ ENDPOINTS = [
     #
     # returnCountOnly IS NOT SUBJECT TO maxRecordCount, so none of these rows can
     # see the client truncating. What catches a broken pager is the browser gate
-    # -- ms/scripts/smoke_test.mjs asserts the loader makes more than one
+    # -- la/scripts/smoke_test.mjs asserts the loader makes more than one
     # request and that the second page's station reaches the card.
     #
-    # Counted over the app's own envelope (METRO_BBOX, -91.66,30.13,-88.09,35.0),
-    # which reaches into the neighbouring states where the border is not
+    # Counted over the app's own envelope (METRO_BBOX, -94.05,28.85,-88.75,33.02),
+    # which reaches into Texas, Arkansas and Mississippi where the border is not
     # straight, so these are the counts the app downloads rather than the
     # state's exact totals.
     {
         "layer": "post-office",
         "url": ("https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38/query"
-                "?geometry=-91.66%2C30.13%2C-88.09%2C35.0&geometryType=esriGeometryEnvelope"
+                "?geometry=-94.05%2C28.85%2C-88.75%2C33.02&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&where=1%3D1"
                 "&returnCountOnly=true&f=json"),
-        "min_count": 590,   # 654 measured 2026-10-15
+        "min_count": 645,   # 717 measured 2026-10-20
     },
     {
         "layer": "fire-station",
         "url": ("https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51/query"
-                "?geometry=-91.66%2C30.13%2C-88.09%2C35.0&geometryType=esriGeometryEnvelope"
+                "?geometry=-94.05%2C28.85%2C-88.75%2C33.02&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&where=1%3D1"
                 "&returnCountOnly=true&f=json"),
-        "min_count": 1360,  # 1,508 measured 2026-10-15 -- within 492 of the 2,000 cap
+        "min_count": 1500,  # 1,675 measured 2026-10-20 -- within 325 of the 2,000 cap
     },
     {
         "layer": "police-station",
         "url": ("https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53/query"
-                "?geometry=-91.66%2C30.13%2C-88.09%2C35.0&geometryType=esriGeometryEnvelope"
+                "?geometry=-94.05%2C28.85%2C-88.75%2C33.02&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&where=1%3D1"
                 "&returnCountOnly=true&f=json"),
-        "min_count": 415,   # 462 measured 2026-10-15
+        "min_count": 470,   # 522 measured 2026-10-20
     },
     # ZCTAs carry NO STATE field, so this one is counted by ENVELOPE, in Esri's
     # own comma form -- the {minLng,...} shape makes TIGERweb answer HTTP 200
     # with a JSON error envelope. min_count is what makes this a real check
-    # rather than a reachability ping.
+    # rather than a reachability ping. The envelope is the app's own
+    # (LA_BBOX_ENVELOPE in index.html).
     {
         "layer": "zip-code",
         "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query?where=1%3D1"
-                "&geometry=-91.75%2C30.05%2C-88.00%2C35.10&geometryType=esriGeometryEnvelope"
+                "&geometry=-94.15%2C28.75%2C-88.65%2C33.12&geometryType=esriGeometryEnvelope"
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
-        "min_count": 745,   # 827 measured 2026-10-15
-    },
-    # The county maps ms/scripts/build_ms_supervisor_districts.py reads for the
-    # thirteen counties drawn from published maps of their own lines. Unlike the
-    # rows above these have a builder and a committed file; they are COUNTED here
-    # because all three servers answer a deleted layer with HTTP 200 (an empty
-    # page, an "Application Error" page or a blank one, measured 2026-10-15), so
-    # a status check would read a layer that is gone as reachable. A count query
-    # on a missing layer answers HTTP 200 with an Esri error envelope instead,
-    # which the check below reports. Each layer held exactly 5 districts the day
-    # it was added, except Covington's, which draws District 2 as two features
-    # and so counts 6; a change is a reason to rebuild, which re-reads the
-    # evidence each county's lines were confirmed with. Check 1 holds these rows
-    # to the builder's own COUNTY_SOURCES, so the two cannot name different
-    # layers. Lee's, Pearl River's and Perry's maps, added 2026-10-16, and
-    # Covington's and Tippah's, added later that day, are on ArcGIS Online like
-    # Lamar's.
-    {
-        "layer": "county-supervisor",   # Copiah
-        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Copiah_County_Feature_Layer/FeatureServer/15/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Covington (District 2 is two features)
-        "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/NEW_DISTRICTS/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 6,
-    },
-    {
-        "layer": "county-supervisor",   # Harrison
-        "url": "https://geo.co.harrison.ms.us/server/rest/services/AGO/HarrisonCounty_SupervisorDistrict/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Hinds
-        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Hinds_County_Map/FeatureServer/17/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Lamar
-        "url": "https://services1.arcgis.com/mz3jHVSffoNsLuEB/arcgis/rest/services/Lamar_Service/FeatureServer/15/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Lee
-        "url": "https://services3.arcgis.com/j2GTvlDqmJmX3REZ/arcgis/rest/services/New_Districts/FeatureServer/4/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Madison
-        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Madison_County_Map/FeatureServer/44/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Pearl River
-        "url": "https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/91/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Perry
-        "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/Perry_Addressing_Service/FeatureServer/9/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Rankin
-        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Rankin_County_Feature_Layer/FeatureServer/13/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Simpson
-        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Simpson_County_Feature_Layer/FeatureServer/32/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Tippah
-        "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Administrative_Boundaries/FeatureServer/4/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    {
-        "layer": "county-supervisor",   # Warren
-        "url": "https://gis.cmpdd.org/server/rest/services/Hosted/Warren_County_Feature_Layer/FeatureServer/21/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 5,
-    },
-    # The precinct maps that witness five of those counties' lines (the
-    # builder's precinct_witness). Each floor is the count read on 2026-10-16:
-    # a precinct map that loses precincts has been redrawn, which is a reason to
-    # rebuild, and the rebuild re-measures whether it still follows the lines.
-    # Check 1 holds these rows to COUNTY_SOURCES as it holds the maps.
-    {
-        "layer": "county-supervisor (precincts)",   # Lee, the Circuit Clerk's splits
-        "url": "https://services.arcgis.com/AzU5dE5IP7kWAdH7/arcgis/rest/services/Lee_County_Master_Splits_2024/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 215,
-    },
-    {
-        "layer": "county-supervisor (precincts)",   # Pearl River
-        "url": "https://services6.arcgis.com/9h5t9CkNYcgSXrCh/arcgis/rest/services/Redistricting_2023/FeatureServer/92/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 27,
-    },
-    {
-        "layer": "county-supervisor (precincts)",   # Perry
-        "url": "https://services3.arcgis.com/V34P0GFhKji2Th5l/arcgis/rest/services/PRECINCTS_2023/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 16,
-    },
-    {
-        "layer": "county-supervisor (precincts)",   # Covington
-        "url": "https://services8.arcgis.com/zEXKj9GaZJZhjLD3/arcgis/rest/services/Covington_Precincts_2022_11_17_region/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 15,
-    },
-    {
-        "layer": "county-supervisor (precincts)",   # Tippah
-        "url": "https://services8.arcgis.com/EPmd9E80DVjVOYp6/arcgis/rest/services/Voter_Precinct_2024/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
-        "min_count": 22,
+        "min_count": 750,   # 831 measured 2026-10-20
     },
 ]
 
-# ---- the courts' laws and the judges' news (checks 6 and 7) -----------------
-#
-# The Legislature lists every measure of a session in one file, which is how
-# the 2026 laws the court maps read were found (ms/data/source/courts/README.md).
-# A session that has not been held answers HTTP 404 (measured 2026-10-16 on the
-# 2026 Second Extraordinary Session), so check 6 reads each year's regular
-# session and its extraordinary sessions in order until one is missing.
-SESSION_LIST = "https://billstatus.ls.state.ms.us/%s/pdf/all_measures/allmsrs.xml"
-FIRST_SESSION_YEAR = 2025
-# The sessions whose lists were read in full on 2026-10-15; one of these
-# answering 404 is a list that moved, not a session that was never held.
-SESSIONS_READ = ("2025", "20251E", "2026", "20261E")
-# A short title that names a court, a judge or a judicial district. Measured
-# on those four lists, it also matches salaries, appropriations and bills that
-# died, which is why a person reads each enacted match once and records it.
-COURT_TITLE = re.compile(
-    r"chancer|circuit court|court district|judicial district|judgeship|subdistrict"
-    r"|chancellor|supreme court district|court of appeals|circuit judge"
-    r"|judicial redistrict", re.I)
-# A measure's list shows only its latest action. These are the wordings for a
-# measure that became law, measured on the same four lists ("Partially Vetoed
-# By Governor" is how an appropriation the Governor vetoed in part reads).
-ENACTED = re.compile(r"approved by governor|law w/?out governor|veto overridden"
-                     r"|partially vetoed", re.I)
-NOT_LAW = re.compile(r"\bdied\b|\bvetoed\b|veto sustained", re.I)
-# Every enacted bill on those four lists whose short title COURT_TITLE matches,
-# and what reading it found. A bill read in full that writes a district's
-# counties is one ms/scripts/build_ms_court_districts.py reads (its BILLS), and
-# check 1 holds the two tables to each other.
-LAWS_REVIEWED = {
-    ("2025", "HB 1509"): "title read 2026-10-15: district attorneys' salaries",
-    ("2025", "HB 1544"): "read in full 2026-10-15: writes the circuit districts (BILLS)",
-    ("2025", "SB 2768"): "read in full 2026-10-15: writes the chancery districts (BILLS)",
-    ("20251E", "HB 38"): "title read 2026-10-15: the courts' appropriation",
-    ("20251E", "HB 49"): ("read in full 2026-10-15: changes only the number of "
-                          "assistant district attorneys"),
-    ("2026", "HB 1"): ("read in full 2026-10-15: the Third Chancery District, its "
-                       "counties unchanged (BILLS)"),
-    ("2026", "HB 580"): ("read in full 2026-10-15: the Fourth and Seventh Circuit "
-                         "Districts, their counties unchanged (BILLS)"),
-    ("2026", "HB 1931"): "title read 2026-10-15: the courts' appropriation",
-}
-
-# The court's news page lists its 15 latest articles, about seven weeks of them
-# on 2026-10-16. Every article numbered from 3098 (1 August 2025, the date of
-# the older of the two trial lists) to COURT_NEWS_REVIEWED was read by number on
-# 2026-10-15 or 2026-10-16 (3172 was "File not found"), and three of them are
-# sources in build_ms_judges.py's CHANGES.
-COURT_NEWS = "https://courts.ms.gov/news/news.php"
-COURT_NEWS_ARTICLE = "https://courts.ms.gov/news/view_news_page.php?article=%d"
-COURT_NEWS_REVIEWED = 3171
-# The Governor fills a judge's vacancy by appointment and announces it in the
-# newsroom, four or five releases a page. Every headline dated from January
-# 2024 to GOVERNOR_NEWS_REVIEWED was read (26 pages, 2026-10-15; page 1 again
-# 2026-10-16), and two are sources in CHANGES.
-GOVERNOR_NEWS = "https://governorreeves.ms.gov/newsroom/"
-GOVERNOR_NEWS_PAGE = "https://governorreeves.ms.gov/newsroom/paged-2/%d/"
-GOVERNOR_NEWS_REVIEWED = "2026-10-15"
-GOVERNOR_NEWS_PAGES = 6
-JUDGE_WORD = re.compile(r"\b(judges?|chancellors?|justices?|chancery|circuit|court)\b", re.I)
-COURT_CHANGE = re.compile(r"\b(died|dies|death|passed away|retire[sd]?|retiring|resign\w*"
-                          r"|appoint\w*|oath|sworn|takes office|elected|vacan\w*"
-                          r"|special elections?)\b", re.I)
-GOVERNOR_CHANGE = re.compile(r"\b(appoint\w*|vacan\w*|special elections?)\b", re.I)
+# Check 5's dates and the layer the congressional file is drawn from. The
+# builder (la/scripts/build_legislative_boundaries.py) holds the same name and
+# date, and refuses a rebuild once either stops being true.
+CONGRESS_LAYER_URL = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4?f=json"
+CONGRESS_LAYER_NAME = "119th Congressional Districts"
+CONGRESS_SERVING_UNTIL = "2027-01-03"
+CONGRESS_WARN_FROM = "2026-12-01"
 
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -551,77 +309,28 @@ class Findings(object):
         return "ok"
 
 
-# Hosts that send only their own certificate, keyed to the intermediate
-# scripts/aia_bundle.py pins for them. The builder that reads the host completes
-# the chain from that pin, so this check reads it the same way, robots.txt
-# included: read with the plain trust store, www.legislature.ms.gov's robots.txt
-# is unreachable, which RFC 9309 treats as a refusal, and on 2026-10-15 that
-# stopped the whole run at the first legislature row. gis.cmpdd.org, the
-# planning district's map server the supervisor build reads, sends its leaf
-# without the GoDaddy intermediate, measured the same day, and
-# billstatus.ls.state.ms.us, where the Legislature publishes its bills and its
-# lists of measures (checks 5 and 6), sends its own without the GlobalSign one.
-PINNED_CHAINS = {"www.legislature.ms.gov": "globalsign-rsa-ov-2018",
-                 "gis.cmpdd.org": "godaddy-g2",
-                 "billstatus.ls.state.ms.us": "globalsign-rsa-ov-2018"}
-_BUNDLES = {}
-
-
-def _verify_for(url):
-    """The CA bundle path to read `url` with, or None for the default store."""
-    from urllib.parse import urlsplit
-
-    key = PINNED_CHAINS.get(urlsplit(url).hostname or "")
-    if key is None:
-        return None
-    if key not in _BUNDLES:
-        _BUNDLES[key] = aia_bundle.ca_bundle("ms-validate-sources", key)
-    return _BUNDLES[key]
-
-
-def _drop_bundles():
-    for path in _BUNDLES.values():
-        try:
-            os.unlink(path)
-        except OSError:
-            pass
-
-
-def http_get(url, want_json=True, params=None, attempts=1):
-    """GET with a sane UA; returns (ok, payload_or_error). Never raises.
-    `attempts` above 1 retries a dropped connection, which courts.ms.gov does
-    now and then (measured 2026-10-15 and 2026-10-16); an HTTP answer is never
-    retried."""
+def http_get(url, want_json=True, params=None):
+    """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
-    ua = "districtry source validator (+https://districtry.com/ms/)"
-    try:
-        verify = _verify_for(url)
-    except (Exception, SystemExit) as e:  # a moved pin is a finding, not a crash
-        return False, "could not build the pinned certificate chain: %s" % e
+    ua = "districtry source validator (+https://districtry.com/la/)"
     try:
         require_robots_once(url, ua, headers={"User-Agent": ua},
-                            label="ms-validate-sources", verify=verify)
+                            label="la-validate-sources")
     except SystemExit:
         # require_robots_once has printed why and exits on a refusal or an
         # unreadable policy. Here that is one source's finding rather than the
         # end of the run, and nothing is fetched from the host either way.
         return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
-    kwargs = {"verify": verify} if verify else {}
-    for attempt in range(attempts):
-        try:
-            resp = requests.get(
-                url,
-                params=params,
-                timeout=HTTP_TIMEOUT,
-                headers={"User-Agent": ua},
-                **kwargs
-            )
-            break
-        except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
-            if attempt + 1 == attempts:
-                return False, "request failed: %s" % e
-            time.sleep(6.0 * (attempt + 1))
+    try:
+        resp = requests.get(
+            url,
+            params=params,
+            timeout=HTTP_TIMEOUT,
+            headers={"User-Agent": ua},
+        )
+    except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
+        return False, "request failed: %s" % e
     if resp.status_code >= 400:
         return False, "HTTP %d" % resp.status_code
     # 202 is never a real document. "Accepted" means the request was taken for
@@ -644,65 +353,8 @@ def check_manifest_matches_app(html, findings):
         if d["id"] not in html:
             findings.add(FAIL, d["layer"],
                          "dataset id %s not found in index.html — manifest is "
-                         "out of sync with the app (update ms/scripts/validate_sources.py)"
+                         "out of sync with the app (update la/scripts/validate_sources.py)"
                          % d["id"])
-    # The county maps the supervisor build reads are counted under ENDPOINTS,
-    # and the builder's COUNTY_SOURCES is the authority on which they are: a
-    # county added there and not here would be a layer nothing watches.
-    try:
-        import build_ms_supervisor_districts as supervisor
-    except Exception as e:  # a broken import is a finding, not a crash
-        findings.add(FAIL, "county-supervisor",
-                     "could not read the supervisor builder's county sources: %s" % e)
-    else:
-        want = sorted(spec["url"] for spec in supervisor.COUNTY_SOURCES.values())
-        have = sorted(e["url"].split("/query?")[0] for e in ENDPOINTS
-                      if e["layer"] == "county-supervisor")
-        if want != have:
-            findings.add(FAIL, "county-supervisor",
-                         "ENDPOINTS counts %s and the builder reads %s — update "
-                         "ms/scripts/validate_sources.py" % (have, want))
-        want = sorted(spec["precincts"]["url"] for spec in supervisor.COUNTY_SOURCES.values()
-                      if spec.get("precincts"))
-        have = sorted(e["url"].split("/query?")[0] for e in ENDPOINTS
-                      if e["layer"] == "county-supervisor (precincts)")
-        if want != have:
-            findings.add(FAIL, "county-supervisor",
-                         "ENDPOINTS counts the precinct maps %s and the builder reads %s "
-                         "— update ms/scripts/validate_sources.py" % (have, want))
-        unpinned = sorted(h for h, k in supervisor.PINNED_CHAINS.items()
-                          if PINNED_CHAINS.get(h) != k)
-        if unpinned:
-            findings.add(FAIL, "county-supervisor",
-                         "the builder pins a certificate for %s and this check does "
-                         "not, so it would read the host differently" % unpinned)
-    # The court maps depend on the laws in the court map builder's BILLS, so
-    # each must be one check 6 records as read; and the judges' CHANGES cite
-    # the court's news by article, so none may be newer than the article check 7
-    # treats as the last one reviewed.
-    try:
-        import build_ms_court_districts as courts
-        import build_ms_judges as judges
-    except Exception as e:  # a broken import is a finding, not a crash
-        findings.add(FAIL, "court districts (laws)",
-                     "could not read the court builders: %s" % e)
-    else:
-        for bill, name in courts.BILLS:
-            m = re.search(r"/documents/(\w+)/html/(HB|SB)/[\d-]+/(?:HB|SB)0*(\d+)SG\.htm$",
-                          courts.SOURCES[bill][0])
-            key = (m.group(1), "%s %s" % (m.group(2), m.group(3))) if m else None
-            if key not in LAWS_REVIEWED:
-                findings.add(FAIL, "court districts (laws)",
-                             "the court maps read %s (%s), and LAWS_REVIEWED does not "
-                             "record it, so check 6 would report it unread"
-                             % (name, courts.SOURCES[bill][0]))
-        for ch in judges.CHANGES:
-            m = re.search(r"[?&]article=(\d+)", ch["source"]["url"])
-            if m and int(m.group(1)) > COURT_NEWS_REVIEWED:
-                findings.add(FAIL, "judges (news)",
-                             "CHANGES cites the court's article %s, after "
-                             "COURT_NEWS_REVIEWED (%d); raise it once the articles "
-                             "between have been read" % (m.group(1), COURT_NEWS_REVIEWED))
     for p in PROVENANCE:
         # A file the app addresses by a slug built at RUNTIME has no literal to
         # find — the same `dynamic_reference` exemption validate_index.py
@@ -714,6 +366,12 @@ def check_manifest_matches_app(html, findings):
             findings.add(FAIL, p["layer"],
                          "index.html no longer references %s — manifest drift"
                          % needle)
+    for e in ENDPOINTS:
+        # The ZIP envelope is the app's own, so a change to one side is drift.
+        if e["layer"] == "zip-code" and "-94.15, ymin: 28.75, xmax: -88.65, ymax: 33.12" not in html:
+            findings.add(FAIL, e["layer"],
+                         "index.html's LA_BBOX_ENVELOPE no longer matches the envelope this "
+                         "check counts ZCTAs over — update the endpoint row with it")
 
 
 # ---- check 2: Socrata datasets resolve, keep their name, aren't superseded ---
@@ -865,424 +523,36 @@ def check_endpoints(findings, offline):
             findings.add(OK, e["layer"], "endpoint answering — %d features" % count)
 
 
-# ---- check 5: the courts' district pages still list what was drawn ---------
-def check_court_pages(findings, offline):
-    """The four court maps are drawn from the counties each court's page lists,
-    read from copies kept in data/source/courts/. A court that changes its page
-    changes no file here, so the page as served now is parsed the court map
-    builder's own way and compared with the copy."""
+# ---- check 5: the congressional map is still the one the members sit for ----
+def check_congress_map(findings, offline, today=None):
+    today = today or datetime.date.today().isoformat()
+    if today >= CONGRESS_SERVING_UNTIL:
+        findings.add(WARN, "us-house",
+                     "the members congress-districts.json was drawn for left office at noon "
+                     "on 3 January 2027. Rebuild it from TIGERweb's layer named '120th "
+                     "Congressional Districts' (its CD120 field), drop layer_name and "
+                     "serving_until in la/scripts/build_legislative_boundaries.py, and check "
+                     "the weekly roster has the new members — la/WATCH.md has the steps")
+    elif today >= CONGRESS_WARN_FROM:
+        findings.add(WARN, "us-house",
+                     "the 120th Congress takes office at noon on 3 January 2027 on the map "
+                     "Louisiana drew for 2026; congress-districts.json is the 119th's until "
+                     "then and must be rebuilt that day — la/WATCH.md has the steps")
     if offline:
         return
-    import build_ms_court_districts as courts
-    today = datetime.datetime.now(datetime.timezone.utc).date()
-    for name, layer in sorted(courts.PAGES.items()):
-        url, read_on, _sha = courts.SOURCES[name]
-        ok, res = http_get(url, want_json=False, attempts=3)
-        time.sleep(3.0)
-        if not ok:
-            findings.add(WARN, layer, "the court's district page could not be read "
-                         "(%s), so the map was not checked against it: %s" % (res, url))
-            continue
-        said = io.StringIO()
-        try:
-            with contextlib.redirect_stdout(said):
-                changes = courts.page_changes(name, res.content)
-        except SystemExit:
-            findings.add(WARN, layer, "the court's district page no longer reads the "
-                         "way the copy of %s did, so the map cannot be checked against "
-                         "it (%s): %s" % (read_on, " ".join(said.getvalue().split()), url))
-            continue
-        if not changes:
-            findings.add(OK, layer, "the court's district page still lists the "
-                         "counties of the copy of %s: %s" % (read_on, url))
-            continue
-        expected = ("From 1 January 2027 the chancery and circuit pages are "
-                    "expected to list the 2027 districts; if that is the change, "
-                    "retire the until-2027 files at the same time (ms/WATCH.md). "
-                    if today >= courts.REDRAW and name in ("chancery-districts.htm",
-                                                           "circuit-districts.htm")
-                    else "")
-        findings.add(WARN, layer, "the court's district page now lists different "
-                     "counties from the copy the map was drawn from: %s. %sRe-read "
-                     "the page into ms/data/source/courts/, record its hash and date in "
-                     "build_ms_court_districts.py's SOURCES, and rebuild: %s"
-                     % ("; ".join(changes), expected, url))
-    if today >= courts.REDRAW:
-        still = [n for _c, _p, n, *_r in courts.TRIAL
-                 if os.path.exists(os.path.join(APP_DATA_DIR, n))]
-        if still:
-            findings.add(WARN, "ms-chancery-court", "it is %s and %s still ship. The "
-                         "app has drawn the 2027 districts since 1 January 2027; retire "
-                         "the until-2027 files (ms/WATCH.md)." % (today, ", ".join(still)))
-
-
-# ---- check 6: a later law that writes a court district ----------------------
-def _tag(tag, text):
-    m = re.search(r"<%s>(.*?)</%s>" % (tag, tag), text, re.S)
-    return " ".join(html_module.unescape(m.group(1)).split()) if m else ""
-
-
-def session_measures(raw):
-    """[(measure, short title, latest action)] for the bills on one session's
-    list of all measures, each named "HB 1544". The list pads a number to four
-    places with spaces ("HB   1", "HB1544"). Nominations (SN) and resolutions
-    are not laws."""
-    text = raw.decode("latin-1")
-    out = []
-    for group in re.findall(r"<MSRGROUP>(.*?)</MSRGROUP>", text, re.S):
-        m = re.match(r"^(HB|SB)\s*(\d+)$", _tag("MEASURE", group))
-        if m:
-            out.append(("%s %d" % (m.group(1), int(m.group(2))),
-                        _tag("SHORTTITLE", group), _tag("ACTION", group)))
-    return out
-
-
-def check_court_laws(findings, offline):
-    """Every bill of every session held since 2025 whose short title names a
-    court, a judge or a judicial district, and that became law, must be one a
-    person has read and recorded in LAWS_REVIEWED: a law that redraws a court
-    district changes the map on the day it takes effect, and nothing else here
-    would notice it. A matching bill still before the Legislature is listed,
-    and is not yet a finding."""
-    if offline:
-        return
-    label = "court districts (laws)"
-    today = datetime.datetime.now(datetime.timezone.utc).date()
-    seen, read, unread = set(), set(), []
-    for year in range(FIRST_SESSION_YEAR, today.year + 2):
-        for k in range(0, 10):
-            session = str(year) if k == 0 else "%d%dE" % (year, k)
-            ok, res = http_get(SESSION_LIST % session, want_json=False, attempts=2)
-            time.sleep(3.0)
-            if not ok:
-                if res == "HTTP 404" and session not in SESSIONS_READ:
-                    if k:  # extraordinary sessions are numbered in order
-                        break
-                    continue
-                findings.add(WARN, label, "the list of every measure of the %s session "
-                             "could not be read (%s), so no law of that session was "
-                             "checked: %s" % (session, res, SESSION_LIST % session))
-                if k:
-                    break
-                continue
-            measures = session_measures(res.content)
-            if not measures:
-                findings.add(WARN, label, "the list of every measure of the %s session "
-                             "answered with no bills in it, so its layout has probably "
-                             "changed: %s" % (session, SESSION_LIST % session))
-                continue
-            read.add(session)
-            pending = []
-            for measure, title, action in measures:
-                if not COURT_TITLE.search(title):
-                    continue
-                key = (session, measure)
-                if ENACTED.search(action):
-                    seen.add(key)
-                    if key not in LAWS_REVIEWED:
-                        unread.append(key)
-                        findings.add(WARN, label, "%s of the %s session became law (%s) "
-                                     "and no one here has read it: \"%s\". If it writes a "
-                                     "chancery, circuit, Court of Appeals or Supreme Court "
-                                     "district, add it to build_ms_court_districts.py's "
-                                     "BILLS and SOURCES and rebuild; either way, record "
-                                     "what it does in LAWS_REVIEWED. %s"
-                                     % (measure, session, action, title,
-                                        SESSION_LIST % session))
-                elif not NOT_LAW.search(action):
-                    pending.append("%s (%s)" % (measure, action))
-            if pending:
-                findings.add(OK, label, "%s session: still before the Legislature and "
-                             "naming a court in their titles: %s"
-                             % (session, "; ".join(pending)))
-    for key in sorted(LAWS_REVIEWED):
-        if key[0] in read and key not in seen:
-            findings.add(WARN, label, "LAWS_REVIEWED records %s of the %s session as a "
-                         "law, and that session's list no longer shows it as one"
-                         % (key[1], key[0]))
-    if read and not unread:
-        findings.add(OK, label, "%d session(s) read (%s); every enacted bill naming a "
-                     "court in its title is one LAWS_REVIEWED records"
-                     % (len(read), ", ".join(sorted(read))))
-
-
-# ---- check 7: news that a judge has left or arrived -------------------------
-COURT_NEWS_ITEM = re.compile(
-    r"article=(\d+)&name=[^']*'[^>]*>\s*<span[^>]*>(.*?)</span></a>\s*"
-    r"<span class='newsdatetext'><br>([^<]*)</span>", re.S)
-GOVERNOR_NEWS_ITEM = re.compile(
-    r'itemprop="mainEntityOfPage"[^>]*itemid="([^"]+)"[^>]*content="([^"]*)"\s*/>'
-    r'<meta itemprop="datePublished" content="(\d{4}-\d\d-\d\d)"')
-
-
-def check_judge_news(findings, offline):
-    """The judges' lists lag the bench by months, so build_ms_judges.py applies
-    the changes since from the court's own news and the Governor's
-    announcements (CHANGES). Nothing tells this project of the next one, so
-    both newsrooms are read for headlines after the last one reviewed."""
-    if offline:
-        return
-    label = "judges (news)"
-    ok, res = http_get(COURT_NEWS, want_json=False, attempts=3)
-    time.sleep(3.0)
+    ok, res = http_get(CONGRESS_LAYER_URL)
     if not ok:
-        findings.add(WARN, label, "the court's news page could not be read (%s): %s"
-                     % (res, COURT_NEWS))
+        findings.add(WARN, "us-house", "TIGERweb's Legislative layer 4 is not reachable (%s)" % res)
+        return
+    name = res.get("name", "") if isinstance(res, dict) else ""
+    if name != CONGRESS_LAYER_NAME:
+        findings.add(WARN, "us-house",
+                     "TIGERweb's Legislative layer 4 is now %r, not %r: the shipped file is "
+                     "unchanged, but la/scripts/build_legislative_boundaries.py would refuse to "
+                     "rebuild it until its layer table names the layer that carries the 119th "
+                     "Congress's map" % (name, CONGRESS_LAYER_NAME))
     else:
-        items = [(int(n), " ".join(html_module.unescape(re.sub(r"<[^>]+>", " ", t)).split()),
-                  d.strip())
-                 for n, t, d in COURT_NEWS_ITEM.findall(res.text)]
-        if not items:
-            findings.add(WARN, label, "the court's news page no longer reads as a list "
-                         "of headlines: %s" % COURT_NEWS)
-        else:
-            newer = [i for i in items if i[0] > COURT_NEWS_REVIEWED]
-            for n, title, when in newer:
-                if JUDGE_WORD.search(title) and COURT_CHANGE.search(title):
-                    findings.add(WARN, label, "the court's news, %s: \"%s\". If a "
-                                 "judge left or arrived, add or retire an entry in "
-                                 "build_ms_judges.py's CHANGES; then raise "
-                                 "COURT_NEWS_REVIEWED past it: %s"
-                                 % (when, title, COURT_NEWS_ARTICLE % n))
-            oldest = min(i[0] for i in items)
-            if oldest > COURT_NEWS_REVIEWED + 1:
-                findings.add(WARN, label, "the court's news page now starts at article "
-                             "%d, so articles %d to %d left it unread here. Read them at "
-                             "%s, then raise COURT_NEWS_REVIEWED."
-                             % (oldest, COURT_NEWS_REVIEWED + 1, oldest - 1,
-                                COURT_NEWS_ARTICLE % (COURT_NEWS_REVIEWED + 1)))
-            findings.add(OK, label, "the court's news page: %d headline(s) after article "
-                         "%d" % (len(newer), COURT_NEWS_REVIEWED))
-    seen, newest_page_older = {}, False
-    for page in range(1, GOVERNOR_NEWS_PAGES + 1):
-        url = GOVERNOR_NEWS if page == 1 else GOVERNOR_NEWS_PAGE % page
-        ok, res = http_get(url, want_json=False, attempts=2)
-        time.sleep(3.0)
-        if not ok:
-            findings.add(WARN, label, "the Governor's newsroom could not be read (%s): %s"
-                         % (res, url))
-            break
-        items = GOVERNOR_NEWS_ITEM.findall(res.text)
-        if len(items) < 2:
-            findings.add(WARN, label, "the Governor's newsroom no longer reads as a list "
-                         "of dated releases: %s" % url)
-            break
-        for link, title, when in items:
-            seen.setdefault(link, (html_module.unescape(title), when))
-        # The first release on every page is the same pinned one, so the page's
-        # own order is read from the rest.
-        if min(when for _l, _t, when in items[1:]) <= GOVERNOR_NEWS_REVIEWED:
-            newest_page_older = True
-            break
-    if seen and not newest_page_older:
-        findings.add(WARN, label, "the Governor's newsroom carries more than %d pages of "
-                     "releases after %s, so some were not read here; read them, then "
-                     "raise GOVERNOR_NEWS_REVIEWED." % (GOVERNOR_NEWS_PAGES,
-                                                        GOVERNOR_NEWS_REVIEWED))
-    newer = [(when, title, link) for link, (title, when) in seen.items()
-             if when > GOVERNOR_NEWS_REVIEWED]
-    for when, title, link in sorted(newer):
-        if JUDGE_WORD.search(title) and GOVERNOR_CHANGE.search(title):
-            findings.add(WARN, label, "the Governor's newsroom, %s: \"%s\". If it fills "
-                         "or opens a judge's seat, add or update the entry in "
-                         "build_ms_judges.py's CHANGES; then raise "
-                         "GOVERNOR_NEWS_REVIEWED: %s" % (when, title, link))
-    if seen:
-        findings.add(OK, label, "the Governor's newsroom: %d release(s) after %s"
-                     % (len(newer), GOVERNOR_NEWS_REVIEWED))
-
-
-# ---- check 8: the cities' ward maps still serve the lines that were drawn ---
-def check_city_wards(findings, offline):
-    """Each drawn city's wards come from the layer build_ms_city_wards.py's
-    CITIES names, cut at the Census Bureau's map of the city, and the build
-    records a fingerprint of both (data/source/ms-city-wards.source.json).
-    Nothing runs that build on a schedule, and a city can redraw inside a
-    layer whose name stays the same, so each layer is asked again, the build's
-    way, for its name, its wards and its lines."""
-    if offline:
-        return
-    import build_ms_city_wards as wards
-    label = "city-ward"
-    try:
-        with open(wards.SOURCE_RECORD, encoding="utf-8") as fh:
-            record = json.load(fh)
-    except (OSError, ValueError) as e:
-        findings.add(FAIL, label, "the ward build's record of what it read could not be "
-                     "read (%s), so no ward map was checked: %s" % (e, wards.SOURCE_RECORD))
-        return
-    built = record.get("built")
-    for c in wards.CITIES:
-        city = c["city"]
-        rec = (record.get("cities") or {}).get(c["geoid"])
-        if not rec:
-            findings.add(FAIL, label, "%s: the ward build's record names no layer for this "
-                         "city; rebuild with build_ms_city_wards.py" % city)
-            continue
-        ok, meta = http_get(c["layer"], params={"f": "json"}, attempts=2)
-        time.sleep(wards.MIN_DELAY_S)
-        if not ok or (isinstance(meta, dict) and "error" in meta):
-            findings.add(WARN, label, "%s: the ward layer could not be read (%s), so its "
-                         "wards were not checked; it may have been moved or removed: %s"
-                         % (city, meta.get("error") if ok else meta, c["layer"]))
-            continue
-        moved = []
-        pinned = c["witness"].get("layer_name")
-        if pinned and meta.get("name") != pinned:
-            moved.append("the layer is now named %r, not %r, and a renamed ward layer is "
-                         "a new plan until a person has read it" % (meta.get("name"), pinned))
-        ok, fc = http_get(c["layer"] + "/query", params=wards.layer_params(c), attempts=2)
-        time.sleep(wards.MIN_DELAY_S)
-        if not ok or not isinstance(fc, dict) or "error" in fc or fc.get("exceededTransferLimit"):
-            findings.add(WARN, label, "%s: the ward layer's wards could not be read (%s), so "
-                         "its lines were not checked: %s"
-                         % (city, (fc.get("error") or "the answer hit its transfer limit")
-                            if ok and isinstance(fc, dict) else fc, c["layer"]))
-            continue
-        skip = c.get("skip") or {}
-        kept = [f.get("attributes") or {} for f in fc.get("features") or []]
-        kept = [a for a in kept if not (skip and all(a.get(k) == v for k, v in skip.items()))]
-        try:
-            have = sorted(set(c["read"](a.get(c["field"])) for a in kept))
-        except (TypeError, ValueError):
-            have = None
-        drawn = sorted(int(w) for w in c["people"])
-        if have != drawn:
-            moved.append("the layer now holds wards %s, and the shipped file draws wards %s"
-                         % (have if have is not None else "this check cannot read", drawn))
-        if "adopted" in c["witness"]:
-            dates = sorted(set(wards._date(a.get("ADOPTED")) for a in kept), key=str)
-            if dates != [c["witness"]["adopted"]]:
-                moved.append("the county's layer now gives adoption dates %s, not %s, and a "
-                             "new adoption date is a redistricting until a person has read "
-                             "it" % (dates, c["witness"]["adopted"]))
-        if have is not None and wards.lines_sha256(fc, c) != rec.get("lines_sha256"):
-            moved.append("the layer serves different lines from the ones the shipped file was "
-                         "drawn from on %s (it gives its last edit as %s)"
-                         % (built, wards._date((meta.get("editingInfo") or {}).get(
-                             "dataLastEditDate") or (meta.get("editingInfo") or {}).get(
-                             "lastEditDate")) or "not stated"))
-        ok, pfc = http_get(wards.TIGERWEB_PLACE + "/query", params=wards.place_params(c),
-                           attempts=2)
-        time.sleep(wards.MIN_DELAY_S)
-        if not ok or not isinstance(pfc, dict) or "error" in pfc:
-            findings.add(WARN, label, "%s: the Census Bureau's map of the city could not be "
-                         "read (%s), so the city's limits were not checked: %s"
-                         % (city, pfc.get("error") if ok and isinstance(pfc, dict) else pfc,
-                            wards.TIGERWEB_PLACE))
-        elif wards.lines_sha256(pfc) != rec.get("place_sha256"):
-            moved.append("the Census Bureau's map of the city's limits, where the wards are "
-                         "cut, has changed since %s" % built)
-        if moved:
-            findings.add(WARN, label, "%s: %s. Rebuild with ms/scripts/build_ms_city_wards.py, "
-                         "which stops if any ward's people moved, and read the city's map "
-                         "before raising anything it pins: %s"
-                         % (city, "; ".join(moved), c["page"]))
-        else:
-            findings.add(OK, label, "%s: the ward layer still serves the lines drawn on %s, "
-                         "wards %d to %d, and the Census map of the city is unchanged"
-                         % (city, built, drawn[0], drawn[-1]))
-
-
-# ---- check 9: the city councils the cities' own pages name -----------------
-def check_city_councils(findings, offline):
-    """The City card names each city's mayor and council from the city's own
-    pages, read once (data/app/ms-city-councils.json), with the telephone
-    numbers five of those pages print inside a person's own entry and the
-    e-mail addresses nine of them print there (Hattiesburg's in a card for
-    each member). No weekly job reads them again yet, so each page is read
-    here the council builder's way, with its own client and robots.txt
-    reading, and compared seat by seat: the name, the numbers in the order
-    the page prints them, and the address. A finding names the city and the
-    seat and never prints a number or an address."""
-    if offline:
-        return
-    import build_ms_city_councils as councils
-    label = "municipality (city councils)"
-    try:
-        with open(councils.OUT, encoding="utf-8") as fh:
-            shipped = json.load(fh)
-    except (OSError, ValueError) as e:
-        findings.add(FAIL, label, "the shipped council file could not be read (%s): %s"
-                     % (e, councils.OUT))
-        return
-    fetcher = councils.Fetcher()
-    today = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
-    for c in councils.CITIES:
-        name = c["name"]
-        old = shipped.get(c["geoid"]) or {}
-        try:
-            council = fetcher.get(c["council"])
-            if c["geoid"] in councils.NOT_PUBLISHED:
-                seats = councils.printed_seats(councils.page_lines(council))
-                if seats:
-                    findings.add(WARN, label, "%s: the city's page now prints seat labels "
-                                 "(%s), where on %s it printed none. If it now names its "
-                                 "council, take the city out of the council builder's "
-                                 "NOT_PUBLISHED, give it the shape its page prints, and "
-                                 "rebuild: %s" % (name, ", ".join(seats),
-                                                  councils.NOT_PUBLISHED[c["geoid"]]["measured"],
-                                                  c["council"]))
-                else:
-                    findings.add(OK, label, "%s: the city's page still prints no seat label, "
-                                 "as on %s" % (name, councils.NOT_PUBLISHED[c["geoid"]]["measured"]))
-                continue
-            mayor = fetcher.get(c["mayor_page"]) if c["mayor"][0] == "mayor" else ""
-            rec = councils.read_city(c, council, mayor, today)
-        except SystemExit as e:
-            findings.add(WARN, label, "%s: the city's pages no longer read the way they did "
-                         "on %s (%s), so its council was not checked: %s"
-                         % (name, old.get("read"), e, c["council"]))
-            continue
-        except Exception as e:  # noqa: BLE001 — one city's page is one finding
-            findings.add(WARN, label, "%s: the city's pages could not be read (%s), so its "
-                         "council was not checked: %s" % (name, e, c["council"]))
-            continue
-        def numbers(seat):
-            return ([seat["phone"]] if seat.get("phone") else []) + list(seat.get("phonesExtra") or [])
-        before = {s.get("seat"): s for s in old.get("seats") or []}
-        changed = []
-        for s in rec["seats"]:
-            was_seat = before.get(s["seat"]) or {}
-            was, now = was_seat.get("name"), s.get("name")
-            if was != now:
-                changed.append("%s: the shipped file names %s, the city's page now %s"
-                               % (s["seat"], was or "nobody", now or "shows it vacant"))
-                continue
-            if len(numbers(was_seat)) != len(numbers(s)):
-                changed.append("%s: the city's page now prints %d telephone number%s for "
-                               "this person, where the shipped file carries %d"
-                               % (s["seat"], len(numbers(s)), "" if len(numbers(s)) == 1 else "s",
-                                  len(numbers(was_seat))))
-            elif numbers(was_seat) != numbers(s):
-                changed.append("%s: the city's page now prints a different telephone number "
-                               "for this person than the shipped file carries" % s["seat"])
-            was_mail = (was_seat.get("email") or "").lower()
-            now_mail = (s.get("email") or "").lower()
-            if was_mail != now_mail:
-                changed.append("%s: %s" % (s["seat"], (
-                    "the city's page now prints an e-mail address of this person's own, "
-                    "where the shipped file carries none") if not was_mail else (
-                    "the city's page no longer prints, as this person's own, the e-mail "
-                    "address the shipped file carries") if not now_mail else (
-                    "the city's page now prints a different e-mail address for this person "
-                    "than the shipped file carries")))
-        if changed:
-            findings.add(WARN, label, "%s: %s. Rebuild with "
-                         "ms/scripts/build_ms_city_councils.py: %s"
-                         % (name, "; ".join(changed), c["council"]))
-        else:
-            phoned = sum(len(numbers(s)) for s in rec["seats"])
-            mailed = sum(1 for s in rec["seats"] if s.get("email"))
-            same = ([("the same %d telephone number%s" % (phoned, "" if phoned == 1 else "s"))]
-                    if phoned else []) + \
-                   ([("the same %d e-mail address%s" % (mailed, "" if mailed == 1 else "es"))]
-                    if mailed else [])
-            findings.add(OK, label, "%s: the city's pages still name the %d people the "
-                         "shipped file names%s (read %s)"
-                         % (name, sum(1 for s in rec["seats"] if s.get("name")),
-                            (", with " + " and ".join(same)) if same else "",
-                            old.get("read")))
+        findings.add(OK, "us-house", "TIGERweb's Legislative layer 4 is still %r" % name)
 
 
 def render(findings):
@@ -1326,22 +596,15 @@ def main():
 
     if not args.offline and requests is None:
         print("validate_sources: requests not installed; run with --offline or "
-              "`pip install -c ms/scripts/requirements.txt requests`", file=sys.stderr)
+              "`pip install -c la/scripts/requirements.txt requests`", file=sys.stderr)
         sys.exit(1)
 
     findings = Findings()
-    try:
-        check_manifest_matches_app(html, findings)
-        check_socrata(findings, args.offline)
-        check_provenance(findings, args.offline)
-        check_endpoints(findings, args.offline)
-        check_court_pages(findings, args.offline)
-        check_court_laws(findings, args.offline)
-        check_judge_news(findings, args.offline)
-        check_city_wards(findings, args.offline)
-        check_city_councils(findings, args.offline)
-    finally:
-        _drop_bundles()
+    check_manifest_matches_app(html, findings)
+    check_socrata(findings, args.offline)
+    check_provenance(findings, args.offline)
+    check_endpoints(findings, args.offline)
+    check_congress_map(findings, args.offline)
 
     report = render(findings)
     sys.stdout.write(report)

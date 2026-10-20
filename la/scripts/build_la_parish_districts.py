@@ -18,8 +18,13 @@ number or letter the parish uses, and every one outside Orleans is
 nonfunctioning (FUNCSTAT N), which is how the Census files a governing-body
 district. Orleans Parish has a single subdivision, the City of New Orleans
 (FUNCSTAT F), because the city council's districts are not filed with the
-Census at all. No state office publishes a statewide map of the current
-lines, measured 2026-10-09 for the plan and again 2026-10-20.
+Census at all. No statewide map of the current lines has been found: the
+plan found none on 2026-10-09, and on 2026-10-20 the Legislature's
+redistricting site (redist.legis.la.gov, its home page read with curl)
+offered maps of the state's own plans only (current plans for Congress,
+the House, the Senate and the Supreme Court; 2011 maps for the House,
+Congress, BESE, the PSC and the 5th Circuit) and none of a parish's. That is two places looked,
+not every state office.
 
 WHY MOST PARISHES ARE NOT DRAWN. The Census has a parish's new lines only if
 the parish sent them after the 2020 census. Measured 2026-10-20 on the 2020

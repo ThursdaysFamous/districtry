@@ -251,6 +251,19 @@
         "maxLng": -88.09,
         "maxLat": 35.0
       }
+    },
+    {
+      "id": "louisiana",
+      "label": "Louisiana",
+      "url": "https://districtry.com/la/",
+      "emoji": "🎷",
+      "explorer_name": "districtry Louisiana",
+      "bbox": {
+        "minLng": -94.05,
+        "minLat": 28.85,
+        "maxLng": -88.75,
+        "maxLat": 33.02
+      }
     }
   ],
   "hover_number_keys": [
@@ -472,7 +485,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 9,
   "anchor_point": {
     "lat": 29.9524,
     "lng": -90.0767,

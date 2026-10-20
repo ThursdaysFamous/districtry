@@ -1636,9 +1636,12 @@ jobs:
       # Louisiana's parish governing bodies come from the Secretary of State's
       # list of elected officials, which also prints each official's mailing
       # address, race and gender. This holds the shipped file to the shape it
-      # was built in, offline: every one of the 64 parishes, the member floors,
-      # a body's office address or telephone only where three of its members
-      # share it, and no field the builder does not carry.
+      # was built in, offline: every one of the 64 parishes, every member named
+      # and seated, the member, telephone and party floors, no telephone on two
+      # members' rows or on a member's row and the body's office both, and no
+      # field the builder does not carry. Whether three members printed a body's
+      # office is decided when the file is built, from the list itself, which is
+      # not kept, so it is not re-checked here.
       - name: LA parish officials keep their shape and carry no field the builder does not read
         if: ${{ !cancelled() }}
         run: python3 la/scripts/build_la_parish_officials.py --check

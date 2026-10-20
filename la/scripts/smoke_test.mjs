@@ -5,12 +5,13 @@
 //
 // It deliberately depends only on the app shell (Leaflet from its CDN) and the
 // same-origin data/app/*.json files — never on the live district APIs, which
-// are flaky/blocked in CI. The three no-API layers (school board, IL Supreme
-// Court, Board of Review) are the deterministic ground truth.
+// are flaky/blocked in CI. The four same-origin anchors (Parish, U.S. House,
+// Louisiana Senate and Louisiana House) are the deterministic ground truth,
+// and every live service a check needs is stubbed.
 //
 // Run locally against a static server:
 //     python3 -m http.server 8000 &
-//     npm install playwright && node scripts/smoke_test.mjs
+//     npm install playwright && BASE_URL=http://localhost:8000/la/ node la/scripts/smoke_test.mjs
 // Configure the URL with BASE_URL (default http://localhost:8000/).
 
 import { chromium } from "playwright";
@@ -48,52 +49,80 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
-const POINT = "32.30380,-90.18220"; // the State Capitol, Jackson, Hinds County
-const OFFLINE = ["county", "us-house", "ms-senate", "ms-house"];
-const EXPECT_DISTRICT = { "county": "Hinds County", "us-house": "2", "ms-senate": "29", "ms-house": "67" };
-const NEGATIVE_POINT = "32.48000,-88.25000"; // near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.
-const APP_NAME = "districtry Mississippi";
-const EXPECT_LAYERS = 17;
+const POINT = "29.95240,-90.07670"; // New Orleans City Hall, 1300 Perdido Street, Orleans Parish
+const OFFLINE = ["county", "us-house", "la-senate", "la-house"];
+const EXPECT_DISTRICT = { "county": "Orleans Parish", "us-house": "2", "la-senate": "5", "la-house": "93" };
+const NEGATIVE_POINT = "28.60000,-90.50000"; // open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.
+const APP_NAME = "districtry Louisiana";
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
-// Fork-specific smoke-test constants (the reference repo hoists its own set
-// here). The template's CHI-scenario checks are dropped at build time, so the
-// GAP_PROBE / MOVE_POINT / STRAGGLER_* names below are contract stubs — the
-// span's consumers keep the names resolvable; grow real fixtures (and restore
-// the corresponding checks from the reference repo's smoke_test.mjs) as this
-// fork ships the layers they exercise.
-const EXPORTS_NAME = "MississippiExplorer";
+// Instance constants this file owns (the worksheet emits the block above).
+const EXPORTS_NAME = "LouisianaExplorer";
 const PORTAL_HOST = "data.invalid"; // must stay a non-empty hostname: an empty string would abort every request
 // Geocoder type-ahead fixture: RAW carries an embedded unit the app's cleaner
 // must strip to CLEANED; the Photon STUB answers only CLEANED, so the check
-// proves the strip-and-retry path with no live network.
+// proves the strip-and-retry path with no live network. The address is the
+// fleet's shared placeholder; only its position is this state's.
 const GEOCODER_QUERY_RAW = "16 W Jones St Suite 200, Capital City";
 const GEOCODER_UNIT_FRAGMENT = "Suite 200";
 const GEOCODER_QUERY_CLEANED = "16 W Jones St, Capital City";
 const GEOCODER_STUB_FEATURE = {
   type: "Feature",
-  geometry: { type: "Point", coordinates: [-90.18220, 32.30380] },
+  geometry: { type: "Point", coordinates: [-90.07670, 29.95240] },
   properties: {
     // the typed number: an answer without it shows the street instead of
     // a row (ENGINE geocoder-search runAddressSearch)
     housenumber: "16",
     street: "W Jones St",
     city: "Capital City",
-    state: "Mississippi",
+    state: "Louisiana",
     postcode: "00000"
   }
 };
 // Contract stubs (their consuming checks are reference-fork scenarios,
-// dropped from this template's body):
-const GAP_PROBE = { county: "statewide", label: "Statewide", lat: 32.30380, lng: -90.18220 };
+// dropped from this instance's body):
+const GAP_PROBE = { county: "statewide", label: "Statewide", lat: 29.95240, lng: -90.07670 };
 const MOVE_POINT = { lat: 0, lng: 0, district: "0" };
 const STRAGGLER_FILE = "data/app/state-counties.json";
 const STRAGGLER_POINT = "0,0";
 // Layers expected to HIDE (not merely report no district) at NEGATIVE_POINT.
-// The starter layers declare no coverage() test, so none hide — they all take
-// the honest "no district here" branch instead.
+// None of the four anchors declares a coverage() test, so none hide — they
+// all take the honest "no district here" branch instead.
 const NEGATIVE_HIDDEN = [];
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
+
+// The app's rule for a shipped file: even-odd within a polygon, any part of a
+// multipolygon. Used to read what the shipped files put at a point, so an
+// expectation moves with a rebuild instead of being written down here.
+function inRing(x, y, ring) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+function propsAt(fc, point) {
+  const [lat, lng] = point.split(",").map(Number);
+  return fc.features.filter((f) => {
+    const g = f.geometry;
+    const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+    return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
+  }).map((f) => f.properties);
+}
+function shipped(name) {
+  return JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", name), "utf8"));
+}
+// "2030-01-13" -> "January 13, 2030", the card's own date wording.
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+  "August", "September", "October", "November", "December"];
+function longDate(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+  return m ? `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}` : null;
+}
+// A card writes a telephone with non-breaking hyphens (U+2011).
+const plain = (s) => String(s || "").replace(/‑/g, "-");
 
 const failures = [];
 function check(name, ok, detail) {
@@ -361,27 +390,27 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     MISSISSIPPI HAS TWO NEIGHBOURS THE FLEET SERVES AND TWO IT DOES NOT,
-  //     so both halves are its own. Tennessee is live, so a click on Memphis
-  //     must open that app: Overton Park sits about 16 km north of the state
-  //     line, well clear of either outline's simplification. Arkansas went
-  //     live on 2026-10-15, so a click on Lake Village must open THAT app: it
-  //     is the Chicot County seat, about 11.5 km west of the river that is the
-  //     state line, and measured against fleet-outlines.json it lies inside
-  //     Arkansas's outline and no other, and outside this app's coverage ring.
-  //     Alabama is served by nobody, so a click near York, Alabama must stay
-  //     here (1a2-ii below). This instance answers its own side from the
-  //     coverage rings the wash retained — no fetch. Chicago proves the file
-  //     is still read for ground far from here.
+  //     LOUISIANA HAS THREE NEIGHBOURS, AND THE FLEET SERVES TWO OF THEM.
+  //     Mississippi is live, so a click at its State Capitol in Jackson must
+  //     open that app: measured against fleet-outlines.json on 2026-10-20 it
+  //     lies inside Mississippi's outline and no other, about 77 km from this
+  //     app's coverage ring. Arkansas is live, so a click on El Dorado must
+  //     open THAT app: it is about 21 km north of the state line, inside
+  //     Arkansas's outline and no other. This instance answers its own side
+  //     from the coverage ring the wash retained, with no fetch, and it works
+  //     while this instance is dark because the fleet file names only live
+  //     apps. Chicago proves the file is still read for ground far from here.
   //
-  //     LOUISIANA IS DELIBERATELY NOT A CASE. It is on the next-states list,
-  //     so a "stays here" case there would start failing the day it goes
-  //     live, in a change that is about another state.
+  //     TEXAS IS DELIBERATELY NOT A CASE. Nobody serves it today, so a click
+  //     there stays here; but the fleet is meant to reach every state, and a
+  //     "stays here" case in Texas would start failing the day it goes live,
+  //     in a change that is about another state. The offshore negative point
+  //     carries that half instead (1a2-ii).
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
-      { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
-      { name: "Lake Village, Arkansas", lat: 33.3290, lng: -91.2818, want: "https://districtry.com/ar/" },
+      { name: "Jackson, Mississippi", lat: 32.3038, lng: -90.1822, want: "https://districtry.com/ms/" },
+      { name: "El Dorado, Arkansas", lat: 33.2076, lng: -92.6663, want: "https://districtry.com/ar/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -394,17 +423,17 @@ try {
       }, { c, n: EXPORTS_NAME });
       const went = await page.waitForURL((u) => u.href.startsWith(c.want + "#point="), { timeout: QUERY_TIMEOUT })
         .then(() => page.url(), () => null);
-      check(`a click on ${c.name} from Mississippi opens ${c.want} with the point`, !!went, went || page.url());
+      check(`a click on ${c.name} from Louisiana opens ${c.want} with the point`, !!went, went || page.url());
       await context.close();
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, near York in
-  //     Sumter County, Alabama, is about 12 km east of the state line and no
-  //     districtry instance covers it, so the click must stay HERE. A route to
-  //     a sibling would be the same lie pointing the other way, and the stub
-  //     makes it visible: if the app navigated, the URL would be the stubbed
-  //     sibling rather than this app.
+  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in open water
+  //     about 50 km south of the Louisiana coast, is outside every outline in
+  //     the fleet, so the click must stay HERE. A route to a sibling would be
+  //     the same lie pointing the other way, and the stub makes it visible: if
+  //     the app navigated, the URL would be the stubbed sibling rather than
+  //     this app.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, BASE, async (p) => {
@@ -417,10 +446,10 @@ try {
     }, { n: EXPORTS_NAME, pt: NEGATIVE_POINT });
     await page.waitForTimeout(3000);
     const url = page.url();
-    // Still under BASE means still this app. This asked for the URL NOT to
-    // name one of a list of sibling tags, and a list needs a new entry each
-    // time a state goes live: the one it lacked would read as staying here.
-    check("a click near York, Alabama stays in this app",
+    // Still under BASE means still this app. Asking instead for the URL NOT to
+    // name one of a list of sibling tags needs a new entry each time a state
+    // goes live, and the one it lacked would read as staying here.
+    check("a click offshore, outside every app's outline, stays in this app",
       url.startsWith(BASE), url);
     await context.close();
   }
@@ -490,13 +519,12 @@ try {
     await context.close();
   }
 
-  // 2. The three no-API layers classify a known point against known ground
-  //    truth, fetched from data/app/*.json. Two expected-value shapes: a
-  //    NUMERIC expectation asserts the card's own "District N" token exactly
-  //    (never a stray digit elsewhere in the card); a NAME expectation (a
-  //    state-template fork's county or school-district anchor, whose card
-  //    honestly prints an identity rather than a number) asserts the card
-  //    names that identity verbatim.
+  // 2. The four same-origin anchors classify a known point against known
+  //    ground truth, fetched from data/app/*.json. Two expected-value shapes:
+  //    a NUMERIC expectation asserts the card's own "District N" token exactly
+  //    (never a stray digit elsewhere in the card); a NAME expectation (the
+  //    Parish anchor, whose card prints an identity rather than a number)
+  //    asserts the card names that identity verbatim.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, `${BASE}#point=${POINT}&layers=${OFFLINE.join(",")}`);
@@ -512,36 +540,58 @@ try {
         info.text.slice(0, 70)
       );
     }
-    // 2a. A LEGISLATOR'S OWN NUMBERS RIDE THE PERSON ROW, each with the word
-    //     the member's profile prints for it ("home", "business", "cell"),
-    //     since Adam's ruling of 2026-10-17 ("if the official government
-    //     source uses personal phone numbers, we publish those"). The numbers
-    //     expected are read from the shipped roster for each chamber's anchor
-    //     district, so a weekly refresh that changes them changes what is
-    //     expected; a record carrying none is reported, never passed as a
-    //     check. The card shows numbers with no-break hyphens, folded back
-    //     before comparing, and each must also be a telephone link that
-    //     dials its own digits, so a label never reaches the number dialled.
-    for (const [id, file] of [["ms-senate", "ms-senate-members.json"], ["ms-house", "ms-house-members.json"]]) {
-      const rec = await page.evaluate(async ({ f, d }) => {
-        const r = await fetch("data/app/" + f).then((x) => x.json());
-        return r[d] || {};
-      }, { f: file, d: EXPECT_DISTRICT[id] });
-      const want = rec.phone ? [rec.phone].concat(rec.phonesExtra || []) : [];
-      if (!want.length) {
-        console.log(`  SKIP  ${id} member's own numbers — the anchor's member prints none`);
-        continue;
-      }
+    // 2a. EACH CHAMBER'S OWN PAGES NAME THE MEMBER, and the card carries what
+    //     they print: the name, the party, the district office and the
+    //     chamber's own e-mail address, which must open as a mailto link. The
+    //     values expected are read from the shipped roster for each chamber's
+    //     anchor district, so a weekly refresh that changes them changes what
+    //     is expected. The office sits behind a closed disclosure, which
+    //     innerText leaves out, so the office is read from textContent.
+    for (const [id, file] of [["la-senate", "la-senate-members.json"], ["la-house", "la-house-members.json"]]) {
+      const rec = shipped(file)[EXPECT_DISTRICT[id]] || {};
       const info = await cardText(page, id);
-      const text = (info.text || "").replace(/‑/g, "-");
-      const dialled = await page.evaluate((cid) =>
-        Array.from(document.querySelectorAll("#card-" + cid + " a[href^='tel:']"))
-          .map((a) => a.getAttribute("href").slice(4)), id);
-      const missing = want.filter((n) => !text.includes(n) || !dialled.includes(n.replace(/\D/g, "")));
-      check(`${id} card shows and dials every number the member's own profile prints, with its word`,
-        !info.error && missing.length === 0 && want.every((n) => /^(home|business|cell) /.test(n)),
-        `missing ${missing.length} of ${want.length}`);
+      const got = await page.evaluate((cid) => {
+        const el = document.getElementById("card-" + cid);
+        return {
+          all: el ? el.textContent.replace(/\s+/g, " ") : "",
+          mailto: el ? Array.from(el.querySelectorAll("a[href^='mailto:']")).map((a) => a.getAttribute("href")) : [],
+        };
+      }, id);
+      const street = (rec.districtOffice || [])[0] || null;
+      const mailOk = !!rec.email && got.mailto.some((h) =>
+        decodeURIComponent(h.slice(7)).toLowerCase() === String(rec.email).toLowerCase());
+      check(`${id} card names the member, the party, the district office and the chamber e-mail its own pages print`,
+        !info.error && !!rec.name && info.text.includes(rec.name) &&
+          !!rec.party && info.text.toLowerCase().includes(String(rec.party).toLowerCase()) &&
+          !!street && got.all.includes(street) && mailOk,
+        `name=${rec.name} street=${street} mailto=${JSON.stringify(got.mailto)} ${info.text.slice(0, 80)}`);
     }
+    await context.close();
+  }
+
+  // 2a2. A SEAT THE CHAMBER LISTS AS VACANT SAYS SO, in the chamber's words,
+  //     and names nobody. Senate District 14 read vacant on 2026-10-20; the
+  //     point is the shipped district's pole of inaccessibility (shapely
+  //     polylabel), about 3.8 km from its nearest edge. Where a later refresh
+  //     seats a senator there, the check asserts that senator is named
+  //     instead, so a filled seat passes and a wrong name still fails.
+  {
+    const SD14 = "30.47794,-91.16278";
+    const rec = shipped("la-senate-members.json")["14"] || {};
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${SD14}&layers=la-senate`);
+    const info = await cardText(page, "la-senate");
+    const text = info.text || "";
+    const others = Object.entries(shipped("la-senate-members.json"))
+      .filter(([d, r]) => d !== "14" && r.name && text.includes(r.name)).map(([, r]) => r.name);
+    const ok = rec.vacant
+      ? /\bVacant\b/.test(text) && !!rec.vacantWhy && text.includes(rec.vacantWhy)
+      : !!rec.name && text.includes(rec.name);
+    check(rec.vacant
+        ? "la-senate says District 14 is vacant, in the chamber's own words, and names nobody"
+        : "la-senate names District 14's senator now that the chamber lists one",
+      !info.error && /District 14\b/.test(text) && ok && others.length === 0,
+      `vacant=${!!rec.vacant} others=${others.slice(0, 2)} ${text.slice(0, 140)}`);
     await context.close();
   }
 
@@ -674,14 +724,14 @@ try {
   }
 
   // 6. The USGS structures loader PAGES, and the second page reaches the card.
-  //    fire-station is 1,508 points in Mississippi's envelope, within 492
-  //    of a 2,000-record cap the service reports as HTTP 200 +
-  //    exceededTransferLimit rather than an error, so the day the count passes
-  //    the cap a single request drops real stations and the nearest-3 card
-  //    looks correct at every point. That was proven by hand when the layer shipped
-  //    and then by NOTHING: the source manifest's count row cannot see it,
-  //    because returnCountOnly is not subject to maxRecordCount and answers the
-  //    true count whatever the client does. This is the check that can.
+  //    fire-station is 1,675 points in Louisiana's envelope (measured
+  //    2026-10-20), within 325 of a 2,000-record cap the service reports as
+  //    HTTP 200 + exceededTransferLimit rather than an error, so the day the
+  //    count passes the cap a single request drops real stations and the
+  //    nearest-3 card looks correct at every point. The source manifest's
+  //    count row cannot see that, because returnCountOnly is not subject to
+  //    maxRecordCount and answers the true count whatever the client does.
+  //    This is the check that can.
   //
   //    The service is stubbed rather than called, so the assertion is about
   //    THIS APP'S control flow and cannot fail on somebody else's outage. Page
@@ -694,7 +744,7 @@ try {
     const offsets = [];
     const fieldsAsked = [];
     const far = (i) => ({
-      attributes: { NAME: `FAR STATION ${i}`, ADDRESS: "1 Far Rd", CITY: "Tupelo", STATE: "MS", ZIPCODE: "38804" },
+      attributes: { NAME: `FAR STATION ${i}`, ADDRESS: "1 Far Rd", CITY: "Monroe", STATE: "LA", ZIPCODE: "71201" },
       geometry: { x: -83.0458, y: 42.3314 },
     });
     const [lat, lng] = POINT.split(",").map(Number);
@@ -704,16 +754,14 @@ try {
         const offset = Number(params.get("resultOffset"));
         offsets.push(offset);
         fieldsAsked.push(params.get("outFields") || "");
-        // ESRI JSON, not GeoJSON — the shape the app now asks for. Every
-        // ArcGIS loader moved to f=json on 2026-09-05 because the GeoJSON
-        // export unnests interior rings (engine/index.html/arcgis-loader.txt);
-        // a stub still answering GeoJSON stops reproducing the contract. The
-        // assertions are unchanged; only the wire format is.
+        // ESRI JSON, not GeoJSON — the shape the app asks for. Every ArcGIS
+        // loader moved to f=json on 2026-09-05 because the GeoJSON export
+        // unnests interior rings (engine/index.html/arcgis-loader.txt).
         const body = offset === 0
           ? { exceededTransferLimit: true, features: [far(1), far(2), far(3)] }
           : { features: [{
                 attributes: { NAME: "PAGE TWO STATION", ADDRESS: "2 Second Page Way",
-                              CITY: "Jackson", STATE: "MS", ZIPCODE: "39201" },
+                              CITY: "New Orleans", STATE: "LA", ZIPCODE: "70112" },
                 geometry: { x: lng, y: lat },
               }] };
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) });
@@ -725,7 +773,6 @@ try {
       const box = document.getElementById("toggle-fire-station");
       if (box && !box.checked) box.click();
     }, { pt: POINT, n: EXPORTS_NAME }).catch(() => {});
-    // cardText returns {text, error, empty}, not a bare string.
     let card = { text: "(card never resolved)" };
     try {
       card = await cardText(page, "fire-station");
@@ -736,52 +783,53 @@ try {
     check("the second page's station reaches the card",
       /PAGE TWO STATION/.test(text), text.slice(0, 140));
     // TWO assertions, because either alone passes while the other half is
-    // broken. Asserting only the rendered line is GREEN FOR THE WRONG REASON —
-    // this stub returns STATE whatever outFields asks for, so deleting STATE
-    // from the app's request left the line check passing (measured, while
-    // writing this). Asserting only the request would pass with a card that
+    // broken: this stub returns STATE whatever outFields asks for, so a check
+    // of the rendered line alone stays green with STATE deleted from the
+    // app's request, and a check of the request alone passes with a card that
     // never renders what it fetched.
     check("the app ASKS the service for STATE",
       fieldsAsked.every((f) => /\bSTATE\b/.test(f)),
       `outFields=${fieldsAsked[0] || "(none seen)"}`);
     check("a structure line RENDERS its state",
-      /Jackson, MS/.test(text), text.slice(0, 140));
+      /New Orleans, LA/.test(text), text.slice(0, 140));
     await context.close();
   }
 
-  // 7. THE THREE LIVE TIGERWEB FABRIC CARDS, STUBBED — and stubbed on purpose
-  //    rather than anchored. The worksheet's OFFLINE anchors are same-origin
-  //    only, which is this test's own stated contract, and these three layers
-  //    fetch the Census live: asserting a card against somebody else's server
-  //    makes the test fail on their outage and on any network that intercepts
-  //    TLS, which is how it failed here first (ERR_CERT_AUTHORITY_INVALID on
-  //    tigerweb.geo.census.gov, with the same query answering 200 to curl
-  //    through the agent proxy in the same minute).
+  // 7. THE LIVE TIGERWEB FABRIC CARDS, STUBBED — and stubbed on purpose rather
+  //    than anchored. The worksheet's OFFLINE anchors are same-origin only,
+  //    which is this test's own stated contract, and these layers fetch the
+  //    Census live: asserting a card against somebody else's server makes the
+  //    test fail on their outage and on any network that intercepts TLS.
   //
-  //    SINCE 2026-10-17 THESE LAYERS ARE ANSWERED FROM SAME-ORIGIN TILE
-  //    ARCHIVES, and the stubs stay anyway: several cases below exist in no
-  //    archive (an affix no table carries, an inactive municipality), so
-  //    each case refuses its layer's archive and the stub decides the card.
+  //    NO TILE ARCHIVE SHIPS FOR THESE LAYERS YET (the mirror is a go-live
+  //    step, la/WATCH.md). Each case refuses its layer's archive anyway, so
+  //    the day one ships, the stub still decides the card and a case that
+  //    exists in no archive (an affix no table carries) keeps working.
   //
-  //    WHAT IS ACTUALLY WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of
-  //    it is exercised by a live fetch that happens to work. Three claims, each
-  //    wrong in a way a reader would see:
+  //    WHAT IS WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of it is
+  //    exercised by a live fetch that happens to work. Four claims, each wrong
+  //    in a way a reader would see:
   //
   //    (a) The municipality card states the style the Census records — a
-  //        CITY, a TOWN or a VILLAGE, Mississippi's three — and an affix the
+  //        CITY, a TOWN or a VILLAGE, Louisiana's three — and an affix the
   //        card does not know produces NO type row rather than an improvised
   //        one.
-  //    (b) A separate status row appears only for a FUNCSTAT I place. One
-  //        Mississippi place is inactive today (Tillatoba, one of 300,
-  //        measured 2026-10-15), and a missing status row would imply a
-  //        working government where the Census records none.
-  //    (c) The one school tiling answers, under the label with no qualifier,
+  //    (b) A status row appears only for the two statuses other than active
+  //        that Louisiana's places carry, measured 2026-10-20 across all 305:
+  //        FUNCSTAT B (Baton Rouge and Lafayette) keeps its type row and
+  //        points at the Parish card; FUNCSTAT N (Houma) drops the type row,
+  //        because a place with no government of its own is not "a
+  //        general-purpose local government over this point".
+  //    (c) New Orleans, FUNCSTAT A like any city, is one government with
+  //        Orleans Parish, so its card must not say "alongside the parish",
+  //        and it says the Parish card names its mayor and council.
+  //    (d) The one school tiling answers, under the label with no qualifier,
   //        because the unified districts cover the state alone.
   {
     function esriPolygon(props) {
       return {
         attributes: props,
-        geometry: { rings: [[[-91, 31.5], [-89.5, 31.5], [-89.5, 33], [-91, 33], [-91, 31.5]]] }
+        geometry: { rings: [[[-90.6, 29.6], [-89.6, 29.6], [-89.6, 30.3], [-90.6, 30.3], [-90.6, 29.6]]] }
       };
     }
     function esriBody(props) {
@@ -792,54 +840,65 @@ try {
         features: [esriPolygon(props)]
       });
     }
-
+    const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
     const cases = [
       {
-        name: "a city names itself a city",
-        layer: "municipality",
-        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
-        props: { GEOID: "2836000", NAME: "Jackson city", BASENAME: "Jackson", STATE: "28", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Jackson city/, /Incorporated city/, /Mayor/],
-        reject: [/INACTIVE/, /Incorporated town/, /Incorporated village/, /Not named here/]
+        name: "a city names itself a city, alongside the parish",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2270000", NAME: "Shreveport city", BASENAME: "Shreveport", STATE: "22", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Shreveport city/, /Incorporated city — a general-purpose local government over this point, alongside the parish/, /Not named here/],
+        reject: [/Status/, /Incorporated town/, /Incorporated village/, /Parish card names/]
       },
       {
         name: "a town names itself a town, not a city",
-        layer: "municipality",
-        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
-        props: { GEOID: "2824940", NAME: "Flora town", BASENAME: "Flora", STATE: "28", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Flora town/, /Incorporated town/, /this town is not one of them/],
-        reject: [/INACTIVE/, /Incorporated city/, /Incorporated village/, /Who these are/]
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2264765", NAME: "Ridgecrest town", BASENAME: "Ridgecrest", STATE: "22", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Ridgecrest town/, /Incorporated town/],
+        reject: [/Incorporated city/, /Incorporated village/]
       },
       {
         name: "a village names itself a village",
-        layer: "municipality",
-        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
-        props: { GEOID: "2865680", NAME: "Satartia village", BASENAME: "Satartia", STATE: "28", LSADC: "47", FUNCSTAT: "A" },
-        want: [/Satartia village/, /Incorporated village/],
-        reject: [/INACTIVE/, /Incorporated city/, /Incorporated town/]
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2253370", NAME: "Napoleonville village", BASENAME: "Napoleonville", STATE: "22", LSADC: "47", FUNCSTAT: "A" },
+        want: [/Napoleonville village/, /Incorporated village/],
+        reject: [/Incorporated city/, /Incorporated town/]
       },
       {
         name: "an affix the card does not carry prints NO type row",
-        layer: "municipality",
-        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
-        props: { GEOID: "2899999", NAME: "Nowhere borough", BASENAME: "Nowhere", STATE: "28", LSADC: "21", FUNCSTAT: "A" },
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2299999", NAME: "Nowhere borough", BASENAME: "Nowhere", STATE: "22", LSADC: "21", FUNCSTAT: "A" },
         want: [/Nowhere borough/],
         reject: [/Incorporated city/, /Incorporated town/, /Incorporated village/]
       },
       {
-        name: "a FUNCSTAT I place says it is inactive",
-        layer: "municipality",
-        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
-        props: { GEOID: "2873440", NAME: "Tillatoba town", BASENAME: "Tillatoba", STATE: "28", LSADC: "43", FUNCSTAT: "I" },
-        want: [/Tillatoba town/, /INACTIVE/, /no government operating/],
-        reject: []
+        name: "a FUNCSTAT B city keeps its type, says what the Census records, and points at the Parish card",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2205000", NAME: "Baton Rouge city", BASENAME: "Baton Rouge", STATE: "22", LSADC: "25", FUNCSTAT: "B" },
+        want: [/Baton Rouge city/, /Incorporated city/, /partly consolidated with another government/,
+               /The Parish card names the parish's governing body and its executive/],
+        reject: [/no government of its own/]
+      },
+      {
+        name: "a FUNCSTAT N city drops its type row, says it has no government of its own, and points at the Parish card",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2236255", NAME: "Houma city", BASENAME: "Houma", STATE: "22", LSADC: "25", FUNCSTAT: "N" },
+        want: [/Houma city/, /no government of its own operating/,
+               /The Parish card names the parish's governing body and its executive/],
+        reject: [/Incorporated city/, /partly consolidated/]
+      },
+      {
+        name: "New Orleans says it is one government with Orleans Parish, never alongside it, and that the Parish card names its mayor and council",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2255000", NAME: "New Orleans city", BASENAME: "New Orleans", STATE: "22", LSADC: "25", FUNCSTAT: "A" },
+        want: [/New Orleans city/, /New Orleans and Orleans Parish are one government/,
+               /The Parish card names them/, /New Orleans City Council as Orleans Parish's governing body/],
+        reject: [/alongside the parish/, /Not named here/, /Status/]
       },
       {
         name: "the school district card names the district",
-        layer: "school-district-unified",
-        service: "School/MapServer/0",
-        props: { GEOID: "2802190", NAME: "Jackson Public School District", STATE: "28" },
-        want: [/Jackson Public School District/],
+        layer: "school-district-unified", service: "School/MapServer/0",
+        props: { GEOID: "2201170", NAME: "Orleans Parish School District", STATE: "22" },
+        want: [/Orleans Parish School District/],
         reject: [/Unified/]
       }
     ];
@@ -847,11 +906,6 @@ try {
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
-        // The layer is drawn and answered from a tile archive since 2026-10-17,
-        // so the archive is refused here: the card then falls back to the
-        // census loader, whose point query and whole-set download go to the
-        // same service path, and this one route answers either with the same
-        // feature (the archive-failure path il's smoke check 2d also holds).
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
@@ -870,24 +924,24 @@ try {
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose
-  //    point query cannot be filtered server-side — and outside Mississippi it
+  //    point query cannot be filtered server-side — and over a land border it
   //    does not answer with nothing, it answers with a real neighbouring ZIP.
-  //    Measured against the live service 2026-10-15: the Alabama negative
-  //    point -> 36925, against the State Capitol's correct 39201. So without a
-  //    coverage test this card would present another state's ZIP code as this
-  //    app's answer.
+  //    Measured against the live service 2026-10-20: Orange, Texas gives
+  //    77630 and Vicksburg, Mississippi 39183.
   //
-  //    THE OUT-OF-STATE HALF IS THE ONE THAT DISCRIMINATES, and the stub is
-  //    what makes it honest: it answers with 36925 — a ZIP the live service
-  //    really does return over the line — so a regression that drops
-  //    `coverage` renders that card and fails here. Stubbing an EMPTY answer
-  //    would pass for the wrong reason. The in-state half is equally
-  //    load-bearing: coverage fails OPEN, so a test that only asserted hiding
-  //    would also pass on a layer that had stopped working altogether.
+  //    THE OUT-OF-STATE HALF IS THE ONE THAT DISCRIMINATES. The stub answers
+  //    77630 whatever point is asked, so a regression that drops `coverage`
+  //    shows the block AND renders a Texas ZIP here, which is the harm a
+  //    reader would see; the live service answers no ZCTA at this offshore
+  //    point, so without the stub that regression would show only an empty
+  //    card. The in-state half is equally load-bearing: coverage fails OPEN,
+  //    so a test that only asserted hiding would also pass on a layer that
+  //    had stopped working altogether.
   //
-  //    The negative point is the worksheet's own, in Sumter County, Alabama —
-  //    outside the county fabric's dissolve, which is what the coverage test
-  //    reads.
+  //    The negative point is the worksheet's own, offshore and outside the
+  //    state outline, which is what the coverage test reads. A point in Texas
+  //    would test the same thing and start failing the day a Texas app goes
+  //    live and a selection there leaves for it.
   {
     const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
     function zctaBody(zip) {
@@ -898,7 +952,7 @@ try {
         features: [{
           attributes: { ZCTA5: zip },
           // a ring around BOTH probe points, so geometry never decides this
-          geometry: { rings: [[[-91, 31.5], [-87.5, 31.5], [-87.5, 33], [-91, 33], [-91, 31.5]]] }
+          geometry: { rings: [[[-91, 28.4], [-89.8, 28.4], [-89.8, 30.2], [-91, 30.2], [-91, 28.4]]] }
         }]
       });
     }
@@ -907,30 +961,25 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
-        // The layer is drawn and answered from a tile archive since 2026-10-17;
-        // refusing it sends the card to the census loader, which this stub answers
-        // (the archive-failure path il's smoke check 2d also holds).
+        // no archive ships yet; refused so the stub decides the day one does
         await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
-          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("39201") }));
+          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("70112") }));
       });
       const info = await cardText(page, "zip-code");
-      check("zip-code answers inside Mississippi (coverage fails open, so this half matters)",
-        !info.error && /39201/.test(info.text || ""),
+      check("zip-code answers inside Louisiana (coverage fails open, so this half matters)",
+        !info.error && /70112/.test(info.text || ""),
         (info.text || "").slice(0, 90));
       await context.close();
     }
 
-    // out of state: the layer HIDES, and the neighbouring ZIP never renders
+    // out of state: the layer HIDES, and the stubbed ZIP never renders
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
-        // The layer is drawn and answered from a tile archive since 2026-10-17;
-        // refusing it sends the card to the census loader, which this stub answers
-        // (the archive-failure path il's smoke check 2d also holds).
         await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
-          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("36925") }));
+          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("77630") }));
       });
       const hidden = await page
         .waitForFunction(() => {
@@ -940,861 +989,282 @@ try {
         }, null, { timeout: QUERY_TIMEOUT })
         .then(() => true, () => false);
       const info = await cardText(page, "zip-code");
-      const leaked = /36925/.test(info.text || "");
+      const leaked = /77630/.test(info.text || "");
       const stillOn = await page.evaluate(
         (n) => window[n].state.layersOn["zip-code"] === true, EXPORTS_NAME);
-      check("zip-code hides outside Mississippi rather than naming an Alabama ZIP",
+      check("zip-code hides outside Louisiana rather than naming a Texas ZIP",
         hidden && !leaked && stillOn,
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();
     }
   }
 
-  // 9. THE BOARD OF SUPERVISORS, on the County card. The expected names are
-  //    read from the shipped roster rather than written here, because a new
-  //    edition of the directory changes them and a name in this file would
-  //    fail a correct rebuild. Three counties, each for its own claim:
-  //      - Hinds, at the Capitol: all five supervisors with their districts,
-  //        the board's address where the roster carries one, and the credit;
-  //      - Jasper, one of the five counties whose directory page says "Beat":
-  //        the card uses the county's word;
-  //      - Amite, one of the six counties whose supervisors each print a
-  //        different address: NO office block at all, because a supervisor's
-  //        own address may be a home;
-  //      - Sunflower, whose District 3 the 2026 directory prints as "Vacant":
-  //        the card says the seat is vacant, and nobody called Vacant is
-  //        listed as a supervisor. A roster with no vacancy there still runs
-  //        the other assertions, so a new edition filling the seat passes.
-  //    In all four the card also names the county's five election
-  //    commissioners by district, in the directory's word for them ("District"
-  //    even in Jasper, where the supervisors' districts are beats), and quotes
-  //    the directory on what they do. Only names reach the card: the roster
-  //    carries nothing else for them, which the builder's --check holds.
-  //    The non-Capitol points are interior points of each county as the
-  //    shipped geometry draws it (polylabel, 2026-10-15).
+  // 9. EVERY PARISH'S GOVERNING BODY, on the Parish card. The names expected
+  //    are read from the shipped roster (data/app/la-parish-officials.json)
+  //    rather than written here, because the Secretary of State's next
+  //    edition of its list changes them and a name in this file would fail a
+  //    correct rebuild. Six parishes, each for its own claim:
+  //      - Orleans, at City Hall: the Mayor first, then the New Orleans City
+  //        Council with its two members elected at large and its five
+  //        district members, the one term every one of them shares, which
+  //        member represents the point, and the credit and link to the list;
+  //      - Avoyelles, a police jury whose District 4 the list leaves out: the
+  //        card says the list names no one for it and does not call it
+  //        vacant, says the list does not record the jury's president, and
+  //        shows the office three or more members share;
+  //      - Cameron, whose District 4 elects two jurors: both are listed;
+  //      - Caddo, the one parish commission, with its shared office;
+  //      - East Baton Rouge, a Mayor-President and the Metropolitan Council,
+  //        whose seats the list calls Metro Districts;
+  //      - Assumption, whose seats are wards: the card's sentence about which
+  //        member represents the point says ward.
+  //    Each person the list prints a telephone for shows it, since Adam's
+  //    ruling of 2026-10-17. The points are poles of inaccessibility of each
+  //    parish as the shipped file draws it (shapely polylabel, 2026-10-20),
+  //    13 to 24 km from the nearest parish line, and Assumption's is the one
+  //    check 10 uses for its Ward 4.
   {
-    const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-county-officials.json"), "utf8"));
+    const roster = shipped("la-parish-officials.json");
     const cases = [
-      { name: "Hinds County", point: POINT, fips: "28049" },
-      { name: "Jasper County", point: "32.01901,-89.11740", fips: "28061" },
-      { name: "Amite County", point: "31.17456,-90.72388", fips: "28005" },
-      { name: "Sunflower County", point: "33.47334,-90.60537", fips: "28133" },
+      { point: POINT, geoid: "22071" },
+      { point: "31.03895,-92.02714", geoid: "22009" },
+      { point: "29.82600,-92.82737", geoid: "22023" },
+      { point: "32.45376,-93.89207", geoid: "22017" },
+      { point: "30.59069,-91.10618", geoid: "22033" },
+      { point: "29.84237,-91.03153", geoid: "22007" },
     ];
+    const footerLinks = (page, id) => page.evaluate((cid) => {
+      const el = document.getElementById("card-" + cid);
+      const block = el && el.closest(".layer-block");
+      return block ? Array.from(block.querySelectorAll(".card-footer a[href]")).map((a) => a.href) : [];
+    }, id);
     for (const c of cases) {
-      const o = roster[c.fips];
-      const word = o.label === "Beat" ? "Beat" : "District";
+      const o = roster[c.geoid];
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${c.point}&layers=county`);
-      const county = await cardText(page, "county");
-      const seated = o.supervisors.filter((sv) => sv.vacant !== true);
-      const empty = o.supervisors.filter((sv) => sv.vacant === true);
-      const missing = seated.filter((sv) => !county.text.includes(sv.name) ||
-        !county.text.includes(`${word} ${sv.district}`)).map((sv) => sv.name);
-      // every vacant seat is said to be vacant; no "Vacant" stands as a name
-      const unsaid = empty.filter((sv) =>
-        !new RegExp(`${word} ${sv.district}\\b[^.]*listed as vacant`).test(county.text))
-        .map((sv) => `${word} ${sv.district}`);
-      const vacantAsName = /Vacant(?! seats?)/.test(county.text);
-      const vacancyRight = unsaid.length === 0 && !vacantAsName &&
-        (empty.length > 0 || !/Vacant seat/.test(county.text));
-      const office = /Board of supervisors' office/.test(county.text);
-      const officeRight = (o.boardAddress || o.boardPhone)
-        ? office && (!o.boardAddress || county.text.includes(o.boardAddress))
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      const shown = plain(text);
+      const people = (o.atLarge || []).concat(o.seats || []);
+      const unnamed = people.filter((p) => !text.includes(p.name) || !text.includes(p.seat)).map((p) => p.name);
+      const unphoned = people.concat(o.executive ? [o.executive] : [])
+        .filter((p) => p.phone && !shown.includes(p.phone)).map((p) => p.name);
+      const exe = o.executive;
+      const exeOk = exe ? text.includes(exe.name) && new RegExp(exe.title, "i").test(text) : true;
+      const terms = [...new Set(people.map((p) => p.termEnds))];
+      const termOk = terms.length === 1 && terms[0]
+        ? text.includes(`The list gives every member's term as ending on ${longDate(terms[0])}.`)
+        : !/The list gives every member's term/.test(text);
+      const office = /The (police jury|council|commission)'s office/i.test(text);
+      const officeOk = (o.boardAddress || o.boardPhone)
+        ? office && (!o.boardAddress || text.includes(o.boardAddress))
         : !office;
-      check(`county card at ${c.name} names every seated supervisor by ${word.toLowerCase()} and says which seats are vacant, with a board office only where the roster has one`,
-        !county.error && county.text.includes(c.name) && missing.length === 0 && officeRight &&
-          vacancyRight &&
-          /Where these names come from/.test(county.text) &&
-          /County Offices and Directory/.test(county.text),
-        missing.length ? `missing=${missing.slice(0, 3)}`
-          : !vacancyRight ? `unsaid=${unsaid} vacantAsName=${vacantAsName}`
-          : `office=${office} ${county.text.slice(0, 90)}`);
-      const cword = o.commissionerLabel === "Beat" ? "Beat" : "District";
-      const commissioners = (o.electionCommissioners || []).filter((ec) => ec.vacant !== true);
-      // the commissioners follow their own heading, so each is looked for
-      // there; the heading is set in capitals, which innerText reports
-      const at = county.text.search(/election commissioners/i);
-      const after = at >= 0 ? county.text.slice(at) : "";
-      const unnamed = commissioners.filter((ec) => !after.includes(ec.name) ||
-        !after.includes(`${cword} ${ec.district}`)).map((ec) => ec.name);
-      check(`county card at ${c.name} names its election commissioners by ${cword.toLowerCase()} and quotes the directory on what they do`,
-        !county.error && commissioners.length > 0 && unnamed.length === 0 &&
-          /Election commissioner\b/.test(after) &&
-          /What election commissioners do/.test(county.text) &&
-          /certifying election results/.test(county.text) &&
-          /supervisor and the election commissioner elected from the/.test(county.text),
-        unnamed.length ? `unnamed=${unnamed.slice(0, 3)}` : after.slice(0, 120));
-      // A telephone the directory prints for one person is on that person's
-      // row, published since 2026-10-17 even where it may be the person's own
-      // line; the board's shared number is in the board's office block. The
-      // card writes a number with non-breaking hyphens, so they are put back.
-      const shown = county.text.replace(/‑/g, "-");
-      const unshown = seated.concat(commissioners).filter((p) => p.phone &&
-        !shown.includes(p.phone)).map((p) => p.name);
-      check(`county card at ${c.name} shows the telephone the directory prints for each supervisor and election commissioner who has one of their own`,
-        !county.error && unshown.length === 0,
-        unshown.length ? `unshown=${unshown.slice(0, 3)}` : "");
+      const word = (o.seats || []).every((s) => /^Ward\b/.test(s.seat)) ? "ward" : "district";
+      const whichOk = (o.atLarge || []).length
+        ? /elected at large represents? the whole parish/.test(text) &&
+            text.includes(`the one elected from the ${word} this point is in does`)
+        : text.includes(`The member elected from the ${word} this point is in.`);
+      const juryOk = o.kind === "police-jury"
+        ? /A police jury elects its own president from among its members/.test(text)
+        : !/police jury elects its own president/.test(text);
+      const unlisted = o.unlisted || [];
+      const unlistedOk = unlisted.length
+        ? unlisted.every((s) => text.includes(s)) && /names no one for/.test(text) &&
+            /does not say the seat is vacant, so this card does not either/.test(text)
+        : !/names no one for/.test(text);
+      const footer = await footerLinks(page, "county");
+      const creditOk = /Where these names come from/i.test(text) &&
+        text.includes(`read on ${longDate(o.read)}`) && footer.includes(o.sourceUrl);
+      check(`the Parish card in ${o.parish} names ${exe ? "its " + exe.title + " and " : ""}every member of the ${o.body} by seat, with the list's own credit`,
+        !info.error && text.includes(o.parish) && people.length > 0 && unnamed.length === 0 &&
+          exeOk && termOk && officeOk && whichOk && juryOk && unlistedOk && creditOk &&
+          unphoned.length === 0,
+        `unnamed=${unnamed.slice(0, 3)} unphoned=${unphoned.slice(0, 2)} exe=${exeOk} term=${termOk} office=${officeOk} ` +
+          `which=${whichOk} jury=${juryOk} unlisted=${unlistedOk} credit=${creditOk} ${text.slice(0, 100)}`);
       await context.close();
     }
   }
 
-  // 9b. The roster is refused, and the County card must degrade to a sentence
-  //    naming nobody while the county itself still classifies: a roster
+  // 9b. The roster is refused, and the Parish card must degrade to a sentence
+  //    naming nobody while the parish itself still classifies: a roster
   //    failure is not the layer's failure.
   {
-    const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-county-officials.json"), "utf8"));
-    const hinds = roster["28049"];
+    const orleans = shipped("la-parish-officials.json")["22071"];
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (p) => {
-      await p.route("**/data/app/ms-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      await p.route("**/data/app/la-parish-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
     });
-    const county = await cardText(page, "county");
-    const named = hinds.supervisors.concat(hinds.electionCommissioners)
-      .filter((sv) => sv.name && county.text.includes(sv.name)).map((sv) => sv.name);
-    check("county card degrades to naming nobody when the roster fails",
-      !county.error && /Hinds County/.test(county.text) && /did not load/.test(county.text) &&
+    const info = await cardText(page, "county");
+    const text = info.text || "";
+    const named = [orleans.executive].concat(orleans.atLarge || [], orleans.seats || [])
+      .filter((p) => p && p.name && text.includes(p.name)).map((p) => p.name);
+    check("the Parish card degrades to naming nobody when the list of officials fails",
+      !info.error && /Orleans Parish/.test(text) && /did not load, so no one is named here/.test(text) &&
         named.length === 0,
-      `named=${named.slice(0, 2)} text=${county.text.slice(0, 90)}`);
+      `named=${named.slice(0, 2)} text=${text.slice(0, 90)}`);
     await context.close();
   }
 
-  // 10. THE COUNTY SUPERVISOR DISTRICT LAYER, drawn only in the counties whose
-  //     current lines are confirmed. The expected district, county, supervisor
-  //     and edition are read from the shipped files, so a rebuild that
-  //     renumbers a county moves the expectation with it; what is asserted is
-  //     that the card agrees with those files at the point.
-  //       - Two counties drawn from the Census's lines: the card's
-  //         "District N" is the district the shipped file puts the point in, it
-  //         names that district's supervisor from the directory, and it says
-  //         where the line and the name come from, naming the Census edition.
-  //       - Two counties drawn from their own maps, Hinds at the Capitol and
-  //         Rankin: the card says whose map the line comes from and when it
-  //         was read, and never names the Census edition; in Rankin it also
-  //         says how many people the map's own population figures leave out,
-  //         and in Hinds that it leaves nobody out.
-  //       - Amite, whose Census lines place every resident as the Census's
-  //         January 1, 2010 edition does, and which publishes none of its
-  //         own: the layer HIDES, with the layers= permalink intact. This is
-  //         the half that discriminates: without `coverage` the card would
-  //         say no district is drawn here, about a county that has five.
-  //       - With the layer OFF at the Capitol, the coverage test reads the
-  //         list of drawn counties and never the districts file, which was
-  //         150 KB gzipped on every reader's first selection when the test
-  //         read it (2026-10-15), and the layer's toggle still shows there.
-  //       - Each of those cards also names the election commissioner of the
-  //         same district from the same directory, and says where the names
-  //         (plural) come from.
+  // 10. THE POLICE JURY OR COUNCIL DISTRICT LAYER, drawn only in the parishes
+  //     whose current lines are confirmed (Adam's ruling of 2026-10-20,
+  //     "Confirmed only"). The district, parish, body and member expected are
+  //     read from the shipped files at the point, so a rebuild that renumbers
+  //     a parish moves the expectation with it; what is asserted is that the
+  //     card agrees with those files.
+  //       - Caddo District 1 (the commission), Assumption Ward 4 (a police
+  //         jury whose seats are wards) and St. Charles District 4 (a council
+  //         with two members elected at large): each card names the district
+  //         in the parish's own word, its member, the at-large members where
+  //         there are any, the body, where the line comes from (the Census's
+  //         January 1, 2026 edition, which the build checked) and where the
+  //         names come from.
+  //       - Orleans, at City Hall, is not drawn: the layer HIDES, with the
+  //         layers= permalink intact. This is the half that discriminates:
+  //         without `coverage` the card would say no district is drawn here,
+  //         about a parish with five.
+  //       - With the layer OFF at the Caddo parish point, the coverage test
+  //         reads the list of drawn parishes and never the districts file,
+  //         which every reader would otherwise download on a first selection,
+  //         and the layer's toggle still shows there.
   //       - The roster is refused: the district still answers and names nobody.
-  //       - A vacant seat, on a stubbed directory because no drawn county has
-  //         one in the 2026 edition: the card says the seat is vacant and
-  //         names nobody for it. The same for a vacant commissioner's seat,
-  //         while the supervisor is still named.
-  //       - A stubbed directory that names the supervisors' districts with one
-  //         word and the commissioners' with another: no commissioner is
-  //         joined to the district on the strength of its number alone.
-  //     The points are interior points of each district as the shipped file
-  //     draws it (polylabel, 2026-10-15), each at least 5 km from its lines.
+  //       - A seat the list leaves out, on a stubbed roster because no drawn
+  //         parish has one on 2026-10-20: the card says the list names no one
+  //         for it and calls nothing vacant.
+  //       - Two members from one district, Cameron's shape, on a stubbed
+  //         roster for the same reason: the card names both.
+  //     The points are each district's pole of inaccessibility as the shipped
+  //     file draws it (shapely polylabel, 2026-10-20), 5 to 13 km from its
+  //     nearest line.
   {
-    const sup = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-supervisor-districts.json"), "utf8"));
-    const rec = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "source", "ms-supervisor-districts.source.json"), "utf8"));
-    const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-county-officials.json"), "utf8"));
-    // the app's rule: even-odd within a polygon, any part of a multipolygon
-    function inRing(x, y, ring) {
-      let inside = false;
-      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-        const [xi, yi] = ring[i], [xj, yj] = ring[j];
-        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
-      }
-      return inside;
-    }
-    function districtsAt(point) {
-      const [lat, lng] = point.split(",").map(Number);
-      return sup.features.filter((f) => {
-        const g = f.geometry;
-        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
-        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
-      }).map((f) => f.properties);
-    }
-    function seatOf(p) {
-      const o = roster[p.countyfips] || { supervisors: [] };
-      return o.supervisors.find((sv) => String(sv.district) === String(p.district)) || {};
-    }
-    function commissionerOf(p) {
-      const o = roster[p.countyfips] || {};
-      return (o.electionCommissioners || []).find((ec) => String(ec.district) === String(p.district)) || {};
-    }
-    const drawnPoints = ["34.92782,-90.17414", "33.34602,-88.57919"];  // DeSoto 3, Lowndes 4
-    const ownMapPoints = [POINT, "32.34382,-89.84721"];  // Hinds 5 (the Capitol), Rankin 4
-    const AMITE = "31.17456,-90.72388";  // the Amite County point check 9 uses
+    const districts = shipped("la-parish-districts.json");
+    const roster = shipped("la-parish-officials.json");
+    const seatOf = (p) => (((roster[p.parishfips] || {}).seats) || [])
+      .filter((s) => s.seat === `${p.label === "Ward" ? "Ward" : "District"} ${p.district}`);
+    const drawnPoints = ["32.83961,-93.92869", "29.84237,-91.03153", "29.77359,-90.28081"];  // Caddo 1, Assumption Ward 4, St. Charles 4
+    const CADDO_PARISH = "32.45376,-93.89207";  // the Caddo point check 9 uses, in District 12
 
     for (const pt of drawnPoints) {
-      const at = districtsAt(pt);
+      const at = propsAt(districts, pt);
       const p = at[0] || {};
-      const seat = seatOf(p);
-      const word = p.label === "Beat" ? "Beat" : "District";
+      const seats = seatOf(p);
+      const o = roster[p.parishfips] || {};
+      const atLarge = o.atLarge || [];
+      const name = `${p.label === "Ward" ? "Ward" : "District"} ${p.district}`;
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
-      const info = await cardText(page, "county-supervisor");
+      const page = await booted(context, `${BASE}#point=${pt}&layers=parish-district`);
+      const info = await cardText(page, "parish-district");
       const text = info.text || "";
-      const ec = commissionerOf(p);
-      check(`county-supervisor card in ${p.county || "a drawn county"} names ${word} ${p.district}, its supervisor and its election commissioner, with where the line and the names come from`,
-        at.length === 1 && !info.error && !!seat.name && !!ec.name &&
-          new RegExp(`\\b${word} ${p.district}\\b`).test(text) &&
-          text.includes(seat.name) && text.includes(ec.name) && /Election commissioner/.test(text) &&
-          text.includes(p.county) &&
-          /Where this line comes from/.test(text) && text.includes(`${rec.vintage} edition`) &&
-          /Where the names come from/.test(text),
-        `districts here=${at.length} ${text.slice(0, 120)}`);
-      await context.close();
-    }
-
-    for (const pt of ownMapPoints) {
-      const at = districtsAt(pt);
-      const p = at[0] || {};
-      const seat = seatOf(p);
-      const aside = Number(p.set_aside) || 0;
-      const asideText = `${aside.toLocaleString("en-US")} people in census blocks with almost no homes`;
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
-      const info = await cardText(page, "county-supervisor");
-      const text = info.text || "";
-      const ec = commissionerOf(p);
-      check(`county-supervisor card in ${p.county || "a county drawn from its own map"} names District ${p.district}, its supervisor and its election commissioner, and says whose map the line comes from${aside ? " and whom its figures leave out" : ""}`,
-        at.length === 1 && p.lines === "county" && !info.error && !!seat.name && !!ec.name &&
-          new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
-          text.includes(seat.name) && text.includes(ec.name) && text.includes(p.county) &&
-          !!p.source && text.includes(p.source) && /, read on \d{1,2} [A-Z][a-z]+ \d{4}\./.test(text) &&
-          !text.includes(`${rec.vintage} edition`) &&
-          (aside > 0 ? text.includes(asideText) : !/almost no homes/.test(text)),
-        `districts here=${at.length} lines=${p.lines} ${text.slice(0, 160)}`);
+      const word = p.label === "Ward" ? "ward" : "district";
+      check(`the parish-district card in ${p.parish || "a drawn parish"} names ${name}, its member${atLarge.length ? ", the members elected at large" : ""} and where the line and the names come from`,
+        at.length === 1 && seats.length === 1 && !info.error &&
+          new RegExp(`\\b${name}\\b`).test(text) && text.includes(seats[0].name) &&
+          atLarge.every((m) => text.includes(m.name)) &&
+          (atLarge.length ? /Members elected at large/i.test(text) : !/Members elected at large/i.test(text)) &&
+          text.includes(p.parish) && text.includes(p.body) &&
+          /Where this line comes from/i.test(text) && text.includes("January 1, 2026 edition") &&
+          text.includes(`${word}s hold nearly equal numbers of people`) &&
+          (atLarge.length ? /Where the names come from/i.test(text) : /Where the name comes from/i.test(text)),
+        `districts here=${at.length} seats=${seats.length} ${text.slice(0, 140)}`);
       await context.close();
     }
 
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${AMITE}&layers=county-supervisor`);
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=parish-district`);
       const hidden = await page
         .waitForFunction(() => {
-          const box = document.getElementById("toggle-county-supervisor");
+          const box = document.getElementById("toggle-parish-district");
           const block = box && box.closest(".layer-block");
           return block && block.hidden === true;
         }, null, { timeout: QUERY_TIMEOUT })
         .then(() => true, () => false);
       const stillOn = await page.evaluate(
-        (n) => window[n].state.layersOn["county-supervisor"] === true, EXPORTS_NAME);
-      check("county-supervisor hides in Amite County, whose current lines are not confirmed, and stays switched on",
-        districtsAt(AMITE).length === 0 && hidden && stillOn,
-        `drawn here=${districtsAt(AMITE).length} hidden=${hidden} layersOn=${stillOn}`);
+        (n) => window[n].state.layersOn["parish-district"] === true, EXPORTS_NAME);
+      check("parish-district hides in Orleans Parish, whose current lines are not confirmed, and stays switched on",
+        propsAt(districts, POINT).length === 0 && hidden && stillOn,
+        `drawn here=${propsAt(districts, POINT).length} hidden=${hidden} layersOn=${stillOn}`);
       await context.close();
     }
 
     {
       const asked = [];
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (pg) => {
+      const page = await booted(context, `${BASE}#point=${CADDO_PARISH}&layers=county`, async (pg) => {
         pg.on("request", (r) => asked.push(r.url()));
       });
       await cardText(page, "county");
       const shown = await page
         .waitForFunction(() => {
-          const box = document.getElementById("toggle-county-supervisor");
+          const box = document.getElementById("toggle-parish-district");
           const block = box && box.closest(".layer-block");
           return block && block.hidden === false;
         }, null, { timeout: QUERY_TIMEOUT })
         .then(() => true, () => false);
-      const list = asked.some((u) => /\/data\/app\/ms-supervisor-counties\.json/.test(u));
-      const file = asked.some((u) => /\/data\/app\/ms-supervisor-districts\.json/.test(u));
+      const list = asked.some((u) => /\/data\/app\/la-parish-district-parishes\.json/.test(u));
+      const file = asked.some((u) => /\/data\/app\/la-parish-districts\.json/.test(u));
       const off = await page.evaluate(
-        (n) => !window[n].state.layersOn["county-supervisor"], EXPORTS_NAME);
-      check("with county-supervisor off, its coverage test reads the list of drawn counties and never the districts file, and its toggle shows in Hinds",
+        (n) => !window[n].state.layersOn["parish-district"], EXPORTS_NAME);
+      check("with parish-district off, its coverage test reads the list of drawn parishes and never the districts file, and its toggle shows in Caddo",
         off && list && !file && shown,
         `off=${off} list=${list} districts file=${file} shown=${shown}`);
       await context.close();
     }
 
-    const p = districtsAt(drawnPoints[0])[0] || {};
-    const seat = seatOf(p);
+    const p = propsAt(districts, drawnPoints[0])[0] || {};
+    const seat = seatOf(p)[0] || {};
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
-        await pg.route("**/data/app/ms-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=parish-district`, async (pg) => {
+        await pg.route("**/data/app/la-parish-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
       });
-      const info = await cardText(page, "county-supervisor");
+      const info = await cardText(page, "parish-district");
       const text = info.text || "";
-      const o = roster[p.countyfips] || { supervisors: [] };
-      const named = o.supervisors.concat(o.electionCommissioners || [])
-        .filter((sv) => sv.name && text.includes(sv.name)).map((sv) => sv.name);
-      check("county-supervisor still names the district, and names nobody, when the roster fails",
+      const o = roster[p.parishfips] || {};
+      const named = (o.seats || []).concat(o.atLarge || [])
+        .filter((s) => s.name && text.includes(s.name)).map((s) => s.name);
+      check("parish-district still names the district, and names nobody, when the list of officials fails",
         !info.error && new RegExp(`\\bDistrict ${p.district}\\b`).test(text) &&
-          /did not load/.test(text) && named.length === 0,
+          /The list of members did not load, so no one is named here/.test(text) && named.length === 0,
         `named=${named.slice(0, 2)} ${text.slice(0, 120)}`);
       await context.close();
     }
 
     {
       const stub = JSON.parse(JSON.stringify(roster));
-      const seats = stub[p.countyfips].supervisors;
-      seats[seats.findIndex((sv) => String(sv.district) === String(p.district))] =
-        { district: String(p.district), vacant: true };
+      stub[p.parishfips].seats = stub[p.parishfips].seats.filter((s) => s.seat !== `District ${p.district}`);
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
-        await pg.route("**/data/app/ms-county-officials.json", (r) =>
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=parish-district`, async (pg) => {
+        await pg.route("**/data/app/la-parish-officials.json", (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
       });
-      const info = await cardText(page, "county-supervisor");
+      const info = await cardText(page, "parish-district");
       const text = info.text || "";
-      check("county-supervisor says a vacant seat is vacant and names nobody for it",
-        !info.error && !!seat.name && /listed as vacant/.test(text) && !text.includes(seat.name) &&
-          !/Vacant/.test(text),
-        text.slice(0, 120));
+      check("parish-district says the list names no one for a seat it leaves out, and calls nothing vacant",
+        !info.error && !!seat.name && /The Secretary of State's list names no one for this district/.test(text) &&
+          !text.includes(seat.name) && !/vacant/i.test(text),
+        text.slice(0, 140));
       await context.close();
     }
 
-    const ec = commissionerOf(p);
     {
+      // Two members from one district, the shape of Cameron's District 4, on
+      // a stubbed roster because no drawn parish elects two from one district
+      // on 2026-10-20: the card names both, in the list's order.
       const stub = JSON.parse(JSON.stringify(roster));
-      const coms = stub[p.countyfips].electionCommissioners;
-      coms[coms.findIndex((c) => String(c.district) === String(p.district))] =
-        { district: String(p.district), vacant: true };
+      const second = { seat: seat.seat, name: "Second Member (test fixture)" };
+      stub[p.parishfips].seats.push(second);
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
-        await pg.route("**/data/app/ms-county-officials.json", (r) =>
+      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=parish-district`, async (pg) => {
+        await pg.route("**/data/app/la-parish-officials.json", (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
       });
-      const info = await cardText(page, "county-supervisor");
+      const info = await cardText(page, "parish-district");
       const text = info.text || "";
-      check("county-supervisor says a vacant election commissioner's seat is vacant, names nobody for it, and still names the supervisor",
-        !info.error && !!ec.name && !!seat.name && text.includes(seat.name) &&
-          /Election commissioner[^.]*listed as vacant/.test(text) && !text.includes(ec.name) &&
-          /Where the name comes from/.test(text),
+      check("parish-district names both members of a district that elects two",
+        !info.error && !!seat.name && text.includes(seat.name) && text.includes(second.name) &&
+          text.indexOf(seat.name) < text.indexOf(second.name) && /Where the names come from/i.test(text),
         text.slice(0, 160));
       await context.close();
-    }
-
-    {
-      const stub = JSON.parse(JSON.stringify(roster));
-      stub[p.countyfips].commissionerLabel = stub[p.countyfips].label === "Beat" ? "District" : "Beat";
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${drawnPoints[0]}&layers=county-supervisor`, async (pg) => {
-        await pg.route("**/data/app/ms-county-officials.json", (r) =>
-          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
-      });
-      const info = await cardText(page, "county-supervisor");
-      const text = info.text || "";
-      check("county-supervisor joins no election commissioner where the directory names the two lists' districts with different words",
-        !info.error && !!ec.name && !!seat.name && text.includes(seat.name) &&
-          !text.includes(ec.name) && !/Election commissioner/.test(text),
-        text.slice(0, 160));
-      await context.close();
-    }
-  }
-  // 11. THE FOUR COURTS WHOSE JUDGES ARE ELECTED FROM DISTRICTS. Every
-  //     expectation is read from the shipped maps and the shipped list of
-  //     judges at the point, so a rebuild moves it with the files; what is
-  //     asserted is that each card agrees with them.
-  //       - At the Capitol, in Hinds County: the Supreme Court card names its
-  //         district and that district's three justices and no others. The
-  //         Court of Appeals divides Hinds by voting precinct, so its card
-  //         names both districts, says which one takes the listed precincts,
-  //         and names the judges of both. The chancery card names its
-  //         chancellors and the vacancy the court's news reported, with that
-  //         news as its link. The circuit card names its judges and says which
-  //         counties its district takes in on 1 January 2027, worked out here
-  //         from the two shipped circuit maps.
-  //       - In Claiborne County, whose circuit district ends on 1 January
-  //         2027: the circuit card names today's district and its judge, says
-  //         which district the point is in from that day and that today's
-  //         district will not exist; the chancery card says which chancery
-  //         district the point moves to. The point is the shipped county's
-  //         pole of inaccessibility, 13 km from its nearest edge (2026-10-16).
-  //       - With the page's clock at 2 January 2027: both trial layers draw
-  //         the 2027 maps and never fetch today's, so the Claiborne point is
-  //         in the district the 2027 file puts it in, and the cards name
-  //         nobody, because the lists of judges this app reads still describe
-  //         the earlier districts. The Supreme Court card still names its
-  //         justices, since that court is not redrawn.
-  //       - The list of judges is refused: every card still names its
-  //         district, says the names did not load, and names nobody.
-  {
-    const courtFile = (n) => JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", n), "utf8"));
-    const judges = courtFile("ms-judge-roster.json").courts;
-    const maps = {
-      supreme: courtFile("ms-supreme-court-districts.json"),
-      appeals: courtFile("ms-court-of-appeals-districts.json"),
-      chancery: courtFile("ms-chancery-court-districts.json"),
-      chancery2027: courtFile("ms-chancery-court-districts-2027.json"),
-      circuit: courtFile("ms-circuit-court-districts.json"),
-      circuit2027: courtFile("ms-circuit-court-districts-2027.json"),
-    };
-    // the app's rule: even-odd within a polygon, any part of a multipolygon
-    function inRing(x, y, ring) {
-      let inside = false;
-      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-        const [xi, yi] = ring[i], [xj, yj] = ring[j];
-        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
-      }
-      return inside;
-    }
-    function propsAt(fc, point) {
-      const [lat, lng] = point.split(",").map(Number);
-      return fc.features.filter((f) => {
-        const g = f.geometry;
-        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
-        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
-      }).map((f) => f.properties);
-    }
-    function ord(n) {
-      const t = n % 100, u = n % 10;
-      return n + ((t >= 11 && t <= 13) ? "th" : u === 1 ? "st" : u === 2 ? "nd" : u === 3 ? "rd" : "th");
-    }
-    function countyPhrase(names) {
-      const joined = names.length === 1 ? names[0] : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
-      return joined + (names.length === 1 ? " County" : " Counties");
-    }
-    const namesOf = (court, unit) =>
-      ((judges[court].districts[String(unit)] || {}).members || []).map((m) => m.name);
-    const allNames = (court) =>
-      Object.values(judges[court].districts).flatMap((d) => (d.members || []).map((m) => m.name));
-    const ALL = "ms-supreme-court,ms-court-of-appeals,ms-chancery-court,ms-circuit-court";
-    const CLAIBORNE = "31.96509,-90.84966";
-    const hrefs = (page, id) => page.$$eval(`#card-${id} a[href]`, (as) => as.map((a) => a.href));
-
-    const sc = propsAt(maps.supreme, POINT);
-    const coa = propsAt(maps.appeals, POINT);
-    const ch = propsAt(maps.chancery, POINT);
-    const ci = propsAt(maps.circuit, POINT);
-    const ci27 = propsAt(maps.circuit2027, POINT);
-    {
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=${ALL}`);
-
-      const s = sc[0] || {};
-      const sInfo = await cardText(page, "ms-supreme-court");
-      const sNames = namesOf("supreme", s.unit);
-      const sOthers = allNames("supreme").filter((n) => !sNames.includes(n) && sInfo.text.includes(n));
-      check("ms-supreme-court names the Capitol's district and its three justices, and no others",
-        sc.length === 1 && !sInfo.error && sNames.length === 3 &&
-          new RegExp(`Supreme Court District ${s.unit}\\b`).test(sInfo.text) &&
-          sNames.every((n) => sInfo.text.includes(n)) && sOthers.length === 0 &&
-          /where these names come from/i.test(sInfo.text),
-        `features here=${sc.length} others named=${sOthers.slice(0, 2)} ${sInfo.text.slice(0, 120)}`);
-
-      const a = coa[0] || {};
-      const aInfo = await cardText(page, "ms-court-of-appeals");
-      const units = (a.units || []).map(String);
-      const aNames = units.flatMap((u) => namesOf("appeals", u));
-      check("ms-court-of-appeals names both districts that divide Hinds, says which takes the listed precincts, and names both districts' judges",
-        coa.length === 1 && units.length === 2 && a.county === "Hinds" && !aInfo.error &&
-          aInfo.text.includes(`Court of Appeals District ${units[0]} or ${units[1]}`) &&
-          aInfo.text.includes(`are in District ${a.named}, and the rest of the county is in District ${a.rest}`) &&
-          units.every((u) => new RegExp(`judges elected from district ${u}\\b`, "i").test(aInfo.text)) &&
-          aNames.length === 4 && aNames.every((n) => aInfo.text.includes(n)),
-        `features here=${coa.length} units=${units} ${aInfo.text.slice(0, 160)}`);
-
-      const c = ch[0] || {};
-      const cInfo = await cardText(page, "ms-chancery-court");
-      const cDistrict = judges.chancery.districts[String(c.unit)] || {};
-      const cNames = namesOf("chancery", c.unit);
-      const cNotes = cDistrict.notes || [];
-      const cLinks = await hrefs(page, "ms-chancery-court");
-      check("ms-chancery-court names the Capitol's district, its chancellors and the vacancy the court's news reported, with that news as its link",
-        ch.length === 1 && !cInfo.error && cNames.length > 0 &&
-          cInfo.text.includes(`${ord(c.unit)} Chancery District`) &&
-          cNames.every((n) => cInfo.text.includes(n)) &&
-          cNotes.every((n) => cInfo.text.includes(n.text) && cLinks.includes(n.url)) &&
-          (judges.chancery.listUpdated ? /where these names come from/i.test(cInfo.text) : true),
-        `features here=${ch.length} notes=${cNotes.length} ${cInfo.text.slice(0, 160)}`);
-
-      const r = ci[0] || {}, r27 = ci27[0] || {};
-      const gains = (r27.counties || []).filter((n) => !(r.counties || []).includes(n));
-      const rInfo = await cardText(page, "ms-circuit-court");
-      const rNames = namesOf("circuit", r.unit);
-      const change = `The ${ord(r27.unit)} Circuit District takes in ${countyPhrase(gains)}.`;
-      check("ms-circuit-court names the Capitol's district and its judges, and says which counties it takes in on 1 January 2027",
-        ci.length === 1 && ci27.length === 1 && String(r.unit) === String(r27.unit) && gains.length > 0 &&
-          !rInfo.error && rNames.length > 0 &&
-          rInfo.text.includes(`${ord(r.unit)} Circuit District`) &&
-          rNames.every((n) => rInfo.text.includes(n)) && rInfo.text.includes(change) &&
-          rInfo.text.includes("filled at the election of 3 November 2026"),
-        `features here=${ci.length}/${ci27.length} want "${change}" ${rInfo.text.slice(0, 160)}`);
-
-      // Each judge the court's list prints a number of their own for shows it
-      // on the card (read since 2026-10-17). The card writes hyphens as U+2011.
-      const plain = (s) => s.replace(/\u2011/g, "-");
-      const phoned = [["chancery", c.unit, cInfo.text], ["circuit", r.unit, rInfo.text]]
-        .flatMap(([court, unit, text]) =>
-          ((judges[court].districts[String(unit)] || {}).members || [])
-            .filter((m) => m.phone).map((m) => ({ court, phone: m.phone, text: plain(text) })));
-      const missing = phoned.filter((p) => !p.text.includes(p.phone));
-      check("the chancery and circuit cards at the Capitol show each judge's own telephone from the court's list",
-        phoned.length > 0 && missing.length === 0,
-        `numbers in the list here=${phoned.length} not on the card=${missing.map((p) => p.court).join(",")}`);
-      await context.close();
-    }
-
-    {
-      const r = propsAt(maps.circuit, CLAIBORNE)[0] || {};
-      const r27 = propsAt(maps.circuit2027, CLAIBORNE)[0] || {};
-      const c = propsAt(maps.chancery, CLAIBORNE)[0] || {};
-      const c27 = propsAt(maps.chancery2027, CLAIBORNE)[0] || {};
-      const ends = !maps.circuit2027.features.some((f) => String(f.properties.unit) === String(r.unit));
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${CLAIBORNE}&layers=ms-chancery-court,ms-circuit-court`);
-      const rInfo = await cardText(page, "ms-circuit-court");
-      const rNames = namesOf("circuit", r.unit);
-      const moves = `This point is in the ${ord(r27.unit)} Circuit District: ${countyPhrase(r27.counties || [])}.`;
-      const gone = `There is no ${ord(r.unit)} Circuit District from that day.`;
-      check("in Claiborne County the circuit card names today's district and its judge, the district it moves to, and that today's district ends",
-        String(r.unit) !== String(r27.unit) && ends && !rInfo.error && rNames.length > 0 &&
-          rInfo.text.includes(`${ord(r.unit)} Circuit District`) &&
-          rNames.every((n) => rInfo.text.includes(n)) &&
-          rInfo.text.includes(moves) && rInfo.text.includes(gone),
-        `today=${r.unit} 2027=${r27.unit} ends=${ends} ${rInfo.text.slice(0, 200)}`);
-      const cInfo = await cardText(page, "ms-chancery-court");
-      const cMoves = `This point is in the ${ord(c27.unit)} Chancery District: ${countyPhrase(c27.counties || [])}.`;
-      check("in Claiborne County the chancery card says which chancery district the point moves to on 1 January 2027",
-        String(c.unit) !== String(c27.unit) && !cInfo.error &&
-          cInfo.text.includes(`${ord(c.unit)} Chancery District`) && cInfo.text.includes(cMoves) &&
-          !cInfo.text.includes(`There is no ${ord(c.unit)} Chancery District`),
-        `today=${c.unit} 2027=${c27.unit} ${cInfo.text.slice(0, 200)}`);
-      await context.close();
-    }
-
-    {
-      const r27 = propsAt(maps.circuit2027, CLAIBORNE)[0] || {};
-      const c27 = propsAt(maps.chancery2027, CLAIBORNE)[0] || {};
-      const s = propsAt(maps.supreme, CLAIBORNE)[0] || {};
-      const asked = [];
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${CLAIBORNE}&layers=${ALL}`, async (pg) => {
-        await pg.clock.setFixedTime(new Date("2027-01-02T12:00:00Z"));
-        pg.on("request", (q) => asked.push(q.url()));
-      });
-      const rInfo = await cardText(page, "ms-circuit-court");
-      const cInfo = await cardText(page, "ms-chancery-court");
-      const sInfo = await cardText(page, "ms-supreme-court");
-      const nobody = (info, court) => allNames(court).filter((n) => info.text.includes(n));
-      const fetched = (re) => asked.some((u) => re.test(u));
-      const today = fetched(/\/ms-(circuit|chancery)-court-districts\.json/);
-      const later = fetched(/\/ms-circuit-court-districts-2027\.json/) && fetched(/\/ms-chancery-court-districts-2027\.json/);
-      const redrawn = /These districts were redrawn on 1 January 2027/;
-      check("on 2 January 2027 the trial courts draw the 2027 maps, never fetch today's, and name nobody from lists of the earlier districts",
-        later && !today && !rInfo.error && !cInfo.error &&
-          rInfo.text.includes(`${ord(r27.unit)} Circuit District`) &&
-          cInfo.text.includes(`${ord(c27.unit)} Chancery District`) &&
-          redrawn.test(rInfo.text) && redrawn.test(cInfo.text) &&
-          nobody(rInfo, "circuit").length === 0 && nobody(cInfo, "chancery").length === 0 &&
-          !/from 1 january 2027/i.test(rInfo.text) && !rInfo.text.includes("3 November 2026"),
-        `2027 files=${later} today's files=${today} named=${nobody(rInfo, "circuit").slice(0, 2)} ${rInfo.text.slice(0, 160)}`);
-      const sNames = namesOf("supreme", s.unit);
-      check("on 2 January 2027 the Supreme Court card still names its justices",
-        !sInfo.error && sNames.length === 3 && sNames.every((n) => sInfo.text.includes(n)),
-        sInfo.text.slice(0, 120));
-      await context.close();
-    }
-
-    {
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=${ALL}`, async (pg) => {
-        await pg.route("**/data/app/ms-judge-roster.json", (q) => q.fulfill({ status: 503, body: "down" }));
-      });
-      const cards = [
-        ["ms-supreme-court", "supreme", `Supreme Court District ${(sc[0] || {}).unit}`],
-        ["ms-court-of-appeals", "appeals", "Court of Appeals District"],
-        ["ms-chancery-court", "chancery", `${ord((ch[0] || {}).unit)} Chancery District`],
-        ["ms-circuit-court", "circuit", `${ord((ci[0] || {}).unit)} Circuit District`],
-      ];
-      const bad = [];
-      for (const [id, court, title] of cards) {
-        const info = await cardText(page, id);
-        const named = allNames(court).filter((n) => info.text.includes(n));
-        if (info.error || !info.text.includes(title) || !/did not load/.test(info.text) || named.length) {
-          bad.push(`${id}: ${named.length ? "named " + named[0] : info.text.slice(0, 80)}`);
-        }
-      }
-      check("every court card still names its district, and names nobody, when the list of judges fails",
-        bad.length === 0, bad.join(" | "));
-      await context.close();
-    }
-  }
-
-  // ---- Tribal Government. The Mississippi Choctaw Reservation's card names
-  // the band, its seat, the Tribal Chief and the council members with the
-  // community each represents, from the band's own page; the districts
-  // sentence points at those community names rather than saying no council
-  // seat belongs to the land, which would be false here. A point off tribal
-  // land is told so in the layer's own words. The point is shapely's
-  // representative point of the shipped reservation's part in Neshoba County
-  // (2026-10-15).
-  {
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
-      (els) => els.map((e) => ({
-        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
-        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
-      })));
-    const at = async (pt) => {
-      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
-      const card = await cardText(page, "tribal-government");
-      const fields = await fieldsOf(page);
-      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
-    };
-    const c = await at("32.79497,-89.25493");
-    const districts = c.by("Districts drawn here");
-    check("the Mississippi Choctaw Reservation names the band, its seat, its Chief and its council by community",
-          c.by("Tribal government") === "Mississippi Band of Choctaw Indians" &&
-          c.by("Seat of government") === "Choctaw, MS" &&
-          c.by("Land") === "Mississippi Choctaw Reservation" &&
-          c.text.indexOf("Cyrus Ben") !== -1 &&
-          c.text.indexOf("Tribal Chief and Tribal Council") !== -1 &&
-          c.text.indexOf("Bogue Chitto") !== -1 &&
-          c.text.indexOf("From the nation's own council page") !== -1 &&
-          districts.indexOf("beside their name below") !== -1 &&
-          districts.indexOf("no council seat") === -1 &&
-          !c.by("Why no names"),
-          JSON.stringify(c.text.slice(0, 200)));
-    const off = await at(POINT);
-    check("a point off tribal land is told so in the layer's own words",
-          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
-          JSON.stringify(off.text.slice(0, 120)));
-    await context.close();
-  }
-
-  // 12. THE MAYOR AND COUNCIL OF THE 15 CITIES OF 25,000 PEOPLE OR MORE, AND
-  //     THE WARDS OF NINE. Every name expected is read from the shipped
-  //     roster (data/app/ms-city-councils.json) and every ward from the
-  //     shipped ward file (data/app/ms-city-wards.json) at the point, so a
-  //     rebuild moves the expectation with the files; what is asserted is
-  //     that each card agrees with them and says where they come from.
-  //       - The City card in Jackson (the place query stubbed, as in 7) names
-  //         the mayor and every member by seat, says when the city's page was
-  //         read, links the mayor's page and, in its footer, the council's,
-  //         and says the City Ward layer draws Jackson's wards. In Biloxi,
-  //         whose wards are not drawn, it says so.
-  //       - Greenville's names nobody and says why; a roster that fails to
-  //         load leaves the place standing and says no name is shown.
-  //       - The City Ward card at the Capitol names its ward, the ward's
-  //         member and whose map the line is, and links the city's ward-map
-  //         page and the council page.
-  //       - Where Oxford's own map draws two wards over one spot it names
-  //         both. The point is shapely's polylabel of the largest Ward 2 /
-  //         Ward 4 sliver in the drawn file, 2.5 m from its edge (2026-10-17).
-  //       - In Biloxi, whose wards are not drawn, the card says which nine
-  //         cities' wards are.
-  //       - The telephone numbers (Adam's ruling of 2026-10-17): the City card
-  //         in Oxford dials every number the roster carries for its members,
-  //         each as a tel: link of its digits with the page's label ("home",
-  //         "cell") in the text, and no other; Jackson's, whose page prints no
-  //         member's number, dials nothing; the City Ward card where Oxford's
-  //         map draws two wards dials both members' numbers.
-  //       - The e-mail addresses (Adam's ruling of 2026-10-17, the same day):
-  //         the City card in Olive Branch links every address the roster
-  //         carries for its mayor and aldermen, beside their numbers, and no
-  //         other; Jackson's and Oxford's, whose pages print no member's own
-  //         address, link none; the City Ward card in Tupelo, whose page
-  //         prints each member's address and no number, links its member's
-  //         address and dials nothing. The Tupelo point is shapely's
-  //         polylabel of Ward 1 in the drawn file, 2.4 km from its edge
-  //         (2026-10-17).
-  {
-    const councils = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-city-councils.json"), "utf8"));
-    const wards = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ms-city-wards.json"), "utf8"));
-    function inRing(x, y, ring) {
-      let inside = false;
-      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-        const [xi, yi] = ring[i], [xj, yj] = ring[j];
-        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
-      }
-      return inside;
-    }
-    function wardsAt(point) {
-      const [lat, lng] = point.split(",").map(Number);
-      return wards.features.filter((f) => {
-        const g = f.geometry;
-        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
-        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
-      }).map((f) => f.properties);
-    }
-    const memberOf = (p) => ((councils[p.geoid] || {}).seats || []).find((s) => s.seat === p.seat) || {};
-    // Every number the roster carries for these seats, as the tel: link it
-    // dials and the label word the card prints in front of it.
-    const numbersOf = (seats) => seats.flatMap((s) => (s.phone ? [s.phone].concat(s.phonesExtra || []) : []))
-      .map((n) => ({ tel: "tel:" + n.replace(/[^\d+]/g, ""), word: (n.match(/^([a-z]+) /) || [])[1] || null }));
-    const tels = (got) => got.body.filter((h) => h.startsWith("tel:"));
-    // Every address the roster carries for these seats, as the mailto: link
-    // the card opens.
-    const addressesOf = (seats) => seats.filter((s) => s.email).map((s) => "mailto:" + s.email);
-    const mails = (got) => got.body.filter((h) => h.startsWith("mailto:"));
-    const placeBody = (props) => JSON.stringify({
-      geometryType: "esriGeometryPolygon", spatialReference: { wkid: 4326 },
-      fields: Object.keys(props).map((n) => ({ name: n, type: "esriFieldTypeString", alias: n })),
-      features: [{ attributes: props,
-                   geometry: { rings: [[[-91, 31.5], [-89.5, 31.5], [-89.5, 33], [-91, 33], [-91, 31.5]]] } }]
-    });
-    const links = (page, id) => page.evaluate((cid) => {
-      const el = document.getElementById("card-" + cid);
-      const block = el && el.closest(".layer-block");
-      return {
-        body: el ? Array.from(el.querySelectorAll("a[href]")).map((a) => a.href) : [],
-        footer: block ? Array.from(block.querySelectorAll(".card-footer a[href]")).map((a) => a.href) : []
-      };
-    }, id);
-    const cityAt = async (props, routeExtra) => {
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (pg) => {
-        // The layer is answered from a tile archive, where the Capitol is in
-        // Jackson whatever the stub says, so the archive is refused and the
-        // card falls back to the census loader this stub answers (as in 7).
-        await pg.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
-        await pg.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
-          r.fulfill({ status: 200, contentType: "application/json", body: placeBody(props) }));
-        if (routeExtra) await routeExtra(pg);
-      });
-      const info = await cardText(page, "municipality");
-      const got = await links(page, "municipality");
-      await context.close();
-      return { text: info.text || "", error: info.error, links: got };
-    };
-
-    {
-      const j = councils["2836000"];
-      const c = await cityAt({ GEOID: "2836000", NAME: "Jackson city", BASENAME: "Jackson", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
-      const names = j.seats.filter((s) => s.name).map((s) => s.name);
-      const missing = names.filter((n) => !c.text.includes(n));
-      check("the City card in Jackson names the mayor and every council member by seat, says when the city's page was read, and links the mayor's and the council's pages",
-        !c.error && names.length === j.seats.length && missing.length === 0 &&
-          /Mayor/.test(c.text) && /Ward 7/.test(c.text) &&
-          /as Jackson's own website named them on \d{1,2} [A-Z][a-z]+ \d{4}/.test(c.text) &&
-          /Your ward/.test(c.text) && /The City Ward layer draws Jackson's wards/.test(c.text) &&
-          !/Not named here/.test(c.text) &&
-          c.links.body.includes(j.mayorUrl) && c.links.footer.includes(j.councilUrl),
-        `missing=${missing} links=${JSON.stringify(c.links)} ${c.text.slice(0, 140)}`);
-      check("the City card in Jackson, whose page prints no member's number or address, dials nothing and links no address",
-        !c.error && numbersOf(j.seats).length === 0 && tels(c.links).length === 0 &&
-          addressesOf(j.seats).length === 0 && mails(c.links).length === 0 &&
-          !/Each telephone number/.test(c.text) && !/Each e-mail address/.test(c.text),
-        `tel links=${tels(c.links).length} mailto links=${mails(c.links).length}`);
-    }
-    {
-      const ox = councils["2854840"];
-      const want = numbersOf(ox.seats);
-      const c = await cityAt({ GEOID: "2854840", NAME: "Oxford city", BASENAME: "Oxford", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
-      const got = tels(c.links);
-      const missing = want.filter((n) => !got.includes(n.tel));
-      const words = [...new Set(want.map((n) => n.word).filter(Boolean))];
-      check("the City card in Oxford dials every number the roster carries for its members, with the page's own labels, and no other number, and links no address",
-        !c.error && want.length >= 4 && missing.length === 0 && got.length === want.length &&
-          words.length >= 2 && words.every((w) => new RegExp("\\b" + w + " ").test(c.text)) &&
-          /Each telephone number is one the website printed with that person's name/.test(c.text) &&
-          addressesOf(ox.seats).length === 0 && mails(c.links).length === 0 &&
-          ox.seats.filter((s) => s.name).every((s) => c.text.includes(s.name)),
-        `want=${want.length} got=${got.length} missing=${missing.length} words=${words} mailto links=${mails(c.links).length}`);
-    }
-    {
-      const ob = councils["2854040"];
-      const wantTel = numbersOf(ob.seats), wantMail = addressesOf(ob.seats);
-      const c = await cityAt({ GEOID: "2854040", NAME: "Olive Branch city", BASENAME: "Olive Branch", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
-      const tel = tels(c.links), mail = mails(c.links);
-      check("the City card in Olive Branch links every address the roster carries for its mayor and aldermen, beside their numbers, and no other",
-        !c.error && wantMail.length >= 6 && wantMail.every((m) => mail.includes(m)) &&
-          mail.length === wantMail.length && wantTel.every((n) => tel.includes(n.tel)) &&
-          tel.length === wantTel.length && /\bEmail\b/.test(c.text) &&
-          /Each telephone number and e-mail address is one the website printed with that person's name/.test(c.text),
-        `addresses want=${wantMail.length} got=${mail.length} numbers want=${wantTel.length} got=${tel.length}`);
-    }
-    {
-      const c = await cityAt({ GEOID: "2806220", NAME: "Biloxi city", BASENAME: "Biloxi", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
-      check("the City card in Biloxi, whose wards are not drawn, names its council and says this app does not draw its wards",
-        !c.error && c.text.includes(councils["2806220"].seats[0].name) &&
-          /This app does not draw Biloxi's wards/.test(c.text) && !/City Ward layer draws/.test(c.text),
-        c.text.slice(0, 200));
-    }
-    {
-      const c = await cityAt({ GEOID: "2829180", NAME: "Greenville city", BASENAME: "Greenville", STATE: "28", LSADC: "25", FUNCSTAT: "A" });
-      check("the City card in Greenville names nobody and says the city's own website names no member",
-        !c.error && /Your mayor and council: not named here/.test(c.text) &&
-          /does not name its mayor or its council members/.test(c.text) &&
-          !/Who these are/.test(c.text) && !/\bMayor\b/.test(c.text),
-        c.text.slice(0, 200));
-    }
-    {
-      const c = await cityAt({ GEOID: "2836000", NAME: "Jackson city", BASENAME: "Jackson", STATE: "28", LSADC: "25", FUNCSTAT: "A" },
-        async (pg) => {
-          await pg.route("**/data/app/ms-city-councils.json", (r) => r.fulfill({ status: 500, body: "down" }));
-        });
-      check("the City card still names the place, and names nobody, when the list of mayors and councils fails",
-        !c.error && /Jackson city/.test(c.text) && /did not load, so no name is shown/.test(c.text) &&
-          !c.text.includes(councils["2836000"].seats[0].name),
-        c.text.slice(0, 160));
-    }
-
-    const wardCard = async (pt, routeExtra) => {
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=city-ward`, routeExtra);
-      const info = await cardText(page, "city-ward");
-      const got = await links(page, "city-ward");
-      await context.close();
-      return { text: info.text || "", error: info.error, links: got };
-    };
-    {
-      const at = wardsAt(POINT);
-      const p = at[0] || {};
-      const m = memberOf(p);
-      const council = councils[p.geoid] || {};
-      const c = await wardCard(POINT);
-      check(`the City Ward card at the Capitol names ${p.city} ${p.seat}, its member and whose map the line is, and links the city's ward-map page and the council's page`,
-        at.length === 1 && !c.error && !!m.name && c.text.includes(m.name) &&
-          c.text.includes(String(p.seat)) && c.text.includes(`${p.city} ${council.body}`) &&
-          /How this line is drawn/.test(c.text) && c.text.includes("Jackson Adopted Wards 2024") &&
-          /as Jackson's own website named them on \d{1,2} [A-Z][a-z]+ \d{4}/.test(c.text) &&
-          c.links.body.includes(p.sourceUrl) && c.links.footer.includes(council.councilUrl),
-        `wards here=${at.length} links=${JSON.stringify(c.links)} ${c.text.slice(0, 160)}`);
-    }
-    {
-      const OXFORD_TWO = "34.354137,-89.508531";
-      const at = wardsAt(OXFORD_TWO);
-      const names = at.map((p) => memberOf(p).name).filter(Boolean);
-      const c = await wardCard(OXFORD_TWO);
-      const want = numbersOf(at.map(memberOf));
-      const got = tels(c.links);
-      check("where Oxford's own map draws two wards over one spot, the City Ward card names both and both members, and dials each member's numbers",
-        at.length === 2 && names.length === 2 && !c.error &&
-          names.every((n) => c.text.includes(n)) &&
-          /Ward 2 and Ward 4/.test(c.text) && /More than one ward here/.test(c.text) &&
-          want.length >= 2 && want.every((n) => got.includes(n.tel)) && got.length === want.length &&
-          /Each telephone number is one the website printed with that person's name/.test(c.text),
-        `wards here=${at.map((p) => p.seat)} numbers want=${want.length} got=${got.length} ${c.text.slice(0, 160)}`);
-    }
-    {
-      const TUPELO_1 = "34.301027,-88.785125";
-      const at = wardsAt(TUPELO_1);
-      const m = memberOf(at[0] || {});
-      const c = await wardCard(TUPELO_1);
-      const mail = mails(c.links);
-      check("the City Ward card in Tupelo, whose page prints each member's address and no number, links its member's address and dials nothing",
-        at.length === 1 && !c.error && !!m.name && !!m.email && c.text.includes(m.name) &&
-          mail.length === 1 && mail[0] === "mailto:" + m.email && tels(c.links).length === 0 &&
-          /Each e-mail address is one the website printed with that person's name/.test(c.text),
-        `wards here=${at.map((p) => p.seat)} mailto links=${mail.length} tel links=${tels(c.links).length} ${c.text.slice(0, 160)}`);
-    }
-    {
-      const BILOXI = "30.3958,-88.8853";
-      const c = await wardCard(BILOXI);
-      check("in Biloxi, whose wards are not drawn, the City Ward card says which nine cities' wards are",
-        wardsAt(BILOXI).length === 0 && !c.error && /No ward is drawn at this point/.test(c.text) &&
-          /nine of Mississippi's 15 cities/.test(c.text) && /Brandon/.test(c.text),
-        c.text.slice(0, 160));
-    }
-    {
-      const at = wardsAt(POINT);
-      const p = at[0] || {};
-      const c = await wardCard(POINT, async (pg) => {
-        await pg.route("**/data/app/ms-city-councils.json", (r) => r.fulfill({ status: 500, body: "down" }));
-      });
-      check("the City Ward card still names the ward, and names nobody, when the list of mayors and councils fails",
-        !c.error && c.text.includes(String(p.seat)) && /did not load, so no name is shown/.test(c.text) &&
-          !c.text.includes(memberOf(p).name || "(none)"),
-        c.text.slice(0, 160));
     }
   }
 } finally {

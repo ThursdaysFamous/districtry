@@ -66,6 +66,9 @@ const cases = [
     "1438 South College, Lafayette, LA 70503"],
   [["P.O. Box 660", "Harrisonburg, LA 71340", "119 Pine Street", "Suite B", "Harrisonburg, LA 71340", "(318)744-0005"],
     "119 Pine Street, Suite B, Harrisonburg, LA 71340"],
+  // the box in one town, the office in another, its state written "La"
+  [["P.O Box 269", "Turkey Creek, LA 70585", "7674 US Hwy 167", "Ville Platte, La 70586", "(337)461-2595"],
+    "7674 US Hwy 167, Ville Platte, La 70586"],
   // three offices in one block: the first is the one pinned
   [["1206 South 5th Street", "Leesville, LA 71446", "218 West 4th Street", "DeQuincy, LA 70633", "401 West 1st Street", "DeRidder, LA 70634", "(337)238-6435"],
     "1206 South 5th Street, Leesville, LA 71446"],
@@ -126,7 +129,11 @@ if (officeAddressForGeocode(null) !== null) fail("officeAddressForGeocode(null) 
 // with an index.html and a data/app/, the rule the registration gate
 // discovers by, so a new state's rosters are read the day they land.
 const PHONE = /(?:\(\d{3}\)\s*|\b\d{3}[-.])\d{3}[-.]\d{4}\b|\b(?:phone|fax|e-?mail)\s*:/i;
-const CITY_LINE = /\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\s*$/;
+// The state's second letter may be lower case: the Louisiana Senate prints
+// "Ville Platte, La 70586" after a box in "Turkey Creek, LA 70585", and
+// the helper is right to pin the street address, which only this reading
+// counts as the block's city line.
+const CITY_LINE = /\b[A-Z][A-Za-z]\s+\d{5}(?:-\d{4})?\s*$/;
 const apps = new Set();
 let offices = 0;
 let withCity = 0;
