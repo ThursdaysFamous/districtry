@@ -53,7 +53,10 @@ print it, it is the body's office telephone (St. Landry's thirteen council
 members all print the parish government's number, measured 2026-10-20), and
 where two do it is carried nowhere, since it cannot be told whose it is (two
 St. Tammany council members, that day). A number printed in two parishes would
-be carried for neither; none was.
+be carried for neither; none was. A number whose area code or exchange is 555
+is a placeholder rather than anyone's telephone, and is carried nowhere: one
+Ascension police juror's row printed one on 2026-10-20, as did three rows in
+the list's municipal offices.
 
 THE SEAT is the row's description with its spacing tidied ("District  1" is
 "District 1"): districts are numbered or lettered, Concordia's carry a place
@@ -273,8 +276,25 @@ def iso_date(raw, where):
     return "%s-%s-%s" % (year, month, day)
 
 
+def placeholder_phone(raw):
+    """A number whose area code or exchange is 555 is nobody's telephone."""
+    m = PHONE_RE.match(raw or "")
+    return bool(m) and "555" in (m.group(1), m.group(2))
+
+
+def phone_digits(raw):
+    """The digits of a printed telephone that is one real number, else ''."""
+    if not raw or not PHONE_RE.match(raw) or placeholder_phone(raw):
+        return ""
+    return re.sub(r"\D", "", raw)
+
+
 def phone_of(raw, where, notes):
     if not raw:
+        return None
+    if placeholder_phone(raw):
+        notes.append("%s: the telephone printed is a placeholder (a 555 area code "
+                     "or exchange), so none is carried" % where)
         return None
     if PHONE_RE.match(raw):
         return raw
@@ -347,7 +367,7 @@ def build(texts, previous, today):
         for row in g["members"] + g["at_large"] + g["executive"]:
             if row["Address"]:
                 street_parishes[norm_address(row["Address"])].add(key)
-            digits = re.sub(r"\D", "", row["Phone"])
+            digits = phone_digits(row["Phone"])
             if digits:
                 phone_parishes[digits].add(key)
 
@@ -370,7 +390,8 @@ def build(texts, previous, today):
         if len(g["executive"]) > 1:
             raise SystemExit("FAIL: %s lists %d executives" % (parish_name, len(g["executive"])))
 
-        phone_count = Counter(re.sub(r"\D", "", r["Phone"]) for r in people if r["Phone"])
+        phone_count = Counter(phone_digits(r["Phone"]) for r in people
+                              if phone_digits(r["Phone"]))
 
         def record(row, seat):
             where = "%s %s" % (parish_name, seat)
@@ -490,6 +511,8 @@ def check_shape(data):
                 problems.append("%s: a person with no name" % geoid)
             if p.get("phone") and not PHONE_RE.match(p["phone"]):
                 problems.append("%s: telephone %r" % (geoid, p["phone"]))
+            if p.get("phone") and placeholder_phone(p["phone"]):
+                problems.append("%s: a person carries a placeholder telephone" % geoid)
             if p.get("termEnds") and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", p["termEnds"]):
                 problems.append("%s: term %r" % (geoid, p["termEnds"]))
         for p in people:
@@ -502,7 +525,8 @@ def check_shape(data):
             executives += 1
             if rec["executive"].get("title") not in EXECUTIVE_TITLES:
                 problems.append("%s: executive title %r" % (geoid, rec["executive"].get("title")))
-        if rec.get("boardPhone") and not PHONE_RE.match(rec["boardPhone"]):
+        if rec.get("boardPhone") and (not PHONE_RE.match(rec["boardPhone"]) or
+                                      placeholder_phone(rec["boardPhone"])):
             problems.append("%s: board telephone %r" % (geoid, rec["boardPhone"]))
         own = [p.get("phone") for p in people if p.get("phone")]
         if rec.get("boardPhone") in own:
