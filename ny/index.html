@@ -8281,7 +8281,28 @@ function initNycExplorer() {
    * addresses that carry a ZIP code (the borough clerks, the police station
    * houses, the Council district offices and the community board offices,
    * 171 answers), the rule turns away none. An address with no ZIP code is
-   * taken as before. */
+   * taken as before.
+   *
+   * AN OFFICE THE CITY'S SEARCH CANNOT PLACE IS ASKED ABOUT AT THE CENSUS
+   * BUREAU (from 2026-10-20, Adam's "Use Census"), through the house-number
+   * lookup the map's own search already uses (ENGINE geocoder-search
+   * lookupAddressRanges, by way of districtry's lookup on Deno), which takes an
+   * answer only when it is the ONE match that is the office's number on its
+   * street, in its town or ZIP code. Measured 2026-10-20, asking exactly that
+   * way about the 133 offices outside the city: 104 placed (all 14 U.S. House,
+   * 29 of 36 Senate, 61 of 83 Assembly), every one in the office's own ZIP
+   * code; the Census Bureau found nothing for 15, and found the house for 14
+   * whose written address fails the test (a room before the street, suite
+   * numbers after it, a building's name in front, "Route 32" where it says
+   * "State Rte 32"). For 70 offices inside the city, against the building
+   * positions in the city's own address file, its estimate was a median 28 m
+   * from the building and never more than 100 m. That sends the Census Bureau
+   * a district office's public address, and which office a card shows says
+   * which district the reader selected, so the privacy page names this use,
+   * measured from the call below (scripts/build_privacy_page.py). A failed
+   * city search still rejects, so the office is asked about again on the next
+   * selection; a failed Census request answers as no match, so that office has
+   * no pin for the rest of the visit, as when the Census Bureau finds nothing. */
   function poiAnswerFits(address, props) {
     var s = String(address);
     var zip = (/\b(\d{5})(?:-\d{4})?\s*$/.exec(s) || [])[1];
@@ -8298,9 +8319,8 @@ function initNycExplorer() {
     return fetchJSONWithRetry(url, { headers: { "Accept": "application/json" } }, 1)
       .then(function (fc) {
         var hit = fc && fc.features && fc.features[0];
-        if (!hit || !poiAnswerFits(address, hit.properties)) return null;
-        var c = (hit.geometry && hit.geometry.coordinates) || null;
-        return c ? { lat: c[1], lng: c[0] } : null;
+        var c = hit && poiAnswerFits(address, hit.properties) && hit.geometry && hit.geometry.coordinates;
+        return c ? { lat: c[1], lng: c[0] } : lookupAddressRanges(address);
       });
   }
 
@@ -10439,11 +10459,14 @@ function initNycExplorer() {
    * ENGINE map-link; services/link-lookup/main.ts), which passes on each
    * match's address and position: the Census Bureau sees the lookup and
    * not the reader, and the privacy page names both, measured from the
-   * `?a=` call below (build_privacy_page.py). Only an address the reader
-   * searched for is sent: one a shared map link carried, or one typed and
-   * then sent with Search or Enter, handed over as #q=, or picked from the
-   * list by its street (runAddressSearch, listHeldAnswers), never text while
-   * it is being typed.
+   * `?a=` call below (build_privacy_page.py). From the map's search, only an
+   * address the reader searched for is sent: one a shared map link carried,
+   * or one typed and then sent with Search or Enter, handed over as #q=, or
+   * picked from the list by its street (runAddressSearch, listHeldAnswers),
+   * never text while it is being typed. An app's office-pin provider may
+   * also ask about the public address of an office a card shows, when its
+   * own geocoder cannot place it (New York's poiGeocodeRequest, from
+   * 2026-10-20). build_privacy_page.py fails on a call from anywhere else.
    *
    * An answer is used only if it is the ONE match that is the house
    * (labelAtHouse, ENGINE map-link) in the address's town or ZIP code
@@ -19895,8 +19918,10 @@ function initNycExplorer() {
   EXPLORER_EXPORTS.toTitleCase = toTitleCase;
   /* poiAnswerFits rides here for the same reason: the smoke test holds it to the
      office addresses it was measured on (see poiGeocodeRequest) with no
-     network call. */
+     network call. poiGeocodeRequest rides with it, so the smoke test can hold
+     the order of the two lookups to stubbed answers. */
   EXPLORER_EXPORTS.poiAnswerFits = poiAnswerFits;
+  EXPLORER_EXPORTS.poiGeocodeRequest = poiGeocodeRequest;
   EXPLORER_EXPORTS.setTheme = applyDistrictryTheme;
   EXPLORER_EXPORTS.getTheme = districtryTheme;
 

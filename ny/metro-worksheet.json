@@ -1060,7 +1060,7 @@
   "geocoder": {
     "address": "GeoSearch (city type-ahead, geosearch.planninglabs.nyc) then Photon bounded to the state when the city search finds nothing",
     "unbounded": "Photon (whole-coverage, sibling-metro lookup)",
-    "poi": "GeoSearch (office-address pin lookup; it knows New York City addresses only, so an answer counts only in the office's own ZIP code or at the same house number in the same postal area, and an office elsewhere in the state gets no pin)",
+    "poi": "GeoSearch (office-address pin lookup; it knows New York City addresses only, so an answer counts only in the office's own ZIP code or at the same house number in the same postal area) then, for an office it cannot place, the Census Bureau's house-number estimate through districtry's lookup, kept only at the office's own number on its street in its town or ZIP code",
     "search_placeholder": "Search a New York address"
   },
   "palette": {
