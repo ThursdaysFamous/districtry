@@ -12470,8 +12470,36 @@ function initChiExplorer() {
   // The same `(\S)` guard governs all three, so a PO-box-only address (no
   // street) is still left alone: it geocodes to nothing and the card honestly
   // drops its pin, rather than dropping one on a city centroid.
+  //
+  // Two more shapes, measured 2026-10-20 over every district office the apps
+  // ship, lost a house number or kept a box:
+  //   a building or floor named BEFORE the street — "Dulles State Office
+  //     Building 317 Washington St., Watertown"; "Oswego City Hall, Second
+  //     Floor 13 W. Oneida St."; "Room 419, Legislative Office Building 198
+  //     State St., Albany". The number after the word is the house number,
+  //     and the unit rule read it as a building number and removed it, so New
+  //     York Senate 49, 50 and 52 were looked up with no number at all. When
+  //     that number is followed by a street name and a street type, the words
+  //     before it are dropped and the number stays;
+  //   boxes spelled out or lettered — "Post Office Box 188"; "P.O. Box I".
+  var POI_STREET_TYPE = "(?:street|st|avenue|ave|av|road|rd|boulevard|blvd|drive|dr|lane|ln|place|pl|" +
+    "court|ct|highway|hwy|parkway|pkwy|terrace|ter|circle|cir|square|sq|trail|trl|way|turnpike|tpke|" +
+    "plaza|plz|expressway|expy|freeway|fwy|pike|row|alley|aly|loop|crescent|cres|concourse|walk|path)";
+  // "<number> [N|S|E|W] <one to four words> <street type>" or "<number> Broadway",
+  // ending the comma part or followed by a unit
+  var POI_STREET_AHEAD = "\\d+[a-z]?(?:-\\d+[a-z]?)?\\s+(?:broadway|(?:[nsew]\\.?\\s+)?" +
+    "(?:\\d+(?:st|nd|rd|th)\\s+|[a-z][a-z'.-]*\\s+){1,4}" + POI_STREET_TYPE + "\\b\\.?)" +
+    "\\s*(?:,|$|(?:suite|ste|room|rm|unit|apt|floor)\\b|#)";
+  var POI_NAMED_BEFORE_STREET = new RegExp(
+    "^[\\s\\S]*?\\b(?:building|bldg|floor)\\.?\\s+(?=" + POI_STREET_AHEAD + ")", "i");
+  // a street address already in what would be dropped ("28 Wells Ave., Building
+  // 3 5th Floor") means the building is a unit after it, so nothing is dropped
+  var POI_STREET_IN_PREFIX = new RegExp("\\d[^,]*\\b(?:" + POI_STREET_TYPE + "|broadway|route|rte)\\b", "i");
   function cleanPoiAddress(address) {
     var s = String(address);
+    s = s.replace(POI_NAMED_BEFORE_STREET, function (named) {
+      return POI_STREET_IN_PREFIX.test(named) ? named : "";
+    });
     // "<n>th Floor" — the ordinal precedes the token
     s = s.replace(/(\S)[,\s]+\d+(?:st|nd|rd|th)?\s+floors?\b\.?/gi, "$1 ");
     // "<Unit> <number>" — the token precedes the unit number
@@ -12485,7 +12513,8 @@ function initChiExplorer() {
     // including the parenthesized form the Kane municipal roster uses
     // ("175 Water St., (P.O. Box 205), Burlington") and a trailing period
     // ("P.O. Box 226. LEWISTOWN"), both of which survived the bare-token rule.
-    s = s.replace(/(\S)[,\s]+\(?\s*p\.?\s*o\.?\s*box\.?\s*#?\s*\d+\s*\.?\s*\)?/gi, "$1 ");
+    // Spelled out ("Post Office Box 188") or lettered ("P.O. Box I") too.
+    s = s.replace(/(\S)[,\s]+\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\.?\s*#?\s*(?:\d+|[a-z]\d*(?![\w-]))\s*\.?\s*\)?/gi, "$1 ");
     // collapse the comma/space debris a removal leaves behind
     s = s.replace(/\s+/g, " ").replace(/\s+,/g, ",").replace(/,(?:\s*,)+/g, ",").replace(/^[\s,]+|[\s,]+$/g, "");
     // a separator dash that lost the fragment it introduced ("St. - 6th Floor").
@@ -24349,15 +24378,71 @@ function initChiExplorer() {
   }
 
   // Extract a geocodable street address from an office's address lines (an array
-  // of strings): drop phone/fax lines, keep the street + city/zip. Used by
+  // of strings, exactly as scraped): the FIRST street address in the block, its
+  // street, any building or suite lines and its city/ZIP line. Used by
   // registerIlgaChamber's pointOfInterest when a roster supplies office lines.
+  //
+  // A LINE IS DROPPED FOR WHAT IT IS, NEVER FOR A FRAGMENT IT CONTAINS — the
+  // splitOfficeLines lesson, one block over (2026-10-20). Until that day this
+  // dropped every line matching /phone|fax|tel|\(\d{3}\)|\d{3}[-.\s]\d{4}/i,
+  // and both halves misfired on shipped offices. A ZIP+4 satisfies the last
+  // alternative ("Fort Smith, AR 72903-5083" contains "903-5083"), so the city
+  // line went and the pin was looked up as "6101 Phoenix Ave, Suite 4" with no
+  // city or state; and "tel" sits inside street names ("2400 E. Katella Ave.",
+  // "1 Kattelville Road"), so the whole address went, nothing was left, and the
+  // fallback looked up every line, "Phone: 714-939-8469" included. Measured over
+  // the 693 district offices the fleet's rosters shipped that day: 6 U.S. House
+  // offices lost their city (AR-3, IN-4, MN-8, TN-2, TN-6, WI-1) and 2 assembly
+  // offices were looked up with their telephone numbers (California 68, New
+  // York 121). Those 8 are the only shipped addresses this rule changes. It also
+  // reads the Louisiana legislature's blocks, which put a physical and a mailing
+  // address under headings, sometimes the post office box first, and up to
+  // three offices in one block, all of which the old filter joined into one.
+  //
+  // So a contact line is one LABELLED as a phone, fax or e-mail, or one carrying
+  // a whole telephone number (three, three and four digits, which a ZIP+4 is
+  // not). A line ending in a ZIP code ends an address when the ZIP follows a
+  // two-letter word (the state), a comma, or nothing else on its line, so
+  // "P.O. Box 91245" and "Suite 14800" are not ZIP codes; a heading line
+  // ("Mailing Address:") ends one too, ZIP or not. The first address that is not
+  // only a post office box wins, else the first. Lines after the last address
+  // are a note ("*Not ADA accessible…") and count only when they are all there
+  // is, so a block with no ZIP and no heading is joined as it always was, and a
+  // block with no address line at all gets no pin rather than a lookup of a
+  // telephone number.
+  //
+  // An address with no digit in it, no street number, ZIP code or box, names
+  // no place a pin could go, so it gets no pin either: measured 2026-10-20 over
+  // the same 693 offices, exactly three, Illinois House 13 ("By appointment
+  // only") and Wisconsin Senate 6 and 22 (the bare state, "WI").
   function officeAddressForGeocode(lines) {
     if (!lines || !lines.length) return null;
-    var kept = lines.filter(function (l) {
-      return !/(?:phone|fax|tel|\(\d{3}\)|\d{3}[-.\s]\d{4})/i.test(String(l));
+    var CONTACT = /^\s*(?:phone|telephone|tel|fax|cell|mobile|e-?mail)\s*[:.]/i;
+    var NUMBER = /(?:\(\d{3}\)|\b\d{3})[\s.\-]*\d{3}[\s.\-]\d{4}\b/;
+    var ENDS_IN_ZIP = /(?:^\s*|\b[a-z]{2}\s+|,\s*)\d{5}(?:-\d{4})?[\s.]*$/i;
+    var BOX = /^\s*\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\b/i;
+    var addresses = [];
+    var current = [];
+    lines.forEach(function (raw) {
+      var line = String(raw);
+      if (!line.trim() || CONTACT.test(line) || NUMBER.test(line)) return;
+      var heading = /:\s*$/.test(line);
+      if (!heading) current.push(line);
+      if ((heading || ENDS_IN_ZIP.test(line)) && current.length) {
+        addresses.push(current);
+        current = [];
+      }
     });
-    var addr = (kept.length ? kept : lines).join(", ").trim();
-    return addr || null;
+    if (!addresses.length && current.length) addresses.push(current);
+    // only a box: every line but the city line ("P.O. Box 660", "Harrisonburg, LA 71340")
+    function boxOnly(address) {
+      var head = address.length > 1 ? address.slice(0, -1) : address;
+      return head.every(function (l) { return BOX.test(l); });
+    }
+    var picked = addresses.filter(function (a) { return !boxOnly(a); })[0] || addresses[0];
+    if (!picked) return null;
+    var addr = picked.join(", ").trim();
+    return /\d/.test(addr) ? addr : null;
   }
   /* ==== ENGINE:END office-helpers ==== */
 

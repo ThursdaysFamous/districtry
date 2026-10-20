@@ -779,6 +779,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: node scripts/map_link_test.mjs
 
+      # A legislator card drops a map pin on the member's district office, and
+      # engine/index.html/office-helpers.txt picks the address the pin is
+      # looked up by. It dropped any line that merely contained something
+      # phone-like, so a ZIP+4 city line and a street named Katella went: 8 of
+      # 693 shipped offices were looked up with no city or with their telephone
+      # numbers until 2026-10-20, and nothing ran the function. This runs it
+      # as shipped over fixtures and over every district office every app
+      # ships, so a roster refresh in a new shape fails on its own pull request.
+      - name: Legislator office pins are looked up by their street address
+        if: ${{ !cancelled() }}
+        run: node scripts/office_address_test.mjs
+
       # THE SOCIAL CARD IS THE ONE PAGE ASSET NOBODY ON THE TEAM EVER LOOKS AT,
       # because it renders in somebody else's app. Adam shared an /il/ permalink
       # into a Signal group on 2026-09-13 and the preview showed "CHICAGO

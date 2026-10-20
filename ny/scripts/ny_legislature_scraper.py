@@ -55,11 +55,17 @@ def _office_summary_line(office):
     engine's card renders a single primary district office + the Albany office. The
     extra offices ride along as these one-liners appended to the primary's block.
 
-    The embedded "Phone:"/number is load-bearing: the engine's map-pin geocoder
-    (officeAddressForGeocode) drops any line that looks like a phone/fax, so the pin
-    geocodes the primary office alone instead of two mashed-together addresses.
-    Returns None when there is no phone/fax to embed — without one this line would
-    be geocoded too and mis-pin the card, so such an office is skipped, not shown.
+    The embedded "Phone:"/number was load-bearing until 2026-10-20: the engine's
+    map-pin geocoder (officeAddressForGeocode) dropped any line that looked like a
+    phone/fax, and that is what kept this line out of the pin's lookup. It still
+    drops a line carrying a whole telephone number, as this one does. Without
+    its number this line would still stay out of the pin whenever the primary
+    office ends in a ZIP code and is not only a post office box, because the
+    engine now reads only the block's first street address; a primary office
+    with no ZIP code would be joined to it. Returns None when there is no
+    phone/fax to embed, so such an office is skipped, not shown; that skip was
+    the guard against a mis-pinned card and stands until showing those offices
+    is decided.
     """
     addr = re.sub(r"\s*;\s*", ", ", (office.get("address") or "").replace("\n", ", ")).strip()
     if office.get("voice"):
