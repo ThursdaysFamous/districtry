@@ -1,5 +1,7 @@
 // Holds engine/index.html/office-helpers.txt, AS SHIPPED, to the district
-// offices the legislator cards drop a map pin on.
+// offices the legislator cards drop a map pin on, and since 2026-10-20 the
+// address tidy-up in engine/index.html/poi-geocode.txt that runs on the way to
+// the map service (cleanPoiAddress).
 //
 // officeAddressForGeocode turns a roster's districtOffice lines into the one
 // address the pin is looked up by, in every app that names a legislator. Until
@@ -18,6 +20,16 @@
 // wherever the block has one. A weekly roster refresh that brings a new shape
 // fails here, on its own pull request, rather than on a reader's map.
 //
+// The tidy-up removes suites, rooms and boxes before the lookup, and on the
+// same day it was found removing more: seven New York offices name their
+// building before the street ("Dulles State Office Building 317 Washington
+// St."), and the rule for "Building 3" read the house number as a building
+// number and removed it, so Senate 49 was looked up as "Dulles State Office
+// Washington St., Watertown"; "Post Office Box 188" and "P.O. Box I" stayed in
+// two Illinois lookups. So the whole lookup is held too: to exact answers, and
+// over every shipped office, to keeping the address's numbered street and
+// dropping a box that follows a street.
+//
 //   node scripts/office_address_test.mjs
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -25,8 +37,11 @@ import path from "node:path";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const src = readFileSync(path.join(root, "engine/index.html/office-helpers.txt"), "utf8");
-// officeFieldHtml, in the same block, calls sanitize only when it runs.
-const { officeAddressForGeocode } = new Function(src + "\nreturn { officeAddressForGeocode };")();
+const poiSrc = readFileSync(path.join(root, "engine/index.html/poi-geocode.txt"), "utf8");
+// officeFieldHtml, in the same block, calls sanitize only when it runs, and
+// the geocode queue in the second calls the app's provider only when it runs.
+const { officeAddressForGeocode, cleanPoiAddress } =
+  new Function(src + "\n" + poiSrc + "\nreturn { officeAddressForGeocode, cleanPoiAddress };")();
 
 let failed = 0;
 function fail(msg) {
@@ -117,6 +132,10 @@ const cases = [
   [["Phone: 217-555-0100"], null],
   [["(217) 555-0100", "(217) 555-0101 Fax"], null],
   [[], null],
+  // no number anywhere, so no place a pin could go: Illinois House 13 and
+  // Wisconsin Senate 6, as their rosters carry them
+  [["By appointment only", "(773) 657-4655"], null],
+  [["WI", "Phone: 414-313-1241"], null],
 ];
 
 for (const [lines, want] of cases) {
@@ -124,6 +143,48 @@ for (const [lines, want] of cases) {
   if (got !== want) fail(JSON.stringify(lines) + "\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
 }
 if (officeAddressForGeocode(null) !== null) fail("officeAddressForGeocode(null) is not null");
+
+// The whole lookup, office lines to the string the map service is asked.
+const lookups = [
+  // A building or floor named before the street: the number after it is the
+  // house number. New York Senate 49, 50, 52, 4 and 30 and Assembly 123 and
+  // 150, as their rosters carry them.
+  [["Dulles State Office Building 317 Washington St., Suite 418, Watertown, NY 13601", "Phone: 315-782-3418",
+    "Also: Fulton County Office Building 223 W. Main St., Suite B10, Johnstown, NY 12095 · Phone: 518-762-3733"],
+    "317 Washington St., Watertown, NY 13601"],
+  [["Oswego City Hall, Second Floor 13 W. Oneida St., Oswego, NY 13126",
+    "Also: Room 800, State Office Building 333 E. Washington St., Syracuse, NY 13202 · Phone: 315-428-7632"],
+    "13 W. Oneida St., Oswego, NY 13126"],
+  [["1607 State Office Building 44 Hawley St., Binghamton, NY 13901", "Phone: 607-773-8771"],
+    "44 Hawley St., Binghamton, NY 13901"],
+  [["Room 3B-41-42, Hauppauge State Office Building 250 Veterans Highway, Hauppauge, NY 11788", "Phone: 631-341-7111"],
+    "250 Veterans Highway, Hauppauge, NY 11788"],
+  [["Adam Clayton Powell, Jr. State Office Building 163 W. 125th St., Suite 912, New York, NY 10027", "Phone: 212-222-7315"],
+    "163 W. 125th St., New York, NY 10027"],
+  [["State Office Building, 17th Floor 44 Hawley St., Binghamton, NY 13901", "Phone: 607-723-9047"],
+    "44 Hawley St., Binghamton, NY 13901"],
+  [["Fenton Building 2 E. 2nd St., Suite 320, Jamestown, NY 14701", "Phone: 716-664-7773"],
+    "2 E. 2nd St., Jamestown, NY 14701"],
+  // A box after the street, spelled out or lettered: Illinois House 102 and 110.
+  [["100 Norb Avenue, Suite 1", "Post Office Box 188", "Dieterich, IL 62424", "(217) 813-6036"],
+    "100 Norb Avenue, Dieterich, IL 62424"],
+  [["152 South Church Street", "P.O. Box I", "Louisville, IL 62858", "(618) 665-4109"],
+    "152 South Church Street, Louisville, IL 62858"],
+  // A building AFTER the street is a unit and goes; so does a box with no street.
+  [["28 Wells Ave., Building 3 5th Floor, Yonkers, NY 10701", "Phone: 914-423-4031"],
+    "28 Wells Ave., Yonkers, NY 10701"],
+  [["13405 Folsom Blvd., Building 700 Suite A, Folsom, CA 95630", "Phone: 916-294-9774"],
+    "13405 Folsom Blvd., Folsom, CA 95630"],
+  [["3245 Route 112 Building 2, Suite 6, Medford, NY 11763", "Phone: 631-207-0073"],
+    "3245 Route 112, Medford, NY 11763"],
+  [["P.O. Box 91245", "Lafayette, LA 70509", "(337)267-7520"],
+    "P.O. Box 91245, Lafayette, LA 70509"],
+];
+for (const [lines, want] of lookups) {
+  const address = officeAddressForGeocode(lines);
+  const got = address && cleanPoiAddress(address);
+  if (got !== want) fail("lookup " + JSON.stringify(lines) + "\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+}
 
 // Every district office every app ships. An instance is a top-level folder
 // with an index.html and a data/app/, the rule the registration gate
@@ -134,9 +195,15 @@ const PHONE = /(?:\(\d{3}\)\s*|\b\d{3}[-.])\d{3}[-.]\d{4}\b|\b(?:phone|fax|e-?ma
 // the helper is right to pin the street address, which only this reading
 // counts as the block's city line.
 const CITY_LINE = /\b[A-Z][A-Za-z]\s+\d{5}(?:-\d{4})?\s*$/;
+// a house number and the street it is on: "317 Washington St", "2-6 E. 2nd St"
+const NUMBERED_STREET = new RegExp("(?:^|[\\s,])(\\d+[a-z]?(?:-\\d+[a-z]?)?\\s+(?:[nsew]\\.?\\s+)?" +
+  "(?:[a-z0-9][a-z0-9'.-]*\\s+){0,3}(?:street|st|avenue|ave|road|rd|boulevard|blvd|drive|dr|lane|ln|place|pl|" +
+  "court|ct|highway|hwy|parkway|pkwy|terrace|ter|circle|cir|square|sq|trail|trl|way|turnpike|tpke|plaza|plz))\\b", "i");
+const BOX_AFTER_STREET = /\S[,\s]+\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\b/i;
 const apps = new Set();
 let offices = 0;
 let withCity = 0;
+let numbered = 0;
 for (const tag of readdirSync(root).sort()) {
   const dir = path.join(root, tag, "data", "app");
   if (!existsSync(path.join(root, tag, "index.html")) || !existsSync(dir) || !statSync(dir).isDirectory()) continue;
@@ -155,6 +222,15 @@ for (const tag of readdirSync(root).sort()) {
       const where = tag + "/data/app/" + file + " " + key + " " + JSON.stringify(lines);
       const got = officeAddressForGeocode(lines);
       if (got && PHONE.test(got)) fail(where + "\n  is looked up with a telephone number: " + JSON.stringify(got));
+      const lookup = got && cleanPoiAddress(got);
+      const street = got && got.match(NUMBERED_STREET);
+      if (street) {
+        numbered++;
+        if (lookup.indexOf(street[1]) < 0) fail(where + "\n  is looked up without its street number: " + JSON.stringify(lookup));
+      }
+      if (lookup && BOX_AFTER_STREET.test(lookup)) {
+        fail(where + "\n  is looked up with a post office box after its street: " + JSON.stringify(lookup));
+      }
       const cities = lines.map((l) => String(l).trim()).filter((l) => CITY_LINE.test(l));
       if (!cities.length) continue;
       withCity++;
@@ -166,14 +242,17 @@ for (const tag of readdirSync(root).sort()) {
 }
 // It cannot pass by finding nothing: the rosters moving or a renamed field
 // would otherwise read as every office being fine.
-if (apps.size < 2 || offices < 100) {
-  fail("found " + offices + " district offices in " + apps.size + " apps; expected the fleet's rosters (693 offices in 15 apps on 2026-10-20)");
+if (apps.size < 2 || offices < 100 || numbered < 100) {
+  fail("found " + offices + " district offices in " + apps.size + " apps, " + numbered + " with a numbered street; " +
+    "expected the fleet's rosters (693 offices in 15 apps, 635 with a numbered street, on 2026-10-20)");
 }
 
 if (failed) {
   console.error("office-address: " + failed + " check(s) failed");
   process.exit(1);
 }
-console.log("office-address: OK — " + cases.length + " office blocks read as expected; " + offices +
-  " district offices in " + apps.size + " apps are looked up with no telephone number, and the " + withCity +
-  " that carry a city and ZIP line are looked up with it");
+console.log("office-address: OK — " + cases.length + " office blocks and " + lookups.length +
+  " lookups read as expected; " + offices + " district offices in " + apps.size +
+  " apps are looked up with no telephone number and no post office box after a street, the " + withCity +
+  " that carry a city and ZIP line are looked up with it, and the " + numbered +
+  " with a numbered street keep its number");
