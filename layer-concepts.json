@@ -86,8 +86,9 @@
       "ny": "judicial-district", "wi": "wi-circuit-court", "ia": "ia-judicial-district",
       "mi": "mi-circuit-court", "mn": "mn-judicial-district", "ky": "ky-circuit-court",
       "ok": "ok-judicial-district", "sc": "sc-circuit-court", "tn": "tn-judicial-district",
-      "ar": "ar-circuit-court", "ms": "ms-circuit-court"
+      "ar": "ar-circuit-court", "ms": "ms-circuit-court", "nc": "nc-superior-court"
     },
+    "limited-trial-court-district": { "ky": "ky-district-court", "nc": "nc-district-court" },
     "county": {
       "il": "county", "ny": "county", "wi": "county", "ia": "county", "mi": "county", "mn": "county",
       "ky": "county", "in": "county", "nc": "county", "ok": "county", "sc": "county", "tn": "county", "ar": "county", "ms": "county"
@@ -189,6 +190,7 @@
     "supreme-court-district":     { "line": "#8A692C", "fill": "#8A692C" },
     "appellate-court-district":   { "line": "#753B07", "fill": "#753B07" },
     "trial-court-district":       { "line": "#9550B2", "fill": "#9550B2" },
+    "limited-trial-court-district": { "line": "#5E6E00", "fill": "#5E6E00" },
     "county":                     { "line": "#444B54", "fill": "#6B7280" },
     "county-board":               { "line": "#1F6FB2", "fill": "#3B8FD4" },
     "county-subdivision":         { "line": "#7A5C3E", "fill": "#A98B6C" },
@@ -226,6 +228,7 @@
     "supreme-court-district":      { "weight": 2 },
     "appellate-court-district":    { "weight": 2 },
     "trial-court-district":        { "weight": 1.5 },
+    "limited-trial-court-district": { "weight": 1.5 },
     "county":                      { "weight": 2 },
     "county-board":                { "weight": 2 },
     "county-subdivision":          { "weight": 1.5 },

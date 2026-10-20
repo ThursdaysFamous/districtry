@@ -1357,6 +1357,17 @@ jobs:
           python3 ok/scripts/build_ok_judicial_districts.py --check
           python3 sc/scripts/build_sc_judicial_circuits.py --check
           python3 tn/scripts/build_tn_judicial_districts.py --check
+      # North Carolina's superior and district court districts are read from
+      # the text of G.S. 7A-41 and G.S. 7A-133, kept in nc/data/source/statutes/,
+      # and where the law divides a county, from the 2010 census pieces it
+      # lists. --check (stdlib only) re-parses the kept text, holds each shipped
+      # feature to the parse and to the judge counts the law gives, re-derives
+      # each district's area from the county file and the recorded pieces, asks
+      # both maps which district holds each recorded interior point, and fails
+      # if the county file has changed since the districts were built from it.
+      - name: NC court districts still match the law they are drawn from
+        if: ${{ !cancelled() }}
+        run: python3 nc/scripts/build_nc_court_districts.py --check
       # Six states' precinct layers are built by scripts/statewide_precincts.py.
       # --check holds each shipped file to the hash and the precincts per county
       # its builder recorded, checks every precinct names its county as the

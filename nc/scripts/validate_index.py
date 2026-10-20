@@ -80,9 +80,10 @@ CAPABILITIES = [
 # The constants below are GENERATED from metro-worksheet.json (Conversion 2 —
 # edit the worksheet, run scripts/generate_metro_files.py). Fork history worth
 # keeping by hand: this instance's registerLayer floor arithmetic is 1 function
-# definition + 5 factory bodies + 6 direct registerLayer() calls (county,
-# county-subdivision, voting-precinct, municipality, city-ward and
-# school-board-district) = 12, counted 2026-10-17, and the floor is that count.
+# definition + 5 factory bodies + 8 direct registerLayer() calls (county,
+# county-subdivision, voting-precinct, municipality, city-ward,
+# school-board-district, nc-superior-court and nc-district-court) = 14, counted
+# 2026-10-20, and the floor is that count.
 # THE PARAGRAPH THAT USED TO SIT HERE WAS ILLINOIS'S, inherited verbatim
 # when this validator was cloned: it described 11 direct calls, a
 # police-station/fire-station move and a township layer, none of which this
@@ -90,17 +91,18 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 12
+MIN_REGISTER_LAYER = 14
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "nc-senate", "county", "nc-house", "school-district-unified",
-    "county-subdivision", "school-board-district", "zip-code",
-    "tribal-government", "voting-precinct", "municipality", "city-ward",
-    "police-station", "fire-station", "post-office",
+    "us-house", "nc-district-court", "nc-senate", "nc-superior-court",
+    "county", "nc-house", "school-district-unified", "county-subdivision",
+    "school-board-district", "zip-code", "tribal-government",
+    "voting-precinct", "municipality", "city-ward", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +112,8 @@ GEOMETRY_FILES = {
     "congress-districts.json": (14, 14),  # The 14 U.S. House districts, TIGERweb layer 4 (CD119) until 3 January 2027.
     "nc-senate-districts.json": (50, 50),  # The 50 NC Senate districts. Simplified in the same mapshaper run as the other two chamber files.
     "nc-house-districts.json": (120, 120),  # The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files.
+    "nc-superior-court-districts.json": (73, 73),  # The 73 superior court districts G.S. 7A-41 writes, pre-built by nc/scripts/build_nc_court_districts.py from the kept statute text: whole counties from state-counties.json, and the nine divided counties from the 2010 Census voting districts and blocks the law lists (Douglas-Peucker at 5 m on each dividing line, and the build refuses a line that strays more than 8 m from the 2010 line it draws). 2.0 MB, 590 KB gzipped, fetched only when a reader switches the layer on.
+    "nc-district-court-districts.json": (47, 47),  # The 47 district court districts G.S. 7A-133 writes, pre-built by the same builder: whole counties, and Wake's and Vance's districts from the 2010 Census voting districts the law lists. 1.57 MB, 470 KB gzipped, fetched only when a reader switches the layer on.
     "tribal-areas.json": (2, 2),  # North Carolina's tribal land (scripts/build_tribal_areas.py) — the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians'. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
     "nc-precincts.json": (2625, 2625),  # Every North Carolina voting precinct, pre-built by nc/scripts/build_nc_precincts.py through scripts/statewide_precincts.py from the State Board of Elections' file as NC OneMap serves it (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 2,625 count on the fetch and the drawn file). 8.2 MB, 2.43 MB gzipped, fetched only when a reader switches the layer on.
     "nc-city-wards.json": (100, 100),  # The 100 council districts and wards of the 17 cities above 25,000 people that elect council members by district or ward, pre-built by nc/scripts/build_nc_city_wards.py through scripts/city_ward_maps.py from the map each city or its county publishes (Douglas-Peucker at 4 m; a 6,800-point agreement gate over the seventeen cities' extents, measured 99.94%, with no overlap; each map held to its city's Census outline). 1.46 MB, 410 KB gzipped, fetched only when a reader switches the layer on.
