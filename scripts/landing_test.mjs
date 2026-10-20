@@ -21,7 +21,7 @@
 // link forwards with its query AND hash intact, and a plain visit does not.
 //
 //   node scripts/landing_test.mjs          # BASE_URL defaults to :8131
-import { chromium } from "playwright";
+import { chromium, devices } from "playwright";
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -237,32 +237,82 @@ try {
     await ctx.close();
   }
 
-  // --- 1b. the rename toast fades on its own, and dismisses on click -------
+  // --- 1b. the notice: the Android test invitation, on Android only --------
   //
-  // It is a TOAST now rather than an inline banner, which means it sits over
-  // the masthead and can cover the wordmark. A toast that fails to fade is a
-  // permanent obstruction on the front door — and because it is absolutely
-  // positioned, a reader cannot scroll it away.
+  // The front page's notice (NOTICE in build_landing_page.py) invites Android
+  // readers into the Google Play app's closed test. It ships hidden and the
+  // page's script shows it, so the script is what is under test: shown in an
+  // Android browser and nowhere else, never inside the Play app or an
+  // installed copy, linking the steps page with its ref, and closed on
+  // request. It sits in the page's flow above the masthead and no longer
+  // fades, so one that would not close would hold the address box down for
+  // the whole visit.
   {
-    const ctx = await browser.newContext({ serviceWorkers: "block" });
-    const page = await ctx.newPage();
-    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-    const notice = await page.$("#notice");
-    check("the rename notice renders", notice !== null);
-    if (notice) {
-      const shown = await notice.isVisible();
-      check("the rename notice starts visible", shown, String(shown));
-      await page.click("#notice-dismiss");
-      // The fade is a 900ms CSS animation, then display:none.
-      await page.waitForTimeout(1600);
-      const after = await page.evaluate(() => {
-        const el = document.getElementById("notice");
-        return el ? getComputedStyle(el).display : "removed";
-      });
-      check("dismissing the rename notice hides it",
-        after === "none" || after === "removed", after);
+    async function noticeOn(opts, path, init) {
+      const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      if (init) await page.addInitScript(init);
+      await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(300);
+      const shown = await page.isVisible("#notice").catch(() => false);
+      return { ctx, page, shown };
     }
-    await ctx.close();
+    const android = devices["Pixel 7"];
+    {
+      const { ctx, page, shown } = await noticeOn({}, "/");
+      check("the notice is in the page", (await page.$("#notice")) !== null);
+      check("a computer is not shown the Android invitation", !shown, String(shown));
+      await ctx.close();
+    }
+    {
+      const { ctx, shown } = await noticeOn(devices["iPhone 14"], "/");
+      check("an iPhone is not shown the Android invitation", !shown, String(shown));
+      await ctx.close();
+    }
+    {
+      const { ctx, page, shown } = await noticeOn(android, "/");
+      check("an Android phone is shown the invitation", shown, String(shown));
+      if (shown) {
+        const link = await page.$eval(".notice-cta a", (a) => {
+          const r = a.getBoundingClientRect();
+          return { href: a.getAttribute("href"), w: Math.round(r.width), h: Math.round(r.height) };
+        }).catch(() => null);
+        check("the invitation links the steps page, tagged for the traffic report",
+          !!link && link.href === "/android.html?ref=front-page", JSON.stringify(link));
+        check("the invitation's link is at least a 24px target",
+          !!link && link.w >= 24 && link.h >= 24, JSON.stringify(link));
+        const close = await page.$eval("#notice-dismiss", (b) => {
+          const r = b.getBoundingClientRect();
+          return [Math.round(r.width), Math.round(r.height)];
+        });
+        check("the close button is at least a 24px target",
+          close[0] >= 24 && close[1] >= 24, JSON.stringify(close));
+        await page.click("#notice-dismiss");
+        const after = await page.isVisible("#notice");
+        check("closing the invitation hides it", !after, String(after));
+      }
+      await ctx.close();
+    }
+    // Inside the Google Play app, which opens its first page with ref=play
+    // (engine/shared/play-app.txt marks the window in the head).
+    {
+      const { ctx, shown } = await noticeOn(android, "/?ref=play");
+      check("the Play app is not shown the invitation", !shown, String(shown));
+      await ctx.close();
+    }
+    // An installed copy reports display-mode standalone, which Playwright
+    // cannot emulate, so matchMedia is made to answer it.
+    {
+      const { ctx, shown } = await noticeOn(android, "/", () => {
+        const real = window.matchMedia.bind(window);
+        window.matchMedia = (q) => /display-mode:\s*standalone/.test(q)
+          ? { matches: true, media: q, onchange: null,
+              addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} }
+          : real(q);
+      });
+      check("an installed copy is not shown the invitation", !shown, String(shown));
+      await ctx.close();
+    }
   }
 
   // --- 1c. the address box routes to the instance that covers the point ----

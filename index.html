@@ -561,23 +561,33 @@ body {
 .shell { position: relative; min-height: 100vh; }
 .wrap { max-width: 940px; margin: 0 auto; padding: 56px 24px 72px; }
 
-/* The rename toast: absolutely positioned against .shell (full viewport
-   width), never against .wrap (the centered 940px column) — it sits near the
-   top-right of the WINDOW, matching where a reader's eye actually lands, not
-   near the top-right of the text measure. */
+/* The notice: a card at the top of the column, in the page's flow, above the
+   masthead. It used to be a toast placed over the top-right of the window
+   that faded after 15 seconds; the notice now asks the reader to do
+   something and stays until it is closed, and a card that stays must not sit
+   over the masthead's links. See NOTICE for who it is shown to. */
 .notice {
-  position: absolute; z-index: 20; top: 18px; right: 24px;
-  width: 480px; max-width: calc(100% - 48px);
-  padding: 14px 40px 15px 18px;
+  position: relative; margin: 0 0 24px;
+  padding: 14px 44px 15px 18px;
   background: var(--brand-tint); border: 1px solid var(--brand-border);
-  border-radius: var(--radius-card); box-shadow: 0 6px 22px rgba(23, 22, 28, .16);
-  opacity: 1;
+  border-radius: var(--radius-card);
 }
+.notice[hidden] { display: none; }
 .notice-h {
   margin: 0 0 5px; font: var(--font-heading-weight) 17px/1.25 var(--font-heading);
   color: var(--ink);
 }
 .notice-b { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-3); max-width: 52em; }
+/* The one thing in the notice to tap, on a 32px row so it clears WCAG 2.5.8's
+   24px with room to spare on a phone; the colours are the footer support
+   line's, on the same tint. */
+.notice-cta { margin: 6px 0 0; }
+.notice-cta a {
+  display: inline-flex; align-items: center; min-height: 32px;
+  font-size: 15px; font-weight: 600; color: var(--brand-600);
+}
+.notice-cta a:hover { color: var(--brand-700); }
+.notice-cta a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 4px; }
 .notice #notice-dismiss {
   position: absolute; top: 9px; right: 10px; width: 26px; height: 26px;
   display: flex; align-items: center; justify-content: center; padding: 0;
@@ -588,9 +598,6 @@ body {
 .notice #notice-dismiss:hover, .notice #notice-dismiss:focus-visible {
   background: var(--surface); border-color: var(--brand-border); color: var(--ink);
 }
-@keyframes notice-out { from { opacity: 1; } to { opacity: 0; } }
-.notice.is-fading { animation: notice-out 900ms ease forwards; }
-@media (prefers-reduced-motion: reduce) { .notice.is-fading { animation-duration: 1ms; } }
 
 /* The masthead: the mark beside the wordmark, at a size the mark is actually
    drawn for, in a bar the sub-pages already wear. It was a 64px mark over a
@@ -903,7 +910,7 @@ footer .support b { color: var(--ink); }
   h1 { font-size: 31px; }
   h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
-  .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
+  .notice { margin-bottom: 22px; }
   .states { columns: 2; column-gap: 10px; }
   .states-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -931,12 +938,13 @@ footer .support b { color: var(--ink); }
 <body>
   <a href="#page-main" class="skip-link">Skip to content</a>
   <div class="shell">
-    <aside id="notice" class="notice" role="status" aria-live="polite">
-      <p id="notice-h" class="notice-h">chidistricts.com is now districtry.com</p>
-      <p class="notice-b">Same map, same data, same answers — a new name, because it now covers more than Chicago and more than one state. Illinois lives at districtry.com/il, and every link below goes straight there.</p>
+    <div class="wrap">
+    <aside id="notice" class="notice" aria-labelledby="notice-h" data-only="android" hidden>
+      <p id="notice-h" class="notice-h">Help test districtry on Android</p>
+      <p class="notice-b">districtry is coming to Google Play as an app, and Google needs at least 12 people to test it for 14 days in a row first. Joining takes a few minutes.</p>
+      <p class="notice-cta"><a href="/android.html?ref=front-page">See how to join</a></p>
       <button type="button" id="notice-dismiss" aria-label="Dismiss this notice">&#x2715;</button>
     </aside>
-    <div class="wrap">
     <header class="mast">
       <div class="mast-brand">
         <svg class="logo-mark" viewBox="0 0 96 96" aria-hidden="true"><g class="mk-blend"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g class="mk-blend"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g class="mk-blend"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="currentColor" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="currentColor" stroke-width="11"></line></svg>
@@ -1228,39 +1236,36 @@ footer .support b { color: var(--ink); }
   </div>
 <script>
 (function () {
-  /* ---------- rename-notice toast: auto-fades, dismissible ---------- */
+  /* ---------- the notice: shown where it applies, closed on request ----------
+     A notice with data-only ships hidden (render_notice), and this shows it
+     where its condition holds. "android": a browser on Android, not an
+     installed copy, which is display-mode standalone (the Play app's own
+     window reports it too), and not a window the Play app's mark has set
+     (engine/shared/play-app.txt, run in the head). Closing it lasts for this
+     page view, because this page stores nothing. */
   var notice = document.getElementById("notice");
   if (notice) {
-    var fadeTimer = null, cleanupTimer = null, faded = false;
-    function fade() {
-      if (faded) return;
-      faded = true;
-      clearTimeout(fadeTimer);
-      clearTimeout(cleanupTimer);
-      var done = function () {
-        notice.removeEventListener("animationend", done);
-        notice.style.display = "none";
-      };
-      notice.addEventListener("animationend", done);
-      notice.classList.add("is-fading");
-      // belt and braces: some browsers skip animationend for a 0-duration
-      // reduced-motion run, or a tab backgrounded mid-fade.
-      cleanupTimer = setTimeout(done, 3000);
+    var only = notice.getAttribute("data-only");
+    if (only === "android") {
+      var installed = !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+        window.navigator.standalone === true);
+      if (/\bAndroid\b/.test(window.navigator.userAgent || "") && !installed &&
+          !document.documentElement.classList.contains("dst-play-app")) {
+        notice.hidden = false;
+      }
+    } else if (!only) {
+      notice.hidden = false;
     }
-    fadeTimer = setTimeout(fade, 15 * 1000);
     var dismiss = document.getElementById("notice-dismiss");
-    if (dismiss) dismiss.addEventListener("click", fade);
-    /* The toast is FIRST in the DOM, so its dismiss button is the page's first
-       tab stop: a keyboard reader lands there before anything else. Auto-fading
-       it out from under them would destroy the focused element and drop focus
-       to <body> mid-navigation. While focus is inside, the timer does not run;
-       it restarts when focus leaves. A click still fades immediately, because
-       that is the reader ASKING for it to go. */
-    notice.addEventListener("focusin", function () { clearTimeout(fadeTimer); });
-    notice.addEventListener("focusout", function () {
-      if (faded) return;
-      clearTimeout(fadeTimer);
-      fadeTimer = setTimeout(fade, 15 * 1000);
+    if (dismiss) dismiss.addEventListener("click", function () {
+      /* A keyboard reader's focus would drop to <body> with the button gone,
+         so it moves on to the masthead's first link, the next thing in the
+         tab order. A tap leaves focus alone. */
+      var keyboard = false;
+      try { keyboard = dismiss.matches(":focus-visible"); } catch (e) { /* older browser */ }
+      notice.hidden = true;
+      var next = document.querySelector(".mast-nav a");
+      if (keyboard && next) next.focus();
     });
   }
 
