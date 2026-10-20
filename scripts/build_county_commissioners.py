@@ -126,6 +126,14 @@ EXPECT_MEMBERS = {
                                      # opens, and that feed answers when called with the
                                      # parameters the page carries, which the scraper
                                      # re-reads from the page every run.
+    "PERRY": 3,                      # 2026-10-20; commission form, three elected
+                                     # countywide (the certified canvasses on
+                                     # results.gbsvote.com name Morgenstern 2020, Martin
+                                     # 2022 and Folden for the two-year seat in 2022 and
+                                     # the 2024 nomination). The gap record said the
+                                     # county's site answered every visit with a holding
+                                     # page; on 2026-10-20 it served our own token three
+                                     # times running and names all three.
     "GALLATIN": 5,                   # 2026-08-21; at-large proven TWICE from the county's
                                      # own certified canvasses — "CO.BD.MEMBER CWD (VOTE
                                      # FOR) 3" in the 2026 primary and "COUNTY BOARD MEMBER
