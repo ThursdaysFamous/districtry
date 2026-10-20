@@ -21,7 +21,10 @@ list and member pages), the LIVE TIGERweb fabric — **City, Town or Village** (
 **School District** (69) and **ZIP Code** — and three nearest-N layers from the USGS National Map
 (**Police Station**, **Fire & EMS Station**, **Post Office**). Beside it, **Police Jury or Council
 District** (`parish-district`) draws the districts of each of the 6 parishes whose current lines
-are confirmed, and is hidden in the other 58.
+are confirmed, and is hidden in the other 58. **Tribal Government** (`tribal-government`) draws the
+6 pieces of tribal land the Census draws in the state — the Chitimacha, Coushatta, Jena Band of
+Choctaw and Tunica-Biloxi reservations, and the Coushatta's and Tunica-Biloxi's off-reservation trust
+land — and names the councils of the three nations whose own pages name them.
 
 **THE CONGRESSIONAL MAP IS TIGERweb LAYER 4 (THE 119TH CONGRESS), NOT LAYER 0, UNTIL 3 JANUARY
 2027.** Louisiana redrew its congressional map in the 2026 regular session (Act 2 of 2026), and
@@ -111,6 +114,24 @@ service answers with a neighbouring state's ZIP (77630 at Orange, Texas and 3918
 Mississippi, measured 2026-10-20). The coverage test reads the shipped outline, and the smoke test
 asserts both halves.
 
+**THREE OF THE FOUR TRIBAL COUNCILS ARE NAMED, EACH FROM THE NATION'S OWN PAGE.** The Chitimacha's
+five (chitimacha.gov, whose robots.txt asks for 10 seconds between requests, which the scraper's
+pacer honours), the Jena Band of Choctaw's Tribal Chief and four council members (jenachoctaw.org)
+and the Tunica-Biloxi's seven (tunicabiloxi.org) were read on 2026-10-20 by
+`scripts/tribal_council_scraper.py`. The Coushatta Tribe's own site (coushatta.org) names its
+chairman and says the council has five members without naming the other four, and a partial
+council is not carried, so that card names nobody and says why (`ROSTER_BLOCKED` in
+`scripts/build_tribal_areas.py`). **THE CARD'S "(official)" LINK IS THE BUREAU OF INDIAN AFFAIRS'
+LISTING, AS IN EVERY INSTANCE, AND THE TUNICA-BILOXI'S LEADS NOWHERE**: the Bureau lists
+www.tunica.org, which answered 404 over http and a certificate for another name over https, while
+the tribe's own site is www.tunicabiloxi.org, which the card's "Where these names come from" link
+reaches. For the Coushatta the Bureau lists koasatiheritage.org, which answered the scraper's client
+with a Cloudflare 403 (what it shows a browser was not measured), and the tribe's government page is on
+coushatta.org. Whether a card may link a nation's current site in place of a Bureau listing
+measured dead is a fleet decision not yet taken (`la/WATCH.md`). Two Tunica-Biloxi
+council members are written both with and without "Sr." on their own page; the card prints the
+name as the page sets it in bold and notes the form the paragraph below gives.
+
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
 `data/app/*.json` are runtime-fetched data files; `data/state/` carries the bootstrap state
@@ -126,7 +147,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Louisiana (`louisiana`) — https://districtry.com/la/
 - Geocoders: address Photon (Louisiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Louisiana-bounded, serial >=1s queue)
 - Ground truth: 29.95240,-90.07670 (New Orleans City Hall, 1300 Perdido Street, Orleans Parish) → county Orleans Parish; us-house 2; la-senate 5; la-house 93. Negative point 28.60000,-90.50000 (open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 9. Debug namespace `window.LouisianaExplorer`.
+- Layers: 12 registered (political 5, safety 2, schools 1, geography 4); `registerLayer(` floor 9. Debug namespace `window.LouisianaExplorer`.
 - Scheduled workflows: `update-la-congress-roster.yml` (Mon 19:23 UTC); `update-la-legislature-roster.yml` (Tue 19:23 UTC); `update-la-parish-officials.yml` (Wed 19:23 UTC); `la-validate-sources.yml` (1st of month 20:47 UTC).
 - Source registry: `la/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -219,6 +240,11 @@ and the 8 m fidelity ceiling pass). Rosters: `congress-roster.json`
 `la-{senate,house}-members.json` (`la/scripts/build_la_legislature_roster.py`, from each chamber's
 own pages) and `la-parish-officials.json` (`la/scripts/build_la_parish_officials.py`, from the
 Secretary of State's list) — all count-guarded, all refreshed weekly by CI as reviewed PRs.
+The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both written by the
+fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government join every
+instance uses (`data/tribal-government-join.json`); the councils are re-read weekly from each
+nation's own page by `scripts/tribal_council_scraper.py` in the fleet's
+`update-tribal-councils.yml`, and the land is rebuilt only when the Census redraws it.
 `scripts/validate_chamber_rosters.py` holds both chamber files to one record per seat, and
 `scripts/office_address_test.mjs` holds every district office to the address its map pin is
 looked up by.
