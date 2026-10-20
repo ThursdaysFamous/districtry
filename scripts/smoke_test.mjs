@@ -2966,6 +2966,86 @@ try {
       c.on.join() === "school-board" && !/zz9/.test(c.hash), JSON.stringify(c));
   }
 
+  // 2h3. A LINK NAMING CITY LAYERS AND NO POINT OPENS ON THE CITY. The map
+  //     link on a question page names its layers and nothing else, and until
+  //     2026-10-20 this app opened every such link on the whole state, where
+  //     Chicago sits at or past the top edge of the map. The worksheet's
+  //     `frames` now names the area a city or county layer answers in, and
+  //     ENGINE permalink opens a link naming only such layers on their area.
+  //     Read off the map, never off the hash: a Chicago-only link opens closer
+  //     in than the bare app with all of Chicago in view and no `z=` written,
+  //     and the link it is rewritten to opens the same way again; one that
+  //     also names a statewide layer keeps the state view; and one carrying
+  //     its own zoom keeps that zoom, centred on Chicago. The ward page's
+  //     layers also answer in the suburbs, so its link names its area
+  //     (`frame=chicago`): that opens on Chicago and stays in the rewritten
+  //     hash until a point is selected, the same layers without it keep the
+  //     state view, and an area this app does not declare is ignored.
+  {
+    const view = async (hash) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}${hash}`);
+      const got = await page.evaluate((n) => {
+        const m = window[n].map, c = m.getCenter();
+        // the extent of the shipped school-board-districts.json, which is Chicago
+        const city = window.L.latLngBounds([41.6443, -87.9401], [42.0231, -87.5237]);
+        return { hash: location.hash, zoom: m.getZoom(), center: [c.lat, c.lng],
+          cityInView: m.getBounds().contains(city) };
+      }, EXPORTS_NAME);
+      await context.close();
+      return got;
+    };
+    const near = (x, y) => Math.abs(x.center[0] - y.center[0]) < 0.05 && Math.abs(x.center[1] - y.center[1]) < 0.05;
+    const bare = await view("");
+    const city = await view("#layers=school-board");
+    check("a link naming only Chicago layers opens on Chicago",
+      city.zoom > bare.zoom && city.cityInView && city.hash === "#l=sb",
+      JSON.stringify({ bare, city }));
+    const again = await view(city.hash);
+    check("the link it is rewritten to opens the same way again",
+      again.zoom === city.zoom && near(again, city) && again.hash === city.hash,
+      JSON.stringify({ city, again }));
+    const mixed = await view("#layers=school-board,congress");
+    check("a link that also names a statewide layer keeps the state view",
+      mixed.zoom === bare.zoom && near(mixed, bare), JSON.stringify({ bare, mixed }));
+    const zoomed = await view("#layers=school-board&zoom=12");
+    check("a link with its own zoom keeps it, centred on Chicago",
+      zoomed.zoom === 12 && Math.abs(zoomed.center[0] - 41.834) < 0.05 &&
+        Math.abs(zoomed.center[1] + 87.732) < 0.05 && zoomed.hash === "#l=sb&z=12",
+      JSON.stringify(zoomed));
+    const wardLayers = "#layers=ward,ward-precinct,county-precinct";
+    const unnamed = await view(wardLayers);
+    check("the ward page's layers alone keep the state view",
+      unnamed.zoom === bare.zoom && near(unnamed, bare), JSON.stringify({ bare, unnamed }));
+    const named = await view(wardLayers + "&frame=chicago");
+    // The rewritten hash also names the parent layers the ward page's
+    // sub-layers turn on, so it is read for the three it must carry.
+    const namedCodes = (/^#l=([a-z0-9,]+)&f=chicago$/.exec(named.hash) || ["", ""])[1].split(",");
+    check("a link naming its area opens on it and keeps it in the hash",
+      named.zoom === city.zoom && near(named, city) && named.cityInView &&
+        ["wd", "wp", "cp"].every((c) => namedCodes.includes(c)),
+      JSON.stringify({ city, named }));
+    const namedAgain = await view(named.hash);
+    check("the link it is rewritten to opens on the area again",
+      namedAgain.zoom === named.zoom && near(namedAgain, named) && namedAgain.hash === named.hash,
+      JSON.stringify({ named, namedAgain }));
+    const unknown = await view("#layers=school-board&frame=nowhere");
+    check("an area this app does not declare is ignored and the layers decide",
+      unknown.zoom === city.zoom && near(unknown, city) && unknown.hash === "#l=sb",
+      JSON.stringify({ city, unknown }));
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}${named.hash}`);
+      const hash = await page.evaluate((n) => {
+        window[n].setSelectedPoint(41.8825, -87.6285);
+        return location.hash;
+      }, EXPORTS_NAME);
+      await context.close();
+      check("a selected point takes the area out of the hash",
+        /^#p=41\.8825,-87\.6285&/.test(hash) && !/(^|&)f=/.test(hash), hash);
+    }
+  }
+
   // 2i. THE PANEL COUNT COUNTS WHAT THE SIDEBAR SHOWS. The results panel's
   //     "N of M layers on" counts top-level toggles only — a nested sub-layer
   //     (Township under County, Ward Precinct under City Ward) is not one of
