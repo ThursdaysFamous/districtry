@@ -101,7 +101,7 @@ from build_privacy_page import (  # noqa: E402
     DARK_EXTRA, DARK_TOKENS, LIGHT_TOKENS, esc,
 )
 from build_history_page import shared_footer_byline, shared_goatcounter  # noqa: E402
-from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
+from build_county_status import ALL_COUNTIES, scan_dispatch_tables, slug_of  # noqa: E402
 
 # A county whose shipped roster names NOBODY. A page for it would be a page
 # about a county board with no officeholder on it, which is the opposite of
@@ -656,6 +656,21 @@ def il_districted(inst):
     # rest of them; this reads both, because the reader of a county page does
     # not care which of the two the names came from.
     dirs = [data_dir, os.path.join(REPO_ROOT, inst["tag"], "data", "source")]
+    # WHETHER THE MAP DRAWS A COUNTY'S DISTRICTS IS READ OFF THE APP'S OWN
+    # DISPATCH TABLE, because a roster in data/source is not always Cook's case.
+    # Bond, Bureau, Champaign, Marion and Piatt (measured 2026-10-20) have their
+    # members read from their own websites and their districts drawn nowhere, so
+    # their rosters sit in data/source with no county board entry in
+    # il/index.html at all. Their pages said the map's card read the same source
+    # live and offered to find the reader's district on the map, and neither was
+    # true: no card reads those files and the map has no district to find. A
+    # county the table names keeps the wording it had.
+    with open(os.path.join(REPO_ROOT, inst["tag"], "index.html"), encoding="utf-8") as f:
+        drawn = set(scan_dispatch_tables(f.read(), ()).get(inst["concept"], ()))
+    if not drawn:
+        fail("%s/index.html has no %s dispatch entries, so this cannot tell "
+             "which counties' districts the map draws"
+             % (inst["tag"], inst["concept"]))
     paths = sorted(set(
         path
         for d in dirs
@@ -714,10 +729,17 @@ def il_districted(inst):
                     % (os.path.relpath(path, REPO_ROOT), len(data)))
             nameless.add(name)
             continue
-        out[name] = {"districts": districts, "sourceUrl": source, "extras": extras,
-                     "skipped": skipped, "slug": slug, "at_large": False,
-                     "source_file": path,
-                     "not_read_since": (not_read or {}).get("since")}
+        rec = {"districts": districts, "sourceUrl": source, "extras": extras,
+               "skipped": skipped, "slug": slug, "at_large": False,
+               "source_file": path,
+               "not_read_since": (not_read or {}).get("since")}
+        if slug not in drawn:
+            rec["undrawn"] = True
+            rec["cta_layers"] = "county"
+            rec["cta_note"] = ("Opens the map with the county layer on. This "
+                               "board's districts are not on the map yet, so the "
+                               "map cannot find your district.")
+        out[name] = rec
     return out, problems, nameless, used, None
 
 
@@ -3122,6 +3144,17 @@ def districted_body(inst, name, rec):
                 "then, so these are the names it published before that day; the "
                 "map's %s card asks the same service directly"
                 % (esc(rec["not_read_since"]), esc(inst["phrase"])))
+    # A county whose districts the map does not draw has no card reading
+    # anything, so neither sentence above is true of it (il_districted says
+    # how that is decided).
+    if rec.get("undrawn"):
+        if rec.get("not_read_since") or app_reads:
+            fail("%s is marked undrawn but %s, and this page has no sentence "
+                 "for that" % (heading_of(inst, name, rec),
+                               "its roster is in data/app" if app_reads else
+                               "its roster was kept unread"))
+        same = ("the map does not draw these districts yet, so it cannot show "
+                "which one an address is in")
     # A RECORD MAY STATE WHERE ITS NAMES CAME FROM, and the default below
     # cannot serve one that did not come from the county. "exactly as the
     # county publishes them" is true of every roster scraped from a county's

@@ -1628,16 +1628,18 @@ SITES = {
         # on 2026-10-20 from a Claude Code sandbox with exactly these headers on
         # Python's own HTTP client: robots.txt served (175 bytes, no rule
         # matching this path), then the page three times twenty seconds apart,
-        # HTTP 200 and the same 97,254 bytes each time, naming all three. The
-        # requests stack was not tried, because a second client is never
-        # probed on a host that already serves the first. A run that meets the
-        # holding page at the PAGE parses nobody, and main() then carries the
-        # shipped roster forward rather than writing an empty board; one that
-        # meets it at robots.txt cannot read the policy, which disallows, and
-        # the whole run stops there, as it would for any host in this table. If
-        # that happens, delete this entry: the builder then carries Perry's
-        # shipped commissioners forward, saying so on every run, and every other
-        # county refreshes.
+        # HTTP 200 and the same 97,254 bytes each time, naming all three. From a
+        # GitHub runner the same evening robots.txt served the same 175 bytes on
+        # three reads fifteen seconds apart (robots-verdicts.json); the page has
+        # not been read from a runner yet. The requests stack was not tried,
+        # because a second client is never probed on a host that already serves
+        # the first. A run that meets the holding page at the PAGE parses
+        # nobody, and main() then carries the shipped roster forward rather than
+        # writing an empty board; one that meets it at robots.txt cannot read
+        # the policy, which disallows, and the whole run stops there, as it
+        # would for any host in this table. If that happens, delete this entry:
+        # the builder then carries Perry's shipped commissioners forward, saying
+        # so on every run, and every other county refreshes.
         "headers": UA_HEADERS_ROSTER_BOT,
         "client": "stdlib",
     },
