@@ -4,6 +4,9 @@
   "metro_bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 },
   "metro_center": [42.75, -75.77],
   "permalink_gate": { "minLat": 40.33, "maxLat": 45.17, "minLng": -79.91, "maxLng": -71.52 },
+  "frames": {
+    "nyc": ["borough-boundaries.json"]
+  },
   "socrata_host": "https://data.cityofnewyork.us",
   "socrata_app_token": "mde4YTGz0w7M4jDhUJ7WVn85W",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
@@ -245,6 +248,7 @@
       "id": "borough",
       "label": "Borough / County",
       "group": "geography",
+      "frame": "nyc",
       "area_rank": 12,
       "rank_note": "5 counties — largest",
       "rank_comment": [
@@ -284,6 +288,7 @@
       "id": "borough-president",
       "label": "Borough President",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 13,
       "source": {
         "answers": "Which Borough President's office covers this address.",
@@ -301,6 +306,7 @@
       "id": "district-attorney",
       "label": "District Attorney",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 14,
       "source": {
         "answers": "Which District Attorney's office covers this address.",
@@ -336,6 +342,7 @@
       "id": "municipal-court",
       "label": "Civil Court (Municipal Court) District",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 16,
       "rank_note": "28 Civil Court districts",
       "source": {
@@ -372,6 +379,7 @@
       "id": "school-district",
       "label": "Community School District",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 18,
       "rank_note": "32 community school districts",
       "source": {
@@ -390,6 +398,7 @@
       "id": "cec",
       "label": "Community Education Council",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 19,
       "rank_note": "same 32, drawn just after school-district",
       "source": {
@@ -408,6 +417,7 @@
       "id": "fire-battalion",
       "label": "FDNY Battalion",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 20,
       "rank_note": "49 FDNY battalions",
       "source": {
@@ -427,6 +437,7 @@
       "guide": { "href": "council-district.html", "text": "What Council district am I in?" },
       "label": "City Council District",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 21,
       "rank_note": "51 City Council districts",
       "source": {
@@ -446,6 +457,7 @@
       "guide": { "href": "community-board.html", "text": "What community board am I in?" },
       "label": "Community District / Board",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 22,
       "rank_note": "59 community districts",
       "source": {
@@ -464,6 +476,7 @@
       "id": "election-district",
       "label": "Election District",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 23,
       "rank_comment": [
         "election-district (~4,200) sits just BEFORE its parent Assembly so the",
@@ -503,6 +516,7 @@
       "id": "police-sector",
       "label": "NYPD Sector",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 25,
       "rank_note": "303 sectors — just before its parent precinct",
       "source": {
@@ -521,6 +535,7 @@
       "id": "police-precinct",
       "label": "NYPD Precinct",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 26,
       "rank_note": "78 NYPD precincts",
       "source": {
@@ -539,6 +554,7 @@
       "id": "zip-code",
       "label": "ZIP Code (MODZCTA)",
       "group": "geography",
+      "frame": "nyc",
       "area_rank": 28,
       "rank_note": "~178 MODZCTA",
       "source": {
@@ -575,6 +591,7 @@
       "id": "neighborhood",
       "label": "Neighborhood (NTA)",
       "group": "geography",
+      "frame": "nyc",
       "area_rank": 29,
       "rank_note": "~262 NTAs",
       "source": {
@@ -593,6 +610,7 @@
       "id": "hs-zone",
       "label": "High School Zone",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 30,
       "rank_note": "high-school zones (sparse)",
       "source": {
@@ -611,6 +629,7 @@
       "id": "ms-zone",
       "label": "Middle School Zone",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 31,
       "rank_note": "middle-school zones (partial)",
       "source": {
@@ -629,6 +648,7 @@
       "id": "es-zone",
       "label": "Elementary School Zone",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 32,
       "rank_note": "elementary zones — smallest polygon layer",
       "source": {
@@ -665,6 +685,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 34,
       "rank_note": "point marker — always topmost",
       "source": {

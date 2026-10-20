@@ -37,6 +37,17 @@ on:
       - "*/index.html"
       - "engine/**"
       - ".github/workflows/vector-tiles.yml"
+  # Main keeps the copy of the mirrored layers' sets that every pull request
+  # reads (the probe step below), because a copy a pull request saves is
+  # visible to that pull request alone. So main runs this check, and keeps
+  # what it fetched, whenever the records of those sets or the way the probe
+  # files them changes.
+  push:
+    branches: [main]
+    paths:
+      - "tiger-mirror.json"
+      - "portal-mirror.json"
+      - "scripts/probe_tile_cards.mjs"
   workflow_dispatch: {}
 
 # the same pin smoke-test.yml carries, so the cache key and the install agree
@@ -58,7 +69,10 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          # "3.14", not "3.x": runner images now carry Python 3.15, and
+          # shapely 2.1.2 and pyproj 3.7.2 publish no wheel for it. Only the
+          # workflows that install those two pin it (2026-10-20).
+          python-version: "3.14"
 
       # tippecanoe builds the archives; apt's is 2.49, the version the gate
       # was measured with
@@ -127,10 +141,34 @@ jobs:
             npx playwright install chromium
           fi
 
+      # The sets the mirrored layers were built from, kept between runs
+      # (scripts/probe_tile_cards.mjs says how each is filed): fetching them
+      # all again was 1,067 s of the probe's 1,392 s on 2026-10-20, about a
+      # gigabyte from the Census Bureau and three city portals. A pull
+      # request reads its own copy from an earlier run, or else main's.
+      - name: Restore the kept copy of the mirrored layers' sets
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/probe-tile-sets
+          key: probe-tile-sets-${{ hashFiles('tiger-mirror.json', 'portal-mirror.json') }}-${{ github.run_id }}
+          restore-keys: |
+            probe-tile-sets-${{ hashFiles('tiger-mirror.json', 'portal-mirror.json') }}-
+            probe-tile-sets-
+
       - name: Every tiled layer's card matches its card from the whole file
+        id: probe
         run: |
           # A listen queue of 1024 rather than socketserver's 5, for the
           # reason smoke-test.yml gives where it starts the same server.
           python3 -c 'import runpy, socketserver, sys; socketserver.TCPServer.request_queue_size = 1024; sys.argv = ["http.server", "8000"]; runpy.run_module("http.server", run_name="__main__", alter_sys=True)' >/dev/null 2>&1 &
           sleep 2
-          BASE_URL=http://localhost:8000 node scripts/probe_tile_cards.mjs
+          PROBE_SET_CACHE="$HOME/.cache/probe-tile-sets" BASE_URL=http://localhost:8000 node scripts/probe_tile_cards.mjs
+
+      # Saved only when this run fetched a set the copy lacked, and also when
+      # a layer failed, so a rerun does not fetch everything again.
+      - name: Keep the copy for the next run
+        if: ${{ !cancelled() && steps.probe.outputs.fetched != '' && steps.probe.outputs.fetched != '0' }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/probe-tile-sets
+          key: probe-tile-sets-${{ hashFiles('tiger-mirror.json', 'portal-mirror.json') }}-${{ github.run_id }}-${{ github.run_attempt }}

@@ -7282,6 +7282,28 @@
     },
     "lee": {
       "fire": {
+        "AMBOY FIRE": {
+          "comptrollerCode": "052/010/06",
+          "filedFor": "2024",
+          "heads": [
+            {
+              "name": "Duane Dickison",
+              "phone": "(815) 757-5682",
+              "role": "Chief"
+            },
+            {
+              "email": "nathanshaw@amboyfire.com",
+              "name": "Bridget Gramento",
+              "phone": "(815) 857-2325",
+              "role": "C.F.O."
+            }
+          ],
+          "office": {
+            "address": "25 N East Street, PO BOX 165",
+            "city": "Amboy IL 61310",
+            "email": "chief@amboyfire.com"
+          }
+        },
         "ASHTON FIRE": {
           "board": [
             {
@@ -10580,7 +10602,7 @@
       }
     }
   },
-  "generated": "2026-10-17T18:44:55Z",
+  "generated": "2026-10-19T19:03:00Z",
   "mailGivenForTwo": {
     "18532bdb20a6f776": [
       "4f2cbfb3f059084a",

@@ -2018,10 +2018,13 @@ try {
   //     browser's own dialog. It is offered ONCE: after a reload, with the
   //     event fired again, nothing shows. On a computer the event is left
   //     alone. An iPhone's Safari has no such event and gets a short tip with
-  //     no button. A launch of the installed app is counted once per window
-  //     and an install once, both by app and never by place. Chrome's real
-  //     event cannot be produced in a test, so a synthetic one carries the two
-  //     members the app uses, prompt() and userChoice.
+  //     no button. While the Android app is in Google Play's closed test, a
+  //     phone whose browser names Android is invited to the test instead; the
+  //     Install case below runs with this headless browser's own user agent,
+  //     which does not name Android. A launch of the installed app is counted
+  //     once per window and an install once, both by app and never by place.
+  //     Chrome's real event cannot be produced in a test, so a synthetic one
+  //     carries the two members the app uses, prompt() and userChoice.
   {
     const PHONE = { width: 390, height: 844 };
     const TAG = APP_DIR.replace(/\/$/, "");
@@ -2158,6 +2161,106 @@ try {
       const events = await installEvents(page);
       check("closing the tip removes it, and the tip and its closing are each counted once",
         gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
+      await context.close();
+    }
+    // WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST, an Android phone
+    // is invited to the test instead of being offered the website version:
+    // Chrome's event is still held, no Install button is offered, and the bar
+    // links the steps page. A reader who was offered the install before the
+    // test began (the key already reads "shown") is asked once about the
+    // test, and not again; and the Play app's own window is not asked at all.
+    // A close or a followed link writes "test-answered", which the front
+    // page's own invitation to the test reads (Adam, 2026-10-20: a "no"
+    // stays closed), and an answer given there keeps this bar away too.
+    const ANDROID_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36";
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      await context.addInitScript(() => {
+        try {
+          if (!sessionStorage.getItem("__inviteSeeded")) {
+            sessionStorage.setItem("__inviteSeeded", "1");
+            localStorage.setItem("districtry-install-invite", "shown");
+          }
+        } catch (e) { /* blocked storage: the checks below report it */ }
+      });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      const shown = await page.waitForSelector(".install-invite a.install-invite-go", { timeout: 10000 }).then(() => true, () => false);
+      const bar = await page.evaluate(() => {
+        const el = document.querySelector(".install-invite");
+        const a = el && el.querySelector("a.install-invite-go");
+        return el ? { text: el.textContent, href: a && a.getAttribute("href"),
+          install: !!el.querySelector("button.install-invite-go") } : null;
+      });
+      check("on an Android phone the app holds Chrome's install event and invites the reader to the Play test instead",
+        held === true && shown && !!bar && /Android app/.test(bar.text) && !bar.install &&
+        bar.href === "/android.html?ref=map", JSON.stringify({ held, bar }));
+      if (shown) {
+        await page.evaluate(() => document.addEventListener("click", (e) => {
+          if (e.target.closest && e.target.closest(".install-invite-go")) e.preventDefault();
+        }));
+        await page.click(".install-invite-go");
+      }
+      await page.waitForTimeout(200);
+      const after = await page.evaluate(() => ({
+        prompted: window.__prompted || 0,
+        bar: !!document.querySelector(".install-invite"),
+        seen: localStorage.getItem("districtry-install-invite"),
+      }));
+      const events = await installEvents(page);
+      check("following the test link counts it, records the answer, hands Chrome's dialog nothing, and the bar goes",
+        after.prompted === 0 && !after.bar && after.seen === "test-answered" &&
+        events.join() === "install-invite/test-shown,install-invite/test-join",
+        JSON.stringify({ after, events }));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      const heldAgain = await fireInstallEvent(page);
+      await page.waitForTimeout(4500);
+      const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
+      check("the test is offered once: a later visit holds the event and shows nothing",
+        heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      const page = await booted(context, VIEW, stubCounter);
+      const shown = await page.waitForSelector(".install-invite-close", { timeout: 10000 }).then(() => true, () => false);
+      if (shown) await page.click(".install-invite-close");
+      await page.waitForTimeout(200);
+      const after = await page.evaluate(() => ({
+        bar: !!document.querySelector(".install-invite"),
+        seen: localStorage.getItem("districtry-install-invite"),
+      }));
+      const events = await installEvents(page);
+      check("closing the test invitation records the answer the front page reads, and is counted once",
+        shown && !after.bar && after.seen === "test-answered" &&
+        events.join() === "install-invite/test-shown,install-invite/test-closed",
+        JSON.stringify({ shown, after, events }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      await context.addInitScript(() => {
+        try { localStorage.setItem("districtry-install-invite", "test-answered"); } catch (e) { /* reported below */ }
+      });
+      const page = await booted(context, VIEW, stubCounter);
+      await page.waitForTimeout(4500);
+      const bar = await page.evaluate(() => !!document.querySelector(".install-invite"));
+      const events = await installEvents(page);
+      check("a reader who answered the front page's invitation is not invited again on the map",
+        !bar && events.length === 0, JSON.stringify({ bar, events }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
+      const page = await booted(context, `${BASE}?ref=play#p=41.8825,-87.6285&l=cg`, stubCounter);
+      await page.waitForTimeout(4500);
+      const inApp = await page.evaluate(() => ({
+        marked: document.documentElement.classList.contains("dst-play-app"),
+        bar: !!document.querySelector(".install-invite"),
+      }));
+      check("inside the Play app nobody is invited to the test",
+        inApp.marked && !inApp.bar, JSON.stringify(inApp));
       await context.close();
     }
   }
@@ -2861,6 +2964,86 @@ try {
     const c = await view("#p=41.8825,-87.6285&l=sb,zz9&z=14");
     check("an unknown code in a short link is dropped, and the known ones still apply",
       c.on.join() === "school-board" && !/zz9/.test(c.hash), JSON.stringify(c));
+  }
+
+  // 2h3. A LINK NAMING CITY LAYERS AND NO POINT OPENS ON THE CITY. The map
+  //     link on a question page names its layers and nothing else, and until
+  //     2026-10-20 this app opened every such link on the whole state, where
+  //     Chicago sits at or past the top edge of the map. The worksheet's
+  //     `frames` now names the area a city or county layer answers in, and
+  //     ENGINE permalink opens a link naming only such layers on their area.
+  //     Read off the map, never off the hash: a Chicago-only link opens closer
+  //     in than the bare app with all of Chicago in view and no `z=` written,
+  //     and the link it is rewritten to opens the same way again; one that
+  //     also names a statewide layer keeps the state view; and one carrying
+  //     its own zoom keeps that zoom, centred on Chicago. The ward page's
+  //     layers also answer in the suburbs, so its link names its area
+  //     (`frame=chicago`): that opens on Chicago and stays in the rewritten
+  //     hash until a point is selected, the same layers without it keep the
+  //     state view, and an area this app does not declare is ignored.
+  {
+    const view = async (hash) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}${hash}`);
+      const got = await page.evaluate((n) => {
+        const m = window[n].map, c = m.getCenter();
+        // the extent of the shipped school-board-districts.json, which is Chicago
+        const city = window.L.latLngBounds([41.6443, -87.9401], [42.0231, -87.5237]);
+        return { hash: location.hash, zoom: m.getZoom(), center: [c.lat, c.lng],
+          cityInView: m.getBounds().contains(city) };
+      }, EXPORTS_NAME);
+      await context.close();
+      return got;
+    };
+    const near = (x, y) => Math.abs(x.center[0] - y.center[0]) < 0.05 && Math.abs(x.center[1] - y.center[1]) < 0.05;
+    const bare = await view("");
+    const city = await view("#layers=school-board");
+    check("a link naming only Chicago layers opens on Chicago",
+      city.zoom > bare.zoom && city.cityInView && city.hash === "#l=sb",
+      JSON.stringify({ bare, city }));
+    const again = await view(city.hash);
+    check("the link it is rewritten to opens the same way again",
+      again.zoom === city.zoom && near(again, city) && again.hash === city.hash,
+      JSON.stringify({ city, again }));
+    const mixed = await view("#layers=school-board,congress");
+    check("a link that also names a statewide layer keeps the state view",
+      mixed.zoom === bare.zoom && near(mixed, bare), JSON.stringify({ bare, mixed }));
+    const zoomed = await view("#layers=school-board&zoom=12");
+    check("a link with its own zoom keeps it, centred on Chicago",
+      zoomed.zoom === 12 && Math.abs(zoomed.center[0] - 41.834) < 0.05 &&
+        Math.abs(zoomed.center[1] + 87.732) < 0.05 && zoomed.hash === "#l=sb&z=12",
+      JSON.stringify(zoomed));
+    const wardLayers = "#layers=ward,ward-precinct,county-precinct";
+    const unnamed = await view(wardLayers);
+    check("the ward page's layers alone keep the state view",
+      unnamed.zoom === bare.zoom && near(unnamed, bare), JSON.stringify({ bare, unnamed }));
+    const named = await view(wardLayers + "&frame=chicago");
+    // The rewritten hash also names the parent layers the ward page's
+    // sub-layers turn on, so it is read for the three it must carry.
+    const namedCodes = (/^#l=([a-z0-9,]+)&f=chicago$/.exec(named.hash) || ["", ""])[1].split(",");
+    check("a link naming its area opens on it and keeps it in the hash",
+      named.zoom === city.zoom && near(named, city) && named.cityInView &&
+        ["wd", "wp", "cp"].every((c) => namedCodes.includes(c)),
+      JSON.stringify({ city, named }));
+    const namedAgain = await view(named.hash);
+    check("the link it is rewritten to opens on the area again",
+      namedAgain.zoom === named.zoom && near(namedAgain, named) && namedAgain.hash === named.hash,
+      JSON.stringify({ named, namedAgain }));
+    const unknown = await view("#layers=school-board&frame=nowhere");
+    check("an area this app does not declare is ignored and the layers decide",
+      unknown.zoom === city.zoom && near(unknown, city) && unknown.hash === "#l=sb",
+      JSON.stringify({ city, unknown }));
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}${named.hash}`);
+      const hash = await page.evaluate((n) => {
+        window[n].setSelectedPoint(41.8825, -87.6285);
+        return location.hash;
+      }, EXPORTS_NAME);
+      await context.close();
+      check("a selected point takes the area out of the hash",
+        /^#p=41\.8825,-87\.6285&/.test(hash) && !/(^|&)f=/.test(hash), hash);
+    }
   }
 
   // 2i. THE PANEL COUNT COUNTS WHAT THE SIDEBAR SHOWS. The results panel's
