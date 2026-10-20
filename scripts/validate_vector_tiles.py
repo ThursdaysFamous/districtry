@@ -158,7 +158,11 @@ def even_odd(x, y, rings):
 def check(path, seed):
     import mapbox_vector_tile
     from pmtiles.reader import Reader, MmapSource, all_tiles
+    from build_vector_tiles import read_directories_once
 
+    # every tile and point below is read through Reader.get, which would
+    # otherwise unpack the whole directory again each time
+    read_directories_once()
     with open(path, "rb") as fh:
         src = MmapSource(fh)
         reader = Reader(src)

@@ -1401,6 +1401,18 @@ archive was rebuilt at zoom 12). `vector-tiles.yml` now also runs on changes
 to any app's `index.html` or the engine, since a registration or a query
 change can break the card without touching an archive.
 
+**Most of those two gates' time was the tile reader, not the checks**
+(2026-10-20). By 2026-10-19 a pull request's tile check spent 2 min 39 s in
+`--committed` (67 archives) and 5 min 32 s in `validate_vector_tiles.py`
+(146), on every run. Profiled, almost all of it was `pmtiles`' `Reader.get`
+unpacking the archive's whole root directory again, up to 6,863 entries in
+pure Python, for every tile it returned. `read_directories_once()` in
+`build_vector_tiles.py` keeps each parsed directory under its own bytes, which
+changes no answer because the parse depends on nothing else; both gates call
+it. Measured here, `--committed` went from 88 s to 36 s and
+`validate_vector_tiles.py` from 166 s to 48 s, and each printed exactly the
+lines it printed before.
+
 **Not yet on tiles (phase 5b).** The county-dispatched layers — Illinois's
 county board, county precinct, fire, park and library districts and judicial
 subcircuits, the Iowa and Michigan city-ward layers, and New York's county
