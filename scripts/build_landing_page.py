@@ -245,6 +245,7 @@ CANONICAL = "https://districtry.com/"
 # page fills, and an override naming a page that is not there. A new state
 # needs no edit here at all — its congress.html and state-legislature.html take
 # the defaults; a new KIND of page is what has to be filed.
+TAIL_ROW = "Also answered in one place"
 QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
@@ -274,10 +275,32 @@ QUESTION_ROWS = [
     # The tail row, for a concept only one place answers. A row of its own per
     # page would be three headings each naming a single link, which is the
     # shape the regrouping exists to retire.
-    ("Also answered in one place", ("precinct.html", "precinct-maps.html", "township.html",
-                                    "community-board.html",
-                                    "county-auditor.html", "borough.html")),
+    (TAIL_ROW, ("precinct.html", "precinct-maps.html", "township.html",
+                "community-board.html",
+                "county-auditor.html", "borough.html")),
 ]
+
+# THE COLOUR EACH QUESTION'S TILE IS MARKED IN: the map colour of the concept
+# the question asks about, from layer-concepts.json `colors`, so a reader who
+# goes on to the map meets the same colour on that layer there. The dark twin
+# is build_dark_map_palette.dark_twin over the whole fleet's colours, which is
+# the colour every app draws that concept in at night, not a second guess at
+# it. The tail row asks no one question, so it names no concept and its tile
+# is marked in the page's own neutral colour rather than one borrowed from a
+# concept it would then seem to be about. render_asks fails on a question
+# with no entry here, an entry naming a concept with no colour, and an entry
+# for a question no row asks.
+QUESTION_CONCEPT = {
+    "Who is my U.S. representative?": "us-house",
+    "Who is my state legislator?": "state-senate",
+    "Who sits on my county board?": "county-board",
+    "Who represents me on the city council?": "city-council",
+    "What police district am I in?": "police-district",
+    "Which school board district am I in?": "school-board-district",
+    "Which special district covers me?": "fire-district",
+    "Which court elects my judges?": "supreme-court-district",
+    TAIL_ROW: None,
+}
 
 # The topic each page's chip names, by page basename — the default for every
 # instance that carries that page.
@@ -857,6 +880,7 @@ def render_asks(metros):
                      % (text, seen[text], href))
             seen[text] = href
 
+    colours = question_colours()
     out = []
     for question, chips in groups:
         links = "\n".join(
@@ -864,11 +888,55 @@ def render_asks(metros):
             ' &#183; %s</span></a></li>' % (html.escape(href, quote=True),
                                             html.escape(place), html.escape(topic))
             for place, topic, href in chips)
-        out.append('      <div class="ask">\n'
-                   '        <h3>%s</h3>\n'
+        # What the closed tile says is behind it. Counted from the chips, so
+        # it moves the day a page is added and needs no edit here.
+        places = len({href.split("/")[1] for _, _, href in chips})
+        if question == TAIL_ROW:
+            count = "%d page%s" % (len(chips), "" if len(chips) == 1 else "s")
+        elif places == len(chips):
+            count = "%d place%s" % (places, "" if places == 1 else "s")
+        else:
+            count = "%d pages in %d place%s" % (len(chips), places, "" if places == 1 else "s")
+        style = (' style="--lc-l:%s;--lc-d:%s"' % colours[question]) if question in colours else ""
+        out.append('      <details class="ask"%s open>\n'
+                   '        <summary><span class="ask-sw" aria-hidden="true"></span>'
+                   '<h3>%s</h3><span class="ask-n">%s</span></summary>\n'
                    '        <ul class="ask-chips">\n%s\n        </ul>\n'
-                   '      </div>' % (html.escape(question), links))
+                   '      </details>' % (style, html.escape(question), count, links))
     return "\n".join(out)
+
+
+def question_colours():
+    """{question: (light, dark)} for every question row that names a concept.
+
+    build_dark_map_palette is imported here rather than at the top because it
+    reads the fleet through generate_metro_files, which needs jsonschema, and
+    several generators import this module for its shell alone."""
+    import build_dark_map_palette as palette
+    asked = [q for q, _ in QUESTION_ROWS]
+    missing = [q for q in asked if q not in QUESTION_CONCEPT]
+    if missing:
+        fail("QUESTION_CONCEPT has no entry for %s. Name the concept whose map "
+             "colour marks its tile, or None for a row that asks no one question."
+             % ", ".join(repr(q) for q in missing))
+    stale = sorted(q for q in QUESTION_CONCEPT if q not in asked)
+    if stale:
+        fail("QUESTION_CONCEPT names %s, which no question row asks."
+             % ", ".join(repr(q) for q in stale))
+    with open(os.path.join(REPO_ROOT, "layer-concepts.json"), encoding="utf-8") as f:
+        drawn = json.load(f)["colors"]
+    bounds = palette.fleet_bounds([text for _, _, text in palette.targets()])
+    out = {}
+    for question in asked:
+        concept = QUESTION_CONCEPT[question]
+        if concept is None:
+            continue
+        line = (drawn.get(concept) or {}).get("line")
+        if not line:
+            fail("QUESTION_CONCEPT gives %r the concept %r, which has no line colour "
+                 "in layer-concepts.json." % (question, concept))
+        out[question] = (line.upper(), palette.dark_twin(line.upper(), bounds))
+    return out
 
 
 DC = "District of Columbia"
@@ -1288,10 +1356,12 @@ h1 {
   color: var(--ink-3);
 }
 
+/* Section headings read as headings, in sentence case. Until 2026-10-21 they
+   were 14px grey capitals, which is how a form or a printed report marks its
+   parts, and the page read like one. */
 h2 {
-  font: var(--font-heading-weight) 14px/1 var(--font-heading);
-  letter-spacing: .09em; text-transform: uppercase;
-  color: var(--ink-3); margin: 44px 0 12px;
+  font: var(--font-heading-weight) 27px/1.15 var(--font-heading);
+  color: var(--ink); margin: 60px 0 14px; text-wrap: balance;
 }
 .section-note {
   margin: -2px 0 14px; font-size: 13.5px; line-height: 1.5;
@@ -1396,17 +1466,59 @@ a.st:hover .st-scope, a.st:focus-visible .st-scope { color: var(--ink-3); }
    Google's link guidance sets and the reason render_asks refuses to emit two
    chips alike. They are a <ul> because they are a list of places: a screen
    reader announces how many answer each question and can jump the lot. */
-.asks { display: flex; flex-direction: column; }
-.ask {
-  display: grid; grid-template-columns: 330px minmax(0, 1fr);
-  gap: 8px 18px; align-items: center; padding: 12px 0;
+/* EACH QUESTION IS A TILE THAT OPENS TO ITS PLACES. As rows, the chips took
+   36%% of this page on a computer and 52%% on a phone, measured 2026-10-21, and
+   grew by one chip per question with every state that went live. Closed, the
+   nine questions sit in one block of tiles, each marked in the map colour of
+   what it asks about and saying how many places answer it. They ship OPEN and
+   the script under them folds them, the state list's rule, so a reader with
+   no script gets every link. The cost is a second tap to reach a question
+   page. A tile opens where it stands rather than across the row, because a
+   tile spanning the row would leave a hole wherever it did not start one. */
+.asks {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px; align-items: start;
 }
-.ask + .ask { border-top: 1px solid var(--border); }
+.ask {
+  --lc: var(--lc-l, var(--muted));
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-card);
+  transition: border-color .14s ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ask { --lc: var(--lc-d, var(--muted)); }
+}
+:root[data-theme="dark"] .ask { --lc: var(--lc-d, var(--muted)); }
+.ask:hover { border-color: var(--brand-border); }
+.ask > summary {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) 14px;
+  column-gap: 12px; row-gap: 2px; align-items: center;
+  min-height: 66px; padding: 13px 14px; list-style: none; cursor: pointer;
+  border-radius: var(--radius-card);
+}
+.ask > summary::-webkit-details-marker { display: none; }
+.ask > summary:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+.ask-sw {
+  grid-row: 1 / span 2; width: 30px; height: 30px; border-radius: 7px;
+  border: 2px solid var(--lc); background: var(--surface);
+  background: color-mix(in srgb, var(--lc) 16%%, var(--surface));
+}
 .ask h3 {
-  margin: 0; font: var(--font-heading-weight) 19px/1.2 var(--font-heading);
+  margin: 0; font: var(--font-heading-weight) 17.5px/1.2 var(--font-heading);
   color: var(--ink);
 }
-.ask-chips { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: 0; padding: 0; }
+.ask-n { grid-column: 2; font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+.ask > summary::after {
+  content: ""; grid-column: 3; grid-row: 1 / span 2; justify-self: center;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3);
+  transform: translateY(-2px) rotate(45deg); transition: transform .14s ease;
+}
+.ask[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.ask-chips {
+  display: flex; flex-wrap: wrap; gap: 7px; list-style: none;
+  margin: 0; padding: 0 14px 14px 56px;
+}
 .chip {
   display: inline-flex; align-items: center; min-height: 36px; padding: 7px 13px;
   background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
@@ -1416,7 +1528,10 @@ a.st:hover .st-scope, a.st:focus-visible .st-scope { color: var(--ink-3); }
 }
 .chip:hover, .chip:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
 .chip:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
-.chip-topic { color: var(--ink-3); font-weight: 400; }
+/* `pre`, because a chip is a flex box and its topic a flex item, and a flex
+   item drops the space it starts with: every chip read "Illinois· U.S. House"
+   on screen while its text said "Illinois · U.S. House". */
+.chip-topic { color: var(--ink-3); font-weight: 400; white-space: pre; }
 
 .does { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 22px 26px; }
 .does > div { padding-top: 13px; border-top: 2px solid var(--border); }
@@ -1476,12 +1591,15 @@ footer .support b { color: var(--ink); }
 .foot-links a { display: block; padding: 5px 0; min-height: 24px; line-height: 1.4; text-decoration: none; }
 .foot-links a:hover, .foot-links a:focus-visible { text-decoration: underline; }
 
+@media (max-width: 860px) {
+  .asks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 560px) {
   .wrap { padding: 28px 18px 56px; }
   header.mast { gap: 8px; margin-bottom: 26px; }
   .wordmark { font-size: 25px; }
   h1 { font-size: 31px; }
-  h2 { margin-top: 34px; }
+  h2 { font-size: 24px; margin-top: 44px; }
   .search-row { flex-direction: column; }
   .notice { margin-bottom: 22px; }
   .states { columns: 2; column-gap: 10px; }
@@ -1502,7 +1620,8 @@ footer .support b { color: var(--ink); }
   /* One column, and the chips grow: a row of links is the shape WCAG 2.5.8
      catches, and 36px tall chips 7px apart are inside each other's 24px
      circle once they wrap on a narrow screen. */
-  .ask { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 0; }
+  .asks { grid-template-columns: minmax(0, 1fr); }
+  .ask-chips { padding-left: 14px; }
   .chip { min-height: 40px; padding: 9px 14px; }
   .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
@@ -1584,6 +1703,17 @@ footer .support b { color: var(--ink); }
     <div class="asks">
 %(asks)s
     </div>
+    <script>
+    /* The question tiles ship open, so a reader with no script still gets
+       every link, and fold here, right after they are parsed, so no screen
+       paints them open first. */
+    (function () {
+      var asks = document.currentScript.previousElementSibling;
+      if (!asks) return;
+      var tiles = asks.querySelectorAll("details.ask");
+      for (var i = 0; i < tiles.length; i++) tiles[i].open = false;
+    })();
+    </script>
 
     <h2>What it does</h2>
     <div class="does">

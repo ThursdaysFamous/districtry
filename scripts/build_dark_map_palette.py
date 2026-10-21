@@ -177,6 +177,22 @@ def fleet_bounds(texts):
     return min(ls), max(ls)
 
 
+def dark_twin(colour, bounds):
+    """One light colour -> its dark counterpart, remapped over `bounds`.
+
+    Split out so the front page's question tiles (build_landing_page.py), which
+    show each question in its concept's map colour, take the same dark colour
+    the apps draw that concept in rather than a second derivation of it."""
+    lo, hi = bounds
+    span = (hi - lo) or 1.0
+    L, C, H = _oklch(colour)
+    Ln = DARK_L_LO + (L - lo) * (DARK_L_HI - DARK_L_LO) / span
+    Cn = C * DARK_CHROMA
+    while Cn > 0 and not _in_gamut(*_lch_to_lab(Ln, Cn, H)):
+        Cn -= 0.004
+    return _hex(*_lch_to_lab(Ln, Cn, H))
+
+
 def dark_map_palette(index_html, bounds=None):
     """Every layer stroke/fill literal in index.html -> its dark counterpart,
     remapped over `bounds` (the fleet's lightness range) when given."""
@@ -184,17 +200,7 @@ def dark_map_palette(index_html, bounds=None):
     if bounds is None:
         ls = [_oklch(c)[0] for c in palette]
         bounds = (min(ls), max(ls))
-    lo, hi = bounds
-    span = (hi - lo) or 1.0
-    out = {}
-    for c in palette:
-        L, C, H = _oklch(c)
-        Ln = DARK_L_LO + (L - lo) * (DARK_L_HI - DARK_L_LO) / span
-        Cn = C * DARK_CHROMA
-        while Cn > 0 and not _in_gamut(*_lch_to_lab(Ln, Cn, H)):
-            Cn -= 0.004
-        out[c] = _hex(*_lch_to_lab(Ln, Cn, H))
-    return out
+    return {c: dark_twin(c, bounds) for c in palette}
 
 def render(index_html, bounds=None):
     """The region body: one JS object literal, sorted, wrapped to stay readable."""

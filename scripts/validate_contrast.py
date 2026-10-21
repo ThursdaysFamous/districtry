@@ -213,7 +213,7 @@ FLOORS = {"text": 4.5, "large": 3.0, "ui": 3.0, "decorative": None}
 # literal is the card palette's, which is the next gate's subject.
 PAIRS = [
     # — body text on the grounds —
-    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body; the phone install invitation's .install-invite-text on its --panel bar (styles-app)"),
+    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body; the phone install invitation's .install-invite-text on its --panel bar (styles-app); landing .ask h3, each question tile's question (build_landing_page)"),
     ("ink",        "paper",      "text", "app ground: body (styles-app); every root page's body; the question pages' .lookup-input value, a --paper field inside the --panel .lookup-card (shell)"),
     ("ink",        "surface-2",  "text", ".layer-block-head in DARK only — the skin repaints it #262331 (== --surface-2 dark) under --card-ink #ece9f4 (== --ink dark); in light the head is styles-card-v2's literal #fff (== --surface), so the light half of this row re-measures (ink, surface). The --surface-2 VALUE reaches a light-tier reader through .card-section-label (the muted row below)"),
     ("ink",        "brand-tint", "text", "landing .notice-h and .pill; privacy .tldr (build_landing_page, build_privacy_page — children of body or of an unpainted main, i.e. on --paper)"),
@@ -226,7 +226,7 @@ PAIRS = [
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body)"),
     ("ink-3",      "border",     "text", ".gap-badge at 10px — text on the border colour (styles-footer)"),
-    ("muted",      "surface",    "text", "privacy .masthead h1 small, .which, .footer-inner; coverage-map attribution at 10px; landing .st-scope at 12px, the not-yet .st-off names and the .cov-key at 12.5px, all on the --surface .coverage card (build_landing_page)"),
+    ("muted",      "surface",    "text", "privacy .masthead h1 small, .which, .footer-inner; coverage-map attribution at 10px; landing .st-scope at 12px, the not-yet .st-off names and the .cov-key at 12.5px, all on the --surface .coverage card, and each question tile's .ask-n count at 12.5px (build_landing_page)"),
     ("muted",      "paper",      "text", "landing .lede; history .kicker and its scheduled-jobs th at 12px"),
     ("muted",      "surface-2",  "text", ".card-section-label and .card-tinted (styles-card-v2) on --card-section-bg, which the skin sets to --surface-2's value in both tiers, under --card-muted, which equals --muted — literal equals token"),
     ("muted",      "brand-tint", "text", "landing #notice-dismiss at 11.5px (build_landing_page — on body)"),
@@ -234,7 +234,7 @@ PAIRS = [
 
     # — the quiet tier: small labels, meta, placeholders — still TEXT —
     ("faint",      "surface",    "text", ".dst-metro-menu-label 10px, .footer-meta 11px, .title-metro at 40px (large text, whose floor is 3.0 — this row holds the pair to the stricter 4.5 and it clears neither), .hover-foot (skin, as --slate-soft; .hover-foot is the literal #9aa3b2 on literal #fff in light); the app's search placeholder in LIGHT, whose --dst-sunken interior is #ffffff (== --surface); .empty-state-lede 12.5px (il TEMPLATE block); privacy td small 12px; landing .pill-n at rest"),
-    ("faint",      "paper",      "text", "landing h2 at 15px, .cta-note 13px (build_landing_page, shell); the app's search placeholder in DARK, whose --dst-sunken interior is #15131b (== --paper dark)"),
+    ("faint",      "paper",      "text", ".cta-note 13px (shell); the app's search placeholder in DARK, whose --dst-sunken interior is #15131b (== --paper dark)"),
     ("faint",      "brand-tint", "text", "landing .pill:hover .pill-n at 12px (build_landing_page — on body)"),
     ("faint",      "brand-tint@surface", "text", "privacy.html `td small code.k` at 10.8px — .k sets a background and no colour, so inside the table's small text it inherits --faint and sits on the tint over the --surface card (build_privacy_page). The (ink, brand-tint@surface) row above is the same .k in body prose"),
     ("faint",      "dst-brand-tint-soft@surface", "text", ".dpf-support at 11px on all six app pages (styles-districtry-skin) — the one line in the panel foot a reader is asked to act on, as --slate-soft on the skin's own tint over the --panel foot"),
