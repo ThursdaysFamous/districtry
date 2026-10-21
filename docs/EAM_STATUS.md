@@ -43,19 +43,19 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
-| ar | **EAMC** | 75 | 75/75 | 775 | 737 | all | 20 | all | all 14 levels |
+| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 20 | all | 13 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 15 | all | all 14 levels |
-| ia | **EAM·** | 99 | 99/99 | 94 | 94 | all | 71 | all | 13 of 14 levels |
+| ia | **EAM·** | 99 | 99/99 | 94 | 94 | all | 71 | all | 12 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,157 | all | 423 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 20 | all | 11 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 17 | all | 12 of 14 levels |
-| la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 23 | all | 9 of 14 levels |
+| la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 24 | all | 9 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 68 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 21 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 24 | all | 8 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 19 | all | all 14 levels |
-| ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 36 | all | 11 of 14 levels |
-| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 18 | all | 11 of 14 levels |
+| ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 36 | all | 10 of 14 levels |
+| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 18 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 20 | all | 13 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 19 | all | 10 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,576 | all | 267 | all | 13 of 14 levels |
@@ -68,19 +68,16 @@ per county, so each one is named under its state below.
 
 ## What each state still needs
 
-### ar — **E.A.M.C.**
+### ar — EAM·
 
-
-Every test that applies is met. Expansion is finished;
-this instance is in maintenance.
-
-- **Covered: yes.** Every expected level of government is answered.
+- **Watched, not rewritten:** `ar/data/app/ar-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
+- **Watched, not rewritten:** `ar/data/app/ar-quorum-court-districts.json`, by `.github/workflows/update-ar-county-officials.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
+- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `ar-appeals-districts.json`, `ar-city-wards.json`, `ar-fire-districts.json`, `ar-house-districts.json`, `ar-judicial-circuits.json`, `ar-precincts.json`, `ar-school-board-zones.json`, `ar-senate-districts.json`, `ar-townships.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Arkansas has no sub-county general-purpose government — outside a city or town limit the county governs. The 1,051 sub-county units the Census publishes for Arkansas are townships, which the Census records as having no functioning government.
   - **13. Tribal governments** — Arkansas has no tribal land. The Census publishes no federal or state reservation and no off-reservation trust land in the state, measured 2026-10-15 with a control in Tennessee.
-
-- **Watched, not rewritten:** `ar/data/app/ar-city-councils.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-city-council-pages.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
-- **Watched, not rewritten:** `ar/data/app/ar-quorum-court-districts.json` is refreshed by no job because it cannot safely be — `.github/workflows/update-ar-county-officials.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
 
 ### ca — **E.A.M.C.**
 
@@ -104,8 +101,9 @@ this instance is in maintenance.
 ### ia — EAM·
 
 - **Under a WATCH.md plan (51):** re-checked on a stated cadence rather than by a job — `adair-county-outline.json`, `ames-wards.json`, `bettendorf-wards.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `calhoun-county-outline.json`, `cedar-falls-wards.json`, `cedar-rapids-wards.json`, `cerro-gordo-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `davenport-wards.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `dubuque-wards.json`, `floyd-county-outline.json`, `franklin-county-outline.json`, `guthrie-county-outline.json`, `hamilton-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `kossuth-county-outline.json`, `lee-county-outline.json`, `linn-county-outline.json`, `marion-wards.json`, `marshalltown-wards.json`, `mason-city-wards.json`, `metro-outline.json`, `montgomery-county-outline.json`, `palo-alto-county-outline.json`, `pottawattamie-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `warren-county-outline.json`, `waterloo-wards.json`, `webster-county-outline.json`, `west-des-moines-wards.json`, `winneshiek-county-outline.json`, `worth-county-outline.json`, `wright-county-outline.json`
-- **Covered: no.** 1 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+- **Covered: no.** 2 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 79 of 99 counties name a governing body and draw it where it is elected by district; 19 more name a body elected by district whose districts are not drawn, or not matched to their members. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` (wright) — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-supervisor-count-impossible` (pottawattamie) — County elections office (letter addressed to Auditor Mary Ann Hanusa) was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 
 ### il — EAM·
 
@@ -136,7 +134,7 @@ this instance is in maintenance.
 
 ### la — EAM·
 
-- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `la-city-wards.json`, `la-court-of-appeal-districts.json`, `la-district-court-districts.json`, `la-house-districts.json`, `la-parish-district-parishes.json`, `la-parish-districts.json`, `la-precincts.json`, `la-senate-districts.json`, `la-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
+- **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `la-city-wards.json`, `la-conservation-districts.json`, `la-court-of-appeal-districts.json`, `la-district-court-districts.json`, `la-house-districts.json`, `la-parish-district-parishes.json`, `la-parish-districts.json`, `la-precincts.json`, `la-senate-districts.json`, `la-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 8 of 64 counties name a governing body and draw it where it is elected by district; 56 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 7 of 13 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 6 more name a body elected by ward or district whose wards are not drawn; unanswered: Alexandria city, Kenner city, Lake Charles city, Monroe city, New Iberia city, Shreveport city
@@ -189,19 +187,21 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `ny-county-governing-body` accounts for every county in the state, which is what Examined rests on here: 11 of 62 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (24):** re-checked on a stated cadence rather than by a job — `borough-boundaries.json`, `bronx-county-outline.json`, `brooklyn-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `judicial-districts.json`, `manhattan-county-outline.json`, `metro-outline.json`, `municipal-court-districts.json`, `ny-central-hs-districts.json`, `ny-cities-towns.json`, `ny-counties.json`, `ny-school-districts.json`, `ny-state-outline.json`, `ny-villages.json`, `queens-county-outline.json`, `state-assembly-districts.json`, `state-senate-districts.json`, `staten-island-county-outline.json`, `sullivan-county-outline.json`, `sullivan-fire-districts.json`, `sullivan-library-districts.json`, `tompkins-county-outline.json`, `tompkins-legislature-districts.json`
-- **Covered: no.** 3 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 10 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov) was asked on 2026-10-07 and has not answered; the record earns nothing until a thread writes the outcome
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 104 units at 25,000+ name a governing body; unanswered: Albany city, Amherst town, Auburn city, Babylon town, Bethlehem town, Binghamton city, Brighton town, Brookhaven town and 95 more. A record declares this level and earns nothing: `ny-local-governing-body` — Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov) was asked on 2026-10-07 and has not answered; the record earns nothing until a thread writes the outcome
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level). A record declares this level and earns nothing: `ny-local-governing-body` — Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov) was asked on 2026-10-07 and has not answered; the record earns nothing until a thread writes the outcome
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 
 ### ok — EAM·
 
 - **Watched, not rewritten:** `ok/data/app/ok-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
 - **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
-- **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 15 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Muskogee city
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Oklahoma has no sub-county general-purpose government — outside a city or town limit the county governs. The 305 sub-county units the Census publishes for Oklahoma are census county divisions: statistical areas, not governments.
 

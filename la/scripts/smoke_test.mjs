@@ -1289,6 +1289,94 @@ try {
     await context.close();
   }
 
+  // 9c. THE SOIL AND WATER CONSERVATION DISTRICT, on the Parish card: the
+  //     district the Department of Agriculture and Forestry's map puts the
+  //     parish in, each of its offices with its telephone and extension, that
+  //     the card names no supervisor, how the board is chosen, and where it
+  //     comes from. The districts and offices expected are read from the
+  //     shipped file (data/app/la-conservation-districts.json), which
+  //     la/scripts/build_la_conservation_districts.py writes, so a rebuild
+  //     moves them. Three parishes, each for its own claim:
+  //       - Orleans, at City Hall: one district, whose one office is outside
+  //         the parish (Boutte, in St. Charles);
+  //       - Ouachita, one of the seven parishes the map divides between two
+  //         districts: both are listed, the one covering more of the parish
+  //         first, under the sentence saying the line between them is not
+  //         drawn;
+  //       - Jefferson, divided too, whose entry adds the note about Grand Isle.
+  //     The Ouachita and Jefferson points are the parish's pole of
+  //     inaccessibility as the shipped parish file draws it (shapely
+  //     polylabel, 2026-10-21), 15.4 and 8.3 km from the parish's edge; the
+  //     check also reads that file there, so a moved point fails here rather
+  //     than testing another parish. Then the file is refused, and the
+  //     section alone says so while the parish's officials are still named.
+  {
+    const swcd = shipped("la-conservation-districts.json");
+    const parishes = shipped("state-counties.json");
+    const cases = [
+      { point: POINT, geoid: "22071", parish: "Orleans Parish" },
+      { point: "32.44057,-92.15684", geoid: "22073", parish: "Ouachita Parish" },
+      { point: "29.55153,-90.07420", geoid: "22051", parish: "Jefferson Parish" },
+    ];
+    const SPLIT = (parish) => `${parish} has two soil and water conservation districts on the ` +
+      "Department of Agriculture and Forestry's map, and this app does not draw the line between " +
+      "them, so both are listed.";
+    const swcdCard = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county`, routeFn);
+      const info = await cardText(page, "county");
+      const body = await page.evaluate((cid) => {
+        const el = document.getElementById("card-" + cid);
+        return el ? Array.from(el.querySelectorAll("a[href]")).map((a) => a.href) : [];
+      }, "county");
+      await context.close();
+      return { text: plain(info.text || ""), error: info.error, body };
+    };
+    for (const c of cases) {
+      const entry = swcd[c.geoid] || {};
+      const districts = entry.districts || [];
+      const offices = districts.flatMap((d) => d.offices || []);
+      const at = propsAt(parishes, c.point).map((p) => String(p.GEOID));
+      const card = await swcdCard(c.point);
+      const low = card.text.toLowerCase();
+      const where = districts.map((d) => low.indexOf(d.name.toLowerCase()));
+      const ordered = where.every((i, k) => i >= 0 && (k === 0 || i > where[k - 1]));
+      const missing = offices.filter((o) => !card.text.includes(`${o.town} office`) ||
+        !card.text.includes(o.phone) || !card.body.includes("tel:" + o.phone.replace(/[^\d+]/g, "")) ||
+        (o.ext && !card.text.includes(`Extension ${o.ext}`))).map((o) => o.town);
+      const split = districts.length > 1;
+      const splitOk = split
+        ? card.text.includes(SPLIT(c.parish) + (entry.note ? " " + entry.note : ""))
+        : !/soil and water conservation districts on the Department/.test(card.text);
+      const creditOk = /Where this comes from/i.test(card.text) &&
+        card.text.includes(`Louisiana's 44 soil and water conservation districts, last edited ${longDate(entry.mapEdited)} ` +
+          `and read on ${longDate(entry.read)}. This app lists the districts that cover each parish and does not draw their lines.`) &&
+        card.body.includes(entry.pageUrl) && /The Department's page on these districts/.test(card.text);
+      check(`the Parish card in ${c.parish} lists ${split ? "both soil and water conservation districts the map divides it between" : "its soil and water conservation district"}, ` +
+          "every office with its telephone and extension, that no supervisor is named, how the board is chosen, and where it comes from",
+        at.length === 1 && at[0] === c.geoid && !card.error && card.text.includes(c.parish) &&
+          districts.length === (c.geoid === "22071" ? 1 : 2) && ordered && offices.length > 0 &&
+          missing.length === 0 && splitOk && creditOk &&
+          /Not named here\. The Department of Agriculture and Forestry's list gives each district's offices but names none of its five supervisors/.test(card.text) &&
+          /Five supervisors, each a landowner or farm operator, serve three-year terms\./.test(card.text) &&
+          /The Commission appoints the other two, and fills any vacancy for the rest of the term\./.test(card.text),
+        `at=${at} districts=${districts.length} ordered=${ordered} missing=${missing.slice(0, 2)} split=${splitOk} ` +
+          `credit=${creditOk} ${card.text.slice(0, 80)}`);
+    }
+
+    const orleans = shipped("la-parish-officials.json")["22071"];
+    const refused = await swcdCard(POINT, async (p) => {
+      await p.route("**/data/app/la-conservation-districts.json", (r) => r.fulfill({ status: 503, body: "down" }));
+    });
+    const crescent = (swcd["22071"].districts || [])[0].name;
+    check("the Parish card says the list of soil and water conservation districts did not load, and still names the parish's officials",
+      !refused.error && /Orleans Parish/.test(refused.text) &&
+        refused.text.includes("The list of soil and water conservation districts did not load, so none is shown.") &&
+        !refused.text.toLowerCase().includes(crescent.toLowerCase()) &&
+        !!orleans.executive && refused.text.includes(orleans.executive.name),
+      refused.text.slice(0, 90));
+  }
+
   // 10. THE POLICE JURY OR COUNCIL DISTRICT LAYER, drawn only in the parishes
   //     whose current lines are confirmed (Adam's ruling of 2026-10-20,
   //     "Confirmed only"). The district, parish, body and member expected are

@@ -217,14 +217,14 @@
       "area_rank": 6,
       "rank_note": "64 parishes, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
-        "answers": "Which parish contains the point, and the members of its police jury, council or commission, with its parish president or mayor where the parish elects one.",
+        "answers": "Which parish contains the point, and the members of its police jury, council or commission, with its parish president or mayor where the parish elects one, and the soil and water conservation district or districts that cover the parish, with each district's offices.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 64 features, measured 2026-10-20. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "la-parish-officials.json, rebuilt weekly: every member of each parish's governing body — 38 police juries, 25 parish councils and Caddo's parish commission — by district, the at-large members of the seven councils that elect some, and the parish president, mayor-president or mayor of the 25 council parishes, from the Louisiana Secretary of State's list of elected officials (573 members on 2026-10-20). An official's own telephone ships where the list prints it for that official alone. A telephone printed for three or more of a body's members is the body's office telephone, and an address ships only as a body's office, where at least three members print the same one, because some officials' addresses are homes. The list also records each official's race and gender, and neither is read.",
+        "people": "la-parish-officials.json, rebuilt weekly: every member of each parish's governing body — 38 police juries, 25 parish councils and Caddo's parish commission — by district, the at-large members of the seven councils that elect some, and the parish president, mayor-president or mayor of the 25 council parishes, from the Louisiana Secretary of State's list of elected officials (573 members on 2026-10-20). An official's own telephone ships where the list prints it for that official alone. A telephone printed for three or more of a body's members is the body's office telephone, and an address ships only as a body's office, where at least three members print the same one, because some officials' addresses are homes. The list also records each official's race and gender, and neither is read. The soil and water conservation districts that cover each parish, and each district's offices and telephones, come from la-conservation-districts.json, read from the Louisiana Department of Agriculture and Forestry's map and list of the 44 districts (the map's edition of 2026-10-19) by la/scripts/build_la_conservation_districts.py. Neither the Department's list nor the Secretary of State's names any of a district's five supervisors, so the card names none, and it does not draw the districts' lines.",
         "applies": "Louisiana — statewide, all 64 parishes."
       }
     },
@@ -603,6 +603,11 @@
         "note": "Every parish's governing body by seat and its parish president or mayor, from the Secretary of State's list of elected officials, one record per parish, refreshed weekly by update-la-parish-officials.yml."
       },
       {
+        "file": "la-conservation-districts.json",
+        "min_keys": 64,
+        "note": "Which of Louisiana's 44 soil and water conservation districts cover each parish (two in seven parishes), with each district's offices and telephones, keyed by parish GEOID, read from the Department of Agriculture and Forestry's map and list of district contacts by la/scripts/build_la_conservation_districts.py, whose --check holds the file to its record of the PDF read and to the Parish card's wording. No people: neither the Department's list nor the Secretary of State's names a supervisor. The monthly source check warns when the PDF changes, and it is then rebuilt by hand (la/WATCH.md)."
+      },
+      {
         "file": "la-municipal-officials.json",
         "min_keys": 290,
         "note": "The mayor, council or board of aldermen and chief of police or marshal of every municipality the Secretary of State's list names, keyed by the Census place id, built from the same weekly read of the list by la/scripts/build_la_local_officials.py; 302 on 2026-10-20."
@@ -719,6 +724,11 @@
         "label": "Louisiana Legislature",
         "url": "https://legis.la.gov/",
         "note": "The laws that name the parishes of each court of appeal district and judicial district (La. R.S. 13:312 and 13:477), and, from its redistricting office, the Supreme Court districts of Act 7 of 2024 and the statewide precinct file."
+      },
+      {
+        "label": "Louisiana Department of Agriculture and Forestry",
+        "url": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+        "note": "Which soil and water conservation districts cover each parish, and each district's offices and telephones (its map and list of district contacts)."
       },
       {
         "label": "USGS The National Map",
