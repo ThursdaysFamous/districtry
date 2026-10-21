@@ -1,5 +1,5 @@
 {
- "note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, South Carolina and Tennessee nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "note": "Who sits on the council of each nation whose land a districtry app draws, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
   "0080": {
    "source": "nation",
@@ -350,6 +350,36 @@
    ],
    "read": "2026-10-17"
   },
+  "0635": {
+   "source": "nation",
+   "page": "https://www.chitimacha.gov/tribal-government/tribal-council",
+   "pages": [
+    "https://www.chitimacha.gov/tribal-government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Melissa Darden",
+     "role": "Chairman"
+    },
+    {
+     "name": "Melinda Butaud",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Kimberly Walden",
+     "role": "Secretary/Treasurer"
+    },
+    {
+     "name": "Kristan Jones",
+     "role": "Councilman-At-Large"
+    },
+    {
+     "name": "Schuylar Vilcan Hebert",
+     "role": "Councilman-At-Large"
+    }
+   ],
+   "read": "2026-10-20"
+  },
   "1125": {
    "source": "nation",
    "page": "https://www.fdlband.org/government/tribal_council.php",
@@ -630,6 +660,36 @@
    ],
    "read": "2026-10-06",
    "carriedFrom": "2026-10-06"
+  },
+  "1690": {
+   "source": "nation",
+   "page": "https://www.jenachoctaw.org/about-jbci/tribal-leaders",
+   "pages": [
+    "https://www.jenachoctaw.org/about-jbci/tribal-leaders"
+   ],
+   "members": [
+    {
+     "name": "Elizabeth \"Libby\" Rogers",
+     "role": "Tribal Chief"
+    },
+    {
+     "name": "Lacy Robbins McGuffee",
+     "role": "Councilwoman"
+    },
+    {
+     "name": "Lillie Williamson",
+     "role": "Councilwoman"
+    },
+    {
+     "name": "Bryan Nugent",
+     "role": "Councilman"
+    },
+    {
+     "name": "Jason Norris",
+     "role": "Councilman"
+    }
+   ],
+   "read": "2026-10-20"
   },
   "1815": {
    "source": "nation",
@@ -1769,6 +1829,46 @@
     }
    ],
    "read": "2026-10-17"
+  },
+  "4315": {
+   "source": "nation",
+   "page": "https://www.tunicabiloxi.org/tribal-info/tribal-council/",
+   "pages": [
+    "https://www.tunicabiloxi.org/tribal-info/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Marshall Pierite",
+     "role": "Chairman"
+    },
+    {
+     "name": "Marshall Ray Sampson, Sr.",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Shelbie Lyn Sampson",
+     "role": "Secretary-Treasurer"
+    },
+    {
+     "name": "James Craig, III",
+     "role": "Council Member"
+    },
+    {
+     "name": "Bobby Pierite",
+     "role": "Council Member",
+     "note": "the same page also writes Bobby Pierite, Sr."
+    },
+    {
+     "name": "Harold Pierite",
+     "role": "Council Member",
+     "note": "the same page also writes Harold Pierite, Sr."
+    },
+    {
+     "name": "Dr. Julie Zahn",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-20"
   },
   "4445": {
    "source": "nation",

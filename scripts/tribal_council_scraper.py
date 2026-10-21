@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Read who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, South Carolina and Tennessee nation's council, from the nation.
+Read who sits on the council of each nation whose land a districtry app draws, from the nation.
 
 THE AUTHORITY IS EACH NATION'S OWN PUBLISHED COUNCIL. The Bureau of Indian
 Affairs' directory carries one leader per government and never a council, so
@@ -82,6 +82,13 @@ OUT = os.path.join(REPO, "data", "tribal-councils.json")
 
 WI_DOA_LIST = "https://doa.wi.gov/DIR/Tribal-Leaders.pdf"
 
+# The councils file's own description. It names no state, because a list of
+# states here went stale the day a state was added without it (Mississippi's
+# band was read from 2026-10-15 and the list still ended at Tennessee).
+NOTE = ("Who sits on the council of each nation whose land a districtry app draws, "
+        "read by scripts/tribal_council_scraper.py. Stamped onto the cards by "
+        "scripts/build_tribal_areas.py --rosters.")
+
 # AIANNH code -> the pages read and the parser. `seats` is the exact number of
 # members the page states today; see the module docstring.
 _SENECA = ["https://sni.org/about-our-government/executive/",
@@ -148,6 +155,23 @@ NATIONS = {
     # scraper's client) is "User-Agent: * / Disallow:", which allows every path.
     "2300": {"nation": "Mississippi Band of Choctaw Indians",
              "pages": ["https://www.choctaw.org/about-us/tribal-government/"], "seats": 18},
+    # Louisiana (read 2026-10-20, each robots.txt with this scraper's client).
+    # www.chitimacha.gov's allows the council page and states a Crawl-delay of
+    # 10 s, which the pacer honours. www.jenachoctaw.org is a Google Sites page
+    # whose robots.txt is a 404 (allow all). The Bureau lists www.tunica.org
+    # for the Tunica-Biloxi, which answered 404 over http and a certificate
+    # for another name over https; the tribe's own site is
+    # www.tunicabiloxi.org, whose footer gives the tribe's Marksville office
+    # and an @tunica.org address, and whose robots.txt allows every path (its
+    # Crawl-delay line stands before any User-agent line, so it binds no
+    # client). That page says a new website is coming, so a changed page
+    # fails this parser and the council last read is carried.
+    "0635": {"nation": "Chitimacha",
+             "pages": ["https://www.chitimacha.gov/tribal-government/tribal-council"], "seats": 5},
+    "1690": {"nation": "Jena Band of Choctaw",
+             "pages": ["https://www.jenachoctaw.org/about-jbci/tribal-leaders"], "seats": 5},
+    "4315": {"nation": "Tunica-Biloxi",
+             "pages": ["https://www.tunicabiloxi.org/tribal-info/tribal-council/"], "seats": 7},
 }
 
 _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|footer|"
@@ -840,6 +864,51 @@ def p_srmt(pages):
     return out
 
 
+def p_chitimacha(pages):
+    # The council is the lines under the last "Tribal Council" heading, each
+    # "Name - Office" except the secretary-treasurer's, which the page writes
+    # with a comma ("<name>, Secretary/Treasurer"). The footer line, the
+    # tribe's own office on Chitimacha Loop, ends the list.
+    ls = _after(pages[0], "Tribal Council", nth=pages[0].count("Tribal Council") - 1)
+    out = []
+    for line in ls:
+        if "Chitimacha Loop" in line:
+            break
+        name, role = line.split(" - ", 1) if " - " in line else line.rsplit(", ", 1)
+        out.append(_m(name, role))
+    return out
+
+
+def p_jena(pages):
+    # Each leader is an office line ("Tribal Chief", "Councilwoman",
+    # "Councilman"), the name, then a biography; "Stay connected" opens the
+    # footer. Every office line is read, so a sixth leader fails the seat
+    # count rather than being dropped.
+    ls = _after(pages[0], "Tribal Leaders", nth=pages[0].count("Tribal Leaders") - 1)
+    ls = ls[:ls.index("Stay connected")]
+    return [_m(ls[i + 1], line) for i, line in enumerate(ls[:-1])
+            if line in ("Tribal Chief", "Councilwoman", "Councilman")]
+
+
+def p_tunica_biloxi(pages):
+    # Under "Our Tribal Council", each member is a name, the office, then a
+    # biography; the tribe's footer address ends the list. Two biographies
+    # open with "<name>, Sr." where the heading gives the name alone, and the
+    # heading ships with the other form stated, as Bad River's two spellings do.
+    ls = _after(pages[0], "Our Tribal Council")
+    ls = ls[:ls.index("Tunica Biloxi Tribe of Louisiana")]
+    offices = ("Chairman", "Vice Chairman", "Secretary-Treasurer", "Council Member")
+    out = []
+    for i, line in enumerate(ls[:-1]):
+        if ls[i + 1] not in offices:
+            continue
+        bio = ls[i + 2] if i + 2 < len(ls) else ""
+        m = re.match(re.escape(line) + r"(, (?:Sr|Jr)\.)", bio)
+        out.append(_m(line, ls[i + 1],
+                      note=("the same page also writes " + line + m.group(1)) if m else None))
+    return out
+
+
 PARSERS = {
     "0140": p_bad_river, "0170": p_bay_mills, "1125": p_fond_du_lac,
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
@@ -850,6 +919,7 @@ PARSERS = {
     "3680": p_shakopee, "4445": p_upper_sioux, "4595": p_white_earth,
     "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
     "4015": p_stockbridge, "0525": p_catawba, "2300": p_choctaw,
+    "0635": p_chitimacha, "1690": p_jena, "4315": p_tunica_biloxi,
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community"}
 
@@ -959,9 +1029,7 @@ def run(from_dir=None, today=None):
     if failed:
         raise SystemExit("tribal-councils: never read and not readable now:\n  "
                          + "\n  ".join(failed))
-    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, South Carolina and Tennessee nation's council, read "
-                   "by scripts/tribal_council_scraper.py. Stamped onto the cards by "
-                   "scripts/build_tribal_areas.py --rosters.",
+    doc = {"note": NOTE,
            "councils": councils}
     with open(OUT, "w") as fh:
         json.dump(doc, fh, indent=1, ensure_ascii=False)
@@ -1012,6 +1080,23 @@ def selftest():
     assert bf[0]["phone"] == "555-010-1000 x 1" and bf[0]["phonesExtra"] == ["cell 555-010-2001"], bf
     assert bf[1]["phone"] == "555-010-3000" and bf[1]["phonesExtra"] == ["555-010-2002"], bf
     assert _m("A B", "Chair", phonesExtra=[" cell 1 "])["phonesExtra"] == ["cell 1"]
+    # Louisiana's three shapes (names invented): Chitimacha's comma form,
+    # Jena's office-then-name cards, and Tunica-Biloxi's "Sr." in a biography
+    ch = p_chitimacha([["Tribal Council", "Chairman", "Tribal Council",
+                        "Ann Example - Chairman", "Bea Sample, Secretary/Treasurer",
+                        "155 Chitimacha Loop | Charenton, LA 70523"]])
+    assert ch == [_m("Ann Example", "Chairman"),
+                  _m("Bea Sample", "Secretary/Treasurer")], ch
+    jb = p_jena([["Tribal Leaders", "Tribal Leaders", "Tribal Chief", "Ann Example",
+                  "was elected Tribal Chief.", "Councilman", "Bob Sample", "serves.",
+                  "Stay connected", "Councilman", "Not Read"]])
+    assert [m["name"] for m in jb] == ["Ann Example", "Bob Sample"], jb
+    tb = p_tunica_biloxi([["Our Tribal Council", "Ann Example", "Chairman",
+                           "Ann Example is the Chairman.", "Bob Sample", "Council Member",
+                           "Bob Sample, Sr. is a commissioner.",
+                           "Tunica Biloxi Tribe of Louisiana", "150 Example Road"]])
+    assert tb[0] == _m("Ann Example", "Chairman"), tb
+    assert tb[1]["note"] == "the same page also writes Bob Sample, Sr.", tb
     NATIONS["9999"] = {"nation": "Test", "seats": 2}
     try:
         for bad in ([_m("A B", "Chair")],

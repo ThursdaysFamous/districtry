@@ -54,7 +54,7 @@ const OFFLINE = ["county", "us-house", "la-senate", "la-house"];
 const EXPECT_DISTRICT = { "county": "Orleans Parish", "us-house": "2", "la-senate": "5", "la-house": "93" };
 const NEGATIVE_POINT = "28.60000,-90.50000"; // open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.
 const APP_NAME = "districtry Louisiana";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "LouisianaExplorer";
@@ -1265,6 +1265,94 @@ try {
           text.indexOf(seat.name) < text.indexOf(second.name) && /Where the names come from/i.test(text),
         text.slice(0, 160));
       await context.close();
+    }
+  }
+
+  // 11. TRIBAL GOVERNMENT. The nation, its seat, the land and the council
+  //     expected are read from the shipped files at the point, so a weekly
+  //     council refresh moves the expectation with the file; what is asserted
+  //     is that each card agrees with them.
+  //       - The Tunica-Biloxi Reservation names the tribe, its seat, the land,
+  //         every member of the council its own page names, the date and page
+  //         they come from, and says no council seat belongs to this land,
+  //         because the Census draws no tribal district on it.
+  //       - The Coushatta Reservation names nobody and says why: the tribe's
+  //         own site names its chairman and not the other four members.
+  //       - The councils file is refused: the land still answers, naming the
+  //         tribe and nobody on its council.
+  //       - New Orleans City Hall is on no tribal land, and the card says so
+  //         in the layer's own words.
+  //     Each point is the pole of inaccessibility of the piece's largest part
+  //     as the shipped file draws it (shapely polylabel, 2026-10-20), 258 to
+  //     388 m from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
+    const TUNICA = "31.11428,-92.05452";
+    const COUSHATTA = "30.52604,-92.80054";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      await context.close();
+      return { text: card.text || "", error: card.error,
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, TUNICA);
+      const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(TUNICA);
+      check("the Tunica-Biloxi Reservation names the tribe, its seat, the land and its whole council, and where the names come from",
+        land.length === 1 && council.length > 0 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Tunica-Biloxi Indian Tribe" &&
+          c.by("Seat of government") === "Marksville, LA" &&
+          c.by("Land") === "Tunica-Biloxi Reservation" &&
+          council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("Council") && c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") &&
+          c.by("Districts drawn here").indexOf("no council seat") !== -1 && !c.by("Why no names"),
+        `land here=${land.length} council=${council.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const land = propsAt(areas, COUSHATTA);
+      const p = land[0] || {};
+      const c = await at(COUSHATTA);
+      check("the Coushatta Reservation names nobody and says the tribe's own site names only its chairman",
+        land.length === 1 && !councils[p.aiannh] && !c.error &&
+          c.by("Tribal government") === "Coushatta Tribe of Louisiana" &&
+          c.by("Why no names").indexOf("David Sickey") !== -1 &&
+          !c.text.includes("From the nation's own council page"),
+        `land here=${land.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const p = propsAt(areas, TUNICA)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(TUNICA, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the tribe, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Tunica-Biloxi Indian Tribe" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("6 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
     }
   }
 } finally {
