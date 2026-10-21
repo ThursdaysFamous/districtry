@@ -3,6 +3,7 @@
   "4004450": 5,
   "4006400": 5,
   "4023950": 6,
+  "4041850": 8,
   "4048350": 6,
   "4049200": 3,
   "4052500": 8,
@@ -10,13 +11,13 @@
   "4066800": 6,
   "4075000": 9
  },
- "fetched": "2026-10-16",
+ "fetched": "2026-10-21",
  "fingerprint": {
-  "districts": 56,
-  "sha256": "98d2e3eaf6025731fffc54025b164f5d3b6452c3b895410e639118728e9a1c86"
+  "districts": 64,
+  "sha256": "c5c3b1fbc544eff083fb769f1d21c1fe460ecaf3d8369a79ff4ed7642584ece1"
  },
  "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
- "shipped_sha256": "a905f3cdaa798e5f656699d81847354e67ad4c835aa8e6fd5576b98fe03811ad",
+ "shipped_sha256": "90653238191a07560f342565b8fa231eba0a958a63dc94e45db3a1c4394c3b62",
  "sources": {
   "4004450": {
    "city": "Bartlesville",
@@ -64,6 +65,22 @@
    "outside_place_pct": 0.1,
    "part_records_joined": 1,
    "records": 7,
+   "where": "1=1"
+  },
+  "4041850": {
+   "city": "Lawton",
+   "covers_place_pct": 99.7,
+   "field": "Ward_Number",
+   "fingerprint": {
+    "districts": 8,
+    "sha256": "9d8fc3c7f16376dababc762ab746fa2ced0b697089c6426e92813eaf94d01346"
+   },
+   "item": "59f427ec3c0f42329d67ce12895b7e99",
+   "layer": "https://services2.arcgis.com/baoUryRiOxhCY0yb/arcgis/rest/services/CouncilWard/FeatureServer/0",
+   "layer_edited": "2026-07-02T20:57:57Z",
+   "outside_place_pct": 0.1,
+   "part_records_joined": 3,
+   "records": 11,
    "where": "1=1"
   },
   "4048350": {
