@@ -34,6 +34,12 @@
     "cook": ["ccbr-districts.json"],
     "dupage": ["dupage-county-outline.json"]
   },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "ZCTA5", "inside": ["il-state-outline.json"]}
+    ]
+  },
   "socrata_host": "https://data.cityofchicago.org",
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
@@ -2959,6 +2965,12 @@
         "min_features": 46,
         "max_features": 46,
         "note": "Livingston County's 46 voting precincts — the Census 2020 voting districts ONE FOR ONE after a single rename, pre-built by scripts/build_livingston_precincts.py; the Jasper test passes 46/46 and they sum to the county's exact 2020 population of 35,815. Its gap record said the county publishes no mapping data at all, which is still true and is no longer the question: it was last measured 31 Jul 2026, nearly three weeks before the election-results vendors were found. FIVE NAMES DIFFER BETWEEN THE TWO PUBLISHERS AND THEY RESOLVE IN OPPOSITE DIRECTIONS. The county attaches a numeral to CHATSWORTH where the census leaves it bare, so the county's designation wins and the alias renames the census (the Greene case). The results feed abbreviates INDIAN GROVE 1-4 to 'INDIAN GRV', and the census's own county-subdivision layer names the township Indian Grove, so there the CENSUS wins and no alias is needed (the Scott case). Aliasing all five to the canvass would have published 'Indian Grv'; taking the census for all five would have dropped a numeral the county's own ballot carries. No board district and no polling place ship."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 1396,
+        "max_features": 1396,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside il-state-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       }
     ],
     "rosters": [

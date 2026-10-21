@@ -189,6 +189,13 @@ def render_metro_config(w):
         a("  // District-name search index (scripts/build_district_search.py): lets the")
         a("  // search box answer \"33rd ward\" from a same-origin file, no geocoder.")
         a("  var DISTRICT_SEARCH_URL = %s;" % js_str("data/app/" + w["district_search"]["file"]))
+    # The ZIP code index a typed ZIP code is shown from. Opt-in on the same
+    # inertness rule: without the key the search finds a ZIP code through the
+    # geocoder, and never selects its answer for the reader.
+    if "zip_search" in w:
+        a("  // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a")
+        a("  // spot inside it, and its ZIP layer is turned on and pinned for comparison.")
+        a("  var ZIP_SEARCH_URL = %s;" % js_str("data/app/" + w["zip_search"]["file"]))
     # Census block populations for the comparison stats screen. Opt-in on the
     # same inertness rule: without the key the stats screen compares by area.
     if "population" in w:

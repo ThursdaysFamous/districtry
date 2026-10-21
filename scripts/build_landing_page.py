@@ -2767,6 +2767,9 @@ footer .support b { color: var(--ink); }
     if (link && link.kind !== "text") {
       resetButton(); setStatus(mapLinkMessage(link), true); countLinkRead("unreadable"); return;
     }
+    // a typed ZIP code goes to the app whose list holds it (routeZip)
+    var zip = link ? "" : zipQuery(q);
+    if (zip) { routeZip(zip); return; }
     var named = link ? namedState(q) : null;
     if (named && !named.metro) {
       countLinkRead("uncovered");
@@ -2932,6 +2935,59 @@ footer .support b { color: var(--ink); }
       setStatus("Opening " + metro.name + "\\u2026", false);
       window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
       return true;
+    });
+  }
+
+  /* A TYPED ZIP CODE (ENGINE map-link zipQuery) is handed, as #q=, to the
+   * app whose ZIP code list holds it (fleet-zips.json, from
+   * scripts/build_zip_index.mjs), with nothing asked of the geocoder: that
+   * app selects a spot inside it, outlines all of it and compares it with
+   * the wards or county board districts it crosses (ENGINE geocoder-search
+   * showZip). Until 2026-10-21 this page searched a ZIP code like an
+   * address and opened the app with the geocoder's one point for it
+   * selected, so the cards named one ward of a ZIP code that crosses four.
+   * A ZIP code no list holds (a post office box's, or one in Kentucky,
+   * whose app draws no ZIP codes) is searched here, and the app covering
+   * the first answer is handed the ZIP code rather than the answer's point,
+   * so it lists its own answers there and selects none of them for the
+   * reader. If the list cannot be read, the same search answers. */
+  var fleetZips = null;
+  function loadFleetZips() {
+    if (!fleetZips) {
+      fleetZips = fetch("fleet-zips.json")
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { return d && d.zips ? d.zips : null; })
+        ["catch"](function () { return null; });   // an outage falls back to the search, never breaks it
+    }
+    return fleetZips;
+  }
+  function routeZip(zip) {
+    var signal = inFlight.signal;
+    loadFleetZips().then(function (zips) {
+      if (signal.aborted) return;
+      for (var i = 0; i < METROS.length; i++) {
+        if (zips && zipListed(zips[METROS[i].id], zip)) return handTo(METROS[i], zip);
+      }
+      return fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(zip) + "&lang=en&limit=5",
+        { signal: signal, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          var feats = (data && data.features) || [];
+          return routeText(feats, zip).then(function (went) {
+            if (went) return;
+            resetButton();
+            setStatus(feats.length
+              ? "ZIP code " + zip + " is outside every place districtry covers today \\u2014 see what's covered below."
+              : "No matches for ZIP code " + zip + " \\u2014 try an address, or pick a place below.", true);
+          });
+        });
+    })["catch"](function (err) {
+      if (err && err.name === "AbortError") return;
+      resetButton();
+      setStatus("Search failed \\u2014 try again, or pick a place below.", true);
     });
   }
 

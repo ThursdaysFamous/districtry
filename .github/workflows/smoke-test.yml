@@ -585,6 +585,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_district_search.py --check
 
+      # The ZIP code index (2026-10-21). A ZIP code typed into the search box
+      # selects a spot inside it and outlines every ward or county board
+      # district it crosses, and each app's data/app/zip-index.json is where
+      # that spot and the ZIP code's extent come from; the root fleet-zips.json
+      # says which app holds each ZIP code. Offline and Node only, about a
+      # minute: it rebuilds every index from the committed ZIP code archives
+      # and outlines and fails on any difference, naming the archive or
+      # outline whose recorded hash moved when that is why.
+      - name: ZIP code index matches the archives it is built from
+        if: ${{ !cancelled() }}
+        run: node scripts/build_zip_index.mjs --check
+
       # The city rosters in the served bytes. build_county_pages.py put 2,650
       # county officeholders where a crawler can read them and left the city
       # seats behind a JSON fetch: measured 2026-09-15, NYC's 51 Council

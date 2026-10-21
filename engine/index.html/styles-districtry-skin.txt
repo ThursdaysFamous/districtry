@@ -391,6 +391,23 @@
     z-index: 900;
   }
   .masthead .search-shell:not(:hover):not(:focus-within):not(.expanded) .search-extra { padding: 0; border-width: 0; }
+  /* "List them" in a ZIP code's message (geocoder-search showZip), which
+     opens the comparison's numbers: outlined like the panel foot's buttons */
+  .geo-status .zip-stats-btn {
+    display: inline-block;
+    margin: 6px 0 2px;
+    padding: 4px 10px;
+    min-height: 24px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--accent-deep);
+    background: transparent;
+    border: 1px solid var(--dst-brand-line);
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .geo-status .zip-stats-btn:hover, .geo-status .zip-stats-btn:focus-visible { background: var(--dst-brand-tint-soft); }
+  .geo-status .zip-stats-btn:disabled { cursor: progress; }
   /* The four "about the data" doors (operator-directed, two rounds): emoji
      dropped, and the row is no longer a bordered segmented box — that put a
      second hard rectangle beside the search field and gave four secondary
