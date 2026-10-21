@@ -87,14 +87,15 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 11
+MIN_REGISTER_LAYER = 14
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "la-senate", "county", "school-district-unified", "la-house",
+    "us-house", "la-supreme-court", "la-court-of-appeal", "la-senate",
+    "la-district-court", "county", "school-district-unified", "la-house",
     "zip-code", "parish-district", "voting-precinct", "municipality",
     "tribal-government", "police-station", "fire-station", "post-office",
 ]
@@ -106,6 +107,9 @@ GEOMETRY_FILES = {
     "congress-districts.json": (6, 6),  # The 6 U.S. House districts, TIGERweb layer 4 (CD119), until 3 January 2027.
     "la-senate-districts.json": (39, 39),  # The 39 Louisiana Senate districts.
     "la-house-districts.json": (105, 105),  # The 105 Louisiana House districts.
+    "la-supreme-court-districts.json": (7, 7),  # The 7 Supreme Court districts Act 7 of 2024 enacted, from the Legislature's own shapefile (la/scripts/build_la_court_districts.py), each carrying its whole parishes and the parishes it shares.
+    "la-court-of-appeal-districts.json": (16, 16),  # The 15 court of appeal districts as 16 features, dissolved from state-counties.json: St. John the Baptist Parish, which the Mississippi River divides between the Fifth Circuit's Second and Third Districts, is its own feature naming both.
+    "la-district-court-districts.json": (42, 42),  # The 41 judicial districts and Orleans Parish, dissolved from state-counties.json.
     "la-parish-districts.json": (56, 56),  # The police jury, council and commission districts of the 6 parishes whose current lines are confirmed (la/scripts/build_la_parish_districts.py).
     "la-precincts.json": (3569, 3569),  # Every Louisiana voting precinct, pre-built by la/scripts/build_la_precincts.py through scripts/statewide_precincts.py from the Legislature's statewide precinct file, its edition of 27 January 2026 (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 3,569 count, after the five areas of Lake Pontchartrain the file marks as in no voting district are left out). 7.8 MB, 2.31 MB gzipped, fetched only when a reader switches the layer on.
     "tribal-areas.json": (6, 6),  # Louisiana's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, held by four nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-20; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
@@ -120,6 +124,7 @@ ROSTER_FILES = {
     "la-parish-officials.json": 64,  # Every parish's governing body by seat and its parish president or mayor, from the Secretary of State's list of elected officials, one record per parish, refreshed weekly by update-la-parish-officials.yml.
     "la-municipal-officials.json": 290,  # The mayor, council or board of aldermen and chief of police or marshal of every municipality the Secretary of State's list names, keyed by the Census place id, built from the same weekly read of the list by la/scripts/build_la_local_officials.py; 302 on 2026-10-20.
     "la-school-board-members.json": 69,  # The members of all 69 school boards, keyed by the Census school district id, built in the same run; the builder refuses unless every district has a board.
+    "la-judges.json": 6,  # The justices and the judges of the courts of appeal and the district courts by district (la/scripts/build_la_judges.py), from the Secretary of State's list of elected officials, built in the same weekly run as the parish rosters by update-la-parish-officials.yml. Six top-level keys (the three courts, and the list's name, address and read date), so the floor is 6; the builder holds each court's district count exactly.
     "la-parish-district-parishes.json": 6,  # The parishes whose districts the Police Jury or Council District layer draws, written by the same build as la-parish-districts.json; the layer's coverage test reads it.
     "tribal-councils.json": 3,  # The councils of the three Louisiana nations whose own pages name them (the Chitimacha, the Jena Band of Choctaw and the Tunica-Biloxi), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.

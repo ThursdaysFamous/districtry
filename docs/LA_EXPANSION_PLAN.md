@@ -124,6 +124,20 @@ go-live with the same answer, and the two live neighbours gained a routing case 
   says so rather than naming anyone. The builder stops when the Legislature posts a newer edition
   until a person has read it, and `la/WATCH.md` asks for that check every quarter. The done
   standard's score moves from 7 to 8 of the 14 levels.
+- **The three courts elected by district** (2026-10-21, the second change after go-live). The
+  Supreme Court's seven districts are Act 7 of 2024, drawn from the Legislature's own shapefile for
+  the act; they follow voting precincts, so twelve parishes are split between two or three
+  districts and the card tells a reader near a line to ask the parish's registrar of voters. The
+  courts of appeal (La. R.S. 13:312, 15 districts drawn as 16 shapes, because the Mississippi River
+  divides St. John the Baptist Parish between two of the Fifth Circuit's districts) and the
+  judicial districts (13:477, numbered 1 to 40 and 42, and Orleans Parish) are lists of whole
+  parishes written into the law, so they are drawn from the parish map, and the two laws' text is
+  kept in `la/data/source/courts/`. The judges come from the Secretary of State's list in the same
+  weekly run as the parish officials: 7 justices, 53 judges of the courts of appeal and 212 district
+  judges on the day of the first read. The list calls every justice an associate justice, so no
+  card names the Chief Justice, and a sitting justice keeps the seat of the same number until the
+  term ends, so the Supreme Court card says a justice may have been elected inside different lines.
+  The done standard's score moves from 8 to 9 of the 14 levels.
 
 ## What is still owed
 
@@ -143,5 +157,13 @@ go-live with the same answer, and the two live neighbours gained a routing case 
 - **The police juries' presidents**, from each police jury's own page or minutes, parish by parish.
 - **The congressional map on 3 January 2027**, when the 120th Congress's map takes over;
   `la/WATCH.md` has the day's steps, and the monthly source check warns from 1 December 2026.
-- **Courts elected by district, special districts and the parish district boundaries as a level
-  of their own**, the done standard's open levels for Louisiana.
+- **The courts' election sections** (gap `la-court-election-sections`). Some judicial and court
+  of appeal districts elect each judge from one part of the district, which the law often sets by
+  voting precinct; the cards name every judge of the district and the part each is elected from,
+  and the map does not draw the parts. Every district judge's term ends on 31 December 2026, as do
+  two justices' and four appeal judges', so the list changes in January 2027; `la/WATCH.md` says
+  when to look.
+- **The done standard's other open levels for Louisiana**: the parish governing bodies' districts
+  in every parish (above), the councils of the twelve cities of 25,000 or more whose wards are not
+  drawn, school boards elected by district (above), special districts, and the parish district
+  boundaries as a level of their own.
