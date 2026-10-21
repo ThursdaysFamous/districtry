@@ -7,6 +7,13 @@
   "frames": {
     "nyc": ["borough-boundaries.json"]
   },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "zcta", "inside": ["borough-boundaries.json"]},
+      {"id": "nys-zip-code", "field": "ZCTA5", "inside": ["ny-state-outline.json"], "outside": ["borough-boundaries.json"]}
+    ]
+  },
   "socrata_host": "https://data.cityofnewyork.us",
   "socrata_app_token": "mde4YTGz0w7M4jDhUJ7WVn85W",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
@@ -71,7 +78,9 @@
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
       "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
     { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
-      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } },
+    { "id": "louisiana", "label": "Louisiana", "url": "https://districtry.com/la/", "emoji": "🎷", "explorer_name": "districtry Louisiana",
+      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } }
   ],
   "hover_number_keys": [
     ["district", "dist_num", "dist", "district_number", "district_no"],
@@ -1002,7 +1011,14 @@
         "min_features": 11,
         "max_features": 11,
         "note": "New York's tribal land (scripts/build_tribal_areas.py) — 11 areas across 8 nations, two of them state reservations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
-      }],
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 1823,
+        "max_features": 1823,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from the city's MODZCTA archive (data/app/tiles/zip-code.pmtiles), with its spots inside the five boroughs (borough-boundaries.json), and then the statewide ZIP Code Tabulation Area archive (data/app/tiles/nys-zip-code.pmtiles), with its spots in the state outside them (ny-state-outline.json), which is the order and the ground the two layers answer on; --check rebuilds it from the committed archives and outlines. Exact count, because it changes only when the city changes its MODZCTA areas or the Census Bureau its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      }
+    ],
     "rosters": [
       { "file": "nypd-precinct-info.json", "min_keys": 70,
         "note": "keys every precinct (even a null CO), so the floor is the precinct count, not the commander count" },
@@ -1060,7 +1076,7 @@
   "geocoder": {
     "address": "GeoSearch (city type-ahead, geosearch.planninglabs.nyc) then Photon bounded to the state when the city search finds nothing",
     "unbounded": "Photon (whole-coverage, sibling-metro lookup)",
-    "poi": "GeoSearch (office-address pin lookup; every layer that drops a pin is city-only)",
+    "poi": "GeoSearch (office-address pin lookup; it knows New York City addresses only, so an answer counts only in the office's own ZIP code or at the same house number in the same postal area) then, for an office it cannot place, the Census Bureau's house-number estimate through districtry's lookup, kept only at the office's own number on its street in its town or ZIP code",
     "search_placeholder": "Search a New York address"
   },
   "palette": {

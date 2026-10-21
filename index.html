@@ -86,7 +86,7 @@
       "@type": "ItemList",
       "name": "districtry instances",
       "itemListOrder": "https://schema.org/ItemListUnordered",
-      "numberOfItems": 15,
+      "numberOfItems": 16,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -177,6 +177,12 @@
           "position": 15,
           "name": "Mississippi",
           "url": "https://districtry.com/ms/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "name": "Louisiana",
+          "url": "https://districtry.com/la/"
         }
       ]
     }
@@ -559,7 +565,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 .shell { position: relative; min-height: 100vh; }
-.wrap { max-width: 940px; margin: 0 auto; padding: 56px 24px 72px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 56px 24px 72px; }
 
 /* The notice: a card at the top of the column, in the page's flow, above the
    masthead. It used to be a toast placed over the top-right of the window
@@ -707,19 +713,104 @@ h1 {
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
 
-/* Stated plainly and early, never as a warning banner — it is a fact about who
-   this is, not an alarm. See INDEPENDENCE for why it is above the fold, and it
-   now actually is: it sat at 1,800px down the desktop page, under three other
-   sections, which is not above anything. */
-.independence {
-  margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
+/* THE WORKED EXAMPLE (2026-10-21): a place and who represents it there, one
+   of six a reader can switch between, beside the address box on a wide screen
+   and under it on a narrow one. Until then the page said what districtry
+   answers and never showed an answer, so it read as a list of what is covered
+   rather than as something to use. Each card carries its layer's map colour,
+   light and dark, the way the question tiles do; the words on it stay in the
+   page's ink, because a map colour is chosen to read as a line and not as
+   text. */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1fr) 370px;
+  gap: 36px; align-items: start;
+}
+.hero-main { min-width: 0; }
+.example {
+  margin-top: 4px; padding: 16px 14px 12px;
+  background: var(--brand-tint); border: 1px solid var(--brand-border);
+  border-radius: 14px;
+}
+.ex-eyebrow {
+  margin: 0 4px 7px; font: var(--font-heading-weight) 12.5px/1 var(--font-heading);
+  letter-spacing: .09em; text-transform: uppercase; color: var(--brand-700);
+}
+/* A button for each place, the one shown filled the way the address box's
+   button is, so which place is showing does not rest on colour alone. They
+   ship hidden and the page's script shows them, so a reader with no script is
+   not offered buttons that cannot work. */
+.ex-pick { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 4px 13px; }
+.ex-pick[hidden] { display: none; }
+.ex-pick button {
+  min-height: 30px; padding: 5px 11px;
+  font: 600 13.5px/1.2 var(--font-body); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; cursor: pointer;
+}
+.ex-pick button:hover { border-color: var(--brand-600); }
+.ex-pick button[aria-pressed="true"] {
+  color: #fff; background: var(--brand-600); border-color: var(--brand-600); cursor: default;
+}
+.ex-pick button:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ex-pick button[aria-pressed="true"] { color: var(--paper); }
+}
+:root[data-theme="dark"] .ex-pick button[aria-pressed="true"] { color: var(--paper); }
+.ex-place {
+  margin: 0 4px; font: var(--font-heading-weight) 21px/1.2 var(--font-heading);
+  color: var(--ink);
+}
+.ex-addr { margin: 3px 4px 12px; font-size: 13px; line-height: 1.4; color: var(--ink-3); }
+.ex-cards {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 7px; list-style: none; margin: 0; padding: 0;
+}
+.ex-card {
+  --lc: var(--lc-l, var(--muted));
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px; row-gap: 1px; align-items: center;
+  padding: 8px 12px 9px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--lc); border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-card);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ex-card { --lc: var(--lc-d, var(--muted)); }
+}
+:root[data-theme="dark"] .ex-card { --lc: var(--lc-d, var(--muted)); }
+.ex-body {
+  grid-column: 1; font-size: 12.5px; line-height: 1.3; font-weight: 600;
   color: var(--ink-3);
 }
+.ex-body::before {
+  content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px;
+  border-radius: 50%; background: var(--lc); vertical-align: 1px;
+}
+.ex-name {
+  grid-column: 1; min-width: 0; min-height: 1.2em; overflow-wrap: anywhere;
+  font: var(--font-heading-weight) 19px/1.2 var(--font-heading); color: var(--ink);
+}
+.ex-name.ex-none { font-weight: 400; color: var(--muted); }
+.ex-pill {
+  grid-column: 2; grid-row: 1 / span 2;
+  padding: 6px 10px; border-radius: 999px; white-space: nowrap;
+  font: 600 13px/1 var(--font-body); font-variant-numeric: tabular-nums;
+  color: var(--ink); background: var(--paper);
+  background: color-mix(in srgb, var(--lc) 14%, var(--surface));
+}
+.ex-open {
+  display: inline-flex; align-items: center; min-height: 32px; margin: 6px 4px 0;
+  font-size: 14px; font-weight: 600; color: var(--brand-600); text-decoration: none;
+}
+.ex-open:hover { color: var(--brand-700); text-decoration: underline; }
+.ex-open:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 4px; }
 
+/* Section headings read as headings, in sentence case. Until 2026-10-21 they
+   were 14px grey capitals, which is how a form or a printed report marks its
+   parts, and the page read like one. */
 h2 {
-  font: var(--font-heading-weight) 14px/1 var(--font-heading);
-  letter-spacing: .09em; text-transform: uppercase;
-  color: var(--ink-3); margin: 44px 0 12px;
+  font: var(--font-heading-weight) 27px/1.15 var(--font-heading);
+  color: var(--ink); margin: 60px 0 14px; text-wrap: balance;
 }
 .section-note {
   margin: -2px 0 14px; font-size: 13.5px; line-height: 1.5;
@@ -824,17 +915,59 @@ a.st:hover .st-scope, a.st:focus-visible .st-scope { color: var(--ink-3); }
    Google's link guidance sets and the reason render_asks refuses to emit two
    chips alike. They are a <ul> because they are a list of places: a screen
    reader announces how many answer each question and can jump the lot. */
-.asks { display: flex; flex-direction: column; }
-.ask {
-  display: grid; grid-template-columns: 330px minmax(0, 1fr);
-  gap: 8px 18px; align-items: center; padding: 12px 0;
+/* EACH QUESTION IS A TILE THAT OPENS TO ITS PLACES. As rows, the chips took
+   36% of this page on a computer and 52% on a phone, measured 2026-10-21, and
+   grew by one chip per question with every state that went live. Closed, the
+   nine questions sit in one block of tiles, each marked in the map colour of
+   what it asks about and saying how many places answer it. They ship OPEN and
+   the script under them folds them, the state list's rule, so a reader with
+   no script gets every link. The cost is a second tap to reach a question
+   page. A tile opens where it stands rather than across the row, because a
+   tile spanning the row would leave a hole wherever it did not start one. */
+.asks {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px; align-items: start;
 }
-.ask + .ask { border-top: 1px solid var(--border); }
+.ask {
+  --lc: var(--lc-l, var(--muted));
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-card);
+  transition: border-color .14s ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ask { --lc: var(--lc-d, var(--muted)); }
+}
+:root[data-theme="dark"] .ask { --lc: var(--lc-d, var(--muted)); }
+.ask:hover { border-color: var(--brand-border); }
+.ask > summary {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) 14px;
+  column-gap: 12px; row-gap: 2px; align-items: center;
+  min-height: 66px; padding: 13px 14px; list-style: none; cursor: pointer;
+  border-radius: var(--radius-card);
+}
+.ask > summary::-webkit-details-marker { display: none; }
+.ask > summary:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+.ask-sw {
+  grid-row: 1 / span 2; width: 30px; height: 30px; border-radius: 7px;
+  border: 2px solid var(--lc); background: var(--surface);
+  background: color-mix(in srgb, var(--lc) 16%, var(--surface));
+}
 .ask h3 {
-  margin: 0; font: var(--font-heading-weight) 19px/1.2 var(--font-heading);
+  margin: 0; font: var(--font-heading-weight) 17.5px/1.2 var(--font-heading);
   color: var(--ink);
 }
-.ask-chips { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: 0; padding: 0; }
+.ask-n { grid-column: 2; font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+.ask > summary::after {
+  content: ""; grid-column: 3; grid-row: 1 / span 2; justify-self: center;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3);
+  transform: translateY(-2px) rotate(45deg); transition: transform .14s ease;
+}
+.ask[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.ask-chips {
+  display: flex; flex-wrap: wrap; gap: 7px; list-style: none;
+  margin: 0; padding: 0 14px 14px 56px;
+}
 .chip {
   display: inline-flex; align-items: center; min-height: 36px; padding: 7px 13px;
   background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
@@ -844,7 +977,10 @@ a.st:hover .st-scope, a.st:focus-visible .st-scope { color: var(--ink-3); }
 }
 .chip:hover, .chip:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
 .chip:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
-.chip-topic { color: var(--ink-3); font-weight: 400; }
+/* `pre`, because a chip is a flex box and its topic a flex item, and a flex
+   item drops the space it starts with: every chip read "Illinois· U.S. House"
+   on screen while its text said "Illinois · U.S. House". */
+.chip-topic { color: var(--ink-3); font-weight: 400; white-space: pre; }
 
 .does { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 22px 26px; }
 .does > div { padding-top: 13px; border-top: 2px solid var(--border); }
@@ -904,14 +1040,20 @@ footer .support b { color: var(--ink); }
 .foot-links a { display: block; padding: 5px 0; min-height: 24px; line-height: 1.4; text-decoration: none; }
 .foot-links a:hover, .foot-links a:focus-visible { text-decoration: underline; }
 
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .example { margin-top: 0; }
+  .asks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 560px) {
   .wrap { padding: 28px 18px 56px; }
   header.mast { gap: 8px; margin-bottom: 26px; }
   .wordmark { font-size: 25px; }
   h1 { font-size: 31px; }
-  h2 { margin-top: 34px; }
+  h2 { font-size: 24px; margin-top: 44px; }
   .search-row { flex-direction: column; }
   .notice { margin-bottom: 22px; }
+  .example { padding: 14px 12px 10px; }
   .states { columns: 2; column-gap: 10px; }
   .states-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -930,7 +1072,8 @@ footer .support b { color: var(--ink); }
   /* One column, and the chips grow: a row of links is the shape WCAG 2.5.8
      catches, and 36px tall chips 7px apart are inside each other's 24px
      circle once they wrap on a narrow screen. */
-  .ask { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 0; }
+  .asks { grid-template-columns: minmax(0, 1fr); }
+  .ask-chips { padding-left: 14px; }
   .chip { min-height: 40px; padding: 9px 14px; }
   .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
@@ -959,22 +1102,205 @@ footer .support b { color: var(--ink); }
     </header>
 
     <main id="page-main">
-    <h1>Every district that covers a point, and who represents it.</h1>
-    <p class="lede">Enter an address or ZIP — districtry shows every civic district that covers that point on the map, and the people who hold those seats. Free, no login.</p>
+    <div class="hero">
+      <div class="hero-main">
+        <h1>Every district that covers a point, and who represents it.</h1>
+        <p class="lede">Enter an address or ZIP — districtry shows every civic district that covers that point on the map, and the people who hold those seats. Free, no login.</p>
 
-    <div class="search-card">
-      <label class="search-label" for="search-input">Start with an address</label>
-      <form id="search-form" class="search-row">
-        <input type="text" id="search-input" class="search-input" name="q"
-               placeholder="Street address or ZIP" autocomplete="off" />
-        <button type="submit" id="search-button" class="search-button">Show districts</button>
-      </form>
-      <p class="search-help">districtry opens the map that covers the point. 14 states and San Francisco
-         answer today — an address anywhere else says so instead of guessing.</p>
-      <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+        <div class="search-card">
+          <label class="search-label" for="search-input">Start with an address</label>
+          <form id="search-form" class="search-row">
+            <input type="text" id="search-input" class="search-input" name="q"
+                   placeholder="Street address or ZIP" autocomplete="off" />
+            <button type="submit" id="search-button" class="search-button">Show districts</button>
+          </form>
+          <p class="search-help">districtry opens the map that covers the point. 15 states and San Francisco
+             answer today — an address anywhere else says so instead of guessing.</p>
+          <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+      <aside class="example" aria-labelledby="ex-h">
+        <p id="ex-h" class="ex-eyebrow">What you get</p>
+        <div class="ex-pick" role="group" aria-label="Example places" hidden>
+          <button type="button" data-place="chicago" aria-controls="ex-chicago" aria-pressed="true">Chicago</button>
+          <button type="button" data-place="madison" aria-controls="ex-madison" aria-pressed="false">Madison</button>
+          <button type="button" data-place="detroit" aria-controls="ex-detroit" aria-pressed="false">Detroit</button>
+          <button type="button" data-place="nashville" aria-controls="ex-nashville" aria-pressed="false">Nashville</button>
+          <button type="button" data-place="new-york" aria-controls="ex-new-york" aria-pressed="false">New York</button>
+          <button type="button" data-place="san-francisco" aria-controls="ex-san-francisco" aria-pressed="false">San Francisco</button>
+        </div>
+        <div class="ex-panel" id="ex-chicago" data-place="chicago">
+          <h2 class="ex-place">Example: Chicago City Hall</h2>
+          <p class="ex-addr">121 N. LaSalle St., Chicago</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="il/data/app/congress-roster.json" data-seat="[&quot;7&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">IL-7</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="il/data/app/il-senate-members.json" data-seat="[&quot;3&quot;]"><span class="ex-body">Illinois Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 3</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="il/data/app/il-house-members.json" data-seat="[&quot;6&quot;]"><span class="ex-body">Illinois House</span><span class="ex-name" hidden></span><span class="ex-pill">District 6</span></li>
+            <li class="ex-card" style="--lc-l:#1E7A8C;--lc-d:#57C8E1" data-roster="il/data/app/ccbr-roster.json" data-seat="[&quot;3&quot;]"><span class="ex-body">Cook County Board of Review</span><span class="ex-name" hidden></span><span class="ex-pill">District 3</span></li>
+            <li class="ex-card" style="--lc-l:#585EDD;--lc-d:#A7B4FD" data-roster="il/data/app/school-board-members.json" data-seat="[&quot;12&quot;]"><span class="ex-body">Chicago Board of Education</span><span class="ex-name" hidden></span><span class="ex-pill">District 6b</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/il/#p=41.88372,-87.63238&amp;l=cg,ils,ilh,br,sb,cb,wd">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-madison" data-place="madison" hidden>
+          <h2 class="ex-place">Example: Wisconsin State Capitol</h2>
+          <p class="ex-addr">2 E. Main St., Madison</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="wi/data/app/congress-roster.json" data-seat="[&quot;2&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">District 2</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="wi/data/app/wi-senate-members.json" data-seat="[&quot;26&quot;]"><span class="ex-body">Wisconsin Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 26</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="wi/data/app/wi-assembly-members.json" data-seat="[&quot;76&quot;]"><span class="ex-body">Wisconsin Assembly</span><span class="ex-name" hidden></span><span class="ex-pill">District 76</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="wi/data/app/county-board-members.json" data-seat="[&quot;5502501&quot;]"><span class="ex-body">Dane County Board</span><span class="ex-name" hidden></span><span class="ex-pill">District 1</span></li>
+            <li class="ex-card" style="--lc-l:#0B5394;--lc-d:#4FA4FE" data-roster="wi/data/app/wi-alderpersons.json" data-seat="[&quot;48000&quot;, &quot;members&quot;, &quot;04&quot;]"><span class="ex-body">Madison Common Council</span><span class="ex-name" hidden></span><span class="ex-pill">District 4</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/wi/#p=43.07468,-89.38421&amp;l=us,wis,wia,cb,ad,ms">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-detroit" data-place="detroit" hidden>
+          <h2 class="ex-place">Example: Coleman A. Young Municipal Center</h2>
+          <p class="ex-addr">2 Woodward Ave., Detroit</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="mi/data/app/congress-roster.json" data-seat="[&quot;13&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">District 13</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="mi/data/app/mi-senate-members.json" data-seat="[&quot;1&quot;]"><span class="ex-body">Michigan Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 1</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="mi/data/app/mi-house-members.json" data-seat="[&quot;9&quot;]"><span class="ex-body">Michigan House</span><span class="ex-name" hidden></span><span class="ex-pill">District 9</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="mi/data/app/mi-commissioner-members.json" data-seat="[&quot;163&quot;, &quot;districts&quot;, &quot;2&quot;]"><span class="ex-body">Wayne County Commission</span><span class="ex-name" hidden></span><span class="ex-pill">District 2</span></li>
+            <li class="ex-card" style="--lc-l:#0B5394;--lc-d:#4FA4FE" data-roster="mi/data/app/mi-detroit-council-members.json" data-seat="[&quot;districts&quot;, &quot;6&quot;]"><span class="ex-body">Detroit City Council</span><span class="ex-name" hidden></span><span class="ex-pill">District 6</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/mi/#p=42.32944,-83.04389&amp;l=us,mis,mih,cm,cw">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-nashville" data-place="nashville" hidden>
+          <h2 class="ex-place">Example: Tennessee State Capitol</h2>
+          <p class="ex-addr">600 Dr. Martin L. King Jr. Blvd., Nashville</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="tn/data/app/congress-roster.json" data-seat="[&quot;7&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">District 7</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="tn/data/app/tn-senate-members.json" data-seat="[&quot;21&quot;]"><span class="ex-body">Tennessee Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 21</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="tn/data/app/tn-house-members.json" data-seat="[&quot;51&quot;]"><span class="ex-body">Tennessee House</span><span class="ex-name" hidden></span><span class="ex-pill">District 51</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="tn/data/app/tn-commissioners.json" data-seat="[&quot;47037&quot;, &quot;districts&quot;, &quot;19&quot;]"><span class="ex-body">Metro Council</span><span class="ex-name" hidden></span><span class="ex-pill">District 19</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/tn/#p=36.16583,-86.78417&amp;l=us,tns,tnh,cm,cw,bd">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-new-york" data-place="new-york" hidden>
+          <h2 class="ex-place">Example: New York City Hall</h2>
+          <p class="ex-addr">City Hall Park, Manhattan</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="ny/data/app/congress-roster.json" data-seat="[&quot;10&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">NY-10</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="ny/data/app/ny-senate-members.json" data-seat="[&quot;27&quot;]"><span class="ex-body">New York State Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 27</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="ny/data/app/ny-assembly-members.json" data-seat="[&quot;66&quot;]"><span class="ex-body">New York State Assembly</span><span class="ex-name" hidden></span><span class="ex-pill">District 66</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/ny/#p=40.71278,-74.00583&amp;l=cg,nys,nya,lg,cv,cl">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-san-francisco" data-place="san-francisco" hidden>
+          <h2 class="ex-place">Example: San Francisco City Hall</h2>
+          <p class="ex-addr">1 Dr. Carlton B. Goodlett Pl., San Francisco</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="ca/data/app/congress-roster.json" data-seat="[&quot;11&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">CA-11</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="ca/data/app/ca-senate-members.json" data-seat="[&quot;11&quot;]"><span class="ex-body">California Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 11</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="ca/data/app/ca-assembly-members.json" data-seat="[&quot;17&quot;]"><span class="ex-body">California Assembly</span><span class="ex-name" hidden></span><span class="ex-pill">District 17</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="ca/data/app/sf-supervisor-members.json" data-seat="[&quot;5&quot;]"><span class="ex-body">Board of Supervisors</span><span class="ex-name" hidden></span><span class="ex-pill">District 5</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/ca/#p=37.77927,-122.41924&amp;l=cg,cas,caa,sd">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+      </aside>
+      <script>
+      (function () {
+        var box = document.currentScript.previousElementSibling;
+        if (!box || !window.fetch) return;
+        var PLACE_KEY = "districtry-example-place";
+        var pick = box.querySelector(".ex-pick");
+        var panels = box.querySelectorAll(".ex-panel[data-place]");
+        var buttons = box.querySelectorAll(".ex-pick button[data-place]");
+        var order = [], byId = {}, shown = {}, lists = {}, i;
+        for (i = 0; i < panels.length; i++) {
+          order.push(panels[i].getAttribute("data-place"));
+          byId[panels[i].getAttribute("data-place")] = panels[i];
+        }
+        if (!pick || !order.length) return;
+        // The counter loads after this script, so a count waits for it, up to
+        // ten seconds, as the address box's does.
+        function trackEvent(path, tries) {
+          if (window.goatcounter && typeof window.goatcounter.count === "function") {
+            window.goatcounter.count({ path: path, title: path, event: true });
+            return;
+          }
+          if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
+        }
+        function show(card, text, named) {
+          var line = card.querySelector(".ex-name");
+          line.textContent = text;
+          line.className = named ? "ex-name" : "ex-name ex-none";
+        }
+        // One member: the name, "" for a seat the roster calls vacant, or null.
+        function member(rec, pill) {
+          if (!rec || typeof rec !== "object" || rec.withheld) return null;
+          if (rec.subDistrict && pill !== "District " + rec.subDistrict) return null;
+          var n = typeof rec.name === "string" ? rec.name.replace(/^\s+|\s+$/g, "") : "";
+          if (n && n.toUpperCase() !== "VACANT") return n;
+          return rec.vacant || n ? "" : null;
+        }
+        function name(card, list) {
+          var path = JSON.parse(card.getAttribute("data-seat")), seat = list, k;
+          for (k = 0; k < path.length; k++) {
+            seat = seat && typeof seat === "object" &&
+              Object.prototype.hasOwnProperty.call(seat, path[k]) ? seat[path[k]] : null;
+          }
+          var pill = card.querySelector(".ex-pill").textContent;
+          var recs = Array.isArray(seat) ? seat : [seat], names = [], vacant = 0;
+          for (k = 0; k < recs.length; k++) {
+            var n = member(recs[k], pill);
+            if (n) names.push(n);
+            else if (n === "") vacant++;
+          }
+          if (!names.length) return show(card, vacant ? "Vacant" : "Not listed", false);
+          if (vacant) names.push(vacant === 1 ? "a vacant seat" : vacant + " vacant seats");
+          show(card, names.length === 1 ? names[0]
+            : names.slice(0, -1).join(", ") + " and " + names[names.length - 1], true);
+        }
+        function fill(panel) {
+          var cards = panel.querySelectorAll(".ex-card[data-roster]"), groups = {}, j;
+          for (j = 0; j < cards.length; j++) {
+            var url = cards[j].getAttribute("data-roster");
+            cards[j].querySelector(".ex-name").hidden = false;
+            (groups[url] = groups[url] || []).push(cards[j]);
+          }
+          Object.keys(groups).forEach(function (url) {
+            lists[url] = lists[url] || fetch(url).then(function (r) {
+              if (!r.ok) throw new Error("HTTP " + r.status);
+              return r.json();
+            });
+            lists[url].then(function (list) {
+              groups[url].forEach(function (card) { name(card, list); });
+            }, function () {
+              groups[url].forEach(function (card) { show(card, "Name didn't load", false); });
+            });
+          });
+        }
+        function choose(id) {
+          var j;
+          for (j = 0; j < order.length; j++) byId[order[j]].hidden = order[j] !== id;
+          for (j = 0; j < buttons.length; j++) {
+            buttons[j].setAttribute("aria-pressed",
+              buttons[j].getAttribute("data-place") === id ? "true" : "false");
+          }
+          if (!shown[id]) {
+            shown[id] = true;
+            fill(byId[id]);
+          }
+        }
+        var last = null, start;
+        try { last = window.localStorage.getItem(PLACE_KEY); } catch (e) { /* storage blocked */ }
+        i = order.indexOf(last);
+        start = i >= 0 ? order[(i + 1) % order.length]
+                       : order[Math.floor(Math.random() * order.length)];
+        try { window.localStorage.setItem(PLACE_KEY, start); } catch (e) { /* the next visit picks at random */ }
+        choose(start);
+        pick.hidden = false;
+        pick.addEventListener("click", function (e) {
+          var b = e.target;
+          while (b && b !== pick && !(b.getAttribute && b.getAttribute("data-place"))) b = b.parentNode;
+          if (!b || b === pick || b.getAttribute("aria-pressed") === "true") return;
+          choose(b.getAttribute("data-place"));
+          trackEvent("example-place/" + b.getAttribute("data-place"));
+        });
+      })();
+      </script>
     </div>
-
-    <p class="independence">districtry is an independent, unofficial project. It is not a government service and is not affiliated with, endorsed by, or operated by any government agency. It asks for an address only to place a point on the map — there is no account, no sign-in, and it never asks for personal or financial information.</p>
 
     <h2>Where it answers today</h2>
     <div class="coverage">
@@ -982,7 +1308,7 @@ footer .support b { color: var(--ink); }
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
       <div class="cov-head">
-        <p class="cov-count"><strong>14 states and San Francisco answer today.</strong>
+        <p class="cov-count"><strong>15 states and San Francisco answer today.</strong>
           Pick one to open its map.</p>
         <ul class="cov-key" aria-label="Key">
           <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
@@ -1011,7 +1337,7 @@ footer .support b { color: var(--ink); }
         <li><a class="st" href="https://districtry.com/ia/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Iowa</span><span class="st-scope">all 99 counties &#183; <span class="st-n">21</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Kansas</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/ky/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Kentucky</span><span class="st-scope">all 120 counties &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
-        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Louisiana</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/la/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Louisiana</span><span class="st-scope">all 64 parishes &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Maine</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Maryland</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Massachusetts</span><span class="vh">, not yet</span></span></li>
@@ -1026,7 +1352,7 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New Jersey</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New Mexico</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/ny/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New York</span><span class="st-scope">statewide, 5 boroughs in depth &#183; <span class="st-n">39</span>&nbsp;layers</span></a></li>
-        <li><a class="st" href="https://districtry.com/nc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Carolina</span><span class="st-scope">all 100 counties &#183; <span class="st-n">15</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/nc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Carolina</span><span class="st-scope">all 100 counties &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Dakota</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Ohio</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/ok/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Oklahoma</span><span class="st-scope">all 77 counties &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
@@ -1068,8 +1394,8 @@ footer .support b { color: var(--ink); }
     <p class="section-note">One page per question and place: the answer in prose, the roster as it
        stood on the day it was checked, and a link that opens the map with the right layers on.</p>
     <div class="asks">
-      <div class="ask">
-        <h3>Who is my U.S. representative?</h3>
+      <details class="ask" style="--lc-l:#14181C;--lc-d:#696F76" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who is my U.S. representative?</h3><span class="ask-n">16 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/congress.html">Illinois<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ny/congress.html">New York<span class="chip-topic"> &#183; U.S. House</span></a></li>
@@ -1086,10 +1412,11 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/tn/congress.html">Tennessee<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ar/congress.html">Arkansas<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ms/congress.html">Mississippi<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/la/congress.html">Louisiana<span class="chip-topic"> &#183; U.S. House</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>Who is my state legislator?</h3>
+      </details>
+      <details class="ask" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who is my state legislator?</h3><span class="ask-n">13 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/state-legislature.html">Illinois<span class="chip-topic"> &#183; General Assembly</span></a></li>
           <li><a class="chip" href="/ny/state-legislature.html">New York<span class="chip-topic"> &#183; NY Legislature</span></a></li>
@@ -1103,10 +1430,11 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/tn/state-legislature.html">Tennessee<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/ar/state-legislature.html">Arkansas<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/ms/state-legislature.html">Mississippi<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/la/state-legislature.html">Louisiana<span class="chip-topic"> &#183; Legislature</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>Who sits on my county board?</h3>
+      </details>
+      <details class="ask" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who sits on my county board?</h3><span class="ask-n">16 pages in 15 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/county-board.html">Illinois<span class="chip-topic"> &#183; commissioners</span></a></li>
           <li><a class="chip" href="/ny/county-supervisor.html">New York<span class="chip-topic"> &#183; supervisors</span></a></li>
@@ -1123,10 +1451,11 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/tn/county-commissioner.html">Tennessee<span class="chip-topic"> &#183; commissioners</span></a></li>
           <li><a class="chip" href="/ar/quorum-court.html">Arkansas<span class="chip-topic"> &#183; quorum court</span></a></li>
           <li><a class="chip" href="/ms/county-supervisor.html">Mississippi<span class="chip-topic"> &#183; supervisors</span></a></li>
+          <li><a class="chip" href="/la/parish-government.html">Louisiana<span class="chip-topic"> &#183; police jury or council</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>Who represents me on the city council?</h3>
+      </details>
+      <details class="ask" style="--lc-l:#0B5394;--lc-d:#4FA4FE" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who represents me on the city council?</h3><span class="ask-n">5 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/ward.html">Chicago<span class="chip-topic"> &#183; alderman, by ward</span></a></li>
           <li><a class="chip" href="/ny/council-district.html">New York<span class="chip-topic"> &#183; Council district</span></a></li>
@@ -1134,39 +1463,39 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ia/city-council.html">Iowa<span class="chip-topic"> &#183; city council</span></a></li>
           <li><a class="chip" href="/mi/city-council.html">Michigan<span class="chip-topic"> &#183; city council</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>What police district am I in?</h3>
+      </details>
+      <details class="ask" style="--lc-l:#9C0B24;--lc-d:#FF696D" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>What police district am I in?</h3><span class="ask-n">2 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/police-district.html">Chicago<span class="chip-topic"> &#183; police district</span></a></li>
           <li><a class="chip" href="/ny/police-precinct.html">New York<span class="chip-topic"> &#183; NYPD precinct</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>Which school board district am I in?</h3>
+      </details>
+      <details class="ask" style="--lc-l:#585EDD;--lc-d:#A7B4FD" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Which school board district am I in?</h3><span class="ask-n">2 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/school-board.html">Chicago<span class="chip-topic"> &#183; Board of Education</span></a></li>
           <li><a class="chip" href="/wi/school-board.html">Wisconsin<span class="chip-topic"> &#183; school board</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>Which special district covers me?</h3>
+      </details>
+      <details class="ask" style="--lc-l:#B0342A;--lc-d:#FE8B7C" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Which special district covers me?</h3><span class="ask-n">3 pages in 1 place</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/fire-district.html">Illinois<span class="chip-topic"> &#183; fire district</span></a></li>
           <li><a class="chip" href="/il/park-district.html">Illinois<span class="chip-topic"> &#183; park district</span></a></li>
           <li><a class="chip" href="/il/library-district.html">Illinois<span class="chip-topic"> &#183; library district</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>Which court elects my judges?</h3>
+      </details>
+      <details class="ask" style="--lc-l:#8A692C;--lc-d:#DDB061" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Which court elects my judges?</h3><span class="ask-n">3 pages in 2 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/judicial-subcircuit.html">Illinois<span class="chip-topic"> &#183; judicial subcircuit</span></a></li>
           <li><a class="chip" href="/il/supreme-court.html">Illinois<span class="chip-topic"> &#183; Supreme Court</span></a></li>
           <li><a class="chip" href="/wi/circuit-court.html">Wisconsin<span class="chip-topic"> &#183; circuit court</span></a></li>
         </ul>
-      </div>
-      <div class="ask">
-        <h3>Also answered in one place</h3>
+      </details>
+      <details class="ask" open>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Also answered in one place</h3><span class="ask-n">6 pages</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/precinct.html">Illinois<span class="chip-topic"> &#183; precinct</span></a></li>
           <li><a class="chip" href="/il/precinct-maps.html">Illinois<span class="chip-topic"> &#183; who publishes precinct maps</span></a></li>
@@ -1175,8 +1504,19 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ny/borough.html">New York<span class="chip-topic"> &#183; borough offices</span></a></li>
           <li><a class="chip" href="/ia/county-auditor.html">Iowa<span class="chip-topic"> &#183; county auditor</span></a></li>
         </ul>
-      </div>
+      </details>
     </div>
+    <script>
+    /* The question tiles ship open, so a reader with no script still gets
+       every link, and fold here, right after they are parsed, so no screen
+       paints them open first. */
+    (function () {
+      var asks = document.currentScript.previousElementSibling;
+      if (!asks) return;
+      var tiles = asks.querySelectorAll("details.ask");
+      for (var i = 0; i < tiles.length; i++) tiles[i].open = false;
+    })();
+    </script>
 
     <h2>What it does</h2>
     <div class="does">
@@ -1339,7 +1679,10 @@ footer .support b { color: var(--ink); }
       bbox: { minLat: 33.0, maxLat: 36.5, minLng: -94.62, maxLng: -89.64 } },
     { id: "mississippi", tag: "ms", name: "Mississippi", url: "https://districtry.com/ms/", whole: true,
       outline: "ms/data/app/metro-outline.json",
-      bbox: { minLat: 30.13, maxLat: 35.0, minLng: -91.66, maxLng: -88.09 } }
+      bbox: { minLat: 30.13, maxLat: 35.0, minLng: -91.66, maxLng: -88.09 } },
+    { id: "louisiana", tag: "la", name: "Louisiana", url: "https://districtry.com/la/", whole: true,
+      outline: "la/data/app/metro-outline.json",
+      bbox: { minLat: 28.85, maxLat: 33.02, minLng: -94.05, maxLng: -89.71 } }
   ];
 
   function metrosClaiming(lat, lng) {
@@ -2125,6 +2468,36 @@ footer .support b { color: var(--ink); }
   function stateInSentence(tag) {
     return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
   }
+  /* The ZIP code a search is for, or "": five digits, with or without the
+   * four after a hyphen, alone or with "zip", "zip code" or "postal code"
+   * before it and a state, as its code or its name, before or after it
+   * ("60625", "ZIP 60625", "IL 60625", "60625, Illinois", "60625 USA").
+   * Anything else typed with it, a town or a street, makes it an address,
+   * which the search answers as before. The state is not checked against
+   * the ZIP code, which decides on its own (ENGINE geocoder-search, and the
+   * front door's address box). */
+  function zipQuery(text) {
+    var t = String(text || "").toLowerCase().replace(/[.,:;]/g, " ").replace(/\s+/g, " ").trim()
+      .replace(/(?:^| )(?:usa|us|united states(?: of america)?)$/, "").trim();
+    var m = /^(?:(?:zip ?code|postal code|zip) )?(?:([a-z][a-z ]*?) )?(\d{5})(?:-\d{4})?(?: ([a-z][a-z ]*))?$/.exec(t);
+    if (!m) return "";
+    function isState(w) { return !w || US_STATE_NAMES.hasOwnProperty(w) || !!stateTagOfName(w); }
+    return isState(m[1]) && isState(m[3]) ? m[2] : "";
+  }
+  /* Whether `codes`, five-digit ZIP codes in order with nothing between
+   * them, as fleet-zips.json lists each app's (scripts/build_zip_index.mjs),
+   * holds `zip`: the apps' search and the front door's address box read the
+   * file with this one function. */
+  function zipListed(codes, zip) {
+    codes = String(codes || "");
+    var lo = 0, hi = Math.floor(codes.length / 5) - 1;
+    while (lo <= hi) {
+      var mid = (lo + hi) >> 1, at = codes.substr(mid * 5, 5);
+      if (at === zip) return true;
+      if (at < zip) lo = mid + 1; else hi = mid - 1;
+    }
+    return false;
+  }
   /* An address as the Census Bureau's lookup is asked about it when the
    * map's search knows neither the house nor its street (ENGINE
    * geocoder-search showStreetOnly): the number and the street, then the
@@ -2350,8 +2723,9 @@ footer .support b { color: var(--ink); }
    * uncovered, none, unreadable, search-failed, or failed-<why> when the
    * lookup could not read a short link. A place shared into the installed
    * app reaches this page (as "opened") when no state has been opened yet.
-   * Nothing about the place is in it. It is the one event this page sends,
-   * and the privacy page names it (build_privacy_page.py ROOT_EVENTS). The
+   * Nothing about the place is in it. It is one of the two events this page
+   * sends, with the worked example's example-place/<place> (EXAMPLE_SCRIPT),
+   * and the privacy page names both (build_privacy_page.py ROOT_EVENTS). The
    * counter loads after this script, so a count waits for it, up to ten
    * seconds, as the apps' do. */
   var linkRead = null, linkVia = "pasted";
@@ -2419,6 +2793,9 @@ footer .support b { color: var(--ink); }
     if (link && link.kind !== "text") {
       resetButton(); setStatus(mapLinkMessage(link), true); countLinkRead("unreadable"); return;
     }
+    // a typed ZIP code goes to the app whose list holds it (routeZip)
+    var zip = link ? "" : zipQuery(q);
+    if (zip) { routeZip(zip); return; }
     var named = link ? namedState(q) : null;
     if (named && !named.metro) {
       countLinkRead("uncovered");
@@ -2584,6 +2961,59 @@ footer .support b { color: var(--ink); }
       setStatus("Opening " + metro.name + "\u2026", false);
       window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
       return true;
+    });
+  }
+
+  /* A TYPED ZIP CODE (ENGINE map-link zipQuery) is handed, as #q=, to the
+   * app whose ZIP code list holds it (fleet-zips.json, from
+   * scripts/build_zip_index.mjs), with nothing asked of the geocoder: that
+   * app selects a spot inside it, outlines all of it and compares it with
+   * the wards or county board districts it crosses (ENGINE geocoder-search
+   * showZip). Until 2026-10-21 this page searched a ZIP code like an
+   * address and opened the app with the geocoder's one point for it
+   * selected, so the cards named one ward of a ZIP code that crosses four.
+   * A ZIP code no list holds (a post office box's, or one in Kentucky,
+   * whose app draws no ZIP codes) is searched here, and the app covering
+   * the first answer is handed the ZIP code rather than the answer's point,
+   * so it lists its own answers there and selects none of them for the
+   * reader. If the list cannot be read, the same search answers. */
+  var fleetZips = null;
+  function loadFleetZips() {
+    if (!fleetZips) {
+      fleetZips = fetch("fleet-zips.json")
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { return d && d.zips ? d.zips : null; })
+        ["catch"](function () { return null; });   // an outage falls back to the search, never breaks it
+    }
+    return fleetZips;
+  }
+  function routeZip(zip) {
+    var signal = inFlight.signal;
+    loadFleetZips().then(function (zips) {
+      if (signal.aborted) return;
+      for (var i = 0; i < METROS.length; i++) {
+        if (zips && zipListed(zips[METROS[i].id], zip)) return handTo(METROS[i], zip);
+      }
+      return fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(zip) + "&lang=en&limit=5",
+        { signal: signal, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          var feats = (data && data.features) || [];
+          return routeText(feats, zip).then(function (went) {
+            if (went) return;
+            resetButton();
+            setStatus(feats.length
+              ? "ZIP code " + zip + " is outside every place districtry covers today \u2014 see what's covered below."
+              : "No matches for ZIP code " + zip + " \u2014 try an address, or pick a place below.", true);
+          });
+        });
+    })["catch"](function (err) {
+      if (err && err.name === "AbortError") return;
+      resetButton();
+      setStatus("Search failed \u2014 try again, or pick a place below.", true);
     });
   }
 

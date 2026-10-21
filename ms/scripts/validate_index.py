@@ -117,6 +117,7 @@ GEOMETRY_FILES = {
     "ms-chancery-court-districts-2027.json": (20, 20),  # The 20 chancery districts from 1 January 2027 (Senate Bill 2768, 2025), which the app draws from that day.
     "ms-circuit-court-districts.json": (23, 23),  # The 23 circuit districts in force until 1 January 2027.
     "ms-circuit-court-districts-2027.json": (22, 22),  # The 22 circuit districts from 1 January 2027 (House Bill 1544, 2025), which the app draws from that day.
+    "zip-index.json": (426, 426),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

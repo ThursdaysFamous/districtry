@@ -1167,7 +1167,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">17 layers — 7 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1176,7 +1176,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1195,6 +1195,19 @@ table.matrix code {
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">North Carolina — statewide, all 14 districts.</td>
               </tr>
+              <tr id="layer-nc-district-court">
+                <th scope="row"><span class="layer-name">District Court District</span><code>nc-district-court</code></th>
+                <td data-label="What it answers">The district court district covering the point: its counties and the parts of the two counties the law divides, how many district judges the law gives it, and whether any seat is tied to a county.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html" target="_blank" rel="noopener">North Carolina General Statutes — G.S. 7A-133 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts of the districts inside Wake and Vance Counties. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer" target="_blank" rel="noopener">U.S. Census TIGERweb — Census 2010, voting districts (layer 72): the 2010 lines G.S. 7A-133(b) says govern, read 2026-10-20 for Wake and Vance Counties.</a></li>
+                    <li><a href="https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-140.html" target="_blank" rel="noopener">G.S. 7A-140 — each district judge is elected by the voters of the district, lives in it and serves four years</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for Districts 12 and 32, where G.S. 7A-133(a) and its residence paragraphs give different numbers, gives both and states neither.</td>
+                <td data-label="Where it applies">North Carolina — statewide, all 47 districts.</td>
+              </tr>
               <tr id="layer-nc-senate">
                 <th scope="row"><span class="layer-name">NC Senate District</span><code>nc-senate</code></th>
                 <td data-label="What it answers">The North Carolina Senate district covering the point, and the senator holding it.</td>
@@ -1205,6 +1218,19 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">nc-senate-members.json, rebuilt weekly by CI from the Open States current-people export for North Carolina (name, party, e-mail, links). What the General Assembly publishes beyond that is recorded in nc/WATCH.md rather than assumed.</td>
                 <td data-label="Where it applies">North Carolina — statewide, all 50 districts.</td>
+              </tr>
+              <tr id="layer-nc-superior-court">
+                <th scope="row"><span class="layer-name">Superior Court District</span><code>nc-superior-court</code></th>
+                <td data-label="What it answers">The superior court district covering the point: its division, its counties and the parts of the counties the law divides, how many resident superior court judges the law gives it and whether any seat is tied to a county, the districts that share a senior resident judge, and, for the two districts the law ends on 1 January 2029, that date.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html" target="_blank" rel="noopener">North Carolina General Statutes — G.S. 7A-41 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts and blocks of each part of the nine counties it divides. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer" target="_blank" rel="noopener">U.S. Census TIGERweb — Census 2010, voting districts (layer 72) and blocks (layer 18): the 2010 lines G.S. 7A-41(c) and (c1) say govern, read 2026-10-20 for the nine divided counties.</a></li>
+                    <li><a href="https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.1.html" target="_blank" rel="noopener">G.S. 7A-41.1 — districts that together make up the same counties share one senior resident superior court judge</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for District 31A, where G.S. 7A-41(a) and (b) give different numbers, gives both and states neither.</td>
+                <td data-label="Where it applies">North Carolina — statewide, all 73 districts (71 from 1 January 2029, when the law ends Districts 10E and 31D).</td>
               </tr>
               <tr id="layer-nc-house">
                 <th scope="row"><span class="layer-name">NC House District</span><code>nc-house</code></th>
@@ -1452,6 +1478,38 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/nc/sources.html#dataset-nc-district-court",
+      "identifier": "nc-district-court",
+      "name": "District Court District",
+      "description": "The district court district covering the point: its counties and the parts of the two counties the law divides, how many district judges the law gives it, and whether any seat is tied to a county. NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for Districts 12 and 32, where G.S. 7A-133(a) and its residence paragraphs give different numbers, gives both and states neither.",
+      "url": "https://districtry.com/nc/sources.html#layer-nc-district-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/nc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "North Carolina General Statutes — G.S. 7A-133 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts of the districts inside Wake and Vance Counties. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.",
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Census 2010, voting districts (layer 72): the 2010 lines G.S. 7A-133(b) says govern, read 2026-10-20 for Wake and Vance Counties.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer"
+        },
+        {
+          "@type": "Dataset",
+          "name": "G.S. 7A-140 — each district judge is elected by the voters of the district, lives in it and serves four years",
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-140.html"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "North Carolina — statewide, all 47 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/nc/sources.html#dataset-nc-senate",
       "identifier": "nc-senate",
       "name": "NC Senate District",
@@ -1470,6 +1528,38 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "North Carolina — statewide, all 50 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/nc/sources.html#dataset-nc-superior-court",
+      "identifier": "nc-superior-court",
+      "name": "Superior Court District",
+      "description": "The superior court district covering the point: its division, its counties and the parts of the counties the law divides, how many resident superior court judges the law gives it and whether any seat is tied to a county, the districts that share a senior resident judge, and, for the two districts the law ends on 1 January 2029, that date. NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for District 31A, where G.S. 7A-41(a) and (b) give different numbers, gives both and states neither.",
+      "url": "https://districtry.com/nc/sources.html#layer-nc-superior-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/nc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "North Carolina General Statutes — G.S. 7A-41 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts and blocks of each part of the nine counties it divides. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.",
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Census 2010, voting districts (layer 72) and blocks (layer 18): the 2010 lines G.S. 7A-41(c) and (c1) say govern, read 2026-10-20 for the nine divided counties.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer"
+        },
+        {
+          "@type": "Dataset",
+          "name": "G.S. 7A-41.1 — districts that together make up the same counties share one senior resident superior court judge",
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.1.html"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "North Carolina — statewide, all 73 districts (71 from 1 January 2029, when the law ends Districts 10E and 31D)"
       }
     },
     {

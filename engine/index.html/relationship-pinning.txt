@@ -372,7 +372,10 @@
     if (unpin) unpin.addEventListener("click", function () { setPinnedParent(null); });
   }
 
-  function setPinnedParent(id) {
+  // `opts.quiet`: a pin the app makes itself, for a ZIP code search (ENGINE
+  // geocoder-search showZip), which counts zip-search/<layer> instead, so
+  // compare/<layer> stays the count of readers who pinned by hand
+  function setPinnedParent(id, opts) {
     pinnedParentId = (pinnedParentId === id) ? null : id;
     // NOTHING COUNTED THIS UNTIL 2026-09-18, so "nobody uses the comparison"
     // was an inference and never a measurement: the app has instrumented
@@ -390,7 +393,8 @@
     // that page an undercount is a false statement exactly as an overcount is.
     // The same regex reads COMMENTS as code, so this one deliberately does not
     // spell the function name next to a quote.
-    if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
+    if (opts && opts.quiet) { /* counted by its search */ }
+    else if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
     else trackEvent("compare-stop");
     refreshAllPinButtons();
     refreshRelationshipOutlines();

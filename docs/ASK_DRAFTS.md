@@ -130,7 +130,7 @@ with, working as intended.
 | Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
 | Black Hawk and Guthrie county auditors (IA) | the same | none | — |
 | Calhoun County Auditor (IA) | the same | none | — |
-| Pottawattamie and Wright county auditors (IA) | how many supervisors, and who | none | — |
+| Wright County Auditor and Pottawattamie County elections office (IA) | how many supervisors, and who | none | — |
 | Tama County Auditor (IA) | the same | none | **ANSWERED same day**, in full: five supervisors with districts, and contact details that need care — District 1's address is a personal one and his telephone is outside the county's own number block, so neither ships until she says which lines are the county's |
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
@@ -173,7 +173,7 @@ which is a claim about the ask and never about the source.
 
 | letter | prior contact | state of the draft |
 |---|---|---|
-| Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread |
+| Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread. Made a Gmail draft 2026-10-07, and still unsent on 2026-10-20 (read in the sent folder that day) |
 | Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
 | Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
 | Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
@@ -184,7 +184,7 @@ which is a claim about the ask and never about the source.
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belford the third (she first wrote "Belfor" and corrected it herself at 19:27 the same day: "I left the d off"). That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
 | Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none **ANSWERED 2026-10-07**: Clerk Robin Harper-Whitehead named all three commissioners — Jason Taylor (Chairman), Matthew Hayden (Vice Chairman) and John McCuan — with one e-mail for the board and her own office's telephone. They ship on the County card and the `johnson-county-board` gap record is retired |
-| Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three. **SENT 2026-10-07**, no reply as of 2026-10-15 |
+| Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three. **SENT 2026-10-07**, no reply as of 2026-10-15. **SETTLED WITHOUT A REPLY 2026-10-20**: the county's own site served its commissioners page and all three ship, so neither of the letter's questions is open and its follow-up must not ask who is serving |
 | Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note". **SENT 2026-10-07**, no reply as of 2026-10-15 |
 | Scott County Clerk (IL) | the same | **NOT a first letter**: the Clerk was written to 07-19 about the seal and the State's Attorney's office answered 07-20 | drafted 2026-10-01 with both acknowledged. Illinois's note recorded Scott as having no prior contact |
 | Ford County Clerk (IL) | a readable copy of the board list | **three letters: 08-03, 08-16 and 09-04**, none answered | drafted 2026-10-01. Illinois's note said two and the letter said "in August"; corrected to name September as well |
@@ -1296,6 +1296,12 @@ official's name wrong is the cheapest possible way to lose a reader.
 >
 > **Do not pay the invoice before the answer arrives.** The money is not the obstacle and
 > paying first would buy a file this project could not then publish.
+>
+> **RE-CHECKED 2026-10-20 in the sent folder**: the letter below became a Gmail draft on
+> 2026-10-07, as a reply on Anderson's own thread to her 12 August agreement and invoice, and it
+> has not been sent. Nothing has gone to Bureau since the operator's message of 11 August, so
+> "three weeks" above is now ten. The county's board members are named from its own site, so
+> this letter is about the district map alone.
 
 **To:** Christine Anderson, GIS Technician, Bureau County Assessor's Office —
 `canderson@bureaucounty-il.gov`
@@ -3688,10 +3694,12 @@ neither names a person.
 | "we do not publish them" | A refusal, which counts at once towards the done standard's fourth test. Record it with the date and tag the gap record. |
 | no reply after the follow-up cadence | `UNRESPONSIVE` after one follow-up and thirty days, recorded with both dates, and the record is tagged then and not before. |
 
-**Urbana is deliberately NOT here.** It is the other Illinois city above 25,000 that names
-nobody, and its site resets every connection from this project's sandbox — which is a measurement
+**Urbana is deliberately NOT here.** It was the other Illinois city above 25,000 that named
+nobody, and its site reset every connection from this project's sandbox — which is a measurement
 of this vantage and not of the city. Writing to a city to ask for data it may already publish is
-a question we would be asking of ourselves. That one waits on a reading from a build machine.
+a question we would be asking of ourselves. **It needed no letter at all**: on 2026-10-21 the city
+turned out to have moved its site to `www.urbanail.gov`, which serves this project's own client,
+and its mayor, council and clerk ship from there (`urbana-city-wards` carries the story).
 
 ---
 
@@ -3700,7 +3708,21 @@ a question we would be asking of ourselves. That one waits on a reading from a b
 
 > **NAMED RATHER THAN NUMBERED**, for the reason `il-gurnee-board-names` above gives.
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
+> **WITHDRAWN 2026-10-21, NEVER SENT, AND THE QUESTION IT ASKS HAD THE WRONG PREMISE.** The
+> city had not blocked anybody: it had moved. Its site is now `www.urbanail.gov`, whose footer
+> names the City of Urbana at 400 South Vine Street and whose council members' addresses are on
+> that domain, and it answers this project's own client with a full page (requests plus the
+> districtry roster token, HTTP 200, robots.txt Drupal's default allowing the pages read). The
+> mayor, the seven ward council members and the elected City Clerk ship from it weekly through
+> `scripts/il_large_city_councils_scraper.py`. The gap record this letter was written for,
+> `urbana-city-council-names`, is retired; its successor `urbana-city-wards` in
+> `docs/DATA_LAYER_GUIDEBOOK.md` keeps what it got wrong, and records the one thing still missing,
+> the wards, which this letter never asked about. **Search for a government that has moved
+> before writing to one that seems to have shut its door.** The text below is kept as written so
+> the mistake stays readable; it must not be sent. The Gmail draft made from it on 2026-10-20 was
+> retitled "WITHDRAWN, do not send" and emptied on 2026-10-21, for the operator to delete.
+>
+> *Was:* **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
 > `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `urbana-city-council-names` blocker in
 > `docs/DATA_LAYER_GUIDEBOOK.md`.
 
@@ -3936,8 +3958,10 @@ before writing any publisher off.
 
 ## Ask ny-comptroller-local-officials — New York's Comptroller: how current are the names, and are they dated?
 
-**Status: SENT 2026-10-07 at 21:15 UTC — NO REPLY as of 2026-10-11; ONE FOLLOW-UP DUE ON OR
-AFTER 2026-10-21.** Read off the sent folder (subject "Following up: the municipal officials
+**Status: SENT 2026-10-07 at 21:15 UTC; FOLLOWED UP 2026-10-21 at 02:07 UTC, the one follow-up
+it gets (below). No reply is recorded to either. If nothing answers by 2026-11-20, thirty
+days after the follow-up, the outcome is `unresponsive`, and nothing more is sent.** The first
+letter was read off the sent folder (subject "Following up: the municipal officials
 information the Comptroller holds", to `localgov@osc.ny.gov`, its own thread rather than a reply
 on Ask 33's). Named rather than numbered. **This is a FOLLOW-UP, not an opening**:
 `localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on 2026-10-01 and has not replied, so the
@@ -4026,6 +4050,12 @@ Ask 33 gives: there is nothing yet to license. If a file arrives, that is a sepa
 
 ### Follow-up — for the Letters thread to draft on or after 2026-10-21, as a reply in the sent thread
 
+**SENT 2026-10-21 at 02:07 UTC**, by the operator, read off the sent folder by the thread that
+drafts the letters, which counts it the second follow-up to that address, since the address
+was first copied on Ask 33 on 2026-10-01. The operator reworded some of that night's letters before sending, so the
+sent copy, not the text below, is the record of what was asked. Gaps `ny-county-governing-body`
+and `ny-local-governing-body` carry the date in their `ask` field as `followedUp`.
+
 Send only if nothing has arrived from `osc.ny.gov` by then; check the inbox first, because a
 reply may have come to a different thread. This is the one follow-up the ask gets: if it goes
 unanswered for thirty days after this, the ask is `UNRESPONSIVE`, which is a claim about the ask
@@ -4051,9 +4081,11 @@ and never about the office.
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
 **Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; JOHNSON ANSWERED 2026-10-07;
-THE OTHER THREE DRAFTED 2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
+THE OTHER THREE DRAFTED 2026-10-01. PERRY CLOSED 2026-10-20 WITHOUT A REPLY**, when its own site
+answered (under its letter, below). Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
 
-Gaps `johnson-county-board` (retired 2026-10-07, below), `perry-county-website-blocked`, `pope-county-board`,
+Gaps `johnson-county-board` (retired 2026-10-07, below), `perry-county-website-blocked` (retired
+2026-10-20, below), `pope-county-board`,
 `scott-county-commissioners`. **Hardin's gap record is gone**: Clerk Jill Cowsert answered
 within seven minutes of the letter, naming all three commissioners, and they ship — so the
 record that said they were unnamed no longer describes the county. This is the first of these
@@ -4096,8 +4128,8 @@ makes about the county against the county.**
 | county | seats | what blocks the roster | prior contact |
 |---|---|---|---|
 | Hardin — **CLOSED** | 3 commissioners | nothing now: all three are named and shipped | 21 July, 5, 16 and 21 August 2026; answered 24 August; asked again 1 October and answered the same day |
-| Johnson | 3 commissioners | the county has no website at all, as its Clerk stated on 21 July 2026 | 21 July 2026, answered the same day; 5 and 16 August, unanswered |
-| Perry | 3 commissioners | the county's site turns away automated visits | none |
+| Johnson — **CLOSED 2026-10-07** | 3 commissioners | nothing now: the Clerk's reply of 7 October named all three, and they ship; the county has no website at all, as she stated on 21 July 2026 | 21 July 2026, answered the same day; 5 and 16 August, unanswered |
+| Perry — **CLOSED 2026-10-20** | 3 commissioners | nothing now: the county's own site answered on 2026-10-20 and names all three, and they ship | 20 July 2026 about the seal, and 5 and 16 August about the election maps, unanswered (this cell read "none" until 2026-10-20) |
 | Pope | unknown | the web address serves a template page carrying no county information, and the clerk's domain is mail-only with no website behind it | none |
 | Scott — **CLOSED 2026-10-15** | 3 commissioners | nothing now: the page's widget reads a feed that answers when asked the page's way, and all three ship from it | 19 July 2026, answered 20 July by the State's Attorney's office about the county seal |
 
@@ -4235,6 +4267,18 @@ says nothing whatever about a website.
 > <YOUR E-MAIL>
 > https://districtry.com/il/
 
+**CLOSED 2026-10-20 WITHOUT A REPLY.** The letter's premise, that the county's website turns away
+automated visits, stopped being true. Read with this project's own token on Python's own HTTP
+client, the commissioners page answered three times running, twenty seconds apart, and robots.txt
+answered a GitHub runner the same way three times. The page names Chairman Bruce Morgenstern and
+Commissioners Jennifer Martin and Joseph Folden, which the certified canvasses agree with, and
+they ship on the County card (`docs/DATA_LAYER_GUIDEBOOK.md`, "Closed record — Perry County's
+commissioners"). Both of the letter's questions are settled, so its follow-up, due about 28
+October, should not ask either. The letter also says "office contact only, or nothing", which
+has not been this project's rule since 2026-10-17, when an official's own telephone and e-mail
+address began shipping wherever a government source prints them beside that official; anything
+written to this office next should not repeat it.
+
 ### Pope County Clerk — `countyclerk@popeco.illinois.gov`
 
 The one mail-only address in this group: the domain carries mail and no website, which is a
@@ -4329,7 +4373,8 @@ answered from a different office, so the letter names both correctly.
   stops saying nothing where it should name three or six people. **Hardin is the proof and it
   took seven minutes**: Clerk Cowsert's reply of 1 October named all three commissioners, they
   ship, and the gap record is gone. Johnson, Perry and Scott each close the same way, on one
-  reply. For Johnson that reply is the only route there will ever be — as it was for Hardin —
+  reply. *(Corrected 2026-10-20: Scott and Perry closed without one, Scott on 15 October through
+  its page's own feed and Perry on 20 October when its site answered.)* For Johnson that reply is the only route there will ever be — as it was for Hardin —
   because each county's own Clerk has told us the county publishes no website, so no amount of
   further looking could ever have closed either one.
 - **And a county with no website is a document roster permanently.** Hardin joins Edwards and
@@ -4350,7 +4395,9 @@ answered from a different office, so the letter names both correctly.
 ## Ask il-seven-counties-board-districts — seven Illinois county clerks: following up on August
 
 **Status: NOT YET SENT — REWRITTEN 2026-10-01.** Named rather than numbered, for the reason
-`il-gurnee-board-names` above gives. **It was drafted as an EIGHT-county first approach and it
+`il-gurnee-board-names` above gives. **MARION'S WENT 2026-10-01 at 18:09**, read from the sent mail
+on 2026-10-20; this line was not updated when it went, and the other six letters' dates are not
+re-checked here. **It was drafted as an EIGHT-county first approach and it
 is a SEVEN-county follow-up**, which is the whole of what this rewrite changed.
 
 Gaps `bond-county-board-districts`, `cumberland-county-board`,
@@ -4380,7 +4427,7 @@ question for her.
 | Jersey | 4 | 9 Aug 2026 | 16 Aug 2026 | the only map published is dated 2016, before the 2021 redraw, with no data behind it |
 | Lawrence | 7 | 5 Aug 2026 | 16 Aug 2026 | the county's mapping carries taxing districts only — no board districts and no precincts |
 | Macoupin | 9 | 1 Aug 2026 | 16 Aug 2026 | readable district maps with no data behind them, and the precinct data does not say which district each precinct is in |
-| Marion | 5 | 5 Aug 2026 | 16 Aug 2026 | no district map, and Centralia and Salem are each split across three districts |
+| Marion | 5 | 5 Aug 2026 | 16 Aug 2026 | no district map as data (the county's site posts one as a picture, read 2026-10-20), and Centralia and Salem are each split across three districts |
 
 **FAYETTE'S LETTER GOES TO A DIFFERENT PERSON FROM THE AUGUST ONES, AND SO MUST NOT SAY
 "YOU".** August's first letter went to Clerk Barker and the follow-up to Ms. Pollard, whom the
@@ -4693,6 +4740,22 @@ at all — is a question to ask only once the map has been read and found not to
 > <YOUR NAME>
 > <YOUR E-MAIL>
 > https://districtry.com/il/
+
+**2026-10-20, after this letter went:** the county's own site, marioncountyil.gov, names all
+fifteen board members by district, and they now ship on a county page of their own. The same
+site posts the district map as a picture (1024x683). A picture is not traced here and it does not
+say which Census areas make up the current Centralia and Salem precincts, so the letter's ask
+stands as written. A follow-up can say the picture was seen and why it is not enough.
+
+**CORRECTED 2026-10-21: no follow-up goes, and the asking stops here.** The sentence above
+suggested one, and the rule at the end of this section forbids it: the 1 October letter was
+the office's third on these maps (5 and 16 August, then 1 October, after the July note about
+the seal), and a third letter that goes unanswered is recorded as silence, with nothing more
+sent. The picture is not a reply either, because the county uploaded it on 28 April, before
+any of these letters. The 1 October letter has had no answer as of 21 October, so it is
+recorded as unanswered and the office is not written to again about the maps. A reply, if one
+comes, is still recorded and acted on. The letters thread caught this before anything was
+drafted.
 
 ### What each answer means
 
@@ -5698,7 +5761,11 @@ Subject: Wyoming City Council members on districtry.com: how would you like them
 > messages, one per county, each to that county's Auditor at the address
 > `ia/data/app/ia-county-auditors.json` carries, every one confirmed in the operator's own sent
 > folder: Tama (Karen Rohrs, 14:53:51 UTC), Wright (Amanda Meyer, 14:53:56) and Pottawattamie
-> (Mary Ann Hanusa, 14:54:03). The ledger is updated in the
+> (14:54:03). **POTTAWATTAMIE'S WENT TO THE COUNTY'S ELECTIONS OFFICE, NOT TO THE AUDITOR'S OWN
+> MAILBOX** (corrected 2026-10-20, read from the sent message): the address that file carries for
+> the Auditor is `elections@pottcounty-ia.gov`, the elections office's shared mailbox, so the
+> letter opens "Dear Auditor Hanusa" and was delivered to that desk. A reply may come from
+> elections staff rather than from her. The ledger is updated in the
 > `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
 > `docs/DATA_LAYER_GUIDEBOOK.md` and in `ia/WATCH.md`, and both records now carry an `ask` block
 > reading `pending`. A follow-up falls due for the two still silent at about three weeks
@@ -6726,6 +6793,10 @@ in the page the way Scott's carried one.
   security check (HTTP 202, `sg-captcha: challenge`). That is an access control and is not worked
   around, so nothing behind it can be read, feed or not; "turns away automated visits" is still
   true.
+  **Corrected 2026-10-20:** the check had gone. With the roster token on Python's own HTTP client,
+  robots.txt and the commissioners page answered on three reads twenty seconds apart, and
+  robots.txt answered a GitHub runner the same way three times, so the three commissioners ship
+  and the letter's question is settled (under the Perry letter in the five-counties ask).
 - **Johnson** — kept. `johnsonco.illinois.gov` points at a hosting company's shared server that
   carries no site for it (its certificate names the server, and plain HTTP answers that host's
   default page). That agrees with the Clerk's own statement of 21 July that there is no website.
@@ -7475,7 +7546,13 @@ found one error of ours.
 
 ## Ask mn-mat-town-officers — Minnesota Association of Townships: a list of each town's supervisors, clerk and treasurer
 
-> **NOT SENT.** Drafted 2026-10-15 by the Minnesota thread, to the association's general address,
+> **ASKED 2026-10-21 at 00:13 UTC**, from the operator's own mailbox to `info@mntownships.org`,
+> read off the sent folder by the thread that drafts the letters. The operator reworded some of
+> that night's letters before sending, so the sent copy, not the text below, is the record of
+> what was asked. A follow-up is due about 2026-11-11 if nothing has come back. Gap
+> `mn-township-officers` carries the date in its `ask` field.
+>
+> Drafted 2026-10-15 by the Minnesota thread, to the association's general address,
 > `info@mntownships.org`, which its own Contact Us page gives for general questions (read
 > 2026-10-15 after its robots.txt, whose `*` group permits that page). The pages read first, so
 > the letter asks only for what is not already public: the home page, About, Contact Us, Township
@@ -7483,6 +7560,13 @@ found one error of ours.
 > officers. The Update Officer Information page says MAT keeps officer records and asks towns to
 > report changes, and the Township Team page says MAT serves "over 9,000 township officers" in
 > "1,772 of the 1,776 townships".
+>
+> **Made a Gmail draft 2026-10-20**, unsent, on the operator's word that day to draft the
+> letters, with one sentence changed from the version first written here. It read "We would
+> show only each officer's name and office, and never a home address, phone number or e-mail
+> address", and since 2026-10-17 this project publishes an official's own telephone and e-mail
+> wherever a government source prints them beside that official, so the letter says what holds
+> for MAT's list instead. The text below is the draft's.
 
 **Why this is asked.** Minnesota's map draws every one of the state's organized towns, and since
 2026-10-15 the Township or City card names the board of the 704 towns that hold their town
@@ -7514,8 +7598,8 @@ publishes this information that the project exists to encourage.
 > website, where we could read it? Either would let a resident of any township see who serves on
 > their town board.
 >
-> We would show only each officer's name and office, and never a home address, phone number or
-> e-mail address. The map would link to MAT for anyone who wants to know more.
+> From MAT's list we would show only each officer's name and office, and never a home address.
+> The map would link to MAT for anyone who wants to know more.
 >
 > A one-line reply is plenty. If this is not something MAT can do, a "no" is a genuinely useful
 > answer too, and we will keep reading the election results and each town's own website.
@@ -7763,20 +7847,27 @@ that needs a change in law, is then the next question; nothing here establishes 
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 
-> **NOT YET ASKED — DRAFTED 2026-10-15.** Three letters, one per city, each about one ward map
-> this project measured on 2026-10-15 and did not ship. Each city's gap record in
-> `docs/DATA_LAYER_GUIDEBOOK.md` carries the measurement (`annarbor-ward-boundary`,
-> `kentwood-ward-boundary`, `bay-city-ward-boundary`). On send, add `"ask": {"who": "<name>",
-> "asked": "<date>"}` to that record. The four other Michigan cities owed on the done standard
-> (Holland, Midland, Muskegon, Pontiac) shipped the same day and need no letter. Lansing's ward map
+> **ASKED 2026-10-21, all three**, from the operator's own mailbox, read off the sent folder by
+> the thread that drafts the letters: Bay City at 01:41 UTC, Kentwood and Ann Arbor at 01:46
+> UTC. The operator reworded some of that night's letters before sending, so the sent copies,
+> not the text below, are the record of what was asked. A follow-up is due about 2026-11-11 for
+> any that has not answered. Each city's gap record carries the date in its `ask` field and the
+> city in its `covers` field.
+>
+> Drafted 2026-10-15. Three letters, one per city, each about one ward map this project measured
+> on 2026-10-15 and did not ship. Each city's gap record in `docs/DATA_LAYER_GUIDEBOOK.md`
+> carries the measurement (`annarbor-ward-boundary`, `kentwood-ward-boundary`,
+> `bay-city-ward-boundary`). The four other Michigan cities owed on the done standard (Holland,
+> Midland, Muskegon, Pontiac) shipped the same day and need no letter. Lansing's ward map
 > waits on the operator's decision about its licence, and Walker's on his decision about map PDFs
-> that state terms; neither is asked here.
+> that state terms; neither is asked here. DECIDED 2026-10-20 for Lansing: the operator chose to
+> draw its ward map with the credit the city's licence asks for, and it shipped in #1667.
 
 | city | addressed to | address | where the address came from |
 |---|---|---|---|
 | Ann Arbor | Scott Harrod | `sjharrod@a2gov.org` | the maintainer named on the city's own open-data record for the "Wards and Precincts" dataset (ckan.a2gov.org, dataset 8c6a26f9), read 2026-10-15 |
 | Kentwood | Dan Kasunic, City Clerk | `elections@kentwood.us` | the city clerk's election page, which gives this address for elections questions; the clerk's main page names Dan Kasunic and `eclerk@kentwood.us`, read 2026-10-15 |
-| Bay City | the City Clerk's office | **none recorded** | NOT FOUND: the city's website could not be reached from this project's sandbox, so the clerk's name and address must be read in a browser before sending |
+| Bay City | Tema Lucero, City Clerk | `cityclerk@baycitymi.gov` | NOT FOUND on 2026-10-15: the city's website could not be reached from this project's sandbox. Found 2026-10-21 by the thread that drafts the letters, in a voter-information listing of Michigan election offices and not on the city's own website, which that thread reported is behind a Cloudflare block and did not read; the draft was changed to greet the clerk by name. If it bounces, read the city's own clerk page in a browser |
 
 ### Ann Arbor
 
@@ -8064,14 +8155,19 @@ KGIS was asked and did not answer.
 
 ## Ask tn-lebanon-ward-map — Wilson County Election Commission: Lebanon's six wards as a map file
 
-> **NOT YET ASKED — DRAFTED 2026-10-17.** To the Wilson County Election Commission at
+> **ASKED 2026-10-21 at 01:46 UTC**, from the operator's own mailbox to `info@wilsontnvotes.gov`,
+> read off the sent folder by the thread that drafts the letters. The operator reworded some of
+> that night's letters before sending, so the sent copy, not the text below, is the record of
+> what was asked. A follow-up is due about 2026-11-11 if nothing has come back. Gap
+> `tn-municipal-officeholders` records it in its prose only, because that record's `ask` field
+> already holds the KGIS letter about Knoxville.
+>
+> Drafted 2026-10-17. To the Wilson County Election Commission at
 > `info@wilsontnvotes.gov` (telephone (615) 444-0216), the address its own website,
 > wilsontnvotes.gov, gives (read 2026-10-17, after the host's robots.txt). The commission
 > publishes Lebanon's ward maps as PDF files dated 22 October 2025, and Lebanon's own website
 > resets this project's connections, so the commission is the one office found publishing the
-> wards at all. The mailbox has not been searched for earlier correspondence with
-> wilsontnvotes.gov; do that before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17`
-> to `ASKED <date>` in gap `tn-municipal-officeholders` and in the Tennessee row of `tn/WATCH.md`.
+> wards at all.
 
 **Why this is asked.** Lebanon elects its mayor citywide and one council member from each of six
 wards. Its council is named on Tennessee's map and its wards are not drawn, because the only
@@ -8124,13 +8220,18 @@ with its date, and the card keeps saying the wards are not drawn.
 
 ## Ask ok-lawton-ward-map — City of Lawton, City Clerk: which map shows the eight wards in force
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives the City
+> **ASKED 2026-10-21 at about 02:03 UTC, through the contact form on the city's website**, by
+> the operator, whose own message that minute is the record of it: a form leaves nothing in the
+> sent folder. The operator reworded some of that night's letters before sending, so what went
+> through the form, not the text below, is the record of what was asked. A follow-up is due
+> about 2026-11-11 if nothing has come back, through the form again or by telephone. Gap
+> `ok-municipal-officeholders` carries the date in its `ask` field.
+>
+> Drafted 2026-10-17, with no e-mail address. The city's website gives the City
 > Clerk's office a telephone number, 580-581-3305, and a contact form, and no e-mail address (read
 > 2026-10-16). The draft goes in the operator's mailbox with the address field empty, which stops
 > it being sent by accident, and opens with a bracketed note naming the office, its telephone
-> number and the reason; it can go through the form or by post. The mailbox has not been searched
-> for earlier correspondence with the City of Lawton; do that before it goes. On send, change
-> `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `ok-municipal-officeholders`.
+> number and the reason; it can go through the form or by post.
 
 **Why this is asked.** Lawton elects its mayor citywide and one council member from each of eight
 wards. Its council is named on Oklahoma's map and its wards are not drawn, because the only ward
@@ -8231,15 +8332,24 @@ and the cards keep saying the wards and zones are not drawn.
 
 ## Ask sc-anderson-council-districts — City of Anderson, Planning and Development: the six council districts as a map file
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives Planning and
+> **ASKED 2026-10-21 at 02:06 UTC, to Mayor Terence Roberts at `troberts@cityofandersonsc.com`**,
+> from the operator's own mailbox, read off the sent folder by the thread that drafts the
+> letters. The operator readdressed it to the mayor that evening on that thread's advice: the
+> map covers all six districts, so it is no one council member's business, and the mayor's
+> office is the likeliest to pass it to the staff who keep the file. The draft was changed to
+> open "Dear Mayor Roberts," where the text below opens to Planning and Development, and its
+> bracketed note was taken out. The operator reworded some of that night's letters before
+> sending, so the sent copy, not the text below, is the record of what was asked. A follow-up is
+> due about 2026-11-11 if nothing has come back. Gap `sc-municipal-officeholders` carries the
+> date in its `ask` field.
+>
+> Drafted 2026-10-17, with no e-mail address. The city's website gives Planning and
 > Development at 601 South Main Street, Anderson, SC 29624, telephone (864) 231-2222, and the City
 > Council's office at 401 South Main Street, telephone (864) 231-1135, and no e-mail address for
 > either (read 2026-10-16). It goes to Planning and Development as the department most likely to
 > keep the city's maps (inferred; the Council's office is the other choice). The draft goes in the operator's mailbox with the address field empty,
 > which stops it being sent by accident, and opens with a bracketed note naming the office, its
-> telephone number and the reason; it can go by post or after a call. The mailbox has not been
-> searched for earlier correspondence with the City of Anderson; do that before it goes. On send,
-> change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `sc-municipal-officeholders`.
+> telephone number and the reason; it can go by post or after a call.
 
 **Why this is asked.** Anderson elects its mayor and two council members citywide and six from
 districts. Its council is named on South Carolina's map and its districts are not drawn, because the
@@ -8300,15 +8410,18 @@ the districts are not drawn.
 
 ## Ask ky-kde-school-board-divisions — Kentucky Department of Education, KDE Data Services: each county school board's members by division, and the precincts in each division
 
-> **NOT YET ASKED — DRAFTED 2026-10-17.** To KDE Data Services (Office of Education Technology,
+> **ASKED 2026-10-21 at 00:27 UTC**, from the operator's own mailbox to
+> `kdedatarequest@education.ky.gov`, read off the sent folder by the thread that drafts the
+> letters. The operator reworded some of that night's letters before sending, so the sent copy,
+> not the text below, is the record of what was asked. A follow-up is due about 2026-11-11 if
+> nothing has come back. Gap `ky-school-board-members` carries the date in its `ask` field.
+>
+> Drafted 2026-10-17. To KDE Data Services (Office of Education Technology,
 > Division of School Data Services) at `kdedatarequest@education.ky.gov`. That is the address the
 > "KDE Data Services" link in the Page Contact box points to on the Department's "KY K-12 Data
 > Requests and Governance" page (`www.education.ky.gov/districts/tech/Pages/DataRequests.aspx`),
 > read 2026-10-17 after the host's robots.txt, which was served empty and so disallows nothing. The
-> same box gives 300 Sower Blvd., 4th Floor, Frankfort, KY 40601, and (502) 564-2020. The mailbox
-> has not been searched for earlier correspondence with the Department of Education; do that
-> before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap
-> `ky-school-board-members` and add the record's `ask` block.
+> same box gives 300 Sower Blvd., 4th Floor, Frankfort, KY 40601, and (502) 564-2020.
 
 **Why this is asked.** Each of Kentucky's 120 county school boards is elected from five
 divisions, and every division is a set of whole voting precincts (KRS 160.210); the boards of

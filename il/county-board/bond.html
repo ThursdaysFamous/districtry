@@ -287,7 +287,12 @@ h1 {
 }
 .contact .who { margin: 0; font-weight: 600; }
 .contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
-.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
+/* 1.9, not 1.5: when the e-mail wraps at phone width, the telephone and the
+   "County website" link sit on neighbouring lines, and at 1.5 their centres
+   were as little as 20.3px apart across the 353 pages (measured 2026-10-21),
+   under the 24px WCAG 2.5.8 spacing page_consistency_test.mjs holds, which it
+   only samples. At 1.9 the closest pair on any page is 25.6px. */
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.9; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -464,9 +469,9 @@ h1 {
 <p class="kicker"><svg class="districtry-mark" width="18" height="18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><polygon points="16,20 60,8 90,34 84,74 46,90 12,64" fill="#6d3fd1"></polygon><circle cx="42" cy="58" r="15" fill="none" stroke="#fff" stroke-width="10"></circle><line x1="57" y1="20" x2="57" y2="77.5" stroke="#fff" stroke-width="10"></line></svg><a href="../">districtry / illinois</a></p>
 <h1>Bond County Board</h1>
 <p class="title-sub">Every member of the Bond County Board, from the county&#x27;s own published roster.</p>
-<p class="lede">The Bond County Board is elected by district. This page lists 5 districts and the 5 members who hold them, exactly as the county publishes them — the map's county board card reads the same source live, so a card can be up to a week newer than this page.</p>
-<a class="cta" href="../#layers=county-board,county">Find your Bond County district on the map →</a>
-<p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
+<p class="lede">The Bond County Board is elected by district. This page lists 5 districts and the 5 members who hold them, exactly as the county publishes them — the map does not draw these districts yet, so it cannot show which one an address is in.</p>
+<a class="cta" href="../#layers=county">See Bond County on the map →</a>
+<p class="cta-note">Opens the map with the county layer on. This board&#x27;s districts are not on the map yet, so the map cannot find your district.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
 <ul class="members"><li class="member"><span class="m-name">Chris Timmerman</span><span class="m-contact"><a href="mailto:chris.timmermann@bondcountyil.gov">chris.timmermann@bondcountyil.gov</a></span></li></ul>

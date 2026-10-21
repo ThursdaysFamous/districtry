@@ -45,17 +45,22 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # index.html actually carries the fences, so an app WITHOUT dark mode is skipped
 # instead of failing, and an app that adopts it is picked up with nothing here to
 # edit.
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-try:
-    from generate_metro_files import INSTANCES
-except ImportError:  # pragma: no cover
-    INSTANCES = {"il": {"app": "il"}}
+#
+# THE FOLDERS ARE READ OFF THE TREE, NOT OFF generate_metro_files.INSTANCES
+# (2026-10-21). That import exits the process when jsonschema is missing, and
+# it is not an ImportError, so the fallback that used to sit here never ran.
+# It did not matter while only this script and its CI step read the table; the
+# front page's question tiles now take their dark colours from dark_twin, and
+# build_landing_page.py has run without jsonschema since it was written. The
+# tree is also the rule validate_instance_registration.py holds the registry
+# to (a top-level folder with its own index.html), so both readers name the
+# same apps.
 
 
 def targets():
     out = []
-    for tag in sorted(INSTANCES):
-        rel = os.path.join(INSTANCES[tag]["app"], "index.html")
+    for tag in sorted(os.listdir(REPO_ROOT)):
+        rel = os.path.join(tag, "index.html")
         path = os.path.join(REPO_ROOT, rel)
         try:
             with open(path, encoding="utf-8", newline="") as f:
@@ -177,6 +182,22 @@ def fleet_bounds(texts):
     return min(ls), max(ls)
 
 
+def dark_twin(colour, bounds):
+    """One light colour -> its dark counterpart, remapped over `bounds`.
+
+    Split out so the front page's question tiles (build_landing_page.py), which
+    show each question in its concept's map colour, take the same dark colour
+    the apps draw that concept in rather than a second derivation of it."""
+    lo, hi = bounds
+    span = (hi - lo) or 1.0
+    L, C, H = _oklch(colour)
+    Ln = DARK_L_LO + (L - lo) * (DARK_L_HI - DARK_L_LO) / span
+    Cn = C * DARK_CHROMA
+    while Cn > 0 and not _in_gamut(*_lch_to_lab(Ln, Cn, H)):
+        Cn -= 0.004
+    return _hex(*_lch_to_lab(Ln, Cn, H))
+
+
 def dark_map_palette(index_html, bounds=None):
     """Every layer stroke/fill literal in index.html -> its dark counterpart,
     remapped over `bounds` (the fleet's lightness range) when given."""
@@ -184,17 +205,7 @@ def dark_map_palette(index_html, bounds=None):
     if bounds is None:
         ls = [_oklch(c)[0] for c in palette]
         bounds = (min(ls), max(ls))
-    lo, hi = bounds
-    span = (hi - lo) or 1.0
-    out = {}
-    for c in palette:
-        L, C, H = _oklch(c)
-        Ln = DARK_L_LO + (L - lo) * (DARK_L_HI - DARK_L_LO) / span
-        Cn = C * DARK_CHROMA
-        while Cn > 0 and not _in_gamut(*_lch_to_lab(Ln, Cn, H)):
-            Cn -= 0.004
-        out[c] = _hex(*_lch_to_lab(Ln, Cn, H))
-    return out
+    return {c: dark_twin(c, bounds) for c in palette}
 
 def render(index_html, bounds=None):
     """The region body: one JS object literal, sorted, wrapped to stay readable."""
