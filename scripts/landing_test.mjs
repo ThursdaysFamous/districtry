@@ -1008,6 +1008,100 @@ try {
     await ctx.close();
   }
 
+  // --- 1i. the worked example: one place, and who represents it there ------
+  //
+  // Beside the address box since 2026-10-21: a place, the offices that answer
+  // there and the people who hold them, read by the generator from the files
+  // the map's own cards read (render_example). Its words are held to those
+  // files by build_landing_page.py --check; what is held here is what a reader
+  // is shown: the example beside the box on a computer and after it on a
+  // phone, a name and a district on every card, each card in its layer's map
+  // colour in both themes, links that open an app at a point with layers on
+  // and keep that point when followed, and the independence sentence still on
+  // a phone's first screen, which is why the try-it line comes after it.
+  {
+    const examples = {};
+    for (const [label, opts] of [
+      ["computer", { viewport: { width: 1280, height: 800 }, colorScheme: "light" }],
+      // iPhone 13's viewport, so "first screen" means a real phone's.
+      ["phone", { viewport: { width: 390, height: 664 }, colorScheme: "light" }],
+      ["dark", { viewport: { width: 1280, height: 800 }, colorScheme: "dark" }],
+    ]) {
+      const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.evaluate(() => document.fonts.ready);
+      examples[label] = await page.evaluate(() => {
+        const aside = document.querySelector(".example");
+        const search = document.querySelector(".search-card");
+        const a = aside && aside.getBoundingClientRect();
+        const s = search && search.getBoundingClientRect();
+        return {
+          shown: !!aside && aside.checkVisibility(),
+          beside: !!(a && s && a.left >= s.right && a.top < s.bottom),
+          after: !!(a && s && a.top >= s.bottom && a.left < s.right),
+          sideways: document.documentElement.scrollWidth > innerWidth,
+          indep: (() => {
+            const p = document.querySelector(".independence");
+            if (!p) return null;
+            return { top: Math.round(p.getBoundingClientRect().top),
+                     line: parseFloat(getComputedStyle(p).lineHeight), screen: innerHeight };
+          })(),
+          cards: [...document.querySelectorAll(".ex-card")].map((li) => ({
+            body: (li.querySelector(".ex-body")?.textContent || "").trim(),
+            name: (li.querySelector(".ex-name")?.textContent || "").trim(),
+            pill: (li.querySelector(".ex-pill")?.textContent || "").trim(),
+            lc: getComputedStyle(li).getPropertyValue("--lc").trim().toUpperCase(),
+            light: li.style.getPropertyValue("--lc-l").trim().toUpperCase(),
+            dark: li.style.getPropertyValue("--lc-d").trim().toUpperCase(),
+          })),
+          links: [...document.querySelectorAll(".example a, .try a")].map((l) => l.href),
+        };
+      });
+      await ctx.close();
+    }
+    const { computer, phone, dark } = examples;
+    check("the worked example is on the page, with a name and a district on every card",
+      computer.shown && computer.cards.length >= 3 &&
+        computer.cards.every((c) => c.body && c.name && c.pill),
+      JSON.stringify(computer.cards.map((c) => [c.body, c.name, c.pill])));
+    check("on a computer the example sits beside the address box", computer.beside, JSON.stringify(computer));
+    check("on a phone the example comes after the address box, with no sideways scroll",
+      phone.shown && phone.after && !phone.sideways, JSON.stringify({ ...phone, cards: phone.cards.length }));
+    // INDEPENDENCE in build_landing_page.py says why that sentence is above
+    // the fold. Put under the box, the try-it line pushed it to the last line
+    // of this screen, so two lines of it must show.
+    check("on a phone the independence sentence starts on the first screen, at least two lines of it",
+      !!phone.indep && phone.indep.top + 2 * phone.indep.line <= phone.indep.screen,
+      JSON.stringify(phone.indep));
+    check("each example card takes its layer's map colour, light and dark",
+      computer.cards.every((c) => /^#[0-9A-F]{6}$/.test(c.light) && c.lc === c.light) &&
+        dark.cards.every((c) => /^#[0-9A-F]{6}$/.test(c.dark) && c.lc === c.dark),
+      JSON.stringify([computer.cards.map((c) => c.lc), dark.cards.map((c) => c.lc)]));
+    // A link opens an app with its point and its layers in the short form the
+    // apps write: #p=lat,lng and &l= with the layers' permanent codes.
+    const apps = FLEET.map((m) => m.url);
+    check("every example link opens an app at a point with layers on",
+      computer.links.length >= 3 && computer.links.every((h) =>
+        apps.some((u) => h.startsWith(u + "#")) &&
+        /#p=-?\d+(\.\d+)?,-?\d+(\.\d+)?&l=[a-z][a-z0-9]*(,[a-z][a-z0-9]*)*$/.test(h)),
+      JSON.stringify(computer.links));
+
+    // Followed, a link keeps its point: the instance is stubbed, so a wrong
+    // route shows as a wrong URL rather than as a failed navigation that
+    // leaves the page on / and reads like a right one.
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    const want = await page.getAttribute(".try a", "href");
+    await page.click(".try a");
+    await page.waitForURL((u) => u.pathname !== "/", { timeout: 10000, waitUntil: "commit" }).catch(() => {});
+    check("following a try-it link opens that app with its point and layers",
+      page.url() === want, `${page.url()} vs ${want}`);
+    await ctx.close();
+  }
+
   // --- 2-4. old app links forward, carrying query AND hash ----------------
   //
   // /il/ IS STUBBED, and that is the point of this block. The guard's whole job

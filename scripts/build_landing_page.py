@@ -75,7 +75,9 @@ import argparse
 import difflib
 import glob
 import html
+import functools
 import json
+import math
 import os
 import re
 import sys
@@ -921,20 +923,380 @@ def question_colours():
     if stale:
         fail("QUESTION_CONCEPT names %s, which no question row asks."
              % ", ".join(repr(q) for q in stale))
-    with open(os.path.join(REPO_ROOT, "layer-concepts.json"), encoding="utf-8") as f:
-        drawn = json.load(f)["colors"]
-    bounds = palette.fleet_bounds([text for _, _, text in palette.targets()])
     out = {}
     for question in asked:
         concept = QUESTION_CONCEPT[question]
         if concept is None:
             continue
-        line = (drawn.get(concept) or {}).get("line")
-        if not line:
+        colour = concept_colour(concept)
+        if not colour:
             fail("QUESTION_CONCEPT gives %r the concept %r, which has no line colour "
                  "in layer-concepts.json." % (question, concept))
-        out[question] = (line.upper(), palette.dark_twin(line.upper(), bounds))
+        out[question] = colour
     return out
+
+
+@functools.lru_cache(maxsize=None)
+def layer_concepts():
+    return json.loads(read(os.path.join(REPO_ROOT, "layer-concepts.json"),
+                           "the layer concept table"))
+
+
+@functools.lru_cache(maxsize=None)
+def fleet_bounds():
+    return palette.fleet_bounds([text for _, _, text in palette.targets()])
+
+
+@functools.lru_cache(maxsize=None)
+def concept_colour(concept):
+    """(light, dark) for a concept: its map line colour and the dark twin every
+    app draws it in, or None for a concept with no line colour."""
+    line = (layer_concepts()["colors"].get(concept) or {}).get("line")
+    if not line:
+        return None
+    return line.upper(), palette.dark_twin(line.upper(), fleet_bounds())
+
+
+def concept_of(tag, layer_id):
+    """The first concept, in file order, that names this app's layer: the rule
+    generate_metro_files.py colours a layer under two concepts by. None for a
+    layer in no concept, which keeps its own colour in the app (own_colour)."""
+    for concept, apps in layer_concepts()["concepts"].items():
+        ids = apps.get(tag)
+        if ids == layer_id or (isinstance(ids, list) and layer_id in ids):
+            return concept
+    return None
+
+
+def own_colour(tag, layer_id):
+    """(light, dark) for a layer in no concept: the stroke colour its own
+    registerLayer block draws it in, and the dark twin the app derives from
+    that colour. A layer drawn by a factory, or with no literal stroke in its
+    block, fails here rather than taking a colour the map does not draw."""
+    text = read(os.path.join(REPO_ROOT, tag, "index.html"), "the %s app" % tag)
+    marker = 'id: "%s",' % layer_id
+    if text.count(marker) != 1:
+        fail("%s/index.html registers %r %d time(s) as `%s`, so the front page "
+             "cannot read the colour the map draws it in."
+             % (tag, layer_id, text.count(marker), marker))
+    start = text.index(marker)
+    end = text.find("registerLayer(", start)
+    m = re.search(r'style:\s*\{\s*color:\s*"(#[0-9A-Fa-f]{6})"',
+                  text[start:end if end != -1 else len(text)])
+    if not m:
+        fail("%s/index.html: the %r registration carries no literal stroke "
+             "colour, so the front page cannot read the colour the map draws it in."
+             % (tag, layer_id))
+    colour = m.group(1).upper()
+    return colour, palette.dark_twin(colour, fleet_bounds())
+
+
+def concept_layers(tag, concepts):
+    """This app's layer ids for each concept it has, in the order given."""
+    out = []
+    for concept in concepts:
+        ids = layer_concepts()["concepts"].get(concept, {}).get(tag)
+        for layer_id in (ids if isinstance(ids, list) else [ids] if ids else []):
+            if layer_id not in out:
+                out.append(layer_id)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# THE WORKED EXAMPLE beside the address box (2026-10-21, the option Adam was
+# shown as A). Measured on main that day, the page named no officeholder at
+# all: it said what districtry answers and never showed an answer. So it shows
+# one, for one well-known place, read the way the map reads it: each district
+# from the boundary file its layer draws, and each person from the roster its
+# card reads. Nothing below is typed in by hand except the place, its address,
+# its point and the name of each body.
+#
+# ONLY OFFICES WHOSE BOUNDARIES SHIP AS FILES. The ward and the Cook County
+# Board answer at City Hall too, but the map reads both boundaries from the
+# city's and the county's own servers when a reader clicks, so this generator
+# cannot measure which district City Hall is in, and a district typed in here
+# would be a claim nothing holds to the map. The link under the example opens
+# both.
+#
+# THE POINT MUST NOT SIT NEAR AN EDGE. The shipped boundaries are simplified,
+# and a point a few metres from an edge can fall on one side here and on the
+# other in a reader's browser, so the build fails when any example district's
+# edge is nearer than EXAMPLE_EDGE_M. Measured on 2026-10-21 the nearest is
+# the Board of Review's, 124 m from the point.
+#
+# THE NAMES CHANGE WHEN A ROSTER DOES, so each weekly workflow that rewrites
+# one of these rosters regenerates this page in the same run, and
+# check_example_workflows fails one that does not: the rule
+# build_officeholder_tables.py holds its tables to. Without it the next roster
+# change would turn this page's --check red on the bot's own pull request.
+EXAMPLE_TAG = "il"
+EXAMPLE_PLACE = "Chicago City Hall"
+EXAMPLE_ADDRESS = "121 N. LaSalle St., Chicago"
+EXAMPLE_POINT = (41.88372, -87.63238)
+EXAMPLE_EDGE_M = 50
+EXAMPLE_CARDS = [
+    # The layer, the body its card names, its boundary file and roster under
+    # the app's data/app, the roster key a district carries (read the way the
+    # app reads it), and the district as the card prints it.
+    {"layer": "congress", "body": "U.S. House",
+     "boundary": "congress-districts.json", "roster": "congress-roster.json",
+     "key": lambda p: str(int(p["BASENAME"])), "label": lambda p, k: "IL-" + k},
+    {"layer": "il-senate", "body": "Illinois Senate",
+     "boundary": "il-senate-districts.json", "roster": "il-senate-members.json",
+     "key": lambda p: str(int(p["BASENAME"])), "label": lambda p, k: "District " + k},
+    {"layer": "il-house", "body": "Illinois House",
+     "boundary": "il-house-districts.json", "roster": "il-house-members.json",
+     "key": lambda p: str(int(p["BASENAME"])), "label": lambda p, k: "District " + k},
+    {"layer": "ccbr", "body": "Cook County Board of Review",
+     "boundary": "ccbr-districts.json", "roster": "ccbr-roster.json",
+     "key": lambda p: str(p["DISTRICT"]), "label": lambda p, k: "District " + k},
+    # The boundary's 1-20 is the roster's key and is printed nowhere; a seat
+    # is named by the Board's own number and letter, the boundary's longName.
+    {"layer": "school-board", "body": "Chicago Board of Education",
+     "boundary": "school-board-districts.json", "roster": "school-board-members.json",
+     "key": lambda p: str(p["district"]), "label": lambda p, k: p["longName"]},
+]
+
+# The other places a reader can try in one tap, each opening its app at the
+# point with the layers for TRY_CONCEPTS on. The point must lie inside that
+# app's own outline in fleet-outlines.json, or the app would hand the reader
+# on to another one; the build checks it.
+TRY_PLACES = [
+    # what the link says, the metros.json id of the app, and the point
+    ("the Wisconsin State Capitol", "wisconsin", 43.07468, -89.38421),
+    ("New York City Hall", "nyc", 40.71278, -74.00583),
+]
+TRY_CONCEPTS = ("us-house", "state-senate", "state-house", "county-board",
+                "city-council", "school-board-district")
+
+
+def _parts(geom):
+    if not geom:
+        return []
+    if geom["type"] == "Polygon":
+        return [geom["coordinates"]]
+    if geom["type"] == "MultiPolygon":
+        return geom["coordinates"]
+    return []
+
+
+def _even_odd(x, y, rings):
+    inside = False
+    for ring in rings:
+        j = len(ring) - 1
+        for i in range(len(ring)):
+            xi, yi = ring[i][0], ring[i][1]
+            xj, yj = ring[j][0], ring[j][1]
+            if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / (yj - yi) + xi:
+                inside = not inside
+            j = i
+    return inside
+
+
+def _inside(geom, lng, lat):
+    """The app's rule: even-odd within a Polygon, and inside ANY part of a
+    MultiPolygon."""
+    return any(_even_odd(lng, lat, rings) for rings in _parts(geom))
+
+
+def _edge_metres(geom, lng, lat):
+    """How far the point is from the nearest edge of the geometry, in metres,
+    on a flat projection at the point's latitude (good to well under a metre
+    over the few hundred metres this is asked about)."""
+    kx, ky = 111320.0 * math.cos(math.radians(lat)), 110540.0
+    best = float("inf")
+    for rings in _parts(geom):
+        for ring in rings:
+            for i in range(len(ring) - 1):
+                ax, ay = (ring[i][0] - lng) * kx, (ring[i][1] - lat) * ky
+                bx, by = (ring[i + 1][0] - lng) * kx, (ring[i + 1][1] - lat) * ky
+                dx, dy = bx - ax, by - ay
+                span = dx * dx + dy * dy
+                t = 0.0 if span == 0 else max(0.0, min(1.0, -(ax * dx + ay * dy) / span))
+                best = min(best, math.hypot(ax + t * dx, ay + t * dy))
+    return best
+
+
+def coord(v):
+    """A coordinate as the apps write one: five decimals, trailing zeros dropped."""
+    return ("%.5f" % v).rstrip("0").rstrip(".")
+
+
+@functools.lru_cache(maxsize=None)
+def layer_codes():
+    return json.loads(read(os.path.join(REPO_ROOT, "layer-codes.json"),
+                           "the layer code table"))["codes"]
+
+
+def app_link(metro, lat, lng, layer_ids):
+    """A link that opens an app at a point with these layers on, written the
+    way the app writes its own (#p= and the layers' permanent codes)."""
+    codes = layer_codes()
+    missing = [i for i in layer_ids if i not in codes]
+    if missing:
+        fail("layer-codes.json has no code for %s, so the front page cannot link "
+             "%s with it on." % (", ".join(missing), metro["url"]))
+    return "%s#p=%s,%s&l=%s" % (metro["url"], coord(lat), coord(lng),
+                                ",".join(codes[i] for i in layer_ids))
+
+
+def example_name(rec):
+    """(what the card says, whether it names a person). A seat the roster does
+    not name prints what the officeholder tables print, never a guess."""
+    name = rec.get("name")
+    name = name.strip() if isinstance(name, str) else ""
+    if name and name.upper() != "VACANT":
+        return name, True
+    if rec.get("vacant") or name.upper() == "VACANT":
+        return "Vacant", False
+    return "Not listed", False
+
+
+def example_cards():
+    """[(spec, district label, name, named, (light, dark))] at the example
+    point, measured from the shipped files. The colours are the ones the map
+    draws each layer in."""
+    lat, lng = EXAMPLE_POINT
+    base = os.path.join(REPO_ROOT, EXAMPLE_TAG, "data", "app")
+    out = []
+    for spec in EXAMPLE_CARDS:
+        boundary = os.path.join(base, spec["boundary"])
+        try:
+            feats = json.loads(read(boundary, "an example boundary"))["features"]
+        except (ValueError, KeyError) as e:
+            fail("%s is not a feature collection: %s" % (boundary, e))
+        hits = {}
+        for f in feats:
+            if _inside(f.get("geometry"), lng, lat):
+                hits.setdefault(spec["key"](f["properties"]), []).append(f)
+        if len(hits) != 1:
+            fail("%s: %s answers %d district(s) at %s (%s), not one. Pick a point "
+                 "every example layer answers once."
+                 % (spec["layer"], spec["boundary"], len(hits), EXAMPLE_PLACE,
+                    ", ".join(sorted(hits)) or "none"))
+        (key, found), = hits.items()
+        edge = min(_edge_metres(f["geometry"], lng, lat) for f in found)
+        if edge < EXAMPLE_EDGE_M:
+            fail("%s: %s is %.0f m from the edge of its district in %s, nearer "
+                 "than EXAMPLE_EDGE_M (%d m), so the map in a reader's browser "
+                 "could answer the other side of it. Move the point."
+                 % (spec["layer"], EXAMPLE_PLACE, edge, spec["boundary"], EXAMPLE_EDGE_M))
+        try:
+            roster = json.loads(read(os.path.join(base, spec["roster"]), "an example roster"))
+        except ValueError as e:
+            fail("%s is not JSON: %s" % (spec["roster"], e))
+        rec = roster.get(key)
+        if not isinstance(rec, dict):
+            fail("%s has no seat %r, the district %s is in by %s."
+                 % (spec["roster"], key, EXAMPLE_PLACE, spec["boundary"]))
+        label = spec["label"](found[0]["properties"], key)
+        sub = rec.get("subDistrict")
+        if sub and label != "District " + sub:
+            fail("%s: the boundary calls the seat %r and the roster %r. The two "
+                 "must agree before the front page names who holds it."
+                 % (spec["layer"], label, "District " + sub))
+        name, named = example_name(rec)
+        concept = concept_of(EXAMPLE_TAG, spec["layer"])
+        colour = concept_colour(concept) if concept else None
+        out.append((spec, label, name, named,
+                    colour or own_colour(EXAMPLE_TAG, spec["layer"])))
+    return out
+
+
+def example_layers():
+    """The layers the example's link opens: the cards' own, then the
+    TRY_CONCEPTS layers the cards leave out (the ward and the county board)."""
+    ids = [spec["layer"] for spec in EXAMPLE_CARDS]
+    return ids + [i for i in concept_layers(EXAMPLE_TAG, TRY_CONCEPTS) if i not in ids]
+
+
+def render_example(metros):
+    """The worked example's aside, and the line of one-tap places that follows
+    the independence sentence."""
+    by_tag = {m["tag"]: m for m in metros}
+    by_id = {m.get("id"): m for m in metros}
+    if EXAMPLE_TAG not in by_tag:
+        fail("the worked example is in %r, which metros.json does not list as live."
+             % EXAMPLE_TAG)
+    lat, lng = EXAMPLE_POINT
+    items = []
+    for spec, label, name, named, colour in example_cards():
+        items.append(
+            '          <li class="ex-card" style="--lc-l:%s;--lc-d:%s">'
+            '<span class="ex-body">%s</span><span class="ex-name%s">%s</span>'
+            '<span class="ex-pill">%s</span></li>'
+            % (colour + (html.escape(spec["body"]), "" if named else " ex-none",
+                         html.escape(name), html.escape(label))))
+    aside = (
+        '      <aside class="example" aria-labelledby="ex-h">\n'
+        '        <p class="ex-eyebrow">What you get</p>\n'
+        '        <h2 id="ex-h" class="ex-place">Example: %s</h2>\n'
+        '        <p class="ex-addr">%s</p>\n'
+        '        <ul class="ex-cards">\n%s\n        </ul>\n'
+        '        <a class="ex-open" href="%s">See every district here on the map'
+        '<span aria-hidden="true">&#160;&#8594;</span></a>\n'
+        '      </aside>\n'
+        % (html.escape(EXAMPLE_PLACE), html.escape(EXAMPLE_ADDRESS), "\n".join(items),
+           html.escape(app_link(by_tag[EXAMPLE_TAG], lat, lng, example_layers()), quote=True)))
+
+    try:
+        outlines = json.loads(read(os.path.join(REPO_ROOT, "fleet-outlines.json"),
+                                   "the fleet outlines"))["outlines"]
+    except (ValueError, KeyError) as e:
+        fail("fleet-outlines.json has no outlines: %s" % e)
+    links = []
+    for words, metro_id, plat, plng in TRY_PLACES:
+        m = by_id.get(metro_id)
+        if not m:
+            fail("TRY_PLACES links %r, which metros.json does not list as live." % metro_id)
+        if not _inside(outlines.get(metro_id), plng, plat):
+            fail("TRY_PLACES puts %s at %s,%s, outside %s's own outline in "
+                 "fleet-outlines.json, so that app would hand the reader on."
+                 % (words, plat, plng, metro_id))
+        layer_ids = concept_layers(m["tag"], TRY_CONCEPTS)
+        if not layer_ids:
+            fail("%s has no layer for any of TRY_CONCEPTS." % metro_id)
+        links.append('<a href="%s">%s</a>' % (
+            html.escape(app_link(m, plat, plng, layer_ids), quote=True), html.escape(words)))
+    joined = links[0] if len(links) == 1 else ", ".join(links[:-1]) + " or " + links[-1]
+    tries = '        <p class="try">Or try it at %s.</p>\n' % joined
+    return aside, tries
+
+
+WORKFLOWS = os.path.join(REPO_ROOT, ".github", "workflows")
+
+
+def check_example_workflows():
+    """A workflow that rewrites a roster the example reads must regenerate this
+    page and commit it, or the next roster change fails this page's --check on
+    the bot's own pull request with last week's name still on it. The rule and
+    its test are build_officeholder_tables.check_workflows'."""
+    rosters = ["%s/data/app/%s" % (EXAMPLE_TAG, spec["roster"]) for spec in EXAMPLE_CARDS]
+    found = set()
+    for name in sorted(os.listdir(WORKFLOWS)):
+        if not name.endswith((".yml", ".yaml")):
+            continue
+        with open(os.path.join(WORKFLOWS, name), encoding="utf-8") as f:
+            text = f.read()
+        if "git add" not in text:
+            continue
+        for roster in rosters:
+            if roster not in text:
+                continue
+            found.add(roster)
+            if "build_landing_page.py" not in text:
+                fail(".github/workflows/%s rewrites %s, which the front page's worked "
+                     "example reads, and never regenerates the front page — add a step "
+                     "running python3 scripts/build_landing_page.py and `git add "
+                     "index.html`" % (name, roster))
+            if not any(line.split()[:2] == ["git", "add"] and "index.html" in line.split()
+                       for line in text.splitlines()):
+                fail(".github/workflows/%s regenerates the front page and never "
+                     "commits it — add index.html to its `git add`" % name)
+    unwritten = sorted(set(rosters) - found)
+    if unwritten:
+        print("build-landing-page: no workflow rewrites %s; the example reads it "
+              "as it ships" % ", ".join(unwritten))
 
 
 DC = "District of Columbia"
@@ -1065,6 +1427,11 @@ def build():
     two_tier = any((AREAS.get(m["tag"]) or {}).get("state_outline") for m in metros)
     key_wash = ('          <li><span class="sw sw-wash" aria-hidden="true"></span>'
                 'Statewide layers only</li>\n' if two_tier else "")
+
+    # The worked example beside the address box names people, so a roster
+    # refresh that renames one must rebuild this page in the same run.
+    example, tries = render_example(metros)
+    check_example_workflows()
 
     return """<!DOCTYPE html>
 <html lang="en">
@@ -1197,7 +1564,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 .shell { position: relative; min-height: 100vh; }
-.wrap { max-width: 940px; margin: 0 auto; padding: 56px 24px 72px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 56px 24px 72px; }
 
 /* The notice: a card at the top of the column, in the page's flow, above the
    masthead. It used to be a toast placed over the top-right of the window
@@ -1353,6 +1720,83 @@ h1 {
   margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
   color: var(--ink-3);
 }
+
+/* THE WORKED EXAMPLE (2026-10-21): one place and who represents it there,
+   beside the address box on a wide screen and under it on a narrow one. Until
+   then the page said what districtry answers and never showed an answer, so it
+   read as a list of what is covered rather than as something to use. Each card
+   carries its layer's map colour, light and dark, the way the question tiles
+   do; the words on it stay in the page's ink, because a map colour is chosen
+   to read as a line and not as text. */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1fr) 370px;
+  gap: 36px; align-items: start;
+}
+.hero-main { min-width: 0; }
+.try { margin: 14px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--ink-3); }
+.try a {
+  color: var(--brand-600); font-weight: 600; text-decoration: none;
+  border-bottom: 1px solid var(--brand-border);
+}
+.try a:hover { color: var(--brand-700); border-bottom-color: currentColor; }
+.try a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 2px; }
+.example {
+  margin-top: 4px; padding: 16px 14px 12px;
+  background: var(--brand-tint); border: 1px solid var(--brand-border);
+  border-radius: 14px;
+}
+.ex-eyebrow {
+  margin: 0 4px 7px; font: var(--font-heading-weight) 12.5px/1 var(--font-heading);
+  letter-spacing: .09em; text-transform: uppercase; color: var(--brand-700);
+}
+.ex-place {
+  margin: 0 4px; font: var(--font-heading-weight) 21px/1.2 var(--font-heading);
+  color: var(--ink);
+}
+.ex-addr { margin: 3px 4px 12px; font-size: 13px; line-height: 1.4; color: var(--ink-3); }
+.ex-cards {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 7px; list-style: none; margin: 0; padding: 0;
+}
+.ex-card {
+  --lc: var(--lc-l, var(--muted));
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px; row-gap: 1px; align-items: center;
+  padding: 8px 12px 9px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--lc); border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-card);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ex-card { --lc: var(--lc-d, var(--muted)); }
+}
+:root[data-theme="dark"] .ex-card { --lc: var(--lc-d, var(--muted)); }
+.ex-body {
+  grid-column: 1; font-size: 12.5px; line-height: 1.3; font-weight: 600;
+  color: var(--ink-3);
+}
+.ex-body::before {
+  content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px;
+  border-radius: 50%%; background: var(--lc); vertical-align: 1px;
+}
+.ex-name {
+  grid-column: 1; min-width: 0; overflow-wrap: anywhere;
+  font: var(--font-heading-weight) 19px/1.2 var(--font-heading); color: var(--ink);
+}
+.ex-name.ex-none { font-weight: 400; color: var(--muted); }
+.ex-pill {
+  grid-column: 2; grid-row: 1 / span 2;
+  padding: 6px 10px; border-radius: 999px; white-space: nowrap;
+  font: 600 13px/1 var(--font-body); font-variant-numeric: tabular-nums;
+  color: var(--ink); background: var(--paper);
+  background: color-mix(in srgb, var(--lc) 14%%, var(--surface));
+}
+.ex-open {
+  display: inline-flex; align-items: center; min-height: 32px; margin: 6px 4px 0;
+  font-size: 14px; font-weight: 600; color: var(--brand-600); text-decoration: none;
+}
+.ex-open:hover { color: var(--brand-700); text-decoration: underline; }
+.ex-open:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 4px; }
 
 /* Section headings read as headings, in sentence case. Until 2026-10-21 they
    were 14px grey capitals, which is how a form or a printed report marks its
@@ -1590,6 +2034,8 @@ footer .support b { color: var(--ink); }
 .foot-links a:hover, .foot-links a:focus-visible { text-decoration: underline; }
 
 @media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .example { margin-top: 0; }
   .asks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
@@ -1600,6 +2046,7 @@ footer .support b { color: var(--ink); }
   h2 { font-size: 24px; margin-top: 44px; }
   .search-row { flex-direction: column; }
   .notice { margin-bottom: 22px; }
+  .example { padding: 14px 12px 10px; }
   .states { columns: 2; column-gap: 10px; }
   .states-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -1642,22 +2089,25 @@ footer .support b { color: var(--ink); }
     </header>
 
     <main id="page-main">
-    <h1>Every district that covers a point, and who represents it.</h1>
-    <p class="lede">%(desc)s</p>
+    <div class="hero">
+      <div class="hero-main">
+        <h1>Every district that covers a point, and who represents it.</h1>
+        <p class="lede">%(desc)s</p>
 
-    <div class="search-card">
-      <label class="search-label" for="search-input">Start with an address</label>
-      <form id="search-form" class="search-row">
-        <input type="text" id="search-input" class="search-input" name="q"
-               placeholder="Street address or ZIP" autocomplete="off" />
-        <button type="submit" id="search-button" class="search-button">Show districts</button>
-      </form>
-      <p class="search-help">districtry opens the map that covers the point. %(answer_count)s
-         %(answer_verb)s today — an address anywhere else says so instead of guessing.</p>
-      <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
-    </div>
+        <div class="search-card">
+          <label class="search-label" for="search-input">Start with an address</label>
+          <form id="search-form" class="search-row">
+            <input type="text" id="search-input" class="search-input" name="q"
+                   placeholder="Street address or ZIP" autocomplete="off" />
+            <button type="submit" id="search-button" class="search-button">Show districts</button>
+          </form>
+          <p class="search-help">districtry opens the map that covers the point. %(answer_count)s
+             %(answer_verb)s today — an address anywhere else says so instead of guessing.</p>
+          <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+        </div>
+    %(independence)s%(tries)s      </div>
+%(example)s    </div>
 
-%(independence)s
     <h2>Where it answers today</h2>
     <div class="coverage">
       <iframe class="coverage-frame" src="coverage-map.html"
@@ -2363,6 +2813,8 @@ footer .support b { color: var(--ink); }
         "notice": render_notice(),
         "notice_memory": notice_memory(),
         "independence": render_independence(),
+        "example": example,
+        "tries": tries,
         "answer_count": html.escape(answer_count),
         "answer_verb": answer_verb,
         "key_wash": key_wash,
