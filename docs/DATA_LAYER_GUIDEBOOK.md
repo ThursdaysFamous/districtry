@@ -2720,18 +2720,6 @@ trusted.
       "wanted": "A district-by-district roster from each intermediate school district's own board page, refreshed weekly."
     },
     {
-      "id": "lansing-ward-boundary",
-      "kind": "blocked",
-      "concept": "City council district",
-      "area": "Lansing",
-      "layer": "city-ward",
-      "counties": [],
-      "summary": "Lansing elects four of its eight council members by ward, and this app does not show you which ward you live in.",
-      "why": "The city publishes its ward map on terms that bar commercial use. That is a condition on the map rather than a technical block, and it has not been resolved instead of being worked around.",
-      "wanted": "Permission to use the city's ward map on a free public site, or the same boundary published on open terms.",
-      "blocker": "MEASURED 2026-09-05. THE GEOMETRY IS FINE AND THE LICENCE IS THE WHOLE BLOCKER. The city's ArcGIS org (services1.arcgis.com/pNPbgWy7hpfFGWoZ) publishes the current plan TWICE. `VotingWards` is the clean one: exactly 4 features, WARDID 1-4, snippet 'Wards for the City of Lansing, updated for the 2022 elections', and its licenseInfo is EMPTY. `City_Wards` carries the SAME plan ('City of Lansing wards, as defined in the 2020 redistricting cycle') and states, verbatim: 'This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.' It also carries 9 features rather than 4 - ward 2 in four parts plus two non-ward features keyed DT and MR - and a third service, `Wards`, repeats that shape with 10 features and no licence. AN UNSTATED LICENCE IS SILENCE, NOT A GRANT: the same publisher states NonCommercial terms on the same plan, so reading the copy that omits the notice as permissive would be choosing the reading that suits us. The operative licence is therefore CC BY-NC 4.0 and the call is the operator's, not this build's. CURRENCY IS NOT IN DOUBT and was measured before the licence was: dissolved by the state's own 2026 precinct WARD column (27 precincts, 7/7/6/7), `VotingWards` agrees with the state on 1860 of 1862 sampled points (99.893%), as the builder itself reports - the same test Grand Rapids passed at 99.575%. mi/scripts/build_mi_lansing_wards.py is written, records the licence clause verbatim, and REFUSES TO WRITE without an explicit --licence-approved flag, so no derived geometry is committed while the question is open; committing the file would itself distribute the data."
-    },
-    {
       "id": "annarbor-ward-boundary",
       "kind": "blocked",
       "concept": "City council district",

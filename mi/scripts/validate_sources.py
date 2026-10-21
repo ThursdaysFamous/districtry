@@ -493,6 +493,17 @@ PROVENANCE = [
     },
     {
         "layer": "city-ward",
+        "app_file": "mi-lansing-wards.json",
+        "source_url": "https://services1.arcgis.com/pNPbgWy7hpfFGWoZ/arcgis/rest/services/VotingWards/FeatureServer/0",
+        "note": (
+            "Lansing's four council wards, from the city's own VotingWards layer, by "
+            "mi/scripts/build_mi_lansing_wards.py. The city states CC BY-NC 4.0 on the same "
+            "plan; the card credits the city and names the licence, and the build fails if "
+            "the stated licence changes."
+        ),
+    },
+    {
+        "layer": "city-ward",
         "app_file": "mi-jackson-council-members.json",
         "source_url": "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager",
         "note": (
