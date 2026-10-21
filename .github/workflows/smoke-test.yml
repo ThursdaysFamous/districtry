@@ -109,6 +109,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro missouri --out mo/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -908,6 +909,7 @@ jobs:
           python3 wi/scripts/build_metro_outline.py --check
           python3 ia/scripts/build_metro_outline.py --check
           python3 mi/scripts/build_metro_outline.py --check
+          python3 mo/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -1609,6 +1611,19 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ms/scripts/build_ms_county_officials.py --check
 
+      # Missouri's county governing bodies and other elected officers come
+      # from the Secretary of State's Missouri Roster, a PDF that also prints
+      # each official's own office address and fax number. This holds the
+      # shipped file to the shape it was built in, offline: one record for
+      # each of the 114 counties and the City of St. Louis under its own
+      # name, every body in the shape the build requires (the four charter
+      # counties, the city and the commission counties, seat counts
+      # included), the recalled Jackson County executive still not named,
+      # every seat and office named or marked vacant, and no fax number.
+      - name: MO county officials keep their shape and carry no fax number
+        if: ${{ !cancelled() }}
+        run: python3 mo/scripts/build_mo_county_officials.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the
@@ -1671,12 +1686,14 @@ jobs:
         run: python3 la/scripts/build_la_parish_officials.py --check
 
       # Louisiana draws a police jury or council district only in the parishes
-      # whose Census lines are confirmed current: changed after the 2020 census,
-      # and balanced on that census's own blocks. The blocks are not shipped, so
-      # the population cannot be re-measured here; this holds the shipped file
-      # to its build record, every district to a seat in the Secretary of
-      # State's list in the parish's own word, the card to the Census edition
-      # the file was built from, and the drawn parishes to the Parish layer.
+      # whose lines are confirmed current: the Census's where they changed after
+      # the 2020 census and balance on that census's own blocks, and Orleans's
+      # and East Baton Rouge's from each parish government's own map. The
+      # blocks are not shipped, so the population cannot be re-measured here;
+      # this holds the shipped file to its build record, every district to a
+      # seat in the Secretary of State's list in the parish's own word, the card
+      # to the Census edition the file was built from, and the drawn parishes to
+      # the Parish layer.
       - name: LA parish districts still match their build record, the list's seats and the Parish layer
         if: ${{ !cancelled() }}
         run: python3 la/scripts/build_la_parish_districts.py --check
@@ -1698,6 +1715,19 @@ jobs:
         run: |
           python3 la/scripts/build_la_court_districts.py --check
           python3 la/scripts/build_la_judges.py --check
+
+      # Louisiana's city council districts, drawn in the four cities whose own
+      # current map is confirmed (Lafayette, Bossier City, Central and Slidell),
+      # each cut at the Census Bureau's map of the city. The census blocks the
+      # plans were confirmed on are not shipped, so this holds the shipped file
+      # to its build record, every city's districts to the council seats the
+      # Secretary of State's list names for it, no ground to two cities, and the
+      # hand-written sentences naming the drawn cities (the card's empty state,
+      # the City card's list and the sources page) to the builder's own lists of
+      # which cities are drawn and why the others are not.
+      - name: LA city council districts still match their build record, the list's seats and the cities the pages name
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_city_wards.py --check
 
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
@@ -1848,6 +1878,7 @@ jobs:
           python3 ar/scripts/validate_index.py ar/index.html
           python3 ms/scripts/validate_index.py ms/index.html
           python3 la/scripts/validate_index.py la/index.html
+          python3 mo/scripts/validate_index.py mo/index.html
 
 
   browser:
@@ -2060,6 +2091,7 @@ jobs:
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ms/  node ms/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/la/  node la/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/mo/  node mo/scripts/smoke_test.mjs
 
           # shard 3
 

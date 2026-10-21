@@ -1,0 +1,128 @@
+name: Update Missouri legislature roster
+
+# Weekly refresh of the Missouri Senate + House rosters
+# (mo/data/app/mo-senate-members.json and mo-house-members.json, fetched by
+# mo/index.html's chamber cards). Rebuilds both chambers from each chamber's
+# own publications and — if anything changed — opens a PR rather than
+# committing directly to main.
+#
+# The Senate comes from its senator directory (www.senate.mo.gov), one card
+# per seat, with each senator's e-mail address from the Secretary of State's
+# General Assembly Roster, a PDF read with pdftotext (poppler-utils, installed
+# below). The House comes from the member files it publishes for exactly this
+# use at documents.house.mo.gov: one XML file per district, found through the
+# session file SessionSet.js. house.mo.gov itself states a 120-second
+# Crawl-delay and disallows every address with a query string, so it is never
+# read.
+#
+# THE RUN TAKES ABOUT AN HOUR, ON PURPOSE: documents.house.mo.gov's robots.txt
+# asks for 20 seconds between requests (read 2026-10-21), and the builder's
+# HostPacer honours it across the list file and 163 district files. The job
+# timeout below leaves room for that and still stops a run that hangs.
+#
+# A seat a chamber shows as vacant ships as a vacancy record naming that
+# chamber's own publication; the builder never reads a member's home town,
+# legislative assistant or biography, which the House's files also carry.
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN SCRAPED A
+# SECOND TIME, the update-ilga-roster.yml pattern: a second pass would ask the
+# chambers' servers for the same files again for nothing, and for an hour. A
+# run where main changed those same files meanwhile errors at the checkout
+# instead of pushing, which is right.
+#
+# MISSOURI IS DARK, so this job does not regenerate mo/state-legislature.html:
+# build_legislator_pages.py refuses an instance metros.json does not carry, so
+# that page is not built yet. Go-live adds the step in the same change that
+# adds mo to metros.json — mo/WATCH.md has the list.
+
+on:
+  schedule:
+    - cron: "37 18 * * 2" # Tuesday 18:37 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    # About an hour at the House's own requested pace; bounded so a run that
+    # hangs dies visibly rather than holding a runner for six hours.
+    timeout-minutes: 120
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the builder's session (it retries a reset or a timeout).
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      # The Secretary of State's General Assembly Roster is a PDF, read with
+      # pdftotext in layout mode.
+      - name: Install pdftotext
+        run: |
+          # the runner image's Google Chrome apt source once served a Packages
+          # file whose hash did not match its Release file (smoke-test.yml)
+          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
+               \( -name '*.list' -o -name '*.sources' \) \
+               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
+          sudo apt-get update -q
+          sudo apt-get install -y -q poppler-utils
+          pdftotext -v
+
+      - name: Rebuild Missouri Senate + House rosters
+        run: python3 mo/scripts/build_mo_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 mo/scripts/validate_index.py mo/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- mo/data/app/mo-senate-members.json mo/data/app/mo-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/mo-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add mo/data/app/mo-senate-members.json mo/data/app/mo-house-members.json
+          git commit -m "Update Missouri Senate + House rosters from the Missouri General Assembly"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Missouri Senate + House rosters" \
+              --body "Automated weekly refresh of the Missouri Senate and Missouri House chamber cards' rosters, from the Senate's senator directory, the House's published member files and the Secretary of State's General Assembly Roster, generated by \`mo/scripts/build_mo_legislature_roster.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

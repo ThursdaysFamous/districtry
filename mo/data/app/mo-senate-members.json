@@ -1,0 +1,371 @@
+{
+  "1": {
+    "name": "Doug Beck",
+    "party": "Democratic",
+    "email": "doug.beck@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 333",
+      "Jefferson City, MO 65101",
+      "573-751-0220"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=3"
+  },
+  "2": {
+    "name": "Nick Schroer",
+    "party": "Republican",
+    "email": "nick.schroer@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 227",
+      "Jefferson City, MO 65101",
+      "573-751-1282"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=276"
+  },
+  "3": {
+    "name": "Mike Henderson",
+    "party": "Republican",
+    "email": "mike.henderson@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 431",
+      "Jefferson City, MO 65101",
+      "573-751-4008"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6368"
+  },
+  "4": {
+    "name": "Karla May",
+    "party": "Democratic",
+    "email": "karla.may@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 225",
+      "Jefferson City, MO 65101",
+      "573-751-3599"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=18"
+  },
+  "5": {
+    "name": "Steven Roberts",
+    "party": "Democratic",
+    "email": "steven.roberts@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 434",
+      "Jefferson City, MO 65101",
+      "573-751-4415"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=26"
+  },
+  "6": {
+    "name": "Mike Bernskoetter",
+    "party": "Republican",
+    "email": "mike.bernskoetter@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 416",
+      "Jefferson City, MO 65101",
+      "573-751-2076"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=4"
+  },
+  "7": {
+    "name": "Patty Lewis",
+    "party": "Democratic",
+    "email": "patty.lewis@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 425",
+      "Jefferson City, MO 65101",
+      "573-751-6607"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6369"
+  },
+  "8": {
+    "name": "Mike Cierpiot",
+    "party": "Republican",
+    "email": "mike.cierpiot@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 422",
+      "Jefferson City, MO 65101",
+      "573-751-1464"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=8"
+  },
+  "9": {
+    "name": "Barbara Washington",
+    "party": "Democratic",
+    "email": "barbara.washington@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 328",
+      "Jefferson City, MO 65101",
+      "573-751-3158"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=31"
+  },
+  "10": {
+    "vacant": true,
+    "vacantWhy": "The Missouri Senate's senator directory lists this seat as vacant.",
+    "sourceUrl": "https://www.senate.mo.gov/Senators/SenatorDirectory/",
+    "asOf": "2026-10-21"
+  },
+  "11": {
+    "name": "Joe Nicola",
+    "party": "Republican",
+    "email": "joe.nicola@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 226",
+      "Jefferson City, MO 65101",
+      "573-751-3074"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6370"
+  },
+  "12": {
+    "name": "Rusty Black",
+    "party": "Republican",
+    "email": "rusty.black@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 420",
+      "Jefferson City, MO 65101",
+      "573-751-1415"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=270"
+  },
+  "13": {
+    "name": "Angela Mosley",
+    "party": "Democratic",
+    "email": "angela.mosley@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 421",
+      "Jefferson City, MO 65101",
+      "573-751-2420"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=20"
+  },
+  "14": {
+    "name": "Brian Williams",
+    "party": "Democratic",
+    "email": "brian.williams@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 428A",
+      "Jefferson City, MO 65101",
+      "573-751-4106"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=34"
+  },
+  "15": {
+    "name": "David Gregory",
+    "party": "Republican",
+    "email": "david.gregory@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 331",
+      "Jefferson City, MO 65101",
+      "573-751-5568"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6371"
+  },
+  "16": {
+    "name": "Justin Brown",
+    "party": "Republican",
+    "email": "justin.brown@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 423",
+      "Jefferson City, MO 65101",
+      "573-751-5713"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6"
+  },
+  "17": {
+    "name": "Maggie Nurrenbern",
+    "party": "Democratic",
+    "email": "maggie.nurrenbern@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 330",
+      "Jefferson City, MO 65101",
+      "573-751-5282"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6372"
+  },
+  "18": {
+    "name": "Cindy O'Laughlin",
+    "party": "Republican",
+    "email": "cindy.olaughlin@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 326",
+      "Jefferson City, MO 65101",
+      "573-751-7985"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=21"
+  },
+  "19": {
+    "name": "Stephen Webber",
+    "party": "Democratic",
+    "email": "stephen.webber@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 329",
+      "Jefferson City, MO 65101",
+      "573-751-3931"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6373"
+  },
+  "20": {
+    "name": "Curtis Trent",
+    "party": "Republican",
+    "email": "curtis.trent@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 323",
+      "Jefferson City, MO 65101",
+      "573-751-1503"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=275"
+  },
+  "21": {
+    "name": "Kurtis Gregory",
+    "party": "Republican",
+    "email": "kurtis.gregory@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 433A",
+      "Jefferson City, MO 65101",
+      "573-751-4302"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6374"
+  },
+  "22": {
+    "name": "Mary Elizabeth Coleman",
+    "party": "Republican",
+    "email": "maryelizabeth.coleman@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 331A",
+      "Jefferson City, MO 65101",
+      "573-751-1492"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=272"
+  },
+  "23": {
+    "name": "Adam Schnelting",
+    "party": "Republican",
+    "email": "adam.schnelting@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 219",
+      "Jefferson City, MO 65101",
+      "573-751-1141"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6375"
+  },
+  "24": {
+    "name": "Tracy McCreery",
+    "party": "Democratic",
+    "email": "tracy.mccreery@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 427",
+      "Jefferson City, MO 65101",
+      "573-751-9762"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=277"
+  },
+  "25": {
+    "name": "Jason Bean",
+    "party": "Republican",
+    "email": "jason.bean@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 321",
+      "Jefferson City, MO 65101",
+      "573-751-4843"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=2"
+  },
+  "26": {
+    "name": "Ben Brown",
+    "party": "Republican",
+    "email": "ben.brown@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 430",
+      "Jefferson City, MO 65101",
+      "573-751-3678"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=271"
+  },
+  "27": {
+    "name": "Jamie Burger",
+    "party": "Republican",
+    "email": "jamie.burger@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 334",
+      "Jefferson City, MO 65101",
+      "573-751-2459"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6376"
+  },
+  "28": {
+    "name": "Sandy Crawford",
+    "party": "Republican",
+    "email": "sandy.crawford@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 319",
+      "Jefferson City, MO 65101",
+      "573-751-8793"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=9"
+  },
+  "29": {
+    "name": "Mike Moon",
+    "party": "Republican",
+    "email": "mike.moon@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 220",
+      "Jefferson City, MO 65101",
+      "573-751-1480"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=19"
+  },
+  "30": {
+    "name": "Lincoln Hough",
+    "party": "Republican",
+    "email": "lincoln.hough@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 419",
+      "Jefferson City, MO 65101",
+      "573-751-1311"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=15"
+  },
+  "31": {
+    "name": "Rick Brattin",
+    "party": "Republican",
+    "email": "rick.brattin@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 221",
+      "Jefferson City, MO 65101",
+      "573-751-2108"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=5"
+  },
+  "32": {
+    "name": "Jill Carter",
+    "party": "Republican",
+    "email": "jill.carter@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 320",
+      "Jefferson City, MO 65101",
+      "573-751-2173"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=273"
+  },
+  "33": {
+    "name": "Brad Hudson",
+    "party": "Republican",
+    "email": "brad.hudson@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 426",
+      "Jefferson City, MO 65101",
+      "573-751-1882"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=6377"
+  },
+  "34": {
+    "name": "Tony Luetkemeyer",
+    "party": "Republican",
+    "email": "tony.luetkemeyer@senate.mo.gov",
+    "capitolOffice": [
+      "201 W Capitol Ave., Room 332",
+      "Jefferson City, MO 65101",
+      "573-751-2183"
+    ],
+    "url": "https://www.senate.mo.gov/Senators/member?id=17"
+  }
+}
