@@ -52,9 +52,9 @@ name: Update Louisiana parish, town and school board officials
 # before its first fetch of a host through scraper_common. www.sos.la.gov and
 # electionstatistics.sos.la.gov refuse every client and are never read.
 #
-# LOUISIANA IS DARK, so this job regenerates no parish page:
-# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
-# go-live adds its adapter.
+# It regenerates the per-parish pages (la/parish-government/<parish>.html)
+# and the files that count them in the same PR, since Louisiana's go-live
+# gave scripts/build_county_pages.py its adapter.
 
 on:
   schedule:
@@ -124,8 +124,20 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add la/data/app/la-parish-officials.json \
-            la/data/app/la-municipal-officials.json la/data/app/la-school-board-members.json
+          # The per-parish pages (la/parish-government/) are GENERATED from the
+          # parish roster this job just rewrote, so regenerate them here or the
+          # smoke gate's `build_county_pages.py --check` fails on this PR with a
+          # page naming last week's members.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          # llms.txt COUNTS the per-parish pages, so a parish dropping out of
+          # the roster would move it.
+          python3 scripts/build_llms_txt.py
+          # docs/EAM_STATUS.md counts the districts the parish roster names and
+          # the towns the town roster names, so either one changing moves it.
+          python3 scripts/build_eam_status.py
+          git add la/data/app/la-parish-officials.json la/data/app/la-municipal-officials.json la/data/app/la-school-board-members.json la/parish-government la/parish-government.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Louisiana parish, town and school board officials"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

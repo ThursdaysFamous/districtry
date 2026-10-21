@@ -370,19 +370,20 @@ try {
   //     is the Chicot County seat, about 11.5 km west of the river that is the
   //     state line, and measured against fleet-outlines.json it lies inside
   //     Arkansas's outline and no other, and outside this app's coverage ring.
+  //     Louisiana went live in the change that added it as a case, so a
+  //     click on Franklinton must open THAT app: it is the Washington Parish
+  //     seat, and measured against fleet-outlines.json it lies inside
+  //     Louisiana's outline and no other, about 17 km from the nearest edge.
   //     Alabama is served by nobody, so a click near York, Alabama must stay
   //     here (1a2-ii below). This instance answers its own side from the
   //     coverage rings the wash retained — no fetch. Chicago proves the file
   //     is still read for ground far from here.
-  //
-  //     LOUISIANA IS DELIBERATELY NOT A CASE. It is on the next-states list,
-  //     so a "stays here" case there would start failing the day it goes
-  //     live, in a change that is about another state.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
       { name: "Lake Village, Arkansas", lat: 33.3290, lng: -91.2818, want: "https://districtry.com/ar/" },
+      { name: "Franklinton, Louisiana", lat: 30.8474, lng: -90.1553, want: "https://districtry.com/la/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
