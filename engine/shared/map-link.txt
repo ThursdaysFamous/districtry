@@ -597,6 +597,36 @@
   function stateInSentence(tag) {
     return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
   }
+  /* The ZIP code a search is for, or "": five digits, with or without the
+   * four after a hyphen, alone or with "zip", "zip code" or "postal code"
+   * before it and a state, as its code or its name, before or after it
+   * ("60625", "ZIP 60625", "IL 60625", "60625, Illinois", "60625 USA").
+   * Anything else typed with it, a town or a street, makes it an address,
+   * which the search answers as before. The state is not checked against
+   * the ZIP code, which decides on its own (ENGINE geocoder-search, and the
+   * front door's address box). */
+  function zipQuery(text) {
+    var t = String(text || "").toLowerCase().replace(/[.,:;]/g, " ").replace(/\s+/g, " ").trim()
+      .replace(/(?:^| )(?:usa|us|united states(?: of america)?)$/, "").trim();
+    var m = /^(?:(?:zip ?code|postal code|zip) )?(?:([a-z][a-z ]*?) )?(\d{5})(?:-\d{4})?(?: ([a-z][a-z ]*))?$/.exec(t);
+    if (!m) return "";
+    function isState(w) { return !w || US_STATE_NAMES.hasOwnProperty(w) || !!stateTagOfName(w); }
+    return isState(m[1]) && isState(m[3]) ? m[2] : "";
+  }
+  /* Whether `codes`, five-digit ZIP codes in order with nothing between
+   * them, as fleet-zips.json lists each app's (scripts/build_zip_index.mjs),
+   * holds `zip`: the apps' search and the front door's address box read the
+   * file with this one function. */
+  function zipListed(codes, zip) {
+    codes = String(codes || "");
+    var lo = 0, hi = Math.floor(codes.length / 5) - 1;
+    while (lo <= hi) {
+      var mid = (lo + hi) >> 1, at = codes.substr(mid * 5, 5);
+      if (at === zip) return true;
+      if (at < zip) lo = mid + 1; else hi = mid - 1;
+    }
+    return false;
+  }
   /* An address as the Census Bureau's lookup is asked about it when the
    * map's search knows neither the house nor its street (ENGINE
    * geocoder-search showStreetOnly): the number and the street, then the

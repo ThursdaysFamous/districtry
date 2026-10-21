@@ -117,7 +117,8 @@ Michigan and Wisconsin towns and townships, New York towns), and in others they
 are areas the Census draws for counting only (Kentucky, Oklahoma and South
 Carolina's census county divisions), or legal areas the Census records as
 having no functioning government (North Carolina's and Arkansas's townships,
-Tennessee's civil districts, Mississippi's supervisor districts). The map is
+Tennessee's civil districts, Mississippi's supervisor districts, the districts
+Louisiana's parish police juries and councils are elected from). The map is
 owed either way; where the units govern nobody, the card says so rather than
 implying a government. Mississippi's county subdivisions ARE its supervisor
 districts, so its supervisor district map is its answer to this level, and the
@@ -125,6 +126,12 @@ level stays open until every county's current lines are drawn: in 70 counties
 the Census's own copy still carries the lines of its 2020 edition, and in 54 of
 them those lines put every resident in the same district as its January 2010
 edition did (measured 2026-10-16).
+Louisiana's are the same case: its county subdivisions are the districts its
+parishes' governing bodies are elected from, so its parish district map is its
+answer to this level, and the level stays open until every parish's current
+lines are drawn. In 52 of the 63 parishes outside Orleans the Census's own copy
+carries lines that move nobody from its 2020 edition, and the New Orleans City
+Council's districts are not filed with the Census at all (measured 2026-10-20).
 Arkansas's are drawn from the state's own township map rather than the
 Census's: the two disagree about how many townships a county has in 27
 counties, and in the two counties checked, Washington and Scott, the Census's
@@ -164,14 +171,16 @@ already sit. Nor is an Indiana township, for the same reason: measured
 2026-10-11, 61 clear the line, and the trustee runs township assistance, fire
 protection and cemeteries while the county governs an unincorporated resident.
 No active township or town in Iowa, Kentucky, Wisconsin, Minnesota, North
-Carolina, Oklahoma, South Carolina, Tennessee, Arkansas or Mississippi reaches
-25,000 (North Carolina's townships and Tennessee's civil districts govern
-nobody, Kentucky, Oklahoma and South Carolina are divided into census county
-divisions, which are statistical areas, every Arkansas township is one the
-Census records as having no functioning government, and Mississippi's county
+Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi or
+Louisiana reaches 25,000 (North Carolina's townships and Tennessee's civil
+districts govern nobody, Kentucky, Oklahoma and South Carolina are divided into
+census county divisions, which are statistical areas, every Arkansas township is
+one the Census records as having no functioning government, Mississippi's county
 subdivisions are its supervisor districts, which elect a member of the county's
-board and govern nobody themselves), so the question does not arise in those
-ten today; if one ever does, it is answered by the
+board and govern nobody themselves, and Louisiana's are the districts its
+parishes' police juries and councils are elected from, which govern nobody
+either), so the question does not arise in those eleven today; if one ever does,
+it is answered by the
 general-purpose test above and not by a per-state exception.
 
 | app | units at 25,000+ | of which towns or townships |
@@ -190,10 +199,11 @@ general-purpose test above and not by a per-state exception.
 | South Carolina | 17 | — |
 | Oklahoma | 16 | — |
 | Mississippi | 15 | — |
+| Louisiana | 13 | — |
 
-That is 564 governments across the fourteen statewide apps. The first seven rows
-were measured 2026-10-01, Arkansas's 2026-10-15, Mississippi's 2026-10-16 and the
-rest 2026-10-11;
+That is 577 governments across the fifteen statewide apps. The first seven rows
+were measured 2026-10-01, Arkansas's 2026-10-15, Mississippi's 2026-10-16,
+Louisiana's 2026-10-21 and the rest 2026-10-11;
 until then the scoring tool read a state it had not measured as one with nothing
 to answer, so Indiana, North Carolina and Oklahoma passed this entry unchecked.
 San Francisco is one city, so its city tier is the whole app.
@@ -389,8 +399,15 @@ question.
   a trial-court map would redraw the county map. Arkansas draws both levels
   that elect by district, its Court of Appeals districts and its 28 circuits;
   five circuits are divided into election subdistricts by a federal court
-  order, which are not drawn, and their cards say so. North Carolina still
-  owes the entry.
+  order, which are not drawn, and their cards say so. North Carolina answers
+  them since 2026-10-20 with both of its trial courts, 73 superior court
+  districts and 47 district court districts, each electing its own judges.
+  They are drawn from the text of the law, which the General Assembly
+  publishes where this project may read it. Most are whole counties; where the
+  law divides a county it lists the 2010 census voting districts and blocks of
+  each part, so those parts are drawn from the Census Bureau's 2010 lines. No
+  judge is named, because the court system lists its judges on a page its
+  website asks programs not to read.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
   statewide director districts, New York City's community education councils,
   Minnesota's fourteen boards that elect by district, and since 2026-10-16
@@ -417,7 +434,9 @@ question.
 - Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
   Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
   Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one
-  statewide precinct map a government office in that state publishes. Oklahoma
+  statewide precinct map a government office in that state publishes, and
+  since 2026-10-21 Louisiana, from the Louisiana Legislature's statewide
+  precinct file (its edition of 27 January 2026). Oklahoma
   ships none: its State Election Board sent the question of using its precinct
   maps to the University of Oklahoma's Center for Spatial Analysis, which was
   asked on 2026-10-01 and has not answered, and no precinct layer ships there

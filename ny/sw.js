@@ -68,6 +68,7 @@ const GEOMETRY_URLS = [
   "./data/app/sullivan-library-districts.json",
   "./data/app/sullivan-county-outline.json",
   "./data/app/tribal-areas.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

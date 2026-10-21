@@ -1,0 +1,159 @@
+# La. R.S. 13:312, Courts of appeal; circuits and districts
+# Read 2026-10-21 from https://legis.la.gov/legis/Law.aspx?d=77438 with the client
+# districtry/1.0 (+https://districtry.com/la/), after its robots.txt.
+# The page was 69,804 bytes, SHA-256 68a0d797b2e977587e3e3f0fbba2fc4b6f726dfaaceeac259682dd5ecdaedc43.
+# Kept: the page's text from the section's heading to the end of its
+# history notes, with scripts, styles and tags removed, one line per line.
+§312. Courts of appeal; circuits and districts
+There shall be five court of appeal circuits, which shall be subdivided into districts
+as follows:
+1.(a) First circuit. The parishes of Ascension, Assumption, East Baton Rouge, East
+Feliciana, Iberville, Lafourche, Livingston, Pointe Coupee, St. Helena, St. Mary, St.
+Tammany, Tangipahoa, Terrebonne, Washington, West Baton Rouge, and West Feliciana
+shall compose the first circuit and the court of appeal for that circuit shall be known as
+"Court of Appeal, First Circuit, State of Louisiana".
+(b) Districts of first circuit. The parishes of Ascension, Assumption, Iberville,
+Lafourche, Pointe Coupee, St. Mary, Terrebonne, and West Baton Rouge shall compose the
+first district of the first circuit. The first district shall be further divided into two election
+sections. Election section one shall be composed of Ascension Parish, Assumption Parish,
+Iberville Parish, Pointe Coupee Parish, and West Baton Rouge Parish. Election section two
+shall be composed of Lafourche Parish, St. Mary Parish, and Terrebonne Parish. The parish
+of East Baton Rouge shall compose the second district of the first circuit. The parishes of
+East Feliciana, Livingston, St. Helena, St. Tammany, Tangipahoa, Washington, and West
+Feliciana shall compose the third district of the first circuit.
+2.(a) Second circuit. The parishes of Bienville, Bossier, Caddo, Caldwell, Claiborne,
+DeSoto, East Carroll, Franklin, Jackson, Lincoln, Madison, Morehouse, Ouachita, Red River,
+Richland, Tensas, Union, Webster, West Carroll, and Winn shall compose the second circuit,
+and the court of appeal for that circuit shall be known as "Court of Appeal, Second Circuit,
+State of Louisiana".
+(b) Districts of second circuit. (i) The parishes of East Carroll, Franklin, Madison,
+Morehouse, Ouachita, Richland, Tensas, and West Carroll shall compose the first district of
+the second circuit. The first district shall be further divided into two election sections.
+(aa) Election section one shall consist of East Carroll Parish, Madison Parish,
+Precincts 4, 6, 7, 8, 9, 10, 11, 21, 22, 23, 24, 25, and 26 of Morehouse Parish, Precincts 2-4,
+3-1, 3-2, 3-3, 3-4, 3-5, 3-6, 3-7, 3-8, 3-9, 3-10, 3-11, 3-12, 3-13, 3-14, 3-15, 3-16, 3-17, 10-7,
+10-8, 10-12, 10-13, 10-17, and 10-22 of Ouachita Parish, Tensas Parish, and Precincts 1, 2,
+3, 4, 5, 5A, and 6 of West Carroll Parish.
+(bb) Election section two shall consist of Franklin Parish, Precincts 1, 2, 3, 5, 12, 13,
+14, 15, 16, 17, 18, 19, 20, 27, 28, 29, 30, 31, 32, 33 and 34 of Morehouse Parish, Precincts
+1-1, 1-2, 1-3, 1-4, 1-4A, 1-5, 2-1, 2-2, 2-3, 4-1, 4-2, 5-1, 5-2, 5-3, 5-4, 5-5, 5-6, 5-7, 5-8, 5-9,
+5-10, 5-11, 5-12, 5-13, 5-14, 5-15, 5-16, 5-17, 5-18, 5-19, 5-20, 5-21, 6-1, 6-2, 7-1, 8-1, 8-2,
+9-1, 10-1, 10-2, 10-3, 10-4, 10-5, 10-6, 10-9, 10-10, 10-11, 10-14, 10-15, 10-16, 10-18, 10-19, 10-20, and 10-21 of Ouachita Parish, Richland Parish, and Precincts 7, 8, 9, 10, 11, 12,
+12A, 13, 14, 14A, 15, 16, and 17 of West Carroll Parish.
+(ii) The parishes of Bienville, Bossier, Caldwell, Claiborne, Jackson, Lincoln, Union,
+Webster, and Winn shall compose the second district of the second circuit. The second
+district shall be further divided into two election sections.
+(aa) Election section one shall consist of the parishes of Bienville, Caldwell,
+Claiborne, Jackson, Lincoln, Union, and Winn.
+(bb) Election section two shall consist of the parishes of Bossier and Webster.
+(iii) The parishes of Caddo, DeSoto, and Red River shall compose the third district
+of the second circuit. The third district shall be further divided into two election sections.
+(aa) Election section one shall consist of Precincts 1, 3, 5, 23, 24, 25, 26, 27, 29, 30,
+31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 50, 51, 52, 53, 54, 55, 58, 59, 60,
+61, 65, 67, 71, 73A, 73B, 80, 81, 84, 86, 96, 130, and 131 of Caddo Parish.
+(bb) Election section two shall consist of Precincts 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+15, 16, 17, 18, 19, 20, 21, 22, 28, 47, 48, 49, 56A, 56B, 57, 62, 63, 64, 66, 68, 69, 70, 72, 74,
+75, 76A, 76B, 77, 78, 79, 82A, 82B, 83A, 83B, 85A, 85B, 87, 88, 89A, 89B, 89C, 90A, 90B,
+91A, 91B, 92, 93, 94, 95A, 95B, 97A, 97B, 98, 99, 122, 123, 124, 125, 126, 127, 128, 129,
+132A, 132B, 133, 134, 135, 136, 137A, 137B, 138, 139, 140, 141, 142, 143, 144, 145, 146,
+147, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, and 159 of Caddo Parish, DeSoto
+Parish, and Red River Parish.
+3.(a) Third circuit. The parishes of Acadia, Allen, Avoyelles, Beauregard, Cameron,
+Calcasieu, Catahoula, Concordia, Evangeline, Grant, Iberia, Jefferson Davis, Lafayette,
+LaSalle, Natchitoches, Rapides, Sabine, St. Martin, St. Landry, Vermilion, and Vernon shall
+compose the third circuit and the court of appeal for that circuit shall be known as "Court of
+Appeal, Third Circuit, State of Louisiana".
+(b) Districts of third circuit.
+(i) The parishes of Avoyelles, Catahoula, Concordia, Grant, LaSalle, Natchitoches,
+Rapides, and Sabine shall compose the first district of the third circuit.
+(ii) The parishes of Beauregard, Calcasieu, Cameron, Jefferson Davis, and Vernon
+shall compose the second district of the third circuit. The second district shall be further
+divided into two election sections.
+(aa) Election section one shall consist of Precincts 300, 301, 302, 303, 304, 305, 307,
+308, 309E, 309W, 310, 311, 312, 313E, 313W, 315E, 320E, 320W, 321, 322, 323, 324, 328,
+329, 330, 361, 364, 371N, 800, 801, 861E, and 861W of Calcasieu Parish and Precincts 5,
+6, 8, 8A, 20, 21, and 23 of Jefferson Davis Parish.
+(bb) Election section two shall consist of Beauregard Parish; Precincts 160E, 160W,
+161, 162E, 162W, 163, 164, 165, 166E, 166W, 167, 260, 261, 262, 306, 314, 315W, 316E,
+316W, 317, 318, 319N, 319S, 325, 326, 327, 331, 332N, 332S, 333, 334, 335, 336, 337, 338,
+339, 340, 360, 362, 363, 365, 366, 367, 368, 369, 370, 371S, 372, 400, 401, 402, 403, 404,
+405, 406, 407, 408, 440, 441, 460E, 460W, 461, 463, 464, 465, 466E, 466W, 467, 468, 469,
+560, 561, 562, 600, 601, 602, 603, 660, 661, 662, 663, 664, 700, 701, 702, 703, 760, 761,
+762, 860N, and 860S of Calcasieu Parish; Cameron Parish; Precincts 1, 2, 3, 4, 7, 9A, 9B,
+10, 12, 13, 14, 16, 17, 18, and 19 of Jefferson Davis Parish; and Vernon Parish.
+(cc) The election sections used in this Item shall be evaluated by the end of the year
+following the year of official release of the decennial federal census to determine if there
+exists any substantial variation in population in a district, or if they are as equal as
+practicable.
+(iii) The parishes of Acadia, Allen, Evangeline, Iberia, Lafayette, St. Martin, St.
+Landry, and Vermilion shall compose the third district of the third circuit. The third district
+shall be further divided into five election sections.
+(aa) Election section 1 shall consist of precincts 2-3, 2-4, 3-1, 3-2, 3-3A, 3-3B, 3-4,
+3-5, 3-6, 3-6A, 3-6B, 3-7, 4-1, 4-2, 4-6, 7-1, 7-2, 7-3, 7-4 of Acadia Parish; Allen Parish;
+Evangeline Parish; precincts 1, 3A, 4, 5, 3B of Lafayette Parish; precincts 1-8, 1-10, 1-12,
+1-17, 1-17A, 1-19, 2-2, 2-3, 2-4, 2-5, 2-9, 2-10, 5-2, 5-4, 6-2, 6-3, 6-4, 6-5, 6-6, 6-7, 6-8, 6-9,
+6-12, 6-13, 6-14, 6-16 of St. Landry Parish.
+(bb) Election section 2 shall consist of precincts 1-1, 1-2, 2-2, 1-4, 2-1, 2-3, 4-1, 4-2,
+4-3, 4-4, 2-5, 14-2, 3-4 of Iberia Parish; precincts 15, 17, 18, 19, 22, 23, 24A, 50, 51, 52, 54,
+55, 56, 57, 58, 59, 61, 62, 63, 64, 67, 68, 24B of Lafayette Parish; precincts 1-1, 1-2, 1-3, 1-4,
+1-5, 1-7, 1-9, 1-11, 1-13, 1-14, 1-15, 1-16, 1-18, 1-20, 1-21, 1-22, 1-23, 1-24, 1-25, 1-26, 1-27, 1-28, 1-29, 2-1, 2-6, 2-7, 2-8, 3-2, 3-4, 3-6, 4-1, 4-2, 4-4, 4-7, 4-8, 4-9, 4-10, 4-11, 4-14,
+4-15, 5-1, 5-3, 5-5, 5-6, 5-7, 5-3A, 6-1, 6-10, 6-11, 6-15, 6-17 of St. Landry Parish; precincts
+1-1, 1-3, 1-4, 2-1 & 2-3, 3-1, 4-1, 4-3, 4-4, 7-1, 7-2, 7-3, 7-4, 9-1, 9-3, 3-7, 3-3, 1-6, 2-4, 3-8,
+3-5, 3-9, 3-6, 9-5 of St. Martin Parish.
+(cc) Election section 3 shall consist of precincts 1-3, 5-6, 3-1, 3-2, 3-3, 1-5, 5-1, 5-2,
+5-3, 5-4, 4-5, 7-6, 1-6, 6-1, 6-2, 6-3, 7-1, 7-2, 7-3, 7-4, 7-5, 8-1, 8-2, 8-3, 8-4, 8-5, 11-6, 9-1,
+9-2, 9-3, 9-4, 9-5, 6-5, 10-2, 10-3, 10-4, 11-1, 11-2, 11-3, 11-4, 11-5, 12-1, 12-2, 12-3, 12-6,
+12-5, 3-5, 5-8, 13-4, 13-5, 13-6, 14-1, 14-3, 14-4, 13-2, 14-6, 14-5, 5-5, 2-4, 4-6, 7-7, 8-6,
+11-7, 5-7, 6-4, 12-7, 12-4, 12-8, 10-1, 13-3, 13-1 of Iberia Parish; precincts 99, 100, 101,
+102, 103, 104, 106 of Lafayette Parish; precincts 1-6, 3-1, 3-3, 3-5, 4-3, 4-5, 4-6, 4-12, 4-13,
+4-16 of St. Landry Parish; precincts 1-2, 1-5, 2-2, 3-2, 4-6, 3-4, 4-2, 4-5, 5-1, 5-2, 5-3 & 5-4,
+6-1, 6-2, 6-3, 6-4, 8-1, 9-4, 8-3, 8-4, 9-2, 1-7, 8-2 of St. Martin Parish.
+(dd) Election section 4 shall consist of precincts 1-1, 1-2A, 1-2B, 1-3A, 1-3B, 1-4A,
+1-4B, 1-5A, 1-5B, 1-6, 1-7, 1-8, 1-9, 1-10, 1-11, 2-1, 2-2, 2-5, 4-3, 4-4, 4-5, 5-1A, 5-1B, 5-2A, 5-2B, 5-3, 5-4, 5-5, 5-6, 6-1, 6-2, 6-3A, 6-3B, 6-4, 6-5, 6-6, 6-7, 6-8, 6-9, 6-10, 6-11, 6-12, 6-13, 6-14, 6-15, 6-16 of Acadia Parish; precincts 7, 8, 9, 27, 28, 36, 37, 86, 34B of
+Lafayette Parish; Vermilion Parish.
+(ee) Election section 5 shall consist of precincts 2, 6, 10, 11, 12, 13, 14, 16, 20, 21,
+25, 26, 29, 30, 31, 32, 33, 34A, 35, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 53, 60, 65,
+66, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 87, 88, 89, 90, 91, 92, 93,
+94, 95, 96, 97, 98, 105 of Lafayette Parish.
+4.(a) Fourth Circuit. The parishes of Orleans, Plaquemines, and St. Bernard shall
+compose the fourth circuit, and the court of appeal for that circuit shall be known as "Court
+of Appeal, Fourth Circuit, State of Louisiana".
+(b) Districts of the fourth circuit. The parish of Orleans shall compose the first
+district of the fourth circuit; the parish of Plaquemines shall compose the second district of
+the fourth circuit; and the parish of St. Bernard shall compose the third district of the fourth
+circuit.
+5.(a) Fifth Circuit. The parishes of Jefferson, St. Charles, St. James, and St. John the
+Baptist shall compose the fifth circuit and the court of appeal for that circuit shall be known
+as "Court of Appeal, Fifth Circuit, State of Louisiana".
+(b) Districts of the fifth circuit.
+(i) The parish of Jefferson shall compose the first district of the fifth circuit. The first
+district shall be further divided into two election sections. Election section one shall consist
+of Precincts 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 51, 52, 53, 54,
+55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102,
+103, 105, 106, 107, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129,
+130, 131, 132, 133, 134, 136, 138, 152, 155, 157A, 170, 171, 172, 174, 175, 176, 177, 178,
+179-A, 182, 183, 184, 185A, 185B, 189, 190, 191, 192, 193, 194, 195, 196, 197A, 197B,
+197C, 198, 199, 202, 203, 204, 205, 210, 211, 212A, 212B, 213A, 213B, 213C, 214A, 214B,
+215, 216, 217, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 246,
+247, 248, 249, 1-G, 2-G, 3-G, 4-G, 5-G, 6-G, 7-G, 8-G, 9-G, 10-G, 11-G, 1-GI, 1-H, 2-H,
+3-H, 4-H, 5-H, 6-H, 7-H, 8-H, 9-H, 13-KA, 1-K, 2-K, 3-K, 4-K, 5-K, 6-K, 7-K, 8-K, 9-K,
+10-K, 11-K, 12-K, 14-K, 15-K, 16-K, 17-K,18-K, 19-K, 20-K, 25-K, 27-K, 28-K, 29-K, 30-K, 34-K, 35-K, 1-L, 1-W, 3-W, 4-W, 5-W, 6-W, and 7-W of Jefferson Parish. Election
+section two shall consist of Precincts 104, 108, 115, 150, 151, 153, 154,156, 157B, 179B,
+180, 181, 187, 188, 200, 201, 13-KB, 21-K, 22-K, 23-K, 24-K, 26-K, 31-K, 33-K, 173 and
+2-W.
+(ii) The parish of St. James and that portion of St. John the Baptist Parish east of the
+Mississippi River shall compose the second district of the fifth circuit.
+(iii) The parish of St. Charles and that portion of St. John the Baptist Parish west of
+the Mississippi River shall compose the third district of the fifth circuit.
+Added by Acts 1975, No. 52, §1. Amended by Acts 1980, No. 661, §1, eff. July 1,
+1982; Acts 1980, No. 661, §7, eff. July 24, 1980; Acts 1981, No. 3, §1, eff. May 1, 1982;
+Acts 1992, No. 513, §1, eff. June 25, 1992; Acts 1992, No. 1069, §1, eff. July 14, 1992; Acts
+2007, No. 261, §1, eff. Oct. 31, 2007; Acts 2008, No. 369, §1, eff. Jan. 1, 2009; Acts 2009,
+No. 133, §1, eff. June 25, 2009; Acts 2020, No. 338, §1, eff. June 13, 2020.
+NOTE: See Acts 2007, No. 261, §3, relative to the effectiveness of the
+amendment to Paragraph (5). The consent judgment referred to in the Act
+was entered on Oct. 31, 2007.
+NOTE: See Acts 2020, No. 338, §§2, 3, regarding judgeships created by that
+Act being assigned election sections for election purposes.

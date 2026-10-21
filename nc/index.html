@@ -3103,6 +3103,23 @@ svg.leaflet-image-layer.leaflet-interactive path {
     z-index: 900;
   }
   .masthead .search-shell:not(:hover):not(:focus-within):not(.expanded) .search-extra { padding: 0; border-width: 0; }
+  /* "List them" in a ZIP code's message (geocoder-search showZip), which
+     opens the comparison's numbers: outlined like the panel foot's buttons */
+  .geo-status .zip-stats-btn {
+    display: inline-block;
+    margin: 6px 0 2px;
+    padding: 4px 10px;
+    min-height: 24px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--accent-deep);
+    background: transparent;
+    border: 1px solid var(--dst-brand-line);
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .geo-status .zip-stats-btn:hover, .geo-status .zip-stats-btn:focus-visible { background: var(--dst-brand-tint-soft); }
+  .geo-status .zip-stats-btn:disabled { cursor: progress; }
   /* The four "about the data" doors (operator-directed, two rounds): emoji
      dropped, and the row is no longer a bordered segmented box — that put a
      second hard rectangle beside the search field and gave four secondary
@@ -4221,15 +4238,17 @@ function initNorthCarolinaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "nc-senate": "ncs", "county": "co", "nc-house": "nch",
-    "school-district-unified": "su", "county-subdivision": "cs", "school-board-district": "bd",
-    "zip-code": "zp", "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "nc-superior-court": "ncu", "nc-district-court": "ncd", "school-district-unified": "su",
+    "county-subdivision": "cs", "school-board-district": "bd", "zip-code": "zp",
+    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["nc-senate"],
-    "state-house": ["nc-house"], "county": ["county"],
+    "state-house": ["nc-house"], "trial-court-district": ["nc-superior-court"],
+    "limited-trial-court-district": ["nc-district-court"], "county": ["county"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
@@ -4243,6 +4262,9 @@ function initNorthCarolinaExplorer() {
   // clean the address is. Set from the worksheet's poi_geocode_bbox — widen
   // it there whenever a layer's cards start naming farther-away offices.
   var POI_GEOCODE_BBOX = { minLng: -84.5, minLat: 33.6, maxLng: -75.1, maxLat: 36.75 };
+  // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
+  // spot inside it, and its ZIP layer is turned on and pinned for comparison.
+  var ZIP_SEARCH_URL = "data/app/zip-index.json";
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -4300,7 +4322,9 @@ function initNorthCarolinaExplorer() {
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
       bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
     { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
-      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } },
+    { id: "louisiana", label: "Louisiana", url: "https://districtry.com/la/", emoji: "🎷", explorerName: "districtry Louisiana",
+      bbox: { minLng: -94.05, minLat: 28.85, maxLng: -89.71, maxLat: 33.02 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8666,6 +8690,36 @@ function initNorthCarolinaExplorer() {
   function stateInSentence(tag) {
     return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
   }
+  /* The ZIP code a search is for, or "": five digits, with or without the
+   * four after a hyphen, alone or with "zip", "zip code" or "postal code"
+   * before it and a state, as its code or its name, before or after it
+   * ("60625", "ZIP 60625", "IL 60625", "60625, Illinois", "60625 USA").
+   * Anything else typed with it, a town or a street, makes it an address,
+   * which the search answers as before. The state is not checked against
+   * the ZIP code, which decides on its own (ENGINE geocoder-search, and the
+   * front door's address box). */
+  function zipQuery(text) {
+    var t = String(text || "").toLowerCase().replace(/[.,:;]/g, " ").replace(/\s+/g, " ").trim()
+      .replace(/(?:^| )(?:usa|us|united states(?: of america)?)$/, "").trim();
+    var m = /^(?:(?:zip ?code|postal code|zip) )?(?:([a-z][a-z ]*?) )?(\d{5})(?:-\d{4})?(?: ([a-z][a-z ]*))?$/.exec(t);
+    if (!m) return "";
+    function isState(w) { return !w || US_STATE_NAMES.hasOwnProperty(w) || !!stateTagOfName(w); }
+    return isState(m[1]) && isState(m[3]) ? m[2] : "";
+  }
+  /* Whether `codes`, five-digit ZIP codes in order with nothing between
+   * them, as fleet-zips.json lists each app's (scripts/build_zip_index.mjs),
+   * holds `zip`: the apps' search and the front door's address box read the
+   * file with this one function. */
+  function zipListed(codes, zip) {
+    codes = String(codes || "");
+    var lo = 0, hi = Math.floor(codes.length / 5) - 1;
+    while (lo <= hi) {
+      var mid = (lo + hi) >> 1, at = codes.substr(mid * 5, 5);
+      if (at === zip) return true;
+      if (at < zip) lo = mid + 1; else hi = mid - 1;
+    }
+    return false;
+  }
   /* An address as the Census Bureau's lookup is asked about it when the
    * map's search knows neither the house nor its street (ENGINE
    * geocoder-search showStreetOnly): the number and the street, then the
@@ -8875,6 +8929,8 @@ function initNorthCarolinaExplorer() {
   // row's click instead of selecting its point, by returning true
   // (rows.pick): listHeldAnswers uses both
   function renderGeocodeResults(results, fromLink, rows) {
+    // the answers to a ZIP code no list holds are each one spot (zipAnswerRows)
+    if (!rows && zipAnswers.seq === districtSearchSeq) rows = zipAnswerRows(zipAnswers.zip);
     // the district section (district-result / district-hint rows) is owned by
     // renderDistrictSection and stays on top; only address rows are replaced
     clearResultRows(false);
@@ -9543,6 +9599,13 @@ function initNorthCarolinaExplorer() {
     // a link is read once, by the debounced search; its own words are not a
     // district name
     if (parseMapLink(q)) return Promise.resolve();
+    // a ZIP code a list holds answers alone, as a district name does
+    var zip = zipQuery(q);
+    if (zip) {
+      return findZip(zip).then(function (found) {
+        if (geocodeInputEl.value.trim() === q && found && (found.here || found.away)) renderZipRow(zip, found);
+      });
+    }
     return findDistricts(q).then(function (found) {
       if (geocodeInputEl.value.trim() !== q) return;
       renderDistrictSection(found);
@@ -9550,6 +9613,303 @@ function initNorthCarolinaExplorer() {
       // address rows on screen belong to earlier text: drop them now
       if (found.exact) { clearResultRows(false); syncResultCount(); }
     });
+  }
+
+  /* ---------- a ZIP code: all of it, compared ----------
+   * A ZIP code typed into the box used to be sent to the geocoder like an
+   * address, and its answer selected one spot, so every card named that
+   * spot's districts. A ZIP code is not a spot: Chicago's 60625 crosses four
+   * wards (measured 2026-10-21 against Census 2020 blocks: Ward 33 41%, Ward
+   * 40 30%, Ward 39 16%, Ward 47 13%), and a reader who searched it reported
+   * that the map named one. On Adam's choice of that day the search now
+   * selects a spot inside the ZIP code, turns its ZIP layer on and PINS it
+   * for comparison (ENGINE relationship-pinning), so the map outlines every
+   * district of the other layers on that lies inside the ZIP code or crosses
+   * its edge, and the reader sees the comparison without having to find it.
+   * When no other layer is on, the one turned on to compare with is chosen
+   * at the spot, in the order Adam gave: a city's council districts (the
+   * concept city-council: Chicago's wards) where the spot has one, the
+   * county board's districts where it does not ("Ward then county district
+   * rep if ward isn't present"), and the U.S. House's where neither answers,
+   * which is North Carolina's case outside its cities. A layer already on,
+   * such as one a question page turned on, is compared as it is.
+   *
+   * THE SPOT IS NOT AN ADDRESS, and the message says so: the cards answer
+   * for the selected point, as they always do, and the point is the place in
+   * the ZIP code farthest from its edges (scripts/build_zip_index.mjs, which
+   * also keeps it on the ZIP layer's own ground), nobody's house.
+   *
+   * NOTHING GOES TO A GEOCODER for a ZIP code a list holds: this app's own
+   * (ZIP_SEARCH_URL, the worksheet's zip_search key) or, for a ZIP code
+   * another app holds, the fleet's (../fleet-zips.json), whose row opens
+   * that app with the ZIP code as #q=. A ZIP code no list holds (a post
+   * office box's, one too narrow for a spot clear of its edges, or any in an
+   * app with no ZIP layer, Kentucky's) is searched as before, and its
+   * answers are marked so that #q= never selects one and a reader who picks
+   * one is told the cards are for that spot alone.
+   *
+   * THE COST, stated to Adam before he chose it: a comparison reads the
+   * whole of each layer it compares, so in Illinois a ZIP code search
+   * downloads the ZIP layer's whole file from the Census Bureau (about 4 MB)
+   * and, in Chicago, every county's wards (about 12 MB from about 20
+   * servers). Counted as zip-search/<the ZIP layer>, never by ZIP code,
+   * which says where a reader lives more precisely than the two-decimal
+   * rounding every point event is held to; the pin it makes is not counted
+   * as compare/<layer>, which stays the count of readers who pinned by hand. */
+  var ZIP_COMPARE_CONCEPTS = ["city-council", "county-board", "us-house"];
+  var zipIndexPromise = null;
+  function loadZipIndex() {
+    if (typeof ZIP_SEARCH_URL === "undefined") return Promise.resolve(null);
+    if (!zipIndexPromise) {
+      zipIndexPromise = fetchJSONWithRetry(ZIP_SEARCH_URL, {}, 2).then(function (data) {
+        var byZip = {};
+        ((data && data.features) || []).forEach(function (f) {
+          var p = f && f.properties;
+          if (p && p.zip && getLayerById(p.layer) && f.geometry && f.geometry.coordinates) byZip[p.zip] = f;
+        });
+        return byZip;
+      })["catch"](function (err) {
+        console.warn("ZIP code index unavailable; ZIP codes are searched as addresses:", err);
+        zipIndexPromise = null; // try again on the next search
+        return null;
+      });
+    }
+    return zipIndexPromise;
+  }
+  var FLEET_ZIPS_URL = "../fleet-zips.json";
+  var fleetZipsPromise = null;
+  function loadFleetZips() {
+    if (!fleetZipsPromise) {
+      fleetZipsPromise = fetchJSONWithRetry(FLEET_ZIPS_URL, {}, 1).then(function (data) {
+        return (data && data.zips) || {};
+      })["catch"](function (err) {
+        console.warn("fleet-zips.json unavailable; ZIP codes other apps hold are searched as addresses:", err);
+        fleetZipsPromise = null;
+        return null;
+      });
+    }
+    return fleetZipsPromise;
+  }
+  // { here: the index's feature } when this app holds the ZIP code, { away:
+  // the app } when another live app does, and {} when no list could say
+  function findZip(zip) {
+    return loadZipIndex().then(function (byZip) {
+      if (byZip && byZip[zip]) return { here: byZip[zip] };
+      return loadFleetZips().then(function (fleet) {
+        for (var id in fleet || {}) {
+          if (!fleet.hasOwnProperty(id) || id === THIS_METRO || !zipListed(fleet[id], zip)) continue;
+          for (var i = 0; i < METRO_EXPLORERS.length; i++) {
+            if (METRO_EXPLORERS[i].id === id) return { away: METRO_EXPLORERS[i] };
+          }
+        }
+        return {};
+      });
+    });
+  }
+  // A ZIP code a list holds answers alone: one row, which shows it here or
+  // opens the app that holds it
+  function renderZipRow(zip, found) {
+    if (inFlightController) inFlightController.abort(); // an address lookup from an earlier keystroke
+    clearResultRows(true);
+    clearResultRows(false);
+    if (found.here) {
+      geoResultsList.appendChild(zipResultRow(zip, found.here));
+      syncResultCount();
+      return;
+    }
+    var metro = found.away;
+    var row = siblingRow(metro, "ZIP code " + zip, function () {
+      if (metroHandedOff) return;
+      metroHandedOff = true;
+      geoStatus.textContent = "Opening " + siblingDisplayName(metro) + "…";
+      geoStatus.className = "geo-status";
+      trackEvent("metro-portal-go/" + metro.id, "zip");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + zip;
+    });
+    row.className += " zip-away";
+    geoResultsList.appendChild(row);
+    geoStatus.textContent = "ZIP code " + zip + " is in " + metro.label + ".";
+    geoStatus.className = "geo-status";
+  }
+  function zipResultRow(zip, f) {
+    var li = document.createElement("li");
+    li.className = "district-result zip-result";
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.appendChild(document.createTextNode("ZIP code " + zip));
+    var hint = document.createElement("span");
+    hint.className = "district-result-hint";
+    hint.textContent = "All of it, and the districts it crosses";
+    btn.appendChild(hint);
+    btn.addEventListener("click", function () {
+      clearTimeout(debounceTimer);
+      if (inFlightController) inFlightController.abort();
+      districtSearchSeq++; // nothing still in flight may redraw the list now
+      showZip(zip, f);
+    });
+    li.appendChild(btn);
+    return li;
+  }
+  // The search for a ZIP code: a list's row, or the geocoder's answers marked
+  // as one spot each
+  var zipAnswers = { seq: -1, zip: "" };
+  function runZipSearch(zip, submitted) {
+    var seq = districtSearchSeq;
+    return findZip(zip).then(function (found) {
+      if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      if (found.here || found.away) return renderZipRow(zip, found);
+      zipAnswers = { seq: seq, zip: zip };
+      return runAddressSearch(zip, null, submitted);
+    });
+  }
+  // How renderGeocodeResults lists the geocoder's answers to a ZIP code no
+  // list holds: marked, so that #q= selects none (prefillGeocodeSearch), and
+  // picked with a message saying the cards are for that one spot
+  function zipAnswerRows(zip) {
+    return {
+      mark: function () { return "zip-answer"; },
+      pick: function (r) {
+        trackEvent("address-search");
+        geoResultsList.innerHTML = "";
+        setSelectedPoint(parseFloat(r.lat), parseFloat(r.lon));
+        zipMessage("Selected: " + r.display_name + ". This map can't show all of ZIP code " + zip +
+          ", so the cards are for this one spot in it, and a ZIP code can cross several districts.");
+        return true;
+      }
+    };
+  }
+  // A message about the ZIP code, kept on screen until another point is
+  // selected or another search begins; returns a function that rewrites it
+  // while it is still the one on screen
+  function zipMessage(text, extra) {
+    var seq = districtSearchSeq, picked = state.sequence;
+    function current() { return seq === districtSearchSeq && picked === state.sequence; }
+    function write(t, more) {
+      if (!current()) return;
+      geoStatus.textContent = t;
+      geoStatus.className = "geo-status";
+      if (more) geoStatus.appendChild(more);
+      collapseAfterSelect = false;
+      refreshSearchShellExpanded();
+    }
+    write(text, extra);
+    // every selection adds the selected point's marker (setSelectedPoint)
+    var watch = function () {
+      if (state.sequence === picked) return;
+      map.off("layeradd", watch);
+      if (seq !== districtSearchSeq) return; // a newer search wrote its own words
+      geoStatus.textContent = "";
+      collapseAfterSelect = true;
+      refreshSearchShellExpanded();
+    };
+    map.on("layeradd", watch);
+    return write;
+  }
+  // The name a layer's districts go by in a sentence: "City Ward", "County
+  // Board District", "U.S. House district"
+  function zipDistrictWord(mod) {
+    return /\b(?:district|ward)$/i.test(mod.label) ? mod.label : mod.label + " district";
+  }
+  function showZip(zip, f) {
+    var layer = f.properties.layer;
+    var mod = getLayerById(layer);
+    trackEvent("zip-search/" + layer);
+    var lng = f.geometry.coordinates[0], lat = f.geometry.coordinates[1];
+    geoResultsList.innerHTML = "";
+    setSelectedPoint(lat, lng, { skipPan: true });
+    var picked = state.sequence, point = state.selectedPoint;
+    var box = document.getElementById("toggle-" + layer);
+    if (box && !box.checked) box.click(); // a real click, so the layer's handlers run
+    // pinned without being counted as a reader's pin
+    if (pinnedParentId !== layer) setPinnedParent(layer, { quiet: true });
+    var lead = "The map has selected a spot inside ZIP code " + zip + ", not at any address, so the cards below " +
+      "are for that spot. The ZIP code is outlined in bold on the map";
+    var write = zipMessage(lead + ".");
+    var b = f.bbox;
+    // framed below the search panel, with room for the line the comparison
+    // adds to the message (clearOfSearchPanel)
+    if (b && b.length === 4) {
+      map.fitBounds([[b[1], b[0]], [b[3], b[2]]], { paddingTopLeft: [24, clearOfSearchPanel() + 36], paddingBottomRight: [24, 24] });
+    } else {
+      map.setView([lat, lng], Math.max(map.getZoom(), 13));
+    }
+    return zipCompareWith(mod, point, picked).then(function (compared) {
+      if (picked !== state.sequence || !compared) return;
+      var with1 = compared.turnOn || (compared.on.length === 1 ? compared.on[0] : null);
+      if (compared.turnOn) {
+        var other = document.getElementById("toggle-" + compared.turnOn.id);
+        if (other && !other.checked) other.click(); // a real click, as for the ZIP layer
+      }
+      write(lead + ", and so is every " + (with1 ? zipDistrictWord(with1) + " it crosses" :
+        "district it crosses in the layers you have on") + ". ", zipStatsButton(picked));
+    });
+  }
+  // What the ZIP code is compared with: { on: [the polygon layers already
+  // on that answer here] }, or { turnOn: the layer to turn on }, or null
+  function zipCompareWith(zipMod, point, picked) {
+    var zipIds = layerIdsOfConcept["zip-code"] || [];
+    var on = layers.filter(function (mod) {
+      return state.layersOn[mod.id] && mod.id !== zipMod.id && zipIds.indexOf(mod.id) < 0 && mod.overlay && mod.overlay.style;
+    });
+    return Promise.all(on.map(function (mod) { return layerRelevance(mod, picked); })).then(function (relevant) {
+      on = on.filter(function (mod, i) { return relevant[i]; });
+      if (on.length) return { on: on };
+      var candidates = [];
+      ZIP_COMPARE_CONCEPTS.forEach(function (concept) {
+        (layerIdsOfConcept[concept] || []).forEach(function (id) {
+          var mod = getLayerById(id);
+          if (mod && mod.overlay && mod.overlay.style && candidates.indexOf(mod) < 0) candidates.push(mod);
+        });
+      });
+      // the first that has a district at the spot, asked one at a time, so a
+      // layer later in the order downloads nothing when an earlier one answers
+      return candidates.reduce(function (chain, mod) {
+        return chain.then(function (found) {
+          if (found || picked !== state.sequence) return found;
+          return Promise.resolve()
+            .then(function () { return mod.coverage ? mod.coverage(point) : true; })
+            ["catch"](function () { return true; }) // a coverage test that throws fails open, as the cards' does
+            .then(function (inside) { return inside ? mod.query(point, picked) : null; })
+            .then(function (result) { return result ? { turnOn: mod } : null; }, function (err) {
+              console.warn("[" + mod.id + "] no answer at the ZIP code's spot:", err);
+              return null;
+            });
+        });
+      }, Promise.resolve(null));
+    });
+  }
+  // The comparison's numbers (ENGINE compare-stats), opened once the ZIP
+  // code's outline and every compared layer's boundaries and cards are in,
+  // or after the wait a shared report gets, with whatever has arrived
+  function zipStatsButton(picked) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "zip-stats-btn";
+    btn.textContent = "List them";
+    btn.setAttribute("aria-haspopup", "dialog");
+    btn.addEventListener("click", function () {
+      var until = Date.now() + STATS_RESTORE_WAIT_MS;
+      (function tryOpen() {
+        if (picked !== state.sequence || !document.body.contains(btn)) return;
+        var ready = !!relationshipParentFeature();
+        if (ready && (statsLayersSettled() || Date.now() >= until)) {
+          btn.disabled = false;
+          btn.textContent = "List them";
+          openCompareStats();
+          return;
+        }
+        if (Date.now() >= until) {
+          btn.disabled = false;
+          btn.textContent = "The outline hasn't loaded. Try again";
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = "Loading the outlines…";
+        setTimeout(tryOpen, 500);
+      })();
+    });
+    return btn;
   }
 
   /* ---------- counting the map links the search box reads ----------
@@ -9694,6 +10054,9 @@ function initNorthCarolinaExplorer() {
     clearRangePin(); // a pin answers the search before this one
     var tag = fromLink ? addressStateTag(q) : "";
     if (tag && tag !== METRO_BRAND.instanceTag && showLinkElsewhere(fromLink, tag)) return Promise.resolve();
+    // a ZIP code typed, or handed over as #q= (runZipSearch)
+    var zip = fromLink ? "" : zipQuery(q);
+    if (zip) return runZipSearch(zip, submitted);
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
       renderDistrictSection(found);
@@ -10201,11 +10564,14 @@ function initNorthCarolinaExplorer() {
    * ENGINE map-link; services/link-lookup/main.ts), which passes on each
    * match's address and position: the Census Bureau sees the lookup and
    * not the reader, and the privacy page names both, measured from the
-   * `?a=` call below (build_privacy_page.py). Only an address the reader
-   * searched for is sent: one a shared map link carried, or one typed and
-   * then sent with Search or Enter, handed over as #q=, or picked from the
-   * list by its street (runAddressSearch, listHeldAnswers), never text while
-   * it is being typed.
+   * `?a=` call below (build_privacy_page.py). From the map's search, only an
+   * address the reader searched for is sent: one a shared map link carried,
+   * or one typed and then sent with Search or Enter, handed over as #q=, or
+   * picked from the list by its street (runAddressSearch, listHeldAnswers),
+   * never text while it is being typed. An app's office-pin provider may
+   * also ask about the public address of an office a card shows, when its
+   * own geocoder cannot place it (New York's poiGeocodeRequest, from
+   * 2026-10-20). build_privacy_page.py fails on a call from anywhere else.
    *
    * An answer is used only if it is the ONE match that is the house
    * (labelAtHouse, ENGINE map-link) in the address's town or ZIP code
@@ -10374,7 +10740,10 @@ function initNorthCarolinaExplorer() {
    * one; and the row a link to a place in another state draws
    * (showLinkElsewhere) is followed, because the address itself says which
    * state's app it belongs to, so a place shared into the installed app
-   * opens in its own state.
+   * opens in its own state. So is the row a ZIP code another app holds
+   * draws (renderZipRow), for the same reason, and a ZIP code this app holds
+   * is one row, which is selected (showZip); an answer to a ZIP code no list
+   * holds is never selected (zipAnswerRows), because it is one spot in it.
    *
    * NOR IS AN ANSWER THAT IS NOT THE HOUSE the address names
    * (listHeldAnswers), though it be the only one: an answer without the
@@ -10392,8 +10761,8 @@ function initNorthCarolinaExplorer() {
     return runGeocodeSearch(q, null, true).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
       var place = geoResultsList.querySelectorAll("li.link-place > button");
-      var away = geoResultsList.querySelectorAll("li.map-link-away > button");
-      if (own.length === 1) { if (!/\b(?:no-number|other-street)\b/.test(own[0].parentNode.className)) own[0].click(); }
+      var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
+      if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
       else if (place.length === 1) place[0].click();
       else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
@@ -10468,7 +10837,9 @@ function initNorthCarolinaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 14 congressional districts — the largest districts North Carolina carries below the state itself
+    "nc-district-court", // 47 district court districts, 2,966 km2 mean area, measured 2026-10-20 on the drawn file — larger on average than a State Senate district (2,788 km2), smaller than a congressional district (9,956)
     "nc-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
+    "nc-superior-court", // 73 superior court districts, 1,909 km2 mean area, measured 2026-10-20 on the drawn file — smaller on average than a State Senate district (2,788 km2), larger than a county (1,394)
     "county",            // 100 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "nc-house",          // 120 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 118 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
@@ -11844,8 +12215,36 @@ function initNorthCarolinaExplorer() {
   // The same `(\S)` guard governs all three, so a PO-box-only address (no
   // street) is still left alone: it geocodes to nothing and the card honestly
   // drops its pin, rather than dropping one on a city centroid.
+  //
+  // Two more shapes, measured 2026-10-20 over every district office the apps
+  // ship, lost a house number or kept a box:
+  //   a building or floor named BEFORE the street — "Dulles State Office
+  //     Building 317 Washington St., Watertown"; "Oswego City Hall, Second
+  //     Floor 13 W. Oneida St."; "Room 419, Legislative Office Building 198
+  //     State St., Albany". The number after the word is the house number,
+  //     and the unit rule read it as a building number and removed it, so New
+  //     York Senate 49, 50 and 52 were looked up with no number at all. When
+  //     that number is followed by a street name and a street type, the words
+  //     before it are dropped and the number stays;
+  //   boxes spelled out or lettered — "Post Office Box 188"; "P.O. Box I".
+  var POI_STREET_TYPE = "(?:street|st|avenue|ave|av|road|rd|boulevard|blvd|drive|dr|lane|ln|place|pl|" +
+    "court|ct|highway|hwy|parkway|pkwy|terrace|ter|circle|cir|square|sq|trail|trl|way|turnpike|tpke|" +
+    "plaza|plz|expressway|expy|freeway|fwy|pike|row|alley|aly|loop|crescent|cres|concourse|walk|path)";
+  // "<number> [N|S|E|W] <one to four words> <street type>" or "<number> Broadway",
+  // ending the comma part or followed by a unit
+  var POI_STREET_AHEAD = "\\d+[a-z]?(?:-\\d+[a-z]?)?\\s+(?:broadway|(?:[nsew]\\.?\\s+)?" +
+    "(?:\\d+(?:st|nd|rd|th)\\s+|[a-z][a-z'.-]*\\s+){1,4}" + POI_STREET_TYPE + "\\b\\.?)" +
+    "\\s*(?:,|$|(?:suite|ste|room|rm|unit|apt|floor)\\b|#)";
+  var POI_NAMED_BEFORE_STREET = new RegExp(
+    "^[\\s\\S]*?\\b(?:building|bldg|floor)\\.?\\s+(?=" + POI_STREET_AHEAD + ")", "i");
+  // a street address already in what would be dropped ("28 Wells Ave., Building
+  // 3 5th Floor") means the building is a unit after it, so nothing is dropped
+  var POI_STREET_IN_PREFIX = new RegExp("\\d[^,]*\\b(?:" + POI_STREET_TYPE + "|broadway|route|rte)\\b", "i");
   function cleanPoiAddress(address) {
     var s = String(address);
+    s = s.replace(POI_NAMED_BEFORE_STREET, function (named) {
+      return POI_STREET_IN_PREFIX.test(named) ? named : "";
+    });
     // "<n>th Floor" — the ordinal precedes the token
     s = s.replace(/(\S)[,\s]+\d+(?:st|nd|rd|th)?\s+floors?\b\.?/gi, "$1 ");
     // "<Unit> <number>" — the token precedes the unit number
@@ -11859,7 +12258,8 @@ function initNorthCarolinaExplorer() {
     // including the parenthesized form the Kane municipal roster uses
     // ("175 Water St., (P.O. Box 205), Burlington") and a trailing period
     // ("P.O. Box 226. LEWISTOWN"), both of which survived the bare-token rule.
-    s = s.replace(/(\S)[,\s]+\(?\s*p\.?\s*o\.?\s*box\.?\s*#?\s*\d+\s*\.?\s*\)?/gi, "$1 ");
+    // Spelled out ("Post Office Box 188") or lettered ("P.O. Box I") too.
+    s = s.replace(/(\S)[,\s]+\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\.?\s*#?\s*(?:\d+|[a-z]\d*(?![\w-]))\s*\.?\s*\)?/gi, "$1 ");
     // collapse the comma/space debris a removal leaves behind
     s = s.replace(/\s+/g, " ").replace(/\s+,/g, ",").replace(/,(?:\s*,)+/g, ",").replace(/^[\s,]+|[\s,]+$/g, "");
     // a separator dash that lost the fragment it introduced ("St. - 6th Floor").
@@ -14123,15 +14523,71 @@ function initNorthCarolinaExplorer() {
   }
 
   // Extract a geocodable street address from an office's address lines (an array
-  // of strings): drop phone/fax lines, keep the street + city/zip. Used by
+  // of strings, exactly as scraped): the FIRST street address in the block, its
+  // street, any building or suite lines and its city/ZIP line. Used by
   // registerIlgaChamber's pointOfInterest when a roster supplies office lines.
+  //
+  // A LINE IS DROPPED FOR WHAT IT IS, NEVER FOR A FRAGMENT IT CONTAINS — the
+  // splitOfficeLines lesson, one block over (2026-10-20). Until that day this
+  // dropped every line matching /phone|fax|tel|\(\d{3}\)|\d{3}[-.\s]\d{4}/i,
+  // and both halves misfired on shipped offices. A ZIP+4 satisfies the last
+  // alternative ("Fort Smith, AR 72903-5083" contains "903-5083"), so the city
+  // line went and the pin was looked up as "6101 Phoenix Ave, Suite 4" with no
+  // city or state; and "tel" sits inside street names ("2400 E. Katella Ave.",
+  // "1 Kattelville Road"), so the whole address went, nothing was left, and the
+  // fallback looked up every line, "Phone: 714-939-8469" included. Measured over
+  // the 693 district offices the fleet's rosters shipped that day: 6 U.S. House
+  // offices lost their city (AR-3, IN-4, MN-8, TN-2, TN-6, WI-1) and 2 assembly
+  // offices were looked up with their telephone numbers (California 68, New
+  // York 121). Those 8 are the only shipped addresses this rule changes. It also
+  // reads the Louisiana legislature's blocks, which put a physical and a mailing
+  // address under headings, sometimes the post office box first, and up to
+  // three offices in one block, all of which the old filter joined into one.
+  //
+  // So a contact line is one LABELLED as a phone, fax or e-mail, or one carrying
+  // a whole telephone number (three, three and four digits, which a ZIP+4 is
+  // not). A line ending in a ZIP code ends an address when the ZIP follows a
+  // two-letter word (the state), a comma, or nothing else on its line, so
+  // "P.O. Box 91245" and "Suite 14800" are not ZIP codes; a heading line
+  // ("Mailing Address:") ends one too, ZIP or not. The first address that is not
+  // only a post office box wins, else the first. Lines after the last address
+  // are a note ("*Not ADA accessible…") and count only when they are all there
+  // is, so a block with no ZIP and no heading is joined as it always was, and a
+  // block with no address line at all gets no pin rather than a lookup of a
+  // telephone number.
+  //
+  // An address with no digit in it, no street number, ZIP code or box, names
+  // no place a pin could go, so it gets no pin either: measured 2026-10-20 over
+  // the same 693 offices, exactly three, Illinois House 13 ("By appointment
+  // only") and Wisconsin Senate 6 and 22 (the bare state, "WI").
   function officeAddressForGeocode(lines) {
     if (!lines || !lines.length) return null;
-    var kept = lines.filter(function (l) {
-      return !/(?:phone|fax|tel|\(\d{3}\)|\d{3}[-.\s]\d{4})/i.test(String(l));
+    var CONTACT = /^\s*(?:phone|telephone|tel|fax|cell|mobile|e-?mail)\s*[:.]/i;
+    var NUMBER = /(?:\(\d{3}\)|\b\d{3})[\s.\-]*\d{3}[\s.\-]\d{4}\b/;
+    var ENDS_IN_ZIP = /(?:^\s*|\b[a-z]{2}\s+|,\s*)\d{5}(?:-\d{4})?[\s.]*$/i;
+    var BOX = /^\s*\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\b/i;
+    var addresses = [];
+    var current = [];
+    lines.forEach(function (raw) {
+      var line = String(raw);
+      if (!line.trim() || CONTACT.test(line) || NUMBER.test(line)) return;
+      var heading = /:\s*$/.test(line);
+      if (!heading) current.push(line);
+      if ((heading || ENDS_IN_ZIP.test(line)) && current.length) {
+        addresses.push(current);
+        current = [];
+      }
     });
-    var addr = (kept.length ? kept : lines).join(", ").trim();
-    return addr || null;
+    if (!addresses.length && current.length) addresses.push(current);
+    // only a box: every line but the city line ("P.O. Box 660", "Harrisonburg, LA 71340")
+    function boxOnly(address) {
+      var head = address.length > 1 ? address.slice(0, -1) : address;
+      return head.every(function (l) { return BOX.test(l); });
+    }
+    var picked = addresses.filter(function (a) { return !boxOnly(a); })[0] || addresses[0];
+    if (!picked) return null;
+    var addr = picked.join(", ").trim();
+    return /\d/.test(addr) ? addr : null;
   }
   /* ==== ENGINE:END office-helpers ==== */
   /* ==== ENGINE:BEGIN chamber-factory ==== */
@@ -16208,6 +16664,253 @@ function initNorthCarolinaExplorer() {
   });
 
 
+  /* ---------- 15. Superior Court and District Court — from the statutes ----------
+   * NORTH CAROLINA ELECTS ITS TRIAL JUDGES BY DISTRICT, AND THE GENERAL
+   * ASSEMBLY WRITES THE DISTRICTS INTO THE STATUTES: G.S. 7A-41 the 73
+   * superior court districts and G.S. 7A-133 the 47 district court districts.
+   * nc/scripts/build_nc_court_districts.py reads the text kept in
+   * data/source/statutes/, which every build holds to the General Assembly's
+   * live page, and draws each district from this instance's own county file.
+   * Where the law divides a county (nine for the superior court, two for the
+   * district court) it lists the 2010 Census voting districts and blocks of
+   * each part, and G.S. 7A-41(c1) keeps those 2010 lines where a voting
+   * district has moved since, so those parts are drawn from the Census
+   * Bureau's 2010 lines. Both files are this site's own, so a click sends
+   * nothing anywhere.
+   *
+   * NO JUDGE IS NAMED. The court system lists who serves in its judicial
+   * directory, and www.nccourts.gov's robots.txt disallows that path for every
+   * client, in the part of the file headed "Custom robot rules" (measured
+   * 2026-10-20 with a browser's client, the one its pages answer; the file
+   * says Last-Modified 16 October 2026), so nothing here reads it and the
+   * cards link it instead. Election results cannot stand in for it, because
+   * the Governor appoints a judge to a seat that comes open between
+   * elections. Gap nc-judges.
+   *
+   * THE LAW GIVES TWO JUDGE COUNTS FOR THREE DISTRICTS: superior court 31A
+   * (two in the table of 7A-41(a), one in 7A-41(b)), and district court 12
+   * (eleven in the table of 7A-133(a), eight in (b1)) and 32 (six, and five in
+   * (b3)). The cards say so rather than choosing, and the builder fails if any
+   * of the six numbers moves.
+   *
+   * WHAT EACH COURT HEARS, HOW ITS JUDGES ARE ELECTED AND THAT SUPERIOR COURT
+   * JUDGES ROTATE are the court system's own words, read 2026-10-20 from its
+   * superior court, district court and court officials pages, which its
+   * robots.txt allows; nc/WATCH.md says when to read them again.
+   *
+   * MEAN AREAS, measured 2026-10-20 on the drawn files, put the two where
+   * they sit in the area rank: U.S. House 9,956 km2, district court 2,966,
+   * N.C. Senate 2,788, superior court 1,909, county 1,394, N.C. House 1,162.
+   * ---------- */
+  var loadNcSuperiorCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-superior-court-districts.json", {}, 2);
+  });
+  var loadNcDistrictCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-district-court-districts.json", {}, 2);
+  });
+
+  // "Bladen, Brunswick and Columbus Counties"
+  function ncCountiesWord(names) {
+    return ncJoinList(names, "and") + (names.length === 1 ? " County" : " Counties");
+  }
+  // What the statute put in the district, so a reader sees it without opening
+  // the law: "Warren County and part of Vance County", "Parts of Edgecombe and
+  // Wilson Counties".
+  function ncCourtCounties(p) {
+    var whole = (p.counties || []).map(String);
+    var parts = (p.parts || []).map(String);
+    var bits = [];
+    if (whole.length) bits.push(ncCountiesWord(whole));
+    if (parts.length) {
+      bits.push((bits.length ? "part" : "Part") + (parts.length === 1 ? " of " : "s of ") +
+        ncCountiesWord(parts));
+    }
+    return bits.join(" and ");
+  }
+
+  // opts: { word, term, pieces, bench, rotate, gap, link } — `word` names one
+  // district, `term` the term of office ("an eight-year term"), `pieces` what
+  // the law lists inside a divided county, `bench` what the court hears,
+  // `rotate` whether its judges ride the division's districts, `gap` what the
+  // law says about ground no 2010 piece covers, and `link` the statute's own
+  // page.
+  function ncCourtCard(opts) {
+    return function (result) {
+      var p = result.props;
+      var wrap = cardEl("div", "card-flush");
+      var note = ncCourtCounties(p);
+      if (p.division) note += " · " + String(p.division) + " Division";
+      wrap.appendChild(renderBodyIntro({ title: opts.word + " " + String(p.unit), note: note }));
+
+      var rows = [];
+      var each = "elected by the voters of the whole district to " + opts.term;
+      if (p.judgesDisagree && p.judgesDisagree.length === 2) {
+        rows.push({
+          label: "Judges",
+          value: "The law gives two numbers for this district: the table in " +
+            String(p.authority) + "(a) lists " + Number(p.judgesDisagree[0]) +
+            " judges, and " + String(p.judgesDisagreeIn) + " gives " +
+            Number(p.judgesDisagree[1]) + ", so this app states neither. Each judge " +
+            "is " + each + " and must live in the district."
+        });
+      } else if (p.judgeCount) {
+        var n = Number(p.judgeCount);
+        rows.push({
+          label: "Judges",
+          value: n === 1
+            ? "One judge, " + each + ". The judge must live in the district."
+            : ncCapital(NC_SMALL_NUMBERS[n] || String(n)) + " judges, each " + each +
+              ". Each must live in the district."
+        });
+      }
+      rows.push({
+        label: "Who they are",
+        value: "Not named here. The court system's judicial directory, linked below, " +
+          "lists who serves now. Its website asks programs like this app not to read " +
+          "that page, and election results cannot stand in for it, because the " +
+          "Governor appoints a judge to a seat that comes open between elections."
+      });
+      if (p.residence) {
+        rows.push({
+          label: "Seats tied to a county",
+          value: "The voters of the whole district elect every judge, but for some or " +
+            "all of the seats the law lets only people who live in particular counties " +
+            "of the district run (" + String(p.residence) + ")."
+        });
+      }
+      if (opts.rotate && p.division) {
+        rows.push({
+          label: "Who holds court here",
+          value: "Superior court judges rotate among the districts of their division " +
+            "every six months, the court system says, so a judge holding court here " +
+            "may have been elected in another district of the " + String(p.division) +
+            " Division."
+        });
+      }
+      if (p.set && p.set.length) {
+        rows.push({
+          label: "Senior resident judge",
+          value: "Districts " + ncJoinList(p.set, "and") + " together make up " +
+            ncCountiesWord((p.setCounties || []).map(String)) + " and share one senior " +
+            "resident superior court judge, who manages the court's administrative " +
+            "duties there (G.S. 7A-41.1)."
+        });
+      }
+      if (p.endsOn) {
+        rows.push({
+          label: "From " + (ncDate(p.endsOn) || String(p.endsOn)),
+          value: "The law ends this district on that day, and as written today it does " +
+            "not say which district its ground joins (" + String(p.authority) + "(a))."
+        });
+      }
+      rows.push({ label: "The court", value: opts.bench });
+      rows.push({
+        label: "How this map is drawn",
+        value: (p.parts && p.parts.length)
+          ? "From the counties " + String(p.authority) + "(a) lists for this district " +
+            "and, inside " + ncCountiesWord(p.parts.map(String)) + ", from the 2010 " +
+            "Census " + opts.pieces + " " + String(p.authority) + "(b) lists, drawn " +
+            "here to within 8 metres of their 2010 lines. " + opts.gap
+          : "From the counties " + String(p.authority) + "(a) lists for this district, " +
+            "on the same county lines as the County card."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      wrap.appendChild(renderLinkRow({ links: [
+        { label: "Judicial directory", url: "https://www.nccourts.gov/judicial-directory" },
+        { label: "Judicial district maps", url: "https://www.nccourts.gov/documents/publications/judicial-districts-maps" },
+        opts.link
+      ] }));
+      return wrap;
+    };
+  }
+  function ncCourtQuery(load) {
+    return function (point, seq) {
+      return queryFeatureAt(load, point).then(function (feature) {
+        if (!feature || !feature.properties || feature.properties.unit == null) return null;
+        return { seq: seq, props: feature.properties };
+      });
+    };
+  }
+  function ncCourtHover(word) {
+    return function (feature) {
+      var unit = ((feature || {}).properties || {}).unit;
+      return unit == null ? null : word + " " + String(unit);
+    };
+  }
+  // A point a few metres off the coast or across the state line, where the
+  // County card's own map draws no county either.
+  function ncCourtEmpty(word) {
+    return "No " + word + " is drawn at this point. Every district is made of " +
+      "North Carolina's counties, drawn on the same lines as the County card, and " +
+      "this point is outside them all.";
+  }
+
+  registerLayer({
+    id: "nc-superior-court",
+    group: "political",
+    label: "Superior Court District",
+    emptyNote: ncCourtEmpty("superior court district"),
+    overlay: {
+      load: loadNcSuperiorCourts,
+      // the fleet's trial-court purple and line (layer-concepts.json `colors`
+      // and `lines`)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: ncCourtHover("Superior Court District"),
+    query: ncCourtQuery(loadNcSuperiorCourts),
+    render: ncCourtCard({
+      word: "Superior Court District",
+      term: "an eight-year term",
+      pieces: "voting districts and blocks",
+      rotate: true,
+      bench: "Superior courts hear civil and criminal cases, including felony cases " +
+        "and civil cases over $25,000, and appeals of misdemeanours and infractions " +
+        "from the district court.",
+      gap: "The law keeps those 2010 lines where a voting district has moved since " +
+        "(G.S. 7A-41(c1)). Where today's county line takes in ground no 2010 piece " +
+        "covers, the map gives it to the nearest district; the law says a block file " +
+        "kept by the General Assembly's clerks decides such ground (G.S. 7A-41(c2)), " +
+        "and this app has not found that file published.",
+      link: { label: "G.S. 7A-41", url: "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html" }
+    }),
+    primaryLink: function () {
+      return { label: "North Carolina superior courts", url: "https://www.nccourts.gov/courts/superior-court" };
+    }
+  });
+
+  registerLayer({
+    id: "nc-district-court",
+    group: "political",
+    label: "District Court District",
+    emptyNote: ncCourtEmpty("district court district"),
+    overlay: {
+      load: loadNcDistrictCourts,
+      // the limited-jurisdiction trial court's olive and line, shared with
+      // Kentucky's district court (layer-concepts.json `colors` and `lines`)
+      style: { color: "#5E6E00", weight: 1.5, fillColor: "#5E6E00", fillOpacity: 0.05 }
+    },
+    hoverName: ncCourtHover("District Court District"),
+    query: ncCourtQuery(loadNcDistrictCourts),
+    render: ncCourtCard({
+      word: "District Court District",
+      term: "a four-year term",
+      pieces: "voting districts",
+      rotate: false,
+      bench: "District courts hear divorce, child custody and child support cases, " +
+        "civil cases under $25,000, misdemeanours and infractions, and juvenile " +
+        "cases. Unlike superior court judges, district court judges do not rotate " +
+        "between districts.",
+      gap: "Where today's county line takes in ground no 2010 voting district " +
+        "covers, the map gives it to the nearest district; the law does not say " +
+        "where such ground belongs.",
+      link: { label: "G.S. 7A-133", url: "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html" }
+    }),
+    primaryLink: function () {
+      return { label: "North Carolina district courts", url: "https://www.nccourts.gov/courts/district-court" };
+    }
+  });
+
+
 
   /* ==== ENGINE:BEGIN hover-explorer ==== */
   /* =========================================================================
@@ -16970,7 +17673,10 @@ function initNorthCarolinaExplorer() {
     if (unpin) unpin.addEventListener("click", function () { setPinnedParent(null); });
   }
 
-  function setPinnedParent(id) {
+  // `opts.quiet`: a pin the app makes itself, for a ZIP code search (ENGINE
+  // geocoder-search showZip), which counts zip-search/<layer> instead, so
+  // compare/<layer> stays the count of readers who pinned by hand
+  function setPinnedParent(id, opts) {
     pinnedParentId = (pinnedParentId === id) ? null : id;
     // NOTHING COUNTED THIS UNTIL 2026-09-18, so "nobody uses the comparison"
     // was an inference and never a measurement: the app has instrumented
@@ -16988,7 +17694,8 @@ function initNorthCarolinaExplorer() {
     // that page an undercount is a false statement exactly as an overcount is.
     // The same regex reads COMMENTS as code, so this one deliberately does not
     // spell the function name next to a quote.
-    if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
+    if (opts && opts.quiet) { /* counted by its search */ }
+    else if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
     else trackEvent("compare-stop");
     refreshAllPinButtons();
     refreshRelationshipOutlines();
@@ -17698,6 +18405,9 @@ function initNorthCarolinaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "nc-senate", "nc-house",
+    // The courts follow the chambers, as Kentucky's do: each district's
+    // voters elect its superior or district court judges.
+    "nc-superior-court", "nc-district-court",
     // The city council district sits with the other districts that elect
     // someone of their own; it answers only in the seventeen cities whose
     // districts are drawn.
@@ -18192,9 +18902,10 @@ function initNorthCarolinaExplorer() {
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
     "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#5E6E00": "#A6BD42",
+    "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

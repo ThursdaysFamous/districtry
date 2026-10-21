@@ -1,7 +1,7 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-16",
+ "measured": "2026-10-21",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
@@ -11,6 +11,7 @@
   "il": false,
   "in": false,
   "ky": null,
+  "la": null,
   "mi": true,
   "mn": null,
   "ms": null,
@@ -1304,6 +1305,99 @@
     "lsadc": "25",
     "name": "Paducah city",
     "pop": 27137
+   }
+  ],
+  "la": [
+   {
+    "geoid": "2255000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Orleans city",
+    "pop": 383997
+   },
+   {
+    "geoid": "2205000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Baton Rouge city",
+    "pop": 227470
+   },
+   {
+    "geoid": "2270000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Shreveport city",
+    "pop": 187593
+   },
+   {
+    "geoid": "2240735",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lafayette city",
+    "pop": 121374
+   },
+   {
+    "geoid": "2241155",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lake Charles city",
+    "pop": 84872
+   },
+   {
+    "geoid": "2239475",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kenner city",
+    "pop": 66448
+   },
+   {
+    "geoid": "2208920",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bossier City city",
+    "pop": 62701
+   },
+   {
+    "geoid": "2251410",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Monroe city",
+    "pop": 47702
+   },
+   {
+    "geoid": "2200975",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Alexandria city",
+    "pop": 45275
+   },
+   {
+    "geoid": "2236255",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Houma city",
+    "pop": 33406
+   },
+   {
+    "geoid": "2213960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Central city",
+    "pop": 29565
+   },
+   {
+    "geoid": "2270805",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Slidell city",
+    "pop": 28781
+   },
+   {
+    "geoid": "2254035",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Iberia city",
+    "pop": 28555
    }
   ],
   "mi": [

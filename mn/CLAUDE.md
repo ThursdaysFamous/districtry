@@ -65,7 +65,7 @@ numbers printed with no area code ship as printed (gap `mn-township-phone-area-c
 source per town: a town the election results name keeps those names, and the county list is
 compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 13 counties and
 their reasons are in gap `mn-township-officers`, which still covers about 680 towns, with a
-letter to the Minnesota Association of Townships drafted in `docs/ASK_DRAFTS.md`. **NO WEEKLY
+letter to the Minnesota Association of Townships, in `docs/ASK_DRAFTS.md`, sent on 2026-10-21. **NO WEEKLY
 JOB READS THE LISTS YET** — a new workflow needs the operator's word — so each card names the
 day its list was read. **THE DONE-STANDARD LEVEL STAYS OPEN** while those 13 are unsettled.
 A seat a November town has not had

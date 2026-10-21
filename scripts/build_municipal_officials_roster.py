@@ -507,6 +507,11 @@ PRESERVABLE = {
     "normal": {"kind": "enrich", "places": ["Town of Normal"]},
     "quincy": {"kind": "enrich", "places": ["City of Quincy"]},
     "danville": {"kind": "enrich", "places": ["City of Danville"]},
+    # Urbana, added 2026-10-21 by the same scraper and on the same ground as
+    # Champaign beside it. Its old host stopped answering anyone on 2026-10-01;
+    # the city's site is now www.urbanail.gov, which serves this project's own
+    # client.
+    "urbana": {"kind": "enrich", "places": ["City of Urbana"]},
     # Lake County's seven readable cities above 25,000. The county source is at
     # the contact-only rung — a hall address for all 41 municipalities and not
     # one official — so each of these arrives with an address and nobody in it.

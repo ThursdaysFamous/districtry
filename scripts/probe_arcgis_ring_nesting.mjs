@@ -36,6 +36,7 @@ import { chromium } from "playwright";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/+$/, "") + "/";
@@ -183,7 +184,7 @@ async function pageAll(base, params, format) {
 
 const args = process.argv.slice(2).filter((a) => !a.startsWith("-"));
 const tags = args.length ? args : instances();
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 const report = {};
 let lost = 0, affected = 0, measured = 0, skipped = 0;
 

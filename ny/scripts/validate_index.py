@@ -120,6 +120,7 @@ GEOMETRY_FILES = {
     "sullivan-library-districts.json": (2, 2),  # Sullivan County's 2 library districts (same builder, same interval, simplified together with the fire districts so the two layers' shared edges are simplified once). Exact bounds for the same reason.
     "sullivan-county-outline.json": (1, 1),  # Sullivan County sliced verbatim from ny-counties.json, so the fire-district and library-district layers' coverage test and the county card cannot disagree about where Sullivan is.
     "tribal-areas.json": (11, 11),  # New York's tribal land (scripts/build_tribal_areas.py) — 11 areas across 8 nations, two of them state reservations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "zip-index.json": (1823, 1823),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from the city's MODZCTA archive (data/app/tiles/zip-code.pmtiles), with its spots inside the five boroughs (borough-boundaries.json), and then the statewide ZIP Code Tabulation Area archive (data/app/tiles/nys-zip-code.pmtiles), with its spots in the state outside them (ny-state-outline.json), which is the order and the ground the two layers answer on; --check rebuilds it from the committed archives and outlines. Exact count, because it changes only when the city changes its MODZCTA areas or the Census Bureau its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -565,6 +566,11 @@ def _point_in_geometry(lng, lat, geom):
                 inside = not inside
             j = i
         return inside
+    # A Point or line encloses nothing, so it cannot contain the negative
+    # point. The ZIP code index (one Point per ZIP code) is a geometry file
+    # for caching purposes and has no polygons to test.
+    if not geom or geom.get("type") not in ("Polygon", "MultiPolygon"):
+        return False
     polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
     return any(ring_hit(p[0]) and not any(ring_hit(h) for h in p[1:]) for p in polys)
 

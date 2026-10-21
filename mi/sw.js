@@ -62,6 +62,7 @@ const GEOMETRY_URLS = [
   "./data/app/mi-midland-wards.json",
   "./data/app/mi-muskegon-wards.json",
   "./data/app/mi-holland-wards.json",
+  "./data/app/mi-lansing-wards.json",
   "./data/app/mi-walker-wards.json",
   "./data/app/alger-county-outline.json",
   "./data/app/allegan-county-outline.json",
@@ -98,6 +99,7 @@ const GEOMETRY_URLS = [
   "./data/app/mi-circuit-courts.json",
   "./data/app/mi-isd-districts.json",
   "./data/app/tribal-areas.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

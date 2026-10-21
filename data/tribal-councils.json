@@ -1,5 +1,5 @@
 {
- "note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, South Carolina and Tennessee nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "note": "Who sits on the council of each nation whose land a districtry app draws, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
   "0080": {
    "source": "nation",
@@ -95,7 +95,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0140": {
    "source": "nation",
@@ -134,7 +134,7 @@
      "note": "the same page also spells it Connors"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0170": {
    "source": "nation",
@@ -164,7 +164,7 @@
      "role": "Treasurer"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0335": {
    "source": "nation",
@@ -222,7 +222,7 @@
      "email": "mildredholmes@boisforte-nsn.gov"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0525": {
    "source": "nation",
@@ -252,7 +252,7 @@
      "role": "Executive Committee Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0540": {
    "source": "nation",
@@ -348,7 +348,37 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
+  },
+  "0635": {
+   "source": "nation",
+   "page": "https://www.chitimacha.gov/tribal-government/tribal-council",
+   "pages": [
+    "https://www.chitimacha.gov/tribal-government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Melissa Darden",
+     "role": "Chairman"
+    },
+    {
+     "name": "Melinda Butaud",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Kimberly Walden",
+     "role": "Secretary/Treasurer"
+    },
+    {
+     "name": "Kristan Jones",
+     "role": "Councilman-At-Large"
+    },
+    {
+     "name": "Schuylar Vilcan Hebert",
+     "role": "Councilman-At-Large"
+    }
+   ],
+   "read": "2026-10-20"
   },
   "1125": {
    "source": "nation",
@@ -381,7 +411,7 @@
      "district": "District II"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1135": {
    "source": "nation",
@@ -415,7 +445,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1370": {
    "source": "nation",
@@ -453,7 +483,7 @@
      "role": "Councilor"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1450": {
    "source": "nation",
@@ -540,7 +570,7 @@
      "email": "David.Greendeer@ho-chunk.com"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1550": {
    "source": "nation",
@@ -570,7 +600,7 @@
      "role": "Sergeant-at-Arms"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1610": {
    "source": "nation",
@@ -631,6 +661,36 @@
    "read": "2026-10-06",
    "carriedFrom": "2026-10-06"
   },
+  "1690": {
+   "source": "nation",
+   "page": "https://www.jenachoctaw.org/about-jbci/tribal-leaders",
+   "pages": [
+    "https://www.jenachoctaw.org/about-jbci/tribal-leaders"
+   ],
+   "members": [
+    {
+     "name": "Elizabeth \"Libby\" Rogers",
+     "role": "Tribal Chief"
+    },
+    {
+     "name": "Lacy Robbins McGuffee",
+     "role": "Councilwoman"
+    },
+    {
+     "name": "Lillie Williamson",
+     "role": "Councilwoman"
+    },
+    {
+     "name": "Bryan Nugent",
+     "role": "Councilman"
+    },
+    {
+     "name": "Jason Norris",
+     "role": "Councilman"
+    }
+   ],
+   "read": "2026-10-20"
+  },
   "1815": {
    "source": "nation",
    "page": "https://lco-nsn.gov/tribal-governing-board/",
@@ -667,7 +727,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1825": {
    "source": "state-list",
@@ -771,7 +831,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1940": {
    "source": "nation",
@@ -804,7 +864,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1963": {
    "source": "nation",
@@ -886,7 +946,7 @@
      "termEnds": "2027"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2055": {
    "source": "nation",
@@ -925,7 +985,7 @@
      "email": "dawn.pendleton@lowersioux-nsn.gov"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2150": {
    "source": "nation",
@@ -970,7 +1030,7 @@
      "district": "Bradley District"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2175": {
    "source": "nation",
@@ -1016,7 +1076,7 @@
      "role": "Legislator"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2285": {
    "source": "nation",
@@ -1086,7 +1146,7 @@
      "note": "White Earth Reservation Secretary/Treasurer"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2300": {
    "source": "nation",
@@ -1185,7 +1245,7 @@
      "district": "Tucker"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2535": {
    "source": "nation",
@@ -1281,7 +1341,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2560": {
    "source": "nation",
@@ -1345,7 +1405,7 @@
      "email": "khill@oneidanation.org"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2890": {
    "source": "nation",
@@ -1399,7 +1459,7 @@
      "role": "Member At Large"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2980": {
    "source": "nation",
@@ -1461,7 +1521,8 @@
      "termEnds": "2028"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-17",
+   "carriedFrom": "2026-10-17"
   },
   "3085": {
    "source": "nation",
@@ -1524,7 +1585,7 @@
      "termEnds": "July 2027"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3305": {
    "source": "nation",
@@ -1554,7 +1615,7 @@
      "role": "Representative"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3320": {
    "source": "nation",
@@ -1588,7 +1649,7 @@
      "role": "Sub-Chief"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3635": {
    "source": "nation",
@@ -1675,7 +1736,7 @@
      "phone": "906-440-8294"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3680": {
    "source": "nation",
@@ -1697,7 +1758,7 @@
      "role": "Secretary/Treasurer"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3885": {
    "source": "state-list",
@@ -1730,7 +1791,7 @@
      "role": "Council Member II"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "4015": {
    "source": "nation",
@@ -1768,7 +1829,47 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
+  },
+  "4315": {
+   "source": "nation",
+   "page": "https://www.tunicabiloxi.org/tribal-info/tribal-council/",
+   "pages": [
+    "https://www.tunicabiloxi.org/tribal-info/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Marshall Pierite",
+     "role": "Chairman"
+    },
+    {
+     "name": "Marshall Ray Sampson, Sr.",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Shelbie Lyn Sampson",
+     "role": "Secretary-Treasurer"
+    },
+    {
+     "name": "James Craig, III",
+     "role": "Council Member"
+    },
+    {
+     "name": "Bobby Pierite",
+     "role": "Council Member",
+     "note": "the same page also writes Bobby Pierite, Sr."
+    },
+    {
+     "name": "Harold Pierite",
+     "role": "Council Member",
+     "note": "the same page also writes Harold Pierite, Sr."
+    },
+    {
+     "name": "Dr. Julie Zahn",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-20"
   },
   "4445": {
    "source": "nation",
@@ -1803,7 +1904,8 @@
      "phone": "(320) 564-6329"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-17",
+   "carriedFrom": "2026-10-17"
   },
   "4595": {
    "source": "nation",
@@ -1840,7 +1942,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "4625": {
    "source": "nation",
@@ -1904,7 +2006,7 @@
      "email": "ireta.frazier@winnebagotribe.com"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   }
  }
 }
