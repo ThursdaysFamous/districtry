@@ -481,6 +481,16 @@ def measure_address_list(src, name):
 # the map's search knows a street and not the house number on it, its message
 # links to OpenStreetMap's note form, and following that link records
 # `osm-note` and nothing about the street or the place.
+# `zip-search/` joined on 2026-10-21 (engine `geocoder-search` showZip): a ZIP
+# code typed into the search box selects a spot inside it, turns its ZIP layer
+# on, pins it and outlines every ward or county board district it crosses, and
+# the event names the ZIP LAYER ("zip-search/zip-code") and nothing else: not
+# the ZIP code, which would say where a reader lives more precisely than the
+# two-decimal rounding `select` is held to. The pin it makes is not counted as
+# `compare/`, which stays the count of readers who pinned by hand. Only an app
+# that keeps a list of its ZIP codes (ZIP_SEARCH_URL, the worksheet's
+# `zip_search` key) can send it, so the sentence names the apps that cannot,
+# measured off each app's own file, as it does for district-search/.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
@@ -488,7 +498,8 @@ EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-st
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select",
-                   "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
+                   "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
+                   "zip-search/"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 # What the front page (the one untagged surface) sends: the map-link count
 # above, from its address box, and since 2026-10-21 `example-place/<place>`
@@ -500,9 +511,21 @@ ROOT_EVENTS = ["example-place/", "map-link-read/front/"]
 
 
 def event_phrase(event, apps):
-    """One event as the page names it. `district-search` is qualified with the
-    apps that can actually send it, because the list is introduced as what
-    EACH app sends and an app with no district index never sends it."""
+    """One event as the page names it. `district-search` and `zip-search` are
+    qualified with the apps that can actually send them, because the list is
+    introduced as what EACH app sends and an app with no district index, or no
+    list of ZIP codes, never sends the event that searches it."""
+    if event == "zip-search/":
+        mapped = [a for a in apps if a.get("tag")]
+        senders = [a for a in mapped if a.get("zip_search")]
+        if not senders:
+            fail("the event list names zip-search/ but no app keeps a list of ZIP "
+                 "codes (ZIP_SEARCH_URL) — drop it from EXPECTED_EVENTS or restore the lists")
+        others = [a["name"] for a in mapped if not a.get("zip_search")]
+        if not others:
+            return event
+        return "%s (every app but %s, which keep%s no list of ZIP codes to search)" % (
+            event, joined(others), "s" if len(others) == 1 else "")
     if event != "district-search/":
         return event
     mapped = [a for a in apps if a.get("tag")]
@@ -578,6 +601,7 @@ def measure(rel, name, url, tag):
         app["ga"] = None
 
     app["district_search"] = bool(re.search(r"\bvar DISTRICT_SEARCH_URL\s*=", src))
+    app["zip_search"] = bool(re.search(r"\bvar ZIP_SEARCH_URL\s*=", src))
     # Whether the install invitation runs the Android app's closed test
     # (engine install-app): the constant holds the steps page's address while
     # it does, and null once the app is published.
@@ -1418,6 +1442,13 @@ def render_recipient_rows(apps):
             when += " A batch check sends its whole list, one address a second."
         rows.append(recipient_row(label, sub, policy, what, when,
                                   ", ".join(users) + "."))
+    # A ZIP code search (engine geocoder-search zipCompareWith) asks the layers it
+    # might compare with, one at a time, whether each has a district at the
+    # ZIP code's spot before it turns one on, so a point-sending layer can be
+    # asked about that spot without ever being on. Named per app, measured.
+    zip_apps = [a for a in apps if a.get("tag")]
+    zip_others = [a["name"] for a in zip_apps if not a.get("zip_search")]
+    zip_where = (" (in every app but %s)" % esc(joined(zip_others))) if zip_others else ""
     rows.append(recipient_row(
         "Public GIS services", "the district data itself", None,
         "Requests for boundary and roster data from government servers — the U.S. Census "
@@ -1429,9 +1460,15 @@ def render_recipient_rows(apps):
         "<strong>your exact selected point</strong> so one district can answer immediately "
         "while the full layer downloads. Opening a row on the comparison stats screen runs "
         "that same lookup for a point <strong>inside the district the row names</strong>, "
-        "which is a point you did not click, and printing that screen opens every row. Layers whose data ships with the app contact "
-        "nobody at all.",
-        "When you turn a layer on and select a point, or open or print comparison stats.",
+        "which is a point you did not click, and printing that screen opens every row. "
+        "Searching a ZIP code%s selects a spot inside it and, unless a layer you already have "
+        "on can be compared with it, asks the city council layer, then the county board&#39;s, "
+        "then the U.S. House&#39;s whether it has a district at that spot, stopping at the first "
+        "that does, so a layer that sends a point asks its server about that spot even if it is "
+        "never turned on. Layers whose data ships with the app contact "
+        "nobody at all." % zip_where,
+        "When you turn a layer on and select a point, search a ZIP code, or open or print "
+        "comparison stats.",
         "Every app with a map."))
     # NOT a list of the apps. Every page here carries the counter, so naming the
     # seven surfaces this generator reads would have understated the recipient —

@@ -52,6 +52,7 @@ const GEOMETRY_URLS = [
   "./data/app/la-parish-districts.json",
   "./data/app/la-precincts.json",
   "./data/app/tribal-areas.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

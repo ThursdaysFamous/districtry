@@ -840,6 +840,60 @@ try {
     await ctx.close();
   }
 
+  // --- 1e-bis. a typed ZIP code goes whole to the app whose list holds it --
+  //
+  // A ZIP code is not an address. The geocoder answers one point for it, and
+  // until 2026-10-21 this box opened the app with that point selected, so the
+  // cards named one ward of a ZIP code that crosses four. A typed ZIP code is
+  // now looked up in fleet-zips.json and handed to the app whose list holds
+  // it as #q=<zip>, with the geocoder never asked, and that app shows all of
+  // it (ENGINE geocoder-search showZip; smoke check 1d6). A ZIP code no list
+  // holds is searched, and the app covering the first answer is handed the
+  // ZIP code, never the answer's point; one nothing covers, or nobody knows,
+  // is told so; and with the list unreadable the same search answers.
+  {
+    const LOUISVILLE = photonFeature(38.2527, -85.7585);   // Kentucky's app draws no ZIP codes
+    const ZIP_CASES = [
+      { label: "a ZIP code an app lists", typed: "60625", zip: "60625", tag: "il", asked: false },
+      { label: "a ZIP code typed with ZIP and a state", typed: "ZIP 53703, WI", zip: "53703", tag: "wi", asked: false },
+      { label: "a ZIP code no app lists", typed: "40202", zip: "40202", tag: "ky", asked: true,
+        answer: [photonFeature(...UNCOVERED_POINT), LOUISVILLE] },
+      { label: "a ZIP code with the list unreadable", typed: "60625", zip: "60625", tag: "il", asked: true,
+        unreadable: true, answer: [photonFeature(41.9745, -87.6998)] },
+      { label: "a ZIP code nothing covers", typed: "75201", zip: "75201", tag: null, asked: true,
+        answer: [photonFeature(...UNCOVERED_POINT)], says: /^ZIP code 75201 is outside every place districtry covers/ },
+      { label: "a ZIP code nobody knows", typed: "00000", zip: "00000", tag: null, asked: true,
+        answer: [], says: /^No matches for ZIP code 00000/ },
+    ];
+    for (const c of ZIP_CASES) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [];
+      await page.route("**/photon.komoot.io/**", (r) => {
+        asked.push(new URL(r.request().url()).searchParams.get("q"));
+        return photonStub(c.answer || [])(r);
+      });
+      if (c.unreadable) await page.route("**/fleet-zips.json", (r) => r.abort());
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", c.typed);
+      await page.click("#search-button");
+      await addressSettled(page);
+      const u = new URL(page.url());
+      if (c.tag) {
+        check(`${c.label} (${c.typed}) opens /${c.tag}/ with the ZIP code to search`,
+          u.pathname === `/${c.tag}/` && u.hash === "#q=" + c.zip, page.url());
+      } else {
+        check(`${c.label} (${c.typed}) stays on the front page`, u.pathname === "/", page.url());
+        const msg = await textOrNull(page, "#search-status");
+        check(`${c.label} (${c.typed}) is told so`, c.says.test(msg || ""), JSON.stringify(msg));
+      }
+      check(`${c.label} (${c.typed}) ${c.asked ? "is searched as the ZIP code alone" : "is never sent to the geocoder"}`,
+        c.asked ? asked.length === 1 && asked[0] === c.zip : asked.length === 0, JSON.stringify(asked));
+      await ctx.close();
+    }
+  }
+
   // --- 1f. the coverage map loads, draws, and names every place ----------
   //
   // The map is a separate generated page embedded in an iframe, so the landing

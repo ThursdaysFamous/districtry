@@ -58,6 +58,7 @@ const GEOMETRY_URLS = [
   "./data/app/ms-chancery-court-districts-2027.json",
   "./data/app/ms-circuit-court-districts.json",
   "./data/app/ms-circuit-court-districts-2027.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
