@@ -231,6 +231,53 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "la-supreme-court",
+        "app_file": "la-supreme-court-districts.json",
+        "source_url": "https://redist.legis.la.gov/2024_Files/2024LASSCAct7.aspx",
+        "note": (
+            "The 7 Supreme Court districts of Act 7 of 2024 (La. R.S. "
+            "13:101.2), pre-built by la/scripts/build_la_court_districts.py "
+            "from the Legislature's shapefile linked on this page, which the "
+            "builder holds to the SHA-256 it was read with on 2026-10-21. The "
+            "page is checked rather than the 1.3 MB zip; a newer plan would be "
+            "a new act and a new page."
+        ),
+    },
+    {
+        "layer": "la-court-of-appeal",
+        "app_file": "la-court-of-appeal-districts.json",
+        "source_url": "https://legis.la.gov/legis/Law.aspx?d=77438",
+        "note": (
+            "The 15 court of appeal districts, dissolved from the shipped "
+            "parishes by the parish lists in La. R.S. 13:312, whose text is kept "
+            "in la/data/source/courts/; `build_la_court_districts.py --fetch` "
+            "re-reads it and says whether it changed."
+        ),
+    },
+    {
+        "layer": "la-district-court",
+        "app_file": "la-district-court-districts.json",
+        "source_url": "https://legis.la.gov/legis/Law.aspx?d=149496",
+        "note": (
+            "The judicial districts and Orleans Parish, dissolved from the "
+            "shipped parishes by the parish lists in La. R.S. 13:477, kept and "
+            "re-read the same way."
+        ),
+    },
+    {
+        "layer": "la-district-court",
+        "app_file": "la-judges.json",
+        "source_url": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index",
+        "note": (
+            "The same list's Justice of the Supreme Court, Judge of a Court of "
+            "Appeal and District Judge exports, for all three court cards; "
+            "rebuilt weekly from the parish builder's saved exports by "
+            "la/scripts/build_la_judges.py. 7, 53 and 212 judges on 2026-10-21, "
+            "every district judge's term ending 31 December 2026; the race and "
+            "gender columns are never read."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",

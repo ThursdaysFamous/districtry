@@ -1162,7 +1162,11 @@ table.matrix code {
         </li>
         <li>
           <a href="https://voterportal.sos.la.gov/ElectedOfficials/Office/Index" target="_blank" rel="noopener">Louisiana Secretary of State</a>
-          <span class="credit-note">Every parish's police jury, council or commission by seat and its parish president or mayor, every town's mayor, council and chief of police or marshal, and every school board (list of elected officials).</span>
+          <span class="credit-note">Every parish's police jury, council or commission by seat and its parish president or mayor, every town's mayor, council and chief of police or marshal, every school board, and the justices and judges of the courts elected by district (list of elected officials).</span>
+        </li>
+        <li>
+          <a href="https://legis.la.gov/" target="_blank" rel="noopener">Louisiana Legislature</a>
+          <span class="credit-note">The laws that name the parishes of each court of appeal district and judicial district (La. R.S. 13:312 and 13:477), and, from its redistricting office, the Supreme Court districts of Act 7 of 2024 and the statewide precinct file.</span>
         </li>
         <li>
           <a href="https://apps.nationalmap.gov/services/" target="_blank" rel="noopener">USGS The National Map</a>
@@ -1175,7 +1179,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">16 layers — 8 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1184,7 +1188,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">8 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1203,6 +1207,29 @@ table.matrix code {
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Louisiana — statewide, all 6 districts.</td>
               </tr>
+              <tr id="layer-la-supreme-court">
+                <th scope="row"><span class="layer-name">Supreme Court District</span><code>la-supreme-court</code></th>
+                <td data-label="What it answers">The Louisiana Supreme Court district covering the point, and the justice elected from it. Where the point's parish is divided between districts, the card names every district that has a part of it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://redist.legis.la.gov/2024_Files/2024LASSCAct7.aspx" target="_blank" rel="noopener">Louisiana Legislature, redistricting office — the shapefile of the Supreme Court districts that Act 7 of the 2024 Regular Session enacted (La. R.S. 13:101.2), from the office's page for the act; read 2026-10-21 and held to its SHA-256 by la/scripts/build_la_court_districts.py. The districts are drawn from voting precincts, so twelve parishes are divided between two or three of them. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.</a></li>
+                    <li><a href="https://legis.la.gov/legis/ViewDocument.aspx?d=1371415" target="_blank" rel="noopener">Louisiana Legislature — Act 7 of the 2024 Regular Session (Senate Bill 255), which enacts the districts and keeps each justice then in office in the district with the same number until the term ends (La. R.S. 13:101.3); read 2026-10-21.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">la-judges.json, rebuilt weekly by CI from the Louisiana Secretary of State's list of elected officials: each justice's name, party and the day the term ends, and the justice's own telephone where the list prints it for that justice alone. The list names every justice's office Associate Justice, so the card names no Chief Justice. The list also records each official's race and gender, and neither is read.</td>
+                <td data-label="Where it applies">Louisiana — statewide, all 7 districts.</td>
+              </tr>
+              <tr id="layer-la-court-of-appeal">
+                <th scope="row"><span class="layer-name">Court of Appeal District</span><code>la-court-of-appeal</code></th>
+                <td data-label="What it answers">The court of appeal district covering the point and the judges elected from it, grouped as they are elected, with the judges the whole circuit elects and the court's office where one can be kept. Where La. R.S. 13:312 puts the point's whole parish in one election section, the card says which.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://legis.la.gov/legis/Law.aspx?d=77438" target="_blank" rel="noopener">Louisiana Legislature — La. R.S. 13:312, which names the parishes in each district of the five circuits and puts the part of St. John the Baptist Parish east of the Mississippi River in the Fifth Circuit's Second District and the part west of it in the Third; read 2026-10-21 and kept in la/data/source/courts/ with its SHA-256. Drawn by dissolving this app's own parish outlines, so every line is a parish line. The river is not drawn, so St. John the Baptist is one feature naming both districts.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">la-judges.json, from the same weekly read of the Secretary of State's list: each judge's name, party, seat and the day the term ends, and the judge's own telephone where the list prints it for that judge alone. A court's address ships where at least three of its judges print the same one and no other official does.</td>
+                <td data-label="Where it applies">Louisiana — statewide, all 15 districts of the five circuits.</td>
+              </tr>
               <tr id="layer-la-senate">
                 <th scope="row"><span class="layer-name">Louisiana Senate District</span><code>la-senate</code></th>
                 <td data-label="What it answers">The Louisiana Senate district covering the point, and the senator holding it.</td>
@@ -1213,6 +1240,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">la-senate-members.json, rebuilt weekly by CI from the Louisiana Senate's own list of senators and each senator's own page: the name as the senator's page writes it, the party, the district office's address and telephone, and the e-mail address the list prints. The list shows a vacant seat as a card reading Vacant, and the card says so: Senate District 14 on 2026-10-20. The pages also name a legislative assistant and a fax number, and neither is read.</td>
                 <td data-label="Where it applies">Louisiana — statewide, all 39 districts. A point on the open water of Lake Pontchartrain is in no Senate district on the Census's map, and the card says so.</td>
+              </tr>
+              <tr id="layer-la-district-court">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>la-district-court</code></th>
+                <td data-label="What it answers">The judicial district covering the point and the judges of its district court or, in Orleans Parish, of its civil and criminal district courts, with each court's office where one can be kept.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://legis.la.gov/legis/Law.aspx?d=149496" target="_blank" rel="noopener">Louisiana Legislature — La. R.S. 13:477, which names the parishes of the 41 judicial districts and leaves out Orleans Parish, which has a civil district court and a criminal district court of its own; read 2026-10-21 and kept in la/data/source/courts/ with its SHA-256. Drawn by dissolving this app's own parish outlines, with Orleans Parish drawn as one more unit.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">la-judges.json, from the same weekly read: the district judges and the magistrates the list names with them, each with name, party, seat and the day the term ends, and the judge's own telephone where the list prints it for that judge alone. The list can leave a seat out (on 2026-10-21 it named one judge for the 7th Judicial District and three for the 18th), so the card says how many judges the list names, not how many the court has.</td>
+                <td data-label="Where it applies">Louisiana — statewide, all 41 judicial districts and Orleans Parish.</td>
               </tr>
               <tr id="layer-la-house">
                 <th scope="row"><span class="layer-name">Louisiana House District</span><code>la-house</code></th>
@@ -1420,6 +1458,55 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/la/sources.html#dataset-la-supreme-court",
+      "identifier": "la-supreme-court",
+      "name": "Supreme Court District",
+      "description": "The Louisiana Supreme Court district covering the point, and the justice elected from it. Where the point's parish is divided between districts, the card names every district that has a part of it. la-judges.json, rebuilt weekly by CI from the Louisiana Secretary of State's list of elected officials: each justice's name, party and the day the term ends, and the justice's own telephone where the list prints it for that justice alone. The list names every justice's office Associate Justice, so the card names no Chief Justice. The list also records each official's race and gender, and neither is read.",
+      "url": "https://districtry.com/la/sources.html#layer-la-supreme-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/la/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Louisiana Legislature, redistricting office — the shapefile of the Supreme Court districts that Act 7 of the 2024 Regular Session enacted (La. R.S. 13:101.2), from the office's page for the act; read 2026-10-21 and held to its SHA-256 by la/scripts/build_la_court_districts.py. The districts are drawn from voting precincts, so twelve parishes are divided between two or three of them. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+          "url": "https://redist.legis.la.gov/2024_Files/2024LASSCAct7.aspx"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Louisiana Legislature — Act 7 of the 2024 Regular Session (Senate Bill 255), which enacts the districts and keeps each justice then in office in the district with the same number until the term ends (La. R.S. 13:101.3); read 2026-10-21.",
+          "url": "https://legis.la.gov/legis/ViewDocument.aspx?d=1371415"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Louisiana — statewide, all 7 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/la/sources.html#dataset-la-court-of-appeal",
+      "identifier": "la-court-of-appeal",
+      "name": "Court of Appeal District",
+      "description": "The court of appeal district covering the point and the judges elected from it, grouped as they are elected, with the judges the whole circuit elects and the court's office where one can be kept. Where La. R.S. 13:312 puts the point's whole parish in one election section, the card says which. la-judges.json, from the same weekly read of the Secretary of State's list: each judge's name, party, seat and the day the term ends, and the judge's own telephone where the list prints it for that judge alone. A court's address ships where at least three of its judges print the same one and no other official does.",
+      "url": "https://districtry.com/la/sources.html#layer-la-court-of-appeal",
+      "isPartOf": {
+        "@id": "https://districtry.com/la/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Louisiana Legislature — La. R.S. 13:312, which names the parishes in each district of the five circuits and puts the part of St. John the Baptist Parish east of the Mississippi River in the Fifth Circuit's Second District and the part west of it in the Third; read 2026-10-21 and kept in la/data/source/courts/ with its SHA-256. Drawn by dissolving this app's own parish outlines, so every line is a parish line. The river is not drawn, so St. John the Baptist is one feature naming both districts.",
+          "url": "https://legis.la.gov/legis/Law.aspx?d=77438"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Louisiana — statewide, all 15 districts of the five circuits"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/la/sources.html#dataset-la-senate",
       "identifier": "la-senate",
       "name": "Louisiana Senate District",
@@ -1438,6 +1525,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Louisiana — statewide, all 39 districts. A point on the open water of Lake Pontchartrain is in no Senate district on the Census's map, and the card says so"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/la/sources.html#dataset-la-district-court",
+      "identifier": "la-district-court",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point and the judges of its district court or, in Orleans Parish, of its civil and criminal district courts, with each court's office where one can be kept. la-judges.json, from the same weekly read: the district judges and the magistrates the list names with them, each with name, party, seat and the day the term ends, and the judge's own telephone where the list prints it for that judge alone. The list can leave a seat out (on 2026-10-21 it named one judge for the 7th Judicial District and three for the 18th), so the card says how many judges the list names, not how many the court has.",
+      "url": "https://districtry.com/la/sources.html#layer-la-district-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/la/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Louisiana Legislature — La. R.S. 13:477, which names the parishes of the 41 judicial districts and leaves out Orleans Parish, which has a civil district court and a criminal district court of its own; read 2026-10-21 and kept in la/data/source/courts/ with its SHA-256. Drawn by dissolving this app's own parish outlines, with Orleans Parish drawn as one more unit.",
+          "url": "https://legis.la.gov/legis/Law.aspx?d=149496"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Louisiana — statewide, all 41 judicial districts and Orleans Parish"
       }
     },
     {

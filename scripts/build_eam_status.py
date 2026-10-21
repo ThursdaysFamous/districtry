@@ -2201,7 +2201,16 @@ ANSWERS = {
         # none for the New Orleans City Council, so it is not drawn instead
         # (la/CLAUDE.md). Open until every parish is drawn.
         "subdivision-boundaries": OPEN,
-        "courts-by-district": OPEN,
+        # ANSWERED 2026-10-21: the three courts whose judges Louisiana elects
+        # by district, each drawn and its judges named from the Secretary of
+        # State's list (la/scripts/build_la_court_districts.py,
+        # build_la_judges.py): the Supreme Court's seven districts from the
+        # Legislature's own map of Act 7 of 2024, and the 15 court of appeal
+        # districts and 41 judicial districts, with Orleans Parish's own two
+        # courts, from the laws that name their parishes. The election
+        # sections some judges are elected from are not drawn (la/CLAUDE.md).
+        "courts-by-district": answers("la-supreme-court", "la-court-of-appeal",
+                                      "la-district-court"),
         # LOUISIANA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. Every county
         # subdivision the Census carries outside Orleans is one of those
         # districts, at FUNCSTAT N, and Orleans's single one is at FUNCSTAT F,
