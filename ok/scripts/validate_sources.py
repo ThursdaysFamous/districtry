@@ -229,8 +229,8 @@ PROVENANCE = [
         "source_url": "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2",
         "note": (
             "Oklahoma City's 8 council wards, from the city's own map, which says "
-            "nothing about when it was drawn, one of the 56 wards and districts of "
-            "the 9 Oklahoma cities above 25,000 people whose wards elect their own "
+            "nothing about when it was drawn, one of the 64 wards and districts of "
+            "the 10 Oklahoma cities above 25,000 people whose wards elect their own "
             "members, pre-built by ok/scripts/build_ok_city_wards.py through "
             "scripts/city_ward_maps.py, which takes the cities to draw from "
             "ok/data/source/ok-city-council-seats.json; the quarterly --watch row "
@@ -257,6 +257,19 @@ PROVENANCE = [
         "note": (
             "Norman's 8 council wards, from the city's own map, which says it was "
             "\"Updated September 13, 2022 by O-2223-8\" (see the Oklahoma City row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ok-city-wards.json",
+        "source_url": "https://services2.arcgis.com/baoUryRiOxhCY0yb/arcgis/rest/services/CouncilWard/FeatureServer/0",
+        "note": (
+            "Lawton's 8 council wards, from the city's own map, in 11 records, its "
+            "data last edited on 2 July 2026. It does not divide the 2020 census "
+            "population evenly, and it is drawn because the City Clerk's office, "
+            "asked which map is in force, answered on 2026-10-21 by pointing to "
+            "the city's public ward map, which draws this layer (see the Oklahoma "
+            "City row)."
         ),
     },
     {
