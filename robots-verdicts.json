@@ -3,8 +3,8 @@
  "vantage": "GitHub Actions runner on runnervmtr4k5",
  "subject": "robots.txt of every host the tree fetches, read with the client user-agent-measurements.json records as serving it",
  "summary": {
-  "hosts": 511,
-  "allow": 480,
+  "hosts": 512,
+  "allow": 481,
   "refuse": 31,
   "unreadable": 8
  },
@@ -2203,6 +2203,39 @@
    "status": "served",
    "url": "https://pekinpubliclibrary.org/library-board/",
    "why": "robots.txt served (180 bytes): no rule in 1 binding group(s) matches /library-board/"
+  },
+  "perrycountyil.gov": {
+   "host": "perrycountyil.gov",
+   "url": "https://perrycountyil.gov/perry-county-commissioners/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+   "allows": true,
+   "http_status": 200,
+   "reads": 3,
+   "gap_seconds": 15,
+   "readings": [
+    {
+     "status": "served",
+     "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+     "allows": true,
+     "http_status": 200
+    },
+    {
+     "status": "served",
+     "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+     "allows": true,
+     "http_status": 200
+    },
+    {
+     "status": "served",
+     "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+     "allows": true,
+     "http_status": 200
+    }
+   ],
+   "measured": "2026-10-20",
+   "vantage": "GitHub Actions runner on runnervmxehtw"
   },
   "photon.komoot.io": {
    "allows": false,

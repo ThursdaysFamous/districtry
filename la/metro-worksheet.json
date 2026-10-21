@@ -431,10 +431,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 9,
+      "rank_note": "Tribal land — Louisiana has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-10-20: the Chitimacha Reservation (1.820 km², St. Mary Parish); the Coushatta Reservation (2.761 km² in 5 parts, Allen Parish) and the Coushatta Off-Reservation Trust Land (8.592 km² in 9 parts, 7.816 km² of it in Allen Parish and the rest in Natchitoches, Calcasieu and Jefferson Davis); the Jena Band of Choctaw Reservation (1.763 km² in 6 parts, Grant and LaSalle parishes); and the Tunica-Biloxi Reservation (1.690 km²) and Off-Reservation Trust Land (4.412 km² in 5 parts), both in Avoyelles Parish. About 3.5 km² a piece on average against about 16 km² for a city, town or village (4,826 km² across 305 places), so ranked after municipalities and before the point layers, as Mississippi's is, and drawn above the larger areas around it. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Louisiana has 6 such areas, held by the Chitimacha Tribe of Louisiana, the Coushatta Tribe of Louisiana, the Jena Band of Choctaw Indians and the Tunica-Biloxi Indian Tribe.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Chitimacha Tribal Council's five members (chitimacha.gov), the Jena Band's Tribal Chief and four council members (jenachoctaw.org) and the Tunica-Biloxi Tribal Council's seven members (tunicabiloxi.org). The Coushatta Tribe's own site names its chairman and not the other four members, so its card names nobody and says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Louisiana — the six pieces of land above, in Allen, Avoyelles, Calcasieu, Grant, Jefferson Davis, LaSalle, Natchitoches and St. Mary parishes. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -452,7 +470,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -470,7 +488,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -555,6 +573,12 @@
         "min_features": 56,
         "max_features": 56,
         "note": "The police jury, council and commission districts of the 6 parishes whose current lines are confirmed (la/scripts/build_la_parish_districts.py)."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Louisiana's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, held by four nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-20; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -584,6 +608,11 @@
         "note": "The parishes whose districts the Police Jury or Council District layer draws, written by the same build as la-parish-districts.json; the layer's coverage test reads it."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 3,
+        "note": "The councils of the three Louisiana nations whose own pages name them (the Chitimacha, the Jena Band of Choctaw and the Tunica-Biloxi), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -591,7 +620,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-la-shell-v1",
+    "cache_name": "districtry-la-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

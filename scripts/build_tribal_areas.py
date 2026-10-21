@@ -276,6 +276,22 @@ ROSTER_BLOCKED = {
                "challenge page (measured 2026-09-29). A check like that is not "
                "worked around, so no name is carried and the card links the nation.",
     },
+    # Measured 2026-10-20 with tribal_council_scraper.py's client. The Bureau
+    # lists koasatiheritage.org, whose robots.txt allows every path and whose
+    # front page answered HTTP 403 from Cloudflare. coushattatribela.org, the
+    # name the tribe used before, serves a parked domain's robots.txt (a second
+    # `User-agent: *` group with `Disallow: /`) and its www name reset the
+    # connection. The tribe's site is www.coushatta.org, whose robots.txt
+    # allows /government/; that page names the chairman and the staff of each
+    # department, none of whom is a council member, and is not carried.
+    "0795": {
+        "host": "www.coushatta.org",
+        "measured": "2026-10-20",
+        "why": "The tribe's own site names its chairman, David Sickey, and says "
+               "the council has five members, the chairman and four council "
+               "members, without naming the other four (read 2026-10-20). A "
+               "partial council is not carried, so the card links the tribe.",
+    },
 }
 
 # Where a nation publishes its own council, for the nations whose page answers
