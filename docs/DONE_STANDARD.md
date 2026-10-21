@@ -478,15 +478,19 @@ question.
   reads on the evening of 2026-10-16, and nothing is built from a read that
   happened to be served. Oklahoma, Louisiana, Arkansas, New York and Iowa
   owe it too, since Adam's ruling of 2026-10-21 above, because each draws a
-  kind of district whose board the voters elect and names nobody on it.
+  kind of district whose board the voters elect and does not name that
+  board everywhere it is drawn.
   Arkansas's 971 fire districts are drawn from the map state law has each fire
   district file with the Arkansas GIS Office, which names no one who runs a
   district, and a fire protection district's five commissioners are elected
   by its voters. New York's fire districts elect five commissioners and its
   library districts their trustees, and nothing published names them. Iowa's
-  community college trustees are elected one per director district, and the
-  15 colleges publish their boards 15 different ways; its area education
-  agencies, whose directors no voter elects, would pass on their own.
+  community college trustees are elected one per director district, and
+  Iowa keeps no statewide list, so the level waits until the card names the
+  trustee in every college's districts; Northeast Iowa's own page does not
+  say which trustee holds which numbered district (measured 2026-10-21). Its
+  area education agencies, whose directors no voter elects, would pass on
+  their own.
   Oklahoma's 84 conservation districts are drawn from the Conservation
   Commission's map, each with its office and none with its directors, three
   of whom each district's voters elect, because the Commission publishes no
