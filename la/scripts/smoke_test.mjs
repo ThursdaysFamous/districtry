@@ -825,6 +825,24 @@ try {
   //        and it says the Parish card names its mayor and council.
   //    (d) The one school tiling answers, under the label with no qualifier,
   //        because the unified districts cover the state alone.
+  //    (e) A town's card and a school district's card agree with that place's
+  //        record in the shipped roster (la-municipal-officials.json,
+  //        la-school-board-members.json): the mayor, every member under the
+  //        list's own word for them with their seat, every officer under the
+  //        title the list gives, each telephone, the shared office, a seat the
+  //        list skips, the list's credit and link, and which member represents
+  //        the point said no further than the seats allow: a town whose list
+  //        gives no seats is never said to elect at large, and a seat that is
+  //        a lettered seat or a division is not said to cover any ground. The
+  //        names are read from the files, because the Secretary of State's
+  //        next edition changes them and a name written here would fail a
+  //        correct rebuild. Shreveport (council districts), Ridgecrest (no
+  //        seats), Napoleonville (a village), Chatham (which the list calls a
+  //        village and the Census a town), Bernice (a district the list
+  //        skips), Gonzales (divisions), Lafayette (FUNCSTAT B, a council and
+  //        no mayor of its own), and Orleans and West Baton Rouge's school
+  //        boards (district seats, and one member elected at large).
+  //    (f) Either roster refused: the place still answers, naming nobody.
   {
     function esriPolygon(props) {
       return {
@@ -841,34 +859,134 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const SCHOOLS = "School/MapServer/0";
+    const towns = shipped("la-municipal-officials.json");
+    const boards = shipped("la-school-board-members.json");
+    const WORDS = { aldermen: ["Aldermen", "alderman"], council: ["Council members", "council member"],
+                    selectmen: ["Selectmen", "selectman"], trustees: ["Trustees", "trustee"] };
+    const groundOf = (seats) => {
+      let word = null;
+      for (const p of seats) {
+        const m = /^(Ward|District)\b/.exec(p.seat || "");
+        if (!m || (word && m[1].toLowerCase() !== word)) return null;
+        word = m[1].toLowerCase();
+      }
+      return word;
+    };
+    // Every way the card can disagree with the place's record, as a list of
+    // short labels; empty means it agrees.
+    function disagreements(o, text, footer, board) {
+      const out = [];
+      const shown = plain(text);
+      const named = (list) => (list || []).filter((p) => p && p.name);
+      const atLarge = named(o.atLarge), seats = named(o.seats), members = named(o.members);
+      const people = atLarge.concat(seats, members);
+      const mayor = o.mayor && o.mayor.name ? o.mayor : null;
+      const officers = named(o.officers);
+      const everyone = people.concat(mayor ? [mayor] : [], officers);
+      const unnamed = everyone.filter((p) => !text.includes(p.name)).map((p) => p.name);
+      if (unnamed.length) out.push(`unnamed=${unnamed.slice(0, 3)}`);
+      const unseated = people.filter((p) => p.seat && !text.includes(p.seat)).map((p) => p.seat);
+      if (unseated.length) out.push(`seats=${unseated.slice(0, 3)}`);
+      const unphoned = everyone.filter((p) => p.phone && !shown.includes(p.phone)).map((p) => p.name);
+      if (unphoned.length) out.push(`unphoned=${unphoned.slice(0, 3)}`);
+      // section labels are set in capitals, which innerText reports
+      const has = (words) => text.toLowerCase().includes(String(words).toLowerCase());
+      const head = board ? "School board" : (WORDS[o.kind] || ["Members"])[0];
+      if (!people.length || !has(head)) out.push(`heading=${head}`);
+      for (const p of officers) if (!has(p.title)) out.push(`title=${p.title}`);
+      if (!board && (mayor ? !has("Mayor") : !/names no mayor for this/.test(text))) out.push("mayor");
+      const office = /The [a-z ]+'s office/.test(text);
+      const hasOffice = !!(o.officeAddress || o.officePhone);
+      if (hasOffice !== office || (o.officeAddress && !text.includes(o.officeAddress)) ||
+          (o.officePhone && !shown.includes(o.officePhone))) out.push("office");
+      const unlisted = o.unlisted || [];
+      if (unlisted.some((u) => !text.includes(u)) ||
+          (unlisted.length > 0) !== /names no one for/.test(text) ||
+          (unlisted.length && !/does not say the seat is vacant, so this card does not either/.test(text))) out.push("unlisted");
+      if (atLarge.length ? !/elected at large represents? the whole/.test(text)
+                         : /at large/i.test(text)) out.push("at large");
+      const ground = groundOf(seats);
+      if (seats.length && !(ground
+            ? text.includes(`elected from the ${ground} this point is in represents it`) &&
+              text.includes(board ? `does not draw the school board's ${ground}s` : `${ground}s, so it cannot say which ${ground} that is`)
+            : text.includes("but not the ground each seat covers"))) out.push("which");
+      if (!ground && /this point is in represents it/.test(text)) out.push("claims ground");
+      if (members.length && !text.includes("without a ward or district")) out.push("plain");
+      // one shared date names it, whether or not that day has passed
+      const terms = [...new Set(people.map((p) => p.termEnds))];
+      if (terms.length === 1 && terms[0] &&
+          !text.includes(`The list gives every member's term as ending on ${longDate(terms[0])}`)) out.push("term");
+      if (!/Where (these names come|the name comes) from/.test(text) ||
+          !text.includes(`read on ${longDate(o.read)}`)) out.push("credit");
+      if (!footer.includes(o.sourceUrl)) out.push("link");
+      return out;
+    }
     const cases = [
       {
-        name: "a city names itself a city, alongside the parish",
+        name: "a city names itself a city, alongside the parish, with its mayor and its council by district",
         layer: "municipality", service: PLACES,
         props: { GEOID: "2270000", NAME: "Shreveport city", BASENAME: "Shreveport", STATE: "22", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Shreveport city/, /Incorporated city — a general-purpose local government over this point, alongside the parish/, /Not named here/],
-        reject: [/Status/, /Incorporated town/, /Incorporated village/, /Parish card names/]
+        town: true,
+        want: [/Shreveport city/, /Incorporated city — a general-purpose local government over this point, alongside the parish/],
+        reject: [/Status/, /Incorporated town/, /Incorporated village/, /Parish card names/, /Not named here/, /names no officials/]
       },
       {
-        name: "a town names itself a town, not a city",
+        name: "a town names itself a town, not a city, and its aldermen without calling them elected at large",
         layer: "municipality", service: PLACES,
         props: { GEOID: "2264765", NAME: "Ridgecrest town", BASENAME: "Ridgecrest", STATE: "22", LSADC: "43", FUNCSTAT: "A" },
+        town: true,
         want: [/Ridgecrest town/, /Incorporated town/],
-        reject: [/Incorporated city/, /Incorporated village/]
+        reject: [/Incorporated city/, /Incorporated village/, /Its name in the list/]
       },
       {
         name: "a village names itself a village",
         layer: "municipality", service: PLACES,
         props: { GEOID: "2253370", NAME: "Napoleonville village", BASENAME: "Napoleonville", STATE: "22", LSADC: "47", FUNCSTAT: "A" },
+        town: true,
         want: [/Napoleonville village/, /Incorporated village/],
         reject: [/Incorporated city/, /Incorporated town/]
       },
       {
-        name: "an affix the card does not carry prints NO type row",
+        name: "a place the list styles differently from the Census says what the list calls it",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2214485", NAME: "Chatham town", BASENAME: "Chatham", STATE: "22", LSADC: "43", FUNCSTAT: "A" },
+        town: true,
+        want: [/Chatham town/, /Incorporated town/, /The Secretary of State's list calls it the Village of Chatham\./],
+        reject: [/Incorporated village/]
+      },
+      {
+        name: "a district the list skips is named as skipped, not vacant",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2207030", NAME: "Bernice town", BASENAME: "Bernice", STATE: "22", LSADC: "43", FUNCSTAT: "A" },
+        town: true,
+        want: [/Bernice town/],
+        reject: [/vacant\b(?!, so)/]
+      },
+      {
+        name: "a council elected by divisions is not said to cover any ground",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2229850", NAME: "Gonzales city", BASENAME: "Gonzales", STATE: "22", LSADC: "25", FUNCSTAT: "A" },
+        town: true,
+        want: [/Gonzales city/],
+        reject: []
+      },
+      {
+        name: "an affix the card does not carry prints NO type row, and no improvised word for the place",
         layer: "municipality", service: PLACES,
         props: { GEOID: "2299999", NAME: "Nowhere borough", BASENAME: "Nowhere", STATE: "22", LSADC: "21", FUNCSTAT: "A" },
-        want: [/Nowhere borough/],
-        reject: [/Incorporated city/, /Incorporated town/, /Incorporated village/]
+        want: [/Nowhere borough/, /names no officials for this place, so no one is named here/],
+        reject: [/Incorporated city/, /Incorporated town/, /Incorporated village/, /this borough/]
+      },
+      {
+        name: "a FUNCSTAT B city with a council of its own names the council and points at the Parish card for its executive",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2240735", NAME: "Lafayette city", BASENAME: "Lafayette", STATE: "22", LSADC: "25", FUNCSTAT: "B" },
+        town: true,
+        want: [/Lafayette city/, /Incorporated city/, /partly consolidated with another government/,
+               /names no mayor for this city on its own/,
+               /The Parish card names the parish's governing body and its executive/],
+        reject: [/no government of its own/]
       },
       {
         name: "a FUNCSTAT B city keeps its type, says what the Census records, and points at the Parish card",
@@ -895,28 +1013,71 @@ try {
         reject: [/alongside the parish/, /Not named here/, /Status/]
       },
       {
-        name: "the school district card names the district",
-        layer: "school-district-unified", service: "School/MapServer/0",
+        name: "the school district card names the district and its whole board by district",
+        layer: "school-district-unified", service: SCHOOLS,
         props: { GEOID: "2201170", NAME: "Orleans Parish School District", STATE: "22" },
+        board: true,
         want: [/Orleans Parish School District/],
         reject: [/Unified/]
+      },
+      {
+        name: "a school board with a member elected at large names that member and the district members",
+        layer: "school-district-unified", service: SCHOOLS,
+        props: { GEOID: "2201920", NAME: "West Baton Rouge Parish School District", STATE: "22" },
+        board: true,
+        want: [/West Baton Rouge Parish School District/],
+        reject: []
+      },
+      {
+        name: "the town card still names the place, and names nobody, when the list of mayors and councils fails",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "2270000", NAME: "Shreveport city", BASENAME: "Shreveport", STATE: "22", LSADC: "25", FUNCSTAT: "A" },
+        refuse: "la-municipal-officials.json",
+        want: [/Shreveport city/, /Incorporated city/, /The list of mayors and councils did not load, so no one is named here/],
+        reject: [/^MAYOR$/m]
+      },
+      {
+        name: "the school district card still names the district, and names nobody, when the list of board members fails",
+        layer: "school-district-unified", service: SCHOOLS,
+        props: { GEOID: "2201170", NAME: "Orleans Parish School District", STATE: "22" },
+        refuse: "la-school-board-members.json",
+        want: [/Orleans Parish School District/, /The list of school board members did not load, so no one is named here/],
+        reject: []
       }
     ];
 
+    const footerLinks = (page, id) => page.evaluate((cid) => {
+      const el = document.getElementById("card-" + cid);
+      const block = el && el.closest(".layer-block");
+      return block ? Array.from(block.querySelectorAll(".card-footer a[href]")).map((a) => a.href) : [];
+    }, id);
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
+        if (c.refuse) await p.route(`**/data/app/${c.refuse}`, (r) => r.fulfill({ status: 503, body: "down" }));
       });
       const info = await cardText(page, c.layer);
       const text = info.text || "";
       const missing = c.want.filter((re) => !re.test(text));
       const present = c.reject.filter((re) => re.test(text));
-      check(c.name, !info.error && missing.length === 0 && present.length === 0,
-        missing.length || present.length
-          ? `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`
+      const record = c.town ? towns[c.props.GEOID] : c.board ? boards[c.props.GEOID] : null;
+      const off = (c.town || c.board)
+        ? (record ? disagreements(record, text, await footerLinks(page, c.layer), !!c.board) : ["no record in the shipped roster"])
+        : [];
+      // a refused roster names nobody the shipped one would
+      const leaked = c.refuse
+        ? (() => {
+            const o = (c.layer === "municipality" ? towns : boards)[c.props.GEOID] || {};
+            return [o.mayor].concat(o.atLarge || [], o.seats || [], o.members || [], o.officers || [])
+              .filter((p) => p && p.name && text.includes(p.name)).map((p) => p.name);
+          })()
+        : [];
+      check(c.name, !info.error && missing.length === 0 && present.length === 0 && off.length === 0 && leaked.length === 0,
+        missing.length || present.length || off.length || leaked.length
+          ? `missing=${missing} unwanted=${present} disagrees=${off} named=${leaked.slice(0, 2)} text=${text.slice(0, 160)}`
           : text.slice(0, 90));
       await context.close();
     }
@@ -1053,7 +1214,7 @@ try {
       const exeOk = exe ? text.includes(exe.name) && new RegExp(exe.title, "i").test(text) : true;
       const terms = [...new Set(people.map((p) => p.termEnds))];
       const termOk = terms.length === 1 && terms[0]
-        ? text.includes(`The list gives every member's term as ending on ${longDate(terms[0])}.`)
+        ? text.includes(`The list gives every member's term as ending on ${longDate(terms[0])}`)
         : !/The list gives every member's term/.test(text);
       const office = /The (police jury|council|commission)'s office/i.test(text);
       const officeOk = (o.boardAddress || o.boardPhone)

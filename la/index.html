@@ -14646,13 +14646,43 @@ function initLouisianaExplorer() {
     }
     return date;
   }
+  // Today as the list writes a date ("2026-10-20"), by the reader's clock.
+  function laTodayIso() {
+    var d = new Date();
+    function two(n) { return (n < 10 ? "0" : "") + String(n); }
+    return String(d.getFullYear()) + "-" + two(d.getMonth() + 1) + "-" + two(d.getDate());
+  }
+  // A term the list says ends on a day that has passed has ended, and the
+  // list may not yet name whoever took the seat after it: most of the terms
+  // it gave on 2026-10-20 end on December 31, 2026.
+  function laTermEnded(iso) {
+    return !!laDate(iso) && String(iso) < laTodayIso();
+  }
+  // "term ends January 9, 2028" or "term ended December 31, 2026".
+  function laTermPhrase(iso) {
+    var date = laDate(iso);
+    if (!date) return null;
+    return (laTermEnded(iso) ? "term ended " : "term ends ") + date;
+  }
+  // The Term row for a body whose members' terms all end on one day.
+  function laTermField(iso) {
+    var date = laDate(iso);
+    if (!date) return null;
+    return {
+      label: "Term",
+      value: laTermEnded(iso)
+        ? "The list gives every member's term as ending on " + date + ", which " +
+          "has passed. The list may not yet name the members who took office after it."
+        : "The list gives every member's term as ending on " + date + "."
+    };
+  }
   // One person row: the name as the list prints it, the party it prints, the
   // seat, and the telephone printed for that official alone.
   function laPersonRow(p, opts) {
     var bits = [];
     if (opts.seat && p.seat) bits.push(String(p.seat));
-    var term = opts.withTerm ? laDate(p.termEnds) : null;
-    if (term) bits.push("term ends " + term);
+    var term = opts.withTerm ? laTermPhrase(p.termEnds) : null;
+    if (term) bits.push(term);
     return { name: String(p.name), badge: p.party ? String(p.party) : null,
              note: bits.length ? bits.join(", ") : null,
              phone: p.phone ? String(p.phone) : null };
@@ -14770,10 +14800,8 @@ function initLouisianaExplorer() {
       var office = laBodyOffice(o);
       if (office) wrap.appendChild(office);
       var fields = [];
-      if (term) {
-        fields.push({ label: "Term", value: "The list gives every member's term as ending on " +
-          laDate(term) + "." });
-      }
+      var termField = term ? laTermField(term) : null;
+      if (termField) fields.push(termField);
       var skipped = laUnlistedField(o);
       if (skipped) fields.push(skipped);
       var word = laSeatWord(o);
@@ -15145,14 +15173,38 @@ function initLouisianaExplorer() {
    * (4,826 of 111,943 km2 by the Census's own AREALAND), and the parish is
    * the general-purpose local government everywhere else.
    *
-   * NO OFFICEHOLDER YET. The Secretary of State's list of elected officials
-   * names the mayors, aldermen and council members under its own offices,
-   * which this app has not read yet, so the card names no one rather than
-   * guessing. Recorded as gap la-municipal-officeholders.
+   * THE MAYOR, THE COUNCIL OR BOARD OF ALDERMEN AND THE CHIEF OF POLICE OR
+   * MARSHAL come from the Secretary of State's list of elected officials
+   * (data/app/la-municipal-officials.json, built by
+   * la/scripts/build_la_local_officials.py and read again every week),
+   * keyed by the place's Census id: 302 municipalities on 2026-10-20, every
+   * place the Census draws except New Orleans (whose mayor and council the
+   * list names as Orleans Parish's government, so the Parish card names
+   * them), Baton Rouge and Houma. The members are headed by what the list's
+   * titles call them (aldermen, council members, selectmen or trustees); the
+   * list does not name the body, so the card does not either. In 202
+   * municipalities the list gives no seat for any member, and the card lists
+   * them without one and does not call them elected at large, which the list
+   * does not say; where it gives seats, the card says which member
+   * represents the point only as "the one elected from the ward this point
+   * is in", because the map draws no town's wards or districts (gap
+   * la-municipal-ward-lines), and where a seat is a division, a lettered
+   * seat or a numbered council seat the card does not say what ground it
+   * covers. A seat the list skips is named as skipped, as on the Parish
+   * card; where the list calls a place a town or a village that the Census
+   * calls something else, the card says what the list calls it. An address
+   * shows only as the town's office, where at least three of its officials
+   * print the same one and no official outside the town does; a telephone
+   * printed for one official alone shows on that official's row (Adam's
+   * ruling of 2026-10-17). A roster miss degrades to a sentence naming
+   * nobody, never to an error card.
    * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  var loadLaMunicipalOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/la-municipal-officials.json", {}, 2);
+  });
   var LA_PLACE_KINDS = {
     city: "Incorporated city — a general-purpose local government over this point, alongside the parish.",
     town: "Incorporated town — a general-purpose local government over this point, alongside the parish.",
@@ -15174,8 +15226,8 @@ function initLouisianaExplorer() {
   // (la-parish-officials.json) and TIGERweb's one county subdivision for
   // Orleans is the City of New Orleans (FUNCSTAT F), both read 2026-10-20.
   // So "alongside the parish" would be false there, and the Parish card
-  // already names the people this card would otherwise send the reader to
-  // the city's website for. Keyed by the place's GEOID.
+  // already names the people this card would otherwise list. Keyed by the
+  // place's GEOID.
   var LA_CITY_PARISH = {
     "2255000": {
       type: "Incorporated city — New Orleans and Orleans Parish are one " +
@@ -15185,6 +15237,76 @@ function initLouisianaExplorer() {
         "Orleans Parish's governing body."
     }
   };
+  // What the list's titles call a town's members, as a heading and in a
+  // sentence. The list names no body, so neither does the card.
+  var LA_MEMBER_WORDS = {
+    aldermen: { head: "Aldermen", one: "alderman", many: "aldermen" },
+    council: { head: "Council members", one: "council member", many: "council members" },
+    selectmen: { head: "Selectmen", one: "selectman", many: "selectmen" },
+    trustees: { head: "Trustees", one: "trustee", many: "trustees" }
+  };
+  var LA_MEMBER_DEFAULT = { head: "Members", one: "member", many: "members" };
+  // "city", "town" or "village", from the list's own name for the place
+  // ("Town of Vidalia"), or null.
+  function laListStyle(o) {
+    var m = /^(City|Town|Village) of /.exec(String((o && o.municipality) || ""));
+    return m ? m[1].toLowerCase() : null;
+  }
+  // "ward" or "district" where every seat is one (Vidalia's "District 2",
+  // a parish school board's "District 4, Seat A", Assumption's "Ward 3"),
+  // else null: a division, a lettered seat or Mandeville's "Council Member
+  // I" says nothing about the ground it covers.
+  function laSeatGround(seats) {
+    var word = null;
+    for (var i = 0; i < seats.length; i++) {
+      var m = /^(Ward|District)\b/.exec(String((seats[i] && seats[i].seat) || ""));
+      if (!m || (word && m[1].toLowerCase() !== word)) return null;
+      word = m[1].toLowerCase();
+    }
+    return word;
+  }
+  // Which of a body's members represents the point, said as far as the list
+  // and this app know it and no further. `place` is "town", "school
+  // district" and so on, `owner` whose wards or districts they are (the town,
+  // or "school board"), and `words` the members' own word, singular and
+  // plural.
+  function laWhichMember(words, place, owner, atLarge, seats, plain) {
+    var parts = [];
+    var others = seats.length + plain.length;
+    if (atLarge.length) {
+      parts.push(others
+        ? "The " + (atLarge.length === 1 ? words.one + " elected at large represents"
+          : words.many + " elected at large represent") + " the whole " + place + "."
+        : "Every " + words.one + " is elected at large and represents the whole " + place + ".");
+    }
+    if (seats.length) {
+      var ground = laSeatGround(seats);
+      parts.push(ground
+        ? (atLarge.length ? "Of the others, the one" : "The " + words.one) +
+          " elected from the " + ground + " this point is in represents it. This app " +
+          "does not draw the " + owner + "'s " + ground + "s, so it cannot say which " +
+          ground + " that is."
+        : "The list names a seat for " + (atLarge.length ? "each of the others" : "each " + words.one) +
+          " but not the ground each seat covers, so this card does not say which of " +
+          "them represents this point.");
+    }
+    if (plain.length) {
+      parts.push("The Secretary of State's list names " +
+        (atLarge.length || seats.length ? "the other " : (plain.length === 1 ? "this " : "these ")) +
+        (plain.length === 1 ? words.one : words.many) + " without a ward or district, so " +
+        "this card does not say which of them represents this point.");
+    }
+    return parts.join(" ");
+  }
+  function laNamed(list) {
+    return (list || []).filter(function (p) { return p && p.name; });
+  }
+  // "city", "town" or "village", the Census's style for the place, and
+  // "place" for an affix the card does not know, which it does not improvise
+  // a word for.
+  function laPlaceWord(kind) {
+    return (kind && LA_PLACE_KINDS.hasOwnProperty(kind)) ? String(kind) : "place";
+  }
 
   registerLayer({
     id: "municipality",
@@ -15212,7 +15334,7 @@ function initLouisianaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // NAME minus BASENAME, so the style can never contradict the name
@@ -15221,8 +15343,20 @@ function initLouisianaExplorer() {
           // the Census's own functional status, carried so the card can say
           // what it records where it is not "active"
           funcstat: findPropCI(props, ["funcstat"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null,
+          rosterFailed: false
         };
+        // the roster's own failure is not this layer's failure: the place
+        // still answers, and the card says no one is named
+        return loadLaMunicipalOfficials().then(function (roster) {
+          result.officials = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -15234,6 +15368,7 @@ function initLouisianaExplorer() {
       var status = result.funcstat != null ? String(result.funcstat).toUpperCase() : null;
       var merged = result.geoid != null &&
         LA_CITY_PARISH.hasOwnProperty(String(result.geoid)) ? LA_CITY_PARISH[String(result.geoid)] : null;
+      var o = merged ? null : result.officials;
       var rows = [];
       // A place with no government of its own is not "a general-purpose
       // local government over this point", so the style row gives way to
@@ -15246,18 +15381,98 @@ function initLouisianaExplorer() {
       if (status && LA_PLACE_STATUS.hasOwnProperty(status)) {
         rows.push({ label: "Status", value: LA_PLACE_STATUS[status] });
       }
-      rows.push({
-        label: "Your mayor and council",
-        value: merged ? merged.officials : "Not named here. The Secretary of State's list of elected " +
-          "officials names Louisiana's mayors, aldermen and council members, " +
-          "and this app has not read that part of it yet. It does not guess " +
-          "in the meantime, so this place's own website is the current source." +
-          (status === "B" || status === "N"
-            ? " The Parish card names the parish's governing body and its executive."
-            : "")
+      if (!o) {
+        rows.push({
+          label: "Your mayor and council",
+          value: merged ? merged.officials
+            : result.rosterFailed
+              ? "The list of mayors and councils did not load, so no one is named here."
+              : (status === "B" || status === "N")
+                ? "The Secretary of State's list names no mayor or council for this " +
+                  "city on its own. The Parish card names the parish's governing body " +
+                  "and its executive."
+                : "The Secretary of State's list names no officials for this " +
+                  laPlaceWord(result.kind) + ", so no one is named here."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      var style = laListStyle(o);
+      var place = style || laPlaceWord(result.kind);
+      var words = LA_MEMBER_WORDS.hasOwnProperty(o.kind) ? LA_MEMBER_WORDS[o.kind] : LA_MEMBER_DEFAULT;
+      var atLarge = laNamed(o.atLarge), seats = laNamed(o.seats), plain = laNamed(o.members);
+      var members = atLarge.concat(seats, plain);
+      var mayor = o.mayor && o.mayor.name ? o.mayor : null;
+      // Card convention: the mayor, elected by the whole town to run it,
+      // then the members, then the officers the town elects.
+      if (mayor) {
+        wrap.appendChild(renderSectionLabel("Mayor"));
+        wrap.appendChild(renderPersonRows([laPersonRow(mayor, { seat: false, withTerm: true })],
+          { tinted: true }));
+      }
+      var term = laSharedTerm(members);
+      if (members.length) {
+        wrap.appendChild(renderSectionLabel(words.head));
+        wrap.appendChild(renderPersonRows(members.map(function (p) {
+          return laPersonRow(p, { seat: true, withTerm: !term });
+        }), { tinted: true }));
+      }
+      laNamed(o.officers).forEach(function (p) {
+        wrap.appendChild(renderSectionLabel(String(p.title || "Officer")));
+        wrap.appendChild(renderPersonRows([laPersonRow(p, { seat: false, withTerm: true })],
+          { tinted: true }));
       });
-      wrap.appendChild(renderFieldStack(rows));
+      if (o.officeAddress || o.officePhone) {
+        wrap.appendChild(renderOfficeGroup({
+          label: "The " + place + "'s office",
+          open: true,
+          offices: [{
+            label: String(o.municipality),
+            lines: o.officeAddress ? [String(o.officeAddress)] : [],
+            phone: o.officePhone ? String(o.officePhone) : null
+          }]
+        }));
+      }
+      var fields = [];
+      if (!mayor) {
+        fields.push({
+          label: "Mayor",
+          value: status === "B"
+            ? "The Secretary of State's list names no mayor for this city on its own. " +
+              "The Parish card names the parish's governing body and its executive."
+            : "The Secretary of State's list names no mayor for this " + place + "."
+        });
+      }
+      var termField = term ? laTermField(term) : null;
+      if (termField) fields.push(termField);
+      var skipped = laUnlistedField(o);
+      if (skipped) fields.push(skipped);
+      if (members.length) {
+        fields.push({
+          label: "Which one represents this point",
+          value: laWhichMember(words, place, place, atLarge, seats, plain)
+        });
+      }
+      // The list's style where the Census's differs ("Village of Chatham"
+      // over "Chatham town"), so the two names on the card do not look like
+      // two places.
+      if (style && result.kind && style !== String(result.kind)) {
+        fields.push({
+          label: "Its name in the list",
+          value: "The Secretary of State's list calls it the " + String(o.municipality) + "."
+        });
+      }
+      fields.push({
+        label: members.length + (mayor ? 1 : 0) > 1 ? "Where these names come from"
+          : "Where the name comes from",
+        value: laListCredit(o)
+      });
+      wrap.appendChild(renderFieldStack(fields));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return laListLink(result);
     }
   });
 
@@ -15271,31 +15486,122 @@ function initLouisianaExplorer() {
    * here to tell it apart from — and the id stays school-district-unified,
    * because a layer id is a public address.
    *
-   * NO OFFICEHOLDER YET. Louisiana's school board members are elected, and
-   * the Secretary of State's list of elected officials names them under its
-   * School Board Member office, which this app has not read yet, so the
-   * card names the district only. Recorded as gap la-school-board-members.
-   * ---------- */
+   * THE SCHOOL BOARD comes from the same list as the parish and town cards
+   * (data/app/la-school-board-members.json, built by
+   * la/scripts/build_la_local_officials.py and read again every week), keyed
+   * by the district's Census id: all 69 boards and 639 members on
+   * 2026-10-20. A row belongs to the city school system its description
+   * names after the seat (Baker, Bogalusa, Central, Monroe and Zachary) and
+   * otherwise to its parish's. Every member but two, Iberville's and West
+   * Baton Rouge's, who are elected at large, is elected from a district or a
+   * ward, and the map does not draw them (gap la-school-board-district-lines),
+   * so the card lists the whole board and does not say which member
+   * represents the point. 610 of the 639 terms end on December 31, 2026; a
+   * term whose day has passed says so, and la/WATCH.md says when to read the
+   * list again. An address shows only as the board's office, on the same
+   * rule as a town's. ---------- */
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
     "GEOID,NAME,STATE", "school districts");
+  var loadLaSchoolBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/la-school-board-members.json", {}, 2);
+  });
+  var LA_BOARD_WORDS = { head: "School board", one: "member", many: "members" };
 
-  registerPolygonLayer({
+  registerLayer({
     id: "school-district-unified",
     group: "schools",
     label: "School District",
-    loader: loadSchoolDistrictsUnified,
     // Reached only where the tiling has a hole. Inside the state there is
     // none today, so this reads as the out-of-state answer it nearly always
     // is.
     emptyNote: "No school district here. This map holds Louisiana's " +
       "school districts, so a point outside the state gets none.",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
-    fields: [
-      { name: "name", label: "District", keys: ["name"], primary: true },
-      { name: "geoid", label: "GEOID", keys: ["geoid"] }
-    ],
-    compact: true, compactMetaField: "geoid" // 4b name-only card
+    overlay: {
+      load: loadSchoolDistrictsUnified,
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return (name == null || name === "") ? null : String(name);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadSchoolDistrictsUnified, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null,
+          rosterFailed: false
+        };
+        // the roster's own failure is not this layer's failure
+        return loadLaSchoolBoards().then(function (roster) {
+          result.officials = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown school district",
+        note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+      }));
+      var o = result.officials;
+      if (!o) {
+        wrap.appendChild(renderFieldStack([{
+          label: "School board",
+          value: result.rosterFailed
+            ? "The list of school board members did not load, so no one is named here."
+            : "The Secretary of State's list names no school board members for this " +
+              "district, so no one is named here."
+        }]));
+        return wrap;
+      }
+      var atLarge = laNamed(o.atLarge), seats = laNamed(o.seats);
+      var members = atLarge.concat(seats);
+      var term = laSharedTerm(members);
+      if (members.length) {
+        wrap.appendChild(renderSectionLabel(LA_BOARD_WORDS.head));
+        wrap.appendChild(renderPersonRows(members.map(function (p) {
+          return laPersonRow(p, { seat: true, withTerm: !term });
+        }), { tinted: true }));
+      }
+      if (o.officeAddress || o.officePhone) {
+        wrap.appendChild(renderOfficeGroup({
+          label: "The school board's office",
+          open: true,
+          offices: [{
+            label: String(o.district),
+            lines: o.officeAddress ? [String(o.officeAddress)] : [],
+            phone: o.officePhone ? String(o.officePhone) : null
+          }]
+        }));
+      }
+      var fields = [];
+      var termField = term ? laTermField(term) : null;
+      if (termField) fields.push(termField);
+      var skipped = laUnlistedField(o);
+      if (skipped) fields.push(skipped);
+      if (members.length) {
+        fields.push({
+          label: "Which one represents this point",
+          value: laWhichMember(LA_BOARD_WORDS, "school district", "school board", atLarge, seats, [])
+        });
+      }
+      fields.push({ label: "Where these names come from", value: laListCredit(o) });
+      wrap.appendChild(renderFieldStack(fields));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return laListLink(result);
+    }
   });
 
   /* ---------- 7. ZIP Code — live TIGERweb ZCTAs ----------

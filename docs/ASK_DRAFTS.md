@@ -4723,6 +4723,16 @@ site posts the district map as a picture (1024x683). A picture is not traced her
 say which Census areas make up the current Centralia and Salem precincts, so the letter's ask
 stands as written. A follow-up can say the picture was seen and why it is not enough.
 
+**CORRECTED 2026-10-21: no follow-up goes, and the asking stops here.** The sentence above
+suggested one, and the rule at the end of this section forbids it: the 1 October letter was
+the office's third on these maps (5 and 16 August, then 1 October, after the July note about
+the seal), and a third letter that goes unanswered is recorded as silence, with nothing more
+sent. The picture is not a reply either, because the county uploaded it on 28 April, before
+any of these letters. The 1 October letter has had no answer as of 21 October, so it is
+recorded as unanswered and the office is not written to again about the maps. A reply, if one
+comes, is still recorded and acted on. The letters thread caught this before anything was
+drafted.
+
 ### What each answer means
 
 - **Map data** — that county's districts are drawn as the county drew them, with no
