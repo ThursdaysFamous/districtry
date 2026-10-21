@@ -1484,6 +1484,150 @@ try {
       JSON.stringify(unsure));
   }
 
+  // 1d6. A ZIP CODE IS SHOWN WHOLE (ENGINE geocoder-search showZip, Adam's
+  //      choice of 2026-10-21). A reader who searched 60625 reported that the
+  //      map named one ward, and that ZIP code crosses four. A ZIP code handed
+  //      over as #q= now selects the spot data/app/zip-index.json holds for
+  //      it, turns the ZIP layer on and pins it, and turns on the city's wards
+  //      to compare it with, so every ward it crosses is outlined; no geocoder
+  //      is asked, and the pin is not counted as a reader's. The ZIP layer's
+  //      whole set (what the pin reads) is served as the ZIP code's own
+  //      extent and Chicago's wards as four strips across it, so no census or
+  //      city server is needed; every other host is refused, which also stands
+  //      in for the suburban ward servers. Then: a layer already on is
+  //      compared instead and nothing more is turned on; a ZIP code another
+  //      app holds opens that app with it (the sibling app stubbed); and a ZIP
+  //      code no list holds is listed from the geocoder and selected only when
+  //      the reader picks it, with a message saying the cards are for one spot.
+  {
+    const index = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/zip-index.json"), "utf8"));
+    const Z = index.features.find((f) => f.properties.zip === "60625");
+    const [x0, y0, x1, y1] = Z.bbox;
+    const [sx, sy] = Z.geometry.coordinates;
+    // Esri JSON, as the census query answers: an outer ring wound clockwise
+    const ZCTA = { features: [{ attributes: { ZCTA5: "60625" },
+      geometry: { rings: [[[x0, y0], [x0, y1], [x1, y1], [x1, y0], [x0, y0]]] } }] };
+    // four wards in strips, each reaching past the ZIP code's top and bottom so
+    // it crosses the ZIP code's edge, with a vertex on each side at the spot's
+    // latitude, inside the ZIP code: the comparison finds an overlap by a
+    // vertex inside (ENGINE polygon-containment polygonsOverlap), and a strip
+    // whose four corners all lie outside it would never be found. The spot is
+    // inside Ward 40's strip.
+    const cuts = [x0 - 0.01, (x0 + sx) / 2, sx - 0.005, sx + 0.005, x1 + 0.01];
+    const WARDS = { type: "FeatureCollection", features: ["33", "39", "40", "47"].map((ward, i) => ({
+      type: "Feature", properties: { ward: ward },
+      geometry: { type: "Polygon", coordinates: [[[cuts[i], y0 - 0.01], [cuts[i + 1], y0 - 0.01], [cuts[i + 1], sy],
+        [cuts[i + 1], y1 + 0.01], [cuts[i], y1 + 0.01], [cuts[i], sy], [cuts[i], y0 - 0.01]]] } })) };
+    const POBOX = { type: "Feature", geometry: { type: "Point", coordinates: [-87.6298, 41.8781] },
+      properties: { name: "60690", postcode: "60690", city: "Chicago", state: "Illinois", country: "United States",
+        countrycode: "US", type: "other" } };
+    const run = async (hash, leaves) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const asked = [];
+      const page = await booted(context, `${BASE}#${hash}`, async (p) => {
+        // every other host is refused (registered first, so the routes below win)
+        await p.route((u) => !/^(localhost|127\.0\.0\.1)$/.test(u.hostname) &&
+          !/cartocdn\.com$|cdnjs\.cloudflare\.com$/.test(u.hostname), (route) => route.abort());
+        await p.route("https://districtry.com/**", (route) =>
+          route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+        await p.route("**/tigerweb.geo.census.gov/**", (route) => /ZCTA/i.test(route.request().url())
+          ? route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(ZCTA) })
+          : route.abort());
+        await p.route("**/data.cityofchicago.org/**", (route) => /p293-wvbd/.test(route.request().url())
+          ? route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(WARDS) })
+          : route.abort());
+        await p.route("**/photon.komoot.io/**", (route) => {
+          const q = new URL(route.request().url()).searchParams.get("q");
+          asked.push(q);
+          route.fulfill({ status: 200, contentType: "application/json",
+            body: JSON.stringify({ type: "FeatureCollection", features: q === "60690" ? [POBOX] : [] }) });
+        });
+        await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+        await p.addInitScript(() => {
+          window.__gcEvents = [];
+          window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+        });
+      }, leaves);
+      return { context, page, asked };
+    };
+    const view = (page) => page.evaluate((ns) => ({
+      point: window[ns].state.selectedPoint,
+      status: (document.getElementById("geo-status").textContent || "").trim(),
+      rows: [...document.querySelectorAll("#geocode-results li")].map((li) => li.className),
+      on: [...document.querySelectorAll(".layer-block input[type=checkbox]")].filter((c) => c.checked).map((c) => c.id.replace(/^toggle-/, "")).sort(),
+      parent: document.querySelectorAll(".rel-parent-outline").length,
+      crossing: [...document.querySelectorAll(".rel-map-label")].map((e) => e.textContent).sort(),
+      hash: location.hash,
+      button: !!document.querySelector(".zip-stats-btn"),
+      events: (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path),
+    }), EXPORTS_NAME);
+    // settled once the outlines carry the cards' own wording ("Ward 40", not
+    // the boundary's bare "40"), which they take when the compared layer's
+    // card has answered (ENGINE relationship-pinning relLabelText)
+    const compared = (n, wording) => (page) => page.waitForFunction(([k, w]) => {
+      const labels = [...document.querySelectorAll(".rel-map-label")].map((e) => e.textContent);
+      return labels.length >= k && labels.every((t) => new RegExp(w).test(t)) && !!document.querySelector(".zip-stats-btn");
+    }, [n, wording], { timeout: QUERY_TIMEOUT }).catch(() => {});
+
+    let r = await run("q=60625");
+    await compared(4, "^Ward \\d+$")(r.page);
+    let got = await view(r.page);
+    check("a ZIP code selects the spot inside it, turns on the ZIP layer and the wards, and pins the ZIP code",
+      !!got.point && Math.abs(got.point.lat - sy) < 1e-6 && Math.abs(got.point.lng - sx) < 1e-6 &&
+        got.on.join() === "ward,zip-code" && /(^|&)c=zp(&|$)/.test(got.hash.slice(1)),
+      JSON.stringify({ point: got.point, on: got.on, hash: got.hash }));
+    check("every ward the ZIP code crosses is outlined against it, and the message says the spot is not an address",
+      got.parent === 1 && got.crossing.join() === "Ward 33,Ward 39,Ward 40,Ward 47" && got.button &&
+        /selected a spot inside ZIP code 60625, not at any address/.test(got.status) &&
+        /every City Ward it crosses/.test(got.status),
+      JSON.stringify({ parent: got.parent, crossing: got.crossing, status: got.status.slice(0, 220) }));
+    check("a ZIP code a list holds is never sent to the geocoder", r.asked.length === 0, JSON.stringify(r.asked));
+    check("a ZIP code search is counted by its layer, once, and its pin is not counted as a reader's",
+      got.events.filter((e) => /^zip-search\//.test(e)).join() === "zip-search/zip-code" &&
+        !got.events.some((e) => /^compare\//.test(e)),
+      JSON.stringify(got.events));
+    // "List them" opens the comparison's numbers (ENGINE compare-stats): a row
+    // for each ward
+    await r.page.click(".zip-stats-btn");
+    const listed = await r.page.waitForFunction(() => {
+      const modal = document.getElementById("stats-modal");
+      return !!modal && !modal.hidden && document.querySelectorAll(".stats-row").length >= 4;
+    }, null, { timeout: QUERY_TIMEOUT }).then(() => r.page.evaluate(() => document.querySelectorAll(".stats-row").length), () => 0);
+    check("List them opens the comparison's numbers, a row for each ward the ZIP code crosses", listed === 4, `rows=${listed}`);
+    await r.context.close();
+
+    r = await run("q=60625&l=cg");
+    await compared(1, "^IL-\\d+$")(r.page);
+    got = await view(r.page);
+    check("with a layer already on, the ZIP code is compared with it and the wards are not turned on",
+      got.on.join() === "congress,zip-code" && got.crossing.length >= 1 && got.crossing.every((t) => /^IL-\d+$/.test(t)) &&
+        /every U\.S\. House District it crosses/.test(got.status),
+      JSON.stringify({ on: got.on, crossing: got.crossing, status: got.status.slice(-120) }));
+    await r.context.close();
+
+    r = await run("q=53703", true);
+    const went = await r.page.waitForURL((u) => !u.href.startsWith(BASE), { timeout: QUERY_TIMEOUT }).then(() => r.page.url(), () => null);
+    check("a ZIP code another app holds opens that app with the ZIP code, and asks the geocoder nothing",
+      went === "https://districtry.com/wi/#q=53703" && r.asked.length === 0, JSON.stringify({ went, asked: r.asked }));
+    await r.context.close();
+
+    r = await run("q=60690");
+    await r.page.waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    await r.page.waitForTimeout(300); // a selection, if one were coming, follows the list
+    got = await view(r.page);
+    check("a ZIP code no list holds is searched, and its answer is listed but not selected",
+      r.asked.join() === "60690" && !got.point && got.rows.length === 1 && /\bzip-answer\b/.test(got.rows[0]),
+      JSON.stringify({ asked: r.asked, point: got.point, rows: got.rows }));
+    await r.page.click("#geocode-results li button");
+    await r.page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    got = await view(r.page);
+    check("picking that answer selects it and says the cards are for that one spot",
+      !!got.point && Math.abs(got.point.lat - 41.8781) < 1e-6 &&
+        /can't show all of ZIP code 60690, so the cards are for this one spot in it/.test(got.status),
+      JSON.stringify({ point: got.point, status: got.status }));
+    await r.context.close();
+  }
+
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
   //     (dstFitMastheadActions) before the row would drop them below the
   //     search, which a reader saw as the search bar jumping from the middle

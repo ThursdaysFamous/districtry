@@ -94,6 +94,7 @@ const GEOMETRY_URLS = [
   "./data/app/webster-county-outline.json",
   "./data/app/winneshiek-county-outline.json",
   "./data/app/tribal-areas.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
