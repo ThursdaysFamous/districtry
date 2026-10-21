@@ -8590,6 +8590,62 @@ asked, and nothing changes on the map.
   drawn, Jefferson and Rowan. If another county has been drawn since, change the number and the
   names.
 
+---
+
+## Ask ny-nysl-library-trustees — New York State Library, Division of Library Development: the trustee names libraries already report
+
+> **NOT SENT. Drafted 2026-10-21**, for the operator to read and, if he agrees, to send from his
+> own mailbox. To Amy Heebner, who leads the Technology, Reporting and Federal Aid Services Team
+> in the State Library's Division of Library Development (`amy.heebner@nysed.gov`). That team
+> runs the annual report every public and association library files. Gap
+> `ny-special-district-officials` carries the draft's date.
+
+**Why this is asked.** A New York library district elects its trustees, and districtry's Sullivan
+County map draws the county's two library districts with nobody named on the card. Under the
+operator's ruling of 2026-10-21, a special district counts as answered only where its board is
+named. The State Library already collects the names: Section 10 of the Annual Report for Public
+and Association Libraries ("Officers and Trustees") asks for each trustee's name, office and term
+as of February 1, and question 10.7 asks how the board is chosen. The report is filed through
+LibPAS, which needs a login, and no public download of Section 10 was found on 2026-10-21. The
+letter asks whether that section can be shared. Fire district commissioners are not asked here:
+whether the Comptroller's collection of local officials covers fire districts is already part of
+Ask ny-comptroller-local-officials, which waits until 2026-11-20.
+
+> Subject: Library trustee names from the annual report
+>
+> Dear Ms. Heebner,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> New York's map is at https://districtry.com/ny/.
+>
+> It now shows public library districts in Sullivan County, and I would like it to name each
+> district's elected trustees. Section 10 of the Annual Report for Public and Association
+> Libraries already asks every library for its trustees' names, offices and terms as of
+> February 1. I could not find that section published anywhere.
+>
+> Could the State Library share Section 10 for public library districts, either for Sullivan
+> County or statewide? Because the report is dated, each name could be shown with that date and
+> a credit to the State Library. A spreadsheet or any other form is fine.
+>
+> If this is not something you can share, or should go to someone else, a short reply saying so
+> is a complete answer.
+>
+> Thank you,
+> Adam Overberg
+> districtry
+
+**What an answer changes.** A yes: the two Sullivan library district cards name their trustees
+with the report's date, and other counties' library districts can be named as their maps are
+added. A no: recorded in the gap with its date, and the cards keep naming nobody.
+
+**Before sending:**
+
+- Confirm Ms. Heebner is still listed on the Division of Library Development's staff page.
+- Check that Section 10 is still part of the current year's annual report form.
+
+---
+
 ## Ask la-sos-precinct-districts — Louisiana Secretary of State, Elections Division: publish which precincts make up each parish governing body, school board and town council district
 
 > **ASKED 2026-10-21 at 13:58 UTC**, from the operator's own mailbox to `elections@sos.la.gov`,
