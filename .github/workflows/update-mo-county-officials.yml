@@ -1,0 +1,119 @@
+name: Update Missouri county officials
+
+# Weekly refresh of every Missouri county's governing body and its other
+# elected officers (mo/data/app/mo-county-officials.json, fetched by
+# mo/index.html's County card), rebuilt by mo/scripts/build_mo_county_officials.py
+# from the Secretary of State's Missouri Roster: a PDF printed every two years
+# and linked from www.sos.mo.gov/pubs, read with pdftotext (poppler-utils,
+# installed below). If anything changed it opens a PR rather than committing
+# directly to main — officeholder data gets a look before it ships.
+#
+# The roster is a dated edition rather than a live record, so most weeks
+# change nothing and open no PR. What this job exists to catch is a NEW
+# EDITION: the builder follows whichever edition the publications page links,
+# so the 2027-2028 roster is read the week it appears, and every county's
+# names move together in one reviewed PR.
+#
+# The builder FAILS rather than writing when the roster stops reading the way
+# it was measured on 2026-10-21: one record for each of the 114 counties and the
+# City of St. Louis, each county's body in the shape the build
+# requires (the four charter counties, the city and the commission counties,
+# seat counts included), every seat and office named or printed vacant, the
+# recalled Jackson County executive still not named, and no fax number. The
+# validate step runs its offline --check on the written file too. A red run is
+# the signal that a person needs to read the new edition.
+#
+# A telephone or address printed beside two or more officials of one county is
+# an office's and ships only as the body's own; no official's own address
+# ships, and fax numbers never do.
+#
+# robots.txt: www.sos.mo.gov's (199 bytes, read 2026-10-21) disallows nothing
+# the builder reads and states no delay; the builder reads it before its first
+# fetch and paces every fetch at one second.
+#
+# MISSOURI IS DARK, so this job regenerates no county page:
+# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
+# go-live adds its adapter.
+
+on:
+  schedule:
+    - cron: "37 18 * * 3" # Wednesday 18:37 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR runs CI; see
+      # update-mo-legislature-roster.yml for why.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the two fetches (the builder retries a reset or a
+      # timeout); the page and the PDF's words are read with the stdlib.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      # The Missouri Roster is a PDF, read with pdftotext -tsv.
+      - name: Install pdftotext
+        run: |
+          # the runner image's Google Chrome apt source once served a Packages
+          # file whose hash did not match its Release file (smoke-test.yml)
+          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
+               \( -name '*.list' -o -name '*.sources' \) \
+               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
+          sudo apt-get update -q
+          sudo apt-get install -y -q poppler-utils
+          pdftotext -v
+
+      - name: Rebuild the county governing bodies
+        run: python3 mo/scripts/build_mo_county_officials.py
+
+      - name: Validate app + data files
+        run: |
+          python3 mo/scripts/build_mo_county_officials.py --check
+          python3 mo/scripts/validate_index.py mo/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- mo/data/app/mo-county-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/mo-county-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history; the rebuilt file is
+          # carried over the checkout as an uncommitted change.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add mo/data/app/mo-county-officials.json
+          git commit -m "Update Missouri county governing bodies"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Missouri county governing bodies" \
+              --body "Automated weekly refresh of every Missouri county's commission, council or legislature, its county executive where one is elected, and its other elected officers, from the Secretary of State's Missouri Roster, generated by \`mo/scripts/build_mo_county_officials.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
