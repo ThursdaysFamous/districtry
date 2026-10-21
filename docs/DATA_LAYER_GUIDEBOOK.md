@@ -5357,8 +5357,9 @@ concept layer holding a per-county entry table — see
 2026-10-17). Every layer `tiger-mirror.json` lists is drawn and answered from a tile archive
 committed under its app's `data/app/tiles/` and built by `scripts/mirror_tiger_tiles.py`:
 Illinois's, Iowa's, Michigan's and Wisconsin's census layers and the six older apps' ZIP layers
-since 2026-09-27, and the nine newest apps' census layers since 2026-10-17. On 2026-10-17 that
-is every cell here that says live TIGERweb. The whole set is still fetched from TIGERweb wherever
+since 2026-09-27, the nine newest apps' census layers since 2026-10-17, and Louisiana's three
+since 2026-10-21, before it went live. On 2026-10-21 that is every cell here that says live
+TIGERweb. The whole set is still fetched from TIGERweb wherever
 an app needs all of it, such as for a comparison, a pinned district or the raster basemap, so "no
 committed `data/app` file" and "a vintage roll reaches it on its own" are true of that set only:
 a new census vintage reaches the card and the tiled map through the weekly pull request

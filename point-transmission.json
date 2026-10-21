@@ -267,20 +267,20 @@
       ]
     },
     "la": {
-      "layers_sending_point": 3,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
         "fire-station",

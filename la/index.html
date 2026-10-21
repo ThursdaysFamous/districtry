@@ -10468,11 +10468,11 @@ function initLouisianaExplorer() {
     "us-house",          // 6 congressional districts — the largest districts Louisiana carries below the state itself
     "la-senate",         // 39 Senate districts — larger on average than a parish, smaller than a congressional district
     "county",            // 64 parishes, pre-built from TIGERweb; the instance's offline anchor layer
-    "school-district-unified", // 69 school districts covering the whole state, live from TIGERweb (no data/app file)
+    "school-district-unified", // 69 school districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
     "la-house",          // 105 House districts — smaller on average than a school district, larger than a ZIP code
-    "zip-code",          // 831 ZIP Code Tabulation Areas in the state's own bounding box, about 244 km2 of land on average, fetched live by envelope; the layer hides outside Louisiana
-    "parish-district",   // 56 districts in the 6 parishes whose current lines are confirmed, about 212 km2 of land on average against 244 km2 for a ZIP code; drawn only in those parishes
-    "municipality",      // 305 incorporated places, live from TIGERweb
+    "zip-code",          // 540 ZIP Code Tabulation Areas overlapping Louisiana, of the 831 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-21); about 194 km2 of land on average for the 540 and 244 km2 for the 831, and ranked by the 831, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Louisiana
+    "parish-district",   // 56 districts in the 6 parishes whose current lines are confirmed, about 212 km2 of land on average against 244 km2 for a ZIP code in the state's bounding box; drawn only in those parishes
+    "municipality",      // 305 incorporated places, from TIGERweb, drawn from a mirrored tile archive
     "tribal-government", // Tribal land — Louisiana has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-10-20: the Chitimacha Reservation (1.820 km², St. Mary Parish); the Coushatta Reservation (2.761 km² in 5 parts, Allen Parish) and the Coushatta Off-Reservation Trust Land (8.592 km² in 9 parts, 7.816 km² of it in Allen Parish and the rest in Natchitoches, Calcasieu and Jefferson Davis); the Jena Band of Choctaw Reservation (1.763 km² in 6 parts, Grant and LaSalle parishes); and the Tunica-Biloxi Reservation (1.690 km²) and Off-Reservation Trust Land (4.412 km² in 5 parts), both in Avoyelles Parish. About 3.5 km² a piece on average against about 16 km² for a city, town or village (4,826 km² across 305 places), so ranked after municipalities and before the point layers, as Mississippi's is, and drawn above the larger areas around it. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -14543,8 +14543,17 @@ function initLouisianaExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-21 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE TWO LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -15310,6 +15319,7 @@ function initLouisianaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City, Town or Village",
     // the honest words for "outside every incorporated place in Louisiana",
@@ -15510,6 +15520,7 @@ function initLouisianaExplorer() {
 
   registerLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
     // Reached only where the tiling has a hole. Inside the state there is
@@ -15618,9 +15629,11 @@ function initLouisianaExplorer() {
    *
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
    * THAT: the envelope returns 831 ZCTAs (measured 2026-10-20) and
-   * necessarily reaches into Texas, Arkansas and Mississippi. The card
-   * answers from a point query, and the coverage test below hides the layer
-   * outside the state.
+   * necessarily reaches into Texas, Arkansas and Mississippi. Since
+   * 2026-10-21 the card and the overlay read a tile archive that keeps only
+   * the ZCTAs overlapping Louisiana, so the neighbours appear only where the
+   * whole set is drawn (on the raster basemap, or after the archive fails to
+   * load), and the coverage test below hides the layer outside the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -15679,6 +15692,7 @@ function initLouisianaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

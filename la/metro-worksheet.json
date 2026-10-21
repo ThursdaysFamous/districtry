@@ -345,12 +345,12 @@
       "label": "School District",
       "group": "schools",
       "area_rank": 4,
-      "rank_note": "69 school districts covering the whole state, live from TIGERweb (no data/app file)",
+      "rank_note": "69 school districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 69 features for Louisiana, measured 2026-10-20.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 69 features for Louisiana, measured 2026-10-20.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
@@ -381,12 +381,12 @@
       "label": "ZIP Code",
       "group": "geography",
       "area_rank": 6,
-      "rank_note": "831 ZIP Code Tabulation Areas in the state's own bounding box, about 244 km2 of land on average, fetched live by envelope; the layer hides outside Louisiana",
+      "rank_note": "540 ZIP Code Tabulation Areas overlapping Louisiana, of the 831 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-21); about 194 km2 of land on average for the 540 and 244 km2 for the 831, and ranked by the 831, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Louisiana",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='22'. 831 features in Louisiana's box, measured 2026-10-20.",
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='22'. 831 features in Louisiana's box, measured 2026-10-20.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -399,7 +399,7 @@
       "label": "Police Jury or Council District",
       "group": "political",
       "area_rank": 7,
-      "rank_note": "56 districts in the 6 parishes whose current lines are confirmed, about 212 km2 of land on average against 244 km2 for a ZIP code; drawn only in those parishes",
+      "rank_note": "56 districts in the 6 parishes whose current lines are confirmed, about 212 km2 of land on average against 244 km2 for a ZIP code in the state's bounding box; drawn only in those parishes",
       "source": {
         "answers": "Which member of the parish's police jury, council or commission represents the point, in the parishes where this app has confirmed the current district lines. The layer is hidden in the other parishes, where the Parish card still names every member.",
         "boundary": [
@@ -417,12 +417,12 @@
       "label": "City, Town or Village",
       "group": "geography",
       "area_rank": 8,
-      "rank_note": "305 incorporated places, live from TIGERweb",
+      "rank_note": "305 incorporated places, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 305 features for Louisiana (71 cities, 127 towns and 107 villages), measured 2026-10-20. The Census records two of the cities, Baton Rouge and Lafayette, as partly consolidated with another government, and one, Houma, as having no government of its own, and the card says so.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 305 features for Louisiana (71 cities, 127 towns and 107 villages), measured 2026-10-20. The Census records two of the cities, Baton Rouge and Lafayette, as partly consolidated with another government, and one, Houma, as having no government of its own, and the card says so.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
