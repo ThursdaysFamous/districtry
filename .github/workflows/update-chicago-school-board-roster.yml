@@ -86,10 +86,8 @@ jobs:
           # its own last commit.
           python3 scripts/build_officeholder_tables.py
           python3 scripts/build_about_page.py
-          # The front page names City Hall's member of the Board.
-          python3 scripts/build_landing_page.py
           python3 scripts/build_sitemap.py
-          git add il/data/app/school-board-members.json il/school-board.html about.html index.html sitemap.xml
+          git add il/data/app/school-board-members.json il/school-board.html about.html sitemap.xml
           git commit -m "Update Chicago school board roster from the Board's own index"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

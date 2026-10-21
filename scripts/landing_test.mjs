@@ -1011,14 +1011,34 @@ try {
   // --- 1i. the worked example: one place, and who represents it there ------
   //
   // Beside the address box since 2026-10-21: a place, the offices that answer
-  // there and the people who hold them, read by the generator from the files
-  // the map's own cards read (render_example). Its words are held to those
-  // files by build_landing_page.py --check; what is held here is what a reader
-  // is shown: the example beside the box on a computer and after it on a
-  // phone, a name and a district on every card, each card in its layer's map
-  // colour in both themes, links that open an app at a point with layers on
-  // and keep that point when followed, and the independence sentence still on
-  // a phone's first screen, which is why the try-it line comes after it.
+  // there and the people who hold them. The districts are measured by the
+  // generator from the boundary files the map draws (render_example) and held
+  // there by build_landing_page.py --check; the names are read by the page's
+  // own script, when it opens, from the rosters the map's cards read
+  // (EXAMPLE_SCRIPT), so they are held HERE: each card names what its roster
+  // says for its seat, by the rule the officeholder tables print by. Also
+  // held: the example beside the box on a computer and after it on a phone,
+  // each card in its layer's map colour in both themes, links that open an app
+  // at a point with layers on and keep that point when followed, the
+  // independence sentence still on a phone's first screen (which is why the
+  // try-it line comes after it), the bodies and districts with no name lines
+  // when there is no script, and a roster that fails to load saying so on its
+  // own card only.
+  const exampleNamed = () => {
+    const lines = [...document.querySelectorAll(".ex-card .ex-name")];
+    return lines.length > 0 && lines.every((l) => !l.hidden && l.textContent.trim());
+  };
+  // The page's rule, restated so the page is held to it: a name, or "Vacant",
+  // or "Not listed", and not named at all where the roster's number and
+  // letter for the seat differ from the district the card shows.
+  const rosterSays = (roster, seat, pill) => {
+    const rec = roster && typeof roster === "object" ? roster[seat] : null;
+    if (!rec || typeof rec !== "object") return "Not listed";
+    if (rec.subDistrict && pill !== "District " + rec.subDistrict) return "Not listed";
+    const n = typeof rec.name === "string" ? rec.name.trim() : "";
+    if (n && n.toUpperCase() !== "VACANT") return n;
+    return rec.vacant || n ? "Vacant" : "Not listed";
+  };
   {
     const examples = {};
     for (const [label, opts] of [
@@ -1031,6 +1051,7 @@ try {
       const page = await ctx.newPage();
       await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
       await page.evaluate(() => document.fonts.ready);
+      await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
       examples[label] = await page.evaluate(() => {
         const aside = document.querySelector(".example");
         const search = document.querySelector(".search-card");
@@ -1051,6 +1072,8 @@ try {
             body: (li.querySelector(".ex-body")?.textContent || "").trim(),
             name: (li.querySelector(".ex-name")?.textContent || "").trim(),
             pill: (li.querySelector(".ex-pill")?.textContent || "").trim(),
+            roster: li.getAttribute("data-roster"),
+            seat: li.getAttribute("data-seat"),
             lc: getComputedStyle(li).getPropertyValue("--lc").trim().toUpperCase(),
             light: li.style.getPropertyValue("--lc-l").trim().toUpperCase(),
             dark: li.style.getPropertyValue("--lc-d").trim().toUpperCase(),
@@ -1065,6 +1088,19 @@ try {
       computer.shown && computer.cards.length >= 3 &&
         computer.cards.every((c) => c.body && c.name && c.pill),
       JSON.stringify(computer.cards.map((c) => [c.body, c.name, c.pill])));
+    // Each name against the roster file the page fetched, read here from the
+    // tree the server serves. A roster the map's own app does not read is
+    // build_landing_page.py's to refuse.
+    const rosterSaid = computer.cards.map((c) => {
+      try {
+        return rosterSays(JSON.parse(readFileSync(join(HERE, "..", c.roster), "utf8")), c.seat, c.pill);
+      } catch (e) {
+        return `(${c.roster}: ${e.message})`;
+      }
+    });
+    check("each example card names what its roster says for its seat",
+      computer.cards.length > 0 && computer.cards.every((c, i) => c.name === rosterSaid[i]),
+      JSON.stringify(computer.cards.map((c, i) => [c.roster, c.seat, c.name, rosterSaid[i]])));
     check("on a computer the example sits beside the address box", computer.beside, JSON.stringify(computer));
     check("on a phone the example comes after the address box, with no sideways scroll",
       phone.shown && phone.after && !phone.sideways, JSON.stringify({ ...phone, cards: phone.cards.length }));
@@ -1086,6 +1122,48 @@ try {
         apps.some((u) => h.startsWith(u + "#")) &&
         /#p=-?\d+(\.\d+)?,-?\d+(\.\d+)?&l=[a-z][a-z0-9]*(,[a-z][a-z0-9]*)*$/.test(h)),
       JSON.stringify(computer.links));
+
+    // With no script: the bodies and districts and the link to the map, and
+    // no name line, empty or otherwise.
+    {
+      const ctx = await browser.newContext({ javaScriptEnabled: false, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const bare = await page.evaluate(() => ({
+        cards: [...document.querySelectorAll(".ex-card")].map((li) => ({
+          body: (li.querySelector(".ex-body")?.textContent || "").trim(),
+          pill: (li.querySelector(".ex-pill")?.textContent || "").trim(),
+          name: li.querySelector(".ex-name")?.checkVisibility() ?? false,
+        })),
+        link: !!document.querySelector(".example a.ex-open")?.checkVisibility(),
+      }));
+      await ctx.close();
+      check("with no script the example shows its bodies, districts and map link, and no name lines",
+        bare.link && bare.cards.length === computer.cards.length &&
+          bare.cards.every((c) => c.body && c.pill && !c.name),
+        JSON.stringify(bare));
+    }
+    // A roster that fails to load says so on its own card, and the others
+    // still name their seats.
+    {
+      const failing = computer.cards[0]?.roster;
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      if (failing) {
+        await page.route((u) => u.pathname === "/" + failing,
+          (r) => r.fulfill({ status: 404, contentType: "text/plain", body: "not found" }));
+      }
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
+      const got = await page.evaluate(() => [...document.querySelectorAll(".ex-card")].map((li) => [
+        li.getAttribute("data-roster"), (li.querySelector(".ex-name")?.textContent || "").trim()]));
+      await ctx.close();
+      check("a roster that fails to load says so on its own card only",
+        !!failing && got.length === computer.cards.length &&
+          got.every(([roster, name], i) => roster === failing ? name === "Name didn't load"
+                                                              : name === computer.cards[i].name),
+        JSON.stringify(got));
+    }
 
     // Followed, a link keeps its point: the instance is stubbed, so a wrong
     // route shows as a wrong URL rather than as a failed navigation that

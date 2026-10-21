@@ -1011,6 +1011,24 @@ def concept_layers(tag, concepts):
 # card reads. Nothing below is typed in by hand except the place, its address,
 # its point and the name of each body.
 #
+# THE DISTRICTS ARE MEASURED HERE AND THE NAMES ARE READ WHEN THE PAGE OPENS
+# (Adam, the same day: "Why not have the example just be a real read of a
+# fixed location instead of a static list that needs to be rebuilt?"). A
+# first draft wrote the names into the page, so every weekly job rewriting
+# one of its rosters had to regenerate the page too, and a gate failed any
+# job that did not. The page's script now reads each roster the map's card
+# reads (EXAMPLE_SCRIPT), so a name changes on the front page the moment it
+# changes on the map, and no weekly job touches this page. The districts stay
+# here because reading them live means downloading each layer's boundary
+# file: measured that day, 501 KB compressed for this example's five against
+# 45 KB for the whole page, where its five rosters are 14 KB. Which district a
+# fixed point is in changes only when a boundary file is rebuilt, which no
+# weekly job does, and --check fails until this page is regenerated with it.
+# What it costs: the names need the script (without it the cards show the
+# bodies and districts and the link to the map), they are not in the page's
+# text, and a roster that loses a seat shows "Not listed" to a reader, as the
+# map's card does, rather than failing a build first.
+#
 # ONLY OFFICES WHOSE BOUNDARIES SHIP AS FILES. The ward and the Cook County
 # Board answer at City Hall too, but the map reads both boundaries from the
 # city's and the county's own servers when a reader clicks, so this generator
@@ -1023,12 +1041,6 @@ def concept_layers(tag, concepts):
 # other in a reader's browser, so the build fails when any example district's
 # edge is nearer than EXAMPLE_EDGE_M. Measured on 2026-10-21 the nearest is
 # the Board of Review's, 124 m from the point.
-#
-# THE NAMES CHANGE WHEN A ROSTER DOES, so each weekly workflow that rewrites
-# one of these rosters regenerates this page in the same run, and
-# check_example_workflows fails one that does not: the rule
-# build_officeholder_tables.py holds its tables to. Without it the next roster
-# change would turn this page's --check red on the bot's own pull request.
 EXAMPLE_TAG = "il"
 EXAMPLE_PLACE = "Chicago City Hall"
 EXAMPLE_ADDRESS = "121 N. LaSalle St., Chicago"
@@ -1037,7 +1049,8 @@ EXAMPLE_EDGE_M = 50
 EXAMPLE_CARDS = [
     # The layer, the body its card names, its boundary file and roster under
     # the app's data/app, the roster key a district carries (read the way the
-    # app reads it), and the district as the card prints it.
+    # app reads it), and the district as the card prints it. Every roster here
+    # maps that key to one record with a `name`, the shape EXAMPLE_SCRIPT reads.
     {"layer": "congress", "body": "U.S. House",
      "boundary": "congress-districts.json", "roster": "congress-roster.json",
      "key": lambda p: str(int(p["BASENAME"])), "label": lambda p, k: "IL-" + k},
@@ -1140,24 +1153,15 @@ def app_link(metro, lat, lng, layer_ids):
                                 ",".join(codes[i] for i in layer_ids))
 
 
-def example_name(rec):
-    """(what the card says, whether it names a person). A seat the roster does
-    not name prints what the officeholder tables print, never a guess."""
-    name = rec.get("name")
-    name = name.strip() if isinstance(name, str) else ""
-    if name and name.upper() != "VACANT":
-        return name, True
-    if rec.get("vacant") or name.upper() == "VACANT":
-        return "Vacant", False
-    return "Not listed", False
-
-
 def example_cards():
-    """[(spec, district label, name, named, (light, dark))] at the example
-    point, measured from the shipped files. The colours are the ones the map
-    draws each layer in."""
+    """[(spec, district label, roster key, (light, dark))] at the example
+    point, measured from the shipped boundary files. The colours are the ones
+    the map draws each layer in. The names are not here: the page reads them
+    from the rosters when it opens (EXAMPLE_SCRIPT), so this checks only that
+    each roster is the list the map's card reads."""
     lat, lng = EXAMPLE_POINT
     base = os.path.join(REPO_ROOT, EXAMPLE_TAG, "data", "app")
+    app = read(os.path.join(REPO_ROOT, EXAMPLE_TAG, "index.html"), "the %s app" % EXAMPLE_TAG)
     out = []
     for spec in EXAMPLE_CARDS:
         boundary = os.path.join(base, spec["boundary"])
@@ -1185,20 +1189,16 @@ def example_cards():
             roster = json.loads(read(os.path.join(base, spec["roster"]), "an example roster"))
         except ValueError as e:
             fail("%s is not JSON: %s" % (spec["roster"], e))
-        rec = roster.get(key)
-        if not isinstance(rec, dict):
-            fail("%s has no seat %r, the district %s is in by %s."
-                 % (spec["roster"], key, EXAMPLE_PLACE, spec["boundary"]))
-        label = spec["label"](found[0]["properties"], key)
-        sub = rec.get("subDistrict")
-        if sub and label != "District " + sub:
-            fail("%s: the boundary calls the seat %r and the roster %r. The two "
-                 "must agree before the front page names who holds it."
-                 % (spec["layer"], label, "District " + sub))
-        name, named = example_name(rec)
+        if not isinstance(roster, dict):
+            fail("%s is not keyed by district, so the page could not find the seat "
+                 "in it." % spec["roster"])
+        if ("data/app/" + spec["roster"]) not in app:
+            fail("%s/index.html never reads data/app/%s, so the example would name "
+                 "people from a list the map's card does not read."
+                 % (EXAMPLE_TAG, spec["roster"]))
         concept = concept_of(EXAMPLE_TAG, spec["layer"])
         colour = concept_colour(concept) if concept else None
-        out.append((spec, label, name, named,
+        out.append((spec, spec["label"](found[0]["properties"], key), key,
                     colour or own_colour(EXAMPLE_TAG, spec["layer"])))
     return out
 
@@ -1210,9 +1210,57 @@ def example_layers():
     return ids + [i for i in concept_layers(EXAMPLE_TAG, TRY_CONCEPTS) if i not in ids]
 
 
+# Each card's name line ships hidden, so a reader with no script sees the
+# bodies, the districts and the link to the map. This runs right after the
+# example, shows the lines empty (their height kept, so nothing moves when they
+# fill), reads each roster once and names each seat by the rule the officeholder
+# tables print by: a name, or "Vacant", or "Not listed", never a guess. A seat
+# whose number and letter the roster gives differently from the boundary (the
+# Chicago Board of Education's, whose boundary numbers its seats 1-20) is not
+# named at all. landing_test.mjs block 1i holds each name to its roster.
+EXAMPLE_SCRIPT = """\
+      <script>
+      (function () {
+        var box = document.currentScript.previousElementSibling;
+        if (!box || !window.fetch) return;
+        var cards = box.querySelectorAll(".ex-card[data-roster]"), lists = {}, i;
+        for (i = 0; i < cards.length; i++) {
+          var url = cards[i].getAttribute("data-roster");
+          cards[i].querySelector(".ex-name").hidden = false;
+          (lists[url] = lists[url] || []).push(cards[i]);
+        }
+        function show(card, text, named) {
+          var line = card.querySelector(".ex-name");
+          line.textContent = text;
+          line.className = named ? "ex-name" : "ex-name ex-none";
+        }
+        function name(card, list) {
+          var rec = list && typeof list === "object" ? list[card.getAttribute("data-seat")] : null;
+          if (!rec || typeof rec !== "object") return show(card, "Not listed", false);
+          var pill = card.querySelector(".ex-pill").textContent;
+          if (rec.subDistrict && pill !== "District " + rec.subDistrict) return show(card, "Not listed", false);
+          var n = typeof rec.name === "string" ? rec.name.replace(/^\\s+|\\s+$/g, "") : "";
+          if (n && n.toUpperCase() !== "VACANT") return show(card, n, true);
+          show(card, rec.vacant || n ? "Vacant" : "Not listed", false);
+        }
+        Object.keys(lists).forEach(function (url) {
+          fetch(url).then(function (r) {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.json();
+          }).then(function (list) {
+            lists[url].forEach(function (card) { name(card, list); });
+          }, function () {
+            lists[url].forEach(function (card) { show(card, "Name didn't load", false); });
+          });
+        });
+      })();
+      </script>
+"""
+
+
 def render_example(metros):
-    """The worked example's aside, and the line of one-tap places that follows
-    the independence sentence."""
+    """The worked example's aside and the script that names its people, and
+    the line of one-tap places that follows the independence sentence."""
     by_tag = {m["tag"]: m for m in metros}
     by_id = {m.get("id"): m for m in metros}
     if EXAMPLE_TAG not in by_tag:
@@ -1220,13 +1268,14 @@ def render_example(metros):
              % EXAMPLE_TAG)
     lat, lng = EXAMPLE_POINT
     items = []
-    for spec, label, name, named, colour in example_cards():
+    for spec, label, key, colour in example_cards():
         items.append(
-            '          <li class="ex-card" style="--lc-l:%s;--lc-d:%s">'
-            '<span class="ex-body">%s</span><span class="ex-name%s">%s</span>'
-            '<span class="ex-pill">%s</span></li>'
-            % (colour + (html.escape(spec["body"]), "" if named else " ex-none",
-                         html.escape(name), html.escape(label))))
+            '          <li class="ex-card" style="--lc-l:%s;--lc-d:%s" data-roster="%s" '
+            'data-seat="%s"><span class="ex-body">%s</span>'
+            '<span class="ex-name" hidden></span><span class="ex-pill">%s</span></li>'
+            % (colour + (html.escape("%s/data/app/%s" % (EXAMPLE_TAG, spec["roster"]), quote=True),
+                         html.escape(key, quote=True), html.escape(spec["body"]),
+                         html.escape(label))))
     aside = (
         '      <aside class="example" aria-labelledby="ex-h">\n'
         '        <p class="ex-eyebrow">What you get</p>\n'
@@ -1260,43 +1309,7 @@ def render_example(metros):
             html.escape(app_link(m, plat, plng, layer_ids), quote=True), html.escape(words)))
     joined = links[0] if len(links) == 1 else ", ".join(links[:-1]) + " or " + links[-1]
     tries = '        <p class="try">Or try it at %s.</p>\n' % joined
-    return aside, tries
-
-
-WORKFLOWS = os.path.join(REPO_ROOT, ".github", "workflows")
-
-
-def check_example_workflows():
-    """A workflow that rewrites a roster the example reads must regenerate this
-    page and commit it, or the next roster change fails this page's --check on
-    the bot's own pull request with last week's name still on it. The rule and
-    its test are build_officeholder_tables.check_workflows'."""
-    rosters = ["%s/data/app/%s" % (EXAMPLE_TAG, spec["roster"]) for spec in EXAMPLE_CARDS]
-    found = set()
-    for name in sorted(os.listdir(WORKFLOWS)):
-        if not name.endswith((".yml", ".yaml")):
-            continue
-        with open(os.path.join(WORKFLOWS, name), encoding="utf-8") as f:
-            text = f.read()
-        if "git add" not in text:
-            continue
-        for roster in rosters:
-            if roster not in text:
-                continue
-            found.add(roster)
-            if "build_landing_page.py" not in text:
-                fail(".github/workflows/%s rewrites %s, which the front page's worked "
-                     "example reads, and never regenerates the front page — add a step "
-                     "running python3 scripts/build_landing_page.py and `git add "
-                     "index.html`" % (name, roster))
-            if not any(line.split()[:2] == ["git", "add"] and "index.html" in line.split()
-                       for line in text.splitlines()):
-                fail(".github/workflows/%s regenerates the front page and never "
-                     "commits it — add index.html to its `git add`" % name)
-    unwritten = sorted(set(rosters) - found)
-    if unwritten:
-        print("build-landing-page: no workflow rewrites %s; the example reads it "
-              "as it ships" % ", ".join(unwritten))
+    return aside + EXAMPLE_SCRIPT, tries
 
 
 DC = "District of Columbia"
@@ -1431,7 +1444,6 @@ def build():
     # The worked example beside the address box names people, so a roster
     # refresh that renames one must rebuild this page in the same run.
     example, tries = render_example(metros)
-    check_example_workflows()
 
     return """<!DOCTYPE html>
 <html lang="en">
@@ -1780,7 +1792,7 @@ h1 {
   border-radius: 50%%; background: var(--lc); vertical-align: 1px;
 }
 .ex-name {
-  grid-column: 1; min-width: 0; overflow-wrap: anywhere;
+  grid-column: 1; min-width: 0; min-height: 1.2em; overflow-wrap: anywhere;
   font: var(--font-heading-weight) 19px/1.2 var(--font-heading); color: var(--ink);
 }
 .ex-name.ex-none { font-weight: 400; color: var(--muted); }

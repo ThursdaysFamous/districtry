@@ -226,7 +226,7 @@ PAIRS = [
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body); landing .ex-addr, the worked example's address on its tinted panel"),
     ("ink-3",      "border",     "text", ".gap-badge at 10px — text on the border colour (styles-footer)"),
-    ("muted",      "surface",    "text", "privacy .masthead h1 small, .which, .footer-inner; coverage-map attribution at 10px; landing .st-scope at 12px, the not-yet .st-off names and the .cov-key at 12.5px, all on the --surface .coverage card, and each question tile's .ask-n count at 12.5px (build_landing_page); landing .ex-name.ex-none, a seat the roster does not name, on a worked-example card (build_landing_page)"),
+    ("muted",      "surface",    "text", "privacy .masthead h1 small, .which, .footer-inner; coverage-map attribution at 10px; landing .st-scope at 12px, the not-yet .st-off names and the .cov-key at 12.5px, all on the --surface .coverage card, and each question tile's .ask-n count at 12.5px (build_landing_page); landing .ex-name.ex-none, a seat the roster does not name or a roster that did not load, on a worked-example card (build_landing_page)"),
     ("muted",      "paper",      "text", "landing .lede; history .kicker and its scheduled-jobs th at 12px"),
     ("muted",      "surface-2",  "text", ".card-section-label and .card-tinted (styles-card-v2) on --card-section-bg, which the skin sets to --surface-2's value in both tiers, under --card-muted, which equals --muted — literal equals token"),
     ("muted",      "brand-tint", "text", "landing #notice-dismiss at 11.5px (build_landing_page — on body)"),
