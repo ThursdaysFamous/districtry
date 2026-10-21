@@ -102,6 +102,10 @@ SOURCES = {
     # statewide, so the dissolve of its 82 counties is the widest ground it
     # answers on.
     "ms": "ms/data/app/metro-outline.json",
+    # Louisiana's coverage ring IS its state outline: every layer answers
+    # statewide, so the dissolve of its 64 parishes is the widest ground it
+    # answers on.
+    "la": "la/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

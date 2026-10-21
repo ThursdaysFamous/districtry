@@ -141,6 +141,13 @@ AREAS = {
     # A county-by-county layer is not a second ring the wash could draw, so
     # the coverage_key carries `outside` alone.
     "ms": {"outline": "ms/data/app/metro-outline.json", "state_outline": None},
+    # Louisiana joined at its go-live. ONE tier, like ms: its layers answer
+    # over the whole state, except the police jury or council district layer,
+    # which is drawn only in the six parishes whose current lines are confirmed
+    # and hides in the others, where the Parish card still names every member.
+    # A parish-by-parish layer is not a second ring the wash could draw, so the
+    # coverage_key carries `outside` alone.
+    "la": {"outline": "la/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,
