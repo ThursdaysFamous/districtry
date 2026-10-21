@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -116,6 +116,8 @@ ROSTER_FILES = {
     "la-senate-members.json": 39,  # Louisiana Senate roster from the Senate's own list of senators and their pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate District 14 read vacant on 2026-10-20.
     "la-house-members.json": 105,  # Louisiana House roster on the same terms; House Districts 77 and 92 read vacant on 2026-10-20.
     "la-parish-officials.json": 64,  # Every parish's governing body by seat and its parish president or mayor, from the Secretary of State's list of elected officials, one record per parish, refreshed weekly by update-la-parish-officials.yml.
+    "la-municipal-officials.json": 290,  # The mayor, council or board of aldermen and chief of police or marshal of every municipality the Secretary of State's list names, keyed by the Census place id, built from the same weekly read of the list by la/scripts/build_la_local_officials.py; 302 on 2026-10-20.
+    "la-school-board-members.json": 69,  # The members of all 69 school boards, keyed by the Census school district id, built in the same run; the builder refuses unless every district has a board.
     "la-parish-district-parishes.json": 6,  # The parishes whose districts the Police Jury or Council District layer draws, written by the same build as la-parish-districts.json; the layer's coverage test reads it.
     "tribal-councils.json": 3,  # The councils of the three Louisiana nations whose own pages name them (the Chitimacha, the Jena Band of Choctaw and the Tunica-Biloxi), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
