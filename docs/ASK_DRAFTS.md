@@ -7723,7 +7723,9 @@ the counties' own sites and the next election's results stay the route.
 > "Yes write it" on 2026-10-21 to the card proposing it. The mailbox was searched the same day for
 > any message to or from `adem.arkansas.gov` or `dps.arkansas.gov`: none. This ask is recorded in gap
 > `ar-fire-district-boards` and in `ar/WATCH.md`'s fire district row; record the send and any reply
-> in both.
+> in both. The Gmail draft was made by the Letters thread on 2026-10-21 with one wording change,
+> carried back here the same day: the line on what a card shows now follows the fleet rule of
+> 2026-10-17 (an official's own phone or e-mail is published where a government source prints it).
 
 **Why this is asked.** Arkansas's map draws all 971 fire districts from the Arkansas GIS Office's
 layer and names nobody who runs them. Read in the Association of Arkansas Counties' Fire Department
@@ -7769,8 +7771,8 @@ not assume it does. A list of the districts alone is useful; a "no" is a complet
 >    that would help just as much.
 >
 > If neither is something you can share, a "no" is a genuinely useful answer and we will record it.
-> We would show only each commissioner's name and office, never a home address or personal contact
-> details, and every card would credit the source and link back to it.
+> We would never show a home or street address, we would leave off anything a commissioner asks us in
+> writing to leave off, and every card would credit the source and link back to it.
 >
 > Thank you for your time.
 >
