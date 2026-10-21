@@ -416,6 +416,11 @@ def _point_in_geometry(lng, lat, geom):
                 inside = not inside
             j = i
         return inside
+    # A Point or line encloses nothing, so it cannot contain the negative
+    # point. The ZIP code index (one Point per ZIP code) is a geometry file
+    # for caching purposes and has no polygons to test.
+    if not geom or geom.get("type") not in ("Polygon", "MultiPolygon"):
+        return False
     polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
     return any(ring_hit(p[0]) and not any(ring_hit(h) for h in p[1:]) for p in polys)
 

@@ -151,6 +151,7 @@ Usage:
 import argparse
 import ast
 import contextlib
+import fnmatch
 import glob
 import io
 import json
@@ -683,6 +684,47 @@ def check_watch_tables():
     return bad
 
 
+# (workflow text, path, is it staged, why this case is here). Each shape a
+# `git add` takes in the tree, and the two ways a reader of it goes wrong: a
+# path on a continued line read as unstaged, and a glob or a folder read as
+# staging something it does not.
+STAGED_CASES = (
+    ("git add il/data/app/a.json", "il/data/app/a.json", True, "a file, named"),
+    ("git add il/data/source", "il/data/source/b.json", True,
+     "a folder stages what is under it"),
+    ("git add il/data/source", "il/data/sourced.json", False,
+     "a folder is not a prefix of another name"),
+    ("git add -A x.json \\\n  '*/data/app/zip-index.json' y.json",
+     "wi/data/app/zip-index.json", True,
+     "a glob on a continued line: the census tile job's ZIP code indexes"),
+    ("git add -A x.json \\\n  '*/data/app/zip-index.json' y.json",
+     "wi/data/app/zip-search.json", False, "a glob matches its own files only"),
+    ("git add -A x.json\n  '*/data/app/zip-index.json'", "wi/data/app/zip-index.json",
+     False, "a line after one that does not continue is not part of the command"),
+)
+
+
+def check_staged_reader():
+    """Hold the `git add` reader to fixtures, then to the census tile job."""
+    bad = 0
+    for text, rel, want, why in STAGED_CASES:
+        got = bool(refreshed_by(rel, [(t, "w") for t in staged_tokens(text)]))
+        if got != want:
+            bad += 1
+            print("  STAGE %-30s want=%s got=%s  (%s)" % (rel, want, got, why))
+    tiger = ".github/workflows/update-tiger-tiles.yml"
+    if tiger not in refreshed_by("il/data/app/zip-index.json", staged_paths()):
+        bad += 1
+        print("  STAGE %s no longer stages il/data/app/zip-index.json, which "
+              "scripts/build_zip_index.mjs rebuilds from that job's archives"
+              % tiger)
+    print("  STAGE %d staged-path case(s), %d staged / %d not, and the census "
+          "tile job's ZIP code indexes"
+          % (len(STAGED_CASES), sum(1 for c in STAGED_CASES if c[2]),
+             sum(1 for c in STAGED_CASES if not c[2])))
+    return bad
+
+
 def selftest():
     """Hold `shape_of` to files whose shape is settled.
 
@@ -692,7 +734,7 @@ def selftest():
     """
     bad = check_marks() + check_live_fleet() + check_name_shapes()
     bad += check_watch_tables() + check_named_unit() + check_ask_credit()
-    bad += check_ward_cases()
+    bad += check_ward_cases() + check_staged_reader()
     for head, want, why in HEADER_CASES:
         got = is_schedule_table([head])
         if got != want:
@@ -907,15 +949,40 @@ def staged_paths():
         if "schedule:" not in text or "git add " not in text:
             continue
         rel = os.path.relpath(path, REPO_ROOT)
-        for line in text.splitlines():
-            if "git add " not in line:
-                continue
-            for token in line.split()[2:]:
-                token = token.strip("\"'")
-                if token.startswith("-") or "/" not in token:
-                    continue
-                out.append((token, rel))
+        out += [(token, rel) for token in staged_tokens(text)]
     return out
+
+
+def staged_tokens(text):
+    """The paths one workflow's `git add` commands name.
+
+    A `git add` CONTINUED WITH A BACKSLASH names paths on the lines after it
+    too, and a token can be a PATHSPEC GLOB (`'*/data/app/zip-index.json'`).
+    Both are how the two tile mirrors stage their files, and until 2026-10-21
+    this read the first line of a command alone and matched its tokens
+    letter for letter, which nothing it scored depended on until the census
+    tile job began rebuilding each app's ZIP code index: every one of those
+    files then read as under no job at all, while that job rewrote them.
+    """
+    out = []
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if "git add " not in line:
+            continue
+        words = line.split()[2:]
+        j = i
+        while lines[j].rstrip().endswith("\\") and j + 1 < len(lines):
+            j += 1
+            words += lines[j].split()
+        for token in words:
+            token = token.strip("\"'")
+            if token.startswith("-") or "/" not in token:
+                continue
+            out.append(token)
+    return out
+
+
+GLOB_CHARS = re.compile(r"[*?[]")
 
 
 def refreshed_by(rel_path, staged):
@@ -929,6 +996,11 @@ def refreshed_by(rel_path, staged):
     """
     hits = []
     for token, workflow in staged:
+        if GLOB_CHARS.search(token):
+            # git matches a pathspec's `*` across `/`, as fnmatch does
+            if fnmatch.fnmatchcase(rel_path, token):
+                hits.append(workflow)
+            continue
         if (rel_path == token
                 or rel_path.startswith(token.rstrip("/") + "/")
                 or (rel_path.endswith("/") and token.startswith(rel_path))):
