@@ -713,34 +713,19 @@ h1 {
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
 
-/* Stated plainly and early, never as a warning banner — it is a fact about who
-   this is, not an alarm. See INDEPENDENCE for why it is above the fold, and it
-   now actually is: it sat at 1,800px down the desktop page, under three other
-   sections, which is not above anything. */
-.independence {
-  margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
-  color: var(--ink-3);
-}
-
-/* THE WORKED EXAMPLE (2026-10-21): one place and who represents it there,
-   beside the address box on a wide screen and under it on a narrow one. Until
-   then the page said what districtry answers and never showed an answer, so it
-   read as a list of what is covered rather than as something to use. Each card
-   carries its layer's map colour, light and dark, the way the question tiles
-   do; the words on it stay in the page's ink, because a map colour is chosen
-   to read as a line and not as text. */
+/* THE WORKED EXAMPLE (2026-10-21): a place and who represents it there, one
+   of six a reader can switch between, beside the address box on a wide screen
+   and under it on a narrow one. Until then the page said what districtry
+   answers and never showed an answer, so it read as a list of what is covered
+   rather than as something to use. Each card carries its layer's map colour,
+   light and dark, the way the question tiles do; the words on it stay in the
+   page's ink, because a map colour is chosen to read as a line and not as
+   text. */
 .hero {
   display: grid; grid-template-columns: minmax(0, 1fr) 370px;
   gap: 36px; align-items: start;
 }
 .hero-main { min-width: 0; }
-.try { margin: 14px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--ink-3); }
-.try a {
-  color: var(--brand-600); font-weight: 600; text-decoration: none;
-  border-bottom: 1px solid var(--brand-border);
-}
-.try a:hover { color: var(--brand-700); border-bottom-color: currentColor; }
-.try a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 2px; }
 .example {
   margin-top: 4px; padding: 16px 14px 12px;
   background: var(--brand-tint); border: 1px solid var(--brand-border);
@@ -750,6 +735,27 @@ h1 {
   margin: 0 4px 7px; font: var(--font-heading-weight) 12.5px/1 var(--font-heading);
   letter-spacing: .09em; text-transform: uppercase; color: var(--brand-700);
 }
+/* A button for each place, the one shown filled the way the address box's
+   button is, so which place is showing does not rest on colour alone. They
+   ship hidden and the page's script shows them, so a reader with no script is
+   not offered buttons that cannot work. */
+.ex-pick { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 4px 13px; }
+.ex-pick[hidden] { display: none; }
+.ex-pick button {
+  min-height: 30px; padding: 5px 11px;
+  font: 600 13.5px/1.2 var(--font-body); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; cursor: pointer;
+}
+.ex-pick button:hover { border-color: var(--brand-600); }
+.ex-pick button[aria-pressed="true"] {
+  color: #fff; background: var(--brand-600); border-color: var(--brand-600); cursor: default;
+}
+.ex-pick button:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ex-pick button[aria-pressed="true"] { color: var(--paper); }
+}
+:root[data-theme="dark"] .ex-pick button[aria-pressed="true"] { color: var(--paper); }
 .ex-place {
   margin: 0 4px; font: var(--font-heading-weight) 21px/1.2 var(--font-heading);
   color: var(--ink);
@@ -1112,55 +1118,185 @@ footer .support b { color: var(--ink); }
              answer today — an address anywhere else says so instead of guessing.</p>
           <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </div>
-        <p class="independence">districtry is an independent, unofficial project. It is not a government service and is not affiliated with, endorsed by, or operated by any government agency. It asks for an address only to place a point on the map — there is no account, no sign-in, and it never asks for personal or financial information.</p>
-        <p class="try">Or try it at <a href="https://districtry.com/wi/#p=43.07468,-89.38421&amp;l=us,wis,wia,cb,ad,ms">the Wisconsin State Capitol</a> or <a href="https://districtry.com/ny/#p=40.71278,-74.00583&amp;l=cg,nys,nya,lg,cv,cl">New York City Hall</a>.</p>
       </div>
       <aside class="example" aria-labelledby="ex-h">
-        <p class="ex-eyebrow">What you get</p>
-        <h2 id="ex-h" class="ex-place">Example: Chicago City Hall</h2>
-        <p class="ex-addr">121 N. LaSalle St., Chicago</p>
-        <ul class="ex-cards">
-          <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="il/data/app/congress-roster.json" data-seat="7"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">IL-7</span></li>
-          <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="il/data/app/il-senate-members.json" data-seat="3"><span class="ex-body">Illinois Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 3</span></li>
-          <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="il/data/app/il-house-members.json" data-seat="6"><span class="ex-body">Illinois House</span><span class="ex-name" hidden></span><span class="ex-pill">District 6</span></li>
-          <li class="ex-card" style="--lc-l:#1E7A8C;--lc-d:#57C8E1" data-roster="il/data/app/ccbr-roster.json" data-seat="3"><span class="ex-body">Cook County Board of Review</span><span class="ex-name" hidden></span><span class="ex-pill">District 3</span></li>
-          <li class="ex-card" style="--lc-l:#585EDD;--lc-d:#A7B4FD" data-roster="il/data/app/school-board-members.json" data-seat="12"><span class="ex-body">Chicago Board of Education</span><span class="ex-name" hidden></span><span class="ex-pill">District 6b</span></li>
-        </ul>
-        <a class="ex-open" href="https://districtry.com/il/#p=41.88372,-87.63238&amp;l=cg,ils,ilh,br,sb,cb,wd">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        <p id="ex-h" class="ex-eyebrow">What you get</p>
+        <div class="ex-pick" role="group" aria-label="Example places" hidden>
+          <button type="button" data-place="chicago" aria-controls="ex-chicago" aria-pressed="true">Chicago</button>
+          <button type="button" data-place="madison" aria-controls="ex-madison" aria-pressed="false">Madison</button>
+          <button type="button" data-place="detroit" aria-controls="ex-detroit" aria-pressed="false">Detroit</button>
+          <button type="button" data-place="nashville" aria-controls="ex-nashville" aria-pressed="false">Nashville</button>
+          <button type="button" data-place="new-york" aria-controls="ex-new-york" aria-pressed="false">New York</button>
+          <button type="button" data-place="san-francisco" aria-controls="ex-san-francisco" aria-pressed="false">San Francisco</button>
+        </div>
+        <div class="ex-panel" id="ex-chicago" data-place="chicago">
+          <h2 class="ex-place">Example: Chicago City Hall</h2>
+          <p class="ex-addr">121 N. LaSalle St., Chicago</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="il/data/app/congress-roster.json" data-seat="[&quot;7&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">IL-7</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="il/data/app/il-senate-members.json" data-seat="[&quot;3&quot;]"><span class="ex-body">Illinois Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 3</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="il/data/app/il-house-members.json" data-seat="[&quot;6&quot;]"><span class="ex-body">Illinois House</span><span class="ex-name" hidden></span><span class="ex-pill">District 6</span></li>
+            <li class="ex-card" style="--lc-l:#1E7A8C;--lc-d:#57C8E1" data-roster="il/data/app/ccbr-roster.json" data-seat="[&quot;3&quot;]"><span class="ex-body">Cook County Board of Review</span><span class="ex-name" hidden></span><span class="ex-pill">District 3</span></li>
+            <li class="ex-card" style="--lc-l:#585EDD;--lc-d:#A7B4FD" data-roster="il/data/app/school-board-members.json" data-seat="[&quot;12&quot;]"><span class="ex-body">Chicago Board of Education</span><span class="ex-name" hidden></span><span class="ex-pill">District 6b</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/il/#p=41.88372,-87.63238&amp;l=cg,ils,ilh,br,sb,cb,wd">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-madison" data-place="madison" hidden>
+          <h2 class="ex-place">Example: Wisconsin State Capitol</h2>
+          <p class="ex-addr">2 E. Main St., Madison</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="wi/data/app/congress-roster.json" data-seat="[&quot;2&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">District 2</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="wi/data/app/wi-senate-members.json" data-seat="[&quot;26&quot;]"><span class="ex-body">Wisconsin Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 26</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="wi/data/app/wi-assembly-members.json" data-seat="[&quot;76&quot;]"><span class="ex-body">Wisconsin Assembly</span><span class="ex-name" hidden></span><span class="ex-pill">District 76</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="wi/data/app/county-board-members.json" data-seat="[&quot;5502501&quot;]"><span class="ex-body">Dane County Board</span><span class="ex-name" hidden></span><span class="ex-pill">District 1</span></li>
+            <li class="ex-card" style="--lc-l:#0B5394;--lc-d:#4FA4FE" data-roster="wi/data/app/wi-alderpersons.json" data-seat="[&quot;48000&quot;, &quot;members&quot;, &quot;04&quot;]"><span class="ex-body">Madison Common Council</span><span class="ex-name" hidden></span><span class="ex-pill">District 4</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/wi/#p=43.07468,-89.38421&amp;l=us,wis,wia,cb,ad,ms">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-detroit" data-place="detroit" hidden>
+          <h2 class="ex-place">Example: Coleman A. Young Municipal Center</h2>
+          <p class="ex-addr">2 Woodward Ave., Detroit</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="mi/data/app/congress-roster.json" data-seat="[&quot;13&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">District 13</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="mi/data/app/mi-senate-members.json" data-seat="[&quot;1&quot;]"><span class="ex-body">Michigan Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 1</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="mi/data/app/mi-house-members.json" data-seat="[&quot;9&quot;]"><span class="ex-body">Michigan House</span><span class="ex-name" hidden></span><span class="ex-pill">District 9</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="mi/data/app/mi-commissioner-members.json" data-seat="[&quot;163&quot;, &quot;districts&quot;, &quot;2&quot;]"><span class="ex-body">Wayne County Commission</span><span class="ex-name" hidden></span><span class="ex-pill">District 2</span></li>
+            <li class="ex-card" style="--lc-l:#0B5394;--lc-d:#4FA4FE" data-roster="mi/data/app/mi-detroit-council-members.json" data-seat="[&quot;districts&quot;, &quot;6&quot;]"><span class="ex-body">Detroit City Council</span><span class="ex-name" hidden></span><span class="ex-pill">District 6</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/mi/#p=42.32944,-83.04389&amp;l=us,mis,mih,cm,cw">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-nashville" data-place="nashville" hidden>
+          <h2 class="ex-place">Example: Tennessee State Capitol</h2>
+          <p class="ex-addr">600 Dr. Martin L. King Jr. Blvd., Nashville</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="tn/data/app/congress-roster.json" data-seat="[&quot;7&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">District 7</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="tn/data/app/tn-senate-members.json" data-seat="[&quot;21&quot;]"><span class="ex-body">Tennessee Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 21</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="tn/data/app/tn-house-members.json" data-seat="[&quot;51&quot;]"><span class="ex-body">Tennessee House</span><span class="ex-name" hidden></span><span class="ex-pill">District 51</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="tn/data/app/tn-commissioners.json" data-seat="[&quot;47037&quot;, &quot;districts&quot;, &quot;19&quot;]"><span class="ex-body">Metro Council</span><span class="ex-name" hidden></span><span class="ex-pill">District 19</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/tn/#p=36.16583,-86.78417&amp;l=us,tns,tnh,cm,cw,bd">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-new-york" data-place="new-york" hidden>
+          <h2 class="ex-place">Example: New York City Hall</h2>
+          <p class="ex-addr">City Hall Park, Manhattan</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="ny/data/app/congress-roster.json" data-seat="[&quot;10&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">NY-10</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="ny/data/app/ny-senate-members.json" data-seat="[&quot;27&quot;]"><span class="ex-body">New York State Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 27</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="ny/data/app/ny-assembly-members.json" data-seat="[&quot;66&quot;]"><span class="ex-body">New York State Assembly</span><span class="ex-name" hidden></span><span class="ex-pill">District 66</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/ny/#p=40.71278,-74.00583&amp;l=cg,nys,nya,lg,cv,cl">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
+        <div class="ex-panel" id="ex-san-francisco" data-place="san-francisco" hidden>
+          <h2 class="ex-place">Example: San Francisco City Hall</h2>
+          <p class="ex-addr">1 Dr. Carlton B. Goodlett Pl., San Francisco</p>
+          <ul class="ex-cards">
+            <li class="ex-card" style="--lc-l:#14181C;--lc-d:#696F76" data-roster="ca/data/app/congress-roster.json" data-seat="[&quot;11&quot;]"><span class="ex-body">U.S. House</span><span class="ex-name" hidden></span><span class="ex-pill">CA-11</span></li>
+            <li class="ex-card" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" data-roster="ca/data/app/ca-senate-members.json" data-seat="[&quot;11&quot;]"><span class="ex-body">California Senate</span><span class="ex-name" hidden></span><span class="ex-pill">District 11</span></li>
+            <li class="ex-card" style="--lc-l:#8C2E4A;--lc-d:#F47294" data-roster="ca/data/app/ca-assembly-members.json" data-seat="[&quot;17&quot;]"><span class="ex-body">California Assembly</span><span class="ex-name" hidden></span><span class="ex-pill">District 17</span></li>
+            <li class="ex-card" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" data-roster="ca/data/app/sf-supervisor-members.json" data-seat="[&quot;5&quot;]"><span class="ex-body">Board of Supervisors</span><span class="ex-name" hidden></span><span class="ex-pill">District 5</span></li>
+          </ul>
+          <a class="ex-open" href="https://districtry.com/ca/#p=37.77927,-122.41924&amp;l=cg,cas,caa,sd">See every district here on the map<span aria-hidden="true">&#160;&#8594;</span></a>
+        </div>
       </aside>
       <script>
       (function () {
         var box = document.currentScript.previousElementSibling;
         if (!box || !window.fetch) return;
-        var cards = box.querySelectorAll(".ex-card[data-roster]"), lists = {}, i;
-        for (i = 0; i < cards.length; i++) {
-          var url = cards[i].getAttribute("data-roster");
-          cards[i].querySelector(".ex-name").hidden = false;
-          (lists[url] = lists[url] || []).push(cards[i]);
+        var PLACE_KEY = "districtry-example-place";
+        var pick = box.querySelector(".ex-pick");
+        var panels = box.querySelectorAll(".ex-panel[data-place]");
+        var buttons = box.querySelectorAll(".ex-pick button[data-place]");
+        var order = [], byId = {}, shown = {}, lists = {}, i;
+        for (i = 0; i < panels.length; i++) {
+          order.push(panels[i].getAttribute("data-place"));
+          byId[panels[i].getAttribute("data-place")] = panels[i];
+        }
+        if (!pick || !order.length) return;
+        // The counter loads after this script, so a count waits for it, up to
+        // ten seconds, as the address box's does.
+        function trackEvent(path, tries) {
+          if (window.goatcounter && typeof window.goatcounter.count === "function") {
+            window.goatcounter.count({ path: path, title: path, event: true });
+            return;
+          }
+          if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
         }
         function show(card, text, named) {
           var line = card.querySelector(".ex-name");
           line.textContent = text;
           line.className = named ? "ex-name" : "ex-name ex-none";
         }
-        function name(card, list) {
-          var rec = list && typeof list === "object" ? list[card.getAttribute("data-seat")] : null;
-          if (!rec || typeof rec !== "object") return show(card, "Not listed", false);
-          var pill = card.querySelector(".ex-pill").textContent;
-          if (rec.subDistrict && pill !== "District " + rec.subDistrict) return show(card, "Not listed", false);
+        // One member: the name, "" for a seat the roster calls vacant, or null.
+        function member(rec, pill) {
+          if (!rec || typeof rec !== "object" || rec.withheld) return null;
+          if (rec.subDistrict && pill !== "District " + rec.subDistrict) return null;
           var n = typeof rec.name === "string" ? rec.name.replace(/^\s+|\s+$/g, "") : "";
-          if (n && n.toUpperCase() !== "VACANT") return show(card, n, true);
-          show(card, rec.vacant || n ? "Vacant" : "Not listed", false);
+          if (n && n.toUpperCase() !== "VACANT") return n;
+          return rec.vacant || n ? "" : null;
         }
-        Object.keys(lists).forEach(function (url) {
-          fetch(url).then(function (r) {
-            if (!r.ok) throw new Error("HTTP " + r.status);
-            return r.json();
-          }).then(function (list) {
-            lists[url].forEach(function (card) { name(card, list); });
-          }, function () {
-            lists[url].forEach(function (card) { show(card, "Name didn't load", false); });
+        function name(card, list) {
+          var path = JSON.parse(card.getAttribute("data-seat")), seat = list, k;
+          for (k = 0; k < path.length; k++) {
+            seat = seat && typeof seat === "object" &&
+              Object.prototype.hasOwnProperty.call(seat, path[k]) ? seat[path[k]] : null;
+          }
+          var pill = card.querySelector(".ex-pill").textContent;
+          var recs = Array.isArray(seat) ? seat : [seat], names = [], vacant = 0;
+          for (k = 0; k < recs.length; k++) {
+            var n = member(recs[k], pill);
+            if (n) names.push(n);
+            else if (n === "") vacant++;
+          }
+          if (!names.length) return show(card, vacant ? "Vacant" : "Not listed", false);
+          if (vacant) names.push(vacant === 1 ? "a vacant seat" : vacant + " vacant seats");
+          show(card, names.length === 1 ? names[0]
+            : names.slice(0, -1).join(", ") + " and " + names[names.length - 1], true);
+        }
+        function fill(panel) {
+          var cards = panel.querySelectorAll(".ex-card[data-roster]"), groups = {}, j;
+          for (j = 0; j < cards.length; j++) {
+            var url = cards[j].getAttribute("data-roster");
+            cards[j].querySelector(".ex-name").hidden = false;
+            (groups[url] = groups[url] || []).push(cards[j]);
+          }
+          Object.keys(groups).forEach(function (url) {
+            lists[url] = lists[url] || fetch(url).then(function (r) {
+              if (!r.ok) throw new Error("HTTP " + r.status);
+              return r.json();
+            });
+            lists[url].then(function (list) {
+              groups[url].forEach(function (card) { name(card, list); });
+            }, function () {
+              groups[url].forEach(function (card) { show(card, "Name didn't load", false); });
+            });
           });
+        }
+        function choose(id) {
+          var j;
+          for (j = 0; j < order.length; j++) byId[order[j]].hidden = order[j] !== id;
+          for (j = 0; j < buttons.length; j++) {
+            buttons[j].setAttribute("aria-pressed",
+              buttons[j].getAttribute("data-place") === id ? "true" : "false");
+          }
+          if (!shown[id]) {
+            shown[id] = true;
+            fill(byId[id]);
+          }
+        }
+        var last = null, start;
+        try { last = window.localStorage.getItem(PLACE_KEY); } catch (e) { /* storage blocked */ }
+        i = order.indexOf(last);
+        start = i >= 0 ? order[(i + 1) % order.length]
+                       : order[Math.floor(Math.random() * order.length)];
+        try { window.localStorage.setItem(PLACE_KEY, start); } catch (e) { /* the next visit picks at random */ }
+        choose(start);
+        pick.hidden = false;
+        pick.addEventListener("click", function (e) {
+          var b = e.target;
+          while (b && b !== pick && !(b.getAttribute && b.getAttribute("data-place"))) b = b.parentNode;
+          if (!b || b === pick || b.getAttribute("aria-pressed") === "true") return;
+          choose(b.getAttribute("data-place"));
+          trackEvent("example-place/" + b.getAttribute("data-place"));
         });
       })();
       </script>
@@ -2557,8 +2693,9 @@ footer .support b { color: var(--ink); }
    * uncovered, none, unreadable, search-failed, or failed-<why> when the
    * lookup could not read a short link. A place shared into the installed
    * app reaches this page (as "opened") when no state has been opened yet.
-   * Nothing about the place is in it. It is the one event this page sends,
-   * and the privacy page names it (build_privacy_page.py ROOT_EVENTS). The
+   * Nothing about the place is in it. It is one of the two events this page
+   * sends, with the worked example's example-place/<place> (EXAMPLE_SCRIPT),
+   * and the privacy page names both (build_privacy_page.py ROOT_EVENTS). The
    * counter loads after this script, so a count waits for it, up to ten
    * seconds, as the apps' do. */
   var linkRead = null, linkVia = "pasted";
